@@ -173,6 +173,17 @@
 			<form-property name="paymentDateYear" type="java.lang.String" />
       </form-bean>
 
+	  <!-- Bean to Change the Guide Information  -->
+      <form-bean name="editGuideInformationForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+        	<form-property name="quantityList" type="java.lang.String" />
+			<form-property name="contributor" type="java.lang.String" />
+      </form-bean>
+
+
 
     </form-beans>
     
@@ -403,6 +414,20 @@
 	         <forward name="PrepareReady" path="/guide/chooseGuide.jsp"/> 
 	         <forward name="ActionReady" path="/guide/visualizeGuide.jsp"/>  
 	         <forward name="ShowVersionList" path="/guide/chooseVersionPage.jsp"/>  
+      </action>
+
+
+      <!-- action to choose a guide -->
+      <action attribute="editGuideInformationForm"
+      		  input="/guide/editGuideInformation.jsp"
+      	      name="editGuideInformationForm"
+		      path="/editGuideInformation"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.EditGuideDispatchAction"
+              validate="true">
+         <forward name="PrepareReady" path="/guide/editGuideInformation.jsp"/> 
+         <forward name="EditInformationSuccess" path="/guide/visualizeGuide.jsp"/> 
       </action>
 
 

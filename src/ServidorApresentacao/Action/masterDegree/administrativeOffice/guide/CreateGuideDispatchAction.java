@@ -246,6 +246,8 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			String paymentType = (String) createGuideForm.get("paymentType");
 			
 			
+			session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.FALSE);
+			
 			// Check if the Guide will have a "Payed" situation and if the payment type has been chosen
 			
 			if ((guideSituationString.equals(SituationOfGuide.PAYED_STRING)) && (paymentType.equals(PaymentType.DEFAULT_STRING))){
@@ -320,7 +322,8 @@ System.out.println("New Password: " + newInfoGuide.getInfoPerson().getPassword()
 					} catch (FenixServiceException e) {
 						throw new FenixActionException();
 					}
-				}
+				} 
+				
 			session.removeAttribute(SessionConstants.GUIDE);
 			session.setAttribute(SessionConstants.GUIDE, newInfoGuide);
 	

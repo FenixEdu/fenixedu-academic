@@ -5,11 +5,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-<html>
-  <head>
-    <title><bean:message key="title.masterDegree.administraiveOffice.createGuide" /></title>
-  </head>
-  <body>
+
    <span class="error"><html:errors/></span>
 
    <table>
@@ -94,5 +90,3 @@
 
     </html:form>
 	</logic:present>
-  </body>
-</html>

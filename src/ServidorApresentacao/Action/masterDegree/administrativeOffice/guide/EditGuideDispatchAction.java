@@ -1,7 +1,11 @@
 
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.guide;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,12 +18,18 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.util.LabelValueBean;
 
+import DataBeans.InfoContributor;
 import DataBeans.InfoGuide;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NonValidChangeServiceException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.InvalidChangeActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.exceptions.NonValidChangeActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -150,5 +160,101 @@ public class EditGuideDispatchAction extends DispatchAction {
 			throw new Exception();   
 	}
 		
+
+	public ActionForward prepareEditInformation(ActionMapping mapping, ActionForm form,
+									HttpServletRequest request,
+									HttpServletResponse response)
+		throws Exception {
+
+		HttpSession session = request.getSession(false);
+
+		if (session != null) {
+			DynaActionForm editGuideForm = (DynaActionForm) form;
+			GestorServicos serviceManager = GestorServicos.manager();
+			
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			Integer guideYear = new Integer((String) request.getParameter("year"));
+			Integer guideNumber = new Integer((String) request.getParameter("number"));
+			Integer guideVersion = new Integer((String) request.getParameter("version"));
+			
+			
+			Object args[] = { guideNumber, guideYear, guideVersion };
+			
+			// Read the Guide 
+			
+			InfoGuide infoGuide = null;
+			List contributors = null;			
+			try {
+				infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
+				contributors = (List)  serviceManager.executar(userView, "ReadAllContributors", null);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+			
+			ArrayList contributorList = new ArrayList();
+			Iterator iterator = contributors.iterator();
+			while (iterator.hasNext()) {
+				InfoContributor infoContributor = (InfoContributor) iterator.next();
+				contributorList.add(new LabelValueBean(infoContributor.getContributorName(), infoContributor.getContributorNumber().toString()));
+			}
+						
+			session.setAttribute(SessionConstants.GUIDE, infoGuide);
+			session.setAttribute(SessionConstants.CONTRIBUTOR_LIST, contributorList);
+			
+			return mapping.findForward("PrepareReady");			
+
+		} else
+			throw new Exception();   
+	}
+
+
+	public ActionForward editGuideInformation(ActionMapping mapping, ActionForm form,
+									HttpServletRequest request,
+									HttpServletResponse response)
+		throws Exception {
+
+		HttpSession session = request.getSession(false);
+
+		if (session != null) {
+			DynaActionForm editGuideForm = (DynaActionForm) form;
+			GestorServicos serviceManager = GestorServicos.manager();
+			
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
+			session.removeAttribute(SessionConstants.GUIDE);
+			
+			String contributorString = (String) editGuideForm.get("contributor");
+
+			Integer contributorNumber = null;
+			if ((contributorString != null) && (contributorString.length() != 0))
+				contributorNumber = new Integer(contributorString);
+			
+			// Fill in the quantity List
+			Enumeration arguments = request.getParameterNames();
+			String[] quantityList = new String[infoGuide.getInfoGuideEntries().size()];
+			while(arguments.hasMoreElements()){
+				String parameter = (String) arguments.nextElement();
+				if (parameter.startsWith("quantityList")){
+					int arrayPosition = "quantityList".length();
+					String position = parameter.substring(arrayPosition);
+					quantityList[new Integer(position).intValue()] = request.getParameter(parameter);
+				}
+			}
+			
+			Object args[] = {infoGuide, quantityList, contributorNumber };
+			
+			InfoGuide result = null;
+			try {
+				result = (InfoGuide) serviceManager.executar(userView, "EditGuideInformation", args);
+			} catch (InvalidChangeServiceException e) {
+				throw new InvalidChangeActionException(e);
+			}
+			
+			request.setAttribute(SessionConstants.GUIDE, result);
+			return mapping.findForward("EditInformationSuccess");			
+
+		} else
+			throw new Exception();   
+	}
 		  
 }

@@ -35,7 +35,7 @@
 
           <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.degree"/> </td>
-            <td> <bean:write name="guide" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/> </td>
+            <td> <bean:write name="infoGuide" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/> </td>
           </tr>
 
           <tr> 
@@ -44,15 +44,15 @@
           </tr>
           <tr> 
             <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/></td>
-            <td><bean:write name="guide" property="infoContributor.contributorNumber"/></td>
+            <td><bean:write name="infoGuide" property="infoContributor.contributorNumber"/></td>
           </tr>
           <tr> 
             <td><bean:message key="label.masterDegree.administrativeOffice.contributorName"/></td>
-            <td><bean:write name="guide" property="infoContributor.contributorName"/></td>
+            <td><bean:write name="infoGuide" property="infoContributor.contributorName"/></td>
           </tr>
           <tr> 
             <td><bean:message key="label.masterDegree.administrativeOffice.contributorAddress"/></td>
-            <td><bean:write name="guide" property="infoContributor.contributorAddress"/></td>
+            <td><bean:write name="infoGuide" property="infoContributor.contributorAddress"/></td>
           </tr>
 
 	</table>
@@ -105,9 +105,9 @@
 	<br>
 
 
-     <table>
 
          <logic:iterate id="guideSituation" name="infoGuide" property="infoGuideSituations">
+	      <table>
             <% if (((InfoGuideSituation) guideSituation).getState().equals(new State(State.ACTIVE))) { %>
 	            
 				<tr>
@@ -136,8 +136,10 @@
         			<td><bean:write name="infoGuide" property="paymentDate"/></td>
         		</tr>
          	<% } %>
+          </table>
+          <br><br>
          </logic:iterate>
-     </table>
+
 
 	<br>	
 	<br>

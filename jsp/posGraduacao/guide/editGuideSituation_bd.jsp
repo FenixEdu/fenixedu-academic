@@ -14,7 +14,18 @@
    		<bean:define id="days" name="<%= SessionConstants.MONTH_DAYS_KEY %>" scope="session"/>
    		<bean:define id="months" name="<%= SessionConstants.MONTH_LIST_KEY %>" scope="session"/>
    		<bean:define id="years" name="<%= SessionConstants.YEARS_KEY %>" scope="session"/>
-
+        <bean:define id="number" name="infoGuide" property="number" />
+        <bean:define id="year" name="infoGuide" property="year" />
+        <bean:define id="version" name="infoGuide" property="version" />
+    
+    	<strong>
+    	<bean:message key="label.masterDegree.administrativeOffice.guideInformation" 
+    				   arg0='<%= pageContext.findAttribute("version").toString() %>'
+    				   arg1='<%= pageContext.findAttribute("number").toString() %>' 
+    				   arg2='<%= pageContext.findAttribute("year").toString() %>' 
+    	 />
+    	</strong>
+    	 
       <span class="error"><html:errors/></span>
       <br>
 
