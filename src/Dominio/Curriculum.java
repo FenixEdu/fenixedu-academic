@@ -16,7 +16,7 @@ public class Curriculum implements ICurriculum {
 	protected String program;
 	protected IDisciplinaExecucao executionCourse;
 	private Integer internalCode;
-	private Integer keySite;
+	private Integer keyExecutionCourse;
 	
 	/** Creates a new instance of Curriculum */
 	public Curriculum() {
@@ -41,12 +41,12 @@ public class Curriculum implements ICurriculum {
 		this.internalCode = internalCode;
 	}
 	
-	public Integer getKeySite() {
-		return keySite;
+	public Integer getKeyExecutionCourse() {
+		return keyExecutionCourse;
 	}
 	
-	public void setKeySite(Integer keySite) {
-		this.keySite = keySite;
+	public void setKeyExecutionCourse(Integer keyExecutionCourse) {
+		this.keyExecutionCourse = keyExecutionCourse;
 	}
 	public String getGeneralObjectives() {
 		return generalObjectives;

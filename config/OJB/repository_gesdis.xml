@@ -100,12 +100,12 @@
          jdbc-type="VARCHAR"
       />
       <field-descriptor id="3"
-         name="order
+         name="order"
          column="ORDER"
          jdbc-type="INTEGER"
       />
       <field-descriptor id="4"
-         name="keySite
+         name="keySite"
          column="KEY_SITE"
          jdbc-type="INTEGER"
       />
@@ -208,7 +208,7 @@
 <class-descriptor class="Dominio.Curriculum"
                   table="CURRICULUM">
     <field-descriptor id="1"
-        name="INTERNAL_CODE"
+        name="internalCode"
         column="ID_INTERNAL"
         jdbc-type="INTEGER"
         primarykey="true"
