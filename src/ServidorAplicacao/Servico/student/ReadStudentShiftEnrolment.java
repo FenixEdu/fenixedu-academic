@@ -1,5 +1,5 @@
 /**
- * Project Sop 
+ * Project Fénix 
  * 
  * Package ServidorAplicacao.Servico.sop
  * 
@@ -40,6 +40,7 @@ import Dominio.TurmaTurno;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.utils.ClassesComparatorByNumberOfCourses;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaTurnoPersistente;
@@ -61,7 +62,8 @@ public class ReadStudentShiftEnrolment implements IServico {
 	 * <code>_service</code> is the instance of the service
 	 *
 	 */
-	private static ReadStudentShiftEnrolment _service = new ReadStudentShiftEnrolment();
+	private static ReadStudentShiftEnrolment _service =
+		new ReadStudentShiftEnrolment();
 
 	/**
 	 * Creates a new <code>ReadStudentShiftEnrolment</code>.
@@ -95,14 +97,19 @@ public class ReadStudentShiftEnrolment implements IServico {
 	 * @exception FenixServiceException if an error occurs
 	 * @exception ExcepcaoPersistencia if an error occurs
 	 */
-	public InfoShiftStudentEnrolment run(InfoShiftStudentEnrolment infoShiftStudentEnrolment) throws FenixServiceException, ExcepcaoPersistencia {
+	public InfoShiftStudentEnrolment run(InfoShiftStudentEnrolment infoShiftStudentEnrolment)
+		throws FenixServiceException, ExcepcaoPersistencia {
 		if (infoShiftStudentEnrolment == null) {
 			throw new IllegalArgumentException("InfoShiftStudentEnrolment must be not null!");
 		}
 
 		IStudent student = new Student();
 		IPessoa person = new Pessoa();
-		person.setUsername(infoShiftStudentEnrolment.getInfoStudent().getInfoPerson().getUsername());
+		person.setUsername(
+			infoShiftStudentEnrolment
+				.getInfoStudent()
+				.getInfoPerson()
+				.getUsername());
 		student.setPerson(person);
 
 		//Get the OJB Persistent Support singleton
@@ -110,17 +117,24 @@ public class ReadStudentShiftEnrolment implements IServico {
 
 		//TODO: (tdi-dev) -> edgar.goncalves - ask if the null in the
 		//ServiceManager call is important...
-		List courses = (List) ReadDisciplinesByStudent.getService().run(infoShiftStudentEnrolment.getInfoStudent().getNumber(), infoShiftStudentEnrolment.getInfoStudent().getDegreeType());
+		List courses =
+			(List) ReadDisciplinesByStudent.getService().run(
+				infoShiftStudentEnrolment.getInfoStudent().getNumber(),
+				infoShiftStudentEnrolment.getInfoStudent().getDegreeType());
 
 		//*********************************************************************
 		//Get the classes to wich the student is entitled to be in, 
 		//  in the current execution year:
-		List studentAllowedClasses = getStudentsAllowedClasses(student, sp, courses);
+		List studentAllowedClasses =
+			getStudentsAllowedClasses(student, sp, courses);
 
 		//Copy these Classes (ITurma objects) to the action
 		ClassTransformer classTransformer = new ClassTransformer();
 
-		List allowedClasses = (List) CollectionUtils.collect(studentAllowedClasses, classTransformer);
+		List allowedClasses =
+			(List) CollectionUtils.collect(
+				studentAllowedClasses,
+				classTransformer);
 
 		// And the result is: shifts with vacancies, of the courses the student is enrolled with
 		infoShiftStudentEnrolment.setAllowedClasses(allowedClasses);
@@ -136,12 +150,17 @@ public class ReadStudentShiftEnrolment implements IServico {
 
 		shiftStudentExample.setStudent(student);
 		List infoShiftStudentEnrolmentTmp;
-		infoShiftStudentEnrolmentTmp = shiftStudentDAO.readByCriteria(shiftStudentExample);
+		infoShiftStudentEnrolmentTmp =
+			shiftStudentDAO.readByCriteria(shiftStudentExample);
 
 		//Copy the Shifts (ITurno objects) associated with the course in which 
 		// the student is enrolled to InfoShifts
-		ShiftStudentTransformer shiftStudentTransformer = new ShiftStudentTransformer();
-		List infoShiftEnrolment = (List) CollectionUtils.collect(infoShiftStudentEnrolmentTmp, shiftStudentTransformer);
+		ShiftStudentTransformer shiftStudentTransformer =
+			new ShiftStudentTransformer();
+		List infoShiftEnrolment =
+			(List) CollectionUtils.collect(
+				infoShiftStudentEnrolmentTmp,
+				shiftStudentTransformer);
 
 		// And the result is: shifts with vacancies, of the courses the student is enrolled with
 		infoShiftStudentEnrolment.setCurrentEnrolment(infoShiftEnrolment);
@@ -170,7 +189,8 @@ public class ReadStudentShiftEnrolment implements IServico {
 
 		//Copy the Shifts associated with the course in which the student is enrolled
 		ShiftTransformer shiftTransformer = new ShiftTransformer();
-		List infoShiftEnrolmentTmp = (List) CollectionUtils.collect(currentEnrolment, shiftTransformer);
+		List infoShiftEnrolmentTmp =
+			(List) CollectionUtils.collect(currentEnrolment, shiftTransformer);
 
 		//Remove the full shifts and the shifts that aren't theo. or prat.  
 		List availableShifts = new ArrayList();
@@ -179,14 +199,20 @@ public class ReadStudentShiftEnrolment implements IServico {
 				InfoShift shift = (InfoShift) arg0;
 				return (
 					shift.getAvailabilityFinal().intValue() > 0
-						&& (shift.getTipo().getTipo().intValue() == TipoAula.TEORICA
-							|| shift.getTipo().getTipo().intValue() == TipoAula.TEORICO_PRATICA
-							|| shift.getTipo().getTipo().intValue() == TipoAula.PRATICA));
+						&& (shift.getTipo().getTipo().intValue()
+							== TipoAula.TEORICA
+							|| shift.getTipo().getTipo().intValue()
+								== TipoAula.TEORICO_PRATICA
+							|| shift.getTipo().getTipo().intValue()
+								== TipoAula.PRATICA));
 			}
 		}, availableShifts);
 
 		// Remove the shifts in which the student is already enrolled
-		List infoAvailableShifts = (List) CollectionUtils.subtract(availableShifts, infoShiftStudentEnrolment.getCurrentEnrolment());
+		List infoAvailableShifts =
+			(List) CollectionUtils.subtract(
+				availableShifts,
+				infoShiftStudentEnrolment.getCurrentEnrolment());
 
 		//Get the classes for each shift that is in  infoAvailableShifts,
 		// using the list currentEnrollment to search in OJB
@@ -196,22 +222,40 @@ public class ReadStudentShiftEnrolment implements IServico {
 
 			//Get the appropriate OJB Shift from the currentEnrolment,
 			// and get the classes associated to that shift
-			List classList = getClassesAssociatedWithShift(thisInfoShift, currentEnrolment, sp);
+			List classList =
+				getClassesAssociatedWithShift(
+					thisInfoShift,
+					currentEnrolment,
+					sp);
 
-			if (theClassIsAllowed(classList, infoShiftStudentEnrolment.getAllowedClasses())) {
+			if (theClassIsAllowed(classList,
+				infoShiftStudentEnrolment.getAllowedClasses())) {
 				//the shift is OK to proceed:
 				//Replace the arrayList element with an array
 				//[InfoShift, ArrayListWithAssociatedClasses]  
 				//	Object obj[] = new Object[2];
 				//	obj[0] = (Object) thisInfoShift;
 				//	obj[1] = (Object) classList;	
-				InfoShiftWithAssociatedInfoClassesAndInfoLessons composedShift = new InfoShiftWithAssociatedInfoClassesAndInfoLessons();
+				InfoShiftWithAssociatedInfoClassesAndInfoLessons composedShift =
+					new InfoShiftWithAssociatedInfoClassesAndInfoLessons();
 
-				composedShift.setInfoClasses((List) CollectionUtils.intersection(allowedClasses, classList));
+				composedShift.setInfoClasses(
+					(List) CollectionUtils.intersection(
+						allowedClasses,
+						classList));
 				composedShift.setInfoShift(thisInfoShift);
-				composedShift.setInfoLessons(sp.getITurnoAulaPersistente().readByShift((ITurno) (sp.getITurnoPersistente().readByOId(Cloner.copyInfoShift2IShift(thisInfoShift), false))));
+				composedShift.setInfoLessons(
+					sp.getITurnoAulaPersistente().readByShift(
+						(ITurno) (sp
+							.getITurnoPersistente()
+							.readByOId(
+								Cloner.copyInfoShift2IShift(thisInfoShift),
+								false))));
 				//Copy the Shifts associated with the course in which the student is enrolled
-				composedShift.setInfoLessons((List) CollectionUtils.collect(composedShift.getInfoLessons(), new LessonTransformer()));
+				composedShift.setInfoLessons(
+					(List) CollectionUtils.collect(
+						composedShift.getInfoLessons(),
+						new LessonTransformer()));
 
 				infoAvailableShiftsFiltered.add(composedShift);
 			}
@@ -219,7 +263,8 @@ public class ReadStudentShiftEnrolment implements IServico {
 		}
 
 		//Shifts with vacancies of the courses the student is enrolled with 
-		infoShiftStudentEnrolment.setAvailableShift(infoAvailableShiftsFiltered);
+		infoShiftStudentEnrolment.setAvailableShift(
+			infoAvailableShiftsFiltered);
 
 		return infoShiftStudentEnrolment;
 	}
@@ -232,7 +277,11 @@ public class ReadStudentShiftEnrolment implements IServico {
 	 * @return list of classes (ITurma) with the allowed classes for the student
 	 * @exception ExcepcaoPersistencia
 	 */
-	private List getStudentsAllowedClasses(IStudent student, ISuportePersistente sp, List courses) throws ExcepcaoPersistencia {
+	private List getStudentsAllowedClasses(
+		IStudent student,
+		ISuportePersistente sp,
+		List courses)
+		throws ExcepcaoPersistencia {
 
 		ITurno shiftExample = new Turno();
 		IDisciplinaExecucao executionCourseExample = new DisciplinaExecucao();
@@ -248,13 +297,49 @@ public class ReadStudentShiftEnrolment implements IServico {
 		//classShiftExample.setTurma(classExample);
 		classShiftExample.setTurno(shiftExample);
 
-		List classShifts = sp.getITurmaTurnoPersistente().readByCriteria(classShiftExample);
+		List classShifts =
+			sp.getITurmaTurnoPersistente().readByCriteria(classShiftExample);
 
 		classShifts = removeFullShiftsFromListOfClassShifts(classShifts);
 
-		List classes = sortClassesByNumberOfCoursesSatisfied(classShifts, courses);
+		List executionCourses = new ArrayList();
+		Iterator iter = courses.iterator();
+		while (iter.hasNext()) {
+			executionCourses.add(
+				Cloner.copyInfoExecutionCourse2ExecutionCourse(
+					(InfoExecutionCourse) iter.next()));
+		}
+
+		Comparator classesComparator =
+			new ClassesComparatorByNumberOfCourses(executionCourses);
+		List classes = getClassesFromShifts(classShifts);
+
+		Collections.sort(classes, classesComparator);
+
+		//		List classes =
+		//			sortClassesByNumberOfCoursesSatisfied(classShifts, courses);
 
 		return getDistinctClassesFromListOfClasses(classes);
+
+	}
+
+	/**
+	 * @param classShifts
+	 * @return
+	 */
+	private List getClassesFromShifts(List classShifts) {
+		if (classShifts == null) {
+			return new ArrayList();
+		} else {
+			Iterator iter = classShifts.iterator();
+			List classes = new ArrayList();
+			while (iter.hasNext()) {
+				ITurmaTurno classShift = (ITurmaTurno) iter.next();
+				classes.add(classShift.getTurma());
+			}
+			return classes;
+		}
+
 	}
 
 	/**
@@ -316,7 +401,10 @@ public class ReadStudentShiftEnrolment implements IServico {
 			Iterator iterator2 = list2.iterator();
 			while (iterator2.hasNext()) {
 				InfoClass element = (InfoClass) iterator2.next();
-				if ((element.getNome().equals(thisClass.getNome())) && (element.getInfoExecutionDegree().equals(thisClass.getInfoExecutionDegree()))) {
+				if ((element.getNome().equals(thisClass.getNome()))
+					&& (element
+						.getInfoExecutionDegree()
+						.equals(thisClass.getInfoExecutionDegree()))) {
 					return true;
 				}
 			}
@@ -329,7 +417,10 @@ public class ReadStudentShiftEnrolment implements IServico {
 	 * @param currentEnrolment - list of shifts (ITurno)
 	 * @return
 	 */
-	private List getClassesAssociatedWithShift(InfoShift thisInfoShift, List currentEnrolment, ISuportePersistente sp) {
+	private List getClassesAssociatedWithShift(
+		InfoShift thisInfoShift,
+		List currentEnrolment,
+		ISuportePersistente sp) {
 		ITurmaTurnoPersistente shiftClassDAO = sp.getITurmaTurnoPersistente();
 		Iterator iter = currentEnrolment.iterator();
 		ITurno shift = null;
@@ -350,8 +441,11 @@ public class ReadStudentShiftEnrolment implements IServico {
 			}
 
 			//Return a list of InfoClass objects
-			ShiftClassTransformer shiftClassTransformer = new ShiftClassTransformer();
-			return (List) CollectionUtils.collect(classes, shiftClassTransformer);
+			ShiftClassTransformer shiftClassTransformer =
+				new ShiftClassTransformer();
+			return (List) CollectionUtils.collect(
+				classes,
+				shiftClassTransformer);
 		}
 		return null;
 	}
@@ -362,7 +456,9 @@ public class ReadStudentShiftEnrolment implements IServico {
 	 * @param classShifts a <code>List</code> value
 	 * @return a <code>List</code> with the sorted classes.
 	 */
-	private List sortClassesByNumberOfCoursesSatisfied(List classShifts, List courses) {
+	private List sortClassesByNumberOfCoursesSatisfied(
+		List classShifts,
+		List courses) {
 
 		List stats = new ArrayList();
 
@@ -370,23 +466,34 @@ public class ReadStudentShiftEnrolment implements IServico {
 		while (iter.hasNext()) {
 			ITurmaTurno classShift = (ITurmaTurno) iter.next();
 			for (int i = 0; i < stats.size(); i++) {
-				if (((Object[]) stats.get(i))[0].equals(classShift.getTurma())) {
+				if (((Object[]) stats.get(i))[0]
+					.equals(classShift.getTurma())) {
 					//Found the class
-					for (int j = 0; j < ((ArrayList) ((Object[]) stats.get(i))[1]).size(); j++) {
+					for (int j = 0;
+						j < ((ArrayList) ((Object[]) stats.get(i))[1]).size();
+						j++) {
 
-						if (((ArrayList) ((Object[]) stats.get(i))[1]).get(j).equals(classShift.getTurno().getDisciplinaExecucao())) {
+						if (((ArrayList) ((Object[]) stats.get(i))[1])
+							.get(j)
+							.equals(
+								classShift
+									.getTurno()
+									.getDisciplinaExecucao())) {
 
 							//Found the course, already there
 							break;
 						}
 					} // end of for (int  = 0;  < ; ++)
 					//Course not there, yet, adding it...
-					 ((ArrayList) (((Object[]) stats.get(i))[1])).add(classShift.getTurno().getDisciplinaExecucao());
+					((ArrayList) (((Object[]) stats.get(i))[1])).add(
+						classShift.getTurno().getDisciplinaExecucao());
 				}
 			} // end of for (int  = 0;  < ; ++)      
 			//Class not there, yet, add it with the course
-			Object[] obj = new Object[] { classShift.getTurma(), new ArrayList()};
-			((ArrayList) obj[1]).add(classShift.getTurno().getDisciplinaExecucao());
+			Object[] obj =
+				new Object[] { classShift.getTurma(), new ArrayList()};
+			((ArrayList) obj[1]).add(
+				classShift.getTurno().getDisciplinaExecucao());
 			stats.add(obj);
 
 		} // end of while ()
@@ -395,7 +502,14 @@ public class ReadStudentShiftEnrolment implements IServico {
 		// { ITurma class, ArrayList (IDisciplinaExecucao course) }
 
 		for (int i = 0; i < stats.size(); i++) {
-			((Object[]) stats.get(i))[1] = new Integer(CollectionUtils.intersection((Collection) ((ArrayList) ((Object[]) (stats.get(i)))[1]), (Collection) courses).size());
+			((Object[]) stats.get(i))[1] =
+				new Integer(
+					CollectionUtils
+						.intersection(
+							(Collection)
+								((ArrayList) ((Object[]) (stats.get(i)))[1]),
+							(Collection) courses)
+						.size());
 
 		} // end of for (int  = 0;  < ; ++)
 
@@ -430,7 +544,8 @@ public class ReadStudentShiftEnrolment implements IServico {
 		 * @return an <code>int</code> value
 		 */
 		public int compare(Object object1, Object object2) {
-			return ((Integer) ((Object[]) object2)[1]).intValue() - ((Integer) ((Object[]) object1)[1]).intValue();
+			return ((Integer) ((Object[]) object2)[1]).intValue()
+				- ((Integer) ((Object[]) object1)[1]).intValue();
 		}
 
 	}
@@ -501,8 +616,11 @@ public class ReadStudentShiftEnrolment implements IServico {
 		public Object transform(Object arg0) {
 			ITurnoAluno shiftStudent = (ITurnoAluno) arg0;
 			InfoShift shift = new InfoShift();
-			shift.setAvailabilityFinal(shiftStudent.getShift().getAvailabilityFinal());
-			InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(shiftStudent.getShift().getDisciplinaExecucao());
+			shift.setAvailabilityFinal(
+				shiftStudent.getShift().getAvailabilityFinal());
+			InfoExecutionCourse infoExecutionCourse =
+				Cloner.copyIExecutionCourse2InfoExecutionCourse(
+					shiftStudent.getShift().getDisciplinaExecucao());
 			shift.setInfoDisciplinaExecucao(infoExecutionCourse);
 
 			shift.setLotacao(shiftStudent.getShift().getLotacao());
