@@ -8,16 +8,17 @@
 
 <logic:present name="<%= SessionConstants.INFO_SITES_LIST %>" scope="session">
 	<h3><bean:message key="label.professorships" />	</h3>
-		<table cellpadding="0" border="0">
+		<table width="100%" cellpadding="0" border="0">
 	 	
 	<% int index = 0; %>	 
 
 	<logic:iterate name="<%= SessionConstants.INFO_SITES_LIST %>" id="site" >
 		<tr>
 		<bean:define id="executionCourse" name="site" property="infoExecutionCourse"/>
-		<html:link page="/viewSite.do" indexId="index" indexed="true">			
-			<bean:write name="executionCourse" property="sigla"/>
-		</html:link>	
+				<td><html:link page="/viewSite.do" indexId="index" indexed="true"><bean:write name="executionCourse" property="sigla"/></html:link></td>			
+		<td><html:link page="/viewSite.do" indexId="index" indexed="true"><bean:write name="executionCourse" property="nome"/></html:link></td>
+	
+		
 		</tr>
 	 <% index++; %>	
 	</logic:iterate>

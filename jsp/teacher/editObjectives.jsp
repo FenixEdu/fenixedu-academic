@@ -6,5 +6,5 @@
   <tiles:put name="executionCourseName" beanName="<%=SessionConstants.INFO_SITE %>" beanProperty="infoExecutionCourse.nome" />
   <tiles:put name="body" value="/teacher/editObjectives_bd.jsp" />
   <tiles:put name="navLocal" value="/teacher/navbar.jsp" type="page"/>
- 
+  <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
 </tiles:insert>
