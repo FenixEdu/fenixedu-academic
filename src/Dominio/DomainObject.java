@@ -4,8 +4,6 @@
  */
 package Dominio;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author jpvl
@@ -40,13 +38,4 @@ abstract public class DomainObject implements IDomainObject {
 			return super.hashCode();
 		}
 	}
-
-	/* (non-Javadoc)
-	 * @see Dominio.IDomainObject#getUniqueProperties()
-	 * FIXME this should not be here
-	 */
-	public List getUniqueProperties() {
-		return new ArrayList();
-	}
-
 }

@@ -63,23 +63,23 @@ public class WriteCreditsTeacher implements IServico {
 			
 			if (tfcStudentNumber == null || tfcStudentNumber.intValue() == 0) {
 				//delete credits because is zero
-				creditsTeacher =
-					(ICredits) creditsTeacherDAO.readByUnique(
-						creditsTeacher,
-						false);
-				if (creditsTeacher != null) {
-					creditsTeacherDAO.delete(creditsTeacher);
-				}
+//				creditsTeacher =
+//					(ICredits) creditsTeacherDAO.readByUnique(
+//						creditsTeacher,
+//						false);
+//				if (creditsTeacher != null) {
+//					creditsTeacherDAO.delete(creditsTeacher);
+//				}
 			} else {
-				ICredits creditsTeacherReaded =
-					(ICredits) creditsTeacherDAO.readByUnique(
-						creditsTeacher,
-						true);
-				if (creditsTeacherReaded == null) {
-					creditsTeacherDAO.simpleLockWrite(creditsTeacher);
-				} else
-					creditsTeacher = creditsTeacherReaded;
-
+////				ICredits creditsTeacherReaded =
+////					(ICredits) creditsTeacherDAO.readByUnique(
+////						creditsTeacher,
+////						true);
+//				if (creditsTeacherReaded == null) {
+//					creditsTeacherDAO.simpleLockWrite(creditsTeacher);
+//				} else
+//					creditsTeacher = creditsTeacherReaded;
+//
 			}
 			creditsTeacher.setTfcStudentsNumber(tfcStudentNumber);
 			creditsTeacher.setAdditionalCredits(infoCredits.getAdditionalCredits());
