@@ -3,6 +3,9 @@ package ServidorAplicacao.Servicos.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import DataBeans.ISiteComponent;
 import DataBeans.InfoExam;
 import DataBeans.InfoSiteTeacherStudentsEnrolledList;
@@ -11,11 +14,13 @@ import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.Exam;
 import Dominio.IExam;
+import Dominio.IExamStudentRoom;
 import Dominio.IStudent;
 import Dominio.Student;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
+import ServidorPersistente.IPersistentExamStudentRoom;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -72,6 +77,7 @@ public class ReadStudentsEnrolledInExamTest extends TestCaseReadServices {
 		SiteView siteView = new SiteView();
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentExamStudentRoom examStudentRoomDAO = sp.getIPersistentExamStudentRoom();
 			sp.iniciarTransaccao();
 			IStudent student = new Student(new Integer(3));
 			student = (IStudent) sp.getIPersistentStudent().readByOId(student, false);
@@ -82,7 +88,17 @@ public class ReadStudentsEnrolledInExamTest extends TestCaseReadServices {
 			IPersistentExam persistentExam = sp.getIPersistentExam();
 			exam = (IExam) persistentExam.readByOId(exam, false);
 			InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
-			component = new InfoSiteTeacherStudentsEnrolledList(infoStudents,infoExam);
+			
+			
+			List examStudentRoomList = examStudentRoomDAO.readBy(exam);
+			List infoExamStudentRoomList = (List) CollectionUtils.collect(examStudentRoomList, new Transformer() {
+
+				public Object transform(Object input) {
+					IExamStudentRoom examStudentRoom = (IExamStudentRoom) input;
+					return Cloner.copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);
+				}}  );   
+			
+			component = new InfoSiteTeacherStudentsEnrolledList(infoStudents,infoExam, infoExamStudentRoomList);
 			siteView.setComponent(component);
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
