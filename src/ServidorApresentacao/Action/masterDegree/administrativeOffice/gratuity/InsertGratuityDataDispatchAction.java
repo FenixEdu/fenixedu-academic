@@ -38,6 +38,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.Data;
 import Util.Specialization;
+import Util.TipoCurso;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -116,14 +117,14 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
 		infoExecutionYear.setYear(executionYear);
 
-		Object args[] = { infoExecutionYear };
+		Object args[] = { infoExecutionYear, TipoCurso.MESTRADO_OBJ };
 		List executionDegreeList = null;
 		try
 		{
 			executionDegreeList =
 				(List) ServiceManagerServiceFactory.executeService(
 					userView,
-					"ReadExecutionDegreesByExecutionYear",
+					"ReadExecutionDegreesByExecutionYearAndDegreeType",
 					args);
 		}
 		catch (FenixServiceException e)
@@ -206,7 +207,6 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException
 	{
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaValidatorForm gratuityForm = (DynaValidatorForm) form;

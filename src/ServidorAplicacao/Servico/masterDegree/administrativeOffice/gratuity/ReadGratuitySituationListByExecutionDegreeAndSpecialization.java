@@ -5,6 +5,7 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -62,7 +63,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 			throw new FenixServiceException("error.masterDegree.gatuyiuty.impossible.studentsGratuityList");
 		}
 
-		List infoGratuitySituationList = null;
+		HashMap result = null;
 		ISuportePersistente sp = null;
 		try
 		{
@@ -103,7 +104,13 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 			if (gratuitySituationList != null && gratuitySituationList.size() > 0)
 			{
 				ListIterator listIterator = gratuitySituationList.listIterator();
-				infoGratuitySituationList = new ArrayList();
+				List infoGratuitySituationList = new ArrayList();
+				double totalPayedValue = 0;
+				double totalRemaingValue = 0;
+				
+				
+				//while it is cloner each element of the list
+				//it is calculate the total values of payed and remaning values.
 				while (listIterator.hasNext())
 				{
 					IGratuitySituation gratuitySituation = (IGratuitySituation) listIterator.next();
@@ -112,16 +119,27 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 						Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
 
 					infoGratuitySituationList.add(infoGratuitySituation);
+					
+					
+					
+					totalPayedValue =totalPayedValue +infoGratuitySituation.getPayedValue().doubleValue();
+					totalRemaingValue =totalRemaingValue + infoGratuitySituation.getRemainingValue().doubleValue();
 				}
+				
+				//build the result that is a hash map with a list, total payed and remaining value
+				result = new HashMap();
+				result.put(new Integer(0), infoGratuitySituationList);
+				result.put(new Integer(1), new Double(totalPayedValue));
+				result.put(new Integer(2), new Double(totalRemaingValue));
 			}			
 		}
 		catch (ExcepcaoPersistencia e)
 		{
 			e.printStackTrace();
 
-			throw new FenixServiceException();
+			throw new FenixServiceException("error.masterDegree.gatuyiuty.impossible.studentsGratuityList");
 		}
 
-		return infoGratuitySituationList;
+		return result;
 	}
 }
