@@ -38,22 +38,9 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 
 		super.setUp();
 
-		//		defines struts config file to use
+	    //defines struts config file to use
 		setServletConfigFile(getServletConfigFile());
 		setAuthorizedUser();
-//		this.gestor = GestorServicos.manager();
-//		String argsAutenticacao[] = { "user", "pass" };
-//		try {
-//			this.userView =
-//				(IUserView) this.gestor.executar(
-//					null,
-//					"Autenticacao",
-//					argsAutenticacao);
-//			getSession().setAttribute(SessionConstants.U_VIEW, userView);
-//		} catch (Exception ex) {
-//			System.out.println("Autenticacao nao executada: " + ex);
-//			fail("Setting up!");
-//		}
 	}
 
 	protected void tearDown() {
@@ -361,6 +348,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	protected String[] getActionErrors() {
 		return null;
 	}
+
 	public void setNotAuthorizedUser() {
 		UserView userView = new UserView("user", null);
 		Collection roles = new ArrayList();
