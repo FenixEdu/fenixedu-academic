@@ -77,9 +77,8 @@ public class ReadStudentsWithoutGroup implements IService {
 			if (studentGroupNumber > nextGroupNumber) {
 				nextGroupNumber = studentGroupNumber;
 			}
-			
 		}
-		final Integer groupNumber = new Integer(nextGroupNumber);
+		final Integer groupNumber = new Integer(nextGroupNumber + 1);
 		
 //		 if (allStudentsGroups.size() != 0) {
 //		 Collections.max() sort(allStudentsGroups, new
