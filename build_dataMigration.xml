@@ -1006,5 +1006,21 @@
 	  	</exec>
 	</target>
 
-	
+
+    <target name="create-MWCurricularCourseOutsideStudentDegree-table">
+        <sql driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+			 <include name="middleware/createMWCurricularCourseOutsideStudentDegreeTable.sql" />
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
 </project>
