@@ -17,7 +17,6 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author Ivo Brandão
@@ -28,10 +27,11 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-			SessionUtils.validSessionVerification(request, mapping);
+			
 			HttpSession session = request.getSession(false);
 			
 			session.removeAttribute("insertAnnouncementForm");
+			
 			return mapping.findForward("insertAnnouncement");
 	}
 
@@ -39,7 +39,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 
 		DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
@@ -61,7 +61,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-			SessionUtils.validSessionVerification(request, mapping);
+			
 			HttpSession session = request.getSession(false);
 
 			//retrieve announcement
@@ -79,7 +79,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-			SessionUtils.validSessionVerification(request, mapping);
+			
 			HttpSession session = request.getSession(false);
 
 			DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
@@ -96,7 +96,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 
 			//remove index from session
 			session.removeAttribute("index");
-
+		
 			//return to announcementManagement
 			return mapping.findForward("accessAnnouncementManagement");
 	}
@@ -109,7 +109,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 			 * session: Site, Announcement; 
 			 * action: delete Announcement.
 			 */
-			SessionUtils.validSessionVerification(request, mapping);
+			
 			HttpSession session = request.getSession(false);
 
 			InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
@@ -135,9 +135,6 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 	public ActionForward showAnnouncements(
 		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-
-			List announcements = (List) request.getSession().getAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
-
 			//return to announcementManagement
 			return mapping.findForward("showAnnouncements");
 	}
