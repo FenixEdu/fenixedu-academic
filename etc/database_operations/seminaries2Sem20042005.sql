@@ -13,3 +13,10 @@ insert into SEMINARY_CURRICULARCOURSE (id_internal,seminary_id_internal,curricul
 insert into SEMINARY_CURRICULARCOURSE (id_internal,seminary_id_internal,curricular_course_id_internal,modality_id_internal,ACK_OPT_LOCK) values (97,4,11682,3,1);
 insert into SEMINARY_CURRICULARCOURSE (id_internal,seminary_id_internal,curricular_course_id_internal,modality_id_internal,ACK_OPT_LOCK) values (98,4,11677,3,1);
 insert into SEMINARY_CURRICULARCOURSE (id_internal,seminary_id_internal,curricular_course_id_internal,modality_id_internal,ACK_OPT_LOCK) values (99,4,4924,1,1);
+insert into SEMINARY_CURRICULARCOURSE (id_internal,seminary_id_internal,curricular_course_id_internal,modality_id_internal,ACK_OPT_LOCK) values (2100,4,13961,1,1);
+insert into SEMINARY_CURRICULARCOURSE (id_internal,seminary_id_internal,curricular_course_id_internal,modality_id_internal,ACK_OPT_LOCK) values (2101,4,13962,1,1);
+
+update SEMINARY_CURRICULARCOURSE set curricular_course_id_internal=12244 where curricular_course_id_internal=12249;
+update SEMINARY_CURRICULARCOURSE set curricular_course_id_internal=12972 where curricular_course_id_internal=12255;
+update SEMINARY_CURRICULARCOURSE set curricular_course_id_internal=12606 where curricular_course_id_internal=12256;
+update SEMINARY_CURRICULARCOURSE set curricular_course_id_internal=12544 where curricular_course_id_internal=12244;

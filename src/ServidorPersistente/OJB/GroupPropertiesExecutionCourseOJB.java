@@ -104,7 +104,7 @@ public class GroupPropertiesExecutionCourseOJB extends ObjectFenixOJB
     }
 
 
-    public List readByExecutionCourseId(Integer id) throws ExcepcaoPersistencia
+    public List readAllByExecutionCourseId(Integer id) throws ExcepcaoPersistencia
     {
 
         Criteria criteria = new Criteria();
@@ -113,5 +113,4 @@ public class GroupPropertiesExecutionCourseOJB extends ObjectFenixOJB
 
         return queryList(GroupPropertiesExecutionCourse.class, criteria);
     }
-    
 }

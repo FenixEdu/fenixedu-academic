@@ -32,9 +32,9 @@ public interface IPersistentGroupPropertiesExecutionCourse extends IPersistentOb
 
 	public List readAllByExecutionCourse(IExecutionCourse executionCourse) 
 		throws ExcepcaoPersistencia;
-
+    
 	public List readByGroupPropertiesId(Integer id) throws ExcepcaoPersistencia;
 
-	public List readByExecutionCourseId(Integer id) throws ExcepcaoPersistencia;
+	public List readAllByExecutionCourseId(Integer id) throws ExcepcaoPersistencia;
 		
 }
