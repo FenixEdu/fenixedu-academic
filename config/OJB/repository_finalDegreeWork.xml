@@ -1,5 +1,5 @@
 <class-descriptor
-   	  class="Dominio.finalCourseWork.Proposal"
+   	  class="Dominio.finalDegreeWork.Proposal"
    	  table="FINAL_DEGREE_WORK_PROPOSAL"
    >
       <field-descriptor
