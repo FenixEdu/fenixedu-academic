@@ -11,4 +11,5 @@
 <ul>
 	<li><html:link page="/studentTimeTable.do" target="_blank" >O Meu Horário</html:link></li>
   	<li><html:link page="/viewCurriculum.do?method=getStudentCP" ><bean:message key="link.student.curriculum"/></html:link></li>
+  	<%--<li><html:link page="/viewEnroledExecutionCourses.do" ><bean:message key="link.groups" /></html:link></li>--%>
 </ul>
