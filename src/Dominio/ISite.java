@@ -16,5 +16,6 @@ public interface ISite {
 	public void setInitialSection(ISection section);
 	public String getAlternativeSite();
 	public void setAlternativeSite(String alternativeSite);
-
+	public String getMail();
+	public void setMail(String mail);
 }

@@ -18,6 +18,7 @@ public class InfoSite {
     private String initialSectionName;
     private InfoExecutionCourse infoExecutionCourse;
     private String alternativeSite;
+    private String mail;
     //private List infoAnnouncements;
     
 	/** 
@@ -179,6 +180,21 @@ public class InfoSite {
 	 */
 	public void setAlternativeSite(String alternativeSite) {
 		this.alternativeSite = alternativeSite;
+	}
+
+	/**
+	 * @return String
+	 */
+	public String getMail() {
+		return mail;
+	}
+
+	/**
+	 * Sets the mail.
+	 * @param mail The mail to set
+	 */
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 
 }

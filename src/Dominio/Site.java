@@ -18,6 +18,7 @@ public class Site implements ISite {
 	private ISection initialSection;
 	private Integer keyInitialSection;
 	private String alternativeSite;
+	private String mail;
 //	private List announcements;
 	
 	/** 
@@ -196,5 +197,20 @@ public class Site implements ISite {
 			result += "]";
 			return result;
 		}
+
+	/**
+	 * @return String
+	 */
+	public String getMail() {
+		return mail;
+	}
+
+	/**
+	 * Sets the mail.
+	 * @param mail The mail to set
+	 */
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
 
 }
