@@ -90,4 +90,8 @@ public interface ISuportePersistente {
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
 	public IPersistentDegreeEnrolmentInfo getIPersistentDegreeEnrolmentInfo();
 	public IPersistentChosenCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
+	
+	public IPersistentStudentGroupInfo getIPersistentStudentGroupInfo();
+	
+	
 }

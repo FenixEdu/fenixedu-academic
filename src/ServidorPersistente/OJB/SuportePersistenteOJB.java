@@ -65,6 +65,7 @@ import ServidorPersistente.IPersistentRole;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentStudent;
+import ServidorPersistente.IPersistentStudentGroupInfo;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISalaPersistente;
@@ -425,6 +426,10 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public IPersistentChosenCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse() {
 		return new ChosenCurricularCourseForOptionalCurricularCourseOJB();
+	}
+
+	public IPersistentStudentGroupInfo getIPersistentStudentGroupInfo() {
+		return new StudentGroupInfoOJB();
 	}
 
 }
