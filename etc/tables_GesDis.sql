@@ -100,7 +100,7 @@ create table SITE (
    ID_INTERNAL int(11) unsigned not null auto_increment,   
    KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
    KEY_INITIAL_SECTION int(11),
-   ALTERNATIVE_SITE varchar(50),
+   ALTERNATIVE_SITE varchar(255),
    MAIL varchar(50),
    INITIAL_STATEMENT text,
    INTRODUCTION 	text,
