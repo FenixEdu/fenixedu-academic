@@ -11,13 +11,34 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
+import java.util.Calendar;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.RoomKey;
-import DataBeans.ShiftAndLessonKeys;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import DataBeans.InfoLesson;
+import DataBeans.InfoShift;
+import DataBeans.util.Cloner;
+import Dominio.Aula;
+import Dominio.IAula;
+import Dominio.IDisciplinaExecucao;
+import Dominio.ISala;
+import Dominio.ITurno;
+import Dominio.Turno;
+import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IAulaPersistente;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoPersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.DiaSemana;
+import Util.TipoAula;
 
-public class RemoverAulaServicosTest extends TestCaseServicos {
+public class RemoverAulaServicosTest extends TestCaseServicosWithAuthorization {
+	private InfoLesson infoLesson = null;
+	private InfoShift infoShift = null;
+
+
 	public RemoverAulaServicosTest(java.lang.String testName) {
 		super(testName);
 	}
@@ -40,50 +61,91 @@ public class RemoverAulaServicosTest extends TestCaseServicos {
 		super.tearDown();
 	}
 
+	protected String getNameOfServiceToBeTested() {
+		return "RemoverAula";
+	}
+
+
 	// remove Aula by unauthorized user
-	public void testUnauthorizedRemoveAula() {
-		RoomKey keySala = new RoomKey(_sala1.getNome());
-		Object argsRemoverAula[] = new Object[1];
-		argsRemoverAula[0] =
-			new ShiftAndLessonKeys(
-				_turno1.getNome(),
-				_aula1.getDiaSemana(),
-				_aula1.getInicio(),
-				_aula1.getFim(),
-				keySala);
+	public void testRemoveLessonExisting() {
+		this.ligarSuportePersistente(true);
+		
+		Object argsRemoveLesson[] = {this.infoLesson, this.infoShift} ;
 
 		Object result = null;
 		try {
-			result =
-				_gestor.executar(_userView2, "RemoverAula", argsRemoverAula);
-			fail("testUnauthorizedRemoveAula");
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsRemoveLesson);
+			assertEquals("testRemoverAula",	Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			assertNull("testUnauthorizedRemoveAula", result);
 		}
 	}
 
-	public void testRemoverAula() {
-		RoomKey keySala = new RoomKey(_sala1.getNome());
-		Object argsRemoverAula[] = new Object[1];
-		argsRemoverAula[0] =
-			new ShiftAndLessonKeys(
-				_turno1.getNome(),
-				_aula1.getDiaSemana(),
-				_aula1.getInicio(),
-				_aula1.getFim(),
-				keySala);
+	private void ligarSuportePersistente(boolean existing) {
 
-		Object result = null;
+		ISuportePersistente sp = null;
+
 		try {
-			result =
-				_gestor.executar(_userView, "RemoverAula", argsRemoverAula);
-			assertEquals(
-				"testRemoverAula",
-				Boolean.TRUE.booleanValue(),
-				((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testRemoverAula");
+			sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
+
+			DiaSemana weekDay = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+    
+			Calendar startTime = Calendar.getInstance();
+			startTime.set(Calendar.HOUR_OF_DAY, 8);
+			startTime.set(Calendar.MINUTE, 00);
+			startTime.set(Calendar.SECOND, 00);
+			Calendar endTime = Calendar.getInstance();
+			endTime.set(Calendar.HOUR_OF_DAY, 9);
+			endTime.set(Calendar.MINUTE, 30);
+			endTime.set(Calendar.SECOND, 00);
+
+			ISala room = sp.getISalaPersistente().readByName("Ga1");
+			assertNotNull(room);
+
+			IAula lesson = null;
+			IAulaPersistente persistentLesson = sp.getIAulaPersistente();
+
+			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+			assertNotNull(executionCourse);
+			
+			ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+			ITurno shift = null;
+
+
+			if(existing) {
+				lesson = persistentLesson.readByDiaSemanaAndInicioAndFimAndSala(weekDay, startTime, endTime, room);
+				assertNotNull(lesson);
+				shift = persistentShift.readByNameAndExecutionCourse("turno1", executionCourse);
+				assertNotNull(shift);
+
+			} else {
+				lesson = new Aula();
+				lesson.setDiaSemana(new DiaSemana(DiaSemana.DOMINGO));
+				lesson.setFim(endTime);
+				lesson.setInicio(startTime);
+				lesson.setSala(room);
+				lesson.setTipo(new TipoAula(TipoAula.DUVIDAS));
+				lesson.setDisciplinaExecucao(executionCourse);
+				shift = new Turno("desc", new TipoAula(TipoAula.RESERVA), new Integer(1000), executionCourse);
+
+			}
+			
+			this.infoLesson = Cloner.copyILesson2InfoLesson(lesson);
+			this.infoShift = Cloner.copyShift2InfoShift(shift);
+
+			sp.confirmarTransaccao();
+
+		} catch (ExcepcaoPersistencia excepcao) {
+			try {
+				sp.cancelarTransaccao();
+			} catch (ExcepcaoPersistencia ex) {
+				fail("ligarSuportePersistente: cancelarTransaccao");
+			}
+			fail("ligarSuportePersistente: confirmarTransaccao");
 		}
 	}
+
 
 }

@@ -44,13 +44,13 @@ public class RemoverAula implements IServico {
 
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      ISala sala1 = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
+      ISala room = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
       
 		      
 	  ITurno shift = Cloner.copyInfoShift2Shift(infoShift);		      
   
       sp.getITurnoAulaPersistente().delete(shift, infoLesson.getDiaSemana(),
-                                           infoLesson.getInicio(), infoLesson.getFim(), sala1);
+                                           infoLesson.getInicio(), infoLesson.getFim(), room);
       result = true;
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();
