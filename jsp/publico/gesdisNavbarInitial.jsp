@@ -21,9 +21,9 @@
             <dd><html:link page="<%= "/viewSite.do?method=program" + "&amp;exeCode=" + pageContext.findAttribute("exeCode") + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" + pageContext.findAttribute("eYName") %>">
 				<bean:message key="link.program"/>
 				</html:link></dd>
-            <dd><html:link page="<%= "/viewSite.do?method=evaluation&amp;exeCode=" + pageContext.findAttribute("exeCode") + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" + pageContext.findAttribute("eYName") %>">
+          <%--  <dd><html:link page="<%= "/viewSite.do?method=evaluation&amp;exeCode=" + pageContext.findAttribute("exeCode") + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" + pageContext.findAttribute("eYName") %>">
 				<bean:message key="link.evaluation"/>
-				</html:link></dd>	
+				</html:link></dd>	--%>
             <dd><html:link page="<%= "/viewSite.do?method=bibliography&amp;exeCode=" + pageContext.findAttribute("exeCode") + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" + pageContext.findAttribute("eYName") %>">
 				<bean:message key="link.bibliography"/>
 				</html:link></dd>
