@@ -239,7 +239,7 @@
         scope="request"
         validate="false"
         input="/studentShiftEnrolmentManagerLoockup.do?method=proceedToShiftEnrolment&amp;page=0" >                         
-        <forward name="enrollmentConfirmation" path="enrollment-confirmation"/>
+        <forward name="enrollmentConfirmation" path="studentShiftEnrolmentManager.do?method=chooseCourses"/>
       </action>
       
       <action 
