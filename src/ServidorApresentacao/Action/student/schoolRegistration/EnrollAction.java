@@ -1,5 +1,5 @@
 /*
- * Created on Jul 13, 2004
+ * Created on Jul 20, 2004
  *
  */
 package ServidorApresentacao.Action.student.schoolRegistration;
@@ -19,23 +19,25 @@ import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
+
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class InquiryAction extends FenixAction {
-
+public class EnrollAction extends FenixAction{
+    
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, 
             HttpServletResponse response) throws Exception {
 
         IUserView userView = SessionUtils.getUserView(request);        
 
-        DynaActionForm inquiryForm = (DynaActionForm) form;
-        HashMap answersMap = (HashMap) inquiryForm.get("answersMap");
+        DynaActionForm totalForm = (DynaActionForm) form;
+        HashMap answersMap = (HashMap) totalForm.get("answersMap");
         
         Object args[] = {userView,answersMap};
         ServiceUtils.executeService(userView, "SchoolRegistration", args);
 
         return mapping.findForward("viewQuestions");
     }
+
 }

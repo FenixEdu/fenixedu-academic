@@ -4,11 +4,9 @@
  */
 package ServidorPersistente.OJB;
 
-import java.util.List;
-
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.IStudent;
+import Dominio.student.ISchoolRegistrationInquiryAnswer;
 import Dominio.student.SchoolRegistrationInquiryAnswer;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSchoolRegistrationInquiryAnswer;
@@ -25,11 +23,11 @@ public class SchoolRegistrationInquiryAnswerOJB extends ObjectFenixOJB implement
         super.delete(inquiryAnswer);
     }
 
-    public List readAnswersByStudent(IStudent student) throws ExcepcaoPersistencia {
+    public ISchoolRegistrationInquiryAnswer readAnswersByStudentNumber(Integer studentNumber) throws ExcepcaoPersistencia {
         
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyStudent",student.getIdInternal());
-        return queryList(SchoolRegistrationInquiryAnswer.class,criteria);
+        criteria.addEqualTo("keyStudent",studentNumber);
+        return (ISchoolRegistrationInquiryAnswer)queryObject(SchoolRegistrationInquiryAnswer.class,criteria);
     }
 
 }

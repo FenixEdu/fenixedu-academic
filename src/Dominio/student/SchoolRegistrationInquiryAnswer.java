@@ -15,8 +15,11 @@ public class SchoolRegistrationInquiryAnswer extends DomainObject implements ISc
     private Boolean answer3;
     private Boolean answer4;
     private Boolean answer5;
+    private Boolean answer6;
+    private Boolean answer7;
     private Integer keyStudent;
 
+    
     public Boolean getAnswer1() {
         return this.answer1;
     }
@@ -50,12 +53,37 @@ public class SchoolRegistrationInquiryAnswer extends DomainObject implements ISc
         this.answer5 = answer5;
     }
 
+    public Boolean getAnswer6() {
+        return answer6;
+    }
+    public void setAnswer6(Boolean answer6) {
+        this.answer6 = answer6;
+    }
+    public Boolean getAnswer7() {
+        return answer7;
+    }
+    public void setAnswer7(Boolean answer7) {
+        this.answer7 = answer7;
+    }
+    
     public Integer getKeyStudent() {
         return this.keyStudent;
     }
 
     public void setKeyStudent(Integer keyStudent) {
         this.keyStudent = keyStudent;
+    }
+    
+    public void setAnswer(Integer id, Boolean answer){
+        switch(id.intValue()){
+        	case 1: setAnswer1(answer); break;
+        	case 2: setAnswer2(answer); break;
+        	case 3: setAnswer3(answer); break;
+        	case 4: setAnswer4(answer); break;
+        	case 5: setAnswer5(answer); break;
+        	case 6: setAnswer6(answer); break;
+        	case 7: setAnswer7(answer); break;
+        }        
     }
 
     public String toString() {
@@ -67,6 +95,8 @@ public class SchoolRegistrationInquiryAnswer extends DomainObject implements ISc
         result += " answer3 " + answer3 + "\n ";
         result += " answer4 " + answer4 + "\n ";
         result += " answer5 " + answer5 + "\n ";
+        result += " answer6 " + answer6 + "\n ";
+        result += " answer7 " + answer7 + "\n ";
         return result;
     }
 

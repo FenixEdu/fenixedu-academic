@@ -4,9 +4,7 @@
  */
 package ServidorPersistente;
 
-import java.util.List;
-
-import Dominio.IStudent;
+import Dominio.student.ISchoolRegistrationInquiryAnswer;
 import Dominio.student.SchoolRegistrationInquiryAnswer;
 
 
@@ -18,6 +16,6 @@ public interface IPersistentSchoolRegistrationInquiryAnswer extends IPersistentO
     
     public void delete(SchoolRegistrationInquiryAnswer inquiryAnswer) throws ExcepcaoPersistencia;
 
-    public List readAnswersByStudent(IStudent student) throws ExcepcaoPersistencia;
+    public ISchoolRegistrationInquiryAnswer readAnswersByStudentNumber(Integer studentNumber) throws ExcepcaoPersistencia;
 
 }
