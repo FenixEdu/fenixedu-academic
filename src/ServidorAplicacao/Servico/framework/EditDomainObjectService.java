@@ -14,6 +14,7 @@ import DataBeans.InfoObject;
 import Dominio.IDomainObject;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
@@ -71,7 +72,6 @@ public abstract class EditDomainObjectService implements IServico
         ISuportePersistente sp)
         throws FenixServiceException
     {
-
     }
 
     /**
@@ -111,8 +111,7 @@ public abstract class EditDomainObjectService implements IServico
                     PropertyUtils.setProperty(newDomainObject, entry.getKey().toString(), o);
                 }
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             throw new FenixServiceException(e.getMessage());
         }
@@ -125,10 +124,11 @@ public abstract class EditDomainObjectService implements IServico
     protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
         throws ExcepcaoPersistencia;
 
-    /*
+    /**
 	 * Checks if the internalId of the object is null or 0
 	 * 
-	 * @param domainObject @return
+	 * @param domainObject
+	 * @return
 	 */
     protected boolean isNew(IDomainObject domainObject)
     
@@ -142,7 +142,7 @@ public abstract class EditDomainObjectService implements IServico
 	 * 
 	 * @param domainObject
 	 * @return By default returns null. When there is no unique in domainObject the object that we want
-	 *              to create never exists.
+	 *         to create never exists.
 	 */
     protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
         throws ExcepcaoPersistencia, FenixServiceException
@@ -156,11 +156,11 @@ public abstract class EditDomainObjectService implements IServico
 	 * @param objectId
 	 * @param infoObject
 	 * @return @throws
-	 *              FenixServiceException
+	 *         FenixServiceException
 	 * 
-	 * TODO Throw exceptions and remove objectId from method signature.
+	 * TODO Remove objectId from method signature.
 	 */
-    public Boolean run(Integer objectId, InfoObject infoObject) throws FenixServiceException
+    public void run(Integer objectId, InfoObject infoObject) throws FenixServiceException
     {
         try
         {
@@ -170,34 +170,30 @@ public abstract class EditDomainObjectService implements IServico
 
             IDomainObject objectFromDatabase = readObjectByUnique(objectToEdit, sp);
 
-            if (canCreate(objectToEdit, objectFromDatabase))
+            if (!canCreate(objectToEdit, objectFromDatabase))
             {
-                IDomainObject domainObject = null;
-
-                if (isNew(objectToEdit))
-                {
-                    domainObject = (IDomainObject) objectToEdit.getClass().newInstance();
-                }
-                else
-                {
-                    domainObject = objectFromDatabase == null ? objectToEdit : objectFromDatabase;
-                }
-                doBeforeLock(domainObject, infoObject, sp);
-
-                persistentObject.simpleLockWrite(domainObject);
-                PropertyUtils.copyProperties(domainObject, objectToEdit);
-
-                fillAssociatedObjects(domainObject, persistentObject);
-                doAfterLock(domainObject, infoObject, sp);
-                return Boolean.TRUE;
+                throw new NonExistingServiceException("The object does not exist");
             }
-            return Boolean.FALSE;
-        }
-        catch (ExcepcaoPersistencia e)
+            IDomainObject domainObject = null;
+
+            if (isNew(objectToEdit))
+            {
+                domainObject = (IDomainObject) objectToEdit.getClass().newInstance();
+            } else
+            {
+                domainObject = objectFromDatabase == null ? objectToEdit : objectFromDatabase;
+            }
+            doBeforeLock(domainObject, infoObject, sp);
+
+            persistentObject.simpleLockWrite(domainObject);
+            PropertyUtils.copyProperties(domainObject, objectToEdit);
+
+            fillAssociatedObjects(domainObject, persistentObject);
+            doAfterLock(domainObject, infoObject, sp);
+        } catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             if (e instanceof FenixServiceException)
             {

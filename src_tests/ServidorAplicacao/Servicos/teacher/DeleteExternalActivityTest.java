@@ -12,13 +12,13 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * @author Sergio Montelobo
  *  
  */
-public class DeleteExternalActivityCareerTest extends ServiceNeedsAuthenticationTestCase
+public class DeleteExternalActivityTest extends ServiceNeedsAuthenticationTestCase
 {
 
     /**
 	 *  
 	 */
-    public DeleteExternalActivityCareerTest(String testName)
+    public DeleteExternalActivityTest(String testName)
     {
         super(testName);
     }
@@ -75,12 +75,10 @@ public class DeleteExternalActivityCareerTest extends ServiceNeedsAuthentication
     {
         try
         {
-            Boolean result = null;
             Object[] args = { new Integer(1)};
 
-            result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), args);
-
-            assertTrue(result.booleanValue());
+            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
         } catch (Exception ex)
         {

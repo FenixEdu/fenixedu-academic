@@ -341,9 +341,8 @@ public class CreateGrantContract extends ServidorAplicacao.Servico.framework.Edi
      * Executes the service.
      * 
      */
-    public boolean run(InfoGrantContract infoGrantContract) throws FenixServiceException
+    public void run(InfoGrantContract infoGrantContract) throws FenixServiceException
     {
-        Boolean result = null;
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -378,7 +377,7 @@ public class CreateGrantContract extends ServidorAplicacao.Servico.framework.Edi
             Integer newContractNumber = new Integer(aux);
             infoGrantContract.setContractNumber(newContractNumber);
 
-            result = super.run(new Integer(0), infoGrantContract);
+            super.run(new Integer(0), infoGrantContract);
         } catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
@@ -390,6 +389,5 @@ public class CreateGrantContract extends ServidorAplicacao.Servico.framework.Edi
             }
             throw new FenixServiceException(e);
         }
-        return result.booleanValue();
     }
 }

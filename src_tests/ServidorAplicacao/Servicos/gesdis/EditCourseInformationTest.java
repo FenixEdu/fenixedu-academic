@@ -92,15 +92,11 @@ public class EditCourseInformationTest extends ServiceNeedsAuthenticationTestCas
     {
         try
         {
-            Boolean result = null;
-
-            result =
-                (Boolean) gestor.executar(
+            gestor.executar(
                     userView,
                     getNameOfServiceToBeTested(),
                     getAuthorizeArguments());
 
-            assertTrue(result.booleanValue());
             // verifica as alteracoes da base de dados
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/gesdis/testExpectedEditCourseInformationWithCourseReportDataSet.xml");
         } catch (Exception ex)
@@ -113,8 +109,6 @@ public class EditCourseInformationTest extends ServiceNeedsAuthenticationTestCas
     {
         try
         {
-            Boolean result = null;
-
             String[] args = { "maria", "pass", getApplication()};
             IUserView userView = authenticateUser(args);
 
@@ -135,9 +129,8 @@ public class EditCourseInformationTest extends ServiceNeedsAuthenticationTestCas
 
             Object[] serviceArgs = { null, infoCourseReport };
 
-            result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
-
-            assertTrue(result.booleanValue());
+            gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
+            
             // verifica as alteracoes da base de dados
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/gesdis/testExpectedEditCourseInformationWithoutCourseReportDataSet.xml");
         } catch (Exception ex)

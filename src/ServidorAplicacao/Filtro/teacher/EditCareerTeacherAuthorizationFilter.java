@@ -4,12 +4,14 @@
  */
 package ServidorAplicacao.Filtro.teacher;
 
+import DataBeans.InfoObject;
+import DataBeans.teacher.InfoCareer;
 import Dominio.ITeacher;
 import Dominio.teacher.Career;
 import Dominio.teacher.ICareer;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.Filtro;
-import ServidorAplicacao.Filtro.framework.DomainObjectTeacherAuthorizationFilter;
+import ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -21,10 +23,11 @@ import ServidorPersistente.teacher.IPersistentCareer;
  * @author Sergio Montelobo
  *  
  */
-public class CareerTeacherAuthorizationFilter extends DomainObjectTeacherAuthorizationFilter
+public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectTeacherAuthorizationFilter
 {
 
-    private static CareerTeacherAuthorizationFilter instance = new CareerTeacherAuthorizationFilter();
+    private static EditCareerTeacherAuthorizationFilter instance =
+        new EditCareerTeacherAuthorizationFilter();
 
     /**
 	 * The singleton access method of this class.
@@ -36,26 +39,35 @@ public class CareerTeacherAuthorizationFilter extends DomainObjectTeacherAuthori
         return instance;
     }
 
-    private CareerTeacherAuthorizationFilter()
+    private EditCareerTeacherAuthorizationFilter()
     {
     }
 
     /*
 	 * (non-Javadoc)
 	 * 
-	 * @see ServidorAplicacao.Filtro.framework.DomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
-	 *      java.lang.Integer)
+	 * @see ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
+	 *      DataBeans.InfoObject)
 	 */
-    protected boolean domainObjectBelongsToTeacher(IUserView id, Integer objectId)
+    protected boolean domainObjectBelongsToTeacher(IUserView id, InfoObject infoOject)
     {
         try
         {
+            InfoCareer infoCareer = (InfoCareer) infoOject;
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentCareer persistentCareer = sp.getIPersistentCareer();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            ICareer career = (ICareer) persistentCareer.readByOID(Career.class, objectId);
+
+            boolean isNew =
+                (infoCareer.getIdInternal() == null)
+                    || (infoCareer.getIdInternal().equals(new Integer(0)));
+            if (isNew)
+                return true;
+
+            ICareer career =
+                (ICareer) persistentCareer.readByOID(Career.class, infoCareer.getIdInternal());
 
             if (!career.getTeacher().equals(teacher))
                 return false;

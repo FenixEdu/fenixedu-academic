@@ -118,7 +118,6 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
     {
         try
         {
-            Boolean result = null;
             InfoCareer infoCareer = new InfoProfessionalCareer();
             infoCareer.setBeginYear(new Integer(1995));
             infoCareer.setEndYear(new Integer(1999));
@@ -131,10 +130,9 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
             infoCareer.setInfoTeacher(infoTeacher);
             Object[] args = { null,  infoCareer };
 
-            result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedCreateProfessionalCareerDataSet.xml");
-            assertTrue("Assert false!",result.booleanValue());
         } catch (FenixServiceException ex)
         {
             fail("Creating a new professional career " + ex);
@@ -148,7 +146,6 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
     {
         try
         {
-            Boolean result = null;
             InfoCategory infoCategory = new InfoCategory();
             infoCategory.setIdInternal(new Integer(1));
 
@@ -164,9 +161,8 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
             infoCareer.setInfoTeacher(infoTeacher);
             Object[] args = { null, infoCareer };
 
-            result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
-            assertTrue(result.booleanValue());
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedCreateTeachingCareerDataSet.xml");
         } catch (Exception ex)
         {
@@ -178,7 +174,6 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
     {
         try
         {
-            Boolean result = null;
             Integer careerId = new Integer(1);
             
             InfoCareer infoCareer = new InfoProfessionalCareer();
@@ -194,9 +189,8 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
             infoCareer.setInfoTeacher(infoTeacher);
             Object[] args = { careerId, infoCareer };
 
-            result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), args);
-
-            assertTrue(result.booleanValue());
+            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedEditProfessionalCareerDataSet.xml");
         } catch (Exception ex)
         {
@@ -208,7 +202,6 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
     {
         try
         {
-            Boolean result = null;
             Integer careerId = new Integer(2);
             
             InfoCategory infoCategory = new InfoCategory();
@@ -227,9 +220,8 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
             infoCareer.setInfoTeacher(infoTeacher);
             Object[] args = { careerId, infoCareer };
 
-            result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
-            assertTrue(result.booleanValue());
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedEditTeachingCareerDataSet.xml");
         } catch (Exception ex)
         {

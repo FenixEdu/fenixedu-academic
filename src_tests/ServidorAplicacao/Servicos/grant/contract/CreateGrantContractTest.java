@@ -1,6 +1,6 @@
 /*
  * Created on 17/Nov/2003
- *
+ *  
  */
 
 package ServidorAplicacao.Servicos.grant.contract;
@@ -22,9 +22,9 @@ import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherNotFoun
 import ServidorAplicacao.Servico.exceptions.grant.GrantTypeNotFoundException;
 
 /**
- * @author  Barbosa
- * @author  Pica
- *
+ * @author Barbosa
+ * @author Pica
+ *  
  */
 
 public class CreateGrantContractTest
@@ -32,17 +32,18 @@ public class CreateGrantContractTest
 {
 
     /**
-     * @param testName
-     */
+	 * @param testName
+	 */
     public CreateGrantContractTest(String testName)
     {
         super(testName);
     }
 
     /*
-    *  (non-Javadoc)
-    * @see ServiceNeedsAuthenticationTestCase#getApplication()
-    */
+	 * (non-Javadoc)
+	 * 
+	 * @see ServiceNeedsAuthenticationTestCase#getApplication()
+	 */
     protected String getApplication()
     {
         return Autenticacao.INTRANET;
@@ -64,18 +65,20 @@ public class CreateGrantContractTest
     }
 
     /*
-     *  (non-Javadoc)
-     * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
-     */
+	 * (non-Javadoc)
+	 * 
+	 * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
+	 */
     protected String[] getAuthenticatedAndAuthorizedUser()
     {
         String[] args = { "16", "pass", getApplication()};
         return args;
     }
     /*
-     *  (non-Javadoc)
-     * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
-     */
+	 * (non-Javadoc)
+	 * 
+	 * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
+	 */
     protected String[] getAuthenticatedAndUnauthorizedUser()
     {
         String[] args = { "julia", "pass", getApplication()};
@@ -83,9 +86,10 @@ public class CreateGrantContractTest
     }
 
     /*
-     *  (non-Javadoc)
-     * @see ServiceNeedsAuthenticationTestCase#getNonAuthenticatedUser()
-     */
+	 * (non-Javadoc)
+	 * 
+	 * @see ServiceNeedsAuthenticationTestCase#getNonAuthenticatedUser()
+	 */
     protected String[] getNotAuthenticatedUser()
     {
         String[] args = { "fiado", "pass", getApplication()};
@@ -138,9 +142,10 @@ public class CreateGrantContractTest
     }
 
     /*
-     *  (non-Javadoc)
-     * @see ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
-     */
+	 * (non-Javadoc)
+	 * 
+	 * @see ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
+	 */
     protected Object[] getAuthorizeArguments()
     {
         InfoGrantType grantType = new InfoGrantType();
@@ -169,7 +174,7 @@ public class CreateGrantContractTest
         calendar.getTimeZone();
         responsibleTeacherInfo.setBeginDate(dateBegin);
         orientationTeacherInfo.setBeginDate(dateBegin);
-        
+
         calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2004);
         calendar.set(Calendar.MONTH, Calendar.MAY);
@@ -179,7 +184,7 @@ public class CreateGrantContractTest
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         Date dateEnd = calendar.getTime();
-		calendar.getTimeZone();
+        calendar.getTimeZone();
         responsibleTeacherInfo.setEndDate(dateEnd);
         orientationTeacherInfo.setEndDate(dateEnd);
 
@@ -248,11 +253,11 @@ public class CreateGrantContractTest
         return args2;
     }
 
-    /************  Inicio dos testes ao serviço **************/
+    /** ********** Inicio dos testes ao serviço ************* */
 
     /*
-     * Grant Contract Creation Successfull
-     */
+	 * Grant Contract Creation Successfull
+	 */
     public void testCreateGrantContractSuccessfull()
     {
         try
@@ -261,16 +266,12 @@ public class CreateGrantContractTest
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            Boolean result = (Boolean) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            gestor.executar(id, getNameOfServiceToBeTested(), args2);
 
-            if (result.booleanValue())
-            {
-                compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
-                System.out.println(
-                    getNameOfServiceToBeTested()
-                        + " was SUCCESSFULY runned by test: testCreateGrantContractSuccessfull");
-            } else
-                fail("Creating a new GrantContract ");
+            compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
+            System.out.println(
+                getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantContractSuccessfull");
         } catch (FenixServiceException e)
         {
             fail("Creating a new GrantContract " + e);
@@ -281,8 +282,8 @@ public class CreateGrantContractTest
     }
 
     /*
-     * Grant Contract Edition Successfull
-     */
+	 * Grant Contract Edition Successfull
+	 */
     public void testEditGrantContractSuccessfull()
     {
         try
@@ -291,16 +292,12 @@ public class CreateGrantContractTest
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArgumentsEdit();
 
-            Boolean result = (Boolean) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            gestor.executar(id, getNameOfServiceToBeTested(), args2);
 
-            if (result.booleanValue())
-            {
-                compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/grant/contract/testEditGrantContractExpectedDataSet.xml");
-                System.out.println(
-                    getNameOfServiceToBeTested()
-                        + " was SUCCESSFULY runned by test: testCreateGrantContractSuccessfull");
-            } else
-                fail("Editing a GrantContract successfull ");
+            compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/grant/contract/testEditGrantContractExpectedDataSet.xml");
+            System.out.println(
+                getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantContractSuccessfull");
         } catch (FenixServiceException e)
         {
             fail("Editing a GrantContract successfull " + e);
@@ -341,8 +338,8 @@ public class CreateGrantContractTest
     //    }
 
     /*
-     * Grant Contract Edition Unsuccessfull: unknown grant type
-     */
+	 * Grant Contract Edition Unsuccessfull: unknown grant type
+	 */
     public void testCreateGrantContractUnsuccessfullUnknownType()
     {
         try
@@ -367,8 +364,8 @@ public class CreateGrantContractTest
     }
 
     /*
-     * Grant Contract Creation/Edition Unsuccessfull: unknown (responsible) teacher
-     */
+	 * Grant Contract Creation/Edition Unsuccessfull: unknown (responsible) teacher
+	 */
     public void testCreateGrantContractUnsuccessfullUnknownResponsibleTeacher()
     {
         try
@@ -393,8 +390,8 @@ public class CreateGrantContractTest
     }
 
     /*
-     * Grant Contract Creation/Edition Unsuccessfull: unknown (grant orientation) teacher
-     */
+	 * Grant Contract Creation/Edition Unsuccessfull: unknown (grant orientation) teacher
+	 */
     public void testCreateGrantContractUnsuccessfullUnknownGrantOrientationTeacher()
     {
         try

@@ -4,12 +4,14 @@
  */
 package ServidorAplicacao.Filtro.teacher;
 
+import DataBeans.InfoObject;
+import DataBeans.teacher.InfoExternalActivity;
 import Dominio.ITeacher;
 import Dominio.teacher.ExternalActivity;
 import Dominio.teacher.IExternalActivity;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.Filtro;
-import ServidorAplicacao.Filtro.framework.DomainObjectTeacherAuthorizationFilter;
+import ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -21,11 +23,11 @@ import ServidorPersistente.teacher.IPersistentExternalActivity;
  * @author Sergio Montelobo
  *  
  */
-public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectTeacherAuthorizationFilter
+public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainObjectTeacherAuthorizationFilter
 {
 
-    private static ExternalActivityTeacherAuthorizationFilter instance =
-        new ExternalActivityTeacherAuthorizationFilter();
+    private static EditExternalActivityTeacherAuthorizationFilter instance =
+        new EditExternalActivityTeacherAuthorizationFilter();
 
     /**
 	 * The singleton access method of this class.
@@ -37,34 +39,37 @@ public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectTeac
         return instance;
     }
 
-    private ExternalActivityTeacherAuthorizationFilter()
+    private EditExternalActivityTeacherAuthorizationFilter()
     {
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.framework.DomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
-	 *      java.lang.Integer)
-	 */
-    protected boolean domainObjectBelongsToTeacher(IUserView id, Integer objectId)
+    /* (non-Javadoc)
+     * @see ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView, DataBeans.InfoObject)
+     */
+    protected boolean domainObjectBelongsToTeacher(IUserView id, InfoObject infoOject)
     {
         try
         {
+            InfoExternalActivity infoExternalActivity = (InfoExternalActivity) infoOject;
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+
+            boolean isNew =
+                (infoExternalActivity.getIdInternal() == null)
+                    || (infoExternalActivity.getIdInternal().equals(new Integer(0)));
+            if (isNew)
+                return true;
+
             IExternalActivity externalActivity =
                 (IExternalActivity) persistentExternalActivity.readByOID(
                     ExternalActivity.class,
-                    objectId);
+                    infoExternalActivity.getIdInternal());
 
             if (!externalActivity.getTeacher().equals(teacher))
-            {
                 return false;
-            }
             return true;
         } catch (ExcepcaoPersistencia e)
         {
@@ -76,5 +81,4 @@ public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectTeac
             return false;
         }
     }
-
 }

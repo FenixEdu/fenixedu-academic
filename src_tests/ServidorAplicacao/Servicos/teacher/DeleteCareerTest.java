@@ -71,12 +71,10 @@ public class DeleteCareerTest extends ServiceNeedsAuthenticationTestCase
 
         try
         {
-            Boolean result = null;
             Object[] args = { new Integer(1)};
 
-            result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), args);
-
-            assertTrue(result.booleanValue());
+            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            
             compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedDeleteProfessionalCareerDataSet.xml");
         } catch (Exception ex)
         {
@@ -89,12 +87,10 @@ public class DeleteCareerTest extends ServiceNeedsAuthenticationTestCase
 
         try
         {
-            Boolean result = null;
             Object[] args = { new Integer(2)};
 
-            result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), args);
-
-            assertTrue(result.booleanValue());
+            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            
             compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedDeleteTeachingCareerDataSet.xml");
         } catch (Exception ex)
         {

@@ -111,7 +111,6 @@ public class EditExternalActivityTest extends ServiceNeedsAuthenticationTestCase
     {
         try
         {
-            Boolean result = null;
             InfoExternalActivity infoExternalActivity = new InfoExternalActivity();
             infoExternalActivity.setActivity("viajar");
 
@@ -121,9 +120,8 @@ public class EditExternalActivityTest extends ServiceNeedsAuthenticationTestCase
             infoExternalActivity.setInfoTeacher(infoTeacher);
             Object[] args = { null, infoExternalActivity };
 
-            result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
-            assertTrue(result.booleanValue());
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedCreateExternalActivityDataSet.xml");
         } catch (Exception ex)
         {
@@ -135,7 +133,6 @@ public class EditExternalActivityTest extends ServiceNeedsAuthenticationTestCase
     {
         try
         {
-            Boolean result = null;
             Integer externalActivityId = new Integer(1);
             InfoExternalActivity infoExternalActivity = new InfoExternalActivity();
             infoExternalActivity.setIdInternal(externalActivityId);
@@ -147,9 +144,8 @@ public class EditExternalActivityTest extends ServiceNeedsAuthenticationTestCase
             infoExternalActivity.setInfoTeacher(infoTeacher);
             Object[] args = { externalActivityId, infoExternalActivity };
 
-            result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), args);
-
-            assertTrue(result.booleanValue());
+            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedEditExternalActivityDataSet.xml");
         } catch (Exception ex)
         {

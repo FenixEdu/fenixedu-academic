@@ -1,6 +1,6 @@
 /*
  * Created on 25/Nov/2003
- *
+ *  
  */
 
 package ServidorAplicacao.Servicos.grant.contract;
@@ -9,28 +9,30 @@ import DataBeans.grant.contract.InfoGrantType;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 
 /**
- * @author  Barbosa
- * @author  Pica
- *
+ * @author Barbosa
+ * @author Pica
+ *  
  */
 
 public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase
 {
 
     /**
-     * @param testName
-     */
+	 * @param testName
+	 */
     public CreateGrantTypeTest(String testName)
     {
         super(testName);
     }
 
     /*
-    *  (non-Javadoc)
-    * @see ServiceNeedsAuthenticationTestCase#getApplication()
-    */
+	 * (non-Javadoc)
+	 * 
+	 * @see ServiceNeedsAuthenticationTestCase#getApplication()
+	 */
     protected String getApplication()
     {
         return Autenticacao.INTRANET;
@@ -52,18 +54,20 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
     }
 
     /*
-     *  (non-Javadoc)
-     * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
-     */
+	 * (non-Javadoc)
+	 * 
+	 * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
+	 */
     protected String[] getAuthenticatedAndAuthorizedUser()
     {
         String[] args = { "16", "pass", getApplication()};
         return args;
     }
     /*
-     *  (non-Javadoc)
-     * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
-     */
+	 * (non-Javadoc)
+	 * 
+	 * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
+	 */
     protected String[] getAuthenticatedAndUnauthorizedUser()
     {
         String[] args = { "julia", "pass", getApplication()};
@@ -71,9 +75,10 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
     }
 
     /*
-     *  (non-Javadoc)
-     * @see ServiceNeedsAuthenticationTestCase#getNonAuthenticatedUser()
-     */
+	 * (non-Javadoc)
+	 * 
+	 * @see ServiceNeedsAuthenticationTestCase#getNonAuthenticatedUser()
+	 */
     protected String[] getNotAuthenticatedUser()
     {
         String[] args = { "fiado", "pass", getApplication()};
@@ -81,9 +86,10 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
     }
 
     /*
-     *  (non-Javadoc)
-     * @see ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
-     */
+	 * (non-Javadoc)
+	 * 
+	 * @see ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
+	 */
     protected Object[] getAuthorizeArguments()
     {
         InfoGrantType infoGrantType = new InfoGrantType();
@@ -127,11 +133,11 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
         return args;
     }
 
-    /************  Inicio dos testes ao serviço **************/
+    /** ********** Inicio dos testes ao serviço ************* */
 
     /*
-     * Grant Type Creation Successfull
-     */
+	 * Grant Type Creation Successfull
+	 */
     public void testCreateGrantTypeSuccessfull()
     {
         try
@@ -140,16 +146,11 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            Boolean result = (Boolean) gestor.executar(id, getNameOfServiceToBeTested(), args2);
-
-            if (result.booleanValue())
-            {
-                compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
-                System.out.println(
-                    getNameOfServiceToBeTested()
-                        + " was SUCCESSFULY runned by test: testCreateGrantTypeSuccessfull");
-            } else
-                fail("Creating a new GrantType successfull: test failed!");
+            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
+            System.out.println(
+                getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantTypeSuccessfull");
         } catch (FenixServiceException e)
         {
             fail("Creating a new GrantType successfull " + e);
@@ -160,8 +161,8 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
     }
 
     /*
-     * Grant Type Creation Unsuccessfull: existing grant type
-     */
+	 * Grant Type Creation Unsuccessfull: existing grant type
+	 */
     public void testCreateGrantTypeUnsuccessfull()
     {
         try
@@ -170,16 +171,13 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments(false);
 
-            Boolean result = (Boolean) gestor.executar(id, getNameOfServiceToBeTested(), args2);
-
-            if (!result.booleanValue())
-            {
-                compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-                System.out.println(
-                    getNameOfServiceToBeTested()
-                        + " was SUCCESSFULY runned by test: testCreateGrantTypeUnsuccessfull");
-            } else
-                fail("Creating a new GrantType with Existing Type: test failed!");
+            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+        } catch (NonExistingServiceException e)
+        {
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+            System.out.println(
+                getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantTypeUnsuccessfull");
         } catch (FenixServiceException e)
         {
             fail("Creating a new GrantType unsuccessfull " + e);
@@ -190,8 +188,8 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
     }
 
     /*
-     * Grant Type Edition Successfull
-     */
+	 * Grant Type Edition Successfull
+	 */
     public void testEditGrantTypeSuccessfull()
     {
         try
@@ -200,16 +198,12 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArgumentsEdit();
 
-            Boolean result = (Boolean) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            gestor.executar(id, getNameOfServiceToBeTested(), args2);
 
-            if (result.booleanValue())
-            {
-                compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/grant/contract/testEditGrantTypeExpectedDataSet.xml");
-                System.out.println(
-                    getNameOfServiceToBeTested()
-                        + " was SUCCESSFULY runned by test: testEditGrantTypeSuccessfull");
-            } else
-                fail("Editing a GrantType successfull: test failed!");
+            compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/grant/contract/testEditGrantTypeExpectedDataSet.xml");
+            System.out.println(
+                getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testEditGrantTypeSuccessfull");
         } catch (FenixServiceException e)
         {
             fail("Editing a GrantType successfull " + e);
@@ -220,8 +214,8 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
     }
 
     /*
-     * Grant Type Edition Unsuccessfull: existing grant type
-     */
+	 * Grant Type Edition Unsuccessfull: existing grant type
+	 */
     public void testEditGrantTypeUnsuccessfull()
     {
         try
@@ -230,16 +224,13 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments(true);
 
-            Boolean result = (Boolean) gestor.executar(id, getNameOfServiceToBeTested(), args2);
-
-            if (!result.booleanValue())
-            {
-                compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-                System.out.println(
-                    getNameOfServiceToBeTested()
-                        + " was SUCCESSFULY runned by test: testEditGrantTypeUnsuccessfull");
-            } else
-                fail("Editing a GrantType unsuccessfull: test failed!");
+            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+        } catch (NonExistingServiceException e)
+        {
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+            System.out.println(
+                getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testEditGrantTypeUnsuccessfull");
         } catch (FenixServiceException e)
         {
             fail("Editing a GrantType unsuccessfull " + e);

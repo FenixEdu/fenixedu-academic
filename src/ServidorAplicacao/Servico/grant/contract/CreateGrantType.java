@@ -76,8 +76,8 @@ public class CreateGrantType extends ServidorAplicacao.Servico.framework.EditDom
 	/**
 	 * Executes the service.
 	 */
-	public boolean run(InfoGrantType infoGrantType) throws FenixServiceException
+	public void run(InfoGrantType infoGrantType) throws FenixServiceException
 	{
-		return super.run(new Integer(0),infoGrantType).booleanValue();
+		super.run(new Integer(0),infoGrantType);
 	}
 }
