@@ -116,6 +116,7 @@ INSERT INTO PRIVILEGIO VALUES (1, 'RemoveTeacher', 57);
 INSERT INTO PRIVILEGIO VALUES (1, 'AssociateTeacher', 58);
 INSERT INTO PRIVILEGIO VALUES (1, 'InsertAnnouncement', 59);
 INSERT INTO PRIVILEGIO VALUES (1, 'InsertBibliographicReference', 60);
+INSERT INTO PRIVILEGIO VALUES (1, 'EditAnnouncement', 61);
 
 #
 # Data for table 'DEGREE'
