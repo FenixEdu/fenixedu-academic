@@ -5,3 +5,6 @@ curriculo_05_indice.txt
 disciplinasMigrationLog.txt
 fenixDumpCurricularCourses.sql
 LEQNewCurricularCourses.sql
+AlmeidaLEQCurricularCoursesMigrationLog.txt
+fenixDump_20030521_2.sql
+LEQNewCurricularCoursesMigrationLog.txt

@@ -55,7 +55,7 @@ public class EnrolmentFilterCurricularYearPrecedence implements IEnrolmentRule {
 		List curricularCoursesScopesNeverEnroled = EnrolmentContextManager.computeScopesOfCurricularCourses(curricularCoursesNeverEnroled);
 
 // ------------------------------------------------------------
-// NOTE: DAVID-RICARDO: Este pedaço de código é uma maneira de filtrar pelo ramo e semestre de modo a tornar esta regra independente.
+// NOTE DAVID-RICARDO: Este pedaço de código é uma maneira de filtrar pelo ramo e semestre de modo a tornar esta regra independente.
 		List finalSpanBackup = new ArrayList();
 		finalSpanBackup.addAll(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
 		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(curricularCoursesScopesNeverEnroled);

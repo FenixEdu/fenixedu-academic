@@ -41,11 +41,11 @@ public class EnrolmentStrategyLEQ extends EnrolmentStrategy implements IEnrolmen
 		enrolmentRule = new EnrolmentFilterLEQTrainingCourseRule();
 		super.setEnrolmentContext(enrolmentRule.apply(super.getEnrolmentContext()));		
 
-		//	NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser chamada em penultimo
+		//	NOTE DAVID-RICARDO: Esta regra para ser geral para todos os cursos TEM que ser chamada em penultimo
 		enrolmentRule = new EnrolmentFilterPrecedenceSpanRule();
 		super.setEnrolmentContext(enrolmentRule.apply(super.getEnrolmentContext()));
 
-		//	NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
+		//	NOTE DAVID-RICARDO: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
 		enrolmentRule = new EnrolmentFilterNACandNDRule();
 		super.setEnrolmentContext(enrolmentRule.apply(super.getEnrolmentContext()));
 

@@ -169,7 +169,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 		} catch (ExistingPersistentException ex) {
 			assertNotNull("testWriteExisting", ex);
 			try {
-				//				NOTE: DAVID-RICARDO: Aqui devia estar um cancelarTransaccao mas nao esta porque rebenta (java.util.ConcurrentModificationException)
+				//				NOTE DAVID-RICARDO: Aqui devia estar um cancelarTransaccao mas nao esta porque rebenta (java.util.ConcurrentModificationException)
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia e) {
 				fail("aborting transaction");
