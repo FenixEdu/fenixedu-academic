@@ -287,6 +287,11 @@ public class UpdateStudentEnrolments {
 						curricularCourseScope = findScopeForBranch(curricularCourseScopes, null);
 					} 
 					
+					// if we can't find a scope and the degree of the course is diferent from the student's, them we ignore the branch
+					if ((curricularCourseScope == null) && (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().equals(curricularCourse.getDegreeCurricularPlan().getDegree()))) {
+						curricularCourseScope = (ICurricularCourseScope) curricularCourseScopes.get(0);
+					}
+					
 					// If still we cannot find a scope ...
 					
 					if (curricularCourseScope == null) {
