@@ -101,7 +101,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 
 		assertNotNull(studentCurricularPlanTemp);
 		assertTrue(studentCurricularPlanTemp.getStudent().getNumber().intValue() == 600);
-		assertTrue(studentCurricularPlanTemp.getCourseCurricularPlan().getDegree().getSigla().equals("LEIC"));
+		assertTrue(studentCurricularPlanTemp.getDegreeCurricularPlan().getDegree().getSigla().equals("LEIC"));
 		assertTrue(studentCurricularPlanTemp.getCurrentState().getState().intValue() == StudentCurricularPlanState.ACTIVE);
         assertTrue(studentCurricularPlanTemp.getStartDate().toString().equals("2002-12-21"));
     }

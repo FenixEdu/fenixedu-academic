@@ -6,19 +6,19 @@
 <!-- Definitions for Dominio.Departamento -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="Dominio.Departamento" table="DEPARTMENT">
-	<field-descriptor id="1"
+	<field-descriptor
 		name="codigoInterno"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"
 		autoincrement="true"
 	/>
-	<field-descriptor id="2"
+	<field-descriptor
 		name="nome"
 		column="NAME"
 		jdbc-type="VARCHAR"
 	/>
-	<field-descriptor id="3"
+	<field-descriptor
 		name="sigla"
 		column="CODE"
 		jdbc-type="VARCHAR"
@@ -27,7 +27,7 @@
 			name="disciplinasAssociadas"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableHashSet"
 			element-class-ref="Dominio.DisciplinaDepartamento">
-		<inverse-foreignkey field-id-ref="4"/>
+		<inverse-foreignkey field-ref="chaveDepartamento"/>
 	</collection-descriptor>    
 </class-descriptor>   
 
@@ -35,24 +35,24 @@
 <!-- Definitions for Dominio.DisciplinaDepartamento -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="Dominio.DisciplinaDepartamento" table="DEPARTMENT_COURSE">
-	<field-descriptor id="1"
+	<field-descriptor
 		name="codigoInterno"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"
 		autoincrement="true"
 	/>
-	<field-descriptor id="2"
+	<field-descriptor
 		name="nome"
 		column="NAME"
 		jdbc-type="VARCHAR"
 	/>
-	<field-descriptor id="3"
+	<field-descriptor
 		name="sigla"
 		column="CODE"
 		jdbc-type="VARCHAR"
 	/>
-	<field-descriptor id="4"
+	<field-descriptor
 		name="chaveDepartamento"
 		column="KEY_DEPARTMENT"
 		jdbc-type="INTEGER"
@@ -61,7 +61,7 @@
 			name="departamento"
 			class-ref="Dominio.Departamento"
 			proxy="true">
-		<foreignkey field-id-ref="4"/>
+		<foreignkey field-ref="chaveDepartamento"/>
 	</reference-descriptor>     
 </class-descriptor>
 
@@ -69,24 +69,24 @@
 <!-- Definitions for Dominio.Curso -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="Dominio.Curso" table="DEGREE">
-	<field-descriptor id="1"
+	<field-descriptor
 		name="codigoInterno"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"
 		autoincrement="true"
 	/>
-	<field-descriptor id="2"
+	<field-descriptor
 		name="sigla"
 		column="CODE"
 		jdbc-type="VARCHAR"
 	/>
-	<field-descriptor id="3"
+	<field-descriptor
 		name="nome"
 		column="NAME"
 		jdbc-type="VARCHAR"
 	/>
-	<field-descriptor id="4"
+	<field-descriptor
 		name="tipoCurso"
 		column="TYPE_DEGREE"
 		jdbc-type="INTEGER"
@@ -145,66 +145,66 @@
 <!-- Definitions for Dominio.CurricularCourse -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="Dominio.CurricularCourse" table="CURRICULAR_COURSE">
-	<field-descriptor id="1"
+	<field-descriptor
 		name="internalCode"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"
 		autoincrement="true"
 	/>
-	<field-descriptor id="2"
+	<field-descriptor
 		name="departmentCourseKey"
 		column="KEY_DEPARTMENT_COURSE"
 		jdbc-type="INTEGER"
 	/>
-	<field-descriptor id="3"
+	<field-descriptor
 		name="degreeCurricularPlanKey"
 		column="KEY_DEGREE_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/> 
-	<field-descriptor id="4"
+	<field-descriptor
 		name="credits"
 		column="CREDITS"
 		jdbc-type="DOUBLE"
 	/>
-	<field-descriptor id="5"
+	<field-descriptor
 		name="theoreticalHours"
 		column="THEORETICAL_HOURS"
 		jdbc-type="DOUBLE"
 	/>
-	<field-descriptor id="6"
+	<field-descriptor
 		name="praticalHours"
 		column="PRATICAL_HOURS"
 		jdbc-type="DOUBLE"
 	/>
-	<field-descriptor id="7"
+	<field-descriptor
 		name="theoPratHours"
 		column="THEO_PRAT_HOURS"
 		jdbc-type="DOUBLE"
 	/>
-	<field-descriptor id="8"
+	<field-descriptor
 		name="labHours"
 		column="LAB_HOURS"
 		jdbc-type="DOUBLE"
 	/>
 	<!-- ESTE E' PARA SAIR -->
-	<field-descriptor id="9"
+	<field-descriptor
 		name="curricularYear"
 		column="CURRICULAR_YEAR"
 		jdbc-type="INTEGER"
 	/>
 	<!-- ESTE E' PARA SAIR -->
-	<field-descriptor id="10"
+	<field-descriptor
 		name="semester"
 		column="SEMESTER"
 		jdbc-type="INTEGER"
 	/>
-	<field-descriptor id="11"
+	<field-descriptor
 		name="name"
 		column="NAME"
 		jdbc-type="VARCHAR"
 	/>
-	<field-descriptor id="12"
+	<field-descriptor
 		name="code"
 		column="CODE"
 		jdbc-type="VARCHAR"
@@ -213,13 +213,13 @@
 			name="departmentCourse"
 			class-ref="Dominio.DisciplinaDepartamento"
 			proxy="true">
-		<foreignkey field-id-ref="2"/>
+		<foreignkey field-ref="departmentCourseKey"/>
 	</reference-descriptor> 
 	<reference-descriptor
 			name="degreeCurricularPlan"
 			class-ref="Dominio.DegreeCurricularPlan"
 			proxy="true">
-		<foreignkey field-id-ref="3"/>
+		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="associatedExecutionCourses"
@@ -253,37 +253,30 @@
 <!-- Definitions for Dominio.StudentCurricularPlan -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="Dominio.StudentCurricularPlan" table="STUDENT_CURRICULAR_PLAN">
-	<field-descriptor id="1"
+	<field-descriptor
 		name="internalCode"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"
 		autoincrement="true"
 	/>
-	<field-descriptor id="2"
+	<field-descriptor
 		name="studentKey"
 		column="KEY_STUDENT"
 		jdbc-type="INTEGER"
 	/>
-<!-- MUDANCAS DE NOMES
-	<field-descriptor id="3"
+	<field-descriptor
 		name="degreeCurricularPlanKey"
 		column="KEY_DEGREE_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
--->
-	<field-descriptor id="3"
-		name="courseCurricularPlanKey"
-		column="KEY_COURSE_CURRICULAR_PLAN"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor id="4"
+	<field-descriptor
 		name="currentState"
 		column="CURRENT_STATE"
 		jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
 	/>
-	<field-descriptor id="5"
+	<field-descriptor
 		name="startDate"
 		column="START_DATE"
 		jdbc-type="DATE"
@@ -292,21 +285,13 @@
 			name="student"
 			class-ref="Dominio.Student"
 			proxy="true">
-		<foreignkey field-id-ref="2"/>
+		<foreignkey field-ref="studentKey"/>
 	</reference-descriptor>
-<!-- MUDANCAS DE NOMES
 	<reference-descriptor
 			name="degreeCurricularPlan"
 			class-ref="Dominio.DegreeCurricularPlan"
 			proxy="false">
-		<foreignkey field-id-ref="3"/>
-	</reference-descriptor>
--->
-	<reference-descriptor
-			name="courseCurricularPlan"
-			class-ref="Dominio.DegreeCurricularPlan"
-			proxy="false">
-		<foreignkey field-id-ref="3"/>
+		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	</reference-descriptor>
 </class-descriptor>
 
@@ -314,19 +299,19 @@
 <!-- Definitions for Dominio.Enrolment -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="Dominio.Enrolment" table="ENROLMENT">
-	<field-descriptor id="1"
+	<field-descriptor
 		name="internalID"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"
 		autoincrement="true"
 	/>
-	<field-descriptor id="2"
+	<field-descriptor
 		name="studentCurricularPlanKey"
 		column="KEY_STUDENT_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
-	<field-descriptor id="3"
+	<field-descriptor
 		name="curricularCourseKey"
 		column="KEY_CURRICULAR_COURSE"
 		jdbc-type="INTEGER"
@@ -335,13 +320,13 @@
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
 			proxy="true">
-		<foreignkey field-id-ref="2"/>
+		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>      
 	<reference-descriptor
 			name="curricularCourse"
 			class-ref="Dominio.CurricularCourse"
 			proxy="true">
-		<foreignkey field-id-ref="3"/>
+		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>      
 </class-descriptor>
 

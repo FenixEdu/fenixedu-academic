@@ -35,11 +35,11 @@ drop table if exists STUDENT_CURRICULAR_PLAN;
 create table STUDENT_CURRICULAR_PLAN (
    ID_INTERNAL integer(11) not null auto_increment,
    KEY_STUDENT integer(11) not null,
-   KEY_COURSE_CURRICULAR_PLAN integer(11) not null,
+   KEY_DEGREE_CURRICULAR_PLAN integer(11) not null,
    CURRENT_STATE integer(11) not null,
    START_DATE date not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_STUDENT, KEY_COURSE_CURRICULAR_PLAN, CURRENT_STATE))
+   unique U1 (KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE))
    type=InnoDB;
 
 #------------------------------------------

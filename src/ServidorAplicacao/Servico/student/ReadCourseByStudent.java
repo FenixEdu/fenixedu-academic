@@ -53,8 +53,8 @@ public class ReadCourseByStudent implements IServico {
 			if (student != null) {
 				IStudentCurricularPlan StudentCurricularPlan=sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(number, degreeType);
 				if (StudentCurricularPlan != null) {
-					infoDegree = new InfoDegree(StudentCurricularPlan.getCourseCurricularPlan().getDegree().getSigla(),
-										     StudentCurricularPlan.getCourseCurricularPlan().getDegree().getNome());
+					infoDegree = new InfoDegree(StudentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla(),
+										     StudentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome());
 				}		
 				
 			  }

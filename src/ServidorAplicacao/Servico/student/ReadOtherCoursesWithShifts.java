@@ -91,7 +91,7 @@ public class ReadOtherCoursesWithShifts implements IServico {
 		sCP = (IStudentCurricularPlan) lsCP.get(0);
 
 		ICurso c = new Curso();
-		c.setSigla(sCP.getCourseCurricularPlan().getDegree().getSigla());
+		c.setSigla(sCP.getDegreeCurricularPlan().getDegree().getSigla());
 		ICursoExecucao cE = new CursoExecucao();
 	//	cE.setCurso(c);
 		IDisciplinaExecucao dE = new DisciplinaExecucao();

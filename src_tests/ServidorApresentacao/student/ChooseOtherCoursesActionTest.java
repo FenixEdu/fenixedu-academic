@@ -306,7 +306,7 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 	sCP.setStudent(student);
 	sCP.setStartDate(someDate.getTime());
 	sCP.setCurrentState(new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE));
-	sCP.setCourseCurricularPlan(pCC);
+	sCP.setDegreeCurricularPlan(pCC);
 
 	try {
 		_suportePersistente.iniciarTransaccao();

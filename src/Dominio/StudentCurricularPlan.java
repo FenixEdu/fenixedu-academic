@@ -19,10 +19,10 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 
   protected Integer internalCode;
   protected Integer studentKey;
-  protected Integer courseCurricularPlanKey;
+  protected Integer degreeCurricularPlanKey;
 
   protected IStudent student;
-  protected IDegreeCurricularPlan courseCurricularPlan;
+  protected IDegreeCurricularPlan degreeCurricularPlan;
   protected Date startDate;
   protected StudentCurricularPlanState currentState;
     
@@ -34,7 +34,7 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
   			Date startDate, StudentCurricularPlanState currentState) {
 
 	this.student = student;
-	this.courseCurricularPlan = courseCurricularPlan;
+	this.degreeCurricularPlan = courseCurricularPlan;
 	this.startDate = startDate;
 	this.currentState = currentState;
   }
@@ -46,7 +46,7 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
       IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan)obj;
       resultado = 
       ((getStudent().getNumber() == studentCurricularPlan.getStudent().getNumber()) &&
-       (getCourseCurricularPlan().getDegree().getSigla().equals(studentCurricularPlan.getCourseCurricularPlan().getDegree().getSigla())) &&
+       (getDegreeCurricularPlan().getDegree().getSigla().equals(studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla())) &&
        (getCurrentState().getState().intValue() == studentCurricularPlan.getCurrentState().getState().intValue()));
     } 
     return resultado;
@@ -56,7 +56,7 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
     String result = "[STUDENT_CURRICULAR_PLAN";
     result += ", Internal Code=" + internalCode;
     result += ", Student=" + student;
-    result += ", CourseCurricularPlan=" + courseCurricularPlan;
+    result += ", CourseCurricularPlan=" + degreeCurricularPlan;
     result += ", Start Date=" + startDate;
     result += ", State=" + currentState.toString();
 
@@ -66,19 +66,19 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
    
     
 	/**
-	 * Returns the courseCurricularPlan.
+	 * Returns the degreeCurricularPlan.
 	 * @return IDegreeCurricularPlan
 	 */
-	public IDegreeCurricularPlan getCourseCurricularPlan() {
-		return courseCurricularPlan;
+	public IDegreeCurricularPlan getDegreeCurricularPlan() {
+		return degreeCurricularPlan;
 	}
 	
 	/**
-	 * Returns the courseCurricularPlanKey.
+	 * Returns the degreeCurricularPlanKey.
 	 * @return Integer
 	 */
-	public Integer getCourseCurricularPlanKey() {
-		return courseCurricularPlanKey;
+	public Integer getDegreeCurricularPlanKey() {
+		return degreeCurricularPlanKey;
 	}
 	
 	/**
@@ -122,19 +122,19 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 	}
 	
 	/**
-	 * Sets the courseCurricularPlan.
-	 * @param courseCurricularPlan The courseCurricularPlan to set
+	 * Sets the degreeCurricularPlan.
+	 * @param degreeCurricularPlan The degreeCurricularPlan to set
 	 */
-	public void setCourseCurricularPlan(IDegreeCurricularPlan courseCurricularPlan) {
-		this.courseCurricularPlan = courseCurricularPlan;
+	public void setDegreeCurricularPlan(IDegreeCurricularPlan courseCurricularPlan) {
+		this.degreeCurricularPlan = courseCurricularPlan;
 	}
 	
 	/**
-	 * Sets the courseCurricularPlanKey.
-	 * @param courseCurricularPlanKey The courseCurricularPlanKey to set
+	 * Sets the degreeCurricularPlanKey.
+	 * @param degreeCurricularPlanKey The degreeCurricularPlanKey to set
 	 */
-	public void setCourseCurricularPlanKey(Integer courseCurricularPlanKey) {
-		this.courseCurricularPlanKey = courseCurricularPlanKey;
+	public void setDegreeCurricularPlanKey(Integer courseCurricularPlanKey) {
+		this.degreeCurricularPlanKey = courseCurricularPlanKey;
 	}
 	
 	/**

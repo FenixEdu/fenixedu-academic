@@ -186,7 +186,7 @@ public class LoadStudents extends DataFileLoader {
 			System.out.println("------------- BRONCA --------");
 			planoCurricularCurso = planoCurricularCursoTemp;
 		}
-		studentCurricularPlan.setCourseCurricularPlan(planoCurricularCurso);
+		studentCurricularPlan.setDegreeCurricularPlan(planoCurricularCurso);
 
 
 		studentCurricularPlanDAO.lockWrite(studentCurricularPlan);
