@@ -42,7 +42,7 @@ public class PrepareSelectExecutionCourseActionTest
 		setRequestPathInfo("publico", "/prepareSelectExecutionCourseAction");
 
 		// coloca o contexto em sessão.
-		//TODO put curricular year in session
+	
 
 		InfoExecutionDegree infoExecutionDegree =
 			new InfoExecutionDegree(
