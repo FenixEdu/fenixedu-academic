@@ -281,9 +281,28 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 					userView,
 					"ReadTeachersByExecutionCourseResponsibility",
 					args3);
+			
+			if (teacherList!=null){		
+			
 			session.setAttribute(
 				SessionConstants.RESPONSIBLE_TEACHERS_LIST,
-				teacherList);
+				teacherList);}
+				
+			//read	lecturing teachers
+			Object[] args4 = { infoExecCourse };
+						List lecturingTeacherList = null;
+			lecturingTeacherList =
+							(List) manager.executar(
+								userView,
+								"ReadTeachersByExecutionCourseProfessorship",
+								args4);
+			
+						if (lecturingTeacherList!=null){		
+							lecturingTeacherList.removeAll(teacherList);
+						session.setAttribute(
+							SessionConstants.TEACHERS_LIST,
+							lecturingTeacherList);}
+				
 			//			Read last Anouncement
 			Object args1[] = new Object[1];
 			args1[0] = site;

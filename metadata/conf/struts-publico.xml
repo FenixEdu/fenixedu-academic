@@ -272,13 +272,7 @@
         <forward name="viewProgram" path="/program.jsp" />       
 	</action>
 
-	<!-- Actions For Teachers  -->
-	<action 
-		path="/accessTeachers"
-        type="ServidorApresentacao.Action.publico.AccessTeachersAction" >
-    <forward name="Teachers" path="/teachers.jsp"/>  
-	</action>
-
+	
 	<!-- Site viewer -->
 	<action path="/viewSite"
         type="ServidorApresentacao.Action.teacher.ReadSite">    

@@ -31,9 +31,7 @@
 				</html:link></dd>	
   </dl>
  <ul> 
-<li><html:link page="/accessTeachers.do">
-	<bean:message key="link.teachers"/>
-</html:link></li>
+
 <li><html:link page="/viewTimeTable.do">
 		<bean:message key="link.executionCourse.timeTable"/>
 </html:link></li>
