@@ -15,6 +15,7 @@ public class InfoCredits extends InfoObject
     private InfoTeacher infoTeacher;
     private Double institutionWorkTime;
     private Double lessons;
+    private Double masterDegreeCredits;
     private Double otherTypeCredits;
     private Double supportLessons;
     private Boolean containsManagementPositions;
@@ -197,4 +198,22 @@ public class InfoCredits extends InfoObject
         this.containsManagementPositions = containsManagementPositions;
     }
 
+    /**
+     * @return Returns the masterDegreeCredits.
+     */
+    public Double getMasterDegreeCredits() {
+        return masterDegreeCredits;
+    }
+    /**
+     * @param masterDegreeCredits The masterDegreeCredits to set.
+     */
+    public void setMasterDegreeCredits(Double masterDegreeCredits) {
+        this.masterDegreeCredits = masterDegreeCredits;
+    }
+
+    public String getMasterDegreeCreditsFormatted()
+    {
+        return format(this.getMasterDegreeCredits());
+    }
+    
 }
