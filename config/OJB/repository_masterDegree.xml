@@ -904,7 +904,21 @@
         	class-ref="Dominio.Employee"
       	>
 	        <foreignkey field-ref="keyEmployee"/>
-		</reference-descriptor> 
+		</reference-descriptor>
+		
+		<collection-descriptor
+        	name="juries"
+	        element-class-ref="Dominio.Teacher"
+    	    auto-retrieve="true"
+        	proxy="true"
+	        refresh="true"
+         	auto-update="false"
+         	auto-delete="false"
+	        indirection-table="MASTER_DEGREE_PROOF_VERSION_JURY"
+      	>
+    	    <fk-pointing-to-this-class column="KEY_MASTER_DEGREE_PROOF_VERSION"/>
+        	<fk-pointing-to-element-class column="KEY_TEACHER"/>
+      	</collection-descriptor> 
                 
  </class-descriptor>  
    
