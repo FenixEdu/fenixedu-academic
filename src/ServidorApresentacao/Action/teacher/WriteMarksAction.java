@@ -30,7 +30,6 @@ import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -47,7 +46,7 @@ public class WriteMarksAction extends DispatchAction
         ActionForm form,
         HttpServletRequest request,
         HttpServletResponse response)
-        throws Exception, NotExecuteException
+        throws Exception
     {
 
         HttpSession session = request.getSession(false);

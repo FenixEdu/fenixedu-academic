@@ -26,6 +26,7 @@ public class GratuityFile
 	public static final String CODE_SPECIALIZATION = "30";
 	public static final String WITHOUT_ADDRESS = "Sem morada";
 	public static final String NOTHING_TO_PAY = "Nada a pagar";
+	public static final String INSURANCE_TO_PAY = "Apenas seguro a pagar";
 	public static final char SPACE = ' ';
 	public static final char ZERO = '0';
 	
@@ -79,6 +80,8 @@ public class GratuityFile
 		
 		//the student hasn't nothing to pay, then the letter is not created
 		//and the error is registed
+		//but if the student has only the insurance, then the letter is not created
+		//and the error is registed
 		if (infoGratuitySituation.getRemainingValue().doubleValue() <= 0
 				&& infoGratuitySituation.getInsurancePayed().equals(SessionConstants.PAYED_INSURANCE))
 		{
@@ -88,6 +91,15 @@ public class GratuityFile
 					+ NOTHING_TO_PAY);
 			writerErrors.newLine();
 			return false;
+		} else if (infoGratuitySituation.getRemainingValue().doubleValue() <= 0
+				&& !infoGratuitySituation.getInsurancePayed().equals(SessionConstants.PAYED_INSURANCE))
+		{
+			writerErrors.write(
+					infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent().getNumber()
+					+ " "
+					+ INSURANCE_TO_PAY);
+			writerErrors.newLine();
+			return true;
 		}
 
 		return true;

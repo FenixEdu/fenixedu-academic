@@ -187,7 +187,8 @@ public class GratuityFileLetters extends GratuityFile
 				.getNome());
 		line.append("\t");
 		//gratuity value
-		if (infoGratuitySituation.getRemainingValue().doubleValue() != 0)
+		double totalValue = infoGratuitySituation.getRemainingValue().doubleValue();
+		if (totalValue > 0)
 		{
 			line.append(infoGratuitySituation.getRemainingValue());
 		}
@@ -195,12 +196,13 @@ public class GratuityFileLetters extends GratuityFile
 		{
 			//nothig to payed
 			line.append(NOTHING);
+			totalValue = 0;
 		}
 		line.append("\t");
 		//first verify if the student already payed the insurance
 		//and if the student not payed add to the total value
 		//after the insurance value is appended to the line
-		double totalValue = infoGratuitySituation.getRemainingValue().doubleValue();
+
 		if (infoGratuitySituation.getInsurancePayed().equals(SessionConstants.NOT_PAYED_INSURANCE))
 		{
 			//insurance not payed
@@ -215,7 +217,7 @@ public class GratuityFileLetters extends GratuityFile
 		}
 		line.append("\t");
 		//total value
-		if (totalValue != 0)
+		if (totalValue > 0)
 		{
 			line.append(totalValue);
 		}

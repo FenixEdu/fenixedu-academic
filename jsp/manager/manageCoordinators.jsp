@@ -40,46 +40,52 @@
 	</logic:notPresent>
 	
 	<logic:present name="infoExecutionDegree" property="coordinatorsList">
-		<html:form action="/manageCoordinators">
-			<html:hidden property="executionDegreeId" value="<%=  executionDegreeId.toString() %>"/>
-			<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>	
-			<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
-			
-			<html:hidden property="method" value="edit" />
-			<table width="80%" cellpadding="0" border="0">
-				<tr>
-					<td class="listClasses-header"><bean:message key="label.manager.teacher.name" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.teacher.number" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.responsible" />
-					</td>	
-					<td class="listClasses-header"><bean:message key="label.remove" />
-					</td>	
-				</tr>
-				<logic:iterate id="infoCoordinator" name="infoExecutionDegree" property="coordinatorsList">
+		<logic:empty name="infoExecutionDegree" property="coordinatorsList">
+			<i><bean:message key="label.manager.coordinators.nonExisting"/></i>
+		</logic:empty>
+
+		<logic:notEmpty name="infoExecutionDegree" property="coordinatorsList">
+			<html:form action="/manageCoordinators">
+				<html:hidden property="executionDegreeId" value="<%=  executionDegreeId.toString() %>"/>
+				<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>	
+				<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
+				
+				<html:hidden property="method" value="edit" />
+				<table width="80%" cellpadding="0" border="0">
 					<tr>
-						<bean:define id="coordinatorId" name="infoCoordinator" property="idInternal"/>	 			
-						<td class="listClasses"><bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome"/>
+						<td class="listClasses-header"><bean:message key="label.manager.teacher.name" />
 						</td>
-						<td class="listClasses"><bean:write name="infoCoordinator" property="infoTeacher.teacherNumber"/>
+						<td class="listClasses-header"><bean:message key="label.manager.teacher.number" />
 						</td>
-						<td class="listClasses">
-							<html:multibox property="responsibleCoordinatorsIds">
-								<bean:write name="coordinatorId"/>
-							</html:multibox>
-						</td>
-						<td class="listClasses">
-							<html:multibox property="deletedCoordinatorsIds">
-								<bean:write name="coordinatorId"/>
-							</html:multibox>
-						</td>						
-		 			</tr>
-		 		</logic:iterate>						
-			</table>
-			<br>
-			<html:submit><bean:message key="label.manager.save.modifications"/></html:submit>
-		</html:form>
+						<td class="listClasses-header"><bean:message key="label.manager.responsible" />
+						</td>	
+						<td class="listClasses-header"><bean:message key="label.remove" />
+						</td>	
+					</tr>
+					<logic:iterate id="infoCoordinator" name="infoExecutionDegree" property="coordinatorsList">
+						<tr>
+							<bean:define id="coordinatorId" name="infoCoordinator" property="idInternal"/>	 			
+							<td class="listClasses"><bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome"/>
+							</td>
+							<td class="listClasses"><bean:write name="infoCoordinator" property="infoTeacher.teacherNumber"/>
+							</td>
+							<td class="listClasses">
+								<html:multibox property="responsibleCoordinatorsIds">
+									<bean:write name="coordinatorId"/>
+								</html:multibox>
+							</td>
+							<td class="listClasses">
+								<html:multibox property="deletedCoordinatorsIds">
+									<bean:write name="coordinatorId"/>
+								</html:multibox>
+							</td>						
+			 			</tr>
+			 		</logic:iterate>						
+				</table>
+				<br>
+				<html:submit><bean:message key="label.manager.save.modifications"/></html:submit>
+			</html:form>
+		</logic:notEmpty>					
 	</logic:present>
 </logic:present>
 

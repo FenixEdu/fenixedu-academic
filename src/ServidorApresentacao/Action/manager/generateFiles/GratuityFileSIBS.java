@@ -185,10 +185,12 @@ public class GratuityFileSIBS extends GratuityFile
 	private static double findPayValue(InfoGratuitySituation infoGratuitySituation)
 	{
 		double valueToPay = infoGratuitySituation.getRemainingValue().doubleValue();
-
+		if(valueToPay < 0) {
+			valueToPay = 0;
+		}
 		if (infoGratuitySituation.getInsurancePayed().equals(SessionConstants.NOT_PAYED_INSURANCE))
 		{
-			valueToPay = infoGratuitySituation.getRemainingValue().doubleValue() + INSURANCE;
+			valueToPay = valueToPay + INSURANCE;
 		}
 
 		return valueToPay;

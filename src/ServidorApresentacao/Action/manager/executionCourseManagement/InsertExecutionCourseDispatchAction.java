@@ -100,6 +100,13 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction
 
 			request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, executionPeriodLabels);
 		}
+		
+		DynaActionForm executionCourseForm = (DynaActionForm) form;
+		executionCourseForm.set("theoreticalHours", new String("0.0"));
+		executionCourseForm.set("praticalHours", new String("0.0"));
+		executionCourseForm.set("theoPratHours", new String("0.0"));
+		executionCourseForm.set("labHours", new String("0.0"));
+		
 		return mapping.findForward("insertExecutionCourse");
 	}
 

@@ -35,7 +35,8 @@
 								</td>
 								<td class="listClasses">
 									<bean:define id="executionCourseId" name="executionCourse" property="idInternal"/> 
-									&nbsp;<html:link page="<%="/editExecutionCourse.do?method=editExecutionCourse&amp;executionCourseId=" + executionCourseId.toString() + "&amp;executionPeriodName=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionDegreeName=" + pageContext.findAttribute("executionDegreeName") + "&amp;executionPeriodId=" + pageContext.findAttribute("executionPeriodId") + "&amp;executionDegreeId=" + pageContext.findAttribute("executionDegreeId") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;getNotLinked=" + pageContext.findAttribute("getNotLinked")%>">
+									&nbsp;
+									<html:link page="<%="/editExecutionCourse.do?method=editExecutionCourse&amp;executionCourseId=" + executionCourseId.toString() + "&amp;executionPeriodName=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionDegreeName=" + pageContext.findAttribute("executionDegreeName") + "&amp;executionPeriodId=" + pageContext.findAttribute("executionPeriodId") + "&amp;executionDegreeId=" + pageContext.findAttribute("executionDegreeId") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
 										<bean:message key="label.manager.executionCourseManagement.edit"/>
 									</html:link>
 									/

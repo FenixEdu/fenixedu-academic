@@ -225,6 +225,10 @@
 		<put name="body" value="/manager/executionCourseManagement/editExecutionCourse.jsp" />
 		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
+	<definition name="df.executionCourseManagement.viewExecutionCourse" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/executionCourseManagement/viewExecutionCourse.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
+	</definition>
 	<definition name="df.executionCourseManagement.prepareAssociateCurricularCourseChooseDegreeCurricularPlan" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/prepareAssociateCurricularCourseChooseDegreeCurricularPlan.jsp" />
 		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />

@@ -3,15 +3,93 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+
 <h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
-<bean:write name="executionPeriodName"/>
-<logic:notEmpty name="executionDegreeName"/>
-	> <bean:write name="executionDegreeName"/>
-</logic:notEmpty>
+
 <logic:present name="<%=SessionConstants.EXECUTION_COURSE%>">
 	<bean:define id="executionCourseName" name="<%=SessionConstants.EXECUTION_COURSE%>" property="nome"/>
+ 	<bean:define id="executionCourseId" name="<%=SessionConstants.EXECUTION_COURSE%>" property="idInternal"/>
+
+	<bean:write name="executionPeriodName"/>	
+	<logic:present name="executionDegreeName">
+		<logic:notEmpty name="executionDegreeName">
+			> <bean:write name="executionDegreeName"/>
+		</logic:notEmpty>
+	</logic:present>		
  	> <bean:write name="executionCourseName"/>
-	<bean:define id="executionCourseId" name="<%=SessionConstants.EXECUTION_COURSE%>" property="idInternal"/>
+ 	
+	<html:form action="/editExecutionCourse" focus="name">
+		<html:hidden property="method" value="updateExecutionCourse"/>
+		<html:hidden property="executionCourseId" value="<%= executionCourseId.toString() %>" />
+		<html:hidden property="executionPeriod"/>
+		<html:hidden property="executionCoursesNotLinked"/>
+		<html:hidden property="executionDegreeId"/>
+		<html:hidden property="curYear"/>
+		<html:hidden property="page" value="3"/>
+		<table>			
+			<tr>
+				<td>
+					<bean:message key="message.manager.execution.course.name"/>
+				</td>
+				<td>
+					<html:text size="30" property="name" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message key="message.manager.execution.course.code"/>
+				</td>
+				<td>
+					<html:text size="5" property="code" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message key="message.manager.theoreticalHours"/>
+				</td>
+				<td>
+					<html:text size="5" property="theoreticalHours" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message key="message.manager.praticalHours"/>
+				</td>
+				<td>
+					<html:text size="5" property="praticalHours" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message key="message.manager.theoPratHours"/>
+				</td>
+				<td>
+					<html:text size="5" property="theoPratHours" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message key="message.manager.labHours"/>
+				</td>
+				<td>
+					<html:text size="5" property="labHours" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message key="message.manager.execution.course.comment"/>
+				</td>
+				<td>
+					<html:textarea property="comment" rows="3" cols="45"/>
+				</td>
+			</tr>
+		</table>
+		<br />
+		<html:submit styleClass="inputbutton"><bean:message key="button.save"/></html:submit>
+	</html:form>
+	
+	<br />
+	<h2><bean:message key="label.manager.curricularCourses"/></h2>
 	<ul>
 		<li>
 			<html:link page="<%="/editExecutionCourseManageCurricularCourses.do?method=prepareAssociateCurricularCourseChooseDegreeCurricularPlan&amp;executionCourseId=" + pageContext.findAttribute("executionCourseId") + "&amp;executionDegreeName=" + pageContext.findAttribute("executionDegreeName") + "&amp;executionPeriodName=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionPeriodId=" + pageContext.findAttribute("executionPeriodId") + "&amp;executionCourseName=" + executionCourseName.toString()%>">

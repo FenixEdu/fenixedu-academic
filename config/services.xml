@@ -6241,4 +6241,13 @@
             <chain name="TeacherAuthorization"/>
         </filterChains>    	
     </service>
+    <service>
+        <name>EditExecutionCourseByManager</name>
+        <implementationClass>ServidorAplicacao.Servico.sop.EditExecutionCourse</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>    
 </serviceDefinitions>

@@ -38,9 +38,9 @@ public class InsertCurricularCourseScopeAtCurricularCourseTest extends TestCaseM
 		infoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 		infoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);
 		infoCurricularCourseScope.setInfoBranch(infoBranch);
-		infoCurricularCourseScope.setMaxIncrementNac(new Integer(3));
-		infoCurricularCourseScope.setMinIncrementNac(new Integer(2));
-		infoCurricularCourseScope.setWeigth(new Integer(4));
+//		infoCurricularCourseScope.setMaxIncrementNac(new Integer(3));
+//		infoCurricularCourseScope.setMinIncrementNac(new Integer(2));
+//		infoCurricularCourseScope.setWeigth(new Integer(4));
 		
 		Object[] args = { infoCurricularCourseScope };
 		return args;
@@ -62,9 +62,9 @@ public class InsertCurricularCourseScopeAtCurricularCourseTest extends TestCaseM
 		infoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 		infoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);
 		infoCurricularCourseScope.setInfoBranch(infoBranch);
-		infoCurricularCourseScope.setMaxIncrementNac(new Integer(3));
-		infoCurricularCourseScope.setMinIncrementNac(new Integer(2));
-		infoCurricularCourseScope.setWeigth(new Integer(4));
+//		infoCurricularCourseScope.setMaxIncrementNac(new Integer(3));
+//		infoCurricularCourseScope.setMinIncrementNac(new Integer(2));
+//		infoCurricularCourseScope.setWeigth(new Integer(4));
 		
 		Object[] args = { infoCurricularCourseScope };
 		return args;

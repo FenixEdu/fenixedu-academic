@@ -166,7 +166,7 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction
         return mapping.findForward("ShowCurricularCourseList");
     }
 
-    //SCOPE
+   
     public ActionForward showOccupancyLevels(
         ActionMapping mapping,
         ActionForm form,

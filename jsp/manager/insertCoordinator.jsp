@@ -28,7 +28,7 @@
 	</table>
 	
 
-	<html:form action="/insertCoordinator">
+	<html:form action="/insertCoordinator" focus="number">
 		<html:hidden property="method" value="insert" /> 
 		<html:hidden property="page" value="1"/>
 		<html:hidden property="executionDegreeId" value="<%=  executionDegreeId.toString() %>"/>

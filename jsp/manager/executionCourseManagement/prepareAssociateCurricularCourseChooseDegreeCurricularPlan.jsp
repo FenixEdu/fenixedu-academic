@@ -1,15 +1,18 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoExecutionPeriod" %>
 <h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 <span class="error"><html:errors/></span>
 <bean:write name="executionPeriodName"/>
-<logic:notEmpty name="executionDegreeName"/>
-	> <bean:write name="executionDegreeName"/>
-</logic:notEmpty>
-	> <bean:write name="executionCourseName"/>
+<logic:present name="executionDegreeName">
+	<logic:notEmpty name="executionDegreeName">
+		> <bean:write name="executionDegreeName"/>
+	</logic:notEmpty>
+</logic:present>	
+> <bean:write name="executionCourseName"/>
 <html:form action="/editExecutionCourseManageCurricularCourses">
 	<input type="hidden" name="method" value="prepareAssociateCurricularCourse"/>
 	<html:hidden property="executionPeriodName" value="<%= pageContext.findAttribute("executionPeriodName").toString() %>" />

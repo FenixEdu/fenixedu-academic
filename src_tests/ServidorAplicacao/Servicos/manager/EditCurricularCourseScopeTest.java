@@ -33,9 +33,9 @@ public class EditCurricularCourseScopeTest extends TestCaseManagerInsertAndEditS
 		InfoCurricularCourseScope infoCurricularCourseScope = new InfoCurricularCourseScope();
 		infoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 		infoCurricularCourseScope.setInfoBranch(infoBranch);
-		infoCurricularCourseScope.setMaxIncrementNac(new Integer(3));
-		infoCurricularCourseScope.setMinIncrementNac(new Integer(2));
-		infoCurricularCourseScope.setWeigth(new Integer(4));
+		//infoCurricularCourseScope.setMaxIncrementNac(new Integer(3));
+		//infoCurricularCourseScope.setMinIncrementNac(new Integer(2));
+		//infoCurricularCourseScope.setWeigth(new Integer(4));
 		infoCurricularCourseScope.setIdInternal(new Integer(1));
 		
 		Object[] args = { infoCurricularCourseScope };
@@ -56,9 +56,9 @@ public class EditCurricularCourseScopeTest extends TestCaseManagerInsertAndEditS
 		InfoCurricularCourseScope infoCurricularCourseScope = new InfoCurricularCourseScope();
 		infoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 		infoCurricularCourseScope.setInfoBranch(infoBranch);
-		infoCurricularCourseScope.setMaxIncrementNac(new Integer(3));
-		infoCurricularCourseScope.setMinIncrementNac(new Integer(2));
-		infoCurricularCourseScope.setWeigth(new Integer(4));
+//		infoCurricularCourseScope.setMaxIncrementNac(new Integer(3));
+//		infoCurricularCourseScope.setMinIncrementNac(new Integer(2));
+//		infoCurricularCourseScope.setWeigth(new Integer(4));
 		infoCurricularCourseScope.setIdInternal(new Integer(10));
 		
 		Object[] args = { infoCurricularCourseScope };

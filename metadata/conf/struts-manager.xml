@@ -1120,12 +1120,12 @@
 			name="executionCourseForm"
 			scope="request"
 			input="/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0">
-
 		<forward name="prepareEditECChooseExecutionPeriod" path="df.executionCourseManagement.prepareEditECChooseExecutionPeriod"/>
 		<forward name="prepareEditECChooseExecDegreeAndCurYear" path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear"/>
 		<forward name="prepareEditExecutionCourse" path="df.executionCourseManagement.prepareEditExecutionCourse"/>
 		<forward name="editExecutionCourse" path="df.executionCourseManagement.editExecutionCourse"/>
-	</action>
+		<forward name="viewExecutionCourse" path="df.executionCourseManagement.viewExecutionCourse"/>
+	</action>	
 	<action path="/editExecutionCourseManageCurricularCourses"
 			type="ServidorApresentacao.Action.manager.executionCourseManagement.EditExecutionCourseManageCurricularCoursesDispatchAction"
 			parameter="method"
