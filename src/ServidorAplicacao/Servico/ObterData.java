@@ -53,7 +53,6 @@ public class ObterData implements IServico {
   public DataView run()
 	throws FenixServiceException, ExcepcaoInexistente {
 	
-	System.out.println("Entrei em data");
 	Calendar calendar = Calendar.getInstance();
 	int dia= calendar.get(Calendar.DAY_OF_MONTH);
 	int ano= calendar.get(Calendar.YEAR);
@@ -65,10 +64,6 @@ public class ObterData implements IServico {
 	Mes objMes=new Mes(intMes+1);
 	
 	String mes=objMes.toString();
-	//System.out.println(convMes.sqlToJava(mes));
-	
-	
-	//System.out.println(mes);
 
 	/*Object argumentos[] = {};
 

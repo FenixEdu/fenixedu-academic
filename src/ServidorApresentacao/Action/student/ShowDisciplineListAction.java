@@ -41,7 +41,6 @@ public class ShowDisciplineListAction extends Action {
 
 		InfoStudent infoStudent = (InfoStudent) session.getAttribute(INFO_STUDENT_KEY);
 
-		System.out.println(infoStudent.getNumber());
 		Object[] argsReadDisciplinesByStudent = { infoStudent.getNumber(), infoStudent.getDegreeType() };
 		Object[] argsReadCourseByStudent = { infoStudent.getNumber(), infoStudent.getDegreeType() };
 
@@ -49,7 +48,6 @@ public class ShowDisciplineListAction extends Action {
 		ArrayList DisciplinesList = new ArrayList();
 		InfoDegree degree = null;
 
-		System.out.println("iniciarChamada");
 		try {
 			DisciplinesList =
 				(ArrayList) ServiceUtils.executeService(

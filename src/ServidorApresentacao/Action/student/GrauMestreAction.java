@@ -46,12 +46,8 @@ public class GrauMestreAction extends Action {
 
 		// Tipo de certidao que o aluno quer obter
 
-		System.out.println("entrei no GrauMestre");
-
 		String strTipo = (String) session.getAttribute("Tipo");
 
-		System.out.println("ja tenho o tipo");
-		System.out.println(strTipo);
 
 		int Tipo = Integer.parseInt(strTipo);
 		System.out.println(Tipo);
@@ -59,8 +55,6 @@ public class GrauMestreAction extends Action {
 
 		boolean Inscricao = true;
 
-		System.out.println("passei");
-		System.out.println(infoStudent.getNumber());
 		Object[] argsReadDisciplinesByStudent = { infoStudent.getNumber(), infoStudent.getDegreeType() };
 		Object[] argsReadCourseByStudent = { infoStudent.getNumber(), infoStudent.getDegreeType() };
 
@@ -69,7 +63,6 @@ public class GrauMestreAction extends Action {
 		InfoDegree infoDegree = null;
 		String result="Inexistente";
 
-		System.out.println("iniciarChamada");
 
 		// deve faltar remover antes de entrar se existir
 
@@ -86,12 +79,11 @@ public class GrauMestreAction extends Action {
 						"ReadCourseByStudent",
 						argsReadCourseByStudent);
 			if (infoDegree!=null) {
-				System.out.println(infoDegree.toString());
+
 				session.setAttribute("infoCourse", infoDegree);
 			}
-					System.out.println("acabeiServico");
 				} catch (Exception e) {
-					System.out.println("entrei" + e);
+
 					return mapping.getInputForward();
 				}
 
@@ -106,8 +98,7 @@ public class GrauMestreAction extends Action {
 			GestorServicos gestor = GestorServicos.manager();
 			DataView data = (DataView) gestor.executar(null, "ObterData", argumentos);
 			session.setAttribute("Data", data);
-			System.out.println("Acabei de fazer request da data");
-
+			
 
 		return mapping.findForward(result);
 

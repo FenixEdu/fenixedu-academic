@@ -24,7 +24,6 @@ public class EscolherCertidoesAction extends FenixAction {
 
 	HttpSession session = request.getSession(false);
 
-	System.out.println("entrei no escolher certidoes");
 	String result="Inexistente";
 	String tipo="";
 	
@@ -33,11 +32,6 @@ public class EscolherCertidoesAction extends FenixAction {
 		tipo =  (String) escolherCertidaoForm.get("certidao");
 
 		int intTipo = Integer.parseInt(tipo);
-		
-		
-		System.out.println("vou escrever o tipo");
-		System.out.println(tipo);
-		
 
 			switch(intTipo){
 				case 1:result="Tipo1";break;	
@@ -51,8 +45,6 @@ public class EscolherCertidoesAction extends FenixAction {
 		}
 		
 		session.setAttribute("Tipo", tipo);
-		
-		System.out.println("O tipo pedido é:"+result);
 		return mapping.findForward(result);
 
 	  }

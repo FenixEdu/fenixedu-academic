@@ -64,8 +64,6 @@ public class ReadEmptyRoomsService implements IServico {
 							infoRoom.getCapacidadeNormal(),
 							null);
 			
-			System.out.println("Tenho salas:"+roomList.size());
-			
 			
 			Iterator roomListIterator = roomList.iterator();
 			
@@ -81,15 +79,11 @@ public class ReadEmptyRoomsService implements IServico {
 				}
 				
 			}
-
-			System.out.println("Tenho info salas:"+infoRoomList.size());
 			
 			IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
 	
 			
 			List lessonList = lessonDAO.readLessonsInPeriod(lesson);
-			
-			System.out.println("Tenho aulas:"+lessonList.size());
 			
 			List infoLessonList = new ArrayList();
 						

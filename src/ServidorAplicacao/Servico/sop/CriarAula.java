@@ -126,8 +126,6 @@ public class CriarAula implements IServico {
 			List lessonMatchList =
 				persistentLesson.readLessonsInBroadPeriod(lesson);
 
-			System.out.println("Tenho aulas:" + lessonMatchList.size());
-
 			if (lessonMatchList.size() > 0) {
 				if (lessonMatchList.contains(lesson)) {
 					throw new ExistingServiceException();

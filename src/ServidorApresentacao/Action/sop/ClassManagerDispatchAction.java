@@ -255,7 +255,6 @@ public class ClassManagerDispatchAction extends DispatchAction {
 				userView,
 				"LerTurma",
 				argsLerTurma);
-		System.out.println("Class:" + classView + "********************");
 		return classView;
 	}
 

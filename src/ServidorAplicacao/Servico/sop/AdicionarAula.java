@@ -112,17 +112,6 @@ public class AdicionarAula implements IServico {
 		double lessonDuration =
 			(getLessonDurationInMinutes(lesson).doubleValue()) / 60;
 
-		System.out.println(
-			" Numero de horas de turno = "
-				+ hours
-				+ " Numero maximo de horas = "
-				+ shift
-					.getDisciplinaExecucao()
-					.getTheoreticalHours()
-					.doubleValue());
-		System.out.println(
-			" Horas de turno + duracao aula = " + (hours + lessonDuration));
-
 		if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICA))) {
 			if (hours
 				== shift
@@ -203,15 +192,10 @@ public class AdicionarAula implements IServico {
 
 		IAula lesson = null;
 		double duration = 0;
-		System.out.println(
-			"Aulas de turno "
-				+ shift.getNome()
-				+ "= "
-				+ lessonsOfShiftType.size());
 		for (int i = 0; i < lessonsOfShiftType.size(); i++) {
 			lesson = ((ITurnoAula) lessonsOfShiftType.get(i)).getAula();
 			duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
-			//			System.out.println("Total horas aulas do turno = " + duration);			
+		
 		}
 		return duration;
 	}
@@ -224,17 +208,6 @@ public class AdicionarAula implements IServico {
 		int duration = 0;
 
 		duration = (endHour - beginHour) * 60 + (endMinutes - beginMinutes);
-		System.out.println(
-			"AULA - INICIO = "
-				+ beginHour
-				+ ":"
-				+ beginMinutes
-				+ " / FIM = "
-				+ endHour
-				+ ":"
-				+ endMinutes
-				+ " - DURACAO = "
-				+ duration);
 		return new Integer(duration);
 	}
 

@@ -66,10 +66,6 @@ public class EditarTurma implements IServico {
 					.readByNameAndExecutionDegreeAndExecutionPeriod(
 					oldClassView.getNome(),
 					executionDegree, executionPeriod);
-					System.out.println("============="+turma);
-			System.out.println("============="+oldClassView.getNome());
-			System.out.println("============="+executionDegree);
-			System.out.println("============="+executionPeriod);
 			/* :FIXME: we have to change more things... to dump one year to another */			
 			if (turma != null) {
 				turma.setNome(newClassView.getNome());
