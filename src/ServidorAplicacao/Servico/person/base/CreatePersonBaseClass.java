@@ -4,12 +4,12 @@
 
 package ServidorAplicacao.Servico.person.base;
 
+import java.util.ArrayList;
+
 import DataBeans.InfoPerson;
 import Dominio.Country;
 import Dominio.ICountry;
-import Dominio.IPersonRole;
 import Dominio.IPessoa;
-import Dominio.PersonRole;
 import Dominio.Pessoa;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -78,7 +78,7 @@ public class CreatePersonBaseClass
 		personToLock.setSexo(newPerson.getSexo());
 		personToLock.setTelefone(newPerson.getTelefone());
 		personToLock.setTelemovel(newPerson.getTelemovel());
-
+		
 		if (newPerson.getInfoPais() != null)
 		{
 			ICountry country =
@@ -113,18 +113,24 @@ public class CreatePersonBaseClass
 			if(newPerson.getIdInternal() != null && !newPerson.getIdInternal().equals(new Integer(0)))
 				personToLock = (IPessoa) pPerson.readByOID(Pessoa.class, newPerson.getIdInternal());
 
+
+			boolean islocked = false;
 			//Create the new Person if it does not exist
 			if (personToLock == null)
 			{
 				personToLock = new Pessoa();
-
-				IPersonRole personRole = new PersonRole();
-				pPersonRole.simpleLockWrite(personRole);
-				personRole.setPerson(personToLock);
-				personRole.setRole(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
+				pPerson.simpleLockWrite(personToLock);
+				
+				
+				
+				personToLock.setPersonRoles(new ArrayList());
+				personToLock.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
+				islocked = true;
 			}
-			//lock person for WRITE
-			pPerson.simpleLockWrite(personToLock);
+			if(!islocked) {
+				//lock person for WRITE
+				pPerson.simpleLockWrite(personToLock);
+			}
 
 			personToLock = setPersonAttributes(personToLock, newPerson, pCountry);
 
