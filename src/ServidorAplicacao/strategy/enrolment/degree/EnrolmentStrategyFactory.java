@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.ICurricularCourse;
+import org.apache.commons.collections.CollectionUtils;
+
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IStudent;
@@ -110,14 +111,15 @@ public class EnrolmentStrategyFactory {
 		List curricularCoursesFromStudentDegreeCurricularPlan,
 		List aprovedCurricularCoursesFromStudent) {
 
-		Iterator iteratorAproved = aprovedCurricularCoursesFromStudent.iterator();
-		while (iteratorAproved.hasNext()) {
-			ICurricularCourse curricularCourse = (ICurricularCourse) iteratorAproved.next();
-			if (curricularCoursesFromStudentDegreeCurricularPlan.contains(curricularCourse)) {
-				curricularCoursesFromStudentDegreeCurricularPlan.remove(curricularCourse);
-			}
-		}
-		return curricularCoursesFromStudentDegreeCurricularPlan;
+//		Iterator iteratorAproved = aprovedCurricularCoursesFromStudent.iterator();
+		return (List) CollectionUtils.subtract(curricularCoursesFromStudentDegreeCurricularPlan, aprovedCurricularCoursesFromStudent);
+//		while (iteratorAproved.hasNext()) {
+//			ICurricularCourse curricularCourse = (ICurricularCourse) iteratorAproved.next();
+//			if (curricularCoursesFromStudentDegreeCurricularPlan.contains(curricularCourse)) {
+//				curricularCoursesFromStudentDegreeCurricularPlan.remove(curricularCourse);
+//			}
+//		}
+//		return curricularCoursesFromStudentDegreeCurricularPlan;
 	}
 
 }
