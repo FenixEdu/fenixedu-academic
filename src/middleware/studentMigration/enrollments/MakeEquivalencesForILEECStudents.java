@@ -55,6 +55,8 @@ public class MakeEquivalencesForILEECStudents
 	private static HashMap creditEquivalencesType2 = new HashMap();
 	private static HashMap creditEquivalencesType5 = new HashMap();
 	private static HashMap noEquivalences = new HashMap();
+	private static HashMap schools = new HashMap();
+	private static HashMap years = new HashMap();
 	
 	public static void main(String args[])
 	{
@@ -449,10 +451,32 @@ public class MakeEquivalencesForILEECStudents
 				}
 			}
 			MakeEquivalencesForILEECStudents.noEquivalences.put(key, cases);
+
+
+			
+			cases = (List) MakeEquivalencesForILEECStudents.years.get(key);
+			if (cases == null)
+			{
+				cases = new ArrayList();
+				cases.add(oldEnrolment.getExecutionPeriod().getExecutionYear().getYear());
+			} else
+			{
+				if (!cases.contains(oldEnrolment.getExecutionPeriod().getExecutionYear().getYear())) {
+					cases.add(oldEnrolment.getExecutionPeriod().getExecutionYear().getYear());
+				}
+			}
+			MakeEquivalencesForILEECStudents.years.put(key, cases);
+			
+			String rest = "Escola: [" + oldCurricularCourse.getUniversity().getName() + "]";
+			String aux = (String) MakeEquivalencesForILEECStudents.schools.get(key);
+			if(aux == null)
+			{
+				MakeEquivalencesForILEECStudents.schools.put(key, rest);
+			}
 		} else
 		{
 			String key = "Código: [" + oldCurricularCourse.getCode() + "] e Nome: [" + oldCurricularCourse.getName() + "]";
-			
+
 			List cases = null;
 			
 			if(equivalenceType.intValue() == 2)
@@ -493,7 +517,7 @@ public class MakeEquivalencesForILEECStudents
 		if(!MakeEquivalencesForILEECStudents.noEquivalences.entrySet().isEmpty()) {
 			int total = 0;
 			out.println("\nDISCIPLINAS SEM EQUIVALÊNCIA");
-			out.println("\nOS CASOS SÃO:");
+			out.println("\nAS INSCRIÇÕES SÃO:");
 			Iterator iterator = MakeEquivalencesForILEECStudents.noEquivalences.entrySet().iterator();
 			while (iterator.hasNext())
 			{
@@ -504,14 +528,16 @@ public class MakeEquivalencesForILEECStudents
 				out.println("\tAlunos: " + cases);
 				total = total + cases.size();
 			}
-			out.println("TOTAL DE CASOS: " + total);
+			out.println("TOTAL DE INSCRIÇÕES: " + total);
 			out.println("\nAS DISCIPLINAS SÃO:");
 			iterator = MakeEquivalencesForILEECStudents.noEquivalences.entrySet().iterator();
 			while (iterator.hasNext())
 			{
 				Map.Entry mapEntry = (Map.Entry) iterator.next();
 				String key = (String) mapEntry.getKey();
-				out.println("\t" + key);
+				List cases = (List) MakeEquivalencesForILEECStudents.years.get(key);
+				String rest = (String) MakeEquivalencesForILEECStudents.schools.get(key) + ", Anos: " + cases;
+				out.println("\t" + key + " - " + rest);
 			}
 			out.println("TOTAL DE DISCIPLINAS: " + MakeEquivalencesForILEECStudents.noEquivalences.size());
 		}
@@ -519,7 +545,7 @@ public class MakeEquivalencesForILEECStudents
 		if(!MakeEquivalencesForILEECStudents.creditEquivalencesType2.entrySet().isEmpty()) {
 			int total = 0;
 			out.println("\nDISCIPLINAS COM EQUIVALÊNCIAS DO TIPO \"CRÉDITOS EM QUALQUER ÁREA SECUNDÁRIA\"");
-			out.println("\nOS CASOS SÃO:");
+			out.println("\nAS INSCRIÇÕES SÃO:");
 			Iterator iterator = MakeEquivalencesForILEECStudents.creditEquivalencesType2.entrySet().iterator();
 			while (iterator.hasNext())
 			{
@@ -530,7 +556,7 @@ public class MakeEquivalencesForILEECStudents
 				out.println("\tAlunos: " + cases);
 				total = total + cases.size();
 			}
-			out.println("TOTAL DE CASOS: " + total);
+			out.println("TOTAL DE INSCRIÇÕES: " + total);
 			out.println("\nAS DISCIPLINAS SÃO:");
 			iterator = MakeEquivalencesForILEECStudents.creditEquivalencesType2.entrySet().iterator();
 			while (iterator.hasNext())
@@ -545,7 +571,7 @@ public class MakeEquivalencesForILEECStudents
 		if(!MakeEquivalencesForILEECStudents.creditEquivalencesType5.entrySet().isEmpty()) {
 			int total = 0;
 			out.println("\nDISCIPLINAS COM EQUIVALÊNCIAS DO TIPO \"CRÉDITOS EM ÁREA CIENTÍFICA ESPECIFICA\"");
-			out.println("\nOS CASOS SÃO:");
+			out.println("\nAS INSCRIÇÕES SÃO:");
 			Iterator iterator = MakeEquivalencesForILEECStudents.creditEquivalencesType5.entrySet().iterator();
 			while (iterator.hasNext())
 			{
@@ -556,7 +582,7 @@ public class MakeEquivalencesForILEECStudents
 				out.println("\tAlunos: " + cases);
 				total = total + cases.size();
 			}
-			out.println("TOTAL DE CASOS: " + total);
+			out.println("TOTAL DE INSCRIÇÕES: " + total);
 			out.println("\nAS DISCIPLINAS SÃO:");
 			iterator = MakeEquivalencesForILEECStudents.creditEquivalencesType5.entrySet().iterator();
 			while (iterator.hasNext())

@@ -21,13 +21,14 @@ public class MarkType implements Serializable {
 	public static final MarkType TYPE20_OBJ = new MarkType(20);
 	public static final MarkType TYPE5_OBJ = new MarkType(5);
 	
-	private static final Object[] REP_MARKS = {"RE" ,"R.E." ,"REP", "re", "rep"};
-	private static final Object[] NA_MARKS = {"NA","N.A.", "na"};
-	private static final Object[] OTHER_MARKS = {"RE" ,"R.E." ,"REP" , "NA","N.A.", "AP", "ap", "re", "rep", "na"};
-	private static final Object[] TYPE20_MARKS = {"10","11","12","13","14","15","16","17","18","19","20"};
-	private static final Object[] TYPE20EVALUATION_MARKS = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-	private static final Object[] TYPE5_MARKS = {"3" , "4", "5"};
-
+	public static final Object[] REP_MARKS = {"RE" ,"R.E." ,"REP", "re", "rep"};
+	public static final Object[] NA_MARKS = {"NA","N.A.", "na"};
+	public static final Object[] OTHER_MARKS = {"RE" ,"R.E." ,"REP" , "NA","N.A.", "AP", "ap", "re", "rep", "na"};
+	public static final Object[] TYPE20_MARKS = {"10","11","12","13","14","15","16","17","18","19","20"};
+	public static final Object[] TYPE20EVALUATION_MARKS = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+	public static final Object[] TYPE5_MARKS = {"3" , "4", "5"};
+	public static final Object[] AP_MARKS = {"AP", "ap"};
+	
 	private Integer type;
 
 	public MarkType() {

@@ -421,7 +421,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 			Iterator iterator2 = evaluations.iterator();
 			while (iterator2.hasNext())
 			{
-				EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) iterator2.next();
+				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator2.next();
 				if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
 				{
 					Iterator iterator3 = enrollmentsList.iterator();

@@ -35,15 +35,17 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 	}
 
 	public boolean equals(Object obj) {
-		boolean resultado = false;
+		boolean result = false;
 
-		if (obj instanceof IEnrolmentEvaluation) {
+		if(obj instanceof IEnrolmentEvaluation)
+		{
 			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
-
-			resultado =	this.getEnrolment().equals(enrolmentEvaluation.getEnrolment())
-					&& this.getEnrolmentEvaluationType().equals(enrolmentEvaluation.getEnrolmentEvaluationType());
+			result = this.getEnrolment().equals(enrolmentEvaluation.getEnrolment()) &&
+					this.getEnrolmentEvaluationType().equals(enrolmentEvaluation.getEnrolmentEvaluationType()) &&
+					this.getGrade().equals(enrolmentEvaluation.getGrade()) &&
+					this.getWhen().equals(enrolmentEvaluation.getWhen());
 		}
-		return resultado;
+		return result;
 	}
 
 	public String toString() {
