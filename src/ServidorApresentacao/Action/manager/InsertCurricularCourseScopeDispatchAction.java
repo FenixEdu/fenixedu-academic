@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -24,8 +23,7 @@ import DataBeans.InfoBranch;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurricularSemester;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -33,7 +31,8 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author lmac1
@@ -49,17 +48,16 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 		HttpServletResponse response)
 		throws FenixActionException {
 
-			HttpSession session = request.getSession(false);
-			UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
+			IUserView userView = SessionUtils.getUserView(request);
 			
 			Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 		
 			Object[] args = { degreeCurricularPlanId };
 			
-			GestorServicos manager = GestorServicos.manager();
+			
 			List result = null;
 			try {
-					result = (List) manager.executar(userView, "ReadBranchesByDegreeCurricularPlan", args);
+					result = (List) ServiceUtils.executeService(userView, "ReadBranchesByDegreeCurricularPlan", args);
 			
 			} catch (NonExistingServiceException ex) {
 				ActionErrors errors = new ActionErrors();
@@ -97,9 +95,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 			HttpServletResponse response)
 			throws FenixActionException {
 
-			HttpSession session = request.getSession(false);
-			UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
-    	
+				IUserView userView = SessionUtils.getUserView(request);
 			DynaActionForm dynaForm = (DynaValidatorForm) form;
 			
 			InfoCurricularCourseScope infoCurricularCourseScope = new InfoCurricularCourseScope();
@@ -143,10 +139,10 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 		
 			Object args[] = { infoCurricularCourseScope };
 							
-			GestorServicos manager = GestorServicos.manager();
+			
 		
 			try {
-				 	manager.executar(userView, "InsertCurricularCourseScopeAtCurricularCourse", args);
+				ServiceUtils.executeService(userView, "InsertCurricularCourseScopeAtCurricularCourse", args);
 				 	
 			} catch (ExistingServiceException ex) {
 				throw new ExistingActionException(ex.getMessage(), ex);

@@ -5,7 +5,6 @@ package ServidorApresentacao.Action.manager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -14,14 +13,14 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoDegree;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoCurso;
 
 /**
@@ -47,9 +46,7 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 	
-		HttpSession session = request.getSession(false);
-    	UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
-    	
+			IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		String code = (String) dynaForm.get("code");
 		String name = (String) dynaForm.get("name");
@@ -59,10 +56,10 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
     	InfoDegree infoDegree = new InfoDegree(code, name, degreeType);
     	
 		Object args[] = { infoDegree };
-		GestorServicos manager = GestorServicos.manager();
+		
 		
 		try {
-				manager.executar(userView, "InsertDegree", args);
+			ServiceUtils.executeService(userView, "InsertDegree", args);
 				
 		} catch (ExistingServiceException ex) {
 			throw new ExistingActionException("Um curso com esses dados", ex);

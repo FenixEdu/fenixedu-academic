@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -19,12 +18,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author lmac1
@@ -38,18 +37,19 @@ public class DeleteExecutionDegreesAction extends FenixAction {
 								 HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
+		
+			IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm deleteForm = (DynaActionForm) form;
 
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		
 		List executionDegreesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 		Object args[] = { executionDegreesIds };
-		GestorServicos manager = GestorServicos.manager();
+	
 		List errorsList = new ArrayList();
 
 		try {
-				errorsList = (List) manager.executar(userView, "DeleteExecutionDegreesOfDegreeCurricularPlan", args);
+				errorsList = (List) ServiceUtils.executeService(userView, "DeleteExecutionDegreesOfDegreeCurricularPlan", args);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

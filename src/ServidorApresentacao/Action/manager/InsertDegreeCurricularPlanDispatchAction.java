@@ -7,7 +7,6 @@ import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
@@ -18,8 +17,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -28,7 +26,8 @@ import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
 
@@ -46,8 +45,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 	public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException, InvalidArgumentException {
 
-		HttpSession session = request.getSession(false);
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+			IUserView userView = SessionUtils.getUserView(request);
 
 		Integer degreeId = new Integer(request.getParameter("degreeId"));
 
@@ -110,10 +108,9 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
 		Object args[] = { infoDegreeCurricularPlan };
-		GestorServicos manager = GestorServicos.manager();
-
+	
 		try {
-			manager.executar(userView, "InsertDegreeCurricularPlan", args);
+			ServiceUtils.executeService(userView, "InsertDegreeCurricularPlan", args);
 
 		} catch (ExistingServiceException ex) {
 			throw new ExistingActionException(ex.getMessage(), ex);

@@ -5,7 +5,6 @@ package ServidorApresentacao.Action.manager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -15,8 +14,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegreeCurricularPlan;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -24,7 +22,8 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.CurricularCourseType;
 
 /**
@@ -40,8 +39,7 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 
 	public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = SessionUtils.getUserView(request);
 
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 
@@ -64,10 +62,10 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 
 		Object args[] = { infoCurricularCourse };
 
-		GestorServicos manager = GestorServicos.manager();
+		
 
 		try {
-			manager.executar(userView, "InsertCurricularCourseAtDegreeCurricularPlan", args);
+			ServiceUtils.executeService(userView, "InsertCurricularCourseAtDegreeCurricularPlan", args);
 
 		} catch (ExistingServiceException ex) {
 			throw new ExistingActionException(ex.getMessage(), ex);

@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -18,14 +17,14 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoCurricularCourse;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author lmac1
@@ -34,18 +33,16 @@ public class ReadCurricularCourseAction extends FenixAction {
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = SessionUtils.getUserView(request);	
 		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
 		Object args[] = { curricularCourseId };
 
-		GestorServicos manager = GestorServicos.manager();
+		
 		InfoCurricularCourse infoCurricularCourse = null;
 
 		try {
-			infoCurricularCourse = (InfoCurricularCourse) manager.executar(userView, "ReadCurricularCourse", args);
+			infoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService(userView, "ReadCurricularCourse", args);
 
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("message.nonExistingCurricularCourse", "", e);
@@ -56,7 +53,7 @@ public class ReadCurricularCourseAction extends FenixAction {
 		// in case the curricular course really exists
 		List executionCourses = null;
 		try {
-			executionCourses = (List) manager.executar(userView, "ReadExecutionCoursesByCurricularCourse", args);
+			executionCourses = (List) ServiceUtils.executeService(userView, "ReadExecutionCoursesByCurricularCourse", args);
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
@@ -66,7 +63,7 @@ public class ReadCurricularCourseAction extends FenixAction {
 
 		List curricularCourseScopes = new ArrayList();
 		try {
-			curricularCourseScopes = (List) manager.executar(userView, "ReadCurricularCourseScopes", args);
+			curricularCourseScopes = (List) ServiceUtils.executeService(userView, "ReadCurricularCourseScopes", args);
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);

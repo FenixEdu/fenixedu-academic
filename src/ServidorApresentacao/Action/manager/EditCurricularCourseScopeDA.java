@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -21,8 +20,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoBranch;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurricularSemester;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -30,7 +28,8 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author lmac1
@@ -39,20 +38,21 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
 	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
+		
+		IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm dynaForm = (DynaActionForm) form;
 
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		
 
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 		Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 		InfoCurricularCourseScope oldInfoCurricularCourseScope = null;
 
 		Object args[] = { curricularCourseScopeId };
-		GestorServicos manager = GestorServicos.manager();
+		
 
 		try {
-			oldInfoCurricularCourseScope = (InfoCurricularCourseScope) manager.executar(userView, "ReadCurricularCourseScope", args);
+			oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ServiceUtils.executeService(userView, "ReadCurricularCourseScope", args);
 		} catch (NonExistingServiceException ex) {
 			throw new NonExistingActionException("message.nonExistingCurricularCourseScope", mapping.findForward("readCurricularCourse"));
 		} catch (FenixServiceException fenixServiceException) {
@@ -86,7 +86,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		Object[] args1 = { degreeCurricularPlanId };
 		List result = null;
 		try {
-			result = (List) manager.executar(userView, "ReadBranchesByDegreeCurricularPlan", args1);
+			result = (List) ServiceUtils.executeService(userView, "ReadBranchesByDegreeCurricularPlan", args1);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -115,9 +115,8 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
 	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-
+		
+		IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 
 		Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
@@ -192,10 +191,10 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		}
 
 		Object args[] = { newInfoCurricularCourseScope };
-		GestorServicos manager = GestorServicos.manager();
+		
 
 		try {
-			manager.executar(userView, "EditCurricularCourseScope", args);
+			ServiceUtils.executeService(userView, "EditCurricularCourseScope", args);
 		} catch (NonExistingServiceException ex) {
 			throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readCurricularCourse"));
 		} catch (ExistingServiceException e) {

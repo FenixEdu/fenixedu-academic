@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -22,8 +21,7 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoTeacher;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -31,7 +29,8 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author lmac1
@@ -41,8 +40,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
 	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = SessionUtils.getUserView(request);
 		
 		DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -50,10 +48,10 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
 		InfoExecutionDegree oldInfoExecutionDegree = null;
 		Object args[] = { executionDegreeId };
-		GestorServicos manager = GestorServicos.manager();
+		
 
 		try {
-				oldInfoExecutionDegree = (InfoExecutionDegree) manager.executar(userView, "ReadExecutionDegree", args);
+				oldInfoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(userView, "ReadExecutionDegree", args);
 				
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("message.nonExistingExecutionDegree", mapping.findForward("readDegreeCurricularPlan"));
@@ -66,7 +64,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 		
 		/*   Needed service and creation of bean of InfoTeachers for use in jsp   */
 		try {
-			result = (List) manager.executar(userView, "ReadAllTeachers", null);
+			result = (List) ServiceUtils.executeService(userView, "ReadAllTeachers", null);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -86,7 +84,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
 		/*   Needed service and creation of bean of InfoExecutionYears for use in jsp   */
 		try {
-			result = (List) manager.executar(userView, "ReadAllExecutionYears", null);
+			result = (List) ServiceUtils.executeService(userView, "ReadAllExecutionYears", null);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -113,8 +111,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
 	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = SessionUtils.getUserView(request);
 
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 		Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
@@ -143,10 +140,9 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
 		Object args[] = { infoExecutionDegree };
 
-		GestorServicos manager = GestorServicos.manager();
-
+		
 		try {
-				manager.executar(userView, "EditExecutionDegree", args);
+			ServiceUtils.executeService(userView, "EditExecutionDegree", args);
 				
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException("message.manager.existing.execution.degree");

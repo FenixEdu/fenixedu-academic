@@ -8,7 +8,6 @@ import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion;
 import org.apache.struts.action.ActionForm;
@@ -18,8 +17,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoDegreeCurricularPlan;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -28,7 +26,8 @@ import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorPersistente.Conversores.Calendar2DateFieldConversion;
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
@@ -41,19 +40,20 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 
 	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
+		IUserView userView = SessionUtils.getUserView(request);
+		
 		DynaActionForm dynaForm = (DynaActionForm) form;
 
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 
 		InfoDegreeCurricularPlan oldInfoDegreeCP = null;
 
 		Object args[] = { degreeCurricularPlanId };
-		GestorServicos manager = GestorServicos.manager();
+		
 
 		try {
-			oldInfoDegreeCP = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlan", args);
+			oldInfoDegreeCP = (InfoDegreeCurricularPlan) ServiceUtils.executeService(userView, "ReadDegreeCurricularPlan", args);
 
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
@@ -111,8 +111,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 
 	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = SessionUtils.getUserView(request);
 
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 
@@ -181,10 +180,9 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 		newInfoDegreeCP.setIdInternal(oldDegreeCPId);
 
 		Object args[] = { newInfoDegreeCP };
-		GestorServicos manager = GestorServicos.manager();
-
+		
 		try {
-			manager.executar(userView, "EditDegreeCurricularPlan", args);
+			ServiceUtils.executeService(userView, "EditDegreeCurricularPlan", args);
 
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException("message.manager.existing.degree.curricular.plan");

@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -22,8 +21,7 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoTeacher;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -31,7 +29,8 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author lmac1
@@ -47,17 +46,14 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 			HttpServletResponse response)
 			throws FenixActionException {
 
-				HttpSession session = request.getSession(false);
-				UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
+				IUserView userView = SessionUtils.getUserView(request);						
 				
-				
-				GestorServicos manager = GestorServicos.manager();
 				String label, value;
 				List result = null;
 				
 		/*   Needed service and creation of bean of InfoTeachers for use in jsp   */    
 				try {
-						result = (List) manager.executar(userView, "ReadAllTeachers", null);
+						result = (List) ServiceUtils.executeService(userView, "ReadAllTeachers", null);
 				} catch (FenixServiceException e) {
 					throw new FenixActionException(e);
 				}
@@ -77,7 +73,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 				
 		/*   Needed service and creation of bean of InfoExecutionYears for use in jsp   */
 				try {
-						result = (List) manager.executar(userView, "ReadAllExecutionYears", null);
+						result = (List) ServiceUtils.executeService(userView, "ReadAllExecutionYears", null);
 				} catch (FenixServiceException e) {
 					throw new FenixActionException(e);
 				}
@@ -107,8 +103,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-		UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
+			IUserView userView = SessionUtils.getUserView(request);
 		
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
     	
@@ -130,10 +125,9 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 		
 		Object args[] = { infoExecutionDegree };
 		
-		GestorServicos manager = GestorServicos.manager();
-		
+				
 		try {
-				 manager.executar(userView, "InsertExecutionDegreeAtDegreeCurricularPlan", args);
+			ServiceUtils.executeService(userView, "InsertExecutionDegreeAtDegreeCurricularPlan", args);
 				 
 		} catch (ExistingServiceException ex) {
 			throw new ExistingActionException(ex.getMessage(), ex);

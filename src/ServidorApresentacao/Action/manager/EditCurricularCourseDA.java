@@ -5,7 +5,6 @@ package ServidorApresentacao.Action.manager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -14,8 +13,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoCurricularCourse;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -23,7 +21,8 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.CurricularCourseType;
 
 /**
@@ -33,19 +32,20 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 
 	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
+		IUserView userView = SessionUtils.getUserView(request);
+		
 		DynaActionForm dynaForm = (DynaActionForm) form;
 
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		
 		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
 		InfoCurricularCourse oldInfoCurricularCourse = null;
 
 		Object args[] = { curricularCourseId };
-		GestorServicos manager = GestorServicos.manager();
+		
 
 		try {
-			oldInfoCurricularCourse = (InfoCurricularCourse) manager.executar(userView, "ReadCurricularCourse", args);
+			oldInfoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService(userView, "ReadCurricularCourse", args);
 		} catch (NonExistingServiceException ex) {
 			throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping.findForward("readDegreeCP"));
 		} catch (FenixServiceException fenixServiceException) {
@@ -67,8 +67,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 
 	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = SessionUtils.getUserView(request);
 
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 
@@ -94,10 +93,9 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		newInfoCurricularCourse.setBasic(new Boolean(basicString));
 
 		Object args[] = { newInfoCurricularCourse };
-		GestorServicos manager = GestorServicos.manager();
-
+		
 		try {
-			manager.executar(userView, "EditCurricularCourse", args);
+			ServiceUtils.executeService(userView, "EditCurricularCourse", args);
 		} catch (NonExistingServiceException ex) {
 			throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping.findForward("readDegreeCP"));
 		} catch (ExistingServiceException e) {

@@ -5,7 +5,6 @@ package ServidorApresentacao.Action.manager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -13,8 +12,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoDegree;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -22,7 +20,8 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoCurso;
 
 /**
@@ -33,21 +32,21 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 
 	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
+		IUserView userView = SessionUtils.getUserView(request);
 		
 		DynaActionForm readDegreeForm = (DynaActionForm) form;
 
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		
 
 		Integer degreeId = new Integer(request.getParameter("degreeId"));
 
 		InfoDegree oldInfoDegree = null;
 
 		Object args[] = { degreeId };
-		GestorServicos manager = GestorServicos.manager();
+		
 
 		try {
-				oldInfoDegree = (InfoDegree) manager.executar(userView, "ReadDegree", args);
+				oldInfoDegree = (InfoDegree) ServiceUtils.executeService(userView, "ReadDegree", args);
 		
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("message.nonExistingDegree", mapping.findForward("readDegrees"));
@@ -65,9 +64,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 
 	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = SessionUtils.getUserView(request);
 
 		DynaActionForm editDegreeForm = (DynaActionForm) form;
 		Integer oldDegreeId = new Integer(request.getParameter("degreeId"));
@@ -80,10 +77,10 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 		newInfoDegree.setIdInternal(oldDegreeId);
 
 		Object args[] = { newInfoDegree };
-		GestorServicos manager = GestorServicos.manager();
+		
 
 		try {
-				manager.executar(userView, "EditDegree", args);
+			ServiceUtils.executeService(userView, "EditDegree", args);
 			
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("message.nonExistingDegree", mapping.findForward("readDegrees"));
