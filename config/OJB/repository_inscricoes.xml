@@ -565,6 +565,7 @@
 	</reference-descriptor>
 	<collection-descriptor
 			name="evaluations"
+			refresh="true"
 			proxy="true"
 			element-class-ref="Dominio.EnrolmentEvaluation">
 		<inverse-foreignkey field-ref="enrolmentKey"/>
@@ -636,6 +637,7 @@
 	</reference-descriptor>
 	<collection-descriptor
 			name="evaluations"
+			refresh="true"
 			proxy="true"
 			element-class-ref="Dominio.EnrolmentEvaluation">
 		<inverse-foreignkey field-ref="enrolmentKey"/>
@@ -715,6 +717,7 @@
 	</reference-descriptor>
 	<collection-descriptor
 			name="evaluations"
+			refresh="true"
 			proxy="true"
 			element-class-ref="Dominio.EnrolmentEvaluation">
 		<inverse-foreignkey field-ref="enrolmentKey"/>
