@@ -206,9 +206,23 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 	
 	
 	public Object readByOId(Object obj) throws ExcepcaoPersistencia {
+		PersistenceBroker broker = null;
+		boolean needsCommit = false;
+		tx = odmg.currentTransaction();
+		if (tx == null || !tx.isOpen()) {
+			broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+			System.out.println("não há transacção, vou iniciar");
+			needsCommit = true;
+			broker.beginTransaction();
+		} else {
+			broker = ((HasBroker) tx).getBroker();
+		}
 		
-		Identity identity = new Identity(obj,PersistenceBrokerFactory.defaultPersistenceBroker());
-		Object result = PersistenceBrokerFactory.defaultPersistenceBroker().getObjectByIdentity(identity);
+		Identity identity = new Identity(obj,broker);
+		Object result = broker.getObjectByIdentity(identity);
+		if(needsCommit==true){
+			broker.commitTransaction();
+		}
 		return result;
 		
 	}
