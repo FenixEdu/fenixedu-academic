@@ -61,9 +61,9 @@ public class ManageShiftProfessorships extends DispatchAction
             {
 
                 DecimalFormat df = new DecimalFormat();
-
-                percentage = percentage.replace(',', df.getDecimalFormatSymbols().getDecimalSeparator());
-                percentage = percentage.replace('.', df.getDecimalFormatSymbols().getDecimalSeparator());
+                char decimalSeparator = df.getDecimalFormatSymbols().getDecimalSeparator();
+                percentage = percentage.replace(',', '.');
+                //percentage = percentage.replace('.', '.');
 
                 InfoShiftProfessorship infoShiftProfessorship = new InfoShiftProfessorship();
                 infoShiftProfessorship.setInfoShift(new InfoShift(shiftIdInternal));

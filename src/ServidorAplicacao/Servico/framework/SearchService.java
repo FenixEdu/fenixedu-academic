@@ -57,7 +57,8 @@ public abstract class SearchService implements IServico
         {
             public Object transform(Object input)
             {
-                return cloneDomainObject((IDomainObject) input);
+                InfoObject infoObject = cloneDomainObject((IDomainObject) input); 
+                return infoObject;
             }
         });
 
