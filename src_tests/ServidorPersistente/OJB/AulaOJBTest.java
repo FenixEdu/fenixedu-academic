@@ -412,7 +412,7 @@ public class AulaOJBTest extends TestCaseOJB {
 		lessons = null;
 		lessons = persistentLesson.readByRoomAndExecutionPeriod(room, executionPeriod);
 		assertNotNull(lessons);
-		assertEquals(lessons.size(), 6);
+		assertEquals(lessons.size(), 7);
 
 
 		persistentSupport.confirmarTransaccao();
