@@ -4,11 +4,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <h2><bean:message key="link.shift.enrolment" /></h2>
+<span class="error"><html:errors/></span>
 <bean:define id="hoursPattern">HH : mm</bean:define>
 <html:form action="/enrollStudentInShifts" >
 	<html:hidden property="studentId"/>
 	<logic:iterate id="infoClass" name="infoClassEnrollmentDetails" property="infoClassList">
-		<!-- CLASS -->
+		<%-- CLASS --%>
 		<bean:define id="infoClassId" name="infoClass" property="idInternal"/>		
 			<logic:present name="classId">
 				<bean:define id="classIdSelected" name="classId" />		
@@ -21,7 +22,7 @@
 							<bean:message key="message.shif.type.help" />							
 						</td>
 					</tr>
-					<!-- MAP -->
+					<%-- MAP --%>
 					<logic:iterate id="executionCourseDetailsElem" name="infoClassEnrollmentDetails" property="classExecutionCourseShiftEnrollmentDetailsMap">
 						<logic:equal name="executionCourseDetailsElem" property="key" value="<%= infoClassId.toString()%>" >					
 							<logic:iterate id="executionCourseDetails" name="executionCourseDetailsElem" property="value">		
@@ -30,7 +31,7 @@
 									<td colspan="4" class="listClasses-subheader" style="background:#4F82B5"><%--<b><bean:message key="label.course" /></b>&nbsp;--%><bean:write name="executionCourseDetails" property="infoExecutionCourse.nome"/></td>
 								</tr>
 						
-								<!-- SHIFT -->
+								<%-- SHIFT --%>
 								<logic:iterate id="shiftEnrollmentDetails" name="executionCourseDetails" property="shiftEnrollmentDetailsList">						
 									<tr>
 										<td colspan="3" class="listClasses-header">
@@ -40,7 +41,7 @@
 										</td>
 										<td  class="listClasses-header" style="text-align:right">
 											<bean:message key="label.enroll" />?
-											<!-- Radio button -->
+											<%-- Radio button --%>
 											<bean:define id="shiftKey">
 												shiftMap(<bean:write name="executionCourseDetails" property="infoExecutionCourse.idInternal"/>-<bean:write name="shiftEnrollmentDetails" property="infoShift.tipo"/>)							
 											</bean:define>
@@ -55,7 +56,7 @@
 										<th bgcolor="#EBECED" align="center" width="10%"><bean:message key="label.lesson.room"/></td>			
 									</tr> 
 								
-									<!-- LESSONS -->
+									<%-- LESSONS --%>
 									<logic:iterate id="infoLesson" name="shiftEnrollmentDetails" property="infoShift.infoLessons">
 										<tr>
 											<td align='center'><bean:write name="shiftEnrollmentDetails" property="infoShift.tipo.siglaTipoAula" /></td>
