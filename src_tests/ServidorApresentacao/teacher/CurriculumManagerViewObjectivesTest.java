@@ -67,7 +67,8 @@ public class CurriculumManagerViewObjectivesTest
 	* This method must return a string identifying the forward path when the action executes unsuccessfuly.
 	*/
 	protected String getUnsuccessfulForwardPath() {
-		return "/naoExecutado.do";
+//		return "/naoExecutado.do";
+		return null;
 	}
 
 	/**

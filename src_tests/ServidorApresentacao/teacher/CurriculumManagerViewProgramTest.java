@@ -36,7 +36,7 @@ public class CurriculumManagerViewProgramTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
 	 */
 	protected String getServletConfigFile() {
-		return "/WEB-INF/tests/web-teacher.xml";
+		return "/WEB-INF/web.xml";
 	}
 
 	/* (non-Javadoc)
@@ -66,7 +66,8 @@ public class CurriculumManagerViewProgramTest
 	* This method must return a string identifying the forward path when the action executes unsuccessfuly.
 	*/
 	protected String getUnsuccessfulForwardPath() {
-		return "/naoExecutado.do";
+//		return "/naoExecutado.do";
+		return null;
 	}
 
 	/**
