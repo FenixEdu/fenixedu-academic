@@ -1,6 +1,7 @@
 package ServidorApresentacao.teacher;
 
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -210,6 +211,54 @@ public class AnnouncementManagementActionTest extends TestCasePresentationTeache
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
+		return null;
+	}
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
+	 */
+	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
+		return null;
+	}
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedUnsuccessfuly()
+	 */
+	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
+		return null;
+	}
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
+		return null;
+	}
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
+		return null;
+	}
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
+	 */
+	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
+		return null;
+	}
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
+	 */
+	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
+		return null;
+	}
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInUnsuccessfulExecution()
+	 */
+	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		return null;
+	}
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInUnsuccessfulExecution()
+	 */
+	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
 		return null;
 	}
 }
