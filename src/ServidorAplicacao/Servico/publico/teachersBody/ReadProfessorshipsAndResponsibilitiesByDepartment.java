@@ -17,7 +17,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoProfessorship;
 import DataBeans.teacher.professorship.DetailedProfessorship;
-import DataBeans.util.Cloner;
 import Dominio.Department;
 import Dominio.ExecutionYear;
 import Dominio.ICurricularCourse;
@@ -187,8 +186,10 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment implements
                     public Object transform(Object input) {
 
                         IProfessorship professorship = (IProfessorship) input;
-                        InfoProfessorship infoProfessorShip = Cloner
-                                .copyIProfessorship2InfoProfessorship(professorship);
+                        //CLONER
+                        //InfoProfessorship infoProfessorShip = Cloner
+                                //.copyIProfessorship2InfoProfessorship(professorship);
+                        InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
 
                         List executionCourseCurricularCoursesList = getInfoCurricularCourses(professorship
                                 .getExecutionCourse());
@@ -222,8 +223,10 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment implements
                                             public Object transform(Object input) {
 
                                                 ICurricularCourse curricularCourse = (ICurricularCourse) input;
-                                                InfoCurricularCourse infoCurricularCourse = Cloner
-                                                        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                                                //CLONER
+                                                //InfoCurricularCourse infoCurricularCourse = Cloner
+                                                        //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                                                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
                                                 return infoCurricularCourse;
                                             }
                                         });

@@ -11,10 +11,11 @@ import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoFrequenta;
+import DataBeans.InfoFrequentaWithInfoStudent;
 import DataBeans.InfoMark;
+import DataBeans.InfoMarkWithInfoAttendAndInfoStudent;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
-import DataBeans.util.Cloner;
 import Dominio.Evaluation;
 import Dominio.IEvaluation;
 import Dominio.IExecutionCourse;
@@ -90,7 +91,9 @@ public class ReadPublishedMarksByExam implements IServico {
                     .getIPersistentEvaluation();
             evaluation = (IEvaluation) persistentEvaluation.readByOID(
                     Evaluation.class, evaluationCode);
-            infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+            //CLONER
+            //infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+            infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
             //Attends
             IFrequentaPersistente attendDAO = sp.getIFrequentaPersistente();
@@ -104,8 +107,10 @@ public class ReadPublishedMarksByExam implements IServico {
                     new Transformer() {
                         public Object transform(Object input) {
                             IFrequenta attend = (IFrequenta) input;
-                            InfoFrequenta infoAttend = Cloner
-                                    .copyIFrequenta2InfoFrequenta(attend);
+                            //CLONER
+                            //InfoFrequenta infoAttend = Cloner
+                                    //.copyIFrequenta2InfoFrequenta(attend);
+                            InfoFrequenta infoAttend = InfoFrequentaWithInfoStudent.newInfoFromDomain(attend);
                             return infoAttend;
                         }
                     });
@@ -114,7 +119,9 @@ public class ReadPublishedMarksByExam implements IServico {
                     new Transformer() {
                         public Object transform(Object input) {
                             IMark mark = (IMark) input;
-                            InfoMark infoMark = Cloner.copyIMark2InfoMark(mark);
+                            //CLONER
+                            //InfoMark infoMark = Cloner.copyIMark2InfoMark(mark);
+                            InfoMark infoMark = InfoMarkWithInfoAttendAndInfoStudent.newInfoFromDomain(mark);
                             return infoMark;
                         }
                     });
