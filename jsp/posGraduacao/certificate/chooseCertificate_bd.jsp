@@ -30,10 +30,12 @@
        <tr>
          <td><bean:message key="label.certificate.list"/>: </td>
          <td>
-            <html:select property="certificateList">
+       
+            <html:select property="certificateList" >
         	    <option value="" selected="selected"><bean:message key="label.certificate.default"/></option>
                 <html:options name="certificateList" />
-             </html:select>          
+             </html:select>       
+        
          </td>
         </tr>
  	</table>
