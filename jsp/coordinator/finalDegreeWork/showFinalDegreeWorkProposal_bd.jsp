@@ -166,7 +166,7 @@
 		</tr>
 		<tr>
 			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="objectives"/>
+				<bean:write name="finalDegreeWorkProposal" property="framing"/>
 			</td>
 		</tr>
 		<tr>
