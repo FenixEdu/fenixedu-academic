@@ -45,6 +45,18 @@ public class MetadataOJB extends ObjectFenixOJB implements IPersistentMetadata
 		return queryList(Metadata.class, criteria);
 	}
 
+	public List readByExecutionCourseAndVisibilityAndOrder(
+		IExecutionCourse executionCourse,
+		String order)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
+		criteria.addEqualTo("visibility", new Boolean("true"));
+		criteria.addOrderBy(order, true);
+		return queryList(Metadata.class, criteria);
+	}
+
 	public int getNumberOfQuestions(IMetadata metadata) throws ExcepcaoPersistencia
 	{
 		PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();

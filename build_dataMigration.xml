@@ -1238,6 +1238,20 @@
 			</classpath>
 		</java>
 	</target>
+	
+	<target name="update-metadata-fields" depends="compile-proj" description="Update the new metadata fields">
+		<java classname="ServidorAplicacao.UpdateMetadataFields" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
 	<!-- ********************************************************************* -->
 
 	<!-- ************************************************************************************************************************ -->

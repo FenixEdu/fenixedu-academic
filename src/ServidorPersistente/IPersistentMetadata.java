@@ -20,6 +20,8 @@ public interface IPersistentMetadata extends IPersistentObject
 		throws ExcepcaoPersistencia;
 	public abstract List readByExecutionCourseAndVisibility(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
+	public List readByExecutionCourseAndVisibilityAndOrder(IExecutionCourse executionCourse, String order)
+		throws ExcepcaoPersistencia;
 	public abstract int getNumberOfQuestions(IMetadata metadata) throws ExcepcaoPersistencia;
 	public void delete(IMetadata metadata) throws ExcepcaoPersistencia;
 }

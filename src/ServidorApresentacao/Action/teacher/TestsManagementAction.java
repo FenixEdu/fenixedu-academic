@@ -86,7 +86,7 @@ public class TestsManagementAction extends FenixDispatchAction
 		String path = getServlet().getServletContext().getRealPath("/");
 		try
 		{
-			Object[] args = { executionCourseId, null, path };
+			Object[] args = { executionCourseId, null, null, path };
 			siteView = (SiteView) ServiceUtils.executeService(userView, "ReadMetadatasByTest", args);
 		}
 		catch (FenixServiceException e)
@@ -164,10 +164,11 @@ public class TestsManagementAction extends FenixDispatchAction
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		SiteView siteView = null;
 		Integer testCode = getCodeFromRequest(request, "testCode");
+		String order = request.getParameter("order");
 		String path = getServlet().getServletContext().getRealPath("/");
 		try
 		{
-			Object[] args = { executionCourseId, testCode, path };
+			Object[] args = { executionCourseId, testCode, order, path };
 			siteView = (SiteView) ServiceUtils.executeService(userView, "ReadMetadatasByTest", args);
 		}
 		catch (FenixServiceException e)
@@ -1296,10 +1297,11 @@ public class TestsManagementAction extends FenixDispatchAction
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		SiteView siteView = null;
+		String order = request.getParameter("order");
 		String path = getServlet().getServletContext().getRealPath("/");
 		try
 		{
-			Object[] args = { executionCourseId, path };
+			Object[] args = { executionCourseId, order, path };
 			siteView = (SiteView) ServiceUtils.executeService(userView, "ReadMetadatas", args);
 		}
 		catch (FenixServiceException e)

@@ -66,7 +66,7 @@ public class ReadMetadatasByDistributedTest implements IServico
 				throw new InvalidArgumentsServiceException();
 			}
 			IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
-			List metadatas = persistentMetadata.readByExecutionCourse(executionCourse);
+			List metadatas = persistentMetadata.readByExecutionCourseAndVisibility(executionCourse);
 			List result = new ArrayList();
 			IPersistentDistributedTest persistentDistributedTest =
 				persistentSuport.getIPersistentDistributedTest();

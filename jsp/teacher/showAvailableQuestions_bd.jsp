@@ -24,10 +24,30 @@
 	<br/>
 	<table>
 	<tr>
-		<td class="listClasses-header"><bean:message key="label.description"/></td>
-		<td class="listClasses-header"><bean:message key="label.test.materiaPrincipal"/></td>
-		<td class="listClasses-header"><bean:message key="label.test.difficulty"/></td>
-		<td width="90" class="listClasses-header"><bean:message key="label.test.quantidadeExercicios"/></td>
+		<td class="listClasses-header">
+			<div class="gen-button">
+			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=description"%>">
+			<bean:message key="label.description"/>
+			</html:link></div>
+		</td>
+		<td class="listClasses-header">
+			<div class="gen-button">
+			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=mainSubject"%>">
+			<bean:message key="label.test.materiaPrincipal"/>
+			</html:link></div>
+		</td>
+		<td class="listClasses-header">
+		<div class="gen-button">
+			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=difficulty"%>">
+			<bean:message key="label.test.difficulty"/>
+			</html:link></div>
+		</td>
+		<td width="90" class="listClasses-header">
+		<div class="gen-button">
+			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=numberOfMembers"%>">
+			<bean:message key="label.test.quantidadeExercicios"/>
+			</html:link></div>
+		</td>
 	</tr>
 	<logic:iterate id="metadata" name="component" property="infoMetadatas" type="DataBeans.InfoMetadata">
 	<tr>
