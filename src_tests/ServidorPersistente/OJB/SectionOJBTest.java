@@ -73,6 +73,7 @@ public class SectionOJBTest extends TestCaseOJB {
 	ISite site = null;
 	ISection superiorSection = null;
 	IDisciplinaExecucao executionCourse = null;
+	ISection section1 = null;
 	
 	//	read existing section with superiorSection
 	
@@ -101,13 +102,14 @@ public class SectionOJBTest extends TestCaseOJB {
 		 assertEquals(section.getName(), "Seccao1deTFCI");
 		 assertEquals(section.getSite(), site);
 		 assertEquals(section.getSuperiorSection(), null);
-	
+		 
+		 System.out.println("Acabei a 1ª parte do teste");
 	
 	
 	
 	
 	//	read existing section with superiorSection
-   
+	
    try {
 		persistentSupport.iniciarTransaccao();
 		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO", "2002/2003", "LEEC");
@@ -118,9 +120,14 @@ public class SectionOJBTest extends TestCaseOJB {
 	
 		superiorSection = persistentSection.readBySiteAndSectionAndName(site, null,"Seccao1dePO");	
 		assertNotNull(superiorSection);
+		assertEquals(superiorSection.getName(), "Seccao1dePO");
+		assertEquals(superiorSection.getSite(), site);
+		assertEquals(superiorSection.getSuperiorSection(), null);
 		System.out.println("superiorSection: " +superiorSection);
 		System.out.println("superiorSection internal Code: " + ((Section) superiorSection).getInternalCode());
-	    section = persistentSection.readBySiteAndSectionAndName(site, superiorSection,"SubSeccao2dePO");
+		
+		
+	    section1= persistentSection.readBySiteAndSectionAndName(site, superiorSection,"SubSeccao2dePO");
 
 		persistentSupport.confirmarTransaccao();
 		}
@@ -130,13 +137,13 @@ public class SectionOJBTest extends TestCaseOJB {
 	      fail("testReadBySiteAndSectionAndName:fail read existing section ");
 	    }
 		
-	    assertNotNull(section);
+	    assertNotNull(section1);
 		
-		assertEquals(section.getName(), "SubSeccao1dePO");
-		assertEquals(section.getSite(), site);
-		assertEquals(section.getSuperiorSection(), superiorSection);
+		assertEquals(section1.getName(), "SubSeccao2dePO");
+		assertEquals(section1.getSite(), site);
+		assertEquals(section1.getSuperiorSection(), superiorSection);
 	
-	
+		System.out.println("Acabei a 2ª parte do teste");
      //read existing subSection with superiorSection and without inferiorSections
 //
 //
@@ -180,17 +187,6 @@ public class SectionOJBTest extends TestCaseOJB {
 //	itens.add("item12");
 //	itens.add("item21");
 	
-
-
-
-
-
-
-
-
-
-    
-	    
 	// read unexisting section
 	try {
 	  persistentSupport.iniciarTransaccao();
