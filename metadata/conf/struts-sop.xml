@@ -186,7 +186,7 @@
 		<exception type="ServidorAplicacao.NotAuthorizedException"
 			       key="ServidorAplicacao.NotAuthorizedException"
 			       path="/naoAutorizado.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
+			       />
 		<exception type="ServidorAplicacao.FenixServiceException"
 		  	       key="ServidorAplicacao.FenixServiceException"
 		  	       path="/naoExecutado.do"
@@ -208,7 +208,7 @@
       <!-- page fronting actions -->
       <action path="/index" forward="/autenticacaoSOP.jsp"/>
       <action path="/autenticacaoSOP" forward="/autenticacaoSOP.jsp"/>
-      <action path="/naoAutorizado" forward="/naoAutorizado.jsp"/>
+      <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
       <action path="/naoExecutado" forward="/error.jsp"/>
       <action path="/principalSalas" forward="/principalSalas.jsp"/>
       <action path="/criarSala" forward="/criarSala.jsp"/>

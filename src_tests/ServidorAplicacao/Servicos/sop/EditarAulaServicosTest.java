@@ -28,6 +28,7 @@ import DataBeans.KeyLesson;
 import DataBeans.RoomKey;
 import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.sop.exceptions.InterceptingServiceException;
+import ServidorAplicacao.Servico.sop.exceptions.InvalidTimeIntervalServiceException;
 import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import Util.DiaSemana;
 import Util.TipoAula;
@@ -213,10 +214,9 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 
 		try {
 			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
-			assertTrue(
-				"testEditExistingAulaWithInvalidTimeInterval",
-				((InfoLessonServiceResult) result).getMessageType() == InfoLessonServiceResult.INVALID_TIME_INTERVAL);
-
+			fail("testEditExistingAulaWithInvalidTimeInterval: ");
+		} catch (InvalidTimeIntervalServiceException e) {
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("testEditExistingAulaWithInvalidTimeInterval: " + e);
@@ -291,7 +291,7 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		} catch (Exception ex) {
 			fail("Unexpected exception " + ex);
 		}
-		
+
 		// TODO : test the case of a complete match with a lesson other than the one being edited.
 	}
 
