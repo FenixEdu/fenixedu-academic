@@ -197,17 +197,14 @@
     	type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" path="/accessAnnouncementManagementAction">
         <forward name="AnnouncementManagement"  path="/announcementManagement.do" redirect="true"/>
 	</action>
-<!-- esta action faz sentido??????-->
-	<action path="/announcementManagement" forward="announcementManagement"/>
 
 	<action name="announcementManagementForm"
     	type="ServidorApresentacao.Action.teacher.AnnouncementManagementAction"
         path="/announcementManagementAction" 
-        input="announcementManagement" 
-        scope="request">
-        <forward name="InsertAnnouncement" path="/insertAnnouncement.do" />
-		<forward name="EditAnnouncement" path="/editAnnouncement.do" />
-		<forward name="DeleteAnnouncement" path="/deleteAnnouncement.do" />
+        input="/announcementManagement.jsp" >
+        <forward name="InsertAnnouncement" path="/insertAnnouncement.jsp" />
+		<forward name="EditAnnouncement" path="/editAnnouncement.jsp" />
+		<forward name="DeleteAnnouncement" path="/deleteAnnouncement.jsp" />
 	</action>
 	
 	<action parameter="method"      			
