@@ -81,11 +81,13 @@ public class AddItem implements IServico {
 			person = (IPessoa) persistentPerson.readDomainObjectByCriteria(person);
 			webSiteItem.setEditor(person);
 
-			if (webSiteSection.getWhatToSort().equals("itemBeginDay")) {
+			if (webSiteSection.getWhatToSort().equals("ITEM_BEGIN_DAY")) {
+				System.out.println("tem que ordenar por itembeginday");
 				if (infoWebSiteItem.getItemBeginDayCalendar() == null) {
+					System.out.println("itembeginday esta a null");
 					throw new InvalidArgumentsServiceException();
 				}
-			} else if (webSiteSection.getWhatToSort().equals("itemEndDay")) {
+			} else if (webSiteSection.getWhatToSort().equals("ITEM_END_DAY")) {
 				if (infoWebSiteItem.getItemEndDayCalendar() == null) {
 					throw new InvalidArgumentsServiceException();
 				}
@@ -113,6 +115,8 @@ public class AddItem implements IServico {
 
 			if (infoWebSiteItem.getItemBeginDayCalendar() != null) {
 				webSiteItem.setItemBeginDay(infoWebSiteItem.getItemBeginDayCalendar().getTime());
+			}
+			if (infoWebSiteItem.getItemEndDayCalendar() != null) {
 				webSiteItem.setItemEndDay(infoWebSiteItem.getItemEndDayCalendar().getTime());
 			}
 			webSiteItem.setKeyEditor(person.getIdInternal());

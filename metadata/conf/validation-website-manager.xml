@@ -36,7 +36,7 @@
 					<var-value>NOTNULL</var-value>
 				</var>				
 		   	</field>
-			<field property="itemEndDay" depends="requiredif,mask,date" page="1" >
+			<field property="itemEndDay" depends="mask,date" page="1" >
 				<msg name="date" key="errors.invalid.date"/>
 			   	<msg name="mask" key="errors.invalid.date"/>
 			   	<arg0 key="message.itemDay" resource="true"/>
@@ -48,14 +48,6 @@
 			   		<var-name>mask</var-name>
 			   		<var-value>^((.||..)/(.||..)/2...)$</var-value>
 				</var>
-				<var>
-					<var-name>field[0]</var-name>
-					<var-value>itemBeginDay</var-value>
-				</var>
-				<var>
-					<var-name>field-test[0]</var-name>
-					<var-value>NOTNULL</var-value>
-				</var>								
 		   	</field>  	
 			<field property="onlineBeginDay" depends="requiredif,mask,date" page="1" >
 				<msg name="date" key="errors.invalid.date"/>

@@ -61,19 +61,18 @@ public class EditWebSiteItem implements IServico {
 			webSiteSection = new WebSiteSection(sectionCode);
 			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOId(webSiteSection, false);
 
-			if (webSiteSection.getWhatToSort().equals("itemBeginDay")) {
+			if (webSiteSection.getWhatToSort().equals("ITEM_BEGIN_DAY")) {
 				if (infoWebSiteItem.getItemBeginDayCalendar() == null) {
 					throw new InvalidArgumentsServiceException();
 				}
-			} else if (webSiteSection.getWhatToSort().equals("itemEndDay")) {
+			} else if (webSiteSection.getWhatToSort().equals("ITEM_END_DAY")) {
 				if (infoWebSiteItem.getItemEndDayCalendar() == null) {
 					throw new InvalidArgumentsServiceException();
 				}
 			}
 			// if excerpt exceeds limit of words its invalid
 			if (infoWebSiteItem.getExcerpt() != null) {
-				if (StringUtils.countMatches(infoWebSiteItem.getExcerpt(), new String(" "))
-					>= webSiteSection.getExcerptSize().intValue()) {
+				if (StringUtils.countMatches(infoWebSiteItem.getExcerpt(), new String(" ")) >= webSiteSection.getExcerptSize().intValue()) {
 					throw new InvalidSituationServiceException();
 				}
 			}
@@ -89,11 +88,10 @@ public class EditWebSiteItem implements IServico {
 			String authorName = infoWebSiteItem.getAuthorName();
 			String authorEmail = infoWebSiteItem.getAuthorEmail();
 			IPessoa authorPerson = null;
-			if ((authorName == null || authorName.length() == 0)
-				&& (authorEmail == null || authorEmail.length() == 0)) {
-					// in case author was not filled editor becomes the author
-					authorName = person.getNome();
-					authorEmail = person.getEmail();
+			if ((authorName == null || authorName.length() == 0) && (authorEmail == null || authorEmail.length() == 0)) {
+				// in case author was not filled editor becomes the author
+				authorName = person.getNome();
+				authorEmail = person.getEmail();
 			}
 			webSiteItem.setAuthorName(authorName);
 			webSiteItem.setAuthorEmail(authorEmail);
@@ -101,7 +99,13 @@ public class EditWebSiteItem implements IServico {
 			webSiteItem.setExcerpt(infoWebSiteItem.getExcerpt());
 			if (infoWebSiteItem.getItemBeginDayCalendar() != null) {
 				webSiteItem.setItemBeginDay(infoWebSiteItem.getItemBeginDayCalendar().getTime());
+			} else {
+				webSiteItem.setItemBeginDay(null);
+			}
+			if (infoWebSiteItem.getItemEndDayCalendar() != null) {
 				webSiteItem.setItemEndDay(infoWebSiteItem.getItemEndDayCalendar().getTime());
+			} else {
+				webSiteItem.setItemEndDay(null);
 			}
 			webSiteItem.setKeyEditor(person.getIdInternal());
 			webSiteItem.setKeyWebSiteSection(webSiteSection.getIdInternal());
