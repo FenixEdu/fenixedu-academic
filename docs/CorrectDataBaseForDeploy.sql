@@ -13,10 +13,6 @@ create table CANDIDATE_ENROLMENT(
    unique u1 (KEY_MASTER_DEGREE_CANDIDATE, KEY_CURRICULAR_COURSE_SCOPE))
    type=InnoDB;
 
-alter table CURRICULAR_COURSE
- add column  BASIC bit default '0' after KEY_UNIVERSITY
-, type=InnoDB;
-
 
 drop table if exists QUALIFICATION;
 CREATE TABLE QUALIFICATION (
@@ -37,6 +33,5 @@ create table GRATUITY(
    GRATUITY_STATE integer(11),
    DATE date, 
    REMARKS text,
-   primary key (ID_INTERNAL),
-   unique u1 (KEY_STUDENT_CURRICULAR_PLAN, GRATUITY_STATE))
+   primary key (ID_INTERNAL))
    type=InnoDB;

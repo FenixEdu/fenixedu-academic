@@ -345,7 +345,6 @@
 
 
       
-<!--kkkkkkkkkk -->
 	  <!-- Bean to Choose the second Master Degree for Study Plan -->
       <form-bean name="chooseSecondMasterDegreeForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -1011,7 +1010,6 @@
 	         <forward name="Success" path="/candidate/backErrorPage.jsp"/> 
       </action>
 
-<!-- XXXXXXXXXXXXXXXXXXXX -->     
 
 	  <!-- Choose Execution Year to Make Candidate Study Plan -->
       <action path="/chooseExecutionYearToCandidateStudyPlan"
@@ -1053,6 +1051,7 @@
 	         <forward name="ChooseReady" path="/displayCourseListToStudyPlan.do?method=chooseMasterDegree&amp;page=0"/>
      		 <forward name="ChooseSuccess" path="/displayCourseListToStudyPlan.do?method=prepareSelectCourseList&amp;page=0"/>
      		 <forward name="PrintReady" path="/candidate/studyPlanTemplate.jsp"/>
+ 			 <forward name="BackError" path="/backErrorPage.do" redirect="true"/>  
 		</action>
 
      

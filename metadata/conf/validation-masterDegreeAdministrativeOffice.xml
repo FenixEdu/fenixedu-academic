@@ -216,7 +216,7 @@
                   </var>
         </field>
 
-      <field property="       Code" depends="mask" page="1">
+      <field property="postCode" depends="mask" page="1">
         <msg name="mask" key="errors.invalid.zipCode"/>
         <var>
         	<var-name>mask</var-name>

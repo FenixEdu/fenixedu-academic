@@ -153,9 +153,13 @@
  	  <!-- Action for the Coordinator to List the Students -->
 	  <action path="/listStudentsForCoordinator"
 		      parameter="method"
+	          input="/student/indexStudent.jsp"		      
 		      scope="session"
               type="ServidorApresentacao.Action.masterDegree.coordinator.StudentListDispatchAction"
 			  >
+     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
 	         <forward name="PrepareSuccess" path="/student/displayStudentListByDegree.jsp"/> 
 	  </action>
 
@@ -165,6 +169,10 @@
 		      scope="request"
               type="ServidorApresentacao.Action.commons.ChooseCurricularCourseDispatchAction"
 			  >
+     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
+			  
 	         <forward name="ChooseSuccess" path="/student/displayStudentListByCourse.jsp"/>
 	         <forward name="PrepareSuccess" path="/student/displayStudentListByDegree.jsp"/> 
 	         <forward name="NoStudents" path="/studentListByDegree.do?method=getCurricularCourses"/> 
@@ -211,11 +219,11 @@
 	         <forward name="Cancel" path="/displayListToSelectCandidates.do?method=prepareSelectCandidates&amp;page=0"/> 
 	         <forward name="OrderCandidatesReady" path="/candidate/displayChosenSelection.jsp"/> 
 	         <forward name="NumerusClaususNotDefined" path="/chooseMasterDegreeToSelectCandidates.do?method=prepareChooseMasterDegree&amp;page=0"/>  	         
-			 <forward name="BackError" path="/backErrorCandidateApprovalPage.do" redirect="true"/>
+			 <forward name="BackError" path="/backError.do" redirect="true"/>
 			 <forward name="PrintReady" path="/candidate/approvalDispatchTemplate.jsp" />  
 		</action>
 		
-		<action path="/backErrorCandidateApprovalPage"
+		<action path="/backError"
               type="ServidorApresentacao.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/candidate/backErrorPage.jsp"/> 
@@ -261,7 +269,9 @@
 	         <forward name="PrepareSuccess" path="/candidate/displayListOfCoursesToChoose.jsp"/>  
 	         <forward name="ChooseSuccess" path="/candidate/displayCandidateEnrolments.jsp"/>
      		 <forward name="PrintReady" path="/candidate/studyPlanTemplate.jsp"/>     			 
+			 <forward name="BackError" path="/backError.do" redirect="true"/>  
 		</action>
+
 
 
     </action-mappings>

@@ -131,8 +131,7 @@ create table GRATUITY(
    GRATUITY_STATE integer(11),
    DATE date, 
    REMARKS text,
-   primary key (ID_INTERNAL),
-   unique u1 (KEY_STUDENT_CURRICULAR_PLAN, GRATUITY_STATE))
+   primary key (ID_INTERNAL))
    type=InnoDB;
 
 #----------------------------

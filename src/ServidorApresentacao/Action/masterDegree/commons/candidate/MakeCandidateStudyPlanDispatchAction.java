@@ -301,9 +301,9 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 			request.setAttribute("infoExecutionDegree", infoExecutionDegree);
 			
 		}
-
-
-
+//
+//		generateToken(request);
+//		saveToken(request);
 
 		return mapping.findForward("PrepareSuccess");
 	}
@@ -417,15 +417,27 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 
 		
 		HttpSession session = request.getSession(false);
+
+//		if (!isTokenValid(request)){
+//			return mapping.findForward("BackError");
+//		} else {
+//			generateToken(request);
+//			saveToken(request);
+//		}
+
+
+
 		DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 		
 		GestorServicos serviceManager = GestorServicos.manager();	
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		Integer[] selection =  (Integer[]) chooseCurricularCoursesForm.get("selection");
 
-		if ((selection != null) && (selection.length == 0)){
+
+		if (!validChoice(selection)){
 			throw new NoChoiceMadeActionException(null);
-		}	
+		}
+
 		
 	    Integer candidateID = (Integer) chooseCurricularCoursesForm.get("candidateID");
 
@@ -490,6 +502,24 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 	}
 	
 	
+	/**
+	 * @param selection
+	 * @return
+	 */
+	private boolean validChoice(Integer[] selection) {
+		
+		if ((selection != null) && (selection.length == 0) || (selection[0] == null)){
+			return false;	
+		}	
+		
+		for(int i = 0 ; i < selection.length ; i++){
+			if (selection[i] == null){
+				return false;
+			}
+		}
+		return true;
+	}
+
 	private String getFromRequest(String parameter, HttpServletRequest request) {
 		String parameterString = request.getParameter(parameter);
 		if (parameterString == null) {
@@ -513,6 +543,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 		
 			GestorServicos serviceManager = GestorServicos.manager();	
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
 
 		    Integer candidateID = (Integer) chooseCurricularCoursesForm.get("candidateID");
 
