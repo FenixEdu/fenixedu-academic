@@ -69,8 +69,10 @@ public class RoleTypeFieldConversion implements FieldConversion {
 				case RoleType.DEGREE_ADMINISTRATIVE_OFFICE_TYPE :
 					roleType = RoleType.DEGREE_ADMINISTRATIVE_OFFICE;
 					break;
+				case RoleType.CREDITS_MANAGER_TYPE:
+					roleType = RoleType.CREDITS_MANAGER;
+					break;
 				default :
-					System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++DEFAULT DO ROLE");
 					throw new IllegalArgumentException(this.getClass().getName() + ": Illegal role type!(" + obj + ")");
 
 			}
