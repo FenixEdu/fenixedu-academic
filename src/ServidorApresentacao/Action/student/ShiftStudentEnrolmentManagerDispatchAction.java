@@ -7,7 +7,6 @@ package ServidorApresentacao.Action.student;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,7 +29,6 @@ import DataBeans.InfoShift;
 import DataBeans.InfoShiftStudentEnrolment;
 import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.InfoStudent;
-import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
@@ -115,14 +113,14 @@ class InfoShiftDividedList extends ArrayList {
 					subE = (Element) subIt.next();
 					if (subE
 						.getType()
-						.equals(shift.getTipo().getSiglaTipoAula())) {
+						.equals(shift.getTipo().getFullNameTipoAula())) {
 						// ok, found shift type list, let's add the shift
 						subE.add(info);
 						return true;
 					}
 				}
 				// ups, subtype doesn't exist . create and add
-				subE = new Element(shift.getTipo().getSiglaTipoAula());
+				subE = new Element(shift.getTipo().getFullNameTipoAula());
 				subE.add(info);
 				mainE.add(subE);
 				return true;
@@ -130,7 +128,7 @@ class InfoShiftDividedList extends ArrayList {
 		}
 		// main type doesn't exist iet...
 		mainE = new Element(type);
-		subE = new Element(shift.getTipo().getSiglaTipoAula());
+		subE = new Element(shift.getTipo().getFullNameTipoAula());
 		subE.add(info);
 		mainE.add(subE);
 		this.add(mainE);
@@ -251,7 +249,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 			degreeList =
 				(List) ServiceUtils.executeService(
 					userView,
-					"ReadNonMasterExecutionDegreesByExecutionYear",
+					"ReadExecutionDegreesByExecutionYear",
 					new Object[] { currentExecutionYear });
 		} catch (FenixServiceException e2) {
 			throw new FenixActionException(e2);
@@ -261,7 +259,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		// already selected
 		String selectedDegreeAbbrev = request.getParameter("degree");
 		InfoExecutionDegree selectedDegree = null, idtemp = null;
-		Collections.sort(degreeList,new ComparatorByNameForInfoExecutionDegree());
+
 		// if there is no selected degree
 		if (selectedDegreeAbbrev == null) {
 			// retrieve the student's own curricular plan
@@ -518,11 +516,6 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 			(InfoShiftStudentEnrolment) session.getAttribute(
 				SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY);
 
-		System.out.println(
-			"CurrentEnrolment"
-				+ infoShiftStudentEnrolment.getCurrentEnrolment());
-		System.out.println(
-			"dividedList" + infoShiftStudentEnrolment.getDividedList());
 		//		dividedList
 		//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
 		//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
@@ -566,9 +559,6 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		}
 		//request.setAttribute(wantedClass, filter)
 		infoShiftStudentEnrolment.setDividedList(infoShiftDividedList);
-		System.out.println(
-			"CurrentEnrolment"
-				+ infoShiftStudentEnrolment.getCurrentEnrolment());
 
 		session.setAttribute(
 			SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY,
@@ -686,7 +676,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		request.setAttribute("infoSchoolClass", infoSchoolClass);
+		request.setAttribute("infoSchoolClass",infoSchoolClass);
 		request.setAttribute("infoLessons", infoLessons);
 
 		return mapping.findForward("classTimeTable");
