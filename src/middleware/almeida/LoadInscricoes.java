@@ -8,6 +8,9 @@ package middleware.almeida;
 
 import java.util.StringTokenizer;
 
+import Dominio.Enrolment;
+import Dominio.Frequenta;
+
 /**
  *
  * @author  Luis Cruz & Sara Ribeiro
@@ -28,8 +31,6 @@ public class LoadInscricoes extends LoadDataFile {
 		StringTokenizer stringTokenizer =
 			new StringTokenizer(line, getFieldSeperator());
 
-		int numberTokens = stringTokenizer.countTokens();
-
 		String numero = stringTokenizer.nextToken();
 		String ano = stringTokenizer.nextToken();
 		String semestre = stringTokenizer.nextToken();
@@ -49,11 +50,16 @@ public class LoadInscricoes extends LoadDataFile {
 		almeida_inscricoes.setCurso((new Integer(curso)).longValue());
 		almeida_inscricoes.setRamo(ramo);
 
-		writeElement(almeida_inscricoes);
+		//writeElement(almeida_inscricoes);
+		processEnrolement(almeida_inscricoes);
+	}
+
+	private void processEnrolement(Almeida_inscricoes almeida_inscricoes) {
+
 	}
 
 	protected String getFilename() {
-		return "etc/migration/INSCRICOES.TXT";
+		return "migration/INSCRICOES.TXT";
 	}
 
 	protected String getFieldSeperator() {

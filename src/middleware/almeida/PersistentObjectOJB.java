@@ -6,8 +6,13 @@
  */
 package middleware.almeida;
 
+import java.util.List;
+
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
 
 /**
  *
@@ -36,6 +41,15 @@ public class PersistentObjectOJB {
 
 	public void lockWrite(Object obj) {
 		broker.store(obj);
+	}
+
+	public List query(Class classToQuery, Criteria criteria) {
+		Query query = new QueryByCriteria(classToQuery, criteria);
+		return (List) broker.getCollectionByQuery(query);
+	}
+
+	public List query(Object object) {
+		return (List) broker.getCollectionByQuery(new QueryByCriteria(object));
 	}
 
 }
