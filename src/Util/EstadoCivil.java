@@ -66,6 +66,7 @@ public class EstadoCivil {
 		if (estadoCivil.equals(EstadoCivil.VIUVO_STRING)) this.estadoCivil = new Integer(EstadoCivil.VIUVO);
 		if (estadoCivil.equals(EstadoCivil.SEPARADO_STRING)) this.estadoCivil = new Integer(EstadoCivil.SEPARADO);
 		if (estadoCivil.equals(EstadoCivil.UNIAO_DE_FACTO_STRING)) this.estadoCivil = new Integer(EstadoCivil.UNIAO_DE_FACTO);
+		else this.estadoCivil = new Integer(EstadoCivil.SOLTEIRO);
     }
 
     public ArrayList toArrayList() {
@@ -87,7 +88,7 @@ public class EstadoCivil {
 	    if (estadoCivil.intValue()== EstadoCivil.VIUVO) return EstadoCivil.VIUVO_STRING;
 	    if (estadoCivil.intValue()== EstadoCivil.SEPARADO) return EstadoCivil.SEPARADO_STRING;
 	    if (estadoCivil.intValue()== EstadoCivil.UNIAO_DE_FACTO) return EstadoCivil.UNIAO_DE_FACTO_STRING;
-	    return "ERRO!"; // Nunca e atingido
+	    return null; 
     }        
     
     /** Getter for property estadoCivil.
