@@ -99,9 +99,13 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction
 		if (infoCurriculum.getInfoCurricularCourse() != null
 			&& infoCurriculum.getInfoCurricularCourse().getInfoAssociatedExecutionCourses() != null)
 		{
+			ComparatorChain comparatorChain = new ComparatorChain();
+			comparatorChain.addComparator(new BeanComparator("infoExecutionPeriod.infoExecutionYear.beginDate"), true);
+			comparatorChain.addComparator(new BeanComparator("infoExecutionPeriod.beginDate"), true);
+
 			Collections.sort(
 				infoCurriculum.getInfoCurricularCourse().getInfoAssociatedExecutionCourses(),
-				new BeanComparator("nome"));
+				comparatorChain);
 		}
 
 		//order list by year, semester

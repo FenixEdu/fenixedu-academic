@@ -66,13 +66,15 @@
 		<tr>
 			<td class="box_cell">
 				<logic:iterate id="infoExecutionCourse" name="infoCurricularCourse" property="infoAssociatedExecutionCourses">
-					<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal" />
-					<p>
-					<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseID").toString() %>" target="_blank" >
-						<bean:write name="infoExecutionCourse" property="nome" />&nbsp;(<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>&nbsp;-&nbsp;<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>)
-					</html:link>
-					<br />
-					</p>
+					<logic:notEqual name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.state.stateCode" value="NO">
+						<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal" />
+						<p>
+						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseID").toString() %>" target="_blank" >
+							<bean:write name="infoExecutionCourse" property="nome" />&nbsp;(<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>&nbsp;-&nbsp;<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>)
+						</html:link>
+						<br />
+						</p>
+					</logic:notEqual>
 				</logic:iterate>
 			</td>
 		</tr>  
