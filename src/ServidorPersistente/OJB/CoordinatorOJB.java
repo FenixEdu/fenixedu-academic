@@ -32,11 +32,16 @@ public class CoordinatorOJB extends ObjectFenixOJB implements IPersistentCoordin
 		}
 		Iterator iter = coordinators.iterator();
 		List executionDegrees = new ArrayList();
+		String executionDegreeTmp = null;
 		while (iter.hasNext()) {
 			ICoordinator coordinator = (ICoordinator) iter.next();
 			ICursoExecucao executionDegree = coordinator.getExecutionDegree();
-			if (!executionDegrees.contains(executionDegree)) {
-				executionDegrees.add(executionDegree);
+				
+			if (!executionDegrees.contains(executionDegree)) {								 
+				if (executionDegree.getCurricularPlan().getName() != executionDegreeTmp){
+					executionDegreeTmp = executionDegree.getCurricularPlan().getName();				
+					executionDegrees.add(executionDegree);
+				}
 			}
 		}
 		return executionDegrees;

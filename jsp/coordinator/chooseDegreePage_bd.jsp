@@ -17,9 +17,9 @@
 	<table>
 		<tr>
 			<td class="listClasses-header">Nome</td>
-			<td class="listClasses-header">Ano Lectivo</td>
+			<!--<td class="listClasses-header">Ano Lectivo</td> -->
 			<td class="listClasses-header">Plano Curricular</td>
-			<td class="listClasses-header">&nbsp;</td>
+			<!-- <td class="listClasses-header">&nbsp;</td> -->
 		</tr>
 		<logic:iterate id="degree" name="degreeList" indexId="indexDegree">
 			<bean:define id="degreeLink">
@@ -31,22 +31,22 @@
 						<bean:write name="degree" property="infoDegreeCurricularPlan.infoDegree.nome" /> 
 					</html:link>
 			   </td>
-				<td class="listClasses">
+				<!--<td class="listClasses">
 					<html:link page='<%= pageContext.findAttribute("degreeLink").toString() %>'>
 						<bean:write name="degree" property="infoExecutionYear.year" />
 					</html:link>
-			   </td>
+			   </td>-->
 				<td class="listClasses">
 					<html:link page='<%= pageContext.findAttribute("degreeLink").toString() %>'>
 						<bean:write name="degree" property="infoDegreeCurricularPlan.name" />
 					</html:link>
 			   </td>
-   			   <td class="listClasses">
+   			 <!--   <td class="listClasses">
    			   		<logic:equal name="degree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
 			     		<%= candidateAmmounts.get(i++) %>
 			   			<bean:message key="label.masterDegree.coordinator.candidatesAmmount"/> 
         	      	</logic:equal>
-			   </td>
+			   </td> -->
 			</tr>
 		</logic:iterate>
 	</table>
