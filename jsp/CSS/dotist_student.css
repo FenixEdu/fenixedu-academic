@@ -30,7 +30,6 @@ h2	{
 	color: #003366;
 	background-color: transparent;
 }
-
 /******************************************
 	Global Links Proprieties
 *******************************************/
@@ -39,24 +38,20 @@ a:link {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #00427b;
 	text-decoration: underline;
-}
-a:active {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #00427b;
-	background-color: transparent;
-}
+	}
+
 a:visited {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #00427b;
 	background-color: transparent;
-}
+	}
+
 a:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #00427b;
 	text-decoration: none;
-}
+	}
 
 /******************************************
 	NavGeral Links Proprieties
@@ -89,33 +84,26 @@ a:hover {
 
 .centerContent {
 	text-align: center;
-}
-.header {
+	}
+	
+.header-td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	color: #FFFFFF;
 	background-color: #6699CC;
 	padding-right: 20px;
 	padding-left: 20px;
-}
-.footer {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
-	text-align: center;
-	padding: 20px;
-	border-top-width: 4px;
-	border-top-style: solid;
-	border-top-color: #6699CC;
-}
-.navbargeral {
+	}
+	
+.navbargeral-td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #FFFFFF;
 	background-color: #003366;
 	text-align: center;
-}
-.navopgeral {
+	}
+	
+.navopgeral-td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #FFFFFF;
@@ -125,8 +113,9 @@ a:hover {
 	border-right-width: 1px;
 	border-right-style: solid;
 	border-right-color: #b5bdd6;
-}
-.navlateral {
+	}
+
+.navlateral-td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #333333;
@@ -134,14 +123,63 @@ a:hover {
 	border-right-style: solid;
 	border-right-color: #CCCCCC;
 	padding: 20px;
-}
+	}
+
 .bodycontent {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	line-height: 16px;
 	color: #333333;
 	padding: 20px;
-}
+	}
+	
+.footer-td {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	text-align: center;
+	padding: 20px;
+	border-top-width: 4px;
+	border-top-style: solid;
+	border-top-color: #6699CC;
+	}
+	
+/******************************************
+	NavGeral Links Proprieties
+*******************************************/
+	
+.navopgeral-td a:link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	text-decoration: none;
+	}
+	
+.navopgeral-td a:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	text-decoration: none;
+	}
+
+.navopgeral-td a:hover {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: transparent;
+	color: #B5BDD6;
+	}
+	
+/**********************************************
+	 navlateral list
+***********************************************/	
+
+.navlateral-td ul {
+	list-style-type: square;
+	}
+	
+.navlateral-td li {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	margin: 5px 0 5px 0;
+	}
+
 
 /**********************************************
 	 FORMS Classes: inputs
@@ -207,9 +245,9 @@ a:hover {
 	width: 100px;
 }
 .listClasses{
-background-color: #EBECED;
-border: 1px solid #666666;
-text-align: center;
-width: 150px;
-height: 30px;
+	background-color: #EBECED;
+	border: 1px solid #666666;
+	text-align: center;
+	width: 150px;
+	height: 30px;
 }
