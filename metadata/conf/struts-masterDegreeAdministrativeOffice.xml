@@ -101,6 +101,7 @@
         <form-property name="page" type="java.lang.Integer" />
         <form-property name="identificationDocumentNumber" type="java.lang.String" />
         <form-property name="identificationDocumentType" type="java.lang.String" />
+        <form-property name="studentNumber" type="java.lang.String" />
       </form-bean>
 
 	  <!-- Bean for The List of Candidates -->

@@ -16,8 +16,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.credits.IPersistentCredits;
-import ServidorPersistente.credits.IPersistentManagementPositionCreditLine;
-import ServidorPersistente.credits.IPersistentServiceExemptionCreditLine;
 
 /**
  * @author jpvl

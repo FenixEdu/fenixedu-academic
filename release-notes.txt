@@ -19,6 +19,13 @@ CHANGES:
  (Calendar2DateTimeFieldConversion.java(nova classe), repository_gesdis.xml, struts-teacher.xml, validation_teacher.xml, 
  InfoGroupProperties, TeacherAdministrationViewerDispatchAction groupProperties methods, 
  editGroupPorperties.jsp, insertGroupPorperties.jsp, services.xml, DeleteGroupProperties(Service))
+- added links to other operations, in master degree administrative office, when inside guide listing menu
+- added, in master degree administrative office, in guide listing operations, 
+  the possibility to search by student number
+- added, in gep, the possibility to choose basic, non basic or all types of curricular courses
+- fixed, in coordinator, error report when trying to view active degree curricular plan for
+  a degree curricular plan without curricular courses
+- Some imports in classes were removed for warnings cleaning
 
 
 

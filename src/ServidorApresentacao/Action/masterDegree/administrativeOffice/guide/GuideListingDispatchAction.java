@@ -19,8 +19,11 @@ import org.apache.struts.actions.DispatchAction;
 
 import framework.factory.ServiceManagerServiceFactory;
 
+import DataBeans.InfoStudent;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoDocumentoIdentificacao;
@@ -159,17 +162,41 @@ public class GuideListingDispatchAction extends DispatchAction {
 			
 			String identificationDocumentNumber = (String) choosePersonForm.get("identificationDocumentNumber");
 			TipoDocumentoIdentificacao identificationDocumentType = new TipoDocumentoIdentificacao((String) choosePersonForm.get("identificationDocumentType"));
+			String studentNumber = (String) choosePersonForm.get("studentNumber");
+			
+			if(identificationDocumentNumber == null || identificationDocumentNumber.length() == 0) 
+			{
+				InfoStudent infoStudent = null;
+			    if(studentNumber != null && studentNumber.length() > 0) 
+			    {
+				    Object args[] = { Integer.valueOf(studentNumber) };
+					  
+					try 
+					{
+					    infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByNumberAndAllDegreeTypes", args);
+					} catch (FenixServiceException e) {
+						throw new FenixActionException(e);
+					}
+			    }
+				if(infoStudent == null) {
+				    throw new NonExistingActionException("A Pessoa");
+				}
+				identificationDocumentNumber = infoStudent.getInfoPerson().getNumeroDocumentoIdentificacao();
+				identificationDocumentType = infoStudent.getInfoPerson().getTipoDocumentoIdentificacao();
+			}
 			
 			Object args[] = { identificationDocumentNumber, identificationDocumentType };
 	  
 			List result = null;
-			try {
+			try 
+			{
 				result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("A Pessoa", e);
 			}
 			
-			if (result == null){
+			if (result == null)
+			{
 				throw new NonExistingActionException("error.exception.noGuidesForPerson", "Guias para esta pessoa");
 			}
 			

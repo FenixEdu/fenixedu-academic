@@ -138,7 +138,7 @@ public class SearchCoursesInformationAction extends SearchAction
             request.setAttribute("infoExecutionDegree", infoExecutionDegree);
         }
         String basic = request.getParameter("basic");
-        if (basic != null)
+        if (basic != null && basic.length() > 0)
             request.setAttribute("basic", basic);
     }
 
@@ -157,10 +157,12 @@ public class SearchCoursesInformationAction extends SearchAction
             executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
         Boolean basic = null;
-        if (request.getParameter("basic") != null)
+        if ((request.getParameter("basic") != null) && request.getParameter("basic").equals("true")) {
             basic = Boolean.TRUE;
-        if ((request.getParameter("basic") != null) && request.getParameter("basic").equals("false"))
+        }
+        if ((request.getParameter("basic") != null) && request.getParameter("basic").equals("false")) {
             basic = Boolean.FALSE;
+        }
 
         return new Object[] { executionDegreeId, basic };
     }

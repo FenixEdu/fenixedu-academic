@@ -521,7 +521,7 @@
 				name="curricularCourseInformationForm"
 				scope="request"
 				validate="true"
-				input="/chooseDegree.do">
+				input="/indexCoordinator.jsp">
 		   <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
         key="ServidorApresentacao.Action.exceptions.FenixActionException"
         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>

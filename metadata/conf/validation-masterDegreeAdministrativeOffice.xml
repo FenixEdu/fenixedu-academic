@@ -467,13 +467,31 @@
     </form>
     	<!-- validation for the Choose Certificate Info Form -->
     <form name="choosePersonForm">  
-      <field property="identificationDocumentNumber" depends="required" page="1">
-        <arg0 key="label.identificationDocumentNumber" />	
+      <field property="studentNumber" depends="integer" page="1">
+		<arg0 key="label.masterDegree.administrativeOffice.studentNumber" resource="true"/>
       </field>
-
-      <field property="identificationDocumentType" depends="required" page="1">
-        <arg0 key="label.identificationDocumentType" />
+      <field property="identificationDocumentNumber" depends="requiredif" page="1">
+		<arg0 key="label.identificationDocumentNumber" resource="true"/>
+		<var>
+			<var-name>field[0]</var-name>
+			<var-value>studentNumber</var-value>
+		</var>
+		<var>
+			<var-name>fieldTest[0]</var-name>
+			<var-value>NULL</var-value>
+		</var>
       </field>
+      <field property="identificationDocumentType" depends="requiredif" page="1">
+		<arg0 key="label.identificationDocumentType" resource="true"/>
+		<var>
+			<var-name>field[0]</var-name>
+			<var-value>identificationDocumentNumber</var-value>
+		</var>
+		<var>
+			<var-name>fieldTest[0]</var-name>
+			<var-value>NOTNULL</var-value>
+		</var>
+	  </field>		   
     </form>
 
 

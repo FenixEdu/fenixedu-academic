@@ -27,7 +27,7 @@
 	<logic:present name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">
-				<html:link page="/listCoursesInformation.do?method=doSearch&amp;basic=basic" target="_blank"
+				<html:link page="<%="/listCoursesInformation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">

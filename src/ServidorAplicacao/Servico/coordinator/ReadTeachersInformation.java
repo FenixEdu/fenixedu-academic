@@ -93,11 +93,15 @@ public class ReadTeachersInformation implements IService
                 IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
                 List executionDegrees = persistentExecutionDegree.readByExecutionYear(executionYear);
 
-                if (basic == null)
+                if (basic == null) 
+                {
                     professorships = persistentProfessorship.readByExecutionDegrees(executionDegrees);
+                }
                 else
+                {
                     professorships =
                         persistentProfessorship.readByExecutionDegreesAndBasic(executionDegrees, basic);
+                }
             } else
             {
                 ICursoExecucao executionDegree =
@@ -105,11 +109,15 @@ public class ReadTeachersInformation implements IService
                         CursoExecucao.class,
                         executionDegreeId);
 
-                if (basic == null)
+                if (basic == null) 
+                {
                     professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
+                }
                 else
+                {
                     professorships =
                         persistentProfessorship.readByExecutionDegreeAndBasic(executionDegree, basic);
+                }
             }
 
             List teachers = (List) CollectionUtils.collect(professorships, new Transformer()

@@ -104,29 +104,26 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 		//			request.setAttribute("allActiveCurricularCourseScopes", allActiveCurricularCourseScopes);
 		//		}
 
-		if (activeCurricularCourseScopes == null)
+		if (activeCurricularCourseScopes == null || activeCurricularCourseScopes.size() == 0)
 		{
 			errors.add(
 				"noDegreeCurricularPlan",
-				new ActionError("error.coordinator.noDegreeCurricularPlan"));
+				new ActionError("error.nonExisting.AssociatedCurricularCourses"));
 			saveErrors(request, errors);
 		}
 
-
-		//order list by year, next semester, next course
-		ComparatorChain comparatorChain = new ComparatorChain();
-		comparatorChain.addComparator(
-			new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
-		comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
-		comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
-		Collections.sort(activeCurricularCourseScopes, comparatorChain);
-
-		request.setAttribute("allActiveCurricularCourseScopes", activeCurricularCourseScopes);
-
-		if (!errors.isEmpty())
+		if (errors.isEmpty())
 		{
-			return mapping.getInputForward();
-		}
+			//order list by year, next semester, next course
+			ComparatorChain comparatorChain = new ComparatorChain();
+			comparatorChain.addComparator(
+				new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
+			comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
+			comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
+			Collections.sort(activeCurricularCourseScopes, comparatorChain);
+		
+			request.setAttribute("allActiveCurricularCourseScopes", activeCurricularCourseScopes);
+		}			
 		return mapping.findForward("showActiveCurricularCourses");
 	}
 
@@ -182,11 +179,11 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 		{
 			errors.add(
 				"noDegreeCurricularPlan",
-				new ActionError("error.coordinator.noDegreeCurricularPlan"));
+				new ActionError("error.nonExisting.AssociatedCurricularCourses"));
 			saveErrors(request, errors);
 		}
 
-		if (infoDegreeCurricularPlan.getCurricularCourses() != null)
+		if (infoDegreeCurricularPlan != null && infoDegreeCurricularPlan.getCurricularCourses() != null)
 		{
 
 			//order list by year, next semester, next course
@@ -239,10 +236,6 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 			}
 			request.setAttribute("allCurricularCourseScopes", allCurricularCourseScopes);
 			request.setAttribute("curricularCourseScopesHashMap", curricularCourseScopesHashMap);
-		}
-		if (!errors.isEmpty())
-		{
-			return mapping.getInputForward();
 		}
 		return mapping.findForward("showCurricularCoursesHistory");
 	}
