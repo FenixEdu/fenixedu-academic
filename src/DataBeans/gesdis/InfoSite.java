@@ -17,59 +17,55 @@ import DataBeans.util.ViewUtils;
 
 public class InfoSite {
   
-    private InfoSection initialSection;
-    private List sections;
+    private InfoSection initialInfoSection;
+    private List infoSections;
     private String initialSectionName;
     private InfoExecutionCourse infoExecutionCourse;
     private List infoAnnouncements;
     
+	/** 
+	* Construtor
+	*/
+	
 	public InfoSite(){
 	}
+	
+	/** 
+	* Construtor
+	*/
+	
 	
 	public InfoSite(InfoExecutionCourse infoExecutionCourse) {
 		setInfoExecutionCourse(infoExecutionCourse);
 	}
 	
+	/** 
+	* Construtor
+	*/
 	
-    public InfoSite(InfoSection initialSection, List sections, InfoExecutionCourse infoExecutionCourse) {
-//		this.initialSection = ViewUtils.buildQualifiedName(initialSection);
+	
+    public InfoSite(InfoSection initialInfoSection, List infoSections, InfoExecutionCourse infoExecutionCourse, List infoAnnouncements) {
+//		this.initialInfoSection = ViewUtils.buildQualifiedName(initialInfoSection);
 
-		setInitialSection(initialSection);
+		setInitialInfoSection(initialInfoSection);
 
-		if(initialSection != null){
-			this.initialSectionName=initialSection.getName();
+		if(initialInfoSection != null){
+			this.initialSectionName=initialInfoSection.getName();
 		}
 		else
 			initialSectionName=new String("");
 		
-		if (sections != null && !sections.isEmpty()) {
-			this.sections = ViewUtils.buildSectionsList(sections, new ArrayList());			
+		if (infoSections != null && !infoSections.isEmpty()) {
+			this.infoSections = ViewUtils.buildSectionsList(infoSections, new ArrayList());			
 		} else
-			sections = new ArrayList();
+			infoSections = new ArrayList();
 			
 		setInfoExecutionCourse(infoExecutionCourse);
+		setInfoAnnouncements(infoAnnouncements);
+		
     }
     
-    public List getSections() {
-		return sections;
-    }
     
-    public InfoSection getInitialSection() {
-		return initialSection;
-    }
-    
-    public String getInitialSectionName(){
-		return initialSectionName;
-    }
-	
-    public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj != null && obj instanceof InfoSite) {
-			resultado = 
-			getInfoExecutionCourse().equals(((InfoSite) obj).getInfoExecutionCourse());
-		}
-		return resultado;
-    }
 
 	/**
 	 * @return InfoExecutionCourse
@@ -85,6 +81,7 @@ public class InfoSite {
 	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
 		this.infoExecutionCourse = infoExecutionCourse;
 	}
+	
 	/**
 	 * @return List
 	 */
@@ -101,13 +98,29 @@ public class InfoSite {
 	}
 
 	/**
-	 * Sets the initialSection.
-	 * @param initialSection The initialSection to set
-	 */
-	public void setInitialSection(InfoSection initialSection) {
-		this.initialSection = initialSection;
+	* @return InfoSection
+	*/
+	
+	public InfoSection getInitialInfoSection() {
+		return initialInfoSection;
 	}
 
+	/**
+	 * Sets the initialInfoSection.
+	 * @param initialInfoSection The initialInfoSection to set
+	 */
+	public void setInitialInfoSection(InfoSection initialInfoSection) {
+		this.initialInfoSection = initialInfoSection;
+	}
+	
+	/**
+	* @return String initialSectionName
+	*/
+	
+	public String getInitialSectionName(){
+		return initialSectionName;
+	}
+		
 	/**
 	 * Sets the initialSectionName.
 	 * @param initialSectionName The initialSectionName to set
@@ -117,11 +130,28 @@ public class InfoSite {
 	}
 
 	/**
-	 * Sets the sections.
-	 * @param sections The sections to set
-	 */
-	public void setSections(List sections) {
-		this.sections = sections;
+	* @return List of InfoSections
+	*/
+	
+	public List getInfoSections() {
+			return infoSections;
 	}
 
+	/**
+	 * Sets the infoSections.
+	 * @param infoSections The infoSections to set
+	 */
+	public void setInfoSections(List infoSections) {
+		this.infoSections = infoSections;
+	}
+	
+	
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj != null && obj instanceof InfoSite) {
+			resultado = 
+			getInfoExecutionCourse().equals(((InfoSite) obj).getInfoExecutionCourse());
+		}
+		return resultado;
+	}
 }
