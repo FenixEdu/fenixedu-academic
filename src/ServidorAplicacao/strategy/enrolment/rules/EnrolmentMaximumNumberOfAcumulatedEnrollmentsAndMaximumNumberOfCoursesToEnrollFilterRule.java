@@ -2,16 +2,10 @@ package ServidorAplicacao.strategy.enrolment.rules;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEnrolment;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.EnrolmentState;
 
 /**
  * @author David Santos in Jan 27, 2004
@@ -36,12 +30,12 @@ public class EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCour
 		int totalNAC = 0;
 		int NC = 0;
 
-		Iterator iterator = getStudentEnrollmentsWithEnrolledState(studentEnrolmentContext).iterator();
+		Iterator iterator = studentEnrolmentContext.getStudentCurrentSemesterEnrollments().iterator();
 		while (iterator.hasNext())
 		{
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 			ICurricularCourse curricularCourse = enrolment.getCurricularCourse();
-			if (studentEnrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourse).intValue() > 0)
+			if (studentEnrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourse).intValue() > 1)
 			{
 				totalNAC += getMaxIncrementNac(curricularCourse).intValue();
 			} else
@@ -49,10 +43,7 @@ public class EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCour
 				totalNAC += getMinIncrementNac(curricularCourse).intValue();
 			}
 
-			if (studentEnrolmentContext.getStudentCurrentSemesterEnrollments().contains(enrolment))
-			{
-				NC += getWeigth(curricularCourse).intValue();
-			}
+			NC = NC + getWeigth(curricularCourse).intValue();
 		}
 
 		if (totalNAC >= maxTotalNAC || NC >= maxCourses)
@@ -61,26 +52,6 @@ public class EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCour
 		}
 
 		return studentEnrolmentContext;
-	}
-
-	/**
-	 * @param studentEnrolmentContext
-	 * @return
-	 */
-	private List getStudentEnrollmentsWithEnrolledState(StudentEnrolmentContext studentEnrolmentContext)
-	{
-		try
-		{
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
-			return enrolmentDAO.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
-				studentEnrolmentContext.getStudentCurricularPlan(),
-				EnrolmentState.ENROLED);
-		} catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace();
-		}
-		return new ArrayList();
 	}
 
 	/**

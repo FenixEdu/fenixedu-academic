@@ -79,50 +79,6 @@ public class VerifyLEECCurricularPlan
 		}
 	}
 
-//	/**
-//	 * @param branch
-//	 * @throws ExcepcaoPersistencia
-//	 */
-//	private static void printItForCommonArea(IBranch branch) throws ExcepcaoPersistencia
-//	{
-//		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-//		IPersistentCurricularCourseScope curricularCourseScopeDAO = persistentSuport.getIPersistentCurricularCourseScope();
-//
-//		//System.out.println("");
-//		//System.out.println("\tGRUPO: [" + branch.getName() + "]");
-//		List curricularCourseScopes = curricularCourseScopeDAO.readByBranch(branch);
-//		sortCurricularCourseScopes(curricularCourseScopes);
-//
-//		ArrayList curricularCourses = new ArrayList();
-//		Iterator iterScopes = curricularCourseScopes.iterator();
-//
-//		while (iterScopes.hasNext())
-//		{
-//			ICurricularCourseScope ccs = (ICurricularCourseScope) iterScopes.next();
-//			if (!curricularCourses.contains(ccs.getCurricularCourse()))
-//				curricularCourses.add(ccs.getCurricularCourse());
-//		}
-//
-//		sortCurricularCourses(curricularCourses);
-//		Iterator iterator = curricularCourses.iterator();
-//		while (iterator.hasNext())
-//		{
-//			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-//			String name = curricularCourse.getName();
-//			//String year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().toString();
-//			//String semester = curricularCourseScope.getCurricularSemester().getSemester().toString();
-//			String scientificAreaName = "";
-//			if (curricularCourse.getScientificArea() != null)
-//			{
-//				scientificAreaName = curricularCourse.getScientificArea().getName();
-//			}
-//			System.out.print("\t");
-//			System.out.println("NOME: [" + name + "] ÁREA CIENTÍFICA: [" + scientificAreaName + "]");
-//		}
-//		System.out.println("");
-//		System.out.println("");
-//	}
-
 	/**
 	 * @param branch
 	 * @param areaType

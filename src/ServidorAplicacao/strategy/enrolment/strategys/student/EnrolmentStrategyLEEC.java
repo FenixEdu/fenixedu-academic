@@ -139,33 +139,41 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			this.studentHasSecundaryArea = true;
 		}
 
-		List acumulatedCurricularCourses = getStudentEverEnrolledCurricularCourses(enrollmentsWithAprovedState, enrollmentsWithEnrolledState);
-		this.studentEnrolmentContext.setAcumulatedEnrolments(acumulatedCurricularCourses);
-		
+		this.studentEnrolmentContext.setStudentCurricularPlan(this.studentCurricularPlan);
 		this.studentEnrolmentContext.setExecutionPeriod(executionPeriod);
 		this.studentEnrolmentContext.setStudentApprovedEnrollments(enrollmentsWithAprovedState);
 		this.studentEnrolmentContext.setStudentCurrentSemesterEnrollments(enrollmentsWithEnrolledState);
-		this.studentEnrolmentContext.setStudentCurricularPlan(this.studentCurricularPlan);
 		this.studentEnrolmentContext.setFinalCurricularCoursesWhereStudentCanBeEnrolled(baseAreasCurricularCourses);
+
+		List acumulatedCurricularCourses = getStudentEverEnrolledCurricularCourses();
+		this.studentEnrolmentContext.setAcumulatedEnrolments(acumulatedCurricularCourses);
 	}
 
 	/**
-	 * @param enrollmentsWithAprovedState
-	 * @param enrollmentsWithEnrolledState
 	 * @return studentEverEnrolledCurricularCourses
 	 */
-	private List getStudentEverEnrolledCurricularCourses(List enrollmentsWithAprovedState, List enrollmentsWithEnrolledState)
+	private List getStudentEverEnrolledCurricularCourses() throws ExcepcaoPersistencia
 	{
-		List enrollments = new ArrayList();
-		enrollments.addAll(enrollmentsWithAprovedState);
-		enrollments.addAll(enrollmentsWithEnrolledState);
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
+
+		List enrollments =
+			enrolmentDAO.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
+				studentEnrolmentContext.getStudentCurricularPlan(),
+				EnrolmentState.ENROLED);
+		
 		List studentEverEnrolledCurricularCourses = new ArrayList();
-		Iterator iterator = enrollments.iterator();
-		while (iterator.hasNext())
+		
+		if (enrollments != null && !enrollments.isEmpty())
 		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
-			studentEverEnrolledCurricularCourses.add(enrolment.getCurricularCourse());
+			Iterator iterator = enrollments.iterator();
+			while (iterator.hasNext())
+			{
+				IEnrolment enrolment = (IEnrolment) iterator.next();
+				studentEverEnrolledCurricularCourses.add(enrolment.getCurricularCourse());
+			}
 		}
+
 		return studentEverEnrolledCurricularCourses;
 	}
 
@@ -527,6 +535,21 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 					(Integer) creditsInSpecializationAreaGroups.get(specializationGroup.getIdInternal());
 				Integer creditsInSecundaryGroup = (Integer) creditsInSecundaryAreaGroups.get(secundaryGroup.getIdInternal());
 				Integer creditsInScientificArea = (Integer) creditsInScientificAreas.get(scientificAreaID);
+				
+				if (creditsInSpecializationGroup == null)
+				{
+					creditsInSpecializationGroup = new Integer(0);
+				}
+
+				if (creditsInSecundaryGroup == null)
+				{
+					creditsInSecundaryGroup = new Integer(0);
+				}
+
+				if (creditsInScientificArea == null)
+				{
+					creditsInScientificArea = new Integer(0);
+				}
 
 				int sumOfGroupsCredits =
 					creditsInSpecializationGroup.intValue()
@@ -610,10 +633,28 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		Integer maximumLevelToConsiderForSpecializationGroup,
 		Integer maximumLevelToConsiderForSecundaryGroup)
 	{
-		long creditsInSpecializationGroup =
-			((Integer) creditsInSpecializationAreaGroups.get(specializationGroup.getIdInternal())).longValue();
-		long creditsInSecundaryGroup = ((Integer) creditsInSecundaryAreaGroups.get(secundaryGroup.getIdInternal())).longValue();
-		long creditsInScientificArea = ((Integer) creditsInScientificAreas.get(scientificAreaID)).longValue();
+		Integer aux = (Integer) creditsInSpecializationAreaGroups.get(specializationGroup.getIdInternal());
+		Integer bux = (Integer) creditsInSecundaryAreaGroups.get(secundaryGroup.getIdInternal());
+		Integer cux = (Integer) creditsInScientificAreas.get(scientificAreaID);
+
+		if (aux == null)
+		{
+			aux = new Integer(0);
+		}
+
+		if (bux == null)
+		{
+			bux = new Integer(0);
+		}
+		
+		if (cux == null)
+		{
+			cux = new Integer(0);
+		}
+		
+		long creditsInSpecializationGroup = aux.longValue();
+		long creditsInSecundaryGroup = bux.longValue();
+		long creditsInScientificArea = cux.longValue();
 
 		long distanceFromCreditsInSpecializationGroupToMaximumLevelToConsider =
 			maximumLevelToConsiderForSpecializationGroup.longValue() - creditsInSpecializationGroup;
@@ -927,14 +968,20 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 					groups.add(1, secundaryGroup);
 					groups.add(2, scientificArea);
 					clashingGroups.put(scientificArea.getIdInternal(), groups);
-				} else if (specializationGroup != null)
+				} else
 				{
-					sumInHashMap(creditsInSpecializationAreaGroups, specializationGroup.getIdInternal(), credits);
-					entriesInHashMapToRemove.add(scientificAreaID);
-				} else if (secundaryGroup != null)
-				{
-					sumInHashMap(creditsInSecundaryAreaGroups, secundaryGroup.getIdInternal(), credits);
-					entriesInHashMapToRemove.add(scientificAreaID);
+					if (specializationGroup != null)
+					{
+						sumInHashMap(creditsInSpecializationAreaGroups, specializationGroup.getIdInternal(), credits);
+						entriesInHashMapToRemove.add(scientificAreaID);
+					} else
+					{
+						if (secundaryGroup != null)
+						{
+							sumInHashMap(creditsInSecundaryAreaGroups, secundaryGroup.getIdInternal(), credits);
+							entriesInHashMapToRemove.add(scientificAreaID);
+						}
+					}
 				}
 			}
 			
@@ -1274,12 +1321,19 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 					enrollmentsCreated.put(curricularCourse.getIdInternal(), enrolment);
 				}
 			}
+			
+			List studentEverEnrolledCurricularCourses = getStudentEverEnrolledCurricularCourses();
+
+			iterator = enrollmentsCreated.entrySet().iterator();
+			while (iterator.hasNext())
+			{
+				Map.Entry mapEntry = (Map.Entry) iterator.next();
+				IEnrolment enrolment = (IEnrolment) mapEntry.getValue();
+				studentEverEnrolledCurricularCourses.add(enrolment.getCurricularCourse());
+			}
+			
 			this.studentEnrolmentContext.getStudentCurrentSemesterEnrollments().addAll(enrollmentsToAdd);
 			this.studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled().removeAll(curricularCourses);
-			List studentEverEnrolledCurricularCourses =
-				getStudentEverEnrolledCurricularCourses(
-					this.studentEnrolmentContext.getStudentApprovedEnrollments(),
-					this.studentEnrolmentContext.getStudentCurrentSemesterEnrollments());
 			this.studentEnrolmentContext.setAcumulatedEnrolments(studentEverEnrolledCurricularCourses);
 			computeAvailableCurricularCourses();
 		}

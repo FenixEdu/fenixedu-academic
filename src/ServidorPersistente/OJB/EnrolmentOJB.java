@@ -51,10 +51,9 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 
     public List readEnrolmentsByStudentCurricularPlanAndEnrolmentState(IStudentCurricularPlan studentCurricularPlan, EnrolmentState enrolmentState) throws ExcepcaoPersistencia
     {
-       
     	Criteria criteria = new Criteria();
     	criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
-    	criteria.addEqualTo("enrolmentState", EnrolmentState.APROVED);
+    	criteria.addEqualTo("enrolmentState", enrolmentState);
     	return queryList(Enrolment.class, criteria);
     }
 

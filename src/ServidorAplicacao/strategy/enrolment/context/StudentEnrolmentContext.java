@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
@@ -20,7 +21,8 @@ import Dominio.IStudentCurricularPlan;
 public final class StudentEnrolmentContext
 {
 	/**
-	 * Map like this: key = curricularCourseCode + curricularCourseName
+	 * Map like this: String key = curricularCourse.getCode() + curricularCourse.getName() +
+	 * curricularCourse.getDegreeCurricularPlan().getName() + curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
 	 */
 	private Map acumulatedEnrolments;
 	private IExecutionPeriod executionPeriod;
@@ -167,8 +169,14 @@ public final class StudentEnrolmentContext
 	 */
 	public Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse)
 	{
+		String key =
+			curricularCourse.getCode()
+				+ curricularCourse.getName()
+				+ curricularCourse.getDegreeCurricularPlan().getName()
+				+ curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
+		
 		Integer curricularCourseAcumulatedEnrolments =
-			(Integer) this.acumulatedEnrolments.get(curricularCourse.getCode() + curricularCourse.getName()); 
+			(Integer) this.acumulatedEnrolments.get(key);
 		if (curricularCourseAcumulatedEnrolments == null)
 		{
 			curricularCourseAcumulatedEnrolments = new Integer (0);
@@ -181,7 +189,20 @@ public final class StudentEnrolmentContext
 	 */
 	public void setAcumulatedEnrolments(List studentEverEnrollledCurricularCourses)
 	{
-		this.acumulatedEnrolments = CollectionUtils.getCardinalityMap(studentEverEnrollledCurricularCourses);
+		List curricularCoursesEnrolled = (List) CollectionUtils.collect(studentEverEnrollledCurricularCourses, new Transformer()
+		{
+			public Object transform(Object obj)
+			{
+				ICurricularCourse curricularCourse = (ICurricularCourse) obj;
+				String key =
+					curricularCourse.getCode()
+						+ curricularCourse.getName()
+						+ curricularCourse.getDegreeCurricularPlan().getName()
+						+ curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
+				return (key);
+			}
+		});
+		this.acumulatedEnrolments = CollectionUtils.getCardinalityMap(curricularCoursesEnrolled);
 	}
 
 	/**
