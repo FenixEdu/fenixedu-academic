@@ -26,6 +26,7 @@
 	<html:hidden property="objectCode"/>
 	<html:hidden property="teacherNumber" />
 	<html:hidden property="anotherDateVisible" />
+	<html:hidden property="dateEmpty" value="" />
 
 <!-- Shifts -->
 <table width="100%">
@@ -95,6 +96,14 @@
 					</td>
 				</tr>
 			</logic:iterate>
+			<logic:equal name="summaryForm" property="anotherDateVisible" value="false">
+				<tr>
+					<td><bean:message key="label.summaryDateOptions"/></td>
+					<td><html:text property="dateEmpty" size="10" maxlength="10"
+							onchange="this.form.summaryDateInputOption.value='0';this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>
+					<bean:message key="message.dateFormat"/></td>
+				</tr>
+			</logic:equal>		
 			<logic:equal name="summaryForm" property="anotherDateVisible" value="true">
 				<tr>
 					<td><bean:message key="label.summaryDateOptions"/></td>

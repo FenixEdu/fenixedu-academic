@@ -169,6 +169,7 @@
             <form-property name="forHidden" type="java.lang.String" initial=""/>
             <form-property name="title" type="java.lang.String" initial=""/>
             <form-property name="summaryText" type="java.lang.String" initial=""/>
+            <form-property name="dateEmpty" type="java.lang.String" initial=""/>
             <form-property name="summaryDateInput" type="java.lang.String" initial=""/>
             <form-property name="summaryDateInputOption" type="java.lang.String" initial=""/>
             <form-property name="summaryHourInput" type="java.lang.String" initial=""/>

@@ -124,6 +124,7 @@
             <form-property name="forHidden" type="java.lang.String"/>
             <form-property name="title" type="java.lang.String"/>
             <form-property name="summaryText" type="java.lang.String"/>
+            <form-property name="dateEmpty" type="java.lang.String"/>
             <form-property name="summaryDateInput" type="java.lang.String"/>
             <form-property name="summaryDateInputOption" type="java.lang.String"/>
             <form-property name="summaryHourInput" type="java.lang.String"/>
@@ -285,6 +286,9 @@
             <set-property property="objectAttribute" value="infoTeacher"/>
             <set-property property="listAttribute" value="infoTeacherList"/>
             <set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
+            <exception type="java.lang.Exception" 
+                key="message.teacher-not-belong-to-department" 
+                path="search-for-teacherExecutionCourseAssociation-management-summaries"/>
             <forward name="search-form" path="search-for-teacherExecutionCourseAssociation-management-summaries"/>
             <forward name="list-one" path="/showTeacherProfessorshipsForSummariesManagement.do"/>
             <forward name="list-many" path=""/>

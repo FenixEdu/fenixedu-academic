@@ -64,7 +64,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         Integer shiftId = getShiftId(request);
         
         Integer professorShipId = getProfessorShipId(request, actionForm, userView, executionCourseId);
-        
+               
         SiteView siteView = getSiteView(userView, executionCourseId, lessonType, shiftId, professorShipId);
         
         processSummaries(siteView);
@@ -259,13 +259,19 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
     protected void processAnotherDate(HttpServletRequest request, ActionForm form) {
         DynaActionForm actionForm = (DynaActionForm) form;
         String summaryDateInputOption = request.getParameter("summaryDateInputOption");
-        if(summaryDateInputOption == null)
+        
+        if(summaryDateInputOption == null || summaryDateInputOption.equals("0")){
             actionForm.set("anotherDateVisible", "true");
-        else if(summaryDateInputOption != null && summaryDateInputOption.equals("on"))
+        }
+        else if(summaryDateInputOption.equals("on")){     //n esta seleccionado
             actionForm.set("anotherDateVisible", "true");
-        else
-            actionForm.set("anotherDateVisible", "false");
+            actionForm.set("summaryDateInput", "");	
+        }
+        else{
+            actionForm.set("anotherDateVisible", "false"); //esta seleccionada
+        }
     }
+
 
     private void choosenShift(HttpServletRequest request, List infoShifts) {
         if (request.getParameter("shift") != null && request.getParameter("shift").length() > 0) {
