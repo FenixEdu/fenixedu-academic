@@ -13,6 +13,7 @@
 	 <form-bean name="evaluationForm" 
 	 	type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 	 	<form-property name="evaluationElements" type="java.lang.String"/>
+	 	<form-property name="evaluationElementsEn" type="java.lang.String"/>
 	 </form-bean>
      <!--curriculum forms --> 
      <form-bean name="executionCourseCurriculumForm"
