@@ -7,6 +7,9 @@ package Dominio;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 /**
  * @author jpvl
  */
@@ -56,6 +59,8 @@ abstract public class DomainObject implements IDomainObject {
 					&& getIdInternal().equals(domainObject.getIdInternal())) {
 				List thisInterfaces = Arrays.asList(getClass().getInterfaces());
 				List objInterfaces = Arrays.asList(domainObject.getClass().getInterfaces());
+				CollectionUtils.filter(thisInterfaces, new IS_NOT_IDOMAIN_PREDICATE());
+				CollectionUtils.filter(objInterfaces, new IS_NOT_IDOMAIN_PREDICATE());
 				if (thisInterfaces.containsAll(objInterfaces) && objInterfaces.containsAll(thisInterfaces)) {
 					return true;
 				}
@@ -69,6 +74,17 @@ abstract public class DomainObject implements IDomainObject {
 			return getIdInternal().intValue();
 		} else {
 			return super.hashCode();
+		}
+	}
+
+	private class IS_NOT_IDOMAIN_PREDICATE implements Predicate {
+		public boolean evaluate(Object arg0) {
+			Class class1 = (Class) arg0;
+			if (class1.getName().equals(this.getClass().getName())) {
+				return false; 
+			} else {
+				return true;
+			}
 		}
 	}
 
