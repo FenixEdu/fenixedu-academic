@@ -94,7 +94,7 @@
 
 	<bean:message key="label.masterDegree.administrativeOffice.payment"/><br>
        <!-- Payment Type -->
-		<% int i = 0; %>
+		<% int i = 1; %>
     	<logic:iterate id="payment" name="<%= SessionConstants.PAYMENT_TYPE %>"> 
     		<html:radio property="paymentType" value="<%= (new Integer(i)).toString() %>" /> <bean:write name="payment" /><br>
 		<% i++; %>

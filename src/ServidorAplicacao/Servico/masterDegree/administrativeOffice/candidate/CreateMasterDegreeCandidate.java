@@ -14,8 +14,11 @@ import Dominio.CandidateSituation;
 import Dominio.ICandidateSituation;
 import Dominio.ICursoExecucao;
 import Dominio.IMasterDegreeCandidate;
+import Dominio.IPersonRole;
 import Dominio.IPessoa;
+import Dominio.IRole;
 import Dominio.MasterDegreeCandidate;
+import Dominio.PersonRole;
 import Dominio.Pessoa;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
@@ -25,9 +28,10 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
-import Util.State;
+import Util.RoleType;
 import Util.SituationName;
 import Util.Specialization;
+import Util.State;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
@@ -64,12 +68,15 @@ public class CreateMasterDegreeCandidate implements IServico {
 		
 		ISuportePersistente sp = null;
 
+		IRole role = null;
+		IPessoa person = null;
+
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			
 			// Check if the person Exists
 			
-			IPessoa person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(), 
+			person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(), 
 							 newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
 			
 			// Read the Execution of this degree in the current execution Year
@@ -106,7 +113,6 @@ public class CreateMasterDegreeCandidate implements IServico {
 
 			masterDegreeCandidate.setCandidateNumber(number);
 			
-
 			if (person == null) {
 				// Create the new Person
 				
@@ -121,7 +127,16 @@ public class CreateMasterDegreeCandidate implements IServico {
 				person.setUsername(username);
 				
 				sp.getIPessoaPersistente().escreverPessoa(person);
+				
+				// Give the Person Role
+				role = sp.getIPersistentRole().readByRoleType(RoleType.PERSON);
+				IPersonRole personRole = new PersonRole();
+				personRole.setPerson(person);
+				personRole.setRole(role);
+				
+				sp.getIPersistentPersonRole().write(personRole);
 			}
+			
 			
 			masterDegreeCandidate.setPerson(person);
 			
@@ -130,6 +145,23 @@ public class CreateMasterDegreeCandidate implements IServico {
 			
 		} catch (ExistingPersistentException ex) {
 			throw new ExistingServiceException(ex);
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		} 
+
+		try {
+			// Give the Master Degree Candidate Role
+			IPersonRole personRole = new PersonRole();
+			role = sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
+			personRole.setPerson(person);
+			personRole.setRole(role);
+				
+			sp.getIPersistentPersonRole().write(personRole);
+
+		} catch (ExistingPersistentException ex) {
+			// This person is already a Candidate. No need to give the role again
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();

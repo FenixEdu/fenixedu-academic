@@ -1009,27 +1009,19 @@ public abstract class Cloner {
 		IGuide guide = new Guide();
 		copyObjectProperties(guide, infoGuide);
 
-System.out.println("Cloner 1");		
-
 		guide.setContributor(Cloner.copyInfoContributor2IContributor(infoGuide.getInfoContributor()));
-		System.out.println("Cloner 2");		
 		guide.setPerson(Cloner.copyInfoPerson2IPerson(infoGuide.getInfoPerson()));
-		System.out.println("Cloner 3");		
 		guide.setExecutionDegree(Cloner.copyInfoExecutionDegree2ExecutionDegree(infoGuide.getInfoExecutionDegree()));
-		System.out.println("Cloner 4");		
 		
 		if (infoGuide.getInfoGuideEntries() != null){
-			System.out.println("Cloner 5");		
 			Iterator iterator = infoGuide.getInfoGuideEntries().iterator();
 			List guideEntries = new ArrayList();
 			while(iterator.hasNext()) {
 				guideEntries.add(Cloner.copyInfoGuideEntry2IGuideEntry((InfoGuideEntry) iterator.next())); 
 			}
-			System.out.println("Cloner 6");		
 
 			guide.setGuideEntries(guideEntries);			
 		}
-		System.out.println("Cloner 7");		
 
 		return guide;
 	}

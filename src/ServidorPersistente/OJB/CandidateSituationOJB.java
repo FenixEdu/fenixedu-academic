@@ -83,7 +83,7 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
 	}
     
     public void writeCandidateSituation(ICandidateSituation candidateSituationToWrite) throws ExcepcaoPersistencia {
-        super.lockWrite(candidateSituationToWrite);        
+		super.lockWrite(candidateSituationToWrite);
     }
     
     public void delete(ICandidateSituation candidateSituation) throws ExcepcaoPersistencia {

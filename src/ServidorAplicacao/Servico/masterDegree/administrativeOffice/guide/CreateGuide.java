@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -148,8 +149,11 @@ public class CreateGuide implements IServico {
 			
 			// Write the new Entries of the Guide
 			Iterator iterator = infoGuide.getInfoGuideEntries().iterator();
+			List guideEntries = new ArrayList();
 			while(iterator.hasNext()){
 				IGuideEntry guideEntry = Cloner.copyInfoGuideEntry2IGuideEntry((InfoGuideEntry) iterator.next());
+				guideEntries.add(guideEntry);
+
 				guideEntry.setGuide(guide);
 				sp.getIPersistentGuideEntry().write(guideEntry);
 			}
@@ -163,7 +167,11 @@ public class CreateGuide implements IServico {
 			newEx.fillInStackTrace();
 			throw newEx;
 		}
-		return Cloner.copyIGuide2InfoGuide(guide);
+		
+		InfoGuide result = Cloner.copyIGuide2InfoGuide(guide); 
+		result.setInfoGuideEntries(infoGuide.getInfoGuideEntries());
+
+		return result;
 	}
 	
 	// FIXME : move to Util and add Quantity

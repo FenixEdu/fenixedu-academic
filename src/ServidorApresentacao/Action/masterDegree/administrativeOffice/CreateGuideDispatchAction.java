@@ -24,6 +24,7 @@ import org.apache.struts.util.LabelValueBean;
 import DataBeans.InfoContributor;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoGuide;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -31,11 +32,13 @@ import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingContributorServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidSituationActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.GuideRequester;
 import Util.PaymentType;
+import Util.RandomStringGenerator;
 import Util.SituationOfGuide;
 import Util.Specialization;
 
@@ -47,6 +50,7 @@ import Util.Specialization;
  * This is the Action to create a Guide
  * 
  */
+
 public class CreateGuideDispatchAction extends DispatchAction {
 
 	public ActionForward prepare(ActionMapping mapping, ActionForm form,
@@ -189,8 +193,9 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			session.setAttribute(SessionConstants.PAYMENT_TYPE, PaymentType.toArrayList());
 			session.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, SituationOfGuide.toArrayList());
 
-			
 			if (requesterType.equals(GuideRequester.CANDIDATE_STRING)){
+				session.removeAttribute(SessionConstants.REQUESTER_TYPE);
+				session.setAttribute(SessionConstants.REQUESTER_TYPE, requesterType);
 				return mapping.findForward("CreateCandidateGuide");
 			}			
 			
@@ -227,7 +232,6 @@ public class CreateGuideDispatchAction extends DispatchAction {
 				othersPrice = new Double(othersPriceString);
 				
 			SituationOfGuide situationOfGuide = new SituationOfGuide(new Integer(guideSituationString));
-			
 			InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
 	
 			InfoGuide newInfoGuide = null;
@@ -246,6 +250,45 @@ public class CreateGuideDispatchAction extends DispatchAction {
 						
 			session.removeAttribute(SessionConstants.GUIDE);
 			session.setAttribute(SessionConstants.GUIDE, newInfoGuide);
+			
+			// Check if it's necessary to create a password for the candidate And to change his situation
+			String requesterType = (String) session.getAttribute(SessionConstants.REQUESTER_TYPE);
+			session.removeAttribute(SessionConstants.REQUESTER_TYPE); 
+			
+
+			System.out.println("--- " + newInfoGuide.getInfoGuideEntries().size());
+			
+			// We need to check if the Guide has been payd 
+			if ((requesterType.equals(GuideRequester.CANDIDATE_STRING)) &&
+				(newInfoGuide.getPaymentType() != null)) 
+				//((InfoGuideSituation) infoGuide.get().get(0)).getSituation().equals(SituationOfGuide.PAYED_TYPE))
+				if ((infoGuide.getInfoPerson().getPassword() == null) || (infoGuide.getInfoPerson().getPassword().length() == 0)){
+					// Generate the password
+
+					infoGuide.getInfoPerson().setPassword(RandomStringGenerator.getRandomStringGenerator(8));					
+
+System.out.println("New Password: " + infoGuide.getInfoPerson().getPassword());
+
+					// Write the Person
+					try {
+						Object args[] = {infoGuide.getInfoPerson() };
+						serviceManager.executar(userView, "ChangePersonPassword", args);
+					} catch (FenixServiceException e) {
+						throw new FenixActionException();
+					}
+					
+					// The Candidate will now have a new Situation
+					try {
+						Object args[] = { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson()};
+						serviceManager.executar(userView, "CreateCandidateSituation", args);
+					} catch (FenixServiceException e) {
+						throw new FenixActionException();
+					}
+					
+					// Put variable in Session to Inform that it's necessary to print the password
+					session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
+					
+				}
 			
 			return mapping.findForward("CreateSuccess");
 			

@@ -260,6 +260,57 @@
     </collection-descriptor> 
 </class-descriptor>
 
+
+
+<!-- ***********************************
+     Definitions for Dominio.PersonRole 
+     *********************************** -->
+<class-descriptor class="Dominio.PersonRole"
+                  table="PERSON_ROLE">
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+        id="1"
+    />
+
+    <field-descriptor
+        name="keyRole"
+        column="KEY_ROLE"
+        nullable = "false"
+        jdbc-type="INTEGER"
+        id="2"
+    />
+    <field-descriptor 
+        name="keyPerson"
+        column="KEY_PERSON"
+		nullable="false"
+        jdbc-type="INTEGER"
+        id="3"
+    />
+
+      <reference-descriptor
+         name="role"
+         class-ref="Dominio.Role"
+         proxy="false"
+	  >
+         <foreignkey field-id-ref="2"/>
+      </reference-descriptor>
+      
+     <reference-descriptor
+         name="person"
+         class-ref="Dominio.Pessoa"
+         proxy="false"
+	  >
+         <foreignkey field-id-ref="3"/>
+      </reference-descriptor>
+
+</class-descriptor>
+
+
+
 <!-- Definitions for Dominio.Student -->
    <class-descriptor
    	  class="Dominio.Student"

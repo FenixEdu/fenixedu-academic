@@ -21,6 +21,7 @@ import org.odmg.QueryException;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
+import Dominio.IPessoa;
 import Dominio.MasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
@@ -298,6 +299,35 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 			query.bind(executionDegree.getCurricularPlan().getName());
 			query.bind(executionDegree.getCurricularPlan().getDegree().getNome());
 			query.bind(specialization.getSpecialization());
+	
+			List result = (List) query.execute();
+	
+			lockRead(result);
+			if (result.size() != 0)
+				candidate = (IMasterDegreeCandidate) result.get(0);
+	
+			return candidate;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+
+	public IMasterDegreeCandidate readByExecutionDegreeAndPerson(ICursoExecucao executionDegree, IPessoa person) throws ExcepcaoPersistencia{
+		try {
+			IMasterDegreeCandidate candidate = null;
+			String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
+					+ " where person.username = $1"
+					+ " and executionDegree.executionYear.year = $2" 
+					+ " and executionDegree.curricularPlan.name = $3" 
+					+ " and executionDegree.curricularPlan.degree.nome = $4"; 
+	
+			query.create(oqlQuery);
+			query.bind(person.getUsername());
+			query.bind(executionDegree.getExecutionYear().getYear());
+			query.bind(executionDegree.getCurricularPlan().getName());
+			query.bind(executionDegree.getCurricularPlan().getDegree().getNome());
+
 	
 			List result = (List) query.execute();
 	

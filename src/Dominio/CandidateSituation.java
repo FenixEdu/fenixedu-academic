@@ -50,15 +50,6 @@ public class CandidateSituation implements ICandidateSituation {
         setValidation(validation);
     }
 
-    public boolean equals(Object o) {
-        return
-        ((o instanceof CandidateSituation) &&
-        (date.getTime() == (((CandidateSituation)o).getDate().getTime())) &&
-        (remarks.equals((((CandidateSituation)o).getRemarks()))) &&
-        (validation.equals((((CandidateSituation)o).getValidation()))));
-
-    }
-
     public String toString() {
         String result = "Candidate Situation:\n";
         result += "\n  - Internal Code : " + internalCode;

@@ -11,10 +11,12 @@ import java.util.List;
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
+import DataBeans.InfoPerson;
 import DataBeans.util.Cloner;
 import Dominio.ICandidateSituation;
 import Dominio.ICursoExecucao;
 import Dominio.IMasterDegreeCandidate;
+import Dominio.IPessoa;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -86,4 +88,46 @@ public class ReadMasterDegreeCandidate implements IServico {
 
 		return infoMasterDegreeCandidate;
 	}
+	
+	
+	
+	
+	public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson) throws FenixServiceException {
+		
+		ISuportePersistente sp = null;
+		IMasterDegreeCandidate masterDegreeCandidate = null;
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			
+			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+			IPessoa person = Cloner.copyInfoPerson2IPerson(infoPerson);
+			
+			// Read the candidates
+			
+			masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPerson(executionDegree, person);
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		} 
+		
+		if (masterDegreeCandidate == null)
+			return null;	
+		Iterator iterator = masterDegreeCandidate.getSituations().iterator();
+		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+		List situations = new ArrayList();
+		while(iterator.hasNext()){
+			InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) iterator.next()); 
+			situations.add(infoCandidateSituation);
+			
+			// Check if this is the Active Situation
+			if 	(infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
+				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+		}
+		infoMasterDegreeCandidate.setSituationList(situations);
+
+		return infoMasterDegreeCandidate;
+	}
+
+	
 }

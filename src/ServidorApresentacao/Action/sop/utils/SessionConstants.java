@@ -72,6 +72,8 @@ public abstract class SessionConstants {
 	public static final String GUIDE = "guide";
 	public static final String GUIDE_SITUATION_LIST = "guide_situation_list";
 	public static final String PAYMENT_TYPE = "payment_type";
+	public static final String REQUESTER_TYPE = "requester_type";
+	public static final String PRINT_PASSWORD = "print_password";
 
 
 

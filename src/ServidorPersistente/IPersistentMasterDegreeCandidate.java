@@ -18,6 +18,7 @@ import java.util.List;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
+import Dominio.IPessoa;
 import Util.SituationName;
 import Util.Specialization;
 
@@ -122,5 +123,15 @@ public interface IPersistentMasterDegreeCandidate {
 	 */
 	public IMasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(Integer number, ICursoExecucao executionDegree, 
 			Specialization specialization) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param executionDegree
+	 * @param person
+	 * @return IMasterDegreeCandidate
+	 * @throws ExcepcaoPersistencia
+	 */
+	public IMasterDegreeCandidate readByExecutionDegreeAndPerson(ICursoExecucao executionDegree, IPessoa person) throws ExcepcaoPersistencia;		
+	
 			
 } // End of class definition

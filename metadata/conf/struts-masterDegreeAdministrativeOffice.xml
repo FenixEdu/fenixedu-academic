@@ -79,7 +79,7 @@
         	<form-property name="othersPrice" type="java.lang.String" />
         	<form-property name="remarks" type="java.lang.String" />
         	<form-property name="guideSituation" type="java.lang.String" />
-        	<form-property name="paymentType" type="java.lang.Integer" initial="1" />
+        	<form-property name="paymentType" type="java.lang.Integer" initial="2" />
         	
       </form-bean>
 
@@ -125,6 +125,7 @@
       <action path="/candidateSection" forward="/candidateIndex.jsp"/>
       <action path="/contributorSection" forward="/contributor/index.jsp"/>
       <action path="/guideSection" forward="/guide/indexGuide.jsp"/>
+      <action path="/printGuidePage" forward="/guide/printGuidePage.jsp"/>
       
       
             
@@ -283,7 +284,18 @@
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
+	         <forward name="CreateSuccess" path="printGuide.do?method=prepare"/>  	         
       </action>
+
+
+      <!-- Print Guide -->
+      <action path="/printGuide"
+		      parameter="method"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.PrintGuideDispatchAction"
+			  >
+	         <forward name="PrintReady" path="/guide/printGuide.jsp"/> 
+      </action>
+
 
 
     </action-mappings>
