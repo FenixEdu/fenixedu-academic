@@ -8,6 +8,10 @@ import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.ScholarshipNotFinishedServiceException;
+import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
+import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
+import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -21,7 +25,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan implements IServico {
 
-	private static ReadActiveMasterDegreeProofVersionByStudentCurricularPlan servico = new ReadActiveMasterDegreeProofVersionByStudentCurricularPlan();
+	private static ReadActiveMasterDegreeProofVersionByStudentCurricularPlan servico =
+		new ReadActiveMasterDegreeProofVersionByStudentCurricularPlan();
 
 	/**
 	 * The singleton access method of this class.
@@ -48,8 +53,17 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan implement
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
-			IMasterDegreeProofVersion masterDegreeProofVersion = sp.getIPersistentMasterDegreeProofVersion()
-					.readActiveByStudentCurricularPlan(studentCurricularPlan);
+
+			IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
+			IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy =
+				(IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(
+					studentCurricularPlan.getDegreeCurricularPlan());
+
+			if (!masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan))
+				throw new ScholarshipNotFinishedServiceException("message.masterDegree.scholarshipNotFinished");
+
+			IMasterDegreeProofVersion masterDegreeProofVersion =
+				sp.getIPersistentMasterDegreeProofVersion().readActiveByStudentCurricularPlan(studentCurricularPlan);
 
 			if (masterDegreeProofVersion == null)
 				throw new ExcepcaoInexistente("Master Degree Proof not found.");
