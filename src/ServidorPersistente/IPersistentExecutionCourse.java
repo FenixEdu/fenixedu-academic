@@ -19,7 +19,7 @@ public interface IPersistentExecutionCourse extends IPersistentObject
     public void escreverDisciplinaExecucao(IExecutionCourse disciplinaExecucao)
         throws ExcepcaoPersistencia, ExistingPersistentException;
 
-    public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+    //public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
 
     /**
 	 * @param sigla
