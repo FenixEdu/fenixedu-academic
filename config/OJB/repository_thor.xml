@@ -132,6 +132,7 @@
     name="sigla"
     column="Sigla"
     jdbc-type="VARCHAR"
+    primarykey="true"
   />
   <field-descriptor id="1"
     name="nome"
