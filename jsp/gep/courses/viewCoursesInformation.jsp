@@ -153,8 +153,14 @@
 			<bean:message key="label.gep.teachingReport" bundle="GEP_RESOURCES"/>	
 		</td>
 	</tr>
-	<logic:iterate id="infoCourse" name="infoCourses" type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction.InfoCourse">
-		<bean:size id="numberTeachers" name="infoCourse" property="teachers"/> 
+	<logic:present name="infoCourses">
+		<logic:iterate id="infoCourse" name="infoCourses" type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction.InfoCourse">
+		<logic:present name="infoCourse" property="teachers">
+			<bean:size id="numberTeachers" name="infoCourse" property="teachers"/>
+		</logic:present>
+		<logic:notPresent name="infoCourse" property="teachers">
+			<bean:define id="numberTeachers" value="1"/>
+		</logic:notPresent>
 		<tr>
 			<td class="listClasses" rowspan="<%=  pageContext.findAttribute("numberTeachers") %>">&nbsp;
 				<table>
@@ -203,17 +209,23 @@
 					<bean:write name="infoCourse" property="degreeCurricularPlanName"/>
 				</td>
 			</logic:notPresent>
-			<logic:iterate id="teacher" name="infoCourse" property="teachers"  length="1">
-				<td class="listClasses">
-					<bean:write name="teacher" property="name"/>&nbsp;
-						<logic:equal name="teacher" property="responsible" value="true">
-							(<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>)
-						</logic:equal>
-				</td>
-				<td class="listClasses">
-					<bean:write name="teacher" property="department"/>&nbsp;
-				</td>
-			</logic:iterate>
+			<logic:present name="infoCourse" property="teachers">
+				<logic:iterate id="teacher" name="infoCourse" property="teachers"  length="1">
+					<td class="listClasses">
+						<bean:write name="teacher" property="name"/>&nbsp;
+							<logic:equal name="teacher" property="responsible" value="true">
+								(<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>)
+							</logic:equal>
+					</td>
+					<td class="listClasses">
+						<bean:write name="teacher" property="department"/>&nbsp;
+					</td>
+				</logic:iterate>
+			</logic:present>				
+			<logic:notPresent name="infoCourse" property="teachers">
+				<td class="listClasses">&nbsp;</td>
+				<td class="listClasses">&nbsp;</td>
+			</logic:notPresent>				
 			<td class="listClasses" rowspan="<%=  pageContext.findAttribute("numberTeachers") %>">&nbsp;
 				<logic:lessThan name="infoCourse" property="numberFieldsFilled" value="5">
 					<font color="#FF0000"><bean:write name="infoCourse" property="numberFieldsFilled"/>/5</font>
@@ -256,26 +268,30 @@
 				</html:link>
 			</td>
 		</tr>
-		<logic:iterate id="teacher" name="infoCourse" property="teachers"  offset="1">
-		<tr>
-			<td class="listClasses">
-				<bean:write name="teacher" property="name"/>&nbsp;
-				<logic:equal name="teacher" property="responsible" value="true">
-					(<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>)
-				</logic:equal>
-			</td>
-			<td class="listClasses">
-				<bean:write name="teacher" property="department"/>&nbsp;
-			</td>
-		</tr>
+		<logic:present name="infoCourse" property="teachers">
+			<logic:iterate id="teacher" name="infoCourse" property="teachers"  offset="1">
+			<tr>
+				<td class="listClasses">
+					<bean:write name="teacher" property="name"/>&nbsp;
+					<logic:equal name="teacher" property="responsible" value="true">
+						(<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>)
+					</logic:equal>
+				</td>
+				<td class="listClasses">
+					<bean:write name="teacher" property="department"/>&nbsp;
+				</td>
+			</tr>
+			</logic:iterate>
+		</logic:present>
 		</logic:iterate>
-	</logic:iterate>
+	</logic:present>
 </table>
 <br/>
 <h2><bean:message key="label.gep.statistics" bundle="GEP_RESOURCES"/>:</h2>
-<bean:size id="length" name="infoCourses"/>
 <bean:message key="label.gep.numberOfCourses" bundle="GEP_RESOURCES"/>:
-<bean:write name="length"/>
+<logic:present name="infoCourses">
+	<bean:size id="length" name="infoCourses"/>
+	<bean:write name="length"/>
 <br/>
 <br/>
 <table width="50%" border="0" cellspacing="1" style="margin-top:10px">
@@ -361,6 +377,7 @@
 </table>
 <br />
 <br />
+</logic:present>
 <logic:present name="infoExecutionDegree">
 	<logic:present name="basic">
 		<div class="button">
