@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.enrollment.shift.ShiftEnrollmentErrorReport;
 import DataBeans.util.Cloner;
@@ -51,8 +53,7 @@ public class EnrollStudentInShifts implements IService
      *         StudentNotFoundServiceException
      * @throws FenixServiceException
      */
-    public ShiftEnrollmentErrorReport run(Integer studentId,
-            final List shiftIdsToEnroll)
+    public ShiftEnrollmentErrorReport run(Integer studentId, List shiftIdsToEnroll)
             throws StudentNotFoundServiceException, FenixServiceException
     {
         try
@@ -60,40 +61,34 @@ public class EnrollStudentInShifts implements IService
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-            ITurnoAlunoPersistente persistentShiftStudent = sp
-                    .getITurnoAlunoPersistente();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                    .getIPersistentExecutionPeriod();
+            ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
             if (shiftIdsToEnroll != null && !shiftIdsToEnroll.isEmpty())
             {
-                IStudent student = (IStudent) persistentStudent.readByOId(
-                        new Student(studentId), false);
-                if (student == null) { throw new StudentNotFoundServiceException(); }
+                IStudent student = (IStudent) persistentStudent.readByOId(new Student(studentId), false);
+                if (student == null)
+                {
+                    throw new StudentNotFoundServiceException();
+                }
 
-                IExecutionPeriod executionPeriod = persistentExecutionPeriod
-                        .readActualExecutionPeriod();
-                List shiftEnrollments = persistentShiftStudent
-                        .readByStudentAndExecutionPeriod(student,
-                                executionPeriod);
+                IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+                List shiftEnrollments = persistentShiftStudent.readByStudentAndExecutionPeriod(student,
+                        executionPeriod);
 
                 List shiftsToUnEnroll = new ArrayList();
                 List filteredShiftsIdsToEnroll = new ArrayList();
 
-                filteredShiftsIdsToEnroll = calculateShiftsToEnroll(
-                        shiftIdsToEnroll, shiftEnrollments,
-                        filteredShiftsIdsToEnroll);
+                filteredShiftsIdsToEnroll = calculateShiftsToEnroll(shiftIdsToEnroll, shiftEnrollments);
 
-                shiftsToUnEnroll = enrollStudentsInShiftsAndCalculateShiftsToUnEnroll(
-                        student, filteredShiftsIdsToEnroll, errorReport,
-                        persistentShift, persistentShiftStudent);
+                shiftsToUnEnroll = enrollStudentsInShiftsAndCalculateShiftsToUnEnroll(student,
+                        filteredShiftsIdsToEnroll, errorReport, persistentShift, persistentShiftStudent);
 
-                shiftsToUnEnroll = calculateShiftsToUnEnroll(shiftIdsToEnroll,
-                        shiftEnrollments, shiftsToUnEnroll);
+                shiftsToUnEnroll = calculateShiftsToUnEnroll(shiftIdsToEnroll, shiftEnrollments,
+                        shiftsToUnEnroll);
 
-                unEnrollStudentsInShifts(shiftsToUnEnroll, errorReport,
-                        persistentShiftStudent);
+                unEnrollStudentsInShifts(shiftsToUnEnroll, errorReport, persistentShiftStudent);
 
             }
 
@@ -111,10 +106,8 @@ public class EnrollStudentInShifts implements IService
      * @param errors
      * @param persistentShiftStudent
      */
-    private void unEnrollStudentsInShifts(List shiftsToUnEnroll,
-            ShiftEnrollmentErrorReport errorReport,
-            ITurnoAlunoPersistente persistentShiftStudent)
-            throws ExcepcaoPersistencia
+    private void unEnrollStudentsInShifts(List shiftsToUnEnroll, ShiftEnrollmentErrorReport errorReport,
+            ITurnoAlunoPersistente persistentShiftStudent) throws ExcepcaoPersistencia
     {
         Iterator iter = shiftsToUnEnroll.iterator();
         while (iter.hasNext())
@@ -133,11 +126,9 @@ public class EnrollStudentInShifts implements IService
      * @param persistentShiftStudent
      * @throws ExcepcaoPersistencia
      */
-    private List enrollStudentsInShiftsAndCalculateShiftsToUnEnroll(
-            IStudent student, List filteredShiftsIdsToEnroll,
-            ShiftEnrollmentErrorReport errorReport,
-            ITurnoPersistente persistentShift,
-            ITurnoAlunoPersistente persistentShiftStudent)
+    private List enrollStudentsInShiftsAndCalculateShiftsToUnEnroll(IStudent student,
+            List filteredShiftsIdsToEnroll, ShiftEnrollmentErrorReport errorReport,
+            ITurnoPersistente persistentShift, ITurnoAlunoPersistente persistentShiftStudent)
             throws ExcepcaoPersistencia
     {
         List shiftsToUnEnroll = new ArrayList();
@@ -145,8 +136,7 @@ public class EnrollStudentInShifts implements IService
         while (iter.hasNext())
         {
             Integer shiftId = (Integer) iter.next();
-            ITurno shift = (ITurno) persistentShift.readByOId(
-                    new Turno(shiftId), false);
+            ITurno shift = (ITurno) persistentShift.readByOId(new Turno(shiftId), false);
             if (shift == null)
             {
                 errorReport.getUnExistingShifts().add(shiftId);
@@ -154,8 +144,8 @@ public class EnrollStudentInShifts implements IService
             else
             {
                 ITurnoAluno shiftStudentToDelete = persistentShiftStudent
-                        .readByStudentAndExecutionCourseAndLessonType(student,
-                                shift.getDisciplinaExecucao(), shift.getTipo());
+                        .readByStudentAndExecutionCourseAndLessonType(student, shift
+                                .getDisciplinaExecucao(), shift.getTipo());
 
                 if (shift.getLotacao().intValue() > persistentShiftStudent
                         .readNumberOfStudentsByShift(shift))
@@ -185,22 +175,41 @@ public class EnrollStudentInShifts implements IService
      * @param shiftEnrollments
      * @param filteredShiftsIdsToEnroll
      */
-    private List calculateShiftsToEnroll(List shiftIdsToEnroll,
-            List shiftEnrollments, List filteredShiftsIdsToEnroll)
+    private List calculateShiftsToEnroll(List shiftIdsToEnroll, List shiftEnrollments)
     {
-        return shiftIdsToEnroll;
+
+        if (shiftEnrollments != null)
+        {
+            List shiftIdsToIgnore = new ArrayList();
+            Iterator iter = shiftEnrollments.iterator();
+            while (iter.hasNext())
+            {
+                ITurnoAluno shiftStudent = (ITurnoAluno) iter.next();
+
+                if (shiftIdsToEnroll.contains(shiftStudent.getShift().getIdInternal()))
+                {
+
+                    shiftIdsToIgnore.add(shiftStudent.getShift().getIdInternal());
+                }
+            }
+          
+            return (List) CollectionUtils.subtract(shiftIdsToEnroll, shiftIdsToIgnore);
+        }
+        else
+        {
+
+            return shiftIdsToEnroll;
+        }
     }
 
     /**
      * @param shiftIdsToEnroll
      * @param shiftEnrollments
      */
-    private List calculateShiftsToUnEnroll(List shiftIdsToEnroll,
-            List shiftEnrollments, List shiftsToUnEnroll)
+    private List calculateShiftsToUnEnroll(List shiftIdsToEnroll, List shiftEnrollments,
+            List shiftsToUnEnroll)
     {
-
         return shiftsToUnEnroll;
-
     }
 
 }
