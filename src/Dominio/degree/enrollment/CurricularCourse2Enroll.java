@@ -2,7 +2,7 @@
  * Created on Jun 28, 2004
  *
  */
-package Dominio.enrollment;
+package Dominio.degree.enrollment;
 
 import java.io.Serializable;
 

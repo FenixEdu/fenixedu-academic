@@ -7,7 +7,7 @@ package DataBeans.enrollment;
 import java.io.Serializable;
 
 import DataBeans.InfoCurricularCourse;
-import Dominio.enrollment.CurricularCourse2Enroll;
+import Dominio.degree.enrollment.CurricularCourse2Enroll;
 
 /**
  * @author João Mota

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 import DataBeans.DataTranferObject;
 import DataBeans.InfoCurricularCourse;
-import Dominio.enrollment.CurricularCourse2Enroll;
+import Dominio.degree.enrollment.CurricularCourse2Enroll;
 import Util.enrollment.CurricularCourseEnrollmentType;
 
 /**
