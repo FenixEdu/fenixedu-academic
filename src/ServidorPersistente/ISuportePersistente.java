@@ -166,6 +166,12 @@ public interface ISuportePersistente {
 	public IPersistentWebSite getIPersistentWebSite();
 	public IPersistentWebSiteSection getIPersistentWebSiteSection();
 	public IPersistentWebSiteItem getIPersistentWebSiteItem();
+	
+	public IPersistentMasterDegreeThesis getIPersistentMasterDegreeThesis();
+	public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion();
+	public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion();
+	
+	public IPersistentExternalPerson getIPersistentExternalPerson();
 }
 
 
