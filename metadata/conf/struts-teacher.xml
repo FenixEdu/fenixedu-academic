@@ -72,6 +72,17 @@
             <form-property name="page" type="java.lang.Integer" initial="0"/>
      </form-bean>    	
 
+	<form-bean name="alternativeSiteForm"
+				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">        
+            <form-property name="siteAddress" type="java.lang.String" />
+            <form-property name="mail" type="java.lang.String" />               
+            <form-property name="method" type="java.lang.String" />    
+            <form-property name="page" type="java.lang.Integer" initial="0" />           
+	</form-bean>    			
+
+
+
     </form-beans>
 
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -115,6 +126,17 @@
 				<forward name="editBibliographicReference" path="/editBibliographicReference.jsp"/>
 				<forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
 	</action>             
+	
+	<action     path="/alternativeSite"   
+				parameter="method"   			
+				scope="session"
+      			name="alternativeSiteForm"
+      			input="/alternativeSiteManagement.jsp"
+                type="ServidorApresentacao.Action.teacher.AlternativeSiteManagementAction"            
+                validate="true">	           
+				<forward name="editAlternativeSite" path="/alternativeSiteManagement.jsp"/>				
+	</action>             
+	
 
 	<!-- access to announcement management -->
 	<action 
