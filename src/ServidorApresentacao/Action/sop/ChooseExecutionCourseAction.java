@@ -64,6 +64,7 @@ public class ChooseExecutionCourseAction extends Action {
 				infoCourse);
 			return mapping.findForward("forwardChoose");
 		} else {
+			session.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 			return mapping.findForward("showForm");
 		}
 	}

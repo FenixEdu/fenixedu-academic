@@ -56,6 +56,7 @@ public class ClassesManagerDispatchAction extends DispatchAction {
 		if (classesList != null && !classesList.isEmpty())
 			request.setAttribute(CLASS_LIST_KEY, classesList);
 
+		session.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 		return mapping.findForward("listClasses");
 	}
 

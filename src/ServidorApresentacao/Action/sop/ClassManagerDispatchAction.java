@@ -54,6 +54,7 @@ public class ClassManagerDispatchAction extends DispatchAction {
 			SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 
+		session.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 		session.removeAttribute(SessionConstants.CLASS_VIEW);
 		session.removeAttribute(SessionConstants.LESSON_LIST_ATT);
 		String className = getClassName(form);
