@@ -34,7 +34,6 @@ import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import DataBeans.InfoEvaluation;
-import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExam;
 import DataBeans.InfoExamStudentRoom;
 import DataBeans.InfoExecutionCourse;
@@ -1742,31 +1741,7 @@ public abstract class Cloner {
 	}
 
 	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
-	public static IEvaluationMethod copyInfoEvaluationMethod2IEvaluationMethod(InfoEvaluationMethod infoEvaluationMethod) {
 
-		IEvaluationMethod evaluationMethod = new EvaluationMethod();
-		ICurricularCourse curricularCourse =
-			Cloner.copyInfoCurricularCourse2CurricularCourse(infoEvaluationMethod.getInfoCurricularCourse());
-
-		copyObjectProperties(evaluationMethod, infoEvaluationMethod);
-
-		evaluationMethod.setCurricularCourse(curricularCourse);
-
-		return evaluationMethod;
-	}
-
-	public static InfoEvaluationMethod copyIEvaluationMethod2InfoEvaluationMethod(IEvaluationMethod evaluationMethod) {
-
-		InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
-		InfoCurricularCourse infoCurricularCourse =
-			Cloner.copyCurricularCourse2InfoCurricularCourse(evaluationMethod.getCurricularCourse());
-
-		copyObjectProperties(infoEvaluationMethod, evaluationMethod);
-
-		infoEvaluationMethod.setInfoCurricularCourse(infoCurricularCourse);
-
-		return infoEvaluationMethod;
-	}
 	public static IEvaluation copyInfoEvaluation2IEvaluation(InfoEvaluation infoEvaluation) {
 
 		IEvaluation evaluation = null;
@@ -2210,7 +2185,7 @@ public abstract class Cloner {
 		studentGroup.setGroupNumber(infoStudentGroup.getGroupNumber());
 		studentGroup.setIdInternal(infoStudentGroup.getIdInternal());
 		studentGroup.setGroupProperties(groupProperties);
-
+		//TODO: Sofia E Sara-> o shift não está a ser usado
 		return studentGroup;
 	}
 
