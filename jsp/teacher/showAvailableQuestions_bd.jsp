@@ -26,27 +26,44 @@
 	<tr>
 		<td class="listClasses-header">
 			<div class="gen-button">
-			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=description"%>">
 			<bean:message key="label.description"/>
+			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=description"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="" />
+			</html:link>
+			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=description&amp;asc=false"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="" />
+			</html:link></div>
+		</td>
+		<td class="listClasses-header">
+		<bean:message key="label.test.materiaPrincipal"/>
+			<div class="gen-button">
+			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=mainSubject"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="" />
+			</html:link>
+			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=mainSubject&amp;asc=false"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="" />
 			</html:link></div>
 		</td>
 		<td class="listClasses-header">
 			<div class="gen-button">
-			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=mainSubject"%>">
-			<bean:message key="label.test.materiaPrincipal"/>
-			</html:link></div>
-		</td>
-		<td class="listClasses-header">
-		<div class="gen-button">
-			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=difficulty"%>">
 			<bean:message key="label.test.difficulty"/>
-			</html:link></div>
+			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=difficulty"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="" />
+			</html:link>
+			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=difficulty&amp;asc=false"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="" />
+			</html:link></div>		
 		</td>
 		<td width="90" class="listClasses-header">
 		<div class="gen-button">
-			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=numberOfMembers"%>">
+			<div class="gen-button">
 			<bean:message key="label.test.quantidadeExercicios"/>
-			</html:link></div>
+			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=numberOfMembers"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="" />
+			</html:link>
+			<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=numberOfMembers&amp;asc=false"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="" />
+			</html:link></div>		
 		</td>
 	</tr>
 	<logic:iterate id="metadata" name="component" property="infoMetadatas" type="DataBeans.InfoMetadata">

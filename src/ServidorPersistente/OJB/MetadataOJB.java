@@ -47,13 +47,17 @@ public class MetadataOJB extends ObjectFenixOJB implements IPersistentMetadata
 
 	public List readByExecutionCourseAndVisibilityAndOrder(
 		IExecutionCourse executionCourse,
-		String order)
+		String order,
+		String asc)
 		throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
 		criteria.addEqualTo("visibility", new Boolean("true"));
-		criteria.addOrderBy(order, true);
+		if (asc != null && asc.equals("false"))
+			criteria.addOrderBy(order, false);
+		else
+			criteria.addOrderBy(order, true);
 		return queryList(Metadata.class, criteria);
 	}
 

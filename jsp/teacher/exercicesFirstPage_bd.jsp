@@ -61,35 +61,50 @@
 	<br/>
 	<br/>
 	<table>
-	<tr>
+	<tr >
+	
 		<td class="listClasses-header">
-			<div class="gen-button">
-			<html:link page="<%= "/exercicesManagement.do?method=exercicesFirstPage&amp;objectCode=" + pageContext.findAttribute("objectCode")+"&amp;order=description"%>">
-			<bean:message key="label.description"/>
-			</html:link></div>
-		</td>		
-		<td class="listClasses-header">
-			<div class="gen-button">
-			<html:link page="<%= "/exercicesManagement.do?method=exercicesFirstPage&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;order=mainSubject"%>">
-			<bean:message key="label.test.materiaPrincipal"/>
-			</html:link></div>
+		<div class="gen-button">
+		<bean:message key="label.description"/>
+		<html:link page="<%= "/exercicesManagement.do?method=exercicesFirstPage&amp;objectCode=" + pageContext.findAttribute("objectCode")+"&amp;order=description"%>">
+		<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="" />
+		</html:link>
+		<html:link page="<%= "/exercicesManagement.do?method=exercicesFirstPage&amp;objectCode=" + pageContext.findAttribute("objectCode")+"&amp;order=description&amp;asc=false" %>">
+		<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="" />
+		</html:link></div>
 		</td>
 		<td class="listClasses-header">
 			<div class="gen-button">
-			<html:link page="<%= "/exercicesManagement.do?method=exercicesFirstPage&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;order=difficulty"%>">
+			<bean:message key="label.test.materiaPrincipal"/>
+			<html:link page="<%= "/exercicesManagement.do?method=exercicesFirstPage&amp;objectCode=" + pageContext.findAttribute("objectCode")+"&amp;order=mainSubject"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="" />
+			</html:link>
+			<html:link page="<%= "/exercicesManagement.do?method=exercicesFirstPage&amp;objectCode=" + pageContext.findAttribute("objectCode")+"&amp;order=mainSubject&amp;asc=false"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="" />
+			</html:link></div>		
+		</td>
+		<td class="listClasses-header">
 			<bean:message key="label.test.difficulty"/>
-			</html:link></div>
+			<html:link page="<%= "/exercicesManagement.do?method=exercicesFirstPage&amp;objectCode=" + pageContext.findAttribute("objectCode")+"&amp;order=difficulty"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="" />
+			</html:link>
+			<html:link page="<%= "/exercicesManagement.do?method=exercicesFirstPage&amp;objectCode=" + pageContext.findAttribute("objectCode")+"&amp;order=difficulty&amp;asc=false"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="" />
+			</html:link>
 		</td>
 		<td width="90" class="listClasses-header">
 			<div class="gen-button">
-			<html:link page="<%= "/exercicesManagement.do?method=exercicesFirstPage&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;order=numberOfMembers"%>">
 			<bean:message key="label.test.quantidadeExercicios"/>
+			<html:link page="<%= "/exercicesManagement.do?method=exercicesFirstPage&amp;objectCode=" + pageContext.findAttribute("objectCode")+"&amp;order=numberOfMembers"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="" />
+			</html:link>
+			<html:link page="<%= "/exercicesManagement.do?method=exercicesFirstPage&amp;objectCode=" + pageContext.findAttribute("objectCode")+"&amp;order=numberOfMembers&amp;asc=false"%>">
+			<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="" />
 			</html:link></div>
-		</td>
-		
+		</td>		
 	</tr>
 
-	</tr>
+
 	<logic:iterate id="metadata" name="component" property="infoMetadatas" type="DataBeans.InfoMetadata">
 	<tr>
 		<logic:notEqual name="metadata" property="description" value="">
@@ -126,6 +141,7 @@
 		</div></td>
 	</tr>
 	</logic:iterate>
+
 	</table>
 </logic:notEqual>
 </logic:present>

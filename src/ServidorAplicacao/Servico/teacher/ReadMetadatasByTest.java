@@ -50,7 +50,12 @@ public class ReadMetadatasByTest implements IServico
 	{
 		return "ReadMetadatasByTest";
 	}
-	public SiteView run(Integer executionCourseId, Integer testId, String order, String path)
+	public SiteView run(
+		Integer executionCourseId,
+		Integer testId,
+		String order,
+		String asc,
+		String path)
 		throws FenixServiceException
 	{
 		this.path = path.replace('\\', '/');
@@ -76,7 +81,8 @@ public class ReadMetadatasByTest implements IServico
 				metadatas =
 					persistentMetadata.readByExecutionCourseAndVisibilityAndOrder(
 						executionCourse,
-						order);
+						order,
+						asc);
 			else
 				metadatas = persistentMetadata.readByExecutionCourseAndVisibility(executionCourse);
 
