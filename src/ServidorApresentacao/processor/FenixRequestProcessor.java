@@ -5,6 +5,7 @@
 package ServidorApresentacao.processor;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,12 @@ public class FenixRequestProcessor extends RequestProcessor {
 		HttpServletResponse response) {
 		HttpSession session = request.getSession(true);
 		String uri = request.getRequestURI();
+		try {
+			request.setCharacterEncoding("ISO-8859-1");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		if (((uri.indexOf("login.do") == -1)
 			&& (uri.indexOf("/publico/index.do") == -1))) {
 			
