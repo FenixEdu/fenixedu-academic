@@ -4,8 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 	 <br /> 
-	<bean:define id="classview" name="class" />
+	 <bean:define id="component" name="siteView" property="component" />
+	 <bean:define id="lessonList" name="component" property="lessons" />
+	
    		<br/>
-		<h2><bean:message key="title.class.timetable" /><jsp:getProperty name="classview" property="nome"/></h2>
+		<h2><bean:message key="title.class.timetable" /><bean:write name="className" /></h2>
 		<app:gerarHorario name="lessonList"/>		
 		<br />
