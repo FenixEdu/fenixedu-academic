@@ -21,7 +21,7 @@ public class CertificateList {
 	public static final int FIM_PARTE_ESCOLAR_SIMPLES = 7;
 	public static final int FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA = 8;
 	public static final int FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA = 9;
-//	public static final int DIPLOMA = 9;
+	public static final int DIPLOMA = 10;
 	
 
 	public static final CertificateList MATRICULA_TYPE = new CertificateList(MATRICULA);
@@ -33,7 +33,7 @@ public class CertificateList {
 	public static final CertificateList FIM_PARTE_ESCOLAR_SIMPLES_TYPE = new CertificateList(FIM_PARTE_ESCOLAR_SIMPLES);
 	public static final CertificateList FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_TYPE = new CertificateList(FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA);
 	public static final CertificateList FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_TYPE = new CertificateList(FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA);
-//	public static final CertificateList DIPLOMA_TYPE = new CertificateList(DIPLOMA);
+	public static final CertificateList DIPLOMA_TYPE = new CertificateList(DIPLOMA);
 
 	public static final String MATRICULA_STRING = "Matrícula";
 	public static final String MATRICULA_INSCRICAO_STRING = "Matrícula e Inscrição";
@@ -44,7 +44,7 @@ public class CertificateList {
 	public static final String FIM_PARTE_ESCOLAR_SIMPLES_STRING = "Fim parte escolar simples";
 	public static final String FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING = "Fim parte escolar discriminada sem média";
 	public static final String FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING = "Fim parte escolar discriminada com média";
-//	public static final String DIPLOMA_STRING = "Diploma";
+	public static final String DIPLOMA_STRING = "Diploma";
 
 	public static final String DEFAULT = "[Escolha um Tipo de Documento]";
 
@@ -83,7 +83,7 @@ public class CertificateList {
 		result.add(new LabelValueBean(CertificateList.FIM_PARTE_ESCOLAR_SIMPLES_STRING, CertificateList.FIM_PARTE_ESCOLAR_SIMPLES_STRING));
 		result.add(new LabelValueBean(CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING, CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING));
 		result.add(new LabelValueBean(CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING, CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING));
-//		result.add(new LabelValueBean(CertificateList.DIPLOMA_STRING, CertificateList.DIPLOMA_STRING));
+		result.add(new LabelValueBean(CertificateList.DIPLOMA_STRING, CertificateList.DIPLOMA_STRING));
 		return result;	
 	}
     
@@ -97,7 +97,7 @@ public class CertificateList {
 		if (type.intValue()== CertificateList.FIM_PARTE_ESCOLAR_SIMPLES) return CertificateList.FIM_PARTE_ESCOLAR_SIMPLES_STRING;
 		if (type.intValue()== CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA) return CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING;		
 		if (type.intValue()== CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA) return CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING;		
-//		if (type.intValue()== CertificateList.DILPOMA) return CertificateList.DILPOMA_STRING;
+		if (type.intValue()== CertificateList.DIPLOMA) return CertificateList.DIPLOMA_STRING;
 		
 		return "ERRO!"; // Nunca e atingido
 	}      
