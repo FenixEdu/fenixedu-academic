@@ -138,6 +138,7 @@ public abstract class SessionConstants {
 	public static final String FINAL_RESULT_SIMPLE = "fimParteEscolarSimples";
 	public static final String DISCRIMINATED_WITHOUT_AVERAGE = "fimParteEscolarDiscriminadaSemMedia";
 	public static final String DISCRIMINATED_WITH_AVERAGE = "fimParteEscolarDiscriminadaComMedia";
+	public static final String DIPLOMA = "Diploma";
 	
 	
 	

@@ -7,14 +7,11 @@
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>"/>
 <br />
 <table width="100%">
+		<logic:notPresent name="<%= SessionConstants.DIPLOMA%>">
  	<tr>
 		<td>	
-	  		<p>O CHEFE DE SECÇÃO DE PÓS-GRADUAÇÃO DO INSTITUTO SUPERIOR TÉCNICO DA UNIVERSIDADE TÉCNICA DE LISBOA CERTIFICA, a requerimento do interessado que do seu processo individual organizado e arquivado nesta secretaria, consta que:</p>
-	   </td>
-	</tr>
-    <tr>
-		<td> 
-			<%--Certificate --%>
+	  		<p>O CHEFE DE SECÇÃO DE PÓS-GRADUAÇÃO DO INSTITUTO SUPERIOR TÉCNICO DA UNIVERSIDADE TÉCNICA DE LISBOA CERTIFICA, a requerimento do interessado que do seu processo individual organizado e arquivado nesta secretaria, consta que:<br />
+			<%--Certificate --%>			
 			<jsp:include page="./certificateTemplate1.jsp" flush="true" />
 				<logic:present name="<%= SessionConstants.MATRICULA%>">
 			<jsp:include page="./certificateTemplate2.jsp" flush="true" />
@@ -57,15 +54,25 @@
 	  		<jsp:include page="./certificateTemplate8.jsp" flush="true" />
 	  		<jsp:include page="./certificateTemplate10.jsp" flush="true" />
 				</logic:present>
-		</td>
-	</tr>
+	</p>
+	<p>
+			<logic:present name="<%= SessionConstants.DOCUMENT_REASON_LIST%>">
+			<jsp:include page="./templateDocumentReason.jsp" flush="true" />
+   			</logic:present>
+			<%-- Date --%>
+			<jsp:include page="./templateFinal.jsp" flush="true" />
+	 </p>
+	 <p>
+		<h2 style="display: inline;">Aluno: </h2><bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/>
+	 	</logic:notPresent>
+	 	<logic:present name="<%= SessionConstants.DIPLOMA%>">
+	  	<jsp:include page="./certificateTemplate11.jsp" flush="true" />
+	  	</logic:present>
+	  </p>
+	  	</td>
+	</tr>	
 </table>
-	<logic:present name="<%= SessionConstants.DOCUMENT_REASON_LIST%>">
-		<jsp:include page="./templateDocumentReason.jsp" flush="true" />
-   	</logic:present>
-	<%-- Date --%>
-	<jsp:include page="./templateFinal.jsp" flush="true" />
-	 <h2 style="display: inline;">Aluno: </h2><bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/>
+
 	<%--<logic:equal name="infoStudentCurricularPlan" property="specialization" value="Mestrado">
     	<%-- Candidate Information if necessary --%>
    		<%--<jsp:include page="./declarationTemplate2.jsp" flush="true" />

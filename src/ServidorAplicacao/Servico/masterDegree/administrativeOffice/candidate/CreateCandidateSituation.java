@@ -66,7 +66,7 @@ public class CreateCandidateSituation implements IServico {
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			
-System.out.println("Estou aqui");
+
 			
 			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 			IPessoa person = Cloner.copyInfoPerson2IPerson(infoPerson);

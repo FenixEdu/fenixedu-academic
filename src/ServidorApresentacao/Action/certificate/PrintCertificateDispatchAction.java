@@ -75,6 +75,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 			session.removeAttribute(SessionConstants.FINAL_RESULT_SIMPLE);
 			session.removeAttribute(SessionConstants.DISCRIMINATED_WITHOUT_AVERAGE);
 			session.removeAttribute(SessionConstants.DISCRIMINATED_WITH_AVERAGE);
+			session.removeAttribute(SessionConstants.DIPLOMA);
 			session.removeAttribute(SessionConstants.DATE);
 			
 			
@@ -197,7 +198,8 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 						
 						if ((certificate.equals("Fim parte escolar simples")) 
 						   || (certificate.equals("Fim parte escolar discriminada sem média")) 
-						   || (certificate.equals("Fim parte escolar discriminada com média"))){
+						   || (certificate.equals("Fim parte escolar discriminada com média"))
+						   || (certificate.equals("Diploma"))){
 								
 							InfoFinalResult infoFinalResult = null;
 							try {	
@@ -254,7 +256,9 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 							if (certificate.equals("Fim parte escolar discriminada sem média"))	
 								session.setAttribute(SessionConstants.DISCRIMINATED_WITHOUT_AVERAGE, certificate.toUpperCase());
 							if (certificate.equals("Fim parte escolar discriminada com média"))	
-								session.setAttribute(SessionConstants.DISCRIMINATED_WITH_AVERAGE, certificate.toUpperCase());					
+								session.setAttribute(SessionConstants.DISCRIMINATED_WITH_AVERAGE, certificate.toUpperCase());
+							if (certificate.equals("Diploma"))	
+								session.setAttribute(SessionConstants.DIPLOMA, certificate.toUpperCase());						
 						}
 				}
 				else{

@@ -165,6 +165,7 @@ public class ChangeCandidate implements IServico {
 		
 			candidateSituation.setSituation(new SituationName(newCandidate.getInfoCandidateSituation().getSituation()));
 			candidateSituation.setValidation(new State(State.ACTIVE));
+
 			try {		
 				sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
 			} catch (ExcepcaoPersistencia ex) {

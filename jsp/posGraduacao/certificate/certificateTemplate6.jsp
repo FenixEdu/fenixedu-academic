@@ -4,8 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN %>" />
-<tr>
-	<td>
 		do curso de  <bean:write name="infoStudentCurricularPlan" property="specialization"/> em 
 		<bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/> 
 			<logic:equal name="infoStudentCurricularPlan" property="specialization" value="Mestrado">
@@ -15,5 +13,3 @@
 			<logic:equal name="infoStudentCurricularPlan" property="specialization" value="Especialização">
  				ministrado neste instituto, obteve aproveitamento nas disciplinas abaixo discriminada, como extra-curriculares.
 			</logic:equal>
-	</td>
-</tr>
