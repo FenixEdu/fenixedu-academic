@@ -224,8 +224,11 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
         DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 
         String executionYear = getFromRequest("executionYear", request);
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
 
         String degree = getFromRequest("degree", request);
         String candidateID = getFromRequest("candidateID", request);

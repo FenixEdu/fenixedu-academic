@@ -45,9 +45,10 @@ public class CurriculumDispatchAction extends DispatchAction {
 
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        if(degreeCurricularPlanID != null){
+        
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
         
@@ -85,7 +86,7 @@ public class CurriculumDispatchAction extends DispatchAction {
 
         request.setAttribute("studentPerson", infoPerson);
 
-        if(degreeCurricularPlanID != null){
+        if(degreeCurricularPlanID != null && degreeCurricularPlanID.intValue() != 0){
             return mapping.findForward("ShowStudentCurriculumForCoordinator");
         }
         return mapping.findForward("ShowStudentCurriculum");
@@ -158,9 +159,12 @@ public class CurriculumDispatchAction extends DispatchAction {
         HttpSession session = request.getSession();
 
         //get and set the degreeCurricularPlanID from the request and onto the request
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
+        
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         String studentCurricularPlanID = request.getParameter("studentCPID");

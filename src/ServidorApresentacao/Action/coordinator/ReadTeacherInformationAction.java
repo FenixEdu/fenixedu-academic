@@ -35,8 +35,11 @@ public class ReadTeacherInformationAction extends FenixAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
         
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
         Object[] args = { request.getParameter("username"), request.getParameter("executionYear") };
         SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadTeacherInformation",
                 args);

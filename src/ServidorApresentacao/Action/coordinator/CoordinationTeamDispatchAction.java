@@ -41,9 +41,11 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
         
         Integer infoExecutionDegreeID = null;
         Object[] infoArgs = { degreeCurricularPlanID, new Integer(2) };

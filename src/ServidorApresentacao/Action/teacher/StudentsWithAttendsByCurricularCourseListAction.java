@@ -161,8 +161,11 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         DynaActionForm formBean = (DynaActionForm)form;
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
         
         // all the information, no filtering applied
         Object args[] = { executionCourseID, null, null, null };

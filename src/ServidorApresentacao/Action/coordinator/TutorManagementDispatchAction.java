@@ -37,8 +37,11 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
 
         String executionDegreeId = request.getParameter("executionDegreeId");
         request.setAttribute("executionDegreeId", executionDegreeId);
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
 
         //This code is temporary, it just verify if the coordinator logged is a
         // LEEC's coordinator
@@ -80,6 +83,9 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
         Integer executionDegreeId = Integer.valueOf((String) tutorForm.get("executionDegreeId"));
         request.setAttribute("executionDegreeId", executionDegreeId);
 
+        Integer degreeCurricularPlanID = (Integer)tutorForm.get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        
         //This service returns a list with size two:
         // 		first element is infoTeacher that is tutor
         // 		second element is the list of students that this tutor tutorizes
@@ -106,7 +112,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
             request.setAttribute("studentsOfTutor", infoTeacherAndStudents.get(1));
         }
 
-        cleanForm(tutorForm);
+        cleanForm(tutorForm);       
 
         return mapping.findForward("showStudentsByTutor");
     }

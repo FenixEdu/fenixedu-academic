@@ -10,6 +10,7 @@
 <html:hidden property="executionDegreeId" value="<%=  request.getAttribute("executionDegreeId").toString() %>"/>
 <html:hidden property="method" value="readTutor" />
 <html:hidden property="page" value="1" />
+<html:hidden property="degreeCurricularPlanID" />
 
 <bean:message key="label.tutorNumber"/>:&nbsp;<html:text property="tutorNumber" size="4"/>
 

@@ -51,8 +51,11 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
     public ActionForward prepareEnrollmentChooseStudent(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         getExecutionDegree(request);
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
         return mapping.findForward("prepareEnrollmentChooseStudent");
     }
 

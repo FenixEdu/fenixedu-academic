@@ -43,8 +43,11 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
         
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
                 .getAttribute(SessionConstants.MASTER_DEGREE);
@@ -81,8 +84,11 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
         
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
                 .getAttribute(SessionConstants.MASTER_DEGREE);
@@ -190,8 +196,11 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
 
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
         
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
 
         Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 
@@ -301,8 +310,11 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
 
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
         
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
 
         Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 

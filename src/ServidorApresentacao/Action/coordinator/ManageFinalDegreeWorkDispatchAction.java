@@ -60,8 +60,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         HttpSession session = request.getSession(false);
 //        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
 //                .getAttribute(SessionConstants.MASTER_DEGREE);
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
         InfoExecutionDegree infoExecutionDegree = null;
 
         Object args_tmp[] = { degreeCurricularPlanID, new Integer(2) };
@@ -211,8 +214,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         
         String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
         
         if (finalDegreeWorkProposalOIDString != null
                 && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
@@ -331,8 +337,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
 
         HttpSession session = request.getSession(false);
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session

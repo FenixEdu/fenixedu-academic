@@ -147,7 +147,8 @@
 	    <form-property name="deletedTutorsIds" type="java.lang.Integer[]" />
    	    <form-property name="studentNumber" type="java.lang.String"/>
 	    <form-property name="studentNumberFirst" type="java.lang.String"/>
-	    <form-property name="studentNumberSecond" type="java.lang.String"/>	    
+	    <form-property name="studentNumberSecond" type="java.lang.String"/>	  
+	    <form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>  
       </form-bean>
 
 	<!-- ******************* LEEC Enrollment **************** -->

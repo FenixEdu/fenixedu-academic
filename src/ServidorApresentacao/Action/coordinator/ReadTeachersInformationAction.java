@@ -42,8 +42,11 @@ public class ReadTeachersInformationAction extends FenixAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm teacherInformationForm = (DynaActionForm) actionForm;
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
 
         Integer executionDegreeID = new Integer(request.getParameter("executionDegreeId"));
         request.setAttribute("executionDegreeId", executionDegreeID);

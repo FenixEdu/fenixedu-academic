@@ -86,6 +86,7 @@
         	<form-property name="select" type="java.lang.String" />
 			<form-property name="studentNumber" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
 		</form-bean>	
 		
 		<!-- ==================== View Curricular Course Historic ================== -->

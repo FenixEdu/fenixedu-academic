@@ -40,8 +40,12 @@ public class StudentListDispatchAction extends DispatchAction {
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-            Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-
+            Integer degreeCurricularPlanID = null;
+            if(request.getParameter("degreeCurricularPlanID") != null){
+                degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+                request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+            }
+            
             List result = null;
 
             try {
@@ -75,8 +79,6 @@ public class StudentListDispatchAction extends DispatchAction {
                 request.setAttribute("infoExecutionDegree", infoExecutionDegreeForRequest);
             }
 
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-
             String value = (String) request.getParameter("viewPhoto");
             if (value != null && value.equals("true")) {
                 request.setAttribute("viewPhoto", Boolean.TRUE);
@@ -95,9 +97,11 @@ public class StudentListDispatchAction extends DispatchAction {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
         Object args[] = { degreeCurricularPlanID };
         List result = null;
 

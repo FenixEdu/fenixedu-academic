@@ -32,6 +32,7 @@
 <html:form action="/tutorManagementLookup" focus="studentNumber">
 <html:hidden property="executionDegreeId" value="<%=  request.getAttribute("executionDegreeId").toString() %>"/>
 <html:hidden property="tutorNumber" value="<%=  request.getAttribute("tutorNumber").toString() %>"/>
+<html:hidden property="degreeCurricularPlanID" />
 <!-- Associar aluno -->
 <table border="0">
 <tr>

@@ -90,6 +90,7 @@
                  dynamic="true">
         <form-property name="studentCPID" type="java.lang.String" />
         <form-property name="select" type="java.lang.String" />
+		<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>        
       </form-bean>
       
       
@@ -206,6 +207,7 @@
 
       <action path="/viewCurriculum"
 				name="studentCurricularPlanAndEnrollmentsSelectionForm"
+				scope="request"		
               parameter="method"
 		      type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction">
 <!--        <forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>-->

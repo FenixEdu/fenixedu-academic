@@ -47,8 +47,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
 
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
 
         //        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
         //        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
@@ -102,8 +105,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
 
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
 
         //        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
         //        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
@@ -281,8 +287,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         HttpSession session = request.getSession();
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
 
         Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
         request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
@@ -339,8 +348,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute("UserView");
 
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
         
 //        Integer executionDegreeId = getFromRequest("infoExecutionDegreeID", request);
 //        request.setAttribute("infoExecutionDegreeID", executionDegreeId);

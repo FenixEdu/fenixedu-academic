@@ -46,6 +46,9 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction {
 
         Integer executionDegreeId = Integer.valueOf((String) tutorForm.get("executionDegreeId"));
         request.setAttribute("executionDegreeId", executionDegreeId);
+        
+        Integer degreeCurricularPlanID = (Integer)tutorForm.get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);        
 
         Integer studentNumber = null;
         try {
@@ -102,6 +105,9 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction {
 
         Integer executionDegreeId = Integer.valueOf((String) tutorForm.get("executionDegreeId"));
         request.setAttribute("executionDegreeId", executionDegreeId);
+        
+        Integer degreeCurricularPlanID = (Integer)tutorForm.get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);        
 
         Integer studentNumberFirst = null;
         Integer studentNumberSecond = null;
@@ -162,6 +168,9 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction {
 
         Integer executionDegreeId = Integer.valueOf((String) tutorForm.get("executionDegreeId"));
         request.setAttribute("executionDegreeId", executionDegreeId);
+        
+        Integer degreeCurricularPlanID = (Integer)tutorForm.get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);        
 
         Integer[] deletedTutors = (Integer[]) tutorForm.get("deletedTutorsIds");
         List deletedTutorsList = Arrays.asList(deletedTutors);

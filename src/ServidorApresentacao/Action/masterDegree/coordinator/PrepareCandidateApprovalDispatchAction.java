@@ -26,8 +26,12 @@ public class PrepareCandidateApprovalDispatchAction extends DispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         InfoExecutionDegree infoExecutionDegree;
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-
+        Integer degreeCurricularPlanID = null;
+        if(request.getParameter("degreeCurricularPlanID") != null){
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
+        
         Object args[] = { degreeCurricularPlanID, new Integer(1) };
 
         try {
@@ -41,8 +45,6 @@ public class PrepareCandidateApprovalDispatchAction extends DispatchAction {
         request.setAttribute("degree", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
                 .getSigla());
         request.setAttribute("executionYear", infoExecutionDegree.getInfoExecutionYear().getYear());
-
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         
         request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal());
         
