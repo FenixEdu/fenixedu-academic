@@ -36,28 +36,22 @@ public class CreateSiteInExecutionCourse  implements IServico {
 	
 
 	public void run(Integer executionCourseId) throws FenixServiceException {
-//		
+		
 		try {
-				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 								
-				IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 			IDisciplinaExecucao executionCourseToRead = new DisciplinaExecucao();
 			executionCourseToRead.setIdInternal(executionCourseId);
-				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourseToRead, false);
+			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourseToRead, false);
 				
-				if(executionCourse == null)
-					throw new NonExistingServiceException("message.non.existing.execution.course", null);
-			
-				
-	
-			executionCourse.setHasSite(new Boolean(true));
+			if(executionCourse == null)
+				throw new NonExistingServiceException("message.non.existing.execution.course", null);
 	
 			ISite site = new Site();
 			site.setExecutionCourse(executionCourse);
 			
-				
-				persistentExecutionCourse.lockWrite(executionCourse);
 			persistentSite.lockWrite(site);
 					
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {

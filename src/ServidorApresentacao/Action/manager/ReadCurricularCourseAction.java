@@ -38,7 +38,6 @@ public class ReadCurricularCourseAction extends FenixAction {
 
 		Object args[] = { curricularCourseId };
 
-		
 		InfoCurricularCourse infoCurricularCourse = null;
 
 		try {
@@ -77,9 +76,8 @@ public class ReadCurricularCourseAction extends FenixAction {
 
 		if (infoCurricularCourse.getBasic().booleanValue())
 			request.setAttribute("basic", "");
+			
 		request.setAttribute("executionCoursesList", executionCourses);
-//		request.set("infoCurricularCourse", infoCurricularCourse);
-		
 		request.setAttribute("infoCurricularCourse", infoCurricularCourse);
 		request.setAttribute("curricularCourseScopesList", curricularCourseScopes);
 		return mapping.findForward("viewCurricularCourse");

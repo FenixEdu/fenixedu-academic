@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
@@ -51,16 +52,15 @@ public class ReadExecutionCoursesByCurricularCourse implements IServico {
 	ISuportePersistente sp;
 	List allExecutionCourses = null;
 	try {
-			sp = SuportePersistenteOJB.getInstance();
-		ICurricularCourse curricularCourseToRead= new CurricularCourse();
-					curricularCourseToRead.setIdInternal(curricularCourseId);
-			ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(curricularCourseToRead, false);	
+		sp = SuportePersistenteOJB.getInstance();
+		ICurricularCourse curricularCourseToRead = new CurricularCourse();
+		curricularCourseToRead.setIdInternal(curricularCourseId);
+		ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(curricularCourseToRead, false);	
 		
 		if(curricularCourse == null)
-		throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+			throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 		
-		    allExecutionCourses = curricularCourse.getAssociatedExecutionCourses(); 
-		
+		allExecutionCourses = curricularCourse.getAssociatedExecutionCourses(); 
 
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
@@ -73,9 +73,17 @@ public class ReadExecutionCoursesByCurricularCourse implements IServico {
 	Iterator iterator = allExecutionCourses.iterator();
 	List result = new ArrayList(allExecutionCourses.size());
     
-	while (iterator.hasNext())
-		result.add(Cloner.copyIExecutionCourse2InfoExecutionCourse((IDisciplinaExecucao) iterator.next()));
-
+    Boolean hasSite;
+	while(iterator.hasNext()) {
+		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.copyIExecutionCourse2InfoExecutionCourse((IDisciplinaExecucao) iterator.next());
+		try {
+			hasSite = (Boolean) sp.getIDisciplinaExecucaoPersistente().readSite(infoExecutionCourse.getIdInternal());
+		}catch(ExcepcaoPersistencia ex) {
+			throw new FenixServiceException(ex);
+		}
+		infoExecutionCourse.setHasSite(hasSite);
+		result.add(infoExecutionCourse);
+	}
 	return result;
   }
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionPeriod;
 import Dominio.IDisciplinaExecucao;
@@ -53,43 +54,34 @@ public class ReadExecutionCoursesByExecutionPeriod implements IServico {
 	List allExecutionCourses = null;
 	try {
 			sp = SuportePersistenteOJB.getInstance();
-		IExecutionPeriod executionPeriodToRead= new ExecutionPeriod();
-		executionPeriodToRead.setIdInternal(executionPeriodId);
+			IExecutionPeriod executionPeriodToRead = new ExecutionPeriod();
+			executionPeriodToRead.setIdInternal(executionPeriodId);
 		
 			IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOId(executionPeriodToRead, false);
 			
 			if(executionPeriod == null)
-			throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
+				throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
 			
 			allExecutionCoursesFromExecutionPeriod = 
-			(List) sp.getIDisciplinaExecucaoPersistente().readByExecutionPeriod(executionPeriod);
-		    
+				(List) sp.getIDisciplinaExecucaoPersistente().readByExecutionPeriod(executionPeriod);
+
+			if(allExecutionCoursesFromExecutionPeriod == null || allExecutionCoursesFromExecutionPeriod.isEmpty()) 
+				return allExecutionCoursesFromExecutionPeriod;
+				
+			InfoExecutionCourse infoExecutionCourse = null;
 		    allExecutionCourses = new ArrayList(allExecutionCoursesFromExecutionPeriod.size()); 
 		    Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
 		    while(iter.hasNext()){
-		    IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iter.next();
-		    Integer executionCourseId = executionCourse.getIdInternal();
-			Boolean hasSite =(Boolean) sp.getIDisciplinaExecucaoPersistente().readSite(executionCourseId);
-			executionCourse.setHasSite(hasSite);
-			allExecutionCourses.add(executionCourse);
-		    }
-		    
-		     
-		    
+		    	IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iter.next();
+		    	Integer executionCourseId = executionCourse.getIdInternal();
+				Boolean hasSite = (Boolean) sp.getIDisciplinaExecucaoPersistente().readSite(executionCourseId);
+				infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+				infoExecutionCourse.setHasSite(hasSite);
+				allExecutionCourses.add(infoExecutionCourse);
+		    }    
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
 	}
-
-	if (allExecutionCourses == null || allExecutionCourses.isEmpty()) 
-		return allExecutionCourses;
-
-	// build the result of this service
-	Iterator iterator = allExecutionCourses.iterator();
-	List result = new ArrayList(allExecutionCourses.size());
-    
-	while (iterator.hasNext())
-		result.add(Cloner.copyIExecutionCourse2InfoExecutionCourse((IDisciplinaExecucao) iterator.next()));
-
-	return result;
+	return allExecutionCourses;
   }
 }

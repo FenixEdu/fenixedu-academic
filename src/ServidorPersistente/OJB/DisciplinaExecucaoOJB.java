@@ -334,21 +334,19 @@ public class DisciplinaExecucaoOJB
 			  throw new ExistingPersistentException();
 	  }
 
-	  public Boolean readSite(Integer executionCourseId)
-			  throws ExcepcaoPersistencia {
-		Boolean result = null;
+	public Boolean readSite(Integer executionCourseId) throws ExcepcaoPersistencia {
+	  	Boolean result = null;
 		
-			  Criteria criteria = new Criteria();
-		
-			  criteria.addEqualTo("keyExecutionCourse", executionCourseId);
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyExecutionCourse", executionCourseId);
 			  
-			  ISite site = (ISite) queryObject(Site.class, criteria);
-			  if(site==null)
-			    result = new Boolean(false);
-			  else
-			  result = new Boolean(true);
-			  return result;
-		  }
+		ISite site = (ISite) queryObject(Site.class, criteria);
+		if(site == null)
+			result = new Boolean(false);
+		else
+			result = new Boolean(true);
+		return result;
+	}
 
 	public IDisciplinaExecucao readbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 

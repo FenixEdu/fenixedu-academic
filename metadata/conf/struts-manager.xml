@@ -740,7 +740,7 @@
         <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-       <forward name="readCurricularCourse" path="readCurricularCourse.do"/>    	      
+       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>    	      
 	</action>
       <!--Input actions-->  
      <action path="/readDegreesInput"

@@ -20,8 +20,6 @@ public class DisciplinaExecucao extends DomainObject implements IDisciplinaExecu
 	
 	private IExecutionPeriod executionPeriod;
 	private Integer keyExecutionPeriod;
-	
-	private Boolean _hasSite;
 
 	protected String comment;
 	private List attendingStudents;
@@ -291,12 +289,4 @@ public class DisciplinaExecucao extends DomainObject implements IDisciplinaExecu
 		IExecutionPeriod executionPeriod = getExecutionPeriod();	
 		return executionPeriod;
 	}
-
-	public Boolean getHasSite() {	
-		return _hasSite;
-	}
-	public void setHasSite(Boolean hasSite) {
-		_hasSite = hasSite;
-		}
-
 }

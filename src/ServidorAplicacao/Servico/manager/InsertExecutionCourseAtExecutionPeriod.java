@@ -44,37 +44,30 @@ public class InsertExecutionCourseAtExecutionPeriod implements IServico {
 	public void run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
 		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
 		try {
-				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 								
-				IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport.getIPersistentExecutionPeriod();
-				IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(new ExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()), false);
+			IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport.getIPersistentExecutionPeriod();
+			IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(new ExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()), false);
 				
-				if(executionPeriod == null)
-					throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
+			if(executionPeriod == null)
+				throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
 			
-				IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
-				
+			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 				
-			
 			executionCourse.setNome(infoExecutionCourse.getNome());
-			
 			executionCourse.setExecutionPeriod(executionPeriod);
-			
 			executionCourse.setSigla(infoExecutionCourse.getSigla());
-			
 			executionCourse.setLabHours(infoExecutionCourse.getLabHours());
 			executionCourse.setPraticalHours(infoExecutionCourse.getPraticalHours());
 			executionCourse.setTheoPratHours(infoExecutionCourse.getTheoPratHours());
 			executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
 			executionCourse.setComment(infoExecutionCourse.getComment());
-			executionCourse.setHasSite(new Boolean(true));
 	
 			ISite site = new Site();
 			site.setExecutionCourse(executionCourse);
 			
-				
-				persistentExecutionCourse.lockWrite(executionCourse);
+			persistentExecutionCourse.lockWrite(executionCourse);
 			persistentSite.lockWrite(site);
 					
 		} catch (ExistingPersistentException existingException) {
