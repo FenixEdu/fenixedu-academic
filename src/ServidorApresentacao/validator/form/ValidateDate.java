@@ -40,6 +40,7 @@ public class ValidateDate {
 
 		if ((valueString == null) || (sProperty2 == null) || (sProperty3 == null) ||
 			(valueString.length() == 0) || (sProperty2.length() == 0) || (sProperty3.length() == 0)){
+			errors.add(field.getKey(),Resources.getActionError(request, va, field));
 			return true;
 		}
 
