@@ -1,6 +1,6 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
-<!-- Tiles definitions -->
+<!-- Tiles definitions --> 
 <tiles-definitions>
 	<definition name="df.page.read-degrees" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readDegrees_bd.jsp" />

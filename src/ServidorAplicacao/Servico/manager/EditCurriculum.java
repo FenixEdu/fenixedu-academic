@@ -49,7 +49,7 @@ public class EditCurriculum implements IServico {
 	 * Executes the service.
 	 */
 
-	public void run(InfoCurriculum infoCurriculum) throws FenixServiceException {
+	public void run(InfoCurriculum infoCurriculum, String language) throws FenixServiceException {
 
 		try {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
@@ -64,14 +64,18 @@ public class EditCurriculum implements IServico {
 				if(curriculum == null)
 					curriculum = new Curriculum();
 				
-				curriculum.setGeneralObjectives(infoCurriculum.getGeneralObjectives());
-				curriculum.setOperacionalObjectives(infoCurriculum.getOperacionalObjectives());
-				curriculum.setProgram(infoCurriculum.getProgram());
-				curriculum.setGeneralObjectivesEn(infoCurriculum.getGeneralObjectivesEn());
-				curriculum.setOperacionalObjectivesEn(infoCurriculum.getOperacionalObjectivesEn());
-				curriculum.setProgramEn(infoCurriculum.getProgramEn());
-				curriculum.setEvaluationElements(infoCurriculum.getEvaluationElements());
-				curriculum.setEvaluationElementsEn(infoCurriculum.getEvaluationElementsEn());
+				if(language == null) {
+					curriculum.setGeneralObjectives(infoCurriculum.getGeneralObjectives());
+					curriculum.setOperacionalObjectives(infoCurriculum.getOperacionalObjectives());
+					curriculum.setProgram(infoCurriculum.getProgram());
+					curriculum.setEvaluationElements(infoCurriculum.getEvaluationElements());
+				}
+				else {
+					curriculum.setGeneralObjectivesEn(infoCurriculum.getGeneralObjectivesEn());
+					curriculum.setOperacionalObjectivesEn(infoCurriculum.getOperacionalObjectivesEn());
+					curriculum.setProgramEn(infoCurriculum.getProgramEn());
+					curriculum.setEvaluationElementsEn(infoCurriculum.getEvaluationElementsEn());
+				}
 				curriculum.setCurricularCourse(curricularCourse);
 				
 				persistentCurriculum.lockWrite(curriculum);

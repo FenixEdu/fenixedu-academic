@@ -11,31 +11,32 @@
 	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
+	<html:hidden property="language" value="<%= request.getParameter("language") %>"/>
 	
 	<table>
 		<tr>
 			<bean:message key="message.generalObjectivesEn"/>
 		</tr>
 		<tr>
-			<html:text size="60" property="generalObjectivesEn"  />
+			<html:textarea property="generalObjectivesEn" rows="3" cols="60"/>
 		</tr>
 		<tr>
 			<bean:message key="message.operacionalObjectivesEn"/>
 		</tr>
 		<tr>
-			<html:text size="60" property="operacionalObjectivesEn"  />
+			<html:textarea property="operacionalObjectivesEn" rows="3" cols="60"/>
 		</tr>
 		<tr>
 			<bean:message key="message.programEn"/>
 		</tr>
 		<tr>
-			<html:text size="60" property="programEn"  />
+			<html:textarea property="programEn" rows="3" cols="60"/>
 		</tr>
 		<tr>
 			<bean:message key="message.evaluationElementsEn"/>
 		</tr>
 		<tr>
-			<html:text size="60" property="evaluationElementsEn"  />
+			<html:textarea property="evaluationElementsEn" rows="3" cols="60"/>
 		</tr>	
 	</table>
 	<br>

@@ -35,6 +35,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
 		DynaActionForm curriculumForm = (DynaActionForm) form;
 
 		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
+		String language = request.getParameter("language");
 
 		InfoCurriculum infoCurriculum = null;
 
@@ -50,17 +51,20 @@ public class EditCurriculumDA extends FenixDispatchAction {
 		}
 
 		if(infoCurriculum != null) {
-			curriculumForm.set("generalObjectives", infoCurriculum.getGeneralObjectives());
-			curriculumForm.set("operacionalObjectives", infoCurriculum.getOperacionalObjectives());
-			curriculumForm.set("program", infoCurriculum.getProgram());
-			curriculumForm.set("generalObjectivesEn", infoCurriculum.getGeneralObjectivesEn());
-			curriculumForm.set("operacionalObjectivesEn", infoCurriculum.getOperacionalObjectivesEn());
-			curriculumForm.set("programEn", infoCurriculum.getProgramEn());
-			curriculumForm.set("evaluationElements", infoCurriculum.getEvaluationElements());
-			curriculumForm.set("evaluationElementsEn", infoCurriculum.getEvaluationElementsEn());
+			if(language == null) {
+				curriculumForm.set("generalObjectives", infoCurriculum.getGeneralObjectives());
+				curriculumForm.set("operacionalObjectives", infoCurriculum.getOperacionalObjectives());
+				curriculumForm.set("program", infoCurriculum.getProgram());
+				curriculumForm.set("evaluationElements", infoCurriculum.getEvaluationElements());
+			}
+			else {
+				curriculumForm.set("generalObjectivesEn", infoCurriculum.getGeneralObjectivesEn());
+				curriculumForm.set("operacionalObjectivesEn", infoCurriculum.getOperacionalObjectivesEn());
+				curriculumForm.set("programEn", infoCurriculum.getProgramEn());
+				curriculumForm.set("evaluationElementsEn", infoCurriculum.getEvaluationElementsEn());
+			}
 		}
 		
-		String language = request.getParameter("language");
 		if(language == null)
 			return mapping.findForward("editCurriculum");
 			
@@ -72,40 +76,21 @@ public class EditCurriculumDA extends FenixDispatchAction {
 		IUserView userView = SessionUtils.getUserView(request);
 
 		DynaActionForm editForm = (DynaActionForm) form;
-		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
-		
-		String generalObjectives = (String) editForm.get("generalObjectives");
-		String operacionalObjectives = (String) editForm.get("operacionalObjectives");
-		String program = (String) editForm.get("program");
-		String generalObjectivesEn = (String) editForm.get("generalObjectivesEn");
-		String operacionalObjectivesEn = (String) editForm.get("operacionalObjectivesEn");
-		String programEn = (String) editForm.get("programEn");
-		String evaluationElements = (String) editForm.get("evaluationElements");
-		String evaluationElementsEn = (String) editForm.get("evaluationElementsEn");
 		
 		InfoCurriculum infoCurriculum = new InfoCurriculum();
 		InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
-		infoCurricularCourse.setIdInternal(curricularCourseId);
+		infoCurricularCourse.setIdInternal(new Integer(request.getParameter("curricularCourseId")));
 		infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
-		
-		if(generalObjectives.compareTo("") != 0)
-			infoCurriculum.setGeneralObjectives(generalObjectives);
-		if(operacionalObjectives.compareTo("") != 0)
-			infoCurriculum.setOperacionalObjectives(operacionalObjectives);
-		if(program.compareTo("") != 0)
-			infoCurriculum.setProgram(program);
-		if(generalObjectivesEn.compareTo("") != 0)
-			infoCurriculum.setGeneralObjectivesEn(generalObjectivesEn);
-		if(operacionalObjectivesEn.compareTo("") != 0)
-			infoCurriculum.setOperacionalObjectivesEn(operacionalObjectivesEn);
-		if(programEn.compareTo("") != 0)
-			infoCurriculum.setProgramEn(programEn);
-		if(evaluationElements.compareTo("") != 0)
-			infoCurriculum.setEvaluationElements(evaluationElements);
-		if(evaluationElementsEn.compareTo("") != 0)
-			infoCurriculum.setEvaluationElementsEn(evaluationElementsEn);
+		infoCurriculum.setGeneralObjectives((String) editForm.get("generalObjectives"));
+		infoCurriculum.setOperacionalObjectives((String) editForm.get("operacionalObjectives"));
+		infoCurriculum.setProgram((String) editForm.get("program"));
+		infoCurriculum.setGeneralObjectivesEn((String) editForm.get("generalObjectivesEn"));
+		infoCurriculum.setOperacionalObjectivesEn((String) editForm.get("operacionalObjectivesEn"));
+		infoCurriculum.setProgramEn((String) editForm.get("programEn"));
+		infoCurriculum.setEvaluationElements((String) editForm.get("evaluationElements"));
+		infoCurriculum.setEvaluationElementsEn((String) editForm.get("evaluationElementsEn"));
 
-		Object args[] = { infoCurriculum };
+		Object args[] = { infoCurriculum, request.getParameter("language") };
 		
 		try {
 				ServiceUtils.executeService(userView, "EditCurriculum", args);

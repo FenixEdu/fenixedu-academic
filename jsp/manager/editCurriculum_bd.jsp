@@ -4,8 +4,16 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <h2><bean:message key="message.editCurriculum" /></h2>
-
-<html:link page="<%="/editCurriculum.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;language=English"%>"><bean:message key="label.manager.edit.curriculum.english"/></html:link>
+<table>
+	<tr>
+		<td>
+			<img alt="" src="<%= request.getContextPath() %>/images/england-flag.gif" width="30" height="20"/>
+		</td>
+		<td>
+			<html:link page="<%="/editCurriculum.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;language=English"%>"><bean:message key="label.manager.edit.curriculum.english"/></html:link>
+		</td>
+	</tr>
+</table>
 
 <html:form action="/editCurriculum" method="get">
 	<html:hidden property="page" value="1"/>
