@@ -14,7 +14,7 @@
 	<bean:define id="link">/ciapl/dotIstPortal.do?prefix=<bean:write name="role" property="portalSubApplication"/>&amp;page=<bean:write name="role" property="page"/></bean:define>
 	
 	    <td width="20%" nowrap class="navopgeral">
-	    	<strong><html:link href='<%= link %>'><bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/></html:link></strong>
+	    	<html:link href='<%= link %>'><bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/></html:link>
 	    </td>
 	
 </logic:iterate>	
