@@ -57,7 +57,7 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
         Integer studentGroupCode = new Integer(studentGroupCodeString);
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
-        Object[] args1 = { groupPropertiesCode, null, studentGroupCode, userView.getUtilizador(), new Integer(4)};
+        Object[] args1 = { groupPropertiesCode, null, studentGroupCode, userView.getUtilizador(), new Integer(5)};
         try
         {
             ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
@@ -78,7 +78,15 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
             saveErrors(request, actionErrors1);
             return mapping.findForward("viewStudentGroupInformation");
 
-        } catch (FenixServiceException e)
+        }catch (InvalidChangeServiceException e)
+        {
+            ActionErrors actionErrors2 = new ActionErrors();
+            ActionError error2 = null;
+            error2 = new ActionError("error.enrollStudentGroupShift");
+            actionErrors2.add("error.enrollStudentGroupShift", error2);
+            saveErrors(request, actionErrors2);
+            return mapping.findForward("viewShiftsAndGroups");
+        }catch (FenixServiceException e)
         {
             ActionErrors actionErrors2 = new ActionErrors();
             ActionError error2 = null;

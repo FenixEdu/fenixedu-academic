@@ -216,6 +216,55 @@ public class VerifyStudentGroupAtributes implements IServico {
                     studentGroup, username);
             if (result)
                 throw new InvalidSituationServiceException();
+            
+            if(groupProperties.getShiftType() == null || studentGroup.getShift() == null){
+             	throw new InvalidChangeServiceException();
+             }
+
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+        }
+        return true;
+    }
+    
+    
+    private boolean checkEnrollStudentGroupShift(Integer studentGroupCode,Integer groupPropertiesCode,
+            String username) throws FenixServiceException {
+
+        boolean result = false;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+            
+            IGroupProperties groupProperties = (IGroupProperties) sp
+			.getIPersistentGroupProperties().readByOID(
+					GroupProperties.class, groupPropertiesCode);
+            
+            if(groupProperties == null){
+            	throw new ExistingServiceException();
+            }
+            
+            IStudentGroup studentGroup = (IStudentGroup) sp
+                    .getIPersistentStudentGroup().readByOID(StudentGroup.class,
+                            studentGroupCode);
+            if (studentGroup == null) {
+                throw new FenixServiceException();
+            }
+            
+            GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+			.getInstance();
+            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+			.getGroupEnrolmentStrategyInstance(groupProperties);
+
+            result = strategy.checkNotEnroledInGroup(groupProperties,
+                    studentGroup, username);
+            if (result)
+                throw new InvalidSituationServiceException();
+            
+            
+            if(groupProperties.getShiftType() == null || studentGroup.getShift() != null){
+             	throw new InvalidChangeServiceException();
+             }
 
         } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
@@ -250,6 +299,10 @@ public class VerifyStudentGroupAtributes implements IServico {
 
         case 4:
             result = checkEditStudentGroupShift(studentGroupCode, groupPropertiesCode, username);
+            return result;
+            
+        case 5:
+            result = checkEnrollStudentGroupShift(studentGroupCode, groupPropertiesCode, username);
             return result;
         }
 

@@ -79,8 +79,16 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
             actionErrors1.add("errors.editStudentGroupShift.notEnroled", error1);
             saveErrors(request, actionErrors1);
             return mapping.findForward("viewStudentGroupInformation");
-
-        } catch (FenixServiceException e)
+            
+        }catch (InvalidChangeServiceException e)
+        {
+            ActionErrors actionErrors2 = new ActionErrors();
+            ActionError error2 = null;
+            error2 = new ActionError("error.GroupPropertiesShiftTypeChanged");
+            actionErrors2.add("error.GroupPropertiesShiftTypeChanged", error2);
+            saveErrors(request, actionErrors2);
+            return mapping.findForward("viewShiftsAndGroups");
+        }catch (FenixServiceException e)
         {
             ActionErrors actionErrors2 = new ActionErrors();
             ActionError error2 = null;
