@@ -19,6 +19,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IFrequenta;
 import Dominio.ITurno;
+import Dominio.Professorship;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -280,5 +281,36 @@ public class DisciplinaExecucaoOJB
 
 		return queryList(DisciplinaExecucao.class, criteria, true);
 	}
+	
+//	returns a list of teachers in charge ids
+	  public List readExecutionCourseTeachers(Integer executionCourseId) throws ExcepcaoPersistencia {
+		  
+		Criteria criteria = new Criteria();
+		
+		criteria.addEqualTo("keyExecutionCourse", executionCourseId);
+		
+		return (List) queryList(Professorship.class, criteria);
+
+  }
+  
+////  	returns a list of teachers that teach the course ids
+//		public List readExecutionCourseTeachersInCharge(Integer executionCourseId) throws ExcepcaoPersistencia {
+//			try {
+//			String oqlQuery = "select keyTeacher from " + ResponsibleFor.class.getName();
+//			oqlQuery += " where keyExecutionCourse = $1" ;
+//			query.create(oqlQuery);
+//
+//			query.bind(executionCourseId);
+//		
+//
+//			List result = (List) query.execute();
+//			lockRead(result);
+//		
+//			return result;
+//		} catch (QueryException e) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
+//		}
+//	}
+
 
 }

@@ -5,7 +5,7 @@
 <struts-config>
  
 		<!-- ========== Data Source Configuration =============================== -->
-	 
+	
 		<!-- ========== Form Bean Definitions ================================== -->
 		<form-beans type="org.apache.struts.action.ActionFormBean">  
 	
@@ -592,6 +592,16 @@
        <forward name="manageBranches" path="df.page.manage-branches"/>
        <forward name="insertBranch" path="df.page.insert-branch"/>
        <forward name="editBranch" path="df.page.edit-branch"/>
+	</action>
+    
+    <!--name="curricularCourseForm" Action reading teachers of a curricular course  -->
+	<action
+	    path="/readTeacherInCharge"
+	    input="/readCurricularCourse.do"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.ReadTeacherInChargeAction"
+        validate="true">         
+       <forward name="readExecutionCourseTeachers" path="df.page.read-execution-course-teachers"/>      	      
 	</action>
     
       <!--Input actions-->  

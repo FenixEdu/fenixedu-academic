@@ -72,4 +72,9 @@ public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 		ICurricularYear curricularYear,
 		String executionCourseName)
 		throws ExcepcaoPersistencia;
+		
+//	returns a list of teachers in charge ids
+//	public List readExecutionCourseTeachersInCharge(Integer executionCourseId) throws ExcepcaoPersistencia;
+	  
+	public List readExecutionCourseTeachers(Integer executionCourseId) throws ExcepcaoPersistencia ;
 }
