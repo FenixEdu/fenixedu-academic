@@ -11,15 +11,6 @@
 <li><html:link  page="/accessAnnouncements.do">
 	<bean:message key="link.announcements"/>
 </html:link></li>
-<li><html:link page="/accessTeachers.do">
-	<bean:message key="link.teachers"/>
-</html:link></li>
-<li><html:link page="/viewTimeTable.do">
-		<bean:message key="link.executionCourse.timeTable"/>
-</html:link></li>
-<li><html:link page="/viewExecutionCourseShifts.do">
-		<bean:message key="link.executionCourse.shifts"/>
-</html:link></li>
 <li> <a href="/" onclick="houdini('seccao');return false;">Informa&ccedil;&atilde;o Curricular</a></li>
 </ul>
  <dl id="seccao" style="display: none;">
@@ -36,6 +27,17 @@
 				<bean:message key="link.associatedCurricularCourses"/>
 				</html:link></dd>	
   </dl>
+  <ul>
+<li><html:link page="/accessTeachers.do">
+	<bean:message key="link.teachers"/>
+</html:link></li>
+<li><html:link page="/viewTimeTable.do">
+		<bean:message key="link.executionCourse.timeTable"/>
+</html:link></li>
+<li><html:link page="/viewExecutionCourseShifts.do">
+		<bean:message key="link.executionCourse.shifts"/>
+</html:link></li>
+</ul>
 <logic:present name="<%= SessionConstants.SECTIONS %>" >
 	<logic:present name="<%= SessionConstants.INFO_SECTION %>" >
 	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="<%= SessionConstants.INFO_SECTION %>" />
