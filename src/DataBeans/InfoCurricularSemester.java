@@ -3,7 +3,6 @@ package DataBeans;
 import java.io.Serializable;
 import java.util.List;
 
-
 /**
  * @author dcs-rjao
  *
@@ -14,18 +13,19 @@ public class InfoCurricularSemester implements Serializable {
 
 	private Integer semester;
 	private InfoCurricularYear infoCurricularYear;
-	private List associatedInfoCurricularCourses;
-	
+	//	private List associatedInfoCurricularCourses;
+	private List infoScopes;
 
 	public InfoCurricularSemester() {
 		setSemester(null);
-		setAssociatedInfoCurricularCourses(null);
+		//		setAssociatedInfoCurricularCourses(null);
+		setInfoScopes(null);
 		setInfoCurricularYear(null);
 	}
 
 	public InfoCurricularSemester(Integer semester, InfoCurricularYear curricularYear) {
+		this();
 		setSemester(semester);
-		setAssociatedInfoCurricularCourses(null);
 		setInfoCurricularYear(curricularYear);
 	}
 
@@ -33,8 +33,9 @@ public class InfoCurricularSemester implements Serializable {
 		boolean resultado = false;
 		if (obj instanceof InfoCurricularSemester) {
 			InfoCurricularSemester infoCurricularSemester = (InfoCurricularSemester) obj;
-			resultado = (this.getSemester().equals(infoCurricularSemester.getSemester()) &&
-									(this.getInfoCurricularYear().equals(infoCurricularSemester.getInfoCurricularYear())));
+			resultado =
+				(this.getSemester().equals(infoCurricularSemester.getSemester())
+					&& (this.getInfoCurricularYear().equals(infoCurricularSemester.getInfoCurricularYear())));
 		}
 		return resultado;
 	}
@@ -43,16 +44,15 @@ public class InfoCurricularSemester implements Serializable {
 		String result = "[" + this.getClass().getName() + ": ";
 		result += "semester = " + this.getSemester() + "; ";
 		result += "infoCurricularYear = " + this.getInfoCurricularYear() + "]";
-//		result += "associatedInfoCurricularCourses = " + this.associatedInfoCurricularCourses + "; ";
 		return result;
 	}
 
-	/**
-	 * @return List
-	 */
-	public List getAssociatedInfoCurricularCourses() {
-		return associatedInfoCurricularCourses;
-	}
+	//	/**
+	//	 * @return List
+	//	 */
+	//	public List getAssociatedInfoCurricularCourses() {
+	//		return associatedInfoCurricularCourses;
+	//	}
 
 	/**
 	 * @return ICurricularYear
@@ -68,13 +68,13 @@ public class InfoCurricularSemester implements Serializable {
 		return semester;
 	}
 
-	/**
-	 * Sets the associatedInfoCurricularCourses.
-	 * @param associatedInfoCurricularCourses The associatedInfoCurricularCourses to set
-	 */
-	public void setAssociatedInfoCurricularCourses(List associatedCurricularCourses) {
-		this.associatedInfoCurricularCourses = associatedCurricularCourses;
-	}
+	//	/**
+	//	 * Sets the associatedInfoCurricularCourses.
+	//	 * @param associatedInfoCurricularCourses The associatedInfoCurricularCourses to set
+	//	 */
+	//	public void setAssociatedInfoCurricularCourses(List associatedCurricularCourses) {
+	//		this.associatedInfoCurricularCourses = associatedCurricularCourses;
+	//	}
 
 	/**
 	 * Sets the infoCurricularYear.
@@ -90,6 +90,21 @@ public class InfoCurricularSemester implements Serializable {
 	 */
 	public void setSemester(Integer semester) {
 		this.semester = semester;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getInfoScopes() {
+		return infoScopes;
+	}
+
+	/**
+	 * Sets the infoScopes.
+	 * @param infoScopes The infoScopes to set
+	 */
+	public void setInfoScopes(List infoScopes) {
+		this.infoScopes = infoScopes;
 	}
 
 }

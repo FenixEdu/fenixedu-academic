@@ -20,8 +20,9 @@ public interface ICurricularCourse {
 	public void setDepartmentCourse(IDisciplinaDepartamento departmentCourse);
 	public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan);
 	public void setAssociatedExecutionCourses(List associatedExecutionCourses);
-	public void setAssociatedBranches(List associatedBranches);
-	public void setAssociatedCurricularSemesters(List associatedCurricularSemesters);
+//	public void setAssociatedBranches(List associatedBranches);
+//	public void setAssociatedCurricularSemesters(List associatedCurricularSemesters);
+	public void setScopes(List scopes);
 
 	public Double getCredits();
 	public Double getTheoreticalHours();
@@ -33,25 +34,8 @@ public interface ICurricularCourse {
 	public IDisciplinaDepartamento getDepartmentCourse();
 	public IDegreeCurricularPlan getDegreeCurricularPlan();
 	public List getAssociatedExecutionCourses();
-	public List getAssociatedBranches();
-	public List getAssociatedCurricularSemesters();
-
-
-	/**
-	 * @deprecated
-	 */
-//	public void setSemester(Integer semester);
-	/**
-	 * @deprecated
-	 */
-//	public void setCurricularYear(Integer newCurricularYear);
-	/**
-	 * @deprecated
-	 */
-//	public Integer getCurricularYear();
-	/**
-	 * @deprecated
-	 */
-//	public Integer getSemester();
+//	public List getAssociatedBranches();
+//	public List getAssociatedCurricularSemesters();
+	public List getScopes();
 
 }

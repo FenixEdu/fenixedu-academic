@@ -159,7 +159,8 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		assertTrue(curricularCourse2.getDepartmentCourse().equals(curricularCourse.getDepartmentCourse()));
 
 	}
-	// -------------------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------------------
+
 	public void testDeleteAllCurricularCourses() {
 
 		System.out.println("- Test 2 : Delete All CurricularCourses");
@@ -309,8 +310,9 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read Existing CurricularCourse");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 5);
+		assertEquals(list.size(), 6);
 	}
+
 /*
 	public void testReadCurricularCoursesByCurricularSemesterAndCurricularYear() {
 

@@ -13,21 +13,22 @@ public class InfoBranch {
 
 	private String name;
 	private String code;
-	private List associatedCurricularCourses;
+//	private List associatedCurricularCourses;
 	private List associatedStudentCurricularPlans;
+	private List infoScopes;
 
 	public InfoBranch() {
 		setName(null);
 		setCode(null);
-		setAssociatedCurricularCourses(null);
+//		setAssociatedCurricularCourses(null);
 		setAssociatedStudentCurricularPlans(null);
+		setInfoScopes(null);
 	}
 
 	public InfoBranch(String name, String code) {
+		this();
 		setName(name);
 		setCode(code);
-		setAssociatedCurricularCourses(null);
-		setAssociatedStudentCurricularPlans(null);
 	}
 
 	public boolean equals(Object obj) {
@@ -43,8 +44,6 @@ public class InfoBranch {
 		String result = "[" + this.getClass().getName() + ": ";
 		result += "name = " + this.name + "; ";
 		result += "code = " + this.code + "]";
-		result += "associatedCurricularCourses = " + this.associatedCurricularCourses + "; ";
-		result += "associatedStudentCurricularPlans = " + this.associatedStudentCurricularPlans + "]";
 		return result;
 	}
 
@@ -78,12 +77,12 @@ public class InfoBranch {
 		this.name = name;
 	}
 
-	/**
-	 * @return List
-	 */
-	public List getAssociatedCurricularCourses() {
-		return associatedCurricularCourses;
-	}
+//	/**
+//	 * @return List
+//	 */
+//	public List getAssociatedCurricularCourses() {
+//		return associatedCurricularCourses;
+//	}
 
 	/**
 	 * @return List
@@ -92,13 +91,13 @@ public class InfoBranch {
 		return associatedStudentCurricularPlans;
 	}
 
-	/**
-	 * Sets the associatedCurricularCourses.
-	 * @param associatedCurricularCourses The associatedCurricularCourses to set
-	 */
-	public void setAssociatedCurricularCourses(List associatedCurricularCourses) {
-		this.associatedCurricularCourses = associatedCurricularCourses;
-	}
+//	/**
+//	 * Sets the associatedCurricularCourses.
+//	 * @param associatedCurricularCourses The associatedCurricularCourses to set
+//	 */
+//	public void setAssociatedCurricularCourses(List associatedCurricularCourses) {
+//		this.associatedCurricularCourses = associatedCurricularCourses;
+//	}
 
 	/**
 	 * Sets the associatedStudentCurricularPlans.
@@ -106,6 +105,21 @@ public class InfoBranch {
 	 */
 	public void setAssociatedStudentCurricularPlans(List associatedStudentCurricularPlans) {
 		this.associatedStudentCurricularPlans = associatedStudentCurricularPlans;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getInfoScopes() {
+		return infoScopes;
+	}
+
+	/**
+	 * Sets the infoScopes.
+	 * @param infoScopes The infoScopes to set
+	 */
+	public void setInfoScopes(List infoScopes) {
+		this.infoScopes = infoScopes;
 	}
 
 }

@@ -121,7 +121,7 @@ public class CurricularSemesterOJBTest extends TestCaseOJB {
 
 		assertTrue(cs.getCurricularYear().equals(curricularYear));
 
-		assertNull(cs.getAssociatedCurricularCourses());
+		assertNull(cs.getScopes());
 
 	}
 
@@ -182,7 +182,7 @@ public class CurricularSemesterOJBTest extends TestCaseOJB {
 		}
 		assertNotNull(curricularSemester);
 		assertTrue(curricularSemester.getSemester().intValue() == 1);
-		assertNotNull(curricularSemester.getAssociatedCurricularCourses());
+		assertNotNull(curricularSemester.getScopes());
 		assertTrue(curricularSemester.getCurricularYear().equals(curricularYear));
 
 		// CurricularSemester inexistente

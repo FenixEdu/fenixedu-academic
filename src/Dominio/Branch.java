@@ -14,23 +14,23 @@ public class Branch implements IBranch {
 	private Integer internalID;
 	private String name;
 	private String code;
-	private List associatedCurricularCourses;
+//	private List associatedCurricularCourses;
 	private List associatedStudentCurricularPlans;
+	private List scopes;
 
 	public Branch() {
 		setName(null);
 		setCode(null);
 		setInternalID(null);
-		setAssociatedCurricularCourses(null);
+//		setAssociatedCurricularCourses(null);
 		setAssociatedStudentCurricularPlans(null);
+		setScopes(null);
 	}
 
 	public Branch(String name, String code) {
+		this();
 		setName(name);
 		setCode(code);
-		setInternalID(null);
-		setAssociatedCurricularCourses(null);
-		setAssociatedStudentCurricularPlans(null);
 	}
 
 	public boolean equals(Object obj) {
@@ -97,12 +97,12 @@ public class Branch implements IBranch {
 		this.name = name;
 	}
 
-	/**
-	 * @return List
-	 */
-	public List getAssociatedCurricularCourses() {
-		return associatedCurricularCourses;
-	}
+//	/**
+//	 * @return List
+//	 */
+//	public List getAssociatedCurricularCourses() {
+//		return associatedCurricularCourses;
+//	}
 
 	/**
 	 * @return List
@@ -111,13 +111,13 @@ public class Branch implements IBranch {
 		return associatedStudentCurricularPlans;
 	}
 
-	/**
-	 * Sets the associatedCurricularCourses.
-	 * @param associatedCurricularCourses The associatedCurricularCourses to set
-	 */
-	public void setAssociatedCurricularCourses(List associatedCurricularCourses) {
-		this.associatedCurricularCourses = associatedCurricularCourses;
-	}
+//	/**
+//	 * Sets the associatedCurricularCourses.
+//	 * @param associatedCurricularCourses The associatedCurricularCourses to set
+//	 */
+//	public void setAssociatedCurricularCourses(List associatedCurricularCourses) {
+//		this.associatedCurricularCourses = associatedCurricularCourses;
+//	}
 
 	/**
 	 * Sets the associatedStudentCurricularPlans.
@@ -125,6 +125,21 @@ public class Branch implements IBranch {
 	 */
 	public void setAssociatedStudentCurricularPlans(List associatedStudentCurricularPlans) {
 		this.associatedStudentCurricularPlans = associatedStudentCurricularPlans;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getScopes() {
+		return scopes;
+	}
+
+	/**
+	 * Sets the scopes.
+	 * @param scopes The scopes to set
+	 */
+	public void setScopes(List scopes) {
+		this.scopes = scopes;
 	}
 
 }

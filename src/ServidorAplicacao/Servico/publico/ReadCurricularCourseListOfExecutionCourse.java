@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
 import Dominio.IDisciplinaExecucao;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
@@ -47,34 +49,30 @@ public class ReadCurricularCourseListOfExecutionCourse implements IServico {
 	}
 
 	public Object run(InfoExecutionCourse infoExecCourse) throws ExcepcaoInexistente, FenixServiceException {
-		
+
 		List infoCurricularCourseList = new ArrayList();
+		List infoCurricularCourseScopeList = new ArrayList();
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
-				Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecCourse);
+			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecCourse);
 			executionCourse =
-				executionCourseDAO
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					executionCourse.getSigla(),
-					executionCourse.getExecutionPeriod());
-			if (executionCourse != null
-				&& executionCourse.getAssociatedCurricularCourses() != null)
-				for (int i = 0;
-					i < executionCourse.getAssociatedCurricularCourses().size();
-					i++) {
-						ICurricularCourse curricularCourse =
-							(ICurricularCourse) executionCourse
-								.getAssociatedCurricularCourses()
-								.get(
-								i);
-						InfoCurricularCourse infoCurricularCourse =
-							Cloner.copyCurricularCourse2InfoCurricularCourse(
-								curricularCourse);
-						infoCurricularCourseList.add(infoCurricularCourse);
+				executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriod(executionCourse.getSigla(), executionCourse.getExecutionPeriod());
+			if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null)
+				for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
+					ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse.getAssociatedCurricularCourses().get(i);
+					InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+					
+					for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
+						ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(j);
+						InfoCurricularCourseScope infoCurricularCourseScope = Cloner.copyCurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+						infoCurricularCourseScopeList.add(infoCurricularCourseScope);
+					}
+
+					infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
+					infoCurricularCourseList.add(infoCurricularCourse);
+					
 				}
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();

@@ -21,10 +21,9 @@ public class InfoCurricularCourse implements Serializable {
 	private Double praticalHours;
 	private Double theoPratHours;
 	private Double labHours;
-	private Integer curricularYear;
-	private Integer semester;
 	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
-	private List associatedInfoCurricularSemesters;
+//	private List associatedInfoCurricularSemesters;
+	private List infoScopes;
 
 
 	public InfoCurricularCourse() {}
@@ -41,7 +40,7 @@ public class InfoCurricularCourse implements Serializable {
 	}
 
 	public String toString() {
-		String result = "[INFODISCIPLINACURRICULAR";
+		String result = "[" + this.getClass().getName() + ": "; 
 		result += ", nome=" + name;
 		result += ", sigla=" + code;
 		result += "]";
@@ -89,14 +88,14 @@ public class InfoCurricularCourse implements Serializable {
 		return credits;
 	}
 
-	/**
-	 * Returns the curricularYear.
-	 * @return Integer
-	 * @deprecated
-	 */
-	public Integer getCurricularYear() {
-		return curricularYear;
-	}
+//	/**
+//	 * Returns the curricularYear.
+//	 * @return Integer
+//	 * @deprecated
+//	 */
+//	public Integer getCurricularYear() {
+//		return curricularYear;
+//	}
 
 	/**
 	 * Returns the labHours.
@@ -114,14 +113,14 @@ public class InfoCurricularCourse implements Serializable {
 		return praticalHours;
 	}
 
-	/**
-	 * Returns the semester.
-	 * @return Integer
-	 * @deprecated
-	 */
-	public Integer getSemester() {
-		return semester;
-	}
+//	/**
+//	 * Returns the semester.
+//	 * @return Integer
+//	 * @deprecated
+//	 */
+//	public Integer getSemester() {
+//		return semester;
+//	}
 
 	/**
 	 * Returns the theoPratHours.
@@ -147,14 +146,14 @@ public class InfoCurricularCourse implements Serializable {
 		this.credits = credits;
 	}
 
-	/**
-	 * Sets the curricularYear.
-	 * @param curricularYear The curricularYear to set
-	 * @deprecated
-	 */
-	public void setCurricularYear(Integer curricularYear) {
-		this.curricularYear = curricularYear;
-	}
+//	/**
+//	 * Sets the curricularYear.
+//	 * @param curricularYear The curricularYear to set
+//	 * @deprecated
+//	 */
+//	public void setCurricularYear(Integer curricularYear) {
+//		this.curricularYear = curricularYear;
+//	}
 
 	/**
 	 * Sets the labHours.
@@ -172,14 +171,14 @@ public class InfoCurricularCourse implements Serializable {
 		this.praticalHours = praticalHours;
 	}
 
-	/**
-	 * Sets the semester.
-	 * @param semester The semester to set
-	 * @deprecated
-	 */
-	public void setSemester(Integer semester) {
-		this.semester = semester;
-	}
+//	/**
+//	 * Sets the semester.
+//	 * @param semester The semester to set
+//	 * @deprecated
+//	 */
+//	public void setSemester(Integer semester) {
+//		this.semester = semester;
+//	}
 
 	/**
 	 * Sets the theoPratHours.
@@ -213,19 +212,34 @@ public class InfoCurricularCourse implements Serializable {
 		this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
 	}
 
-	/**
-	 * @return List
-	 */
-	public List getAssociatedInfoCurricularSemesters() {
-		return associatedInfoCurricularSemesters;
-	}
+//	/**
+//	 * @return List
+//	 */
+//	public List getAssociatedInfoCurricularSemesters() {
+//		return associatedInfoCurricularSemesters;
+//	}
+//
+//	/**
+//	 * Sets the associatedInfoCurricularSemesters.
+//	 * @param associatedInfoCurricularSemesters The associatedInfoCurricularSemesters to set
+//	 */
+//	public void setAssociatedInfoCurricularSemesters(List associatedInfoCurricularSemesters) {
+//		this.associatedInfoCurricularSemesters = associatedInfoCurricularSemesters;
+//	}
 
-	/**
-	 * Sets the associatedInfoCurricularSemesters.
-	 * @param associatedInfoCurricularSemesters The associatedInfoCurricularSemesters to set
-	 */
-	public void setAssociatedInfoCurricularSemesters(List associatedInfoCurricularSemesters) {
-		this.associatedInfoCurricularSemesters = associatedInfoCurricularSemesters;
-	}
+/**
+ * @return List
+ */
+public List getInfoScopes() {
+	return infoScopes;
+}
+
+/**
+ * Sets the infoScopes.
+ * @param infoScopes The infoScopes to set
+ */
+public void setInfoScopes(List infoScopes) {
+	this.infoScopes = infoScopes;
+}
 
 }

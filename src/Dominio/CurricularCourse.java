@@ -24,12 +24,10 @@ public class CurricularCourse implements ICurricularCourse {
 	private IDegreeCurricularPlan degreeCurricularPlan;
 
 	private List associatedExecutionCourses;
-	private List associatedBranches;
-	private List associatedCurricularSemesters;
+	private List scopes;
+//	private List associatedBranches;
+//	private List associatedCurricularSemesters;
 
-	// Para sair:
-//	private Integer curricularYear;
-//	private Integer semester;
 
 	public CurricularCourse() {
 
@@ -48,8 +46,9 @@ public class CurricularCourse implements ICurricularCourse {
 		setTheoreticalHours(null);
 
 		setAssociatedExecutionCourses(null);
-		setAssociatedBranches(null);
-		setAssociatedCurricularSemesters(null);
+		setScopes(null);
+//		setAssociatedBranches(null);
+//		setAssociatedCurricularSemesters(null);
 	}
 
 	/**
@@ -78,10 +77,6 @@ public class CurricularCourse implements ICurricularCourse {
 		setPraticalHours(praticalHours);
 		setTheoPratHours(theoPratHours);
 		setTheoreticalHours(theoreticalHours);
-
-//		setCurricularYear(curricularYear);
-//		setSemester(semester);
-
 	}
 
 	public CurricularCourse(
@@ -107,19 +102,6 @@ public class CurricularCourse implements ICurricularCourse {
 		setTheoreticalHours(theoreticalHours);
 	}
 
-//	public boolean equals(Object obj) {
-//		boolean resultado = false;
-//		if (obj instanceof ICurricularCourse) {
-//			ICurricularCourse dc = (ICurricularCourse) obj;
-//			resultado = getDegreeCurricularPlan().equals(dc.getDegreeCurricularPlan()) &&
-//									getName().equals(dc.getName()) &&
-//									getCode().equals(dc.getCode()) &&
-//									getCurricularYear().equals(dc.getCurricularYear()) &&
-//									getSemester().equals(dc.getSemester());
-//		}
-//		return resultado;
-//	}
-
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof ICurricularCourse) {
@@ -142,10 +124,6 @@ public class CurricularCourse implements ICurricularCourse {
 		result += "theoPratHours = " + theoPratHours + "; ";
 		result += "labHours = " + labHours + "]\n";
 
-//		result += "associatedExecutionCourses = " + associatedExecutionCourses + "; ";
-//		result += "associatedBranches = " + associatedBranches + "; ";
-//		result += "associatedCurricularSemesters = " + associatedCurricularSemesters + "; ";
-
 		return result;
 	}
 
@@ -165,16 +143,6 @@ public class CurricularCourse implements ICurricularCourse {
 		return credits;
 	}
 
-	/**
-	 * Returns the curricularYear.
-	 * @return int
-	 */
-//	public Integer getCurricularYear() {
-//		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
-//			return ((ICurricularSemester) this.associatedCurricularSemesters.get(0)).getCurricularYear().getYear();
-//		}
-//		return null;
-//	}
 
 	/**
 	 * Returns the degreeCurricularPlan.
@@ -241,17 +209,6 @@ public class CurricularCourse implements ICurricularCourse {
 	}
 
 	/**
-	 * Returns the semester.
-	 * @return int
-	 */
-//	public Integer getSemester() {
-//		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
-//			return ((ICurricularSemester) this.associatedCurricularSemesters.get(0)).getSemester();
-//		}
-//		return null;
-//	}
-
-	/**
 	 * Returns the theoPratHours.
 	 * @return double
 	 */
@@ -274,16 +231,6 @@ public class CurricularCourse implements ICurricularCourse {
 	public void setCode(String code) {
 		this.code = code;
 	}
-
-	/**
-	 * Sets the curricularYear.
-	 * @param curricularYear The curricularYear to set
-	 */
-//	public void setCurricularYear(Integer curricularYear) {
-//		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
-//			((ICurricularSemester) this.associatedCurricularSemesters.get(0)).getCurricularYear().setYear(curricularYear);
-//		}
-//	}
 
 	/**
 	 * Sets the degreeCurricularPlan.
@@ -332,16 +279,6 @@ public class CurricularCourse implements ICurricularCourse {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	/**
-	 * Sets the semester.
-	 * @param semester The semester to set
-	 */
-//	public void setSemester(Integer semester) {
-//		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
-//			((ICurricularSemester) this.associatedCurricularSemesters.get(0)).setSemester(semester);
-//		}
-//	}
 
 	/**
 	 * Returns the associatedExecutionCourses.
@@ -399,34 +336,49 @@ public class CurricularCourse implements ICurricularCourse {
 		this.theoreticalHours = theoreticalHours;
 	}
 
-	/**
-	 * @return List
-	 */
-	public List getAssociatedBranches() {
-		return associatedBranches;
-	}
+//	/**
+//	 * @return List
+//	 */
+//	public List getAssociatedBranches() {
+//		return associatedBranches;
+//	}
+//
+//	/**
+//	 * @return List
+//	 */
+//	public List getAssociatedCurricularSemesters() {
+//		return associatedCurricularSemesters;
+//	}
+//
+//	/**
+//	 * Sets the associatedBranches.
+//	 * @param associatedBranches The associatedBranches to set
+//	 */
+//	public void setAssociatedBranches(List associatedBranches) {
+//		this.associatedBranches = associatedBranches;
+//	}
+//
+//	/**
+//	 * Sets the associatedCurricularSemesters.
+//	 * @param associatedCurricularSemesters The associatedCurricularSemesters to set
+//	 */
+//	public void setAssociatedCurricularSemesters(List associatedCurricularSemesters) {
+//		this.associatedCurricularSemesters = associatedCurricularSemesters;
+//	}
 
 	/**
 	 * @return List
 	 */
-	public List getAssociatedCurricularSemesters() {
-		return associatedCurricularSemesters;
+	public List getScopes() {
+		return scopes;
 	}
 
 	/**
-	 * Sets the associatedBranches.
-	 * @param associatedBranches The associatedBranches to set
+	 * Sets the scopes.
+	 * @param scopes The scopes to set
 	 */
-	public void setAssociatedBranches(List associatedBranches) {
-		this.associatedBranches = associatedBranches;
-	}
-
-	/**
-	 * Sets the associatedCurricularSemesters.
-	 * @param associatedCurricularSemesters The associatedCurricularSemesters to set
-	 */
-	public void setAssociatedCurricularSemesters(List associatedCurricularSemesters) {
-		this.associatedCurricularSemesters = associatedCurricularSemesters;
+	public void setScopes(List scopes) {
+		this.scopes = scopes;
 	}
 
 }

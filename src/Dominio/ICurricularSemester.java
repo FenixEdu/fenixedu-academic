@@ -12,10 +12,12 @@ import java.util.List;
 public interface ICurricularSemester {
 
 	public Integer getSemester();
-	public List getAssociatedCurricularCourses();
+//	public List getAssociatedCurricularCourses();
 	public ICurricularYear getCurricularYear();
+	public List getScopes();
 	
 	public void setSemester(Integer code);
-	public void setAssociatedCurricularCourses(List associatedCurricularCourses);
+//	public void setAssociatedCurricularCourses(List associatedCurricularCourses);
 	public void setCurricularYear(ICurricularYear curricularYear);
+	public void setScopes(List scopes);
 }

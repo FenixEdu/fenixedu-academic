@@ -103,7 +103,7 @@ public class BranchOJBTest extends TestCaseOJB {
 		assertTrue(b2.getCode().equals(branch.getCode()));
 		assertTrue(b2.getName().equals(branch.getName()));
 
-		assertNull(b2.getAssociatedCurricularCourses());
+		assertNull(b2.getScopes());
 		assertNull(b2.getAssociatedStudentCurricularPlans());
 	}
 
@@ -151,7 +151,7 @@ public class BranchOJBTest extends TestCaseOJB {
 		assertNotNull(branch);
 		assertTrue(branch.getName().equals("Inteligencia Artificial"));
 		assertTrue(branch.getCode().equals("IA"));
-		assertNotNull(branch.getAssociatedCurricularCourses());
+		assertNotNull(branch.getScopes());
 		assertNotNull(branch.getAssociatedStudentCurricularPlans());
 
 		// branch inexistente
@@ -226,7 +226,7 @@ public class BranchOJBTest extends TestCaseOJB {
 			fail("Read All Branches");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 2);
+		assertEquals(list.size(), 3);
 	}
 
 }

@@ -76,4 +76,6 @@ public interface ISuportePersistente {
 	public IPersistentGuideEntry getIPersistentGuideEntry();
 	public IPersistentGuide getIPersistentGuide();
 	public IPersistentGuideSituation getIPersistentGuideSituation();
+
+	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
 }

@@ -3,7 +3,6 @@ package DataBeans.util;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -13,6 +12,7 @@ import DataBeans.InfoClass;
 import DataBeans.InfoContributor;
 import DataBeans.InfoCountry;
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurricularSemester;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoDegree;
@@ -24,7 +24,6 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
-import DataBeans.InfoGuideSituation;
 import DataBeans.InfoLesson;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
@@ -47,6 +46,7 @@ import Dominio.CandidateSituation;
 import Dominio.Contributor;
 import Dominio.Country;
 import Dominio.CurricularCourse;
+import Dominio.CurricularCourseScope;
 import Dominio.CurricularSemester;
 import Dominio.CurricularYear;
 import Dominio.Curriculum;
@@ -68,6 +68,7 @@ import Dominio.ICandidateSituation;
 import Dominio.IContributor;
 import Dominio.ICountry;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
 import Dominio.ICurricularYear;
 import Dominio.ICurriculum;
@@ -972,226 +973,6 @@ public abstract class Cloner {
 		return teacher;
 	}
 
-	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
-
-	/**
-	 * @author dcs-rjao
-	 * @param InfoDegreeCurricularPlan
-	 * @return IDegreeCurricularPlan
-	 */
-	public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-
-		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-
-		ICurso degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
-
-		try {
-			BeanUtils.copyProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
-		degreeCurricularPlan.setDegree(degree);
-
-		return degreeCurricularPlan;
-	}
-
-	/**
-	 * @author dcs-rjao
-	 * @param IDegreeCurricularPlan
-	 * @return InfoDegreeCurricularPlan
-	 */
-	public static InfoDegreeCurricularPlan copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
-
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-
-		InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(degreeCurricularPlan.getDegree());
-
-		try {
-			BeanUtils.copyProperties(infoDegreeCurricularPlan, degreeCurricularPlan);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
-		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-
-		return infoDegreeCurricularPlan;
-	}
-
-	/**
-	 * @author dcs-rjao
-	 * @param InfoBranch
-	 * @return IBranch
-	 */
-	public static IBranch copyInfoBranch2IBranch(InfoBranch infoBranch) {
-
-		IBranch branch = new Branch();
-		copyObjectProperties(branch, infoBranch);
-		return branch;
-	}
-
-	/**
-	 * @author dcs-rjao
-	 * @param IBranch
-	 * @return InfoBranch
-	 */
-	public static InfoBranch copyIBranch2InfoBranch(IBranch branch) {
-
-		InfoBranch infoBranch = new InfoBranch();
-		copyObjectProperties(infoBranch, branch);
-		return infoBranch;
-	}
-
-	/**
-	 * @author dcs-rjao
-	 * @param InfoCurricularCourse
-	 * @return ICurricularCourse
-	 */
-	public static ICurricularCourse copyInfoCurricularCourse2CurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-
-		ICurricularCourse curricularCourse = new CurricularCourse();
-		List infoCurricularSemestersList = null;
-		List curricularSemestersList = new ArrayList();
-
-		IDegreeCurricularPlan planoCurricularCurso =
-			copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoCurricularCourse.getInfoDegreeCurricularPlan());
-
-		infoCurricularSemestersList = infoCurricularCourse.getAssociatedInfoCurricularSemesters();
-		if (infoCurricularSemestersList != null && !infoCurricularSemestersList.isEmpty()) {
-			ListIterator iterator = infoCurricularSemestersList.listIterator();
-			while (iterator.hasNext()) {
-				InfoCurricularSemester infoCurricularSemester = (InfoCurricularSemester) iterator.next();
-				ICurricularSemester curricularSemester = copyInfoCurricularSemester2CurricularSemester(infoCurricularSemester);
-				curricularSemestersList.add(curricularSemester);
-			}
-		}
-
-		copyObjectProperties(curricularCourse, infoCurricularCourse);
-
-		curricularCourse.setDegreeCurricularPlan(planoCurricularCurso);
-		curricularCourse.setAssociatedCurricularSemesters(curricularSemestersList);
-
-		return curricularCourse;
-	}
-
-	/**
-	 * @author dcs-rjao
-	 * @param ICurricularCourse
-	 * @return InfoCurricularCourse
-	 */
-
-	public static InfoCurricularCourse copyCurricularCourse2InfoCurricularCourse(ICurricularCourse curricularCourse) {
-
-		InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
-		List infoCurricularSemestersList = new ArrayList();
-		List curricularSemestersList = null;
-
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-			copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(curricularCourse.getDegreeCurricularPlan());
-
-		curricularSemestersList = curricularCourse.getAssociatedCurricularSemesters();
-		if (curricularSemestersList != null && !curricularSemestersList.isEmpty()) {
-			ListIterator iterator = curricularSemestersList.listIterator();
-			while (iterator.hasNext()) {
-				ICurricularSemester curricularSemester = (ICurricularSemester) iterator.next();
-				InfoCurricularSemester infoCurricularSemester = copyCurricularSemester2InfoCurricularSemester(curricularSemester);
-				infoCurricularSemestersList.add(infoCurricularSemester);
-			}
-		}
-
-		copyObjectProperties(infoCurricularCourse, curricularCourse);
-
-		infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-		infoCurricularCourse.setAssociatedInfoCurricularSemesters(infoCurricularSemestersList);
-
-		return infoCurricularCourse;
-	}
-
-	/**
-	 * @author dcs-rjao
-	 * @param InfoCurricularSemester
-	 * @return ICurricularSemester
-	 */
-	public static ICurricularSemester copyInfoCurricularSemester2CurricularSemester(InfoCurricularSemester infoCurricularSemester) {
-//		List infoCurricularCoursesList = null;
-//		List curricularCoursesList = new ArrayList();
-		ICurricularSemester curricularSemester = new CurricularSemester();
-
-		ICurricularYear curricularYear = copyInfoCurricularYear2CurricularYear(infoCurricularSemester.getInfoCurricularYear());
-
-//		infoCurricularCoursesList = infoCurricularSemester.getAssociatedInfoCurricularCourses();
-//		if (infoCurricularCoursesList != null && !infoCurricularCoursesList.isEmpty()) {
-//			ListIterator iterator = infoCurricularCoursesList.listIterator();
-//			while (iterator.hasNext()) {
-//				InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iterator.next();
-//				ICurricularCourse curricularCourse = copyInfoCurricularCourse2CurricularCourse(infoCurricularCourse);
-//				curricularCoursesList.add(curricularCourse);
-//			}
-//		}
-
-		copyObjectProperties(curricularSemester, infoCurricularSemester);
-		curricularSemester.setCurricularYear(curricularYear);
-//		curricularSemester.setAssociatedCurricularCourses(curricularCoursesList);
-
-		return curricularSemester;
-	}
-
-	/**
-	 * @author dcs-rjao
-	 * @param ICurricularSemester
-	 * @return InfoCurricularSemester
-	 */
-
-	public static InfoCurricularSemester copyCurricularSemester2InfoCurricularSemester(ICurricularSemester curricularSemester) {
-//		List infoCurricularCoursesList = new ArrayList();
-//		List curricularCoursesList = null;
-		InfoCurricularSemester infoCurricularSemester = new InfoCurricularSemester();
-
-		InfoCurricularYear infoCurricularYear = copyCurricularYear2InfoCurricularYear(curricularSemester.getCurricularYear());
-
-//		curricularCoursesList = curricularSemester.getAssociatedCurricularCourses();
-//		if (curricularCoursesList != null && !curricularCoursesList.isEmpty()) {
-//			ListIterator iterator = curricularCoursesList.listIterator();
-//			while (iterator.hasNext()) {
-//				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-//				InfoCurricularCourse infoCurricularCourse = copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-//				infoCurricularCoursesList.add(infoCurricularCourse);
-//			}
-//		}
-
-		copyObjectProperties(infoCurricularSemester, curricularSemester);
-
-		infoCurricularSemester.setInfoCurricularYear(infoCurricularYear);
-//		infoCurricularSemester.setAssociatedInfoCurricularCourses(infoCurricularCoursesList);
-
-		return infoCurricularSemester;
-	}
-
-	/**
-	 * @author dcs-rjao
-	 * @param InfoCurricularYear
-	 * @return ICurricularYear
-	 */
-	public static ICurricularYear copyInfoCurricularYear2CurricularYear(InfoCurricularYear infoCurricularYear) {
-		ICurricularYear curricularYear = new CurricularYear();
-		copyObjectProperties(curricularYear, infoCurricularYear);
-		return curricularYear;
-	}
-
-	/**
-	 * @author dcs-rjao
-	 * @param ICurricularYear
-	 * @return InfoCurricularYear
-	 */
-
-	public static InfoCurricularYear copyCurricularYear2InfoCurricularYear(ICurricularYear curricularYear) {
-		InfoCurricularYear infoCurricularYear = new InfoCurricularYear();
-		copyObjectProperties(infoCurricularYear, curricularYear);
-		return infoCurricularYear;
-	}
-
-	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
-
 	/**
 	 * @author joana-nuno
 	 * @param IContributor
@@ -1324,4 +1105,265 @@ System.out.println("Cloner 1");
 		return guideSituation;
 	}
 
+	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
+
+	/**
+	 * @author dcs-rjao
+	 * @param InfoDegreeCurricularPlan
+	 * @return IDegreeCurricularPlan
+	 */
+	public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+
+		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
+
+		ICurso degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
+
+		try {
+			BeanUtils.copyProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		degreeCurricularPlan.setDegree(degree);
+
+		return degreeCurricularPlan;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param IDegreeCurricularPlan
+	 * @return InfoDegreeCurricularPlan
+	 */
+	public static InfoDegreeCurricularPlan copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
+
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+
+		InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(degreeCurricularPlan.getDegree());
+
+		try {
+			BeanUtils.copyProperties(infoDegreeCurricularPlan, degreeCurricularPlan);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+
+		return infoDegreeCurricularPlan;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param InfoBranch
+	 * @return IBranch
+	 */
+	public static IBranch copyInfoBranch2IBranch(InfoBranch infoBranch) {
+
+		IBranch branch = new Branch();
+		copyObjectProperties(branch, infoBranch);
+		return branch;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param IBranch
+	 * @return InfoBranch
+	 */
+	public static InfoBranch copyIBranch2InfoBranch(IBranch branch) {
+
+		InfoBranch infoBranch = new InfoBranch();
+		copyObjectProperties(infoBranch, branch);
+		return infoBranch;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param InfoCurricularCourse
+	 * @return ICurricularCourse
+	 */
+	public static ICurricularCourse copyInfoCurricularCourse2CurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+
+		ICurricularCourse curricularCourse = new CurricularCourse();
+		//		List infoCurricularCourseScopeList = null;
+		//		List curricularCourseScopeList = new ArrayList();
+
+		IDegreeCurricularPlan planoCurricularCurso =
+			copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoCurricularCourse.getInfoDegreeCurricularPlan());
+
+		//		infoCurricularCourseScopeList = infoCurricularCourse.getInfoScopes();
+		//		if (infoCurricularCourseScopeList != null && !infoCurricularCourseScopeList.isEmpty()) {
+		//			ListIterator iterator = infoCurricularCourseScopeList.listIterator();
+		//			while (iterator.hasNext()) {
+		//				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterator.next();
+		//				ICurricularSemester curricularSemester = copyInfoCurricularCourseScope2CurricularCourseScope(infoCurricularCourseScope);
+		//				curricularCourseScopeList.add(curricularSemester);
+		//			}
+		//		}
+
+		copyObjectProperties(curricularCourse, infoCurricularCourse);
+
+		curricularCourse.setDegreeCurricularPlan(planoCurricularCurso);
+		//		curricularCourse.setAssociatedCurricularSemesters(curricularCourseScopeList);
+
+		return curricularCourse;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param ICurricularCourse
+	 * @return InfoCurricularCourse
+	 */
+
+	public static InfoCurricularCourse copyCurricularCourse2InfoCurricularCourse(ICurricularCourse curricularCourse) {
+
+		InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
+		//		List infoCurricularCourseScopeList = new ArrayList();
+		//		List curricularCourseScopeList = null;
+
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+			copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(curricularCourse.getDegreeCurricularPlan());
+
+		//		curricularCourseScopeList = curricularCourse.getScopes();
+		//		if (curricularCourseScopeList != null && !curricularCourseScopeList.isEmpty()) {
+		//			ListIterator iterator = curricularCourseScopeList.listIterator();
+		//			while (iterator.hasNext()) {
+		//				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
+		//				InfoCurricularCourseScope infoCurricularCourseScope = copyCurricularSemester2InfoCurricularCourseScope(curricularCourseScope);
+		//				infoCurricularCourseScopeList.add(infoCurricularCourseScope);
+		//			}
+		//		}
+
+		copyObjectProperties(infoCurricularCourse, curricularCourse);
+
+		infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+		//		infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
+
+		return infoCurricularCourse;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param ICurricularCourseScope
+	 * @return InfoCurricularCourseScope
+	 */
+
+	public static InfoCurricularCourseScope copyCurricularCourseScope2InfoCurricularCourseScope(ICurricularCourseScope curricularCourseScope) {
+
+		InfoCurricularCourseScope infoCurricularCourseScope = new InfoCurricularCourseScope();
+
+		InfoCurricularCourse infoCurricularCourse = copyCurricularCourse2InfoCurricularCourse(curricularCourseScope.getCurricularCourse());
+		InfoCurricularSemester infoCurricularSemester = copyCurricularSemester2InfoCurricularSemester(curricularCourseScope.getCurricularSemester());
+		InfoBranch infoBranch = copyIBranch2InfoBranch(curricularCourseScope.getBranch());
+
+		infoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);
+		infoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
+		infoCurricularCourseScope.setInfoBranch(infoBranch);
+
+		return infoCurricularCourseScope;
+	}
+
+	/**
+		 * @author dcs-rjao
+		 * @param InfoCurricularCourseScope
+		 * @return ICurricularCourseScope
+		 */
+
+	public static ICurricularCourseScope copyInfoCurricularCourseScope2ICurricularCourseScope(InfoCurricularCourseScope infoCurricularCourseScope) {
+
+		ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
+
+		ICurricularCourse curricularCourse = copyInfoCurricularCourse2CurricularCourse(infoCurricularCourseScope.getInfoCurricularCourse());
+		ICurricularSemester curricularSemester = copyInfoCurricularSemester2CurricularSemester(infoCurricularCourseScope.getInfoCurricularSemester());
+		IBranch branch = copyInfoBranch2IBranch(infoCurricularCourseScope.getInfoBranch());
+
+		curricularCourseScope.setCurricularCourse(curricularCourse);
+		curricularCourseScope.setCurricularSemester(curricularSemester);
+		curricularCourseScope.setBranch(branch);
+
+		return curricularCourseScope;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param InfoCurricularSemester
+	 * @return ICurricularSemester
+	 */
+	public static ICurricularSemester copyInfoCurricularSemester2CurricularSemester(InfoCurricularSemester infoCurricularSemester) {
+		//		List infoCurricularCoursesList = null;
+		//		List curricularCoursesList = new ArrayList();
+		ICurricularSemester curricularSemester = new CurricularSemester();
+
+		ICurricularYear curricularYear = copyInfoCurricularYear2CurricularYear(infoCurricularSemester.getInfoCurricularYear());
+
+		//		infoCurricularCoursesList = infoCurricularSemester.getAssociatedInfoCurricularCourses();
+		//		if (infoCurricularCoursesList != null && !infoCurricularCoursesList.isEmpty()) {
+		//			ListIterator iterator = infoCurricularCoursesList.listIterator();
+		//			while (iterator.hasNext()) {
+		//				InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iterator.next();
+		//				ICurricularCourse curricularCourse = copyInfoCurricularCourse2CurricularCourse(infoCurricularCourse);
+		//				curricularCoursesList.add(curricularCourse);
+		//			}
+		//		}
+
+		copyObjectProperties(curricularSemester, infoCurricularSemester);
+		curricularSemester.setCurricularYear(curricularYear);
+		//		curricularSemester.setAssociatedCurricularCourses(curricularCoursesList);
+
+		return curricularSemester;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param ICurricularSemester
+	 * @return InfoCurricularSemester
+	 */
+
+	public static InfoCurricularSemester copyCurricularSemester2InfoCurricularSemester(ICurricularSemester curricularSemester) {
+		//		List infoCurricularCoursesList = new ArrayList();
+		//		List curricularCoursesList = null;
+		InfoCurricularSemester infoCurricularSemester = new InfoCurricularSemester();
+
+		InfoCurricularYear infoCurricularYear = copyCurricularYear2InfoCurricularYear(curricularSemester.getCurricularYear());
+
+		//		curricularCoursesList = curricularSemester.getAssociatedCurricularCourses();
+		//		if (curricularCoursesList != null && !curricularCoursesList.isEmpty()) {
+		//			ListIterator iterator = curricularCoursesList.listIterator();
+		//			while (iterator.hasNext()) {
+		//				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+		//				InfoCurricularCourse infoCurricularCourse = copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+		//				infoCurricularCoursesList.add(infoCurricularCourse);
+		//			}
+		//		}
+
+		copyObjectProperties(infoCurricularSemester, curricularSemester);
+
+		infoCurricularSemester.setInfoCurricularYear(infoCurricularYear);
+		//		infoCurricularSemester.setAssociatedInfoCurricularCourses(infoCurricularCoursesList);
+
+		return infoCurricularSemester;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param InfoCurricularYear
+	 * @return ICurricularYear
+	 */
+	public static ICurricularYear copyInfoCurricularYear2CurricularYear(InfoCurricularYear infoCurricularYear) {
+		ICurricularYear curricularYear = new CurricularYear();
+		copyObjectProperties(curricularYear, infoCurricularYear);
+		return curricularYear;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param ICurricularYear
+	 * @return InfoCurricularYear
+	 */
+
+	public static InfoCurricularYear copyCurricularYear2InfoCurricularYear(ICurricularYear curricularYear) {
+		InfoCurricularYear infoCurricularYear = new InfoCurricularYear();
+		copyObjectProperties(infoCurricularYear, curricularYear);
+		return infoCurricularYear;
+	}
+
+	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
 }

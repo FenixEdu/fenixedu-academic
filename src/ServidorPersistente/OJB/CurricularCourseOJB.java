@@ -122,7 +122,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		try {
 			ArrayList list = new ArrayList();
 			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			oqlQuery += " where associatedCurricularSemesters.curricularYear.year = $1";
+			oqlQuery += " where scopes.curricularSemester.curricularYear.year = $1";
 			query.create(oqlQuery);
 			query.bind(year);
 			List result = (List) query.execute();
@@ -149,7 +149,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		try {
 			ArrayList list = new ArrayList();
 			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			oqlQuery += " where associatedCurricularSemesters.semester = $1";
+			oqlQuery += " where scopes.curricularSemester.semester = $1";
 			query.create(oqlQuery);
 			query.bind(semester);
 			List result = (List) query.execute();
@@ -172,33 +172,33 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 	}
 	
-	public ArrayList readCurricularCoursesByCurricularSemesterAndCurricularYear(Integer semester, Integer year) throws ExcepcaoPersistencia {
-		try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			oqlQuery += " where associatedCurricularSemesters.semester = $1";
-			oqlQuery += " and associatedCurricularSemesters.curricularYear.year = $2";
-			query.create(oqlQuery);
-			query.bind(semester);
-			query.bind(year);
-			List result = (List) query.execute();
-
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-					list.add((ICurricularCourse) iterator.next());
-			}
-			return list;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+//	public ArrayList readCurricularCoursesByCurricularSemesterAndCurricularYear(Integer semester, Integer year) throws ExcepcaoPersistencia {
+//		try {
+//			ArrayList list = new ArrayList();
+//			String oqlQuery = "select all from " + CurricularCourse.class.getName();
+//			oqlQuery += " where associatedCurricularSemesters.semester = $1";
+//			oqlQuery += " and associatedCurricularSemesters.curricularYear.year = $2";
+//			query.create(oqlQuery);
+//			query.bind(semester);
+//			query.bind(year);
+//			List result = (List) query.execute();
+//
+//			try {
+//				lockRead(result);
+//			} catch (ExcepcaoPersistencia ex) {
+//				throw ex;
+//			}
+//
+//			if ((result != null) && (result.size() != 0)) {
+//				ListIterator iterator = result.listIterator();
+//				while (iterator.hasNext())
+//					list.add((ICurricularCourse) iterator.next());
+//			}
+//			return list;
+//
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
+//	}
 	
 }

@@ -35,6 +35,7 @@ import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.IPersistentCurriculum;
@@ -379,4 +380,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentGuideSituation getIPersistentGuideSituation() {
 			return new GuideSituationOJB(); 
 		}
+
+	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope() {
+		return new CurricularCourseScopeOJB();
+	}
 }
