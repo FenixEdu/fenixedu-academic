@@ -255,8 +255,8 @@
          <form-property name="studentNumber" type="java.lang.Integer" />         
        	 <form-property name="grade" type="java.lang.String" />
          <form-property name="teacherNumber" type="java.lang.String" />
-         <form-property name="examDate" type="java.lang.String" /> -->
-         <form-property name="gradeAvailableDate" type="java.lang.String" /> -->
+         <form-property name="examDate" type="java.lang.String" />
+         <form-property name="gradeAvailableDate" type="java.lang.String" />
          <form-property name="enrolmentEvaluationType" type="java.lang.String" />
          <form-property name="observation" type="java.lang.String" />
 	  </form-bean>
