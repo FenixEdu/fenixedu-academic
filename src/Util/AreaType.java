@@ -18,14 +18,17 @@ public class AreaType
 
     public static final int SPECIALIZATION = 1;
     public static final int SECONDARY = 2;
-
+    public static final int BASE = 3;
+    
     public static final String SPECIALIZATION_STRING = "Specialization";
     public static final String SECONDARY_STRING = "Secundary";
+    public static final String BASE_STRING = "Base";
     public static final String DEFAULT = "[Choose one specialization]";
 
     public static final AreaType SPECIALIZATION_OBJ = new AreaType(AreaType.SPECIALIZATION);
     public static final AreaType SECONDARY_OBJ = new AreaType(AreaType.SECONDARY);
-
+    public static final AreaType BASE_OBJ = new AreaType(AreaType.BASE);
+    
     private Integer areaType;
 
     public AreaType()
@@ -48,7 +51,9 @@ public class AreaType
             this.areaType = new Integer(AreaType.SPECIALIZATION);
         if (areaType.equals(AreaType.SECONDARY_STRING))
             this.areaType = new Integer(AreaType.SECONDARY);
-    }
+        if (areaType.equals(AreaType.BASE_STRING))
+        	this.areaType = new Integer(AreaType.BASE);
+        }
 
     public static ArrayList toArrayList()
     {
@@ -56,6 +61,7 @@ public class AreaType
         result.add(new LabelValueBean(AreaType.DEFAULT, null));
         result.add(new LabelValueBean(AreaType.SPECIALIZATION_STRING, AreaType.SPECIALIZATION_STRING));
         result.add(new LabelValueBean(AreaType.SECONDARY_STRING, AreaType.SECONDARY_STRING));
+        result.add(new LabelValueBean(AreaType.BASE_STRING, AreaType.BASE_STRING));
         return result;
     }
 

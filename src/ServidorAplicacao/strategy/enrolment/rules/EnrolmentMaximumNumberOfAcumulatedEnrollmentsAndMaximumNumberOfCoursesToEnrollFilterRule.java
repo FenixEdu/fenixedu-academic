@@ -70,8 +70,7 @@ public class EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCour
 	 */
 	private Integer getMinIncrementNac(ICurricularCourse curricularCourse)
 	{
-		// FIXME [DAVID]: put the MinIncrementNac in the curricularCourse
-		return ((ICurricularCourseScope) curricularCourse.getScopes().get(0)).getMinIncrementNac();
+		return curricularCourse.getMinimumValueForAcumulatedEnrollments();
 	}
 
 	/**
@@ -80,8 +79,7 @@ public class EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCour
 	 */
 	private Integer getMaxIncrementNac(ICurricularCourse curricularCourse)
 	{
-		// FIXME [DAVID]: put the MaxIncrementNac in the curricularCourse
-		return ((ICurricularCourseScope) curricularCourse.getScopes().get(0)).getMaxIncrementNac();
+		return curricularCourse.getMaximumValueForAcumulatedEnrollments();
 	}
 
 	/**
@@ -90,8 +88,7 @@ public class EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCour
 	 */
 	private Integer getWeigth(ICurricularCourse curricularCourse)
 	{
-		// FIXME [DAVID]: put the weight in the curricularCourse
-		return ((ICurricularCourseScope) curricularCourse.getScopes().get(0)).getWeigth();
+		return curricularCourse.getEnrollmentWeigth();
 	}
 
 	/**

@@ -22,6 +22,7 @@ import Dominio.IStudentCurricularPlan;
 import Dominio.ScientificArea;
 import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentApplyPrecedencesRule;
+import ServidorAplicacao.strategy.enrolment.rules.EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCoursesToEnrollFilterRule;
 import ServidorAplicacao.strategy.enrolment.rules.IEnrolmentRule;
 import ServidorAplicacao.strategy.enrolment.strategys.EnrolmentStrategy;
 import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategy;
@@ -79,8 +80,8 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 
 		IEnrolmentRule enrolmentRule = new EnrolmentApplyPrecedencesRule();
 		setStudentEnrolmentContext(enrolmentRule.apply(getStudentEnrolmentContext()));
-//		enrolmentRule = new EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCoursesToEnrollFilterRule();
-//		setStudentEnrolmentContext(enrolmentRule.apply(getStudentEnrolmentContext()));
+		enrolmentRule = new EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCoursesToEnrollFilterRule();
+		setStudentEnrolmentContext(enrolmentRule.apply(getStudentEnrolmentContext()));
 		
 		return studentEnrolmentContext;
 	}
@@ -110,7 +111,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
 		IPersistentExecutionPeriod executionPeriodDAO = persistentSuport.getIPersistentExecutionPeriod();
-		IPersistentCurricularCourse curricularCourseDAO = persistentSuport.getIPersistentCurricularCourse();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
 		IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
 
 		IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
@@ -135,16 +136,18 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		while (iterator.hasNext())
 		{
 			IBranch commonArea = (IBranch) iterator.next();
-			List commonAreaCurricularCourses =
-			curricularCourseDAO.readAllCurricularCoursesByDegreeCurricularPlanAndBranchAndSemester(
-				studentCurricularPlan.getDegreeCurricularPlan(),
-				commonArea,
-				executionPeriod.getSemester());
-			commonAreasCurricularCourses.addAll(commonAreaCurricularCourses);
+			List groups = curricularCourseGroupDAO.readByBranchAndAreaType(commonArea, AreaType.BASE_OBJ);
+			Iterator iterator2 = groups.iterator();
+			while (iterator2.hasNext())
+			{
+				ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator2.next();
+				commonAreasCurricularCourses.addAll(curricularCourseGroup.getCurricularCourses());
+			}
 		}
 
 		selectDesiredCurricularCourses(enrollmentsWithAprovedState, commonAreasCurricularCourses);
 		selectDesiredCurricularCourses(enrollmentsWithEnrolledState, commonAreasCurricularCourses);
+		selectDesiredCurricularCourses(commonAreasCurricularCourses, executionPeriod.getSemester());
 
 		List areas = branchDAO.readByDegreeCurricularPlan(studentCurricularPlan.getDegreeCurricularPlan());
 		List finalAreas = new ArrayList();
@@ -199,14 +202,12 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		List studentApprovedEnrollmentsFromSpecializationAndSecundaryAreas =
 			selectCurricularCoursesFromSpecializationAndSecundaryAreas(
 				studentApprovedEnrollments,
-				studentCurricularPlan.getBranch(),
-				studentCurricularPlan.getSecundaryBranch());
+				this.studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled());
 		
 		List studentCurrentSemesterEnrollmentsFromSpecializationAndSecundaryAreas =
 		selectCurricularCoursesFromSpecializationAndSecundaryAreas(
 				studentCurrentSemesterEnrollments,
-				studentCurricularPlan.getBranch(),
-				studentCurricularPlan.getSecundaryBranch());
+				this.studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled());
 		
 		calculateGroupsCreditsFromEnrollments(
 			studentCurricularPlan,
@@ -1097,25 +1098,18 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	 */
 	private List selectCurricularCoursesFromSpecializationAndSecundaryAreas(
 		List enrollments,
-		IBranch specializationArea,
-		IBranch secundaryArea)
+		List commonAreasCurricularCourses)
 	{
 		List enrollmentsToKeep = new ArrayList();
 		Iterator iterator = enrollments.iterator();
 		while(iterator.hasNext())
 		{
 			IEnrolment enrolment = (IEnrolment) iterator.next();
-			Iterator iterator2 = enrolment.getCurricularCourse().getScopes().iterator();
-			while(iterator2.hasNext())
+			if (!commonAreasCurricularCourses.contains(enrolment.getCurricularCourse()))
 			{
-				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator2.next();
-				if (curricularCourseScope.getBranch().equals(specializationArea)
-					|| curricularCourseScope.getBranch().equals(secundaryArea))
+				if (!enrollmentsToKeep.contains(enrolment))
 				{
-					if (!enrollmentsToKeep.contains(enrolment))
-					{
-						enrollmentsToKeep.add(enrolment);
-					}
+					enrollmentsToKeep.add(enrolment);
 				}
 			}
 		}

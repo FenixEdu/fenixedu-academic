@@ -22,7 +22,6 @@ public class Enrolment extends DomainObject implements IEnrolment
 
 	private Integer studentCurricularPlanKey;
 	private Integer curricularCourseKey;
-	private Integer curricularCourseScopeKey;
 	private Integer keyExecutionPeriod;
 
 	private List evaluations;
@@ -63,24 +62,6 @@ public class Enrolment extends DomainObject implements IEnrolment
 	public void setCurricularCourseKey(Integer curricularCourseKey)
 	{
 		this.curricularCourseKey = curricularCourseKey;
-	}
-
-	
-
-	/**
-	 * @return Returns the curricularCourseScopeKey.
-	 */
-	public Integer getCurricularCourseScopeKey()
-	{
-		return curricularCourseScopeKey;
-	}
-
-	/**
-	 * @param curricularCourseScopeKey The curricularCourseScopeKey to set.
-	 */
-	public void setCurricularCourseScopeKey(Integer curricularCourseScopeKey)
-	{
-		this.curricularCourseScopeKey = curricularCourseScopeKey;
 	}
 
 	/**
@@ -221,7 +202,6 @@ public class Enrolment extends DomainObject implements IEnrolment
 			result =
 				this.getStudentCurricularPlan().equals(enrolment.getStudentCurricularPlan()) &&
 				this.getCurricularCourse().equals(enrolment.getCurricularCourse()) &&
-				//this.getCurricularCourseScope().equals(enrolment.getCurricularCourseScope()) &&
 				this.getExecutionPeriod().equals(enrolment.getExecutionPeriod());
 		}
 		return result;

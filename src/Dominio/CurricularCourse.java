@@ -14,11 +14,9 @@ import Util.CurricularCourseType;
 
 public class CurricularCourse extends DomainObject implements ICurricularCourse
 {
-
     private Integer departmentCourseKey;
     private Integer degreeCurricularPlanKey;
     private Integer universityKey;
-    //	Nuno Correia & Ricardo Rodrigues
     private Integer keyScientificArea;
 
     private Double credits;
@@ -37,8 +35,11 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
     private Boolean basic;
     private List associatedExecutionCourses;
     private List scopes;
-    //	Nuno Correia & Ricardo Rodrigues
     private IScientificArea scientificArea;
+    private Integer maximumValueForAcumulatedEnrollments;
+    private Integer minimumValueForAcumulatedEnrollments;
+    private Integer enrollmentWeigth;
+    private Double ectsCredits;
 
     public CurricularCourse(Integer idInternal)
     {
@@ -552,8 +553,74 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
     			if(curricularCourseScope.getBranch().equals(branch))
     			{
     				return curricularCourseScope.getCurricularSemester().getCurricularYear();
+				}
+			}
+		}
+		return ((ICurricularCourseScope) this.getScopes().get(0)).getCurricularSemester().getCurricularYear();
 	}
-}    	}
-    	return ((ICurricularCourseScope) this.getScopes().get(0)).getCurricularSemester().getCurricularYear();
-    }
+
+    /**
+	 * @return Returns the ectsCredits.
+	 */
+	public Double getEctsCredits()
+	{
+		return ectsCredits;
+	}
+
+	/**
+	 * @param ectsCredits The ectsCredits to set.
+	 */
+	public void setEctsCredits(Double ectsCredits)
+	{
+		this.ectsCredits = ectsCredits;
+	}
+
+	/**
+	 * @return Returns the enrollmentWeigth.
+	 */
+	public Integer getEnrollmentWeigth()
+	{
+		return enrollmentWeigth;
+	}
+
+	/**
+	 * @param enrollmentWeigth The enrollmentWeigth to set.
+	 */
+	public void setEnrollmentWeigth(Integer enrollmentWeigth)
+	{
+		this.enrollmentWeigth = enrollmentWeigth;
+	}
+
+	/**
+	 * @return Returns the maximumValueForAcumulatedEnrollments.
+	 */
+	public Integer getMaximumValueForAcumulatedEnrollments()
+	{
+		return maximumValueForAcumulatedEnrollments;
+	}
+
+	/**
+	 * @param maximumValueForAcumulatedEnrollments The maximumValueForAcumulatedEnrollments to set.
+	 */
+	public void setMaximumValueForAcumulatedEnrollments(Integer maximumValueForAcumulatedEnrollments)
+	{
+		this.maximumValueForAcumulatedEnrollments = maximumValueForAcumulatedEnrollments;
+	}
+
+	/**
+	 * @return Returns the minimumValueForAcumulatedEnrollments.
+	 */
+	public Integer getMinimumValueForAcumulatedEnrollments()
+	{
+		return minimumValueForAcumulatedEnrollments;
+	}
+
+	/**
+	 * @param minimumValueForAcumulatedEnrollments The minimumValueForAcumulatedEnrollments to set.
+	 */
+	public void setMinimumValueForAcumulatedEnrollments(Integer minimumValueForAcumulatedEnrollments)
+	{
+		this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
+	}
+
 }

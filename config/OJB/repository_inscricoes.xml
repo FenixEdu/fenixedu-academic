@@ -298,6 +298,26 @@
 		jdbc-type="INTEGER"
 		locking="true"
 	/>
+	<field-descriptor
+		name="maximumValueForAcumulatedEnrollments"
+		column="MAX_INCREMENT_NAC"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="minimumValueForAcumulatedEnrollments"
+		column="MIN_INCREMENT_NAC"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="enrollmentWeigth"
+		column="ENROLLMENT_WEIGTH"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ectsCredits"
+		column="ECTS_CREDITS"
+		jdbc-type="DOUBLE"
+	/>
 	<reference-descriptor
 			name="university"
 			class-ref="Dominio.University"

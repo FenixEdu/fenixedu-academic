@@ -10,38 +10,96 @@ import java.util.Calendar;
  * 20/Mar/2003
  */
 
-public interface ICurricularCourseScope extends IDomainObject {
+public interface ICurricularCourseScope extends IDomainObject
+{
+	/**
+	 * @deprecated
+	 */
+	public Integer getMaxIncrementNac();
+	/**
+	 * @deprecated
+	 */
+	public Integer getMinIncrementNac();
+	/**
+	 * @deprecated
+	 */
+	public Integer getWeigth();
+	/**
+	 * @deprecated
+	 */
+	public Double getLabHours();
+	/**
+	 * @deprecated
+	 */
+	public Double getPraticalHours();
+	/**
+	 * @deprecated
+	 */
+	public Double getTheoPratHours();
+	/**
+	 * @deprecated
+	 */
+	public Double getTheoreticalHours();
+	/**
+	 * @deprecated
+	 */
+	public Double getCredits();
+	/**
+	 * @deprecated
+	 */
+	public Double getEctsCredits();
+
+	/**
+	 * @deprecated
+	 */
+	public void setMaxIncrementNac(Integer integer);
+	/**
+	 * @deprecated
+	 */
+	public void setMinIncrementNac(Integer integer);
+	/**
+	 * @deprecated
+	 */
+	public void setWeigth(Integer integer);
+	/**
+	 * @deprecated
+	 */
+	public void setLabHours(Double double1);
+	/**
+	 * @deprecated
+	 */
+	public void setPraticalHours(Double double1);
+	/**
+	 * @deprecated
+	 */
+	public void setTheoPratHours(Double double1);
+	/**
+	 * @deprecated
+	 */
+	public void setTheoreticalHours(Double double1);
+	/**
+	 * @deprecated
+	 */
+	public void setCredits(Double double1);
+	/**
+	 * @deprecated
+	 */
+	public void setEctsCredits(Double double1);
+
+
+
+
 	public IBranch getBranch();
 	public ICurricularCourse getCurricularCourse();
 	public ICurricularSemester getCurricularSemester();
-	public Integer getMaxIncrementNac();
-	public Integer getMinIncrementNac();
-	public Integer getWeigth();
-	public Double getLabHours();
-	public Double getPraticalHours();
-	public Double getTheoPratHours();
-	public Double getTheoreticalHours();
-	public Double getCredits();
-	public Double getEctsCredits();
 	public Calendar getBeginDate();
 	public Calendar getEndDate();
-//	public Integer getExecutionYear();
 
-	public Boolean isActive();
-
-	public void setMaxIncrementNac(Integer integer);
-	public void setMinIncrementNac(Integer integer);
-	public void setWeigth(Integer integer);
 	public void setBranch(IBranch branch);
 	public void setCurricularCourse(ICurricularCourse curricularCourse);
 	public void setCurricularSemester(ICurricularSemester curricularSemester);
-	public void setLabHours(Double double1);
-	public void setPraticalHours(Double double1);
-	public void setTheoPratHours(Double double1);
-	public void setTheoreticalHours(Double double1);
-	public void setCredits(Double double1);
-	public void setEctsCredits(Double double1);
 	public void setBeginDate(Calendar beginDate);
 	public void setEndDate(Calendar endDate);
-//	public void setExecutionYear(Integer integer);
+
+	public Boolean isActive();
 }

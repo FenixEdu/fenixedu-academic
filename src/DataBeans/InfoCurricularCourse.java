@@ -25,7 +25,6 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
 	private Double theoPratHours;
 	private Double labHours;
 	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
-	//	private List associatedInfoCurricularSemesters;
 	private List infoScopes;
 	private List infoAssociatedExecutionCourses;
 	private CurricularCourseType type;
@@ -33,12 +32,13 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
 	private Boolean mandatory;
 	private InfoUniversity infoUniversity;
 	private Boolean basic;
-	
 	private String chosen;
-
-    //	Nuno Correia & Ricardo Rodrigues
-    private InfoScientificArea scientificArea;
-
+    private InfoScientificArea infoScientificArea;
+    private Integer maximumValueForAcumulatedEnrollments;
+    private Integer minimumValueForAcumulatedEnrollments;
+    private Integer enrollmentWeigth;
+    private Double ectsCredits;
+    
     /**
      * @return
      */
@@ -143,15 +143,6 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
         return credits;
     }
 
-    //	/**
-    //	 * Returns the curricularYear.
-    //	 * @return Integer
-    //	 * @deprecated
-    //	 */
-    //	public Integer getCurricularYear() {
-    //		return curricularYear;
-    //	}
-
     /**
      * Returns the labHours.
      * @return Double
@@ -169,15 +160,6 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
     {
         return praticalHours;
     }
-
-    //	/**
-    //	 * Returns the semester.
-    //	 * @return Integer
-    //	 * @deprecated
-    //	 */
-    //	public Integer getSemester() {
-    //		return semester;
-    //	}
 
     /**
      * Returns the theoPratHours.
@@ -206,15 +188,6 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
         this.credits = credits;
     }
 
-    //	/**
-    //	 * Sets the curricularYear.
-    //	 * @param curricularYear The curricularYear to set
-    //	 * @deprecated
-    //	 */
-    //	public void setCurricularYear(Integer curricularYear) {
-    //		this.curricularYear = curricularYear;
-    //	}
-
     /**
      * Sets the labHours.
      * @param labHours The labHours to set
@@ -232,15 +205,6 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
     {
         this.praticalHours = praticalHours;
     }
-
-    //	/**
-    //	 * Sets the semester.
-    //	 * @param semester The semester to set
-    //	 * @deprecated
-    //	 */
-    //	public void setSemester(Integer semester) {
-    //		this.semester = semester;
-    //	}
 
     /**
      * Sets the theoPratHours.
@@ -277,21 +241,6 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
     {
         this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
     }
-
-    //	/**
-    //	 * @return List
-    //	 */
-    //	public List getAssociatedInfoCurricularSemesters() {
-    //		return associatedInfoCurricularSemesters;
-    //	}
-    //
-    //	/**
-    //	 * Sets the associatedInfoCurricularSemesters.
-    //	 * @param associatedInfoCurricularSemesters The associatedInfoCurricularSemesters to set
-    //	 */
-    //	public void setAssociatedInfoCurricularSemesters(List associatedInfoCurricularSemesters) {
-    //		this.associatedInfoCurricularSemesters = associatedInfoCurricularSemesters;
-    //	}
 
     /**
      * @return List
@@ -428,22 +377,6 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
         this.infoAssociatedExecutionCourses = infoAssociatedExecutionCourses;
     }
 
-    //	Nuno Correia & Ricardo Rodrigues
-    /**
-	 * @return
-	 */
-    public InfoScientificArea getInfoScientificArea()
-    {
-        return scientificArea;
-    }
-
-    /**
-     * @param scientificArea
-     */
-    public void setInfoScientificArea(InfoScientificArea scientificArea)
-    {
-        this.scientificArea = scientificArea;
-    }
 	/**
 	 * @return Returns the chosen.
 	 */
@@ -458,6 +391,86 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
 	public void setChosen(String chosen)
 	{
 		this.chosen = chosen;
+	}
+
+	/**
+	 * @return Returns the ectsCredits.
+	 */
+	public Double getEctsCredits()
+	{
+		return ectsCredits;
+	}
+
+	/**
+	 * @param ectsCredits The ectsCredits to set.
+	 */
+	public void setEctsCredits(Double ectsCredits)
+	{
+		this.ectsCredits = ectsCredits;
+	}
+
+	/**
+	 * @return Returns the enrollmentWeigth.
+	 */
+	public Integer getEnrollmentWeigth()
+	{
+		return enrollmentWeigth;
+	}
+
+	/**
+	 * @param enrollmentWeigth The enrollmentWeigth to set.
+	 */
+	public void setEnrollmentWeigth(Integer enrollmentWeigth)
+	{
+		this.enrollmentWeigth = enrollmentWeigth;
+	}
+
+	/**
+	 * @return Returns the infoScientificArea.
+	 */
+	public InfoScientificArea getInfoScientificArea()
+	{
+		return infoScientificArea;
+	}
+
+	/**
+	 * @param infoScientificArea The infoScientificArea to set.
+	 */
+	public void setInfoScientificArea(InfoScientificArea infoScientificArea)
+	{
+		this.infoScientificArea = infoScientificArea;
+	}
+
+	/**
+	 * @return Returns the maximumValueForAcumulatedEnrollments.
+	 */
+	public Integer getMaximumValueForAcumulatedEnrollments()
+	{
+		return maximumValueForAcumulatedEnrollments;
+	}
+
+	/**
+	 * @param maximumValueForAcumulatedEnrollments The maximumValueForAcumulatedEnrollments to set.
+	 */
+	public void setMaximumValueForAcumulatedEnrollments(Integer maximumValueForAcumulatedEnrollments)
+	{
+		this.maximumValueForAcumulatedEnrollments = maximumValueForAcumulatedEnrollments;
+	}
+
+	/**
+	 * @return Returns the minimumValueForAcumulatedEnrollments.
+	 */
+	public Integer getMinimumValueForAcumulatedEnrollments()
+	{
+		return minimumValueForAcumulatedEnrollments;
+	}
+
+	/**
+	 * @param minimumValueForAcumulatedEnrollments The minimumValueForAcumulatedEnrollments to set.
+	 */
+	public void setMinimumValueForAcumulatedEnrollments(Integer minimumValueForAcumulatedEnrollments)
+	{
+		this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
 	}
 
 }

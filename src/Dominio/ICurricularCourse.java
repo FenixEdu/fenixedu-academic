@@ -14,26 +14,9 @@ import Util.CurricularCourseType;
 public interface ICurricularCourse extends IDomainObject {
 
 	public void setCredits(Double credits);
-	
-	/**
-	 * @deprecated
-	 * @param theoreticalHours
-	 */
 	public void setTheoreticalHours(Double theoreticalHours);
-	/**
-	 * @deprecated
-	 * @param theoreticalHours
-	 */
 	public void setPraticalHours(Double praticalHours);
-	/**
-	 * @deprecated
-	 * @param theoreticalHours
-	 */
 	public void setTheoPratHours(Double theoPratHours);
-	/**
-	 * @deprecated
-	 * @param theoreticalHours
-	 */
 	public void setLabHours(Double labHours);
 	public void setName(java.lang.String name);
 	public void setCode(java.lang.String code);
@@ -46,33 +29,12 @@ public interface ICurricularCourse extends IDomainObject {
 	public void setMandatory(Boolean boolean1);
 	public void setUniversity(IUniversity code);
 	public void setBasic(Boolean basic);
-	
 	public void setScientificArea(IScientificArea scientificArea);
 	
-		
-	
-	public boolean curricularCourseIsMandatory();
-
 	public Double getCredits();
-	/**
-	 * @deprecated
-	 * @param theoreticalHours
-	 */
 	public Double getTheoreticalHours();
-	/**
-	 * @deprecated
-	 * @param theoreticalHours
-	 */
 	public Double getPraticalHours();
-	/**
-	 * @deprecated
-	 * @param theoreticalHours
-	 */
 	public Double getTheoPratHours();
-	/**
-	 * @deprecated
-	 * @param theoreticalHours
-	 */
 	public Double getLabHours();
 	public java.lang.String getName();
 	public java.lang.String getCode();
@@ -86,7 +48,18 @@ public interface ICurricularCourse extends IDomainObject {
 	public IUniversity getUniversity();
 	public ICurricularCourseScope getCurricularCourseScope(IBranch branch, Integer curricularSemester);
 	public Boolean getBasic();
-	
 	public IScientificArea getScientificArea();
+
+	public Double getEctsCredits();
+	public void setEctsCredits(Double ectsCredits);
+	public Integer getEnrollmentWeigth();
+	public void setEnrollmentWeigth(Integer enrollmentWeigth);
+	public Integer getMaximumValueForAcumulatedEnrollments();
+	public void setMaximumValueForAcumulatedEnrollments(Integer maximumValueForAcumulatedEnrollments);
+	public Integer getMinimumValueForAcumulatedEnrollments();
+	public void setMinimumValueForAcumulatedEnrollments(Integer minimumValueForAcumulatedEnrollments);
 	public ICurricularYear getCurricularYearByBranch(IBranch branch);
+
+	public boolean curricularCourseIsMandatory();
+
 }
