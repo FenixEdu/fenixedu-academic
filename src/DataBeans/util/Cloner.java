@@ -1857,9 +1857,9 @@ public abstract class Cloner {
 	 */
 	public static InfoEnrolmentEvaluation copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(IEnrolmentEvaluation enrolmentEvaluation) {
 		InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
-		InfoTeacher infoTeacher = copyITeacher2InfoTeacher(enrolmentEvaluation.getResponsibleTeacher());
+		InfoPerson infoPerson = copyIPerson2InfoPerson(enrolmentEvaluation.getPersonResponsibleForGrade());
 		copyObjectProperties(infoEnrolmentEvaluation, enrolmentEvaluation);
-		infoEnrolmentEvaluation.setResponsibleInfoTeacher(infoTeacher);
+		infoEnrolmentEvaluation.setInfoPersonResponsibleForGrade(infoPerson);
 		return infoEnrolmentEvaluation;
 	}
 
@@ -1870,9 +1870,9 @@ public abstract class Cloner {
 	 */
 	public static IEnrolmentEvaluation copyInfoEnrolmentEvaluation2IEnrolmentEvaluation(InfoEnrolmentEvaluation infoEnrolmentEvaluation) {
 		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-		ITeacher teacher = copyInfoTeacher2Teacher(infoEnrolmentEvaluation.getResponsibleInfoTeacher());
+		IPessoa pessoa = copyInfoPerson2IPerson(infoEnrolmentEvaluation.getInfoPersonResponsibleForGrade());
 		copyObjectProperties(enrolmentEvaluation, infoEnrolmentEvaluation);
-		enrolmentEvaluation.setResponsibleTeacher(teacher);
+		enrolmentEvaluation.setPersonResponsibleForGrade(pessoa);
 		return enrolmentEvaluation;
 	}
 

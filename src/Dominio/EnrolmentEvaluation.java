@@ -20,10 +20,10 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 	private Date gradeAvailableDate;
 	private EnrolmentEvaluationState enrolmentEvaluationState;
 	private IEnrolment enrolment;
-	private ITeacher responsibleTeacher;
+	private IPessoa personResponsibleForGrade;
 	
 	private Integer enrolmentKey;
-	private Integer responsibleTeacherKey;
+	private Integer personResponsibleForGradeKey;
 		
 	public EnrolmentEvaluation() {
 	}
@@ -45,7 +45,7 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 		result += "grade = " + this.grade + "; ";
 		result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
 		result += "examDate = " + this.examDate + "; ";
-		result += "responsibleTeacher = " + this.responsibleTeacher + "; ";
+		result += "personResponsibleForGrade = " + this.personResponsibleForGrade + "; ";
 		result += "enrolmentEvaluationState = " + this.enrolmentEvaluationState + "; ";
 		result += "enrolment = " + this.enrolment + "; ";
 		result += "gradeAvailableDate = " + this.gradeAvailableDate + "]\n";
@@ -107,20 +107,20 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 		this.enrolmentEvaluationState = state;
 	}
 
-	public ITeacher getResponsibleTeacher() {
-		return responsibleTeacher;
+	public IPessoa getPersonResponsibleForGrade() {
+		return personResponsibleForGrade;
 	}
 
-	public Integer getResponsibleTeacherKey() {
-		return responsibleTeacherKey;
+	public Integer getPersonResponsibleForGradeKey() {
+		return personResponsibleForGradeKey;
 	}
 
-	public void setResponsibleTeacher(ITeacher teacher) {
-		responsibleTeacher = teacher;
+	public void setPersonResponsibleForGrade(IPessoa person) {
+		personResponsibleForGrade = person;
 	}
 
-	public void setResponsibleTeacherKey(Integer integer) {
-		responsibleTeacherKey = integer;
+	public void setPersonResponsibleForGradeKey(Integer integer) {
+		personResponsibleForGradeKey = integer;
 	}
 
 }

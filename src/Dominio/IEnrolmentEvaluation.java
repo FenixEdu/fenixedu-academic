@@ -24,9 +24,9 @@ public interface IEnrolmentEvaluation {
 	public abstract String getGrade();
 	public abstract Date getGradeAvailableDate();
 	public abstract EnrolmentEvaluationState getEnrolmentEvaluationState();
-	public abstract ITeacher getResponsibleTeacher();
+	public abstract IPessoa getPersonResponsibleForGrade();
 
-	public abstract void setResponsibleTeacher(ITeacher teacher);
+	public abstract void setPersonResponsibleForGrade(IPessoa teacher);
 	public abstract void setEnrolment(IEnrolment enrolment);
 	public abstract void setEnrolmentEvaluationType(EnrolmentEvaluationType type);
 	public abstract void setExamDate(Date date);

@@ -148,7 +148,7 @@ create table ENROLMENT_EVALUATION (
    EVALUATION_TYPE int(11) not null,
    EXAM_DATE date,
    GRADE_AVAILABLE_DATE date,
-   RESPONSIBLE_TEACHER int(11) not null,
+   RESPONSIBLE_PERSON int(11) not null,
    STATE int(11) not null,
    KEY_ENROLMENT int(11) not null,
    primary key (ID_INTERNAL),

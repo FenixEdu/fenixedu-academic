@@ -962,8 +962,8 @@
 		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
 	/>
 	<field-descriptor
-		name="responsibleTeacherKey"
-		column="RESPONSIBLE_TEACHER"
+		name="personResponsibleForGradeKey"
+		column="RESPONSIBLE_PERSON"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
@@ -978,10 +978,10 @@
 		jdbc-type="INTEGER"
 	/>
 	<reference-descriptor
-			name="responsibleTeacher"
-			class-ref="Dominio.Teacher"
+			name="personResponsibleForGrade"
+			class-ref="Dominio.Pessoa"
 			proxy="false">
-		<foreignkey field-ref="responsibleTeacherKey"/>
+		<foreignkey field-ref="personResponsibleForGradeKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="enrolment"

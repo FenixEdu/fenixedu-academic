@@ -19,7 +19,7 @@ public class InfoEnrolmentEvaluation implements Serializable {
 	private Date gradeAvailableDate;
 	private EnrolmentEvaluationState state;
 	private InfoEnrolment infoEnrolment;
-	private InfoTeacher responsibleInfoTeacher;
+	private InfoPerson infoPersonResponsibleForGrade;
 	
 	public InfoEnrolmentEvaluation() {
 	}
@@ -41,7 +41,7 @@ public class InfoEnrolmentEvaluation implements Serializable {
 		result += "grade = " + this.grade + "; ";
 		result += "evaluationType = " + this.evaluationType + "; ";
 		result += "examDate = " + this.examDate + "; ";
-		result += "responsibleInfoTeacher = " + this.responsibleInfoTeacher + "; ";
+		result += "infoPersonResponsibleForGrade = " + this.infoPersonResponsibleForGrade + "; ";
 		result += "state = " + this.state + "; ";
 		result += "infoEnrolment = " + this.infoEnrolment + "; ";
 		result += "gradeAvailableDate = " + this.gradeAvailableDate + "]\n";
@@ -97,12 +97,13 @@ public class InfoEnrolmentEvaluation implements Serializable {
 	public void setInfoEnrolment(InfoEnrolment enrolment) {
 		infoEnrolment = enrolment;
 	}
-	public InfoTeacher getResponsibleInfoTeacher() {
-		return responsibleInfoTeacher;
+
+	public InfoPerson getInfoPersonResponsibleForGrade() {
+		return infoPersonResponsibleForGrade;
 	}
 
-	public void setResponsibleInfoTeacher(InfoTeacher teacher) {
-		responsibleInfoTeacher = teacher;
+	public void setInfoPersonResponsibleForGrade(InfoPerson person) {
+		infoPersonResponsibleForGrade = person;
 	}
 
 }
