@@ -244,10 +244,11 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
             // student name
             String shortName = infoAttends.getAluno().getInfoPerson().getNome();
-            String[] names = shortName.split(" ");
-            String firstName = names[0];
-            String lastName = names[names.length - 1];
-            shortName = firstName + " " + lastName;
+//            String[] names = shortName.split(" ");
+//            String firstName = names[0];
+//            String lastName = names[names.length - 1];
+//            shortName = firstName + " " + lastName;
+// commented out by gedl            
             fileContents += shortName + SEPARATOR;
 
             // student groups
@@ -319,7 +320,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
                     now.get(Calendar.DAY_OF_MONTH));
             fileName.append("-").append(now.get(Calendar.MONTH)).append("-").append(
                     now.get(Calendar.YEAR));
-            fileName.append(".csv");
+            fileName.append(".tsv");
             response.setHeader("Content-disposition", "attachment; filename=" + fileName);
             writer.print(fileContents);
             writer.flush();

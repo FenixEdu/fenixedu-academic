@@ -70,5 +70,5 @@ public class ReadStudentCurriculum implements IService {
         }
 
         return result;
-    }
+    }    
 }

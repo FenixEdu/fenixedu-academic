@@ -253,7 +253,7 @@ public class DownloadStudentList extends FenixAction {
             fileName.append("listaDeAlunos_");
             fileName.append(infoExecutionCourse.getSigla()).append("_").append(now.get(Calendar.DAY_OF_MONTH));
             fileName.append("-").append(now.get(Calendar.MONTH)).append("-").append(now.get(Calendar.YEAR));
-            fileName.append(".csv");
+            fileName.append(".tsv");
             response.setHeader("Content-disposition", "attachment; filename="+fileName);
             writer.print(result);
             writer.flush();

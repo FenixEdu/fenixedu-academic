@@ -5,10 +5,16 @@
  */
 package ServidorAplicacao.Filtro;
 
+import java.util.List;
+
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
+import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
 
 /**
@@ -30,12 +36,34 @@ public class ManagerOrSeminariesCoordinatorFilter extends Filtro {
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
+        Integer SCPIDINternal = (Integer) request.getServiceParameters().getParameter(1);
+        this.doesThisSCPBelongToASeminaryCandidate(SCPIDINternal);        
         if (((id != null && id.getRoles() != null
                 && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType1()) && !AuthorizationUtils
                 .containsRole(id.getRoles(), getRoleType2())))
                 || (id == null) || (id.getRoles() == null)) {
             throw new NotAuthorizedFilterException();
         }
+    }
+    
+    public boolean doesThisSCPBelongToASeminaryCandidate(Integer SCPIDInternal)
+    {
+        boolean result = false;
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            StudentCurricularPlan scp = (StudentCurricularPlan)sp.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,SCPIDInternal);
+            List candidacies = sp.getIPersistentSeminaryCandidacy().readByStudentID(scp.getStudent().getIdInternal());
+            if (candidacies != null && candidacies.size() > 0)
+                result = true;
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+           // thats ok, lets say this SCP does <br>NOT</br> belong to a candidate
+        }
+        
+        
+        return result;
     }
 
     protected RoleType getRoleType1() {
