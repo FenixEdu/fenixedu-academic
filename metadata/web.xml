@@ -5,16 +5,16 @@
 <web-app>
 	<filter>
 	    <filter-name>indexFilter</filter-name>
-	    <filter-class>ServidorApresentacao.servlets.filters.StartFilter</filter-class>
+	    <filter-class>ServidorApresentacao.servlets.filters.RequestWrapperFilter</filter-class>
 	</filter>
 	<filter-mapping>
 	    <filter-name>indexFilter</filter-name>
-	    <url-pattern>/publico/*</url-pattern>
+	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
+<!--	<filter-mapping>
 	    <filter-name>indexFilter</filter-name>
 	    <url-pattern>/loginPage.jsp</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 	
     <servlet>
         <servlet-name>StartupServlet</servlet-name>
@@ -99,10 +99,6 @@
         <init-param>
             <param-name>config/operator</param-name>
             <param-value>/WEB-INF/conf/struts-operator.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/webSiteManager</param-name>
-            <param-value>/WEB-INF/conf/struts-webSiteManager.xml</param-value>
         </init-param>
 
         <init-param>

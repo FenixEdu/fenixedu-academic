@@ -9,12 +9,12 @@
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
 		<form-bean name="teacherSearchForm" 
-			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="teacherNumber" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		<form-bean name="creditsTeacherForm"
-			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
 			<form-property name="tfcStudentsNumber"  type="java.lang.String"/>
 			<form-property name="additionalCredits"  type="java.lang.String"/>
@@ -24,7 +24,7 @@
 			<form-property name="page" type="java.lang.Integer"></form-property>               
 		</form-bean> 		          
 		<form-bean name="executionCourseShiftsPercentageForm"
-			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="objectCode" type="java.lang.Integer"/>
 			<form-property name="teacherOID"  type="java.lang.String"/>			
 			<form-property name="shiftProfessorships"  type="java.lang.Integer[]"/>

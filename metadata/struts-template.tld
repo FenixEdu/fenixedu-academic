@@ -11,7 +11,7 @@
 <tlibversion>1.0</tlibversion>
 <jspversion>1.1</jspversion>
 <shortname>template</shortname>
-<uri>http://jakarta.apache.org/struts/tags-template-1.1</uri>
+<uri>http://jakarta.apache.org/struts/tags-template</uri>
 <tag>
 <name>insert</name>
 <tagclass>org.apache.struts.taglib.template.InsertTag</tagclass>

@@ -17,7 +17,7 @@
       </form-bean>
 	
       <form-bean name="pagedIndexForm"
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
         <form-property name="index" type="java.lang.Integer"/>
         <form-property name="page" type="java.lang.Integer"/>
@@ -26,7 +26,7 @@
 	  <!-- CONTEXTO -->
       <!-- Dynamic-FormBean para EscolherContexto -->
       <form-bean name="chooseSearchContextForm"
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="index" type="java.lang.String"/>
 
@@ -44,11 +44,11 @@
 	  
 	  <!-- Dynamic-FormBean for Choose Context-->
       <form-bean name="chooseContextForm"
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="index" type="java.lang.Integer"/>
         <form-property name="curYear" type="java.lang.Integer"/>
-        <form-property name="page" type="java.lang.Integer"/> 
+        <form-property name="page" type="java.lang.Integer" initial="0"/>
       </form-bean>
 	  
 
@@ -90,7 +90,7 @@
 	  <!-- EXAMS -->
       <!-- Dynamic-FormBean for Choose Context-->
       <form-bean name="chooseExamsMapContextForm"
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="index" type="java.lang.String"/>
         <form-property name="selectedCurricularYears" type="java.lang.String[]" size="0"/>
@@ -101,7 +101,7 @@
     
       <!-- Dynamic-FormBean para Day And Shift Context -->
      <form-bean name="chooseDayAndShiftForm"
-                type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true"
                 >
         <form-property name="day" type="java.lang.String"/>
@@ -399,21 +399,7 @@
       <action path="/fileDownload" 
       		  type="ServidorApresentacao.Action.fileManager.FileRetrievingAction" >
       		  <forward  name="xpto1" path="/xpto1.jsp"/>  		  
-     </action>	 
-     
-     <!-- website page -->
-     <action path="/viewWebSiteSection" 
-     	type="ServidorApresentacao.Action.publico.ViewWebSiteSectionAction" 
-     	parameter="method" 
-     	input="siteViewerError.jsp">
-
-      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
-     	
-		<forward name="viewLimitedWebSiteSection" path="/viewLimitedWebSiteSection.jsp"/>     	
-		<forward name="viewWebSiteSection" path="/viewWebSiteSection.jsp"/>     	
-     </action>	 
+     </action>	 	 
     
      </action-mappings>     
 

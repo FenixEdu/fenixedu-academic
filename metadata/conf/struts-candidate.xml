@@ -21,7 +21,7 @@
 
       <!-- Bean for change of Application Information -->
       <form-bean name="changeApplicationInfoForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />

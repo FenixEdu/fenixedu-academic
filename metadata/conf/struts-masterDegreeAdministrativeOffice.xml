@@ -10,20 +10,14 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
       
-		<form-bean name="getStudentByNumberAndDegreeTypeForm" type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+		<form-bean name="getStudentByNumberAndDegreeTypeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
 		</form-bean>
-		<form-bean name="getStudentByNumberAndGraduationTypeForm" type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
-			<form-property name="method" type="java.lang.String"/>
-			<form-property name="page" type="java.lang.Integer"/>
-			<form-property name="graduationType" type="java.lang.String"/>
-			<form-property name="studentNumber" type="java.lang.String"/>
-		</form-bean>
 
-		<form-bean name="getDegreeAndCurricularSemesterAndCurricularYearForm" type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+		<form-bean name="getDegreeAndCurricularSemesterAndCurricularYearForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="studentOID" type="java.lang.Integer"/>
@@ -38,15 +32,6 @@
 			<form-property name="studentOID" type="java.lang.Integer"/>
 		</form-bean>
 
-		<form-bean name="seeStudentAndCurricularPlansForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="method" type="java.lang.String"/>
-			<form-property name="page" type="java.lang.Integer"/>
-			<form-property name="studentName" type="java.lang.String"/>
-			<form-property name="idNumber" type="java.lang.String"/>
-			<form-property name="idType" type="java.lang.String"/>
-			<form-property name="studentNumber" type="java.lang.String"/>
-		</form-bean>
-
       <!-- Dynamic-FormBean para Selecionar Documento -->
 <!--      <form-bean name="posicaoFormBean"
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -56,7 +41,7 @@
     -->  
       <!-- Bean for The Creation of a Candidate -->
       <form-bean name="createCandidateForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="page" type="java.lang.Integer" />
         <form-property name="specialization" type="java.lang.String" />
@@ -69,7 +54,7 @@
       
       <!-- Bean for The Choosing of a Person -->
       <form-bean name="choosePersonForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="page" type="java.lang.Integer" />
         <form-property name="identificationDocumentNumber" type="java.lang.String" />
@@ -78,7 +63,7 @@
 
 	  <!-- Bean for The List of Candidates -->
       <form-bean name="listCandidatesForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
          <form-property name="page" type="java.lang.Integer" />
 		 <form-property name="degree" type="java.lang.String" />
@@ -90,7 +75,7 @@
       
       <!-- Bean for The Creation of a Contributor -->
       <form-bean name="createContributorForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
          <form-property name="page" type="java.lang.Integer" />
@@ -102,7 +87,7 @@
 
       <!-- Bean for The Choosing of a Contributor -->
       <form-bean name="chooseContributorForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
          <form-property name="page" type="java.lang.Integer" />
@@ -112,7 +97,7 @@
       
 	  <!-- Bean for The Choosing of a Guide -->
       <form-bean name="chooseGuideForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
          <form-property name="page" type="java.lang.Integer" />
@@ -123,7 +108,7 @@
 
 	  <!-- Generic Bean for The Choosing of a Year -->
       <form-bean name="chooseExecutionYearForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
          <form-property name="page" type="java.lang.Integer" />
@@ -132,7 +117,7 @@
 
       <!-- Generic Bean to Choose a Master Degree -->
       <form-bean name="chooseMasterDegreeForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
          <form-property name="page" type="java.lang.Integer" />
@@ -141,7 +126,7 @@
 
 		<!-- Bean for The Creation of a Guide -->
 	    <form-bean name="createGuideForm" 
-     			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+     			type="org.apache.struts.validator.DynaValidatorForm"
 			    dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
@@ -158,7 +143,7 @@
 
 	  <!-- Bean for ready to create a guide  -->
       <form-bean name="guideCreateReadyForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
@@ -173,7 +158,7 @@
 
       <!-- Bean for change of Application Information -->
       <form-bean name="changeCandidateForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
                  
             <form-property name="page" type="java.lang.Integer" />
@@ -221,55 +206,11 @@
         	<form-property name="specializationArea" type="java.lang.String" />
         	<form-property name="candidateID" type="java.lang.Integer" />
       </form-bean>
-      
-      <!-- Bean for change of Application Information -->
-      <form-bean name="changePersonalInfoForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-                 dynamic="true">
-            <form-property name="page" type="java.lang.Integer" />
 
-        	<form-property name="identificationDocumentType" type="java.lang.String" />
-        	<form-property name="identificationDocumentNumber" type="java.lang.String" />
-        	<form-property name="identificationDocumentIssuePlace" type="java.lang.String" />		
-        	<form-property name="name" type="java.lang.String" />
-        	<form-property name="sex" type="java.lang.String" />
-        	<form-property name="maritalStatus" type="java.lang.String" />
-        	<form-property name="nationality" type="java.lang.String" />
-        	<form-property name="fatherName" type="java.lang.String" />
-        	<form-property name="motherName" type="java.lang.String" />
-        	<form-property name="birthPlaceParish" type="java.lang.String" />
-        	<form-property name="birthPlaceMunicipality" type="java.lang.String" />
-        	<form-property name="birthPlaceDistrict" type="java.lang.String" />
-        	<form-property name="address" type="java.lang.String" />
-        	<form-property name="place" type="java.lang.String" />
-        	<form-property name="postCode" type="java.lang.String" />
-        	<form-property name="addressParish" type="java.lang.String" />
-        	<form-property name="addressMunicipality" type="java.lang.String" />
-        	<form-property name="addressDistrict" type="java.lang.String" />
-        	<form-property name="telephone" type="java.lang.String" />
-        	<form-property name="mobilePhone" type="java.lang.String" />
-        	<form-property name="email" type="java.lang.String" />
-        	<form-property name="webSite" type="java.lang.String" />
-        	<form-property name="contributorNumber" type="java.lang.String" />
-        	<form-property name="occupation" type="java.lang.String" />
-        	<form-property name="birthDay" type="java.lang.String" /> 
-            <form-property name="birthMonth" type="java.lang.String" /> 
-        	<form-property name="birthYear" type="java.lang.String" /> 
-        	<form-property name="idIssueDateDay" type="java.lang.String" /> 
-            <form-property name="idIssueDateMonth" type="java.lang.String" /> 
-        	<form-property name="idIssueDateYear" type="java.lang.String" /> 
-        	<form-property name="idExpirationDateDay" type="java.lang.String" /> 
-            <form-property name="idExpirationDateMonth" type="java.lang.String" /> 
-        	<form-property name="idExpirationDateYear" type="java.lang.String" /> 
-        	<form-property name="username" type="java.lang.String" /> 
-        	<form-property name="areaOfAreaCode" type="java.lang.String" /> 
-			<form-property name="studentNumber" type="java.lang.String"/>
-      </form-bean>
-      
 
 	  <!-- Bean to Change the Guide Situation  -->
       <form-bean name="editGuideSituationForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
@@ -283,7 +224,7 @@
 
 	  <!-- Bean to Change the Guide Information  -->
       <form-bean name="editGuideInformationForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
@@ -297,7 +238,7 @@
 
       <!-- Bean for The Choosing of a Year -->
       <form-bean name="chooseYearForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
          <form-property name="page" type="java.lang.Integer" />
@@ -306,7 +247,7 @@
 
 	  <!-- Bean to Choose the Information for the Certificate  -->
       <form-bean name="chooseCertificateInfoForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
@@ -318,7 +259,7 @@
 
 	  <!-- Bean to Choose the Information for the Certificate  -->
       <form-bean name="chooseStudentGuideForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
@@ -326,16 +267,13 @@
 			<form-property name="studentGuideList" type="java.lang.String"/>
 			<form-property name="specializationGratuityQuantity" type="java.lang.String"/>
 			<form-property name="specializationGratuityAmount" type="java.lang.String"/>
-			<form-property name="othersGratuityAmount" type="java.lang.String"/>
-			<form-property name="othersGratuityDescription" type="java.lang.String"/>
-			
       
       </form-bean>
       
 
 	  <!-- Bean for The Choosing of a Student -->
       <form-bean name="studentNumberForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
          <form-property name="page" type="java.lang.Integer" initial="0"/>
@@ -357,7 +295,7 @@
 	  
 	  <!-- Bean to submit final evaluation -->
       <form-bean name="marksSubmissionForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" initial="0" />
@@ -372,7 +310,7 @@
 
 	  <!-- Bean to Choose the Situation for the Candidate  -->
       <form-bean name="chooseCandidateSituationForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
@@ -386,7 +324,7 @@
 
 	  <!-- Bean to Choose the Situation for the Candidate  -->
       <form-bean name="chooseStudentForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
@@ -396,7 +334,7 @@
 
 	  <!-- Bean to Choose the Situation for the Candidate  -->
       <form-bean name="candidateRegistrationForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
@@ -414,7 +352,7 @@
       
 	  <!-- Bean to Choose the second Master Degree for Study Plan -->
       <form-bean name="chooseSecondMasterDegreeForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
          <form-property name="page" type="java.lang.Integer" />
@@ -424,7 +362,7 @@
       
       <!-- Bean to Choose the Course List for Study Plan  -->
       <form-bean name="chooseCourseListForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
@@ -437,7 +375,7 @@
       
       <!-- Bean to Choose the Course List for Study Plan  -->
       <form-bean name="gratuityChangeForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
@@ -447,14 +385,7 @@
       </form-bean>
 
 
-      <form-bean name="chooseGuideStateForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-                 dynamic="true">
 
-            <form-property name="page" type="java.lang.Integer" />
-   	        <form-property name="year" type="java.lang.String"/>
-   	        <form-property name="state" type="java.lang.String"/>
-      </form-bean>
 
    </form-beans>
     
@@ -1511,85 +1442,17 @@
 	         <forward name="Print" path="candidate/candidateRegistrationTemplate.jsp"/> 
 	         
       </action>
-      
-	<!-- visualize Student Informations -->
-      
- 	  
-	  <action path="/chooseStudentToVisualizeInformations"
-      	      name="changePersonalInfoForm"
-      		  parameter="method"
-      		  scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.ReadPersonInfoOfStudentsAction"
-			  >
-	         <forward name="Success" path="/student/visualizePersonalStudentInfo.jsp"/> 
-      </action>
-      
-      <action path="/editStudentToVisualizeInformations"
-      	      name="changePersonalInfoForm"
-      		  parameter="method"
-      		  scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.ReadPersonInfoOfStudentsAction"
-			  >
-	         <forward name="Success" path="/student/editStudentInfo.jsp"/> 
-      </action>
-	<!-- end visualize student informations -->
+
 	
-	<!-- edit student informations -->
-	  <action path="/editStudentInfo"
-	  		  input="/editStudentToVisualizeInformations.do?method=execute&amp;page=0"
-      	      name="changePersonalInfoForm"     
-		      parameter="method"
-		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.EditStudentInfoDispatchAction"
-              validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
-		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/> 
-	         <forward name="Success" path="/student/visualizePersonalStudentInfo.jsp"/>  
-       </action>
-      <!-- end of edit student information -->
 
 
-		<action	name="seeStudentAndCurricularPlansForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentAndCurricularPlansDispatchAction"
-				path="/seeStudentAndCurricularPlans"
-				parameter="method"
-				scope="request"
-				input="seeStudentAndCurricularPlans.do?method=start"
-				validate="false">
-			<forward name="start" path="df.page.searchStudents"/>
-			<forward name="viewStudents" path="df.page.viewStudents"/>
-		</action>
-
-		<action	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentCurricularPlansAction"
-				path="/seeStudentCurricularPlans"
-				scope="request"
-				validate="false">
-			<forward name="viewStudentCurricularPlans" path="df.page.viewStudentCurricularPlans"/>
-		</action>
-		
-	  <action	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.ShowStudentCurricularCoursePlanAction"
-				path="/showStudentCurricularCoursePlan"
-				scope="request">
-			<forward name="ShowStudentCurricularCoursePlan" path="df.page.showStudentCurricularCoursePlan"/>
-	 </action>		
-
-	  <action	name="chooseGuideStateForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.GuideListingByStateDispatchAction"
-				path="/guideListingByState"
-				parameter="method"
-				scope="request"
-				input="/guideListingByState.do?method=prepareChooseState&amp;page=0"
-				validate="true">
-			<forward name="PrepareSuccess" path="df.page.searchGuideByState"/>
-			<forward name="ShowList" path="df.page.showSearchGuideListResult"/>
-		</action>
-
+      
+      
     </action-mappings>
     
-	<!-- ========== Controller Configuration ================================ -->
-	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
-
+    <!-- ========== Controller Configuration ================================ -->
+    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
+    
     <!-- ========== Message Resources Definitions ============================ -->
      <message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>   
 
@@ -1598,12 +1461,6 @@
       <set-property property="pathnames" 
                     value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-masterDegreeAdministrativeOffice.xml"/>
     </plug-in>
-
-	<plug-in className="org.apache.struts.tiles.TilesPlugin">
-		<set-property property="definitions-config" value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/masterDegreeAdministrativeOffice/tiles-masterDegreeAdministrativeOffice-definitions.xml,/WEB-INF/tiles/masterDegreeAdministrativeOffice/tiles-masterDegreeAdministrativeOffice-pages-definitions.xml"/>
-		<set-property property="moduleAware" value="true"/>
-		<set-property property="definitions-parser-validate" value="true"/>
-	</plug-in>
-
+    
 </struts-config>
 

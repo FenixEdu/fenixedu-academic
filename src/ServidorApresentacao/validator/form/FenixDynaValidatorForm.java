@@ -37,7 +37,7 @@ public class FenixDynaValidatorForm extends DynaValidatorForm {
 			Integer pageInt = (Integer) super.get("page");			
 			return pageInt == null ? 0 : pageInt.intValue();			
 		} catch (Exception e) {
- 			log("Getting the page number! Page property not defined.",e);
+			getServlet().log("Getting the page number! Page property not defined.",e);
 			return 0;
 		}
 
@@ -51,7 +51,7 @@ public class FenixDynaValidatorForm extends DynaValidatorForm {
 		try {
 			super.set("page",new Integer(page));								
 		} catch (Exception e) {
-			log("Page setting ignored! Page property not defined.",e);
+			getServlet().log("Page setting ignored! Page property not defined.",e);
 		}
 
 	}
@@ -62,7 +62,7 @@ public class FenixDynaValidatorForm extends DynaValidatorForm {
 	public ActionErrors validate(
 		ActionMapping mapping,
 		HttpServletRequest request) {
-		super.setPage(getPage());
+		//super.setPage(getPage());
 		return super.validate(mapping, request);
 	}
 

@@ -11,13 +11,18 @@
 <tlibversion>1.0</tlibversion>
 <jspversion>1.1</jspversion>
 <shortname>html</shortname>
-<uri>http://jakarta.apache.org/struts/tags-html-1.1</uri>
+<uri>http://jakarta.apache.org/struts/tags-html</uri>
 <tag>
 <name>base</name>
 <tagclass>org.apache.struts.taglib.html.BaseTag</tagclass>
 <bodycontent>empty</bodycontent>
 <attribute>
 <name>target</name>
+<required>false</required>
+<rtexprvalue>true</rtexprvalue>
+</attribute>
+<attribute>
+<name>server</name>
 <required>false</required>
 <rtexprvalue>true</rtexprvalue>
 </attribute>
@@ -623,6 +628,11 @@
 <rtexprvalue>true</rtexprvalue>
 </attribute>
 <attribute>
+<name>focusIndex</name>
+<required>false</required>
+<rtexprvalue>true</rtexprvalue>
+</attribute>
+<attribute>
 <name>method</name>
 <required>false</required>
 <rtexprvalue>true</rtexprvalue>
@@ -676,6 +686,11 @@
 <tag>
 <name>frame</name>
 <tagclass>org.apache.struts.taglib.html.FrameTag</tagclass>
+<attribute>
+<name>action</name>
+<required>false</required>
+<rtexprvalue>true</rtexprvalue>
+</attribute>
 <attribute>
 <name>anchor</name>
 <required>false</required>
@@ -800,6 +815,7 @@
 <tag>
 <name>hidden</name>
 <tagclass>org.apache.struts.taglib.html.HiddenTag</tagclass>
+<bodycontent>empty</bodycontent>
 <attribute>
 <name>accesskey</name>
 <required>false</required>
@@ -1330,6 +1346,11 @@
 <tagclass>org.apache.struts.taglib.html.JavascriptValidatorTag</tagclass>
 <bodycontent>empty</bodycontent>
 <attribute>
+<name>cdata</name>
+<required>false</required>
+<rtexprvalue>true</rtexprvalue>
+</attribute>
+<attribute>
 <name>dynamicJavascript</name>
 <required>false</required>
 <rtexprvalue>false</rtexprvalue>
@@ -1370,6 +1391,11 @@
 <tagclass>org.apache.struts.taglib.html.LinkTag</tagclass>
 <attribute>
 <name>accesskey</name>
+<required>false</required>
+<rtexprvalue>true</rtexprvalue>
+</attribute>
+<attribute>
+<name>action</name>
 <required>false</required>
 <rtexprvalue>true</rtexprvalue>
 </attribute>
@@ -1552,7 +1578,7 @@
 <attribute>
 <name>id</name>
 <required>true</required>
-<rtexprvalue>true</rtexprvalue>
+<rtexprvalue>false</rtexprvalue>
 </attribute>
 <attribute>
 <name>bundle</name>
@@ -1834,7 +1860,7 @@
 </attribute>
 <attribute>
 <name>property</name>
-<required>true</required>
+<required>false</required>
 <rtexprvalue>true</rtexprvalue>
 </attribute>
 <attribute>
@@ -2936,6 +2962,11 @@
 <required>false</required>
 <rtexprvalue>true</rtexprvalue>
 </attribute>
+</tag>
+<tag>
+<name>xhtml</name>
+<tagclass>org.apache.struts.taglib.html.XhtmlTag</tagclass>
+<bodycontent>empty</bodycontent>
 </tag>
 </taglib>
 

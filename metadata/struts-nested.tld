@@ -10,7 +10,7 @@
 <tlibversion>1.0</tlibversion>
 <jspversion>1.1</jspversion>
 <shortname>nested</shortname>
-<uri>http://jakarta.apache.org/struts/tags-nested-1.1</uri>
+<uri>http://jakarta.apache.org/struts/tags-nested</uri>
 <tag>
 <name>nest</name>
 <tagclass>org.apache.struts.taglib.nested.NestedPropertyTag</tagclass>
@@ -49,7 +49,7 @@
 <tag>
 <name>define</name>
 <tagclass>org.apache.struts.taglib.nested.bean.NestedDefineTag</tagclass>
-<teiclass>org.apache.struts.taglib.bean.DefineTei</teiclass>
+<teiclass>org.apache.struts.taglib.nested.bean.NestedDefineTei</teiclass>
 <bodycontent>empty</bodycontent>
 <attribute>
 <name>id</name>
@@ -1009,6 +1009,11 @@
 <tagclass>org.apache.struts.taglib.nested.html.NestedLinkTag</tagclass>
 <attribute>
 <name>accesskey</name>
+<required>false</required>
+<rtexprvalue>true</rtexprvalue>
+</attribute>
+<attribute>
+<name>action</name>
 <required>false</required>
 <rtexprvalue>true</rtexprvalue>
 </attribute>

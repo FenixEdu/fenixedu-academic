@@ -11,7 +11,7 @@
 <tlibversion>1.0</tlibversion>
 <jspversion>1.1</jspversion>
 <shortname>bean</shortname>
-<uri>http://jakarta.apache.org/struts/tags-bean-1.1</uri>
+<uri>http://jakarta.apache.org/struts/tags-bean</uri>
 <tag>
 <name>cookie</name>
 <tagclass>org.apache.struts.taglib.bean.CookieTag</tagclass>
@@ -20,7 +20,7 @@
 <attribute>
 <name>id</name>
 <required>true</required>
-<rtexprvalue>true</rtexprvalue>
+<rtexprvalue>false</rtexprvalue>
 </attribute>
 <attribute>
 <name>multiple</name>
@@ -46,7 +46,7 @@
 <attribute>
 <name>id</name>
 <required>true</required>
-<rtexprvalue>true</rtexprvalue>
+<rtexprvalue>false</rtexprvalue>
 </attribute>
 <attribute>
 <name>name</name>
@@ -87,7 +87,7 @@
 <attribute>
 <name>id</name>
 <required>true</required>
-<rtexprvalue>true</rtexprvalue>
+<rtexprvalue>false</rtexprvalue>
 </attribute>
 <attribute>
 <name>multiple</name>
@@ -128,7 +128,7 @@
 <attribute>
 <name>id</name>
 <required>true</required>
-<rtexprvalue>true</rtexprvalue>
+<rtexprvalue>false</rtexprvalue>
 </attribute>
 <attribute>
 <name>name</name>
@@ -214,7 +214,7 @@
 <attribute>
 <name>id</name>
 <required>true</required>
-<rtexprvalue>true</rtexprvalue>
+<rtexprvalue>false</rtexprvalue>
 </attribute>
 <attribute>
 <name>property</name>
@@ -230,7 +230,7 @@
 <attribute>
 <name>id</name>
 <required>true</required>
-<rtexprvalue>true</rtexprvalue>
+<rtexprvalue>false</rtexprvalue>
 </attribute>
 <attribute>
 <name>multiple</name>
@@ -256,7 +256,7 @@
 <attribute>
 <name>id</name>
 <required>true</required>
-<rtexprvalue>true</rtexprvalue>
+<rtexprvalue>false</rtexprvalue>
 </attribute>
 <attribute>
 <name>input</name>
@@ -282,7 +282,7 @@
 <attribute>
 <name>id</name>
 <required>true</required>
-<rtexprvalue>true</rtexprvalue>
+<rtexprvalue>false</rtexprvalue>
 </attribute>
 <attribute>
 <name>name</name>
@@ -308,7 +308,7 @@
 <attribute>
 <name>id</name>
 <required>true</required>
-<rtexprvalue>true</rtexprvalue>
+<rtexprvalue>false</rtexprvalue>
 </attribute>
 <attribute>
 <name>formBean</name>

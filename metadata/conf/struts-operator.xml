@@ -11,7 +11,7 @@
     <form-beans type="org.apache.struts.action.ActionFormBean">
 
       <form-bean name="newPasswordForm"
-      			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+      			type="org.apache.struts.validator.DynaValidatorForm"
       			dynamic="true">
 		<form-property name="userType" type="java.lang.String"/>
 		<form-property name="username" type="java.lang.String"/>

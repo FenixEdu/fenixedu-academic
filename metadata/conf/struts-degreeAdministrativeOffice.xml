@@ -12,14 +12,14 @@
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>
 
-		<form-bean name="getStudentByNumberAndDegreeTypeForm" type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+		<form-bean name="getStudentByNumberAndDegreeTypeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
 		</form-bean>
 
-		<form-bean name="getDegreeAndCurricularSemesterAndCurricularYearForm" type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+		<form-bean name="getDegreeAndCurricularSemesterAndCurricularYearForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="studentOID" type="java.lang.Integer"/>

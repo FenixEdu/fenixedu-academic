@@ -10,7 +10,7 @@
 <tlibversion>1.0</tlibversion>
 <jspversion>1.1</jspversion>
 <shortname>logic</shortname>
-<uri>http://jakarta.apache.org/struts/tags-logic-1.1</uri>
+<uri>http://jakarta.apache.org/struts/tags-logic</uri>
 <tag>
 <name>empty</name>
 <tagclass>org.apache.struts.taglib.logic.EmptyTag</tagclass>
@@ -174,12 +174,12 @@
 <attribute>
 <name>id</name>
 <required>true</required>
-<rtexprvalue>true</rtexprvalue>
+<rtexprvalue>false</rtexprvalue>
 </attribute>
 <attribute>
 <name>indexId</name>
 <required>false</required>
-<rtexprvalue>true</rtexprvalue>
+<rtexprvalue>false</rtexprvalue>
 </attribute>
 <attribute>
 <name>length</name>

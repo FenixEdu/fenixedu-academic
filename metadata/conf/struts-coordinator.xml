@@ -12,7 +12,7 @@
 
 	  <!-- Bean to Choose the Situation for the Candidate  -->
       <form-bean name="chooseCandidateSituationForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
@@ -26,7 +26,7 @@
 
   	  <!-- Bean to Choose the second Master Degree for Study Plan -->
       <form-bean name="chooseSecondMasterDegreeForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
          <form-property name="page" type="java.lang.Integer" />
          <form-property name="masterDegree" type="java.lang.String" />
@@ -35,7 +35,7 @@
  
       <!-- Bean to Choose the Course List for Study Plan  -->
       <form-bean name="chooseCourseListForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
@@ -49,7 +49,7 @@
       
       <!-- Dynamic-FormBean for searchExecutionCourse -->
       <form-bean name="searchExecutionCourses"
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="page" type="java.lang.Integer"/>
         <form-property name="executionPeriodOID" type="java.lang.String"/>
