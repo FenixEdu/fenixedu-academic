@@ -53,7 +53,7 @@ public class CentroCustoRelacional implements ICentroCustoPersistente
         try
         {
             PreparedStatement sql =
-                UtilRelacional.prepararComando("INSERT INTO ass_CENTRO_CUSTO VALUES (?, ?, ?, ?, ?)");
+                UtilRelacional.prepararComando("INSERT INTO ass_CENTRO_CUSTO VALUES (?, ?, ?, ?, ?, 1)");
 
             sql.setInt(1, centroCusto.getCodigoInterno());
             sql.setString(2, centroCusto.getSigla());

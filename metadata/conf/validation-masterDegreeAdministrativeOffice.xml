@@ -218,11 +218,11 @@
         <arg0 key="label.person.identificationDocumentType" />
       </field>
       
-      <field property="telephone" depends="integer" page="1">
+      <field property="telephone" depends="double" page="1">
         <arg0 key="label.person.telephone" />
       </field>
       
-      <field property="mobilePhone" depends="integer" page="1">
+      <field property="mobilePhone" depends="double" page="1">
         <arg0 key="label.person.mobilePhone" />
       </field>
       
@@ -230,7 +230,7 @@
         <arg0 key="Este" resource="false" />
       </field>
 
-      <field property="contributorNumber" depends="integer" page="1">
+      <field property="contributorNumber" depends="double" page="1">
         <arg0 key="label.person.contributorNumber" />
       </field>
 	

@@ -757,7 +757,7 @@ public class FuncionarioRelacional implements IFuncionarioPersistente
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
 					"INSERT INTO ass_FUNCIONARIO_HISTORICO "
-						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)");
+						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
 
 			sql.setInt(1, 0);
 			sql.setInt(2, funcionario.getCodigoInterno());
@@ -862,7 +862,7 @@ public class FuncionarioRelacional implements IFuncionarioPersistente
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
 					"INSERT INTO ass_FUNCIONARIO_HISTORICO "
-						+ "VALUES (?, ?, ?, null, null, null, null, null, ?, ?, ?, ?, NULL)");
+						+ "VALUES (?, ?, ?, null, null, null, null, null, ?, ?, ?, ?, 1)");
 
 			sql.setInt(1, 0);
 			sql.setInt(2, funcionario.getCodigoInterno());
@@ -962,7 +962,7 @@ public class FuncionarioRelacional implements IFuncionarioPersistente
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
 					"INSERT INTO ass_FUNCIONARIO_HISTORICO "
-						+ "VALUES (?, ?, null, ?, null, null, null, null, ?, ?, ?, ?, NULL)");
+						+ "VALUES (?, ?, null, ?, null, null, null, null, ?, ?, ?, ?, 1)");
 
 			sql.setInt(1, 0);
 			sql.setInt(2, funcionario.getCodigoInterno());
@@ -1062,7 +1062,7 @@ public class FuncionarioRelacional implements IFuncionarioPersistente
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
 					"INSERT INTO ass_FUNCIONARIO_HISTORICO "
-						+ "VALUES (?, ?, null, null, ?, null, null, null, ?, ?, ?, ?, NULL)");
+						+ "VALUES (?, ?, null, null, ?, null, null, null, ?, ?, ?, ?, 1)");
 
 			sql.setInt(1, 0);
 			sql.setInt(2, funcionario.getCodigoInterno());
@@ -1162,7 +1162,7 @@ public class FuncionarioRelacional implements IFuncionarioPersistente
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
 					"INSERT INTO ass_FUNCIONARIO_HISTORICO "
-						+ "VALUES (?, ?, null, null, null, ?, null, null, ?, ?, ?, ?, NULL)");
+						+ "VALUES (?, ?, null, null, null, ?, null, null, ?, ?, ?, ?, 1)");
 
 			sql.setInt(1, 0);
 			sql.setInt(2, funcionario.getCodigoInterno());
@@ -1262,7 +1262,7 @@ public class FuncionarioRelacional implements IFuncionarioPersistente
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
 					"INSERT INTO ass_FUNCIONARIO_HISTORICO "
-						+ "VALUES (?, ?, null, null, null, null, ?, null, ?, ?, ?, ?, NULL)");
+						+ "VALUES (?, ?, null, null, null, null, ?, null, ?, ?, ?, ?, 1)");
 
 			sql.setInt(1, 0);
 			sql.setInt(2, funcionario.getCodigoInterno());
@@ -1362,7 +1362,7 @@ public class FuncionarioRelacional implements IFuncionarioPersistente
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
 					"INSERT INTO ass_FUNCIONARIO_HISTORICO "
-						+ "VALUES (?, ?, null, null, null, null, null, ?, ?, ?, ?, ?, NULL)");
+						+ "VALUES (?, ?, null, null, null, null, null, ?, ?, ?, ?, ?, 1)");
 
 			sql.setInt(1, 0);
 			sql.setInt(2, funcionario.getCodigoInterno());
