@@ -51,7 +51,7 @@ public class ViewClassTimeTableAction extends Action {
 		InfoExecutionPeriod infoExecutionPeriod =
 			RequestUtils.getExecutionPeriodFromRequest(request);
 
-		System.out.println("infoExecutionPeriod"+infoExecutionPeriod);
+		
 
 		InfoExecutionDegree infoExecutionDegree =
 			RequestUtils.getExecutionDegreeFromRequest(
@@ -59,7 +59,7 @@ public class ViewClassTimeTableAction extends Action {
 				infoExecutionPeriod.getInfoExecutionYear());
 
 		
-		System.out.println("infoExecutionDegree"+infoExecutionDegree);
+		
 		
 		InfoClass classView = new InfoClass();
 		classView.setInfoExecutionDegree(infoExecutionDegree);

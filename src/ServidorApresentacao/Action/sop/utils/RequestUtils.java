@@ -192,7 +192,7 @@ public abstract class RequestUtils {
 		if (nameDegreeCurricularPlan==null) {
 			nameDegreeCurricularPlan =  request.getParameter("nameDegreeCurricularPlan");
 				}				
-
+		
 		Object[] args1 =
 			{	infoExecutionYear,
 				degreeInitials,
@@ -312,7 +312,7 @@ public abstract class RequestUtils {
 					.getInfoDegreeCurricularPlan()
 					.getInfoDegree()
 					.getSigla());
-			
+		
 		}
 
 	}

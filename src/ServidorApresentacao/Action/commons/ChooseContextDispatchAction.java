@@ -324,17 +324,17 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			Integer anoCurricular =
 				(Integer) escolherContextoForm.get("curYear");
 
-			int index =
-				Integer.parseInt((String) escolherContextoForm.get("index"));
+			Integer index = (Integer) escolherContextoForm.get("index");
 
 			request.setAttribute("curYear", anoCurricular);
 			request.setAttribute("semester", semestre);
-			InfoExecutionPeriod infoExecutionPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
+			InfoExecutionPeriod infoExecutionPeriod =
+				RequestUtils.getExecutionPeriodFromRequest(request);
 
 			RequestUtils.setExecutionPeriodToRequest(
 				request,
 				infoExecutionPeriod);
-			
+
 			Object argsLerLicenciaturas[] =
 				{ infoExecutionPeriod.getInfoExecutionYear()};
 
@@ -348,16 +348,20 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
-
+			Collections.sort(
+				infoExecutionDegreeList,
+				new ComparatorByNameForInfoExecutionDegree());
+			
 			InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) infoExecutionDegreeList.get(index);
-
+				(InfoExecutionDegree) infoExecutionDegreeList.get(
+					index.intValue());
+			
 			if (infoExecutionDegree == null) {
 				return mapping.findForward("Licenciatura execucao inexistente");
-			} 
+			}
 			RequestUtils.setExecutionDegreeToRequest(
-								request,
-								infoExecutionDegree);
+				request,
+				infoExecutionDegree);
 			String nextPage =
 				(String) session.getAttribute(SessionConstants.NEXT_PAGE);
 			if (nextPage != null)

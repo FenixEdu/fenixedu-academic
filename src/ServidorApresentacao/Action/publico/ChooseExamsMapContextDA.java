@@ -172,7 +172,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 			
 			RequestUtils.setExecutionPeriodToRequest(request,infoExecutionPeriod);
 			if (infoExecutionDegree != null) {
-				System.out.println("before:"+infoExecutionDegree);
+				
 				RequestUtils.setExecutionDegreeToRequest(request,infoExecutionDegree);
 				
 			} else {

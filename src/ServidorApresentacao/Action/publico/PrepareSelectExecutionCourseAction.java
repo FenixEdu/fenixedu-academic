@@ -44,6 +44,7 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 			RequestUtils.getExecutionDegreeFromRequest(
 				request,
 				infoExecutionPeriod.getInfoExecutionYear());
+				
 		executionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 		
 		Integer curricularYear =
