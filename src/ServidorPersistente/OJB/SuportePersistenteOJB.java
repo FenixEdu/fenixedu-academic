@@ -29,6 +29,7 @@ import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
+import ServidorPersistente.IPersistentAdvisory;
 import ServidorPersistente.IPersistentAnnouncement;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentBranch;
@@ -656,5 +657,9 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	
 	public IPersistentDistributedTest getIPersistentDistributedTest(){
 		return new DistributedTestOJB();
+	}
+
+	public IPersistentAdvisory getIPersistentAdvisory() {
+		return new AdvisoryOJB();
 	}
 }

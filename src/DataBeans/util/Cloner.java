@@ -621,6 +621,16 @@ public abstract class Cloner {
 	}
 
 	/**
+	 * @param advisory
+	 * @return
+	 */
+	public static IAdvisory copyInfoAdvisory2IAdvisory(InfoAdvisory infoAdvisory) {
+		IAdvisory advisory = new Advisory();
+		copyObjectProperties(advisory, infoAdvisory);
+		return advisory;
+	}
+
+	/**
 	 * Method copyInfoCandidateSituation2ICandidateSituation
 	 * @param infoCandidateSituation
 	 * @return

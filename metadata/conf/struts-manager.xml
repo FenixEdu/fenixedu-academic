@@ -92,6 +92,21 @@
         <form-property name="page" type="java.lang.Integer"/>
      </form-bean>
 
+	  <!-- ========== ADVISORY MANIPULATION ========== -->
+
+      <!-- Dynamic-FormBean para Day And Shift Context -->
+     <form-bean name="advisoryForm"
+                type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true"
+                >
+        <form-property name="sender" type="java.lang.String"/>
+        <form-property name="subject" type="java.lang.String"/>
+        <form-property name="message" type="java.lang.String"/>
+        <form-property name="experationDate" type="java.lang.String"/>
+        <form-property name="recipients" type="java.lang.Integer"/>
+        <form-property name="page" type="java.lang.Integer"/>
+     </form-bean>
+
     </form-beans>
 
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -501,6 +516,17 @@
               >
           <forward name="Manage" path="df.page.manage-cache"/>
           <forward name="CacheCleared" path="/manageCache.do?method=prepare"/>
+      </action>
+
+	<!-- ========== ADVISORY MANIPULATION ========== -->
+      <action path="/manageAdvisories"
+      		  name="advisoryForm"
+		      input="/manageAdvisories.do?method=prepare"
+              type="ServidorApresentacao.Action.manager.ManageAdvisoriesDA"
+              parameter="method"
+              validate="true"
+              >
+          <forward name="Manage" path="df.page.manage-advisories"/>
       </action>
 
 	</action-mappings>

@@ -63,16 +63,6 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 					infoExecutionPeriods,
 					new ExecutionPeriodComparator());
 
-				//				List realExecutionPeriods =
-				//					(List) CollectionUtils.select(
-				//						infoExecutionPeriods,
-				//						new RealExecutionPeriodPredicate());
-
-				//				List workingAreas =
-				//					(List) CollectionUtils.select(
-				//						infoExecutionPeriods,
-				//						new WorkingAreasPredicate());
-
 				if (infoExecutionPeriods != null
 					&& !infoExecutionPeriods.isEmpty()) {
 					request.setAttribute(
@@ -80,11 +70,6 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 						infoExecutionPeriods);
 				}
 
-				//				if (workingAreas != null && !workingAreas.isEmpty()) {
-				//					request.setAttribute(
-				//						SessionConstants.LIST_WORKING_AREAS,
-				//						workingAreas);
-				//				}
 			}
 		} catch (FenixServiceException ex) {
 			throw new FenixActionException(

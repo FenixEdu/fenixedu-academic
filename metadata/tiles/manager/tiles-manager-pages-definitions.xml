@@ -71,4 +71,8 @@
 	<definition name="df.page.manage-cache" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageCache_bd.jsp" />
 	</definition>	
+	<!-- ========== ADVISORY MANIPULATION ========== -->
+	<definition name="df.page.manage-advisories" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/manageAdvisories_bd.jsp" />
+	</definition>	
 </tiles-definitions>

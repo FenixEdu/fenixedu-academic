@@ -243,6 +243,7 @@ public class ManageClassDA
 			InfoClass infoClass =
 				(InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
+
 			Object args[] = { infoClass, shiftOIDs };
 			ServiceUtils.executeService(
 				SessionUtils.getUserView(request),

@@ -132,6 +132,32 @@
         <arg0 key="message.manager.curricular.course.scope.credits" resource="true" />
       </field>
     </form>
+
+    <form name="advisoryForm">
+      <field property="sender" depends="required" page="1" >
+        <arg0 key="message.manager.advisory.sender" resource="true"/>
+      </field>
+      <field property="subject" depends="required" page="1" >
+        <arg0 key="message.manager.advisory.subject" resource="true"/>
+      </field>
+      <field property="message" depends="required" page="1" >
+        <arg0 key="message.manager.advisory.message" resource="true"/>
+      </field>
+      <field property="experationDate" depends="mask,date" page="1">
+      	<msg name="date" key="errors.invalid.date"/>
+      	<msg name="mask" key="errors.invalid.date"/>
+        <arg0 key="message.manager.advisory.expirationDate" resource="true" />
+     	<var>
+           <var-name>datePattern</var-name>
+           <var-value>yyyy/MM/dd</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^(..../(.||..)/(.||..)$</var-value>
+        </var>
+      </field>
+    </form>
+
     
     </formset>
 </form-validation>

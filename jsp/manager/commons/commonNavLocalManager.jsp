@@ -22,6 +22,12 @@
 	</html:link>
 </strong></p>
 
+<p><strong>&raquo; 
+	<html:link page="/manageAdvisories.do?method=prepare">
+		Gest&atilde;o da Avisos
+	</html:link>
+</strong></p>
+
 <p><strong>&raquo; Gest&atilde;o de Previlégios</strong></p>
 <ul>
   <li>Criar Role</html:link></li>
