@@ -16,7 +16,9 @@ import Util.StudentCurricularPlanState;
  *
  * @author  tfc130
  */
-public class InfoStudentCurricularPlan extends InfoObject implements Serializable {
+public class InfoStudentCurricularPlan
+	extends InfoObject
+	implements Serializable, Comparable {
 
 	protected InfoStudent infoStudent;
 	protected InfoBranch infoBranch;
@@ -24,10 +26,10 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
 	protected Date startDate;
 	protected StudentCurricularPlanState currentState;
 	protected Specialization specialization;
-	protected Double givenCredits; 
-    protected Double classification;
-    protected Integer enrolledCourses;
-    protected Integer completedCourses; 
+	protected Double givenCredits;
+	protected Double classification;
+	protected Integer enrolledCourses;
+	protected Integer completedCourses;
 
 	/**
 	 * @return
@@ -57,7 +59,8 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
 		InfoDegreeCurricularPlan degreeCurricularPlan,
 		InfoBranch branch,
 		Date startDate,
-		StudentCurricularPlanState currentState, Specialization specialization) {
+		StudentCurricularPlanState currentState,
+		Specialization specialization) {
 		this();
 		setInfoStudent(student);
 		setInfoDegreeCurricularPlan(degreeCurricularPlan);
@@ -71,11 +74,16 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof InfoStudentCurricularPlan) {
-			InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) obj;
+			InfoStudentCurricularPlan infoStudentCurricularPlan =
+				(InfoStudentCurricularPlan) obj;
 			resultado =
-				this.getInfoStudent().equals(infoStudentCurricularPlan.getInfoStudent())
-					&& this.getInfoDegreeCurricularPlan().equals(infoStudentCurricularPlan.getInfoDegreeCurricularPlan())
-					&& this.getCurrentState().equals(infoStudentCurricularPlan.getCurrentState());
+				this.getInfoStudent().equals(
+					infoStudentCurricularPlan.getInfoStudent())
+					&& this.getInfoDegreeCurricularPlan().equals(
+						infoStudentCurricularPlan
+							.getInfoDegreeCurricularPlan())
+					&& this.getCurrentState().equals(
+						infoStudentCurricularPlan.getCurrentState());
 		}
 		return resultado;
 	}
@@ -83,7 +91,9 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "student = " + this.infoStudent + "; ";
-		result += "degreeCurricularPlan = " + this.infoDegreeCurricularPlan + "; ";
+		result += "degreeCurricularPlan = "
+			+ this.infoDegreeCurricularPlan
+			+ "; ";
 		result += "startDate = " + this.startDate + "; ";
 		result += "specialization = " + this.specialization + "; ";
 		result += "currentState = " + this.currentState + "]\n";
@@ -182,49 +192,63 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
 	/**
 	 * @return
 	 */
-	public Double getClassification()
-	{
+	public Double getClassification() {
 		return classification;
 	}
 
 	/**
 	 * @return
 	 */
-	public Integer getEnrolledCourses()
-	{
+	public Integer getEnrolledCourses() {
 		return enrolledCourses;
 	}
 
 	/**
 	 * @param double1
 	 */
-	public void setClassification(Double double1)
-	{
-		classification= double1;
+	public void setClassification(Double double1) {
+		classification = double1;
 	}
 
 	/**
 	 * @param integer
 	 */
-	public void setEnrolledCourses(Integer integer)
-	{
-		enrolledCourses= integer;
+	public void setEnrolledCourses(Integer integer) {
+		enrolledCourses = integer;
 	}
 
 	/**
 	 * @return
 	 */
-	public Integer getCompletedCourses()
-	{
+	public Integer getCompletedCourses() {
 		return completedCourses;
 	}
 
 	/**
 	 * @param integer
 	 */
-	public void setCompletedCourses(Integer integer)
-	{
-		completedCourses= integer;
+	public void setCompletedCourses(Integer integer) {
+		completedCourses = integer;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(Object arg0) {
+		InfoStudentCurricularPlan obj0 = (InfoStudentCurricularPlan) arg0;
+		if (obj0.currentState.getState().intValue()
+			== getCurrentState().getState().intValue()) {
+			return 0;
+		}
+		if (obj0.currentState.getState().intValue()
+			< getCurrentState().getState().intValue()) {
+			return -1;
+		}
+		if (obj0.currentState.getState().intValue()
+			> getCurrentState().getState().intValue()) {
+			return 1;
+		}
+		return 0;
 	}
 
 }

@@ -793,7 +793,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 						infoLink.setLinkName(file.getLinkName());
 						links.add(infoLink);
 					}
+					Collections.sort(links,new BeanComparator("linkName"));
 					infoItem.setLinks(links);
+					
 				}
 			} catch (SlideException e1) {
 				//the item does not have a folder associated

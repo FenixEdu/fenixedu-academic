@@ -5,6 +5,8 @@
  */
 package fileSuport;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * @author João Mota
  *
@@ -104,7 +106,11 @@ public class FileSuportObject {
 	 * @param linkName
 	 */
 	public void setLinkName(String linkName) {
-		this.linkName = linkName;
+		try {
+			this.linkName = new String(linkName.getBytes(),"ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			this.linkName = linkName;
+		}
 	}
 
 	/**

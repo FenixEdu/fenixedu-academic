@@ -194,7 +194,9 @@ public class FileSuport implements IFileSuport {
 			SubjectNode file = 	new SubjectNode();
 			structure.create(slideToken, file, path);
 			content.create(slideToken, path, true);
-
+			commitTransaction();
+		
+			beginTransaction();
 			NodeRevisionDescriptor currentRevisionDescriptor =
 				new NodeRevisionDescriptor(-1);
 			currentRevisionDescriptor.setContentType(contenType);
