@@ -137,10 +137,13 @@
 					</logic:equal>
 				</logic:present>
 			</table>
-			<logic:present name="infoExpensesReport" property="summaryPTEReport">
-				<jsp:include page="showExtraReportLines.jsp" />
-			</logic:present>
 		</logic:notEmpty>
+		<logic:empty name="infoExpensesReport" property="lines">
+			<span class="error"><bean:message key="message.noMovements" /></span>
+		</logic:empty>
+		<logic:present name="infoExpensesReport" property="summaryPTEReport">
+			<jsp:include page="showExtraReportLines.jsp" />
+		</logic:present>		
 		<br />
 		<br />
 		<br />

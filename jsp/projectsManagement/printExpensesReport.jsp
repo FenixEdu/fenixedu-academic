@@ -90,7 +90,7 @@
 					<br />
 					<br />
 					<br />
-					<logic:present name="infoSummaryPTEReport">
+					<logic:present name="infoExpensesReport" property="summaryPTEReport">
 						<jsp:include page="showExtraReportLines.jsp" />
 					</logic:present>
 				</logic:notEmpty>
