@@ -96,4 +96,30 @@ public class GetEnrolmentList implements IService {
         return result;
     }
 
+    public List run(Integer studentCurricularPlanID, EnrollmentState enrollmentState,
+            Boolean pTypeEnrolments) throws FenixServiceException, Exception {
+
+        if (!pTypeEnrolments.booleanValue()) {
+            return this.run(studentCurricularPlanID, enrollmentState);
+        }
+
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+        // Read the list
+        List enrolmentList = sp.getIPersistentEnrolment()
+                .readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlanID,
+                        enrollmentState);
+
+        // clone
+        List result = new ArrayList();
+        for (Iterator iter = enrolmentList.iterator(); iter.hasNext();) {
+            IEnrollment enrollment = (IEnrollment) iter.next();
+            InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod
+                    .newInfoFromDomain(enrollment);
+            result.add(infoEnrolment);
+        }
+
+        return result;
+    }
+
 }
