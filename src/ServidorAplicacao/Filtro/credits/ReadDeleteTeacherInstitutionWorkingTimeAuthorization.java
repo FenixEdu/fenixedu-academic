@@ -4,8 +4,8 @@
  */
 package ServidorAplicacao.Filtro.credits;
 
-import Dominio.SupportLesson;
 import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
+import Dominio.teacher.workTime.TeacherInstitutionWorkTime;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
@@ -37,7 +37,7 @@ public class ReadDeleteTeacherInstitutionWorkingTimeAuthorization
                 .getIPersistentTeacherInstitutionWorkingTime();
 
         ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (ITeacherInstitutionWorkTime) teacherInstitutionWorkingTimeDAO
-                .readByOId(new SupportLesson(teacherInstitutionWorkingTime), false);
+                .readByOId(new TeacherInstitutionWorkTime(teacherInstitutionWorkingTime), false);
         return teacherInstitutionWorkTime != null ? teacherInstitutionWorkTime.getTeacher()
                 .getIdInternal() : null;
     }
