@@ -14,6 +14,7 @@ import org.apache.commons.collections.Predicate;
 
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoTeacher;
+import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
 import DataBeans.teacher.professorship.InfoSupportLesson;
 
@@ -37,6 +38,8 @@ public class TeacherCreditsSheetDTO implements Serializable
 
     private List infoTeacherInstitutionWorkingTimeList;
 
+    private InfoCredits infoCredits;
+    
     /**
 	 * @return Returns the infoCreditLineList.
 	 */
@@ -218,4 +221,20 @@ public class TeacherCreditsSheetDTO implements Serializable
 		return executionCourseShiftProfessorships;
 	}
     
+    /**
+     * @return Returns the infoCredits.
+     */
+    public InfoCredits getInfoCredits()
+    {
+        return infoCredits;
+    }
+
+    /**
+     * @param infoCredits The infoCredits to set.
+     */
+    public void setInfoCredits(InfoCredits infoCredits)
+    {
+        this.infoCredits = infoCredits;
+    }
+
 }

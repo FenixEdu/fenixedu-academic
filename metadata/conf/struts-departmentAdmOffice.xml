@@ -47,7 +47,7 @@
             <form-property name="idInternal" type="java.lang.Integer"/>
             <form-property name="teacherId" type="java.lang.Integer"/>
             <form-property name="studentId" type="java.lang.Integer"/>
-            <form-property name="executionYearId" type="java.lang.Integer"/>
+            <form-property name="executionPeriodId" type="java.lang.Integer"/>
             <form-property name="studentNumber" type="java.lang.String"/>
             <form-property name="percentage" type="java.lang.String" initial="100"/>
         </form-bean>
@@ -315,6 +315,12 @@
                 type="ServidorAplicacao.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$StudentNotFoundServiceException" 
                 key="message.student-not-found" 
                 path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
+
+            <exception 
+                type="ServidorAplicacao.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$ExecutionPeriodNotFoundServiceException" 
+                key="message.execution-period-not-found" 
+                path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
+
             <exception 
                 type="ServidorAplicacao.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$StudentPercentageExceed" 
                 key="message.teacherDegreeFinalProjectStudent.percentageExceed" 
@@ -338,6 +344,7 @@
             <exception type="ServidorAplicacao.Servico.credits.validator.OverlappingSupportLessonPeriod" 
                 key="message.overlapping.support.lesson.period" 
                 path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
+
             <forward name="show-form" path="/manageTeacherDFPStudent.do?page=0&amp;method=list"/>
             <forward name="successfull-edit" path="/manageTeacherDFPStudent.do?page=0&amp;method=list"/>
             <forward name="successfull-read" path=""/>
@@ -409,7 +416,7 @@
             type="ServidorApresentacao.Action.department.ListDepartmentTeachersAction" 
             name="objectOIDForm" input="/index.do" scope="request" parameter="method" 
             className="ServidorApresentacao.mapping.framework.SearchActionMapping">
-            <set-property property="serviceName" value="ReadDepartmentTeachersService"/>
+            <set-property property="serviceName" value="ReadDepartmentTeachersCreditsDetailsService"/>
             <set-property property="objectAttribute" value="infoTeacher"/>
             <set-property property="listAttribute" value="infoTeacherList"/>
             <set-property property="notFoundMessageKey" value="message.not-found-teachers"/>

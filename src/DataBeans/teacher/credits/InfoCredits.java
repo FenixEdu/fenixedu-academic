@@ -6,98 +6,147 @@ import DataBeans.InfoTeacher;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public class InfoCredits extends InfoObject {
-	private InfoTeacher infoTeacher;
-	private InfoExecutionPeriod infoExecutionPeriod;
-	private Integer tfcStudentsNumber;
-	private Double credits;
-	private Double additionalCredits;
-	private String additionalCreditsJustification;
-	
-	/**
-	 * @return
-	 */
-	public Double getAdditionalCredits() {
-		return this.additionalCredits;
-	}
+public class InfoCredits extends InfoObject
+{
+    private Double degreeFinalProjectStudents;
+    private InfoExecutionPeriod infoExecutionPeriod;
+    private InfoTeacher infoTeacher;
+    private Double institutionWorkTime;
+    private Double lessons;
+    private Double supportLessons;
 
-	/**
-	 * @param additionalCredits
-	 */
-	public void setAdditionalCredits(Double additionalCredits) {
-		this.additionalCredits = additionalCredits;
-	}
+    /**
+     * @return Returns the degreeFinalProjectStudents.
+     */
+    public Double getDegreeFinalProjectStudents()
+    {
+        return degreeFinalProjectStudents;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getAdditionalCreditsJustification() {
-		return this.additionalCreditsJustification;
-	}
+    /**
+     * @return Returns the infoExecutionPeriod.
+     */
+    public InfoExecutionPeriod getInfoExecutionPeriod()
+    {
+        return infoExecutionPeriod;
+    }
 
-	/**
-	 * @param additionalCreditsJustification
-	 */
-	public void setAdditionalCreditsJustification(String additionalCreditsJustification) {
-		this.additionalCreditsJustification = additionalCreditsJustification;
-	}
+    /**
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher()
+    {
+        return infoTeacher;
+    }
 
-	/**
-	 * @return
-	 */
-	public Double getCredits() {
-		return credits;
-	}
+    /**
+     * @return Returns the institutionWorkTime.
+     */
+    public Double getInstitutionWorkTime()
+    {
+        return institutionWorkTime;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoExecutionPeriod getInfoExecutionPeriod() {
-		return infoExecutionPeriod;
-	}
+    /**
+     * @return Returns the lessons.
+     */
+    public Double getLessons()
+    {
+        return lessons;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoTeacher getInfoTeacher() {
-		return infoTeacher;
-	}
+    /**
+     * @return Returns the supportLessons.
+     */
+    public Double getSupportLessons()
+    {
+        return supportLessons;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getTfcStudentsNumber() {
-		return tfcStudentsNumber;
-	}
+    /**
+     * @param degreeFinalProjectStudents
+     *            The degreeFinalProjectStudents to set.
+     */
+    public void setDegreeFinalProjectStudents(Double degreeFinalProjectStudents)
+    {
+        this.degreeFinalProjectStudents = degreeFinalProjectStudents;
+    }
 
-	/**
-	 * @param Doubler1
-	 */
-	public void setCredits(Double double1) {
-		credits = double1;
-	}
+    /**
+     * @param infoExecutionPeriod
+     *            The infoExecutionPeriod to set.
+     */
+    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod)
+    {
+        this.infoExecutionPeriod = infoExecutionPeriod;
+    }
 
-	/**
-	 * @param period
-	 */
-	public void setInfoExecutionPeriod(InfoExecutionPeriod period) {
-		infoExecutionPeriod = period;
-	}
+    /**
+     * @param infoTeacher
+     *            The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher)
+    {
+        this.infoTeacher = infoTeacher;
+    }
 
-	/**
-	 * @param teacher
-	 */
-	public void setInfoTeacher(InfoTeacher teacher) {
-		infoTeacher = teacher;
-	}
+    /**
+     * @param institutionWorkTime
+     *            The institutionWorkTime to set.
+     */
+    public void setInstitutionWorkTime(Double institutionWorkTime)
+    {
+        this.institutionWorkTime = institutionWorkTime;
+    }
 
-	/**
-	 * @param Integer1
-	 */
-	public void setTfcStudentsNumber(Integer integer1) {
-		tfcStudentsNumber = integer1;
-	}
+    /**
+     * @param lessons
+     *            The lessons to set.
+     */
+    public void setLessons(Double lessons)
+    {
+        this.lessons = lessons;
+    }
+
+    /**
+     * @param supportLessons
+     *            The supportLessons to set.
+     */
+    public void setSupportLessons(Double supportLessons)
+    {
+        this.supportLessons = supportLessons;
+    }
+
+    public String getSupportLessonsFormatted()
+    {
+        return format(this.getSupportLessons());
+    }
+    public String getLessonsFormatted()
+    {
+        return format(this.getLessons());
+    }
+    public String getDegreeFinalProjectStudentsFormatted()
+    {
+        return format(this.getDegreeFinalProjectStudents());
+    }
+    public String getInstitutionWorkTimeFormatted()
+    {
+        return format(this.getInstitutionWorkTime());
+    }
+
+    /**
+     * @param double1
+     * @return
+     */
+    private String format(Double number)
+    {
+        if (number == null || number.doubleValue() == 0)
+        {
+            return "0";
+        }
+        return number.toString();
+    }
 
 }

@@ -4,6 +4,8 @@
  */
 package ServidorPersistente.OJB.credits;
 
+import java.util.List;
+
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.Credits;
@@ -33,6 +35,16 @@ public class CreditsOJB extends ObjectFenixOJB implements IPersistentCredits
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
         return (ICredits) queryObject(Credits.class, criteria);
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.credits.IPersistentCredits#readByTeachersAndExecutionPeriod(java.util.List, Dominio.IExecutionPeriod)
+     */
+    public List readByTeachersAndExecutionPeriod(List teachersIds, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addIn("teacher.idInternal", teachersIds);
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
+        return queryList(Credits.class, criteria);
     }
 
 }

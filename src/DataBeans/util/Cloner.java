@@ -2875,7 +2875,7 @@ public abstract class Cloner
         return professorship;
     }
 
-    public static ICredits copyInfoCreditsTeacher2ICreditsTeacher(InfoCredits infoCreditsTeacher)
+    public static ICredits copyInfoCredits2ICredits(InfoCredits infoCreditsTeacher)
     {
 
         InfoTeacher infoTeacher = infoCreditsTeacher.getInfoTeacher();
@@ -2894,7 +2894,7 @@ public abstract class Cloner
         return creditsTeacher;
     }
 
-    public static InfoCredits copyICreditsTeacher2InfoCreditsTeacher(ICredits creditsTeacher)
+    public static InfoCredits copyICredits2InfoCredits(ICredits creditsTeacher)
     {
         ITeacher teacher = creditsTeacher.getTeacher();
         InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);

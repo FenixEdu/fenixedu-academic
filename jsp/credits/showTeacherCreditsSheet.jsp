@@ -7,6 +7,7 @@
 
 <bean:define id="infoTeacher" name="teacherCreditsSheet" property="infoTeacher"/>
 <bean:define id="infoExecutionPeriod" name="teacherCreditsSheet" property="infoExecutionPeriod"/>
+<bean:define id="infoCredits" name="teacherCreditsSheet" property="infoCredits"/>
 
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
@@ -14,6 +15,40 @@
 	<b><bean:message key="label.teacher.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="teacherNumber"/> <br />
 	<b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="infoExecutionPeriod" property="name"/>
 </p>
+
+<u><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong></u>:
+<p>
+<bean:message key="label.credits.lessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.lessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
+<bean:message key="label.credits.supportLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.supportLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
+<bean:message key="label.credits.degreeFinalProjectStudents.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.degreeFinalProjectStudents.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
+<bean:message key="label.credits.institutionWorkTime.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.institutionWorkTime.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>.
+</p>
+
+<b><bean:message key="label.credits.resume" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>:
+	<logic:present name="infoCredits">
+			<b>
+				<bean:write name="infoCredits" property="lessonsFormatted"/>						
+			</b>
+			<bean:message key="label.credits.lessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
+			<b>	
+				<bean:write name="infoCredits" property="supportLessonsFormatted"/>						
+			</b>							
+			<bean:message key="label.credits.supportLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
+	
+			<b>
+				<bean:write name="infoCredits" property="degreeFinalProjectStudentsFormatted"/>						
+			</b>							
+			<bean:message key="label.credits.degreeFinalProjectStudents.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
+			<b>							
+				<bean:write name="infoCredits" property="institutionWorkTimeFormatted"/>						
+			</b>							
+			<bean:message key="label.credits.institutionWorkTime.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+	</logic:present>
+	<logic:notPresent name="infoCredits">
+		--
+	</logic:notPresent>	
+<br/>
+<br/>
 <%-- ========================== PROFESSOR SHIPS ========================================== --%>
 <h2>
 	<span class="emphasis-box">1</span> <i><bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>

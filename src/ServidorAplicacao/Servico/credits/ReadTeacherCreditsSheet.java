@@ -9,18 +9,21 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
 import DataBeans.credits.TeacherCreditsSheetDTO;
 import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
+import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
 import DataBeans.teacher.professorship.DetailedProfessorship;
 import DataBeans.teacher.professorship.InfoSupportLesson;
 import DataBeans.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionPeriod;
+import Dominio.ICredits;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -32,7 +35,6 @@ import Dominio.ITeacher;
 import Dominio.ResponsibleFor;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -42,6 +44,7 @@ import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.credits.IPersistentCredits;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
@@ -50,25 +53,13 @@ import Util.TipoCurso;
 /**
  * @author jpvl
  */
-public class ReadTeacherCreditsSheet implements IServico
+public class ReadTeacherCreditsSheet implements IService
 {
 
-    private static ReadTeacherCreditsSheet instance = new ReadTeacherCreditsSheet();
-
-    public static ReadTeacherCreditsSheet getService()
+    public ReadTeacherCreditsSheet()
     {
-        return instance;
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
-        return "ReadTeacherCreditsSheet";
-    }
     private IExecutionPeriod readExecutionPeriod(
         InfoExecutionPeriod infoExecutionPeriod,
         IPersistentExecutionPeriod executionPeriodDAO)
@@ -80,16 +71,14 @@ public class ReadTeacherCreditsSheet implements IServico
             if (infoExecutionPeriod == null)
             {
                 executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
-            }
-            else
+            } else
             {
                 executionPeriod =
                     (IExecutionPeriod) executionPeriodDAO.readByOId(
                         new ExecutionPeriod(infoExecutionPeriod.getIdInternal()),
                         false);
             }
-        }
-        catch (ExcepcaoPersistencia e1)
+        } catch (ExcepcaoPersistencia e1)
         {
             e1.printStackTrace(System.out);
             throw new FenixServiceException("Error getting execution period!", e1);
@@ -97,11 +86,11 @@ public class ReadTeacherCreditsSheet implements IServico
         return executionPeriod;
     }
     /**
-	 * @param sp
-	 * @param infoTeacher
-	 * @param infoExecutionPeriod
-	 * @return
-	 */
+     * @param sp
+     * @param infoTeacher
+     * @param infoExecutionPeriod
+     * @return
+     */
     private List readInfoMasterDegreeProfessorships(
         ISuportePersistente sp,
         ITeacher teacher,
@@ -114,8 +103,7 @@ public class ReadTeacherCreditsSheet implements IServico
         {
             masterDegreeProfessorshipList =
                 professorshipDAO.readByTeacherAndTypeOfDegree(teacher, TipoCurso.MESTRADO_OBJ);
-        }
-        catch (ExcepcaoPersistencia e)
+        } catch (ExcepcaoPersistencia e)
         {
             e.printStackTrace(System.out);
             throw new FenixServiceException("Problems getting master degree professorships!", e);
@@ -136,11 +124,11 @@ public class ReadTeacherCreditsSheet implements IServico
         return infoMasterDegreeProfessorships;
     }
     /**
-	 * @param sp
-	 * @param infoTeacher
-	 * @param infoExecutionPeriod
-	 * @return
-	 */
+     * @param sp
+     * @param infoTeacher
+     * @param infoExecutionPeriod
+     * @return
+     */
     private List readInfoShiftProfessorships(
         ISuportePersistente sp,
         ITeacher teacher,
@@ -172,11 +160,11 @@ public class ReadTeacherCreditsSheet implements IServico
     }
 
     /**
-	 * @param teacher
-	 * @param executionPeriod
-	 * @param sp
-	 * @return
-	 */
+     * @param teacher
+     * @param executionPeriod
+     * @param sp
+     * @return
+     */
     private List readInfoSupportLessonList(
         ITeacher teacher,
         IExecutionPeriod executionPeriod,
@@ -202,11 +190,11 @@ public class ReadTeacherCreditsSheet implements IServico
     }
 
     /**
-	 * @param teacher
-	 * @param executionPeriod
-	 * @param sp
-	 * @return
-	 */
+     * @param teacher
+     * @param executionPeriod
+     * @param sp
+     * @return
+     */
     private List readInfoTeacherInstitutionWorkingTime(
         ITeacher teacher,
         IExecutionPeriod executionPeriod,
@@ -242,8 +230,7 @@ public class ReadTeacherCreditsSheet implements IServico
         try
         {
             teacher = teacherDAO.readByNumber(teacherNumber);
-        }
-        catch (ExcepcaoPersistencia e2)
+        } catch (ExcepcaoPersistencia e2)
         {
             e2.printStackTrace(System.out);
             throw new FenixServiceException("Error getting teacher!", e2);
@@ -252,11 +239,11 @@ public class ReadTeacherCreditsSheet implements IServico
     }
 
     /**
-	 * @param teacher
-	 * @param executionPeriod
-	 * @param sp
-	 * @return
-	 */
+     * @param teacher
+     * @param executionPeriod
+     * @param sp
+     * @return
+     */
     private List readTeacherDegreeFinalProjectStudentList(
         ITeacher teacher,
         IExecutionPeriod executionPeriod,
@@ -322,13 +309,15 @@ public class ReadTeacherCreditsSheet implements IServico
 
             List detailedProfessorshipList = readDetailedProfessorships(teacher, executionPeriod, sp);
 
+            InfoCredits infoCredits = readCredits(teacher, executionPeriod, sp);
+
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-            InfoExecutionPeriod infoExecutionPeriod =
-                (InfoExecutionPeriod) Cloner.get(executionPeriod);
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
 
             teacherCreditsSheetDTO.setInfoTeacher(infoTeacher);
             teacherCreditsSheetDTO.setInfoExecutionPeriod(infoExecutionPeriod);
-
+            teacherCreditsSheetDTO.setInfoCredits(infoCredits);
+            
             teacherCreditsSheetDTO.setInfoMasterDegreeProfessorships(infoMasterDegreeProfessorships);
 
             teacherCreditsSheetDTO.setInfoTeacherInstitutionWorkingTimeList(
@@ -343,8 +332,7 @@ public class ReadTeacherCreditsSheet implements IServico
 
             teacherCreditsSheetDTO.setDetailedProfessorshipList(detailedProfessorshipList);
 
-        }
-        catch (ExcepcaoPersistencia e)
+        } catch (ExcepcaoPersistencia e)
         {
             e.printStackTrace(System.out);
             throw new FenixServiceException("Problems with database!", e);
@@ -354,11 +342,24 @@ public class ReadTeacherCreditsSheet implements IServico
     }
 
     /**
-	 * @param teacher
-	 * @param executionPeriod
-	 * @param sp
-	 * @return
-	 */
+     * @param teacher
+     * @param executionPeriod
+     * @param sp
+     * @return
+     */
+    private InfoCredits readCredits(ITeacher teacher, IExecutionPeriod executionPeriod, ISuportePersistente sp) throws ExcepcaoPersistencia
+    {
+        IPersistentCredits creditsDAO=sp.getIPersistentCredits();
+        ICredits credits= creditsDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
+        return credits == null ? null : Cloner.copyICredits2InfoCredits(credits);
+    }
+
+    /**
+     * @param teacher
+     * @param executionPeriod
+     * @param sp
+     * @return
+     */
     private List readDetailedProfessorships(
         ITeacher teacher,
         IExecutionPeriod executionPeriod,
