@@ -46,12 +46,12 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
         
         request.setAttribute("className", className);
         
-        if(className.equals(RestrictionByNumberOfCurricularCourses.class.getName().split(RestrictionByNumberOfCurricularCourses.class.getPackage().toString())[0].substring(1))) {      
-            System.out.println("-->Class Name Restriction: " + RestrictionByNumberOfCurricularCourses.class.getName());
-        } else if(className.equals(RestrictionByNumberOfDoneCurricularCourses.class.getName().split(RestrictionByNumberOfDoneCurricularCourses.class.getPackage().toString())[0].substring(1))) {
+       if(className.equals(RestrictionByNumberOfDoneCurricularCourses.class.getName().split(RestrictionByNumberOfDoneCurricularCourses.class.getPackage().toString())[0].substring(1))) {
             System.out.println("-->Class Name Restriction: " + RestrictionByNumberOfDoneCurricularCourses.class.getName());
         } else if(className.equals(RestrictionDoneCurricularCourse.class.getName().split(RestrictionDoneCurricularCourse.class.getPackage().toString())[0].substring(1))) {
             System.out.println("-->Class Name Restriction: " + RestrictionDoneCurricularCourse.class.getName());
+        }else if(className.equals(RestrictionNotDoneCurricularCourse.class.getName().split(RestrictionNotDoneCurricularCourse.class.getPackage().toString())[0].substring(1))) {
+            System.out.println("-->Class Name Restriction: " + RestrictionNotDoneCurricularCourse.class.getName());
         } else if(className.equals(RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class.getName().split(RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class.getPackage().toString())[0].substring(1))) {
             System.out.println("-->Class Name Restriction: " + RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class.getName());
         } else if(className.equals(RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class.getName().split(RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class.getPackage().toString())[0].substring(1))) {

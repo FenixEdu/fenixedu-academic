@@ -6,14 +6,14 @@
 <h3><bean:message key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.simple.precedence"/></h3>
 
 <ul style="list-style-type: square;">
-	<li><html:link page='<%="/makeSimplePrecedence.do?method=insertRestriction&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=RestrictionByNumberOfCurricularCourses"%>'>
-		<bean:message key="label.manager.insert.restriction.restrictionByNumberOfCurricularCourses"/>
-	</html:link></li>
 	<li><html:link page='<%="/makeSimplePrecedence.do?method=insertRestriction&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=RestrictionByNumberOfDoneCurricularCourses"%>'>
 		<bean:message key="label.manager.insert.restriction.restrictionByNumberOfDoneCurricularCourses"/>
 	</html:link></li>
 	<li><html:link page='<%="/makeSimplePrecedence.do?method=insertRestriction&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=RestrictionDoneCurricularCourse"%>'>
 		<bean:message key="label.manager.insert.restriction.restrictionDoneCurricularCourse"/>
+	</html:link></li>
+	<li><html:link page='<%="/makeSimplePrecedence.do?method=insertRestriction&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=RestrictionNotDoneCurricularCourse"%>'>
+		<bean:message key="label.manager.insert.restriction.restrictionNotDoneCurricularCourse"/>
 	</html:link></li>
 	<li><html:link page='<%="/makeSimplePrecedence.do?method=insertRestriction&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse"%>'>
 		<bean:message key="label.manager.insert.restriction.restrictionDoneOrHasEverBeenEnrolledInCurricularCourse"/>

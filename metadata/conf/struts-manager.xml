@@ -289,8 +289,10 @@
 	    </form-bean>
 	    
 	   	<!-- ========== PRECEDENCES MANAGEMENT ========== -->
-		<form-bean name="insertRestrictionForm">
-			<form-property name="page" type="" initial="0"/> 
+		<form-bean name="insertRestrictionForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+			dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/> 
 		</form-bean>
 
     </form-beans>
