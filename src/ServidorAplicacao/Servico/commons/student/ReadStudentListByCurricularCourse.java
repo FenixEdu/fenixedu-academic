@@ -57,7 +57,7 @@ public class ReadStudentListByCurricularCourse implements IServico {
     }
     
     
-    public List run(IUserView userView, Integer curricularCourseID) throws ExcepcaoInexistente, FenixServiceException {
+    public List run(IUserView userView, Integer curricularCourseID, String executionYear) throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
         
@@ -73,7 +73,7 @@ public class ReadStudentListByCurricularCourse implements IServico {
             curricularCourseTemp.setIdInternal(curricularCourseID);
             curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(curricularCourseTemp, false);
 
-			enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourse(curricularCourse);
+			enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourse(curricularCourse, executionYear);
 
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");

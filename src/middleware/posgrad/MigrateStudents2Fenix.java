@@ -260,12 +260,13 @@ public class MigrateStudents2Fenix {
 					// Update The Username
 					
 					if (person.getUsername().charAt(0) == 'X'){
-						if ((student2Convert.getEspecializacao().equalsIgnoreCase("Mestrado")) || 
-							(student2Convert.getEspecializacao().equalsIgnoreCase("Integrado"))){
-								person.setUsername("M" + student2Convert.getNumero());
-						} else {
-							person.setUsername("E" + student2Convert.getNumero());
-						}
+						person.setUsername("M" + student2Convert.getNumero());
+//						if ((student2Convert.getEspecializacao().equalsIgnoreCase("Mestrado")) || 
+//							(student2Convert.getEspecializacao().equalsIgnoreCase("Integrado"))){
+//								person.setUsername("M" + student2Convert.getNumero());
+//						} else {
+//							person.setUsername("E" + student2Convert.getNumero());
+//						}
 					}
 					
 //					if ((student2Convert.getEspecializacao().equalsIgnoreCase("Mestrado")) || 

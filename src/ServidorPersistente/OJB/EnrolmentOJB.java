@@ -417,12 +417,13 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 	}
 	
 	
-	public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
+	public List readByCurricularCourse(ICurricularCourse curricularCourse, String year) throws ExcepcaoPersistencia {
 		   		   
 	Criteria crit = new Criteria();
 	crit.addEqualTo("curricularCourseScope.curricularCourse.idInternal", curricularCourse.getIdInternal());
-   
-	return (List) queryList(Enrolment.class, crit);
+	crit.addEqualTo("executionPeriod.executionYear.year", year);
+ 
+ 	return (List) queryList(Enrolment.class, crit);
 
  }
 

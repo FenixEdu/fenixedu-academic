@@ -121,6 +121,7 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 		request.setAttribute("executionYear", getFromRequest("executionYear", request));
 		request.setAttribute("degree", getFromRequest("degree", request));
 
+		String executionYear = getFromRequest("executionYear", request);
 	
 		Integer courseID = new Integer(getFromRequest("courseID", request));
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -129,7 +130,7 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 
 		List studentList = null;
 		try {
-			Object args[] = { userView, courseID };
+			Object args[] = { userView, courseID , executionYear};
 			studentList = (List) serviceManager.executar(userView, "ReadStudentListByCurricularCourse", args);
 		} catch (NotAuthorizedException e){
 			return mapping.findForward("NotAuthorized");
