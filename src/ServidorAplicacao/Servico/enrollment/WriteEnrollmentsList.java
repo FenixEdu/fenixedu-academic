@@ -37,12 +37,12 @@ public class WriteEnrollmentsList implements IService {
     public WriteEnrollmentsList() {
     }
 
-    public void run(InfoStudent infoStudent, TipoCurso degreeType, InfoExecutionYear infoExecutionYear,
+    public void run(InfoStudent infoStudent, TipoCurso degreeType, Integer executionPeriodId,
             List curricularCoursesList, Map optionalEnrollments, IUserView userView)
             throws FenixServiceException {
         try {
             if (infoStudent == null || infoStudent.getNumber() == null || degreeType == null
-                    || infoExecutionYear == null || infoExecutionYear.getYear() == null) {
+                    || executionPeriodId == null ) {
                 throw new FenixServiceException("");
             }
 
@@ -56,13 +56,6 @@ public class WriteEnrollmentsList implements IService {
                 throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
             }
 
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-            IExecutionYear executionYear = persistentExecutionYear
-                    .readExecutionYearByName(infoExecutionYear.getYear());
-            if (executionYear == null) {
-                throw new FenixServiceException("error.impossible.operations");
-            }
-
             if (curricularCoursesList != null && curricularCoursesList.size() > 0) {
                 ListIterator iterator = curricularCoursesList.listIterator();
                 while (iterator.hasNext()) {
@@ -73,12 +66,12 @@ public class WriteEnrollmentsList implements IService {
                     //Integer enrollmentType = new
                     // Integer(enrollmentInfo.split("-")[0]);
 
-                    IExecutionPeriod executionPeriod = findExecutionPeriod(sp, executionYear,
+                   /* IExecutionPeriod executionPeriod = findExecutionPeriod(sp, executionYear,
                             curricularCourseID, degreeType);
                     Integer executionPeriodId = null;
                     if (executionPeriod != null) {
                         executionPeriodId = executionPeriod.getIdInternal();
-                    }
+                    }*/
 
                     WriteEnrollment writeEnrollmentService = new WriteEnrollment();
                     writeEnrollmentService.run(null, studentCurricularPlan.getIdInternal(),

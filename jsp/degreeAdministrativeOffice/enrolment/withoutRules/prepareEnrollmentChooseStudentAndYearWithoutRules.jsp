@@ -21,8 +21,8 @@
 		<tr>
 			<td><bean:message key="label.choose.year.execution"/>&nbsp;</td>
 			<td>
-				<html:select property="executionYear" >
-					<html:optionsCollection name="executionYears"/>
+				<html:select property="executionPeriod" >
+					<html:optionsCollection name="executionPeriods"/>
 				</html:select>
 			</td>				
 		</tr>

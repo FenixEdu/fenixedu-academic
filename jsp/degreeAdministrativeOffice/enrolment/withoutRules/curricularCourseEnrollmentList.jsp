@@ -32,7 +32,7 @@
 			<html:hidden property="method" value="unEnrollCourses"/>
 			<html:hidden property="page" value="1"/>
 			<html:hidden property="studentNumber" />
-			<html:hidden property="executionYear" />
+			<html:hidden property="executionPeriod" />
 			<html:hidden property="degreeType" />
 			<table >
 				<logic:iterate id="infoEnrollment" name="infoEnrollmentsWithStateEnrolled">
@@ -79,7 +79,7 @@
 	<html:hidden property="method" value="prepareEnrollmentCourses"/>
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="studentNumber" />
-	<html:hidden property="executionYear" />
+	<html:hidden property="executionPeriod" />
 	<html:hidden property="degreeType" />
 	<html:submit styleClass="inputbutton">
 			<bean:message key="button.enroll" bundle="DEGREE_ADM_OFFICE"/>

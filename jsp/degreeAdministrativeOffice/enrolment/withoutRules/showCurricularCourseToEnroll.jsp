@@ -28,7 +28,7 @@
 		<html:hidden property="method" value="enrollCourses"/>
 		<html:hidden property="page" value="1"/>
 		<html:hidden property="studentNumber" />
-		<html:hidden property="executionYear" />
+		<html:hidden property="executionPeriod" />
 		<html:hidden property="degreeType" />
 		<logic:greaterThan name="curricularCoursesSize" value="0">
 			<table >

@@ -8320,4 +8320,15 @@
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
 	</service>
+	<service>
+		<name>ReadExecutionPeriodsEnrollmentFenix</name>
+		<implementationClass> 
+			ServidorAplicacao.Servico.commons.ReadExecutionPeriods
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ExecutionPeriodsEnrollmentFenix"/>
+		</filterChains>
+	</service>
 </serviceDefinitions>

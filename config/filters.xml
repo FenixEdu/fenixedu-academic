@@ -788,4 +788,10 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
+    <filter>
+        <name>ExecutionPeriodsEnrollmentFenix</name>
+        <implementationClass>ServidorAplicacao.Filtro.ExecutionPeriodsEnrollmentFenix</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
 </filterDefinitions>

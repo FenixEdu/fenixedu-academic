@@ -76,57 +76,58 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         request.setAttribute("degreeType", degreeType);
 
         //execution years
-        List executionYears = null;
+        List executionPeriods = null;
         Object[] args = {};
         try {
-            executionYears = (List) ServiceManagerServiceFactory.executeService(null,
-                    "ReadNotClosedExecutionYears", args);
+            executionPeriods = (List) ServiceManagerServiceFactory.executeService(null,
+                    "ReadExecutionPeriodsEnrollmentFenix", args);
         } catch (FenixServiceException e) {
             errors.add("noExecutionYears", new ActionError("error.impossible.operations"));
             saveErrors(request, errors);
             return mapping.findForward("globalEnrolment");
         }
-        if (executionYears == null || executionYears.size() <= 0) {
+        if (executionPeriods == null || executionPeriods.size() <= 0) {
             errors.add("noExecutionYears", new ActionError("error.impossible.operations"));
             saveErrors(request, errors);
             return mapping.findForward("globalEnrolment");
         }
 
-        sortExecutionYears(executionYears, (DynaActionForm) form);
+        sortExecutionPeriods(executionPeriods, (DynaActionForm) form);
 
-        List executionYearLabels = buildLabelValueBeanForJsp(executionYears);
-        request.setAttribute("executionYears", executionYearLabels);
+        List executionYearLabels = buildLabelValueBeanForJsp(executionPeriods);
+        request.setAttribute("executionPeriods", executionYearLabels);
 
         return mapping.findForward("prepareEnrollmentChooseStudentWithoutRules");
     }
 
-    private void sortExecutionYears(List executionYears, DynaActionForm form) {
+    private void sortExecutionPeriods(List executionPeriods, DynaActionForm form) {
         ComparatorChain comparator = new ComparatorChain();
-        comparator.addComparator(new BeanComparator("year"), true);
-        Collections.sort(executionYears, comparator);
+        comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
+        comparator.addComparator(new BeanComparator("semester"), true);
+        Collections.sort(executionPeriods, comparator);
 
-        int size = executionYears.size();
+        int size = executionPeriods.size();
         for (int i = (size - 1); i >= 0; i--) {
-            InfoExecutionYear infoExecutionYear = (InfoExecutionYear) executionYears.get(i);
-            if (infoExecutionYear.getState().equals(PeriodState.CURRENT)) {
-                form.set("executionYear", infoExecutionYear.getYear());
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
+            if (infoExecutionPeriod.getState().equals(PeriodState.CURRENT)) {
+                form.set("executionPeriod", infoExecutionPeriod.getIdInternal().toString());
                 break;
             }
         }
     }
 
-    private List buildLabelValueBeanForJsp(List infoExecutionYears) {
-        List executionYearLabels = new ArrayList();
-        CollectionUtils.collect(infoExecutionYears, new Transformer() {
+    private List buildLabelValueBeanForJsp(List infoExecutionPeriods) {
+        List executionPeriodsLabels = new ArrayList();
+        CollectionUtils.collect(infoExecutionPeriods, new Transformer() {
             public Object transform(Object arg0) {
-                InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
+                InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
 
-                LabelValueBean executionYear = new LabelValueBean(infoExecutionYear.getYear(),
-                        infoExecutionYear.getYear());
+                LabelValueBean executionYear = new LabelValueBean(infoExecutionPeriod.getName() + " - " + infoExecutionPeriod.getInfoExecutionYear().getYear(),
+                        infoExecutionPeriod.getIdInternal().toString());
                 return executionYear;
             }
-        }, executionYearLabels);
-        return executionYearLabels;
+        }, executionPeriodsLabels);
+        return executionPeriodsLabels;
     }
 
     public ActionForward readEnrollments(ActionMapping mapping, ActionForm form,
@@ -141,24 +142,18 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         InfoStudent infoStudent = new InfoStudent();
         infoStudent.setNumber(studentNumber);
 
-        String executionYear = (String) prepareEnrolmentForm.get("executionYear");
-        InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear.setYear(executionYear);
+        String executionPeriodID = (String) prepareEnrolmentForm.get("executionPeriod");
 
         String degreeTypeCode = (String) prepareEnrolmentForm.get("degreeType");
         TipoCurso degreeType = new TipoCurso();
         degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
 
-        Object[] args = { infoStudent, degreeType, executionYear };
+        Object[] args = { infoStudent, degreeType, new Integer(executionPeriodID) };
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
         try {
             infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
                     .executeService(userView, "ReadEnrollmentsWithStateEnrolledByStudent", args);
 
-            //set the execution year choosen in the enrollment context
-            InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-            infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
-            infoStudentEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);
         } catch (NotAuthorizedException e) {
             e.printStackTrace();
 
@@ -197,9 +192,9 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         InfoStudent infoStudent = new InfoStudent();
         infoStudent.setNumber(studentNumber);
 
-        String executionYear = (String) unEnrollForm.get("executionYear");
+        /*String executionYear = (String) unEnrollForm.get("executionYear");
         InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear.setYear(executionYear);
+        infoExecutionYear.setYear(executionYear);*/
 
         String degreeTypeCode = (String) unEnrollForm.get("degreeType");
         TipoCurso degreeType = new TipoCurso();
@@ -244,9 +239,9 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         InfoStudent infoStudent = new InfoStudent();
         infoStudent.setNumber(studentNumber);
 
-        String executionYear = (String) prepareEnrolmentForm.get("executionYear");
-        InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear.setYear(executionYear);
+        String executionPeriodID = (String) prepareEnrolmentForm.get("executionPeriod");
+        /*InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+        infoExecutionYear.setYear(executionYear);*/
 
         String degreeTypeCode = (String) prepareEnrolmentForm.get("degreeType");
         TipoCurso degreeType = new TipoCurso();
@@ -259,7 +254,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         }
 
         //read execution degrees
-        Object args[] = { infoStudent, degreeType, executionDegreeId, infoExecutionYear };
+        Object args[] = { infoStudent, degreeType, executionDegreeId, new Integer(executionPeriodID) };
         List executionDegreeList = null;
         InfoExecutionDegree infoExecutionDegreeSelected = null;
         try {
@@ -302,14 +297,14 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         //maintenance of the form
         DynaActionForm enrollForm = (DynaActionForm) form;
         enrollForm.set("studentNumber", studentNumber.toString());
-        enrollForm.set("executionYear", executionYear);
+        enrollForm.set("executionPeriod", executionPeriodID);
         enrollForm.set("degreeType", degreeTypeCode);
         enrollForm.set("executionDegree", infoExecutionDegreeSelected.getIdInternal().toString());
 
         //maintenance of the Context with the student's number and name and
         // execution year
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = maintenanceContext(infoStudent,
-                infoExecutionYear);
+                infoExecutionDegreeSelected.getInfoExecutionYear());
         request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
 
         return mapping.findForward("choosesForEnrollment");
@@ -359,9 +354,9 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         InfoStudent infoStudent = new InfoStudent();
         infoStudent.setNumber(studentNumber);
 
-        String executionYear = (String) enrollForm.get("executionYear");
-        InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear.setYear(executionYear);
+        String executionPeriodID = (String) enrollForm.get("executionPeriod");
+        /*InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+        infoExecutionYear.setYear(executionYear);*/
 
         String degreeTypeCode = (String) enrollForm.get("degreeType");
         TipoCurso degreeType = new TipoCurso();
@@ -375,17 +370,13 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         Integer[] curricularSemesters = (Integer[]) enrollForm.get("curricularSemesters");
         List curricularSemestersList = Arrays.asList(curricularSemesters);
 
-        Object args[] = { infoStudent, degreeType, infoExecutionYear, executionDegreeID,
+        Object args[] = { infoStudent, degreeType, new Integer(executionPeriodID), executionDegreeID,
                 curricularYearsList, curricularSemestersList };
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
         try {
             infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
                     .executeService(userView, "ReadCurricularCoursesToEnroll", args);
 
-            //set the execution year choosen in the enrollment context
-            InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-            infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
-            infoStudentEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);
         } catch (NotAuthorizedException e) {
             e.printStackTrace();
 
@@ -439,9 +430,9 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         InfoStudent infoStudent = new InfoStudent();
         infoStudent.setNumber(studentNumber);
 
-        String executionYear = (String) enrollForm.get("executionYear");
-        InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear.setYear(executionYear);
+        String executionPeriodID = (String) enrollForm.get("executionPeriod");
+        /*InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+        infoExecutionYear.setYear(executionYear);*/
 
         String degreeTypeCode = (String) enrollForm.get("degreeType");
         TipoCurso degreeType = new TipoCurso();
@@ -450,7 +441,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         String[] curricularCourses = (String[]) enrollForm.get("curricularCourses");
         List curricularCoursesList = Arrays.asList(curricularCourses);
         Map optionalEnrollments = (HashMap) enrollForm.get("enrollmentTypes");
-        Object[] args = { infoStudent, degreeType, infoExecutionYear, curricularCoursesList,
+        Object[] args = { infoStudent, degreeType, new Integer(executionPeriodID), curricularCoursesList,
                 optionalEnrollments, userView };
         try {
             ServiceManagerServiceFactory.executeService(userView, "WriteEnrollmentsList", args);

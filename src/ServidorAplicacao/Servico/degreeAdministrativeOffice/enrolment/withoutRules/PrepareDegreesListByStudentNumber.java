@@ -12,17 +12,22 @@ import org.apache.commons.collections.Predicate;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
+import Dominio.ExecutionPeriod;
 import Dominio.ICursoExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionDegree;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
@@ -42,16 +47,21 @@ public class PrepareDegreesListByStudentNumber implements IService {
     }
 
     public Object run(InfoStudent infoStudent, TipoCurso degreeType, Integer executionDegreeId,
-            InfoExecutionYear infoExecutionYear)
+            Integer executionPeriodID)
     //Integer studentNumber, Integer executionDegreeIdChosen)
             throws FenixServiceException {
         List result = null;
         ISuportePersistente sp = null;
 
         try {
+            sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, executionPeriodID);
+            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
+            
             //read execution degrees by execution year and degree type
             ReadExecutionDegreesByExecutionYearAndDegreeType service = new ReadExecutionDegreesByExecutionYearAndDegreeType();
-            List infoExecutionsDegreesList = service.run(infoExecutionYear, degreeType);
+            List infoExecutionsDegreesList = service.run(infoExecutionPeriod.getInfoExecutionYear(), degreeType);
             if (infoExecutionsDegreesList == null || infoExecutionsDegreesList.size() <= 0) {
                 throw new FenixServiceException("errors.impossible.operation");
             }
@@ -61,7 +71,7 @@ public class PrepareDegreesListByStudentNumber implements IService {
                 throw new FenixServiceException("errors.impossible.operation");
             }
 
-            sp = SuportePersistenteOJB.getInstance();
+            
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             IStudent student = persistentStudent.readStudentByNumberAndDegreeType(infoStudent
                     .getNumber(), degreeType);

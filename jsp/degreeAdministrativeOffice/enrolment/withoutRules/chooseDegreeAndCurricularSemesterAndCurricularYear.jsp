@@ -13,7 +13,7 @@
 	<html:hidden property="method" value="readCoursesToEnroll"/>
 	<html:hidden property="page" value="2"/>
 	<html:hidden property="studentNumber" />
-	<html:hidden property="executionYear"/>
+	<html:hidden property="executionPeriod"/>
 	<html:hidden property="degreeType"/>
 
 	<table border="0">

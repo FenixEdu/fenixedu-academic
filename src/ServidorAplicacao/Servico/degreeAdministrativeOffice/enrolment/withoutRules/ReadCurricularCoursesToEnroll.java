@@ -15,17 +15,20 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import DataBeans.InfoExecutionYear;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoStudentCurricularPlanWithInfoStudent;
 import DataBeans.enrollment.InfoCurricularCourse2Enroll;
 import DataBeans.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
 import Dominio.CursoExecucao;
+import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.degree.enrollment.CurricularCourse2Enroll;
@@ -33,6 +36,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionDegree;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
@@ -53,7 +57,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
     }
 
     public Object run(InfoStudent infoStudent, TipoCurso degreeType,
-            InfoExecutionYear infoExecutionYear, Integer executionDegreeID, List curricularYearsList,
+            Integer executionPeriodID, Integer executionDegreeID, List curricularYearsList,
             List curricularSemestersList) throws FenixServiceException {
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 
@@ -61,6 +65,8 @@ public class ReadCurricularCoursesToEnroll implements IService {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                     .getIStudentCurricularPlanPersistente();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, executionPeriodID);
 
             if (infoStudent == null || infoStudent.getNumber() == null) {
                 throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
@@ -147,7 +153,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
                     });
 
             infoStudentEnrolmentContext = buildResult(studentCurricularPlan,
-                    curricularCoursesFromDegreeCurricularPlan);
+                    curricularCoursesFromDegreeCurricularPlan, executionPeriod);
             if (infoStudentEnrolmentContext == null) {
                 throw new FenixServiceException("");
             }
@@ -194,9 +200,11 @@ public class ReadCurricularCoursesToEnroll implements IService {
     }
 
     private InfoStudentEnrollmentContext buildResult(IStudentCurricularPlan studentCurricularPlan,
-            List curricularCoursesToChoose) {
+            List curricularCoursesToChoose, IExecutionPeriod executionPeriod) {
         InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlanWithInfoStudent
                 .newInfoFromDomain(studentCurricularPlan);
+        
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
 
         List infoCurricularCoursesToChoose = new ArrayList();
         if (curricularCoursesToChoose != null && curricularCoursesToChoose.size() > 0) {
@@ -222,6 +230,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
         infoStudentEnrolmentContext.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
         infoStudentEnrolmentContext
                 .setFinalInfoCurricularCoursesWhereStudentCanBeEnrolled(infoCurricularCoursesToChoose);
+        infoStudentEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);
 
         return infoStudentEnrolmentContext;
     }

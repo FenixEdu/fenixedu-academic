@@ -48,8 +48,8 @@
 			<field property="studentNumber" depends="required,integer" page="1">
 				<arg0 key="label.student.number" resource="true"/>
 			</field>
-			<field property="executionYear" depends="required" page="1">
-				<arg0 key="label.executionYear" resource="true"/>
+			<field property="executionPeriod" depends="required" page="1">
+				<arg0 key="label.student.enrollment.executionPeriod" resource="true"/>
 			</field>
 			<field property="degreeType" depends="required,integer" page="1">
 				<arg0 key="label.degree.type" resource="true"/>
