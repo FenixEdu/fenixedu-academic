@@ -20,6 +20,7 @@ import Dominio.ISala;
 import Dominio.ITurno;
 import Dominio.ITurnoAula;
 import Dominio.ShiftStudent;
+import Dominio.Turno;
 import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ITurnoAulaPersistente;
@@ -118,19 +119,28 @@ public class TurnoAulaOJB extends ObjectFenixOJB implements ITurnoAulaPersistent
 	 */
     public List readByShift(ITurno shift) throws ExcepcaoPersistencia
     {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("turno.idInternal", shift.getIdInternal());
-        List shiftLessons = queryList(TurnoAula.class, crit);
-        if (shiftLessons == null)
-        {
-            return null;
-        }
+//        Criteria crit = new Criteria();
+//        crit.addEqualTo("turno.idInternal", shift.getIdInternal());
+//        List shiftLessons = queryList(TurnoAula.class, crit);
+//        if (shiftLessons == null)
+//        {
+//            return null;
+//        }
+//
+//        List lessons = new ArrayList();
+//        for (int j = 0; j < shiftLessons.size(); j++)
+//            lessons.add(((TurnoAula) shiftLessons.get(j)).getAula());
+//        return lessons;
 
-        List lessons = new ArrayList();
-        for (int j = 0; j < shiftLessons.size(); j++)
-            lessons.add(((TurnoAula) shiftLessons.get(j)).getAula());
-        return lessons;
+		Criteria crit = new Criteria();
+		crit.addEqualTo("idInternal", shift.getIdInternal());
+		ITurno shiftDB = (ITurno) queryObject(Turno.class, crit);
+		if (shiftDB == null)
+		{
+			return null;
+		}
 
+		return shiftDB.getAssociatedLessons();
     }
     /**
 	 * @see ServidorPersistente.ITurnoAulaPersistente#delete(Dominio.ITurno,

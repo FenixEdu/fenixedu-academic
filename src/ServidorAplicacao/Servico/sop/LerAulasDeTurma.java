@@ -15,10 +15,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 import DataBeans.InfoClass;
 import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
+import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.ITurma;
 import Dominio.ITurno;
@@ -30,31 +33,14 @@ import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerAulasDeTurma implements IServico
+public class LerAulasDeTurma implements IService
 {
-
-    private static LerAulasDeTurma _servico = new LerAulasDeTurma();
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static LerAulasDeTurma getService()
-    {
-        return _servico;
-    }
 
     /**
 	 * The actor of this class.
 	 */
-    private LerAulasDeTurma()
+    public LerAulasDeTurma()
     {
-    }
-
-    /**
-	 * Devolve o nome do servico
-	 */
-    public final String getNome()
-    {
-        return "LerAulasDeTurma";
     }
 
     public List run(InfoClass infoClass)
@@ -87,16 +73,16 @@ public class LerAulasDeTurma implements IServico
             while (iterator.hasNext())
             {
                 ITurno shift = (ITurno) iterator.next();
-                InfoShift infoShift = (InfoShift) Cloner.get(shift);
-                List lessonList = shiftLessonDAO.readByShift(shift);
+                List lessonList = shift.getAssociatedLessons();
                 Iterator lessonIterator = lessonList.iterator();
                 while (lessonIterator.hasNext())
                 {
                     IAula elem = (IAula) lessonIterator.next();
-                    InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
+                    IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(Aula.class, elem.getIdInternal());
+                    //InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
+					InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
 
                     if (infoLesson != null) {
-                    	infoLesson.getInfoShiftList().add(infoShift);
                     	infoLessonList.add(infoLesson);
                     }
 
