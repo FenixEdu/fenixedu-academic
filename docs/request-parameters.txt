@@ -18,9 +18,10 @@ exeCourse.theo -> executionCourse theoretical hours
 exeCourse.prat -> executionCourse pratical hours
 exeCourse.theoPrat -> executionCourse theoretical-pratical hours
 exeCourse.lab -> executionCourse lab hours
+exeName -> executionCourse nome
 
 program -> curriculum program
 genObjectives -> curriculum generalObjectives
 opObjectives -> curriculum operationalObjectives
 
-lossonList -> list of lesson to the gerarHorario Tag
+lessonList -> list of lesson to the gerarHorario Tag
