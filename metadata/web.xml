@@ -69,6 +69,11 @@
             <param-value>/WEB-INF/conf/struts-person.xml</param-value>
         </init-param>        
         <init-param>
+            <param-name>config/assiduousness</param-name>
+            <param-value>/WEB-INF/conf/struts-assiduousness.xml</param-value>
+        </init-param>        
+        
+        <init-param>
             <param-name>debug</param-name>
             <param-value>3</param-value>
         </init-param>
