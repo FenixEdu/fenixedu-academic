@@ -3756,10 +3756,21 @@
         <filterChains>
             <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
         </filterChains>
-    </service> <service>
+    </service>
+	<service>
         <name>InsertAttendsSetMembers</name>
         <implementationClass> 
             ServidorAplicacao.Servico.teacher.InsertAttendsSetMembers</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+	<service>
+        <name>InsertStudentsInAttendsSet</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.InsertStudentsInAttendsSet</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5107,6 +5118,13 @@
         <name>teacher.ReadExecutionCourseProjects</name>
         <implementationClass> 
             ServidorAplicacao.Servico.teacher.ReadExecutionCourseProjects</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </service>
+    <service>
+        <name>teacher.ReadExecutionCourseByCodeAndExecutionPeriodId</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.ReadExecutionCourseByCodeAndExecutionPeriodId</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </service>
@@ -6845,8 +6863,8 @@
 		</filterChains>
 	</service>
     <service>
-		<name>ReadAllBuildings</name>
-		<implementationClass>ServidorAplicacao.Servico.sop.exams.ReadAllBuildings</implementationClass>
+		<name>ReadBuildings</name>
+		<implementationClass>ServidorAplicacao.Servico.sop.ReadBuildings</implementationClass>
 		<description>
 		</description>
 		<isTransactional>true</isTransactional>
@@ -7941,6 +7959,92 @@
         <description/>
         <isTransactional>true</isTransactional>
     </service>
+	<service>
+		<name>ReadOldIquiriesSummaryByDegreeIDAndExecutionPeriodID</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.publico.inquiries.ReadOldIquiriesSummaryByDegreeIDAndExecutionPeriodID
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+	</service>
+	<service>
+		<name>ReadOldIquiriesSummaryByDegreeID</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.publico.inquiries.ReadOldIquiriesSummaryByDegreeID
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+	</service>
+	
+	<service>
+		<name>ReadOldInquiriesTeachersResByTeacherNumber</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.teacher.inquiries.ReadOldInquiriesTeachersResByTeacherNumber
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>ReadOldInquiryTeachersResById</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.teacher.inquiries.ReadOldInquiryTeachersResById
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.teacher.inquiries.ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCode</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.teacher.inquiries.ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCode
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>ReadOldInquiriesTeachersResByDegreeId</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.teacher.inquiries.ReadOldInquiriesTeachersResByDegreeId
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.course.inquiries.ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization"/>
+		</filterChains>
+	</service>
+	
+	<!-- =============================================================================================== -->
+	
 	<service>
 		<name>TransferCurricularCourse</name>
 		<implementationClass>ServidorAplicacao.Servico.manager.TransferCurricularCourse</implementationClass>
