@@ -4,6 +4,10 @@
  */
 package ServidorAplicacao.Filtro;
 
+import java.util.Collection;
+import java.util.Iterator;
+
+import DataBeans.InfoRole;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
@@ -23,6 +27,25 @@ public abstract class AuthorizationByRoleFilter extends Filtro {
 		IServico servico,
 		Object[] argumentos)
 		throws Exception {
+			System.out.println("#######################################");
+
+			System.out.println("id= " + id);
+			System.out.println("id.user= " + id.getUtilizador());
+			Collection roles = id.getRoles();
+			System.out.println("roles.size= " + roles.size());
+			
+			System.out.println("role type= " + getRoleType());
+			System.out.println("servico= " + servico.getNome());
+			
+			Iterator iter = roles.iterator();
+			while (iter.hasNext()) {
+				InfoRole role = (InfoRole) iter.next();
+				System.out.println("role.tpye= " + role.getRoleType());
+				System.out.println("role.subApp= " + role.getPortalSubApplication());
+			}
+
+			System.out.println("#######################################");
+			
 		if (((id != null
 			&& id.getRoles() != null
 			&& !AuthorizationUtils.containsRole(id.getRoles(),getRoleType())))

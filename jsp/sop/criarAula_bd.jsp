@@ -21,7 +21,7 @@
 	<tr>
       	<td nowrap class="formTD"><bean:message key="property.aula.weekDay"/>: </td>
         <td nowrap class="formTD">
-        	<html:text property="diaSemana"  size="1"/>
+        	<html:text property="diaSemana"  size="2"/>
        	</td>
    	</tr>
    	<tr>

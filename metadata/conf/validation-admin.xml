@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- @validation.doctype@ -->
+<form-validation>
+  <formset>
+
+    <form name="createExecutionPeriodForm">
+      <field property="semesterToCreate" depends="required" page="1">
+        <arg0 key="property.semester.toCreate" resource="true"/>
+      </field>
+      <field property="yearToCreate" depends="required" page="1">
+        <arg0 key="property.year.toCreate" resource="true"/>
+      </field>
+      <field property="semesterToExportDataFrom" depends="required" page="1">
+        <arg0 key="property.semester.toImport" resource="true"/>
+      </field>
+      <field property="yearToExportDataFrom" depends="required" page="1">
+        <arg0 key="property.year.toImport" resource="true"/>
+      </field>      
+    </form>
+    
+  </formset>
+</form-validation>

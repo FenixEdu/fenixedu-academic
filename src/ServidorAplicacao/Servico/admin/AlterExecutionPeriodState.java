@@ -1,8 +1,8 @@
 /*
- * Created on 2003/07/18
+ * Created on 2003/07/25
  * 
  */
-package ServidorAplicacao.Servico.sop;
+package ServidorAplicacao.Servico.admin;
 
 import DataBeans.InfoExecutionPeriod;
 import Dominio.IExecutionPeriod;
@@ -13,34 +13,38 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.PeriodState;
 /**
  * @author Luis Crus & Sara Ribeiro
  */
 
-public class DeleteWorkingArea implements IServico {
+public class AlterExecutionPeriodState implements IServico {
 
-	private static DeleteWorkingArea _servico = new DeleteWorkingArea();
+	private static AlterExecutionPeriodState _servico =
+		new AlterExecutionPeriodState();
 	/**
 	 * The singleton access method of this class.
 	 **/
-	public static DeleteWorkingArea getService() {
+	public static AlterExecutionPeriodState getService() {
 		return _servico;
 	}
 
 	/**
 	 * The actor of this class.
 	 **/
-	private DeleteWorkingArea() {
+	private AlterExecutionPeriodState() {
 	}
 
 	/**
 	 * Devolve o nome do servico
 	 **/
 	public final String getNome() {
-		return "DeleteWorkingArea";
+		return "AlterExecutionPeriodState";
 	}
 
-	public Boolean run(InfoExecutionPeriod infoExecutionPeriodToDelete)
+	public Boolean run(
+		InfoExecutionPeriod infoExecutionPeriod,
+		PeriodState periodState)
 		throws FenixServiceException {
 
 		Boolean result = new Boolean(false);
@@ -52,17 +56,28 @@ public class DeleteWorkingArea implements IServico {
 			IPersistentExecutionYear executionYearDAO =
 				sp.getIPersistentExecutionYear();
 
-			IExecutionPeriod executionPeriodToDelete =
+			IExecutionPeriod executionPeriod =
 				executionPeriodDAO.readBySemesterAndExecutionYear(
-					infoExecutionPeriodToDelete.getSemester(),
+					infoExecutionPeriod.getSemester(),
 					executionYearDAO.readExecutionYearByName(
-						infoExecutionPeriodToDelete
-							.getInfoExecutionYear()
-							.getYear()));
+						infoExecutionPeriod.getInfoExecutionYear().getYear()));
 
-			if (executionPeriodToDelete != null) {
-				executionPeriodDAO.deleteWorkingArea(executionPeriodToDelete);
-				result = new Boolean(true);
+			if (executionPeriod == null) {
+				throw new InvalidExecutionPeriod();
+			} else {
+				System.out.println("periodState.getStateCode()= " + periodState.getStateCode());
+				if (periodState.getStateCode().equals(PeriodState.CURRENT.getStateCode())) {
+					// Deactivate the current
+					IExecutionPeriod currentExecutionPeriod =
+						executionPeriodDAO.readActualExecutionPeriod();
+					System.out.println("Actual = " + currentExecutionPeriod);
+					executionPeriodDAO.lockWrite(currentExecutionPeriod);
+					currentExecutionPeriod.setState(new PeriodState(PeriodState.OPEN));
+					executionPeriodDAO.lockWrite(currentExecutionPeriod);					 
+				}
+				
+				executionPeriodDAO.lockWrite(executionPeriod);
+				executionPeriod.setState(periodState);
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex.getMessage());
@@ -111,50 +126,6 @@ public class DeleteWorkingArea implements IServico {
 		 */
 		private InvalidExecutionPeriod(String message, Throwable cause) {
 			super(message, cause);
-		}
-
-	}
-
-	/**
-	 * To change the template for this generated type comment go to
-	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
-	 */
-	public class ExistingExecutionPeriod extends FenixServiceException {
-
-		/**
-		 * 
-		 */
-		private ExistingExecutionPeriod() {
-			super();
-		}
-
-		/**
-		 * @param errorType
-		 */
-		private ExistingExecutionPeriod(int errorType) {
-			super(errorType);
-		}
-
-		/**
-		 * @param message
-		 */
-		private ExistingExecutionPeriod(String message) {
-			super(message);
-		}
-
-		/**
-		 * @param message
-		 * @param cause
-		 */
-		private ExistingExecutionPeriod(String message, Throwable cause) {
-			super(message, cause);
-		}
-
-		/**
-		 * @param cause
-		 */
-		private ExistingExecutionPeriod(Throwable cause) {
-			super(cause);
 		}
 
 	}

@@ -77,8 +77,7 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 	 */
 	public void transferData(
 		IExecutionPeriod executionPeriodToImportDataTo,
-		IExecutionPeriod executionPeriodToExportDataFrom,
-		Boolean transferAllData)
+		IExecutionPeriod executionPeriodToExportDataFrom)
 		throws ExcepcaoPersistencia;
 
 	public List readPublic() throws ExcepcaoPersistencia;

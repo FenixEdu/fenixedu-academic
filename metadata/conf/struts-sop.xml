@@ -1072,36 +1072,6 @@
           <forward name="Sucess" path="/viewAllRoomsForExams.jsp"/>
       </action>
 
-
-	<!-- ========== WORKING AREA ========== -->
-      <action path="/manageWorkingArea"
-              type="ServidorApresentacao.Action.sop.ManageWorkingAreaDA"
-              parameter="method"
-              scope="request"
-              >
-          <forward name="Manage" path="/manageWorkingArea.jsp"/>
-      </action>
-
-      <action input="/manageWorkingArea.do?method=prepare&amp;page=1"
-			  name="createWorkingAreaForm"	
-      		  path="/createWorkingAreaForm"
-              scope="request"
-              type="ServidorApresentacao.Action.sop.ManageWorkingAreaDA"
-              parameter="method"
-              validate="true"
-              >
-        <exception type="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
-         	       key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-                   />
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
-         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-                   />
-        <forward name="Sucess" path="/manageWorkingArea.do?method=prepare"/>
-      </action>
-
-
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
 	  <action path="/siteViewer"
 				input="/siteViewerError.jsp"

@@ -1,12 +1,14 @@
 /*
- * Created on 2003/07/22
+ * Created on 2003/07/17
  * 
  */
-package ServidorAplicacao.Servico.sop;
+package ServidorAplicacao.Servico.admin;
 
 import DataBeans.InfoExecutionPeriod;
 import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
 import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -14,35 +16,38 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.PeriodState;
 /**
  * @author Luis Crus & Sara Ribeiro
  */
 
-public class PublishWorkingArea implements IServico {
+public class CreateExecutionPeriod implements IServico {
 
-	private static PublishWorkingArea _servico = new PublishWorkingArea();
+	private static CreateExecutionPeriod _servico = new CreateExecutionPeriod();
 	/**
 	 * The singleton access method of this class.
 	 **/
-	public static PublishWorkingArea getService() {
+	public static CreateExecutionPeriod getService() {
 		return _servico;
 	}
 
 	/**
 	 * The actor of this class.
 	 **/
-	private PublishWorkingArea() {
+	private CreateExecutionPeriod() {
 	}
 
 	/**
 	 * Devolve o nome do servico
 	 **/
 	public final String getNome() {
-		return "PublishWorkingArea";
+		return "CreateExecutionPeriod";
 	}
 
-	public Boolean run(InfoExecutionPeriod infoExecutionPeriodOfWorkingArea)
+	public Boolean run(
+		InfoExecutionPeriod infoExecutionPeriodOfWorkingArea,
+		InfoExecutionPeriod infoExecutionPeriodToExportDataFrom)
 		throws FenixServiceException {
 
 		Boolean result = new Boolean(false);
@@ -54,16 +59,11 @@ public class PublishWorkingArea implements IServico {
 			IPersistentExecutionYear executionYearDAO =
 				sp.getIPersistentExecutionYear();
 
-			if (infoExecutionPeriodOfWorkingArea.getSemester().intValue()
-				>= 0) {
-				throw new InvalidWorkingAreaException();
-			}
-
 			IExecutionPeriod executionPeriodToExportDataFrom =
 				executionPeriodDAO.readBySemesterAndExecutionYear(
-					infoExecutionPeriodOfWorkingArea.getSemester(),
+					infoExecutionPeriodToExportDataFrom.getSemester(),
 					executionYearDAO.readExecutionYearByName(
-						infoExecutionPeriodOfWorkingArea
+						infoExecutionPeriodToExportDataFrom
 							.getInfoExecutionYear()
 							.getYear()));
 
@@ -71,40 +71,51 @@ public class PublishWorkingArea implements IServico {
 				throw new InvalidExecutionPeriod();
 			}
 
-			IExecutionPeriod executionPeriodToImportDataTo =
-				executionPeriodDAO.readBySemesterAndExecutionYear(
-					new Integer(
-						-1
-							* infoExecutionPeriodOfWorkingArea
-								.getSemester()
-								.intValue()),
-					executionPeriodToExportDataFrom.getExecutionYear());
+			IExecutionYear executionYearToCreate =
+				executionYearDAO.readExecutionYearByName(
+					infoExecutionPeriodOfWorkingArea
+						.getInfoExecutionYear()
+						.getYear());
 
-			if (executionPeriodToImportDataTo == null) {
-				// Create coresponding execution period
-				executionPeriodToImportDataTo =
-					new ExecutionPeriod(
-						infoExecutionPeriodOfWorkingArea.getName().substring(3),
-						executionPeriodToExportDataFrom.getExecutionYear());
-				executionPeriodToImportDataTo.setSemester(
-					new Integer(
-						-1
-							* infoExecutionPeriodOfWorkingArea
-								.getSemester()
-								.intValue()));
+			if (executionYearToCreate == null) {
+				// Create coresponding execution year
+				executionYearToCreate =
+					new ExecutionYear(
+						infoExecutionPeriodOfWorkingArea
+							.getInfoExecutionYear()
+							.getYear());
+				executionYearToCreate.setState(
+					new PeriodState(PeriodState.NOT_OPEN));
+
+				executionYearDAO.writeExecutionYear(executionYearToCreate);
 			}
 
-			executionPeriodDAO.writeExecutionPeriod(
-				executionPeriodToImportDataTo);
+			IExecutionPeriod executionPeriodToCreate =
+				executionPeriodDAO.readBySemesterAndExecutionYear(
+					infoExecutionPeriodOfWorkingArea.getSemester(),
+					executionYearToCreate);
 
-			executionPeriodToImportDataTo.setState(
-				new PeriodState(PeriodState.OPEN));				
+			if (executionPeriodToCreate == null) {
+				// Create coresponding execution period
+				executionPeriodToCreate =
+					new ExecutionPeriod(
+						infoExecutionPeriodOfWorkingArea.getName(),
+						executionYearToCreate);
+				executionPeriodToCreate.setSemester(
+					infoExecutionPeriodOfWorkingArea.getSemester());
+				executionPeriodToCreate.setState(
+					new PeriodState(PeriodState.OPEN));
 
-			// Publish working area
+				executionPeriodDAO.writeExecutionPeriod(
+					executionPeriodToCreate);
+			} else {
+				throw new ExistingExecutionPeriod();
+			}
+
+			// Export data to new execution period
 			executionPeriodDAO.transferData(
-				executionPeriodToImportDataTo,
-				executionPeriodToExportDataFrom,
-				new Boolean(true));
+				executionPeriodToCreate,
+				executionPeriodToExportDataFrom);
 
 			result = new Boolean(true);
 		} catch (ExcepcaoPersistencia ex) {
@@ -197,50 +208,6 @@ public class PublishWorkingArea implements IServico {
 		 * @param cause
 		 */
 		private ExistingExecutionPeriod(Throwable cause) {
-			super(cause);
-		}
-
-	}
-
-	/**
-	 * To change the template for this generated type comment go to
-	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
-	 */
-	public class InvalidWorkingAreaException extends FenixServiceException {
-
-		/**
-		 * 
-		 */
-		private InvalidWorkingAreaException() {
-			super();
-		}
-
-		/**
-		 * @param errorType
-		 */
-		private InvalidWorkingAreaException(int errorType) {
-			super(errorType);
-		}
-
-		/**
-		 * @param message
-		 */
-		private InvalidWorkingAreaException(String message) {
-			super(message);
-		}
-
-		/**
-		 * @param message
-		 * @param cause
-		 */
-		private InvalidWorkingAreaException(String message, Throwable cause) {
-			super(message, cause);
-		}
-
-		/**
-		 * @param cause
-		 */
-		private InvalidWorkingAreaException(Throwable cause) {
 			super(cause);
 		}
 
