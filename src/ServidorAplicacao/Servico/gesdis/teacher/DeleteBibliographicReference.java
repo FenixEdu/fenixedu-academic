@@ -36,10 +36,10 @@ public class DeleteBibliographicReference implements IServico {
 	}
 
 	public final String getNome() {
-		return "Teacher.DeleteBibliographicReference";
+		return "DeleteBibliographicReference";
 	}
 
-	public void run(
+	public Boolean run(
 		InfoExecutionCourse infoExecutionCourse,
 		InfoBibliographicReference infoBibliographicReference)
 		throws FenixServiceException {
@@ -65,6 +65,8 @@ public class DeleteBibliographicReference implements IServico {
 					year);
 			if (bibliographicReference != null)
 				persistentBibliographicReference.delete(bibliographicReference);
+				
+			return new Boolean(true);	
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

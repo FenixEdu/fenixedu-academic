@@ -38,7 +38,7 @@ public class InsertBibliographicReference implements IServico {
 	}
 
 	public final String getNome() {
-		return "Teacher.InsertBibliographicReference";
+		return "InsertBibliographicReference";
 	}
 
 	private void verifiesBibliographicReferenceExistence(
