@@ -21,6 +21,7 @@ import Dominio.Pessoa;
 import Dominio.Role;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EstadoCivil;
 import Util.RoleType;
@@ -167,6 +168,7 @@ public class PersonUtils {
 		
 		
 		IPessoa fenixPerson = (IPessoa) sp.getIPessoaPersistente().readByOId(personTemp, true);
+		
 
 		if (fenixPerson == null) {
 			System.out.println("Person not Found !");
@@ -240,11 +242,12 @@ public class PersonUtils {
 	}
 
 
-	public static IPessoa createPersonFromStudent(MWAluno oldStudent) throws ExcepcaoPersistencia {
-		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+	public static IPessoa createPersonFromStudent(MWAluno oldStudent, ISuportePersistente sp) throws ExcepcaoPersistencia {
+		
 		MWPessoa oldPerson = oldStudent.getMiddlewarePerson();
 		
 		IPessoa person = new Pessoa();
+		sp.getIPessoaPersistente().simpleLockWrite(person);
 		
 		person.setCodigoFiscal(oldPerson.getFinancialrepcode());
 		person.setCodigoPostal(oldPerson.getZipcode());
@@ -280,15 +283,14 @@ public class PersonUtils {
 		// Generate Password
 		person.setPassword(PasswordEncryptor.encryptPassword(oldStudent.getDocumentidnumber()));
 		
+		sp.confirmarTransaccao();
 		
-		broker.beginTransaction();
-		broker.store(person);
-		broker.commitTransaction();
 
 
-		broker.beginTransaction();
-		
-			
+		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+		broker.beginTransaction();		
+
+
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("roleType", RoleType.PERSON);
 		Query query = new QueryByCriteria(Role.class, criteria);
@@ -300,8 +302,23 @@ public class PersonUtils {
 		personRole.setRole(role);
 		broker.store(personRole);
 		broker.commitTransaction();
+
+		broker.beginTransaction();		
+
+
+		criteria = new Criteria();
+		criteria.addEqualTo("roleType", RoleType.STUDENT);
+		query = new QueryByCriteria(Role.class, criteria);
+		role = (IRole) broker.getObjectByQuery(query);
+
 		
-		
+		personRole = new PersonRole();
+		personRole.setPerson(person);
+		personRole.setRole(role);
+		broker.store(personRole);
+		broker.commitTransaction();
+
+		sp.iniciarTransaccao();		
 		
 		return person;
 	}

@@ -277,6 +277,7 @@
     name="branchcode"
     column="branchCode"
     jdbc-type="INTEGER"
+
   />
   <field-descriptor id="2"
     name="orientationcode"
@@ -288,5 +289,13 @@
     column="description"
     jdbc-type="VARCHAR"
   />
+
+  <field-descriptor id="4"
+    name="idInternal"
+    column="id_internal"
+    jdbc-type="INTEGER"
+	primarykey="true"    
+  />
+
 
 </class-descriptor>

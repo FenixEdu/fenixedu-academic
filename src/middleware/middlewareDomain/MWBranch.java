@@ -12,6 +12,7 @@ public class MWBranch
   private Integer degreecode;
   private String description;
   private Integer orientationcode;
+  private Integer idInternal;
 
 
 
@@ -59,4 +60,18 @@ public class MWBranch
     return  " [branchCode] " + branchcode + " [degreeCode] " + degreecode + " [description] " + description + " [orientationCode] " + orientationcode;
 
   }
+/**
+ * @return
+ */
+public Integer getIdInternal() {
+	return idInternal;
+}
+
+/**
+ * @param idInternal
+ */
+public void setIdInternal(Integer idInternal) {
+	this.idInternal = idInternal;
+}
+
 }

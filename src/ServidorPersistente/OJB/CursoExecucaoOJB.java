@@ -17,7 +17,11 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
 import Dominio.CursoExecucao;
@@ -322,4 +326,19 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
 		}
 	}
 
+
+	public ICursoExecucao readByDegreeNameAndExecutionYear(String name, IExecutionYear executionYear) throws ExcepcaoPersistencia {
+
+
+		
+		Criteria criteria = new Criteria();
+
+		criteria.addEqualTo("academicYear", executionYear.getIdInternal());
+		criteria.addLike("curricularPlan.degree.nome", name);
+		
+		return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
+
+	}
+
+	
 }

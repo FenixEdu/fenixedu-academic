@@ -14,7 +14,9 @@ package middleware.persistentMiddlewareSupport;
 public interface IPersistentMiddlewareSupport {
 
 
-	public IPersistentAluno getIPersistentAluno();
+	public IPersistentMWAluno getIPersistentMWAluno();
+	public IPersistentMWBranch getIPersistentMWBranch();
+	
 }
 
 

@@ -60,23 +60,32 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
 	}
 
 	public IStudent readByNumero(Integer numero, TipoCurso degreeType) throws ExcepcaoPersistencia {
-		try {
-			IStudent aluno = null;
-			String oqlQuery = "select aluno from " + Student.class.getName();
-			oqlQuery += " where number = $1 and degreeType = $2";
-			query.create(oqlQuery);
-			//query.bind(.getNome());
-			query.bind(numero);
-			query.bind(degreeType.getTipoCurso());
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0)
-				aluno = (IStudent) result.get(0);
-			return aluno;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("number", numero);
+		criteria.addEqualTo("degreeType", degreeType);
+		
+		return (IStudent) queryObject(Student.class, criteria);
 	}
+
+
+//		try {
+//			IStudent aluno = null;
+//			String oqlQuery = "select aluno from " + Student.class.getName();
+//			oqlQuery += " where number = $1 and degreeType = $2";
+//			query.create(oqlQuery);
+//			//query.bind(.getNome());
+//			query.bind(numero);
+//			query.bind(degreeType.getTipoCurso());
+//			List result = (List) query.execute();
+//			lockRead(result);
+//			if (result.size() != 0)
+//				aluno = (IStudent) result.get(0);
+//			return aluno;
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
+//	}
 
 	//
 	//	public void delete(IStudent student) throws ExcepcaoPersistencia {

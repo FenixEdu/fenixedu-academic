@@ -30,4 +30,13 @@ public interface IPersistentBranch extends IPersistentObject {
 	 */
 	public List readByExecutionDegree(ICursoExecucao execucao) throws ExcepcaoPersistencia;
 	public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param degreeCurricularPlan
+	 * @param branchName
+	 * @return IBranch
+	 * @throws ExcepcaoPersistencia
+	 */
+	public IBranch readByDegreeCurricularPlanAndBranchName(IDegreeCurricularPlan degreeCurricularPlan, String branchName) throws ExcepcaoPersistencia;
 }

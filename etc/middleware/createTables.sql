@@ -1,0 +1,87 @@
+drop table if exists mw_ALUNO_temp;
+create table mw_ALUNO_temp(
+  documentIdNumber varchar(250) not null,
+  number integer(50),
+  degreeCode integer(20),
+  branchCode integer(30),
+  year integer(30),
+  ISTUniversity varchar(30),
+  worker varchar(30),
+  gratuitySituation varchar(30),
+  trash varchar(10),
+  answer1 varchar(1),
+  answer2 varchar(1),
+  answer3 varchar(1),
+  answer4 varchar(1),
+  answer5 varchar(1),
+  answer6 varchar(1),
+  answer7 varchar(1),
+  primary key (documentIdNumber)
+)type= InnoDB;
+
+
+drop table if exists mw_PESSOA;
+create table mw_PESSOA(
+  documentIdNumber varchar(250) not null,
+  documentIdType varchar(50),
+  documentIdPlace varchar(20),
+  documentIdDate date,
+  name varchar(250),
+  sex varchar(30),
+  maritalStatus varchar(30),
+  dateOfBirth date,
+  fatherName varchar(250),
+  motherName varchar(250),
+  countryCode integer(10),
+  parishOfBirth varchar(250),
+  municipalityOfBirth varchar(250),
+  districtOfBirth varchar(250),
+  address varchar(250),
+  zipCode varchar(250),
+  areaCode varchar(250),
+  parishOfAddress varchar(250),
+  municipalityOfAddress varchar(250),
+  districtOfAddress varchar(250),
+  phone varchar(250),
+  mobilePhone varchar(250),
+  email varchar(250),
+  homePage varchar(250),
+  contributorNumber integer(11),
+  username varchar(250),
+  password varchar(250),
+  fiscalCode varchar(250),
+  documentIdValidation date,
+  financialRepCode varchar(250),
+  primary key (documentIdNumber)
+)type= InnoDB;
+
+
+drop table if exists mw_COURSE;
+create table mw_COURSE(
+  courseCode varchar(10) not null,
+  courseName varchar(250),
+  universityCode varchar(10)
+)type= InnoDB;
+
+
+drop table if exists mw_BRANCH;
+create table mw_BRANCH(
+  degreeCode integer(10),
+  branchCode integer(10),
+  orientationCode integer(10),
+  description varchar(250),
+  id_internal integer(11) not null auto_increment,
+  primary key (id_internal)
+
+)type= InnoDB;
+
+
+drop table if exists mw_AVERAGE;
+create table mw_AVERAGE(
+ number integer(10) not null,
+ numberOfCoursesEnrolled integer(10),
+ numberOfCoursesApproved integer(10),
+ sum integer(10),
+ average float(10),
+ primary key (number)
+)type= InnoDB;

@@ -148,5 +148,13 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	public ICursoExecucao readByDegreeCodeAndDegreeCurricularPlanName(String code, String name) throws ExcepcaoPersistencia;
 	
 	
-	
+	/**
+	 * 
+	 * @param name
+	 * @param executionYear
+	 * @return The Execution Degree for this Execution Year 
+	 * @throws ExcepcaoPersistencia
+	 */
+	public ICursoExecucao readByDegreeNameAndExecutionYear(String name, IExecutionYear executionYear) throws ExcepcaoPersistencia;
+		
 }

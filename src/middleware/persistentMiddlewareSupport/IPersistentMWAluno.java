@@ -14,17 +14,18 @@ package middleware.persistentMiddlewareSupport;
 import java.util.List;
 
 import middleware.middlewareDomain.MWAluno;
-import middleware.persistentMiddlewareSupport.exceptions.*;
+import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
+import ServidorPersistente.ExcepcaoPersistencia;
 
 
-public interface IPersistentAluno  {
+public interface IPersistentMWAluno  {
     
     /**
      * 
      * @return All the STudents from the old Database
      * @throws PersistentMiddlewareSupportException
      */
-    public List readAll() throws PersistentMiddlewareSupportException;
+    public List readAll() throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
     
     
     /**
@@ -33,6 +34,6 @@ public interface IPersistentAluno  {
      * @return The Student corresponding to this number from the Old Database
      * @throws PersistentMiddlewareSupportException
      */
-    public MWAluno readByNumber(Integer number)throws PersistentMiddlewareSupportException; 
+    public MWAluno readByNumber(Integer number)throws PersistentMiddlewareSupportException, ExcepcaoPersistencia; 
 	
 }

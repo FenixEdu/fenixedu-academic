@@ -179,24 +179,29 @@ public class ExecutionPeriodOJB
 	 */
 	public IExecutionPeriod readActualExecutionPeriod()
 		throws ExcepcaoPersistencia {
-		try {
-			IExecutionPeriod executionPeriod = null;
-			String oqlQuery =
-				"select all from "
-					+ ExecutionPeriod.class.getName()
-					+ " where state = $1";
+//		try {
+//			IExecutionPeriod executionPeriod = null;
+//			String oqlQuery =
+//				"select all from "
+//					+ ExecutionPeriod.class.getName()
+//					+ " where state = $1";
+//
+//			query.create(oqlQuery);
+//			query.bind(PeriodState.CURRENT);
+//
+//			List result = (List) query.execute();
+//			lockRead(result);
+//			if ((result != null) && (!result.isEmpty()))
+//				executionPeriod = (IExecutionPeriod) result.get(0);
+//			return executionPeriod;
+//		} catch (QueryException e) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
+//		}
 
-			query.create(oqlQuery);
-			query.bind(PeriodState.CURRENT);
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("state", PeriodState.CURRENT);
+		return (IExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
 
-			List result = (List) query.execute();
-			lockRead(result);
-			if ((result != null) && (!result.isEmpty()))
-				executionPeriod = (IExecutionPeriod) result.get(0);
-			return executionPeriod;
-		} catch (QueryException e) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
-		}
 	}
 	/**
 	 * @see ServidorPersistente.IPersistentExecutionPeriod#readByNameAndExecutionYear(java.lang.String, Dominio.IExecutionYear)

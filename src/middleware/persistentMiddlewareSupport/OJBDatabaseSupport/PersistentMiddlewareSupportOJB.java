@@ -1,7 +1,8 @@
 package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
+import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
-import middleware.persistentMiddlewareSupport.IPersistentAluno;
+import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
 import org.apache.ojb.broker.PersistenceBroker;
@@ -36,8 +37,12 @@ public class PersistentMiddlewareSupportOJB implements IPersistentMiddlewareSupp
 	}
 
 
-	public IPersistentAluno getIPersistentAluno() {
-		return new AlunoOJB();
+	public IPersistentMWAluno getIPersistentMWAluno() {
+		return new MWAlunoOJB();
+	}
+
+	public IPersistentMWBranch getIPersistentMWBranch() {
+		return new MWBranchOJB();
 	}
 
 }
