@@ -167,7 +167,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	 */
 	public IExecutionPeriod readActiveExecutionPeriod() {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("state", PeriodState.ACTUAL_CODE);
+		criteria.addEqualTo("state", PeriodState.CURRENT_CODE);
 		List result = query(ExecutionPeriod.class, criteria);
 		if (result.size() == 1) {
 			return (IExecutionPeriod) result.get(0);
