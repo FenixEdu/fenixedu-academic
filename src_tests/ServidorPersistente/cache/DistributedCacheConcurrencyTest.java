@@ -13,16 +13,17 @@ import Dominio.ExecutionPeriod;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.cache.logging.CacheLog;
 
 /**
  * @author Luis Cruz
  *  
  */
-public class DistributedCacheTest extends ObjectFenixOJB
+public class DistributedCacheConcurrencyTest extends ObjectFenixOJB
 {
 
 	private static SuportePersistenteOJB persistentSupport;
-	private static DistributedCacheTest cacheTest;
+	private static DistributedCacheConcurrencyTest cacheTest;
 
 	private static Calendar startTime;
 	private static Calendar endTime;
@@ -31,7 +32,7 @@ public class DistributedCacheTest extends ObjectFenixOJB
 		try
 		{
 			persistentSupport = SuportePersistenteOJB.getInstance();
-			cacheTest = new DistributedCacheTest();
+			cacheTest = new DistributedCacheConcurrencyTest();
 		}
 		catch (Exception e)
 		{
@@ -39,24 +40,43 @@ public class DistributedCacheTest extends ObjectFenixOJB
 		}
 	}
 
-	public DistributedCacheTest()
+	public DistributedCacheConcurrencyTest()
 	{
 		super();
 	}
 
 	public static void main(String[] args)
 	{
-		System.out.println("   ### Testing distributed cache ###");
+		System.out.println("   ### Testing distributed cache concurrency test ###");
 		try
 		{
 			readAlotOfObjects();
+			readCacheStatistics();
+			System.out.print("Press <return> to continue");
+			System.in.read();
 			readAlotOfObjects();
+			readCacheStatistics();
+			System.out.print("Press <return> to continue");
+			System.in.read();
 			editSomeObject();
+			readCacheStatistics();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 
+	 */
+	private static void readCacheStatistics()
+	{
+		System.out.println("   number puts               : " + CacheLog.getNumberPuts());
+		System.out.println("   number removes            : " + CacheLog.getNumberRemoves());
+		System.out.println("   number successful lookups : " + CacheLog.getNumberSuccessfulLookUps());
+		System.out.println("   number failed lookups     : " + CacheLog.getNumberFailedLookUps());
+		System.out.println("   number clears             : " + CacheLog.getNumberClears());
 	}
 
 	/**

@@ -38,7 +38,7 @@
 	<target name="run-tests-cache"
 			depends="compile-tests-cache"
             description="Verifies correct cache distribution.">
-		<java classname="ServidorPersistente.cache.DistributedCacheTest">
+		<java classname="ServidorPersistente.cache.DistributedCacheConcurrencyTest">
 			<classpath>
 				<pathelement path="${build.tests.cache}"/>
 				<pathelement path="${build.app-server}"/>
