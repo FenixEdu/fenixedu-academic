@@ -39,7 +39,10 @@
 	</ul>
 	<p>
 	<ul>
-	<li><html:link href="<%= request.getContextPath()+"/publico/viewSiteExecutionCourse.do?method=firstPage" %>" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal" target="_blank">Ver Página da Disciplina</html:link>
 	<li><html:link page="/courseInformation.do?method=prepareEdit&amp;page=0" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.courseInformationManagement"/></html:link></li>
+	</ul>
+	<p>	
+	<ul>
+	<li><html:link href="<%= request.getContextPath()+"/publico/viewSiteExecutionCourse.do?method=firstPage" %>" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal" target="_blank">Ver Página da Disciplina</html:link>
 	</ul>
 </logic:present>
