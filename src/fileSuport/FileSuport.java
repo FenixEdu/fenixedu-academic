@@ -26,7 +26,6 @@ import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
-import javax.transaction.Status;
 import javax.transaction.SystemException;
 
 import org.apache.slide.authenticate.CredentialsToken;
@@ -242,18 +241,13 @@ public class FileSuport implements IFileSuport {
 	}
 
 	private void commitTransaction() throws SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException {
-		if (token.getStatus()!=Status.STATUS_NO_TRANSACTION) {
-			token.commit();	
-		}		
+			token.commit();				
 		}
 	
 	private void abortTransaction() throws IllegalStateException, SecurityException, SystemException{
-			if (token.getStatus()!=Status.STATUS_NO_TRANSACTION) {
 				token.rollback();
 			}
-			
-			
-		}	
+	
 	/**
 		* create Folder
 		* @param folder folder path
