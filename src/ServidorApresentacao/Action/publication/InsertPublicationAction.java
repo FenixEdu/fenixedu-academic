@@ -172,7 +172,7 @@ public class InsertPublicationAction extends CRUDActionByOID {
 		throws FenixActionException {
 		try {
 
-			HttpSession session = request.getSession(false);
+			//HttpSession session = request.getSession(false);
 
 			IUserView userView = SessionUtils.getUserView(request);
 			InfoPublication infoPublication =
@@ -182,7 +182,7 @@ public class InsertPublicationAction extends CRUDActionByOID {
 
 			DynaActionForm dynaForm = (DynaActionForm) form;
 
-			Integer keyTeacher = (Integer) dynaForm.get("teacherId");
+			//Integer keyTeacher = (Integer) dynaForm.get("teacherId");
 
 			Integer publicationType = PublicationConstants.CIENTIFIC;
 
@@ -230,8 +230,8 @@ public class InsertPublicationAction extends CRUDActionByOID {
 		Object[] args =
 			getEditServiceArguments(form, crudMapping, infoObject, request);
 
-		DynaActionForm dynaForm = (DynaActionForm) form;
-		String typePublication = (String) dynaForm.get("typePublication");
+		//DynaActionForm dynaForm = (DynaActionForm) form;
+		//String typePublication = (String) dynaForm.get("typePublication");
 
 		//TODO ver s os campos obrigatorios veem preenchidos
 
@@ -325,7 +325,7 @@ public class InsertPublicationAction extends CRUDActionByOID {
 		throws FenixServiceException {
 		// TODO Auto-generated method stub
 
-		HttpSession session = request.getSession(false);
+		//HttpSession session = request.getSession(false);
 
 		IUserView userView = SessionUtils.getUserView(request);
 		Object[] args1 = { userView };

@@ -46,7 +46,7 @@ public class PublicationAttributeOJB extends ObjectFenixOJB implements IPersiste
      */
     public List readAllByPublicationType(PublicationType publicationType) throws ExcepcaoPersistencia
     {
-        Criteria criteria = new Criteria();
+        //Criteria criteria = new Criteria();
         //criteria.addEqualTo()
         return null;
     }

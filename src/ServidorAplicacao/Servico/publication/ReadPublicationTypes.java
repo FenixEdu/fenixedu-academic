@@ -9,14 +9,11 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
-import Dominio.ITeacher;
 import Dominio.publication.IPublicationType;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.publication.IPersistentPublicationType;
@@ -61,9 +58,9 @@ public class ReadPublicationTypes implements IServico
         	
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-            IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+//            IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
+//            ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
+//            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
             IPersistentPublicationType persistentPublicationType = persistentSuport.getIPersistentPublicationType();
             List publicationTypeList = persistentPublicationType.readAll();

@@ -8,17 +8,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.IStudentCurricularPlan;
 import Dominio.student.ISchoolRegistrationInquiryAnswer;
 import Dominio.student.SchoolRegistrationInquiryAnswer;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSchoolRegistrationInquiryAnswer;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.TipoCurso;
 
 /**
  * @author Nuno Correia
@@ -44,9 +41,9 @@ public class SchoolRegistration implements IService {
     private void enrollStudent1stTime1stYear(ISuportePersistente sp, Integer studentNumber) throws ExcepcaoPersistencia,
     		FenixServiceException {
         
-        IStudentCurricularPlanPersistente scpPersistent = sp.getIStudentCurricularPlanPersistente();       
+        //IStudentCurricularPlanPersistente scpPersistent = sp.getIStudentCurricularPlanPersistente();       
         
-        IStudentCurricularPlan scp = scpPersistent.readActiveStudentCurricularPlan(studentNumber,TipoCurso.LICENCIATURA_OBJ);        
+        //IStudentCurricularPlan scp = scpPersistent.readActiveStudentCurricularPlan(studentNumber,TipoCurso.LICENCIATURA_OBJ);        
      /*   IDegreeCurricularPlan dcp = scp.getDegreeCurricularPlan();
         List curricularCourses = dcp.getCurricularCoursesByYearAndSemesterAndBranch(1,new Integer(1),scp.getBranch());
         

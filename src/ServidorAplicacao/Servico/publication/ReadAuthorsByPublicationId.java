@@ -9,18 +9,14 @@ package ServidorAplicacao.Servico.publication;
 import java.util.ArrayList;
 import java.util.List;
 
-import Dominio.IPessoa;
-import Dominio.publication.IAuthor;
 import Dominio.publication.IPublication;
 import Dominio.publication.Publication;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.publication.IPersistentAuthor;
 import ServidorPersistente.publication.IPersistentPublication;
 
 /**
@@ -56,12 +52,12 @@ public class ReadAuthorsByPublicationId implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentPublication persitentPublication =
 				sp.getIPersistentPublication();
-			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-			IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
-			IPessoa person =
-				persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-			IAuthor author =
-				persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());
+			//IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+			//IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
+			//IPessoa person =
+			//	persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+			//IAuthor author =
+			//	persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());
 
 			IPublication publication =
 				(IPublication) persitentPublication.readByOID(

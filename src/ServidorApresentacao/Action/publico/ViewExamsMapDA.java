@@ -51,7 +51,7 @@ public class ViewExamsMapDA extends FenixContextDispatchAction
 			IUserView userView =
 				(IUserView) request.getSession().getAttribute(
 					SessionConstants.U_VIEW);
-			Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+			//Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
 			Integer degreeId = getFromRequest("degreeID", request);
 			request.setAttribute("degreeID", degreeId);
 

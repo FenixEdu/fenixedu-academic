@@ -30,7 +30,6 @@ import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
-import Util.renderer.BarChart;
 import Util.renderer.container.RequestEntry;
 
 /**
@@ -122,8 +121,8 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 		}
 
 		SortedSet sortedProfileSet = sortProfileMap(profileMap);
-		BarChart barChart = new BarChart(sortedProfileSet, "Average Execution Time",
-				logImageDir + "/" + filename + ".bar.png", 20);
+		//BarChart barChart = new BarChart(sortedProfileSet, "Average Execution Time",
+		//		logImageDir + "/" + filename + ".bar.png", 20);
 		return sortedProfileSet;
 	}
 

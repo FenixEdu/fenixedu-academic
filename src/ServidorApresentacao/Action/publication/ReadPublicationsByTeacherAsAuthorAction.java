@@ -15,7 +15,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.SiteView;
 import DataBeans.publication.InfoSitePublications;
@@ -51,7 +50,7 @@ public class ReadPublicationsByTeacherAsAuthorAction
 
 		ActionForward actionForward =
 			mapping.findForward("show-cientific-author-form");
-		DynaActionForm dynaForm = (DynaActionForm) form;
+		//DynaActionForm dynaForm = (DynaActionForm) form;
 
 		if (session != null) {
 
@@ -82,7 +81,7 @@ public class ReadPublicationsByTeacherAsAuthorAction
 
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
-		ActionErrors errors = new ActionErrors();
+		//ActionErrors errors = new ActionErrors();
 
 		String typePublication =
 			request.getParameter("typePublication");
@@ -94,7 +93,7 @@ public class ReadPublicationsByTeacherAsAuthorAction
 
 		ActionForward actionForward =
 			mapping.findForward("show-cientific-Teacher-form");
-		DynaActionForm dynaForm = (DynaActionForm) form;
+		//DynaActionForm dynaForm = (DynaActionForm) form;
 		
 		if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
 			actionForward =
@@ -141,7 +140,7 @@ public class ReadPublicationsByTeacherAsAuthorAction
 
 		ActionForward actionForward =
 			mapping.findForward("show-cientific-Teacher-form");
-		DynaActionForm dynaForm = (DynaActionForm) form;
+		//DynaActionForm dynaForm = (DynaActionForm) form;
 
 		if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
 			actionForward =
