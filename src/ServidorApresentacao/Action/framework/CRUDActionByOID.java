@@ -4,10 +4,16 @@
  */
 package ServidorApresentacao.Action.framework;
 
+import java.beans.PropertyDescriptor;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.StringTokenizer;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -17,6 +23,7 @@ import org.apache.struts.actions.DispatchAction;
 import DataBeans.InfoObject;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.mapping.framework.CRUDMapping;
@@ -41,6 +48,7 @@ import ServidorApresentacao.mapping.framework.CRUDMapping;
  * 
  * 
  * 
+ * 
  * Methods availables are: <br>
  * 
  * <pre>
@@ -49,6 +57,7 @@ import ServidorApresentacao.mapping.framework.CRUDMapping;
  * 	<b>delete</b> <br>
  *     <b>read</b>
  * </pre>
+ * 
  * 
  * 
  * <b>Notes:</b><br>
@@ -71,7 +80,7 @@ public abstract class CRUDActionByOID extends DispatchAction
 	 * CRUDMapping#getDeleteService()
 	 * 
 	 * @param mapping
-	 *            should be an instance of @link CRUDMapping
+	 *                   should be an instance of @link CRUDMapping
 	 * @param form
 	 * @param request
 	 * @param response
@@ -100,7 +109,7 @@ public abstract class CRUDActionByOID extends DispatchAction
 	 * CRUDMapping#getEditService()
 	 * 
 	 * @param mapping
-	 *            should be an instance of @link CRUDMapping
+	 *                   should be an instance of @link CRUDMapping
 	 * @param form
 	 * @param request
 	 * @param response
@@ -115,7 +124,7 @@ public abstract class CRUDActionByOID extends DispatchAction
         throws Exception
     {
         CRUDMapping crudMapping = (CRUDMapping) mapping;
-        InfoObject infoObject = getInfoObjectFromForm(form);
+        InfoObject infoObject = getInfoObjectFromForm(form, crudMapping);
         Object[] args = { getOIDProperty(crudMapping, form), infoObject };
         ServiceUtils.executeService(
             SessionUtils.getUserView(request),
@@ -130,7 +139,62 @@ public abstract class CRUDActionByOID extends DispatchAction
 	 * @param form
 	 * @return InfoObject created
 	 */
-    abstract protected InfoObject getInfoObjectFromForm(ActionForm form);
+    protected InfoObject getInfoObjectFromForm(ActionForm form, CRUDMapping mapping)
+        throws FenixActionException
+    {
+        InfoObject infoObject;
+        try
+        {
+            infoObject = (InfoObject) Class.forName(mapping.getInfoObjectClassName()).newInstance();
+        } catch (Exception e)
+        {
+            e.printStackTrace(System.out);
+            throw new FenixActionException(e);
+        }
+
+        try
+        {
+            Map formPropertiesHashMap = PropertyUtils.describe(form);
+
+            Iterator iterator = formPropertiesHashMap.entrySet().iterator();
+
+            while (iterator.hasNext())
+            {
+                Map.Entry entry = (Map.Entry) iterator.next();
+                String formProperty = (String) entry.getKey();
+                StringTokenizer propertyTokenizer = new StringTokenizer(formProperty, ".");
+
+                if (propertyTokenizer.countTokens() == 1)
+                {
+                    BeanUtils.copyProperty(infoObject, formProperty, entry.getValue());
+                } else
+                {
+                    Object value = null;
+                    while (propertyTokenizer.hasMoreElements())
+                    {
+                        String property = propertyTokenizer.nextToken();
+
+                        PropertyDescriptor propertyDescriptor =
+                            PropertyUtils.getPropertyDescriptor(propertyTokenizer, property);
+                        if (value == null)
+                        {
+                            value = propertyDescriptor.getPropertyType().newInstance();
+                            PropertyUtils.setProperty(infoObject, property, value);
+                        } else
+                        {
+                            PropertyUtils.setProperty(value, property, entry.getValue());
+                        }
+                    }
+                }
+            }
+        } catch (Exception e1)
+        {
+            // TODO Auto-generated catch block
+            e1.printStackTrace(System.out);
+            throw new FenixActionException(e1);
+        }
+        return infoObject;
+    }
 
     /**
 	 * @param crudMapping
@@ -175,14 +239,26 @@ public abstract class CRUDActionByOID extends DispatchAction
         ActionMapping mapping,
         InfoObject infoObject,
         ActionForm form,
-        HttpServletRequest request)
+        HttpServletRequest request) throws FenixActionException
     {
         try
         {
-            BeanUtils.copyProperties(form, infoObject);
-        } catch (Exception e)
+            Map formPropertiesHashMap = PropertyUtils.describe(form);
+
+            Iterator iterator = formPropertiesHashMap.entrySet().iterator();
+
+            while (iterator.hasNext())
+            {
+                Map.Entry entry = (Map.Entry) iterator.next();
+                String formProperty = (String) entry.getKey();
+                Object value = PropertyUtils.getProperty(infoObject, formProperty);
+                BeanUtils.copyProperty(form, formProperty, value);
+            }
+        } catch (Exception e1)
         {
-            e.printStackTrace();
+            // TODO Auto-generated catch block
+            e1.printStackTrace(System.out);
+            throw new FenixActionException(e1);
         }
     }
 
@@ -193,7 +269,7 @@ public abstract class CRUDActionByOID extends DispatchAction
 	 * infoObject readed.
 	 * 
 	 * @param mapping
-	 *            should be an instance of @link CRUDMapping
+	 *                   should be an instance of @link CRUDMapping
 	 * @param form
 	 * @param request
 	 * @param response
@@ -239,7 +315,7 @@ public abstract class CRUDActionByOID extends DispatchAction
 	 * CRUDMapping#getReadService()
 	 * 
 	 * @param mapping
-	 *            should be an instance of @link CRUDMapping
+	 *                   should be an instance of @link CRUDMapping
 	 * @param form
 	 * @param request
 	 * @param response
