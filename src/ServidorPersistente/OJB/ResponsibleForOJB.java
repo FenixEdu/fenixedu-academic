@@ -7,6 +7,7 @@ package ServidorPersistente.OJB;
 
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.IDisciplinaExecucao;
@@ -103,31 +104,9 @@ public class ResponsibleForOJB
 
 	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
-		try {
-
-			String oqlQuery =
-				"select responsibleFor from "
-					+ ResponsibleFor.class.getName()
-					+ " where executionCourse.sigla = $1"
-					+ " and executionCourse.executionPeriod.name = $2"
-					+ " and executionCourse.executionPeriod.executionYear.year = $3";
-
-			query.create(oqlQuery);
-			query.bind(executionCourse.getSigla());
-			query.bind(executionCourse.getExecutionPeriod().getName());
-			query.bind(
-				executionCourse
-					.getExecutionPeriod()
-					.getExecutionYear()
-					.getYear());
-
-			List result = (List) query.execute();
-			lockRead(result);
-
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		Criteria crit = new Criteria();
+		crit.addEqualTo("executionCourse.idInternal",executionCourse.getIdInternal());
+	return queryList(ResponsibleFor.class,crit);
 	}
 
 	public void delete(IResponsibleFor responsibleFor)
