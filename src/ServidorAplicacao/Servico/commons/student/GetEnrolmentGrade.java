@@ -126,37 +126,21 @@ public class GetEnrolmentGrade implements IServico {
 				}
 			}
 
-			Integer latestMark = null;
+			Integer latestMark = new Integer(0);
 			try {
-				latestMark = new Integer(latestEvaluation.getGrade());
+				latestMark = Integer.valueOf(latestEvaluation.getGrade());
 			} catch (NumberFormatException e) {
 				// If there's an Exception , the the student wasn't able to improve
-
-				latestEvaluation.setGrade((new Integer(latestEvaluation.getGrade())).toString());
-				InfoEnrolmentEvaluation infolatestEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
-
-				try {
-					if (latestEvaluation.getEmployee() != null) {
-						if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
-							|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
-							IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
-							latestEvaluation.setEmployee(employee);
-							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
-						}
-					}
-				} catch (ExcepcaoPersistencia e1) {
-					throw new FenixServiceException(e1);
-				}
-				return infolatestEvaluation;
+				//exception is to be ignored				
 			}
 
 			// if there is no exception we must check wick is the higher grade
 
-			Integer previousMark = null;
+			Integer previousMark = new Integer(0);
 			try {
-				previousMark = new Integer(previousEvaluation.getGrade());
+				previousMark = Integer.valueOf(previousEvaluation.getGrade());
 			} catch (NumberFormatException e) {
-				latestEvaluation.setGrade((new Integer(latestEvaluation.getGrade())).toString());
+//				latestEvaluation.setGrade((new Integer(latestEvaluation.getGrade())).toString());
 				InfoEnrolmentEvaluation infolatestEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
 				try {
 

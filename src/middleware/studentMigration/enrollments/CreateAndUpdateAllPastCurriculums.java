@@ -109,7 +109,7 @@ public class CreateAndUpdateAllPastCurriculums
 			
 			CreateAndUpdateAllPastCurriculums.createAndUpdateUniversitys(mws, fenixPersistentSuport);
 
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			e.printStackTrace(System.out);
 		}
 
@@ -126,9 +126,9 @@ public class CreateAndUpdateAllPastCurriculums
 	/**
 	 * @param mwCurricularCourseScope
 	 * @param fenixPersistentSuport
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	private static void writeAndUpdate(MWCurricularCourseScope mwCurricularCourseScope, ISuportePersistente fenixPersistentSuport) throws Exception
+	private static void writeAndUpdate(MWCurricularCourseScope mwCurricularCourseScope, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		try {
 			IDegreeCurricularPlan degreeCurricularPlan = CreateAndUpdateAllPastCurriculums.getDegreeCurricularPlan(mwCurricularCourseScope, fenixPersistentSuport);
@@ -161,7 +161,7 @@ public class CreateAndUpdateAllPastCurriculums
 				return;
 			}
 
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			System.out.println("[ERROR 109] Exception migrating MWCurricularCourseScope!");
 			System.out.println("[ERROR 109] Execution Year: [" + mwCurricularCourseScope.getExecutionyear() + "]");
 			System.out.println("[ERROR 109] Course Code: [" + mwCurricularCourseScope.getCoursecode() + "]");
@@ -170,7 +170,7 @@ public class CreateAndUpdateAllPastCurriculums
 			System.out.println("[ERROR 109] Curricular Year: [" + mwCurricularCourseScope.getCurricularyear() + "]");
 			System.out.println("[ERROR 109] Curricular Semester: [" + mwCurricularCourseScope.getCurricularsemester() + "]");
 			System.out.println("[ERROR 109] Course Type: [" + mwCurricularCourseScope.getCoursetype() + "]");
-			throw new Exception(e);
+			throw new Throwable(e);
 		}
 	}
 
@@ -178,9 +178,9 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @param mwCurricularCourseScope
 	 * @param fenixPersistentSuport
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWCurricularCourseScope mwCurricularCourseScope, ISuportePersistente fenixPersistentSuport) throws Exception
+	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWCurricularCourseScope mwCurricularCourseScope, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWDegreeTranslation persistentMWDegreeTranslation = mws.getIPersistentMWDegreeTranslation();
@@ -228,9 +228,9 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @param degreeCurricularPlan
 	 * @param fenixPersistentSuport
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	private static IBranch getBranch(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Exception
+	private static IBranch getBranch(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWBranch persistentMWBranch = mws.getIPersistentMWBranch();
@@ -284,9 +284,9 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @param degreeCurricularPlan
 	 * @param fenixPersistentSuport
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	protected static ICurricularCourse getCurricularCourse(String courseCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Exception
+	protected static ICurricularCourse getCurricularCourse(String courseCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IPersistentCurricularCourse persistentCurricularCourse = fenixPersistentSuport.getIPersistentCurricularCourse();
 
@@ -343,9 +343,9 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @param branch
 	 * @param fenixPersistentSuport
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	protected static ICurricularCourseScope getCurricularCourseScope(MWCurricularCourseScope mwCurricularCourseScope, ICurricularCourse curricularCourse, IBranch branch, ISuportePersistente fenixPersistentSuport) throws Exception
+	protected static ICurricularCourseScope getCurricularCourseScope(MWCurricularCourseScope mwCurricularCourseScope, ICurricularCourse curricularCourse, IBranch branch, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IPersistentCurricularCourseScope persistentCurricularCourseScope = fenixPersistentSuport.getIPersistentCurricularCourseScope();
 		IPersistentCurricularSemester persistentCurricularSemester = fenixPersistentSuport.getIPersistentCurricularSemester();
@@ -399,9 +399,9 @@ public class CreateAndUpdateAllPastCurriculums
 	/**
 	 * @param curricularCourseCode
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	protected static String getCurricularCourseName(String curricularCourseCode) throws Exception
+	protected static String getCurricularCourseName(String curricularCourseCode) throws Throwable
 	{
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWCurricularCourse persistentMWCurricualrCourse = mws.getIPersistentMWCurricularCourse();
@@ -418,9 +418,9 @@ public class CreateAndUpdateAllPastCurriculums
 	/**
 	 * @param persistentMiddlewareSupport
 	 * @param fenixPersistentSuport
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	private static void createAndUpdateUniversitys(IPersistentMiddlewareSupport persistentMiddlewareSupport, ISuportePersistente fenixPersistentSuport) throws Exception
+	private static void createAndUpdateUniversitys(IPersistentMiddlewareSupport persistentMiddlewareSupport, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IPersistentMWUniversity persistentMWUniversity = persistentMiddlewareSupport.getIPersistentMWUniversity();
 		IPersistentUniversity persistentUniversity = fenixPersistentSuport.getIPersistentUniversity();
@@ -461,9 +461,9 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @param degreeCurricularPlan
 	 * @param persistentBranch
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	protected static IBranch solveBranchesProblemsForDegrees1And4And6And51And53And54And64(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, IPersistentBranch persistentBranch) throws Exception
+	protected static IBranch solveBranchesProblemsForDegrees1And4And6And51And53And54And64(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, IPersistentBranch persistentBranch) throws Throwable
 	{
 		if ((degreeCode.intValue() == 6) ||
 			(degreeCode.intValue() == 1) ||
@@ -500,9 +500,9 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @param mwCurricularCourseScope
 	 * @param fenixPersistentSuport
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	private static IExecutionPeriod getExecutionPeriod(MWCurricularCourseScope mwCurricularCourseScope, ISuportePersistente fenixPersistentSuport) throws Exception
+	private static IExecutionPeriod getExecutionPeriod(MWCurricularCourseScope mwCurricularCourseScope, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		MWEnrolment mwEnrolment = new MWEnrolment();
 		mwEnrolment.setEnrolmentyear(mwCurricularCourseScope.getExecutionyear());

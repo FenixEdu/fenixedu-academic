@@ -93,11 +93,11 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			IPersistentMWEnrolment persistentMWEnrolment = mws.getIPersistentMWEnrolment();
 
 			fenixPersistentSuport.iniciarTransaccao();
-	
+			
 			Integer numberOfStudents = persistentMWAluno.countAll();
-	
+			
 			fenixPersistentSuport.confirmarTransaccao();
-	
+			
 			System.out.println("[INFO] Total number of student curriculums to update [" + numberOfStudents + "].");
 
 			int numberOfElementsInSpan = 100;
@@ -106,7 +106,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			
 			for (int span = 0; span < numberOfSpans; span++) {
 				fenixPersistentSuport.iniciarTransaccao();
-//				fenixPersistentSuport.clearCache();
+
 				System.gc();
 	
 				System.out.println("[INFO] Reading MWStudents...");
@@ -150,13 +150,12 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		}
 
 		ReportAllPastEnrollmentMigration.report(new PrintWriter(System.out, true));
-//		ReportEnrolment.report(new PrintWriter(System.out, true));
 	}
 
 	/**
 	 * @param mwStudent
 	 * @param fenixPersistentSuport
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	private static void createAndUpdateAllStudentPastEnrolments(MWAluno mwStudent, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
@@ -219,7 +218,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param mwStudent
 	 * @param fenixPersistentSuport
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	private static IStudentCurricularPlan getStudentCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan, IStudent student, MWAluno mwStudent, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
@@ -294,7 +293,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param degreeCurricularPlan
 	 * @param fenixPersistentSuport
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	private static IBranch getBranch(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
@@ -328,7 +327,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param mwStudent
 	 * @param studentCurricularPlan
 	 * @param fenixPersistentSuport
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	private static void writeAndUpdateEnrolments(MWAluno mwStudent, IStudentCurricularPlan studentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
@@ -379,7 +378,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param degreeCurricularPlan
 	 * @param fenixPersistentSuport
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	private static ICurricularCourse getCurricularCourse(MWEnrolment mwEnrolment, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
@@ -419,9 +418,9 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param studentCurricularPlan
 	 * @param fenixPersistentSuport
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	private static ICurricularCourseScope getCurricularCourseScope(MWEnrolment mwEnrolment, ICurricularCourse curricularCourse/*, IStudentCurricularPlan studentCurricularPlan*/, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+	private static ICurricularCourseScope getCurricularCourseScope(MWEnrolment mwEnrolment, ICurricularCourse curricularCourse, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IBranch branch = CreateAndUpdateAllStudentsPastEnrolments.getBranch(mwEnrolment.getDegreecode(), mwEnrolment.getBranchcode(), degreeCurricularPlan, fenixPersistentSuport);
 		if (branch == null) {
@@ -464,7 +463,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param universityCode
 	 * @param fenixPersistentSuport
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	private static IUniversity getUniversity(String universityCode, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
@@ -489,6 +488,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param curricularCourseScope
 	 * @param fenixPersistentSuport
 	 * @return
+	 * @throws Throwable
 	 */
 	private static IEnrolment createAndUpdateEnrolment(MWEnrolment mwEnrolment, IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
@@ -539,12 +539,14 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		} else {
 			whenAltered = mwEnrolment.getExamdate();
 		}
+		
+		String grade = CreateAndUpdateAllStudentsPastEnrolments.getAcurateGrade(mwEnrolment);
 
-		IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(enrolment, enrolmentEvaluationType, mwEnrolment.getGrade(), whenAltered);
+		IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(enrolment, enrolmentEvaluationType, grade, whenAltered);
 
 		IEnrolmentEvaluation enrolmentEvaluationToObtainKey = new EnrolmentEvaluation();
 		enrolmentEvaluationToObtainKey.setEnrolment(enrolment);
-		enrolmentEvaluationToObtainKey.setGrade(mwEnrolment.getGrade());
+		enrolmentEvaluationToObtainKey.setGrade(grade);
 		enrolmentEvaluationToObtainKey.setEnrolmentEvaluationType(enrolmentEvaluationType);
 		enrolmentEvaluationToObtainKey.setWhen(whenAltered);
 		String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentEvaluationKey(enrolmentEvaluationToObtainKey);
@@ -562,7 +564,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
 				enrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
 				enrolmentEvaluation.setExamDate(mwEnrolment.getExamdate());
-				enrolmentEvaluation.setGrade(mwEnrolment.getGrade());
+				enrolmentEvaluation.setGrade(grade);
 				enrolmentEvaluation.setObservation(mwEnrolment.getRemarks());
 				enrolmentEvaluation.setPersonResponsibleForGrade(CreateAndUpdateAllStudentsPastEnrolments.getPersonResponsibleForGrade(mwEnrolment, fenixPersistentSuport));
 
@@ -677,7 +679,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param mwEnrolment
 	 * @param fenixPersistentSuport
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	private static IPessoa getPersonResponsibleForGrade(MWEnrolment mwEnrolment, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
@@ -869,9 +871,9 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param mwEnrolment
 	 * @param fenixPersistentSuport
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	protected static IExecutionPeriod getExecutionPeriodForThisMWEnrolment(MWEnrolment mwEnrolment, ISuportePersistente fenixPersistentSuport) throws Exception
+	protected static IExecutionPeriod getExecutionPeriodForThisMWEnrolment(MWEnrolment mwEnrolment, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IPersistentExecutionPeriod persistentExecutionPeriod = fenixPersistentSuport.getIPersistentExecutionPeriod();
 		IPersistentExecutionYear persistentExecutionYear = fenixPersistentSuport.getIPersistentExecutionYear();
@@ -882,5 +884,43 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(executionPeriodName, executionYear);
 		
 		return executionPeriod;
+	}
+
+	private static String getAcurateGrade(MWEnrolment mwEnrolment)
+	{
+		String grade = mwEnrolment.getGrade();
+
+		if (grade == null) {
+			return "0";
+		}
+
+		if (grade.equals("")) {
+			return "0";
+		}
+
+		if (grade.equals("RE")) {
+			return grade;
+		}
+
+		if (grade.equals("AP")) {
+			return grade;
+		}
+
+		int intGrade;
+
+		try {
+			intGrade = new Integer(grade).intValue();
+		} catch (NumberFormatException e) {
+			System.out.println("[ERROR 215] Grade from MWEnrolment is not a number: [" + mwEnrolment.getGrade() + "]!");
+			return "0";
+		}
+
+		if ((intGrade > 20) || (intGrade < 0)) {
+			System.out.println("[ERROR 216] Grade from MWEnrolment is not valid: [" + mwEnrolment.getGrade() + "]!");
+			return "0";
+		} else
+		{
+			return (new Integer(intGrade)).toString();
+		}
 	}
 }
