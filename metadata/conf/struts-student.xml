@@ -148,7 +148,7 @@
         path="/studentShiftEnrolmentManager"
         input="/studentShiftEnrolmentManager.do?method=initializeEnrolment" 
         parameter="method"
-        scope="session"
+        scope="request"
         validate="false">
         <exception type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
           key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
