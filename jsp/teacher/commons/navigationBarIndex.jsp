@@ -6,10 +6,9 @@
   		<bean:message key="link.manage.executionCourse"/>
   	</html:link>
   </li>
-  <li>
-  	<bean:define id="teacherOID" name="infoTeacher" property="idInternal"/>
-  	<html:link page='<%= "/creditsManagement.do?page=0&amp;method=prepare&amp;teacherOID=	" + teacherOID %>'>
+<%--  <li>
+  	<html:link forward="creditsManagement" paramId="teacherOID" paramName="infoTeacher" paramProperty="idInternal">
   		<bean:message key="link.manage.credits"/>
   	</html:link>
-  </li>
+  </li> --%>
 </ul>
