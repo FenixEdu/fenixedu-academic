@@ -151,7 +151,7 @@
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>
       
-     <collection-descriptor
+      <collection-descriptor
 			name="associatedTeacherProfessorShipPercentage"
 			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
 			element-class-ref="Dominio.TeacherShiftPercentage"
@@ -484,6 +484,43 @@
       >
          <foreignkey field-ref="keyExecutionCourse"/>
       </reference-descriptor>
+   </class-descriptor>
+   
+<!-- Definitions for Dominio.ExamEnrollment -->
+   <class-descriptor
+   	  class="Dominio.ExamEnrollment"
+   	  table="EXAM_ENROLLMENT"
+   >
+      <field-descriptor id="1"
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor id="2"
+         name="keyExam"
+         column="KEY_EXAM"
+         jdbc-type="Integer"
+      />
+      <field-descriptor id="3"
+         name="beginDate"
+         column="BEGIN_DATE"
+         jdbc-type="DATETIME"
+      />
+      <field-descriptor id="4"
+         name="endDate"
+         column="END_DATE"
+         jdbc-type="DATETIME"
+      />
+      
+      <reference-descriptor
+         name="exam"
+         class-ref="Dominio.Exam"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="2"/>
+	</reference-descriptor>
    </class-descriptor>
 
 
