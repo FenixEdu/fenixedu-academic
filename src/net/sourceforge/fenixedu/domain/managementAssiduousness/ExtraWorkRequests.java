@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.IEmployee;
 public class ExtraWorkRequests extends DomainObject implements
         IExtraWorkRequests {
     private IEmployee employee;
-    private ICostCenter costCenter;
     private ICostCenter costCenterExtraWork;
     private ICostCenter costCenterMoney;
 
@@ -323,48 +322,16 @@ public class ExtraWorkRequests extends DomainObject implements
         this.whoEmployee = whoEmployee;
     }
     
-//    /**
-//     * @return Returns the holidaysNumber.
-//     */
-//    public Integer getHolidaysNumber() {
-//        return holidaysNumber;
-//    }
-//    /**
-//     * @param holidaysNumber The holidaysNumber to set.
-//     */
-//    public void setHolidaysNumber(Integer holidaysNumber) {
-//        this.holidaysNumber = holidaysNumber;
-//    }
-//    /**
-//     * @return Returns the hoursExtraWorkPerYear.
-//     */
-//    public Date getHoursExtraWorkPerYear() {
-//        return hoursExtraWorkPerYear;
-//    }    
-//    /**
-//     * @param hoursExtraWorkPerYear The hoursExtraWorkPerYear to set.
-//     */
-//    public void setHoursExtraWorkPerYear(Date hoursExtraWorkPerYear) {
-//        this.hoursExtraWorkPerYear = hoursExtraWorkPerYear;
-//    }   
     public String toString() {
         String string = new String();
-        string = string.concat("[");
+        /*string = string.concat("[");
         string = string.concat(getEmployee().getEmployeeNumber().toString());
         string = string.concat(", ");
         string = string.concat(getBeginDate().toString());
         string = string.concat(", ");
         string = string.concat(getEndDate().toString());
-        string = string.concat("]");        
+        string = string.concat("]");     */   
         
         return string;
-    }
-    public ICostCenter getCostCenter()
-    {
-        return costCenter;
-    }
-    public void setCostCenter(ICostCenter costCenter)
-    {
-        this.costCenter = costCenter;
     }
 }

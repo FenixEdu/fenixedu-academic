@@ -3,11 +3,13 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWork;
 
 /**
@@ -35,9 +37,14 @@ public class InfoExtraWork  extends InfoObject  {
     private Boolean nocturnalAfterSecondHourAuthorized;
     private Boolean restDayAuthorized;
     
+    private Boolean dayPerWeek;
+    private Boolean holiday;
+    private Boolean remuneration;
+    
     private InfoEmployee infoWhoEmployee;
     private Date when;
     
+    private String observation;
     private Date totalExtraWork;
     
     /**
@@ -284,7 +291,68 @@ public class InfoExtraWork  extends InfoObject  {
     public void setTotalExtraWork(Date totalExtraWork) {
         this.totalExtraWork = totalExtraWork;
     }
+    /**
+     * @return Returns the dayPerWeek.
+     */
+    public Boolean getDayPerWeek() {
+        return dayPerWeek;
+    }
+    /**
+     * @param dayPerWeek The dayPerWeek to set.
+     */
+    public void setDayPerWeek(Boolean dayPerWeek) {
+        this.dayPerWeek = dayPerWeek;
+    }    
+    /**
+     * @return Returns the holiday.
+     */
+    public Boolean getHoliday() {
+        return holiday;
+    }
+    /**
+     * @param holiday The holiday to set.
+     */
+    public void setHoliday(Boolean holiday) {
+        this.holiday = holiday;
+    }  
+    /**
+     * @return Returns the remuneration.
+     */
+    public Boolean getRemuneration() {
+        return remuneration;
+    }
+    /**
+     * @param remuneration The remuneration to set.
+     */
+    public void setRemuneration(Boolean remuneration) {
+        this.remuneration = remuneration;
+    }   
+    /**
+     * @return Returns the observation.
+     */
+    public String getObservation() {
+        return observation;
+    }
+    /**
+     * @param observation The observation to set.
+     */
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }    
     
+    public void unAuthorized() {
+        setDiurnalAfterSecondHourAuthorized(Boolean.FALSE);
+        setDiurnalFirstHourAuthorized(Boolean.FALSE);
+        setMealSubsidyAuthorized(Boolean.FALSE);
+        setNocturnalAfterSecondHourAuthorized(Boolean.FALSE);
+        setNocturnalFirstHourAuthorized(Boolean.FALSE);
+        setRestDayAuthorized(Boolean.FALSE);
+        
+        setDayPerWeek(Boolean.FALSE);
+        setHoliday(Boolean.FALSE);
+        setRemuneration(Boolean.FALSE);
+    }
+
     public void copyFromDomain(IExtraWork extraWork) {
         super.copyFromDomain(extraWork);
         if(extraWork != null) {
@@ -303,8 +371,13 @@ public class InfoExtraWork  extends InfoObject  {
             setNocturnalFirstHourAuthorized(extraWork.getNocturnalFirstHourAuthorized());       
             setRestDay(extraWork.getRestDay());
             setRestDayAuthorized(extraWork.getRestDayAuthorized());
+            setDayPerWeek(extraWork.getDayPerWeek());
+            setHoliday(extraWork.getHoliday());
+            setRemuneration(extraWork.getRemuneration());
+            setWhen(extraWork.getWhen());
             setWhen(extraWork.getWhen());
             setTotalExtraWork(extraWork.getTotalExtraWork());
+            setObservation(extraWork.getObservation());
         }        
     }
     
@@ -316,5 +389,43 @@ public class InfoExtraWork  extends InfoObject  {
             infoExtraWork.copyFromDomain(extraWork);
         }
         return infoExtraWork;
+    }
+ 
+    public void copyToDomain(InfoExtraWork infoExtraWork, IExtraWork extraWork) {
+        super.copyToDomain(infoExtraWork, extraWork);
+        extraWork.setDay(infoExtraWork.getDay());
+        extraWork.setBeginHour(infoExtraWork.getBeginHour());
+        extraWork.setEndHour(infoExtraWork.getEndHour());
+        extraWork.setMealSubsidy(infoExtraWork.getMealSubsidy());
+        extraWork.setMealSubsidyAuthorized(infoExtraWork.getMealSubsidyAuthorized());
+        extraWork.setDiurnalFirstHour(infoExtraWork.getDiurnalFirstHour());
+        extraWork.setDiurnalFirstHourAuthorized(infoExtraWork.getDiurnalFirstHourAuthorized());
+        extraWork.setDiurnalAfterSecondHour(infoExtraWork.getDiurnalAfterSecondHour());
+        extraWork.setDiurnalAfterSecondHourAuthorized(infoExtraWork
+                .getDiurnalAfterSecondHourAuthorized());
+        extraWork.setNocturnalFirstHour(infoExtraWork.getNocturnalFirstHour());
+        extraWork.setNocturnalFirstHourAuthorized(infoExtraWork.getNocturnalFirstHourAuthorized());
+        extraWork.setNocturnalAfterSecondHour(infoExtraWork.getNocturnalAfterSecondHour());
+        extraWork.setNocturnalAfterSecondHourAuthorized(infoExtraWork
+                .getNocturnalAfterSecondHourAuthorized());
+        extraWork.setRestDay(infoExtraWork.getRestDay());
+        extraWork.setRestDayAuthorized(infoExtraWork.getRestDayAuthorized());
+
+        extraWork.setWhen(Calendar.getInstance().getTime());
+
+        extraWork.setObservation(infoExtraWork.getObservation());
+
+        extraWork.setDayPerWeek(infoExtraWork.getDayPerWeek());
+        extraWork.setHoliday(infoExtraWork.getHoliday());        
+        extraWork.setRemuneration(infoExtraWork.getRemuneration());
+    }
+    
+    public static IExtraWork newDomainFromInfo(InfoExtraWork infoExtraWork) {
+        IExtraWork extraWork = null;
+        if (infoExtraWork != null) {
+            extraWork = new ExtraWork();
+            infoExtraWork.copyToDomain(infoExtraWork, extraWork);
+        }
+        return extraWork;
     }
 }

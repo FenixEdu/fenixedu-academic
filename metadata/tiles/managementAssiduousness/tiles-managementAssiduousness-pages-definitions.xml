@@ -35,7 +35,11 @@
 		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
 		<put name="body" value="/managementAssiduousness/extraWork/extraWorkSheet.jsp"/>
 	</definition>
-	<definition name="managementAssiduousnessWelcome.extraWork.requests.input" extends="definition.managementAssiduousness.masterPage">
+	<definition name="managementAssiduousnessWelcome.extraWork.requests.inputs" extends="definition.managementAssiduousness.masterPage">
+		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
+		<put name="body" value="/managementAssiduousness/extraWork/requestsExtraWorkInputs.jsp"/>
+	</definition>
+	<definition name="managementAssiduousnessWelcome.extraWork.requests.prepare" extends="definition.managementAssiduousness.masterPage">
 		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
 		<put name="body" value="/managementAssiduousness/extraWork/requestsExtraWork.jsp"/>
 	</definition>

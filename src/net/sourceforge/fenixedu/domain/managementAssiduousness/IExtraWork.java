@@ -64,4 +64,12 @@ public interface IExtraWork extends IDomainObject {
     public void setWhoEmployee(IEmployee whoEmployee); 
     public Date getTotalExtraWork();
     public void setTotalExtraWork(Date totalExtraWork);
+    public String getObservation();
+    public void setObservation(String observation);
+    public Boolean getDayPerWeek();
+    public void setDayPerWeek(Boolean dayPerWeek);
+    public Boolean getHoliday();
+    public void setHoliday(Boolean holiday);
+    public Boolean getRemuneration();
+    public void setRemuneration(Boolean remuneration);
 }

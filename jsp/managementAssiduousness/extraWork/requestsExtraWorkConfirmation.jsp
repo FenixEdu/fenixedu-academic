@@ -37,10 +37,10 @@
 			</tr>
 			<tr class="listClassesWhite">
 				<td nowrap><bean:message key="label.code.cost.center" />:&nbsp;</td>
-				<td  align="left"><bean:write name="infoExtraWorkRequests" property="infoCostCenter.code" />
-					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenter.departament" /><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenter.departament" /></logic:notEmpty>
-					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenter.section1" /><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenter.section1" /></logic:notEmpty>
-					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenter.section2" /><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenter.section2" /></logic:notEmpty>
+				<td  align="left"><bean:write name="infoExtraWorkRequests" property="infoCostCenterExtraWork.code" />
+					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterExtraWork.departament" /><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterExtraWork.departament" /></logic:notEmpty>
+					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterExtraWork.section1" /><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterExtraWork.section1" /></logic:notEmpty>
+					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterExtraWork.section2" /><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterExtraWork.section2" /></logic:notEmpty>
 			</tr>
 			<tr class="listClasses">
 				<td nowrap><bean:message key="label.money"/>&nbsp;<bean:message key="label.code.cost.center" />:&nbsp;</td>
@@ -110,7 +110,7 @@
 		</tr>
 		<tr><td colspan="2" ><br /><br /></td></tr>
 		<tr><td colspan="2">		
-			<html:submit styleClass="inputbuttonSmall" onclick="this.form.method.value='prepareRequests';">
+			<html:submit styleClass="inputbuttonSmall" onclick="this.form.method.value='prepareInputs';">
 				&nbsp;&nbsp;&nbsp;<bean:message key="botao.confirmar"/>&nbsp;&nbsp;&nbsp;
 			</html:submit>		
 			<html:submit styleClass="inputbuttonSmall" onclick="this.form.todo.value='editar';">

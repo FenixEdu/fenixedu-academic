@@ -5,136 +5,149 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Funcionario;
-import net.sourceforge.fenixedu.domain.MarcacaoPonto;
-import net.sourceforge.fenixedu.domain.RegularizacaoMarcacaoPonto;
 import net.sourceforge.fenixedu.applicationTier.ServicoAutorizacao;
 import net.sourceforge.fenixedu.applicationTier.ServicoSeguro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
+import net.sourceforge.fenixedu.domain.Funcionario;
+import net.sourceforge.fenixedu.domain.MarcacaoPonto;
+import net.sourceforge.fenixedu.domain.RegularizacaoMarcacaoPonto;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFuncionarioPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IMarcacaoPontoPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IRegularizacaoMarcacaoPontoPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistente;
+import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistenteOracle;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+
+
 /**
- * 
- * @author Fernanda Quitério & Tania Pousão
+ *
+ * @author  Fernanda Quitério & Tania Pousão
  */
 public class ServicoSeguroConsultarMarcacaoPonto extends ServicoSeguro {
-    private List _listaFuncionarios = null;
+	private List _listaFuncionarios = null;
+	private List _listaCartoes = null;
+	private List _listaEstados = null;
+	private Boolean _oracleDB = null;
 
-    private List _listaCartoes = null;
+	private Timestamp _dataInicio;
+	private Timestamp _dataFim;
 
-    private List _listaEstados = null;
+	private ArrayList _listaMarcacoesPonto = new ArrayList();
+	private ArrayList _listaRegularizacoes = new ArrayList();
 
-    private Timestamp _dataInicio;
+	public ServicoSeguroConsultarMarcacaoPonto(
+		ServicoAutorizacao servicoAutorizacaoLer,
+		List listaFuncionarios,
+		List listaCartoes,
+		List listaEstados,
+		Timestamp dataInicio,
+		Timestamp dataFim, 
+		Boolean oracleDB) {
+		super(servicoAutorizacaoLer);
+		_listaFuncionarios = listaFuncionarios;
+		_listaCartoes = listaCartoes;
+		_listaEstados = listaEstados;
+		_dataInicio = dataInicio;
+		_dataFim = dataFim;
+		_oracleDB = oracleDB;
+	}
 
-    private Timestamp _dataFim;
+	public void execute() throws NotExecuteException {
 
-    private List _listaMarcacoesPonto = new ArrayList();
+		if (_listaFuncionarios != null && _listaFuncionarios.size() == 1) {
+			//consulta de marcações de ponto de apenas um funcionario
+			//assim verifica-se as datas de assiduidade
+			try {
+				lerFimAssiduidade(((Integer) _listaFuncionarios.get(0)).intValue());
+			} catch (NotExecuteException nee) {
+				throw new NotExecuteException(nee.getMessage());
+			}
 
-    private List _listaRegularizacoes = new ArrayList();
+			try {
+				lerInicioAssiduidade(((Integer) _listaFuncionarios.get(0)).intValue());
+			} catch (NotExecuteException nee) {
+				throw new NotExecuteException(nee.getMessage());
+			}
+		}
 
-    public ServicoSeguroConsultarMarcacaoPonto(ServicoAutorizacao servicoAutorizacaoLer,
-            List listaFuncionarios, List listaCartoes, List listaEstados, Timestamp dataInicio,
-            Timestamp dataFim) {
-        super(servicoAutorizacaoLer);
-        _listaFuncionarios = listaFuncionarios;
-        _listaCartoes = listaCartoes;
-        _listaEstados = listaEstados;
-        _dataInicio = dataInicio;
-        _dataFim = dataFim;
-    }
+		IMarcacaoPontoPersistente iMarcacaoPontoPersistente = null;
+		if(_oracleDB.booleanValue()) {
+		    iMarcacaoPontoPersistente = SuportePersistenteOracle.getInstance().iMarcacaoPontoPersistente();
+		} else {
+		    iMarcacaoPontoPersistente = SuportePersistente.getInstance().iMarcacaoPontoPersistente();		    
+		}
+		if ((_listaMarcacoesPonto =
+			(ArrayList) iMarcacaoPontoPersistente.consultarMarcacoesPonto(
+				_listaFuncionarios,
+				_listaCartoes,
+				_listaEstados,
+				_dataInicio,
+				_dataFim))
+			== null) {
+			throw new NotExecuteException("error.marcacaoPonto.naoExistem");
+		}
 
-    public void execute() throws NotExecuteException {
+		ArrayList listaMarcacoesRegularizadas = new ArrayList();
+		listaMarcacoesRegularizadas = (ArrayList) CollectionUtils.select(_listaMarcacoesPonto, new Predicate() {
+			public boolean evaluate(Object arg0) {
+				MarcacaoPonto marcacao = (MarcacaoPonto) arg0;
+				if (marcacao.getEstado().equals("regularizada")) {
+					return true;
+				}
+				return false;
+			}
+		});
+		
+		IRegularizacaoMarcacaoPontoPersistente iRegularizacaoMarcacaoPontoPersistente =
+			SuportePersistente.getInstance().iRegularizacaoMarcacaoPontoPersistente();
+			IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
+		Iterator iterMarcacoes = listaMarcacoesRegularizadas.iterator();
+		while (iterMarcacoes.hasNext()) {
+			MarcacaoPonto marcacao = (MarcacaoPonto) iterMarcacoes.next();
+			RegularizacaoMarcacaoPonto regularizacao =
+				iRegularizacaoMarcacaoPontoPersistente.lerRegularizacaoMarcacaoPonto(marcacao.getCodigoInterno());
+			if (regularizacao != null) {
+				Funcionario funcionarioQuem = iFuncionarioPersistente.lerFuncionarioSemHistorico(regularizacao.getQuem());
+				if(funcionarioQuem!=null){
+					regularizacao.setQuem(funcionarioQuem.getNumeroMecanografico());
+				}
+				_listaRegularizacoes.add(regularizacao);
+			}
+		}
+	}
 
-        if (_listaFuncionarios != null && _listaFuncionarios.size() == 1) {
-            //consulta de marcações de ponto de apenas um funcionario
-            //assim verifica-se as datas de assiduidade
-            try {
-                lerFimAssiduidade(((Integer) _listaFuncionarios.get(0)).intValue());
-            } catch (NotExecuteException nee) {
-                throw new NotExecuteException(nee.getMessage());
-            }
+	private void lerFimAssiduidade(int numMecanografico) throws NotExecuteException {
+		ServicoAutorizacao servicoAutorizacao = new ServicoAutorizacao();
 
-            try {
-                lerInicioAssiduidade(((Integer) _listaFuncionarios.get(0)).intValue());
-            } catch (NotExecuteException nee) {
-                throw new NotExecuteException(nee.getMessage());
-            }
-        }
+		ServicoSeguroLerFimAssiduidade servicoSeguroLerFimAssiduidade =
+			new ServicoSeguroLerFimAssiduidade(servicoAutorizacao, numMecanografico, _dataInicio, _dataFim);
+		servicoSeguroLerFimAssiduidade.execute();
 
-        IMarcacaoPontoPersistente iMarcacaoPontoPersistente = SuportePersistente.getInstance()
-                .iMarcacaoPontoPersistente();
-        if ((_listaMarcacoesPonto = iMarcacaoPontoPersistente.consultarMarcacoesPonto(
-                _listaFuncionarios, _listaCartoes, _listaEstados, _dataInicio, _dataFim)) == null) {
-            throw new NotExecuteException("error.marcacaoPonto.naoExistem");
-        }
+		if (servicoSeguroLerFimAssiduidade.getDataAssiduidade() != null) {
+			_dataFim = servicoSeguroLerFimAssiduidade.getDataAssiduidade();
+		}
+	} /* lerFimAssiduidade */
 
-        List listaMarcacoesRegularizadas = new ArrayList();
-        listaMarcacoesRegularizadas = (ArrayList) CollectionUtils.select(_listaMarcacoesPonto,
-                new Predicate() {
-                    public boolean evaluate(Object arg0) {
-                        MarcacaoPonto marcacao = (MarcacaoPonto) arg0;
-                        if (marcacao.getEstado().equals("regularizada")) {
-                            return true;
-                        }
-                        return false;
-                    }
-                });
+	private void lerInicioAssiduidade(int numMecanografico) throws NotExecuteException {
+		ServicoAutorizacao servicoAutorizacao = new ServicoAutorizacao();
 
-        IRegularizacaoMarcacaoPontoPersistente iRegularizacaoMarcacaoPontoPersistente = SuportePersistente
-                .getInstance().iRegularizacaoMarcacaoPontoPersistente();
-        IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance()
-                .iFuncionarioPersistente();
-        Iterator iterMarcacoes = listaMarcacoesRegularizadas.iterator();
-        while (iterMarcacoes.hasNext()) {
-            MarcacaoPonto marcacao = (MarcacaoPonto) iterMarcacoes.next();
-            RegularizacaoMarcacaoPonto regularizacao = iRegularizacaoMarcacaoPontoPersistente
-                    .lerRegularizacaoMarcacaoPonto(marcacao.getCodigoInterno());
-            if (regularizacao != null) {
-                Funcionario funcionarioQuem = iFuncionarioPersistente
-                        .lerFuncionarioSemHistorico(regularizacao.getQuem());
-                if (funcionarioQuem != null) {
-                    regularizacao.setQuem(funcionarioQuem.getNumeroMecanografico());
-                }
-                _listaRegularizacoes.add(regularizacao);
-            }
-        }
-    }
+		ServicoSeguroLerInicioAssiduidade servicoSeguroLerInicioAssiduidade =
+			new ServicoSeguroLerInicioAssiduidade(servicoAutorizacao, numMecanografico, _dataInicio, _dataFim);
+		servicoSeguroLerInicioAssiduidade.execute();
 
-    private void lerFimAssiduidade(int numMecanografico) throws NotExecuteException {
-        ServicoAutorizacao servicoAutorizacao = new ServicoAutorizacao();
+		if (servicoSeguroLerInicioAssiduidade.getDataAssiduidade() != null) {
+			_dataInicio = servicoSeguroLerInicioAssiduidade.getDataAssiduidade();
+		}
+	} /* lerInicioAssiduidade */
 
-        ServicoSeguroLerFimAssiduidade servicoSeguroLerFimAssiduidade = new ServicoSeguroLerFimAssiduidade(
-                servicoAutorizacao, numMecanografico, _dataInicio, _dataFim);
-        servicoSeguroLerFimAssiduidade.execute();
-
-        if (servicoSeguroLerFimAssiduidade.getDataAssiduidade() != null) {
-            _dataFim = servicoSeguroLerFimAssiduidade.getDataAssiduidade();
-        }
-    } /* lerFimAssiduidade */
-
-    private void lerInicioAssiduidade(int numMecanografico) throws NotExecuteException {
-        ServicoAutorizacao servicoAutorizacao = new ServicoAutorizacao();
-
-        ServicoSeguroLerInicioAssiduidade servicoSeguroLerInicioAssiduidade = new ServicoSeguroLerInicioAssiduidade(
-                servicoAutorizacao, numMecanografico, _dataInicio, _dataFim);
-        servicoSeguroLerInicioAssiduidade.execute();
-
-        if (servicoSeguroLerInicioAssiduidade.getDataAssiduidade() != null) {
-            _dataInicio = servicoSeguroLerInicioAssiduidade.getDataAssiduidade();
-        }
-    } /* lerInicioAssiduidade */
-
-    public List getListaMarcacoesPonto() {
-        return _listaMarcacoesPonto;
-    }
-
-    public List getListaRegularizacoes() {
-        return _listaRegularizacoes;
-    }
+	public ArrayList getListaMarcacoesPonto() {
+		return _listaMarcacoesPonto;
+	}
+	
+	public ArrayList getListaRegularizacoes(){
+		return _listaRegularizacoes;
+	}
 }

@@ -18,8 +18,12 @@ public class InfoExtraWorkHistoric extends InfoObject {
     
     private Integer year;
         
-    private Double serviceDismissalPerYear;
-    private Double holidaysNumberPerYear;
+    private Integer serviceDismissalPerYear;
+    private Integer holidaysNumberPerYear;
+
+    private Date timeForServiceDismissal;
+    private Date timeForHoliday;
+    
     private Date hoursExtraWorkPerYear;
     private Date hoursExtraWorkPerDay;
     
@@ -29,13 +33,13 @@ public class InfoExtraWorkHistoric extends InfoObject {
     /**
      * @return Returns the holidaysNumberPerYear.
      */
-    public Double getHolidaysNumberPerYear() {
+    public Integer getHolidaysNumberPerYear() {
         return holidaysNumberPerYear;
     }
     /**
      * @param holidaysNumberPerYear The holidaysNumberPerYear to set.
      */
-    public void setHolidaysNumberPerYear(Double holidaysNumberPerYear) {
+    public void setHolidaysNumberPerYear(Integer holidaysNumberPerYear) {
         this.holidaysNumberPerYear = holidaysNumberPerYear;
     }
     /**
@@ -89,13 +93,13 @@ public class InfoExtraWorkHistoric extends InfoObject {
     /**
      * @return Returns the serviceDismissalPerYear.
      */
-    public Double getServiceDismissalPerYear() {
+    public Integer getServiceDismissalPerYear() {
         return serviceDismissalPerYear;
     }
     /**
      * @param serviceDismissalPerYear The serviceDismissalPerYear to set.
      */
-    public void setServiceDismissalPerYear(Double serviceDismissalPerYear) {
+    public void setServiceDismissalPerYear(Integer serviceDismissalPerYear) {
         this.serviceDismissalPerYear = serviceDismissalPerYear;
     }
     /**
@@ -109,9 +113,7 @@ public class InfoExtraWorkHistoric extends InfoObject {
      */
     public void setWhen(Date when) {
         this.when = when;
-    }
-    
-   
+    }   
     /**
      * @return Returns the year.
      */
@@ -124,17 +126,43 @@ public class InfoExtraWorkHistoric extends InfoObject {
     public void setYear(Integer year) {
         this.year = year;
     }
+    /**
+     * @return Returns the timeForHoliday.
+     */
+    public Date getTimeForHoliday() {
+        return timeForHoliday;
+    }
+    /**
+     * @param timeForHoliday The timeForHoliday to set.
+     */
+    public void setTimeForHoliday(Date timeForHoliday) {
+        this.timeForHoliday = timeForHoliday;
+    }
+    /**
+     * @return Returns the timeForServiceDismissal.
+     */
+    public Date getTimeForServiceDismissal() {
+        return timeForServiceDismissal;
+    }
+    /**
+     * @param timeForServiceDismissal The timeForServiceDismissal to set.
+     */
+    public void setTimeForServiceDismissal(Date timeForServiceDismissal) {
+        this.timeForServiceDismissal = timeForServiceDismissal;
+    }
+    
     public void copyFromDomain(IExtraWorkHistoric extraWorkHistoric) {
         super.copyFromDomain(extraWorkHistoric);
         if(extraWorkHistoric != null) {
             setServiceDismissalPerYear(extraWorkHistoric.getServiceDismissalPerYear());
             setHolidaysNumberPerYear(extraWorkHistoric.getHolidaysNumberPerYear());
+            setTimeForServiceDismissal(extraWorkHistoric.getTimeForServiceDismissal());
+            setTimeForHoliday(extraWorkHistoric.getTimeForHoliday());
             setHoursExtraWorkPerYear(extraWorkHistoric.getHoursExtraWorkPerYear());
             setHoursExtraWorkPerDay(extraWorkHistoric.getHoursExtraWorkPerDay());
             setWhen(extraWorkHistoric.getWhen());
         }        
-    }
-    
+    }   
 
     public static InfoExtraWorkHistoric newInfoFromDomain(IExtraWorkHistoric extraWorkHistoric) {
         InfoExtraWorkHistoric infoExtraWorkHistoric = null;

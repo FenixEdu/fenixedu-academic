@@ -159,7 +159,22 @@
 	<field-descriptor
   		name="restDayAuthorized" 
   		column="REST_DAY_AUTHORIZED" 
-  		jdbc-type="BIT"/> 
+  		jdbc-type="BIT"/>	
+    <field-descriptor
+  		name="dayPerWeek" 
+  		column="DAY_PER_WEEK" 
+  		jdbc-type="BIT"
+	/>
+	<field-descriptor
+  		name="holiday" 
+  		column="HOLIDAY" 
+  		jdbc-type="BIT"
+	/>
+	<field-descriptor
+  		name="remuneration" 
+  		column="REMUNERATION" 
+  		jdbc-type="BIT"
+	/> 	 
 	<field-descriptor
 	   	name="employeeKey"
 	   	column="KEY_EMPLOYEE"
@@ -312,10 +327,10 @@
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
   	<reference-descriptor
-         name="costCenter"
-         class-ref="net.sourceforge.fenixedu.domain.CostCenter"
+         name="costCenterExtraWork"
+		 class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          proxy="true">
-         <foreignkey field-ref="costCenterKey"/>
+         <foreignkey field-ref="costCenterExtraWorkKey"/>
   	</reference-descriptor>
   	<reference-descriptor
          name="costCenterMoney"
@@ -431,12 +446,12 @@
    	<field-descriptor
    			name="serviceDismissalPerYear"
    			column="SERVICE_DISMISSAL_PER_YEAR"
-   			jdbc-type="DOUBLE"
+   			jdbc-type="INTEGER"
    	/>  		
    	<field-descriptor
    			name="holidaysNumberPerYear"
    			column="HOLIDAYS_NUMBER_PER_YEAR"
-   			jdbc-type="DOUBLE"
+   			jdbc-type="INTEGER"
    	/>
   	<field-descriptor  
 		name="hoursExtraWorkPerYear" 

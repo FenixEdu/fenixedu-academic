@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.domain.managementAssiduousness;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -20,8 +21,12 @@ public class ExtraWorkHistoric extends DomainObject implements
     
     private Integer year;
     
-    private Double serviceDismissalPerYear;
-    private Double holidaysNumberPerYear;
+    private Integer serviceDismissalPerYear;
+    private Integer holidaysNumberPerYear;
+
+    private Date timeForServiceDismissal;
+    private Date timeForHoliday;
+    
     private Date hoursExtraWorkPerYear;
     private Date hoursExtraWorkPerDay;
     
@@ -56,13 +61,13 @@ public class ExtraWorkHistoric extends DomainObject implements
     /**
      * @return Returns the holidaysNumberPerYear.
      */
-    public Double getHolidaysNumberPerYear() {
+    public Integer getHolidaysNumberPerYear() {
         return holidaysNumberPerYear;
     }
     /**
      * @param holidaysNumberPerYear The holidaysNumberPerYear to set.
      */
-    public void setHolidaysNumberPerYear(Double holidaysNumberPerYear) {
+    public void setHolidaysNumberPerYear(Integer holidaysNumberPerYear) {
         this.holidaysNumberPerYear = holidaysNumberPerYear;
     }
     /**
@@ -92,13 +97,13 @@ public class ExtraWorkHistoric extends DomainObject implements
     /**
      * @return Returns the serviceDismissalPerYear.
      */
-    public Double getServiceDismissalPerYear() {
+    public Integer getServiceDismissalPerYear() {
         return serviceDismissalPerYear;
     }
     /**
      * @param serviceDismissalPerYear The serviceDismissalPerYear to set.
      */
-    public void setServiceDismissalPerYear(Double serviceDismissalPerYear) {
+    public void setServiceDismissalPerYear(Integer serviceDismissalPerYear) {
         this.serviceDismissalPerYear = serviceDismissalPerYear;
     }
     /**
@@ -147,6 +152,58 @@ public class ExtraWorkHistoric extends DomainObject implements
      * @param year The year to set.
      */
     public void setYear(Integer year) {
-        year = year;
+        this.year = year;
+    }
+    
+    /**
+     * @return Returns the timeForHoliday.
+     */
+    public Date getTimeForHoliday() {
+        return timeForHoliday;
+    }
+    /**
+     * @param timeForHoliday The timeForHoliday to set.
+     */
+    public void setTimeForHoliday(Date timeForHoliday) {
+        this.timeForHoliday = timeForHoliday;
+    }
+    /**
+     * @return Returns the timeForServiceDismissal.
+     */
+    public Date getTimeForServiceDismissal() {
+        return timeForServiceDismissal;
+    }
+    /**
+     * @param timeForServiceDismissal The timeForServiceDismissal to set.
+     */
+    public void setTimeForServiceDismissal(Date timeForServiceDismissal) {
+        this.timeForServiceDismissal = timeForServiceDismissal;
+    }
+    
+    public void inicialize() {
+        if(getHolidaysNumberPerYear() == null) {
+            setHolidaysNumberPerYear(new Integer(0));
+        }
+        
+        if(getServiceDismissalPerYear() == null) {
+            setServiceDismissalPerYear(new Integer(0));
+        }
+        
+        Calendar calendar= Calendar.getInstance();
+        calendar.clear();
+        
+        if(getHoursExtraWorkPerYear() == null) {
+            setHoursExtraWorkPerYear(calendar.getTime());
+        }
+        if(getHoursExtraWorkPerDay() == null) {
+        	setHoursExtraWorkPerDay(calendar.getTime());
+        }
+        
+        if(getTimeForHoliday() == null) {
+            setTimeForHoliday(calendar.getTime());
+        }
+        if(getTimeForServiceDismissal() == null) {
+            setTimeForServiceDismissal(calendar.getTime());
+        }
     }
 }

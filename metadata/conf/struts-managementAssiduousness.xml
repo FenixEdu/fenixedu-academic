@@ -30,7 +30,8 @@
 				<form-property name="moth" type="java.lang.Integer" />
 				<form-property name="year" type="java.lang.Integer" />    
 				<form-property name="employeeNumber" type="java.lang.Integer" /> 
-				<form-property name="compensation" type="java.lang.String" />        
+				<form-property name="compensation" type="java.lang.String" />      
+				<form-property name="size" type="java.lang.Integer" />      
 		</form-bean>
 		<form-bean name="requestsExtraWorkFormBean"
 				type="org.apache.struts.validator.DynaValidatorForm"
@@ -87,8 +88,10 @@
 				name="requestsExtraWorkFormBean"
 				parameter="method"
 				scope="request"
-				validate="true">
-				<forward name="inputResquets" path="managementAssiduousnessWelcome.extraWork.requests.input"/>
+				validate="true"
+				input="/index.do">
+				<forward name="inputs" path="managementAssiduousnessWelcome.extraWork.requests.inputs"/>
+				<forward name="inputResquets" path="managementAssiduousnessWelcome.extraWork.requests.prepare"/>
 				<forward name="requestsExtraWorkConfirmation" path="managementAssiduousnessWelcome.extraWork.requests.confirmation"/>
 		</action>
 		<action path="/requestsExtraWorkManagement" 
@@ -97,8 +100,9 @@
 				parameter="method"
 				scope="request"
 				validate="true"
-				input="/requestsExtraWork.do?method=prepareRequests&amp;page=0">
-				<forward name="inputResquets" path="managementAssiduousnessWelcome.extraWork.requests.input"/>
+				input="/requestsExtraWork.do?method=prepareInputs">
+				<forward name="inputs" path="managementAssiduousnessWelcome.extraWork.requests.inputs"/>
+				<forward name="inputResquets" path="managementAssiduousnessWelcome.extraWork.requests.prepare"/>
 				<forward name="requestsExtraWorkConfirmation" path="managementAssiduousnessWelcome.extraWork.requests.confirmation"/>
 		</action>
  	</action-mappings>

@@ -37,11 +37,17 @@ public class ExtraWork extends DomainObject implements IExtraWork {
     private Boolean nocturnalAfterSecondHourAuthorized;
     private Boolean restDayAuthorized;
 
+    private Boolean dayPerWeek;
+    private Boolean holiday;
+    private Boolean remuneration;
+    
     private int who;
     private IEmployee whoEmployee;
     private Date when;
     
     private Date totalExtraWork;
+    
+    private String observation;
     
     /**
      * @return Returns the costCenter.
@@ -322,5 +328,52 @@ public class ExtraWork extends DomainObject implements IExtraWork {
      */
     public void setTotalExtraWork(Date totalExtraWork) {
         this.totalExtraWork = totalExtraWork;
+    }    
+    /**
+     * @return Returns the observation.
+     */
+    public String getObservation() {
+        return observation;
+    }
+    /**
+     * @param observation The observation to set.
+     */
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }    
+    /**
+     * @return Returns the dayPerWeek.
+     */
+    public Boolean getDayPerWeek() {
+        return dayPerWeek;
+    }
+    /**
+     * @param dayPerWeek The dayPerWeek to set.
+     */
+    public void setDayPerWeek(Boolean dayPerWeek) {
+        this.dayPerWeek = dayPerWeek;
+    }    /**
+     * @return Returns the holiday.
+     */
+    public Boolean getHoliday() {
+        return holiday;
+    }
+    /**
+     * @param holiday The holiday to set.
+     */
+    public void setHoliday(Boolean holiday) {
+        this.holiday = holiday;
+    }
+    /**
+     * @return Returns the remuneration.
+     */
+    public Boolean getRemuneration() {
+        return remuneration;
+    }
+    /**
+     * @param remuneration The remuneration to set.
+     */
+    public void setRemuneration(Boolean remuneration) {
+        this.remuneration = remuneration;
     }
 }

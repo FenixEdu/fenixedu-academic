@@ -12,23 +12,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
-import pt.utl.ist.berserk.logic.serviceManager.IService;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEmployeeWithAll;
-import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWork;
-import net.sourceforge.fenixedu.domain.Horario;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IStrategyHorarios;
-import net.sourceforge.fenixedu.domain.IStrategyJustificacoes;
-import net.sourceforge.fenixedu.domain.Justificacao;
-import net.sourceforge.fenixedu.domain.MarcacaoPonto;
-import net.sourceforge.fenixedu.domain.ParamJustificacao;
-import net.sourceforge.fenixedu.domain.SuporteStrategyHorarios;
-import net.sourceforge.fenixedu.domain.SuporteStrategyJustificacoes;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWork;
 import net.sourceforge.fenixedu.applicationTier.ServicoAutorizacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoAutorizacaoLer;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroBuscarParamJustificacoes;
@@ -42,6 +25,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeg
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroLerMarcacoesPonto;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroLerStatusAssiduidadeFuncionario;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
+import net.sourceforge.fenixedu.constants.assiduousness.Constants;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEmployeeWithAll;
+import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWork;
+import net.sourceforge.fenixedu.domain.Horario;
+import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.IStrategyHorarios;
+import net.sourceforge.fenixedu.domain.IStrategyJustificacoes;
+import net.sourceforge.fenixedu.domain.Justificacao;
+import net.sourceforge.fenixedu.domain.MarcacaoPonto;
+import net.sourceforge.fenixedu.domain.ParamJustificacao;
+import net.sourceforge.fenixedu.domain.SuporteStrategyHorarios;
+import net.sourceforge.fenixedu.domain.SuporteStrategyJustificacoes;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWork;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -50,7 +47,11 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFeriadoPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistente;
 import net.sourceforge.fenixedu.util.Comparador;
-import net.sourceforge.fenixedu.constants.assiduousness.Constants;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Tânia Pousão
@@ -474,7 +475,7 @@ public class ExtraWorkSheet implements IService {
         ServicoSeguroLerMarcacoesPonto servicoSeguroLerMarcacoesPonto = new ServicoSeguroLerMarcacoesPonto(
                 servicoAutorizacao, _listaFuncionarios, _listaCartoes, null, new Timestamp(
                         calendarioInicio.getTimeInMillis()), new Timestamp(calendarioFim
-                        .getTimeInMillis()));
+                        .getTimeInMillis()), Boolean.TRUE);
         servicoSeguroLerMarcacoesPonto.execute();
         List lista = servicoSeguroLerMarcacoesPonto.getListaMarcacoesPonto();
 
@@ -635,7 +636,7 @@ public class ExtraWorkSheet implements IService {
         ServicoAutorizacao servicoAutorizacao = new ServicoAutorizacao();
         ServicoSeguroConsultarMarcacaoPonto servicoSeguro = new ServicoSeguroConsultarMarcacaoPonto(
                 servicoAutorizacao, _listaFuncionarios, _listaCartoes, _listaEstados, _dataInicio,
-                _dataFim);
+                _dataFim, Boolean.TRUE);
         servicoSeguro.execute();
         _listaMarcacoesPonto = servicoSeguro.getListaMarcacoesPonto();
     } /* consultarMarcacaoPonto */

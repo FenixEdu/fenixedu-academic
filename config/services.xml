@@ -8611,4 +8611,15 @@
             <chain name="TimeTableManagerAuthorization"/>
         </filterChains>
     </service>
+	<service>
+		<name>ExtraWorkSheet</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.managementAssiduousness.ExtraWorkSheet
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization"/>
+		</filterChains>
+	</service>
 </serviceDefinitions>

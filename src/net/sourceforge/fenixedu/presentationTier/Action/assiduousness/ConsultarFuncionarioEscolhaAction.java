@@ -99,7 +99,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
                     servicoAutorizacaoLer, servicoSeguroConstruirEscolhasMarcacoesPonto
                             .getListaFuncionarios(), servicoSeguroConstruirEscolhasMarcacoesPonto
                             .getListaCartoes(), listaEstados, formEscolha.getDataInicioEscolha(),
-                    formEscolha.getDataFimEscolha());
+                    formEscolha.getDataFimEscolha(), Boolean.TRUE);
             try {
                 Executor.getInstance().doIt(servicoSeguroConsultarMarcacaoPonto);
             } catch (NotExecuteException nee) {
@@ -267,7 +267,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
             ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
             ServicoSeguroConsultarVerbete servicoSeguroConsultarVerbete = new ServicoSeguroConsultarVerbete(
                     servicoAutorizacaoLer, numMecanografico, formEscolha.getDataInicioEscolha(),
-                    formEscolha.getDataFimEscolha(), locale);
+                    formEscolha.getDataFimEscolha(), Boolean.TRUE, locale);
 
             //			try {
             //				SuportePersistenteOracle.getInstance().iniciarTransaccao();

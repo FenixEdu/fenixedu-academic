@@ -16,7 +16,10 @@
 <html:form action="/extraWorkByEmployee">
 	<html:hidden property="method" value="writeExtraWork"/>
 	<html:hidden property="page" value="0"/>
-	<bean:size id="sizeList" name="infoExtraWorkList" />		
+	<bean:size id="sizeList" name="infoExtraWorkList" />	
+	<html:hidden property="size" value="<%= sizeList.toString() %>" />	
+	<html:hidden property="moth" />	
+	<html:hidden property="year" />		
 <table>
     <tr>
       <td> 
@@ -56,6 +59,7 @@
 		<td class="listClasses-header" colspan="2"><bean:message key="label.diurnal" /></td>
 		<td class="listClasses-header" colspan="2"><bean:message key="label.nocturnal" /></td>
 		<td class="listClasses-header"><bean:message key="label.weekEnd.holiday" /></td>
+		<td class="listClasses-header"><bean:message key="prompt.observacao" /></td>
 	<tr>
 	<tr>
 		<td class="listClasses-header"><bean:message key="label.moth" /></td>
@@ -69,6 +73,7 @@
 		<td class="listClasses-header"><bean:message key="label.first.hour" /></td>
 		<td class="listClasses-header"><bean:message key="label.more.second.hour" /></td>
 		<td class="listClasses-header"><bean:message key="label.200.percentage" /></td>
+		<td class="listClasses-header">&nbsp;</td>
 	</tr>
 	
 	<% 
@@ -108,7 +113,7 @@
 					<html:hidden name="infoExtraWork" property="beginHour" value="<%= simpleDateFormat.format(beginHour)%>" indexed="true" />
 				</logic:notEmpty>
 			</td>
-			<td rowspan="2"><!-- Início do TE -->&nbsp;
+			<td rowspan="2"><!-- Fim do TE -->&nbsp;
 				<logic:notEmpty name="infoExtraWork" property="endHour" >
 					<bean:define id="endHour" name="infoExtraWork" property="endHour" type="java.util.Date"/>
 					<%= simpleDateFormat.format(endHour)	%>
@@ -122,10 +127,10 @@
 				</logic:notEmpty>
 			</td>
 			<td><!-- Subsidio do Almoço -->&nbsp;
-				<logic:notEmpty name="infoExtraWork" property="mealSubsidy" >
-					<bean:define id="mealSubsidy" name="infoExtraWork" property="mealSubsidy" type="java.util.Date"/>
+				<logic:greaterThan  name="infoExtraWork" property="mealSubsidy" value="0">
+					<bean:define id="mealSubsidy" name="infoExtraWork" property="mealSubsidy" type="java.lang.Integer"/>
 					<bean:write name="infoExtraWork" property="mealSubsidy" />
-				</logic:notEmpty>
+				</logic:greaterThan >
 			</td>
 			<td><!-- 1ª hora Diurna -->&nbsp;
 				<logic:notEmpty name="infoExtraWork" property="diurnalFirstHour" >
@@ -156,43 +161,53 @@
 					<bean:define id="restDay" name="infoExtraWork" property="restDay" type="java.util.Date"/>
 					<%= simpleDateFormat.format(restDay)	%>
 				</logic:notEmpty>		
+			</td>			
+			<td rowspan="2"><!-- Observação -->&nbsp;
+				<logic:notEmpty name="infoExtraWork" property="observation" >
+					<bean:write name="infoExtraWork" property="observation" />
+				</logic:notEmpty>		
 			</td>
 		</tr>			
 		<logic:equal name="isPar" value="0"><tr class="listClassesWhite"></logic:equal>
 		<logic:notEqual name="isPar" value="0"><tr class="listClasses"></logic:notEqual>
 			<td><!-- Subsidio do Almoço Authorization-->&nbsp;
-				<logic:notEmpty name="infoExtraWork" property="mealSubsidy" >
+				<logic:greaterThan  name="infoExtraWork" property="mealSubsidy" value="0">
 					<html:hidden name="infoExtraWork" property="mealSubsidy" indexed="true" />
 					<html:checkbox name="infoExtraWork" property="mealSubsidyAuthorized" value="true" indexed="true" />
-				</logic:notEmpty>
+				</logic:greaterThan>
 			</td>
 			<td><!-- 1ª hora Diurna Authorization -->&nbsp;
 				<logic:notEmpty name="infoExtraWork" property="diurnalFirstHour" >
-					<html:hidden name="infoExtraWork" property="diurnalFirstHour" indexed="true" />				
+					<bean:define id="diurnalFirstHour" name="infoExtraWork" property="diurnalFirstHour" type="java.util.Date"/>
+					<html:hidden name="infoExtraWork" property="diurnalFirstHour" indexed="true" value="<%= simpleDateFormat.format(diurnalFirstHour)	%>"/>				
 					<html:checkbox name="infoExtraWork" property="diurnalFirstHourAuthorized" value="true" indexed="true" />				
 				</logic:notEmpty>
 			</td>
 			<td><!-- 2ª hora Diurna Authorization -->&nbsp;
 				<logic:notEmpty name="infoExtraWork" property="diurnalAfterSecondHour" >
-					<html:hidden name="infoExtraWork" property="diurnalAfterSecondHour" indexed="true" />
+					<bean:define id="diurnalAfterSecondHour" name="infoExtraWork" property="diurnalAfterSecondHour" type="java.util.Date"/>
+					<html:hidden name="infoExtraWork" property="diurnalAfterSecondHour" indexed="true"  value="<%= simpleDateFormat.format(diurnalAfterSecondHour)	%>"/>
 					<html:checkbox name="infoExtraWork" property="diurnalAfterSecondHourAuthorized" value="true" indexed="true" />					
 				</logic:notEmpty>
 			</td>
 			<td><!-- 1ª hora Nocturna Authorization -->&nbsp;
 				<logic:notEmpty name="infoExtraWork" property="nocturnalFirstHour" >
-					<html:hidden name="infoExtraWork" property="nocturnalFirstHour" indexed="true" />				
+					<bean:define id="nocturnalFirstHour" name="infoExtraWork" property="nocturnalFirstHour" type="java.util.Date"/>
+					<html:hidden name="infoExtraWork" property="nocturnalFirstHour" indexed="true"  value="<%= simpleDateFormat.format(nocturnalFirstHour)	%>"/>				
 					<html:checkbox name="infoExtraWork" property="nocturnalFirstHourAuthorized" value="true" indexed="true" />				
 				</logic:notEmpty>
 			</td>
 			<td><!-- 2ª hora Nocturna Authorization -->&nbsp;
 				<logic:notEmpty name="infoExtraWork" property="nocturnalAfterSecondHour" >
-					<html:hidden name="infoExtraWork" property="nocturnalAfterSecondHour" indexed="true" />
+					<bean:define id="nocturnalAfterSecondHour" name="infoExtraWork" property="nocturnalAfterSecondHour" type="java.util.Date"/>
+					<html:hidden name="infoExtraWork" property="nocturnalAfterSecondHour" indexed="true"  value="<%= simpleDateFormat.format(nocturnalAfterSecondHour)	%>"/>
 					<html:checkbox name="infoExtraWork" property="nocturnalAfterSecondHourAuthorized" value="true" indexed="true" />
 				</logic:notEmpty>
 			</td>
 			<td><!-- Fim de semana e Feriados Authorization -->&nbsp;
 				<logic:notEmpty name="infoExtraWork" property="restDay" >
-					<html:hidden name="infoExtraWork" property="restDay" indexed="true" />
+					<bean:define id="restDay" name="infoExtraWork" property="restDay" type="java.util.Date"/>
+					<html:hidden name="infoExtraWork" property="restDay" indexed="true"  value="<%= simpleDateFormat.format(restDay)	%>"/>
 					<html:checkbox name="infoExtraWork" property="restDayAuthorized" value="true" indexed="true" />
 				</logic:notEmpty>
 			</td>

@@ -30,7 +30,10 @@ CREATE TABLE EXTRA_WORK(
   	DIURNAL_AFTER_SECOND_HOUR_AUTHORIZED tinyint(1) NOT NULL default '0',
   	NOCTURNAL_FIRST_HOUR_AUTHORIZED tinyint(1) NOT NULL default '0',
   	NOCTURNAL_AFTER_SECOND_HOUR_AUTHORIZED tinyint(1) NOT NULL default '0',
-  	REST_DAY_AUTHORIZED tinyint(1) NOT NULL default '0',	
+  	REST_DAY_AUTHORIZED tinyint(1) NOT NULL default '0',	  	
+  	DAY_PER_WEEK tinyint(1) NOT NULL default '0',
+  	HOLIDAY tinyint(1) NOT NULL default '0',
+  	REMUNERATION tinyint(1) NOT NULL default '0', 	
 	KEY_EMPLOYEE int(11) unsigned default NULL,
 	KEY_EMPLOYEE_DB int(11) unsigned default NULL,
 	WHEN_ALTER timestamp(14) NOT NULL,
@@ -67,27 +70,29 @@ CREATE TABLE EXTRA_WORK_REQUESTS(
 ) TYPE=InnoDB;
 
 DROP TABLE IF EXISTS EXTRA_WORK_COMPENSATION;
-CREATE TABLE EXTRA_WORK_COMPENSATION(
-	ID_INTERNAL int(11) NOT NULL auto_increment,
-	BEGIN_DATE date NOT NULL,
-	END_DATE date NOT NULL,	
-  	DAY_PER_WEEK tinyint(1) NOT NULL default '0',
-  	HOLIDAY tinyint(1) NOT NULL default '0',
-  	REMUNERATION tinyint(1) NOT NULL default '0', 	
-	KEY_EMPLOYEE int(11) unsigned default NULL,
-  	KEY_EMPLOYEE_DB int(11) unsigned default NULL,
-	WHEN_ALTER timestamp(14) NOT NULL,
-	ACK_OPT_LOCK int(11) default NULL,
-    PRIMARY KEY  (ID_INTERNAL),
-    UNIQUE KEY U1 (KEY_EMPLOYEE, BEGIN_DATE, END_DATE)
-) TYPE=InnoDB;
+-- CREATE TABLE EXTRA_WORK_COMPENSATION(
+--	ID_INTERNAL int(11) NOT NULL auto_increment,
+--	BEGIN_DATE date NOT NULL,
+--	END_DATE date NOT NULL,	
+-- 	DAY_PER_WEEK tinyint(1) NOT NULL default '0',
+--  	HOLIDAY tinyint(1) NOT NULL default '0',
+--  	REMUNERATION tinyint(1) NOT NULL default '0', 	
+--	KEY_EMPLOYEE int(11) unsigned default NULL,
+--  	KEY_EMPLOYEE_DB int(11) unsigned default NULL,
+--	WHEN_ALTER timestamp(14) NOT NULL,
+--	ACK_OPT_LOCK int(11) default NULL,
+--    PRIMARY KEY  (ID_INTERNAL),
+--    UNIQUE KEY U1 (KEY_EMPLOYEE, BEGIN_DATE, END_DATE)
+--) TYPE=InnoDB;
 
 DROP TABLE IF EXISTS EXTRA_WORK_HISTORIC;
 CREATE TABLE EXTRA_WORK_HISTORIC(
 	ID_INTERNAL int(11) NOT NULL auto_increment,
-	YEAR int(11) NOT NULL,
-	SERVICE_DISMISSAL_PER_YEAR float(10,2) unsigned default NULL,   
-	HOLIDAYS_NUMBER_PER_YEAR float(10,2) unsigned default NULL,
+	YEAR int(11) NOT NULL,	
+	SERVICE_DISMISSAL_PER_YEAR int(11) unsigned default NULL,   
+	HOLIDAYS_NUMBER_PER_YEAR int(11) unsigned default NULL,
+	SERVICE_DISMISSAL time default NULL,   
+	HOLIDAYS_NUMBER time default NULL,
 	HOURS_EXTRAWORK_PER_YEAR time default NULL,	  	
 	HOURS_EXTRAWORK_PER_DAY time default NULL,	  	
 	KEY_EMPLOYEE int(11) unsigned default NULL,
