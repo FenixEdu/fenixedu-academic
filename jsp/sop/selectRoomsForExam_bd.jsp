@@ -30,7 +30,8 @@
 					<html:multibox property="selectedRooms">
 						<bean:write name="infoRoom" property="idInternal"/>
 					</html:multibox>
-					<bean:write name="infoRoom" property="nome"/><br/>
+					<bean:write name="infoRoom" property="nome"/>&nbsp;&nbsp;
+					(<bean:write name="infoRoom" property="capacidadeExame"/> lugares)<br/>
 					<%i++;%>
 				</logic:iterate>
 				</br>

@@ -15,6 +15,11 @@
 <br />
 <h2><bean:message key="title.exams.list"/></h2>
 <span class="error"><html:errors/></span>
+
+<bean:define id="deleteConfirm">
+	return confirm('<bean:message key="message.confirm.delete.exam"/>')
+</bean:define>
+
 <logic:notPresent name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
 	<table align="center">
 		<tr>
@@ -64,7 +69,7 @@
 				</td>
 				<td>
 					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=edit"><bean:message key="label.edit"/></html:link>;
-					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=delete"><bean:message key="label.delete"/></html:link>
+					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=delete" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'><bean:message key="label.delete"/></html:link>
 					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=addExecutionCourse"><br /><bean:message key="label.add.executionCourse"/></html:link>
 				</td>
 			</tr>
