@@ -1,7 +1,5 @@
 package ServidorApresentacao.Action.publico;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,14 +8,15 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.ISiteComponent;
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoSiteClasses;
+import DataBeans.SiteView;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
 /**
@@ -40,52 +39,51 @@ public class ViewClassesAction extends FenixAction {
 		GestorServicos gestor = GestorServicos.manager();
 		InfoClass infoClass = new InfoClass();
 
-		InfoExecutionPeriod infoExecutionPeriod =
-			RequestUtils.getExecutionPeriodFromRequest(request);
-			
-		String executionDegreeName = (String) request.getAttribute("degreeInitials");
-		String nameDegreeCurricularPlan =(String) request.getAttribute("nameDegreeCurricularPlan");
-			
+		String year = request.getParameter("eYName");
+		String period = request.getParameter("ePName");
+
+		if (period == null) {
+			period = (String) request.getAttribute("ePName");
+		}
+		if (year == null) {
+			year = (String) request.getAttribute("eYName");
+		}
+
+		String degreeInitials =
+			(String) request.getAttribute("degreeInitials");
+		String nameDegreeCurricularPlan =
+			(String) request.getAttribute("nameDegreeCurricularPlan");
+		Integer curricularYear = (Integer) request.getAttribute("curYear");
 		
-		
-		Object[] args1 =
+		ISiteComponent component = new InfoSiteClasses();
+		SiteView siteView = null;
+		Object[] args =
 			{
-				infoExecutionPeriod.getInfoExecutionYear(),
-				executionDegreeName,
-				nameDegreeCurricularPlan
-				 };
+				component,
+				year,
+				period,
+				degreeInitials,
+				nameDegreeCurricularPlan,
+				null,
+				curricularYear };
+				
 		InfoExecutionDegree infoExecutionDegree;
 		try {
-			infoExecutionDegree =
-				(InfoExecutionDegree) ServiceUtils.executeService(
+			siteView =
+				(SiteView) ServiceUtils.executeService(
 					null,
-					"ReadExecutionDegreesByExecutionYearAndDegreeInitials",
-					args1);
+					"ClassSiteComponentService",
+					args);
 		} catch (FenixServiceException e1) {
 			throw new FenixActionException(e1);
 		}
-		Integer curricularYear =
-			 (Integer) request.getAttribute("curYear");
-
-		infoClass.setAnoCurricular(curricularYear);
-
-		infoClass.setInfoExecutionDegree(infoExecutionDegree);
-		infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
 		
-		Object argsSelectClasses[] = { infoClass };
-		List infoClasses;
-		try {
-			infoClasses =
-				(List) gestor.executar(
-					null,
-					"SelectClasses",
-					argsSelectClasses);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
 
-		request.setAttribute("publico.infoClasses", infoClasses);
-
+		request.setAttribute("siteView", siteView);
+		request.setAttribute("ePName", period);
+		request.setAttribute("eYName", year);
+		request.setAttribute("degreeInitials", degreeInitials);
+		request.setAttribute("nameDegreeCurricularPlan", nameDegreeCurricularPlan);
 		return mapping.findForward("Sucess");
 
 	}

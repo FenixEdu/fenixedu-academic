@@ -6,8 +6,6 @@
  */
 package ServidorApresentacao.Action.publico;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,12 +15,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.InfoClass;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoSiteTimetable;
+import DataBeans.SiteView;
 import ServidorAplicacao.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
 /**
@@ -44,43 +40,53 @@ public class ViewClassTimeTableAction extends Action {
 
 		HttpSession session = request.getSession(true);
 		String className = request.getParameter("className");
+		String degreeInitials = (String) request.getAttribute("degreeInitials");
+		String nameDegreeCurricularPlan =
+			(String) request.getAttribute("nameDegreeCurricularPlan");
+		String year = request.getParameter("eYName");
+		String period = request.getParameter("ePName");
 
+		if (period == null) {
+			period = (String) request.getAttribute("ePName");
+		}
+		if (year == null) {
+			year = (String) request.getAttribute("eYName");
+		}
+		if (degreeInitials == null) {
+			degreeInitials = request.getParameter("degreeInitials");
+		}
+		if (nameDegreeCurricularPlan == null) {
+			nameDegreeCurricularPlan =
+				request.getParameter("nameDegreeCurricularPlan");
+		}
 		if (className == null)
 			return mapping.getInputForward();
 
-		InfoExecutionPeriod infoExecutionPeriod =
-			RequestUtils.getExecutionPeriodFromRequest(request);
+	
+		InfoSiteTimetable component = new InfoSiteTimetable();
 
-		
-
-		InfoExecutionDegree infoExecutionDegree =
-			RequestUtils.getExecutionDegreeFromRequest(
-				request,
-				infoExecutionPeriod.getInfoExecutionYear());
-
-		
-		
-		
-		InfoClass classView = new InfoClass();
-		classView.setInfoExecutionDegree(infoExecutionDegree);
-		classView.setInfoExecutionPeriod(infoExecutionPeriod);
-		classView.setNome(className);
-
-		Object[] args = { classView };
-		List lessons;
+		Object[] args =
+			{
+				component,
+				year,
+				period,
+				degreeInitials,
+				nameDegreeCurricularPlan,
+				className, null };
+		SiteView siteView = null;
 		try {
-			lessons =
-				(List) ServiceUtils.executeService(
+			siteView =
+				(SiteView) ServiceUtils.executeService(
 					null,
-					"LerAulasDeTurma",
+					"ClassSiteComponentService",
 					args);
 		} catch (FenixServiceException e1) {
 			throw new FenixActionException(e1);
 		}
-
-		request.setAttribute("class", classView);
-		request.setAttribute("lessonList", lessons);
-
+		request.setAttribute("siteView", siteView);
+		request.setAttribute("className",className);
+		request.setAttribute("ePName", period);
+		request.setAttribute("eYName", year);
 		return mapping.findForward("Sucess");
 	}
 }
