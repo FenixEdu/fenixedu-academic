@@ -7,12 +7,11 @@
 <html:form action="/chooseExamsMapContextDA" method="GET">
 	<html:hidden  property="ePName" value="<%= pageContext.findAttribute("ePName").toString() %>" />
 	<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
-	
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="choose"/>
     <table width="100%" border="0" cellpadding="0" cellspacing="0">
     	<tr>
-        	<td bgcolor="#FFFFFF" class="infoop"><bean:message key="message.public.degree.choose"/></td>
+        	<td class="infoop"><bean:message key="message.public.degree.choose"/></td>
         </tr>
     </table>
 	<br />
@@ -24,7 +23,7 @@
 	<br />
     <table width="100%" border="0" cellpadding="0" cellspacing="0">
     	<tr>
-        	<td bgcolor="#FFFFFF" class="infoop"><bean:message key="label.select.curricularYears" /></td>
+        	<td class="infoop"><bean:message key="label.select.curricularYears" /></td>
         </tr>
     </table>
 	<br />

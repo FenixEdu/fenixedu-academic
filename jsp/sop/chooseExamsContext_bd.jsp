@@ -3,9 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-
-
-
         <span class="error"><html:errors/></span>
 		<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
         <html:form action="<%=path%>">

@@ -4,20 +4,16 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <app:checkLogon/>
-
 <html:html>
-
 <head>
 <title><bean:message key="alterarPassword.titulo"/></title>
 <html:base/>
 </head>
-
-<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0">
-
+<body leftmargin="0" topmargin="0">
 <div align="left">
   <html:form action="/alterarPassword" focus="passwordAntiga">
-    <table width="600" border="0" align="left" cellpadding="0" cellspacing="0" background="../../Imagens/bg_pattern.gif" nowrap="nowrap">
-      <tr bgcolor='#ffffff'>
+    <table border="0" align="left" cellpadding="0" cellspacing="0" nowrap="nowrap">
+      <tr>
         <td> 
           <html:errors/>
         </td>

@@ -34,10 +34,9 @@
    <tr>
     <td width="25%" align="left" valign="top" nowrap="nowrap" class="navlateral"><tiles:insert attribute="navLocal" ignore="true"/>
     </td>
-   
-      <td width="100%" align="left" valign="top" class="bodycontent">
+    <td width="100%" align="left" valign="top" class="bodycontent">
       	 <tiles:insert attribute="executionCourseName"  ignore="true"/>
-      		<tiles:insert attribute="body" />
+         <tiles:insert attribute="body" />
 	</td>
   
   </tr>

@@ -40,7 +40,7 @@
              	</td>
         	</tr>
             <tr>
-              <td colspan="2"><br />
+              <td class="tall-td" colspan="2"><br />
                 <html:submit property="submit" styleClass="inputbutton">
                 	<bean:message key="botao.ok"/>
                 </html:submit>
@@ -50,7 +50,6 @@
               </td>
             </tr>
        </table>
-       <br />
        <br />
 	   <table width="60%" align="center" class="infotable">
             <tr>

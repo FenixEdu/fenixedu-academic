@@ -14,7 +14,7 @@
             <table border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="tall-td">
-                        <bean:message key="property.room.name"/>
+                        <bean:message key="property.room.name"/>:
                     </td>
                     <td>
                         <html:text property="name" size="11" maxlength="20"/>
@@ -22,7 +22,7 @@
                 </tr>
                 <tr>
                     <td class="tall-td">
-                        <bean:message key="property.room.building"/>
+                        <bean:message key="property.room.building"/>:
                     </td>
                     <td>
                         <html:select property="building" size="1">
@@ -32,7 +32,7 @@
                 </tr>
                 <tr>
                     <td class="tall-td">
-                        <bean:message key="property.room.floor"/>
+                        <bean:message key="property.room.floor"/>:
                     </td>
                     <td>
                         <html:text property="floor" size="2" maxlength="2"/>
@@ -40,7 +40,7 @@
                 </tr>
                 <tr>
                     <td class="tall-td">
-                        <bean:message key="property.room.type"/>
+                        <bean:message key="property.room.type"/>:
                     </td>
                     <td>
                         <html:select property="type" size="1">
@@ -50,7 +50,7 @@
                 </tr>
                 <tr>
                     <td class="tall-td">
-                        <bean:message key="property.room.capacity.normal"/>
+                        <bean:message key="property.room.capacity.normal"/>:
                     </td>
                     <td>
                         <html:text property="capacityNormal" size="3" maxlength="4"/>
@@ -58,15 +58,14 @@
                 </tr>
                 <tr>
                     <td class="tall-td">
-                        <bean:message key="property.room.capacity.exame"/>
+                        <bean:message key="property.room.capacity.exame"/>:
                     </td>
                     <td height="0">
                         <html:text property="capacityExame" size="3" maxlength="4"/>
                     </td>
                 </tr>
             </table>
-           
-            <br/>
+            <br />
                         <html:submit styleClass="inputbutton">
                             <bean:message key="label.submit"/>
                         </html:submit>

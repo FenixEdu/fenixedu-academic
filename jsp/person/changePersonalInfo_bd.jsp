@@ -8,26 +8,19 @@
 <%@ page import="DataBeans.InfoCandidateSituation" %>
 <%@ page import="ServidorAplicacao.Servico.UserView" %>
 <%@ page import="ServidorAplicacao.IUserView" %>
-
 <html>
   <head>
     <title><bean:message key="label.person.title.changePersonalInfo" /></title>
   </head>
   <body>
-
-   <span class="error"><html:errors/></span>
-   <table>
-   		<bean:define id="personalInfo" name="<%= SessionConstants.PERSONAL_INFO_KEY %>" scope="session"/>
-    	<html:form action="/changePersonalInfoDispatchAction?method=change">
-
-   	    
-       	<html:hidden property="name" />
-      	<html:hidden property="username" />
-   	  
-        <tr>
-          <td colspan="2"><h2><bean:message key="label.person.title.changePersonalInfo" /></h2></td>
-        </tr>
-
+<span class="error"><html:errors/></span>
+  <bean:define id="personalInfo" name="<%= SessionConstants.PERSONAL_INFO_KEY %>" scope="session"/>
+  <html:form action="/changePersonalInfoDispatchAction?method=change">
+  <html:hidden property="name" />
+  <html:hidden property="username" />
+<h2><bean:message key="label.person.title.changePersonalInfo" /></h2>
+        <table>
+      		<tr>
             <% IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW); 
                if ((userView.getCandidateView() != null) && (userView.getRoles().size() == 2) &&
                    (userView.hasRoleType(RoleType.MASTER_DEGREE_CANDIDATE)) && 
@@ -52,7 +45,6 @@
                  <td><bean:message key="label.person.motherName" /></td>
                   <td><html:text property="motherName"/></td>
                 </tr>
-                
                 <!-- Data de Nascimento -->
                 <tr>
                  <td><bean:message key="label.person.birth" /></td>
@@ -67,8 +59,6 @@
                      </html:select>
                   </td>          
                 </tr>
-        
-                
                 <!-- Freguesia de Naturalidade -->
                 <tr>
                  <td><bean:message key="label.person.birthPlaceParish" /></td>
@@ -94,7 +84,6 @@
                  <td><bean:message key="label.person.identificationDocumentIssuePlace" /></td>
                   <td><html:text property="identificationDocumentIssuePlace"/></td>
                 </tr>
-                
         	    <!-- Data de Emissao do Documento de Identificacao -->
                 <tr>
                  <td><bean:message key="label.person.identificationDocumentIssueDate" /></td>
@@ -109,7 +98,6 @@
                      </html:select>
                   </td>          
                 </tr>
-        
         	<!-- Data de Validade do Documento de Identificacao -->
                 <tr>
                  <td><bean:message key="label.person.identificationDocumentExpirationDate" /></td>
@@ -124,8 +112,6 @@
                      </html:select>
                   </td>          
                 </tr>
-        
-        
                 <!-- Tipo do Documento de Identificacao -->
                 <tr>
                  <td><bean:message key="label.person.identificationDocumentType" /></td>
@@ -193,9 +179,8 @@
                         <html:options collection="<%= SessionConstants.SEX_LIST_KEY %>" property="value" labelProperty="label"/>
                      </html:select>          
                  </td>
-                </tr>
-                
-                <!-- Nacionalidade -->
+                </tr>   
+               <!-- Nacionalidade -->
                 <tr>
                  <td><bean:message key="label.person.nationality" /></td>
                  <td>
@@ -204,7 +189,6 @@
                      </html:select>          
                  </td>
                 </tr>
-
          	<% } else { %>
       	   	    <html:hidden property="page" value="1"/>
               	<html:hidden property="sex" />
@@ -238,8 +222,6 @@
               	<html:hidden property="idExpirationDateYear" />
               	<html:hidden property="areaOfAreaCode" />
          	<% } %>
-
-
           <!-- Telemovel -->
           <tr>
             <td><bean:message key="label.person.mobilePhone" /></td>
@@ -255,13 +237,10 @@
             <td><bean:message key="label.person.webSite" /></td>
             <td><html:text property="webSite"/></td>
           </tr>
-
-
-        <td colspan="2">
-           <html:submit property="Alterar">Alterar Dados</html:submit>
-           <html:reset property="Reset">Dados Originais</html:reset>
-        </td>
+   	</table>
+<br />
+<html:submit property="Alterar" styleClass="inputbutton">Alterar Dados</html:submit>
+<html:reset property="Reset" styleClass="inputbutton">Dados Originais</html:reset>
       </html:form>  
-   </table>
   </body>
 </html>

@@ -2,13 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-
 <html:form action="/manipularSalas">
-  <center> <b> <bean:message key="manipularSalas.titleSuccess"/> </b> </center>
+<h2><bean:message key="manipularSalas.titleSuccess"/></h2>
   <br/>
   <span class="error"><html:errors/></span>
   <logic:present name="publico.infoRooms" scope="session">
-    <table align="center" border=1 cellpadding='5'>
+    <table border="0" cellpadding="5">
       <%! int i; %>
       <% i = 0; %>
       <logic:iterate id="infoRoom" name="publico.infoRooms">
@@ -22,33 +21,16 @@
         <% i++; %>
       </logic:iterate>
     </table>
-
     <br/>
-    <br/>
-    
-    <table align="center">
-      <tr align="center">
-        <td>
-          <html:submit property="operation"><bean:message key="manipularSalas.verSalaOperation"/></html:submit>
-        </td>
-        <td width="20"> </td>
-        <td>
-          <html:submit property="operation"><bean:message key="manipularSalas.editarSalaOperation"/></html:submit>
-        </td>
-        <td width="20"> </td>
-         <td>
-           <html:submit property="operation"><bean:message key="manipularSalas.apagarSalaOperation"/></html:submit>
-         </td>
-       </tr>
-    </table>
-    <br/>
+<html:submit property="operation" styleClass="inputbutton"><bean:message key="manipularSalas.verSalaOperation"/></html:submit>
+<html:submit property="operation" styleClass="inputbutton"><bean:message key="manipularSalas.editarSalaOperation"/></html:submit>
+<html:submit property="operation" styleClass="inputbutton"><bean:message key="manipularSalas.apagarSalaOperation"/></html:submit>
   </logic:present>
-
   <logic:notPresent name="publico.infoRooms" scope="session">
-    <table align="center" border='1' cellpadding='5'>
-      <tr align="center">
+    <table>
+      <tr>
         <td>
-          <font color='red'> <bean:message key="manipularSalas.titleInsuccess"/></font>
+          <span class="error"><bean:message key="manipularSalas.titleInsuccess"/></span>
         </td>
       </tr>
     </table>

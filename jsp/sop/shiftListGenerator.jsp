@@ -95,14 +95,14 @@
 			<table>
 				<tr>
 					<td>
-						<font color="red">
+						<span class="error">
 							<logic:present name="available">						
 								<bean:message key="error.shifts.class.not.available"/>
 							</logic:present>
 							<logic:notPresent name="available">						
 								<bean:message key="error.shifts.class.not.associated"/>
 							</logic:notPresent>
-						</font>
+						</span>
 					</td>
 				</tr>
 			</table>

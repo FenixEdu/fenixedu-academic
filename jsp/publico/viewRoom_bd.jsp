@@ -7,45 +7,35 @@
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 	<div id="invisible"><h2><bean:message key="title.info.room"/></h2></div>
 	<br/> 
-	<logic:present name="siteView" property="component" >
-		<bean:define id="bodyComponent" name="siteView" property="component"/> 
-		<bean:define id="infoRoom" name="bodyComponent" property="infoRoom"/>
-           <div id="invisible"><table class="invisible" cellspacing="0" cellpadding="0" width="90%">
+	<logic:present name="publico.infoRoom" >
+       	<div id="invisible"><table class="invisible" width="90%">
                 <tr>
-                    <td class="listClasses">
-                        <b><bean:message key="property.room.name"/>:</b> <bean:write name="infoRoom" property="nome"/>
-                    </td>
-                    <td class="listClasses">
-                        <b><bean:message key="property.room.building"/>:</b> <bean:write name="infoRoom" property="edificio"/>
-                    </td>
-                    <td class="listClasses">
-                        <b><bean:message key="property.room.floor"/>:</b> <bean:write name="infoRoom" property="piso"/>
-                    </td>
+                    <td class="listClasses-header"><bean:message key="property.room.name" /></td>
+                    <td class="listClasses-header"><bean:message key="property.room.type" /></td>
+                    <td class="listClasses-header"><bean:message key="property.room.building" /></td>
+                    <td class="listClasses-header"><bean:message key="property.room.floor" /></td>
+					<td class="listClasses-header"><bean:message key="property.room.capacity.normal" /></td>
+					<td class="listClasses-header"><bean:message key="property.room.capacity.exame" /></td>
                 </tr>
                 <tr>
-                    <td class="listClasses">
-                        <b><bean:message key="property.room.type"/>:</b> <bean:write name="infoRoom" property="tipo"/>
-                    </td>
-                    <td class="listClasses">
-                        <b><bean:message key="property.room.capacity.normal"/>:</b> <bean:write name="infoRoom" property="capacidadeNormal"/>
-                    </td>
-                    <td class="listClasses">
-                        <b><bean:message key="property.room.capacity.exame"/>:</b> <bean:write name="infoRoom" property="capacidadeExame"/>
-                    </td>
+                    <td class="listClasses"><bean:write name="publico.infoRoom" property="nome" /></td>
+                    <td class="listClasses"><bean:write name="publico.infoRoom" property="tipo" /></td>
+                    <td class="listClasses"><bean:write name="publico.infoRoom" property="edificio" /></td>
+					<td class="listClasses"><bean:write name="publico.infoRoom" property="piso" /></td>
+                    <td class="listClasses"><bean:write name="publico.infoRoom" property="capacidadeNormal" /></td>
+                    <td class="listClasses"><bean:write name="publico.infoRoom" property="capacidadeExame" /></td>
                 </tr>
             </table>
-</div>
-		<br/>
-		<bean:define id="infoLessons" name="bodyComponent" property="infoLessons"/>
-	   	<app:gerarHorario name="infoLessons" type="<%= TimeTableType.ROOM_TIMETABLE %>"/> 
-
+		</div>
+		<br />
+		<br />
+	   	<app:gerarHorario name="lessonList" type="<%= TimeTableType.ROOM_TIMETABLE %>"/> 
 	</logic:present>
-
-	<logic:notPresent name="siteView" property="component" >
-		<table align="center" border='1' cellpadding='10'>
-			<tr align="center">
+	<logic:notPresent name="publico.infoRoom" >
+		<table align="center">
+			<tr>
 				<td>
-					<font color='red'> <bean:message key="message.public.notfound.room"/> </font>
+					<span class="error"><bean:message key="message.public.notfound.room"/></span>
 				</td>
 			</tr>
 		</table>

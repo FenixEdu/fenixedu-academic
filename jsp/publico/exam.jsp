@@ -4,16 +4,14 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="exams" name="component" property="infoExams" />
-<table align="center">
+<table width="90%" align="center">
 <tr>
 	<td class="listClasses-header" ><bean:message key="label.season"/></th>
 	<td class="listClasses-header" ><bean:message key="label.day"/></th>
 	<td class="listClasses-header" ><bean:message key="label.beginning"/></th>
 	<td class="listClasses-header" ><bean:message key="label.end"/></th>
-	
 </tr>	
 	<logic:iterate id="exam" name="exams">
-		
 	<tr>
 	<td class="listClasses"><bean:write name="exam" property="season"/></td>		
 	<td class="listClasses"><bean:write name="exam" property="date"/></td>

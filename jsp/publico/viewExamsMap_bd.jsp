@@ -5,10 +5,9 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <br/>
 <bean:define id="component" name="siteView" property="component"/>
-
-<table width="80%" border="0" cellpadding="0" cellspacing="0" align="center">
+<table width="80%" align="center">
 	<tr>
-		<td bgcolor="#FFFFFF" class="infoselected"><p><bean:message key="title.selected.degree"/></p>
+		<td class="infoselected"><p><bean:message key="title.selected.degree"/></p>
 			<strong><jsp:include page="examsMapContext.jsp"/></strong>
          </td>
     </tr>

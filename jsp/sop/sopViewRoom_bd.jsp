@@ -6,64 +6,76 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
-
-	<br/>
-	<center><font color='#034D7A' size='5'> <b> <bean:message key="title.view.room"/> </b> </font></center>
-	<br/>
-
-	<logic:present name="publico.infoRoom" scope="session">
-
-            <table cellspacing="0" cellpadding="0" width="100%">
-                <tr class="timeTable_line">
-                    <td class="horariosHoras_first">
-                        <b><bean:message key="property.room.name"/>:</b> <bean:write name="publico.infoRoom" property="nome"/>
+<h2><bean:message key="title.view.room"/></h2>
+<br />
+<html:form action="/chooseExecutionPeriod">
+	<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		    <td nowrap="nowrap" width="125"><bean:message key="property.executionPeriod"/>:</td>
+		    <td nowrap="nowrap"><jsp:include page="selectExecutionPeriodList.jsp"/></td>
+			<td width="10"></td>
+			<td>
+				<html:hidden property="method" value="chooseForViewRoom"/>
+				<html:hidden property="page" value="1"/>
+			    <html:submit styleClass="inputbutton"><bean:message key="label.choose"/>
+          		</html:submit>
+			</td>
+		</tr>
+	</table>
+</html:form> 
+<br />
+<logic:present name="publico.infoRoom" scope="session">
+            <table width="100%">
+                <tr>
+                    <td class="listClasses-header">
+                        <bean:message key="property.room.name"/>
                     </td>
-                    <td class="horariosHoras_first">
-                        <b><bean:message key="property.room.building"/>:</b> <bean:write name="publico.infoRoom" property="edificio"/>
+					<td class="listClasses-header">
+						<bean:message key="property.room.type"/>
+					</td>
+                    <td class="listClasses-header">
+                        <bean:message key="property.room.building"/>
                     </td>
-                    <td class="horariosHoras_first">
-                        <b><bean:message key="property.room.floor"/>:</b> <bean:write name="publico.infoRoom" property="piso"/>
+                    <td class="listClasses-header">
+                        <bean:message key="property.room.floor"/>
                     </td>
+					<td class="listClasses-header">
+						<bean:message key="property.room.capacity.normal"/>
+					</td>
+					<td class="listClasses-header">
+						<bean:message key="property.room.capacity.exame"/>
+					</td>
                 </tr>
-                <tr class="timeTable_line">
-                    <td class="horariosHoras_first">
-                        <b><bean:message key="property.room.type"/>:</b> <bean:write name="publico.infoRoom" property="tipo"/>
+                <tr>
+					<td class="listClasses">
+						<bean:write name="publico.infoRoom" property="nome"/>
+					</td>
+                    <td class="listClasses">
+                        <bean:write name="publico.infoRoom" property="tipo"/>
                     </td>
-                    <td class="horariosHoras_first">
-                        <b><bean:message key="property.room.capacity.normal"/>:</b> <bean:write name="publico.infoRoom" property="capacidadeNormal"/>
+					<td class="listClasses">
+						<bean:write name="publico.infoRoom" property="edificio"/>
+					</td>
+					<td class="listClasses">
+						<bean:write name="publico.infoRoom" property="piso"/>
+					</td>
+                    <td class="listClasses">
+                         <bean:write name="publico.infoRoom" property="capacidadeNormal"/>
                     </td>
-                    <td class="horariosHoras_first">
-                        <b><bean:message key="property.room.capacity.exame"/>:</b> <bean:write name="publico.infoRoom" property="capacidadeExame"/>
+                    <td class="listClasses">
+                        <bean:write name="publico.infoRoom" property="capacidadeExame"/>
                     </td>
                 </tr>
             </table>
-
-		<br/>
-		<br/>
-
-		<html:form action="/chooseExecutionPeriod">
-		<table border="0" cellspacing="0" cellpadding="0">
-		  <tr>
-		    <td nowrap="nowrap" class="formTD"><bean:message key="property.executionPeriod"/></td>
-		    <td nowrap="nowrap" class="formTD"><jsp:include page="selectExecutionPeriodList.jsp"/></td>
-		  </tr>
-		</table>
-		<html:hidden property="method" value="chooseForViewRoom"/>
-		<html:hidden property="page" value="1"/>
-		  <html:submit styleClass="inputbutton">
-		   	  <bean:message key="label.choose"/>
-		  </html:submit>
-		</html:form>   
-
-	   	<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"/> 
-
+	<br />
+	<br />	
+	<div align="center"><app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"/></div>
 	</logic:present>
-
 	<logic:notPresent name="publico.infoRoom" scope="session">
-		<table align="center" border='1' cellpadding='10'>
-			<tr align="center">
+		<table align="center">
+			<tr>
 				<td>
-					<font color='red'> <bean:message key="message.public.notfound.room"/> </font>
+					<span class="error"><bean:message key="message.public.notfound.room"/></span>
 				</td>
 			</tr>
 		</table>

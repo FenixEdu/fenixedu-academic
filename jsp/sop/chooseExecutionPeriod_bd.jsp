@@ -6,14 +6,15 @@
 <html:form action="/chooseExecutionPeriod">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td nowrap="nowrap" class="formTD"><bean:message key="property.executionPeriod"/></td>
-    <td nowrap="nowrap" class="formTD"><jsp:include page="selectExecutionPeriodList.jsp"/></td>
+    <td nowrap="nowrap" width="125"><bean:message key="property.executionPeriod"/>:</td>
+    <td nowrap="nowrap"><jsp:include page="selectExecutionPeriodList.jsp"/></td>
   </tr>
 </table>
+<br />
 <html:hidden property="method" value="choose"/>
 <html:hidden property="page" value="1"/>
-  <html:submit styleClass="inputbutton">
-   	  <bean:message key="label.choose"/>
-  </html:submit>
+<html:submit styleClass="inputbutton">
+<bean:message key="label.choose"/>
+</html:submit>
 </html:form>    
 
