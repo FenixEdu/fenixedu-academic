@@ -321,5 +321,59 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 			  fail("testReadAll: failed reading all announcements");	
 			}
 				}
+				
+//	public void testReadbyOID() {
+//		   IAnnouncement announcement = null;
+//
+//		   //read existing
+//		   Calendar calendar = Calendar.getInstance();
+//		   calendar.set(Calendar.YEAR, 2003);
+//		   calendar.set(Calendar.MONTH, Calendar.JANUARY);
+//		   calendar.set(Calendar.DATE, 21);
+//		   calendar.set(Calendar.HOUR_OF_DAY, 13);
+//		   calendar.set(Calendar.MINUTE, 20);
+//		   calendar.set(Calendar.SECOND, 0);
+//		   calendar.set(Calendar.MILLISECOND, 0);
+//		
+//		   Timestamp date = new Timestamp(calendar.getTime().getTime());
+//		   try {
+//			   persistentSupport.iniciarTransaccao();
+//			   announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
+//			   persistentSupport.confirmarTransaccao();
+//		   } catch(ExcepcaoPersistencia excepcaoPersistencia) {
+//			   fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
+//		   }
+//		   assertNotNull(announcement);
+//		   assertEquals(announcement.getTitle(), "announcement1deTFCI");
+////		   assertEquals(announcement.getCreationDate(), date);
+////		   assertEquals(announcement.getLastModifiedDate(), date);
+//		   assertEquals(announcement.getInformation(), "information1");
+//		   assertEquals(announcement.getSite(), site);
+//			//test
+//			try {
+//				IAnnouncement announcement2 = new Announcement();
+//				//((Announcement)announcement2).setIdInternal(((Announcement)announcement).getIdInternal());
+//				((Announcement)announcement).setIdInternal(null);
+//				persistentSupport.iniciarTransaccao();
+//				IAnnouncement announcement1 = (IAnnouncement) persistentAnnouncement.readByOId(announcement);
+//				persistentSupport.confirmarTransaccao();
+////				assertEquals("readbyOID test",announcement,announcement1);
+//				System.out.println(announcement1);
+//			} catch (ExcepcaoPersistencia e) {
+//				fail("readbyOID test");
+//			}
+//
+//		   //read unexisting
+//		   announcement = null;
+//		   try {
+//			   persistentSupport.iniciarTransaccao();
+//			   announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("unexistingAnnouncement", date, site);
+//			   persistentSupport.confirmarTransaccao();
+//		   } catch(ExcepcaoPersistencia excepcaoPersistencia) {
+//			   fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
+//		   }
+//		   assertNull(announcement);
+//	   }
+			
 	
 }
