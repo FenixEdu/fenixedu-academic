@@ -312,7 +312,7 @@
          class-ref="Dominio.DisciplinaExecucao"
          proxy="true"
     >
-	<foreignkey field-id-ref="2"/>
+	<foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor>
     
 </class-descriptor>

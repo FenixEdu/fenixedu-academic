@@ -1,5 +1,5 @@
 /*
- * Created on 26/Mar/2003
+ * Created on 28/Mar/2003
  *
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
@@ -13,28 +13,28 @@ import junit.framework.TestSuite;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.IProfessorship;
+import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPersistentProfessorship;
+import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
 
 /**
  * @author jmota
  *
  */
-public class ProfessorshipOJBTest extends TestCaseOJB {
+public class ResponsibleForOJBTest extends TestCaseOJB {
 	private SuportePersistenteOJB persistentSupport = null;
 	private IDisciplinaExecucao executionCourse = null;
-	private IDisciplinaExecucao executionCourseWithoutProfessorships = null;
+	private IDisciplinaExecucao executionCourseWithoutResponsibleFors = null;
 	private IExecutionPeriod executionPeriod = null;
 	private IExecutionYear executionYear = null;
 	private ITeacher teacher = null;
-	private ITeacher teacherWithoutProfessorship = null;
-	private IPersistentProfessorship persistentProfessorship = null;
+	private ITeacher teacherWithoutResponsibleFor = null;
+	private IPersistentResponsibleFor persistentResponsibleFor = null;
 	private IPersistentTeacher persistentTeacher = null;
 	private IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 	private IPersistentExecutionPeriod persistentExecutionPeriod = null;
@@ -42,7 +42,7 @@ public class ProfessorshipOJBTest extends TestCaseOJB {
 	/**
 	 * @param testName
 	 */
-	public ProfessorshipOJBTest(String testName) {
+	public ResponsibleForOJBTest(String testName) {
 		super(testName);
 	}
 
@@ -51,7 +51,7 @@ public class ProfessorshipOJBTest extends TestCaseOJB {
 	}
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ProfessorshipOJBTest.class);
+		TestSuite suite = new TestSuite(ResponsibleForOJBTest.class);
 		return suite;
 	}
 
@@ -70,8 +70,8 @@ public class ProfessorshipOJBTest extends TestCaseOJB {
 		persistentExecutionYear =
 			persistentSupport.getIPersistentExecutionYear();
 		persistentTeacher = persistentSupport.getIPersistentTeacher();
-		persistentProfessorship =
-			persistentSupport.getIPersistentProfessorship();
+		persistentResponsibleFor =
+			persistentSupport.getIPersistentResponsibleFor();
 	}
 
 	protected void tearDown() {
@@ -80,10 +80,10 @@ public class ProfessorshipOJBTest extends TestCaseOJB {
 
 	public void testDelete() {
 
-		//read existing professorship
+		//read existing responsibleFor
 		try {
 			persistentSupport.iniciarTransaccao();
-			teacher = persistentTeacher.readTeacherByNumber(new Integer(2));
+			teacher = persistentTeacher.readTeacherByNumber(new Integer(1));
 			assertNotNull("testDelete: failed reading teacher", teacher);
 			executionYear =
 				persistentExecutionYear.readExecutionYearByName("2002/2003");
@@ -105,63 +105,63 @@ public class ProfessorshipOJBTest extends TestCaseOJB {
 			assertNotNull(
 				"testDelete: failed reading executionCourse",
 				executionCourse);
-			IProfessorship professorship =
-				persistentProfessorship.readByTeacherAndExecutionCourse(
+			IResponsibleFor responsibleFor =
+				persistentResponsibleFor.readByTeacherAndExecutionCourse(
 					teacher,
 					executionCourse);
 			assertNotNull(
-				"testDelete: failed reading professorship",
-				professorship);
+				"testDelete: failed reading responsibleFor",
+				responsibleFor);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
-			fail("Test delete professorship: failed in the test setup");
+			fail("Test delete responsibleFor: failed in the test setup");
 		}
-		//delete professorship
+		//delete responsibleFor
 		try {
 			persistentSupport.iniciarTransaccao();
-			IProfessorship professorship =
-				persistentProfessorship.readByTeacherAndExecutionCourse(
+			IResponsibleFor responsibleFor =
+				persistentResponsibleFor.readByTeacherAndExecutionCourse(
 					teacher,
 					executionCourse);
 			assertNotNull(
-				"testDelete: failed reading professorship",
-				professorship);
-			persistentProfessorship.delete(professorship);
+				"testDelete: failed reading responsibleFor",
+				responsibleFor);
+			persistentResponsibleFor.delete(responsibleFor);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace();
-			fail("Test delete professorship: failed deleting");
+			fail("Test delete responsibleFor: failed deleting");
 		}
 		//read again
 		try {
 			persistentSupport.iniciarTransaccao();
-			IProfessorship professorship =
-				persistentProfessorship.readByTeacherAndExecutionCourse(
+			IResponsibleFor responsibleFor =
+				persistentResponsibleFor.readByTeacherAndExecutionCourse(
 					teacher,
 					executionCourse);
 			assertNull(
-				"testDelete: failed deleting professorship",
-				professorship);
+				"testDelete: failed deleting responsibleFor",
+				responsibleFor);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace();
-			fail("Test delete professorship: failed reading deleted professorship");
+			fail("Test delete responsibleFor: failed reading deleted responsibleFor");
 		}
 	}
 	public void testReadByTeacherAndExecutionCourse() {
 		//		setup
 		try {
 			persistentSupport.iniciarTransaccao();
-			teacher = persistentTeacher.readTeacherByNumber(new Integer(2));
+			teacher = persistentTeacher.readTeacherByNumber(new Integer(1));
 			assertNotNull(
 				"testReadByTeacherAndExecutionCourse: failed reading teacher",
 				teacher);
-			teacherWithoutProfessorship =
+			teacherWithoutResponsibleFor =
 				persistentTeacher.readTeacherByNumber(new Integer(4));
 			assertNotNull(
 				"testReadByTeacherAndExecutionCourse: failed reading teacher",
-				teacherWithoutProfessorship);
+				teacherWithoutResponsibleFor);
 			executionYear =
 				persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(
@@ -188,44 +188,44 @@ public class ProfessorshipOJBTest extends TestCaseOJB {
 			e.printStackTrace();
 			fail("testReadByTeacherAndExecutionCourse: failed in the test setup");
 		}
-		//read existing professorship
+		//read existing responsibleFor
 		try {
 			persistentSupport.iniciarTransaccao();
-			IProfessorship professorship =
-				persistentProfessorship.readByTeacherAndExecutionCourse(
+			IResponsibleFor responsibleFor =
+				persistentResponsibleFor.readByTeacherAndExecutionCourse(
 					teacher,
 					executionCourse);
 			assertNotNull(
-				"testReadByTeacherAndExecutionCourse: failed reading professorship",
-				professorship);
+				"testReadByTeacherAndExecutionCourse: failed reading responsibleFor",
+				responsibleFor);
 			persistentSupport.confirmarTransaccao();
 			assertEquals(
-				"testReadByTeacherAndExecutionCourse: failed reading professorship. ExecutionCourse not equal!",
-				professorship.getExecutionCourse(),
+				"testReadByTeacherAndExecutionCourse: failed reading responsibleFor. ExecutionCourse not equal!",
+				responsibleFor.getExecutionCourse(),
 				executionCourse);
 			assertEquals(
-				"testReadByTeacherAndExecutionCourse: failed reading professorship. Teacher not equal!",
-				professorship.getTeacher(),
+				"testReadByTeacherAndExecutionCourse: failed reading responsibleFor. Teacher not equal!",
+				responsibleFor.getTeacher(),
 				teacher);
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace();
 			fail("testReadByTeacherAndExecutionCourse: failed reading");
 		}
-		//read non Existing professorship
+		//read non Existing responsibleFor
 		try {
 			persistentSupport.iniciarTransaccao();
-			IProfessorship professorship =
-				persistentProfessorship.readByTeacherAndExecutionCourse(
-					teacherWithoutProfessorship,
+			IResponsibleFor responsibleFor =
+				persistentResponsibleFor.readByTeacherAndExecutionCourse(
+					teacherWithoutResponsibleFor,
 					executionCourse);
 			assertNull(
-				"testReadByTeacherAndExecutionCourse: failed reading non existing professorship"
-					+ professorship,
-				professorship);
+				"testReadByTeacherAndExecutionCourse: failed reading non existing responsibleFor"
+					+ responsibleFor,
+				responsibleFor);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace();
-			fail("testReadByTeacherAndExecutionCourse: failed reading non existing professorship");
+			fail("testReadByTeacherAndExecutionCourse: failed reading non existing responsibleFor");
 		}
 
 	}
@@ -234,51 +234,51 @@ public class ProfessorshipOJBTest extends TestCaseOJB {
 		//		setup
 		try {
 			persistentSupport.iniciarTransaccao();
-			teacher = persistentTeacher.readTeacherByNumber(new Integer(2));
+			teacher = persistentTeacher.readTeacherByNumber(new Integer(1));
 			assertNotNull("testReadByTeacher: failed reading teacher", teacher);
-			teacherWithoutProfessorship =
+			teacherWithoutResponsibleFor =
 				persistentTeacher.readTeacherByNumber(new Integer(4));
 			assertNotNull(
 				"testReadByTeacher: failed reading teacher",
-				teacherWithoutProfessorship);
+				teacherWithoutResponsibleFor);
 
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			fail("testReadByTeacher: failed in the test setup");
 		}
-		//read existing professorship
+		//read existing responsibleFor
 		try {
 			persistentSupport.iniciarTransaccao();
-			List professorships =
-				persistentProfessorship.readByTeacher(teacher);
+			List responsibleFors =
+				persistentResponsibleFor.readByTeacher(teacher);
 			assertNotNull(
-				"testReadByTeacher: failed reading professorship",
-				professorships);
+				"testReadByTeacher: failed reading responsibleFor",
+				responsibleFors);
 			persistentSupport.confirmarTransaccao();
 			assertEquals(
-				"testReadByTeacher: failed reading professorship.List size diferent",
-				professorships.size(),
-				1);
+				"testReadByTeacher: failed reading responsibleFor.List size diferent",
+				responsibleFors.size(),
+				3);
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace();
 			fail("testReadByTeacher: failed reading");
 		}
-		//read non Existing professorship
+		//read non Existing responsibleFor
 		try {
 			persistentSupport.iniciarTransaccao();
-			List professorships =
-				persistentProfessorship.readByTeacher(
-					teacherWithoutProfessorship);
+			List responsibleFors =
+				persistentResponsibleFor.readByTeacher(
+					teacherWithoutResponsibleFor);
 			assertEquals(
-				"testReadByTeacher: failed reading non existing professorship"
-					+ professorships,
-				professorships.size(),
+				"testReadByTeacher: failed reading non existing responsibleFor"
+					+ responsibleFors,
+				responsibleFors.size(),
 				0);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace();
-			fail("testReadByTeacher: failed reading non existing  professorship");
+			fail("testReadByTeacher: failed reading non existing  responsibleFor");
 		}
 
 	}
@@ -307,68 +307,68 @@ public class ProfessorshipOJBTest extends TestCaseOJB {
 			assertNotNull(
 				"testReadByExecutionCourse: failed reading executionCourse",
 				executionCourse);
-			executionCourseWithoutProfessorships =
+			executionCourseWithoutResponsibleFors =
 				persistentExecutionCourse
 					.readByExecutionCourseInitialsAndExecutionPeriod(
 					"PO",
 					executionPeriod);
 			assertNotNull(
 				"testReadByExecutionCourse: failed reading executionCourse",
-				executionCourseWithoutProfessorships);
+				executionCourseWithoutResponsibleFors);
 
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			fail("testReadByExecutionCourse: failed in the test setup");
 		}
-		//read existing professorship
+		//read existing responsibleFor
 		try {
 			persistentSupport.iniciarTransaccao();
-			List professorships =
-				persistentProfessorship.readByExecutionCourse(executionCourse);
+			List responsibleFors =
+				persistentResponsibleFor.readByExecutionCourse(executionCourse);
 			assertNotNull(
-				"testReadByExecutionCourse: failed reading professorship",
-				professorships);
+				"testReadByExecutionCourse: failed reading responsibleFor",
+				responsibleFors);
 			persistentSupport.confirmarTransaccao();
 			assertEquals(
-				"testReadByExecutionCourse: failed reading professorship.List size diferent",
-				professorships.size(),
-				3);
+				"testReadByExecutionCourse: failed reading responsibleFor.List size diferent",
+				responsibleFors.size(),
+				1);
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace();
 			fail("testReadByExecutionCourse: failed reading");
 		}
-		//read non Existing professorship
+		//read non Existing responsibleFor
 		try {
 			persistentSupport.iniciarTransaccao();
-			List professorships =
-				persistentProfessorship.readByExecutionCourse(
-					executionCourseWithoutProfessorships);
+			List responsibleFors =
+				persistentResponsibleFor.readByExecutionCourse(
+					executionCourseWithoutResponsibleFors);
 			assertEquals(
-				"testReadByExecutionCourse: failed reading non existing professorship"
-					+ professorships,
-				professorships.size(),
+				"testReadByExecutionCourse: failed reading non existing responsibleFor"
+					+ responsibleFors,
+				responsibleFors.size(),
 				0);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace();
-			fail("testReadByExecutionCourse: failed reading non existing  professorship");
+			fail("testReadByExecutionCourse: failed reading non existing  responsibleFor");
 		}
 	}
 
 	public void testReadAll() {
 
-		//read all professorships
+		//read all responsibleFors
 		try {
 			persistentSupport.iniciarTransaccao();
-			List professorships = persistentProfessorship.readAll();
+			List responsibleFors = persistentResponsibleFor.readAll();
 			assertNotNull(
-				"testReadAll: failed reading all professorships",
-				professorships);
+				"testReadAll: failed reading all responsibleFors",
+				responsibleFors);
 			assertEquals(
-				"testReadAll: failed reading all professorships",
-				5,
-				professorships.size());
+				"testReadAll: failed reading all responsibleFors",
+				3,
+				responsibleFors.size());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace();
@@ -379,27 +379,27 @@ public class ProfessorshipOJBTest extends TestCaseOJB {
 
 	public void testDeleteAll() {
 
-		//delete all professorships
+		//delete all responsibleFors
 		try {
 			persistentSupport.iniciarTransaccao();
-			persistentProfessorship.deleteAll();
+			persistentResponsibleFor.deleteAll();
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace();
-			fail("Test delete professorship: failed deleting");
+			fail("Test delete responsibleFor: failed deleting");
 		}
 		//read again
 		try {
 			persistentSupport.iniciarTransaccao();
-			List professorships = persistentProfessorship.readAll();
+			List responsibleFors = persistentResponsibleFor.readAll();
 			assertEquals(
-				"testDelete: failed deleting professorships",
+				"testDelete: failed deleting responsibleFors",
 				0,
-				professorships.size());
+				responsibleFors.size());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace();
-			fail("Test delete professorship: failed reading deleted professorship");
+			fail("Test delete responsibleFor: failed reading deleted responsibleFor");
 		}
 	}
 }

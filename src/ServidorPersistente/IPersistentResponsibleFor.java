@@ -30,9 +30,7 @@ public interface IPersistentResponsibleFor extends IPersistentObject {
 	public void delete(IResponsibleFor responsibleFor)
 		throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
-	public void deleteByExecutionCourse(IDisciplinaExecucao executionCourse)
-		throws ExcepcaoPersistencia;
-	public void deleteByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
+	public List readAll()throws ExcepcaoPersistencia;
 	public void lockWrite(IResponsibleFor responsibleFor)
 		throws ExcepcaoPersistencia, ExistingPersistentException;
 }

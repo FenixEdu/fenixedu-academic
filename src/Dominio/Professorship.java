@@ -88,5 +88,12 @@ public class Professorship extends DomainObject implements IProfessorship {
 	public void setTeacher(ITeacher teacher) {
 		this.teacher = teacher;
 	}
-
+	public String toString() {
+			String result = "Professorship :\n";
+			result += "\n  - ExecutionCourse : "+ getExecutionCourse();
+			result += "\n  - Teacher : " + getTeacher();
+			
+			
+			return result;
+		}
 }

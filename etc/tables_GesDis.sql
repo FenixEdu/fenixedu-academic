@@ -31,7 +31,8 @@ create table CURRICULUM (
    GENERAL_OBJECTIVES varchar(50),
    OPERACIONAL_OBJECTIVES varchar(50),
    PROGRAM varchar(50),
-   primary key (ID_INTERNAL))
+   primary key (ID_INTERNAL),
+   UNIQUE KEY U1(KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
 
 #----------------------------

@@ -6,6 +6,9 @@
  */
 package ServidorPersistente.OJB;
 
+import java.util.Iterator;
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.ICurriculum;
@@ -67,6 +70,34 @@ public class CurriculumOJBTest extends TestCaseOJB {
 	  }  
 	  
 	  
+	public void testDeleteAll(){
+					 
+//			delete all curriculum
+			 try{
+				 persistentSupport.iniciarTransaccao();
+				 persistentCurriculum.deleteAll();
+				 persistentSupport.confirmarTransaccao();
+		
+			 } catch (ExcepcaoPersistencia ex) {
+				 fail("    -> Failed deleting all Existing Curriculum");
+			 }
+//			Read Again
+			 try{
+				 persistentSupport.iniciarTransaccao();
+				 List curriculumList =persistentCurriculum.readAll();
+				 Iterator iter = curriculumList.iterator();
+				 while (iter.hasNext()){
+					System.out.println((ICurriculum) iter.next());
+				 }
+				 assertEquals(0,curriculumList.size());
+				 persistentSupport.confirmarTransaccao();
+		
+			 } catch (ExcepcaoPersistencia ex) {
+				 fail("    -> Failed Reading Existing Curriculum");
+			 }
+	 
+		}  
+	  
 	public void testReadCurriculumByExecutionCourse(){
 		IDisciplinaExecucao executionCourse=null;
 		ICurriculum curriculum=null;
@@ -125,6 +156,79 @@ public class CurriculumOJBTest extends TestCaseOJB {
 		 
 	}
 	  
+	public void testDelete(){
+		IDisciplinaExecucao executionCourse=null;
+		ICurriculum curriculum=null;
+		IExecutionYear executionYear= null;
+		IExecutionPeriod executionPeriod = null;
+		
+//		Read Existing Execution Course	
+		 try{
+			 persistentSupport.iniciarTransaccao();
+			 executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI","2002/2003","LEIC");
+			 assertNotNull("    -> Failed Reading Existing Execution Course",executionCourse);
+			 persistentSupport.confirmarTransaccao();
+		
+		 } catch (ExcepcaoPersistencia ex) {
+			 fail("    -> Failed Reading Existing Execution Course");
+		 }
+
+//		Read Existing Curriculum
+		 try{
+			 persistentSupport.iniciarTransaccao();
+			 curriculum=persistentCurriculum.readCurriculumByExecutionCourse(executionCourse);
+			 assertNotNull(curriculum);
+			 persistentSupport.confirmarTransaccao();
+		
+		 } catch (ExcepcaoPersistencia ex) {
+			 fail("    -> Failed Reading Existing Curriculum");
+		 }
+		 assertTrue(curriculum.getExecutionCourse().equals(executionCourse));
+		 assertTrue(curriculum.getGeneralObjectives().equals("bla"));
+		 assertTrue(curriculum.getOperacionalObjectives().equals("bla"));
+		 assertTrue(curriculum.getProgram().equals("bla"));
+		 
+//		delete curriculum
+		 try{
+			 persistentSupport.iniciarTransaccao();
+			 curriculum=persistentCurriculum.readCurriculumByExecutionCourse(executionCourse);
+			 assertNotNull(curriculum);
+			 persistentCurriculum.delete(curriculum);
+			 persistentSupport.confirmarTransaccao();
+		
+		 } catch (ExcepcaoPersistencia ex) {
+			 fail("    -> Failed Reading NON Existing Curriculum");
+		 }
+//		Read Again
+		 try{
+			 persistentSupport.iniciarTransaccao();
+			 curriculum=persistentCurriculum.readCurriculumByExecutionCourse(executionCourse);
+			 assertNull(curriculum);
+			 persistentSupport.confirmarTransaccao();
+		
+		 } catch (ExcepcaoPersistencia ex) {
+			 fail("    -> Failed Reading Existing Curriculum");
+		 }
+	 
+	}
 	  
+	public void testReadAll(){
+					 
+//			read all curriculum
+			 try{
+				 persistentSupport.iniciarTransaccao();
+				List curriculumList= persistentCurriculum.readAll();
+				assertNotNull(curriculumList);
+				assertEquals(2,curriculumList.size());
+				 persistentSupport.confirmarTransaccao();
+		
+			 } catch (ExcepcaoPersistencia ex) {
+				 fail("    -> Failed deleting all Existing Curriculum");
+			 }
+
+	 
+		}  
+	  
+	
 	  
 }

@@ -44,8 +44,9 @@ INSERT INTO ITEM VALUES (3,'Item2deTFCI',1,'item2 da seccao1deTFCI',0,2);
 #
 #---------
 DELETE FROM CURRICULUM;
-INSERT INTO CURRICULUM VALUES (1, '24', 'bla','bla','bla');
-INSERT INTO CURRICULUM VALUES (2, '25','bla','bla','bla');
+INSERT INTO CURRICULUM VALUES (2, '25', 'bla','bla','bla');
+INSERT INTO CURRICULUM VALUES (1, '24','bla','bla','bla');
+
 
 #
 # Data for table 'TEACHER'

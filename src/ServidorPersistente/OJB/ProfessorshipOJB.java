@@ -6,7 +6,6 @@
  */
 package ServidorPersistente.OJB;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.odmg.QueryException;
@@ -34,6 +33,23 @@ public class ProfessorshipOJB
 	 */
 	public ProfessorshipOJB() {
 		super();
+	}
+
+
+
+
+
+	public List readAll()throws ExcepcaoPersistencia {
+	
+		try {
+			String oqlQuery = "select all from " + Professorship.class.getName();
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 	}
 
 	public IProfessorship readByTeacherAndExecutionCourse(
@@ -124,26 +140,7 @@ public class ProfessorshipOJB
 		super.delete(professorship);
 	}
 
-	public void deleteByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
-		List result = readByTeacher(teacher);
-		Iterator iter = result.iterator();
-		while (iter.hasNext()) {
-			IProfessorship professorship = (IProfessorship) iter.next();
-			super.delete(professorship);
-		}
 
-	}
-
-	public void deleteByExecutionCourse(IDisciplinaExecucao executionCourse)
-		throws ExcepcaoPersistencia {
-		List result = readByExecutionCourse(executionCourse);
-		Iterator iter = result.iterator();
-		while (iter.hasNext()) {
-			IProfessorship professorship = (IProfessorship) iter.next();
-			super.delete(professorship);
-		}
-
-	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
 		String oqlQuery = "select all from " + Professorship.class.getName();

@@ -17,6 +17,7 @@ import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurriculum;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  *
  * @author  EP 15
@@ -53,9 +54,49 @@ public class CurriculumOJB
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, queryEx);
 		}
 	}
-	public void lockWrite(ICurriculum curriculum) throws ExcepcaoPersistencia {
-		super.lockWrite(curriculum);
-	}
+	
+
+	public void lockWrite(ICurriculum curriculum)
+				throws ExcepcaoPersistencia, ExistingPersistentException {
+					ICurriculum curriculumFromDB = null;
+
+				// If there is nothing to write, simply return.
+				if (curriculum == null)
+					return;
+
+				// Read curriculum from database.
+				curriculumFromDB =
+					this.readCurriculumByExecutionCourse(curriculum.getExecutionCourse());
+
+				// If curriculum is not in database, then write it.
+				if (curriculumFromDB == null)
+					super.lockWrite(curriculum);
+				
+				// else If the curriculum is mapped to the database, then write any existing changes.
+				else if (
+					(curriculum instanceof Curriculum)
+						&& ((Curriculum) curriculumFromDB).getInternalCode().equals(
+							((Curriculum) curriculum).getInternalCode())) {
+					super.lockWrite(curriculum);
+					// else Throw an already existing exception
+				} else
+					throw new ExistingPersistentException();
+				}
+
+		public List readAll()throws ExcepcaoPersistencia {
+	
+				try {
+					String oqlQuery = "select all from " + Curriculum.class.getName();
+					query.create(oqlQuery);
+					List result = (List) query.execute();
+					lockRead(result);
+					return result;
+				} catch (QueryException ex) {
+					throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+				}
+			}
+
+
 	public void delete(ICurriculum curriculum) throws ExcepcaoPersistencia {
 		super.delete(curriculum);
 	}

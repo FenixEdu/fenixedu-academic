@@ -30,11 +30,9 @@ public interface IPersistentProfessorship extends IPersistentObject {
 						throws ExcepcaoPersistencia;
 	public void delete(IProfessorship professorship) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
-	public void deleteByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
-	public void deleteByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
 	public void lockWrite(IProfessorship professorship)
 				throws ExcepcaoPersistencia, ExistingPersistentException;
-	
+	public List readAll()throws ExcepcaoPersistencia;
 	
 
 }

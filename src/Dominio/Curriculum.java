@@ -85,11 +85,7 @@ public class Curriculum implements ICurriculum {
 		if (obj instanceof ICurriculum) {
 			ICurriculum curriculum = (ICurriculum) obj;
 			result =
-				getGeneralObjectives().equals(
-					curriculum.getGeneralObjectives())
-					&& getOperacionalObjectives().equals(
-						curriculum.getOperacionalObjectives())
-					&& getProgram().equals(curriculum.getProgram());
+				getExecutionCourse().equals(curriculum.getExecutionCourse());
 		}
 		return result;
 	}

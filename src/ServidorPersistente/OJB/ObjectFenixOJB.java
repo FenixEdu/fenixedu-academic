@@ -121,6 +121,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 			deletedObject.add(obj);
 
 		} catch (ODMGRuntimeException ex) {
+			ex.printStackTrace();
 			throw new ExcepcaoPersistencia(
 				ExcepcaoPersistencia.UPGRADE_LOCK,
 				ex);
@@ -132,9 +133,12 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 			query.create(oqlQuery);
 			List result = (List) query.execute();
 			ListIterator iterator = result.listIterator();
-			while (iterator.hasNext())
+			while (iterator.hasNext()) {
+				
 				delete(iterator.next());
+			}
 		} catch (QueryException ex) {
+			ex.printStackTrace();
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 

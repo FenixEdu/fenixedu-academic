@@ -6,7 +6,6 @@
  */
 package ServidorPersistente.OJB;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.odmg.QueryException;
@@ -36,6 +35,19 @@ public class ResponsibleForOJB
 	public ResponsibleForOJB() {
 		super();
 	}
+	
+	public List readAll()throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + ResponsibleFor.class.getName();
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+		}
+	
 	public IResponsibleFor readByTeacherAndExecutionCourse(
 			ITeacher teacher,
 			IDisciplinaExecucao executionCourse)
@@ -124,26 +136,9 @@ public class ResponsibleForOJB
 			super.delete(responsibleFor);
 		}
 
-		public void deleteByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
-			List result = readByTeacher(teacher);
-			Iterator iter = result.iterator();
-			while (iter.hasNext()) {
-				IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
-				super.delete(responsibleFor);
-			}
+		
 
-		}
-
-		public void deleteByExecutionCourse(IDisciplinaExecucao executionCourse)
-			throws ExcepcaoPersistencia {
-			List result = readByExecutionCourse(executionCourse);
-			Iterator iter = result.iterator();
-			while (iter.hasNext()) {
-				IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
-				super.delete(responsibleFor);
-			}
-
-		}
+		
 
 		public void deleteAll() throws ExcepcaoPersistencia {
 			String oqlQuery = "select all from " + ResponsibleFor.class.getName();
