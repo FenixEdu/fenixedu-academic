@@ -28,11 +28,13 @@ public class InfoExam {
 
 	private Integer idInternal;
 
-	// The following variable serves the purpose of indicating the
-	// execution course associated with this exam through which
-	// the exam was obtained. It should serve only for view purposes!!!
-	// It was created to be used and set by the ExamsMap Utilities.
-	// It has no meaning in the buisness logic.
+	/**
+	 * The following variable serves the purpose of indicating the
+	 * execution course associated with this exam through which 
+	 * the exam was obtained. It should serve only for view purposes!!!
+	 * It was created to be used and set by the ExamsMap Utilities.
+	 * It has no meaning in the business logic.
+	 */
 	private InfoExecutionCourse infoExecutionCourse;
 
 	public InfoExam() {
