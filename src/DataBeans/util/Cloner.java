@@ -3,6 +3,7 @@ package DataBeans.util;
 import org.apache.commons.beanutils.BeanUtils;
 
 import DataBeans.InfoClass;
+import DataBeans.InfoCountry;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
@@ -17,6 +18,7 @@ import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
 import Dominio.Aula;
+import Dominio.Country;
 import Dominio.CurricularCourse;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
@@ -24,6 +26,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.IAula;
+import Dominio.ICountry;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
@@ -500,7 +503,11 @@ public abstract class Cloner {
 	 */
 	public static IMasterDegreeCandidate copyInfoMasterDegreeCandidate2IMasterDegreCandidate(InfoMasterDegreeCandidate infoMasterDegreeCandidate) {
 		IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
+		ICountry country = Cloner.copyInfoCountry2ICountry(infoMasterDegreeCandidate.getInfoCountry());
+		ICountry nationality = Cloner.copyInfoCountry2ICountry(infoMasterDegreeCandidate.getInfoNationality());
 		copyObjectProperties(masterDegreeCandidate, infoMasterDegreeCandidate);
+		masterDegreeCandidate.setCountry(country);
+		masterDegreeCandidate.setNationality(nationality);
 		return masterDegreeCandidate;
 	}
 
@@ -513,10 +520,35 @@ public abstract class Cloner {
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate();
 		copyObjectProperties(infoMasterDegreeCandidate, masterDegreeCandidate);
 		InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(masterDegreeCandidate.getDegree());
+		InfoCountry infoCountry = Cloner.copyICountry2InfoCountry(masterDegreeCandidate.getCountry());
+		InfoCountry infoNationality = Cloner.copyICountry2InfoCountry(masterDegreeCandidate.getNationality());
 		infoMasterDegreeCandidate.setInfoDegree(infoDegree);
-		infoMasterDegreeCandidate.setCountry(masterDegreeCandidate.getCountry().getName());
-		infoMasterDegreeCandidate.setIdentificationDocumentType(masterDegreeCandidate.getIdentificationDocumentType().toString2());
+		infoMasterDegreeCandidate.setInfoCountry(infoCountry);
+		infoMasterDegreeCandidate.setInfoNationality(infoNationality);
+		infoMasterDegreeCandidate.setIdentificationDocumentType(masterDegreeCandidate.getIdentificationDocumentType().toString());
 		return infoMasterDegreeCandidate;
+	}
+	
+	/**
+	 * Method copyInfoCountry2ICountry
+	 * @param infoCountry
+	 * @return
+	 */
+	public static ICountry copyInfoCountry2ICountry(InfoCountry infoCountry) {
+		ICountry country = new Country();
+		copyObjectProperties(country, infoCountry);
+		return country;
+	}
+	
+	/**
+	 * Method copyICountry2InfoCountry
+	 * @param country
+	 * @return
+	 */
+	public static InfoCountry copyICountry2InfoCountry(ICountry country) {
+		InfoCountry infoCountry = new InfoCountry();
+		copyObjectProperties(infoCountry, country);
+		return infoCountry;
 	}
 
 }
