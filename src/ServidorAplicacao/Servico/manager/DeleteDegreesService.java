@@ -49,11 +49,9 @@ public class DeleteDegreesService implements IServico {
 					ICurso degree =
 						persistentDegree.readByIdInternal(internalId);
 					if (degree != null)
-						result = persistentDegree.delete(degree);
-						
+						result = persistentDegree.delete(degree);			
 					if(result.equals(new Boolean(false)))				
-					undeletedDegreesNames.add((String) degree.getNome());
-				
+					undeletedDegreesNames.add((String) degree.getNome());	
 			}
 			
 			return undeletedDegreesNames;

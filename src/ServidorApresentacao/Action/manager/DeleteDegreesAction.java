@@ -46,33 +46,26 @@ public class DeleteDegreesAction extends FenixAction {
 		List errorNames = new ArrayList();
 
 		try {
-			errorNames = (List) manager.executar(userView, "DeleteDegreesService", args);
-//			session.removeAttribute(SessionConstants.INFO_DEGREES_LIST);
-
+				errorNames = (List) manager.executar(userView, "DeleteDegreesService", args);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+		
+		if (!errorNames.isEmpty()) {
+				ActionErrors actionErrors = new ActionErrors();
+				Iterator namesIter = errorNames.iterator();
+				ActionError error = null;
+				while (namesIter.hasNext()) {
+						// CRIO UM ACTION ERROR PARA CADA DEGREE
+						error = new ActionError("errors.invalid.delete.not.empty", (String) namesIter.next());
+						actionErrors.add("errors.invalid.delete.not.empty", error);
+				}
+				saveErrors(request, actionErrors);
 		}
 
 		List allInfoDegrees;
 		try {
-
-			allInfoDegrees = (List) manager.executar(userView, "ReadDegreesService", null);
-
-			if (!errorNames.isEmpty()) {
-				ActionErrors actionErrors = new ActionErrors();
-				Iterator namesIter = errorNames.iterator();
-				ActionError error = null;
-
-				while (namesIter.hasNext()) {
-					//						CRIO UM ACTION ERROR PARA CADA DEGREE
-					error = new ActionError("errors.invalid.delete.not.empty", (String) namesIter.next());
-					actionErrors.add("errors.invalid.delete.not.empty", error);
-
-				}
-//				deleteDegreesForm.set("internalIds", new Integer[] {});//COM O RESET NAO DAVA/POR ISSO FACO UM SET COM NADAPA LIMPARO"internalIds" DO FORM
-				saveErrors(request, actionErrors);
-
-			}
+				allInfoDegrees = (List) manager.executar(userView, "ReadDegreesService", null);	
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -81,7 +74,6 @@ public class DeleteDegreesAction extends FenixAction {
 		request.setAttribute(SessionConstants.INFO_DEGREES_LIST, allInfoDegrees);
 
 		return mapping.findForward("readDegrees");
-
 	}
 
 }
