@@ -319,7 +319,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 
 		String graduationType = (String) request.getAttribute("graduationType");
 		if (graduationType == null)
-			graduationType = (String) request.getParameter("graduationType");
+			graduationType = request.getParameter("graduationType");
 
 		request.setAttribute("graduationType", graduationType);
 

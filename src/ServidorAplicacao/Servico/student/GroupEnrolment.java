@@ -41,125 +41,157 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author asnr and scpo
  *
  */
-public class GroupEnrolment implements IServico {
+public class GroupEnrolment implements IServico
+{
 
-	private static GroupEnrolment _servico = new GroupEnrolment();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static GroupEnrolment getService() {
-		return _servico;
-	}
+    private static GroupEnrolment _servico = new GroupEnrolment();
+    /**
+     * The singleton access method of this class.
+     **/
+    public static GroupEnrolment getService()
+    {
+        return _servico;
+    }
 
-	/**
-	 * The actor of this class.
-	 **/
-	private GroupEnrolment() {
-	}
+    /**
+     * The actor of this class.
+     **/
+    private GroupEnrolment()
+    {
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "GroupEnrolment";
-	}
+    /**
+     * Devolve o nome do servico
+     **/
+    public final String getNome()
+    {
+        return "GroupEnrolment";
+    }
 
-	public boolean run(Integer groupPropertiesCode, Integer shiftCode, Integer groupNumber, List studentCodes, String username)
-		throws FenixServiceException {
+    public boolean run(
+        Integer groupPropertiesCode,
+        Integer shiftCode,
+        Integer groupNumber,
+        List studentCodes,
+        String username)
+        throws FenixServiceException
+    {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentStudentGroupAttend persistentStudentGroupAttend = sp.getIPersistentStudentGroupAttend();
-			IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
-			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-			IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentStudentGroupAttend persistentStudentGroupAttend =
+                sp.getIPersistentStudentGroupAttend();
+            IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
+            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+            IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
 
-			IGroupProperties groupProperties =
-				(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
-			ITurno shift = (ITurno) sp.getITurnoPersistente().readByOId(new Turno(shiftCode), false);
+            IGroupProperties groupProperties =
+                (IGroupProperties) sp.getIPersistentGroupProperties().readByOId(
+                    new GroupProperties(groupPropertiesCode),
+                    false);
+            ITurno shift = (ITurno) sp.getITurnoPersistente().readByOId(new Turno(shiftCode), false);
 
-			IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-			IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory =
+                GroupEnrolmentStrategyFactory.getInstance();
+            IGroupEnrolmentStrategy strategy =
+                enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
 
-			
-			Integer result = strategy.enrolmentPolicyNewGroup(groupProperties, studentCodes.size() + 1, shift);
-			
-			if (result.equals(new Integer(-1)))
-				throw new InvalidArgumentsServiceException();
-				
-			if(result.equals(new Integer(-2)))
-				throw new NonValidChangeServiceException();
-			
-			if(result.equals(new Integer(-3)))
-				throw new NotAuthorizedException();
-			
+            Integer result =
+                strategy.enrolmentPolicyNewGroup(groupProperties, studentCodes.size() + 1, shift);
 
+            if (result.equals(new Integer(-1)))
+                throw new InvalidArgumentsServiceException();
 
-			List allStudentGroup = new ArrayList();
-			allStudentGroup = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
-			
+            if (result.equals(new Integer(-2)))
+                throw new NonValidChangeServiceException();
 
-			IStudentGroup newStudentGroup =
-				persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties, groupNumber);
-			
-			if (newStudentGroup!= null)
-				throw new FenixServiceException();
+            if (result.equals(new Integer(-3)))
+                throw new NotAuthorizedException();
 
-			newStudentGroup = new StudentGroup(groupNumber, groupProperties, shift);
-			persistentStudentGroup.lockWrite(newStudentGroup);
+            List allStudentGroup = new ArrayList();
+            allStudentGroup =
+                persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
 
+            IStudentGroup newStudentGroup =
+                persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(
+                    groupProperties,
+                    groupNumber);
 
-			IStudent userStudent = (IStudent) sp.getIPersistentStudent().readByUsername(username);
-			IFrequenta userAttend =
-				(IFrequenta) sp.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
-					userStudent,
-					groupProperties.getExecutionCourse());
+            if (newStudentGroup != null)
+                throw new FenixServiceException();
 
-			Iterator iterGroups = allStudentGroup.iterator();
-			while (iterGroups.hasNext()) {
-				IStudentGroup existingStudentGroup = (IStudentGroup) iterGroups.next();
-				IStudentGroupAttend newStudentGroupAttend = null;
-				Iterator iterator = studentCodes.iterator();
+            newStudentGroup = new StudentGroup(groupNumber, groupProperties, shift);
+            persistentStudentGroup.lockWrite(newStudentGroup);
 
-				while (iterator.hasNext()) {
-					IStudent student = (IStudent) persistentStudent.readByOId(new Student((Integer) iterator.next()), false);
+            IStudent userStudent = sp.getIPersistentStudent().readByUsername(username);
+            IFrequenta userAttend =
+                sp.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
+                    userStudent,
+                    groupProperties.getExecutionCourse());
 
-					IFrequenta attend =
-						persistentAttend.readByAlunoAndDisciplinaExecucao(student, groupProperties.getExecutionCourse());
+            Iterator iterGroups = allStudentGroup.iterator();
+            while (iterGroups.hasNext())
+            {
+                IStudentGroup existingStudentGroup = (IStudentGroup) iterGroups.next();
+                IStudentGroupAttend newStudentGroupAttend = null;
+                Iterator iterator = studentCodes.iterator();
 
-					newStudentGroupAttend = persistentStudentGroupAttend.readBy(existingStudentGroup, attend);
+                while (iterator.hasNext())
+                {
+                    IStudent student =
+                        (IStudent) persistentStudent.readByOId(
+                            new Student((Integer) iterator.next()),
+                            false);
 
-					if (newStudentGroupAttend != null)
-						throw new ExistingServiceException();
+                    IFrequenta attend =
+                        persistentAttend.readByAlunoAndDisciplinaExecucao(
+                            student,
+                            groupProperties.getExecutionCourse());
 
-				}
-				IStudentGroupAttend userStudentGroupAttend = persistentStudentGroupAttend.readBy(existingStudentGroup, userAttend);
+                    newStudentGroupAttend =
+                        persistentStudentGroupAttend.readBy(existingStudentGroup, attend);
 
-				if (userStudentGroupAttend != null)
-					throw new InvalidSituationServiceException();
+                    if (newStudentGroupAttend != null)
+                        throw new ExistingServiceException();
 
-			}
+                }
+                IStudentGroupAttend userStudentGroupAttend =
+                    persistentStudentGroupAttend.readBy(existingStudentGroup, userAttend);
 
-			Iterator iter = studentCodes.iterator();
-			
-			while (iter.hasNext()) {
+                if (userStudentGroupAttend != null)
+                    throw new InvalidSituationServiceException();
 
-				IStudent student = (IStudent) persistentStudent.readByOId(new Student((Integer) iter.next()), false);
+            }
 
-				IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student, groupProperties.getExecutionCourse());
+            Iterator iter = studentCodes.iterator();
 
-				IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(newStudentGroup, attend);
+            while (iter.hasNext())
+            {
 
-				persistentStudentGroupAttend.lockWrite(notExistingSGAttend);
-			}
-			IStudentGroupAttend notExistingUserSGAttend = new StudentGroupAttend(newStudentGroup, userAttend);
+                IStudent student =
+                    (IStudent) persistentStudent.readByOId(new Student((Integer) iter.next()), false);
 
-			persistentStudentGroupAttend.lockWrite(notExistingUserSGAttend);
+                IFrequenta attend =
+                    persistentAttend.readByAlunoAndDisciplinaExecucao(
+                        student,
+                        groupProperties.getExecutionCourse());
 
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
-		return true;
-	}
+                IStudentGroupAttend notExistingSGAttend =
+                    new StudentGroupAttend(newStudentGroup, attend);
+
+                persistentStudentGroupAttend.lockWrite(notExistingSGAttend);
+            }
+            IStudentGroupAttend notExistingUserSGAttend =
+                new StudentGroupAttend(newStudentGroup, userAttend);
+
+            persistentStudentGroupAttend.lockWrite(notExistingUserSGAttend);
+
+        } catch (ExcepcaoPersistencia ex)
+        {
+            ex.printStackTrace();
+        }
+        return true;
+    }
 
 }

@@ -28,56 +28,57 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class ReadTests implements IServico {
+public class ReadTests implements IServico
+{
 
-	private static ReadTests service = new ReadTests();
+    private static ReadTests service = new ReadTests();
 
-	public static ReadTests getService() {
-		return service;
-	}
+    public static ReadTests getService()
+    {
+        return service;
+    }
 
-	public String getNome() {
-		return "ReadTests";
-	}
-	public SiteView run(Integer executionCourseId)
-		throws FenixServiceException {
+    public String getNome()
+    {
+        return "ReadTests";
+    }
+    public SiteView run(Integer executionCourseId) throws FenixServiceException
+    {
 
-		ISuportePersistente persistentSuport;
-		try {
-			persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport;
+        try
+        {
+            persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				persistentSuport.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
-				new DisciplinaExecucao(executionCourseId);
-			executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-					executionCourse,
-					false);
-			if (executionCourse == null) {
-				throw new InvalidArgumentsServiceException();
-			}
-			IPersistentTest persistentTest =
-				(IPersistentTest) persistentSuport.getIPersistentTest();
-			List tests = persistentTest.readByExecutionCourse(executionCourse);
-			List result = new ArrayList();
-			Iterator iter = tests.iterator();
-			while (iter.hasNext()) {
-				ITest test = (ITest) iter.next();
-				InfoTest infoTest = Cloner.copyITest2InfoTest(test);
-				result.add(infoTest);
-			}
-			InfoSiteTests bodyComponent = new InfoSiteTests();
-			bodyComponent.setInfoTests(result);
-			bodyComponent.setExecutionCourse(
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-					executionCourse));
-			SiteView siteView =
-				new ExecutionCourseSiteView(bodyComponent, bodyComponent);
-			return siteView;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+                persistentSuport.getIDisciplinaExecucaoPersistente();
+            IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
+            executionCourse =
+                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+            if (executionCourse == null)
+            {
+                throw new InvalidArgumentsServiceException();
+            }
+            IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
+            List tests = persistentTest.readByExecutionCourse(executionCourse);
+            List result = new ArrayList();
+            Iterator iter = tests.iterator();
+            while (iter.hasNext())
+            {
+                ITest test = (ITest) iter.next();
+                InfoTest infoTest = Cloner.copyITest2InfoTest(test);
+                result.add(infoTest);
+            }
+            InfoSiteTests bodyComponent = new InfoSiteTests();
+            bodyComponent.setInfoTests(result);
+            bodyComponent.setExecutionCourse(
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+            SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
+            return siteView;
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+    }
 
 }

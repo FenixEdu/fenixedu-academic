@@ -17,54 +17,64 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class DeleteDegrees implements IServico {
+public class DeleteDegrees implements IServico
+{
 
-	private static DeleteDegrees service = new DeleteDegrees();
+    private static DeleteDegrees service = new DeleteDegrees();
 
-	public static DeleteDegrees getService() {
-		return service;
-	}
+    public static DeleteDegrees getService()
+    {
+        return service;
+    }
 
-	private DeleteDegrees() {
-	}
+    private DeleteDegrees()
+    {
+    }
 
-	public final String getNome() {
-		return "DeleteDegrees";
-	}
-	
-// delete a set of degrees
-	public List run(List degreesInternalIds) throws FenixServiceException {
+    public final String getNome()
+    {
+        return "DeleteDegrees";
+    }
 
-		try {
+    // delete a set of degrees
+    public List run(List degreesInternalIds) throws FenixServiceException
+    {
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ICursoPersistente persistentDegree = sp.getICursoPersistente();
-			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
+        try
+        {
 
-			Iterator iter = degreesInternalIds.iterator();
-			List degreeCurricularPlans;
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ICursoPersistente persistentDegree = sp.getICursoPersistente();
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
+                sp.getIPersistentDegreeCurricularPlan();
 
-			List undeletedDegreesNames = new ArrayList();
+            Iterator iter = degreesInternalIds.iterator();
+            List degreeCurricularPlans;
 
-			while (iter.hasNext()) {
+            List undeletedDegreesNames = new ArrayList();
 
-				Integer internalId = (Integer) iter.next();
-				ICurso degree = persistentDegree.readByIdInternal(internalId);
-				if (degree != null) {
-					degreeCurricularPlans = persistentDegreeCurricularPlan.readByDegree(degree);
-					if(degreeCurricularPlans.isEmpty())
-						persistentDegree.delete(degree);
-					else
-						undeletedDegreesNames.add((String) degree.getNome());			
-				}	
-			}
-			
-			return undeletedDegreesNames;
+            while (iter.hasNext())
+            {
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+                Integer internalId = (Integer) iter.next();
+                ICurso degree = persistentDegree.readByIdInternal(internalId);
+                if (degree != null)
+                {
+                    degreeCurricularPlans = persistentDegreeCurricularPlan.readByDegree(degree);
+                    if (degreeCurricularPlans.isEmpty())
+                        persistentDegree.delete(degree);
+                    else
+                        undeletedDegreesNames.add(degree.getNome());
+                }
+            }
 
-	}
+            return undeletedDegreesNames;
+
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+
+    }
 
 }

@@ -62,7 +62,7 @@ public class DeleteBranches implements IServico {
 					if(studentCurricularPlans.isEmpty())
 						persistentBranch.delete(branch);
 					else
-						undeletedCodes.add((String) branch.getCode());	
+						undeletedCodes.add(branch.getCode());	
 				}	
 			}
 			

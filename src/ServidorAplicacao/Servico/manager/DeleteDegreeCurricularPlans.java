@@ -24,73 +24,97 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class DeleteDegreeCurricularPlans implements IServico {
+public class DeleteDegreeCurricularPlans implements IServico
+{
 
-	private static DeleteDegreeCurricularPlans service = new DeleteDegreeCurricularPlans();
+    private static DeleteDegreeCurricularPlans service = new DeleteDegreeCurricularPlans();
 
-	public static DeleteDegreeCurricularPlans getService() {
-		return service;
-	}
+    public static DeleteDegreeCurricularPlans getService()
+    {
+        return service;
+    }
 
-	private DeleteDegreeCurricularPlans() {
-	}
+    private DeleteDegreeCurricularPlans()
+    {
+    }
 
-	public final String getNome() {
-		return "DeleteDegreeCurricularPlans";
-	}
-	
-	// delete a set of degreeCurricularPlans
-	public List run(List degreeCurricularPlansIds) throws FenixServiceException {
+    public final String getNome()
+    {
+        return "DeleteDegreeCurricularPlans";
+    }
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
-			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
-			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-			IPersistentBranch persistentBranch = sp.getIPersistentBranch();
-			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente();
+    // delete a set of degreeCurricularPlans
+    public List run(List degreeCurricularPlansIds) throws FenixServiceException
+    {
 
-			Iterator iter = degreeCurricularPlansIds.iterator();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
+                sp.getIPersistentDegreeCurricularPlan();
+            ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+            IPersistentBranch persistentBranch = sp.getIPersistentBranch();
+            IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
+                sp.getIStudentCurricularPlanPersistente();
 
-			List undeletedDegreeCurricularPlansNames = new ArrayList();
-			List executionDegrees, curricularCourses, branches, studentCurricularPlans;
-			Integer degreeCurricularPlanId;
-			IDegreeCurricularPlan degreeCurricularPlan;
+            Iterator iter = degreeCurricularPlansIds.iterator();
 
-			while(iter.hasNext()) {
+            List undeletedDegreeCurricularPlansNames = new ArrayList();
+            List executionDegrees, curricularCourses, branches, studentCurricularPlans;
+            Integer degreeCurricularPlanId;
+            IDegreeCurricularPlan degreeCurricularPlan;
 
-				degreeCurricularPlanId = (Integer) iter.next();
-				degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(degreeCurricularPlanId), false);
-				if(degreeCurricularPlan != null) {
-					executionDegrees = persistentExecutionDegree.readByDegreeCurricularPlan(degreeCurricularPlan);
-					if(!executionDegrees.isEmpty())
-						undeletedDegreeCurricularPlansNames.add((String) degreeCurricularPlan.getName());
-					else {
-						curricularCourses = persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
-						if(!curricularCourses.isEmpty())
-							undeletedDegreeCurricularPlansNames.add((String) degreeCurricularPlan.getName());
-						else {
-							branches = persistentBranch.readByDegreeCurricularPlan(degreeCurricularPlan);
-							if(!branches.isEmpty())
-								undeletedDegreeCurricularPlansNames.add((String) degreeCurricularPlan.getName());
-							else {
-								studentCurricularPlans = persistentStudentCurricularPlan.readByDegreeCurricularPlan(degreeCurricularPlan);
-								if(!studentCurricularPlans.isEmpty())
-									undeletedDegreeCurricularPlansNames.add((String) degreeCurricularPlan.getName());
-								else
-									persistentDegreeCurricularPlan.deleteDegreeCurricularPlan(degreeCurricularPlan);			
-							}
-						}
-					}
-				}
-			}
-				
-			return undeletedDegreeCurricularPlansNames;
+            while (iter.hasNext())
+            {
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+                degreeCurricularPlanId = (Integer) iter.next();
+                degreeCurricularPlan =
+                    (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(
+                        new DegreeCurricularPlan(degreeCurricularPlanId),
+                        false);
+                if (degreeCurricularPlan != null)
+                {
+                    executionDegrees =
+                        persistentExecutionDegree.readByDegreeCurricularPlan(degreeCurricularPlan);
+                    if (!executionDegrees.isEmpty())
+                        undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
+                    else
+                    {
+                        curricularCourses =
+                            persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(
+                                degreeCurricularPlan);
+                        if (!curricularCourses.isEmpty())
+                            undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
+                        else
+                        {
+                            branches = persistentBranch.readByDegreeCurricularPlan(degreeCurricularPlan);
+                            if (!branches.isEmpty())
+                                undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
+                            else
+                            {
+                                studentCurricularPlans =
+                                    persistentStudentCurricularPlan.readByDegreeCurricularPlan(
+                                        degreeCurricularPlan);
+                                if (!studentCurricularPlans.isEmpty())
+                                    undeletedDegreeCurricularPlansNames.add(
+                                        degreeCurricularPlan.getName());
+                                else
+                                    persistentDegreeCurricularPlan.deleteDegreeCurricularPlan(
+                                        degreeCurricularPlan);
+                            }
+                        }
+                    }
+                }
+            }
 
-	}
+            return undeletedDegreeCurricularPlansNames;
+
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+
+    }
 
 }

@@ -38,102 +38,104 @@ import UtilTests.ParseMetadata;
  * @author Susana Fernandes
  */
 
-public class ReadMetadatasByTest implements IServico {
+public class ReadMetadatasByTest implements IServico
+{
 
-	private static ReadMetadatasByTest service = new ReadMetadatasByTest();
-	private String path = new String();
-	public static ReadMetadatasByTest getService() {
-		return service;
-	}
+    private static ReadMetadatasByTest service = new ReadMetadatasByTest();
+    private String path = new String();
+    public static ReadMetadatasByTest getService()
+    {
+        return service;
+    }
 
-	public String getNome() {
-		return "ReadMetadatasByTest";
-	}
-	public SiteView run(Integer executionCourseId, Integer testId, String path)
-		throws FenixServiceException {
-		this.path = path.replace('\\', '/');
-		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				persistentSuport.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
-				new DisciplinaExecucao(executionCourseId);
-			executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-					executionCourse,
-					false);
-			if (executionCourse == null) {
-				throw new InvalidArgumentsServiceException();
-			}
-			IPersistentMetadata persistentMetadata =
-				(IPersistentMetadata) persistentSuport.getIPersistentMetadata();
-			List metadatas =
-				persistentMetadata.readByExecutionCourse(executionCourse);
-			List result = new ArrayList();
-			IPersistentTest persistentTest =
-				persistentSuport.getIPersistentTest();
+    public String getNome()
+    {
+        return "ReadMetadatasByTest";
+    }
+    public SiteView run(Integer executionCourseId, Integer testId, String path)
+        throws FenixServiceException
+    {
+        this.path = path.replace('\\', '/');
+        try
+        {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+                persistentSuport.getIDisciplinaExecucaoPersistente();
+            IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
+            executionCourse =
+                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+            if (executionCourse == null)
+            {
+                throw new InvalidArgumentsServiceException();
+            }
+            IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
+            List metadatas = persistentMetadata.readByExecutionCourse(executionCourse);
+            List result = new ArrayList();
+            IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
 
-			List questions = new ArrayList();
-			if (testId != null) {
-				ITest test = new Test(testId);
-				test = (ITest) persistentTest.readByOId(test, false);
+            List questions = new ArrayList();
+            if (testId != null)
+            {
+                ITest test = new Test(testId);
+                test = (ITest) persistentTest.readByOId(test, false);
 
-				if (test == null) {
-					throw new InvalidArgumentsServiceException();
-				}
+                if (test == null)
+                {
+                    throw new InvalidArgumentsServiceException();
+                }
 
-				IPersistentTestQuestion persistentTestQuestion =
-					persistentSuport.getIPersistentTestQuestion();
-				questions = persistentTestQuestion.readByTest(test);
-			}
+                IPersistentTestQuestion persistentTestQuestion =
+                    persistentSuport.getIPersistentTestQuestion();
+                questions = persistentTestQuestion.readByTest(test);
+            }
 
-			Iterator iter = metadatas.iterator();
-			while (iter.hasNext()) {
-				IMetadata metadata = (IMetadata) iter.next();
-				if (metadata.getVisibility().equals(new Boolean("true"))) {
+            Iterator iter = metadatas.iterator();
+            while (iter.hasNext())
+            {
+                IMetadata metadata = (IMetadata) iter.next();
+                if (metadata.getVisibility().equals(new Boolean("true")))
+                {
 
-					boolean contains = false;
+                    boolean contains = false;
 
-					Iterator iterQuestion = questions.iterator();
-					while (iterQuestion.hasNext()) {
-						ITestQuestion testQuestion =
-							(TestQuestion) iterQuestion.next();
-						if (testQuestion
-							.getQuestion()
-							.getKeyMetadata()
-							.equals(metadata.getIdInternal())) {
-							contains = true;
-							break;
-						}
-					}
-					if (contains == false) {
-						InfoMetadata infoMetadata =
-							Cloner.copyIMetadata2InfoMetadata(metadata);
-						ParseMetadata p = new ParseMetadata();
-						try {
-							infoMetadata =
-								p.parseMetadata(
-									metadata.getMetadataFile(),
-									infoMetadata,
-									path);
-						} catch (Exception e) {
-							throw new FenixServiceException(e);
-						}
-						result.add(infoMetadata);
-					}
-				}
-			}
-			InfoSiteMetadatas bodyComponent = new InfoSiteMetadatas();
-			bodyComponent.setInfoMetadatas(result);
-			bodyComponent.setExecutionCourse(
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-					executionCourse));
-			SiteView siteView =
-				new ExecutionCourseSiteView(bodyComponent, bodyComponent);
-			return siteView;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+                    Iterator iterQuestion = questions.iterator();
+                    while (iterQuestion.hasNext())
+                    {
+                        ITestQuestion testQuestion = (TestQuestion) iterQuestion.next();
+                        if (testQuestion
+                            .getQuestion()
+                            .getKeyMetadata()
+                            .equals(metadata.getIdInternal()))
+                        {
+                            contains = true;
+                            break;
+                        }
+                    }
+                    if (contains == false)
+                    {
+                        InfoMetadata infoMetadata = Cloner.copyIMetadata2InfoMetadata(metadata);
+                        ParseMetadata p = new ParseMetadata();
+                        try
+                        {
+                            infoMetadata =
+                                p.parseMetadata(metadata.getMetadataFile(), infoMetadata, path);
+                        } catch (Exception e)
+                        {
+                            throw new FenixServiceException(e);
+                        }
+                        result.add(infoMetadata);
+                    }
+                }
+            }
+            InfoSiteMetadatas bodyComponent = new InfoSiteMetadatas();
+            bodyComponent.setInfoMetadatas(result);
+            bodyComponent.setExecutionCourse(
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+            SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
+            return siteView;
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+    }
 }

@@ -19,49 +19,61 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class ReadCurriculum implements IServico {
+public class ReadCurriculum implements IServico
+{
 
-	private static ReadCurriculum service = new ReadCurriculum();
+    private static ReadCurriculum service = new ReadCurriculum();
 
-	/**
-	* The singleton access method of this class.
-	*/
-	public static ReadCurriculum getService() {
-		return service;
-	}
+    /**
+    * The singleton access method of this class.
+    */
+    public static ReadCurriculum getService()
+    {
+        return service;
+    }
 
-	/**
-	* The constructor of this class.
-	*/
-	private ReadCurriculum() { }
+    /**
+    * The constructor of this class.
+    */
+    private ReadCurriculum()
+    {
+    }
 
-	/**
-	* Service name
-	*/
-	public final String getNome() {
-		return "ReadCurriculum";
-	}
+    /**
+    * Service name
+    */
+    public final String getNome()
+    {
+        return "ReadCurriculum";
+    }
 
-	/**
-	* Executes the service. Returns the current InfoCurriculum.
-	*/
-	public InfoCurriculum run(Integer curricularCourseId) throws FenixServiceException {
-		
-		ICurricularCourse curricularCourse;
-		ICurriculum curriculum;
-		
-		try {
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(new CurricularCourse(curricularCourseId), false);
-				if(curricularCourse == null)
-					throw new NonExistingServiceException();
-				curriculum = (ICurriculum) sp.getIPersistentCurriculum().readCurriculumByCurricularCourse(curricularCourse);
-		} catch (ExcepcaoPersistencia excepcaoPersistencia){
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-     	if(curriculum == null)
-     		return null;
-		InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum); 
-		return infoCurriculum;
-	}
+    /**
+    * Executes the service. Returns the current InfoCurriculum.
+    */
+    public InfoCurriculum run(Integer curricularCourseId) throws FenixServiceException
+    {
+
+        ICurricularCourse curricularCourse;
+        ICurriculum curriculum;
+
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            curricularCourse =
+                (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(
+                    new CurricularCourse(curricularCourseId),
+                    false);
+            if (curricularCourse == null)
+                throw new NonExistingServiceException();
+            curriculum =
+                sp.getIPersistentCurriculum().readCurriculumByCurricularCourse(curricularCourse);
+        } catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+        if (curriculum == null)
+            return null;
+        InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
+        return infoCurriculum;
+    }
 }

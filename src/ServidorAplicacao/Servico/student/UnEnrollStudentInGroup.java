@@ -27,79 +27,92 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *
  */
 
-public class UnEnrollStudentInGroup implements IServico {
+public class UnEnrollStudentInGroup implements IServico
+{
 
-	private static UnEnrollStudentInGroup _servico = new UnEnrollStudentInGroup();
+    private static UnEnrollStudentInGroup _servico = new UnEnrollStudentInGroup();
 
-	/**
-	 * The singleton access method of this class.
-	 **/
+    /**
+     * The singleton access method of this class.
+     **/
 
-	public static UnEnrollStudentInGroup getService() {
-		return _servico;
-	}
+    public static UnEnrollStudentInGroup getService()
+    {
+        return _servico;
+    }
 
-	/**
-	 * The actor of this class.
-	 **/
-	private UnEnrollStudentInGroup() {
-	}
+    /**
+     * The actor of this class.
+     **/
+    private UnEnrollStudentInGroup()
+    {
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "UnEnrollStudentInGroup";
-	}
+    /**
+     * Devolve o nome do servico
+     **/
+    public final String getNome()
+    {
+        return "UnEnrollStudentInGroup";
+    }
 
-	public Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException {
-		
-		
-		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+    public Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException
+    {
 
-			IPersistentStudentGroup persistentStudentGroup = persistentSuport.getIPersistentStudentGroup();
-			IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport.getIPersistentStudentGroupAttend();
-			IPersistentStudent persistentStudent = persistentSuport.getIPersistentStudent();
-			IFrequentaPersistente persistentAttend = persistentSuport.getIFrequentaPersistente();
+        try
+        {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
-			
-			if(studentGroup == null)
-				throw new InvalidSituationServiceException();
+            IPersistentStudentGroup persistentStudentGroup =
+                persistentSuport.getIPersistentStudentGroup();
+            IPersistentStudentGroupAttend persistentStudentGroupAttend =
+                persistentSuport.getIPersistentStudentGroupAttend();
+            IPersistentStudent persistentStudent = persistentSuport.getIPersistentStudent();
+            IFrequentaPersistente persistentAttend = persistentSuport.getIFrequentaPersistente();
 
-			IDisciplinaExecucao executionCourse = studentGroup.getGroupProperties().getExecutionCourse();
-			IStudent student = (IStudent) persistentStudent.readByUsername(userName);
-			IFrequenta attend = (IFrequenta) persistentAttend.readByAlunoAndDisciplinaExecucao(student, executionCourse);
-				
-			
-			IGroupProperties groupProperties = studentGroup.getGroupProperties();
-			
-			
-			IStudentGroupAttend studentGroupAttendToDelete =
-				(IStudentGroupAttend) persistentStudentGroupAttend.readBy(studentGroup, attend);
-			
-			if(studentGroupAttendToDelete == null)
-				throw new InvalidArgumentsServiceException();
-			
-			IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-			IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+            IStudentGroup studentGroup =
+                (IStudentGroup) persistentStudentGroup.readByOId(
+                    new StudentGroup(studentGroupCode),
+                    false);
 
-			boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(studentGroupAttendToDelete, studentGroup);
+            if (studentGroup == null)
+                throw new InvalidSituationServiceException();
 
-			persistentStudentGroupAttend.delete(studentGroupAttendToDelete);
-			
-			if (resultEmpty) 
-			{
-				persistentStudentGroup.delete(studentGroup);
-				return new Boolean(false);
-			}
-	
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	
-			return new Boolean(true);
-	}
+            IDisciplinaExecucao executionCourse = studentGroup.getGroupProperties().getExecutionCourse();
+            IStudent student = persistentStudent.readByUsername(userName);
+            IFrequenta attend =
+                persistentAttend.readByAlunoAndDisciplinaExecucao(student, executionCourse);
+
+            IGroupProperties groupProperties = studentGroup.getGroupProperties();
+
+            IStudentGroupAttend studentGroupAttendToDelete =
+                persistentStudentGroupAttend.readBy(studentGroup, attend);
+
+            if (studentGroupAttendToDelete == null)
+                throw new InvalidArgumentsServiceException();
+
+            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory =
+                GroupEnrolmentStrategyFactory.getInstance();
+            IGroupEnrolmentStrategy strategy =
+                enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+
+            boolean resultEmpty =
+                strategy.checkIfStudentGroupIsEmpty(studentGroupAttendToDelete, studentGroup);
+
+            persistentStudentGroupAttend.delete(studentGroupAttendToDelete);
+
+            if (resultEmpty)
+            {
+                persistentStudentGroup.delete(studentGroup);
+                return new Boolean(false);
+            }
+
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+
+        return new Boolean(true);
+    }
 
 }

@@ -28,83 +28,100 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class DeleteExecutionCourses implements IServico {
+public class DeleteExecutionCourses implements IServico
+{
 
-	private static DeleteExecutionCourses service = new DeleteExecutionCourses();
+    private static DeleteExecutionCourses service = new DeleteExecutionCourses();
 
-	public static DeleteExecutionCourses getService() {
-		return service;
-	}
+    public static DeleteExecutionCourses getService()
+    {
+        return service;
+    }
 
-	private DeleteExecutionCourses() {
-	}
+    private DeleteExecutionCourses()
+    {
+    }
 
-	public final String getNome() {
-		return "DeleteExecutionCourses";
-	}
-	
-	// delete a set of execution courses
-	public List run(List internalIds) throws FenixServiceException {
+    public final String getNome()
+    {
+        return "DeleteExecutionCourses";
+    }
 
-		try {
+    // delete a set of execution courses
+    public List run(List internalIds) throws FenixServiceException
+    {
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
-			ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-			IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-			IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
-			IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-			IPersistentSite persistentSite = sp.getIPersistentSite();
+        try
+        {
 
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+                sp.getIDisciplinaExecucaoPersistente();
+            ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+            IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+            IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            IPersistentSite persistentSite = sp.getIPersistentSite();
 
-			Iterator iter = internalIds.iterator();
-			Iterator iterator;
-			List shifts, attends, professorShips, responsibles;
-			Integer internalId;
-			IProfessorship professorShip;
-			IResponsibleFor responsibleFor;
-			List undeletedExecutionCoursesCodes = new ArrayList();
-			ISite site;
+            Iterator iter = internalIds.iterator();
+            Iterator iterator;
+            List shifts, attends, professorShips, responsibles;
+            Integer internalId;
+            IProfessorship professorShip;
+            IResponsibleFor responsibleFor;
+            List undeletedExecutionCoursesCodes = new ArrayList();
+            ISite site;
 
-			while(iter.hasNext()) {
-				internalId = (Integer) iter.next();
-				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(internalId), false);
-				if(executionCourse != null) {
-					shifts = persistentShift.readByExecutionCourse(executionCourse);
-					if(!shifts.isEmpty())
-						undeletedExecutionCoursesCodes.add((String) executionCourse.getSigla());
-					else {
-						attends = persistentAttend.readByExecutionCourse(executionCourse);
-						if(attends.isEmpty()) {
-							persistentExecutionCourse.deleteExecutionCourse(executionCourse);
-							professorShips = persistentProfessorShip.readByExecutionCourse(executionCourse);
-							iterator = professorShips.iterator();
-							while(iterator.hasNext()) {
-								professorShip = (IProfessorship) iterator.next();
-								persistentProfessorShip.delete(professorShip);
-							}
-							responsibles = persistentResponsibleFor.readByExecutionCourse(executionCourse);
-							iterator = responsibles.iterator();
-							while(iterator.hasNext()) {
-								responsibleFor = (IResponsibleFor) iterator.next();
-								persistentResponsibleFor.delete(responsibleFor);
-							}
-							
-							site = persistentSite.readByExecutionCourse(executionCourse);	
-							persistentSite.delete(site);
-						} 
-						else
-							undeletedExecutionCoursesCodes.add((String) executionCourse.getSigla());
-					}				
-				}	
-			}
-			
-			return undeletedExecutionCoursesCodes;
+            while (iter.hasNext())
+            {
+                internalId = (Integer) iter.next();
+                IDisciplinaExecucao executionCourse =
+                    (IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+                        new DisciplinaExecucao(internalId),
+                        false);
+                if (executionCourse != null)
+                {
+                    shifts = persistentShift.readByExecutionCourse(executionCourse);
+                    if (!shifts.isEmpty())
+                        undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
+                    else
+                    {
+                        attends = persistentAttend.readByExecutionCourse(executionCourse);
+                        if (attends.isEmpty())
+                        {
+                            persistentExecutionCourse.deleteExecutionCourse(executionCourse);
+                            professorShips =
+                                persistentProfessorShip.readByExecutionCourse(executionCourse);
+                            iterator = professorShips.iterator();
+                            while (iterator.hasNext())
+                            {
+                                professorShip = (IProfessorship) iterator.next();
+                                persistentProfessorShip.delete(professorShip);
+                            }
+                            responsibles =
+                                persistentResponsibleFor.readByExecutionCourse(executionCourse);
+                            iterator = responsibles.iterator();
+                            while (iterator.hasNext())
+                            {
+                                responsibleFor = (IResponsibleFor) iterator.next();
+                                persistentResponsibleFor.delete(responsibleFor);
+                            }
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+                            site = persistentSite.readByExecutionCourse(executionCourse);
+                            persistentSite.delete(site);
+                        } else
+                            undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
+                    }
+                }
+            }
 
-	}
+            return undeletedExecutionCoursesCodes;
+
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+
+    }
 
 }

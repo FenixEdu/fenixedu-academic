@@ -33,87 +33,73 @@ import UtilTests.ParseQuestion;
 /**
  * @author Susana Fernandes
  */
-public class ReadTestQuestion implements IServico {
-	private static ReadTestQuestion service = new ReadTestQuestion();
-	private String path = new String();
+public class ReadTestQuestion implements IServico
+{
+    private static ReadTestQuestion service = new ReadTestQuestion();
+    private String path = new String();
 
-	public static ReadTestQuestion getService() {
-		return service;
-	}
+    public static ReadTestQuestion getService()
+    {
+        return service;
+    }
 
-	public String getNome() {
-		return "ReadTestQuestion";
-	}
+    public String getNome()
+    {
+        return "ReadTestQuestion";
+    }
 
-	public SiteView run(
-		Integer executionCourseId,
-		Integer testId,
-		Integer questionId,
-		String path)
-		throws FenixServiceException {
-		this.path = path.replace('\\', '/');
-		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				persistentSuport.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
-				new DisciplinaExecucao(executionCourseId);
-			executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-					executionCourse,
-					false);
-			if (executionCourse == null)
-				throw new InvalidArgumentsServiceException();
+    public SiteView run(Integer executionCourseId, Integer testId, Integer questionId, String path)
+        throws FenixServiceException
+    {
+        this.path = path.replace('\\', '/');
+        try
+        {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+                persistentSuport.getIDisciplinaExecucaoPersistente();
+            IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
+            executionCourse =
+                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+            if (executionCourse == null)
+                throw new InvalidArgumentsServiceException();
 
-			IPersistentTest persistentTest =
-				persistentSuport.getIPersistentTest();
-			ITest test = new Test(testId);
-			test = (ITest) persistentTest.readByOId(test, false);
-			if (test == null)
-				throw new InvalidArgumentsServiceException();
+            IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
+            ITest test = new Test(testId);
+            test = (ITest) persistentTest.readByOId(test, false);
+            if (test == null)
+                throw new InvalidArgumentsServiceException();
 
-			IPersistentQuestion persistentQuestion =
-				persistentSuport.getIPersistentQuestion();
-			IQuestion question = new Question(questionId);
-			question =
-				(IQuestion) persistentQuestion.readByOId(question, false);
-			if (question == null)
-				throw new InvalidArgumentsServiceException();
+            IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
+            IQuestion question = new Question(questionId);
+            question = (IQuestion) persistentQuestion.readByOId(question, false);
+            if (question == null)
+                throw new InvalidArgumentsServiceException();
 
-			InfoQuestion infoQuestion =
-				Cloner.copyIQuestion2InfoQuestion(question);
-			ParseQuestion parse = new ParseQuestion();
-			try {
-				infoQuestion =
-					parse.parseQuestion(
-						infoQuestion.getXmlFile(),
-						infoQuestion,
-						path);
-			} catch (Exception e) {
-				throw new FenixServiceException(e);
-			}
-			IPersistentTestQuestion persistentTestQuestion =
-				persistentSuport.getIPersistentTestQuestion();
-			ITestQuestion testQuestion =
-				(ITestQuestion) persistentTestQuestion.readByTestAndQuestion(
-					test,
-					question);
-			InfoTestQuestion infoTestQuestion =
-				Cloner.copyITestQuestion2InfoTestQuestion(testQuestion);
-			infoTestQuestion.setQuestion(infoQuestion);
-			InfoSiteTestQuestion bodyComponent = new InfoSiteTestQuestion();
-			bodyComponent.setInfoTestQuestion(infoTestQuestion);
-			bodyComponent.setInfoQuestion(infoQuestion);
-			bodyComponent.setExecutionCourse(
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-					executionCourse));
-			SiteView siteView =
-				new ExecutionCourseSiteView(bodyComponent, bodyComponent);
-			return siteView;
+            InfoQuestion infoQuestion = Cloner.copyIQuestion2InfoQuestion(question);
+            ParseQuestion parse = new ParseQuestion();
+            try
+            {
+                infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, path);
+            } catch (Exception e)
+            {
+                throw new FenixServiceException(e);
+            }
+            IPersistentTestQuestion persistentTestQuestion =
+                persistentSuport.getIPersistentTestQuestion();
+            ITestQuestion testQuestion = persistentTestQuestion.readByTestAndQuestion(test, question);
+            InfoTestQuestion infoTestQuestion = Cloner.copyITestQuestion2InfoTestQuestion(testQuestion);
+            infoTestQuestion.setQuestion(infoQuestion);
+            InfoSiteTestQuestion bodyComponent = new InfoSiteTestQuestion();
+            bodyComponent.setInfoTestQuestion(infoTestQuestion);
+            bodyComponent.setInfoQuestion(infoQuestion);
+            bodyComponent.setExecutionCourse(
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+            SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
+            return siteView;
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+    }
 }

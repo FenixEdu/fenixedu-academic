@@ -20,63 +20,70 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
-
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class ChooseExecutionYearDispatchAction extends DispatchAction {
+public class ChooseExecutionYearDispatchAction extends DispatchAction
+{
 
-	public ActionForward prepareChooseExecutionYear(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
-		
-		HttpSession session = request.getSession(false);
-		MessageResources messages = getResources(request);
+    public ActionForward prepareChooseExecutionYear(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-		// Get Execution Year List
-		
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos serviceManager = GestorServicos.manager();			
-		ArrayList executionYearList = null; 			
-		try {
-			executionYearList = (ArrayList) serviceManager.executar(userView, "ReadExecutionYears", null);
-		} catch (ExistingServiceException e) {
-			throw new ExistingActionException(e);
-		}
-		
-					
-		if (request.getParameter("jspTitle") != null) {
-			request.setAttribute("jspTitle", messages.getMessage((String) request.getParameter("jspTitle")));	
-		}			
-		
+        HttpSession session = request.getSession(false);
+        MessageResources messages = getResources(request);
 
-		Collections.sort(executionYearList, new BeanComparator("label"));
-		request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST, executionYearList);
-					
-		return mapping.findForward("PrepareSuccess");
-	}
+        // Get Execution Year List
 
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        GestorServicos serviceManager = GestorServicos.manager();
+        ArrayList executionYearList = null;
+        try
+        {
+            executionYearList =
+                (ArrayList) serviceManager.executar(userView, "ReadExecutionYears", null);
+        } catch (ExistingServiceException e)
+        {
+            throw new ExistingActionException(e);
+        }
 
-	public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+        if (request.getParameter("jspTitle") != null)
+        {
+            request.setAttribute("jspTitle", messages.getMessage(request.getParameter("jspTitle")));
+        }
 
-		
-		HttpSession session = request.getSession(false);
+        Collections.sort(executionYearList, new BeanComparator("label"));
+        request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST, executionYearList);
 
-		if (session != null) {
-			session.setAttribute(SessionConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
-			request.setAttribute("executionYear", request.getParameter("executionYear"));
+        return mapping.findForward("PrepareSuccess");
+    }
 
-			request.setAttribute("jspTitle", request.getParameter("jspTitle"));
+    public ActionForward chooseExecutionYear(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-			return mapping.findForward("ChooseSuccess");
-		  } else
-			throw new Exception();   
-	}
+        HttpSession session = request.getSession(false);
+
+        if (session != null)
+        {
+            session.setAttribute(SessionConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
+            request.setAttribute("executionYear", request.getParameter("executionYear"));
+
+            request.setAttribute("jspTitle", request.getParameter("jspTitle"));
+
+            return mapping.findForward("ChooseSuccess");
+        } else
+            throw new Exception();
+    }
 }

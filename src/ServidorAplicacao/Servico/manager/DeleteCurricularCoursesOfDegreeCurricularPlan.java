@@ -22,67 +22,84 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IServico {
+public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IServico
+{
 
-	private static DeleteCurricularCoursesOfDegreeCurricularPlan service = new DeleteCurricularCoursesOfDegreeCurricularPlan();
+    private static DeleteCurricularCoursesOfDegreeCurricularPlan service =
+        new DeleteCurricularCoursesOfDegreeCurricularPlan();
 
-	public static DeleteCurricularCoursesOfDegreeCurricularPlan getService() {
-		return service;
-	}
+    public static DeleteCurricularCoursesOfDegreeCurricularPlan getService()
+    {
+        return service;
+    }
 
-	private DeleteCurricularCoursesOfDegreeCurricularPlan() {
-	}
+    private DeleteCurricularCoursesOfDegreeCurricularPlan()
+    {
+    }
 
-	public final String getNome() {
-		return "DeleteCurricularCoursesOfDegreeCurricularPlan";
-	}
-	
-	// delete a set of curricularCourses
-	public List run(List curricularCoursesIds) throws FenixServiceException {
+    public final String getNome()
+    {
+        return "DeleteCurricularCoursesOfDegreeCurricularPlan";
+    }
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+    // delete a set of curricularCourses
+    public List run(List curricularCoursesIds) throws FenixServiceException
+    {
 
-			Iterator iter = curricularCoursesIds.iterator();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-			List undeletedCurricularCourses = new ArrayList();
-			List executionCourses, scopes;
-			Integer curricularCourseId;
-			ICurricularCourse curricularCourse;
+            Iterator iter = curricularCoursesIds.iterator();
 
-			while(iter.hasNext()) {
+            List undeletedCurricularCourses = new ArrayList();
+            List executionCourses, scopes;
+            Integer curricularCourseId;
+            ICurricularCourse curricularCourse;
 
-				curricularCourseId = (Integer) iter.next();
-				curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(curricularCourseId), false);
-				if(curricularCourse != null) {
-					executionCourses = curricularCourse.getAssociatedExecutionCourses();
-					if(executionCourses.isEmpty()) {
-						scopes = curricularCourse.getScopes();
-						if (scopes != null) {
-									if(!scopes.isEmpty()) {
-										Iterator iterator = scopes.iterator();
-										CurricularCourseScopeOJB scopeOJB = new CurricularCourseScopeOJB();
-										while(iterator.hasNext()) {
-											scopeOJB.delete((CurricularCourseScope) iterator.next());
-										}
-									}
-						}
-						persistentCurricularCourse.delete(curricularCourse);
-					}
-					else {
-						undeletedCurricularCourses.add((String) curricularCourse.getName());		
-						undeletedCurricularCourses.add((String) curricularCourse.getCode());
-					}
-				}
-			}
-				
-			return undeletedCurricularCourses;
+            while (iter.hasNext())
+            {
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+                curricularCourseId = (Integer) iter.next();
+                curricularCourse =
+                    (ICurricularCourse) persistentCurricularCourse.readByOId(
+                        new CurricularCourse(curricularCourseId),
+                        false);
+                if (curricularCourse != null)
+                {
+                    executionCourses = curricularCourse.getAssociatedExecutionCourses();
+                    if (executionCourses.isEmpty())
+                    {
+                        scopes = curricularCourse.getScopes();
+                        if (scopes != null)
+                        {
+                            if (!scopes.isEmpty())
+                            {
+                                Iterator iterator = scopes.iterator();
+                                CurricularCourseScopeOJB scopeOJB = new CurricularCourseScopeOJB();
+                                while (iterator.hasNext())
+                                {
+                                    scopeOJB.delete((CurricularCourseScope) iterator.next());
+                                }
+                            }
+                        }
+                        persistentCurricularCourse.delete(curricularCourse);
+                    } else
+                    {
+                        undeletedCurricularCourses.add(curricularCourse.getName());
+                        undeletedCurricularCourses.add(curricularCourse.getCode());
+                    }
+                }
+            }
 
-	}
+            return undeletedCurricularCourses;
+
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+
+    }
 
 }

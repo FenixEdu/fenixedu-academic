@@ -104,7 +104,7 @@ public class ConfirmActualEnrolment implements IServico {
 			Integer studentNumber = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getNumber();
 			TipoCurso tipoCurso = TipoCurso.LICENCIATURA_OBJ;
 
-			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readActiveStudentCurricularPlan(studentNumber, tipoCurso);
+			IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(studentNumber, tipoCurso);
 
 			IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readDomainObjectByCriteria(enrolmentContext.getExecutionPeriod());
 
@@ -144,10 +144,10 @@ public class ConfirmActualEnrolment implements IServico {
 
 				//				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseScope.getCurricularCourse());
 				ICurricularCourseScope curricularCourseScopeToWrite =
-					(ICurricularCourseScope) persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
-						curricularCourseScopeChosen.getCurricularCourse(),
-						curricularCourseScopeChosen.getCurricularSemester(),
-						curricularCourseScopeChosen.getBranch(), null);
+					persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
+                        	curricularCourseScopeChosen.getCurricularCourse(),
+                        	curricularCourseScopeChosen.getCurricularSemester(),
+                        	curricularCourseScopeChosen.getBranch(), null);
 				//				ICurricularCourseScope curricularCourseScopeToWrite =
 				//					(ICurricularCourseScope) persistentCurricularCourseScope.readDomainObjectByCriteria(curricularCourseScopeForCriteria);
 				if (!doingCurricularCoursesRead.contains(curricularCourseScopeToWrite.getCurricularCourse())) {
@@ -207,10 +207,10 @@ public class ConfirmActualEnrolment implements IServico {
 					ICurricularCourseScope optionalCurricularCourseScopeChosen = enrolmentInOptionalCurricularCourse.getCurricularCourseScope();
 
 					ICurricularCourseScope optionalCurricularCourseScopeToWrite =
-						(ICurricularCourseScope) persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
-							optionalCurricularCourseScopeChosen.getCurricularCourse(),
-							optionalCurricularCourseScopeChosen.getCurricularSemester(),
-							optionalCurricularCourseScopeChosen.getBranch(), null);
+						persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
+                            	optionalCurricularCourseScopeChosen.getCurricularCourse(),
+                            	optionalCurricularCourseScopeChosen.getCurricularSemester(),
+                            	optionalCurricularCourseScopeChosen.getBranch(), null);
 
 					enrolmentInOptionalCurricularCourse.setCurricularCourseScope(optionalCurricularCourseScopeToWrite);
 					enrolmentInOptionalCurricularCourse.setCurricularCourseForOption(curricularCourseForOption);

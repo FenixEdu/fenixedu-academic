@@ -28,65 +28,87 @@ import Util.TipoCurso;
  * @author lmac1
  */
 
-public class EditDegreeDispatchAction extends FenixDispatchAction {
+public class EditDegreeDispatchAction extends FenixDispatchAction
+{
 
-	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+    public ActionForward prepareEdit(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-		IUserView userView = SessionUtils.getUserView(request);
-		
-		DynaActionForm readDegreeForm = (DynaActionForm) form;
+        IUserView userView = SessionUtils.getUserView(request);
 
+        DynaActionForm readDegreeForm = (DynaActionForm) form;
 
-		Integer degreeId = new Integer(request.getParameter("degreeId"));
+        Integer degreeId = new Integer(request.getParameter("degreeId"));
 
-		InfoDegree oldInfoDegree = null;
+        InfoDegree oldInfoDegree = null;
 
-		Object args[] = { degreeId };
-		
-		try {
-				oldInfoDegree = (InfoDegree) ServiceUtils.executeService(userView, "ReadDegree", args);
-		
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("message.nonExistingDegree", mapping.findForward("readDegrees"));
-		}  catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-				
-		TipoCurso degreeType = (TipoCurso) oldInfoDegree.getTipoCurso();
+        Object args[] = { degreeId };
 
-		readDegreeForm.set("name", oldInfoDegree.getNome());
-		readDegreeForm.set("code", oldInfoDegree.getSigla());
-		readDegreeForm.set("degreeType", degreeType.getTipoCurso());
-		return mapping.findForward("editDegree");
-	}
+        try
+        {
+            oldInfoDegree = (InfoDegree) ServiceUtils.executeService(userView, "ReadDegree", args);
 
-	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        } catch (NonExistingServiceException e)
+        {
+            throw new NonExistingActionException(
+                "message.nonExistingDegree",
+                mapping.findForward("readDegrees"));
+        } catch (FenixServiceException fenixServiceException)
+        {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-		IUserView userView = SessionUtils.getUserView(request);
+        TipoCurso degreeType = oldInfoDegree.getTipoCurso();
 
-		DynaActionForm editDegreeForm = (DynaActionForm) form;
-		Integer oldDegreeId = new Integer(request.getParameter("degreeId"));
-		String code = (String) editDegreeForm.get("code");
-		String name = (String) editDegreeForm.get("name");
-		Integer degreeTypeInt = (Integer) editDegreeForm.get("degreeType");
+        readDegreeForm.set("name", oldInfoDegree.getNome());
+        readDegreeForm.set("code", oldInfoDegree.getSigla());
+        readDegreeForm.set("degreeType", degreeType.getTipoCurso());
+        return mapping.findForward("editDegree");
+    }
 
-		TipoCurso degreeType = new TipoCurso(degreeTypeInt);
-		InfoDegree newInfoDegree = new InfoDegree(code, name, degreeType);
-		newInfoDegree.setIdInternal(oldDegreeId);
+    public ActionForward edit(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-		Object args[] = { newInfoDegree };
-		
+        IUserView userView = SessionUtils.getUserView(request);
 
-		try {
-			ServiceUtils.executeService(userView, "EditDegree", args);
-			
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("message.nonExistingDegree", mapping.findForward("readDegrees"));
-		} catch (ExistingServiceException e) {
-			throw new ExistingActionException("message.manager.existing.degree");
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-		return mapping.findForward("readDegree");
-	}
+        DynaActionForm editDegreeForm = (DynaActionForm) form;
+        Integer oldDegreeId = new Integer(request.getParameter("degreeId"));
+        String code = (String) editDegreeForm.get("code");
+        String name = (String) editDegreeForm.get("name");
+        Integer degreeTypeInt = (Integer) editDegreeForm.get("degreeType");
+
+        TipoCurso degreeType = new TipoCurso(degreeTypeInt);
+        InfoDegree newInfoDegree = new InfoDegree(code, name, degreeType);
+        newInfoDegree.setIdInternal(oldDegreeId);
+
+        Object args[] = { newInfoDegree };
+
+        try
+        {
+            ServiceUtils.executeService(userView, "EditDegree", args);
+
+        } catch (NonExistingServiceException e)
+        {
+            throw new NonExistingActionException(
+                "message.nonExistingDegree",
+                mapping.findForward("readDegrees"));
+        } catch (ExistingServiceException e)
+        {
+            throw new ExistingActionException("message.manager.existing.degree");
+        } catch (FenixServiceException fenixServiceException)
+        {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+        return mapping.findForward("readDegree");
+    }
 }

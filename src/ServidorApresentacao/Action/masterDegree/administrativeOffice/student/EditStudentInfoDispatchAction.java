@@ -60,8 +60,8 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
 				generateToken(request);
 				saveToken(request);
 			}*/
-			Integer personCode = Integer.valueOf((String)getFromRequest("idInternal", request));
-			Integer number = Integer.valueOf((String)getFromRequest("number",request));
+			Integer personCode = Integer.valueOf(getFromRequest("idInternal", request));
+			Integer number = Integer.valueOf(getFromRequest("number",request));
 			// Create Dates
 
 			Calendar birthDate = Calendar.getInstance();

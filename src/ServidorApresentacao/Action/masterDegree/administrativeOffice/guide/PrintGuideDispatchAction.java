@@ -1,4 +1,3 @@
-
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.guide;
 
 import java.text.DateFormat;
@@ -30,105 +29,132 @@ import Util.GuideRequester;
  * 
  * 
  */
-public class PrintGuideDispatchAction extends DispatchAction {
+public class PrintGuideDispatchAction extends DispatchAction
+{
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+    public ActionForward prepare(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-		
-		HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-		if (session != null) {
-			GestorServicos serviceManager = GestorServicos.manager();
-			
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        if (session != null)
+        {
+            GestorServicos serviceManager = GestorServicos.manager();
 
-			Boolean passwordPrint = (Boolean) session.getAttribute(SessionConstants.PRINT_PASSWORD);
-			InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
-			
-			String graduationType = (String) request.getAttribute("graduationType");
-			if (graduationType == null)
-				graduationType = (String) request.getParameter("graduationType");
-			request.setAttribute("graduationType",graduationType);
-			
-			if (infoGuide.getGuideRequester().equals(GuideRequester.CANDIDATE_TYPE)){
-				// Read The Candidate
-				InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
-				try {
-					
-					if (session.getAttribute(SessionConstants.REQUESTER_NUMBER) == null){
-						Object args[] = { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson()};
-						infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "ReadMasterDegreeCandidate", args);
-					} else {
-						Integer number = (Integer) session.getAttribute(SessionConstants.REQUESTER_NUMBER);
-						Object args[] = { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson(), number};
-						infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "ReadCandidateListByPersonAndExecutionDegree", args);
-					}
-				} catch (FenixServiceException e) {
-					throw new FenixActionException();
-				}
-				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
-				if ((passwordPrint != null) && passwordPrint.booleanValue()) {
-					infoMasterDegreeCandidate.getInfoPerson().setPassword(infoGuide.getInfoPerson().getPassword());
-				}
-			} 
-			
-			Locale locale = new Locale("pt", "PT");
-			Date date = new Date();
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
-			session.setAttribute(SessionConstants.DATE, formatedDate);			
-			
-			
-			return mapping.findForward("PrintReady");
-		  } else
-			throw new Exception();   
+            Boolean passwordPrint = (Boolean) session.getAttribute(SessionConstants.PRINT_PASSWORD);
+            InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
 
-	}
-		
-	public ActionForward print(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+            String graduationType = (String) request.getAttribute("graduationType");
+            if (graduationType == null)
+                graduationType = request.getParameter("graduationType");
+            request.setAttribute("graduationType", graduationType);
 
-		
-		HttpSession session = request.getSession(false);
+            if (infoGuide.getGuideRequester().equals(GuideRequester.CANDIDATE_TYPE))
+            {
+                // Read The Candidate
+                InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
+                try
+                {
 
-		if (session != null) {
-			GestorServicos serviceManager = GestorServicos.manager();
-			
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+                    if (session.getAttribute(SessionConstants.REQUESTER_NUMBER) == null)
+                    {
+                        Object args[] = { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson()};
+                        infoMasterDegreeCandidate =
+                            (InfoMasterDegreeCandidate) serviceManager.executar(
+                                userView,
+                                "ReadMasterDegreeCandidate",
+                                args);
+                    } else
+                    {
+                        Integer number =
+                            (Integer) session.getAttribute(SessionConstants.REQUESTER_NUMBER);
+                        Object args[] =
+                            { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson(), number };
+                        infoMasterDegreeCandidate =
+                            (InfoMasterDegreeCandidate) serviceManager.executar(
+                                userView,
+                                "ReadCandidateListByPersonAndExecutionDegree",
+                                args);
+                    }
+                } catch (FenixServiceException e)
+                {
+                    throw new FenixActionException();
+                }
+                session.setAttribute(
+                    SessionConstants.MASTER_DEGREE_CANDIDATE,
+                    infoMasterDegreeCandidate);
+                if ((passwordPrint != null) && passwordPrint.booleanValue())
+                {
+                    infoMasterDegreeCandidate.getInfoPerson().setPassword(
+                        infoGuide.getInfoPerson().getPassword());
+                }
+            }
 
-			
-			Integer number = new Integer(request.getParameter("number"));
-			Integer year = new Integer(request.getParameter("year"));
-			Integer version = new Integer(request.getParameter("version"));
+            Locale locale = new Locale("pt", "PT");
+            Date date = new Date();
 
-			session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
+            String formatedDate =
+                "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
+            session.setAttribute(SessionConstants.DATE, formatedDate);
 
-			InfoGuide infoGuide = null;			
-			try {
-				Object args[] = { number, year, version };
-				infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException();
-			}
+            return mapping.findForward("PrintReady");
+        } else
+            throw new Exception();
 
-			Locale locale = new Locale("pt", "PT");
-			Date date = new Date();
+    }
 
-			String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
-			session.setAttribute(SessionConstants.DATE, formatedDate);	
+    public ActionForward print(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-			session.setAttribute(SessionConstants.GUIDE, infoGuide);		
-			
-			return mapping.findForward("PrintOneGuide");
-		  } else
-			throw new Exception();   
+        HttpSession session = request.getSession(false);
 
-	}
+        if (session != null)
+        {
+            GestorServicos serviceManager = GestorServicos.manager();
 
-	  
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+            Integer number = new Integer(request.getParameter("number"));
+            Integer year = new Integer(request.getParameter("year"));
+            Integer version = new Integer(request.getParameter("version"));
+
+            session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
+
+            InfoGuide infoGuide = null;
+            try
+            {
+                Object args[] = { number, year, version };
+                infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
+            } catch (FenixServiceException e)
+            {
+                throw new FenixActionException();
+            }
+
+            Locale locale = new Locale("pt", "PT");
+            Date date = new Date();
+
+            String formatedDate =
+                "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
+            session.setAttribute(SessionConstants.DATE, formatedDate);
+
+            session.setAttribute(SessionConstants.GUIDE, infoGuide);
+
+            return mapping.findForward("PrintOneGuide");
+        } else
+            throw new Exception();
+
+    }
+
 }

@@ -72,7 +72,7 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 	public ActionForward chooseCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession(false);
-		String executionYear = (String) getFromRequest("executionYear", request);
+		String executionYear = getFromRequest("executionYear", request);
 		Integer courseID = Integer.valueOf(getFromRequest("courseID", request));
 		request.setAttribute("courseID", getFromRequest("courseID", request));
 

@@ -8,7 +8,7 @@
  *   - Joana Mota (jccm@rnl.ist.utl.pt)
  *
  */
- 
+
 package ServidorApresentacao.Action.masterDegree.candidate;
 
 import java.util.List;
@@ -21,46 +21,51 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
-public class ReadPersonCandidatesAction extends ServidorApresentacao.Action.base.FenixAction {
+public class ReadPersonCandidatesAction extends ServidorApresentacao.Action.base.FenixAction
+{
 
-  public ActionForward execute(ActionMapping mapping, ActionForm form,
-                                HttpServletRequest request,
-                                HttpServletResponse response)
-      throws Exception {
+    public ActionForward execute(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-	
+        HttpSession session = request.getSession(false);
+        if (session != null)
+        {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            GestorServicos gestor = GestorServicos.manager();
 
-	HttpSession session = request.getSession(false);
-	if (session != null) {
-      IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-      GestorServicos gestor = GestorServicos.manager();
-	  
-      Object args[] = new Object[1];
-	  args[0] = userView;
-	  List candidates = null;
-	  try {
-	      candidates = (List) gestor.executar(userView, "ReadPersonCandidates", args);
-	  } catch(FenixServiceException e) {
-	  	throw new FenixActionException(e);
-	  	
-	  }
-	  if (candidates.size() == 1) {
-	  	session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, (InfoMasterDegreeCandidate) candidates.get(0));
-		return mapping.findForward("Success");
-	  }
-	  	 
-      session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
-      return mapping.findForward("ChooseCandidate");
+            Object args[] = new Object[1];
+            args[0] = userView;
+            List candidates = null;
+            try
+            {
+                candidates = (List) gestor.executar(userView, "ReadPersonCandidates", args);
+            } catch (FenixServiceException e)
+            {
+                throw new FenixActionException(e);
 
-    } else
-      throw new Exception();   
-  }
+            }
+            if (candidates.size() == 1)
+            {
+                session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, candidates.get(0));
+                return mapping.findForward("Success");
+            }
+
+            session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
+            return mapping.findForward("ChooseCandidate");
+
+        } else
+            throw new Exception();
+    }
 
 }

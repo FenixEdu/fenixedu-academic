@@ -75,14 +75,14 @@ public class EditGroupShift implements IServico {
 
 			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 			IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
-			IStudent student = (IStudent) persistentSupport.getIPersistentStudent().readByUsername(username);
+			IStudent student = persistentSupport.getIPersistentStudent().readByUsername(username);
 			
 			if (studentGroup == null)
 				throw new InvalidArgumentsServiceException();
 
-			IFrequenta attend =(IFrequenta) persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
-					student,
-					studentGroup.getGroupProperties().getExecutionCourse());
+			IFrequenta attend =persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
+                    		student,
+                    		studentGroup.getGroupProperties().getExecutionCourse());
 			IStudentGroupAttend studentGroupAttend = persistentStudentGroupAttend.readBy(studentGroup, attend);
 			
 			

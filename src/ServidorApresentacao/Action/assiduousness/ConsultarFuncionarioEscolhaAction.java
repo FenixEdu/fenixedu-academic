@@ -44,358 +44,419 @@ import Util.FormataCalendar;
  *
  * @author  Fernanda Quitério & Tania Pousão
  */
-public final class ConsultarFuncionarioEscolhaAction extends Action {
+public final class ConsultarFuncionarioEscolhaAction extends Action
+{
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {
+    public ActionForward execute(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws IOException, ServletException
+    {
 
-		Locale locale = getLocale(request);
-		MessageResources messages = getResources(request);
-		ActionErrors errors = new ActionErrors();
-		HttpSession session = request.getSession();
+        Locale locale = getLocale(request);
+        MessageResources messages = getResources(request);
+        ActionErrors errors = new ActionErrors();
+        HttpSession session = request.getSession();
 
-		if (isCancelled(request)) {
-			if (mapping.getAttribute() != null)
-				session.removeAttribute(mapping.getAttribute());
-			return (mapping.findForward("PortalGestaoAssiduidadeAction"));
-		}
+        if (isCancelled(request))
+        {
+            if (mapping.getAttribute() != null)
+                session.removeAttribute(mapping.getAttribute());
+            return (mapping.findForward("PortalGestaoAssiduidadeAction"));
+        }
 
-		ConsultarFuncionarioMostrarForm formEscolha = (ConsultarFuncionarioMostrarForm) form;
-		Integer numMecanografico = (Integer) session.getAttribute("numMecanografico");
-		System.out.println("CONSULTA DE ASSIDUIDADE: " + formEscolha.getEscolha() + " funcionario " + numMecanografico 
-		+ " mes " + formEscolha.getMesInicioEscolha());
+        ConsultarFuncionarioMostrarForm formEscolha = (ConsultarFuncionarioMostrarForm) form;
+        Integer numMecanografico = (Integer) session.getAttribute("numMecanografico");
+        System.out.println(
+            "CONSULTA DE ASSIDUIDADE: "
+                + formEscolha.getEscolha()
+                + " funcionario "
+                + numMecanografico
+                + " mes "
+                + formEscolha.getMesInicioEscolha());
 
-		if (formEscolha.getEscolha().equals("consultar.marcacao")) {
-			//»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» Marcacoes de Ponto «««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
+        if (formEscolha.getEscolha().equals("consultar.marcacao"))
+        {
+            //»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» Marcacoes de Ponto «««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
 
-			ArrayList listaFuncionarios = new ArrayList();
-			listaFuncionarios.add(numMecanografico);
+            ArrayList listaFuncionarios = new ArrayList();
+            listaFuncionarios.add(numMecanografico);
 
-			ArrayList listaEstados = new ArrayList();
-			listaEstados.add(new String("valida"));
-			listaEstados.add(new String("regularizada"));
-			listaEstados.add(new String("cartaoFuncionarioInvalido"));
-			listaEstados.add(new String("cartaoSubstitutoInvalido"));
+            ArrayList listaEstados = new ArrayList();
+            listaEstados.add(new String("valida"));
+            listaEstados.add(new String("regularizada"));
+            listaEstados.add(new String("cartaoFuncionarioInvalido"));
+            listaEstados.add(new String("cartaoSubstitutoInvalido"));
 
-			ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
-			ServicoSeguroConstruirEscolhasMarcacoesPonto servicoSeguroConstruirEscolhasMarcacoesPonto =
-				new ServicoSeguroConstruirEscolhasMarcacoesPonto(servicoAutorizacaoLer, listaFuncionarios, null
-			/*listaCartoes*/
-			, formEscolha.getDataInicioEscolha(), formEscolha.getDataFimEscolha());
-			try {
-				Executor.getInstance().doIt(servicoSeguroConstruirEscolhasMarcacoesPonto);
-			} catch (NotAuthorizeException nae) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
-			} catch (NotExecuteException nee) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-			} catch (PersistenceException pe) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-			} finally {
-				if (!errors.isEmpty()) {
-					saveErrors(request, errors);
-					return (new ActionForward(mapping.getInput()));
-				}
-			}
+            ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
+            ServicoSeguroConstruirEscolhasMarcacoesPonto servicoSeguroConstruirEscolhasMarcacoesPonto =
+                new ServicoSeguroConstruirEscolhasMarcacoesPonto(
+                    servicoAutorizacaoLer,
+                    listaFuncionarios,
+                    null
+            /*listaCartoes*/
+            , formEscolha.getDataInicioEscolha(), formEscolha.getDataFimEscolha());
+            try
+            {
+                Executor.getInstance().doIt(servicoSeguroConstruirEscolhasMarcacoesPonto);
+            } catch (NotAuthorizeException nae)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
+            } catch (NotExecuteException nee)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
+            } catch (PersistenceException pe)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
+            } finally
+            {
+                if (!errors.isEmpty())
+                {
+                    saveErrors(request, errors);
+                    return (new ActionForward(mapping.getInput()));
+                }
+            }
 
-			ServicoSeguroConsultarMarcacaoPonto servicoSeguroConsultarMarcacaoPonto =
-				new ServicoSeguroConsultarMarcacaoPonto(
-					servicoAutorizacaoLer,
-					servicoSeguroConstruirEscolhasMarcacoesPonto.getListaFuncionarios(),
-					servicoSeguroConstruirEscolhasMarcacoesPonto.getListaCartoes(),
-					listaEstados,
-					formEscolha.getDataInicioEscolha(),
-					formEscolha.getDataFimEscolha());
-			try {
-				Executor.getInstance().doIt(servicoSeguroConsultarMarcacaoPonto);
-			} catch (NotAuthorizeException nae) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
-			} catch (NotExecuteException nee) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-			} catch (PersistenceException pe) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-			} finally {
-				if (!errors.isEmpty()) {
-					saveErrors(request, errors);
-					return (new ActionForward(mapping.getInput()));
-				}
-			}
-			ArrayList listaMarcacoesPonto = servicoSeguroConsultarMarcacaoPonto.getListaMarcacoesPonto();
+            ServicoSeguroConsultarMarcacaoPonto servicoSeguroConsultarMarcacaoPonto =
+                new ServicoSeguroConsultarMarcacaoPonto(
+                    servicoAutorizacaoLer,
+                    servicoSeguroConstruirEscolhasMarcacoesPonto.getListaFuncionarios(),
+                    servicoSeguroConstruirEscolhasMarcacoesPonto.getListaCartoes(),
+                    listaEstados,
+                    formEscolha.getDataInicioEscolha(),
+                    formEscolha.getDataFimEscolha());
+            try
+            {
+                Executor.getInstance().doIt(servicoSeguroConsultarMarcacaoPonto);
+            } catch (NotAuthorizeException nae)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
+            } catch (NotExecuteException nee)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
+            } catch (PersistenceException pe)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
+            } finally
+            {
+                if (!errors.isEmpty())
+                {
+                    saveErrors(request, errors);
+                    return (new ActionForward(mapping.getInput()));
+                }
+            }
+            ArrayList listaMarcacoesPonto = servicoSeguroConsultarMarcacaoPonto.getListaMarcacoesPonto();
 
-			// ordena as marcacoes de ponto por ordem decrescente porque a tabela e apresentada ao contrario no jsp
-			Comparador comparador = new Comparador(new String("MarcacaoPonto"), new String("decrescente"));
-			Object[] arrayMarcacoesPonto = listaMarcacoesPonto.toArray();
-			Arrays.sort(arrayMarcacoesPonto, comparador);
+            // ordena as marcacoes de ponto por ordem decrescente porque a tabela e apresentada ao contrario no jsp
+            Comparador comparador =
+                new Comparador(new String("MarcacaoPonto"), new String("decrescente"));
+            Object[] arrayMarcacoesPonto = listaMarcacoesPonto.toArray();
+            Arrays.sort(arrayMarcacoesPonto, comparador);
 
-			// lista ordenada das marcacoes de ponto
-			listaMarcacoesPonto = new ArrayList();
-			for (int i = 0; i < arrayMarcacoesPonto.length; i++)
-				listaMarcacoesPonto.add(arrayMarcacoesPonto[i]);
+            // lista ordenada das marcacoes de ponto
+            listaMarcacoesPonto = new ArrayList();
+            for (int i = 0; i < arrayMarcacoesPonto.length; i++)
+                listaMarcacoesPonto.add(arrayMarcacoesPonto[i]);
 
-			// criacao da tabela de marcacoes para mostrar no jsp
-			ArrayList listaMarcacoesPontoBody = new ArrayList();
-			ListIterator iterListaMarcacoesPonto = listaMarcacoesPonto.listIterator();
-			MarcacaoPonto marcacaoPonto = null;
-			Calendar calendario = Calendar.getInstance();
-			calendario.setLenient(false);
+            // criacao da tabela de marcacoes para mostrar no jsp
+            ArrayList listaMarcacoesPontoBody = new ArrayList();
+            ListIterator iterListaMarcacoesPonto = listaMarcacoesPonto.listIterator();
+            MarcacaoPonto marcacaoPonto = null;
+            Calendar calendario = Calendar.getInstance();
+            calendario.setLenient(false);
 
-			while (iterListaMarcacoesPonto.hasNext()) {
-				marcacaoPonto = (MarcacaoPonto) iterListaMarcacoesPonto.next();
+            while (iterListaMarcacoesPonto.hasNext())
+            {
+                marcacaoPonto = (MarcacaoPonto) iterListaMarcacoesPonto.next();
 
-				if (marcacaoPonto.getSiglaUnidade().length() == 0) {
-					listaMarcacoesPontoBody.add(0, "&nbsp;");
-				} else {
-					listaMarcacoesPontoBody.add(0, marcacaoPonto.getSiglaUnidade());
-				}
-				listaMarcacoesPontoBody.add(1, String.valueOf(marcacaoPonto.getNumFuncionario()));
-				listaMarcacoesPontoBody.add(2, String.valueOf(marcacaoPonto.getNumCartao()));
+                if (marcacaoPonto.getSiglaUnidade().length() == 0)
+                {
+                    listaMarcacoesPontoBody.add(0, "&nbsp;");
+                } else
+                {
+                    listaMarcacoesPontoBody.add(0, marcacaoPonto.getSiglaUnidade());
+                }
+                listaMarcacoesPontoBody.add(1, String.valueOf(marcacaoPonto.getNumFuncionario()));
+                listaMarcacoesPontoBody.add(2, String.valueOf(marcacaoPonto.getNumCartao()));
 
-				calendario.setTimeInMillis(marcacaoPonto.getData().getTime());
-				if (marcacaoPonto.getEstado().equals("regularizada")) {
-					listaMarcacoesPontoBody.add(3, "<b>" + FormataCalendar.dataHoras(calendario) + "</b>");
-				} else {
-					listaMarcacoesPontoBody.add(3, FormataCalendar.dataHoras(calendario));
-				}
-				//listaMarcacoesPontoBody.add(4, messages.getMessage(marcacaoPonto.getEstado()));
-			}
-			ArrayList listagem = new ArrayList();
-			ArrayList listaHeaders = new ArrayList();
+                calendario.setTimeInMillis(marcacaoPonto.getData().getTime());
+                if (marcacaoPonto.getEstado().equals("regularizada"))
+                {
+                    listaMarcacoesPontoBody.add(
+                        3,
+                        "<b>" + FormataCalendar.dataHoras(calendario) + "</b>");
+                } else
+                {
+                    listaMarcacoesPontoBody.add(3, FormataCalendar.dataHoras(calendario));
+                }
+                //listaMarcacoesPontoBody.add(4, messages.getMessage(marcacaoPonto.getEstado()));
+            }
+            ArrayList listagem = new ArrayList();
+            ArrayList listaHeaders = new ArrayList();
 
-			listaHeaders.add(messages.getMessage("prompt.unidade"));
-			listaHeaders.add(messages.getMessage("prompt.funcionario"));
-			listaHeaders.add(messages.getMessage("prompt.numCartao"));
-			listaHeaders.add(messages.getMessage("prompt.data"));
-			//listaHeaders.add(messages.getMessage("prompt.estado"));
+            listaHeaders.add(messages.getMessage("prompt.unidade"));
+            listaHeaders.add(messages.getMessage("prompt.funcionario"));
+            listaHeaders.add(messages.getMessage("prompt.numCartao"));
+            listaHeaders.add(messages.getMessage("prompt.data"));
+            //listaHeaders.add(messages.getMessage("prompt.estado"));
 
-			listagem.add(listaHeaders);
-			listagem.add(listaMarcacoesPontoBody);
+            listagem.add(listaHeaders);
+            listagem.add(listaMarcacoesPontoBody);
 
-			request.setAttribute("listagem", listagem);
-			request.setAttribute("forward", mapping.findForward("ConsultarMarcacaoPontoMostrar"));
-			session.setAttribute("linkBotao", "ConsultarFuncionarioMostrar");
+            request.setAttribute("listagem", listagem);
+            request.setAttribute("forward", mapping.findForward("ConsultarMarcacaoPontoMostrar"));
+            session.setAttribute("linkBotao", "ConsultarFuncionarioMostrar");
 
-			return (mapping.findForward("MostrarListaAction"));
+            return (mapping.findForward("MostrarListaAction"));
 
-		} else if (formEscolha.getEscolha().equals("consultar.justificacoes")) {
-			//»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» Justificacoes ««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
+        } else if (formEscolha.getEscolha().equals("consultar.justificacoes"))
+        {
+            //»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» Justificacoes ««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
 
-			ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
-			ServicoSeguroConsultarJustificacoes servicoSeguroConsultarJustificacoes =
-				new ServicoSeguroConsultarJustificacoes(
-					servicoAutorizacaoLer,
-					numMecanografico.intValue(),
-					formEscolha.getDataInicioEscolha(),
-					formEscolha.getDataFimEscolha());
-			try {
-				Executor.getInstance().doIt(servicoSeguroConsultarJustificacoes);
-			} catch (NotAuthorizeException nae) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
-			} catch (NotExecuteException nee) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-			} catch (PersistenceException pe) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-			} finally {
-				if (!errors.isEmpty()) {
-					saveErrors(request, errors);
-					return (new ActionForward(mapping.getInput()));
-				}
-			}
-			ArrayList listaJustificacoes = servicoSeguroConsultarJustificacoes.getListaJustificacoes();
+            ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
+            ServicoSeguroConsultarJustificacoes servicoSeguroConsultarJustificacoes =
+                new ServicoSeguroConsultarJustificacoes(
+                    servicoAutorizacaoLer,
+                    numMecanografico.intValue(),
+                    formEscolha.getDataInicioEscolha(),
+                    formEscolha.getDataFimEscolha());
+            try
+            {
+                Executor.getInstance().doIt(servicoSeguroConsultarJustificacoes);
+            } catch (NotAuthorizeException nae)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
+            } catch (NotExecuteException nee)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
+            } catch (PersistenceException pe)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
+            } finally
+            {
+                if (!errors.isEmpty())
+                {
+                    saveErrors(request, errors);
+                    return (new ActionForward(mapping.getInput()));
+                }
+            }
+            ArrayList listaJustificacoes = servicoSeguroConsultarJustificacoes.getListaJustificacoes();
 
-			// ordena as justificacoes por decrescente porque a tabela e apresentada ao contrario no jsp
-			Comparador comparador = new Comparador(new String("Justificacao"), new String("crescente"));
-			Collections.sort((ArrayList) listaJustificacoes, comparador);
+            // ordena as justificacoes por decrescente porque a tabela e apresentada ao contrario no jsp
+            Comparador comparador = new Comparador(new String("Justificacao"), new String("crescente"));
+            Collections.sort(listaJustificacoes, comparador);
 
-			ServicoSeguroBuscarParamJustificacoes servicoSeguroBuscarParamJustificacoes =
-				new ServicoSeguroBuscarParamJustificacoes(servicoAutorizacaoLer, listaJustificacoes);
-			try {
-				Executor.getInstance().doIt(servicoSeguroBuscarParamJustificacoes);
-			} catch (NotAuthorizeException nae) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
-			} catch (NotExecuteException nee) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-			} catch (PersistenceException pe) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-			} finally {
-				if (!errors.isEmpty()) {
-					saveErrors(request, errors);
-					return (new ActionForward(mapping.getInput()));
-				}
-			}
-			ArrayList listaParamJustificacoes = servicoSeguroBuscarParamJustificacoes.getListaJustificacoes();
+            ServicoSeguroBuscarParamJustificacoes servicoSeguroBuscarParamJustificacoes =
+                new ServicoSeguroBuscarParamJustificacoes(servicoAutorizacaoLer, listaJustificacoes);
+            try
+            {
+                Executor.getInstance().doIt(servicoSeguroBuscarParamJustificacoes);
+            } catch (NotAuthorizeException nae)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
+            } catch (NotExecuteException nee)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
+            } catch (PersistenceException pe)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
+            } finally
+            {
+                if (!errors.isEmpty())
+                {
+                    saveErrors(request, errors);
+                    return (new ActionForward(mapping.getInput()));
+                }
+            }
+            ArrayList listaParamJustificacoes =
+                servicoSeguroBuscarParamJustificacoes.getListaJustificacoes();
 
-			// criacao da tabela de justificacoes para mostrar no jsp
-			ArrayList listaJustificacoesBody = new ArrayList();
-			ArrayList listaBody = new ArrayList();
-			ListIterator iterListaParamJustificacoes = listaParamJustificacoes.listIterator();
-			Justificacao justificacao = null;
-			ParamJustificacao paramJustificacao = null;
+            // criacao da tabela de justificacoes para mostrar no jsp
+            ArrayList listaJustificacoesBody = new ArrayList();
+            ArrayList listaBody = new ArrayList();
+            ListIterator iterListaParamJustificacoes = listaParamJustificacoes.listIterator();
+            Justificacao justificacao = null;
+            ParamJustificacao paramJustificacao = null;
 
-			while (iterListaParamJustificacoes.hasNext()) {
-				paramJustificacao = (ParamJustificacao) iterListaParamJustificacoes.next();
-				justificacao = (Justificacao) listaJustificacoes.get(iterListaParamJustificacoes.previousIndex());
+            while (iterListaParamJustificacoes.hasNext())
+            {
+                paramJustificacao = (ParamJustificacao) iterListaParamJustificacoes.next();
+                justificacao =
+                    (Justificacao) listaJustificacoes.get(iterListaParamJustificacoes.previousIndex());
 
-				listaJustificacoesBody.add(0, numMecanografico.toString());
-				IStrategyJustificacoes strategyJustificacoes =
-					SuporteStrategyJustificacoes.getInstance().callStrategy(paramJustificacao.getTipo());
-				strategyJustificacoes.setListaJustificacoesBody(paramJustificacao, justificacao, listaJustificacoesBody);
-				
-				listaBody.addAll(listaJustificacoesBody);
-				listaJustificacoesBody.clear();
-			}
-			ArrayList listagem = new ArrayList();
-			ArrayList listaHeaders = new ArrayList();
+                listaJustificacoesBody.add(0, numMecanografico.toString());
+                IStrategyJustificacoes strategyJustificacoes =
+                    SuporteStrategyJustificacoes.getInstance().callStrategy(paramJustificacao.getTipo());
+                strategyJustificacoes.setListaJustificacoesBody(
+                    paramJustificacao,
+                    justificacao,
+                    listaJustificacoesBody);
 
-			listaHeaders.add(messages.getMessage("prompt.funcionario"));
-			listaHeaders.add(messages.getMessage("prompt.sigla"));
-			listaHeaders.add(messages.getMessage("prompt.descricaoJustificacao"));
-			listaHeaders.add(messages.getMessage("prompt.tipo"));
-			listaHeaders.add(messages.getMessage("prompt.diaInicio"));
-			listaHeaders.add(messages.getMessage("prompt.diaFim"));
-			listaHeaders.add(messages.getMessage("prompt.horaInicio"));
-			listaHeaders.add(messages.getMessage("prompt.horaFim"));
-			
-			listagem.add(listaHeaders);
-			listagem.add(listaBody);
+                listaBody.addAll(listaJustificacoesBody);
+                listaJustificacoesBody.clear();
+            }
+            ArrayList listagem = new ArrayList();
+            ArrayList listaHeaders = new ArrayList();
 
-			request.setAttribute("listagem", listagem);
-			request.setAttribute("forward", mapping.findForward("ConsultarJustificacoesMostrar"));
-			session.setAttribute("linkBotao", "ConsultarFuncionarioMostrar");
+            listaHeaders.add(messages.getMessage("prompt.funcionario"));
+            listaHeaders.add(messages.getMessage("prompt.sigla"));
+            listaHeaders.add(messages.getMessage("prompt.descricaoJustificacao"));
+            listaHeaders.add(messages.getMessage("prompt.tipo"));
+            listaHeaders.add(messages.getMessage("prompt.diaInicio"));
+            listaHeaders.add(messages.getMessage("prompt.diaFim"));
+            listaHeaders.add(messages.getMessage("prompt.horaInicio"));
+            listaHeaders.add(messages.getMessage("prompt.horaFim"));
 
-			return (mapping.findForward("MostrarListaAction"));
+            listagem.add(listaHeaders);
+            listagem.add(listaBody);
 
-		} else if (formEscolha.getEscolha().equals("consultar.verbete")) {
-			//»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» Verbete «««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
-//			//ATENCAO: Servico acede à BD Oracle para ler as marcacoes ponto
-			ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
-			ServicoSeguroConsultarVerbete servicoSeguroConsultarVerbete =
-				new ServicoSeguroConsultarVerbete(
-					servicoAutorizacaoLer,
-					numMecanografico,
-					formEscolha.getDataInicioEscolha(),
-					formEscolha.getDataFimEscolha(),
-					locale);
-					
-//			try {
-//				SuportePersistenteOracle.getInstance().iniciarTransaccao();
+            request.setAttribute("listagem", listagem);
+            request.setAttribute("forward", mapping.findForward("ConsultarJustificacoesMostrar"));
+            session.setAttribute("linkBotao", "ConsultarFuncionarioMostrar");
 
-				try {
-					Executor.getInstance().doIt(servicoSeguroConsultarVerbete);
-				} catch (NotAuthorizeException nae) {
-					errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
-				} catch (NotExecuteException nee) {
-					errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-				} catch (PersistenceException pe) {
-					errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-				} finally {
-//					SuportePersistenteOracle.getInstance().cancelarTransaccao();
-					if (!errors.isEmpty()) {
-						saveErrors(request, errors);
-						return (new ActionForward(mapping.getInput()));
-					}
-				}
-//				
-//				SuportePersistenteOracle.getInstance().confirmarTransaccao();
-//			} catch (Exception e) {
-//				if (!errors.empty()) {
-//					saveErrors(request, errors);
-//					return (new ActionForward(mapping.getInput()));
-//				}
-//			}
+            return (mapping.findForward("MostrarListaAction"));
 
-			ArrayList listaHeaders = new ArrayList();
-			listaHeaders.add(messages.getMessage("prompt.data"));
-			listaHeaders.add(messages.getMessage("prompt.sigla"));
-			listaHeaders.add(messages.getMessage("prompt.saldoHN"));
-			listaHeaders.add(messages.getMessage("prompt.saldoPF"));
-			listaHeaders.add(messages.getMessage("prompt.justificacao"));
-			listaHeaders.add(messages.getMessage("consultar.marcacao"));
+        } else if (formEscolha.getEscolha().equals("consultar.verbete"))
+        {
+            //»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» Verbete «««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
+            //			//ATENCAO: Servico acede à BD Oracle para ler as marcacoes ponto
+            ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
+            ServicoSeguroConsultarVerbete servicoSeguroConsultarVerbete =
+                new ServicoSeguroConsultarVerbete(
+                    servicoAutorizacaoLer,
+                    numMecanografico,
+                    formEscolha.getDataInicioEscolha(),
+                    formEscolha.getDataFimEscolha(),
+                    locale);
 
-			ArrayList listaHeadersResumo = new ArrayList();
-			listaHeadersResumo.add(messages.getMessage("prompt.saldoHN"));
-			listaHeadersResumo.add(messages.getMessage("prompt.saldoPF"));
-			listaHeadersResumo.add(messages.getMessage("prompt.saldoNocturno"));
-			listaHeadersResumo.add(messages.getMessage("DSC"));
-			listaHeadersResumo.add(messages.getMessage("DS"));
+            //			try {
+            //				SuportePersistenteOracle.getInstance().iniciarTransaccao();
 
-			ArrayList listaHeadersTrabExtra = new ArrayList();
-			listaHeadersTrabExtra.add(messages.getMessage("prompt.primeiroEscalao"));
-			listaHeadersTrabExtra.add(messages.getMessage("prompt.segundoEscalao"));
-			listaHeadersTrabExtra.add(messages.getMessage("prompt.depoisSegundoEscalao"));
-			listaHeadersTrabExtra.add(messages.getMessage("prompt.primeiroEscalao"));
-			listaHeadersTrabExtra.add(messages.getMessage("prompt.segundoEscalao"));
-			listaHeadersTrabExtra.add(messages.getMessage("prompt.depoisSegundoEscalao"));
-			
-			ArrayList listaSaldos = servicoSeguroConsultarVerbete.getListaSaldos();
-			ArrayList listaResumo = new ArrayList();
-			Calendar calendario = Calendar.getInstance();
-			calendario.setLenient(false);
+            try
+            {
+                Executor.getInstance().doIt(servicoSeguroConsultarVerbete);
+            } catch (NotAuthorizeException nae)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
+            } catch (NotExecuteException nee)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
+            } catch (PersistenceException pe)
+            {
+                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
+            } finally
+            {
+                //					SuportePersistenteOracle.getInstance().cancelarTransaccao();
+                if (!errors.isEmpty())
+                {
+                    saveErrors(request, errors);
+                    return (new ActionForward(mapping.getInput()));
+                }
+            }
+            //				
+            //				SuportePersistenteOracle.getInstance().confirmarTransaccao();
+            //			} catch (Exception e) {
+            //				if (!errors.empty()) {
+            //					saveErrors(request, errors);
+            //					return (new ActionForward(mapping.getInput()));
+            //				}
+            //			}
 
-			// saldoHN
-			calendario.clear();
-			calendario.setTimeInMillis(((Long) listaSaldos.get(0)).longValue());
-			listaResumo.add(0, FormataCalendar.horasSaldo(calendario));
-			// saldoPF
-			calendario.clear();
-			calendario.setTimeInMillis(((Long) listaSaldos.get(1)).longValue());
-			listaResumo.add(1, FormataCalendar.horasSaldo(calendario));
-			// saldo nocturno normal
-			calendario.clear();
-			calendario.setTimeInMillis(((Long) listaSaldos.get(7)).longValue());
-			listaResumo.add(2, FormataCalendar.horasSaldo(calendario));
-			// saldo DSC ou Feriado
-			calendario.clear();
-			calendario.setTimeInMillis(((Long) listaSaldos.get(5)).longValue());
-			listaResumo.add(3, FormataCalendar.horasSaldo(calendario));
-			// saldo DS
-			calendario.clear();
-			calendario.setTimeInMillis(((Long) listaSaldos.get(6)).longValue());
-			listaResumo.add(4, FormataCalendar.horasSaldo(calendario));
+            ArrayList listaHeaders = new ArrayList();
+            listaHeaders.add(messages.getMessage("prompt.data"));
+            listaHeaders.add(messages.getMessage("prompt.sigla"));
+            listaHeaders.add(messages.getMessage("prompt.saldoHN"));
+            listaHeaders.add(messages.getMessage("prompt.saldoPF"));
+            listaHeaders.add(messages.getMessage("prompt.justificacao"));
+            listaHeaders.add(messages.getMessage("consultar.marcacao"));
 
-			ArrayList listaTrabExtra = new ArrayList();
+            ArrayList listaHeadersResumo = new ArrayList();
+            listaHeadersResumo.add(messages.getMessage("prompt.saldoHN"));
+            listaHeadersResumo.add(messages.getMessage("prompt.saldoPF"));
+            listaHeadersResumo.add(messages.getMessage("prompt.saldoNocturno"));
+            listaHeadersResumo.add(messages.getMessage("DSC"));
+            listaHeadersResumo.add(messages.getMessage("DS"));
 
-			// saldo primeiro escalao diurno
-			calendario.clear();
-			calendario.setTimeInMillis(((Long) listaSaldos.get(2)).longValue());
-			listaTrabExtra.add(0, FormataCalendar.horasSaldo(calendario));
-			// saldo segundo escalao diurno
-			calendario.clear();
-			calendario.setTimeInMillis(((Long) listaSaldos.get(3)).longValue());
-			listaTrabExtra.add(1, FormataCalendar.horasSaldo(calendario));
-			// saldo para alem do segundo escalao diurno
-			calendario.clear();
-			calendario.setTimeInMillis(((Long) listaSaldos.get(4)).longValue());
-			listaTrabExtra.add(2, FormataCalendar.horasSaldo(calendario));
-			// saldo primeiro escalao nocturno
-			calendario.clear();
-			calendario.setTimeInMillis(((Long) listaSaldos.get(8)).longValue());
-			listaTrabExtra.add(3, FormataCalendar.horasSaldo(calendario));
-			// saldo segundo escalao nocturno
-			calendario.clear();
-			calendario.setTimeInMillis(((Long) listaSaldos.get(9)).longValue());
-			listaTrabExtra.add(4, FormataCalendar.horasSaldo(calendario));
-			// saldo para alem do segundo escalao nocturno
-			calendario.clear();
-			calendario.setTimeInMillis(((Long) listaSaldos.get(10)).longValue());
-			listaTrabExtra.add(5, FormataCalendar.horasSaldo(calendario));
+            ArrayList listaHeadersTrabExtra = new ArrayList();
+            listaHeadersTrabExtra.add(messages.getMessage("prompt.primeiroEscalao"));
+            listaHeadersTrabExtra.add(messages.getMessage("prompt.segundoEscalao"));
+            listaHeadersTrabExtra.add(messages.getMessage("prompt.depoisSegundoEscalao"));
+            listaHeadersTrabExtra.add(messages.getMessage("prompt.primeiroEscalao"));
+            listaHeadersTrabExtra.add(messages.getMessage("prompt.segundoEscalao"));
+            listaHeadersTrabExtra.add(messages.getMessage("prompt.depoisSegundoEscalao"));
 
+            ArrayList listaSaldos = servicoSeguroConsultarVerbete.getListaSaldos();
+            ArrayList listaResumo = new ArrayList();
+            Calendar calendario = Calendar.getInstance();
+            calendario.setLenient(false);
 
-			ArrayList listagem = new ArrayList();
-			listagem.add(listaHeaders);
-			listagem.add(servicoSeguroConsultarVerbete.getVerbete());
-			listagem.add(listaHeadersResumo);
-			listagem.add(listaResumo);
-			listagem.add(listaHeadersTrabExtra);
-			listagem.add(listaTrabExtra);
+            // saldoHN
+            calendario.clear();
+            calendario.setTimeInMillis(((Long) listaSaldos.get(0)).longValue());
+            listaResumo.add(0, FormataCalendar.horasSaldo(calendario));
+            // saldoPF
+            calendario.clear();
+            calendario.setTimeInMillis(((Long) listaSaldos.get(1)).longValue());
+            listaResumo.add(1, FormataCalendar.horasSaldo(calendario));
+            // saldo nocturno normal
+            calendario.clear();
+            calendario.setTimeInMillis(((Long) listaSaldos.get(7)).longValue());
+            listaResumo.add(2, FormataCalendar.horasSaldo(calendario));
+            // saldo DSC ou Feriado
+            calendario.clear();
+            calendario.setTimeInMillis(((Long) listaSaldos.get(5)).longValue());
+            listaResumo.add(3, FormataCalendar.horasSaldo(calendario));
+            // saldo DS
+            calendario.clear();
+            calendario.setTimeInMillis(((Long) listaSaldos.get(6)).longValue());
+            listaResumo.add(4, FormataCalendar.horasSaldo(calendario));
 
-			request.setAttribute("listagem", listagem);
-			request.setAttribute("forward", mapping.findForward("ConsultarVerbeteMostrar"));
-			session.setAttribute("linkBotao", "ConsultarFuncionarioMostrar");
+            ArrayList listaTrabExtra = new ArrayList();
 
-			// para o caso de querer imprimir o verbete do funcionario
-			session.setAttribute("impressaoVerbete", listagem);
+            // saldo primeiro escalao diurno
+            calendario.clear();
+            calendario.setTimeInMillis(((Long) listaSaldos.get(2)).longValue());
+            listaTrabExtra.add(0, FormataCalendar.horasSaldo(calendario));
+            // saldo segundo escalao diurno
+            calendario.clear();
+            calendario.setTimeInMillis(((Long) listaSaldos.get(3)).longValue());
+            listaTrabExtra.add(1, FormataCalendar.horasSaldo(calendario));
+            // saldo para alem do segundo escalao diurno
+            calendario.clear();
+            calendario.setTimeInMillis(((Long) listaSaldos.get(4)).longValue());
+            listaTrabExtra.add(2, FormataCalendar.horasSaldo(calendario));
+            // saldo primeiro escalao nocturno
+            calendario.clear();
+            calendario.setTimeInMillis(((Long) listaSaldos.get(8)).longValue());
+            listaTrabExtra.add(3, FormataCalendar.horasSaldo(calendario));
+            // saldo segundo escalao nocturno
+            calendario.clear();
+            calendario.setTimeInMillis(((Long) listaSaldos.get(9)).longValue());
+            listaTrabExtra.add(4, FormataCalendar.horasSaldo(calendario));
+            // saldo para alem do segundo escalao nocturno
+            calendario.clear();
+            calendario.setTimeInMillis(((Long) listaSaldos.get(10)).longValue());
+            listaTrabExtra.add(5, FormataCalendar.horasSaldo(calendario));
 
-			return (mapping.findForward("MostrarListaAction"));
-		}
-		return (mapping.findForward("PortalGestaoAssiduidadeAction"));
-	}
+            ArrayList listagem = new ArrayList();
+            listagem.add(listaHeaders);
+            listagem.add(servicoSeguroConsultarVerbete.getVerbete());
+            listagem.add(listaHeadersResumo);
+            listagem.add(listaResumo);
+            listagem.add(listaHeadersTrabExtra);
+            listagem.add(listaTrabExtra);
+
+            request.setAttribute("listagem", listagem);
+            request.setAttribute("forward", mapping.findForward("ConsultarVerbeteMostrar"));
+            session.setAttribute("linkBotao", "ConsultarFuncionarioMostrar");
+
+            // para o caso de querer imprimir o verbete do funcionario
+            session.setAttribute("impressaoVerbete", listagem);
+
+            return (mapping.findForward("MostrarListaAction"));
+        }
+        return (mapping.findForward("PortalGestaoAssiduidadeAction"));
+    }
 }

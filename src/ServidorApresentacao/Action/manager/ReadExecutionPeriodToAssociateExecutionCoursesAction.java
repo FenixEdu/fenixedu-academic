@@ -30,51 +30,72 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author lmac1
  */
-public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixAction {
+public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixAction
+{
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+    public ActionForward execute(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-		IUserView userView = SessionUtils.getUserView(request);
-		Integer curricularCourseId =  new Integer(request.getParameter("curricularCourseId"));
-		
-		Object args1[] = { curricularCourseId };
-		
-		List executionCoursesList = null; 
-		try {
-				executionCoursesList = (List) ServiceUtils.executeService(userView, "ReadExecutionCoursesByCurricularCourse", args1);
-		
-		} catch (NonExistingServiceException e) {
-					throw new NonExistingActionException(e.getMessage(), "");
-				} catch (FenixServiceException fenixServiceException) {
-					throw new FenixActionException(fenixServiceException.getMessage());
-				}
-				
-		List unavailableExecutionPeriodsIds = new ArrayList();
-		Iterator iter = executionCoursesList.iterator();
-		while(iter.hasNext()){
-		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) iter.next();
+        IUserView userView = SessionUtils.getUserView(request);
+        Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
-		unavailableExecutionPeriodsIds.add((Integer) infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
-		}
-				
-		Object args2[] = {unavailableExecutionPeriodsIds };
-		try {
-			List infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadAvailableExecutionPeriods", args2);
+        Object args1[] = { curricularCourseId };
 
-			if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+        List executionCoursesList = null;
+        try
+        {
+            executionCoursesList =
+                (List) ServiceUtils.executeService(
+                    userView,
+                    "ReadExecutionCoursesByCurricularCourse",
+                    args1);
 
-				Collections.sort(infoExecutionPeriods, new ExecutionPeriodComparator());
+        } catch (NonExistingServiceException e)
+        {
+            throw new NonExistingActionException(e.getMessage(), "");
+        } catch (FenixServiceException fenixServiceException)
+        {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-				if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
-					request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
-				}
+        List unavailableExecutionPeriodsIds = new ArrayList();
+        Iterator iter = executionCoursesList.iterator();
+        while (iter.hasNext())
+        {
+            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) iter.next();
 
-			}
-		} catch (FenixServiceException ex) {
-			throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
-		}
+            unavailableExecutionPeriodsIds.add(
+                infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+        }
 
-		request.setAttribute("name", "associate");
-		return mapping.findForward("viewExecutionPeriods");
-	}
+        Object args2[] = { unavailableExecutionPeriodsIds };
+        try
+        {
+            List infoExecutionPeriods =
+                (List) ServiceUtils.executeService(userView, "ReadAvailableExecutionPeriods", args2);
+
+            if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty())
+            {
+
+                Collections.sort(infoExecutionPeriods, new ExecutionPeriodComparator());
+
+                if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty())
+                {
+                    request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
+                }
+
+            }
+        } catch (FenixServiceException ex)
+        {
+            throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
+        }
+
+        request.setAttribute("name", "associate");
+        return mapping.findForward("viewExecutionPeriods");
+    }
 }

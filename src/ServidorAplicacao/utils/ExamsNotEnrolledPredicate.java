@@ -9,24 +9,25 @@ import java.util.List;
 
 import org.apache.commons.collections.Predicate;
 
-import Dominio.IExam;
-
 /**
  * @author João Mota
  *
  */
-public class ExamsNotEnrolledPredicate implements Predicate {
-	private List examsEnrolled;	
-	/* (non-Javadoc)
-	 * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-	 */
-	 public ExamsNotEnrolledPredicate(List exams){
-	 	this.examsEnrolled = exams;
-	 }
-	 
-	public boolean evaluate(Object arg0) {
-		
-		return !examsEnrolled.contains((IExam)arg0);
-	}
+public class ExamsNotEnrolledPredicate implements Predicate
+{
+    private List examsEnrolled;
+    /* (non-Javadoc)
+     * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
+     */
+    public ExamsNotEnrolledPredicate(List exams)
+    {
+        this.examsEnrolled = exams;
+    }
+
+    public boolean evaluate(Object arg0)
+    {
+
+        return !examsEnrolled.contains(arg0);
+    }
 
 }
