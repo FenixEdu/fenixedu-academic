@@ -18,6 +18,8 @@ import Dominio.ITeacher;
 import Dominio.ResponsibleFor;
 import Dominio.Teacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
+import ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -135,7 +137,7 @@ public class UpdateTeacherExecutionYearResponsabilities implements IService
 	 * @param sp
 	 */
     private void addResponsibleFors(ITeacher teacher, List responsabilitiesToAdd,
-            IPersistentResponsibleFor responsibleForDAO, IPersistentExecutionCourse executionCourseDAO) throws ExcepcaoPersistencia
+            IPersistentResponsibleFor responsibleForDAO, IPersistentExecutionCourse executionCourseDAO) throws MaxResponsibleForExceed, InvalidCategory, ExcepcaoPersistencia
     {
         if (!responsabilitiesToAdd.isEmpty())
         {
@@ -147,6 +149,7 @@ public class UpdateTeacherExecutionYearResponsabilities implements IService
                 responsibleForDAO.simpleLockWrite(responsibleFor);
                 responsibleFor.setTeacher(teacher);
                 responsibleFor.setExecutionCourse(executionCourse);
+                ResponsibleForValidator.getInstance().validateResponsibleForList(teacher, executionCourse, responsibleFor, responsibleForDAO);
             }
         }
     }

@@ -62,6 +62,7 @@ create table CATEGORY (
    CODE varchar(20) not null,
    LONG_NAME varchar(250) not null,
    SHORT_NAME varchar(50) not null,
+   CAN_BE_EXECUTION_COURSE_RESPONSIBLE bit not null default 0,
    primary key (ID_INTERNAL),
    unique U1 (CODE))
    type=InnoDB;

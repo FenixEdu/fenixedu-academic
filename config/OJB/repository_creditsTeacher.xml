@@ -142,5 +142,6 @@
       <field-descriptor name="longName" column="LONG_NAME" jdbc-type="VARCHAR"/>
 
       <field-descriptor name="shortName" column="SHORT_NAME" jdbc-type="VARCHAR"/>
+      <field-descriptor name="canBeExecutionCourseResponsible" column="CAN_BE_EXECUTION_COURSE_RESPONSIBLE" jdbc-type="BIT"/>      
 </class-descriptor>
 

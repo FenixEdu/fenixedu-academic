@@ -14,6 +14,7 @@ import Dominio.Professorship;
 import Dominio.ResponsibleFor;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
@@ -78,6 +79,7 @@ public class InsertProfessorShip implements IService
                     responsibleForDAO.simpleLockWrite(responsibleForTeacher);
                     responsibleForTeacher.setExecutionCourse(executionCourse);
                     responsibleForTeacher.setTeacher(teacher);
+                    ResponsibleForValidator.getInstance().validateResponsibleForList(teacher, executionCourse, responsibleForTeacher, responsibleForDAO);
                 }
             }
 

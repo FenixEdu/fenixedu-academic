@@ -121,11 +121,21 @@
             <forward name="list-professorships" path="show-teacher-professorships-for-management"/>
         </action>        
         
-       <action path="/updateTeacherExecutionYearExecutionCourseResponsabilities" input="show-teacher-professorships-for-management" 
+        <action path="/updateTeacherExecutionYearExecutionCourseResponsabilities" 
+            input="show-teacher-professorships-for-management" 
             name="teacherExecutionCourseResponsabilities" scope="request" 
             type="ServidorApresentacao.Action.teacher.professorship.UpdateTeacherExecutionCourseResponsabilitiesAction">
+            <exception 
+                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$InvalidCategory" 
+                key="message.professorship.invalidCategory" 
+                path="/showTeacherProfessorshipsForManagement.do"/>
+            <exception 
+                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$MaxResponsibleForExceed" 
+                key="message.professorship.numberOfResponsibleForExceeded" 
+                path="/showTeacherProfessorshipsForManagement.do" 
+                handler="ServidorApresentacao.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler"/>
             <forward name="successfull-update" path="/showTeacherProfessorshipsForManagement.do"/>
-        </action>          
+        </action>
             <!-- ====================== USE CASE: Remove Professorship ========================== -->
         <action path="/removeProfessorship" 
             input="/showTeacherProfessorshipsForManagement.do" 
@@ -150,6 +160,17 @@
             input="/createProfessorship?method=showExecutionDegreeExecutionCourses" 
             name="teacherExecutionCourseForm" scope="request" parameter="method" 
             type="ServidorApresentacao.Action.teacher.professorship.CreateProfessorshipDispatchAction">
+
+            <exception 
+                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$InvalidCategory" 
+                key="message.professorship.invalidCategory" 
+                path="/createProfessorship.do?method=showExecutionDegreeExecutionCourses"/>
+            <exception 
+                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$MaxResponsibleForExceed" 
+                key="message.professorship.numberOfResponsibleForExceeded" 
+                path="/createProfessorship.do?method=showExecutionDegreeExecutionCourses" 
+                handler="ServidorApresentacao.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler"/>
+
             <forward name="first-step" path="createProfessorship"/>
             <forward name="second-step" path="createProfessorship"/>
             <forward name="third-step" path="createProfessorship"/>

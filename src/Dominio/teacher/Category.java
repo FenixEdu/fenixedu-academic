@@ -20,6 +20,7 @@ public class Category extends DomainObject implements ICategory {
 	private String shortName;
 	private String longName;
 	private String code;
+	private Boolean canBeExecutionCourseResponsible;
 
 	public Category() {
 	}
@@ -88,4 +89,18 @@ public class Category extends DomainObject implements ICategory {
 		result += "]";
 		return result;
 	}
+    /**
+     * @return Returns the canBeExecutionCourseResponsible.
+     */
+    public Boolean getCanBeExecutionCourseResponsible()
+    {
+        return this.canBeExecutionCourseResponsible;
+    }
+    /**
+     * @param canBeExecutionCourseResponsible The canBeExecutionCourseResponsible to set.
+     */
+    public void setCanBeExecutionCourseResponsible(Boolean canBeExecutionCourseResponsible)
+    {
+        this.canBeExecutionCourseResponsible = canBeExecutionCourseResponsible;
+    }
 }

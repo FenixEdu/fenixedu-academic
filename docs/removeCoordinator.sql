@@ -1,1 +1,0 @@
-alter table EXECUTION_DEGREE drop KEY_TEACHER;
