@@ -87,16 +87,15 @@ public class ExamRoomDistribution implements IServico {
 			}
 			
 			
-			Calendar endHourDay = exam.getEnrollmentBeginTime();
+			Calendar endHourDay = exam.getEnrollmentEndTime();
 			
-			endEnrollmentDay.set(Calendar.HOUR, 0);
+			endEnrollmentDay.set(Calendar.HOUR_OF_DAY, 0);
 			endEnrollmentDay.set(Calendar.MINUTE, 0);
-			endEnrollmentDay.add(Calendar.HOUR, endHourDay.get(Calendar.HOUR));
-			endEnrollmentDay.add(Calendar.MINUTE, endHourDay.get(Calendar.MINUTE));			
+			endEnrollmentDay.roll(Calendar.HOUR_OF_DAY, endHourDay.get(Calendar.HOUR_OF_DAY));
+			endEnrollmentDay.roll(Calendar.MINUTE, endHourDay.get(Calendar.MINUTE));			
 
 			Calendar examDay = exam.getDay();
 			Calendar today = Calendar.getInstance();
-			today.setTime(new Date());
 			
 			if ( today.after(examDay) || today.before(endEnrollmentDay) ) {
 				throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);		
