@@ -51,7 +51,24 @@ public class EditItemDispatchAction extends FenixDispatchAction {
 
 		InfoItem oldInfoItem = (InfoItem) infoItemsList.get(index.intValue());
 		session.setAttribute(SessionConstants.INFO_ITEM, oldInfoItem);
-	
+		GestorServicos manager = GestorServicos.manager();
+		Object readSectionArgs[] = { oldInfoItem.getInfoSection() };
+						ArrayList items;
+						try {
+							infoItemsList =
+								(ArrayList) manager.executar(
+									null,
+									"ReadItems",
+								readSectionArgs);
+						} catch (FenixServiceException fenixServiceException) {
+							throw new FenixActionException(fenixServiceException.getMessage());
+						}
+			infoItemsList.remove(oldInfoItem);
+			Collections.sort(infoItemsList);
+		
+		
+	 
+	   session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST,infoItemsList);
 		return mapping.findForward("editItem");
 	}
 
@@ -80,17 +97,42 @@ public class EditItemDispatchAction extends FenixDispatchAction {
 						(InfoItem) session.getAttribute(SessionConstants.INFO_ITEM);
 		
 		//InfoItem newInfoItem = (InfoItem) session.getAttribute(SessionConstants.INFO_ITEM);
+		GestorServicos manager = GestorServicos.manager();
+		Object readSectionArgs[] = { infoSection };
+				ArrayList items;
+				try {
+					items =
+						(ArrayList) manager.executar(
+							null,
+							"ReadItems",
+						readSectionArgs);
+				} catch (FenixServiceException fenixServiceException) {
+					throw new FenixActionException(fenixServiceException.getMessage());
+				}
+
+				Collections.sort(items);
+
 
 		InfoItem newInfoItem = new InfoItem();
 		newInfoItem.setInfoSection(infoSection);
 		newInfoItem.setInformation((String) itemForm.get("information"));
-		newInfoItem.setItemOrder(new Integer((String) itemForm.get("itemOrder")));
+		Integer order = new Integer((String) itemForm.get("itemOrder"));
+		switch (order.intValue()) {
+			case -1 :
+				order=new Integer(items.size()- 1);
+				break;
+			
+			default :
+				order= new Integer(order.intValue()-1);
+				break;
+		}
+		newInfoItem.setItemOrder(order);
 		newInfoItem.setName((String) itemForm.get("name"));
 		newInfoItem.setUrgent(new Boolean((String) itemForm.get("urgent")));
 
 		Object editItemArgs[] = { oldInfoItem, newInfoItem };
 		
-		GestorServicos manager = GestorServicos.manager();
+		
 		
 		
 		try {
@@ -103,8 +145,7 @@ public class EditItemDispatchAction extends FenixDispatchAction {
 	
 		//			read section items 
 
-		Object readSectionArgs[] = { infoSection };
-		ArrayList items;
+		
 		try {
 			items =
 				(ArrayList) manager.executar(

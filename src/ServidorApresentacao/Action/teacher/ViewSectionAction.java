@@ -6,6 +6,7 @@
  */
 package ServidorApresentacao.Action.teacher;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.gesdis.InfoItem;
 import DataBeans.gesdis.InfoSection;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
@@ -69,6 +71,12 @@ public class ViewSectionAction extends FenixAction {
 			session.setAttribute(
 				SessionConstants.INFO_SECTION_ITEMS_LIST,
 				infoItems);
+				
+			Iterator iter = infoItems.iterator();
+			while(iter.hasNext()){
+				InfoItem item = (InfoItem) iter.next();
+				System.out.println(item);	
+			}
 
 		}
 		return mapping.findForward("Sucess");

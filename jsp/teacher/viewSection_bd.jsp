@@ -41,7 +41,8 @@
     <logic:equal name="item" property="urgent" value="true"><font color="red"></logic:equal>
 	 		
   			  <bean:write name="item" property="information"/>
- 			 <logic:equal name="item" property="urgent" value="true"></font></logic:equal>
+  			  <bean:write name="item" property="itemOrder" />
+  			   <logic:equal name="item" property="urgent" value="true"></font></logic:equal>
 <table>
 	<tr>
 				

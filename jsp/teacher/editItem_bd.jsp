@@ -20,14 +20,15 @@
 
 <tr>
 	<td>
-		<bean:message key="message.itemOrder"/>
+		<bean:message key="message.sectionOrder"/>		
 	</td>
 	<td>
 		<html:select property="itemOrder" size="1">
 			<bean:define id="items" name="<%= SessionConstants.INFO_SECTION_ITEMS_LIST %>" />
-			<html:options name="items" property="" />
+			<html:options collection="items" labelProperty="name" property="itemOrder" />
+			<html:option value="-1">(fim)</html:option>
 		</html:select>
-		<html:text name="item" property="itemOrder"/>
+		
 	</td>
 </tr>
 
@@ -39,8 +40,9 @@
 	</td>
 	<td>
 		<html:select property="urgent" size="1" >
-				<html:option value="true">sim</html:option>
+				
 				<html:option value="false">não</html:option>
+				<html:option value="true">sim</html:option>
 		</html:select>
 	</td>
 </tr>

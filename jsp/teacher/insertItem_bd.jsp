@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <table align="center">
 <html:form action="/insertItem">
 
@@ -10,15 +10,19 @@
 		<bean:message key="message.itemName"/>
 	</td>
 	<td>
-		<html:textarea rows="2" cols="50" property="itemName" />
+		<html:text property="name" />
 	</td>
 </tr>
 <tr>
 	<td>
-		<bean:message key="message.itemOrder"/>
+		<bean:message key="message.sectionOrder"/>	
 	</td>
 	<td>
-		<html:text size="5" property="itemOrder"/>
+		<html:select property="itemOrder" size="1">
+			<bean:define id="items" name="<%= SessionConstants.INFO_SECTION_ITEMS_LIST %>" />
+			<html:options collection="items" labelProperty="name" property="itemOrder" />
+			<html:option value="-1">(fim)</html:option>
+		</html:select>
 	</td>
 </tr>
 <tr>
@@ -34,7 +38,11 @@
 		<bean:message key="message.itemUrgent"/>
 	</td>
 	<td>
-		<html:text size="5" property="urgent"/>
+			<html:select property="urgent" size="1" >
+				
+				<html:option value="false">não</html:option>
+				<html:option value="true">sim</html:option>
+		</html:select>
 	</td>
 </tr>
 <tr>

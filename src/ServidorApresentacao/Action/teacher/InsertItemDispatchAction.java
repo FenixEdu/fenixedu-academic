@@ -9,6 +9,7 @@ package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +40,30 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
+HttpSession session = request.getSession(false);
+
+	InfoSection infoSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
+	List infoItemsList = null;
+			
+			GestorServicos manager = GestorServicos.manager();
+			Object readSectionArgs[] = {infoSection};
+			
+			try {
+					infoItemsList =
+											(ArrayList) manager.executar(
+												null,
+												"ReadItems",
+											readSectionArgs);
+									} catch (FenixServiceException fenixServiceException) {
+										throw new FenixActionException(fenixServiceException.getMessage());
+									}
+						
+						Collections.sort(infoItemsList);
+		
+		
+	 
+				   session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST,infoItemsList);
+
 		return mapping.findForward("insertItem");
 			} 
 
@@ -49,23 +74,57 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-
+			
+			
+		HttpSession session = request.getSession(false);
+		UserView userView =(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
-		String itemName = (String) dynaForm.get("itemName");
-		String itemOrderString = (String) dynaForm.get("itemOrder");
+		InfoSection infoSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
+		List infoItemsList = null;
+		GestorServicos manager = GestorServicos.manager();
+				Object readSectionArgs[] = { infoSection };
+						ArrayList items;
+						try {
+							items =
+								(ArrayList) manager.executar(
+									null,
+									"ReadItems",
+								readSectionArgs);
+						} catch (FenixServiceException fenixServiceException) {
+							throw new FenixActionException(fenixServiceException.getMessage());
+						}
+
+		Collections.sort(items);
+
+
+		InfoItem newInfoItem = new InfoItem();
+		
+			
+				Integer order = new Integer((String) dynaForm.get("itemOrder"));
+				switch (order.intValue()) {
+					case -1 :
+						order=new Integer(items.size());
+						break;
+			
+					default :
+						order= new Integer(order.intValue());
+						break;
+				}
+				newInfoItem.setItemOrder(order);
+		String itemName = (String) dynaForm.get("name");
+		
     	String information = (String) dynaForm.get("information");
 		String urgentString = (String) dynaForm.get("urgent");
 		
-		HttpSession session = request.getSession();
 		
-		UserView userView =(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		InfoSection infoSection =(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);	
 		
+		
+	
 			InfoItem infoItem =
-				new InfoItem(information, itemName, new Integer(itemOrderString), infoSection, new Boolean(urgentString));
+				new InfoItem(information, itemName, order, infoSection, new Boolean(urgentString));
 
 			Object args[] = { infoItem };
-			GestorServicos manager = GestorServicos.manager();
+			
 			try {
 				Boolean result = (Boolean) manager.executar(userView, "InsertItem", args);
 			} catch (FenixServiceException fenixServiceException) {
