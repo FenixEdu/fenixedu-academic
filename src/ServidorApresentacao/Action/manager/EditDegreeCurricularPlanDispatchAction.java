@@ -1,10 +1,11 @@
 /*
- * Created on 31/Jul/2003
+ * Created on 5/Ago/2003
  */
 package ServidorApresentacao.Action.manager;
 
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,49 +33,78 @@ import Util.MarkType;
 /**
  * @author lmac1
  */
-public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchAction {
+public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction {
 
 
-	public ActionForward prepareInsert(
+	public ActionForward prepareEdit(
 			ActionMapping mapping,
 			ActionForm form,
 			HttpServletRequest request,
 			HttpServletResponse response)
 			throws FenixActionException {
 				
-				
-//				DynaActionForm dynaForm = (DynaValidatorForm) form;
-				
-				System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqANTES");
-				Integer degreeId =new Integer(request.getParameter("degreeId"));
-				
-//				dynaForm.set("degreeId",degreeId);
-				request.setAttribute("degreeId",degreeId);
+			HttpSession session = request.getSession(false);
+			DynaActionForm dynaForm = (DynaActionForm) form;
+			
+			UserView userView =
+				(UserView) session.getAttribute(SessionConstants.U_VIEW);
+			Integer degreeCurricularPlanId =new Integer(request.getParameter("degreeCurricularPlanId"));
+			
+			InfoDegreeCurricularPlan oldInfoDegreeCP = null;
 
-			return mapping.findForward("insertDegreeCurricularPlan");
+			Object args[] = { degreeCurricularPlanId };
+			GestorServicos manager = GestorServicos.manager();
+			try{
+				oldInfoDegreeCP = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlanService", args);
+			}catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+			}
+			
+		
+			dynaForm.set("name", (String) oldInfoDegreeCP.getName());
+			dynaForm.set("state", (DegreeCurricularPlanState) oldInfoDegreeCP.getState());
+			
+			if(!oldInfoDegreeCP.getInitialDate().toString().equals(""))
+			dynaForm.set("initialDate", (Date) oldInfoDegreeCP.getInitialDate());
+			
+			if(!oldInfoDegreeCP.getEndDate().toString().equals(""))
+			dynaForm.set("endDate", (Date) oldInfoDegreeCP.getEndDate());
+			
+			dynaForm.set("degreeDuration", (Integer) oldInfoDegreeCP.getDegreeDuration());
+			dynaForm.set("setMinimalYearForOptionalCourses", (Integer) oldInfoDegreeCP.getMinimalYearForOptionalCourses());
+			
+			if(!oldInfoDegreeCP.getNeededCredits().toString().equals(""))
+			dynaForm.set("neddedCredits", (Double) oldInfoDegreeCP.getNeededCredits());
+			
+			if(!oldInfoDegreeCP.getMarkType().toString().equals(""))
+			dynaForm.set("markType", (MarkType) oldInfoDegreeCP.getMarkType());
+			
+			if(!oldInfoDegreeCP.getNumerusClausus().toString().equals(""))
+			dynaForm.set("numerusClausus", (Integer) oldInfoDegreeCP.getNumerusClausus());
+						
+		
+			request.setAttribute("degreeCurricularPlanId",degreeCurricularPlanId);
+			return mapping.findForward("editDegreeCP");
 		}
+//mm que esteja a editar e importante ter o id do degree
 
-
-	public ActionForward insert(
+	public ActionForward edit(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-//			System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqDEPOIS");
+
 		HttpSession session = request.getSession(false);
 		UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
     	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		
-		Integer degreeId =(Integer) dynaForm.get("degreeId");
-		
-//		Integer degreeId =(Integer)request.getAttribute("degreeId");
-//		System.out.println("DEGREEIDSSSSSSSSSSSS"+degreeId);
+		Integer oldDegreeCPId =(Integer) dynaForm.get("degreeCurricularPlanId");
+		Integer degreeId =(Integer) dynaForm.get("degreeCurricularPlanId");
 		
 		
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();		
-
+		InfoDegreeCurricularPlan newInfoDegreeCP = new InfoDegreeCurricularPlan();		
 
 		
 		String name = (String) dynaForm.get("name");
@@ -100,10 +130,10 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 
 
 //		Calendar initialDate = null;
- 		if(initialDateString.compareTo("") != 0){
+		if(initialDateString.compareTo("") != 0){
 				String[] initialDateTokens = initialDateString.split("/");
 
-				 	Calendar initialDate = Calendar.getInstance();
+					Calendar initialDate = Calendar.getInstance();
 					initialDate.set(
 									Calendar.DAY_OF_MONTH,
 									(new Integer(initialDateTokens[0])).intValue());
@@ -113,8 +143,8 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 					initialDate.set(
 									Calendar.YEAR,
 									(new Integer(initialDateTokens[2])).intValue());
-			infoDegreeCurricularPlan.setInitialDate(initialDate.getTime());
- 		}
+			newInfoDegreeCP.setInitialDate(initialDate.getTime());
+		}
 
 //		Calendar endDate = null;
 		if(initialDateString.compareTo("") != 0){
@@ -130,13 +160,13 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 						endDate.set(
 									Calendar.YEAR,
 									(new Integer(endDateTokens[2])).intValue());
-			infoDegreeCurricularPlan.setEndDate(endDate.getTime());
+			newInfoDegreeCP.setEndDate(endDate.getTime());
 		}
 		
 //		 neededCredits = null;
 		if(neededCreditsString.compareTo("") != 0) {
 			Double neededCredits = new Double(neededCreditsString); 
-			infoDegreeCurricularPlan.setNeededCredits(neededCredits);
+			newInfoDegreeCP.setNeededCredits(neededCredits);
 		}
 		
 		
@@ -145,31 +175,30 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 
 		if(markTypeString.compareTo("") != 0){
 			
-			System.out.println("ENTROU NO MARK TYPE");
+//			System.out.println("ENTROU NO MARK TYPE");
 			Integer markTypeInt = new Integer(markTypeString);
 			MarkType markType = new MarkType(markTypeInt);
-			infoDegreeCurricularPlan.setMarkType(markType);
+			newInfoDegreeCP.setMarkType(markType);
 		}
 		
 //		Integer numerusClausus = null;
 		if(numerusClaususString.compareTo("") != 0){
 			Integer numerusClausus = new Integer (numerusClaususString);
-			infoDegreeCurricularPlan.setNumerusClausus(numerusClausus);
+			newInfoDegreeCP.setNumerusClausus(numerusClausus);
 		}
 																						
-		infoDegreeCurricularPlan.setName(name);
-//		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-		infoDegreeCurricularPlan.setState(state);										
-		infoDegreeCurricularPlan.setDegreeDuration(degreeDuration);
-		infoDegreeCurricularPlan.setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
+		newInfoDegreeCP.setName(name);
+		newInfoDegreeCP.setState(state);										
+		newInfoDegreeCP.setDegreeDuration(degreeDuration);
+		newInfoDegreeCP.setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
 																						
 			
-		Object args[] = { infoDegreeCurricularPlan, degreeId };
+		Object args[] = { oldDegreeCPId, newInfoDegreeCP, degreeId };
 		GestorServicos manager = GestorServicos.manager();
 		List serviceResult = null;
-		System.out.println("Antes do 1º Serviço");
+//		System.out.println("Antes do 1º Serviço");
 		try {
-				serviceResult = (List) manager.executar(userView, "InsertDegreeCurricularPlanService", args);
+				serviceResult = (List) manager.executar(userView, "EditDegreeCurricularPlanService", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -199,13 +228,13 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 			System.out.println("depois do 2º Serviço FIM DA ACTION");
 			
 			
-			System.out.println("DEGREECP QUE KERO!!!!!!!111"+infoDegreeCurricularPlan);
+			System.out.println("DEGREECP QUE KERO!!!!!!!111"+newInfoDegreeCP);
 			
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 		
-		return mapping.findForward("readDegree");
+		return mapping.findForward("readDegreeCP");
 	}			
 }
 

@@ -76,6 +76,7 @@ public class InsertDegreeCurricularPlanService implements IServico {
 						errors.set(1, name);
 					}
 				}
+			System.out.println("ERRO ERRO ERRO ERRO"+errors);
 
 				if(modified == 0) {
 					errors = null; 

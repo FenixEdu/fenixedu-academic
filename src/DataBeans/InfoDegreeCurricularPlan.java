@@ -25,13 +25,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Serializable
 	private MarkType markType;
 	private Integer numerusClausus;
 
-	public InfoDegreeCurricularPlan() {
-		setName(null);
-		setInfoDegree(null);
-		setState(null);
-		setInitialDate(null);
-		setEndDate(null);
-	}
+	public InfoDegreeCurricularPlan() {}
 
 	public InfoDegreeCurricularPlan(String name, InfoDegree infoDegree) {
 		this();
