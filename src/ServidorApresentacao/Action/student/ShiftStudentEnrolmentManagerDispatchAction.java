@@ -500,11 +500,10 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		
+
 		//validateToken(request, form, mapping);
 
 		HttpSession session = request.getSession();
-		
 
 		InfoShiftStudentEnrolment infoShiftStudentEnrolment =
 			(InfoShiftStudentEnrolment) session.getAttribute(
@@ -519,7 +518,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		Iterator i = infoShiftStudentEnrolment.getAvailableShift().iterator();
 		// FIXME: tdi-dev (bruno) -> this wanted class is not reset after use, causing some problems
 		String wantedClass = (String) ((DynaActionForm) form).get("class");
-		ClassNamePredicate filter = new ClassNamePredicate(wantedClass);
+		//		ClassNamePredicate filter = new ClassNamePredicate(wantedClass);
 
 		while (i.hasNext()) {
 			InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftClassesWithLessons =
@@ -570,7 +569,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-
+		
 		//validateToken(request, form, mapping);
 
 		Integer[] shifts = (Integer[]) ((DynaActionForm) form).get("shifts");
@@ -658,16 +657,17 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 	private void initializeForm(
 		InfoShiftStudentEnrolment infoShiftStudentEnrolment,
 		DynaActionForm form) {
-		List currentEnrolment = infoShiftStudentEnrolment.getCurrentEnrolment();
-		List avaliableShift = infoShiftStudentEnrolment.getAvailableShift();
-		InfoStudent infoStudent = infoShiftStudentEnrolment.getInfoStudent();
+		
+		//		List currentEnrolment = infoShiftStudentEnrolment.getCurrentEnrolment();
+		//		List avaliableShift = infoShiftStudentEnrolment.getAvailableShift();
+		//		InfoStudent infoStudent = infoShiftStudentEnrolment.getInfoStudent();
 		form.set(
 			"shifts",
 			new Integer[(
 				(InfoShiftDividedList) infoShiftStudentEnrolment
 					.getDividedList())
 				.leafSize()
-				* 2]);
+				 * 2 ]);
 		// DANGER: each divided 'sector' has two sublists, each a type of shift . Hardcoding 2 is dangerous
 	}
 }

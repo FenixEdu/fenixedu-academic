@@ -14,6 +14,12 @@ import java.util.List;
  * @author  tdi-dev
  */
 public class InfoShiftStudentEnrolment {
+	
+	
+	/**
+	 * List with the student lessons for the time table display
+	 */
+	private List lessons;
 
 	/**    
 	 * List containing all the classes (InfoClass) in wich the student is allowed to be in.
@@ -72,6 +78,20 @@ public class InfoShiftStudentEnrolment {
      * Element containing the information about the student that is enroling
      */
 	private InfoStudent InfoStudent;
+
+	/**
+	 * @return
+	 */
+	public List getLessons() {
+		return lessons;
+	}
+
+	/**
+	 * @param lessons
+	 */
+	public void setLessons(List lessons) {
+		this.lessons = lessons;
+	}
 
 	public InfoShiftStudentEnrolment() {
 	}

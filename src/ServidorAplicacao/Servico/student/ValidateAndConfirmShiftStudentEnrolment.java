@@ -61,7 +61,8 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 			return Cloner.copyIShift2InfoShift(shift);
 		}
 	}
-	private static ValidateAndConfirmShiftStudentEnrolment _service = new ValidateAndConfirmShiftStudentEnrolment();
+	private static ValidateAndConfirmShiftStudentEnrolment _service =
+		new ValidateAndConfirmShiftStudentEnrolment();
 
 	private ValidateAndConfirmShiftStudentEnrolment() {
 	}
@@ -81,7 +82,8 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 	 * Inserts and updates table.
 	 * 
 	 * */
-	public InfoShiftStudentEnrolment run(InfoShiftStudentEnrolment infoShiftStudentEnrolment) throws FenixServiceException, ExcepcaoPersistencia {
+	public InfoShiftStudentEnrolment run(InfoShiftStudentEnrolment infoShiftStudentEnrolment)
+		throws FenixServiceException, ExcepcaoPersistencia {
 		if (infoShiftStudentEnrolment == null) {
 			throw new IllegalArgumentException("InfoShiftStudentEnrolment must be not null!");
 		}
@@ -128,8 +130,10 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 		 * */
 
 		IStudent student = new Student();
-		student.setDegreeType(infoShiftStudentEnrolment.getInfoStudent().getDegreeType());
-		student.setNumber(infoShiftStudentEnrolment.getInfoStudent().getNumber());
+		student.setDegreeType(
+			infoShiftStudentEnrolment.getInfoStudent().getDegreeType());
+		student.setNumber(
+			infoShiftStudentEnrolment.getInfoStudent().getNumber());
 
 		List filledShifts = new ArrayList();
 		List newShifts = new ArrayList();
@@ -138,10 +142,16 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 
 		//1
 
-		ShiftTransformerInverse shiftTransformerInverse = new ShiftTransformerInverse();
+		ShiftTransformerInverse shiftTransformerInverse =
+			new ShiftTransformerInverse();
 		//		Copy of the wanted Shifts, in ITurno format
-		List wantedShifts = (List) CollectionUtils.collect(infoShiftStudentEnrolment.getWantedShifts(), shiftTransformerInverse);
-
+		List wantedShifts =
+			(List) CollectionUtils.collect(
+				infoShiftStudentEnrolment.getWantedShifts(),
+				shiftTransformerInverse);
+		
+		//make the shifts persistent
+		wantedShifts = getPersistentShifts(wantedShifts);
 		//		Copy of the current Enrolment (actual Shifts), in ITurno format
 
 		//		List actualShifts =
@@ -167,7 +177,8 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 
 		//Old shift configuration to be presented as extra info to the user
 		ShiftTransformer shiftTransformer = new ShiftTransformer();
-		infoShiftStudentEnrolment.setCurrentEnrolment((List) CollectionUtils.collect(actualShifts, shiftTransformer));
+		infoShiftStudentEnrolment.setCurrentEnrolment(
+			(List) CollectionUtils.collect(actualShifts, shiftTransformer));
 
 		//get the students allowed classes, to check each shift against it
 		List studentsAllowedClasses = getStudentsAllowedClasses(student, sp);
@@ -187,9 +198,16 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 			}
 
 			//1.1 - Produce an error if the shift is of the same type and same course than another pretended one.
-			if ((listTmp = obtainShiftsOfSameTypeAndCourse(pretendedNewShifts, shift)).size() > 1) {
+			if ((listTmp =
+				obtainShiftsOfSameTypeAndCourse(pretendedNewShifts, shift))
+				.size()
+				> 1) {
 
-				treatShiftInErrors(errors, actualShifts, listTmp, "ValidadeShiftStudentEnrolment - Não se pode escolher mais que um turno para a mesma cadeira que sejam do mesmo tipo!");
+				treatShiftInErrors(
+					errors,
+					actualShifts,
+					listTmp,
+					"ValidadeShiftStudentEnrolment - Não se pode escolher mais que um turno para a mesma cadeira que sejam do mesmo tipo!");
 
 				//don't remove the shift, to make sure the other shift is reported as a bogus one.
 				continue;
@@ -197,9 +215,18 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 
 			//1.2 - Produce an error if the shift is of the same course than another pretended one but of different classes.
 			//checks in all the shifts (both pretended and actual)
-			if ((listTmp = obtainShiftsOfDifferentClassesAndSameCourse(wantedShifts, shift)).size() > 1) {
+			if ((listTmp =
+				obtainShiftsOfDifferentClassesAndSameCourse(
+					wantedShifts,
+					shift))
+				.size()
+				> 1) {
 
-				treatShiftInErrors(errors, actualShifts, listTmp, "ValidadeShiftStudentEnrolment - Não se pode escolher mais que um turno para a mesma cadeira em turmas diferentes!");
+				treatShiftInErrors(
+					errors,
+					actualShifts,
+					listTmp,
+					"ValidadeShiftStudentEnrolment - Não se pode escolher mais que um turno para a mesma cadeira em turmas diferentes!");
 				//don't remove the shift, to make sure the other shift is reported as a bogus one.
 				continue;
 			}
@@ -223,8 +250,12 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 			}
 
 			//1.4  Filter shifts that are not associated with the classes the user is allowed to be in.
-			if (!theClassIsAllowed(getClassesAssociatedWithShift(shift, sp), studentsAllowedClasses)) {
-				ShiftConflict error = new ShiftConflict(shift, "ValidateAndConfirmShiftStudentEnrolment - you are not allowed to be in this shift!!");
+			if (!theClassIsAllowed(getClassesAssociatedWithShift(shift, sp),
+				studentsAllowedClasses)) {
+				ShiftConflict error =
+					new ShiftConflict(
+						shift,
+						"ValidateAndConfirmShiftStudentEnrolment - you are not allowed to be in this shift!!");
 				errors.add(error);
 				i.remove();
 				continue;
@@ -236,9 +267,13 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 			shiftExample.setIdInternal(shift.getIdInternal());
 
 			ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
-			ITurno obtainedShift = (ITurno) shiftDAO.readDomainObjectByCriteria(shiftExample);
+			ITurno obtainedShift =
+				(ITurno) shiftDAO.readDomainObjectByCriteria(shiftExample);
 			if (obtainedShift == null) {
-				ShiftConflict error = new ShiftConflict(shift, "ValidateAndConfirmShiftStudentEnrolment - turno não existe!");
+				ShiftConflict error =
+					new ShiftConflict(
+						shift,
+						"ValidateAndConfirmShiftStudentEnrolment - turno não existe!");
 				errors.add(error);
 				actualShifts.remove(shift);
 				i.remove();
@@ -246,14 +281,19 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 				//throw new FenixServiceException("ValidateAndConfirmShiftStudentEnrolment - non existent shift!");
 			}
 
-			int availabilityFinal = obtainedShift.getAvailabilityFinal().intValue();
+			int availabilityFinal =
+				obtainedShift.getAvailabilityFinal().intValue();
 
 			if (availabilityFinal > 0) {
 				//decrement the value of FNL
 				//TODO: tdi-dev (edgar.goncalves) -> make sure the database is updated successfully
-				obtainedShift.setAvailabilityFinal(new Integer(availabilityFinal - 1));
+				obtainedShift.setAvailabilityFinal(
+					new Integer(availabilityFinal - 1));
 
-				ITurno oldShift = obtainShiftOfSameTypeAndCourse(actualShifts, (ITurno) shift);
+				ITurno oldShift =
+					obtainShiftOfSameTypeAndCourse(
+						actualShifts,
+						(ITurno) shift);
 
 				if (oldShift != null) {
 					/* the shift already exixts in actual shifts  (type, executionCourse) */
@@ -275,23 +315,50 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 					thisShiftStudent.setShift(thisShift);
 					thisShiftStudent.setStudent(student);
 
-					List oldShiftStudents = shiftStudentDAO.readByCriteria(thisShiftStudent);
+					List oldShiftStudents =
+						shiftStudentDAO.readByCriteria(thisShiftStudent);
 
-					shiftStudentDAO.delete((ITurnoAluno) oldShiftStudents.get(0));
+					shiftStudentDAO.delete(
+						(ITurnoAluno) oldShiftStudents.get(0));
 
 					//Writing to the database the newshift
-					IStudent studentTmp = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(student.getNumber(), student.getDegreeType());
-					ITurno shiftTmp = sp.getITurnoPersistente().readByNameAndExecutionCourse(shift.getNome(), shift.getDisciplinaExecucao());
-					ITurnoAluno newShiftStudent = new ShiftStudent(shiftTmp, studentTmp);
-					((ServidorPersistente.OJB.TurnoAlunoOJB) shiftStudentDAO).simpleLockWrite(newShiftStudent);
+					IStudent studentTmp =
+						sp
+							.getIPersistentStudent()
+							.readStudentByNumberAndDegreeType(
+							student.getNumber(),
+							student.getDegreeType());
+					ITurno shiftTmp =
+						sp.getITurnoPersistente().readByNameAndExecutionCourse(
+							shift.getNome(),
+							shift.getDisciplinaExecucao());
+					ITurnoAluno newShiftStudent =
+						new ShiftStudent(shiftTmp, studentTmp);
+					(
+						(
+							ServidorPersistente
+								.OJB
+								.TurnoAlunoOJB) shiftStudentDAO)
+								.simpleLockWrite(
+						newShiftStudent);
 
-					obtainedShift.setAvailabilityFinal(new Integer(availabilityFinal - 1));
-					oldShift.setAvailabilityFinal(new Integer(oldShift.getAvailabilityFinal().intValue() + 1));
+					obtainedShift.setAvailabilityFinal(
+						new Integer(availabilityFinal - 1));
+					oldShift.setAvailabilityFinal(
+						new Integer(
+							oldShift.getAvailabilityFinal().intValue() + 1));
 
 					Iterator i2 = actualShifts.iterator();
 					while (i2.hasNext()) {
 						ITurno element = (ITurno) i2.next();
-						if ((element.getNome().equals(oldShift.getNome())) && (element.getDisciplinaExecucao().getNome().equals(oldShift.getDisciplinaExecucao().getNome()))) {
+						if ((element.getNome().equals(oldShift.getNome()))
+							&& (element
+								.getDisciplinaExecucao()
+								.getNome()
+								.equals(
+									oldShift
+										.getDisciplinaExecucao()
+										.getNome()))) {
 							i2.remove();
 							break;
 						}
@@ -312,14 +379,30 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 					newShifts.add(pair);
 
 					//Updates the availability on the database
-					obtainedShift.setAvailabilityFinal(new Integer(availabilityFinal - 1));
+					obtainedShift.setAvailabilityFinal(
+						new Integer(availabilityFinal - 1));
 					shiftDAO.lockWrite(obtainedShift);
 
 					//Writing to the database the newshift
-					IStudent studentTmp = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(student.getNumber(), student.getDegreeType());
-					ITurno shiftTmp = sp.getITurnoPersistente().readByNameAndExecutionCourse(shift.getNome(), shift.getDisciplinaExecucao());
-					ITurnoAluno newShiftStudent = new ShiftStudent(shiftTmp, studentTmp);
-					((ServidorPersistente.OJB.TurnoAlunoOJB) shiftStudentDAO).simpleLockWrite(newShiftStudent);
+					IStudent studentTmp =
+						sp
+							.getIPersistentStudent()
+							.readStudentByNumberAndDegreeType(
+							student.getNumber(),
+							student.getDegreeType());
+					ITurno shiftTmp =
+						sp.getITurnoPersistente().readByNameAndExecutionCourse(
+							shift.getNome(),
+							shift.getDisciplinaExecucao());
+					ITurnoAluno newShiftStudent =
+						new ShiftStudent(shiftTmp, studentTmp);
+					(
+						(
+							ServidorPersistente
+								.OJB
+								.TurnoAlunoOJB) shiftStudentDAO)
+								.simpleLockWrite(
+						newShiftStudent);
 				}
 			} else {
 				/*
@@ -349,7 +432,10 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 		 */
 
 		InfoShiftStudentEnrolment result = infoShiftStudentEnrolment;
-		result.setFilledShifts((List) CollectionUtils.collect(filledShifts, shiftTransformerInverse));
+		result.setFilledShifts(
+			(List) CollectionUtils.collect(
+				filledShifts,
+				shiftTransformerInverse));
 		result.setNewShifts(newShifts);
 
 		if (errors.size() == 0) {
@@ -358,6 +444,26 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 			result.setErrors(errors);
 		}
 		return result;
+	}
+
+	/**
+	 * @param wantedShifts
+	 * @return
+	 */
+	private List getPersistentShifts(List wantedShifts)
+		throws ExcepcaoPersistencia {
+		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+		ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+		List shifts = new ArrayList();
+		Iterator iter = wantedShifts.iterator();
+		while (iter.hasNext()) {
+			ITurno shift = (ITurno) iter.next();
+			shift = (ITurno) persistentShift.readByOId(shift, false);
+			if (shift != null) {
+				shifts.add(shift);
+			}
+		}
+		return shifts;
 	}
 
 	/**
@@ -385,7 +491,10 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 	 * @return list of classes (ITurma) with the allowed classes for the student
 	 * @throws ExcepcaoPersistencia
 	 */
-	private List getStudentsAllowedClasses(IStudent student, ISuportePersistente sp) throws ExcepcaoPersistencia {
+	private List getStudentsAllowedClasses(
+		IStudent student,
+		ISuportePersistente sp)
+		throws ExcepcaoPersistencia {
 		ITurno shiftExample = new Turno();
 		IDisciplinaExecucao executionCourseExample = new DisciplinaExecucao();
 		List associatedStudents = new ArrayList();
@@ -399,8 +508,9 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 		classShiftExample.setTurma(classExample);
 		classShiftExample.setTurno(shiftExample);
 
-		List classShifts = sp.getITurmaTurnoPersistente().readByCriteria(classShiftExample);
-		
+		List classShifts =
+			sp.getITurmaTurnoPersistente().readByCriteria(classShiftExample);
+
 		List result = getDistinctClassesFromListOfClassShifts(classShifts);
 		return result;
 	}
@@ -414,25 +524,23 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 		List result = new ArrayList();
 		while (i.hasNext()) {
 			ITurma clazz = (ITurma) ((ITurmaTurno) i.next()).getTurma();
-			
-			
-			
+
 			if (!result.contains(clazz)) {
 				result.add(clazz);
 			}
-			
-//			Iterator resultIterator = result.iterator();
-//			boolean containsOneOfThese = false;
-//			while (resultIterator.hasNext()) {
-//				ITurma resultShift = (ITurma) resultIterator.next();
-//				if (shift.equals(resultShift)) {
-//					containsOneOfThese = true;
-//					break;
-//				}
-//			}
-//			if (!containsOneOfThese) {
-//				result.add(shift);
-//			}
+
+			//			Iterator resultIterator = result.iterator();
+			//			boolean containsOneOfThese = false;
+			//			while (resultIterator.hasNext()) {
+			//				ITurma resultShift = (ITurma) resultIterator.next();
+			//				if (shift.equals(resultShift)) {
+			//					containsOneOfThese = true;
+			//					break;
+			//				}
+			//			}
+			//			if (!containsOneOfThese) {
+			//				result.add(shift);
+			//			}
 		}
 		return result;
 	}
@@ -445,10 +553,13 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 		 * @param list2 of classes
 		 * @return true if list1 intersected with list2 is not null
 		 */
-	private boolean theClassIsAllowed(List shiftClasses, List studentAllowedClasses) {
+	private boolean theClassIsAllowed(
+		List shiftClasses,
+		List studentAllowedClasses) {
 		Iterator iterator = shiftClasses.iterator();
 
-		System.out.println("Student Allowed Classes:" + studentAllowedClasses.size());
+		System.out.println(
+			"Student Allowed Classes:" + studentAllowedClasses.size());
 		System.out.println("Shift Classes: " + shiftClasses.size());
 
 		while (iterator.hasNext()) {
@@ -468,7 +579,10 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 	 * @param shift - Shift to be used in OJB usage
 	 * @return
 	 */
-	private List getClassesAssociatedWithShift(ITurno shift, ISuportePersistente sp) throws FenixServiceException {
+	private List getClassesAssociatedWithShift(
+		ITurno shift,
+		ISuportePersistente sp)
+		throws FenixServiceException {
 		ITurmaTurnoPersistente shiftClassDAO = sp.getITurmaTurnoPersistente();
 		if (shift != null) {
 			List classes;
@@ -480,8 +594,11 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 			}
 
 			//Return a list of InfoClass objects
-			ShiftClassTransformer shiftClassTransformer = new ShiftClassTransformer();
-			return (List) CollectionUtils.collect(classes, shiftClassTransformer);
+			ShiftClassTransformer shiftClassTransformer =
+				new ShiftClassTransformer();
+			return (List) CollectionUtils.collect(
+				classes,
+				shiftClassTransformer);
 		}
 		return null;
 	}
@@ -492,7 +609,11 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 	 * @param listTmp
 	 * @param msg
 	 */
-	private void treatShiftInErrors(List errors, List actualShifts, ArrayList listTmp, String msg) {
+	private void treatShiftInErrors(
+		List errors,
+		List actualShifts,
+		ArrayList listTmp,
+		String msg) {
 		Iterator iteratorTmp;
 		Iterator iteratorTmp2;
 		//Remove from the bug list and from the actualShifts the fake erroneous Shifts that are already enroled
@@ -505,14 +626,18 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 
 			iteratorTmp2 = actualShifts.iterator();
 			while (iteratorTmp2.hasNext()) {
-				if (idCode == ((ITurno) (iteratorTmp2.next())).getIdInternal().intValue()) {
+				if (idCode
+					== ((ITurno) (iteratorTmp2.next()))
+						.getIdInternal()
+						.intValue()) {
 					shiftIsInActualShifts = true;
 					break;
 				}
 			}
 
 			//Produce an error if it isn't already there
-			if ((!shiftIsInActualShifts) && (!alreadyReportedAsBogusShift(errors, tempShift))) {
+			if ((!shiftIsInActualShifts)
+				&& (!alreadyReportedAsBogusShift(errors, tempShift))) {
 				ShiftConflict error = new ShiftConflict(tempShift, msg);
 				errors.add(error);
 			}
@@ -532,7 +657,11 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 	private boolean alreadyReportedAsBogusShift(List errors, ITurno shift) {
 		Iterator errorIterator = errors.iterator();
 		while (errorIterator.hasNext()) {
-			if (shift.getIdInternal().intValue() == ((ShiftConflict) (errorIterator.next())).getShift().getIdInternal().intValue()) {
+			if (shift.getIdInternal().intValue()
+				== ((ShiftConflict) (errorIterator.next()))
+					.getShift()
+					.getIdInternal()
+					.intValue()) {
 				return true;
 			}
 		}
@@ -548,16 +677,20 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 	 * @param shift InfoShift object that is going to be used as a search criteria 
 	 * @returnArrayList with the shift in the list that satisfied this criteria
 	 */
-	private ArrayList obtainShiftsOfSameTypeAndCourse(List list, ITurno shift) {
+	private ArrayList obtainShiftsOfSameTypeAndCourse(
+		List list,
+		ITurno shift) {
 
 		final TipoAula type = shift.getTipo();
 		final IDisciplinaExecucao course = shift.getDisciplinaExecucao();
 
-		ArrayList resultList = (ArrayList) CollectionUtils.select(list, new Predicate() {
+		ArrayList resultList =
+			(ArrayList) CollectionUtils.select(list, new Predicate() {
 
 			public boolean evaluate(Object arg0) {
 				ITurno infoShift = (ITurno) arg0;
-				return infoShift.getTipo().equals(type) && infoShift.getDisciplinaExecucao().equals(course);
+				return infoShift.getTipo().equals(type)
+					&& infoShift.getDisciplinaExecucao().equals(course);
 			}
 		});
 		return resultList;
@@ -581,7 +714,8 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 
 			public boolean evaluate(Object arg0) {
 				ITurno shift = (ITurno) arg0;
-				return shift.getTipo().equals(type) && shift.getDisciplinaExecucao().equals(course);
+				return shift.getTipo().equals(type)
+					&& shift.getDisciplinaExecucao().equals(course);
 			}
 		});
 	}
@@ -589,14 +723,18 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 	/**
 	 * obtainShiftsOfSameClassAndCourses
 	 * 
-	 * Checks wether there is not any more Shifts in the list l belonging to the same course that are not of the same class
+	 * Checks wether there is not any more Shifts in the list l belonging to the same course that are not of the 
+	 * same class
 	 * 
 	 * @param l List with InfoShift objects
 	 * @param shift InfoShift object that is going to be used as a search criteria 
 	 * @return ArrayList: list of shifts tht should not be processed
 	 */
 
-	private ArrayList obtainShiftsOfDifferentClassesAndSameCourse(List l, ITurno shift) throws ExcepcaoPersistencia {
+	private ArrayList obtainShiftsOfDifferentClassesAndSameCourse(
+		List l,
+		ITurno shift)
+		throws ExcepcaoPersistencia {
 		ArrayList result = new ArrayList();
 
 		final IDisciplinaExecucao course = shift.getDisciplinaExecucao();
@@ -604,7 +742,8 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 		ITurmaTurnoPersistente classShiftDAO = sp.getITurmaTurnoPersistente();
-		ArrayList obtainedClasses = (ArrayList) classShiftDAO.readByShift(shift);
+		ArrayList obtainedClasses =
+			(ArrayList) classShiftDAO.readByShift(shift);
 
 		//Assuming there is two shifts (tops) of the same course:
 		ITurno otherShift = (ITurno) CollectionUtils.find(l, new Predicate() {
@@ -615,9 +754,13 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 			}
 		});
 
-		ArrayList obtainedClassesFromTheOtherShift = (ArrayList) classShiftDAO.readByShift(otherShift);
+		ArrayList obtainedClassesFromTheOtherShift =
+			(ArrayList) classShiftDAO.readByShift(otherShift);
 
-		ArrayList list = (ArrayList) CollectionUtils.intersection(obtainedClassesFromTheOtherShift, obtainedClasses);
+		ArrayList list =
+			(ArrayList) CollectionUtils.intersection(
+				obtainedClassesFromTheOtherShift,
+				obtainedClasses);
 		if (list.size() == 0) {
 			result.add(shift);
 			result.add(otherShift);

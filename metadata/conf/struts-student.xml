@@ -19,10 +19,9 @@
       <form-bean name="studentShiftEnrolmentForm"
       			type="org.apache.struts.validator.DynaValidatorForm"
       			dynamic="true">
-      		<form-property name="method" type="java.lang.String"/>
-	      	<form-property name="shifts" type="java.lang.Integer[]"/>
-	      	<form-property name="class" type="java.lang.String"/>
-
+      	<form-property name="method" type="java.lang.String"/>
+	    <form-property name="shifts" type="java.lang.Integer[]"/>
+	    <form-property name="class" type="java.lang.String"/>
 		<form-property name="degree" type="java.lang.String"/>
 		<form-property name="course" type="java.lang.String[]"/>
 		<form-property name="wantedCourse" type="java.lang.String[]"/>
@@ -154,7 +153,7 @@
         path="/studentShiftEnrolmentManager"
         input="/studentShiftEnrolmentManager.do?method=initializeEnrolment&amp;firstTime=yes" 
         parameter="method"
-        scope="request"
+        scope="session"
         validate="false">
         <exception type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
           key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
@@ -296,9 +295,7 @@
         <forward name="Inexistente" path="/naoExecutado.do"/>
       </action>
  	-->
- 			
- 			
-	<!-- GROUPS -->
+ 			<!-- GROUPS -->
  	   
  	<action type="ServidorApresentacao.Action.student.ViewEnroledExecutionCoursesAction"
             path="/viewEnroledExecutionCourses"
@@ -342,8 +339,6 @@
     
       
  </action-mappings>     
-
-
 
     
     <!-- ========== Controller Configuration ================================ -->

@@ -26,6 +26,7 @@ import DataBeans.InfoShiftStudentEnrolment;
 import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
+import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IPessoa;
 import Dominio.IStudent;
@@ -45,6 +46,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaTurnoPersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
+import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
@@ -265,8 +267,40 @@ public class ReadStudentShiftEnrolment implements IServico {
 		//Shifts with vacancies of the courses the student is enrolled with 
 		infoShiftStudentEnrolment.setAvailableShift(
 			infoAvailableShiftsFiltered);
-
+		
+		//adds the student lessons to the structure for timetable display
+	infoShiftStudentEnrolment.setLessons(getStudentLessons(infoShiftStudentEnrolment));
+		
 		return infoShiftStudentEnrolment;
+	}
+
+	/**
+	 * @return
+	 */
+	private List getStudentLessons(InfoShiftStudentEnrolment infoShiftStudentEnrolment) throws ExcepcaoPersistencia {
+		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+		ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+		ITurnoAulaPersistente persistentShiftLesson = sp.getITurnoAulaPersistente();
+		List currentEnrollment = infoShiftStudentEnrolment.getCurrentEnrolment();
+		Iterator iter = currentEnrollment.iterator();
+		List lessons = new ArrayList();
+		while (iter.hasNext()){
+			InfoShift infoShift = (InfoShift) iter.next();
+			ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
+			shift = (ITurno) persistentShift.readByOId(shift,false);
+			List shiftLessons =persistentShiftLesson.readByShift(shift);
+			List infoLessons=new ArrayList();
+			Iterator iter1 = shiftLessons.iterator();
+			while(iter1.hasNext()){
+				IAula lesson = (IAula) iter1.next();
+				infoLessons.add(Cloner.copyILesson2InfoLesson(lesson));
+			}
+			lessons.addAll(infoLessons);			
+		}
+		if (lessons.isEmpty()){
+			lessons=null;
+		}		
+		return lessons;
 	}
 
 	/**

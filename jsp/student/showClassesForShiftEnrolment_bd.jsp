@@ -59,16 +59,18 @@
 	  </table>
 	<br>
 </logic:present>
-<logic:present name="infoLessons">
- <bean:size id="infoLessonsSize" name="infoLessons"/>
- <logic:equal name="infoLessonsSize" value="0">
+
+
+<logic:notPresent name="infoStudentShiftEnrolment" property="lessons">
+ 
   Não está inscrito em nenhum turno...
- </logic:equal>
- <logic:notEqual name="infoLessonsSize" value="0">
+ </logic:notPresent>
+ <logic:present name="infoStudentShiftEnrolment" property="lessons">
+<bean:define id="infoLessons" name="infoStudentShiftEnrolment" property="lessons" />
   <h3>Horário:</h3>
-  <app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/>
- </logic:notEqual>
-</logic:present>
+  <app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/> 
+ </logic:present>
+
 <logic:notPresent name="infoStudentShiftEnrolment" property="allowedClasses">
  Não existem turmas disponíveis.
 </logic:notPresent>

@@ -74,12 +74,12 @@
 						<br />
 						Turnos
 						<logic:iterate name="list" id="sublist" property="list" indexId="groupIndex">
-							<bean:define id="index" value="<%=  (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-							<br />
+						<br />
 							Tipo:
 							<bean:write name="sublist" property="type"/>
 							<br />
 							<logic:iterate name="sublist" id="shiftWithLessons" property="list" >
+								
 								<bean:define id="shift" name="shiftWithLessons" property="infoShift" />
 								&nbsp
 								<html:radio property='<%= "shifts[" + index + "]" %>' idName="shift" value="idInternal" />
@@ -104,6 +104,7 @@
 									</logic:iterate>
 								</blockquote>
 							</logic:iterate>
+					<bean:define id="index" value="<%=  (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
 						</logic:iterate>
 					</logic:iterate>
 					<html:submit value="Inscrever"/>
