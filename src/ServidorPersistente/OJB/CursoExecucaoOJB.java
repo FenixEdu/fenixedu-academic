@@ -118,7 +118,6 @@ public class CursoExecucaoOJB
 	public List readByExecutionYear(IExecutionYear executionYear)
 		throws ExcepcaoPersistencia {
 		try {
-			ICursoExecucao cursoExecucao = null;
 			String oqlQuery =
 				"select all from " + CursoExecucao.class.getName();
 			oqlQuery += " where executionYear.year = $1";
@@ -141,7 +140,6 @@ public class CursoExecucaoOJB
 		IExecutionYear executionYear)
 		throws ExcepcaoPersistencia {
 		try {
-			ICursoExecucao cursoExecucao = null;
 			String oqlQuery =
 				"select all from " + CursoExecucao.class.getName();
 			oqlQuery += " where executionYear.year = $1"
@@ -173,7 +171,6 @@ public class CursoExecucaoOJB
 		IExecutionYear executionYear)
 		throws ExcepcaoPersistencia {
 		try {
-			ICursoExecucao cursoExecucao = null;
 			String oqlQuery =
 				"select all from " + CursoExecucao.class.getName();
 			oqlQuery += " where executionYear.year = $1"
@@ -198,7 +195,6 @@ public class CursoExecucaoOJB
 
 	public List readMasterDegrees(String executionYear) throws ExcepcaoPersistencia{
 		try {
-			List masterDegrees = null;
 			String oqlQuery =
 				"select all from " + CursoExecucao.class.getName();
 			oqlQuery += " where executionYear.year = $1"
