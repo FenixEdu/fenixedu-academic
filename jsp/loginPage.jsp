@@ -13,20 +13,24 @@
 	</div>
 	<div id="txt">
 	<h1>Login</h1>
-	<p>O servi&ccedil;o <strong>.IST</strong> permite aos utilizadores
-       certificados - alunos, docentes, funcion&aacute;rios - do <a href="http://www.ist.utl.pt">Instituto
-       Superior T&eacute;cnico</a> utilizar diversos servi&ccedil;os e
-       funcionalidades de forma a simplificar o quotidiano de todos aqueles
-       que estudam ou trabalham.</p>
-       <p>Caso precise de esclarecimentos adicionais ou n&atilde;o consiga
-       efectuar o seu login contacte a equipa de suporte utilizando: <a href="mailto:suporte@dot.ist.utl.pt">suporte@dot.ist.utl.pt</a></p>
-       
-     <p>
-	   <span class="error">Caso seja aluno</span>, deverá usar como Username L seguido do seu número de estudante (ex: L90123). Caso ainda não tenha
-password, deverá solicitá-la no CIIST.         
-	 </p>
-	 
-	 
+	<p>
+		O servi&ccedil;o <strong>.IST</strong> permite aos utilizadores certificados - alunos, docentes,
+		funcion&aacute;rios - do <a href="http://www.ist.utl.pt">Instituto Superior T&eacute;cnico</a>
+		utilizar diversos servi&ccedil;os e funcionalidades de forma a simplificar o quotidiano de todos
+		aqueles que estudam ou trabalham.
+	</p>
+
+	<p>
+		Caso o utilizador não consiga aceder ao sistema por qualquer motivo, incluindo a perda de
+		password, ou necessite de qualquer esclarecimento adicional deve contactar a equipa de
+		suporte técnico através do endereço: <a href="mailto:suporte@dot.ist.utl.pt">suporte@dot.ist.utl.pt</a>.
+	</p>       
+
+	<p>
+		O username dos alunos é constituído pelo seu número mecanográfico precedido da letra "L" (por
+		exemplo, L90123). Os pedidos de novas passwords devem ser efectuados na Recepção do CIIST.
+	</p>
+
 	<div id="alert">	
 		<p><span class="error"><html:errors property="invalidAuthentication"/></span></p>
 		<p><span class="error"><html:errors property="errors.noAuthorization"/></span></p>
@@ -48,7 +52,7 @@ password, deverá solicitá-la no CIIST.
 				<td colspan="2"><span class="error"><html:errors property="password" /></span></td>
 			</tr>
 			<tr>
-		    	<td>Password: </td>
+		    	<td>Password:</td>
 		        <td><html:password property="password" redisplay="false"/></td>
 		 	</tr>
 	    </table>
