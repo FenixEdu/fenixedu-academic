@@ -48,7 +48,7 @@ public class InfoViewClassSchedule extends InfoObject implements Serializable {
 		if (obj instanceof InfoViewClassSchedule) {
 			InfoViewClassSchedule infoViewClassSchedule = (InfoViewClassSchedule) obj;
 			resultado =
-				getInfoClass().equals(infoViewClassSchedule.getClass()) &&
+				getInfoClass().equals(infoViewClassSchedule.getInfoClass()) &&
 				getClassLessons().size() == infoViewClassSchedule.getClassLessons().size();
 		}
 		return resultado;
