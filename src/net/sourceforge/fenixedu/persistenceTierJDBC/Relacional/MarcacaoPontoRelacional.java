@@ -1321,10 +1321,8 @@ import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistenteOracle;
 // ««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
 // Marcacao de ponto para LOCALHOST
 // »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
-public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
-{
-    public boolean alterarMarcacaoPonto(MarcacaoPonto marcacaoPonto)
-    {
+public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
+    public boolean alterarMarcacaoPonto(MarcacaoPonto marcacaoPonto) {
         /*
          * //Acesso a BD da nossa Aplicacao boolean resultado = false;
          * 
@@ -1356,11 +1354,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
          */
         boolean resultado = false;
 
-        try
-        {
+        try {
             SuportePersistenteOracle.getInstance().iniciarTransaccao();
-            try
-            {
+            try {
                 PreparedStatement sql = UtilRelacionalOracle.prepararComando("UPDATE ASS_MARCAS SET "
                         + "ASS_MARPESSOA = ? , " + "ASS_MARCARTAO = ? , " + "ASS_MARDHMARCA = ?, "
                         + "ASS_MARUNID = ? , " + "ASS_MARTIPO = ? , " + "ASS_MARAUTOJUST = ? , "
@@ -1369,11 +1365,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                         + "WHERE ASS_MARSEQ = ? ");
 
                 sql.setInt(1, marcacaoPonto.getNumFuncionario());
-                if (marcacaoPonto.getEstado().equals("regularizada"))
-                {
+                if (marcacaoPonto.getEstado().equals("regularizada")) {
                     sql.setInt(2, -1);
-                } else
-                {
+                } else {
                     sql.setInt(2, marcacaoPonto.getNumCartao());
                 }
 
@@ -1382,11 +1376,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                 sql.setString(4, marcacaoPonto.getSiglaUnidade());
                 sql.setString(5, new String("N"));
                 sql.setString(6, new String("N"));
-                if (marcacaoPonto.getEstado().equals("regularizada"))
-                {
+                if (marcacaoPonto.getEstado().equals("regularizada")) {
                     sql.setString(7, new String("S"));
-                } else
-                {
+                } else {
                     sql.setString(7, new String("N"));
                 }
                 sql.setString(8, new String("N"));
@@ -1402,26 +1394,22 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                 sql.executeUpdate();
                 sql.close();
                 resultado = true;
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 SuportePersistenteOracle.getInstance().cancelarTransaccao();
                 System.out.println("MarcacaoPontoRelacional.alterarMarcacaoPonto: " + e.toString());
                 return resultado;
             }
             SuportePersistenteOracle.getInstance().confirmarTransaccao();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.alterarMarcacaoPonto: " + e.toString());
         }
         return resultado;
     } /* alterarMarcacaoPonto */
 
-    public boolean apagarMarcacaoPonto(int chaveMarcacao)
-    {
+    public boolean apagarMarcacaoPonto(int chaveMarcacao) {
         boolean resultado = false;
 
-        try
-        {
+        try {
             PreparedStatement sql = UtilRelacional
                     .prepararComando("DELETE FROM ass_MARCACAO_PONTO WHERE codigoInterno = ?");
 
@@ -1430,19 +1418,16 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
             sql.executeUpdate();
             sql.close();
             resultado = true;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.apagarMarcacaoPonto: " + e.toString());
         }
         return resultado;
     } /* apagarMarcacaoPonto */
 
-    public boolean apagarMarcacaoPonto(Timestamp dataMarcacao)
-    {
+    public boolean apagarMarcacaoPonto(Timestamp dataMarcacao) {
         boolean resultado = false;
 
-        try
-        {
+        try {
             PreparedStatement sql = UtilRelacional
                     .prepararComando("DELETE FROM ass_MARCACAO_PONTO WHERE dataMarcacao = ?");
 
@@ -1451,19 +1436,16 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
             sql.executeUpdate();
             sql.close();
             resultado = true;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.apagarMarcacaoPonto: " + e.toString());
         }
         return resultado;
     } /* apagarMarcacaoPonto */
 
-    public boolean apagarMarcacoesPonto()
-    {
+    public boolean apagarMarcacoesPonto() {
         boolean resultado = false;
 
-        try
-        {
+        try {
             PreparedStatement sql = UtilRelacional.prepararComando("DELETE FROM ass_MARCACAO_PONTO");
             sql.executeUpdate();
             sql.close();
@@ -1473,16 +1455,14 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
              * sql.close();
              */
             resultado = true;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.apagarMarcacoesPonto: " + e.toString());
         }
         return resultado;
     } /* apagarMarcacoesPonto */
 
     public List consultarMarcacoesPonto(List listaFuncionarios, List listaCartoes, List listaEstados,
-            Timestamp dataInicio, Timestamp dataFim)
-    {
+            Timestamp dataInicio, Timestamp dataFim) {
         /*
          * //Acesso a BD da nossa Aplicacao List marcacoesPonto = null;
          * 
@@ -1574,86 +1554,65 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
         // ATENCAO: Acede à BD do Teleponto para ler as marcacoes de ponto
         List marcacoesPonto = null;
 
-        try
-        {
+        try {
             SuportePersistenteOracle.getInstance().iniciarTransaccao();
-            try
-            {
+            try {
 
                 // procura de marcacoes de ponto normais
                 StringBuffer query = new StringBuffer(
                         "SELECT * FROM ASS_MARCAS WHERE ((ASS_MARDHMARCA IS NULL) OR "
                                 + "(ASS_MARDHMARCA BETWEEN ? AND ?))");
-                if (listaFuncionarios != null)
-                {
-                    if (listaFuncionarios.size() > 0)
-                    {
+                if (listaFuncionarios != null) {
+                    if (listaFuncionarios.size() > 0) {
                         query = query.append(" AND (");
 
                         ListIterator iterListaFuncionarios = listaFuncionarios.listIterator();
-                        while (iterListaFuncionarios.hasNext())
-                        {
+                        while (iterListaFuncionarios.hasNext()) {
                             iterListaFuncionarios.next();
-                            if (iterListaFuncionarios.hasNext())
-                            {
+                            if (iterListaFuncionarios.hasNext()) {
                                 query = query.append("ASS_MARPESSOA = ? OR ");
-                            } else
-                            {
+                            } else {
                                 query = query.append("ASS_MARPESSOA = ?)");
                             }
                         }
                     }
                 }
-                if (listaCartoes != null)
-                {
-                    if (listaCartoes.size() > 0)
-                    {
+                if (listaCartoes != null) {
+                    if (listaCartoes.size() > 0) {
                         query = query.append(" AND ((");
 
                         ListIterator iterListaCartoes = listaCartoes.listIterator();
-                        while (iterListaCartoes.hasNext())
-                        {
+                        while (iterListaCartoes.hasNext()) {
                             iterListaCartoes.next();
-                            if (iterListaCartoes.hasNext())
-                            {
+                            if (iterListaCartoes.hasNext()) {
                                 query = query.append("ASS_MARCARTAO = ? OR ");
-                            } else
-                            {
+                            } else {
                                 query = query.append("ASS_MARCARTAO = ?)");
                             }
                         }
                     }
                 }
 
-                if (listaCartoes != null && listaFuncionarios != null)
-                {
-                    if (listaCartoes.size() > 0 && listaFuncionarios.size() > 0)
-                    {
+                if (listaCartoes != null && listaFuncionarios != null) {
+                    if (listaCartoes.size() > 0 && listaFuncionarios.size() > 0) {
                         query = query.append(" OR (ASS_MARCARTAO = -1 AND (");
 
                         ListIterator iterListaFuncionarios = listaFuncionarios.listIterator();
-                        while (iterListaFuncionarios.hasNext())
-                        {
+                        while (iterListaFuncionarios.hasNext()) {
                             iterListaFuncionarios.next();
-                            if (iterListaFuncionarios.hasNext())
-                            {
+                            if (iterListaFuncionarios.hasNext()) {
                                 query = query.append("ASS_MARPESSOA = ? OR ");
-                            } else
-                            {
+                            } else {
                                 query = query.append("ASS_MARPESSOA = ?)))");
                             }
                         }
-                    } else
-                    {
-                        if (listaCartoes.size() > 0)
-                        {
+                    } else {
+                        if (listaCartoes.size() > 0) {
                             query = query.append(")");
                         }
                     }
-                } else
-                {
-                    if (listaCartoes != null)
-                    {
+                } else {
+                    if (listaCartoes != null) {
                         query = query.append(")");
                     }
                 }
@@ -1665,41 +1624,34 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                 // indice do comando sql
                 int indice = 3;
 
-                if (listaFuncionarios != null)
-                {
+                if (listaFuncionarios != null) {
                     ListIterator iterListaFuncionarios = listaFuncionarios.listIterator();
                     Integer numFuncionario = null;
 
-                    while (iterListaFuncionarios.hasNext())
-                    {
+                    while (iterListaFuncionarios.hasNext()) {
                         numFuncionario = (Integer) iterListaFuncionarios.next();
                         sql.setInt(indice, numFuncionario.intValue());
                         indice++;
                     }
                 }
 
-                if (listaCartoes != null)
-                {
+                if (listaCartoes != null) {
                     ListIterator iterListaCartoes = listaCartoes.listIterator();
                     Integer numCartao = null;
 
-                    while (iterListaCartoes.hasNext())
-                    {
+                    while (iterListaCartoes.hasNext()) {
                         numCartao = (Integer) iterListaCartoes.next();
                         sql.setInt(indice, numCartao.intValue());
                         indice++;
                     }
                 }
 
-                if (listaCartoes != null && listaFuncionarios != null)
-                {
-                    if (listaCartoes.size() > 0 && listaFuncionarios.size() > 0)
-                    {
+                if (listaCartoes != null && listaFuncionarios != null) {
+                    if (listaCartoes.size() > 0 && listaFuncionarios.size() > 0) {
                         ListIterator iterListaFuncionarios = listaFuncionarios.listIterator();
                         Integer numFuncionario = null;
 
-                        while (iterListaFuncionarios.hasNext())
-                        {
+                        while (iterListaFuncionarios.hasNext()) {
                             numFuncionario = (Integer) iterListaFuncionarios.next();
                             sql.setInt(indice, numFuncionario.intValue());
                             indice++;
@@ -1717,11 +1669,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                         .prepararComando("SELECT * FROM ass_PARAM_REGULARIZACAO WHERE sigla = 'MA'");
                 ResultSet resultado2 = sql2.executeQuery();
                 int marcacaoAnular = 0;
-                if (resultado2.next())
-                {
+                if (resultado2.next()) {
                     marcacaoAnular = resultado2.getInt("codigoInterno");
-                } else
-                {
+                } else {
                     sql2.close();
                     SuportePersistenteOracle.getInstance().cancelarTransaccao();
                     return null;
@@ -1733,10 +1683,8 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                         .prepararComando("SELECT * FROM ass_REGULARIZACAO_MARCACAO WHERE "
                                 + "chaveMarcacaoPonto = ?");
                 ResultSet resultado3 = null;
-                while (resultado.next())
-                {
-                    if (resultado.getString("ASS_MARDHMARCA") != null)
-                    {
+                while (resultado.next()) {
+                    if (resultado.getString("ASS_MARDHMARCA") != null) {
                         dataMarcacao = Timestamp.valueOf(resultado.getString("ASS_MARDHMARCA"));
                     }
                     MarcacaoPonto marcacaoPonto = new MarcacaoPonto(resultado.getInt("ASS_MARSEQ"),
@@ -1746,15 +1694,12 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                     // diferenciar as marcacoes regularizadas
                     sql3.setInt(1, resultado.getInt("ASS_MARSEQ"));
                     resultado3 = sql3.executeQuery();
-                    if (resultado3.next())
-                    {
+                    if (resultado3.next()) {
                         // retirar as marcacoes de ponto que foram marcadas para
                         // anular
-                        if (resultado3.getInt("chaveParamRegularizacao") == marcacaoAnular)
-                        {
+                        if (resultado3.getInt("chaveParamRegularizacao") == marcacaoAnular) {
                             continue;
-                        } else
-                        {
+                        } else {
                             marcacaoPonto.setEstado("regularizada");
                             marcacaoPonto.setSiglaUnidade("");
                             marcacaoPonto.setNumCartao(0);
@@ -1764,27 +1709,24 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                 }
                 sql3.close();
                 sql.close();
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 SuportePersistenteOracle.getInstance().cancelarTransaccao();
                 System.out.println("MarcacaoPontoRelacional.consultarMarcacoesPonto: " + e.toString());
                 return null;
             }
             SuportePersistenteOracle.getInstance().confirmarTransaccao();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.consultarMarcacoesPonto: " + e.toString());
             return null;
         }
         return marcacoesPonto;
     } /* consultarMarcacoesPonto */
 
-    public List consultarMarcacoesPontoErros(String estado)
-    { // não será preciso
+    public List consultarMarcacoesPontoErros(String estado) { // não será
+                                                                // preciso
         List errosLeitura = null;
 
-        try
-        {
+        try {
             /*
              * String query = "SELECT * FROM marcacao_ponto WHERE estado = '" +
              * estado + "'"; PreparedStatement sql =
@@ -1803,30 +1745,25 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
              * resultado.getInt("numFuncionario"),
              * resultado.getString("estado"))); } sql.close();
              */
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.consultarMarcacoesPontoErros: " + e.toString());
             return null;
         }
         return errosLeitura;
     } /* consultarMarcacoesPontoErros */
 
-    public boolean escreverMarcacaoPonto(MarcacaoPonto marcacaoPonto)
-    {
+    public boolean escreverMarcacaoPonto(MarcacaoPonto marcacaoPonto) {
         boolean resultado = false;
-        try
-        {
+        try {
             PreparedStatement sql = UtilRelacional
                     .prepararComando("INSERT INTO ass_MARCACAO_PONTO VALUES (?, ?, ?, ?, ?, ?, ?)");
 
             sql.setInt(1, marcacaoPonto.getCodigoInterno());
             sql.setInt(2, marcacaoPonto.getUnidade());
             sql.setString(3, marcacaoPonto.getSiglaUnidade());
-            if (marcacaoPonto.getData() != null)
-            {
+            if (marcacaoPonto.getData() != null) {
                 sql.setTimestamp(4, new Timestamp((marcacaoPonto.getData()).getTime()));
-            } else
-            {
+            } else {
                 sql.setTimestamp(4, null);
             }
             sql.setInt(5, marcacaoPonto.getNumCartao());
@@ -1836,37 +1773,31 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
             sql.executeUpdate();
             sql.close();
             resultado = true;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.escreverMarcacaoPonto: " + e.toString());
         }
         return resultado;
     } /* escreverMarcacaoPonto */
 
-    public boolean escreverMarcacoesPonto(List listaMarcacoes)
-    {
+    public boolean escreverMarcacoesPonto(List listaMarcacoes) {
         boolean resultado = false;
 
         ListIterator iterador = listaMarcacoes.listIterator();
         MarcacaoPonto marcacaoPonto = null;
 
-        try
-        {
+        try {
             PreparedStatement sql = UtilRelacional
                     .prepararComando("INSERT INTO ass_MARCACAO_PONTO VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-            while (iterador.hasNext())
-            {
+            while (iterador.hasNext()) {
                 marcacaoPonto = (MarcacaoPonto) iterador.next();
 
                 sql.setInt(1, marcacaoPonto.getCodigoInterno());
                 sql.setInt(2, marcacaoPonto.getUnidade());
                 sql.setString(3, marcacaoPonto.getSiglaUnidade());
-                if (marcacaoPonto.getData() != null)
-                {
+                if (marcacaoPonto.getData() != null) {
                     sql.setTimestamp(4, new Timestamp((marcacaoPonto.getData()).getTime()));
-                } else
-                {
+                } else {
                     sql.setTimestamp(4, null);
                 }
                 sql.setInt(5, marcacaoPonto.getNumCartao());
@@ -1877,19 +1808,16 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
             }
             sql.close();
             resultado = true;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.escreverMarcacoesPonto: " + e.toString());
         }
         return resultado;
     } /* escreverMarcacoesPonto */
 
-    public MarcacaoPonto lerMarcacaoPonto(int codigoInterno)
-    {
+    public MarcacaoPonto lerMarcacaoPonto(int codigoInterno) {
         MarcacaoPonto marcacaoPonto = null;
 
-        try
-        {
+        try {
             PreparedStatement sql = UtilRelacional
                     .prepararComando("SELECT * FROM ass_MARCACAO_PONTO WHERE codigoInterno = ?");
 
@@ -1897,10 +1825,8 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
 
             ResultSet resultado = sql.executeQuery();
             Timestamp dataMarcacao = null;
-            if (resultado.next())
-            {
-                if (resultado.getString("dataMarcacao") != null)
-                {
+            if (resultado.next()) {
+                if (resultado.getString("dataMarcacao") != null) {
                     dataMarcacao = Timestamp.valueOf(resultado.getString("dataMarcacao"));
                 }
                 marcacaoPonto = new MarcacaoPonto(resultado.getInt("codigoInterno"), resultado
@@ -1909,15 +1835,13 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                         .getString("estado"));
             }
             sql.close();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.lerMarcacaoPonto: " + e.toString());
         }
         return marcacaoPonto;
     } /* lerMarcacaoPonto */
 
-    public MarcacaoPonto lerMarcacaoPonto(Timestamp dataMarcacao, int numFuncionario)
-    {
+    public MarcacaoPonto lerMarcacaoPonto(Timestamp dataMarcacao, int numFuncionario) {
         /*
          * // Acesso a nossa base de dados MarcacaoPonto marcacaoPonto = null;
          * 
@@ -1944,11 +1868,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
          **********************************************************************/
         MarcacaoPonto marcacaoPonto = null;
 
-        try
-        {
+        try {
             SuportePersistenteOracle.getInstance().iniciarTransaccao();
-            try
-            {
+            try {
 
                 PreparedStatement sql = UtilRelacionalOracle.prepararComando("SELECT * FROM ASS_MARCAS "
                         + "WHERE ASS_MARDHMARCA = ? AND ASS_MARPESSOA = ?");
@@ -1957,29 +1879,25 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                 sql.setInt(2, numFuncionario);
 
                 ResultSet resultadoQuery = sql.executeQuery();
-                if (resultadoQuery.next())
-                {
+                if (resultadoQuery.next()) {
                     marcacaoPonto = new MarcacaoPonto(resultadoQuery.getInt("ASS_MARSEQ"),
                             resultadoQuery.getString("ASS_MARUNID"), Timestamp.valueOf(resultadoQuery
                                     .getString("ASS_MARDHMARCA")), resultadoQuery
                                     .getInt("ASS_MARCARTAO"), resultadoQuery.getInt("ASS_MARPESSOA"));
-                } else
-                {
+                } else {
                     sql.close();
                     return null;
                 }
                 sql.close();
 
-                if (marcacaoPonto != null)
-                {
+                if (marcacaoPonto != null) {
                     sql = UtilRelacional
                             .prepararComando("SELECT codigoInterno FROM ass_UNIDADE_MARCACAO "
                                     + "WHERE sigla = ?");
 
                     sql.setString(1, marcacaoPonto.getSiglaUnidade());
                     resultadoQuery = sql.executeQuery();
-                    if (resultadoQuery.next())
-                    {
+                    if (resultadoQuery.next()) {
                         marcacaoPonto.setUnidade(resultadoQuery.getInt("codigoInterno"));
                     }
                     sql.close();
@@ -1989,29 +1907,25 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
 
                     sql.setInt(1, marcacaoPonto.getCodigoInterno());
                     resultadoQuery = sql.executeQuery();
-                    if (resultadoQuery.next())
-                    {
+                    if (resultadoQuery.next()) {
                         marcacaoPonto.setEstado("regularizada");
                     }
                     sql.close();
                 }
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 SuportePersistenteOracle.getInstance().cancelarTransaccao();
                 System.out.println("MarcacaoPontoRelacional.lerMarcacaoPonto: " + e.toString());
                 return null;
             }
             SuportePersistenteOracle.getInstance().confirmarTransaccao();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.lerMarcacaoPonto: " + e.toString());
             return null;
         }
         return marcacaoPonto;
     } /* lerMarcacaoPonto */
 
-    public List lerMarcacoesPonto()
-    {
+    public List lerMarcacoesPonto() {
         /*
          * //Acesso a BD da nossa Aplicação List marcacoesPonto = null;
          * 
@@ -2037,11 +1951,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
          **********************************************************************/
         List marcacoesPonto = null;
 
-        try
-        {
+        try {
             SuportePersistenteOracle.getInstance().iniciarTransaccao();
-            try
-            {
+            try {
                 PreparedStatement sql = UtilRelacionalOracle.prepararComando("SELECT * FROM ASS_MARCAS");
                 ResultSet resultado = sql.executeQuery();
 
@@ -2058,29 +1970,24 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                 String sigla = new String(" ");
                 int chaveUnidade = 0;
 
-                while (resultado.next())
-                {
-                    if (resultado.getString("ASS_MARUNID") != null)
-                    {
+                while (resultado.next()) {
+                    if (resultado.getString("ASS_MARUNID") != null) {
                         // obtem o codigo interno da unidade de marcacao
                         sql2.setString(1, resultado.getString("ASS_MARUNID"));
                         resultado2 = sql2.executeQuery();
-                        if (resultado2.next())
-                        {
+                        if (resultado2.next()) {
                             sigla = resultado.getString("ASS_MARUNID");
                             chaveUnidade = resultado2.getInt("codigoInterno");
                         }
                     }
-                    if (resultado.getString("ASS_MARDHMARCA") != null)
-                    {
+                    if (resultado.getString("ASS_MARDHMARCA") != null) {
                         dataMarcacao = Timestamp.valueOf(resultado.getString("ASS_MARDHMARCA"));
                     }
                     marcacaoPonto = new MarcacaoPonto(resultado.getInt("ASS_MARSEQ"), chaveUnidade,
                             sigla, dataMarcacao, resultado.getInt("ASS_MARCARTAO"), resultado
                                     .getInt("ASS_MARPESSOA"));
 
-                    if (resultado.getString("ASS_MARREGUL").equals("S"))
-                    {
+                    if (resultado.getString("ASS_MARREGUL").equals("S")) {
                         marcacaoPonto.setEstado("regularizada");
                     }
                     marcacoesPonto.add(marcacaoPonto);
@@ -2090,23 +1997,20 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                 sql2.close();
                 sql.close();
 
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 SuportePersistenteOracle.getInstance().cancelarTransaccao();
                 System.out.println("MarcacaoPontoRelacional.lerMarcacoesPonto: " + e.toString());
                 return null;
             }
             SuportePersistenteOracle.getInstance().confirmarTransaccao();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.lerMarcacoesPonto: " + e.toString());
             return null;
         }
         return marcacoesPonto;
     } /* lerMarcacoesPonto */
 
-    public List lerMarcacoesPonto(int numCartao)
-    {
+    public List lerMarcacoesPonto(int numCartao) {
         /*
          * // Acesso a BD da nossa Aplicação List marcacoesPonto = null;
          * 
@@ -2134,11 +2038,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
          **********************************************************************/
         List marcacoesPonto = null;
 
-        try
-        {
+        try {
             SuportePersistenteOracle.getInstance().iniciarTransaccao();
-            try
-            {
+            try {
                 PreparedStatement sql = UtilRelacionalOracle
                         .prepararComando("SELECT * FROM ASS_MARCAS WHERE ASS_MARCARTAO = ? ");
 
@@ -2148,10 +2050,8 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
 
                 marcacoesPonto = new ArrayList();
                 Timestamp dataMarcacao = null;
-                while (resultado.next())
-                {
-                    if (resultado.getString("ASS_MARDHMARCA") != null)
-                    {
+                while (resultado.next()) {
+                    if (resultado.getString("ASS_MARDHMARCA") != null) {
                         dataMarcacao = java.sql.Timestamp.valueOf(resultado.getString("ASS_MARDHMARCA"));
                     }
 
@@ -2161,23 +2061,20 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                     dataMarcacao = null;
                 }
                 sql.close();
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 SuportePersistenteOracle.getInstance().cancelarTransaccao();
                 System.out.println("MarcacaoPontoRelacional.lerMarcacoesPonto: " + e.toString());
                 return null;
             }
             SuportePersistenteOracle.getInstance().confirmarTransaccao();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.lerMarcacoesPonto: " + e.toString());
             return null;
         }
         return marcacoesPonto;
     } /* lerMarcacoesPonto */
 
-    public List obterMarcacoesPonto(int numFuncionario, int numCartao, Timestamp dataFim)
-    {
+    public List obterMarcacoesPonto(int numFuncionario, int numCartao, Timestamp dataFim) {
         /*
          * // Acesso a BD da nossa Aplicacao List marcacoesPonto = null;
          * 
@@ -2207,11 +2104,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
          */
         List marcacoesPonto = null;
 
-        try
-        {
+        try {
             SuportePersistenteOracle.getInstance().iniciarTransaccao();
-            try
-            {
+            try {
 
                 PreparedStatement sql = UtilRelacionalOracle.prepararComando("SELECT * FROM ASS_MARCAS "
                         + "WHERE ASS_MARDHMARCA>=? AND ASS_MARPESSOA=? AND ASS_MARCARTAO=?");
@@ -2224,10 +2119,8 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                 marcacoesPonto = new ArrayList();
                 Timestamp dataMarcacao = null;
 
-                while (resultado.next())
-                {
-                    if (resultado.getString("ASS_MARDHMARCA") != null)
-                    {
+                while (resultado.next()) {
+                    if (resultado.getString("ASS_MARDHMARCA") != null) {
                         dataMarcacao = java.sql.Timestamp.valueOf(resultado.getString("ASS_MARDHMARCA"));
                     }
 
@@ -2239,15 +2132,13 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                 }
                 sql.close();
 
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 SuportePersistenteOracle.getInstance().cancelarTransaccao();
                 System.out.println("MarcacaoPontoRelacional.obterMarcacoesPonto: " + e.toString());
                 return null;
             }
             SuportePersistenteOracle.getInstance().confirmarTransaccao();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.obterMarcacoesPonto: " + e.toString());
             return null;
         }
@@ -2255,8 +2146,7 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
 
     } /* obterMarcacoesPonto */
 
-    public List obterMarcacoesPonto(int numCartao, Timestamp dataInicio, Timestamp dataFim)
-    {
+    public List obterMarcacoesPonto(int numCartao, Timestamp dataInicio, Timestamp dataFim) {
         /*
          * // Acesso a BD da nossa Aplicacao List marcacoesPonto = null;
          * 
@@ -2288,11 +2178,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
          */
         List marcacoesPonto = null;
 
-        try
-        {
+        try {
             SuportePersistenteOracle.getInstance().iniciarTransaccao();
-            try
-            {
+            try {
                 PreparedStatement sql = UtilRelacionalOracle.prepararComando("SELECT * FROM ASS_MARCAS "
                         + "WHERE ASS_MARCARTAO=? AND " + "ASS_MARDHMARCA>=? AND ASS_MARDHMARCA<=?");
 
@@ -2305,10 +2193,8 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
 
                 marcacoesPonto = new ArrayList();
                 Timestamp dataMarcacao = null;
-                while (resultado.next())
-                {
-                    if (resultado.getString("ASS_MARDHMARCA") != null)
-                    {
+                while (resultado.next()) {
+                    if (resultado.getString("ASS_MARDHMARCA") != null) {
                         dataMarcacao = java.sql.Timestamp.valueOf(resultado.getString("ASS_MARDHMARCA"));
                     }
 
@@ -2317,23 +2203,20 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                             resultado.getInt("ASS_MARPESSOA")));
                 }
                 sql.close();
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 SuportePersistenteOracle.getInstance().cancelarTransaccao();
                 System.out.println("MarcacaoPontoRelacional.obterMarcacoesPonto: " + e.toString());
                 return null;
             }
             SuportePersistenteOracle.getInstance().confirmarTransaccao();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.obterMarcacoesPonto: " + e.toString());
             return null;
         }
         return marcacoesPonto;
     } /* obterMarcacoesPonto */
 
-    public int ultimoCodigoInterno()
-    {
+    public int ultimoCodigoInterno() {
         /*
          * int ultimo = 0;
          * 
@@ -2346,30 +2229,25 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
          * e.toString()); } finally { return ultimo; }
          */
         int ultimo = 0;
-        try
-        {
+        try {
             SuportePersistenteOracle.getInstance().iniciarTransaccao();
-            try
-            {
+            try {
                 // último número de sequencia na tabela
                 PreparedStatement sql = UtilRelacionalOracle
                         .prepararComando("SELECT MAX(ASS_MARSEQ) FROM ASS_MARCAS");
                 ResultSet resultadoQuery = sql.executeQuery();
-                if (resultadoQuery.next())
-                {
+                if (resultadoQuery.next()) {
                     ultimo = resultadoQuery.getInt(1) + 1;
                 }
                 sql.close();
 
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 SuportePersistenteOracle.getInstance().cancelarTransaccao();
                 System.out.println("MarcacaoPontoRelacional.ultimoCodigoInterno: " + e.toString());
                 return ultimo;
             }
             SuportePersistenteOracle.getInstance().confirmarTransaccao();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.ultimoCodigoInterno: " + e.toString());
         }
         return ultimo;
@@ -2377,29 +2255,24 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
 
     // ATENCAO: DESNECESSARIO PARA A APLICACAO DE ASSIDUIDADE, APENAS CONSTRUIDO
     // PARA CONSEGUIR ESCREVER OS DADOS NA BD ORACLE
-    public boolean alterarMarcacaoPontoRegularizacao(RegularizacaoMarcacaoPonto regularizacao)
-    {
+    public boolean alterarMarcacaoPontoRegularizacao(RegularizacaoMarcacaoPonto regularizacao) {
         boolean resultado = false;
 
         /***********************************************************************
          * ************************** escrever a marcacao de ponto na BD Oracle
          **********************************************************************/
-        try
-        {
+        try {
             SuportePersistenteOracle.getInstance().iniciarTransaccao();
-            try
-            {
+            try {
                 // numero mecanografico do funcionario da sessao
                 int numMecanograficoSessao = 0;
                 PreparedStatement sql = UtilRelacional
                         .prepararComando("SELECT numeroMecanografico FROM ass_FUNCIONARIO WHERE codigoInterno = ?");
                 sql.setInt(1, regularizacao.getQuem());
                 ResultSet resultadoQuery = sql.executeQuery();
-                if (resultadoQuery.next())
-                {
+                if (resultadoQuery.next()) {
                     numMecanograficoSessao = resultadoQuery.getInt("numeroMecanografico");
-                } else
-                {
+                } else {
                     sql.close();
                     SuportePersistenteOracle.getInstance().cancelarTransaccao();
                     return false;
@@ -2413,11 +2286,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                 sql.setInt(1, regularizacao.getChaveParamRegularizacao());
                 resultadoQuery = sql.executeQuery();
                 String sigla = null;
-                if (resultadoQuery.next())
-                {
+                if (resultadoQuery.next()) {
                     sigla = resultadoQuery.getString("sigla");
-                } else
-                {
+                } else {
                     sql.close();
                     return false;
                 }
@@ -2447,16 +2318,14 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                 sql.executeUpdate();
                 sql.close();
                 resultado = true;
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 SuportePersistenteOracle.getInstance().cancelarTransaccao();
                 System.out.println("MarcacaoPontoRelacional.alterarMarcacaoPontoRegularizacao: "
                         + e.toString());
                 return false;
             }
             SuportePersistenteOracle.getInstance().confirmarTransaccao();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.alterarMarcacaoPontoRegularizacao: "
                     + e.toString());
         }
@@ -2465,29 +2334,24 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
 
     // ATENCAO: DESNECESSARIO PARA A APLICACAO DE ASSIDUIDADE, APENAS CONSTRUIDO
     // PARA CONSEGUIR ESCREVER OS DADOS NA BD ORACLE
-    public boolean alterarMarcacaoPontoEscreverRegularizacao(RegularizacaoMarcacaoPonto regularizacao)
-    {
+    public boolean alterarMarcacaoPontoEscreverRegularizacao(RegularizacaoMarcacaoPonto regularizacao) {
         boolean resultado = false;
 
         /***********************************************************************
          * ************************** escrever a marcacao de ponto na BD Oracle
          **********************************************************************/
-        try
-        {
+        try {
             SuportePersistenteOracle.getInstance().iniciarTransaccao();
-            try
-            {
+            try {
                 // numero mecanografico do funcionario da sessao
                 int numMecanograficoSessao = 0;
                 PreparedStatement sql = UtilRelacional
                         .prepararComando("SELECT numeroMecanografico FROM ass_FUNCIONARIO WHERE codigoInterno = ?");
                 sql.setInt(1, regularizacao.getQuem());
                 ResultSet resultadoQuery = sql.executeQuery();
-                if (resultadoQuery.next())
-                {
+                if (resultadoQuery.next()) {
                     numMecanograficoSessao = resultadoQuery.getInt("numeroMecanografico");
-                } else
-                {
+                } else {
                     sql.close();
                     SuportePersistenteOracle.getInstance().cancelarTransaccao();
                     return false;
@@ -2501,11 +2365,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                 sql.setInt(1, regularizacao.getChaveParamRegularizacao());
                 resultadoQuery = sql.executeQuery();
                 String sigla = null;
-                if (resultadoQuery.next())
-                {
+                if (resultadoQuery.next()) {
                     sigla = resultadoQuery.getString("sigla");
-                } else
-                {
+                } else {
                     sql.close();
                     return false;
                 }
@@ -2537,8 +2399,7 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                 sql.setInt(1, regularizacao.getChaveMarcacaoPonto());
                 resultadoQuery = sql.executeQuery();
                 PreparedStatement sql2 = null;
-                if (resultadoQuery.next())
-                {
+                if (resultadoQuery.next()) {
                     sql2 = UtilRelacionalOracle.prepararComando("INSERT INTO ASS_MARREG "
                             + "VALUES (?, ?, ?, ?)");
 
@@ -2549,47 +2410,40 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
 
                     sql2.executeUpdate();
                     sql2.close();
-                } else
-                {
+                } else {
                     sql2.close();
                     sql.close();
                     SuportePersistenteOracle.getInstance().cancelarTransaccao();
                     return false;
                 }
                 resultado = true;
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 SuportePersistenteOracle.getInstance().cancelarTransaccao();
                 System.out.println("MarcacaoPontoRelacional.alterarMarcacaoPontoEscreverRegularizacao: "
                         + e.toString());
                 return false;
             }
             SuportePersistenteOracle.getInstance().confirmarTransaccao();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.alterarMarcacaoPontoEscreverRegularizacao: "
                     + e.toString());
-        } finally
-        {
-            return resultado;
         }
+        return resultado;
+
     } /* alterarMarcacaoPontoEscreverRegularizacao */
 
     // ATENCAO: DESNECESSARIO PARA A APLICACAO DE ASSIDUIDADE, APENAS CONSTRUIDO
     // PARA CONSEGUIR ESCREVER OS DADOS NA BD ORACLE
     public int escreverMarcacaoPontoRegularizacao(MarcacaoPonto marcacaoPonto,
-            RegularizacaoMarcacaoPonto regularizacao)
-    {
+            RegularizacaoMarcacaoPonto regularizacao) {
         int ultimo = 0;
 
         /***********************************************************************
          * ************************** escrever a marcacao de ponto na BD Oracle
          **********************************************************************/
-        try
-        {
+        try {
             SuportePersistenteOracle.getInstance().iniciarTransaccao();
-            try
-            {
+            try {
 
                 // numero mecanografico do funcionario da sessao
                 int numMecanograficoSessao = 0;
@@ -2597,11 +2451,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                         .prepararComando("SELECT numeroMecanografico FROM ass_FUNCIONARIO WHERE codigoInterno = ?");
                 sql.setInt(1, regularizacao.getQuem());
                 ResultSet resultadoQuery = sql.executeQuery();
-                if (resultadoQuery.next())
-                {
+                if (resultadoQuery.next()) {
                     numMecanograficoSessao = resultadoQuery.getInt("numeroMecanografico");
-                } else
-                {
+                } else {
                     sql.close();
                     SuportePersistenteOracle.getInstance().cancelarTransaccao();
                     return ultimo;
@@ -2616,11 +2468,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
 
                 resultadoQuery = sql.executeQuery();
                 String sigla = null;
-                if (resultadoQuery.next())
-                {
+                if (resultadoQuery.next()) {
                     sigla = resultadoQuery.getString("sigla");
-                } else
-                {
+                } else {
                     sql.close();
                     return ultimo;
                 }
@@ -2629,8 +2479,7 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
 
                 sql = UtilRelacionalOracle.prepararComando("SELECT MAX(ASS_MARSEQ) FROM ASS_MARCAS");
                 resultadoQuery = sql.executeQuery();
-                if (resultadoQuery.next())
-                {
+                if (resultadoQuery.next()) {
                     ultimo = resultadoQuery.getInt(1) + 1;
                 }
                 sql.close();
@@ -2641,11 +2490,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
 
                 sql.setInt(1, marcacaoPonto.getNumFuncionario());
                 sql.setInt(2, -1);
-                if (marcacaoPonto.getData() != null)
-                {
+                if (marcacaoPonto.getData() != null) {
                     sql.setTimestamp(3, new Timestamp((marcacaoPonto.getData()).getTime()));
-                } else
-                {
+                } else {
                     sql.setTimestamp(3, null);
                 }
                 sql.setString(4, marcacaoPonto.getSiglaUnidade());
@@ -2674,16 +2521,14 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
 
                 sql.executeUpdate();
                 sql.close();
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 SuportePersistenteOracle.getInstance().cancelarTransaccao();
                 System.out.println("MarcacaoPontoRelacional.escreverMarcacaoPontoRegularizacao: "
                         + e.toString());
                 return 0;
             }
             SuportePersistenteOracle.getInstance().confirmarTransaccao();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("MarcacaoPontoRelacional.escreverMarcacaoPontoRegularizacao: "
                     + e.toString());
         }
