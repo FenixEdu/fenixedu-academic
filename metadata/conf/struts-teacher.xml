@@ -97,7 +97,7 @@
         dynamic="true">
         <form-property name="information" type="java.lang.String"/>  
         <form-property name="itemOrder" type="java.lang.String" />   
-        <form-property name="itemName" type="java.lang.String" />   
+        <form-property name="name" type="java.lang.String" />   
         <form-property name="urgent" type="java.lang.String"/>           
 		          
 	
