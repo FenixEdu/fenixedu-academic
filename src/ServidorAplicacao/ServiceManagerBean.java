@@ -73,7 +73,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	 *      java.lang.String, java.lang.String, java.lang.Object[])
 	 */
 	public Object execute(IUserView id, String service, String method, Object[] args)
-		throws FenixServiceException
+		throws FenixServiceException, EJBException
 	{
 		try
 		{
@@ -140,11 +140,13 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
-			FenixRemoteServiceException fenixRemoteServiceException = new FenixRemoteServiceException();
-			fenixRemoteServiceException.setCausePackageName(e.getClass().getPackage().getName());
-			fenixRemoteServiceException.setCauseClassName(e.getClass().getName());
-			throw fenixRemoteServiceException;
+//			e.printStackTrace();
+//			FenixRemoteServiceException fenixRemoteServiceException = new FenixRemoteServiceException();
+//			fenixRemoteServiceException.setCausePackageName(e.getClass().getPackage().getName());
+//			fenixRemoteServiceException.setCauseClassName(e.getClass().getName());
+//			throw fenixRemoteServiceException;
+
+			throw (EJBException) new EJBException(e).initCause(e);
 		}
 	}
 

@@ -5,10 +5,12 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.rmi.RemoteException;
+import java.rmi.ServerException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.ejb.CreateException;
+import javax.ejb.EJBException;
 import javax.naming.NamingException;
 
 import org.apache.commons.lang.StringUtils;
@@ -116,37 +118,31 @@ public class DynamicServiceManagerEJBDelegate implements InvocationHandler
 		}
 		catch (InvocationTargetException e)
 		{
-
-			if (e.getTargetException() instanceof FenixRemoteServiceException)
-			{
-				FenixRemoteServiceException fenixRemoteServiceException =
-					(FenixRemoteServiceException) e.getTargetException();
-
-				Throwable originalException = recreateOriginalException(fenixRemoteServiceException);
-				if (originalException != null)
+			if (e.getTargetException() instanceof RemoteException) {
+//				System.out.println("DynamicServiceManagerEJBDelegate - RemoteException");
+//				System.out.println("DynamicServiceManagerEJBDelegate - class= " + e.getTargetException().getClass().getName());
+//				System.out.println("DynamicServiceManagerEJBDelegate - cause= " + e.getTargetException().getCause().getClass().getName());
+//				System.out.println("DynamicServiceManagerEJBDelegate - cause= " + e.getTargetException().getCause().getCause().getClass().getName());
+//				System.out.println("DynamicServiceManagerEJBDelegate - cause= " + e.getTargetException().getCause().getCause().getCause().getClass().getName());
+				if (e.getTargetException().getCause() == null)
 				{
-					throw originalException;
+					throw e.getTargetException();
 				}
-				else
+				else if (e.getTargetException().getCause().getCause() == null)
 				{
-					throw new RuntimeException(
-						"Unable to recreate original exception: "
-							+ fenixRemoteServiceException.getCauseClassName()
-							+ " on the client side.",
-						fenixRemoteServiceException);
+					throw e.getTargetException().getCause();
+				}
+				else if (e.getTargetException().getCause().getCause().getCause() == null)
+				{
+					throw e.getTargetException().getCause().getCause();
+				}
+				else {
+					throw e.getTargetException().getCause().getCause().getCause();
 				}
 			}
 			else if (e.getTargetException().getCause() instanceof FilterChainFailedException)
 			{
 				throw new NotAuthorizedException();
-			}
-			else if (e.getTargetException() instanceof RemoteException)
-			{
-				// Remote exception isn't declared by the
-				// IServiceManagerWrapper method that was called,
-				// so we have to catch it and throw something that is
-				System.out.println("########!!!!!!!!!!!!! N DEVIA ESTAR AQUI !!!!!!!!!!##########");
-				throw new FenixServiceException(e.getTargetException());
 			}
 			else
 			{
@@ -155,61 +151,4 @@ public class DynamicServiceManagerEJBDelegate implements InvocationHandler
 		}
 	}
 
-	/**
-	 * @param exception
-	 * @return
-	 */
-	private Throwable recreateOriginalException(FenixRemoteServiceException exception)
-	{
-		Throwable originalException = null;
-		try
-		{
-			String[] classNames = StringUtils.split(exception.getCauseClassName(), "$");
-			Class originalHostExceptionClass = null;
-			Object originalHostException = null;
-			if (classNames.length > 2)
-			{
-				System.out.println("Unable to recreated orignial exception. :(");
-				System.out.println("The original exception is nested inside a nested object.");
-				System.out.println(
-					"Inorder for this exception to be recreated this code must be changed.");
-				/*
-				 * To do so, iterate this if/else block This solution was not yet implemented because it
-				 * is very unlikely and doing so might bring about a bug or two, so for we decided to
-				 * just keep it simple.
-				 *  
-				 */
-				return null;
-			}
-			else if (classNames.length == 2)
-			{
-				originalHostExceptionClass = Class.forName(classNames[0]);
-				originalHostException =
-					originalHostExceptionClass.getConstructor(null).newInstance(null);
-				//System.out.println("Sucessfully recreated orignial host of exception. :)");
-
-				Class originalExceptionClass = Class.forName(exception.getCauseClassName());
-				Constructor[] constructors = originalExceptionClass.getConstructors();
-				originalException =
-					(Throwable) originalExceptionClass.getConstructor(
-						constructors[0].getParameterTypes()).newInstance(
-						new Object[] { originalHostException });
-			}
-			else
-			{
-				Class originalExceptionClass = Class.forName(exception.getCauseClassName());
-				originalException =
-					(Throwable) originalExceptionClass.getConstructor(null).newInstance(null);
-			}
-
-			//System.out.println("Sucessfully recreated orignial exception. :)");
-		}
-		catch (Exception e1)
-		{
-			System.out.println("Unable to recreated orignial exception. :(");
-			originalException = null;
-		}
-
-		return originalException;
-	}
 }
