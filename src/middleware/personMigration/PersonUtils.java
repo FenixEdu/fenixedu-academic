@@ -168,7 +168,7 @@ public class PersonUtils {
 		
 		
 		IPessoa fenixPerson = (IPessoa) sp.getIPessoaPersistente().readByOId(personTemp, true);
-		
+//		IPessoa fenixPerson = (IPessoa) sp.getIPessoaPersistente().readByOId(personTemp, false);
 
 		if (fenixPerson == null) {
 			System.out.println("Person not Found !");

@@ -737,21 +737,129 @@
 	</target>
 	
 	
+
+
+    <target name="load-existing-students"
+    		depends="load-data"
+            description="Carrega os Alunos que ja existem para a Tabela MW_ALUNO">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+			 <include name="middleware/LoadExistingStudents.sql" />
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
+
+
+
+	<target name="update-existing-students"
+	        depends="compile-proj, load-existing-students">
+		<java classname="middleware.studentMigration.UpdateStudent"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+	
+	</target>
+
+
+
+
+
+    <target name="load-new-ID-Students"
+    		depends="load-data"
+            description="Carrega os Alunos com novos BI's para a Tabela MW_ALUNO">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+			 <include name="middleware/LoadNewIDStudents.sql" />
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
+	
+
+
+	<target name="update-students-with-new-ID"
+	        depends="compile-proj, load-new-ID-Students">
+		<java classname="middleware.studentMigration.UpdateStudentIDNumbers"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+	
+	</target>
+
+
+
+
+	<target name="update-students"
+	        depends="compile-proj, update-students-with-new-ID, update-existing-students, create-new-students">
+	</target>
+
+
+
+
+    <target name="load-2003-enrolments"
+    		depends="load-data"
+            description="Carrega as inscricoes de 2003 para a Tabela MW_ENROLMENT">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+			 <include name="middleware/Load2003Enrolments.sql" />
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
 	
 </project>

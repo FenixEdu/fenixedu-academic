@@ -14,6 +14,8 @@ import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSup
 import middleware.personMigration.PersonUtils;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
 
 import Dominio.IBranch;
 import Dominio.ICursoExecucao;
@@ -23,6 +25,7 @@ import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.IStudentKind;
+import Dominio.Pessoa;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -38,38 +41,31 @@ import Util.TipoCurso;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  */
 
-public class CreateStudent {
+public class UpdateStudentIDNumbers {
 
 
 	public static void main(String args[]) throws Exception {
 
+		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();		
+		
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWAluno persistentAluno = mws.getIPersistentMWAluno();
 		
-		System.out.println("Reading new Students ....");
+		System.out.println("Reading Students ....");
 
 
-		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-		sp.iniciarTransaccao();
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
 		List result = persistentAluno.readAll();
-		sp.confirmarTransaccao();
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
 		
-		System.out.println("Creating " + result.size() + " new Students ...");
+		System.out.println("Updating " + result.size() + " Student Document Id Numbers ...");
 
 
 		Iterator iterator = result.iterator();
 		while(iterator.hasNext()) {
 			MWAluno student = (MWAluno) iterator.next();
 		
-			try {
-				sp.iniciarTransaccao();
-				sp.clearCache();
-				CreateStudent.createStudent(student, sp);
-				sp.confirmarTransaccao();
-			} catch(Exception e) {
-				System.out.println("Error Migrating Student " + student.getNumber());
-				e.printStackTrace(System.out);
-			}
+			UpdateStudentIDNumbers.updateStudentIDNumbers(student);
 		}
 	}
 
@@ -81,29 +77,35 @@ public class CreateStudent {
 	 */ 
 	private static IExecutionPeriod executionPeriod = null;
 	
-	public static void createStudent(MWAluno oldStudent, SuportePersistenteOJB sp) throws Exception {
+	public static void updateStudentIDNumbers(MWAluno oldStudent) throws Exception {
 		
 		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-		
-			// Check if the person Exists
-			// If it does then we will not change his information
-		
-			executionPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
-			
+
+			sp.iniciarTransaccao();
+
+
+			// Check if the Person Exists
 			IPessoa person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(oldStudent.getDocumentidnumber(), PersonUtils.getDocumentIdType(oldStudent.getMiddlewarePerson().getDocumentidtype()));
-		
-			if (person == null) {
-				person = PersonUtils.createPersonFromStudent(oldStudent, sp);
+
+			if (person != null) {
+				System.out.println("The Person already exists !! Student [" + oldStudent.getNumber() + "] Person ID [" + oldStudent.getDocumentidnumber() + "]");
+				sp.confirmarTransaccao();
+				return;
 			}
 
-			// Create The Student
-			IStudent student = createStudent(oldStudent, sp, person);
-
-			// Create the Student's Curricular Plan
-
-			createStudentCurricularPlan(sp, student, oldStudent);
-
+		
+			IStudent student = sp.getIPersistentStudent().readByNumero(oldStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+			
+			IPessoa personTemp = new Pessoa();
+			personTemp.setIdInternal(student.getPerson().getIdInternal());
+			
+			person = (IPessoa) sp.getIPessoaPersistente().readByOId(personTemp, true); 
+			person.setNumeroDocumentoIdentificacao(oldStudent.getDocumentidnumber());
+		
+		
+			sp.confirmarTransaccao();
 		} catch(Exception e) {
 			e.printStackTrace(System.out);
 			throw new Exception(e);

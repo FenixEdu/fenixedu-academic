@@ -85,3 +85,55 @@ create table mw_AVERAGE(
  average float(10),
  primary key (number)
 )type= InnoDB;
+
+
+drop table if exists mw_ENROLMENT_temp;
+create table mw_ENROLMENT_temp(
+	number integer(11), 
+	enrolmentYear integer(11), 
+	curricularCourseYear integer(11),
+	curricularCourseSemester integer(11),
+	season integer(11), 
+	courseCode integer(11),
+	degreeCode integer(11),
+	branchCode integer(11),
+	grade varchar(10),
+	teacherNumber integer(11),
+	examDate date,
+	universityCode varchar(10),
+	remarks varchar(255),
+	idinternal integer(11) not null auto_increment,
+	primary key (idInternal)
+)type= InnoDB;
+
+
+
+drop table if exists mw_CURRICULAR_COURSE;
+create table mw_CURRICULAR_COURSE(
+	courseCode varchar(10) not null, 
+	courseName varchar(255) not null, 
+	universityCode varchar(10),
+	primary key (courseCode, courseName)	
+)type= InnoDB;
+
+
+
+drop table if exists mw_CURRICULAR_COURSE_SCOPE;
+create table mw_CURRICULAR_COURSE_SCOPE(
+	executionYear integer(11) not null,
+	courseCode varchar(10) not null, 
+	degreeCode integer(11) not null,
+	branchCode integer(11) not null,		 
+	curricularYear integer(11),
+	curricularSemester integer(11),	
+	courseType integer(11),
+	theoreticalHours float(10),	
+	praticaHours float(10),
+	labHours float(10),
+	theoPratHours float(10),
+	credits float(10),		
+	orientation varchar(255),
+	primary key(executionYear, courseCode, degreeCode, branchCode)
+)type= InnoDB;
+
+
