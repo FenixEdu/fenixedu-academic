@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionForward;
  *
  */
 public class GuiderAlreadyChosenActionException extends FenixActionException {
-	public static String key = "error.exception.masterDegree.GuiderAlreadyChosen";
+	public static String key = "error.exception.masterDegree.guiderAlreadyChosen";
 
 	public GuiderAlreadyChosenActionException(Throwable cause) {
 		super(key, cause);

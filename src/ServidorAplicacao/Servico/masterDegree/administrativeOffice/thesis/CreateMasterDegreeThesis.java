@@ -77,7 +77,7 @@ public class CreateMasterDegreeThesis implements IServico {
 				for (Iterator iterator = infoTeacherAssistentGuiders.iterator(); iterator.hasNext();) {
 					InfoTeacher assistentGuider = (InfoTeacher) iterator.next();
 					if (assistentGuider.getIdInternal().equals(guider.getIdInternal())) {
-						throw new GuiderAlreadyChosenServiceException("error.exception.masterDegree.GuiderAlreadyChosen");
+						throw new GuiderAlreadyChosenServiceException("error.exception.masterDegree.guiderAlreadyChosen");
 					}
 				}
 			}

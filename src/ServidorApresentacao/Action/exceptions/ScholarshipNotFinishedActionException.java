@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionForward;
  *
  */
 public class ScholarshipNotFinishedActionException extends FenixActionException {
-	public static String key = "error.exception.scholarshipNotFinished";
+	public static String key = "error.exception.masterDegree.scholarshipNotFinished";
 
 	public ScholarshipNotFinishedActionException(String value) {
 		super(key, value);
