@@ -16,11 +16,13 @@ public interface IExam {
 	public Calendar getEnd();
 	public Season getSeason();	
 	public List getAssociatedExecutionCourses();
+	public String getComment();
 
 	public void setBeginning(Calendar beginning);
 	public void setDay(Calendar day);
 	public void setEnd(Calendar end);
 	public void setSeason(Season epoca);
 	public void setAssociatedExecutionCourses(List list);
+	public void setComment(String string);
 
 }

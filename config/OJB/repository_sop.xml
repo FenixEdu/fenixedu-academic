@@ -390,6 +390,12 @@
          jdbc-type="INTEGER"
          conversion="ServidorPersistente.Conversores.Season2EnumSeasonFieldConversion"
       />
+	  <field-descriptor
+		 name="comment"
+         column="COMMENT"
+        jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+	  />
 	<collection-descriptor
 			name="associatedExecutionCourses"
 			element-class-ref="Dominio.DisciplinaExecucao"

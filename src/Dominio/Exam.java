@@ -19,6 +19,7 @@ public class Exam extends DomainObject implements IExam {
 	protected Calendar end;
 	protected Season season;
 	protected List associatedExecutionCourses;
+	protected String comment;
 
 
 	public Exam() {}
@@ -37,7 +38,7 @@ public class Exam extends DomainObject implements IExam {
 			+ " day= '"             + this.getDay()             + "'\n"
 			+ " beginning= '"       + this.getBeginning()       + "'\n"
 			+ " end= '"             + this.getEnd()             + "'\n"
-			+ " season= '"           + this.getSeason()           + "'\n"			
+			+ " season= '"           + this.getSeason()           + "'\n"
 			+ "";
 	}
 
@@ -121,6 +122,20 @@ public class Exam extends DomainObject implements IExam {
 	 */
 	public void setAssociatedExecutionCourses(List list) {
 		associatedExecutionCourses = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setComment(String string) {
+		comment = string;
 	}
 
 }
