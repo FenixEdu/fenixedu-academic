@@ -19,7 +19,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.BibliographicReference;
 import Dominio.EvaluationMethod;
 import Dominio.ExecutionCourse;
-import Dominio.IAula;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.IEvaluationMethod;

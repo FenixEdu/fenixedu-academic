@@ -9,27 +9,16 @@ import org.apache.commons.collections.Predicate;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Enrolment;
-import Dominio.EnrolmentEvaluation;
-import Dominio.Frequenta;
 import Dominio.IEnrollment;
-import Dominio.IEnrolmentEvaluation;
-import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
-import Dominio.IStudentGroupAttend;
 import Dominio.precedences.IRestrictionByCurricularCourse;
 import Dominio.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.utils.enrolment.DeleteEnrolmentUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
-import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.IPersistentRestriction;
-import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**

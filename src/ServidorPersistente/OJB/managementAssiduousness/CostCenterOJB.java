@@ -6,7 +6,6 @@ package ServidorPersistente.OJB.managementAssiduousness;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.CostCenter;
 import ServidorPersistente.OJB.PersistentObjectOJB;

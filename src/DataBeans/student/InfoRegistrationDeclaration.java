@@ -7,7 +7,6 @@ package DataBeans.student;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoObject;
 import DataBeans.InfoPerson;
-import DataBeans.InfoStudentCurricularPlan;
 
 /**
  * @author Ricardo Rodrigues

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -19,10 +18,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import DataBeans.InfoEnrolment;
 import DataBeans.InfoPerson;
-import DataBeans.InfoStudent;
-import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.student.InfoRegistrationDeclaration;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;

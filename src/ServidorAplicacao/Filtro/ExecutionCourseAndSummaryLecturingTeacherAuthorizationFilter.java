@@ -14,7 +14,6 @@ import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSummary;
-import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;

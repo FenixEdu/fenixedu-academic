@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoMasterDegreeCandidateWithInfoPerson;
@@ -21,7 +22,6 @@ import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.State;
-import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * 

@@ -1,12 +1,8 @@
 package ServidorPersistente.OJB.transactions;
 
-import java.util.List;
-
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.IPersonAccount;
 import Dominio.transactions.IPaymentTransaction;
-import Dominio.transactions.InsuranceTransaction;
 import Dominio.transactions.PaymentTransaction;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;

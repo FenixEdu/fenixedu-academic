@@ -4,8 +4,6 @@
  */
 package DataBeans;
 
-import java.util.List;
-import java.util.ListIterator;
 
 /**
  * @author joaosa & rmalo

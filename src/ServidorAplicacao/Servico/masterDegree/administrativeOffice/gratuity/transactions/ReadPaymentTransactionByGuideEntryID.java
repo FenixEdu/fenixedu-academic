@@ -1,16 +1,13 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.transactions;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.transactions.InfoPaymentTransaction;
-import DataBeans.transactions.InfoTransaction;
 import Dominio.transactions.IPaymentTransaction;
-import Dominio.transactions.ITransaction;
-import Dominio.transactions.Transaction;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
