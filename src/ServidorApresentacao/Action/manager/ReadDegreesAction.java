@@ -34,17 +34,16 @@ public class ReadDegreesAction extends FenixAction {
 			UserView userView =
 				(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		
-			try {
+			try {		
+		        	List degrees = null;
+					GestorServicos serviceManager = GestorServicos.manager();
+					degrees = (List) serviceManager.executar(
+								userView,
+								"ReadDegreesService",
+								null);
 		
-		        List degrees = null;
-				GestorServicos serviceManager = GestorServicos.manager();
-				degrees = (List) serviceManager.executar(
-				userView,
-				"ReadDegreesService",
-				null);
-		
-				Collections.sort(degrees);
-				request.setAttribute(SessionConstants.INFO_DEGREES_LIST,degrees);
+					Collections.sort(degrees);
+					request.setAttribute(SessionConstants.INFO_DEGREES_LIST,degrees);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}

@@ -51,34 +51,34 @@ public class ReadDegreeAction extends FenixAction  {
 				GestorServicos manager = GestorServicos.manager();
 				InfoDegree degree = null;
 				
-				try{
-					degree = (InfoDegree) manager.executar(userView, "ReadDegreeService", args);
-				}catch(FenixServiceException e){
+				try {
+						degree = (InfoDegree) manager.executar(userView, "ReadDegreeService", args);
+				} catch(FenixServiceException e) {
 					throw new FenixActionException(e);
 			    }
+			    
 			    //Caso em que se tenta ler 1 curso que não existe na base de dados
-				if(degree==null){
+				if(degree == null) {
 					try {
 							List degrees = null;
-//							GestorServicos serviceManager = GestorServicos.manager();
 							degrees = (List) manager.executar(
-							userView,
-							"ReadDegreesService",
-							null);
+										userView,
+										"ReadDegreesService",
+										null);
 							Collections.sort(degrees);
-							request.setAttribute(SessionConstants.INFO_DEGREES_LIST,degrees);
+							request.setAttribute(SessionConstants.INFO_DEGREES_LIST, degrees);
 							ActionErrors actionErrors = new ActionErrors();
 							ActionError error = new ActionError("message.nonExistingDegree");
 						    actionErrors.add("message.nonExistingDegree", error);
 							saveErrors(request, actionErrors);
 					} catch (FenixServiceException e) {
-								throw new FenixActionException(e);
-					   }
+						throw new FenixActionException(e);
+					}
 					return mapping.findForward("readDegrees");
 				}
 				
 				//Caso tudo corra como esperado, i.e., o curso existe mesmo
-				request.setAttribute(SessionConstants.INFO_DEGREE,degree);
+				request.setAttribute(SessionConstants.INFO_DEGREE, degree);
 				return mapping.findForward("viewDegree");
-			}
+	}
 }

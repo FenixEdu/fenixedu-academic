@@ -20,6 +20,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author lmac1
  */
+
 public class InsertDegreeService implements IServico {
 
 	private static InsertDegreeService service = new InsertDegreeService();
@@ -41,52 +42,44 @@ public class InsertDegreeService implements IServico {
 		ICurso degree = null;
 		ICursoPersistente persistentDegree = null;
 		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
+				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+				persistentDegree = persistentSuport.getICursoPersistente();
+				List persistentDegrees = persistentSuport.getICursoPersistente().readAll();
 
-			persistentDegree = persistentSuport.getICursoPersistente();
-			List persistentDegrees = persistentSuport.getICursoPersistente().readAll();
-
-			Iterator iter = persistentDegrees.iterator();
+				Iterator iter = persistentDegrees.iterator();
 			
-			String code = infoDegree.getSigla();
-			String name = infoDegree.getNome();
-			List errors = new ArrayList();
-			errors.add(null);
-			errors.add(null);
+				String code = infoDegree.getSigla();
+				String name = infoDegree.getNome();
+				List errors = new ArrayList();
+				errors.add(null);
+				errors.add(null);
+				int modified = 0;
 			
-			
-			
-			while(iter.hasNext()){
-				ICurso degreeIter = (ICurso) iter.next();
-				if(code.compareToIgnoreCase(degreeIter.getSigla())==0)
-				{	
-		        	errors.add(0, code);
+				while(iter.hasNext()) {
+					ICurso degreeIter = (ICurso) iter.next();
+					if(code.compareToIgnoreCase(degreeIter.getSigla())==0) {
+						modified++;
+		        		errors.set(0, code);
+					}
+					if(name.compareToIgnoreCase(degreeIter.getNome())==0) {
+						modified++;
+						errors.set(1, name);
+					}
 				}
-				if(name.compareToIgnoreCase(degreeIter.getNome())==0)
-					errors.add(1, name);
-			}
 
-			List errors2 = new ArrayList();
-			errors2.add(null);
-			errors2.add(null);
-
-			if(errors2.equals((List)errors)){
-				errors = null;
-				degree = new Curso(
-							code,
-							name,
-							infoDegree.getTipoCurso());
+				if(modified == 0) {
+					errors = null;
+					degree = new Curso(
+										code,
+										name,
+										infoDegree.getTipoCurso());
 	
-				persistentDegree.lockWrite(degree);
-			}
-			return errors;
+					persistentDegree.lockWrite(degree);
+				}
+				return errors;
 			
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
-
-		
 	}
 }

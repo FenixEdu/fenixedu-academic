@@ -36,7 +36,7 @@ public class DeleteDegreesServiceTest extends TestCaseNeedAuthorizationServices 
 		}
 		
 	protected String[] getArgsForAuthorizedUser() {
-			return new String[]{"manager", "pass", getApplication()};
+			return new String[] {"manager", "pass", getApplication()};
 		}
 		
     //	delete existing object
@@ -66,7 +66,7 @@ public class DeleteDegreesServiceTest extends TestCaseNeedAuthorizationServices 
 					System.out.println(
 						"testSuccessfulExecutionOfDeleteServiceObjectExists was UNSUCCESSFULY runned by class: "
 							+ this.getClass().getName());
-					fail("testSuccessfulExecutionOfDeleteService");
+					fail("testSuccessfulExecutionOfDeleteServiceObjectExists");
 			}
 		}
 		
@@ -102,7 +102,7 @@ public class DeleteDegreesServiceTest extends TestCaseNeedAuthorizationServices 
 		}
 		
 //	try to delete object that can´t be deleted
-	public void testUnSuccessfulExecutionOfDeleteService() {
+	public void testUnsuccessfulExecutionOfDeleteService() {
 
 			Integer[] entry = { new Integer(10) };
 			List idList = Arrays.asList(entry);
@@ -118,18 +118,18 @@ public class DeleteDegreesServiceTest extends TestCaseNeedAuthorizationServices 
 					List comparatorArgument = new ArrayList(1);
 					comparatorArgument.add("Informatica e Computadores");
 					assertEquals(
-						"testUnSuccessfulExecutionOfDeleteService",
+						"testUnsuccessfulExecutionOfDeleteService",
 						comparatorArgument,
 						result);
 					System.out.println(
-						"testUnSuccessfulExecutionOfDeleteService was SUCCESSFULY runned by class: "
+						"testUnsuccessfulExecutionOfDeleteService was SUCCESSFULY runned by class: "
 							+ this.getClass().getName());
 			} catch (Exception ex) {
 					ex.printStackTrace();
 					System.out.println(
-						"testUnSuccessfulExecutionOfDeleteService was UNSUCCESSFULY runned by class: "
+						"testUnsuccessfulExecutionOfDeleteService was UNSUCCESSFULY runned by class: "
 							+ this.getClass().getName());
-					fail("testUnSuccessfulExecutionOfDeleteService");
+					fail("testUnsuccessfulExecutionOfDeleteService");
 			}
 		}
 

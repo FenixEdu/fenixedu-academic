@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import ServidorApresentacao.ScopeConstants;
 import ServidorApresentacao.TestCasePresentationManagerPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -29,14 +27,6 @@ public class ReadDegreesActionTest extends TestCasePresentationManagerPortal{
 
 	}
 	
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
-		
-	public static Test suite() {
-		TestSuite suite = new TestSuite(ReadDegreesActionTest.class);
-		return suite;
-	}
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
@@ -49,8 +39,6 @@ public class ReadDegreesActionTest extends TestCasePresentationManagerPortal{
 	 * use with testUnsuccessfulExecutionOfAction.
 	 */
 	protected String[] getActionErrors() {
-//		String[] result = { "java.lang.Exception" };
-//		return result;
 		return null;
 	}
 
@@ -100,16 +88,14 @@ public class ReadDegreesActionTest extends TestCasePresentationManagerPortal{
 	}
 	
 	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
-	return null;
+		return null;
 	}
 
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
 		Map result = new HashMap();
-
 		List requestAttributtes = new ArrayList(1);
 		requestAttributtes.add(SessionConstants.INFO_DEGREES_LIST);
 		result.put(new Integer(ScopeConstants.REQUEST), requestAttributtes);
-	
 		return result;
 	}
 

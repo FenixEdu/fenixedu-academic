@@ -8,6 +8,7 @@ import ServidorAplicacao.Servicos.TestCaseReadServices;
 /**
  * @author lmac1
  */
+
 public class ReadDegreesServiceTest extends TestCaseReadServices {
 	    
 	/**
@@ -15,14 +16,14 @@ public class ReadDegreesServiceTest extends TestCaseReadServices {
 	 */
 	 public ReadDegreesServiceTest(String testName) {
 		super(testName);
-			}
+	 }
 
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	 protected String getNameOfServiceToBeTested() {
 		return "ReadDegreesService";
-	   }
+	 }
        
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
@@ -30,10 +31,6 @@ public class ReadDegreesServiceTest extends TestCaseReadServices {
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 		return null;
 	}
-
-//	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
-//		return null;
-//	}
 
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
@@ -56,15 +53,16 @@ public class ReadDegreesServiceTest extends TestCaseReadServices {
 	protected Object getObjectToCompare() {			
 		return null;
 	}
+	
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.TestCaseServicos#getArgsForAuthorizedUser()
 	 */
 	protected String[] getArgsForAuthorizedUser() {
-		return new String[]{"manager", "pass", getApplication()};
+		return new String[] {"manager", "pass", getApplication()};
 	}
 	
 	protected boolean needsAuthorization() {
 			return true;
-		}
+	}
 
 }

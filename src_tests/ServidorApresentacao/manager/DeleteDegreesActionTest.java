@@ -42,7 +42,6 @@ public class DeleteDegreesActionTest extends TestCasePresentationManagerPortal {
 	 {
 		String[] errors = { "errors.invalid.delete.not.empty" };
 		return errors;
-//return null;
 	 }
 	 
 	/**

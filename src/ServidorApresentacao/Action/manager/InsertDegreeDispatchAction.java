@@ -53,73 +53,52 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 	
 		HttpSession session = request.getSession(false);
-    	UserView userView =
-						(UserView) session.getAttribute(SessionConstants.U_VIEW);
+    	UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
+    	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		String code = (String) dynaForm.get("code");
 		String name = (String) dynaForm.get("name");
 		Integer degreeTypeInt = (Integer) dynaForm.get("degreeType");
 				
 		TipoCurso degreeType = new TipoCurso(degreeTypeInt);
-		
-
-    	InfoDegree infoDegree =
-				new InfoDegree(
-					code,
-					name,
-			        degreeType);
-
+    	InfoDegree infoDegree = new InfoDegree(
+												code,
+												name,
+			       								degreeType);
 		Object args[] = { infoDegree };
 		GestorServicos manager = GestorServicos.manager();
 		List serviceResult = null;
 		try {
-			serviceResult = (List) manager.executar(userView, "InsertDegreeService", args);
-		}
-//		//FAZER TB PARA JAH EXISTE COM ESSA SIGLA 
-//		catch (ExistingServiceException e) {
-//						   throw new ExistingActionException("Uma secção com esse nome",e);
-//					   }
-		catch (FenixServiceException e) {
+				serviceResult = (List) manager.executar(userView, "InsertDegreeService", args);
+		} catch (FenixServiceException e) {
 			throw new FenixActionException(e.getMessage());
 		}
 
-		try {
-		
-			List degrees = null;
-				//Object args1[]={};
-				GestorServicos serviceManager = GestorServicos.manager();
-				degrees = (List) serviceManager.executar(
-				userView,
-				"ReadDegreesService",
-				null);
-				
-			if (serviceResult!=null)
-			{
-				ActionErrors actionErrors = new ActionErrors();
-				ActionError error = null;
-				if(serviceResult.get(0)!=null)
-				{
-					error = new ActionError("message.existingDegreeCode",  serviceResult.get(0));
-					actionErrors.add("message.existingDegreeCode", error);
-				}	
-			    
-				if(serviceResult.get(1)!=null)
-				{
-					error = new ActionError("message.existingDegreeName",  serviceResult.get(1));
-					actionErrors.add("message.existingDegreeName", error);
+		try {	
+				List degrees = null;
+				degrees = (List) manager.executar(
+													userView,
+													"ReadDegreesService",
+													null);
+				if (serviceResult != null) {
+					ActionErrors actionErrors = new ActionErrors();
+					ActionError error = null;
+					if(serviceResult.get(0) != null) {
+						error = new ActionError("message.existingDegreeCode", serviceResult.get(0));
+						actionErrors.add("message.existingDegreeCode", error);
+					}	
+					if(serviceResult.get(1) != null)
+					{
+						error = new ActionError("message.existingDegreeName", serviceResult.get(1));
+						actionErrors.add("message.existingDegreeName", error);
+					}			
+					saveErrors(request, actionErrors);
 				}
-								
-				saveErrors(request, actionErrors);
-			
-			}
-		
 				Collections.sort(degrees);
 				request.setAttribute(SessionConstants.INFO_DEGREES_LIST,degrees);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-
-			return mapping.findForward("readDegrees");
-	}
-			
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		return mapping.findForward("readDegrees");
+	}			
 }

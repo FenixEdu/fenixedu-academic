@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import ServidorApresentacao.ScopeConstants;
 import ServidorApresentacao.TestCasePresentationManagerPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -17,6 +15,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author lmac1
  */
+
 public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 
 	
@@ -27,16 +26,7 @@ public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 		super(testName);
 
 	}
-	
-		public static void main(java.lang.String[] args) {
-			junit.textui.TestRunner.run(suite());
-		}
-
 		
-		public static Test suite() {
-			TestSuite suite = new TestSuite(ReadDegreeActionTest.class);
-			return suite;
-		}
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
@@ -49,8 +39,7 @@ public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 	 * use with testUnsuccessfulExecutionOfAction.
 	 */
 	protected String[] getActionErrors() {
-		String[] result = {"message.nonExistingDegree"};		
-//		result.add("message.nonExistingDegree");
+		String[] result = { "message.nonExistingDegree" };		
 		return result;
 	}
 
@@ -79,7 +68,7 @@ public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 	 * This method must return a string identifying the forward when the action executes unsuccessfuly.
 	 */
 	protected String getUnsuccessfulForward() {
-		return null;
+		return "readDegrees";
 	}
 	
 	protected int getScope() {
@@ -107,11 +96,9 @@ public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 	}
 
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
-		Map result = new HashMap();
-		
+		Map result = new HashMap();	
 		List requestAttributtes = new ArrayList(1);
 		requestAttributtes.add(SessionConstants.INFO_DEGREE);
-		
 		result.put(new Integer(ScopeConstants.REQUEST), requestAttributtes);
 		return result;
 	}
@@ -121,7 +108,11 @@ public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 	}
 
 	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
-		return null;
+		Map result = new HashMap();	
+		List requestAttributtes = new ArrayList(1);
+		requestAttributtes.add(SessionConstants.INFO_DEGREES_LIST);
+		result.put(new Integer(ScopeConstants.REQUEST), requestAttributtes);
+		return result;
 	}
 
 	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {

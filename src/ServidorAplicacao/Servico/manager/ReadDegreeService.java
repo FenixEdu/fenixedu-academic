@@ -12,6 +12,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author lmac1
  */
+
 public class ReadDegreeService implements IServico {
 
   private static ReadDegreeService service = new ReadDegreeService();
@@ -44,19 +45,18 @@ public class ReadDegreeService implements IServico {
 	ICurso degree = null;
 	
 	try {
-		sp = SuportePersistenteOJB.getInstance();
-		degree = sp.getICursoPersistente().readByIdInternal(idInternal);
+			sp = SuportePersistenteOJB.getInstance();
+			degree = sp.getICursoPersistente().readByIdInternal(idInternal);
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
 	}
    
        
-	if (degree == null){
-				return null;
-			}
+	if (degree == null) {
+		return null;
+	}
 
-			infoDegree = Cloner.copyIDegree2InfoDegree(degree);
-	  
+	infoDegree = Cloner.copyIDegree2InfoDegree(degree); 
 	return infoDegree;
   }
 }

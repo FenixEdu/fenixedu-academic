@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import ServidorApresentacao.ScopeConstants;
 import ServidorApresentacao.TestCasePresentationManagerPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -17,24 +15,15 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author lmac1
  */
+
 public class InsertDegreeDispatchActionTest extends TestCasePresentationManagerPortal{
 
-	
 	/**
 	 * @param testName
 	 */
 	public InsertDegreeDispatchActionTest(String testName) {
 		super(testName);
-
 	}
-	public static void main(java.lang.String[] args) {
-			junit.textui.TestRunner.run(suite());
-		}
-
-	public static Test suite() {
-			TestSuite suite = new TestSuite(InsertDegreeDispatchActionTest.class);
-			return suite;
-		}
 
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
@@ -48,7 +37,7 @@ public class InsertDegreeDispatchActionTest extends TestCasePresentationManagerP
 	 * use with testUnsuccessfulExecutionOfAction.
 	 */
 	protected String[] getActionErrors() {
-		String[] result = {"message.existingDegreeCode","message.existingDegreeName"};		
+		String[] result = {"message.existingDegreeCode", "message.existingDegreeName"};		
 		return result;
 	}
 
@@ -77,7 +66,7 @@ public class InsertDegreeDispatchActionTest extends TestCasePresentationManagerP
 	 * This method must return a string identifying the forward when the action executes unsuccessfuly.
 	 */
 	protected String getUnsuccessfulForward() {
-		return null;
+		return "readDegrees";
 	}
 	
 	protected int getScope() {
@@ -94,31 +83,27 @@ public class InsertDegreeDispatchActionTest extends TestCasePresentationManagerP
 
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
 		Map result = new HashMap();
-		
-		result.put("method","insert");
-		result.put("code","LEC");
-		result.put("name","Licenciatura em Engenharia Civil");
-		result.put("degreeType","Licenciatura");
+		result.put("method", "insert");
+		result.put("code", "LEC");
+		result.put("name", "Licenciatura em Engenharia Civil");
+		result.put("degreeType", "1");
 		return result;
 	}
 	
 	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
 		Map result = new HashMap();
-		
-		result.put("method","insert");
-		result.put("code","MEM");
-		result.put("name","Engenharia Mecânica");
-		result.put("degreeType","Licenciatura");
+		result.put("method", "insert");
+		result.put("code", "MEM");
+		result.put("name", "Engenharia Mecanica");
+		result.put("degreeType", "1");
 		return result;
 	}
 
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
 		Map result = new HashMap();
-		
 		List requestAttributtes = new ArrayList(1);
 		requestAttributtes.add(SessionConstants.INFO_DEGREES_LIST);
 		result.put(new Integer(ScopeConstants.REQUEST), requestAttributtes);
-
 		return result;
 	}
 
@@ -128,11 +113,9 @@ public class InsertDegreeDispatchActionTest extends TestCasePresentationManagerP
 
 	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
 		Map result = new HashMap();
-		
 		List requestAttributtes = new ArrayList(1);
 		requestAttributtes.add(SessionConstants.INFO_DEGREES_LIST);
 		result.put(new Integer(ScopeConstants.REQUEST), requestAttributtes);
-		
 		return result;
 	}
 
@@ -141,5 +124,3 @@ public class InsertDegreeDispatchActionTest extends TestCasePresentationManagerP
 	}
 
 }
-
-
