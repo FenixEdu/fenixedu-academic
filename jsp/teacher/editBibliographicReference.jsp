@@ -37,14 +37,14 @@
     <logic:notPresent name="edit">
     	<html:hidden property="method" value="createBibliographicReference"/>
    	 	<html:submit>
-    	   	<bean:message key="button.confirmInsert"/>                    		         	
+    	   	<bean:message key="button.confirm"/>                    		         	
     	</html:submit>       
     </logic:notPresent>
     
     <logic:present name="edit">
        	<html:hidden property="method" value="editBibliographicReference"/>
    	 	<html:submit>
-    	   	<bean:message key="button.confirmEdit"/>                    		         	
+    	   	<bean:message key="button.confirm"/>                    		         	
     	</html:submit>       
     </logic:present>	
     	
