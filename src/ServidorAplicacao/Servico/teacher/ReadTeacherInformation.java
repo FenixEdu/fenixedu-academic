@@ -97,16 +97,17 @@ public class ReadTeacherInformation implements IService {
             // the previous execution year
             IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
             IExecutionYear executionYear = null;
-            if (argExecutionYear.equals("")) {
+            if (argExecutionYear == null || argExecutionYear.equals("")) {
                 IPersistentExecutionPeriod persistentExecutionPeriod = sp
                         .getIPersistentExecutionPeriod();
                 IExecutionPeriod actualExecutionPeriod = persistentExecutionPeriod
                         .readActualExecutionPeriod();
                 IExecutionPeriod previousExecutionPeriod = actualExecutionPeriod
                         .getPreviousExecutionPeriod();
-
-                // FIXME this will not work on the second semester of an
-                // execution year!!
+                while (previousExecutionPeriod.getExecutionYear().equals(actualExecutionPeriod.getExecutionYear())) {
+                    previousExecutionPeriod = previousExecutionPeriod.getPreviousExecutionPeriod();
+                }
+                
                 executionYear = previousExecutionPeriod.getExecutionYear();
             } else
                 executionYear = persistentExecutionYear.readExecutionYearByName(argExecutionYear);
