@@ -197,10 +197,6 @@ public class BibliographicReferenceManagerDispatchAction
 		HttpSession session = request.getSession(false);
 		InfoExecutionCourse infoExecutionCourse =
 			(InfoExecutionCourse) session.getAttribute("InfoExecutionCourse");
-		/*InfoBibliographicReference infoBibliographicReference =
-			(InfoBibliographicReference) session.getAttribute(
-				"BibliographicReference");
-				*/
 		UserView userView = (UserView) session.getAttribute("UserView");
 		Object args[] = { infoExecutionCourse, null };
 		GestorServicos gestor = GestorServicos.manager();
