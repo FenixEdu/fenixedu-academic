@@ -69,6 +69,7 @@ public class EditExamServiceTest extends TestCaseCreateServices {
 			new InfoExecutionYear("2002/2003");
 		InfoExecutionPeriod infoExecutionPeriod =
 			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+		infoExecutionPeriod.setSemester(new Integer(2));
 
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse.setSigla("RCI");
@@ -105,6 +106,7 @@ public class EditExamServiceTest extends TestCaseCreateServices {
 			new InfoExecutionYear("2002/2003");
 		InfoExecutionPeriod infoExecutionPeriod =
 			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+		infoExecutionPeriod.setSemester(new Integer(2));
 
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse.setSigla("RCI");
