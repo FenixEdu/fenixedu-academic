@@ -87,12 +87,16 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
     public void writeMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidateToWrite) throws ExcepcaoPersistencia {
     	if (masterDegreeCandidateToWrite == null) return;
     	
-    	IMasterDegreeCandidate masterDegreeCandidateBD1 = this.readMasterDegreeCandidateByUsername(masterDegreeCandidateToWrite.getPerson().getUsername());
-    	
-		IMasterDegreeCandidate masterDegreeCandidateBD2 = this.readByIdentificationDocNumberAndTypeAndExecutionDegree(
-				masterDegreeCandidateToWrite.getPerson().getNumeroDocumentoIdentificacao(),
-				masterDegreeCandidateToWrite.getPerson().getTipoDocumentoIdentificacao().getTipo(),
-				masterDegreeCandidateToWrite.getExecutionDegree());
+    	IMasterDegreeCandidate masterDegreeCandidateBD1 = this.readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(
+				masterDegreeCandidateToWrite.getCandidateNumber(),
+				masterDegreeCandidateToWrite.getExecutionDegree().getExecutionYear().getYear(),
+				masterDegreeCandidateToWrite.getExecutionDegree().getCurricularPlan().getDegree().getSigla(),
+				masterDegreeCandidateToWrite.getSpecialization());
+
+		IMasterDegreeCandidate masterDegreeCandidateBD2 = this.readByUsernameAndExecutionDegreeAndSpecialization(
+				masterDegreeCandidateToWrite.getPerson().getUsername(),
+				masterDegreeCandidateToWrite.getExecutionDegree(),
+				masterDegreeCandidateToWrite.getSpecialization());
     	
     	if (masterDegreeCandidateBD1 == null && masterDegreeCandidateBD2 == null) {   	
         	super.lockWrite(masterDegreeCandidateToWrite);
@@ -106,28 +110,30 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 				   super.lockWrite(masterDegreeCandidateToWrite);
 				   return;
 				 }
-		if (masterDegreeCandidateBD2 != null &&
-			    (masterDegreeCandidateToWrite instanceof MasterDegreeCandidate) &&
+	   if (masterDegreeCandidateBD2 != null &&
+				(masterDegreeCandidateToWrite instanceof MasterDegreeCandidate) &&
 				((MasterDegreeCandidate) masterDegreeCandidateBD2).getInternalCode().equals(
 				((MasterDegreeCandidate) masterDegreeCandidateToWrite).getInternalCode())) {
-				    super.lockWrite(masterDegreeCandidateToWrite);
-				    return;
-		} else
-			throw new ExistingPersistentException();
-        
+				  super.lockWrite(masterDegreeCandidateToWrite);
+				  return;
+				}
+		
+		throw new ExistingPersistentException();
     }
     
     
-	public Integer generateCandidateNumber(String executionYear, String degreeName) throws ExcepcaoPersistencia {
+	public Integer generateCandidateNumber(String executionYear, String degreeName, Specialization specialization) throws ExcepcaoPersistencia {
 		try {
 			int number = 0;
 			String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
 							+ " where executionDegree.executionYear.year = $1"
 							+ " and executionDegree.curricularPlan.degree.nome = $2"
+							+ " and specialization = $3"
 							+ " order by candidateNumber desc";
 			query.create(oqlQuery);
 			query.bind(executionYear);
 			query.bind(degreeName);
+			query.bind(specialization.getSpecialization());
 			List result = (List) query.execute();
 
 			lockRead(result);
@@ -167,6 +173,37 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 			query.bind(executionDegree.getExecutionYear().getYear());
 			query.bind(executionDegree.getCurricularPlan().getName());
 			query.bind(executionDegree.getCurricularPlan().getDegree().getNome());
+	
+			List result = (List) query.execute();
+	
+			lockRead(result);
+			if (result.size() != 0)
+				candidate = (IMasterDegreeCandidate) result.get(0);
+	
+			return candidate;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+    
+    
+	public IMasterDegreeCandidate readByUsernameAndExecutionDegreeAndSpecialization(String username, ICursoExecucao executionDegree, Specialization specialization) 
+	throws ExcepcaoPersistencia {
+		try {
+			IMasterDegreeCandidate candidate = null;
+			String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
+					+ " where person.username = $1"
+					+ " and executionDegree.executionYear.year = $2" 
+					+ " and executionDegree.curricularPlan.name = $3" 
+					+ " and executionDegree.curricularPlan.degree.nome = $4" 
+					+ " and specialization = $5" ;
+	
+			query.create(oqlQuery);
+			query.bind(username);
+			query.bind(executionDegree.getExecutionYear().getYear());
+			query.bind(executionDegree.getCurricularPlan().getName());
+			query.bind(executionDegree.getCurricularPlan().getDegree().getNome());
+			query.bind(specialization.getSpecialization());
 	
 			List result = (List) query.execute();
 	

@@ -14,12 +14,14 @@ public class RoleType {
 	public static final int TEACHER_TYPE = 3;
 	public static final int TIME_TABLE_MANAGER_TYPE = 4;
 	public static final int MASTER_DEGREE_CANDIDATE_TYPE = 5;
+	public static final int MASTER_DEGREE_ADMINISTRATIVE_OFFICE_TYPE = 6;
 	
 	public static final RoleType PERSON = new RoleType(RoleType.PERSON_TYPE);
 	public static final RoleType STUDENT = new RoleType(RoleType.STUDENT_TYPE);
 	public static final RoleType TEACHER = new RoleType(RoleType.TEACHER_TYPE);
 	public static final RoleType TIME_TABLE_MANAGER = new RoleType(RoleType.TIME_TABLE_MANAGER_TYPE);
 	public static final RoleType MASTER_DEGREE_CANDIDATE = new RoleType(RoleType.MASTER_DEGREE_CANDIDATE_TYPE);
+	public static final RoleType MASTER_DEGREE_ADMINISTRATIVE_OFFICE = new RoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_TYPE);
 	
 	private int id;
 

@@ -47,6 +47,9 @@ public class RoleTypeFieldConversion implements FieldConversion {
 					break;
 				case RoleType.MASTER_DEGREE_CANDIDATE_TYPE :
 					roleType = RoleType.MASTER_DEGREE_CANDIDATE;
+					break;
+				case RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_TYPE :
+					roleType = RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE;
 
 			}
 		}else{

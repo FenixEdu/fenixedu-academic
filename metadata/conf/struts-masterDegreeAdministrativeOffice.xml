@@ -59,26 +59,24 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
-<!--      <action path="/index" forward="/mainMenu.jsp"/>
--->      
-      <action path="/index"
-      	      type="ServidorApresentacao.Action.masterDegree.administrativeOffice.LogonActionToRemove">
-      	  <forward name="Success" path="/mainMenu.jsp"/>      	      
-      </action>
+      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
+      <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
+      <action path="/index" forward="/index.jsp"/>
       
+            
       <action path="/naoExecutado" forward="/error.jsp"/>
       
       <!-- action definition -->
       
       <!-- action to create a candidate -->
       <action attribute="createCandidateForm"
-      		  input="/prepareCreateCandidate.jsp"
+      		  input="/createCandidate.jsp"
       	      name="createCandidateForm"
 		      path="/createCandidateDispatchAction"
 		      parameter="method"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateCandidateDispatchAction"
               validate="true">
-	         <forward name="PrepareSuccess" path="/prepareCreateCandidate.jsp"/>  
+	         <forward name="PrepareSuccess" path="/createCandidate.jsp"/>  
 	         <forward name="CreateSuccess" path="/createCandidateSuccess.jsp"/>  
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
@@ -88,7 +86,7 @@
       <!-- Action For LogOff -->
       <action path="/logoff"
       	      type="ServidorApresentacao.Action.commons.LogOffAction">
-      	  <forward name="Success" path="/index.do"/>      	      
+      	  <forward name="Success" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
       </action>
       
       	<!-- ExceptionHandling -->   

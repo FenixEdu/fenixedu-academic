@@ -19,6 +19,7 @@ import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoMasterDegreeCandidate;
+import DataBeans.InfoPerson;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -110,10 +111,13 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 
 			// Create the new Master Degree Candidate
 			InfoMasterDegreeCandidate newMasterDegreeCandidate = new InfoMasterDegreeCandidate();
-//			newMasterDegreeCandidate.setName(name);
-//			newMasterDegreeCandidate.setIdentificationDocumentNumber(identificationDocumentNumber);
-//			newMasterDegreeCandidate.setInfoIdentificationDocumentType(identificationDocumentType);
+			InfoPerson infoPerson = new InfoPerson();
+			infoPerson.setNome(name);
+			infoPerson.setNumeroDocumentoIdentificacao(identificationDocumentNumber);
+			infoPerson.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(identificationDocumentType));
+
 			newMasterDegreeCandidate.setSpecialization(degreeType);
+			newMasterDegreeCandidate.setInfoPerson(infoPerson);
 			
 			Object args[] = { newMasterDegreeCandidate , degreeName , userView};
 	  

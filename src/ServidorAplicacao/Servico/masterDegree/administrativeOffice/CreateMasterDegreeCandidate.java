@@ -19,10 +19,10 @@ import Dominio.IPessoa;
 import Dominio.MasterDegreeCandidate;
 import Dominio.Pessoa;
 import ServidorAplicacao.FenixServiceException;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.person.GenerateUsername;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -30,7 +30,6 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.CandidateSituationValidation;
 import Util.SituationName;
 import Util.Specialization;
-
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
@@ -80,19 +79,17 @@ public class CreateMasterDegreeCandidate implements IServico {
 			
 			if (person == null) {
 				// Create the new Person
+				
+				System.out.println("############ nOVA pESSOA");
+				
 				person = new Pessoa();
+				person.setNome(newMasterDegreeCandidate.getInfoPerson().getNome());
 				person.setNumeroDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao());
 				person.setTipoDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
 				
 				// Generate Person Username
 				
-				String username = null;
-				GestorServicos serviceManager = GestorServicos.manager();
-				try {
-					username = (String) serviceManager.executar(userView, "GenerateUsername", null);
-				} catch (Exception e) {
-					throw new Exception(e);
-				}
+				String username = GenerateUsername.getUsername();
 				person.setUsername(username);
 				
 				sp.getIPessoaPersistente().escreverPessoa(person);
@@ -127,9 +124,13 @@ public class CreateMasterDegreeCandidate implements IServico {
 			// Generate the Candidate's number	
 			Integer number = sp.getIPersistentMasterDegreeCandidate().generateCandidateNumber(
 								executionYear.getYear(),
-								masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getNome());
+								masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getNome(), 
+								masterDegreeCandidate.getSpecialization());
 
 			masterDegreeCandidate.setCandidateNumber(number);
+			
+			System.out.println("numero do candidato" + number);
+			
 			
 			// Write the new Candidate
 			sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);		

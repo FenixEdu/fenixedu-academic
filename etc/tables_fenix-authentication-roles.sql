@@ -30,7 +30,7 @@ create table PERSON (
    SOCIAL_SECURITY_NUMBER varchar(50),
    PROFESSION varchar(100),
    USERNAME varchar(50) not null,
-   PASSWD varchar(40) not null,
+   PASSWD varchar(40),
    KEY_COUNTRY int(11),
    FISCAL_CODE varchar(50),
    TYPE_ID_DOCUMENT int(11) not null,

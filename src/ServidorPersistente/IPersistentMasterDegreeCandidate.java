@@ -52,14 +52,16 @@ public interface IPersistentMasterDegreeCandidate {
      * @throws ExcepcaoPersistencia
      */
     public void deleteAll() throws ExcepcaoPersistencia;
+
 	/**
 	 * 
 	 * @param executionYear
 	 * @param degreeName
+	 * @param specialization
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	public Integer generateCandidateNumber(String executionYear, String degreeName) throws ExcepcaoPersistencia; 
+	public Integer generateCandidateNumber(String executionYear, String degreeName, Specialization specialization) throws ExcepcaoPersistencia; 
 	
 	/**
 	 * 
@@ -72,4 +74,17 @@ public interface IPersistentMasterDegreeCandidate {
 	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegree(String idDocumentNumber, 
 			Integer idDocumentType, ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
 
+	
+	/**
+	 * 
+	 * @param username
+	 * @param executionDegree
+	 * @param specialization
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public IMasterDegreeCandidate readByUsernameAndExecutionDegreeAndSpecialization(String username, ICursoExecucao executionDegree, Specialization specialization) throws ExcepcaoPersistencia;
+	
+	
+	
 } // End of class definition

@@ -127,7 +127,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         assertEquals(masterDegreeCandidateTemp.getPerson().getSexo(), new Sexo(Sexo.MASCULINO));
         assertEquals(masterDegreeCandidateTemp.getPerson().getEstadoCivil(), new EstadoCivil(EstadoCivil.SOLTEIRO));
         
-        assertTrue(masterDegreeCandidateTemp.getPerson().getNascimento().toString().equals("1900-05-12"));
+        assertTrue(masterDegreeCandidateTemp.getPerson().getNascimento().toString().equals("1979-05-12"));
         assertTrue(masterDegreeCandidateTemp.getPerson().getNomePai().equals("Manuel"));
         assertTrue(masterDegreeCandidateTemp.getPerson().getNomeMae().equals("Maria"));
         assertTrue(masterDegreeCandidateTemp.getPerson().getNacionalidade().equals("Portuguesa"));
@@ -146,16 +146,15 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         assertTrue(masterDegreeCandidateTemp.getPerson().getEnderecoWeb().equals("http123"));
         assertTrue(masterDegreeCandidateTemp.getPerson().getCodigoFiscal().equals("4444444444"));
         assertTrue(masterDegreeCandidateTemp.getPerson().getProfissao().equals("Profissao"));
-        assertTrue(masterDegreeCandidateTemp.getMajorDegree().equals("LEIC"));
+        assertTrue(masterDegreeCandidateTemp.getMajorDegree().equals("Informatica"));
         assertTrue(masterDegreeCandidateTemp.getPerson().getUsername().equals("nmsn"));
 
-		// Ver como se comparam as passwords encriptadas
-        assertTrue(masterDegreeCandidateTemp.getPerson().getPassword().equals(PasswordEncryptor.encryptPassword("Pass1")));
+        assertTrue(masterDegreeCandidateTemp.getPerson().getPassword().equals(PasswordEncryptor.encryptPassword("pass")));
         assertTrue(masterDegreeCandidateTemp.getCandidateNumber().equals(new Integer(1)));
-        assertEquals(masterDegreeCandidateTemp.getSpecialization(), new Specialization(Specialization.INTEGRADO));
+        assertEquals(masterDegreeCandidateTemp.getSpecialization(), new Specialization(Specialization.MESTRADO));
         assertTrue(masterDegreeCandidateTemp.getMajorDegreeSchool().equals("IST"));
-        assertTrue(masterDegreeCandidateTemp.getMajorDegreeYear().equals(new Integer(2002)));
-        assertTrue(masterDegreeCandidateTemp.getAverage().equals(new Double(12.99)));
+        assertTrue(masterDegreeCandidateTemp.getMajorDegreeYear().equals(new Integer(2000)));
+        assertTrue(masterDegreeCandidateTemp.getAverage().equals(new Double(14.99)));
   
         assertEquals(masterDegreeCandidateTemp.getSituations().size(), 2);
   
@@ -304,7 +303,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		assertTrue(masterDegreeCandidateTemp.getPerson().getUsername().equals("ars"));
 		
 		// Ver como se comparam as passwords encriptadas
-		assertTrue(masterDegreeCandidateTemp.getPerson().getPassword().equals(PasswordEncryptor.encryptPassword("Pass1")));
+		assertTrue(masterDegreeCandidateTemp.getPerson().getPassword().equals(PasswordEncryptor.encryptPassword("pass2")));
 		assertTrue(masterDegreeCandidateTemp.getCandidateNumber().equals(new Integer(10)));
 		assertEquals(masterDegreeCandidateTemp.getSpecialization(), new Specialization(Specialization.MESTRADO));
 		assertTrue(masterDegreeCandidateTemp.getMajorDegreeSchool().equals("IST"));
@@ -404,7 +403,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         try {
             persistentSupport.iniciarTransaccao();
             masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(new Integer(1),
-            							"2003/2004", "LEEC", new Specialization(Specialization.INTEGRADO));
+            							"2003/2004", "LEEC", new Specialization(Specialization.MESTRADO));
             persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -412,20 +411,18 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         
         assertNotNull(masterDegreeCandidateTemp);
         
-        System.out.println(masterDegreeCandidateTemp);
-        
         // Testing the obtained Candidate 
 		assertTrue(masterDegreeCandidateTemp.getPerson().getNumeroDocumentoIdentificacao().equals("4444444"));
 		assertEquals(masterDegreeCandidateTemp.getPerson().getTipoDocumentoIdentificacao(), new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
 		assertTrue(masterDegreeCandidateTemp.getPerson().getLocalEmissaoDocumentoIdentificacao().equals("Lisboa"));
-       
+		       
 		assertTrue(masterDegreeCandidateTemp.getPerson().getDataEmissaoDocumentoIdentificacao().toString().equals("2002-10-12"));
 		assertTrue(masterDegreeCandidateTemp.getPerson().getDataValidadeDocumentoIdentificacao().toString().equals("2005-11-01"));
 		assertTrue(masterDegreeCandidateTemp.getPerson().getNome().equals("Nuno"));
 		assertEquals(masterDegreeCandidateTemp.getPerson().getSexo(), new Sexo(Sexo.MASCULINO));
 		assertEquals(masterDegreeCandidateTemp.getPerson().getEstadoCivil(), new EstadoCivil(EstadoCivil.SOLTEIRO));
-        
-		assertTrue(masterDegreeCandidateTemp.getPerson().getNascimento().toString().equals("1900-05-12"));
+		        
+		assertTrue(masterDegreeCandidateTemp.getPerson().getNascimento().toString().equals("1979-05-12"));
 		assertTrue(masterDegreeCandidateTemp.getPerson().getNomePai().equals("Manuel"));
 		assertTrue(masterDegreeCandidateTemp.getPerson().getNomeMae().equals("Maria"));
 		assertTrue(masterDegreeCandidateTemp.getPerson().getNacionalidade().equals("Portuguesa"));
@@ -444,19 +441,17 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		assertTrue(masterDegreeCandidateTemp.getPerson().getEnderecoWeb().equals("http123"));
 		assertTrue(masterDegreeCandidateTemp.getPerson().getCodigoFiscal().equals("4444444444"));
 		assertTrue(masterDegreeCandidateTemp.getPerson().getProfissao().equals("Profissao"));
-		assertTrue(masterDegreeCandidateTemp.getMajorDegree().equals("LEIC"));
+		assertTrue(masterDegreeCandidateTemp.getMajorDegree().equals("Informatica"));
 		assertTrue(masterDegreeCandidateTemp.getPerson().getUsername().equals("nmsn"));
 		
-		// Ver como se comparam as passwords encriptadas
-		  assertTrue(masterDegreeCandidateTemp.getPerson().getPassword().equals(PasswordEncryptor.encryptPassword("Pass1")));
+		assertTrue(masterDegreeCandidateTemp.getPerson().getPassword().equals(PasswordEncryptor.encryptPassword("pass")));
 		assertTrue(masterDegreeCandidateTemp.getCandidateNumber().equals(new Integer(1)));
-		assertEquals(masterDegreeCandidateTemp.getSpecialization(), new Specialization(Specialization.INTEGRADO));
+		assertEquals(masterDegreeCandidateTemp.getSpecialization(), new Specialization(Specialization.MESTRADO));
 		assertTrue(masterDegreeCandidateTemp.getMajorDegreeSchool().equals("IST"));
-		assertTrue(masterDegreeCandidateTemp.getMajorDegreeYear().equals(new Integer(2002)));
-		assertTrue(masterDegreeCandidateTemp.getAverage().equals(new Double(12.99)));
-  
+		assertTrue(masterDegreeCandidateTemp.getMajorDegreeYear().equals(new Integer(2000)));
+		assertTrue(masterDegreeCandidateTemp.getAverage().equals(new Double(14.99)));
+		  
 		assertEquals(masterDegreeCandidateTemp.getSituations().size(), 2);
-
     }
 
     public void testReadNonExistingMasterDegreeCandidate2() {
@@ -481,7 +476,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         
 		try {
 			persistentSupport.iniciarTransaccao();
-			masterDegreeCandidateTemp1 = persistentMasterDegreeCandidate.readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(new Integer(1), "2003/2004", "LEEC", new Specialization(Specialization.INTEGRADO));
+			masterDegreeCandidateTemp1 = persistentMasterDegreeCandidate.readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(new Integer(1), "2003/2004", "LEEC", new Specialization(Specialization.MESTRADO));
 			assertNotNull(masterDegreeCandidateTemp1);
 			
 			
@@ -497,6 +492,43 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		} catch (ExcepcaoPersistencia ex) {
 			fail("    -> Error on test");
 		}
+	}
+
+	public void testReadByUsernameAndExecutionDegreeAndSpecialization(){
+		System.out.println("- Test 11 : Read existing Master Degree Candidate by Username and Execution Degree and Specialization");
+		ICurso masterDegreeTemp = null;
+		IExecutionYear executionYear = null;
+		ICursoExecucao executionDegree = null;
+		IDegreeCurricularPlan degreeCurricularPlan = null;
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			masterDegreeTemp = persistentDegree.readBySigla("LEEC");
+			assertNotNull(masterDegreeTemp);
+
+			executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+			assertNotNull(executionYear);
+
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano2", masterDegreeTemp);
+			assertNotNull(degreeCurricularPlan);
+        
+			executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			assertNotNull(executionDegree);
+
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("    -> Error on test");
+		}
+			
+		try {
+			persistentSupport.iniciarTransaccao();
+			IMasterDegreeCandidate masterDegreeCandidate = persistentMasterDegreeCandidate.readByUsernameAndExecutionDegreeAndSpecialization("nmsn", executionDegree, new Specialization(Specialization.MESTRADO));
+			assertNotNull(masterDegreeCandidate);		
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("    -> Error on test");
+		}
+		
 	}
 
     

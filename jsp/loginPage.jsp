@@ -14,7 +14,7 @@
        </tr>
        <tr>
          <td class="introtexto">           <h1><br />
-           Login - Dot Ist</h1>
+           Login - Dot IST</h1>
            <p>O servi&ccedil;o <strong>.ist</strong> permite aos utilizadores
              certificados - alunos, docentes, funcion&aacute;rios - do <a href="http://www.ist.utl.pt">Instituto
              Superior T&eacute;cnico</a> utilizar diversos servi&ccedil;os e
