@@ -34,7 +34,7 @@ public abstract class FenixLookupDispatchAction extends LookupDispatchAction {
 		return result;
 	  }
 	 /**
-	  *  This method returns a map (x,y)
+	  *  This method returns a Map (x,y)
 	  * 
 	  *  x - is a message resource identifier
 	  *  y - is the name of the method which will be implemented within the subclasses
