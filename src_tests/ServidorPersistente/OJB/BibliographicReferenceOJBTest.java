@@ -38,7 +38,7 @@ public class BibliographicReferenceOJBTest extends TestCaseOJB {
 	}
 
 	protected void setUp() {
-		//super.setUp();
+		super.setUp();
 		try {
 			persistentSupport = SuportePersistenteOJB.getInstance();
 		} catch (ExcepcaoPersistencia e) {
@@ -164,7 +164,7 @@ public class BibliographicReferenceOJBTest extends TestCaseOJB {
 				persistentSupport.getIPersistentBibliographicReference();
 			references = ref.readBibliographicReference(executionCourse);								
 			assertNotNull(references);
-			assertEquals(references.size(),2);
+			assertEquals(references.size(),3);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("    -> Failed Reading Existing Bibliographic Reference");

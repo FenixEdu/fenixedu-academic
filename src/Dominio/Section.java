@@ -197,7 +197,6 @@ public class Section implements ISection {
 		boolean result = false;
 		if (arg0 instanceof ISection) {
 			result = (getName().equals(((ISection) arg0).getName()))&&
-				(getSectionOrder().equals(((ISection) arg0).getSectionOrder()))&&
 				(getSite().equals(((ISection) arg0).getSite()))&&				
 				((getSuperiorSection() == null && ((ISection)arg0).getSuperiorSection() == null ) || (getSuperiorSection().equals(((ISection) arg0).getSuperiorSection())));
 		} 
@@ -228,7 +227,7 @@ public class Section implements ISection {
 		result += ", sectionOrder=" + getSectionOrder();
 		result += ", name=" + getName();
 		result += ", lastModifiedDate=" + getLastModifiedDate();
-//		result += ", site=" + getSite();
+		result += ", site=" + getSite();
 		result += ", superiorSection=" + getSuperiorSection();
 //		result += ", inferiorSections=" + getInferiorSections();
 		//result += ", items=" + getItems();

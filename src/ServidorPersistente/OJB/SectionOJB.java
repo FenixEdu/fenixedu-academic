@@ -24,6 +24,7 @@ import Dominio.Item;
 import Dominio.Section;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSection;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 
@@ -154,10 +155,38 @@ public List readBySite(ISite site) throws ExcepcaoPersistencia {
 		 }
 	 }
 	 
-	public void lockWrite(ISection section) throws ExcepcaoPersistencia {
-		super.lockWrite(section);
-	}
+	public void lockWrite(ISection section) 
+	throws ExcepcaoPersistencia, ExistingPersistentException {
+	 System.out.println("entrei no lockwrite");
 
+		// If there is nothing to write, simply return.
+		if (section == null) { System.out.println("a section está a null");return;}
+		System.out.println("vou ler da base de dados");
+		ISection sectionFromDB= this.readBySiteAndSectionAndName(section.getSite(),section.getSuperiorSection(),section.getName());
+		
+		// If section is not in database, then write it.
+		if (sectionFromDB == null){
+			System.out.println("não existe na BD");
+			System.out.println(section);
+			super.lockWrite(section);
+			System.out.println("escrevi a entrada nova na bd");
+		}
+		// else If the professorship is mapped to the database, then write any existing changes.
+		else if (
+					(section instanceof Section)
+						&& ((Section) sectionFromDB).getInternalCode().equals(
+							((Section) section).getInternalCode())) {
+								System.out.println("já existe na bd, vou fazer update");			
+					super.lockWrite(section);
+					System.out.println("fiz update");
+					// else Throw an already existing exception
+				} else{
+					System.out.println("duplicate key entry");
+					throw new ExistingPersistentException();
+				}
+					
+				}
+		
 
 	public void delete(ISection section) throws ExcepcaoPersistencia {
 					
