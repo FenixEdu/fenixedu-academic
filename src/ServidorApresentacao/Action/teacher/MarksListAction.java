@@ -163,7 +163,7 @@ public class MarksListAction extends DispatchAction {
 
         String announcementTitle = null;
         if (publishmentMessage != null && publishmentMessage.length() > 0) {
-            MessageResources messages = getResources(request);
+            MessageResources messages = getResources(request, "DEFAULT");
             announcementTitle = messages.getMessage("message.publishment");
         }
 
