@@ -26,8 +26,10 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -166,27 +168,30 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 				Object args[] = { infoExecutionDegree, executionDegreeId };
 		
 				GestorServicos manager = GestorServicos.manager();
-				List serviceResult = null;
+//				List serviceResult = null;
 		
 				try {
-						serviceResult = (List) manager.executar(userView, "EditExecutionDegree", args);
-				} catch (FenixServiceException e) {
-					throw new FenixActionException(e);
-				}
+						manager.executar(userView, "EditExecutionDegree", args);
+				} catch (ExistingServiceException e) {
+				   throw new ExistingActionException(e.getMessage(), e);
+			   }
+catch (FenixServiceException fenixServiceException) {
+	throw new FenixActionException(fenixServiceException.getMessage());
+}
 		
-				if(serviceResult != null) {
-					ActionErrors actionErrors = new ActionErrors();
-					if(serviceResult.get(0) == "alreadyExisting") {
-						ActionError error = new ActionError("message.existingExecutionDegree", serviceResult.get(1));
-						actionErrors.add("message.existingExecutionDegree", error);			
-						saveErrors(request, actionErrors);
-					}
-					else {
-						ActionError error = new ActionError("message.nonExistingExecutionDegree");
-						actionErrors.add("message.nonExistingExecutionDegree", error);			
-						saveErrors(request, actionErrors);
-					}
-				}
+//				if(serviceResult != null) {
+//					ActionErrors actionErrors = new ActionErrors();
+//					if(serviceResult.get(0) == "alreadyExisting") {
+//						ActionError error = new ActionError("message.existingExecutionDegree", serviceResult.get(1));
+//						actionErrors.add("message.existingExecutionDegree", error);			
+//						saveErrors(request, actionErrors);
+//					}
+//					else {
+//						ActionError error = new ActionError("message.nonExistingExecutionDegree");
+//						actionErrors.add("message.nonExistingExecutionDegree", error);			
+//						saveErrors(request, actionErrors);
+//					}
+//				}
 			}
 			return mapping.findForward("readDegreeCurricularPlan");
 		}			

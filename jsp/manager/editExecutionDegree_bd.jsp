@@ -5,6 +5,8 @@
 
 <br>
 
+<span class="error"><html:errors/></span>
+
 <html:form action="/editExecutionDegree" method ="get">
 	    
 	<html:hidden property="page" value="1"/>

@@ -4,7 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <h2><bean:message key="message.editDegree" /></h2>
-<br/>
+<br>
+
+<span class="error"><html:errors/></span>
+
 <table>
 <html:form action="/editDegree" method="get">
 	<html:hidden property="page" value="1"/>
@@ -17,9 +20,6 @@
 		<html:textarea cols="60" property="name" />
 		
 	</td>
-	<td>
-		<span class="error"><html:errors property="name"  /></span>
-	</td>
 </tr>
 <tr>
 	<td>
@@ -27,9 +27,6 @@
 	</td>
 	<td>
 		<html:textarea cols="60" property="code"  />
-	</td>
-	<td>
-		<span class="error"><html:errors property="code" /></span>
 	</td>
 </tr>
 				

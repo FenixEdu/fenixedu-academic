@@ -3,14 +3,10 @@
  */
 package ServidorApresentacao.Action.manager;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -19,8 +15,10 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoDegree;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoCurso;
@@ -89,27 +87,29 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 		
 		Object args[] = { oldDegreeId, newInfoDegree };
 		GestorServicos manager = GestorServicos.manager();
-		List serviceResult = null;
+	
 		
 		try {
-				serviceResult = (List) manager.executar(userView, "EditDegree", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e.getMessage());
-		}
-
-		if(serviceResult != null) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			if(serviceResult.get(0) != null) {
-				error = new ActionError("message.existingDegreeCode", serviceResult.get(0));
-				actionErrors.add("message.existingDegreeCode", error);
-			}	
-			if(serviceResult.get(1) != null) {
-				error = new ActionError("message.existingDegreeName", serviceResult.get(1),serviceResult.get(2));
-				actionErrors.add("message.existingDegreeName", error);
-			}			
-			saveErrors(request, actionErrors);
-		}
+			manager.executar(userView, "EditDegree", args);
+		}catch (ExistingServiceException e) {
+				   throw new ExistingActionException(e.getMessage(), e);
+			   }
+catch (FenixServiceException fenixServiceException) {
+	throw new FenixActionException(fenixServiceException.getMessage());
+}
+//		if(serviceResult != null) {
+//			ActionErrors actionErrors = new ActionErrors();
+//			ActionError error = null;
+//			if(serviceResult.get(0) != null) {
+//				error = new ActionError("message.existingDegreeCode", serviceResult.get(0));
+//				actionErrors.add("message.existingDegreeCode", error);
+//			}	
+//			if(serviceResult.get(1) != null) {
+//				error = new ActionError("message.existingDegreeName", serviceResult.get(1),serviceResult.get(2));
+//				actionErrors.add("message.existingDegreeName", error);
+//			}			
+//			saveErrors(request, actionErrors);
+//		}
 		return mapping.findForward("readDegrees");
 	}				
 }

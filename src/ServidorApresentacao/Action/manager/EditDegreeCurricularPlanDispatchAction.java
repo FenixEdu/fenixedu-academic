@@ -5,15 +5,12 @@ package ServidorApresentacao.Action.manager;
 
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -23,8 +20,10 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoDegreeCurricularPlan;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorPersistente.Conversores.Calendar2DateFieldConversion;
@@ -213,22 +212,24 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 			
 		Object args[] = { oldDegreeCPId, newInfoDegreeCP, degreeId };
 		GestorServicos manager = GestorServicos.manager();
-		List serviceResult = null;
+//		List serviceResult = null;
 		try {
-				serviceResult = (List) manager.executar(userView, "EditDegreeCurricularPlan", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		
-		if(serviceResult != null) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			if(serviceResult.get(0) != null) {
-				error = new ActionError("message.existingDegreeCPName", serviceResult.get(0));
-				actionErrors.add("message.existingDegreeCPName", error);
-			}			
-			saveErrors(request, actionErrors);
-		}
+			manager.executar(userView, "EditDegreeCurricularPlan", args);
+		}  catch (ExistingServiceException e) {
+				   throw new ExistingActionException(e.getMessage(), e);
+			   }
+catch (FenixServiceException fenixServiceException) {
+	throw new FenixActionException(fenixServiceException.getMessage());
+}
+//		if(serviceResult != null) {
+//			ActionErrors actionErrors = new ActionErrors();
+//			ActionError error = null;
+//			if(serviceResult.get(0) != null) {
+//				error = new ActionError("message.existingDegreeCPName", serviceResult.get(0));
+//				actionErrors.add("message.existingDegreeCPName", error);
+//			}			
+//			saveErrors(request, actionErrors);
+//		}
 		return mapping.findForward("readDegree");
 	}			
 }

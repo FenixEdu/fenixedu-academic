@@ -4,7 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <h2><bean:message key="message.edit.DegreeCP" /></h2>
-<br/>
+<br>
+
+<span class="error"><html:errors/></span>
 <table>
 <html:form action="/editDegreeCurricularPlan" method="get">
 	<html:hidden property="page" value="1"/>
@@ -15,9 +17,6 @@
 	</td>
 	<td>
 		<html:text size="60" property="name" />
-	</td>
-	<td>
-		<span class="error"><html:errors property="name"  /></span>
 	</td>
 </tr>
 <tr>
@@ -43,9 +42,6 @@
 	<td>
 		<html:text size="60" property="initialDate" />
 	</td>
-	<td>
-		<span class="error"><html:errors property="initialDate" /></span>
-	</td>
 </tr>
 	
 <tr>
@@ -54,9 +50,6 @@
 	</td>
 	<td>
 		<html:text size="60" property="endDate" />
-	</td>
-	<td>
-		<span class="error"><html:errors property="endDate" /></span>
 	</td>
 </tr>
 	
@@ -67,9 +60,6 @@
 	<td>
 		<html:text size="60" property="degreeDuration" />
 	</td>
-	<td>
-		<span class="error"><html:errors property="degreeDuration" /></span>
-	</td>
 </tr>
 	
 <tr>
@@ -79,9 +69,6 @@
 	<td>
 		<html:text size="60" property="minimalYearForOptionalCourses" />
 	</td>
-	<td>
-		<span class="error"><html:errors property="minimalYearForOptionalCourses" /></span>
-	</td>
 </tr>
 	
 <tr>
@@ -90,9 +77,6 @@
 	</td>
 	<td>
 		<html:text size="60" property="neededCredits" />
-	</td>
-	<td>
-		<span class="error"><html:errors property="neededCredits" /></span>
 	</td>
 </tr>
 	
@@ -107,9 +91,6 @@
     	<html:option key="option.editDegreeCP.20" value="20"/>
     	</html:select>
 	</td>
-	<td>
-		<span class="error"><html:errors property="markType" /></span>
-	</td>
 </tr>
 	
 <tr>
@@ -118,9 +99,6 @@
 	</td>
 	<td>
 		<html:text size="60" property="numerusClausus" />
-	</td>
-	<td>
-		<span class="error"><html:errors property="numerusClausus" /></span>
 	</td>
 </tr>	
 			

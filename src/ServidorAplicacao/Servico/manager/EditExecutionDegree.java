@@ -17,6 +17,7 @@ import Dominio.IExecutionYear;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -25,6 +26,7 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author lmac1
@@ -46,7 +48,7 @@ public class EditExecutionDegree implements IServico {
 	}
 	
 
-	public List run(InfoExecutionDegree infoExecutionDegree, Integer executionDegreeId) throws FenixServiceException {
+	public void run(InfoExecutionDegree infoExecutionDegree, Integer executionDegreeId) throws FenixServiceException {
 
 		ICursoExecucaoPersistente persistentExecutionDegree = null;
 	
@@ -60,7 +62,10 @@ public class EditExecutionDegree implements IServico {
 				
 				// first check if the executionDegree still exists - concurrency control
 				if(oldExecutionDegree != null) {
-					ICursoExecucao newExecutionDegree = null;
+					
+					
+					
+//					ICursoExecucao newExecutionDegree = null;
 					InfoExecutionYear infoExecutionYear = infoExecutionDegree.getInfoExecutionYear();
 					Integer degreeCurricularPlanId = infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal();
 					
@@ -71,15 +76,15 @@ public class EditExecutionDegree implements IServico {
 						IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearString);
 						IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
 						IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(degreeCurricularPlanId), false);
-						newExecutionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+//						newExecutionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 						
 						// check if the new executionDegree already exists...
-						if(newExecutionDegree != null) {
-							result.add("alreadyExisting");
-							result.add(executionYearString);
-							return result;
-						}
-						
+//						if(newExecutionDegree != null) {
+//							result.add("alreadyExisting");
+//							result.add(executionYearString);
+//							return result;
+//						}
+//						
 						oldExecutionDegree.setExecutionYear(executionYear);
 					}
 					
@@ -94,13 +99,17 @@ public class EditExecutionDegree implements IServico {
 						ITeacher teacher = (ITeacher) persistentTeacher.readByOId(new Teacher(infoExecutionDegree.getInfoCoordinator().getIdInternal()), false);
 						oldExecutionDegree.setCoordinator(teacher);
 					}
+
+					try {
+						persistentExecutionDegree.simpleLockWrite(oldExecutionDegree);
+								} catch (ExistingPersistentException ex) {
+									throw new ExistingServiceException("O curso execução", ex);
+								}
 					
-					persistentExecutionDegree.simpleLockWrite(oldExecutionDegree);
-					return null;
+				
+
 				}
 				
-				result.add("desapeared");
-				return result;
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

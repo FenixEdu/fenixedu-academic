@@ -3,18 +3,18 @@
  */
 package ServidorAplicacao.Servico.manager;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoDegree;
 import Dominio.ICurso;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
 /**
@@ -47,7 +47,7 @@ public class EditDegree implements IServico {
    * Executes the service. Returns the current infodegree.
    */
 
-	public List run(Integer oldDegreeId, InfoDegree newInfoDegree) throws FenixServiceException {
+	public void run(Integer oldDegreeId, InfoDegree newInfoDegree) throws FenixServiceException {
 	
 		ISuportePersistente persistentSuport = null;	
 		ICursoPersistente persistentDegree = null;
@@ -68,38 +68,53 @@ public class EditDegree implements IServico {
 				newCode = newInfoDegree.getSigla();
 				newName = newInfoDegree.getNome();
 				newType = newInfoDegree.getTipoCurso();
-				List errors = new ArrayList(3);
-				errors.add(null);
-			    errors.add(null);
-			errors.add(null);
-				if(newCode.compareToIgnoreCase(oldDegree.getSigla())==0 && (newName.compareToIgnoreCase(oldDegree.getNome())==0 && newType.equals((TipoCurso) oldDegree.getTipoCurso())))
-					errors = null;
-				else
-				{
-					int modified = 0;
-					Iterator iter = degrees.iterator();
+//				List errors = new ArrayList(3);
+//				errors.add(null);
+//			    errors.add(null);
+//			errors.add(null);
+//				if(newCode.compareToIgnoreCase(oldDegree.getSigla())!=0 || (newName.compareToIgnoreCase(oldDegree.getNome())!=0 || newType.equals((TipoCurso) oldDegree.getTipoCurso())))
+//				
+
+//				{
+//					int modified = 0;
+//					Iterator iter = degrees.iterator();
+//				
+//					while(iter.hasNext()) {
+//						ICurso degreeIter = (ICurso) iter.next();
+//						if(newCode.compareToIgnoreCase(degreeIter.getSigla())==0) {
+//							modified++;
+////							errors.set(0, newCode);
+//				 		}
+//						if(newName.compareToIgnoreCase(degreeIter.getNome())==0 && newType.equals((TipoCurso) degreeIter.getTipoCurso())) {
+//						modified++;
+////						errors.set(1, newType.toString());
+////						errors.set(2, newName);
+//						}
+//					}
+//					if(modified == 0) {
+//						persistentDegree.simpleLockWrite(oldDegree);
+//						oldDegree.setNome(newName);
+//						oldDegree.setSigla(newCode);
+//						oldDegree.setTipoCurso(newType);
+//					}
+//				}
 				
-					while(iter.hasNext()) {
-						ICurso degreeIter = (ICurso) iter.next();
-						if(newCode.compareToIgnoreCase(degreeIter.getSigla())==0) {
-							modified++;
-							errors.set(0, newCode);
-				 		}
-						if(newName.compareToIgnoreCase(degreeIter.getNome())==0 && newType.equals((TipoCurso) degreeIter.getTipoCurso())) {
-						modified++;
-						errors.set(1, newType.toString());
-						errors.set(2, newName);
-						}
-					}
-					if(modified == 0) {
-						persistentDegree.simpleLockWrite(oldDegree);
-						oldDegree.setNome(newName);
-						oldDegree.setSigla(newCode);
-						oldDegree.setTipoCurso(newType);
+//				return errors;
+			if(oldDegree != null) {
+
+				try {
+					persistentDegree.lockWrite(oldDegree);
+					oldDegree.setNome(newName);
+					oldDegree.setSigla(newCode);
+					oldDegree.setTipoCurso(newType);
+				
+					} catch (ExistingPersistentException ex) {
+						throw new ExistingServiceException("O com esses nome,sigla e tipo", ex);
 					}
 				}
-				
-				return errors;
+		
+		
+			
 			
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);

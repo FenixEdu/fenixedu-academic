@@ -177,7 +177,11 @@
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.manager.EditDegreeDispatchAction"
-        validate="true">  
+        validate="true"> 
+         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   /> 
        <forward name="editDegree" path="df.page.edit-degree"/>
        <forward name="readDegrees" path="/readDegrees.do"/>      	      
 	</action>
@@ -228,6 +232,10 @@
 		scope="request"
 		type="ServidorApresentacao.Action.manager.EditDegreeCurricularPlanDispatchAction"
         validate="true">  
+         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   /> 
        <forward name="editDegreeCP" path="df.page.edit-degree-curricular-plan"/>
        <forward name="readDegree" path="/readDegree.do"/>      	      
 	</action>
@@ -344,6 +352,10 @@
 		scope="request"
 		type="ServidorApresentacao.Action.manager.EditExecutionDegreeDispatchAction"
         validate="true">  
+         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   /> 
        <forward name="editExecutionDegree" path="df.page.edit-execution-degree"/>
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
 	</action>
