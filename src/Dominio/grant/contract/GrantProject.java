@@ -3,50 +3,47 @@
  */
 package Dominio.grant.contract;
 
-
 /**
  * @author pica
  * @author barbosa
  */
-public class GrantProject extends GrantPaymentEntity implements IGrantProject
-{
+public class GrantProject extends GrantPaymentEntity implements IGrantProject {
+
     private IGrantCostCenter grantCostCenter;
-    private Integer keyGrantCostCenter; 
-    
-	public GrantProject()
-	{
-		super();
-	}
-	/**
-	 * @return Returns the grantCostCenter.
-	 */
-	public IGrantCostCenter getGrantCostCenter()
-	{
-		return grantCostCenter;
-	}
 
-	/**
-	 * @param grantCostCenter The grantCostCenter to set.
-	 */
-	public void setGrantCostCenter(IGrantCostCenter grantCostCenter)
-	{
-		this.grantCostCenter = grantCostCenter;
-	}
+    private Integer keyGrantCostCenter;
 
-	/**
-	 * @return Returns the keyGrantCostCenter.
-	 */
-	public Integer getKeyGrantCostCenter()
-	{
-		return keyGrantCostCenter;
-	}
+    public GrantProject() {
+    }
 
-	/**
-	 * @param keyGrantCostCenter The keyGrantCostCenter to set.
-	 */
-	public void setKeyGrantCostCenter(Integer keyGrantCostCenter)
-	{
-		this.keyGrantCostCenter = keyGrantCostCenter;
-	}
+    /**
+     * @return Returns the grantCostCenter.
+     */
+    public IGrantCostCenter getGrantCostCenter() {
+        return grantCostCenter;
+    }
+
+    /**
+     * @param grantCostCenter
+     *            The grantCostCenter to set.
+     */
+    public void setGrantCostCenter(IGrantCostCenter grantCostCenter) {
+        this.grantCostCenter = grantCostCenter;
+    }
+
+    /**
+     * @return Returns the keyGrantCostCenter.
+     */
+    public Integer getKeyGrantCostCenter() {
+        return keyGrantCostCenter;
+    }
+
+    /**
+     * @param keyGrantCostCenter
+     *            The keyGrantCostCenter to set.
+     */
+    public void setKeyGrantCostCenter(Integer keyGrantCostCenter) {
+        this.keyGrantCostCenter = keyGrantCostCenter;
+    }
 
 }

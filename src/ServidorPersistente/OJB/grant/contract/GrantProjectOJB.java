@@ -15,15 +15,17 @@ import ServidorPersistente.grant.IPersistentGrantProject;
  * @author pica
  * @author barbosa
  */
-public class GrantProjectOJB extends ObjectFenixOJB implements IPersistentGrantProject
-{
-	public IGrantProject readGrantProjectByNumber(String number) throws ExcepcaoPersistencia
-	{
-		IGrantProject grantProject = null;
-		Criteria criteria = new Criteria();
+public class GrantProjectOJB extends ObjectFenixOJB implements
+        IPersistentGrantProject {
+
+    public IGrantProject readGrantProjectByNumber(String number)
+            throws ExcepcaoPersistencia {
+        IGrantProject grantProject = null;
+        Criteria criteria = new Criteria();
         criteria.addEqualTo("number", number);
-        criteria.addEqualTo("class_name", "Dominio.grant.contract.GrantProject");
+        criteria
+                .addEqualTo("class_name", "Dominio.grant.contract.GrantProject");
         grantProject = (IGrantProject) queryObject(GrantProject.class, criteria);
         return grantProject;
-	}
+    }
 }

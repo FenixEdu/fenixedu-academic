@@ -1,6 +1,5 @@
 /*
  * Created on 19/Nov/2003
- * 
  */
 package DataBeans.grant.contract;
 
@@ -9,13 +8,12 @@ import java.util.Date;
 import DataBeans.InfoObject;
 
 /**
- * @author  Barbosa
- * @author  Pica
- * 
+ * @author Barbosa
+ * @author Pica
  */
 
-public class InfoGrantType extends InfoObject
-{
+public class InfoGrantType extends InfoObject {
+
     private String name;
     private String sigla;
     private Integer minPeriodDays;
@@ -23,116 +21,102 @@ public class InfoGrantType extends InfoObject
     private Double indicativeValue;
     private String source;
     private Date state;
-    
+
     /**
      * @return
      */
-    public Double getIndicativeValue()
-    {
+    public Double getIndicativeValue() {
         return indicativeValue;
     }
 
     /**
      * @param indicativeValue
      */
-    public void setIndicativeValue(Double indicativeValue)
-    {
+    public void setIndicativeValue(Double indicativeValue) {
         this.indicativeValue = indicativeValue;
     }
 
     /**
      * @return
      */
-    public Integer getMaxPeriodDays()
-    {
+    public Integer getMaxPeriodDays() {
         return maxPeriodDays;
     }
 
     /**
      * @param maxPeriodDays
      */
-    public void setMaxPeriodDays(Integer maxPeriodDays)
-    {
+    public void setMaxPeriodDays(Integer maxPeriodDays) {
         this.maxPeriodDays = maxPeriodDays;
     }
 
     /**
      * @return
      */
-    public Integer getMinPeriodDays()
-    {
+    public Integer getMinPeriodDays() {
         return minPeriodDays;
     }
 
     /**
      * @param minPeriodDays
      */
-    public void setMinPeriodDays(Integer minPeriodDays)
-    {
+    public void setMinPeriodDays(Integer minPeriodDays) {
         this.minPeriodDays = minPeriodDays;
     }
 
     /**
      * @return
      */
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
     /**
      * @param name
      */
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
     /**
      * @return
      */
-    public String getSigla()
-    {
+    public String getSigla() {
         return sigla;
     }
 
     /**
      * @param sigla
      */
-    public void setSigla(String sigla)
-    {
+    public void setSigla(String sigla) {
         this.sigla = sigla;
     }
 
     /**
      * @return
      */
-    public String getSource()
-    {
+    public String getSource() {
         return source;
     }
 
     /**
      * @param source
      */
-    public void setSource(String source)
-    {
+    public void setSource(String source) {
         this.source = source;
     }
 
     /**
      * @return
      */
-    public Date getState()
-    {
+    public Date getState() {
         return state;
     }
 
     /**
      * @param state
      */
-    public void setState(Date state)
-    {
+    public void setState(Date state) {
         this.state = state;
     }
 

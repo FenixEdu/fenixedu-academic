@@ -10,79 +10,71 @@ import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
 
 /**
- * @author  Barbosa
- * @author  Pica
- * 
+ * @author Barbosa
+ * @author Pica
+ *  
  */
 
-public class InfoGrantOrientationTeacher extends InfoObject
-{
-	private Date beginDate;
-	private Date endDate;
-	private InfoTeacher orientationTeacherInfo;
-	private InfoGrantContract grantContractInfo;
-	
+public class InfoGrantOrientationTeacher extends InfoObject {
+
+    private Date beginDate;
+    private Date endDate;
+    private InfoTeacher orientationTeacherInfo;
+    private InfoGrantContract grantContractInfo;
+
     /**
      * @return
      */
-    public Date getBeginDate()
-    {
+    public Date getBeginDate() {
         return beginDate;
     }
 
     /**
      * @param beginDate
      */
-    public void setBeginDate(Date beginDate)
-    {
+    public void setBeginDate(Date beginDate) {
         this.beginDate = beginDate;
     }
 
     /**
      * @return
      */
-    public Date getEndDate()
-    {
+    public Date getEndDate() {
         return endDate;
     }
 
     /**
      * @param endDate
      */
-    public void setEndDate(Date endDate)
-    {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
     /**
      * @return
      */
-    public InfoGrantContract getGrantContractInfo()
-    {
+    public InfoGrantContract getGrantContractInfo() {
         return grantContractInfo;
     }
 
     /**
      * @param grantContractInfo
      */
-    public void setGrantContractInfo(InfoGrantContract grantContractInfo)
-    {
+    public void setGrantContractInfo(InfoGrantContract grantContractInfo) {
         this.grantContractInfo = grantContractInfo;
     }
 
     /**
      * @return
      */
-    public InfoTeacher getOrientationTeacherInfo()
-    {
+    public InfoTeacher getOrientationTeacherInfo() {
         return orientationTeacherInfo;
     }
 
     /**
      * @param orientationTeacherInfo
      */
-    public void setOrientationTeacherInfo(InfoTeacher orientationTeacher)
-    {
+    public void setOrientationTeacherInfo(InfoTeacher orientationTeacher) {
         orientationTeacherInfo = orientationTeacher;
     }
 

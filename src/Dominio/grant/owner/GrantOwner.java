@@ -12,131 +12,130 @@ import Dominio.IPessoa;
 /**
  * @author Barbosa
  * @author Pica
- * 
+ *  
  */
 public class GrantOwner extends DomainObject implements IGrantOwner {
 
-	private Integer number;
-	private Date dateSendCGD;
-	private Integer cardCopyNumber;
-	private IPessoa person;
-	private Integer keyPerson;
+    private Integer number;
 
-	/** 
-	 * Constructor
-	 */
-	public GrantOwner() {
-	}
+    private Date dateSendCGD;
 
-	/** 
-	 * Constructor
-	 */
-	public GrantOwner(Integer grantOwnerId) {
-		setIdInternal(grantOwnerId);
-	}
+    private Integer cardCopyNumber;
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+    private IPessoa person;
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof IGrantOwner) {
-			IGrantOwner grantOwner = (IGrantOwner) obj;
-			result =
-				(((this.number.equals(grantOwner.getNumber()))
-					&& (this.person.equals(grantOwner.getPerson()))));
-		}
-		return result;
-	}
+    private Integer keyPerson;
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		String result = "[GRANT OWNER";
+    /**
+     * Constructor
+     */
+    public GrantOwner() {
+    }
 
-		result += ", number=" + getNumber();
-		result += ", dateSendCGD=" + getDateSendCGD();
-		result += ", cardCopyNumber=" + getCardCopyNumber();
-		result += ", person=" + getPerson();
-		result += "]";
-		return result;
-	}
+    /**
+     * Constructor
+     */
+    public GrantOwner(Integer grantOwnerId) {
+        setIdInternal(grantOwnerId);
+    }
 
-	/**
-	 * @return Date
-	 */
-	public Date getDateSendCGD() {
-		return dateSendCGD;
-	}
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getNumber() {
-		return number;
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof IGrantOwner) {
+            IGrantOwner grantOwner = (IGrantOwner) obj;
+            result = (((this.number.equals(grantOwner.getNumber())) && (this.person
+                    .equals(grantOwner.getPerson()))));
+        }
+        return result;
+    }
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getKeyPerson() {
-		return keyPerson;
-	}
+    /**
+     * @return Date
+     */
+    public Date getDateSendCGD() {
+        return dateSendCGD;
+    }
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getCardCopyNumber() {
-		return cardCopyNumber;
-	}
+    /**
+     * @return Integer
+     */
+    public Integer getNumber() {
+        return number;
+    }
 
-	/**
-	 * @return Integer
-	 */
-	public IPessoa getPerson() {
-		return person;
-	}
+    /**
+     * @return Integer
+     */
+    public Integer getKeyPerson() {
+        return keyPerson;
+    }
 
-	/**
-	 * Sets the dateSendCGD.
-	 * @param dateSendCGD The dateSendCGD to set
-	 */
-	public void setDateSendCGD(Date dateSendCGD) {
-		this.dateSendCGD = dateSendCGD;
-	}
+    /**
+     * @return Integer
+     */
+    public Integer getCardCopyNumber() {
+        return cardCopyNumber;
+    }
 
-	/**
-	 * Sets the number of the grantOwner.
-	 * @param number The number to set
-	 */
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
+    /**
+     * @return Integer
+     */
+    public IPessoa getPerson() {
+        return person;
+    }
 
-	/**
-	 * Sets the Person.
-	 * @param Person The Person to set
-	 */
-	public void setPerson(IPessoa person) {
-		this.person = person;
-	}
+    /**
+     * Sets the dateSendCGD.
+     * 
+     * @param dateSendCGD
+     *            The dateSendCGD to set
+     */
+    public void setDateSendCGD(Date dateSendCGD) {
+        this.dateSendCGD = dateSendCGD;
+    }
 
-	/**
-	 * Sets the cardCopyNumber.
-	 * @param cardCopyNumber The cardCopyNumber to set
-	 */
-	public void setCardCopyNumber(Integer cardCopyNumber) {
-		this.cardCopyNumber = cardCopyNumber;
-	}
-	
-	/**
-	 * Sets the keyPerson.
-	 * @param personKey The personKey to set
-	 */
-	public void setKeyPerson(Integer personKey) {
-		this.keyPerson = personKey;
-	}
+    /**
+     * Sets the number of the grantOwner.
+     * 
+     * @param number
+     *            The number to set
+     */
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    /**
+     * Sets the Person.
+     * 
+     * @param Person
+     *            The Person to set
+     */
+    public void setPerson(IPessoa person) {
+        this.person = person;
+    }
+
+    /**
+     * Sets the cardCopyNumber.
+     * 
+     * @param cardCopyNumber
+     *            The cardCopyNumber to set
+     */
+    public void setCardCopyNumber(Integer cardCopyNumber) {
+        this.cardCopyNumber = cardCopyNumber;
+    }
+
+    /**
+     * Sets the keyPerson.
+     * 
+     * @param personKey
+     *            The personKey to set
+     */
+    public void setKeyPerson(Integer personKey) {
+        this.keyPerson = personKey;
+    }
 
 }

@@ -10,80 +10,72 @@ import DataBeans.InfoTeacher;
  * @author pica
  * @author barbosa
  */
-public class InfoGrantPart extends InfoObject
-{
-	private Integer percentage;
-	private InfoGrantSubsidy infoGrantSubsidy;
-	private InfoGrantPaymentEntity infoGrantPaymentEntity;
-	private InfoTeacher infoResponsibleTeacher;
-	
-	public InfoGrantPart()
-	{
-		super();
-	}
+public class InfoGrantPart extends InfoObject {
 
-	/**
-	 * @return Returns the infoGrantPaymentEntity.
-	 */
-	public InfoGrantPaymentEntity getInfoGrantPaymentEntity()
-	{
-		return infoGrantPaymentEntity;
-	}
+    private Integer percentage;
+    private InfoGrantSubsidy infoGrantSubsidy;
+    private InfoGrantPaymentEntity infoGrantPaymentEntity;
+    private InfoTeacher infoResponsibleTeacher;
 
-	/**
-	 * @param infoGrantPaymentEntity The infoGrantPaymentEntity to set.
-	 */
-	public void setInfoGrantPaymentEntity(InfoGrantPaymentEntity infoGrantPaymentEntity)
-	{
-		this.infoGrantPaymentEntity = infoGrantPaymentEntity;
-	}
+    /**
+     * @return Returns the infoGrantPaymentEntity.
+     */
+    public InfoGrantPaymentEntity getInfoGrantPaymentEntity() {
+        return infoGrantPaymentEntity;
+    }
 
-	/**
-	 * @return Returns the infoGrantResponsibleTeacher.
-	 */
-	public InfoTeacher getInfoResponsibleTeacher()
-	{
-		return infoResponsibleTeacher;
-	}
+    /**
+     * @param infoGrantPaymentEntity
+     *            The infoGrantPaymentEntity to set.
+     */
+    public void setInfoGrantPaymentEntity(
+            InfoGrantPaymentEntity infoGrantPaymentEntity) {
+        this.infoGrantPaymentEntity = infoGrantPaymentEntity;
+    }
 
-	/**
-	 * @param infoResponsibleTeacher The infoResponsibleTeacher to set.
-	 */
-	public void setInfoResponsibleTeacher(InfoTeacher infoResponsibleTeacher)
-	{
-		this.infoResponsibleTeacher = infoResponsibleTeacher;
-	}
+    /**
+     * @return Returns the infoGrantResponsibleTeacher.
+     */
+    public InfoTeacher getInfoResponsibleTeacher() {
+        return infoResponsibleTeacher;
+    }
 
-	/**
-	 * @return Returns the infoGrantSubsidy.
-	 */
-	public InfoGrantSubsidy getInfoGrantSubsidy()
-	{
-		return infoGrantSubsidy;
-	}
+    /**
+     * @param infoResponsibleTeacher
+     *            The infoResponsibleTeacher to set.
+     */
+    public void setInfoResponsibleTeacher(InfoTeacher infoResponsibleTeacher) {
+        this.infoResponsibleTeacher = infoResponsibleTeacher;
+    }
 
-	/**
-	 * @param infoGrantSubsidy The infoGrantSubsidy to set.
-	 */
-	public void setInfoGrantSubsidy(InfoGrantSubsidy infoGrantSubsidy)
-	{
-		this.infoGrantSubsidy = infoGrantSubsidy;
-	}
+    /**
+     * @return Returns the infoGrantSubsidy.
+     */
+    public InfoGrantSubsidy getInfoGrantSubsidy() {
+        return infoGrantSubsidy;
+    }
 
-	/**
-	 * @return Returns the percentage.
-	 */
-	public Integer getPercentage()
-	{
-		return percentage;
-	}
+    /**
+     * @param infoGrantSubsidy
+     *            The infoGrantSubsidy to set.
+     */
+    public void setInfoGrantSubsidy(InfoGrantSubsidy infoGrantSubsidy) {
+        this.infoGrantSubsidy = infoGrantSubsidy;
+    }
 
-	/**
-	 * @param percentage The percentage to set.
-	 */
-	public void setPercentage(Integer percentage)
-	{
-		this.percentage = percentage;
-	}
+    /**
+     * @return Returns the percentage.
+     */
+    public Integer getPercentage() {
+        return percentage;
+    }
+
+    /**
+     * @param percentage
+     *            The percentage to set.
+     */
+    public void setPercentage(Integer percentage) {
+        this.percentage = percentage;
+    }
 
 }

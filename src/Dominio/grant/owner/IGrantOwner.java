@@ -12,17 +12,23 @@ import Dominio.IPessoa;
 /**
  * @author Barbosa
  * @author Pica
- * 
+ *  
  */
 public interface IGrantOwner extends IDomainObject {
 
-	public IPessoa getPerson();
-	public Integer getNumber();
-	public Date getDateSendCGD();
-	public Integer getCardCopyNumber();
+    public IPessoa getPerson();
 
-	public void setPerson(IPessoa person);
-	public void setNumber(Integer number);
-	public void setDateSendCGD(Date dateSendCGD);
-	public void setCardCopyNumber(Integer cardCopyNumber);
+    public Integer getNumber();
+
+    public Date getDateSendCGD();
+
+    public Integer getCardCopyNumber();
+
+    public void setPerson(IPessoa person);
+
+    public void setNumber(Integer number);
+
+    public void setDateSendCGD(Date dateSendCGD);
+
+    public void setCardCopyNumber(Integer cardCopyNumber);
 }

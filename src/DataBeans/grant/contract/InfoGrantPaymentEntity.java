@@ -10,80 +10,71 @@ import DataBeans.InfoTeacher;
  * @author pica
  * @author barbosa
  */
-public abstract class InfoGrantPaymentEntity extends InfoObject
-{
+public abstract class InfoGrantPaymentEntity extends InfoObject {
+
     protected String number;
     protected String designation;
     protected String ojbConcreteClass;
     protected InfoTeacher infoResponsibleTeacher;
-	
-	public InfoGrantPaymentEntity()
-	{
-		super();
-	}
 
-	/**
-	 * @return Returns the designation.
-	 */
-	public String getDesignation()
-	{
-		return designation;
-	}
+    /**
+     * @return Returns the designation.
+     */
+    public String getDesignation() {
+        return designation;
+    }
 
-	/**
-	 * @param designation The designation to set.
-	 */
-	public void setDesignation(String designation)
-	{
-		this.designation = designation;
-	}
+    /**
+     * @param designation
+     *            The designation to set.
+     */
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
 
-	/**
-	 * @return Returns the number.
-	 */
-	public String getNumber()
-	{
-		return number;
-	}
+    /**
+     * @return Returns the number.
+     */
+    public String getNumber() {
+        return number;
+    }
 
-	/**
-	 * @param number The number to set.
-	 */
-	public void setNumber(String number)
-	{
-		this.number = number;
-	}
+    /**
+     * @param number
+     *            The number to set.
+     */
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
-	/**
-	 * @return Returns the ojbConcreteClass.
-	 */
-	public String getOjbConcreteClass()
-	{
-		return ojbConcreteClass;
-	}
+    /**
+     * @return Returns the ojbConcreteClass.
+     */
+    public String getOjbConcreteClass() {
+        return ojbConcreteClass;
+    }
 
-	/**
-	 * @param ojbConcreteClass The ojbConcreteClass to set.
-	 */
-	public void setOjbConcreteClass(String ojbConcreteClass)
-	{
-		this.ojbConcreteClass = ojbConcreteClass;
-	}
+    /**
+     * @param ojbConcreteClass
+     *            The ojbConcreteClass to set.
+     */
+    public void setOjbConcreteClass(String ojbConcreteClass) {
+        this.ojbConcreteClass = ojbConcreteClass;
+    }
 
-	/**
-	 * @return Returns the infoResponsibleTeacher.
-	 */
-	public InfoTeacher getInfoResponsibleTeacher()
-	{
-		return infoResponsibleTeacher;
-	}
+    /**
+     * @return Returns the infoResponsibleTeacher.
+     */
+    public InfoTeacher getInfoResponsibleTeacher() {
+        return infoResponsibleTeacher;
+    }
 
-	/**
-	 * @param infoResponsibleTeacher The infoResponsibleTeacher to set.
-	 */
-	public void setInfoResponsibleTeacher(InfoTeacher infoResponsibleTeacher)
-	{
-		this.infoResponsibleTeacher = infoResponsibleTeacher;
-	}
+    /**
+     * @param infoResponsibleTeacher
+     *            The infoResponsibleTeacher to set.
+     */
+    public void setInfoResponsibleTeacher(InfoTeacher infoResponsibleTeacher) {
+        this.infoResponsibleTeacher = infoResponsibleTeacher;
+    }
 
 }

@@ -12,18 +12,23 @@ import Dominio.ITeacher;
 /**
  * @author Barbosa
  * @author Pica
- * 
+ *  
  */
-public interface IGrantOrientationTeacher extends IDomainObject
-{
-	public Date getBeginDate();
-	public Date getEndDate();
-	public ITeacher getOrientationTeacher();
-	public IGrantContract getGrantContract();
+public interface IGrantOrientationTeacher extends IDomainObject {
 
+    public Date getBeginDate();
 
-	public void setBeginDate(Date beginDate);
-	public void setEndDate(Date endDate);
-	public void setGrantContract(IGrantContract grantContract);
-	public void setOrientationTeacher(ITeacher OrientationTeacher);
+    public Date getEndDate();
+
+    public ITeacher getOrientationTeacher();
+
+    public IGrantContract getGrantContract();
+
+    public void setBeginDate(Date beginDate);
+
+    public void setEndDate(Date endDate);
+
+    public void setGrantContract(IGrantContract grantContract);
+
+    public void setOrientationTeacher(ITeacher OrientationTeacher);
 }

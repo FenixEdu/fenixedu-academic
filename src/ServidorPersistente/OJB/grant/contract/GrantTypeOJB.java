@@ -10,19 +10,18 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.grant.IPersistentGrantType;
 
 /**
- *
- * @author  Barbosa
- * @author  Pica
+ * @author Barbosa
+ * @author Pica
  */
 
-public class GrantTypeOJB extends ServidorPersistente.OJB.ObjectFenixOJB implements IPersistentGrantType
-{
-    public GrantTypeOJB()
-    {
+public class GrantTypeOJB extends ServidorPersistente.OJB.ObjectFenixOJB
+        implements IPersistentGrantType {
+
+    public GrantTypeOJB() {
     }
 
-    public IGrantType readGrantTypeBySigla(String sigla) throws ExcepcaoPersistencia
-    {
+    public IGrantType readGrantTypeBySigla(String sigla)
+            throws ExcepcaoPersistencia {
         IGrantType grantType = null;
 
         Criteria criteria = new Criteria();
@@ -30,10 +29,9 @@ public class GrantTypeOJB extends ServidorPersistente.OJB.ObjectFenixOJB impleme
         grantType = (IGrantType) queryObject(GrantType.class, criteria);
         return grantType;
     }
-    
-    public List readAll() throws ExcepcaoPersistencia
-    {
-    	List grantTypes = queryList(GrantType.class, null);
-    	return grantTypes;
+
+    public List readAll() throws ExcepcaoPersistencia {
+        List grantTypes = queryList(GrantType.class, null);
+        return grantTypes;
     }
 }

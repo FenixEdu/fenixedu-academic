@@ -12,19 +12,27 @@ import Dominio.grant.owner.IGrantOwner;
 /**
  * @author Barbosa
  * @author Pica
- * 
+ *  
  */
-public interface IGrantContract extends IDomainObject
-{
-	public Integer getContractNumber();
-	public String getEndContractMotive();
-	public IGrantOwner getGrantOwner();
-	public IGrantType getGrantType();
+public interface IGrantContract extends IDomainObject {
+
+    public Integer getContractNumber();
+
+    public String getEndContractMotive();
+
+    public IGrantOwner getGrantOwner();
+
+    public IGrantType getGrantType();
+
     public Date getDateAcceptTerm();
-    
-	public void setContractNumber(Integer contractNumber);
-	public void setEndContractMotive(String endContractMotive);
-	public void setGrantOwner(IGrantOwner grantOwner);
-	public void setGrantType(IGrantType grantType);
+
+    public void setContractNumber(Integer contractNumber);
+
+    public void setEndContractMotive(String endContractMotive);
+
+    public void setGrantOwner(IGrantOwner grantOwner);
+
+    public void setGrantType(IGrantType grantType);
+
     public void setDateAcceptTerm(Date dateAcceptTerm);
 }

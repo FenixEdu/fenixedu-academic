@@ -23,36 +23,33 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Pica
  *  
  */
-public class ReadAllTeachersNumberAndName implements IService
-{
+public class ReadAllTeachersNumberAndName implements IService {
+
     /**
      * The constructor of this class.
      */
-    public ReadAllTeachersNumberAndName()
-    {
+    public ReadAllTeachersNumberAndName() {
     }
-    
-    public List run() throws FenixServiceException
-    {
+
+    public List run() throws FenixServiceException {
         List teachers = null;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentTeacher pt = sp.getIPersistentTeacher();
-            teachers = pt.readAll();
-        } catch (ExcepcaoPersistencia e)
-        {
+            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            teachers = persistentTeacher.readAll();
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e.getMessage());
         }
 
-        if(teachers == null)
-            return new ArrayList();
-        
+        if (teachers == null) { return new ArrayList(); }
+
         Iterator teachersIterator = teachers.iterator();
-        
+
+        /*
+         * Set the InfoObject only with the needed fields to be presented.
+         */
         ArrayList teachersList = new ArrayList();
-        while(teachersIterator.hasNext())
-        {
+        while (teachersIterator.hasNext()) {
             InfoTeacher infoTeacher = new InfoTeacher();
             InfoPerson infoPerson = new InfoPerson();
             ITeacher teacher = (ITeacher) teachersIterator.next();

@@ -15,15 +15,18 @@ import ServidorPersistente.grant.IPersistentGrantCostCenter;
  * @author pica
  * @author barbosa
  */
-public class GrantCostCenterOJB extends ObjectFenixOJB implements IPersistentGrantCostCenter
-{
-	public IGrantCostCenter readGrantCostCenterByNumber(String number) throws ExcepcaoPersistencia
-	{
-		IGrantCostCenter grantCostCenter = null;
-		Criteria criteria = new Criteria();
+public class GrantCostCenterOJB extends ObjectFenixOJB implements
+        IPersistentGrantCostCenter {
+
+    public IGrantCostCenter readGrantCostCenterByNumber(String number)
+            throws ExcepcaoPersistencia {
+        IGrantCostCenter grantCostCenter = null;
+        Criteria criteria = new Criteria();
         criteria.addEqualTo("number", number);
-        criteria.addEqualTo("class_name", "Dominio.grant.contract.GrantCostCenter");
-        grantCostCenter = (IGrantCostCenter) queryObject(GrantCostCenter.class, criteria);
+        criteria.addEqualTo("class_name",
+                "Dominio.grant.contract.GrantCostCenter");
+        grantCostCenter = (IGrantCostCenter) queryObject(GrantCostCenter.class,
+                criteria);
         return grantCostCenter;
-	}
+    }
 }

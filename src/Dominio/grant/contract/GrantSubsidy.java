@@ -11,156 +11,155 @@ import Dominio.DomainObject;
  * @author pica
  * @author barbosa
  */
-public class GrantSubsidy extends DomainObject implements IGrantSubsidy
-{
-	private Integer state;
+public class GrantSubsidy extends DomainObject implements IGrantSubsidy {
+
+    private Integer state;
+
     private Date dateBeginSubsidy;
+
     private Date dateEndSubsidy;
-	private String valueFullName;
-	private Double value;
-	private Double totalCost;
-	private IGrantContract grantContract;
-	private Integer keyGrantContract;
-	/**
-	 *  
-	 */
-	public GrantSubsidy()
-	{
-		super();
-	}
 
-	/**
-	 * @param idInternal
-	 */
-	public GrantSubsidy(Integer idInternal)
-	{
-		super(idInternal);
-	}
+    private String valueFullName;
 
-	/**
-	 * @return Returns the grantContract.
-	 */
-	public IGrantContract getGrantContract()
-	{
-		return grantContract;
-	}
+    private Double value;
 
-	/**
-	 * @param grantContract The grantContract to set.
-	 */
-	public void setGrantContract(IGrantContract grantContract)
-	{
-		this.grantContract = grantContract;
-	}
+    private Double totalCost;
 
-	/**
-	 * @return Returns the totalCost.
-	 */
-	public Double getTotalCost()
-	{
-		return totalCost;
-	}
+    private IGrantContract grantContract;
 
-	/**
-	 * @param totalCost The totalCost to set.
-	 */
-	public void setTotalCost(Double totalCost)
-	{
-		this.totalCost = totalCost;
-	}
+    private Integer keyGrantContract;
 
-	/**
-	 * @return Returns the value.
-	 */
-	public Double getValue()
-	{
-		return value;
-	}
+    /**
+     *  
+     */
+    public GrantSubsidy() {
+        super();
+    }
 
-	/**
-	 * @param value The value to set.
-	 */
-	public void setValue(Double value)
-	{
-		this.value = value;
-	}
+    /**
+     * @param idInternal
+     */
+    public GrantSubsidy(Integer idInternal) {
+        super(idInternal);
+    }
 
-	/**
-	 * @return Returns the valueFullName.
-	 */
-	public String getValueFullName()
-	{
-		return valueFullName;
-	}
+    /**
+     * @return Returns the grantContract.
+     */
+    public IGrantContract getGrantContract() {
+        return grantContract;
+    }
 
-	/**
-	 * @param valueFullName The valueFullName to set.
-	 */
-	public void setValueFullName(String valueFullName)
-	{
-		this.valueFullName = valueFullName;
-	}
+    /**
+     * @param grantContract
+     *            The grantContract to set.
+     */
+    public void setGrantContract(IGrantContract grantContract) {
+        this.grantContract = grantContract;
+    }
 
-	/**
-	 * @return Returns the keyGrantContract.
-	 */
-	public Integer getKeyGrantContract()
-	{
-		return keyGrantContract;
-	}
+    /**
+     * @return Returns the totalCost.
+     */
+    public Double getTotalCost() {
+        return totalCost;
+    }
 
-	/**
-	 * @param keyGrantContract The keyGrantContract to set.
-	 */
-	public void setKeyGrantContract(Integer keyGrantContract)
-	{
-		this.keyGrantContract = keyGrantContract;
-	}
+    /**
+     * @param totalCost
+     *            The totalCost to set.
+     */
+    public void setTotalCost(Double totalCost) {
+        this.totalCost = totalCost;
+    }
 
-	/**
-	 * @return Returns the dateBeginSubsidy.
-	 */
-	public Date getDateBeginSubsidy()
-	{
-		return dateBeginSubsidy;
-	}
+    /**
+     * @return Returns the value.
+     */
+    public Double getValue() {
+        return value;
+    }
 
-	/**
-	 * @param dateBeginSubsidy The dateBeginSubsidy to set.
-	 */
-	public void setDateBeginSubsidy(Date dateBeginSubsidy)
-	{
-		this.dateBeginSubsidy = dateBeginSubsidy;
-	}
+    /**
+     * @param value
+     *            The value to set.
+     */
+    public void setValue(Double value) {
+        this.value = value;
+    }
 
-	/**
-	 * @return Returns the dateEndSubsidy.
-	 */
-	public Date getDateEndSubsidy()
-	{
-		return dateEndSubsidy;
-	}
+    /**
+     * @return Returns the valueFullName.
+     */
+    public String getValueFullName() {
+        return valueFullName;
+    }
 
-	/**
-	 * @param dateEndSubsidy The dateEndSubsidy to set.
-	 */
-	public void setDateEndSubsidy(Date dateEndSubsidy)
-	{
-		this.dateEndSubsidy = dateEndSubsidy;
-	}
+    /**
+     * @param valueFullName
+     *            The valueFullName to set.
+     */
+    public void setValueFullName(String valueFullName) {
+        this.valueFullName = valueFullName;
+    }
 
-	/**
-	 * @return Returns the state.
-	 */
-	public Integer getState()
-	{
-		return state;
-	}
-	/**
-	 * @param state The state to set.
-	 */
-	public void setState(Integer state)
-	{
-		this.state = state;
-	}
+    /**
+     * @return Returns the keyGrantContract.
+     */
+    public Integer getKeyGrantContract() {
+        return keyGrantContract;
+    }
+
+    /**
+     * @param keyGrantContract
+     *            The keyGrantContract to set.
+     */
+    public void setKeyGrantContract(Integer keyGrantContract) {
+        this.keyGrantContract = keyGrantContract;
+    }
+
+    /**
+     * @return Returns the dateBeginSubsidy.
+     */
+    public Date getDateBeginSubsidy() {
+        return dateBeginSubsidy;
+    }
+
+    /**
+     * @param dateBeginSubsidy
+     *            The dateBeginSubsidy to set.
+     */
+    public void setDateBeginSubsidy(Date dateBeginSubsidy) {
+        this.dateBeginSubsidy = dateBeginSubsidy;
+    }
+
+    /**
+     * @return Returns the dateEndSubsidy.
+     */
+    public Date getDateEndSubsidy() {
+        return dateEndSubsidy;
+    }
+
+    /**
+     * @param dateEndSubsidy
+     *            The dateEndSubsidy to set.
+     */
+    public void setDateEndSubsidy(Date dateEndSubsidy) {
+        this.dateEndSubsidy = dateEndSubsidy;
+    }
+
+    /**
+     * @return Returns the state.
+     */
+    public Integer getState() {
+        return state;
+    }
+
+    /**
+     * @param state
+     *            The state to set.
+     */
+    public void setState(Integer state) {
+        this.state = state;
+    }
 }

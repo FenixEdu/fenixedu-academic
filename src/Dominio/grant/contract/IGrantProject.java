@@ -3,13 +3,13 @@
  */
 package Dominio.grant.contract;
 
-
 /**
  * @author pica
  * @author barbosa
  */
-public interface IGrantProject extends IGrantPaymentEntity
-{
+public interface IGrantProject extends IGrantPaymentEntity {
+
     public IGrantCostCenter getGrantCostCenter();
+
     public void setGrantCostCenter(IGrantCostCenter grantCostCenter);
 }

@@ -3,15 +3,13 @@
  */
 package Dominio.grant.contract;
 
-
 /**
  * @author pica
  * @author barbosa
  */
-public class GrantCostCenter extends GrantPaymentEntity implements IGrantCostCenter
-{
-    public GrantCostCenter()
-    {
-        super();
+public class GrantCostCenter extends GrantPaymentEntity implements
+        IGrantCostCenter {
+
+    public GrantCostCenter() {
     }
 }

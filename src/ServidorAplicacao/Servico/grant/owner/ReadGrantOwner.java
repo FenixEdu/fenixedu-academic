@@ -15,38 +15,39 @@ import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 
 /**
- * @author  Barbosa
- * @author  Pica
+ * @author Barbosa
+ * @author Pica
  *  
  */
-public class ReadGrantOwner extends ReadDomainObjectService implements IService
-{
+public class ReadGrantOwner extends ReadDomainObjectService implements IService {
 
-	public ReadGrantOwner()
-    {
+    public ReadGrantOwner() {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantOwner();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
      */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject)
-    {
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
         return Cloner.copyIGrantOwner2InfoGrantOwner((IGrantOwner) domainObject);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
      */
-    protected Class getDomainObjectClass()
-    {
+    protected Class getDomainObjectClass() {
         return GrantOwner.class;
     }
 }

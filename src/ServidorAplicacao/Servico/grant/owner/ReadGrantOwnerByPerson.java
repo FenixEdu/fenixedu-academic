@@ -15,30 +15,25 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.grant.IPersistentGrantOwner;
 
 /**
- * @author  Barbosa
- * @author  Pica
+ * @author Barbosa
+ * @author Pica
  *  
  */
-public class ReadGrantOwnerByPerson implements IService
-{
+public class ReadGrantOwnerByPerson implements IService {
 
-	public ReadGrantOwnerByPerson()
-    {
+    public ReadGrantOwnerByPerson() {
     }
 
-    public InfoGrantOwner run(Integer personId) throws FenixServiceException
-    {
+    public InfoGrantOwner run(Integer personId) throws FenixServiceException {
         InfoGrantOwner infoGrantOwner = null;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentGrantOwner pgo = sp.getIPersistentGrantOwner();
-            IGrantOwner grantOwner = pgo.readGrantOwnerByPerson(personId);
-            
+            IPersistentGrantOwner persistentGrantOwner = sp.getIPersistentGrantOwner();
+            IGrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(personId);
+
             infoGrantOwner = Cloner.copyIGrantOwner2InfoGrantOwner(grantOwner);
-        } catch (ExcepcaoPersistencia e)
-        {
-        	throw new FenixServiceException(e.getMessage());
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e.getMessage());
         }
         return infoGrantOwner;
     }
