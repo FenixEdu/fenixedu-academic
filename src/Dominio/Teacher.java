@@ -13,7 +13,7 @@ import java.util.List;
 public class Teacher extends Pessoa implements ITeacher {
     private Integer teacherNumber;
     private List professorShipsExecutionCourses;
-    private List responsibleForExecutionCourses;
+    private List responsableForExecutionCourses;
     /** Creates a new instance of Teacher */
     public Teacher() {
     }
@@ -43,7 +43,7 @@ public class Teacher extends Pessoa implements ITeacher {
 	 * @return List
 	 */
 	public List getResponsableForExecutionCourses() {
-		return responsibleForExecutionCourses;
+		return responsableForExecutionCourses;
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class Teacher extends Pessoa implements ITeacher {
 	 * @param responsableForExecutionCourses The responsableForExecutionCourses to set
 	 */
 	public void setResponsableForExecutionCourses(List responsableForExecutionCourses) {
-		this.responsibleForExecutionCourses = responsableForExecutionCourses;
+		this.responsableForExecutionCourses = responsableForExecutionCourses;
 	}
 
 	/**

@@ -1,6 +1,5 @@
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Test;
@@ -72,10 +71,8 @@ public class TeacherOJBTest extends TestCaseOJB {
         }
         assertNotNull(teacherRead);
         assertEquals(teacherRead.getTeacherNumber(), teacher.getTeacherNumber());
-//        assertEquals(teacherRead.getSitesOwned(), teacher.getSitesOwned());
-//        assertEquals(teacherRead.getProfessorShipsSites(), teacher.getProfessorShipsSites());
-		assertEquals(teacherRead.getProfessorShipsExecutionCourses(), new ArrayList());
-		assertEquals(teacherRead.getResponsableForExecutionCourses(), new ArrayList());
+        assertEquals(teacherRead.getResponsableForExecutionCourses(), teacher.getResponsableForExecutionCourses());
+        assertEquals(teacherRead.getProfessorShipsExecutionCourses(), teacher.getProfessorShipsExecutionCourses());
         
     }
 
@@ -128,8 +125,8 @@ public class TeacherOJBTest extends TestCaseOJB {
         }
         assertNotNull(teacher);
         assertTrue(teacher.getTeacherNumber().equals(new Integer("1")));
-        assertTrue(teacher.getResponsableForExecutionCourses().equals(new ArrayList()));
-		assertTrue(teacher.getProfessorShipsExecutionCourses().equals(new ArrayList()));
+		assertEquals(teacher.getResponsableForExecutionCourses().size(), 2);
+		assertEquals(teacher.getProfessorShipsExecutionCourses().size(), 3);
 
 		//read unexisting
 		try {
@@ -155,8 +152,8 @@ public class TeacherOJBTest extends TestCaseOJB {
 		}
 		assertNotNull(teacher);
 		assertTrue(teacher.getTeacherNumber().equals(new Integer("1")));
-		assertTrue(teacher.getProfessorShipsExecutionCourses().equals(new ArrayList()));
-		assertTrue(teacher.getResponsableForExecutionCourses().equals(new ArrayList()));
+		assertEquals(teacher.getResponsableForExecutionCourses().size(), 2);
+		assertEquals(teacher.getProfessorShipsExecutionCourses().size(), 3);
 
 		//read unexisting
 		try {
@@ -216,4 +213,113 @@ public class TeacherOJBTest extends TestCaseOJB {
         }
         assertNotNull(list);
     }
+    
+	public void testReadResponsableForExecutionCoursesByUsername() {
+		List result = null;
+
+		//read existing
+		try {
+			persistentSupport.iniciarTransaccao();
+			result = persistentTeacher.readResponsableForExecutionCourses("teacher1");
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testReadResponsableForExecutionCoursesByUsername: readResponsableForExecutionCourses");
+		}
+		assertNotNull(result);
+		assertEquals(result.size(), 2);
+
+		//read unexisting
+		result = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			result = persistentTeacher.readResponsableForExecutionCourses("teacherUnexisting");
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testReadResponsableForExecutionCoursesByUsername: readResponsableForExecutionCourses");
+		}
+		assertNotNull(result);
+		assertEquals(result.isEmpty(), true);
+	}
+
+	public void testReadResponsableForExecutionCoursesByTeacherNumber() {
+		List result = null;
+
+		//read existing
+		try {
+			persistentSupport.iniciarTransaccao();
+			result = persistentTeacher.readResponsableForExecutionCourses(new Integer("1"));
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testReadResponsableForExecutionCoursesByTeacherNumber: readResponsableForExecutionCourses");
+		}
+		assertNotNull(result);
+		assertEquals(result.size(), 2);
+
+		//read unexisting
+		result = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			result = persistentTeacher.readResponsableForExecutionCourses(new Integer("2"));
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testReadResponsableForExecutionCoursesByTeacherNumber: readResponsableForExecutionCourses");
+		}
+		assertNotNull(result);
+		assertEquals(result.isEmpty(), true);
+	}
+
+	public void testReadProfessorShipsExecutionCoursesByUsername() {
+		List result = null;
+
+		//read existing
+		try {
+			persistentSupport.iniciarTransaccao();
+			result = persistentTeacher.readProfessorShipsExecutionCourses("teacher1");
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testReadProfessorShipsExecutionCoursesByUsername: readProfessorShipsExecutionCourses");
+		}
+		assertNotNull(result);
+		assertEquals(result.size(), 3);
+
+		//read unexisting
+		result = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			result = persistentTeacher.readProfessorShipsExecutionCourses("teacherUnexisting");
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testReadProfessorShipsExecutionCoursesByUsername: readProfessorShipsExecutionCourses");
+		}
+		assertNotNull(result);
+		assertEquals(result.isEmpty(), true);
+	}
+
+	public void testReadProfessorShipsExecutionCoursesByTeacherNumber() {
+		List result = null;
+
+		//read existing
+		try {
+			persistentSupport.iniciarTransaccao();
+			result = persistentTeacher.readProfessorShipsExecutionCourses(new Integer("1"));
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testReadProfessorShipsExecutionCoursesByUsername: readProfessorShipsExecutionCourses");
+		}
+		assertNotNull(result);
+		assertEquals(result.size(), 3);
+
+		//read unexisting
+		result = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			result = persistentTeacher.readProfessorShipsExecutionCourses(new Integer("2"));
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testReadProfessorShipsExecutionCoursesByUsername: readProfessorShipsExecutionCourses");
+		}
+		assertNotNull(result);
+		assertEquals(result.isEmpty(), true);
+	}
+    
 }

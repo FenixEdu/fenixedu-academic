@@ -62,3 +62,20 @@ INSERT INTO CURRICULUM VALUES (2, '25','bla','bla','bla');
 
 DELETE FROM TEACHER;
 INSERT INTO TEACHER VALUES (1, 'teacher1', 'password', 1);
+
+#
+# Data for table 'professorships'
+#
+
+DELETE FROM professorships;
+INSERT INTO professorships VALUES (1, 24);
+INSERT INTO professorships VALUES (1, 25);
+INSERT INTO professorships VALUES (1, 26);
+
+#
+# Data for table 'responsablefor'
+#
+
+DELETE FROM responsablefor;
+INSERT INTO responsablefor VALUES (1, 25);
+INSERT INTO responsablefor VALUES (1, 26);
