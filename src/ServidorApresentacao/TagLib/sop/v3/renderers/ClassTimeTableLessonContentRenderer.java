@@ -17,12 +17,12 @@ public class ClassTimeTableLessonContentRenderer
 		StringBuffer strBuffer = new StringBuffer();
 		InfoLesson lesson = lessonSlot.getInfoLessonWrapper().getInfoLesson();
 		
-		strBuffer.append("<a href='siteViewer.do?method=executionCourseViewer&amp;exeCourseCode=");
+		strBuffer.append("<a class='timetable' href='siteViewer.do?method=executionCourseViewer&amp;exeCourseCode=");
 		strBuffer.append(lesson.getInfoDisciplinaExecucao().getSigla());
 		strBuffer.append("'>").append(lesson.getInfoDisciplinaExecucao().getSigla()).append("</a>");
 		strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")<br/>");
 		strBuffer
-			.append(" <a href='siteViewer.do?method=roomViewer&amp;roomName=")
+			.append(" <a class='timetable' href='siteViewer.do?method=roomViewer&amp;roomName=")
 			.append(lesson.getInfoSala().getNome())
 			.append("'>")
 			.append(lesson.getInfoSala().getNome())

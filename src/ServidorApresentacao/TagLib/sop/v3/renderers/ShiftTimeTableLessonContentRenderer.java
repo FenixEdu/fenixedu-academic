@@ -21,7 +21,7 @@ public class ShiftTimeTableLessonContentRenderer
 		strBuffer.append("(");
 		strBuffer.append(lesson.getTipo()).append(")");
 		strBuffer
-			.append("<a href='siteViewer.do?method=roomViewer&amp;roomName=")
+			.append("<a class='timetable' href='siteViewer.do?method=roomViewer&amp;roomName=")
 			.append(lesson.getInfoSala().getNome())
 			.append("'>")
 			.append(lesson.getInfoSala().getNome())
