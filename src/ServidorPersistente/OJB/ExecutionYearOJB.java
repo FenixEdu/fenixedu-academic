@@ -61,8 +61,8 @@ public class ExecutionYearOJB
 	public ArrayList readAllExecutionYear() throws ExcepcaoPersistencia {
 		try {
 
-			String oqlQuery =
-				"select all from " + ExecutionYear.class.getName();
+			String oqlQuery = "select all from " + ExecutionYear.class.getName()
+						    + " order by year desc";
 			query.create(oqlQuery);
 			Collection result = (Collection) query.execute();
 			lockRead((List) result);

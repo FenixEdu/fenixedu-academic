@@ -43,6 +43,12 @@
             </td>
           </tr>
 
+          <!-- Execution Year  -->
+          <tr>
+            <td><bean:message key="label.masterDegree.administrativeOffice.executionYear" /></td>
+            <td><bean:write name="newCandidate" property="infoExecutionDegree.infoExecutionYear.year"/></td>
+          </tr>
+
           <!-- Identification Document Number -->
           <tr>
             <td><bean:message key="label.candidate.identificationDocumentNumber" /></td>

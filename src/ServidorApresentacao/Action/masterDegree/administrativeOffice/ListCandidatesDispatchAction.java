@@ -22,7 +22,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoCountry;
-import DataBeans.InfoGuide;
+import DataBeans.InfoExecutionYear;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
 import ServidorAplicacao.FenixServiceException;
@@ -84,12 +84,25 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			// Create the Degree Type List
 			
 			session.setAttribute(SessionConstants.SPECIALIZATIONS, Specialization.toArrayList());
+
+
+			// Get the Actual ExecutionYear
+			InfoExecutionYear infoExecutionYear = null;
+			
+			try {
+				infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadActualExecutionYear", null);
+			} catch (Exception e) {
+				throw new Exception(e);
+			}
 			
 			// Get the Degree List
 			
 			ArrayList degreeList = null; 			
+			
+			Object args[] = {infoExecutionYear.getYear()};
+			
 			try {
-				degreeList = (ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", null);
+				degreeList = (ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", args);
 			} catch (Exception e) {
 				throw new Exception(e);
 			}

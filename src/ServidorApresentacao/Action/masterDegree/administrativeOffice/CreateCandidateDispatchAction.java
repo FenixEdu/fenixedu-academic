@@ -39,6 +39,62 @@ import Util.TipoDocumentoIdentificacao;
  */
 public class CreateCandidateDispatchAction extends DispatchAction {
 
+
+	public ActionForward prepareChooseExecutionYear(ActionMapping mapping, ActionForm form,
+									HttpServletRequest request,
+									HttpServletResponse response)
+		throws Exception {
+
+		SessionUtils.validSessionVerification(request, mapping);
+		HttpSession session = request.getSession(false);
+
+		if (session != null) {
+			DynaActionForm chooseExecutionYearForm = (DynaActionForm) form;
+			GestorServicos serviceManager = GestorServicos.manager();
+			
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			
+			// Get Execution Year List
+			
+			ArrayList executionYearList = null; 			
+			try {
+				executionYearList = (ArrayList) serviceManager.executar(userView, "ReadExecutionYears", null);
+			} catch (ExistingServiceException e) {
+				throw new ExistingActionException(e);
+			}
+
+			request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST, executionYearList);
+						
+			return mapping.findForward("PrepareSuccess");
+		  } else
+			throw new Exception();   
+
+	}
+
+
+
+	public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form,
+									HttpServletRequest request,
+									HttpServletResponse response)
+		throws Exception {
+
+		SessionUtils.validSessionVerification(request, mapping);
+		HttpSession session = request.getSession(false);
+
+		if (session != null) {
+			DynaActionForm chooseExecutionYearForm = (DynaActionForm) form;
+			GestorServicos serviceManager = GestorServicos.manager();
+			
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			
+			request.setAttribute(SessionConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
+						
+			return mapping.findForward("CreateReady");
+		  } else
+			throw new Exception();   
+	}
+
+
 	public ActionForward prepare(ActionMapping mapping, ActionForm form,
 									HttpServletRequest request,
 									HttpServletResponse response)
@@ -50,13 +106,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 		if (session != null) {
 			DynaActionForm createCandidateForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
-			
-			createCandidateForm.set("specialization", null);
-			createCandidateForm.set("degree", null);
-			createCandidateForm.set("name", null);
-			createCandidateForm.set("identificationDocumentNumber", null);
-			createCandidateForm.set("identificationDocumentType", null);
-			
+
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Create the Degree Type List
@@ -65,9 +115,11 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 			
 			// Get the Degree List
 			
-			ArrayList degreeList = null; 			
+			ArrayList degreeList = null;
+			Object args[] = { request.getAttribute(SessionConstants.EXECUTION_YEAR) } ;
+			
 			try {
-				degreeList = (ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", null);
+				degreeList = (ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", args);
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException(e);
 			}

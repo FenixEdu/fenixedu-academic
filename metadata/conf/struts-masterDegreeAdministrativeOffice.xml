@@ -66,7 +66,16 @@
          <form-property name="guideNumber" type="java.lang.String" />
          <form-property name="guideYear" type="java.lang.String" />
       </form-bean>
-      
+
+
+	  <!-- Bean for The Choosing of a Guide -->
+      <form-bean name="chooseExecutionYearForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="executionYear" type="java.lang.String" />
+      </form-bean>      
 
 
 		<!-- Bean for The Creation of a Guide -->
@@ -190,6 +199,25 @@
     
       
       <!-- action definition -->
+      
+      
+      <!-- action to choose a Execution Year to create a candidate -->
+      <action attribute="chooseExecutionYearForm"
+      		  input="/chooseExecutionYear.jsp"
+      	      name="chooseExecutionYearForm"
+		      path="/chooseExecutionYear"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateCandidateDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
+	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
+	         <forward name="CreateReady" path="/createCandidateDispatchAction.do?method=prepare&amp;page=0"/>  
+      </action>
+      
+      
       
       <!-- action to create a candidate -->
       <action attribute="createCandidateForm"

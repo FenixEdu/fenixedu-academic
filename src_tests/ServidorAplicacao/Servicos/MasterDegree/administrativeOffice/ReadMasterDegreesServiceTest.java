@@ -55,8 +55,9 @@ public class ReadMasterDegreesServiceTest extends TestCaseServicos {
         System.out.println("- Test 1 : Read Master Degrees");
         List masterDegrees = null;
 
+		Object args[] = {"2002/2003"};
         try {
-            masterDegrees = (List) _gestor.executar(this.getUserViewToBeTested(), "ReadMasterDegrees", null);
+            masterDegrees = (List) _gestor.executar(this.getUserViewToBeTested(), "ReadMasterDegrees", args);
         } catch (Exception ex) {
             System.out.println("Service Not Executed: " + ex);
         }   

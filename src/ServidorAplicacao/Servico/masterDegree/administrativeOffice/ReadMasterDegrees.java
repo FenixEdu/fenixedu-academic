@@ -45,7 +45,7 @@ public class ReadMasterDegrees implements IServico {
 		return "ReadMasterDegrees";
 	}
 
-	public ArrayList run() throws FenixServiceException {
+	public ArrayList run(String executionYearString) throws FenixServiceException {
 
 		ISuportePersistente sp = null;
 		List result = new ArrayList();
@@ -55,7 +55,7 @@ public class ReadMasterDegrees implements IServico {
 			// Get the Actual Execution Year
 			IExecutionYear executionYear = null;
 
-			executionYear = sp.getIPersistentExecutionYear().readActualExecutionYear();
+			executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
 			
 			// Read the degrees
 			
