@@ -307,7 +307,7 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		changePersonalInfoForm.set("motherName", infoPerson.getNomeMae());
 		changePersonalInfoForm.set(
 			"nationality",
-			infoPerson.getInfoPais().getName());
+			infoPerson.getInfoPais().getNationality());
 		changePersonalInfoForm.set(
 			"birthPlaceParish",
 			infoPerson.getFreguesiaNaturalidade());

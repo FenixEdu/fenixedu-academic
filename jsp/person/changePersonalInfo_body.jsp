@@ -38,7 +38,6 @@
       	<html:hidden property="addressMunicipality" />
       	<html:hidden property="addressDistrict" />
       	<html:hidden property="telephone" />
-      	<html:hidden property="mobilePhone" />
       	<html:hidden property="contributorNumber" />
       	<html:hidden property="occupation" />
       	<html:hidden property="birthDay" />

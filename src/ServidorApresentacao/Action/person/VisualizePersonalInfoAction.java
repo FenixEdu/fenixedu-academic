@@ -49,6 +49,7 @@ public class VisualizePersonalInfoAction
 				args);
 
 		request.removeAttribute("personalInfo");
+
 		request.setAttribute("personalInfo", infoPerson);
 
 		return mapping.findForward("Success");
