@@ -984,9 +984,9 @@
         />     
 
         <field-descriptor 
-           name="workLocation"    
-           column="WORK_LOCATION"  
-           jdbc-type="VARCHAR"
+           name="keyWorkLocation"    
+           column="KEY_WORK_LOCATION"  
+           jdbc-type="INTEGER"
         />          
 
 		<reference-descriptor
@@ -994,6 +994,13 @@
 	        class-ref="Dominio.Pessoa"
       	>
     	    <foreignkey field-ref="keyPerson"/>
+		</reference-descriptor>
+		
+		<reference-descriptor
+        	name="workLocation"
+	        class-ref="Dominio.WorkLocation"
+      	>
+    	    <foreignkey field-ref="keyWorkLocation"/>
 		</reference-descriptor>
                 
  </class-descriptor>  
@@ -1129,5 +1136,32 @@
 
 	 </class-descriptor>
 <!-- End of definitions for class Dominio.reimbursementGuide.ReimbursementGuide -->
+
+<!-- Definitions for class Dominio.WorkLocation -->
+	
+ <class-descriptor
+              class="Dominio.WorkLocation"
+              table="WORK_LOCATION"
+      >
+      
+      <field-descriptor 
+           name="idInternal"    
+           column="ID_INTERNAL"  
+           jdbc-type="INTEGER"
+           primarykey="true"
+           autoincrement="true"
+        />  
+        
+        <field-descriptor 
+           name="name"    
+           column="NAME"  
+           jdbc-type="VARCHAR"
+        />
+               
+ </class-descriptor>  
+   
+<!-- End of definitions for class Dominio.WorkLocation -->
+
+
 
 <!-- Mapping of User defined classes ends here -->
