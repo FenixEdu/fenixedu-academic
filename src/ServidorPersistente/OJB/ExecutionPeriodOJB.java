@@ -289,6 +289,9 @@ public class ExecutionPeriodOJB
 					executionPeriodToImportDataTo));
 		}
 
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		
 		criteria = new Criteria();
 		criteria.addEqualTo(
 			"executionPeriod.idInternal",
@@ -305,6 +308,9 @@ public class ExecutionPeriodOJB
 					executionPeriodToImportDataTo));
 		}
 
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+
 		// Classes
 		List classesToTransfer = queryList(Turma.class, criteria);
 		List classes = new ArrayList();
@@ -315,6 +321,9 @@ public class ExecutionPeriodOJB
 					executionPeriodToImportDataTo,
 					executionDegrees));
 		}
+
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
 
 		criteria = new Criteria();
 		criteria.addEqualTo(
@@ -332,6 +341,9 @@ public class ExecutionPeriodOJB
 					executionCourses));
 		}
 
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+
 		// Shifts
 		List shiftsToTransfer = queryList(Turno.class, criteria);
 		List shifts = new ArrayList();
@@ -342,6 +354,9 @@ public class ExecutionPeriodOJB
 					executionPeriodToImportDataTo,
 					executionCourses));
 		}
+
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
 
 		criteria = new Criteria();
 		criteria.addEqualTo(
@@ -358,6 +373,9 @@ public class ExecutionPeriodOJB
 				lessons);
 		}
 
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+
 		// Classes-Shifts
 		List classesShiftsToTransfer = queryList(TurmaTurno.class, criteria);
 		for (int i = 0; i < classesShiftsToTransfer.size(); i++) {
@@ -368,10 +386,13 @@ public class ExecutionPeriodOJB
 				shifts);
 		}
 
-		criteria = new Criteria();
-		criteria.addEqualTo(
-			"associatedExecutionCourses.executionPeriod.idInternal",
-			executionPeriodToExportDataFrom.getIdInternal());
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+
+//		criteria = new Criteria();
+//		criteria.addEqualTo(
+//			"associatedExecutionCourses.executionPeriod.idInternal",
+//			executionPeriodToExportDataFrom.getIdInternal());
 
 		// Whatever else needs to be transfered
 	}
