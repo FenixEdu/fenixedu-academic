@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
 
+import DataBeans.InfoBranch;
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoClass;
 import DataBeans.InfoCountry;
@@ -33,6 +34,7 @@ import DataBeans.gesdis.InfoTeacher;
 import Dominio.Announcement;
 import Dominio.Aula;
 import Dominio.BibliographicReference;
+import Dominio.Branch;
 import Dominio.CandidateSituation;
 import Dominio.Country;
 import Dominio.CurricularCourse;
@@ -47,6 +49,7 @@ import Dominio.ExecutionYear;
 import Dominio.IAnnouncement;
 import Dominio.IAula;
 import Dominio.IBibliographicReference;
+import Dominio.IBranch;
 import Dominio.ICandidateSituation;
 import Dominio.ICountry;
 import Dominio.ICurricularCourse;
@@ -125,36 +128,6 @@ public abstract class Cloner {
 
 		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 		return infoExecutionCourse;
-	}
-
-	/**
-	 * Method copyInfoCurricularCourse2ICurricularCourse.
-	 * @param infoCurricularCourse
-	 * @return ICurricularCourse
-	 */
-	public static ICurricularCourse copyInfoCurricularCourse2ExecutionCourse(InfoCurricularCourse infoCurricularCourse) {
-		ICurricularCourse curricularCourse = new CurricularCourse();
-		IDegreeCurricularPlan planoCurricularCurso =
-			copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
-				infoCurricularCourse.getInfoDegreeCurricularPlan());
-
-		copyObjectProperties(curricularCourse, infoCurricularCourse);
-
-		curricularCourse.setDegreeCurricularPlan(planoCurricularCurso);
-		return curricularCourse;
-	}
-
-	public static InfoCurricularCourse copyICurricularCourse2InfoCurricularCourse(ICurricularCourse curricularCourse) {
-		InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-			copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
-				curricularCourse.getDegreeCurricularPlan());
-
-		copyObjectProperties(infoCurricularCourse, curricularCourse);
-
-		infoCurricularCourse.setInfoDegreeCurricularPlan(
-			infoDegreeCurricularPlan);
-		return infoCurricularCourse;
 	}
 
 	/**
@@ -327,49 +300,6 @@ public abstract class Cloner {
 
 		return executionDegree;
 
-	}
-	/**
-	 * Method copyInfoDegreeCurricularPlan2IDegreeCurricularPlan.
-	 * @param infoDegreeCurricularPlan
-	 * @return IDegreeCurricularPlan
-	 */
-	public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-
-		ICurso degree =
-			Cloner.copyInfoDegree2IDegree(
-				infoDegreeCurricularPlan.getInfoDegree());
-		try {
-			BeanUtils.copyProperties(
-				degreeCurricularPlan,
-				infoDegreeCurricularPlan);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
-		degreeCurricularPlan.setDegree(degree);
-
-		return degreeCurricularPlan;
-
-	}
-
-	public static InfoDegreeCurricularPlan copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-			new InfoDegreeCurricularPlan();
-
-		InfoDegree infoDegree =
-			Cloner.copyIDegree2InfoDegree(degreeCurricularPlan.getDegree());
-		try {
-			BeanUtils.copyProperties(
-				infoDegreeCurricularPlan,
-				degreeCurricularPlan);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
-		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-
-		return infoDegreeCurricularPlan;
 	}
 
 	public static InfoExecutionDegree copyIExecutionDegree2InfoExecutionDegree(ICursoExecucao executionDegree) {
@@ -1121,4 +1051,111 @@ public abstract class Cloner {
 
 				return teacher;
 			}		
+
+//	---------------------------------------------- DCS-RJAO -----------------------------------------------
+
+	 /**
+	  * @author dcs-rjao
+	  * @param InfoDegreeCurricularPlan
+	  * @return IDegreeCurricularPlan
+	  */
+	 public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+
+		 IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
+
+		 ICurso degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
+
+		 try {
+			 BeanUtils.copyProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
+		 } catch (Exception e) {
+			 throw new RuntimeException(e);
+		 }
+
+		 degreeCurricularPlan.setDegree(degree);
+
+		 return degreeCurricularPlan;
+	 }
+
+	 /**
+	  * @author dcs-rjao
+	  * @param IDegreeCurricularPlan
+	  * @return InfoDegreeCurricularPlan
+	  */
+	 public static InfoDegreeCurricularPlan copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
+
+		 InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+
+		 InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(degreeCurricularPlan.getDegree());
+
+		 try {
+			 BeanUtils.copyProperties(infoDegreeCurricularPlan, degreeCurricularPlan);
+		 } catch (Exception e) {
+			 throw new RuntimeException(e);
+		 }
+
+		 infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+
+		 return infoDegreeCurricularPlan;
+	 }
+
+	 /**
+	  * @author dcs-rjao
+	  * @param InfoBranch
+	  * @return IBranch
+	  */
+	 public static IBranch copyInfoBranch2IBranch(InfoBranch infoBranch) {
+
+		 IBranch branch = new Branch();
+		 copyObjectProperties(branch, infoBranch);
+		 return branch;
+	 }
+
+	 /**
+	  * @author dcs-rjao
+	  * @param IBranch
+	  * @return InfoBranch
+	  */
+	 public static InfoBranch copyIBranch2InfoBranch(IBranch branch) {
+
+		 InfoBranch infoBranch = new InfoBranch();
+		 copyObjectProperties(infoBranch, branch);
+		 return infoBranch;
+	 }
+
+	 /**
+	  * @author dcs-rjao
+	  * @param InfoCurricularCourse
+	  * @return ICurricularCourse
+	  */
+	 public static ICurricularCourse copyInfoCurricularCourse2ExecutionCourse(InfoCurricularCourse infoCurricularCourse) {
+
+		 ICurricularCourse curricularCourse = new CurricularCourse();
+
+		 IDegreeCurricularPlan planoCurricularCurso = copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoCurricularCourse.getInfoDegreeCurricularPlan());
+
+		 copyObjectProperties(curricularCourse, infoCurricularCourse);
+
+		 curricularCourse.setDegreeCurricularPlan(planoCurricularCurso);
+
+		 return curricularCourse;
+	 }
+
+	 /**
+	  * @author dcs-rjao
+	  * @param ICurricularCourse
+	  * @return InfoCurricularCourse
+	  */
+	 public static InfoCurricularCourse copyICurricularCourse2InfoCurricularCourse(ICurricularCourse curricularCourse) {
+
+		 InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
+
+		 InfoDegreeCurricularPlan infoDegreeCurricularPlan = copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(curricularCourse.getDegreeCurricularPlan());
+
+		 copyObjectProperties(infoCurricularCourse, curricularCourse);
+
+		 infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+
+		 return infoCurricularCourse;
+	 }
+//	---------------------------------------------- DCS-RJAO -----------------------------------------------
 }
