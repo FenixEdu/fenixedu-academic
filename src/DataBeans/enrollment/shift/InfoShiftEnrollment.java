@@ -22,6 +22,12 @@ public class InfoShiftEnrollment
 	 */
 	private List infoAttendingCourses;
 	
+	
+	/**
+	 * Shifts that the student are enrolling
+	 */
+	private List infoShiftEnrollment;
+	
 	/**
 	 * Execution courses that belongs to execution degree selected
 	 */
@@ -49,6 +55,24 @@ public class InfoShiftEnrollment
 	 */
 	private InfoStudent infoStudent;
 	
+
+
+
+	/**
+	 * @return Returns the infoShiftEnrollment.
+	 */
+	public List getInfoShiftEnrollment()
+	{
+		return infoShiftEnrollment;
+	}
+
+	/**
+	 * @param infoShiftEnrollment The infoShiftEnrollment to set.
+	 */
+	public void setInfoShiftEnrollment(List infoShiftEnrollment)
+	{
+		this.infoShiftEnrollment = infoShiftEnrollment;
+	}
 
 	/**
 	 * @return Returns the infoAttendingCourses.

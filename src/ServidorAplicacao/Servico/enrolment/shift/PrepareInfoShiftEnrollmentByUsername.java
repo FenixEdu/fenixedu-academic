@@ -2,7 +2,7 @@
  * Created on 10/Fev/2004
  *  
  */
-package ServidorAplicacao.Servico.student;
+package ServidorAplicacao.Servico.enrolment.shift;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,13 +11,16 @@ import java.util.ListIterator;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoShift;
 import DataBeans.enrollment.shift.InfoShiftEnrollment;
 import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
+import Dominio.ExecutionPeriod;
 import Dominio.Frequenta;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
@@ -26,6 +29,7 @@ import Dominio.IExecutionYear;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import Dominio.ITurnoAluno;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -35,6 +39,7 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
 
@@ -72,6 +77,11 @@ public class PrepareInfoShiftEnrollmentByUsername implements IService
 
 			//retrieve all courses that student is currently attended in
 			infoShiftEnrollment.setInfoAttendingCourses(readAttendingCourses(sp, student.getNumber()));
+
+			//retrieve all shifts that student is currently enrollment
+			//it will be shift associated with all or some attending courses
+			infoShiftEnrollment.setInfoShiftEnrollment(
+				readShiftEnrollment(sp, student, infoShiftEnrollment.getInfoAttendingCourses()));
 
 			//read current execution period
 			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
@@ -140,6 +150,41 @@ public class PrepareInfoShiftEnrollmentByUsername implements IService
 		return infoAttendingCourses;
 	}
 
+	private List readShiftEnrollment(
+		ISuportePersistente sp,
+		IStudent student,
+		List infoAttendingCourses)
+		throws ExcepcaoPersistencia
+	{
+		List infoShiftEnrollment = null;
+
+		if (infoAttendingCourses != null && infoAttendingCourses.size() > 0)
+		{
+			IExecutionPeriod executionPeriod = new ExecutionPeriod();
+			executionPeriod.setIdInternal(
+				((InfoExecutionCourse) infoAttendingCourses.get(0))
+					.getInfoExecutionPeriod()
+					.getIdInternal());
+
+			ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
+			List studentShifts =
+				persistentShiftStudent.readByStudentAndExecutionPeriod(student, executionPeriod);
+
+			infoShiftEnrollment = (List) CollectionUtils.collect(studentShifts, new Transformer()
+			{
+
+				public Object transform(Object input)
+				{
+					ITurnoAluno shiftStudent = (ITurnoAluno) input;
+					InfoShift infoShift = Cloner.copyShift2InfoShift(shiftStudent.getShift());
+					return infoShift;
+				}
+			});
+		}
+
+		return infoShiftEnrollment;
+	}
+
 	private List readInfoExecutionDegrees(ISuportePersistente sp, IExecutionYear executionYear)
 		throws ExcepcaoPersistencia, FenixServiceException
 	{
@@ -206,17 +251,20 @@ public class PrepareInfoShiftEnrollmentByUsername implements IService
 		ICursoExecucao executionDegree = null;
 
 		//read the execution degree chosen
-		if(executionDegreeIdChosen != null){
+		if (executionDegreeIdChosen != null)
+		{
 			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
-			
+
 			executionDegree = new CursoExecucao();
 			executionDegree.setIdInternal(executionDegreeIdChosen);
-			executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
-			if(executionDegree != null){
+			executionDegree =
+				(ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
+			if (executionDegree != null)
+			{
 				return executionDegree;
 			}
 		}
-				
+
 		IStudentCurricularPlanPersistente persistentCurricularPlan =
 			sp.getIStudentCurricularPlanPersistente();
 		IStudentCurricularPlan studentCurricularPlan =

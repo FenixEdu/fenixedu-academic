@@ -2,7 +2,7 @@
  * Created on 10/Fev/2004
  *  
  */
-package ServidorApresentacao.Action.student;
+package ServidorApresentacao.Action.student.enrollment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,10 +37,11 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
-		HttpServletResponse response) throws FenixTransactionException
+		HttpServletResponse response)
+		throws FenixTransactionException
 	{
 		super.validateToken(request, form, mapping, "error.transaction.enrollment");
-		
+
 		ActionErrors errors = new ActionErrors();
 		HttpSession session = request.getSession();
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -91,7 +92,7 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 
 			return mapping.getInputForward();
 		}
-		
+
 		return mapping.findForward("chooseCourses");
 	}
 
@@ -99,10 +100,11 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
-		HttpServletResponse response) throws FenixTransactionException
+		HttpServletResponse response)
+		throws FenixTransactionException
 	{
 		super.validateToken(request, form, mapping, "error.transaction.enrollment");
-		
+
 		ActionErrors errors = new ActionErrors();
 		HttpSession session = request.getSession();
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -110,9 +112,9 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 		//Read data from form
 		DynaActionForm enrollmentForm = (DynaActionForm) form;
 		Integer removedCourse = (Integer) enrollmentForm.get("removedCourse");
-		
+
 		Integer studentId = (Integer) enrollmentForm.get("studentId");
-		
+
 		InfoStudent infoStudent = new InfoStudent();
 		infoStudent.setIdInternal(studentId);
 
@@ -175,12 +177,10 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 
 		//Read data from form
 		DynaActionForm enrollmentForm = (DynaActionForm) form;
-		Integer studentId = (Integer) enrollmentForm.get("studentId");
-		System.out.println("-->studentId: " + studentId);
+		Integer studentId = readStudentId(request, enrollmentForm);
 
 		InfoStudent infoStudent = new InfoStudent();
 		infoStudent.setIdInternal(studentId);
-
 		Object[] args = { infoStudent };
 		InfoClassEnrollmentDetails infoClassEnrollmentDetails = null;
 		try
@@ -195,25 +195,36 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 		{
 			exception.printStackTrace();
 			errors.add("error", new ActionError("errors.impossible.operation"));
-
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
-		if(infoClassEnrollmentDetails == null)	{
+		if (infoClassEnrollmentDetails == null)
+		{
 			errors.add("error", new ActionError("errors.impossible.operation"));
-
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
-		
-		request.setAttribute("infoClassEnrollmentDetails", infoClassEnrollmentDetails);
 
+		request.setAttribute("infoClassEnrollmentDetails", infoClassEnrollmentDetails);
 		System.out.println("---------------------------------------------------");
 		System.out.println(infoClassEnrollmentDetails);
 		System.out.println("---------------------------------------------------");
-		
-		
 		return mapping.findForward("");
+	}
+
+	private Integer readStudentId(HttpServletRequest request, DynaActionForm enrollmentForm)
+	{
+		Integer studentId = (Integer) enrollmentForm.get("studentId");
+		if (studentId == null)
+		{
+			String studentIdString = request.getParameter("studentId"); 
+			if (studentIdString != null)
+
+			{
+				studentId = Integer.valueOf(request.getParameter("studentId"));
+			}
+		}
+		return studentId;
 	}
 
 	public ActionForward exitEnrollment(

@@ -5727,7 +5727,7 @@
     <service>
     	<name>PrepareInfoShiftEnrollmentByUsername</name>
     	<description>Read all information needed for shift enrollment</description>
-    	<implementationClass>ServidorAplicacao.Servico.student.PrepareInfoShiftEnrollmentByUsername</implementationClass>
+    	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.PrepareInfoShiftEnrollmentByUsername</implementationClass>
     	<isTransactional>True</isTransactional>
         <filterChains>
             <chain name="StudentAuthorization"/>
@@ -5747,6 +5747,13 @@
     	<isTransactional>True</isTransactional>
         <filterChains/>
     </service> 
+    <service>
+    	<name>ReadClassShiftEnrollmentDetails</name>
+    	<description>Read all data, include schedule, shift, class and lessons, from student shift enrollment</description>
+    	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.ReadClassShiftEnrollmentDetails</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains/>
+    </service>
 	<service>
     	<name>ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</name>
     	<description>Returns information about student enrollments in curricular courses</description>
@@ -5755,5 +5762,5 @@
         <filterChains>
             <chain name="EnrollmentLEECAuthorization"/>
         </filterChains>
-    </service>      
+    </service>    
 </serviceDefinitions>

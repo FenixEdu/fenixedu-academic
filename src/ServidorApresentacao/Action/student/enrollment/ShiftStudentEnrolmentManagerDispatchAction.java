@@ -3,7 +3,7 @@
  * 
  *  
  */
-package ServidorApresentacao.Action.student;
+package ServidorApresentacao.Action.student.enrollment;
 
 import java.util.Collections;
 
@@ -27,25 +27,22 @@ import Util.ExecutionDegreesFormat;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * @author tdi-dev (bruno)
- * Modified by Tânia Pousão
- * 
- * This class is used to group shifts by 'main types' (such as classes or courses) and then subdivide by
- * shift types
+ * @author tdi-dev (bruno) Modified by Tânia Pousão
+ *  
  */
 public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDispatchAction
-{	
+{
 	public ActionForward start(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
 	{
 		super.createToken(request);
-		
+
 		return chooseCourses(mapping, form, request, response);
 	}
-	
+
 	public ActionForward chooseCourses(
 		ActionMapping mapping,
 		ActionForm form,
@@ -68,7 +65,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 
 		DynaActionForm enrolmentForm = (DynaActionForm) form;
 		Integer executionDegreeIdChosen = (Integer) enrolmentForm.get("degree");
-		
+
 		InfoShiftEnrollment infoShiftEnrollment = null;
 		Object[] args = { userView.getUtilizador(), executionDegreeIdChosen };
 		try
@@ -86,26 +83,34 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 			saveErrors(request, errors);
 			return mapping.findForward("studentFirstPage");
 		}
-		
-		//order degree's list and format them names
-		if (infoShiftEnrollment.getInfoExecutionDegreesList() != null
-			&& infoShiftEnrollment.getInfoExecutionDegreesList().size() > 0)
-		{
-			Collections.sort(
-				infoShiftEnrollment.getInfoExecutionDegreesList(),
-				new ComparatorByNameForInfoExecutionDegree());
-			infoShiftEnrollment.setInfoExecutionDegreesLabelsList(
-				ExecutionDegreesFormat.buildExecutionDegreeLabelValueBean(
-					infoShiftEnrollment.getInfoExecutionDegreesList()));
-		}
-		
+
 		//inicialize the form with the degree chosen and student number
 		enrolmentForm.set("degree", infoShiftEnrollment.getInfoExecutionDegree().getIdInternal());
 		enrolmentForm.set("studentId", infoShiftEnrollment.getInfoStudent().getIdInternal());
 
 		request.setAttribute("infoShiftEnrollment", infoShiftEnrollment);
 		
-		return mapping.findForward("selectCourses");
+		if (infoShiftEnrollment.getInfoShiftEnrollment() != null
+			&& infoShiftEnrollment.getInfoShiftEnrollment().size() > 0)
+		{
+			return mapping.findForward("showShiftsEnrollment");			
+		}
+		else
+		{
+			//order degree's list and format them names
+			if (infoShiftEnrollment.getInfoExecutionDegreesList() != null
+				&& infoShiftEnrollment.getInfoExecutionDegreesList().size() > 0)
+			{
+				Collections.sort(
+					infoShiftEnrollment.getInfoExecutionDegreesList(),
+					new ComparatorByNameForInfoExecutionDegree());
+				infoShiftEnrollment.setInfoExecutionDegreesLabelsList(
+					ExecutionDegreesFormat.buildExecutionDegreeLabelValueBean(
+						infoShiftEnrollment.getInfoExecutionDegreesList()));
+			}
+
+			return mapping.findForward("selectCourses");
+		}
 	}
 
 }

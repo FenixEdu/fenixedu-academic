@@ -205,19 +205,20 @@
       <!-- Student Shift Enrolment Manager-->
 	  <action path="/studentShiftEnrolmentManager"
 	  	name="studentShiftEnrolmentForm"
-        type="ServidorApresentacao.Action.student.ShiftStudentEnrolmentManagerDispatchAction"
+        type="ServidorApresentacao.Action.student.enrollment.ShiftStudentEnrolmentManagerDispatchAction"
 		input="/dotIstPortal.do?prefix=/student&amp;page=/index.do" 
         parameter="method"
         scope="request"
         validate="false">                         
         <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=start&amp;firstTime=true"/>
 		<forward name="selectCourses" path="show-courses-by-degree"/>
+		<forward name="showShiftsEnrollment" path="show-shifts-enrollment"/>
       </action>
       
    	  <action path="/studentShiftEnrolmentManagerLoockup"
 	  	name="studentShiftEnrolmentForm"
-        type="ServidorApresentacao.Action.student.ShiftStudentEnrolmentManagerLookupDispatchAction"
-		input="/studentShiftEnrolmentManager.do?method=start" 
+        type="ServidorApresentacao.Action.student.enrollment.ShiftStudentEnrolmentManagerLookupDispatchAction"
+		input="/studentShiftEnrolmentManager.do?method=chooseCourses" 
 		parameter="method"
         scope="request"
         validate="false">                           
