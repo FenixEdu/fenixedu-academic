@@ -178,6 +178,8 @@
 			<forward name="showAvailableOptionalCurricularCourses" path="df.page.showAvailableOptionalCurricularCoursesWithoutRules"/>
 			<forward name="searchOptionalCurricularCourses" path="df.page.searchOptionalCurricularCoursesWithoutRules"/>
 			<forward name="concreteOptionalList" path="df.page.concreteOptionalListWithoutRules"/>
+			<forward name="verifyEnrolment" path="df.page.verifyOptionalEnrolmentWithoutRules"/>
+			<forward name="acceptEnrolment" path="df.page.acceptOptionalEnrolmentWithoutRules"/>
 			<forward name="cancel" path="/prepareStudentEnrolment.do?method=optionalWithoutRules"/>
 			<forward name="home" path="df.page.main"/>
 		</action>

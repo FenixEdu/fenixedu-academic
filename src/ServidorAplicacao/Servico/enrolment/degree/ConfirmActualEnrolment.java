@@ -171,7 +171,8 @@ public class ConfirmActualEnrolment implements IServico {
 				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator2.next();
 				
 				IEnrolmentInOptionalCurricularCourse enrolment = (IEnrolmentInOptionalCurricularCourse) persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(enrolmentInOptionalCurricularCourse.getStudentCurricularPlan(), enrolmentInOptionalCurricularCourse.getCurricularCourseScope(), enrolmentInOptionalCurricularCourse.getExecutionPeriod());
-				ICurricularCourse curricularCourseForOption = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourseForOption());
+//				ICurricularCourse curricularCourseForOption = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourseForOption());
+				ICurricularCourse curricularCourseForOption = enrolmentInOptionalCurricularCourse.getCurricularCourseForOption();
 				
 				if(enrolment == null) {
 //					ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourse());

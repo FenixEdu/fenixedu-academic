@@ -22,13 +22,10 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
-import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorApresentacao.Action.exceptions.FenixTransactionException;
-import ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.CurricularCourseType;
@@ -61,37 +58,9 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 		this.initializeForm(infoEnrolmentContext, (DynaActionForm) form);
 		return mapping.findForward(forwards[0]);
 	}
-/*
-	public ActionForward outOfPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		if (isCancelled(request)) {
-			return mapping.findForward(forwards[3]);
-		}
-		validateToken(request, form, mapping);
-
-		HttpSession session = request.getSession();
-
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		IUserView actor = (IUserView) session.getAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
-
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-
-		Object args1[] = { infoExecutionPeriod, actor };
-		ServiceUtils.executeService(userView, "CreateTemporarilyEnrolmentPeriod", args1);
-
-		Object args2[] = { actor };
-		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCoursesWithRules", args2);
-
-		Object args3[] = { infoExecutionPeriod, infoEnrolmentContext };
-		ServiceUtils.executeService(userView, "DeleteTemporarilyEnrolmentPeriod", args3);
-
-//		session.removeAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
-		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
-		initializeForm(infoEnrolmentContext, (DynaActionForm) form);
-		return mapping.findForward(forwards[0]);
-	}
 
 	public ActionForward verifyEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
 		validateToken(request, form, mapping);
 
 		DynaActionForm enrolmentForm = (DynaActionForm) form;
@@ -99,26 +68,27 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		InfoEnrolmentContext infoEnrolmentContext = processEnrolment(request, enrolmentForm, session);
+		InfoEnrolmentContext infoEnrolmentContext = this.processEnrolment(request, enrolmentForm, session);
 
 		Object args[] = { infoEnrolmentContext };
 
-		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ValidateActualEnrolmentWithRules", args);
-		ActionForward nextForward = null;
+		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ValidateActualOptionalEnrolmentWithouRules", args);
+
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 		if (!infoEnrolmentContext.getEnrolmentValidationResult().isSucess()) {
-			saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
-			nextForward = getBeforeForward(request, mapping);
+			this.saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
+			return mapping.findForward(forwards[0]);
 		} else {
-			nextForward = getNextForward(request, mapping);
+			return mapping.findForward(forwards[1]);
 		}
-		return nextForward;
 	}
 
 	public ActionForward accept(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
 		if (isCancelled(request)) {
-			return getBeforeForward(request, mapping);
+			return mapping.findForward(forwards[0]);
 		}
+
 		validateToken(request, form, mapping);
 
 		HttpSession session = request.getSession();
@@ -129,9 +99,9 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 
 		Object args[] = { infoEnrolmentContext };
 
-		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ConfirmActualEnrolmentWithRules", args);
+		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ConfirmActualOptionalEnrolmentWithoutRules", args);
 		if (infoEnrolmentContext.getEnrolmentValidationResult().isSucess()) {
-			return getNextForward(request, mapping);
+			return mapping.findForward(forwards[2]);
 		} else {
 			session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 			saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
@@ -139,7 +109,7 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 		}
 
 	}
-*/
+
 	public ActionForward startEnrolmentInOptional(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		validateToken(request, form, mapping);
@@ -149,7 +119,6 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
 
-		// Small trick just to be able to chow some information in the JSP.
 		DynaValidatorForm enrolmentForm = (DynaValidatorForm) form;
 		Integer optionalCurricularCourseIndex = (Integer) enrolmentForm.get("optionalCourseIndex");
 		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(optionalCurricularCourseIndex.intValue());
@@ -166,21 +135,27 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 
 	public ActionForward showOptionalCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		DynaValidatorForm enrolmentForm = (DynaValidatorForm) form;
+
 		if (isCancelled(request)) {
+			Integer[] curricularCoursesIndexes = (Integer[]) enrolmentForm.get("curricularCourses");
+			Integer optionalCurricularCourseIndex = (Integer) enrolmentForm.get("optionalCourseIndex");
+//System.out.println("INDEX: [" + optionalCurricularCourseIndex.intValue() + "]");
+			curricularCoursesIndexes[optionalCurricularCourseIndex.intValue()] = null;
+			enrolmentForm.set("curricularCourses", curricularCoursesIndexes);
 			return mapping.findForward(forwards[0]);
 		}
+
 		validateToken(request, form, mapping);
 
-		DynaValidatorForm enrolmentForm = (DynaValidatorForm) form;
 		HttpSession session = request.getSession();
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
 
-		// Small trick just to be able to chow some information in the JSP.
-		Integer optionalCurricularCourseIndex = (Integer) enrolmentForm.get("optionalCourseIndex");
-		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(optionalCurricularCourseIndex.intValue());
-		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(infoCurricularCourseScope);
+//		Integer optionalCurricularCourseIndex = (Integer) enrolmentForm.get("optionalCourseIndex");
+//		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(optionalCurricularCourseIndex.intValue());
+//		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(infoCurricularCourseScope);
 
 		enrolmentForm.set("optionalCurricularCourse", null);
 		Integer infoDegreeInternalId = (Integer) enrolmentForm.get("infoDegree");
@@ -204,12 +179,12 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 		return mapping.findForward(forwards[4]);
 	}
 
-/*
 	public ActionForward chooseOptionalCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		if (isCancelled(request)) {
-			return mapping.findForward("showAvailableCourses");
+			return mapping.findForward(forwards[3]);
 		}
+
 		validateToken(request, form, mapping);
 
 		DynaValidatorForm enrolmentForm = (DynaValidatorForm) form;
@@ -231,14 +206,13 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 
 		Object args[] = { infoEnrolmentContext, infoCurricularCourseOptional };
 
-//		System.out.println("Escolhida:" + infoCurricularCourseOptional.toString());
+		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "SelectOptionalCurricularCourseWithoutRules", args);
 
-		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "SelectOptionalCurricularCourseWithRules", args);
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 
 		return mapping.findForward(forwards[0]);
 	}
-*/
+
 	private void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping) throws FenixTransactionException {
 
 		if (!isTokenValid(request)) {
@@ -283,7 +257,7 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 		}
 		enrolmentForm.set("curricularCourses", curricularCoursesIndexes);
 	}
-/*
+
 	private InfoEnrolmentContext processEnrolment(HttpServletRequest request, DynaActionForm enrolmentForm, HttpSession session) {
 
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
@@ -329,34 +303,6 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 		return infoEnrolmentContext;
 	}
 
-	private ActionForward getBeforeForward(HttpServletRequest request, ActionMapping mapping) throws Exception {
-		int step = 0;
-		try {
-			step = Integer.parseInt(request.getParameter("step"));
-		} catch (NumberFormatException e) {
-		}
-
-		if (step < 0 && step >= forwards.length)
-			throw new IllegalArgumentException("Illegal step!");
-
-		if (step != 0)
-			step -= 1;
-
-		return mapping.findForward(forwards[step]);
-	}
-
-	private ActionForward getNextForward(HttpServletRequest request, ActionMapping mapping) throws Exception {
-		int step = 0;
-		try {
-			step = Integer.parseInt(request.getParameter("step"));
-		} catch (NumberFormatException e) {
-		}
-
-		step = step < 0 ? 0 : step;
-		step = step > forwards.length ? forwards.length - 2 : step;
-		return mapping.findForward(forwards[step + 1]);
-	}
-
 	private void saveErrorsFromInfoEnrolmentContext(HttpServletRequest request, InfoEnrolmentContext infoEnrolmentContext) {
 		ActionErrors actionErrors = new ActionErrors();
 
@@ -374,5 +320,4 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 		}
 		saveErrors(request, actionErrors);
 	}
-*/
 }

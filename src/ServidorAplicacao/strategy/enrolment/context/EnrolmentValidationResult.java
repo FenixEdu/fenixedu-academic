@@ -14,6 +14,7 @@ public class EnrolmentValidationResult {
 	public static final String SUCCESS_ENROLMENT = "message.successful.enrolment";
 	public static final String LEQ_UNIQUE_LABORATORY = "message.leq.unique.laboratory";
 	public static final String NO_CURRICULAR_COURSES_TO_ENROLL = "error.no.curricular.courses.to.enroll";
+	public static final String NO_OPTIONAL_CURRICULAR_COURSES_TO_ENROLL = "error.no.optional.curricular.courses.to.enroll";
 	
 	private Map message;
 	private boolean sucess;

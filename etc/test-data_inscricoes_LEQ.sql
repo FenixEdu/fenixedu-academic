@@ -40,95 +40,95 @@ insert into DEGREE_CURRICULAR_PLAN values (1, 'LEQ-2003', 1, 1, '0000-00-00', '0
 -- -----------------------------
 -- PRIMEIRO ANO, PRIMEIRO SEMESTRE:
 delete from CURRICULAR_COURSE;
-insert into CURRICULAR_COURSE values (1, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTRODUÇÃO À QUÍMICA-FÍSICA", "D3", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (2, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA I", "PY", 1, 1, 1, "IST");
-insert into CURRICULAR_COURSE values (3, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ÁLGEBRA LINEAR", "QN", 1, 1, 1, "IST");
-insert into CURRICULAR_COURSE values (4, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "COMPUTAÇÃO E PROGRAMAÇÃO", "AZ9", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (5, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTRODUÇÃO À LIGAÇÃO QUÍMICA", "GU", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (6, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "LABORATÓRIO DE QUÍMICA GERAL I", "AGU", 6, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (1, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTRODUÇÃO À QUÍMICA-FÍSICA", "D3", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (2, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA I", "PY", 1, 1, 1, "IST");
+insert into CURRICULAR_COURSE values (3, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ÁLGEBRA LINEAR", "QN", 1, 1, 1, "IST");
+insert into CURRICULAR_COURSE values (4, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "COMPUTAÇÃO E PROGRAMAÇÃO", "AZ9", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (5, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTRODUÇÃO À LIGAÇÃO QUÍMICA", "GU", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (6, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "LABORATÓRIO DE QUÍMICA GERAL I", "AGU", 6, 1, 0, "IST");
 -- PRIMEIRO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (7, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "QUÍMICA ORGÂNICA I", "HU", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (8, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "MECÂNICA E ONDAS", "AZH", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (9, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ANÁLISE MATEMÁTICA II", "P5", 1, 1, 1, "IST");
-insert into CURRICULAR_COURSE values (10, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "QUÍMICA DAS SOLUÇÕES AQUOSAS", "AGW", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (11, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "LABORATÓRIO DE QUÍMICA GERAL II", "AGX", 6, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (12, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PRINCÍPIOS BÁSICOS DE ENGENHARIA DE PROCESSOS", "AH2", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (7, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "QUÍMICA ORGÂNICA I", "HU", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (8, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "MECÂNICA E ONDAS", "AZH", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (9, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ANÁLISE MATEMÁTICA II", "P5", 1, 1, 1, "IST");
+insert into CURRICULAR_COURSE values (10, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "QUÍMICA DAS SOLUÇÕES AQUOSAS", "AGW", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (11, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "LABORATÓRIO DE QUÍMICA GERAL II", "AGX", 6, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (12, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PRINCÍPIOS BÁSICOS DE ENGENHARIA DE PROCESSOS", "AH2", 1, 1, 0, "IST");
 -- SEGUNDO ANO, PRIMEIRO SEMESTRE:
-insert into CURRICULAR_COURSE values (13, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA III", "UN", 1, 1, 1, "IST");
-insert into CURRICULAR_COURSE values (14, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "TERMODINÂMICA QUÍMICA", "LP", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (15, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROBABILIDADES E ESTATÍSTICA", "SF", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (16, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "LABORATÓRIO DE QUÍMICA ORGÂNICA", "AIF", 6, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (17, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "QUÍMICA ORGÂNICA II", "AJM", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (18, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ELECTROMAGNETISMO E ÓPTICA", "AZI", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (13, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA III", "UN", 1, 1, 1, "IST");
+insert into CURRICULAR_COURSE values (14, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "TERMODINÂMICA QUÍMICA", "LP", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (15, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROBABILIDADES E ESTATÍSTICA", "SF", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (16, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "LABORATÓRIO DE QUÍMICA ORGÂNICA", "AIF", 6, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (17, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "QUÍMICA ORGÂNICA II", "AJM", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (18, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ELECTROMAGNETISMO E ÓPTICA", "AZI", 1, 1, 0, "IST");
 -- SEGUNDO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (19, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "FENÓMENOS DE TRANSFERÊNCIA I", "C4", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (20, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ANÁLISE MATEMÁTICA IV", "U8", 1, 1, 1, "IST");
-insert into CURRICULAR_COURSE values (21, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "QUÍMICA FÍSICA", "XW", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (22, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "TERMODINÂMICA DE ENGENHARIA QUÍMICA", "AII", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (23, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROCESSOS DE ENGENHARIA QUÍMICA I", "AIK", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (24, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "LABORATÓRIO DE ENGENHARIA QUÍMICA I", "AJL", 6, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (19, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "FENÓMENOS DE TRANSFERÊNCIA I", "C4", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (20, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ANÁLISE MATEMÁTICA IV", "U8", 1, 1, 1, "IST");
+insert into CURRICULAR_COURSE values (21, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "QUÍMICA FÍSICA", "XW", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (22, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "TERMODINÂMICA DE ENGENHARIA QUÍMICA", "AII", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (23, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROCESSOS DE ENGENHARIA QUÍMICA I", "AIK", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (24, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "LABORATÓRIO DE ENGENHARIA QUÍMICA I", "AJL", 6, 1, 0, "IST");
 -- TERCEIRO ANO, PRIMEIRO SEMESTRE:
-insert into CURRICULAR_COURSE values (25, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ANÁLISE QUÍMICA", "AN", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (26, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FENÓMENOS DE TRANSFERÊNCIA II", "C5", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (27, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ANÁLISE E SIMULAÇÃO NUMÉRICA", "AZ7", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (28, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROCESSOS DE ENGENHARIA QUÍMICA II", "AL6", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (29, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "LABORATÓRIO DE ENGENHARIA QUÍMICA II", "AL7", 6, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (30, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "MATERIAIS E CORROSÃO", "AMD", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (25, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ANÁLISE QUÍMICA", "AN", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (26, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FENÓMENOS DE TRANSFERÊNCIA II", "C5", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (27, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ANÁLISE E SIMULAÇÃO NUMÉRICA", "AZ7", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (28, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROCESSOS DE ENGENHARIA QUÍMICA II", "AL6", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (29, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "LABORATÓRIO DE ENGENHARIA QUÍMICA II", "AL7", 6, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (30, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "MATERIAIS E CORROSÃO", "AMD", 1, 1, 0, "IST");
 -- TERCEIRO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (31, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "OPERAÇÕES EM SISTEMAS MULTIFÁSICOS", "AL8", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (32, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "LABORATÓRIO DE ENGENHARIA QUÍMICA III", "AL9", 6, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (33, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ENGENHARIA DAS REACÇÕES I", "AME", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (34, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FENÓMENOS DE TRANSFERÊNCIA III", "AMG", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (35, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROCESSOS DE SEPARAÇÃO I", "AMH", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (36, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FUNDAMENTOS DE GESTÃO", "AX2", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (31, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "OPERAÇÕES EM SISTEMAS MULTIFÁSICOS", "AL8", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (32, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "LABORATÓRIO DE ENGENHARIA QUÍMICA III", "AL9", 6, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (33, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ENGENHARIA DAS REACÇÕES I", "AME", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (34, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FENÓMENOS DE TRANSFERÊNCIA III", "AMG", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (35, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROCESSOS DE SEPARAÇÃO I", "AMH", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (36, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FUNDAMENTOS DE GESTÃO", "AX2", 1, 1, 0, "IST");
 -- QUARTO ANO, PRIMEIRO SEMESTRE:
-insert into CURRICULAR_COURSE values (37, 1, 1, 4.0, 3.0, 2.0, 0.0, 2.0, "OPTIMIZAÇÃO DE PROCESSOS", "7W", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (38, 1, 1, 4.0, 3.0, 0.0, 2.0, 2.0, "CONTROLO E INSTRUMENTAÇÃO DE PROCESSOS", "APK", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (39, 1, 1, 4.0, 3.0, 1.0, 2.0, 2.0, "LABORATÓRIOS DE ENGENHARIA QUÍMICA IV", "APL", 6, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (40, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ENGENHARIA DAS REACÇÕES II", "AR7", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (41, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROCESSOS DE SEPARAÇÃO II", "AR8", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (42, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "OPÇÃO I", "", 2, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (37, null, 1, 4.0, 3.0, 2.0, 0.0, 2.0, "OPTIMIZAÇÃO DE PROCESSOS", "7W", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (38, null, 1, 4.0, 3.0, 0.0, 2.0, 2.0, "CONTROLO E INSTRUMENTAÇÃO DE PROCESSOS", "APK", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (39, null, 1, 4.0, 3.0, 1.0, 2.0, 2.0, "LABORATÓRIOS DE ENGENHARIA QUÍMICA IV", "APL", 6, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (40, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ENGENHARIA DAS REACÇÕES II", "AR7", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (41, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROCESSOS DE SEPARAÇÃO II", "AR8", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (42, null, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "OPÇÃO I", "", 2, 1, 0, "IST");
 -- QUARTO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (43, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "ENGENHARIA QUÍMICA INTEGRADA I", "APM", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (44, 1, 1, 4.0, 3.0, 0.0, 0.0, 0.0, "SÍNTESE E INTEGRAÇÃO DE PROCESSOS", "APO", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (45, 1, 1, 4.0, 3.0, 0.0, 3.0, 0.0, "LABORATÓRIOS DE ENGENHARIA QUÍMICA V", "APP", 6, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (46, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "TECNOLOGIA AMBIENTAL", "APQ", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (47, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "DIMENSIONAMENTO E OPTIMIZAÇÃO DE EQUIPAMENTOS E UTILIDADES", "APN", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (48, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "OPÇÃO II", "", 2, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (43, null, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "ENGENHARIA QUÍMICA INTEGRADA I", "APM", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (44, null, 1, 4.0, 3.0, 0.0, 0.0, 0.0, "SÍNTESE E INTEGRAÇÃO DE PROCESSOS", "APO", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (45, null, 1, 4.0, 3.0, 0.0, 3.0, 0.0, "LABORATÓRIOS DE ENGENHARIA QUÍMICA V", "APP", 6, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (46, null, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "TECNOLOGIA AMBIENTAL", "APQ", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (47, null, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "DIMENSIONAMENTO E OPTIMIZAÇÃO DE EQUIPAMENTOS E UTILIDADES", "APN", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (48, null, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "OPÇÃO II", "", 2, 1, 0, "IST");
 -- QUINTO ANO, PRIMEIRO SEMESTRE:
-insert into CURRICULAR_COURSE values (49, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "PROJECTO DE INDÚSTRIAS QUÍMICAS", "AB3", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (50, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ENGENHARIA QUÍMICA INTEGRADA II", "AV6", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (51, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO III", "", 2, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (49, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "PROJECTO DE INDÚSTRIAS QUÍMICAS", "AB3", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (50, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ENGENHARIA QUÍMICA INTEGRADA II", "AV6", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (51, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO III", "", 2, 1, 0, "IST");
 -- QUINTO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (52, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESTÁGIO", "AV2", 5, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (52, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESTÁGIO", "AV2", 5, 1, 0, "IST");
 -- QUARTO ANO, PRIMEIRO SEMESTRE, OPÇÕES:
-insert into CURRICULAR_COURSE values (53, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "RISCOS NATURAIS E TECNOLÓGICOS", "AH0", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (54, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "GESTÃO PELA QUALIDADE TOTAL", "ALE", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (55, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ANÁLISES INDUSTRIAIS E CONTROLO", "AV7", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (56, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "LIMITES DA CIÊNCIA", "AXM", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (57, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "BIOTECNOLOGIA", "AB6", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (58, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "QUÍMICA INDUSTRIAL", "AOZ", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (59, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESTIMATIVA DE PROPRIEDADES PARA ENGENHARIA DE PROCESSOS", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (53, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "RISCOS NATURAIS E TECNOLÓGICOS", "AH0", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (54, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "GESTÃO PELA QUALIDADE TOTAL", "ALE", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (55, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ANÁLISES INDUSTRIAIS E CONTROLO", "AV7", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (56, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "LIMITES DA CIÊNCIA", "AXM", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (57, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "BIOTECNOLOGIA", "AB6", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (58, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "QUÍMICA INDUSTRIAL", "AOZ", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (59, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESTIMATIVA DE PROPRIEDADES PARA ENGENHARIA DE PROCESSOS", "", 1, 1, 0, "IST");
 -- QUARTO ANO, SEGUNDO SEMESTRE, OPÇÕES:
-insert into CURRICULAR_COURSE values (60, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "INVESTIGAÇÃO OPERACIONAL", "EA", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (61, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "PREVISÃO DE PROPRIEDADES", "ZC", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (62, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TRATAMENTO DE EFLUENTES GASOSOS", "AEV", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (63, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESTUDOS DE CIÊNCIA:ARTE,TECNOLOGIA E SOCIEDADE", "AP9", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (64, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "GESTÃO, TRATAMENTO E VALORIZAÇÃO DE RESÍDUOS", "APR", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (65, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "SUPERVISÃO E DIAGNÓSTICO DE PROCESSOS", "APU", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (66, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "GESTÃO DA PRODUÇÃO E DAS OPERAÇÕES", "APW", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (67, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "SISTEMAS DE GESTÃO AMBIENTAL", "AV8", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (68, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "MODELAÇÃO E OPTIMIZAÇÃO DE SISTEMAS DINÂMICOS", "AX3", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (69, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "CIÊNCIA E TECNOLOGIA DE POLÍMEROS", "AXN", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (60, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "INVESTIGAÇÃO OPERACIONAL", "EA", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (61, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "PREVISÃO DE PROPRIEDADES", "ZC", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (62, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TRATAMENTO DE EFLUENTES GASOSOS", "AEV", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (63, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESTUDOS DE CIÊNCIA:ARTE,TECNOLOGIA E SOCIEDADE", "AP9", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (64, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "GESTÃO, TRATAMENTO E VALORIZAÇÃO DE RESÍDUOS", "APR", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (65, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "SUPERVISÃO E DIAGNÓSTICO DE PROCESSOS", "APU", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (66, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "GESTÃO DA PRODUÇÃO E DAS OPERAÇÕES", "APW", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (67, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "SISTEMAS DE GESTÃO AMBIENTAL", "AV8", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (68, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "MODELAÇÃO E OPTIMIZAÇÃO DE SISTEMAS DINÂMICOS", "AX3", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (69, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "CIÊNCIA E TECNOLOGIA DE POLÍMEROS", "AXN", 1, 1, 0, "IST");
 -- QUINTO ANO, PRIMEIRO SEMESTRE, OPÇÕES:
-insert into CURRICULAR_COURSE values (70, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TECNOLOGIA ALIMENTAR", "AI", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (71, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "REFINAÇÃO DE PETRÓLEOS E PETROQUÍMICA", "IF", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (72, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "MODELOS MULTICRITÉRIO DE APOIO À DECISÃO", "AJA", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (73, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "SEGURANÇA E HIGIENE INDUSTRIAL", "APB", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (74, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "CONTROLO DE QUALIDADE", "APS", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (75, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "CONTROLO AVANÇADO DE PROCESSOS", "APT", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (76, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "CARACTERÍSTICAS E TRATAMENTO DE ÁGUAS", "AET", 1, 1, 0, "IST");
-insert into CURRICULAR_COURSE values (77, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ENGENHARIA DE SUPERFÍCIES", "APY", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (70, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TECNOLOGIA ALIMENTAR", "AI", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (71, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "REFINAÇÃO DE PETRÓLEOS E PETROQUÍMICA", "IF", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (72, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "MODELOS MULTICRITÉRIO DE APOIO À DECISÃO", "AJA", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (73, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "SEGURANÇA E HIGIENE INDUSTRIAL", "APB", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (74, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "CONTROLO DE QUALIDADE", "APS", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (75, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "CONTROLO AVANÇADO DE PROCESSOS", "APT", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (76, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "CARACTERÍSTICAS E TRATAMENTO DE ÁGUAS", "AET", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (77, null, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ENGENHARIA DE SUPERFÍCIES", "APY", 1, 1, 0, "IST");
 
 -- -----------------------------
 -- Data for table 'CURRICULAR_COURSE_SCOPE'
@@ -427,3 +427,8 @@ insert into ENROLMENT values (24, 1, 24, 4, 1, 'Dominio.Enrolment', null, 1);
 -- -----------------------------
 DELETE FROM EXECUTION_DEGREE;
 INSERT INTO EXECUTION_DEGREE VALUES (1, 1, 1, 1, 1);
+
+-- insert into CURRICULAR_COURSE values (1178, null, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "OPÇÃO IV", "", 2, 1, 0, "IST");
+-- insert into CURRICULAR_COURSE_SCOPE  values (1192, 7, 1178, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+-- INSERT INTO EXECUTION_COURSE VALUES (1000,'OPÇÃO IV','APR',0,0,0,0, 2, 5,"");
+-- INSERT INTO CURRICULAR_COURSE_EXECUTION_COURSE VALUES (1000, 1178, 1000);

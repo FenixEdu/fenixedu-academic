@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
-import Dominio.ICurricularCourseScope;
+import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.util.Cloner;
+import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
@@ -17,6 +17,10 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentFilterAllOptionalCoursesRule;
 import ServidorAplicacao.strategy.enrolment.rules.IEnrolmentRule;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author dcs-rjao
@@ -43,40 +47,42 @@ public class ShowAvailableCurricularCoursesForOptionWithoutRules implements ISer
 		IEnrolmentRule enrolmentRule = new EnrolmentFilterAllOptionalCoursesRule();
 		EnrolmentContext enrolmentContext = enrolmentRule.apply(EnrolmentContextManager.getEnrolmentContext(infoEnrolmentContext));
 		InfoEnrolmentContext infoEnrolmentContext2 = EnrolmentContextManager.getInfoEnrolmentContext(enrolmentContext);
-
-//		IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoEnrolmentContext2.getInfoExecutionPeriod());
-//		infoEnrolmentContext2.setOptionalInfoCurricularCoursesToChooseFromDegree(this.filterByExecutionCourses(infoEnrolmentContext2.getOptionalInfoCurricularCoursesToChooseFromDegree(), executionPeriod));
-
+		infoEnrolmentContext2.setOptionalInfoCurricularCoursesToChooseFromDegree(this.filterByExecutionCourses(infoEnrolmentContext2.getOptionalInfoCurricularCoursesToChooseFromDegree(), infoEnrolmentContext2.getInfoExecutionPeriod()));
 		return infoEnrolmentContext2;
 	}
 
 	// FIXME DAVID-RICARDO: Eventualmente esta filtragem deverá ser feita dentro da própria regra.
-	private List filterByExecutionCourses(List possibleCurricularCoursesScopesToChoose, IExecutionPeriod executionPeriod) {
+	private List filterByExecutionCourses(List infoCurricularCoursesList, InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 
-		List curricularCoursesToRemove = new ArrayList();
-		final IExecutionPeriod executionPeriod2 = executionPeriod;
-		
-		Iterator iterator = possibleCurricularCoursesScopesToChoose.iterator();
-		while (iterator.hasNext()) {
-			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-			List executionCourseList = curricularCourseScope.getCurricularCourse().getAssociatedExecutionCourses(); 
-				
-			List executionCourseInExecutionPeriod = (List) CollectionUtils.select(executionCourseList, new Predicate() {
-				public boolean evaluate(Object obj) {
-					IDisciplinaExecucao disciplinaExecucao = (IDisciplinaExecucao) obj;
-					return disciplinaExecucao.getExecutionPeriod().equals(executionPeriod2);
+		try {
+			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+			
+			List infoCurricularCoursesToRemove = new ArrayList();
+			
+			Iterator iterator = infoCurricularCoursesList.iterator();
+			while (iterator.hasNext()) {
+				InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iterator.next();
+			
+				IDisciplinaExecucao executionCourseCriteria = new DisciplinaExecucao();
+				executionCourseCriteria.setExecutionPeriod(executionPeriod);
+				executionCourseCriteria.setNome(infoCurricularCourse.getName());
+				executionCourseCriteria.setSigla(infoCurricularCourse.getCode());
+				List associatedExecutionCourses = persistentExecutionCourse.readByCriteria(executionCourseCriteria);
+					
+				if(associatedExecutionCourses.isEmpty()){
+					infoCurricularCoursesToRemove.add(infoCurricularCourse);
+				} else {
+					associatedExecutionCourses.clear();
 				}
-			});
-				
-			if(executionCourseInExecutionPeriod.isEmpty()){
-				curricularCoursesToRemove.add(curricularCourseScope);
-			} else {
-				executionCourseInExecutionPeriod.clear();
 			}
+			
+			infoCurricularCoursesList.removeAll(infoCurricularCoursesToRemove);
+			
+			return infoCurricularCoursesList;
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
 		}
-
-		possibleCurricularCoursesScopesToChoose.removeAll(curricularCoursesToRemove);
-		
-		return possibleCurricularCoursesScopesToChoose;
 	}
 }
