@@ -71,6 +71,11 @@
     <appender-ref ref="ConsoleAppender"/>
   </logger>
 
+  <logger name="Tools.DMLGenerator" additivity="false">
+    <level value="info"/>
+    <appender-ref ref="ConsoleAppender"/>
+  </logger>
+
   <root>
     <priority value="error"/>    
     <appender-ref ref="ConsoleAppender"/>
