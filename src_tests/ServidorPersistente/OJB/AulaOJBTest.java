@@ -56,7 +56,7 @@ public class AulaOJBTest extends TestCaseOJB {
   }
     
   /** Test of readByDiaSemanaAndInicioAndFimAndSala method, of class ServidorPersistente.OJB.AulaOJB. */
-  public void testreadByDiaSemanaAndInicioAndFimAndSala() {
+  public void testReadByDiaSemanaAndInicioAndFimAndSala() {
     IAula lesson = null;
     ISala room = null;
     IDisciplinaExecucao executionCourse = null;
@@ -101,8 +101,7 @@ public class AulaOJBTest extends TestCaseOJB {
 	
 	assertEquals(lesson.getDisciplinaExecucao(), executionCourse);
 	
-	
-    
+	    
     // read unexisting lesson
     try {
       persistentSupport.iniciarTransaccao();
