@@ -89,7 +89,9 @@ public class SchoolRegistration implements IService {
             schoolRegistrationInquiryAnswer = new SchoolRegistrationInquiryAnswer();
         }
         persistentSRIA.simpleLockWrite(schoolRegistrationInquiryAnswer);
-        schoolRegistrationInquiryAnswer.setKeyStudent(studentNumber);
+        IStudent student = new Student();
+        student.setNumber(studentNumber);
+        schoolRegistrationInquiryAnswer.setStudent(student);
 
         Iterator iterator = answers.keySet().iterator();
         while (iterator.hasNext()) {
@@ -202,6 +204,9 @@ public class SchoolRegistration implements IService {
     
     private ITurma selectClass(List classes) {
         
+        for(int iter=0; iter < classes.size(); iter++){
+            List shifts = ((ITurma)classes.get(iter)).getAssociatedShifts();
+        }
         return (ITurma) classes.get(0);
     }
 
@@ -228,5 +233,7 @@ public class SchoolRegistration implements IService {
     private void enrollInShifts(List shiftsToEnroll) {       
         
     }
+    
+   
 
 }
