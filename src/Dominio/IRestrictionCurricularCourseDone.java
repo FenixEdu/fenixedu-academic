@@ -7,7 +7,7 @@ package Dominio;
 /**
  * @author jpvl
  */
-public interface ICurricularCourseDoneRestriction extends IRestriction{
+public interface IRestrictionCurricularCourseDone extends IRestriction{
 	/**
 	 * @return
 	 */

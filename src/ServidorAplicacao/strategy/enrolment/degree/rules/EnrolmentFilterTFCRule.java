@@ -14,7 +14,7 @@ public class EnrolmentFilterTFCRule implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 
-		int size1 = enrolmentContext.getCurricularCoursesDoneByStudent().size();
+		int size1 = enrolmentContext.getEnrolmentsAprovedByStudent().size();
 		int size2 = enrolmentContext.getCurricularCoursesFromStudentCurricularPlan().size();
 		
 		if ((size2 - size1) > 14) {

@@ -206,4 +206,10 @@ public class Enrolment implements IEnrolment {
 		this.ojbConcreteClass = ojbConcreteClass;
 	}
 
+	/* (non-Javadoc)
+	 * @see Dominio.IEnrolment#getRealCurricularCourse()
+	 */
+	public ICurricularCourse getRealCurricularCourse() {
+		return this.getCurricularCourse();	
+	}
 }

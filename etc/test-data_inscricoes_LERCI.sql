@@ -239,6 +239,7 @@ insert into PRECEDENCE values (36, 41, 'SP');
 insert into PRECEDENCE values (37, 48, 'SP');
 insert into PRECEDENCE values (38, 46, 'SP');
 insert into PRECEDENCE values (39, 47, 'SP');
+insert into PRECEDENCE values (40, 53, 'SP');
 
 -- -----------------------------
 -- Data for table 'RESTRICTION'
@@ -296,6 +297,7 @@ insert into RESTRICTION values (48, 'Dominio.RestrictionCurricularCourseDone', 3
 insert into RESTRICTION values (49, 'Dominio.RestrictionCurricularCourseDone', 37, 32, 0);
 insert into RESTRICTION values (50, 'Dominio.RestrictionCurricularCourseDone', 38, 32, 0);
 insert into RESTRICTION values (51, 'Dominio.RestrictionCurricularCourseDone', 39, 25, 0);
+insert into RESTRICTION values (52, 'Dominio.RestrictionNumberOfCurricularCourseDone', 40, null, 28);
 
 -- -----------------------------
 -- Data for table 'ENROLMENT'

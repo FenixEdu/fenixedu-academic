@@ -17,7 +17,7 @@ import Util.PrecedenceScopeToApply;
 /**
  * @author jpvl
  */
-public abstract class PrecedenceRule implements IEnrolmentRule {
+public abstract class EnrolmentPrecedenceRule implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 		List precedenceList = null;
@@ -28,8 +28,7 @@ public abstract class PrecedenceRule implements IEnrolmentRule {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentPrecedence precedenceDAO = sp.getIPersistentPrecedence();
-			precedenceList =
-				precedenceDAO.readByDegreeCurricularPlan(
+			precedenceList = precedenceDAO.readByDegreeCurricularPlan(
 					studentActiveCurricularPlan.getDegreeCurricularPlan(),
 					getScopeToApply());
 		} catch (ExcepcaoPersistencia e) {
@@ -37,8 +36,7 @@ public abstract class PrecedenceRule implements IEnrolmentRule {
 			throw new IllegalStateException("Cannot read from database");
 		}
 
-		List curricularCourseToApply =
-			getListOfCurricularCoursesToApply(enrolmentContext);
+		List curricularCourseToApply = getListOfCurricularCoursesToApply(enrolmentContext);
 
 		doApply(enrolmentContext, precedenceList, curricularCourseToApply);
 

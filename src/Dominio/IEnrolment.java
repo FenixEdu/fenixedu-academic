@@ -19,4 +19,6 @@ public interface IEnrolment {
 	public void setCurricularCourse(ICurricularCourse curricularCourse);
 	public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan);
 	void setExecutionPeriod(IExecutionPeriod executionPeriod);
+	
+	public ICurricularCourse getRealCurricularCourse();
 }

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseScope;
 import Dominio.IPrecedence;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import Util.PrecedenceScopeToApply;
@@ -17,7 +16,7 @@ import Util.PrecedenceScopeToApply;
  * @see ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentPrecedenceRule
  * @author jpvl
  */
-public class EnrolmentFilterPrecedenceSpanRule extends EnrolmentPrecedenceRule implements IEnrolmentRule {
+public class EnrolmentFilterPrecedenceNotDoneRule extends EnrolmentPrecedenceRule implements IEnrolmentRule {
 
 	protected void doApply(EnrolmentContext enrolmentContext, List precedenceList, List curricularCourseToApply) {
 		List curricularCourseScopesNotToStay = new ArrayList();
@@ -25,21 +24,14 @@ public class EnrolmentFilterPrecedenceSpanRule extends EnrolmentPrecedenceRule i
 			IPrecedence precedence = (IPrecedence) precedenceList.get(i);
 			if (!precedence.evaluate(enrolmentContext)) {
 				ICurricularCourse curricularCourse = precedence.getCurricularCourse();
-				List scopes = curricularCourse.getScopes();
-				for (int scopeIndex = 0; scopeIndex < scopes.size();scopeIndex++) {
-					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes.get(scopeIndex);
-					if (!curricularCourseScopesNotToStay.contains(curricularCourseScope)) {
-						curricularCourseScopesNotToStay.add(curricularCourseScope);
-					}
-				}
+				curricularCourseScopesNotToStay.add(curricularCourse);
 			}
 		}
-		enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().removeAll(curricularCourseScopesNotToStay);
 		curricularCourseToApply.removeAll(curricularCourseScopesNotToStay);
 	}
 
 	protected PrecedenceScopeToApply getScopeToApply() {
-		return PrecedenceScopeToApply.TO_APPLY_TO_SPAN;
+		return PrecedenceScopeToApply.TO_APLLY_TO_OPTION_LIST;
 	}
 
 	/**
@@ -48,7 +40,7 @@ public class EnrolmentFilterPrecedenceSpanRule extends EnrolmentPrecedenceRule i
 	 * @return List to apply this rule
 	 */
 	protected List getListOfCurricularCoursesToApply(EnrolmentContext enrolmentContext) {
-		List finalCurricularCourseScopesSpan =	enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
-		return finalCurricularCourseScopesSpan;
+		List optionalList =	enrolmentContext.getOptionalCurricularCoursesToChooseFromDegree();
+		return optionalList;
 	}
 }

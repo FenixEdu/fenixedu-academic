@@ -335,9 +335,9 @@ delete from ENROLMENT;
 insert into ENROLMENT values (1, 1, 1, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (2, 1, 2, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (3, 1, 3, 1, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (4, 1, 4, 1, 2, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (5, 1, 5, 1, 2, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (6, 1, 6, 1, 2, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (4, 1, 4, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (5, 1, 5, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (6, 1, 6, 1, 1, 'Dominio.Enrolment', null);
 
 insert into ENROLMENT values (7, 1, 7, 2, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (8, 1, 8, 2, 1, 'Dominio.Enrolment', null);

@@ -25,6 +25,8 @@ public class PrecedenceScopeToApplyJava2SqlConversion implements FieldConversion
 					return PrecedenceScopeToApply.TO_APLLY_DURING_ENROLMENT_STR; 
 				case PrecedenceScopeToApply.TO_APPLY_TO_SPAN_INT:
 					return PrecedenceScopeToApply.TO_APPLY_TO_SPAN_STR;
+				case PrecedenceScopeToApply.TO_APLLY_TO_OPTION_LIST_INT:
+					return PrecedenceScopeToApply.TO_APLLY_TO_OPTION_LIST_STR;					
 				default:
 					throw new IllegalArgumentException(this.getClass().getName()+": Unkown PrecedenceScopeToApply!");
 			}
@@ -43,6 +45,8 @@ public class PrecedenceScopeToApplyJava2SqlConversion implements FieldConversion
 				return PrecedenceScopeToApply.TO_APPLY_TO_SPAN;				
 			}else if (PrecedenceScopeToApply.TO_APLLY_DURING_ENROLMENT_STR.equals(sourceStr)){
 				return PrecedenceScopeToApply.TO_APPLY_DURING_ENROLMENT;
+			}else if (PrecedenceScopeToApply.TO_APLLY_TO_OPTION_LIST_STR.equals(sourceStr)){
+				return PrecedenceScopeToApply.TO_APLLY_TO_OPTION_LIST;
 			}else{
 				throw new IllegalArgumentException(this.getClass().getName()+": Unkown type!("+source+")");
 			}

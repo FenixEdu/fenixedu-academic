@@ -5,12 +5,14 @@
 package ServidorAplicacao.strategy.enrolment.degree;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurso;
+import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
@@ -33,7 +35,7 @@ public final class EnrolmentContext {
 	private ICurso chosenOptionalDegree;
 	private ICurricularCourseScope chosenOptionalCurricularCourseScope;
 
-	private List curricularCoursesDoneByStudent;
+	private List enrolmentsAprovedByStudent;
 	private List actualEnrolments;
 	private List curricularCoursesFromStudentCurricularPlan;
 	private List finalCurricularCoursesScopesSpanToBeEnrolled;
@@ -54,10 +56,21 @@ public final class EnrolmentContext {
 	/**
 	 * @return
 	 */
-	public List getCurricularCoursesDoneByStudent() {
-		return curricularCoursesDoneByStudent;
+	public List getEnrolmentsAprovedByStudent() {
+		return this.enrolmentsAprovedByStudent;
 	}
 
+	public boolean isCurricularCourseDone(ICurricularCourse curricularCourse){
+		
+		Iterator iterator = enrolmentsAprovedByStudent.iterator();
+		while (iterator.hasNext()) {
+			IEnrolment enrolment = (IEnrolment) iterator.next();
+			if (enrolment.getRealCurricularCourse().equals(curricularCourse)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	/**
 	 * @return
 	 */
@@ -75,8 +88,8 @@ public final class EnrolmentContext {
 	/**
 	 * @param list
 	 */
-	public void setCurricularCoursesDoneByStudent(List list) {
-		curricularCoursesDoneByStudent = list;
+	public void setEnrolmentsAprovedByStudent(List list) {
+		this.enrolmentsAprovedByStudent = list;
 	}
 
 	/**

@@ -18,6 +18,7 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
@@ -117,15 +118,13 @@ public abstract class EnrolmentContextManager {
 		});
 
 		List studentCurricularPlanCurricularCourses = computeStudentCurricularPlanCurricularCourses(degreeCurricularPlanCurricularCourses, studentActiveCurricularPlan);
-		
-		
-		
+				
 		IExecutionPeriod enrolmentExecutionPeriod = enrolmentPeriod.getExecutionPeriod(); 
 
 		enrolmentContext.setCurricularCoursesFromStudentCurricularPlan(studentCurricularPlanCurricularCourses);
 		enrolmentContext.setStudent(student);
 		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(computeCurricularCoursesScopesNotYetDoneByStudent(degreeCurricularPlanCurricularCourses, studentEnroledAndDoneCurricularCourses));
-		enrolmentContext.setCurricularCoursesDoneByStudent(studentDoneCurricularCourses);
+		enrolmentContext.setEnrolmentsAprovedByStudent(studentEnrolmentsWithStateApproved);
 		enrolmentContext.setAcumulatedEnrolments(CollectionUtils.getCardinalityMap(curricularCoursesEnrolled));
 		enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
 		enrolmentContext.setEnrolmentValidationResult(new EnrolmentValidationResult());
@@ -298,14 +297,14 @@ public abstract class EnrolmentContextManager {
 		}
 
 		// Transform list of info curricular courses done by the student:
-		List infoCurricularCoursesDoneByStudentList = infoEnrolmentContext.getInfoCurricularCoursesDoneByStudent();
-		List curricularCoursesDoneByStudentList = new ArrayList();
-		if (infoCurricularCoursesDoneByStudentList != null && !infoCurricularCoursesDoneByStudentList.isEmpty()) {
-			Iterator iterator = infoCurricularCoursesDoneByStudentList.iterator();
+		List infoEnrolmentsAprovedByStudentList = infoEnrolmentContext.getInfoEnrolmentsAprovedByStudent();
+		List enrolmentsAprovedByStudentList = new ArrayList();
+		if (infoEnrolmentsAprovedByStudentList != null && !infoEnrolmentsAprovedByStudentList.isEmpty()) {
+			Iterator iterator = infoEnrolmentsAprovedByStudentList.iterator();
 			while (iterator.hasNext()) {
-				InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iterator.next();
-				ICurricularCourse curricularCourse = Cloner.copyInfoCurricularCourse2CurricularCourse(infoCurricularCourse);
-				curricularCoursesDoneByStudentList.add(curricularCourse);
+				InfoEnrolment infoEnrolment = (InfoEnrolment) iterator.next();
+				IEnrolment enrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEnrolment);
+				enrolmentsAprovedByStudentList.add(enrolment);
 			}
 		}
 
@@ -323,7 +322,7 @@ public abstract class EnrolmentContextManager {
 		enrolmentContext.setChosenOptionalDegree(degree);
 		enrolmentContext.setDegreesForOptionalCurricularCourses(optionalDegreeList);
 		enrolmentContext.setOptionalCurricularCoursesToChooseFromDegree(optionalCurricularCourseList);
-		enrolmentContext.setCurricularCoursesDoneByStudent(curricularCoursesDoneByStudentList);
+		enrolmentContext.setEnrolmentsAprovedByStudent(enrolmentsAprovedByStudentList);
 		enrolmentContext.setOptionalCurricularCoursesEnrolments(optionalCurricularCoursesEnrolmentsList);
 		enrolmentContext.setChosenOptionalCurricularCourseScope(chosenCurricularCourseScope);
 		enrolmentContext.setExecutionPeriod(executionPeriod);
@@ -425,14 +424,14 @@ public abstract class EnrolmentContextManager {
 		}
 
 		// Transform list of info curricular courses done by the student:
-		List curricularCoursesDoneByStudentList = enrolmentContext.getCurricularCoursesDoneByStudent();
-		List infoCurricularCoursesDoneByStudentList = new ArrayList();
-		if (curricularCoursesDoneByStudentList != null && !curricularCoursesDoneByStudentList.isEmpty()) {
-			Iterator iterator = curricularCoursesDoneByStudentList.iterator();
+		List enrolmentsAprovedByStudentList = enrolmentContext.getEnrolmentsAprovedByStudent();
+		List infoEnrolmentsAprovedByStudentList = new ArrayList();
+		if (enrolmentsAprovedByStudentList != null && !enrolmentsAprovedByStudentList.isEmpty()) {
+			Iterator iterator = enrolmentsAprovedByStudentList.iterator();
 			while (iterator.hasNext()) {
-				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-				InfoCurricularCourse infoCurricularCourse =	Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-				infoCurricularCoursesDoneByStudentList.add(infoCurricularCourse);
+				IEnrolment enrolment = (IEnrolment) iterator.next();
+				InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolment);
+				infoEnrolmentsAprovedByStudentList.add(infoEnrolment);
 			}
 		}
 
@@ -450,7 +449,7 @@ public abstract class EnrolmentContextManager {
 		infoEnrolmentContext.setChosenOptionalInfoDegree(infoDegree);
 		infoEnrolmentContext.setInfoDegreesForOptionalCurricularCourses(infoDegreeList);
 		infoEnrolmentContext.setOptionalInfoCurricularCoursesToChooseFromDegree(infoOptionalCurricularCourseList);
-		infoEnrolmentContext.setInfoCurricularCoursesDoneByStudent(infoCurricularCoursesDoneByStudentList);
+		infoEnrolmentContext.setInfoEnrolmentsAprovedByStudent(infoEnrolmentsAprovedByStudentList);
 		infoEnrolmentContext.setInfoOptionalCurricularCoursesEnrolments(infoOptionalCurricularCoursesEnrolmentsList);
 		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(infoChosenCurricularCourseScope);
 		infoEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);

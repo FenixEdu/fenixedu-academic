@@ -129,7 +129,7 @@ public class EnrolmentContextManagerTest extends TestCaseServicos {
 			strategyEnrolmentContext.getCurricularCourseAcumulatedEnrolments(
 				curricularCourse));
 
-		List doneCourses = enrolmentContext.getCurricularCoursesDoneByStudent();
+		List doneCourses = enrolmentContext.getEnrolmentsAprovedByStudent();
 		assertNotNull("curricular courses done is null!", doneCourses);
 		assertEquals("Curricular courses done!", 0, doneCourses.size());
 

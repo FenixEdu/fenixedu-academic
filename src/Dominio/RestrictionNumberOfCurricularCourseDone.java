@@ -11,7 +11,7 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 /**
  * @author jpvl
  */
-public class RestrictionNumberOfCurricularCourseDone extends Restriction implements INumberOfCurricularCourseDoneRestriction {
+public class RestrictionNumberOfCurricularCourseDone extends Restriction implements IRestrictionNumberOfCurricularCourseDone {
 	private Integer numberOfCurricularCourseDone;
 
 	/**
@@ -39,9 +39,8 @@ public class RestrictionNumberOfCurricularCourseDone extends Restriction impleme
 	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext)
 	 */
 	public boolean evaluate(EnrolmentContext enrolmentContext) {
-		List doneList = enrolmentContext.getCurricularCoursesDoneByStudent();
-		return (((doneList == null) && (this.numberOfCurricularCourseDone.intValue()== 0)) ||(doneList.size() == numberOfCurricularCourseDone.intValue()));
-		
+		List doneList = enrolmentContext.getEnrolmentsAprovedByStudent();
+		return (((doneList == null) && (this.numberOfCurricularCourseDone.intValue()== 0)) ||(doneList.size() >= numberOfCurricularCourseDone.intValue()));
 	}
 
 	/* (non-Javadoc)
@@ -49,8 +48,8 @@ public class RestrictionNumberOfCurricularCourseDone extends Restriction impleme
 	 */
 	public boolean equals(Object obj) {
 		boolean result = super.equals(obj); 
-		if ((result) && (obj instanceof INumberOfCurricularCourseDoneRestriction)){
-			INumberOfCurricularCourseDoneRestriction numberOfCurricularCourseDoneRestriction = (INumberOfCurricularCourseDoneRestriction) obj;
+		if ((result) && (obj instanceof IRestrictionNumberOfCurricularCourseDone)){
+			IRestrictionNumberOfCurricularCourseDone numberOfCurricularCourseDoneRestriction = (IRestrictionNumberOfCurricularCourseDone) obj;
 			result = numberOfCurricularCourseDoneRestriction.getNumberOfCurricularCourseDone().equals(this.getNumberOfCurricularCourseDone());
 		}
 		return result;

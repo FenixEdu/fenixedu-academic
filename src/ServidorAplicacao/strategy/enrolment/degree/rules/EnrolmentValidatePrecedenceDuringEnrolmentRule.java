@@ -15,10 +15,10 @@ import Util.PrecedenceScopeToApply;
 /**
  * @author jpvl
  */
-public class EnrolmentValidatePrecedenceDuringEnrolmentRule extends PrecedenceRule{
+public class EnrolmentValidatePrecedenceDuringEnrolmentRule extends EnrolmentPrecedenceRule{
 
 	/* (non-Javadoc)
-	 * @see ServidorAplicacao.strategy.enrolment.degree.rules.PrecedenceRule#getScopeToApply()
+	 * @see ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentPrecedenceRule#getScopeToApply()
 	 */
 	protected PrecedenceScopeToApply getScopeToApply() {
 		return PrecedenceScopeToApply.TO_APPLY_DURING_ENROLMENT;

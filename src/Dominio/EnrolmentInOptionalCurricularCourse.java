@@ -61,4 +61,11 @@ public class EnrolmentInOptionalCurricularCourse extends Enrolment implements IE
 		this.curricularCourseForOptionKey = curricularCourseForOptionKey;
 	}
 
+	
+	/* (non-Javadoc)
+	 * @see Dominio.IEnrolment#getRealCurricularCourse()
+	 */
+	public ICurricularCourse getRealCurricularCourse() {
+		return this.getCurricularCourseForOption();
+	}
 }

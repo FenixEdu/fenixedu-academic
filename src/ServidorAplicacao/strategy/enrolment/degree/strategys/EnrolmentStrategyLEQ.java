@@ -5,6 +5,7 @@ import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterAutomati
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterCurricularYearPrecedence;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterLEQTrainingCourseRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterNACandNDRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterPrecedenceNotDoneRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterPrecedenceSpanRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterRestrictedOptionalCoursesRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterRestrictedOptionalDegreeRule;
@@ -87,8 +88,8 @@ public class EnrolmentStrategyLEQ implements IEnrolmentStrategy {
 		enrolmentRule = new EnrolmentFilterRestrictedOptionalCoursesRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
-//		enrolmentRule = new EnrolmentFilterLEQSimultaneousEnrolmentRule();
-//		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);		
+		enrolmentRule = new EnrolmentFilterPrecedenceNotDoneRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);		
 
 		return this.enrolmentContext;
 	}

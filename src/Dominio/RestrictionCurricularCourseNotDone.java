@@ -9,15 +9,13 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 /**
  * @author jpvl
  */
-public class RestrictionCurricularCourseDone
-	extends Restriction
-	implements IRestrictionCurricularCourseDone {
+public class RestrictionCurricularCourseNotDone	extends Restriction implements IRestrictionCurricularCourseNotDone	 {
 	private Integer keyPrecedentCurricularCourse;
 	private ICurricularCourse precedentCurricularCourse;
 	/**
 	 * 
 	 */
-	public RestrictionCurricularCourseDone() {
+	public RestrictionCurricularCourseNotDone() {
 		super();
 	}
 
@@ -39,8 +37,12 @@ public class RestrictionCurricularCourseDone
 	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext)
 	 */
 	public boolean evaluate(EnrolmentContext enrolmentContext) {
-//		return enrolmentContext.getEnrolmentsAprovedByStudent().contains(this.getPrecedentCurricularCourse());
-		return enrolmentContext.isCurricularCourseDone(this.getPrecedentCurricularCourse());
+		if(enrolmentContext.isCurricularCourseDone(this.getPrecedentCurricularCourse())){
+			return false;
+		}
+		else{
+			return true;
+		}
 	}
 	/**
 	 * @return

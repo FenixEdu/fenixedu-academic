@@ -12,9 +12,11 @@ package Util;
 public class PrecedenceScopeToApply {
 	public static final int TO_APPLY_TO_SPAN_INT = 1;
 	public static final int TO_APLLY_DURING_ENROLMENT_INT = 2;
+	public static final int TO_APLLY_TO_OPTION_LIST_INT = 3;
 	
 	public static final String TO_APPLY_TO_SPAN_STR = "SP";
 	public static final String TO_APLLY_DURING_ENROLMENT_STR = "ENR";
+	public static final String TO_APLLY_TO_OPTION_LIST_STR = "OP";
 	
 	/**
 	 * Precedence of this type is to be applied in calculation of initial span of curricular courses
@@ -26,7 +28,10 @@ public class PrecedenceScopeToApply {
 	 */
 	public static final PrecedenceScopeToApply TO_APPLY_DURING_ENROLMENT = new PrecedenceScopeToApply(PrecedenceScopeToApply.TO_APLLY_DURING_ENROLMENT_INT);
 
+	public static final PrecedenceScopeToApply TO_APLLY_TO_OPTION_LIST = new PrecedenceScopeToApply(PrecedenceScopeToApply.TO_APLLY_TO_OPTION_LIST_INT);
+	
 	private int scope;
+	
 	
 	private PrecedenceScopeToApply(int scope){
 		this.scope = scope;
