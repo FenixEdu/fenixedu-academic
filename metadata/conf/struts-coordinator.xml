@@ -670,20 +670,12 @@
 			<forward name="successfull-read" path="view-teaching-report"/>
 	</action>
 
-<!--	
 	<action path="/studentsByCurricularCourse" input="/teacherAdministrationViewerError.jsp" 
-            name="studentsByCurricularCourseForm" scope="request" parameter="method" 
-            type="ServidorApresentacao.Action.teacher.StudentsByCurricularCourseListAction">
-            <forward name="success" path="/viewStudents.jsp" />
-        </action>
--->
-		<action path="/studentsByCurricularCourse" input="/teacherAdministrationViewerError.jsp" 
             name="studentsByCurricularCourseForm" scope="request" parameter="method" 
             type="ServidorApresentacao.Action.teacher.StudentsWithAttendsByCurricularCourseListAction">
             <forward name="success" path="/viewStudents.jsp" />
-        </action>
-		
-	 <action type="ServidorApresentacao.Action.teacher.DownloadStudentList" 
+    </action>
+	<action type="ServidorApresentacao.Action.teacher.DownloadStudentsWithAttendsByExecutionCourseListAction" 
             path="/getTabSeparatedStudentList" scope="request">
         </action>
 

@@ -234,20 +234,11 @@ function cleanSelect(checkboxes) {
 	</tr>
 	<tr valign="top">
 		<td colspan="3">
-		
-			<html:link page="/sendMailToAllStudents.do" name="sendMailLinkParameters">
-				<bean:message key="link.sendEmailToAllStudents"/>
-			</html:link>
-		</td>
-	</tr>
-	<tr><td>&nbsp;</td></tr>
-	<tr>
-		<td colspan="3">
 			<html:link page="/getTabSeparatedStudentList.do" name="spreadSheetLinkArgs">
 				<bean:message key="link.getExcelSpreadSheet"/><br/>
 			</html:link>
 		</td>
-	</tr> 
+	</tr>
 	<tr><td>&nbsp;</td></tr>
 	<tr>
      	   <bean:define id="colspan" value="1"/>
@@ -440,11 +431,11 @@ function cleanSelect(checkboxes) {
 						parameters.put("objectCode",executionCourseId);
 						parameters.put("groupPropertiesCode",groupPropertiesIdInternal);
 				%>
-					<html:link page="/viewStudentGroupInformation.do" name="parameters">
+				<%--	<html:link page="/viewStudentGroupInformation.do" name="parameters">--%>
 				<%
 							out.print(groupNumber);
 				%>
-					</html:link>
+				<%--	</html:link>--%>
 				<%
 					}
 					else{

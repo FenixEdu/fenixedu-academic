@@ -600,7 +600,7 @@
         <form-bean name="confirmDeletePublicationForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
 			<form-property name="idInternal" type="java.lang.Integer" />
-        </form-bean>        
+        </form-bean>
         
         
         
@@ -1546,8 +1546,8 @@
         <action type="ServidorApresentacao.Action.Seminaries.DownloadCandidaciesTable" 
             path="/getTabSeparatedCandidacies" scope="request">
         </action>
-        <!--- by gedl, 16-9-2003 -->
-        <action type="ServidorApresentacao.Action.teacher.DownloadStudentList" 
+        <!--- by ajfe / jpvb, 1-2005 -->
+		<action type="ServidorApresentacao.Action.teacher.DownloadStudentsWithAttendsByExecutionCourseListAction" 
             path="/getTabSeparatedStudentList" scope="request">
         </action>
         <!--- by gedl, 17-9-2003 -->
@@ -1679,6 +1679,7 @@
 			input="/publicationManagement.do">
 			<forward name="show-publications" path="publications-management"/>
 		</action>
+		
 		<!-- Carlos Pereira & Francisco Passos -->
         <action 
 			type="ServidorApresentacao.Action.publication.PrepareDeletePublicationAction" 
@@ -1694,7 +1695,7 @@
 			parameter="method" scope="request" validate="false">
 			<forward name="deleted" path="/publicationManagement.do"/>
 		</action>
-						
+				
 		<!-- PrepareSearchPerson-->
 		<action type="ServidorApresentacao.Action.publication.SearchAuthorPublicationAction" 
             path="/prepareSearchPerson" name="publicationManagementForm" scope="request"

@@ -5,7 +5,9 @@ package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,12 +92,13 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { executionCourseID, coursesIDs, enrollmentTypeList, shiftIDs };
         TeacherAdministrationSiteView siteView = null;
+        InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = null;
 
         try {
             siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
                     userView, "ReadStudentsWithAttendsByExecutionCourse", args);
             
-            InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
+            infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
             
             Collections.sort(infoDTO.getInfoAttends(), new BeanComparator("infoAttends.aluno.number"));
 
@@ -112,6 +115,31 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         } else {
             request.setAttribute("viewPhoto", Boolean.FALSE);
         }
+        
+        
+        Map sendMailParameters = new HashMap();
+        sendMailParameters.put("objectCode",infoDTO.getInfoExecutionCourse().getIdInternal());
+        sendMailParameters.put("method","prepare");
+        request.setAttribute("sendMailLinkParameters",sendMailParameters);
+        
+        String cbCoursesString[] = new String[checkedCoursesIds.length];
+        for (int i = 0; i < checkedCoursesIds.length; i++){
+            cbCoursesString[i] = checkedCoursesIds[i].toString();
+        }
+        
+        String cbShiftsString[] = new String[checkedShiftIds.length];
+        for (int i = 0; i < checkedShiftIds.length; i++){
+            cbShiftsString[i] = checkedShiftIds[i].toString();
+        }
+        
+        Map spreadSheetParameters = new HashMap();
+        spreadSheetParameters.put("objectCode",infoDTO.getInfoExecutionCourse().getIdInternal());
+        spreadSheetParameters.put("method","prepare");
+        spreadSheetParameters.put("coursesIDs",cbCoursesString);
+        spreadSheetParameters.put("enrollmentType",enrollmentType);
+        spreadSheetParameters.put("shiftIDs",cbShiftsString);
+        request.setAttribute("spreadSheetLinkArgs",spreadSheetParameters);
+        
         return mapping.findForward("success");
     }
     
@@ -132,12 +160,13 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         // all the information, no filtering applied
         Object args[] = { executionCourseID, null, null, null };
         TeacherAdministrationSiteView siteView = null;
+        InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = null;
 
         try {
             siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
                     userView, "ReadStudentsWithAttendsByExecutionCourse", args);
 
-            InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
+            infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
                         
             Collections.sort(infoDTO.getInfoAttends(), new BeanComparator("infoAttends.aluno.number"));
 
@@ -151,17 +180,23 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         //filling the courses checkboxes in the form-bean
         List infoDCPs = ((InfoForReadStudentsWithAttendsByExecutionCourse)siteView.getComponent()).getInfoDegreeCurricularPlans();
         Integer cbCourses[] = new Integer[infoDCPs.size() + 1];
+        String cbCoursesString[] = new String[infoDCPs.size() + 1];
         cbCourses[0] = new Integer(0);
+        cbCoursesString[0] = "0";
         for (int i = 1; i < cbCourses.length; i++){
             cbCourses[i] = ((InfoDegreeCurricularPlan)infoDCPs.get(i-1)).getIdInternal();
+            cbCoursesString[i] = cbCourses[i].toString();
         }
 
         //filling the shifts checkboxes in the form-bean
         List infoShifts = ((InfoForReadStudentsWithAttendsByExecutionCourse)siteView.getComponent()).getInfoShifts();
         Integer cbShifts[] = new Integer[infoShifts.size() + 1];
+        String cbShiftsString[] = new String[infoShifts.size() + 1];
         cbShifts[0] = new Integer(0);
+        cbShiftsString[0] = "0";
         for (int i = 1; i < cbShifts.length; i++){
             cbShifts[i] = ((InfoShift)infoShifts.get(i-1)).getIdInternal();
+            cbShiftsString[i] = cbShifts[i].toString();
         }
         
 //      filling the enrollment filters checkboxes in the form-bean
@@ -174,6 +209,20 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         formBean.set("coursesIDs",cbCourses);
         formBean.set("shiftIDs",cbShifts);
         formBean.set("enrollmentType",cbFilters);
+        
+        
+        Map sendMailParameters = new HashMap();
+        sendMailParameters.put("objectCode",infoDTO.getInfoExecutionCourse().getIdInternal());
+        sendMailParameters.put("method","prepare");
+        request.setAttribute("sendMailLinkParameters",sendMailParameters);
+        
+        Map spreadSheetParameters = new HashMap();
+        spreadSheetParameters.put("objectCode",infoDTO.getInfoExecutionCourse().getIdInternal());
+        spreadSheetParameters.put("method","prepare");
+        spreadSheetParameters.put("coursesIDs",cbCoursesString);
+        spreadSheetParameters.put("enrollmentType",cbFilters);
+        spreadSheetParameters.put("shiftIDs",cbShiftsString);
+        request.setAttribute("spreadSheetLinkArgs",spreadSheetParameters);
 
         return mapping.findForward("success");
     }
