@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.person.Sex;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
@@ -123,6 +124,7 @@ public class CreateMasterDegreeCandidate implements IService {
                         .getNumeroDocumentoIdentificacao());
                 person.setTipoDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson()
                         .getTipoDocumentoIdentificacao());
+                person.setSex(Sex.MALE);
 
                 // Generate Person Username
                 String username = GenerateUsername.getCandidateUsername(masterDegreeCandidate);
