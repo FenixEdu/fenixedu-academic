@@ -99,7 +99,7 @@ public class InfoShift extends InfoObject {
 	}
 
 	public String toString() {
-		String result = "[TURNO";
+		String result = "[INFO_TURNO";
 		result += ", nome=" + _nome;
 		result += ", tipo=" + _tipo;
 		result += ", lotacao=" + _lotacao;

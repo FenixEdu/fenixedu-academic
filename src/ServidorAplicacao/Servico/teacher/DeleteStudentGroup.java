@@ -34,7 +34,7 @@ public class DeleteStudentGroup implements IServico {
 		return "DeleteStudentGroup";
 	}
 	
-	public void run(Integer executionCourseCode,Integer studentGroupCode) throws FenixServiceException {
+	public Boolean run(Integer executionCourseCode,Integer studentGroupCode) throws FenixServiceException {
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
@@ -42,21 +42,23 @@ public class DeleteStudentGroup implements IServico {
 			IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport.getIPersistentStudentGroupAttend();
 
 			IStudentGroup deletedStudentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
-		
-			if (deletedStudentGroup == null) {
-				return;
-			}
-
-			List studentGroupAttendList = persistentStudentGroupAttend.readAllByStudentGroup(deletedStudentGroup);
-			if(studentGroupAttendList.size()!=0)
-				throw new ExistingServiceException();
 			
+			if (deletedStudentGroup == null) {
+				throw new ExistingServiceException();
+			}
+			
+			List studentGroupAttendList = persistentStudentGroupAttend.readAllByStudentGroup(deletedStudentGroup);
+			
+			if(studentGroupAttendList.size()!=0)
+				return new Boolean(false);
+					
 			persistentStudentGroup.delete(deletedStudentGroup);
-				
+							
 		} 
 		catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
+		return new Boolean(true);
 	}
 }
 

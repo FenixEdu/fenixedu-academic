@@ -63,7 +63,7 @@ public class ReadStudentsWithoutGroup implements IServico {
 
 		List frequentas = new ArrayList();
 		IStudent userStudent = null;
-		List infoStudentList = new ArrayList();		
+		List infoStudentList = null;		
 		try {
 		
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
@@ -71,27 +71,19 @@ public class ReadStudentsWithoutGroup implements IServico {
 			IFrequentaPersistente persistentAttend = ps.getIFrequentaPersistente();
 			IPersistentStudentGroup persistentStudentGroup = ps.getIPersistentStudentGroup();
 			IPersistentStudentGroupAttend  persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
-			System.out.println("ENTRA NO Servico READ STUDENTS WITHOUT GROUP");
 			
 			IGroupProperties groupProperties = (IGroupProperties)ps.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode),false);
-			System.out.println("POLITICA"+groupProperties.getEnrolmentPolicy().toString());
-			
 			
 				
 			if(groupProperties.getEnrolmentPolicy().equals(new EnrolmentGroupPolicyType(2)))
 				return null;
 			else
 			{
-				System.out.println("ENTRA NO IF DO SERVICO READ STUDENTS WITHOUT GROUP");
 				frequentas = persistentAttend.readByExecutionCourse(groupProperties.getExecutionCourse());
 
-				System.out.println("FREQUENTAS"+frequentas.size());
 				List allStudentsGroups =persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
-				System.out.println("ALL-STUDENTS-GROUP"+allStudentsGroups.size());
 				
 				userStudent = persistentStudent.readByUsername(username);
-				//IFrequenta userAttend = persistentAttend.readByAlunoAndDisciplinaExecucao(userStudent,groupProperties.getExecutionCourse());
-				System.out.println("USER_STUDENT"+userStudent.getNumber());
 				
 				List allStudentGroupAttend = new ArrayList();
 				Iterator iterator = allStudentsGroups.iterator();
@@ -99,7 +91,6 @@ public class ReadStudentsWithoutGroup implements IServico {
 				while (iterator.hasNext()) 
 				{
 					allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup((IStudentGroup) iterator.next()); 
-					System.out.println("ALL-STUDENTS-BY-GROUP"+allStudentGroupAttend.size());
 					Iterator iter = allStudentGroupAttend.iterator();
 					while(iter.hasNext())
 					{
@@ -110,10 +101,9 @@ public class ReadStudentsWithoutGroup implements IServico {
 						}
 					}
 				}
-				System.out.println("frequentas depois"+frequentas.size());
 				IStudent student = null;
 				Iterator iterStudent = frequentas.iterator();
-		
+				infoStudentList = new ArrayList();
 				while (iterStudent.hasNext()) 
 				{
 					student = ((IFrequenta) iterStudent.next()).getAluno();

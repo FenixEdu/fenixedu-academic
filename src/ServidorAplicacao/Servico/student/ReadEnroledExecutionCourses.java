@@ -16,21 +16,9 @@ import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao
-	.strategy
-	.groupEnrolment
-	.strategys
-	.GroupEnrolmentStrategyFactory;
-import ServidorAplicacao
-	.strategy
-	.groupEnrolment
-	.strategys
-	.IGroupEnrolmentStrategy;
-import ServidorAplicacao
-	.strategy
-	.groupEnrolment
-	.strategys
-	.IGroupEnrolmentStrategyFactory;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentGroupProperties;
@@ -44,8 +32,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadEnroledExecutionCourses implements IServico {
 
-	private static ReadEnroledExecutionCourses _servico =
-		new ReadEnroledExecutionCourses();
+	private static ReadEnroledExecutionCourses _servico = new ReadEnroledExecutionCourses();
 	/**
 	 * The singleton access method of this class.
 	 **/
@@ -73,52 +60,34 @@ public class ReadEnroledExecutionCourses implements IServico {
 		while (iter.hasNext()) {
 			IGroupProperties groupProperties = (IGroupProperties) iter.next();
 
-			IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory =
-				GroupEnrolmentStrategyFactory.getInstance();
-			IGroupEnrolmentStrategy strategy =
-				enrolmentGroupPolicyStrategyFactory
-					.getGroupEnrolmentStrategyInstance(
-					groupProperties);
-			result =
-				result
-					|| strategy.checkEnrolmentDate(
-						groupProperties,
-						Calendar.getInstance());
+			IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+			IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+			result = result || strategy.checkEnrolmentDate(groupProperties, Calendar.getInstance());
 		}
 
 		return result;
 	}
 
-	public List run(String username)
-		throws FenixServiceException {
+	public List run(String username) throws FenixServiceException {
 		List allInfoExecutionCourses = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IFrequentaPersistente persistentAttend =
-				sp.getIFrequentaPersistente();
+			IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-			IPersistentGroupProperties persistentGroupProperties =
-				sp.getIPersistentGroupProperties();
+			IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
 
 			IStudent student = persistentStudent.readByUsername(username);
-			List allAttend =
-				persistentAttend.readByStudentNumber(student.getNumber());
+			List allAttend = persistentAttend.readByStudentNumber(student.getNumber());
 
 			Iterator iter = allAttend.iterator();
 			allInfoExecutionCourses = new ArrayList();
 
 			while (iter.hasNext()) {
-				IDisciplinaExecucao executionCourse =
-					((IFrequenta) iter.next()).getDisciplinaExecucao();
-				List allGroupProperties =
-					persistentGroupProperties
-						.readAllGroupPropertiesByExecutionCourse(
-						executionCourse);
+				IDisciplinaExecucao executionCourse = ((IFrequenta) iter.next()).getDisciplinaExecucao();
+				List allGroupProperties = persistentGroupProperties.readAllGroupPropertiesByExecutionCourse(executionCourse);
 				boolean result = checkPeriodEnrollment(allGroupProperties);
 				if (result) {
-					allInfoExecutionCourses.add(
-						Cloner.copyIExecutionCourse2InfoExecutionCourse(
-							executionCourse));
+					allInfoExecutionCourses.add(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 				}
 
 			}

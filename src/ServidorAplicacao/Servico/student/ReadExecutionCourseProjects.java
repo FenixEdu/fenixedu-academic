@@ -11,6 +11,7 @@ import java.util.List;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteProjects;
+import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IGroupProperties;
@@ -29,8 +30,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadExecutionCourseProjects implements IServico {
 
-	private static ReadExecutionCourseProjects _servico =
-		new ReadExecutionCourseProjects();
+	private static ReadExecutionCourseProjects _servico = new ReadExecutionCourseProjects();
 	/**
 	 * The singleton access method of this class.
 	 **/
@@ -51,40 +51,42 @@ public class ReadExecutionCourseProjects implements IServico {
 		return "ReadExecutionCourseProjects";
 	}
 
+	public ISiteComponent run(Integer executionCourseCode) throws FenixServiceException {
 
-	public ISiteComponent run(Integer executionCourseCode)throws FenixServiceException {
-		
-	InfoSiteProjects infoSiteProjects = new InfoSiteProjects();
-		
-	try 
-	{
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		IDisciplinaExecucao executionCourse = (IDisciplinaExecucao)sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(executionCourseCode),false);
+		InfoSiteProjects infoSiteProjects = null;
+
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IDisciplinaExecucao executionCourse =
+				(IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(
+					new DisciplinaExecucao(executionCourseCode),
+					false);
+
+			List executionCourseProjects = sp.getIPersistentGroupProperties().readAllGroupPropertiesByExecutionCourse(executionCourse);
+
+			if (executionCourseProjects.size() != 0) 
+			{
+				infoSiteProjects = new InfoSiteProjects();
+				IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+				IGroupEnrolmentStrategy strategy = null;
+
+				List infoGroupPropertiesList = new ArrayList();
+				Iterator iterator = executionCourseProjects.iterator();
+
+				while (iterator.hasNext()) {
+					IGroupProperties groupProperties = (IGroupProperties) iterator.next();
+					strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+					if (strategy.checkEnrolmentDate(groupProperties, Calendar.getInstance()))
+						infoGroupPropertiesList.add(Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties));
+
+				}
 				
-		List executionCourseProjects = sp.getIPersistentGroupProperties().readAllGroupPropertiesByExecutionCourse(executionCourse);
-		
-		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory =GroupEnrolmentStrategyFactory.getInstance();
-		IGroupEnrolmentStrategy strategy =null;
-		
-			
-		List infoGroupPropertiesList = new ArrayList();
-		Iterator iterator = executionCourseProjects.iterator();
-		
-		while (iterator.hasNext()) {
-			IGroupProperties groupProperties = (IGroupProperties)iterator.next();
-			strategy =enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
-			if(strategy.checkEnrolmentDate(groupProperties,Calendar.getInstance()))
-				infoGroupPropertiesList.add(groupProperties);
-
+				infoSiteProjects.setInfoGroupPropertiesList(infoGroupPropertiesList);
+			}
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			throw new FenixServiceException("error.impossibleReadExecutionCourseProjects");
 		}
-		infoSiteProjects.setInfoGroupPropertiesList(infoGroupPropertiesList);	
-		
-	} catch (ExcepcaoPersistencia e) {
-		e.printStackTrace();
-		throw new FenixServiceException("error.impossibleReadExecutionCourseProjects");
+		return infoSiteProjects;
 	}
-		
-		
-	return infoSiteProjects;
-}
 }

@@ -4,6 +4,7 @@
  */
 package ServidorApresentacao.Action.student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,43 +30,32 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  */
 public class ViewStudentGroupInformationAction extends FenixContextAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		
-		String studentGroupCodeString =
-			request.getParameter("studentGroupCode");
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		String studentGroupCodeString = request.getParameter("studentGroupCode");
 
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
 
 		ISiteComponent viewStudentGroup;
 		Object[] args = { studentGroupCode };
 		try {
-			viewStudentGroup =
-				(InfoSiteStudentGroup) ServiceUtils.executeService(
-					userView,
-					"ReadStudentGroupInformation",
-					args);
+			viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService(userView, "ReadStudentGroupInformation", args);
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		System.out.println("Dp do servico");
+		InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
 
-		List infoSiteStudentInformationList =
-			((InfoSiteStudentGroup) viewStudentGroup)
-				.getInfoSiteStudentInformationList();
+		List infoSiteStudentInformationList = new ArrayList();
+		if (infoSiteStudentGroup != null) {
+			infoSiteStudentInformationList = infoSiteStudentGroup.getInfoSiteStudentInformationList();
+		}
 
-		request.setAttribute(
-			"infoSiteStudentInformationList",
-			infoSiteStudentInformationList);
+		request.setAttribute("infoSiteStudentInformationList", infoSiteStudentInformationList);
 
 		return mapping.findForward("sucess");
 	}

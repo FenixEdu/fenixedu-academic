@@ -29,8 +29,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadAllShiftsAndGroupsByProject implements IServico {
 
-	private static ReadAllShiftsAndGroupsByProject _servico =
-		new ReadAllShiftsAndGroupsByProject();
+	private static ReadAllShiftsAndGroupsByProject _servico = new ReadAllShiftsAndGroupsByProject();
 	/**
 	 * The singleton access method of this class.
 	 **/
@@ -51,77 +50,57 @@ public class ReadAllShiftsAndGroupsByProject implements IServico {
 		return "ReadAllShiftsAndGroupsByProject";
 	}
 
-	public ISiteComponent run(Integer groupPropertiesCode)
-		throws FenixServiceException {
+	public ISiteComponent run(Integer groupPropertiesCode) throws FenixServiceException {
 
-		InfoSiteAllGroups infoSiteAllGroups = new InfoSiteAllGroups();
-		List infoSiteGroupsByShiftList=null;
-		
-			
+		InfoSiteAllGroups infoSiteAllGroups = null;
+		List infoSiteGroupsByShiftList = null;
+
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IGroupProperties groupProperties =
-				(IGroupProperties) sp
-					.getIPersistentGroupProperties()
-					.readByOId(
-					new GroupProperties(groupPropertiesCode),
-					false);
-			List allStudentsGroup =
-				sp
-					.getIPersistentStudentGroup()
-					.readAllStudentGroupByGroupProperties(
-					groupProperties);
-
-			ITurno shift = null;
-			List shiftsInternalList = new ArrayList();
-			Iterator iterator = allStudentsGroup.iterator();
-
-			while (iterator.hasNext()) {
-				shift = ((IStudentGroup) iterator.next()).getShift();
-				if (!shiftsInternalList.contains(shift))
-					shiftsInternalList.add(shift);
-			}
-			
-			Iterator iterator2 = shiftsInternalList.iterator();
-			List studentGroupsList = null;
-			InfoSiteGroupsByShift infoSiteGroupsByShift = null;
-			shift = null;
-			infoSiteGroupsByShiftList =
-				new ArrayList(shiftsInternalList.size());
-			while (iterator2.hasNext()) {
-				shift = (ITurno) iterator2.next();
-				studentGroupsList =
-					sp
-						.getIPersistentStudentGroup()
-						.readAllStudentGroupByGroupPropertiesAndShift(
-						groupProperties,
-						shift);
+				(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
+			List allStudentsGroup = sp.getIPersistentStudentGroup().readAllStudentGroupByGroupProperties(groupProperties);
+			if (allStudentsGroup.size() != 0) {
 				
+				infoSiteAllGroups = new InfoSiteAllGroups();
+				ITurno shift = null;
+				List shiftsInternalList = new ArrayList();
+				Iterator iterator = allStudentsGroup.iterator();
 
-				List infoStudentGroupList =
-					new ArrayList(studentGroupsList.size());
-				Iterator iter = studentGroupsList.iterator();
-				while (iter.hasNext())
-					infoStudentGroupList.add(
-						Cloner.copyIStudentGroup2InfoStudentGroup(
-							(IStudentGroup) iter.next()));
+				while (iterator.hasNext()) {
+					shift = ((IStudentGroup) iterator.next()).getShift();
+					if (!shiftsInternalList.contains(shift))
+						shiftsInternalList.add(shift);
+				}
 
-				infoSiteGroupsByShift = new InfoSiteGroupsByShift();
-				infoSiteGroupsByShift.setInfoStudentGroupsList(
-					infoStudentGroupList);
-				infoSiteGroupsByShift.setInfoShift(
-					Cloner.copyIShift2InfoShift(shift));
-				infoSiteGroupsByShiftList.add(infoSiteGroupsByShift);
+				Iterator iterator2 = shiftsInternalList.iterator();
+				List studentGroupsList = null;
+				InfoSiteGroupsByShift infoSiteGroupsByShift = null;
+				shift = null;
+				infoSiteGroupsByShiftList = new ArrayList(shiftsInternalList.size());
+				while (iterator2.hasNext()) {
+					shift = (ITurno) iterator2.next();
+					studentGroupsList =
+						sp.getIPersistentStudentGroup().readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
 
+					List infoStudentGroupList = new ArrayList(studentGroupsList.size());
+					Iterator iter = studentGroupsList.iterator();
+					while (iter.hasNext())
+						infoStudentGroupList.add(Cloner.copyIStudentGroup2InfoStudentGroup((IStudentGroup) iter.next()));
+
+					infoSiteGroupsByShift = new InfoSiteGroupsByShift();
+					infoSiteGroupsByShift.setInfoStudentGroupsList(infoStudentGroupList);
+					infoSiteGroupsByShift.setInfoShift(Cloner.copyIShift2InfoShift(shift));
+					infoSiteGroupsByShiftList.add(infoSiteGroupsByShift);
+
+				}
+				infoSiteAllGroups.setInfoSiteGroupsByShiftList(infoSiteGroupsByShiftList);
 			}
-			infoSiteAllGroups.setInfoSiteGroupsByShiftList(infoSiteGroupsByShiftList);
-			
-		
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			throw new FenixServiceException("error.impossibleReadAllShiftsByProject");
 		}
-		
+
 		return infoSiteAllGroups;
 	}
 }

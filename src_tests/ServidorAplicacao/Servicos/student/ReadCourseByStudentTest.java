@@ -70,7 +70,6 @@ public class ReadCourseByStudentTest extends TestCaseReadServices {
   protected Object getObjectToCompare() {
   	InfoDegree infoDegree = new InfoDegree();
   	infoDegree.setSigla("LEIC");
-  	
 	return infoDegree;
   }
 

@@ -4,6 +4,7 @@
  */
 package ServidorApresentacao.Action.student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,42 +30,33 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  */
 public class ViewProjectStudentGroupsAction extends FenixContextAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		
-		String groupPropertiesCodeString =
-						request.getParameter("groupPropertiesCode");
-			
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
 		ISiteComponent viewAllGroups;
 		Object[] args = { groupPropertiesCode };
 		try {
-			viewAllGroups =
-				(InfoSiteAllGroups) ServiceUtils.executeService(
-					userView,
-					"ReadAllShiftsAndGroupsByProject",
-					args);
+			viewAllGroups = (InfoSiteAllGroups) ServiceUtils.executeService(userView, "ReadAllShiftsAndGroupsByProject", args);
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		
-		List infoSiteGroupsByShiftList= ((InfoSiteAllGroups)viewAllGroups)
-			.getInfoSiteGroupsByShiftList();
-		
-		request.setAttribute(
-			"infoSiteGroupsByShiftList",
-			infoSiteGroupsByShiftList);
 
+		InfoSiteAllGroups infoSiteAllGroups = (InfoSiteAllGroups) viewAllGroups;
+		List infoSiteGroupsByShiftList = new ArrayList();
+		if (infoSiteAllGroups != null) {
+			infoSiteGroupsByShiftList = infoSiteAllGroups.getInfoSiteGroupsByShiftList();
+		}
+		
+		request.setAttribute("infoSiteGroupsByShiftList", infoSiteGroupsByShiftList);
+		
 		return mapping.findForward("sucess");
 	}
 }

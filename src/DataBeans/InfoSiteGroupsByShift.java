@@ -30,6 +30,9 @@ public class InfoSiteGroupsByShift implements ISiteComponent{
 
 	public boolean equals(Object objectToCompare) {
 		boolean result = false;
+		if(objectToCompare instanceof InfoSiteGroupsByShift)
+			result = true;
+			
 		if (objectToCompare instanceof InfoSiteSections
 			&& (((((InfoSiteGroupsByShift) objectToCompare).getInfoShift() != null
 				&& this.getInfoShift() != null
@@ -52,13 +55,14 @@ public class InfoSiteGroupsByShift implements ISiteComponent{
 
 			return false;
 		}
+		
 		ListIterator iter1 =
 			((InfoSiteGroupsByShift) objectToCompare).getInfoStudentGroupsList().listIterator();
 		ListIterator iter2 = this.getInfoStudentGroupsList().listIterator();
 		while (result && iter1.hasNext()) {
-			Integer groupNumber1 = (Integer) iter1.next();
-			Integer groupNumber2 = (Integer) iter2.next();
-			if (!groupNumber1.equals(groupNumber2)) {
+			InfoStudentGroup infoStudentGroup1 = (InfoStudentGroup) iter1.next();
+			InfoStudentGroup infoStudentGroup2 = (InfoStudentGroup) iter2.next();
+			if (!infoStudentGroup1.equals(infoStudentGroup2)) {
 				result = false;
 			}
 		}

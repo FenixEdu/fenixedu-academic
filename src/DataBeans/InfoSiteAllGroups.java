@@ -30,9 +30,11 @@ public class InfoSiteAllGroups implements ISiteComponent {
 	}
 	
 	public boolean equals(Object objectToCompare) {
-
-			boolean result = false;
-
+			boolean result = true;
+			
+			if(objectToCompare instanceof InfoSiteAllGroups)
+				result = true;
+				
 			if (((InfoSiteAllGroups) objectToCompare).getInfoSiteGroupsByShiftList() == null
 				&& this.getInfoSiteGroupsByShiftList() == null) {
 				return true;
@@ -45,6 +47,8 @@ public class InfoSiteAllGroups implements ISiteComponent {
 
 				return false;
 			}
+
+			
 			ListIterator iter1 =
 				((InfoSiteAllGroups) objectToCompare)
 					.getInfoSiteGroupsByShiftList()

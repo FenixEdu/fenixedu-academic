@@ -17,6 +17,7 @@ import Dominio.Student;
 import Dominio.StudentGroup;
 import Dominio.StudentGroupAttend;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
@@ -77,9 +78,10 @@ public class InsertStudentGroupMembers implements IServico {
 			persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
 			
 			IStudentGroup studentGroup =(IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
+			System.out.println("STUDENT GROUP"+studentGroup);
 			
 			if(studentGroup==null)
-				return new Boolean(false);
+				throw new ExistingServiceException();
 				
 			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode),false);
 			

@@ -31,11 +31,12 @@ public class InfoSiteProjects implements ISiteComponent{
 	}
 
 	public boolean equals(Object objectToCompare) {
-
 		boolean result = false;
-
+		if(objectToCompare instanceof InfoSiteProjects)
+			result = true;
+			
 		if (((InfoSiteProjects) objectToCompare).getInfoGroupPropertiesList() == null
-			&& this.getInfoGroupPropertiesList() == null) {
+			&& this.getInfoGroupPropertiesList() == null) {	
 			return true;
 		}
 
@@ -43,21 +44,24 @@ public class InfoSiteProjects implements ISiteComponent{
 			|| this.getInfoGroupPropertiesList() == null
 			|| ((InfoSiteProjects) objectToCompare).getInfoGroupPropertiesList().size()
 				!= this.getInfoGroupPropertiesList().size()) {
-
 			return false;
 		}
+		
 		ListIterator iter1 =
 			((InfoSiteProjects) objectToCompare)
 				.getInfoGroupPropertiesList()
 				.listIterator();
 		ListIterator iter2 = this.getInfoGroupPropertiesList().listIterator();
 		while (result && iter1.hasNext()) {
+			
 			InfoGroupProperties groupProperties1 = (InfoGroupProperties) iter1.next();
 			InfoGroupProperties groupProperties2 = (InfoGroupProperties) iter2.next();
 			if (!groupProperties2.equals(groupProperties2)) {
+			
 				result = false;
 			}
 		}
+		
 		return result;
 	}
 

@@ -14,8 +14,6 @@
 
 
 <logic:present name="infoSiteGroupsByShiftList">
-	
-	
 
 	<logic:empty name="infoSiteGroupsByShiftList">
 		<h2><bean:message key="message.infoSiteGroupsByShiftList.not.available" /></h2>

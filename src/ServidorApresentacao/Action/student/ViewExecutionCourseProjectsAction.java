@@ -4,6 +4,7 @@
  */
 package ServidorApresentacao.Action.student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,44 +30,32 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  */
 public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		String executionCourseCodeString =
-			request.getParameter("executionCourseCode");
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		String executionCourseCodeString = request.getParameter("executionCourseCode");
 		Integer executionCourseCode = new Integer(executionCourseCodeString);
 
 		ISiteComponent viewProjectsComponent;
 		Object[] args = { executionCourseCode };
 		try {
-			viewProjectsComponent =
-				(InfoSiteProjects) ServiceUtils.executeService(
-					userView,
-					"ReadExecutionCourseProjects",
-					args);
+			viewProjectsComponent = (InfoSiteProjects) ServiceUtils.executeService(userView, "ReadExecutionCourseProjects", args);
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		
-		List infoGroupPropertiesList =
-			((InfoSiteProjects) viewProjectsComponent)
-				.getInfoGroupPropertiesList();
-		System.out.println("INFO LIST-size" + infoGroupPropertiesList.size());
 
-		request.setAttribute(
-			"infoGroupPropertiesList",
-			infoGroupPropertiesList);
-
-			return mapping.findForward("sucess");
-
+		InfoSiteProjects infoSiteProjects = (InfoSiteProjects) viewProjectsComponent;
+		List infoGroupPropertiesList = new ArrayList();
+		if (infoSiteProjects != null) {
+			infoGroupPropertiesList = infoSiteProjects.getInfoGroupPropertiesList();
 		}
+		request.setAttribute("infoGroupPropertiesList", infoGroupPropertiesList);
+		
+		return mapping.findForward("sucess");
 
 	}
+
+}

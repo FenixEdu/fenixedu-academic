@@ -57,16 +57,19 @@ public class ReadStudentGroupInformation implements IServico {
 	public ISiteComponent run(Integer studentGroupCode)
 		throws FenixServiceException {
 
-			List studentGroupAttendInformationList = null;
-			InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+			
+			InfoSiteStudentGroup infoSiteStudentGroup = null;
 			try {
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 				IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
 
 				List studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
-
-				studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
+				if(studentGroupAttendList.size()!=0)
+				{
+				
+				infoSiteStudentGroup= new InfoSiteStudentGroup();
+				List studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
 				Iterator iter = studentGroupAttendList.iterator();
 				InfoSiteStudentInformation infoSiteStudentInformation = null;
 				InfoStudentGroupAttend infoStudentGroupAttend = null;
@@ -92,9 +95,11 @@ public class ReadStudentGroupInformation implements IServico {
 				Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
 				
 				infoSiteStudentGroup.setInfoSiteStudentInformationList(studentGroupAttendInformationList);
+				}
 				} catch (ExcepcaoPersistencia ex) {
 				ex.printStackTrace();
 			}
+			System.out.println("RESULATDO NO FIM DO SERVICO"+infoSiteStudentGroup);
 			return infoSiteStudentGroup;
 	}
 }

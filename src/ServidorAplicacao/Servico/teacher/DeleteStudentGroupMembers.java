@@ -15,6 +15,7 @@ import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
@@ -57,7 +58,7 @@ public class DeleteStudentGroupMembers implements IServico {
 	 * Executes the service.
 	 */
 
-	public void run(Integer executionCourseCode, Integer studentGroupCode,List studentUsernames) throws FenixServiceException {
+	public boolean run(Integer executionCourseCode, Integer studentGroupCode,List studentUsernames) throws FenixServiceException {
 		
 		
 		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
@@ -80,6 +81,9 @@ public class DeleteStudentGroupMembers implements IServico {
 			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode),false);
 			IStudentGroup studentGroup =(IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
 			
+			if(studentGroup==null)
+				throw new ExistingServiceException();
+			
 			Iterator iterator = studentUsernames.iterator();
 			
 			while (iterator.hasNext()) {
@@ -88,17 +92,14 @@ public class DeleteStudentGroupMembers implements IServico {
 				IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student, executionCourse);
 				
 				IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend.readBy(studentGroup,attend); 
-				if(oldStudentGroupAttend!=null)
-				{
-				
-				persistentStudentGroupAttend.delete(oldStudentGroupAttend);
-				}
+				if(oldStudentGroupAttend!=null)				
+					persistentStudentGroupAttend.delete(oldStudentGroupAttend);
 			}
 
 		}
 		catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
-
+		return true;
 	}
 }

@@ -32,8 +32,9 @@ public class InfoSiteStudentGroup implements ISiteComponent {
 
 		
 	public boolean equals(Object objectToCompare) {
-
-			boolean result = false;
+		boolean result = false;
+		if(objectToCompare instanceof InfoSiteStudentGroup)
+			result = true;
 
 			if (((InfoSiteStudentGroup) objectToCompare).getInfoSiteStudentInformationList() == null
 				&& this.getInfoSiteStudentInformationList() == null) {
@@ -47,6 +48,8 @@ public class InfoSiteStudentGroup implements ISiteComponent {
 
 				return false;
 			}
+			
+			
 			ListIterator iter1 =
 				((InfoSiteStudentGroup) objectToCompare)
 					.getInfoSiteStudentInformationList()

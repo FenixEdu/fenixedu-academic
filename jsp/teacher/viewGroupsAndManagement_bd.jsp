@@ -34,7 +34,7 @@
      	<td>
         <br>
         <h2>
-        	<table width="500" cellpadding="0" border="6" bgcolor="red" style="text-align: left;" > 		
+        	<table width="500" cellpadding="0" border="6" style="text-align: left;" > 		
 																
 				<bean:define id="infoShift" name="infoSiteGroupsByShift" property="infoShift"/>
 						

@@ -94,7 +94,7 @@ public class CreateStudentGroup implements IServico {
 	 * Executes the service.
 	 */
 
-	public void run(Integer executionCourseCode,Integer groupNumber, Integer groupPropertiesCode, Integer shiftCode,List studentCodes)
+	public boolean run(Integer executionCourseCode,Integer groupNumber, Integer groupPropertiesCode, Integer shiftCode,List studentCodes)
 		throws FenixServiceException {
 
 
@@ -114,12 +114,8 @@ public class CreateStudentGroup implements IServico {
 			persistentGroupProperites = persistentSupport.getIPersistentGroupProperties();
 			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperites.readByOId(new GroupProperties(groupPropertiesCode),false);		
 			
-			ITurno shift = null;
-			if(shiftCode!=null)
-			{
-				persistentShift = persistentSupport.getITurnoPersistente();
-				shift = (ITurno) persistentShift.readByOId(new Turno(shiftCode),false);
-			}
+			persistentShift = persistentSupport.getITurnoPersistente();
+			ITurno shift = (ITurno) persistentShift.readByOId(new Turno(shiftCode),false);
 						
 			checkIfStudentGroupExists(groupNumber, groupProperties);
 			
@@ -149,5 +145,7 @@ public class CreateStudentGroup implements IServico {
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());			
 		  }
+		return true; 
+		 
 		 }
 }

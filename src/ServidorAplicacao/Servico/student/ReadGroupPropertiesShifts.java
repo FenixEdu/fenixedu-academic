@@ -12,9 +12,7 @@ import DataBeans.InfoShift;
 import DataBeans.InfoSiteShifts;
 import DataBeans.util.Cloner;
 import Dominio.GroupProperties;
-import Dominio.IAula;
 import Dominio.IGroupProperties;
-import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -88,46 +86,53 @@ public class ReadGroupPropertiesShifts implements IServico {
 
 					for (int i = 0; i < shifts.size(); i++) {
 					ITurno shift = (ITurno) shifts.get(i);
-					InfoShift infoShift =
-						new InfoShift(shift.getNome(),shift.getTipo(),shift.getLotacao(),Cloner.copyIExecutionCourse2InfoExecutionCourse(groupProperties.getExecutionCourse()));
+					InfoShift infoShift =Cloner.copyIShift2InfoShift(shift);
 
-
-					List lessons =
-						sp.getITurnoAulaPersistente().readByShift(shift);
-					List infoLessons = new ArrayList();
-					List classesShifts =
-						sp.getITurmaTurnoPersistente().readClassesWithShift(
-							shift);
-					List infoClasses = new ArrayList();
-
-					for (int j = 0; j < lessons.size(); j++)
-						infoLessons.add(
-							Cloner.copyILesson2InfoLesson(
-								(IAula) lessons.get(j)));
-
-					infoShift.setInfoLessons(
-						infoLessons);
-
-					for (int j = 0; j < classesShifts.size(); j++)
-						infoClasses.add(
-							Cloner.copyClass2InfoClass(
-								((ITurmaTurno) classesShifts.get(j))
-									.getTurma()));
-
-					infoShift.setInfoClasses(infoClasses);
+//					List lessons =sp.getITurnoAulaPersistente().readByShift(shift);
+//					List infoLessons = new ArrayList();
+//					List classesShifts =sp.getITurmaTurnoPersistente().readClassesWithShift(shift);
+//					List infoClasses = new ArrayList();
+//
+//					for (int j = 0; j < lessons.size(); j++)
+//						infoLessons.add(
+//							Cloner.copyILesson2InfoLesson(
+//								(IAula) lessons.get(j)));
+//
+//					infoShift.setInfoLessons(infoLessons);
+//
+//					for (int j = 0; j < classesShifts.size(); j++)
+//						infoClasses.add(
+//							Cloner.copyClass2InfoClass(
+//								((ITurmaTurno) classesShifts.get(j))
+//									.getTurma()));
+//
+//					infoShift.setInfoClasses(infoClasses);
+//					
 					infoShift.setIdInternal(shift.getIdInternal());
 
 					infoShifts.add(infoShift);
 				}
-			}
+			
 			infoSiteShifts = new InfoSiteShifts();
 			infoSiteShifts.setShifts(infoShifts);
 			infoSiteShifts.setInfoExecutionPeriodName(groupProperties.getExecutionCourse().getExecutionPeriod().getName());
 			infoSiteShifts.setInfoExecutionYearName(groupProperties.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
-		
+				}
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
+		}
+		System.out.println("INFO_SITE_SHIFTS"+infoSiteShifts);
+		if(infoSiteShifts!=null)
+		{
+		
+			System.out.println("-----------tam-shifts"+infoSiteShifts.getShifts().size());
+			System.out.println("-----------tam-shifts"+infoSiteShifts.getShifts().get(0).toString());
+			
+
+			System.out.println("-----------tam-ano"+infoSiteShifts.getInfoExecutionYearName());
+
+			System.out.println("-----------tam-periodo"+infoSiteShifts.getInfoExecutionPeriodName());
 		}
 		return infoSiteShifts;
 	}

@@ -66,7 +66,7 @@ public class EditStudentGroupShift implements IServico {
 	
 			persistentShift = persistentSupport.getITurnoPersistente();
 			ITurno shift = (ITurno) persistentShift.readByOId(new Turno(newShiftCode),false);
-								
+							
 			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 			IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode),false);
 			
