@@ -2,13 +2,22 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ page import="org.apache.struts.util.RequestUtils" %>
 <bean:size id="resultSize" name="infoGrantOwnerList"/>
+
+<logic:messagesPresent name="notMessageKey">
+    <span class="error">
+    	<html:errors/>
+    </span>
+</logic:messagesPresent>  
+
 
 <p>
 	<bean:message key="label.grant.owner.searchresult" arg0="<%= resultSize.toString() %>"/>
 </p>
-<table border="0" cellspacing="1" cellpadding="1">
 
+
+<table border="0" cellspacing="1" cellpadding="1">
 	<!-- Table description rows -->
 	<tr>
 		<td class="listClasses-header" colspan="3">
@@ -25,10 +34,10 @@
 			<bean:message key="label.grant.owner.infoperson.name"/>
 		</td>
 		<td class="listClasses-header">
-			<bean:message key="label.grant.owner.infoperson.fiscalCode"/>
+			<bean:message key="label.grant.owner.idInternal"/>
 		</td>
 		<td class="listClasses-header">
-			<bean:message key="label.grant.owner.idInternal"/>
+			<bean:message key="label.grant.owner.infoperson.fiscalCode"/>
 		</td>
 		<td class="listClasses-header">
 			<bean:message key="label.grant.owner.infoperson.documentId"/>
@@ -37,8 +46,7 @@
 			<bean:message key="label.grant.owner.infoperson.documentIdType"/>
 		</td>
 		<td class="listClasses-header">
-		</td>		
-		
+		</td>				
 	</tr>
 
 	<!-- Table with result of search -->
@@ -48,10 +56,15 @@
 			<bean:write name="infoGrantOwner" property="personInfo.nome"/>
 		</td>
 		<td class="listClasses">
-			<bean:write name="infoGrantOwner" property="personInfo.numContribuinte"/>
+			<logic:present name="infoGrantOwner" property="grantOwnerNumber">
+				<bean:write name="infoGrantOwner" property="grantOwnerNumber"/>
+			</logic:present>
+			<logic:notPresent name="infoGrantOwner" property="grantOwnerNumber">
+				---
+			</logic:notPresent>
 		</td>
 		<td class="listClasses">
-			<bean:write name="infoGrantOwner" property="grantOwnerNumber"/>
+			<bean:write name="infoGrantOwner" property="personInfo.numContribuinte"/>
 		</td>
 		<td class="listClasses">
 			<bean:write name="infoGrantOwner" property="personInfo.numeroDocumentoIdentificacao"/>
@@ -63,14 +76,14 @@
 			<!-- Person is a Grant Owner already -->
 			<logic:present name="infoGrantOwner" property="grantOwnerNumber">
 				<bean:define id="idInternal" name="infoGrantOwner" property="idInternal"/>
-				<html:link page='<%= "/manageGrantOwner.do?method=prepareManageGrantOwnerForm&amp;idInternal=" + idInternal %>' >
+				<html:link page='<%= "/manageGrantOwner.do?method=prepareManageGrantOwnerForm&amp;idInternal=" + idInternal %>' > 
 					<bean:message key="label.grant.owner.edit" />
 				</html:link>
 			</logic:present>
 			<!-- Person is not a Grant Owner -->
 			<logic:notPresent name="infoGrantOwner" property="grantOwnerNumber">
 				<bean:define id="personUsername" name="infoGrantOwner" property="personInfo.username"/>
-				<html:link page='<%= "/editGrantOwner.do?method=prepareEditGrantOwnerForm&amp;personUsername=" + personUsername %>' >
+				<html:link page='<%= "/editGrantOwner.do?method=prepareEditGrantOwnerForm&personUsername=" + personUsername %>' >
 					<bean:message key="label.grant.owner.create" />
 				</html:link>
 			</logic:notPresent>
@@ -79,32 +92,18 @@
 	</logic:iterate>
 	<!-- End of table with the results -->
 </table>
-<p>
 
-<!--	<html:link page="/editGrantOwner.do?method=prepareEditGrantOwnerForm">
-		<bean:message key="label.grant.owner.createnew" />
-	</html:link>-->
-
-	<table align="center">
+<br>
+<table class="listClasses">
 	<tr>
 		<td>
+			Caso queira criar uma nova pessoa bolseira clique neste botão: 
 			<!-- Button to create a new Person Grant Owner -->
 			<html:form action="/editGrantOwner.do?method=prepareEditGrantOwnerForm">
 				<html:submit styleClass="inputbutton">
-					<bean:message key="button.search"/>
+					<bean:message key="button.createPersonGrantOwner"/>
 				</html:submit>		
 			</html:form>	
 		</td>
-		<td>
-			<!-- Back Button -->
-			<html:form action="/index.do">
-				<html:submit styleClass="inputbutton">
-					<bean:message key="button.back"/>
-				</html:submit>
-			</html:form>
-		</td>
 	</tr>
-	</table>
-</p>
-
-</p>
+</table>

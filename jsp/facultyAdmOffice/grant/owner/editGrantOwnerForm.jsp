@@ -2,83 +2,126 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<html:form action="/editGrantOwner">
+<html:form action="/editGrantOwner" style="display:inline">
 
 <logic:messagesPresent>
-    <span class="error">
-    	<html:errors/>
-    </span>
-    </logic:messagesPresent>
-    <html:hidden property="method" value="doEdit"/>
-  	<html:hidden property="page" value="1"/>
-  	<table>
-		<tr><td colspan="2"><b><bean:message key="label.grant.owner.information"/></b></td></tr>
-  	    <tr>
-			<td>
-				<bean:message key="label.grant.owner.datesendcgd"/>
-			</td>
-			<td>
-				<html:text property="dateSendCGD"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message key="label.grant.owner.cardcopynumber"/>
-			</td>
-			<td>
-				<html:text property="cardCopyNumber"/>
-			</td>
-		</tr>
-	</table>
-	<br>
-	<table>
-		<tr><td colspan="2"><b><bean:message key="label.grant.owner.personalinformation"/></td></tr>
+<span class="error">
+	<html:errors/>
+</span>
+</logic:messagesPresent>
 
-		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.name"/>
-			</td>
-			<td>
-				<html:text property="name" size="70"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.sex"/>
-			</td>
-			<td>
-				Masculino:&nbsp;<html:radio property="sex" value="1"/>&nbsp;&nbsp;
-				Feminino:&nbsp;<html:radio property="sex" value="2"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.maritalStatus"/>
-			</td>
-			<td>
-				<html:select property="maritalStatus">
-					<html:options collection="maritalStatusList" property="value" labelProperty="label"/>
-				</html:select>
-			</td>
-		</tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.birthdate"/>
-			</td>
-			<td>
-				<html:text property="birthdate"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.fatherName"/>
-			</td>
-			<td>
-				<html:text property="fatherName" size="70"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.motherName"/>
+<html:hidden property="method" value="doEdit"/>
+<html:hidden property="page" value="1"/>
+
+<table class="listClasses" align="center">
+		<tr><td>Preencha correctamente o formulário (não deixando campos obrigatórios em branco).</td></tr>
+</table>
+<br>
+<table>
+	<tr>
+		<td colspan="2" ><b><bean:message key="label.grant.owner.information"/></b></td>
+	</tr>
+	<tr>
+		<td align="left"><bean:message key="label.grant.owner.datesendcgd"/>:&nbsp;</td>
+		<td><html:text property="dateSendCGD"/></td>
+	</tr>
+	<tr>
+		<td align="left"><bean:message key="label.grant.owner.cardcopynumber"/>:&nbsp;</td>
+		<td><html:text property="cardCopyNumber"/></td>
+	</tr>
+</table>
+<br>
+<table>
+	<tr>
+		<td colspan="2" ><b><bean:message key="label.grant.owner.infoperson.idinformation"/></td>
+	</tr>
+	<tr>
+		<td align="left">
+			<bean:message key="label.grant.owner.infoperson.idNumber"/>:&nbsp;
+		</td>
+		<td>
+			<html:text property="idNumber"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="left">
+			<bean:message key="label.grant.owner.infoperson.idType"/>:&nbsp;
+		</td>
+		<td>
+			<html:select property="idType">
+				<html:options collection="documentTypeList" property="value" labelProperty="label"/>
+			</html:select>
+		</td>
+	</tr>
+	<tr>
+		<td align="left">
+			<bean:message key="label.grant.owner.infoperson.idLocation"/>:&nbsp;
+		</td>
+		<td>
+			<html:text property="idLocation"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="left">
+			<bean:message key="label.grant.owner.infoperson.idDate"/>:&nbsp;
+		</td>
+		<td>
+			<html:text property="idDate"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="left">
+			<bean:message key="label.grant.owner.infoperson.idValidDate"/>:&nbsp;
+		</td>
+		<td>
+				<html:text property="idValidDate"/>
+		</td>
+	</tr>
+</table>
+<br>
+<table>
+	<tr>
+		<td colspan="2" ><b><bean:message key="label.grant.owner.personalinformation"/></td>
+	</tr>
+	<tr>
+		<td align="left"><bean:message key="label.grant.owner.infoperson.name"/>:&nbsp;</td>
+		<td><html:text property="name" size="70"/></td>
+	</tr>
+	<tr>
+		<td align="left"><bean:message key="label.grant.owner.infoperson.sex"/>:&nbsp;</td>
+		<td>
+			Masculino:&nbsp;<html:radio property="sex" value="1"/>&nbsp;&nbsp;
+			Feminino:&nbsp;<html:radio property="sex" value="2"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="left">
+			<bean:message key="label.grant.owner.infoperson.maritalStatus"/>:&nbsp;
+		</td>
+		<td>
+			<html:select property="maritalStatus">
+				<html:options collection="maritalStatusList" property="value" labelProperty="label"/>
+			</html:select>
+		</td>
+	</tr>
+		<td align="left">
+			<bean:message key="label.grant.owner.infoperson.birthdate"/>:&nbsp;
+		</td>
+		<td>
+			<html:text property="birthdate"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="left">
+			<bean:message key="label.grant.owner.infoperson.fatherName"/>:&nbsp;
+		</td>
+		<td>
+			<html:text property="fatherName" size="70"/>
+		</td>
+	</tr>
+	<tr>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.motherName"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="motherName" size="70"/>
@@ -86,82 +129,40 @@
 		</tr>
 		
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.districtBirth"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.districtBirth"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="districtBirth"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.parishOfBirth"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.parishOfBirth"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="parishOfBirth"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.districtSubBirth"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.districtSubBirth"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="districtSubBirth"/>
 			</td>			
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.idNumber"/>
-			</td>
-			<td>
-				<html:text property="idNumber"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.idType"/>
-			</td>
-			<td>
-				<html:select property="idType">
-					<html:options collection="documentTypeList" property="value" labelProperty="label"/>
-				</html:select>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.idLocation"/>
-			</td>
-			<td>
-				<html:text property="idLocation"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.idDate"/>
-			</td>
-			<td>
-				<html:text property="idDate"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.idValidDate"/>
-			</td>
-			<td>
-				<html:text property="idValidDate"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.nationality"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.nationality"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="nationality"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.country"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.country"/>:&nbsp;
 			</td>
 			<td>
 				<html:select property="country">
@@ -170,135 +171,139 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.address"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.address"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="address"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.area"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.area"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="area"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.areaCode"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.areaCode"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="areaCode"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.areaOfAreaCode"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.areaOfAreaCode"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="areaOfAreaCode"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.addressParish"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.addressParish"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="addressParish"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.addressDistrictSub"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.addressDistrictSub"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="addressDistrictSub"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.addressDistrict"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.addressDistrict"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="addressDistrict"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.phone"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.phone"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="phone"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.cellPhone"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.cellPhone"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="cellphone"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.email"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.email"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="email"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.homepage"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.homepage"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="homepage"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.socialSecurityNumber"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.socialSecurityNumber"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="socialSecurityNumber"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.profession"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.profession"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="profession"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
-				<bean:message key="label.grant.owner.infoperson.fiscalCode"/>
+			<td align="left">
+				<bean:message key="label.grant.owner.infoperson.fiscalCode"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="fiscalCode"/>
 			</td>
 		</tr>
-		
-		
 	</table>
 	
+	<html:hidden property="personUsername"/>
+	<html:hidden property="password"/>
+	<html:hidden property="idInternal"/>
+	
+	<br>
+	<table>
+	<tr>
+	<td>
 		<html:submit styleClass="inputbutton">
-			<bean:message key="button.create"/>
+			<bean:message key="button.save"/>
 		</html:submit>
 	</html:form>		
-		
-		<html:form action="/index.do">
-			<html:submit styleClass="inputbutton">
-				<bean:message key="button.back"/>
-			</html:submit>
+	</td>
+	<td>
+	<html:form action="/searchGrantOwner?page=1&amp;method=searchForm" style="display:inline">
+		<html:submit styleClass="inputbutton" style="display:inline">
+			<bean:message key="button.cancel"/>
+		</html:submit>
 	</html:form>					
-		<html:form action="/index.do">
-			<html:submit styleClass="inputbutton">
-				<bean:message key="button.cancel"/>
-			</html:submit>
-	</html:form>					
-
+	</td>
+	</tr>
+	</table>
 	

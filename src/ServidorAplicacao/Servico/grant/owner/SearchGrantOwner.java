@@ -1,6 +1,6 @@
 /*
  * Created on 10/11/2003
- * 
+ *  
  */
 package ServidorAplicacao.Servico.grant.owner;
 
@@ -21,36 +21,41 @@ import ServidorPersistente.grant.IPersistentGrantOwner;
 import Util.TipoDocumentoIdentificacao;
 
 /**
- * @author  Barbosa
- * @author  Pica
+ * @author Barbosa
+ * @author Pica
  *  
  */
-public class SearchGrantOwner implements IServico {
+public class SearchGrantOwner implements IServico
+{
 
 	private static SearchGrantOwner service = new SearchGrantOwner();
 	/**
 	 * The singleton access method of this class.
 	 */
-	public static SearchGrantOwner getService() {
+	public static SearchGrantOwner getService()
+	{
 		return service;
 	}
 	/**
 	 * The constructor of this class.
 	 */
-	private SearchGrantOwner() {
+	private SearchGrantOwner()
+	{
 	}
 	/**
 	 * The name of the service
 	 */
-	public final String getNome() {
+	public final String getNome()
+	{
 		return "SearchGrantOwner";
 	}
 
 	/**
 	 * Executes the service.
 	 */
-	public List run(String name, String IdNumber, Integer IdType)
-		throws FenixServiceException {
+	public List run(String name, String IdNumber, Integer IdType, Integer grantOwnerNumber)
+		throws FenixServiceException
+	{
 		ISuportePersistente persistentSupport = null;
 		IPessoaPersistente persistentPerson = null;
 		IPersistentGrantOwner persistentGrantOwner = null;
@@ -61,48 +66,61 @@ public class SearchGrantOwner implements IServico {
 		IGrantOwner grantOwner = null;
 		IPessoa person = null;
 
-		try {
+		try
+		{
 			persistentSupport = SuportePersistenteOJB.getInstance();
 			persistentPerson = persistentSupport.getIPessoaPersistente();
 			persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
 
+			// Search by Grant Owner Number
+			if (grantOwnerNumber != null)
+			{
+				grantOwner = persistentGrantOwner.readGrantOwnerByNumber(grantOwnerNumber);
+				if (grantOwner != null)
+				{
+					InfoGrantOwner newInfoGrantOwner = Cloner.copyIGrantOwner2InfoGrantOwner(grantOwner);
+					grantOwnerList.add(newInfoGrantOwner);
+					return grantOwnerList;
+				}
+			}
+
 			// Search by ID number and ID type
-			if ((IdNumber != null) && (IdType != null)) {
+			if ((IdNumber != null) && (IdType != null))
+			{
 				type = new TipoDocumentoIdentificacao(IdType);
-				person =
-					persistentPerson.lerPessoaPorNumDocIdETipoDocId(
-						IdNumber,
-						type);
+				person = persistentPerson.lerPessoaPorNumDocIdETipoDocId(IdNumber, type);
 			}
 			//Search by name IF search by ID has failed
-			if (person == null) {
+			if (person == null)
+			{
 				if (name != null)
 					personList = persistentPerson.findPersonByName(name);
 			} else
 				personList.add(person);
 
-			if (personList.size() > 0) {
+			if (personList.size() > 0)
+			{
 				//Get all the grantOwners associated with each person in list
-				for (int i = 0; i < personList.size(); i++) {
+				for (int i = 0; i < personList.size(); i++)
+				{
 					InfoGrantOwner newInfoGrantOwner = new InfoGrantOwner();
 					IPessoa newPerson = (IPessoa) personList.get(i);
-					grantOwner =
-						persistentGrantOwner.readGrantOwnerByPerson(
-							newPerson.getIdInternal());
+					grantOwner = persistentGrantOwner.readGrantOwnerByPerson(newPerson.getIdInternal());
 
 					if (grantOwner != null)
-						//The person is a GrantOwner 
-						newInfoGrantOwner =
-							Cloner.copyIGrantOwner2InfoGrantOwner(grantOwner);
-					else {
+						//The person is a GrantOwner
+						newInfoGrantOwner = Cloner.copyIGrantOwner2InfoGrantOwner(grantOwner);
+					else
+					{
 						//The person is NOT a GrantOwner
-						newInfoGrantOwner.setPersonInfo(
-							Cloner.copyIPerson2InfoPerson(newPerson));
+						newInfoGrantOwner.setPersonInfo(Cloner.copyIPerson2InfoPerson(newPerson));
 					}
 					grantOwnerList.add(newInfoGrantOwner);
 				}
 			}
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+
+		} catch (ExcepcaoPersistencia excepcaoPersistencia)
+		{
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
 		return grantOwnerList;
