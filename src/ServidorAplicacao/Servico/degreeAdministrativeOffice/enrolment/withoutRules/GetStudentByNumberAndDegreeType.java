@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.degreeAdministrativeOffice;
+package ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules;
 
 import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;

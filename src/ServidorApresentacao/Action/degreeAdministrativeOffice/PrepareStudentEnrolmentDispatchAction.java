@@ -34,16 +34,28 @@ public class PrepareStudentEnrolmentDispatchAction extends DispatchAction {
 	private final String[] forwards = { "startCurricularCourseEnrolmentWithRules", "startCurricularCourseEnrolmentWithoutRules" };
 
 	public ActionForward withRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		doIt(mapping, form, request, response);
+
+		DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
+		HttpSession session = request.getSession();
+
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		Integer degreeType = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
+		Integer studentNumber = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("studentNumber"));
+		Object args[] = { degreeType, studentNumber };
+
+		IUserView actor = null;
+		try {
+			actor = (IUserView) ServiceUtils.executeService(userView, "GetUserViewFromStudentNumberAndDegreeType", args);
+//			TODO DAVID-RICARDO: Fazer qq coisa se o student não existir, isto é, se o aluno que se quer inscrever não se encontrar na base de dados.
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		session.setAttribute(SessionConstants.ENROLMENT_ACTOR_KEY, actor);
 		return mapping.findForward(forwards[0]);
 	}
 
 	public ActionForward withoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		doIt(mapping, form, request, response);
-		return mapping.findForward(forwards[1]);
-	}
-
-	public void doIt(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
@@ -59,7 +71,7 @@ public class PrepareStudentEnrolmentDispatchAction extends DispatchAction {
 			Object args1[] = { degreeType, studentNumber };
 			student = (InfoStudent) ServiceUtils.executeService(userView, "GetStudentByNumberAndDegreeType", args1);
 //			TODO DAVID-RICARDO: Fazer qq coisa se o student não existir, isto é, se o aluno que se quer inscrever não se encontrar na base de dados.
-			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 			TipoCurso realDegreeType = new TipoCurso(degreeType);
 			Object args2[] = { infoExecutionPeriod.getInfoExecutionYear(), realDegreeType };
 			infoExecutionDegreesList = (List) ServiceUtils.executeService(userView, "ReadExecutionDegreesByExecutionYearAndDegreeType", args2);
@@ -68,8 +80,10 @@ public class PrepareStudentEnrolmentDispatchAction extends DispatchAction {
 		}
 		session.setAttribute(SessionConstants.ENROLMENT_ACTOR_KEY, student);
 		session.setAttribute(SessionConstants.DEGREE_LIST, this.getExecutionDegreesLableValueBeanList(infoExecutionDegreesList));
+		session.setAttribute(SessionConstants.DEGREES, infoExecutionDegreesList);
+		return mapping.findForward(forwards[1]);
 	}
-	
+
 	private List getExecutionDegreesLableValueBeanList(List infoExecutionDegreesList) {
 		ArrayList result = null;
 		if ( (infoExecutionDegreesList != null) && (!infoExecutionDegreesList.isEmpty()) ) {

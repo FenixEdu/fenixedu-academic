@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.degreeAdministrativeOffice;
+package ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.degreeAdministrativeOffice;
+package ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withRules;
 
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;

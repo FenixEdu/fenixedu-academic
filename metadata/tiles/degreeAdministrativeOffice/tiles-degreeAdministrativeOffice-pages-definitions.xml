@@ -19,8 +19,8 @@
 	<definition name="df.page.acceptEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptEnrolment.jsp"/>
 	</definition>
-	<definition name="df.page.showAvailableCurricularCourses" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/showAvailableCurricularCourses.jsp"/>
+	<definition name="df.page.showAvailableCurricularCoursesWithRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/showAvailableCurricularCoursesWithRules.jsp"/>
 	</definition>
 	<definition name="df.page.verifyEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/verifyEnrolment.jsp"/>
@@ -32,4 +32,10 @@
 	<definition name="df.page.searchOptionalCurricularCourses" extends="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/searchOptionalCurricularCourses.jsp"/>
 	</definition>
+
+
+	<definition name="df.page.showAvailableCurricularCoursesWithoutRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/showAvailableCurricularCoursesWithoutRules.jsp"/>
+	</definition>
+
 </tiles-definitions>

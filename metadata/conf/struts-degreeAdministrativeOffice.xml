@@ -30,11 +30,11 @@
 			<form-property name="optionalCourseIndex" type="java.lang.Integer"/>
 			<form-property name="optionalCurricularCourse" type="java.lang.Integer"/>
 		</form-bean>
-<!--
+
 		<form-bean name="curricularCourseEnrolmentWithoutRulesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
+			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
 		</form-bean>
--->
 	</form-beans>
 
 	<!-- ========== Global Exception Definitions ============================ -->
@@ -103,12 +103,12 @@
 		</action>
 
 		<action name="getDegreeAndCurricularSemesterAndCurricularYearForm"
-				type="ServidorApresentacao.Action.commons.VoidAction"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareEnrolmentContextAction"
 				path="/prepareEnrolmentContext"
 				input="/prepareEnrolmentContext.do"
 				scope="session"
-				validate="false">
-			<forward name="Success" path="df.page.main"/>
+				validate="true">
+			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCoursesWithoutRules"/>
 		</action>
 
 		<action	name="curricularCourseEnrolmentWithRulesForm"
@@ -125,13 +125,13 @@
 						key="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 
-			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCourses"/>
+			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCoursesWithRules"/>
 			<forward name="verifyEnrolment" path="df.page.verifyEnrolment"/>
 			<forward name="acceptEnrolment" path="df.page.acceptEnrolment"/>
 			<forward name="concreteOptionalList" path="df.page.concreteOptionalList"/>
 			<forward name="searchOptionalCurricularCourses" path="df.page.searchOptionalCurricularCourses"/>
 		</action>
-<!--
+
 		<action	name="curricularCourseEnrolmentWithoutRulesForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCourseEnrolmentWithoutRulesManagerDispatchAction"
 				path="/curricularCourseEnrolmentWithoutRulesManager"
@@ -146,22 +146,24 @@
 						key="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 
-			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCourses"/>
+			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCoursesWithoutRules"/>
+<!--
 			<forward name="verifyEnrolment" path="df.page.verifyEnrolment"/>
 			<forward name="acceptEnrolment" path="df.page.acceptEnrolment"/>
 			<forward name="concreteOptionalList" path="df.page.concreteOptionalList"/>
 			<forward name="searchOptionalCurricularCourses" path="df.page.searchOptionalCurricularCourses"/>
-		</action>
 -->
+		</action>
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
 	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions =========================== -->
+	<message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources"/>
+<!--
 	<message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources" key="DEGREE_ADMIN_OFFICE_RESOURCES" null="false"/>
 	<message-resources parameter="ServidorApresentacao.StudentResources"/>
-<!--
 	<message-resources parameter="ServidorApresentacao.ApplicationResources"/>
 	<message-resources parameter="ServidorApresentacao.PortalResources" key="PORTAL_RESOURCES" null="false"/>
 -->
