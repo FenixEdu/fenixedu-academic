@@ -2,7 +2,6 @@
 #----------------------------
 # Table structure for room occupation
 #----------------------------
-drop table if exists ROOM_OCCUPATION;
 create table ROOM_OCCUPATION (
    ID_INTERNAL int(11) not null auto_increment,
    START_TIME time not null,
@@ -18,7 +17,6 @@ create table ROOM_OCCUPATION (
 #----------------------------
 # Table structure for period
 #----------------------------
-drop table if exists PERIOD;
 create table PERIOD (
    ID_INTERNAL int(11) not null auto_increment,
    START_DATE date not null,
@@ -32,7 +30,6 @@ create table PERIOD (
 #----------------------------
 # Table structure for writtenEvaluation_roomOccupation
 #----------------------------
-drop table if exists WRITTEN_EVALUATION_ROOM_OCCUPATION;
 create table WRITTEN_EVALUATION_ROOM_OCCUPATION (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_WRITTEN_EVALUATION int(11) not null,
@@ -45,7 +42,6 @@ create table WRITTEN_EVALUATION_ROOM_OCCUPATION (
 #----------------------------
 # Table structure for writtenEvaluation_curricularCourseScope
 #----------------------------
-drop table if exists WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE;
 create table WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_WRITTEN_EVALUATION int(11) not null,
@@ -55,4 +51,4 @@ create table WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE (
    unique U1 (KEY_WRITTEN_EVALUATION, KEY_CURRICULAR_COURSE_SCOPE))
    type=InnoDB;
    
-alter table EXAM_EXECUTION_COURSE alter ACK_OPT_LOCK set default '1' not null;
+alter table EXAM_EXECUTION_COURSE alter ACK_OPT_LOCK set default '1';

@@ -11,7 +11,7 @@ package Util;
  *
  * @author  tfc130
  */
-public class TipoSala extends FenixUtil {
+public class TipoSala extends FenixUtil implements Comparable{
     public static final int ANFITEATRO = 1;
     public static final int LABORATORIO = 2;
     public static final int PLANA = 3;
@@ -58,5 +58,10 @@ public class TipoSala extends FenixUtil {
 			case PLANA : return "P";
 		}
 		return "Error: Invalid lesson type";
+	}
+	
+	public int compareTo(Object arg0)
+	{
+		return this.tipo.compareTo(((TipoSala) arg0).getTipo());
 	}
 }

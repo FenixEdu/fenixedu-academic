@@ -110,11 +110,6 @@ public class ExamSiteComponentBuilder
 			startSeason1.set(Calendar.DAY_OF_MONTH, 21);
 			endSeason2.set(Calendar.DAY_OF_MONTH, 17);
         }
-		if (executionDegree.getCurricularPlan().getDegree().getSigla().equals("LEN"))
-		{
-			startSeason1.set(Calendar.DAY_OF_MONTH, 21);
-			endSeason2.set(Calendar.DAY_OF_MONTH, 17);
-		}
 		if (executionDegree.getCurricularPlan().getDegree().getSigla().equals("LET"))
 		{
 			startSeason1.set(Calendar.DAY_OF_MONTH, 21);

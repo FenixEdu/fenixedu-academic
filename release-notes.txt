@@ -1,5 +1,5 @@
 --------------------------------------------------------------------
-Release 2004-04-28
+Release 2004-04-29
 ---------------------------------------------------------------------
 
 NEW FEATURES:
@@ -26,6 +26,11 @@ NEW FEATURES:
 - Edit Reembursement Guide Situation
 - View Reembursement Guides
 - Print Reembursement Guides
+- New SOP exams application, with the same use cases but new interface and  
+  association of exams to curricular course scopes. More flexible exam hours 
+  (end and beggining). Exams associated to room occupations to make the room
+  search algorithm more reliable.
+
 NOTES:
 - updateWebSiteItem-14-04-2004.sql: 
 - added field ftpName in website_item table

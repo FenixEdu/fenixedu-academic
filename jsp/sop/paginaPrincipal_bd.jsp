@@ -36,8 +36,7 @@ e alterar aulas).</p>
     <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
     </td>
     <td class="infoop">
-    	<html:link page="/mainExams.do?method=prepare"><strong>Gest&atilde;o de Exames</strong></html:link> 
-    	<br /> <br /><html:link page="/mainExamsNew.do?method=prepare"><strong>Gest&atilde;o de Exames (new version) </strong></html:link>
+		<html:link page="/mainExamsNew.do?method=prepare"><strong>Gest&atilde;o de Exames </strong></html:link>
     </td>
   </tr>
 </table>

@@ -78,33 +78,36 @@ public class ReadFilteredExamsMap implements IServico
         // is not yet available from the database
         Calendar startSeason1 = Calendar.getInstance();
         startSeason1.set(Calendar.YEAR, 2004);
-        startSeason1.set(Calendar.MONTH, Calendar.JANUARY);
-        startSeason1.set(Calendar.DAY_OF_MONTH, 5);
+        startSeason1.set(Calendar.MONTH, Calendar.JUNE);
+        startSeason1.set(Calendar.DAY_OF_MONTH, 14);
         startSeason1.set(Calendar.HOUR_OF_DAY, 0);
         startSeason1.set(Calendar.MINUTE, 0);
         startSeason1.set(Calendar.SECOND, 0);
         startSeason1.set(Calendar.MILLISECOND, 0);
         Calendar endSeason2 = Calendar.getInstance();
         endSeason2.set(Calendar.YEAR, 2004);
-        endSeason2.set(Calendar.MONTH, Calendar.FEBRUARY);
-        endSeason2.set(Calendar.DAY_OF_MONTH, 14);
+        endSeason2.set(Calendar.MONTH, Calendar.JULY);
+        endSeason2.set(Calendar.DAY_OF_MONTH, 24);
         endSeason2.set(Calendar.HOUR_OF_DAY, 0);
         endSeason2.set(Calendar.MINUTE, 0);
         endSeason2.set(Calendar.SECOND, 0);
         endSeason2.set(Calendar.MILLISECOND, 0);
 
-        if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LEEC"))
-        {
-            startSeason1.set(Calendar.DAY_OF_MONTH, 5);
-            endSeason2.set(Calendar.DAY_OF_MONTH, 14);
-        }
-        if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LEC")
-            || infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LET")
-            || infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LA"))
-        {
-            startSeason1.set(Calendar.DAY_OF_MONTH, 12);
-            endSeason2.set(Calendar.DAY_OF_MONTH, 7);
-        }
+		if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LEC"))
+		{
+			startSeason1.set(Calendar.DAY_OF_MONTH, 21);
+			endSeason2.set(Calendar.DAY_OF_MONTH, 17);
+		}
+		if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LET"))
+		{
+			startSeason1.set(Calendar.DAY_OF_MONTH, 21);
+			endSeason2.set(Calendar.DAY_OF_MONTH, 17);
+		}
+		if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LA"))
+		{
+			startSeason1.set(Calendar.DAY_OF_MONTH, 21);
+			endSeason2.set(Calendar.DAY_OF_MONTH, 17);
+		}
 
         // Set Exam Season info
         infoExamsMap.setStartSeason1(startSeason1);
