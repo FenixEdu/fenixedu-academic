@@ -24,6 +24,7 @@ public class RenderExamsMapTag extends TagSupport {
 
 	// Name of atribute containing ExamMap
 	private String name;
+	private String user;
 
 	private ExamsMapSlotContentRenderer examsMapSlotContentRenderer =
 		new ExamsMapContentRenderer();
@@ -31,8 +32,11 @@ public class RenderExamsMapTag extends TagSupport {
 	public int doStartTag() throws JspException {
 		// Obtain InfoExamMap
 		InfoExamsMap infoExamsMap = null;
+		String typeUser = "";
+
 		try {
 			infoExamsMap = (InfoExamsMap) pageContext.findAttribute(name);
+			typeUser = user;
 		} catch (ClassCastException e) {
 			infoExamsMap = null;
 		}		
@@ -48,7 +52,8 @@ public class RenderExamsMapTag extends TagSupport {
 		ExamsMapRenderer renderer =
 			new ExamsMapRenderer(
 				examsMap,
-				this.examsMapSlotContentRenderer);
+				this.examsMapSlotContentRenderer,
+				typeUser);
 		
 		try {
 			writer.print(renderer.render());
@@ -79,6 +84,14 @@ public class RenderExamsMapTag extends TagSupport {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String string) {
+		user = string;
 	}
 
 }

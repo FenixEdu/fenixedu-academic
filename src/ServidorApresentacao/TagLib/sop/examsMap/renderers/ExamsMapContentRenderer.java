@@ -17,7 +17,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
 	public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot) {
 		StringBuffer strBuffer = new StringBuffer();
-		
+
 		strBuffer.append(examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH));
 		if (examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) == 1) {
 			strBuffer.append(" de ");
@@ -36,7 +36,8 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 	public StringBuffer renderDayContents(
 		ExamsMapSlot examsMapSlot,
 		Integer year1,
-		Integer year2) {
+		Integer year2,
+		String typeUser) {
 		StringBuffer strBuffer = new StringBuffer();
 
 		for (int i = 0; i < examsMapSlot.getExams().size(); i++) {
@@ -49,19 +50,28 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 				String courseInitials =
 					infoExam.getInfoExecutionCourse().getSigla();
 
-				strBuffer.append(
-					"<a href='viewExamsMap.do?method=edit"
-						+ "&amp;executionCourseInitials="
-						+ infoExam.getInfoExecutionCourse().getSigla()
-						+ "&amp;season="
-						+ infoExam.getSeason().getseason()
-						+ "'>");
-
-				if (isOnValidWeekDay) {
-					strBuffer.append(courseInitials);
-				} else {
+				if (typeUser.equals("sop")) {
 					strBuffer.append(
-						"<font color='red'>" + courseInitials + "</font>");
+						"<a href='viewExamsMap.do?method=edit"
+							+ "&amp;executionCourseInitials="
+							+ infoExam.getInfoExecutionCourse().getSigla()
+							+ "&amp;season="
+							+ infoExam.getSeason().getseason()
+							+ "'>");
+
+					if (isOnValidWeekDay) {
+						strBuffer.append(courseInitials);
+					} else {
+						strBuffer.append(
+							"<font color='red'>" + courseInitials + "</font>");
+					}
+
+				} else if (typeUser.equals("public")) {
+					strBuffer.append(
+						"<a href='siteViewer.do?method=executionCourseViewer&amp;exeCourseCode="
+							+ infoExam.getInfoExecutionCourse().getSigla()
+							+ "'>");
+					strBuffer.append(courseInitials);
 				}
 
 				if (infoExam.getBeginning() != null) {
@@ -70,7 +80,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 						infoExam.getBeginning().get(Calendar.HOUR_OF_DAY) + "H";
 
 					strBuffer.append(" às ");
-					if (isAtValidHour) {
+					if (isAtValidHour || !typeUser.equals("sop")) {
 						strBuffer.append(hoursText);
 					} else {
 						strBuffer.append(

@@ -29,12 +29,16 @@ public class ExamsMapRenderer {
 	private ExamsMap examsMap;
 	private ExamsMapSlotContentRenderer examsMapSlotContentRenderer;
 
+	private String user;
+
 	public ExamsMapRenderer(
 		ExamsMap examsMap,
-		ExamsMapSlotContentRenderer examsMapSlotContentRenderer) {
+		ExamsMapSlotContentRenderer examsMapSlotContentRenderer,
+		String typeUser) {
 		setExamsMap(examsMap);
 		setExamsMapSlotContentRenderer(examsMapSlotContentRenderer);
 		numberOfWeks = examsMap.getDays().size() / 6;
+		setUser(typeUser);
 	}
 
 	public StringBuffer render() {
@@ -88,7 +92,7 @@ public class ExamsMapRenderer {
 
 			strBuffer.append("</tr>");
 			strBuffer.append("</table>");
-			
+
 			if (i < numberOfCurricularYearsToDisplay - 1) {
 				strBuffer.append("<br/>");
 				strBuffer.append("<br/>");
@@ -111,7 +115,12 @@ public class ExamsMapRenderer {
 				boolean showCreateExamLink =
 					infoExecutionCourse.getAssociatedInfoExams().size() < 2;
 
-				if (showCreateExamLink) {
+				if (user.equals("public")) {
+					strBuffer.append(
+						"<a href='siteViewer.do?method=executionCourseViewer&amp;exeCourseCode="
+							+ infoExecutionCourse.getSigla()
+							+ "'>");
+				} else if (showCreateExamLink && user.equals("sop")) {
 					strBuffer.append(
 						"<a href='viewExamsMap.do?method=create&amp;indexExecutionCourse="
 							+ i
@@ -122,7 +131,7 @@ public class ExamsMapRenderer {
 				strBuffer.append(" - ");
 				strBuffer.append(infoExecutionCourse.getNome());
 
-				if (showCreateExamLink) {
+				if (showCreateExamLink || user.equals("public")) {
 					strBuffer.append("</a>");
 				}
 
@@ -182,7 +191,8 @@ public class ExamsMapRenderer {
 					(ExamsMapSlot) examsMap.getDays().get(
 						week * daysOfWeek.length + slot),
 					year1,
-					year2));
+					year2,
+					user));
 			strBuffer.append("</td>");
 		}
 	}
@@ -234,6 +244,14 @@ public class ExamsMapRenderer {
 	 */
 	private void setExamsMapSlotContentRenderer(ExamsMapSlotContentRenderer renderer) {
 		examsMapSlotContentRenderer = renderer;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String string) {
+		user = string;
 	}
 
 }
