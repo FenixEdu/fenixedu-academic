@@ -25,11 +25,11 @@ public class AnnouncementManagementFormAction extends FenixAction {
         String option = (String) announcementManagementForm.get("option");
         int index = ((Integer) announcementManagementForm.get("index")).intValue();
         List announcements = (List) session.getAttribute("Announcements");
-        if (option.equals("Editar")) {
+        if (option.equals("Edit")) {
             session.setAttribute("Announcement", announcements.get(index));
             return mapping.findForward("EditAnnouncement");
         }
-        else if (option.equals("Apagar")) {
+        else if (option.equals("Delete")) {
             session.setAttribute("Announcement", announcements.get(index));
             return mapping.findForward("DeleteAnnouncement");
         }

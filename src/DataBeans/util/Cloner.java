@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-
 import DataBeans.InfoCandidateSituation;
-
 import DataBeans.InfoClass;
 import DataBeans.InfoCountry;
 import DataBeans.InfoCurricularCourse;
@@ -75,10 +73,7 @@ import Dominio.Site;
 import Dominio.Student;
 import Dominio.Turma;
 import Dominio.Turno;
-
 import Util.TipoCurso;
-import Util.TipoCurso;
-import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author jpvl
