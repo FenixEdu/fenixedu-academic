@@ -225,10 +225,14 @@ public abstract class Cloner {
 	 * @return IAula
 	 */
 	public static InfoRoom copyRoom2InfoRoom(ISala room) {
-		InfoRoom infoRoom = new InfoRoom();
 
-		copyObjectProperties(infoRoom, room);
-		return infoRoom;
+		if (room != null) {
+			InfoRoom infoRoom = new InfoRoom();
+
+			copyObjectProperties(infoRoom, room);
+			return infoRoom;
+		}
+		return null;
 	}
 
 	/**
