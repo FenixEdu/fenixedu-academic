@@ -57,6 +57,11 @@
         </field>
     </form>
 
+    <form name="pagedIndexForm">
+      <field property="index" depends="required, integer" page="1">
+        <arg0 key="property.index"/>
+      </field>
+    </form>
 
   <!-- Validation for chooseContextForm Form -->
     <form name="chooseContextForm">
@@ -566,6 +571,7 @@
         <arg0 key="property.class.name"/>
       </field>
     </form>
+
 
   </formset>
 </form-validation>

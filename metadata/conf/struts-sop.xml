@@ -221,7 +221,12 @@
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>
 
-
+      <form-bean name="pagedIndexForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">
+        <form-property name="index" type="java.lang.Integer"/>
+        <form-property name="page" type="java.lang.Integer"/>
+      </form-bean>
       
      </form-beans>
 
@@ -252,7 +257,6 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
       <action path="/paginaPrincipal" forward="/paginaPrincipal.jsp"/>
-      <action path="/mainExams" forward="/mainExams.jsp"/>
       <action path="/index" forward="/autenticacaoSOP.jsp"/>
       <action path="/autenticacaoSOP" forward="/autenticacaoSOP.jsp"/>
       <action path="/criarSala" forward="/criarSala.jsp"/>
@@ -830,7 +834,7 @@
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
         		   />
     	<forward name="showCreateForm" path="/createExam.jsp"/>
-    	<forward name="Sucess" path="/mainExams.jsp"/>
+    	<forward name="Sucess" path="/mainExams.do?method=prepare"/>
     	<forward name="viewExamsMap" path="/viewExamsMap.do?method=view"/>
 	</action>
 
@@ -882,6 +886,18 @@
         <forward name="showExamsMap" path="/viewExamsMap.do?method=view"/>
 	</action>
 
+	<action path="/mainExams"
+			name="pagedIndexForm"
+			input="/mainExams.do?method=prepare"
+    		type="ServidorApresentacao.Action.sop.ExecutionPeriodDA"
+    		parameter="method"
+    		validate="true"
+    		scope="request"
+    		>
+  		<forward name="showForm" path="/mainExams.jsp"/>
+  		<forward name="choose" path="/mainExams.do?method=prepare"/>
+	</action>
+      
       
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
 	  <action path="/siteViewer"
