@@ -643,7 +643,7 @@
     </filterChain>
     <filterChain>
         <name>EnrollmentWithoutRulesAuthorization</name>
-        <expression>EnrollmentLEECWithoutRulesAuthorization || MasterDegreeEnrollmentWithoutRulesAuthorization</expression>
+        <expression>EnrollmentWithoutRulesAuthorization || MasterDegreeEnrollmentWithoutRulesAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>

@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<h2><bean:message key="title.student.LEEC.enrollment.rules.without"/></h2>
+<h2><bean:message key="title.student.enrollment.rules.without"/></h2>
 
 <span class="error"><html:errors/></span>
 <html:form action="/courseEnrolmentWithoutRulesManagerDA" focus="studentNumber">

@@ -25,8 +25,8 @@ public class RestrictionByNumberOfDoneCurricularCourses extends RestrictionByNum
 		if (precedenceContext.getStudentCurricularPlan().getNumberOfApprovedCurricularCourses() >= numberOfCurricularCourses
                 .intValue()) {
             return CurricularCourseEnrollmentType.DEFINITIVE;
-        } else {
+        } 
             return CurricularCourseEnrollmentType.NOT_ALLOWED;
-        }
+        
 	}
 }

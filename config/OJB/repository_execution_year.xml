@@ -1,0 +1,49 @@
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.ExecutionYear -->
+<!-- ******************************************************************************************************************************* -->
+ <class-descriptor
+         class="Dominio.ExecutionYear"
+         table="EXECUTION_YEAR"
+    >
+       <field-descriptor 
+          name="idInternal"
+          column="ID_INTERNAL"
+          jdbc-type="INTEGER"
+          primarykey="true"
+          autoincrement="true"
+       />
+       <field-descriptor 
+          name="year"
+          column="YEAR"
+          jdbc-type="VARCHAR"
+       />       
+       <field-descriptor
+          name="state"
+          column="STATE"
+	      conversion="ServidorPersistente.Conversores.JavaPeriodState2SqlPeriodState"
+          jdbc-type="VARCHAR"/>       
+       <field-descriptor
+          name="beginDate"
+          column="BEGIN_DATE"
+          jdbc-type="DATE"
+          conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+       />
+       <field-descriptor
+          name="endDate"
+          column="END_DATE"
+          jdbc-type="DATE"
+          conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+        />          
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+      <collection-descriptor
+			name="executionPeriods"
+			element-class-ref="Dominio.ExecutionPeriod"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionYear"/>
+	</collection-descriptor>  
+    </class-descriptor> 

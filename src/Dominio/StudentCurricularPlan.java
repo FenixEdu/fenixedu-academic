@@ -2,6 +2,7 @@ package Dominio;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -786,6 +787,24 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
      */
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
         //do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStudentCurricularPlan#getCurricularCoursesToEnroll(Dominio.IExecutionYear, Util.enrollment.EnrollmentRuleType)
+     */
+    public List getCurricularCoursesToEnrollInExecutionYear(IExecutionYear executionYear, EnrollmentRuleType enrollmentRuleType) throws ExcepcaoPersistencia {
+            List result = new ArrayList();
+            List executionPeriods=null;
+        if (executionYear==null){
+            executionPeriods = getExecutionPeriod(null).getExecutionYear().getExecutionPeriods();
+        } else {
+            executionPeriods = executionYear.getExecutionPeriods();
+        }
+            Iterator iter = executionPeriods.iterator();
+            while (iter.hasNext()){
+                result.addAll(getCurricularCoursesToEnroll((IExecutionPeriod) iter.next(),enrollmentRuleType));
+            }
+        return result;
     }
 
     // -------------------------------------------------------------

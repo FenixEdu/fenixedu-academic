@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<h2><bean:message key="title.student.enrollment"/></h2>
+<h2><bean:message key="title.student.enrollment" bundle="DEFAULT"/></h2>
 
 
 <span class="error"><html:errors/></span>
@@ -14,7 +14,7 @@
 	</logic:present>
 	<table>
 		<tr>
-			<td><bean:message key="label.choose.student"/>&nbsp;</td>
+			<td><bean:message key="label.choose.student" bundle="DEFAULT"/>&nbsp;</td>
 			<td>
 				<input type="text" name="studentNumber" size="5" maxlength="5"/>
 			</td>

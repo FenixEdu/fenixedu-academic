@@ -35,8 +35,8 @@
 				<logic:iterate id="infoCurricularCourse" name="infoCurricularCoursesToEnroll">
 					<bean:define id="infoCurricularCourseId" name="infoCurricularCourse" property="idInternal" />
 					<tr>
-						<td><bean:write name="infoCurricularCourse" property="name"/></td>
-						<td><html:multibox property="curricularCourses" value="<%= infoCurricularCourseId.toString() %>" /></td>
+						<td class="listClasses"><bean:write name="infoCurricularCourse" property="name"/></td>
+						<td class="listClasses"><html:multibox property="curricularCourses" value="<%= infoCurricularCourseId.toString() %>" /></td>
 					</tr>
 				</logic:iterate>
 			</table>

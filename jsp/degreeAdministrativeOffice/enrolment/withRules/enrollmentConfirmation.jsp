@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="Util.EnrolmentState, Util.CurricularCourseType, DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
-<h2><bean:message key="title.student.enrollment"/></h2>
+<h2><bean:message key="title.student.enrollment" bundle="STUDENT_RESOURCES"/></h2>
 <span class="error"><html:errors/></span>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>

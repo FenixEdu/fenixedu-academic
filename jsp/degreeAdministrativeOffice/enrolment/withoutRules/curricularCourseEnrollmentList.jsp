@@ -38,7 +38,7 @@
 				<logic:iterate id="infoEnrollment" name="infoEnrollmentsWithStateEnrolled">
 					<bean:define id="infoEnrollmentId" name="infoEnrollment" property="idInternal" />
 					<tr>
-						<td>
+						<td class="listClasses">
 							<bean:write name="infoEnrollment" property="infoCurricularCourse.name"/>
 							<logic:equal name="infoEnrollment" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
 							<% if (pageContext.findAttribute("infoEnrollment") instanceof InfoEnrolmentInOptionalCurricularCourse)
@@ -53,7 +53,7 @@
 							%>
 							</logic:equal>
 						</td>
-						<td><html:multibox property="unenrollments" value="<%= infoEnrollmentId.toString() %>" /></td>
+						<td class="listClasses"><html:multibox property="unenrollments" value="<%= infoEnrollmentId.toString() %>" /></td>
 					</tr>
 				</logic:iterate>
 			</table>

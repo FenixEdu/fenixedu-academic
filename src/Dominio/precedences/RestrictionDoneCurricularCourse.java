@@ -26,16 +26,16 @@ public class RestrictionDoneCurricularCourse extends RestrictionByCurricularCour
 			if (precedenceContext.getStudentCurricularPlan().isCurricularCourseApproved(
                     this.getPrecedentCurricularCourse())) {
                 return CurricularCourseEnrollmentType.DEFINITIVE;
-            } else {
+            } 
                 CurricularCourseEnrollmentType type = precedenceContext.getStudentCurricularPlan()
                         .getCurricularCourseEnrollmentType(this.getPrecedentCurricularCourse(),
                                 precedenceContext.getExecutionPeriod());
                 if (type.equals(CurricularCourseEnrollmentType.TEMPORARY)) {
                     return CurricularCourseEnrollmentType.TEMPORARY;
-                } else {
-                    return CurricularCourseEnrollmentType.NOT_ALLOWED;
                 }
-            }
+                    return CurricularCourseEnrollmentType.NOT_ALLOWED;
+                
+            
 	    } catch(ExcepcaoPersistencia e) {
 	        throw new RuntimeException(e);
 	    }

@@ -81,8 +81,8 @@ public class RestrictionPeriodToApply extends Restriction implements IRestrictio
 
         if (isValid) {
             return CurricularCourseEnrollmentType.DEFINITIVE;
-        } else {
+        } 
             return CurricularCourseEnrollmentType.NOT_ALLOWED;
-        }
+        
     }
 }

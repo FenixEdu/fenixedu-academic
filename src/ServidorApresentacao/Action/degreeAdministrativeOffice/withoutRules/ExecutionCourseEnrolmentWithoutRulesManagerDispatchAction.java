@@ -244,7 +244,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 		}
 		catch (NotAuthorizedException e)
 		{
-			e.printStackTrace();
+			
 
 			errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
 			saveErrors(request, errors);

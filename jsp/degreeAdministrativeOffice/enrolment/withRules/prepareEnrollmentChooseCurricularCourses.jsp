@@ -28,7 +28,7 @@
 	}
 // -->
 </script>
-<h2><bean:message key="title.student.enrollment"/></h2>
+<h2><bean:message key="title.student.enrollment" bundle="STUDENT_RESOURCES"/></h2>
 <span class="error"><html:errors/></span>
 <html:form action="/curricularCoursesEnrollment">
 	<html:hidden property="method" value="enrollmentConfirmation" />

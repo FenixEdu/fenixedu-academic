@@ -39,6 +39,7 @@
 <!ENTITY student SYSTEM "repository_student.xml">
 <!ENTITY curricularCourseEquivalence SYSTEM "repository_curricular_course_equivalence.xml">
 <!ENTITY branch SYSTEM "repository_branch.xml">
+<!ENTITY executionYear SYSTEM "repository_execution_year.xml">
 ]>
 
 
@@ -83,4 +84,5 @@
 	&student;
 	&curricularCourseEquivalence;
     &branch;
+    &executionYear;
 </descriptor-repository>
