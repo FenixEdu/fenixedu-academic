@@ -20,7 +20,9 @@ import DataBeans.InfoRoom;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.sop.exceptions.InterceptingServiceException;
+import ServidorAplicacao.Servico.sop.exceptions.InvalidTimeIntervalServiceException;
 import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
 import ServidorApresentacao.Action.sop.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.exceptions.InterceptingActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
@@ -34,8 +36,8 @@ import Util.TipoAula;
  */
 public class CriarAulaFormAction extends FenixAction {
 
-	public static String INVALID_TIME_INTERVAL = "errors.lesson.invalid.time.interval";
-	
+	public static String INVALID_TIME_INTERVAL =
+		"errors.lesson.invalid.time.interval";
 
 	public ActionForward execute(
 		ActionMapping mapping,
@@ -47,46 +49,50 @@ public class CriarAulaFormAction extends FenixAction {
 
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
-			IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
+			IUserView userView =
+				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 
 			Calendar inicio = Calendar.getInstance();
 			inicio.set(
 				Calendar.HOUR_OF_DAY,
-				Integer.parseInt((String)criarAulaForm.get("horaInicio")));
+				Integer.parseInt((String) criarAulaForm.get("horaInicio")));
 			inicio.set(
 				Calendar.MINUTE,
-				Integer.parseInt((String)criarAulaForm.get("minutosInicio")));
+				Integer.parseInt((String) criarAulaForm.get("minutosInicio")));
 			inicio.set(Calendar.SECOND, 0);
 			Calendar fim = Calendar.getInstance();
 			fim.set(
 				Calendar.HOUR_OF_DAY,
-				Integer.parseInt((String)criarAulaForm.get("horaFim")));
+				Integer.parseInt((String) criarAulaForm.get("horaFim")));
 			fim.set(
 				Calendar.MINUTE,
-				Integer.parseInt((String)criarAulaForm.get("minutosFim")));
+				Integer.parseInt((String) criarAulaForm.get("minutosFim")));
 			fim.set(Calendar.SECOND, 0);
 
-
 			String initials = (String) criarAulaForm.get("courseInitials");
-			
-			InfoExecutionCourse courseView = RequestUtils.getExecutionCourseBySigla(request, initials);
 
-			if (courseView==null){
+			InfoExecutionCourse courseView =
+				RequestUtils.getExecutionCourseBySigla(request, initials);
+
+			if (courseView == null) {
 				return mapping.getInputForward();
 			}
-			
+
 			InfoRoom infoSala = new InfoRoom();
 			infoSala.setNome((String) criarAulaForm.get("nomeSala"));
 			Object argsCriarAula[] =
 				{
 					 new InfoLesson(
-						new DiaSemana(new Integer((String)criarAulaForm.get("diaSemana"))),
+						new DiaSemana(
+							new Integer(
+								(String) criarAulaForm.get("diaSemana"))),
 						inicio,
 						fim,
-						new TipoAula(new Integer((String) criarAulaForm.get("tipoAula"))),
+						new TipoAula(
+							new Integer(
+								(String) criarAulaForm.get("tipoAula"))),
 						infoSala,
-						courseView)
-				};
+						courseView)};
 
 			InfoLessonServiceResult result = null;
 			try {
@@ -95,35 +101,41 @@ public class CriarAulaFormAction extends FenixAction {
 						userView,
 						"CriarAula",
 						argsCriarAula);
-			} catch (ExistingServiceException ex) {
-				throw new ExistingActionException("A aula", ex);
 			} catch (InterceptingServiceException ex) {
+				
 				throw new InterceptingActionException(infoSala.getNome(), ex);
+			} catch (ExistingServiceException ex) {
+				
+				throw new ExistingActionException("A aula", ex);
+			} catch (InvalidTimeIntervalServiceException ex) {
+				throw new InvalidTimeIntervalActionException(ex);
 			}
 			ActionErrors actionErrors = getActionErrors(result, inicio, fim);
 
-			if (actionErrors.isEmpty()){
+			if (actionErrors.isEmpty()) {
 				return mapping.findForward("Sucesso");
-			}else{
+			} else {
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
-			}			
+			}
 
 		} else
 			throw new Exception();
 	}
 
-	private ActionErrors getActionErrors(InfoLessonServiceResult result, Calendar inicio, Calendar fim) {
+	private ActionErrors getActionErrors(
+		InfoLessonServiceResult result,
+		Calendar inicio,
+		Calendar fim) {
 		ActionErrors actionErrors = new ActionErrors();
 		String beginMinAppend = "";
 		String endMinAppend = "";
-		
+
 		if (inicio.get(Calendar.MINUTE) == 0)
 			beginMinAppend = "0";
 		if (fim.get(Calendar.MINUTE) == 0)
-				endMinAppend = "0";
-		
-		
+			endMinAppend = "0";
+
 		switch (result.getMessageType()) {
 			case InfoLessonServiceResult.SUCESS :
 				break;
@@ -133,16 +145,23 @@ public class CriarAulaFormAction extends FenixAction {
 					new ActionError(
 						INVALID_TIME_INTERVAL,
 						""
-							+ inicio.get(Calendar.HOUR_OF_DAY) + ":" + inicio.get(Calendar.MINUTE) + beginMinAppend
+							+ inicio.get(Calendar.HOUR_OF_DAY)
+							+ ":"
+							+ inicio.get(Calendar.MINUTE)
+							+ beginMinAppend
 							+ " - "
-							+ fim.get(Calendar.HOUR_OF_DAY) + ":" + fim.get(Calendar.MINUTE) + endMinAppend));
+							+ fim.get(Calendar.HOUR_OF_DAY)
+							+ ":"
+							+ fim.get(Calendar.MINUTE)
+							+ endMinAppend));
 				break;
 			default :
-				actionErrors.add(INVALID_TIME_INTERVAL,new ActionError(INVALID_TIME_INTERVAL));
+				actionErrors.add(
+					INVALID_TIME_INTERVAL,
+					new ActionError(INVALID_TIME_INTERVAL));
 				break;
 		}
 		return actionErrors;
 	}
-
 
 }

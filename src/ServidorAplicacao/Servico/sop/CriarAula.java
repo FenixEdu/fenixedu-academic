@@ -22,10 +22,15 @@ import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.sop.exceptions.InterceptingServiceException;
+import ServidorAplicacao
+	.Servico
+	.sop
+	.exceptions
+	.InvalidTimeIntervalServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
@@ -92,12 +97,17 @@ public class CriarAula implements IServico {
 					executionCourse);
 
 			result = validTimeInterval(aula);
+			if (result.getMessageType() == 1) {
+				throw new InvalidTimeIntervalServiceException();
+			}
+
 			boolean resultB = validNoInterceptingLesson(aula);
 
 			if (result.isSUCESS() && resultB) {
 				try {
 					sp.getIAulaPersistente().lockWrite(aula);
 				} catch (ExistingPersistentException ex) {
+
 					throw new ExistingServiceException(ex);
 				}
 			} else {
@@ -105,6 +115,7 @@ public class CriarAula implements IServico {
 			}
 
 		} catch (ExcepcaoPersistencia ex) {
+
 			throw new FenixServiceException(ex.getMessage());
 		}
 

@@ -283,6 +283,9 @@
 		<exception type="ServidorApresentacao.Action.sop.exceptions.InterceptingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />
+        <exception type="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />           
 		<forward name="Sucesso" path="/gestaoHorarios.do"/>
       </action>
 
