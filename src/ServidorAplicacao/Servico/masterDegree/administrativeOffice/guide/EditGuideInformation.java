@@ -118,8 +118,6 @@ public class EditGuideInformation implements IServico {
 			
 		infoGuide.setInfoContributor(Cloner.copyIContributor2InfoContributor(contributor));
 		
-System.out.println("infoGuide " + infoGuide.getInfoContributor());
-		
 		// Check the quantities of the Guide Entries
 		// The items without a quantity or with a 0 quantity will be deleted if the guide is NON PAYED or
 		// they won't appear in the new guide version if the guide has been payed 
@@ -193,13 +191,15 @@ System.out.println("infoGuide " + infoGuide.getInfoContributor());
 						IGuideEntry guideEntry = sp.getIPersistentGuideEntry().readByGuideAndGraduationTypeAndDocumentTypeAndDescription(
 										guide, infoGuideEntry.getGraduationType(), infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
 						guideEntry.setQuantity(infoGuideEntry.getQuantity());
-						
 					} catch (ExcepcaoPersistencia ex) {
 						FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 						newEx.fillInStackTrace();
 						throw newEx;
 					}
 				}
+
+				sp.getIPersistentGuide().write(guide);
+				guide.setContributor(contributor);
 			}
 						
 		} else if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE)){
@@ -255,22 +255,11 @@ System.out.println("infoGuide " + infoGuide.getInfoContributor());
 			}
 			
 		}
-		
-		
 		// If there's no change
 		
 		if (!change)
 			throw new NoChangeMadeServiceException();
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.getIPersistentGuide().write(guide);
-			guide.setContributor(contributor);
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
-		InfoGuide newInfoGuide = null;
+
 		IGuide newGuide = null;
 		InfoGuide result = null;
 		try {
@@ -289,7 +278,7 @@ System.out.println("infoGuide " + infoGuide.getInfoContributor());
 			// Update the Guide Total
 			InfoGuide infoGuideTemp = new InfoGuide();
 			infoGuideTemp.setInfoGuideEntries(newInfoGuideEntries);
-System.out.println("NewGuide no Serviço" + newGuide);	
+
 			result = Cloner.copyIGuide2InfoGuide(newGuide); 
 
 			result.setTotal(CalculateGuideTotal.calculate(result));
