@@ -74,8 +74,6 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
     }
     
     public void apagarTodasAsPessoas() throws ExcepcaoPersistencia {
-		//String oqlQuery = "select all from " + Privilegio.class.getName();
-		//super.deleteAll(oqlQuery);
         String oqlQuery = "select all from " + Pessoa.class.getName();
         super.deleteAll(oqlQuery);
     }
