@@ -13,12 +13,15 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
+import Dominio.ExecutionPeriod;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
+import Dominio.IExecutionPeriod;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionCourse;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -51,7 +54,7 @@ public class ReadExecutionCoursesByExecutionDegreeService implements IService
         super();
     }
 
-    public List run(Integer executionDegreeId) throws FenixServiceException
+    public List run(Integer executionDegreeId, Integer executionPeriodId) throws FenixServiceException
     {
         List infoExecutionCourseList = null;
 
@@ -59,6 +62,20 @@ public class ReadExecutionCoursesByExecutionDegreeService implements IService
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod executionPeriod = null;
+
+            if (executionPeriodId == null)
+            {
+                executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+            }
+            else
+            {
+                executionPeriod = (IExecutionPeriod) executionCourseDAO.readByOId(new ExecutionPeriod(
+                        executionPeriodId),
+                        false);
+            }
+
             ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
 
             ICursoExecucao executionDegree = (ICursoExecucao) executionDegreeDAO.readByOId(
@@ -69,8 +86,8 @@ public class ReadExecutionCoursesByExecutionDegreeService implements IService
                 throw new NonExistingExecutionDegree();
             }
 
-            List executionCourseList = executionCourseDAO.readByDegreeCurricularPlanAndExecutionYear(
-                    executionDegree.getCurricularPlan(), executionDegree.getExecutionYear());
+            List executionCourseList = executionCourseDAO.readByExecutionDegreeAndExecutionPeriod(
+                    executionDegree, executionPeriod);
 
             infoExecutionCourseList = (List) CollectionUtils.collect(executionCourseList,
                     new Transformer()
