@@ -1,83 +1,138 @@
 /*
  * ReadCourseByStudentTest.java JUnit based test
- *
+ * 
  * Created on February 26th, 2003, 15:33
  */
 
 package ServidorAplicacao.Servicos.student;
 
 /**
- *
  * @author Nuno Nunes & Joana Mota
  */
-import java.util.ArrayList;
+import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import DataBeans.ISiteComponent;
+import DataBeans.InfoExamStudentRoom;
 import DataBeans.InfoPerson;
 import DataBeans.InfoShiftEnrolment;
-import DataBeans.InfoStudent;
 import DataBeans.InfoStudentSiteExams;
 import DataBeans.SiteView;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+import ServidorAplicacao.Servicos.UtilsTestCase;
 
-public class ReadExamsByStudentTest extends TestCaseReadServices {
+public class ReadExamsByStudentTest
+	extends ServiceNeedsAuthenticationTestCase {
 
 	private InfoPerson infoPerson = null;
-	private InfoStudent infoStudent = null;
 	private InfoShiftEnrolment infoShiftEnrolment = null;
-	
-    public ReadExamsByStudentTest(java.lang.String testName) {
-    super(testName);
-  }
-    
-  public static void main(java.lang.String[] args) {
-    junit.textui.TestRunner.run(suite());
-  }
-    
-  public static Test suite() {
-    TestSuite suite = new TestSuite(ReadExamsByStudentTest.class);
-        
-    return suite;
-  }
-    
-  protected void setUp() {
-    super.setUp();
-  }
-    
-  protected void tearDown() {
-    super.tearDown();
-  }
 
+	public ReadExamsByStudentTest(java.lang.String testName) {
+		super(testName);
+	}
 
+	protected String getApplication() {
+		return Autenticacao.EXTRANET;
+	}
 
-  protected String getNameOfServiceToBeTested() {
-	  return "ReadExamsByStudent";
-  }
+	protected String[] getAuthenticatedAndAuthorizedUser() {
+		String[] args = { "13", "pass", getApplication()};
+		return args;
+	}
 
-  protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-	return null;
-	 
-  }
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
+		String[] args = { "nmsn", "pass", getApplication()};
+		return args;
+	}
 
-  protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-	  Object[] result = { "3"};
-	  return result;
-  }
+	protected Object[] getAuthorizeArguments() {
+		Object[] args = { "13" };
+		return args;
+	}
 
-  protected int getNumberOfItemsToRetrieve() {
-	  return 1;
-  }
+	protected String getDataSetFilePath() {
+		return "etc/datasets/servicos/student/testReadExamsByStudentDataSet.xml";
+	}
 
+	protected String getNameOfServiceToBeTested() {
+		return "ReadExamsByStudent";
+	}
 
-//TODO: add data to run this test properly
-  protected Object getObjectToCompare() {
-  	SiteView siteView = new SiteView();
- 	ISiteComponent component = new InfoStudentSiteExams(new ArrayList(),new ArrayList());
-  	siteView.setComponent(component);
-  	
-	return siteView;
-  }
+	protected String[] getNotAuthenticatedUser() {
+		String[] args = { "fiado", "pass", getApplication()};
+		return args;
+	}
+
+	public void testNonExistingStudent() {
+
+		Object[] args = { "100" };
+		SiteView result = null;
+
+		try {
+			result =
+				(SiteView) gestor.executar(
+					userView,
+					getNameOfServiceToBeTested(),
+					args);
+			InfoStudentSiteExams infoStudentsSiteExams =
+				(InfoStudentSiteExams) result.getComponent();
+			List examsToEnroll = infoStudentsSiteExams.getExamsToEnroll();
+			assertEquals(examsToEnroll.size(), 0);
+
+			System.out.println(
+				"testNonExistingStudent was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testNonExistingStudent was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testNonExistingStudent");
+		}
+	}
+
+	public void testReadExamsExistingStudent() {
+		Object[] args = getAuthorizeArguments();
+		SiteView result = null;
+
+		try {
+			result =
+				(SiteView) gestor.executar(
+					userView,
+					getNameOfServiceToBeTested(),
+					args);
+
+			InfoStudentSiteExams infoStudentsSiteExams =
+				(InfoStudentSiteExams) result.getComponent();
+
+			List infoExamsStudentRoomList =
+				infoStudentsSiteExams.getExamsEnrolledDistributions();
+			assertEquals(infoExamsStudentRoomList.size(), 3);
+
+			Object[] values = { new Integer(1), new Integer(2), new Integer(3)};
+
+			System.out.println(InfoExamStudentRoom.class);
+			
+			assertTrue(
+				UtilsTestCase.readTestList(
+					infoExamsStudentRoomList,
+					values,
+					"idInternal",
+					InfoExamStudentRoom.class));
+
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/student/testReadExamsByStudentExpectedDataSet.xml");
+
+			System.out.println(
+				"testReadExamsExistingStudent was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testReadExamsExistingStudent was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testReadExamsExistingStudent");
+		}
+
+	}
 
 }

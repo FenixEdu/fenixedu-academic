@@ -1,23 +1,20 @@
 package ServidorAplicacao.Servicos.publico;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
-import DataBeans.InfoRole;
+import java.util.List;
+
+import DataBeans.ExecutionCourseSiteView;
+import DataBeans.InfoMark;
 import DataBeans.InfoSiteMarks;
-import DataBeans.TeacherAdministrationSiteView;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.TestCaseServices;
-import Util.RoleType;
+import ServidorAplicacao.Servicos.ServiceTestCase;
+import ServidorAplicacao.Servicos.UtilsTestCase;
 
 /**
  * @author Fernanda Quitério
- *
+ *  
  */
-public class ReadPublishedMarksByExamTest extends TestCaseServices {
+public class ReadPublishedMarksByExamTest extends ServiceTestCase {
 	/**
 	 * @param testName
 	 */
@@ -25,48 +22,147 @@ public class ReadPublishedMarksByExamTest extends TestCaseServices {
 		super(testName);
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "ReadPublishedMarksByExam";
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseServices#getDataSetFilePath()
-	 */
 	protected String getDataSetFilePath() {
-		return "etc/testDataSetForMarksList.xml";
+		return "etc/datasets/servicos/publico/testReadPublishedMarksByExamDataSet.xml";
 	}
 
-	public void testSucessfullExecution() {
+	public void testNonExistingEvaluation() {
+
+		Object[] args = { new Integer(4), new Integer(1000)};
+		ExecutionCourseSiteView result = null;
+
 		try {
-			//Service
 
-			Object[] args = { new Integer(3), new Integer(1) };
+			result =
+				(ExecutionCourseSiteView) gestor.executar(
+					null,
+					getNameOfServiceToBeTested(),
+					args);
 
-			
-			GestorServicos serviceManager = GestorServicos.manager();
-			TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
-			
-			assertEquals("Error in Exam !", ((InfoSiteMarks)siteView.getComponent()).getInfoEvaluation().getIdInternal().intValue(), 1);
-			assertEquals("Error in marks list !", ((InfoSiteMarks)siteView.getComponent()).getMarksList().size(), 3);
-						
+			System.out.println(
+				"testNonExistingEvaluation was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testNonExistingEvaluation");
+
 		} catch (FenixServiceException e) {
+			System.out.println(
+				"testNonExistingEvaluation was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+		} catch (Exception e) {
 			e.printStackTrace();
-			fail("Executing  Service!");
+			System.out.println(
+				"testNonExistingEvaluation was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testNonExistingEvaluation");
 		}
 	}
 
-	public IUserView authorizedUserView() {
-		InfoRole infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.TEACHER);
+	public void testNonExistingSite() {
 
-		Collection roles = new ArrayList();
-		roles.add(infoRole);
+		Object[] args = { new Integer(1000), new Integer(5)};
+		ExecutionCourseSiteView result = null;
 
-		UserView userView = new UserView("user", roles);
+		try {
+
+			result =
+				(ExecutionCourseSiteView) gestor.executar(
+					null,
+					getNameOfServiceToBeTested(),
+					args);
+
+			System.out.println(
+				"testNonExistingSite was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testNonExistingSite");
+
+		} catch (FenixServiceException e) {
+			System.out.println(
+				"testNonExistingSite was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(
+				"testNonExistingSite was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testNonExistingSite");
+		}
+	}
+
+	public void testExistingSiteAndEvaluationWithoutMarks() {
+
+		Object[] args = { new Integer(4), new Integer(6)};
+		ExecutionCourseSiteView result = null;
+
+		try {
+
+			result =
+				(ExecutionCourseSiteView) gestor.executar(
+					null,
+					getNameOfServiceToBeTested(),
+					args);
+			
+			InfoSiteMarks infoSiteMarks = (InfoSiteMarks) result.getComponent();
+			List marksList = infoSiteMarks.getMarksList();
+			
+			assertEquals(marksList.size(), 0);
+			
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/publico/testExpectedReadPublishedMarksByExamDataSet.xml");
+			
+			System.out.println(
+				"testExistingSiteAndEvaluationWithoutMarks was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(
+				"testExistingSiteAndEvaluationWithoutMarks was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testExistingSiteAndEvaluationWithoutMarks");
+		}
+
+	}
 	
-		return userView;
+	public void testExistingSiteAndEvaluation() {
+
+		Object[] args = { new Integer(4), new Integer(5)};
+		ExecutionCourseSiteView result = null;
+
+		try {
+
+			result =
+				(ExecutionCourseSiteView) gestor.executar(
+					null,
+					getNameOfServiceToBeTested(),
+					args);
+			
+			InfoSiteMarks infoSiteMarks = (InfoSiteMarks) result.getComponent();
+			List marksList = infoSiteMarks.getMarksList();
+			
+			assertEquals(marksList.size(), 6);
+			
+			Object[] values = { new Integer(1), new Integer(2), new Integer(3), new Integer(4), new Integer(5), new Integer(6)};
+			Object[] argumentos = {};
+			
+			
+			assertTrue(UtilsTestCase.readTestList(marksList, values, "idInternal", InfoMark.class));
+			
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/publico/testExpectedReadPublishedMarksByExamDataSet.xml");
+			
+			System.out.println(
+				"testExistingSiteAndEvaluationWithoutMarks was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(
+				"testExistingSiteAndEvaluationWithoutMarks was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testExistingSiteAndEvaluationWithoutMarks");
+		}
+
 	}
 }

@@ -76,7 +76,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase {
 		return args;
 	}
 
-	public void testExamSite() {
+	public void testExamSiteComponentService() {
 		SiteView result = null;
 		Object[] args = getArguments();
 
@@ -220,7 +220,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase {
 			for (int i = 0; i < size; i++) {
 				InfoExecutionCourse infoExecutionCourse =
 					(InfoExecutionCourse) executionCourses.get(i);
-				
+
 				List examsService =
 					infoExecutionCourse.getAssociatedInfoExams();
 
@@ -238,28 +238,30 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase {
 				}
 			}
 
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/publico/testExamSiteComponentServiceExpectedDataSet.xml");
+
 			System.out.println(
-				"testReadSiteItems was SUCCESSFULY runned by class: "
+				"testExamSiteComponentService was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 
 		} catch (FenixServiceException ex) {
 			ex.printStackTrace();
 			System.out.println(
-				"testReadSiteItems was UNSUCCESSFULY runned by class: "
+				"testExamSiteComponentService was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-			fail("testReadSiteItems");
+			fail("testExamSiteComponentService");
 		} catch (OutOfMemoryError ex) {
 			ex.printStackTrace();
 			System.out.println(
-				"testReadSiteItems was UNSUCCESSFULY runned by class: "
+				"testExamSiteComponentService was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-			fail("testReadSiteItems");
+			fail("testExamSiteComponentService");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println(
-				"testReadSiteItems was UNSUCCESSFULY runned by class: "
+				"testExamSiteComponentService was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-			fail("testReadSiteItems");
+			fail("testExamSiteComponentService");
 		}
 
 	}

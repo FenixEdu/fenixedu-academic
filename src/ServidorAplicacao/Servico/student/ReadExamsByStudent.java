@@ -76,6 +76,7 @@ public class ReadExamsByStudent implements IServico {
 				while (iter.hasNext()) {
 					IExamStudentRoom examStudentRoom =
 						(IExamStudentRoom) iter.next();
+					
 					InfoExamStudentRoom infoExamStudentRoom =
 						new InfoExamStudentRoom();
 					infoExamStudentRoom.setIdInternal(
@@ -134,6 +135,7 @@ public class ReadExamsByStudent implements IServico {
 				List attends =
 					sp.getIFrequentaPersistente().readByStudentNumber(
 						student.getNumber());
+	
 				Iterator examsToEnrollIterator = attends.iterator();
 				while (examsToEnrollIterator.hasNext()) {
 					examsToEnroll.addAll(
@@ -141,6 +143,7 @@ public class ReadExamsByStudent implements IServico {
 							.getDisciplinaExecucao()
 							.getAssociatedExams());
 				}
+				
 
 				CollectionUtils.filter(
 					examsToEnroll,
