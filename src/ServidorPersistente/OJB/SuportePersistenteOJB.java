@@ -121,17 +121,14 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			///////////////////////////////////////////////////////////////////
 			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
 			///////////////////////////////////////////////////////////////////
-			Database db = _odmg.getDatabase(null);
-			if (db == null) {
-				///////////////////////////////////////////////////////////////////
-				// End of Added Code
-				///////////////////////////////////////////////////////////////////				
-				db = _odmg.newDatabase();
-				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
-			}
 
-			Transaction tx = _odmg.newTransaction();
-			tx.begin();
+
+				openDatabase();
+
+				Transaction tx = _odmg.newTransaction();
+				tx.begin();
+
+
 		} catch (ODMGException ex1) {
 			throw new ExcepcaoPersistencia(
 				ExcepcaoPersistencia.OPEN_DATABASE,
@@ -143,16 +140,29 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		}
 	}
 
+	private void openDatabase() throws ODMGException {
+		Database db = _odmg.getDatabase(null);
+		if (db == null) {
+			///////////////////////////////////////////////////////////////////
+			// End of Added Code
+			///////////////////////////////////////////////////////////////////				
+			db = _odmg.newDatabase();
+			db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+		}
+	}
+
 	public void confirmarTransaccao() throws ExcepcaoPersistencia {
 		try {
+			openDatabase();
 			Transaction tx = _odmg.currentTransaction();
+
 			if (tx == null)
 				System.out.println(
 					"SuportePersistente.OJB - Nao ha transaccao activa");
 			else {
-
 				tx.commit();
-				_odmg.getDatabase(null).close();
+				Database db =_odmg.getDatabase(null); 
+				if (db!= null) db.close();
 			}
 		} catch (ODMGException ex1) {
 			throw new ExcepcaoPersistencia(
@@ -167,12 +177,14 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public void cancelarTransaccao() throws ExcepcaoPersistencia {
 		try {
-			Transaction tx = _odmg.currentTransaction();
+				openDatabase();
+				Transaction tx = _odmg.currentTransaction();
 
-			if (tx != null) {
-				tx.abort();
-				_odmg.getDatabase(null).close();
-			}
+				if (tx != null) {
+					tx.abort();
+					_odmg.getDatabase(null).close();
+				}
+
 		} catch (ODMGException ex1) {
 			throw new ExcepcaoPersistencia(
 				ExcepcaoPersistencia.CLOSE_DATABASE,
