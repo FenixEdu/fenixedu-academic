@@ -1020,7 +1020,9 @@
 	
 	<!-- ********************************************************* -->
 
-	<!-- ***************** ADDED BY DAVID SANTOS ***************** -->
+	<!-- *********************************************** ADDED BY DAVID SANTOS ************************************************** -->
+
+	<!-- ********************** ENROLLMENT MIGRATION RELATED ********************** -->
     <target name="create-MWCurricularCourseOutsideStudentDegree-table">
         <sql driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/${db.name}"
@@ -1091,20 +1093,6 @@
 		</java>
 	</target>
 
-	<target name="create-branch-codes-and-acronyms" depends="compile-proj">
-		<java classname="middleware.databaseClean.CreateBranchCodesAndAcronyms" fork="yes" failonerror="false" maxmemory="512m">
-			<classpath>
-				<pathelement path="${webapp.classes}"/>
-				<pathelement path="${config}"/>
-				<pathelement path="${sql}"/>
-				<pathelement path="${src}"/>
-				<fileset dir="${webapp.lib}">
-					<include name="**/*.jar"/>
-				</fileset>
-			</classpath>
-		</java>
-	</target>
-
 	<target name="create-and-update-attends-for-all-master-degree-students" depends="compile-proj">
 		<java classname="middleware.studentMigration.CreateAndUpdateAttendsForAllMasterDegreeStudents" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>
@@ -1126,9 +1114,39 @@
 		<exec executable="${sql}/middleware/commands/migrateAllStudenCurricularPlans.bat" vmlauncher="true" os="Windows, Windows 2000, Windows XP">
 		</exec>
 	</target>
+	<!-- ************************************************************************** -->
 
-	<target name="make-equivalences-for-all-students-past-enrolments" depends="compile-proj">
-		<java classname="middleware.studentMigration.enrollments.MakeEquivalencesForAllStudentsPastEnrolments" fork="yes" failonerror="false" maxmemory="512m">
+	<!-- ********************** DATABASE CLEANING RELATED ********************** -->
+	<target name="create-branch-codes-and-acronyms" depends="compile-proj">
+		<java classname="middleware.databaseClean.branches.CreateBranchCodesAndAcronyms" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="change-relation-between-CCScope-and-CC-of-mathAnalysisA" depends="compile-proj">
+		<java classname="middleware.databaseClean.curricularCourseScopes.ChangeRelationBetweenCCScopeAndCCOfMathAnalysisA.java" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="delete-alterative-curricularCourseScopes" depends="compile-proj">
+		<java classname="middleware.databaseClean.curricularCourseScopes.DeleteAlterativeCurricularCourseScopes.java" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>
@@ -1154,7 +1172,25 @@
 			</classpath>
 		</java>
 	</target>
+	<!-- *********************************************************************** -->
 
+	<!-- ********************** EQUIVALENCE MIGRATION RELATED ********************** -->
+	<target name="make-equivalences-for-all-students-past-enrolments" depends="compile-proj">
+		<java classname="middleware.studentMigration.equivalences.MakeEquivalencesForAllStudentsPastEnrolments" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+	<!-- *************************************************************************** -->
+
+	<!-- ********************** ILEEC MIGRATION RELATED ********************** -->
 	<target name="replace-tokens-for-ileec">
 		<delete file="${sql}/middleware/PopulateTables_generated.sql"/>
 		<copy file="${sql}/middleware/ileec/populateTablesIleec.sql" toFile="${sql}/middleware/PopulateTables_generated.sql"/>
@@ -1191,7 +1227,7 @@
 	</target>
 
 	<target name="make-equivalences-for-ileec-students" depends="compile-proj, load-ileec-data" description="Cria na BD do Fénix as equivalências do ILEEC">
-		<java classname="middleware.studentMigration.enrollments.MakeEquivalencesForILEECStudents" fork="yes" failonerror="false" maxmemory="512m">
+		<java classname="middleware.studentMigration.equivalences.MakeEquivalencesForILEECStudents" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>
@@ -1203,7 +1239,8 @@
 			</classpath>
 		</java>
 	</target>
+	<!-- ********************************************************************* -->
 
-	<!-- ********************************************************* -->
+	<!-- ************************************************************************************************************************ -->
 
 </project>
