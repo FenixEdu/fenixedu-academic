@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IAnnouncement;
 import Dominio.IDisciplinaExecucao;

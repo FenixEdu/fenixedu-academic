@@ -10,11 +10,12 @@ package ServidorAplicacao.Servico.gesdis.teacher;
  */
 import java.sql.Timestamp;
 import java.util.Date;
+
+import DataBeans.InfoAnnouncement;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import DataBeans.gesdis.InfoAnnouncement;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import Dominio.IAnnouncement;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;

@@ -12,7 +12,7 @@ import java.util.Calendar;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import Dominio.Announcement;
 import Dominio.IAnnouncement;
 import Dominio.IDisciplinaExecucao;

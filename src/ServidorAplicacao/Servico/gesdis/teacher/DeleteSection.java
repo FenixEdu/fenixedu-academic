@@ -5,7 +5,8 @@ package ServidorAplicacao.Servico.gesdis.teacher;
  */
 import java.util.Iterator;
 import java.util.List;
-import DataBeans.gesdis.InfoSection;
+
+import DataBeans.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.ISection;
 import Dominio.ISite;

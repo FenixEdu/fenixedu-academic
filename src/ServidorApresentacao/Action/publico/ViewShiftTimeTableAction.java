@@ -19,8 +19,8 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
+import DataBeans.InfoSite;
 import DataBeans.ShiftKey;
-import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;

@@ -11,8 +11,8 @@ package ServidorAplicacao.Servico.gesdis.teacher;
  * @author jmota
  */
 
-import DataBeans.gesdis.InfoAnnouncement;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoAnnouncement;
+import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IAnnouncement;
 import Dominio.ISite;

@@ -6,9 +6,9 @@
  */
 package ServidorAplicacao.Servico.gesdis.teacher;
 
+import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
-import DataBeans.gesdis.InfoBibliographicReference;
 import Dominio.IBibliographicReference;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;

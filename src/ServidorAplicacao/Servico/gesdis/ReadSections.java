@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.ISection;
 import Dominio.ISite;

@@ -6,8 +6,8 @@
  */
 package ServidorAplicacao.Servico.gesdis.teacher;
 
+import DataBeans.InfoSite;
 import DataBeans.util.*;
-import DataBeans.gesdis.InfoSite;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ISite;
 import ServidorAplicacao.FenixServiceException;

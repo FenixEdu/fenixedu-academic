@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.gesdis.InfoSection;
+import DataBeans.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.IItem;
 import Dominio.ISection;

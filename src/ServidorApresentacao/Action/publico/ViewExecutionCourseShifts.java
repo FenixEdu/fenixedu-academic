@@ -18,10 +18,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoSite;
 import DataBeans
 	.comparators
 	.ComparatorByLessonTypeForInfoShiftWithAssociatedInfoClassesAndInfoLessons;
-import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;

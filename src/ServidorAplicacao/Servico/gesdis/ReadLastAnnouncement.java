@@ -1,8 +1,8 @@
 package ServidorAplicacao.Servico.gesdis;
 
+import DataBeans.InfoAnnouncement;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.gesdis.InfoAnnouncement;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IAnnouncement;
 import Dominio.IDisciplinaExecucao;

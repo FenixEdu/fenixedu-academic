@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.gesdis.InfoBibliographicReference;
 import DataBeans.util.Cloner;
 import Dominio.IBibliographicReference;
 import Dominio.IDisciplinaExecucao;

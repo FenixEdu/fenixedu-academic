@@ -8,7 +8,6 @@ package DataBeans;
 
 import java.io.Serializable;
 
-import DataBeans.gesdis.InfoTeacher;
 
 /**
  *

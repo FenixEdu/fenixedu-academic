@@ -6,7 +6,7 @@
  */
 package ServidorAplicacao.Servico.gesdis.teacher;
 
-import DataBeans.gesdis.InfoTeacher;
+import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.ITeacher;
 import ServidorAplicacao.FenixServiceException;

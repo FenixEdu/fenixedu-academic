@@ -13,12 +13,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoAnnouncement;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
+import DataBeans.InfoSite;
 import DataBeans.RoomKey;
-import DataBeans.gesdis.InfoAnnouncement;
-import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -34,7 +34,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		
+
+		HttpSession session = request.getSession(true);
 		String roomName = (String) request.getParameter("roomName");
 		ActionErrors errors = new ActionErrors();
 		RoomKey roomKey = null;
@@ -63,8 +64,11 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			}
 
 			if (infoRoom != null) {
-				InfoExecutionPeriod infoExecutionPeriod = 
-					(InfoExecutionPeriod) RequestUtils.getExecutionPeriodFromRequest(request);
+				InfoExecutionPeriod infoExecutionPeriod =
+					(
+						InfoExecutionPeriod) RequestUtils
+							.getExecutionPeriodFromRequest(
+						request);
 
 				Object argsReadLessons[] = { infoExecutionPeriod, infoRoom };
 
@@ -76,7 +80,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			}
 
 			if ((infoRoom != null) && (lessons != null)) {
-				
+
 				request.setAttribute("lessonList", lessons);
 				request.setAttribute("publico.infoRoom", infoRoom);
 			}
@@ -92,6 +96,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+
+		HttpSession session = request.getSession(true);
 
 		DynaActionForm courseForm = (DynaActionForm) form;
 
@@ -110,6 +116,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+
+		HttpSession session = request.getSession(true);
 		String exeCourseCode = null;
 
 		exeCourseCode = (String) request.getParameter("exeCourseCode");
@@ -134,15 +142,15 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws Exception {
 
 		HttpSession session = request.getSession(true);
-		
+
 		ActionErrors errors = new ActionErrors();
 		InfoExecutionPeriod infoExecPeriod = null;
 		InfoExecutionCourse infoExecCourse = null;
 
 		if (session != null) {
-			infoExecPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
-				
-			// TODO: Isto não faz nada, pois não?
+			infoExecPeriod =
+				RequestUtils.getExecutionPeriodFromRequest(request);
+
 			if (infoExecPeriod == null) {
 				infoExecPeriod =
 					RequestUtils.getExecutionPeriodFromRequest(request);
@@ -170,95 +178,135 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			}
 
 			if (infoExecCourse != null) {
-				RequestUtils.setExecutionCourseToRequest(request,infoExecCourse);
+
+				RequestUtils.setExecutionCourseToRequest(
+					request,
+					infoExecCourse);
+
 			}
 
-			// Read associated curricular courses to display curricular course information.
-			Object argsReadCurricularCourseListOfExecutionCourse[] =
-				{ infoExecCourse };
-				
-			List infoCurricularCourses =
-				(List) gestor.executar(
-					null,
-					"ReadCurricularCourseListOfExecutionCourse",
-					argsReadCurricularCourseListOfExecutionCourse);
-			
-			
-			if (infoCurricularCourses != null
-				&& !infoCurricularCourses.isEmpty()) {
-				request.setAttribute(
-					"publico.infoCurricularCourses",
-					infoCurricularCourses);
-			}
+			getAssociatedCurricularCourses(request, gestor, infoExecCourse);
 
 			//start reading Gesdis related info
 			//read site
 			GestorServicos manager = GestorServicos.manager();
-			InfoSite site = null;
-			Object[] args2 = { infoExecCourse };
-			site = (InfoSite) manager.executar(null, "ReadSite", args2);
-			RequestUtils.setSiteFirstPageToRequest(request,site);
-			
+
+			InfoSite site = getSite(request, gestor, infoExecCourse);
+
 			//read Sections			
-			RequestUtils.setSectionsToRequest(request,site);
+			RequestUtils.setSectionsToRequest(request, site);
 
-			//read responsible
+			getTeachers(request, gestor, infoExecCourse);
 
-			Object[] args3 = { infoExecCourse };
-			List teacherList = null;
-			teacherList =
-				(List) manager.executar(
-					null,
-					"ReadTeachersByExecutionCourseResponsibility",
-					args3);
-
-			if (teacherList != null) {
-
-				request.setAttribute(
-					"resTeacherList",
-					teacherList);
-			}
-
-			//read	lecturing teachers
-			Object[] args4 = { infoExecCourse };
-			List lecturingTeacherList = null;
-			lecturingTeacherList =
-				(List) manager.executar(
-					null,
-					"ReadTeachersByExecutionCourseProfessorship",
-					args4);
-
-			if (lecturingTeacherList != null) {
-				lecturingTeacherList.removeAll(teacherList);
-				request.setAttribute(
-					"lecTeacherList",
-					lecturingTeacherList);
-			}
-
-			//			Read last Anouncement
-			Object args1[] = new Object[1];
-			args1[0] = site;
-
-			InfoAnnouncement lastAnnouncement = null;
-
-			try {
-				lastAnnouncement =
-					(InfoAnnouncement) manager.executar(
-						null,
-						"ReadLastAnnouncement",
-						args1);
-						
-				request.setAttribute(
-					"lastAnnouncement",
-					lastAnnouncement);
-			} catch (FenixServiceException fenixServiceException) {
-				throw new FenixActionException(
-					fenixServiceException.getMessage());
-			}
+			getLastAnnouncement(request, gestor, site);
 
 			return mapping.findForward("executionCourseViewer");
 		} else {
 			throw new Exception();
+		}
+	}
+
+	private InfoSite getSite(
+		HttpServletRequest request,
+		GestorServicos manager,
+		InfoExecutionCourse infoExecCourse)
+		throws FenixServiceException {
+		Object[] args2 = { infoExecCourse };
+		InfoSite site = (InfoSite) manager.executar(null, "ReadSite", args2);
+		RequestUtils.setSiteToRequest(request, site);
+		return site;
+	}
+
+	private void getAssociatedCurricularCourses(
+		HttpServletRequest request,
+		GestorServicos manager,
+		InfoExecutionCourse infoExecCourse)
+		throws FenixServiceException {
+		// Read associated curricular courses to display curricular course information.
+		Object argsReadCurricularCourseListOfExecutionCourse[] =
+			{ infoExecCourse };
+
+		List infoCurricularCourses =
+			(List) manager.executar(
+				null,
+				"ReadCurricularCourseListOfExecutionCourse",
+				argsReadCurricularCourseListOfExecutionCourse);
+
+		if (infoCurricularCourses != null
+			&& !infoCurricularCourses.isEmpty()) {
+			request.setAttribute(
+				"publico.infoCurricularCourses",
+				infoCurricularCourses);
+		}
+	}
+
+	private void getLastAnnouncement(
+		HttpServletRequest request,
+		GestorServicos manager,
+		InfoSite site)
+		throws FenixActionException {
+		//			Read last Anouncement
+		Object args1[] = new Object[1];
+		args1[0] = site;
+
+		InfoAnnouncement lastAnnouncement = null;
+
+		try {
+			lastAnnouncement =
+				(InfoAnnouncement) manager.executar(
+					null,
+					"ReadLastAnnouncement",
+					args1);
+
+			setAnnouncementToRequest(request, lastAnnouncement);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+	}
+
+	private void setAnnouncementToRequest(
+		HttpServletRequest request,
+		InfoAnnouncement lastAnnouncement) {
+		request.setAttribute("lastAnnouncement", lastAnnouncement);
+	}
+
+	private void getTeachers(
+		HttpServletRequest request,
+		GestorServicos manager,
+		InfoExecutionCourse infoExecCourse)
+		throws FenixServiceException {
+		//read responsible
+
+		Object[] args3 = { infoExecCourse };
+		List teacherList = null;
+		teacherList =
+			(List) manager.executar(
+				null,
+				"ReadTeachersByExecutionCourseResponsibility",
+				args3);
+		
+		//read	lecturing teachers
+		Object[] args4 = { infoExecCourse };
+		List lecturingTeacherList = null;
+		lecturingTeacherList =
+			(List) manager.executar(
+				null,
+				"ReadTeachersByExecutionCourseProfessorship",
+				args4);
+		
+		setTeachersToRequest(request, teacherList, lecturingTeacherList);
+	}
+
+	private void setTeachersToRequest(
+		HttpServletRequest request,
+		List teacherList,
+		List lecturingTeacherList) {
+		if (teacherList != null) {
+						request.setAttribute("resTeacherList", teacherList);
+					}
+		if (lecturingTeacherList != null) {
+			lecturingTeacherList.removeAll(teacherList);
+			request.setAttribute("lecTeacherList", lecturingTeacherList);
 		}
 	}
 

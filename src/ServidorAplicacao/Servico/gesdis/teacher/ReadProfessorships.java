@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.gesdis.InfoSite;
-import DataBeans.gesdis.InfoTeacher;
+import DataBeans.InfoSite;
+import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IProfessorship;

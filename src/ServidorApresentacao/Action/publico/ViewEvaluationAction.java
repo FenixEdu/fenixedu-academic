@@ -18,7 +18,7 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
