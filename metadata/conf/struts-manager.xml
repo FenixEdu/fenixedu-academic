@@ -86,7 +86,8 @@
          	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                /> 
-      	  <forward name="viewDegree" path="df.page.read-degree"/>      	      
+      	  <forward name="viewDegree" path="df.page.read-degree"/>  
+      	  <forward name="readDegrees" path="df.page.read-degrees"/> 	      
       </action>
          
      <!-- Action for inserting a degree -->
@@ -114,15 +115,13 @@
       		 input="/readDegreesInput.do"
       		 scope="request"
       	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction">
-             
-	<exception type="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
-         	   key="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-               /> 
-             
       	  <forward name="readDegrees" path="df.page.read-degrees"/>      	      
       </action>
       
+     <!--<exception type="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
+         	   key="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               />  -->
      
       <!--Input actions-->
       <action path="/insertDegreeInput"

@@ -78,29 +78,15 @@ public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 	}
 
 	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
-		
-		return null;
+		Map result = new HashMap();
+		result.put("idInternal", "5");
+		return result;
 	}
 
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
-//		Map result = new HashMap();
-//		ISuportePersistente persistentSupport = null;
-//		Integer persistentId = null;
-//		try {
-//					
-//				persistentSupport = SuportePersistenteOJB.getInstance();
-//				persistentSupport.iniciarTransaccao();			
-//				persistentId = persistentSupport.getICursoPersistente().;
-//				persistentSupport.confirmarTransaccao();
-//
-//			}catch (ExcepcaoPersistencia exception) {
-//						  exception.printStackTrace(System.out);
-//						  fail("Using services at getItemsToPutInSessionForActionToBeTestedSuccessfuly()!");
-//						}	
-//		result.put(new Integer(ScopeConstants.REQUEST), requestAttributtes);
-//	
-//		return result;
-        return null;
+	   	Map result = new HashMap();
+	   	result.put("idInternal", "9");
+       	return result;
 	}
 	
 	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
@@ -109,11 +95,11 @@ public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
 		Map result = new HashMap();
-
+		
 		List requestAttributtes = new ArrayList(1);
 		requestAttributtes.add(SessionConstants.INFO_DEGREE);
+		
 		result.put(new Integer(ScopeConstants.REQUEST), requestAttributtes);
-	
 		return result;
 	}
 
@@ -131,3 +117,18 @@ public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 
 }
 
+//ISuportePersistente persistentSupport = null;
+//Integer persistentId = null;
+//try {
+//					
+//		persistentSupport = SuportePersistenteOJB.getInstance();
+//		persistentSupport.iniciarTransaccao();			
+//		persistentId = persistentSupport.getICursoPersistente().;
+//		persistentSupport.confirmarTransaccao();
+//
+//	}catch (ExcepcaoPersistencia exception) {
+//				  exception.printStackTrace(System.out);
+//				  fail("Using services at getItemsToPutInSessionForActionToBeTestedSuccessfuly()!");
+//				}
+//Integer id = new Integer("9");	
+//String requestAttributtes = id.toString();

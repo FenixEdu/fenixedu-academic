@@ -5,7 +5,6 @@ import DataBeans.util.Cloner;
 import Dominio.ICurso;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -37,7 +36,7 @@ public class ReadDegreeService implements IServico {
   }
 
   /**
-   * Executes the service. Returns the current collection of infodegrees .
+   * Executes the service. Returns the current infodegree.
    */
   public InfoDegree run(Integer idInternal) throws FenixServiceException {
 	ISuportePersistente sp;
@@ -50,11 +49,20 @@ public class ReadDegreeService implements IServico {
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
 	}
-    if(degree != null)
-      	infoDegree = Cloner.copyIDegree2InfoDegree(degree);
-    else
-    	throw new NonExistingServiceException();
-    
+   
+       
+	if (degree == null){
+				return null;
+			}
+//	try {
+//		sp = SuportePersistenteOJB.getInstance();
+//		degree = sp.getICursoPersistente().readByIdInternal(idInternal);
+//	} catch (ExcepcaoPersistencia excepcaoPersistencia){
+//		throw new NonExistingServiceException(excepcaoPersistencia);
+//	}
+//	  
+			infoDegree = Cloner.copyIDegree2InfoDegree(degree);
+	  
 	return infoDegree;
   }
 }
