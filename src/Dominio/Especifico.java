@@ -2925,7 +2925,6 @@ public class Especifico implements IStrategyHorarios {
 										- horario.getInicioPF2().getTime());
 						}
 					}
-					//					System.out.println("valor de trabalhouPF fim: " + trabalhouPF);
 				}
 			}
 			long saldoInjust = 0;

@@ -1112,17 +1112,11 @@ public class Turnos implements IStrategyHorarios {
 			calendario.setLenient(false);
 			calendario.clear();
 			calendario.setTimeInMillis(saldoExtraordinario);
-			System.out.println(
-				"saldo extraordinario: "
-					+ FormataCalendar.horasMinutosDuracao(calendario));
 			if (saldoExtraordinario
 				> ((Long) listaSaldos.get(0)).longValue()) {
 				calendario.clear();
 				calendario.setTimeInMillis(
 					((Long) listaSaldos.get(0)).longValue());
-				System.out.println(
-					" maior que saldo "
-						+ FormataCalendar.horasMinutosDuracao(calendario));
 				saldoExtraordinario = ((Long) listaSaldos.get(0)).longValue();
 			}
 			//cálculo dos escalões do trabalho extraordinário nocturno

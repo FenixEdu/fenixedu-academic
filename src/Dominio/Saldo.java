@@ -55,7 +55,6 @@ public class Saldo implements IStrategyJustificacoes {
 		listaJustificacoesBody.add(4, new String(""));
     
 		calendario.clear();
-		System.out.println("tempo de justificacao: " + justificacao.getHoraInicio().getTime());
 		calendario.setTimeInMillis(justificacao.getHoraInicio().getTime());
 		listaJustificacoesBody.add(5, FormataCalendar.horasMinutosDuracao(calendario));
 		listaJustificacoesBody.add(6, new String(""));

@@ -1893,7 +1893,6 @@ public class Flexivel implements IStrategyHorarios {
 					}
 				}
 			}
-//			System.out.println("intervalo de refeicao sem descontos: " + intervaloRefeicao);
 
 			if (intervaloRefeicao >= horario.getIntervaloMinimoRefeicao().getTime()
 				&& intervaloRefeicao < horario.getDescontoObrigatorioRefeicao().getTime()
@@ -1931,7 +1930,6 @@ public class Flexivel implements IStrategyHorarios {
 				}
 			}
 		}
-		//System.out.println("saldo depois do calculo da refeicao sem tirar 7 horas: " + saldo);
 
 		// saldo do horario normal
 		Float duracaoDiaria =
@@ -1951,23 +1949,8 @@ public class Flexivel implements IStrategyHorarios {
 			long trabalhouPF = 0;
 
 			while (iterador.hasNext()) {
-//				System.out.println("ciclo do calculo do periodo fixo");
-//				System.out.println("valor de trabalhouPF inicio: " + trabalhouPF);
 				entrada = (MarcacaoPonto)iterador.next();
 				if (iterador.hasNext()) {
-					/*System.out.println(
-						"calendario de entrada: "
-							+ calendario.get(Calendar.DAY_OF_MONTH)
-							+ "/"
-							+ calendario.get(Calendar.MONTH)
-							+ "/"
-							+ calendario.get(Calendar.YEAR)
-							+ " "
-							+ calendario.get(Calendar.HOUR_OF_DAY)
-							+ ":"
-							+ calendario.get(Calendar.MINUTE)
-							+ ":"
-							+ calendario.get(Calendar.SECOND));*/
 
 					saida = (MarcacaoPonto)iterador.next();
 
@@ -2004,10 +1987,8 @@ public class Flexivel implements IStrategyHorarios {
 						trabalhouPF =
 							trabalhouPF - (horario.getFimPF2().getTime() - horario.getInicioPF2().getTime());
 					}
-//					System.out.println("valor de trabalhouPF fim: " + trabalhouPF);
 				}
 			}
-//			System.out.println("o funcionario trabalhou no periodo fixo: " + trabalhouPF);
 			long saldoInjust =
 				trabalhouPF
 					- (horario.getFimPF1().getTime()
@@ -2115,9 +2096,7 @@ public class Flexivel implements IStrategyHorarios {
 			listaSaldos.set(8, new Long(saldoPrimEscalao));
 			listaSaldos.set(9, new Long(saldoSegEscalao));
 			listaSaldos.set(10, new Long(saldoDepoisSegEscalao));
-			
-			System.out.println("------>SALDO EXTRA NOCTURNO: " + 	saldoPrimEscalao + " - " + saldoSegEscalao + " - " + saldoDepoisSegEscalao);
-
+	
 			//calculo do trabalho extraordinário diurno
 			saldoExtraordinario = ((Long)listaSaldos.get(0)).longValue() - saldoExtraordinario;
 
@@ -2143,7 +2122,6 @@ public class Flexivel implements IStrategyHorarios {
 			listaSaldos.set(3, new Long(saldoSegEscalao));
 			listaSaldos.set(4, new Long(saldoDepoisSegEscalao));
 			
-			System.out.println("------>SALDO EXTRA DIURNO: " + 	saldoPrimEscalao + " - " + saldoSegEscalao + " - " + saldoDepoisSegEscalao);
 		}
 	} /* calcularHorasExtraorinarias */
 
