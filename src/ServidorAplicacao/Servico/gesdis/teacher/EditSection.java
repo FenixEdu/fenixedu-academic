@@ -26,44 +26,35 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class EditSection implements IServico {
 
-
 	private static EditSection service = new EditSection();
-    
 
 	/**
-
 	 * The singleton access method of this class.
-
-	 **/
-
+	 */
 	public static EditSection getService() {
-
 		return service;
-
 	}
 
     
 	public String getNome() {
-
 		return "EditSection";
-
 	}
 
-	private void organizeSectionsOrder(
-			int newOrder,
-			int oldOrder,
-			ISite site)
-			throws FenixServiceException {
+	/**
+	 * 
+	 * @param newOrder
+	 * @param oldOrder
+	 * @param site
+	 * @throws FenixServiceException
+	 */
+	private void organizeSectionsOrder(int newOrder, int oldOrder, ISite site) throws FenixServiceException {
 
 			IPersistentSection persistentSection = null;
 			try {
-
-				ISuportePersistente persistentSuport =
-					SuportePersistenteOJB.getInstance();
+				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				persistentSection = persistentSuport.getIPersistentSection();
 
 				List sectionsList = null;
-
 				sectionsList = persistentSection.readBySite(site);
 
 				Iterator iterSections = sectionsList.iterator();
@@ -72,46 +63,33 @@ public class EditSection implements IServico {
 					while (iterSections.hasNext()) {
 
 						ISection iterSection = (ISection) iterSections.next();
-
 						int iterSectionOrder = iterSection.getSectionOrder().intValue();
 
 						if (iterSectionOrder > oldOrder) {
-
 							iterSection.setSectionOrder(new Integer(iterSectionOrder - 1));
-
 							persistentSection.lockWrite(iterSection);
 						}
-					} 
-					else
-				
-					while (iterSections.hasNext()) {
-	
-						ISection iterSection = (ISection) iterSections.next();
+					} else
+						while (iterSections.hasNext()) {
+							ISection iterSection = (ISection) iterSections.next();
 
-						int iterSectionOrder = iterSection.getSectionOrder().intValue();
+							int iterSectionOrder = iterSection.getSectionOrder().intValue();
 
-						if (iterSectionOrder >= newOrder) {
+							if (iterSectionOrder >= newOrder) {
 
-							iterSection.setSectionOrder(new Integer(iterSectionOrder + 1));
-
-							persistentSection.lockWrite(iterSection);
-
-						}
-					}
+								iterSection.setSectionOrder(new Integer(iterSectionOrder + 1));
+								persistentSection.lockWrite(iterSection);
+							}
+						} //else
 			} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-
 				throw new FenixServiceException(excepcaoPersistencia);
 			}
 		}
 
 	/**
 	 * Executes the service.
-	 *
-	 **/
-
-	public Boolean run (InfoSection oldInfoSection, InfoSection newInfoSection)
-
-	throws FenixServiceException{
+	 */
+	public Boolean run (InfoSection oldInfoSection, InfoSection newInfoSection) throws FenixServiceException{
 		
 		ISection fatherSection = null; 
 		IItem item=null;
@@ -122,11 +100,12 @@ public class EditSection implements IServico {
 			ISite site = Cloner.copyInfoSite2ISite(oldInfoSection.getInfoSite());
 			
 			InfoSection fatherInfoSection = oldInfoSection.getSuperiorInfoSection();
-			System.out.println("FatherInfoSection"+fatherInfoSection.getInternalCode());
-			if(fatherInfoSection != null)
-				fatherSection= Cloner.copyInfoSection2ISection(fatherInfoSection);
+
+			System.out.println("FatherInfoSection" + fatherInfoSection.getInternalCode());
+
+			if(fatherInfoSection != null) fatherSection= Cloner.copyInfoSection2ISection(fatherInfoSection);
 			
-			ISection section = persistentSection.readBySiteAndSectionAndName(site,fatherSection,oldInfoSection.getName());
+			ISection section = persistentSection.readBySiteAndSectionAndName(site, fatherSection, oldInfoSection.getName());
 			
 			section.setLastModifiedDate(newInfoSection.getLastModifiedDate());
 			section.setName(newInfoSection.getName());
@@ -143,8 +122,8 @@ public class EditSection implements IServico {
 			}
 			catch (ExcepcaoPersistencia e) {
 				throw new FenixServiceException(e);
-			}	
-			return new Boolean(true);
-		}	
-	}
-
+			}
+				
+		return new Boolean(true);
+	}	
+}

@@ -19,32 +19,28 @@
         column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
 	/>
-	 <field-descriptor id="3"
-         name="keyInitialSection"
-         column="KEY_INITIAL_SECTION"
-         jdbc-type="INTEGER"/>
          
-    <field-descriptor id="4"
+    <field-descriptor id="3"
          name="alternativeSite"
          column="ALTERNATIVE_SITE"
     	 jdbc-type="VARCHAR"/>
     	 
-   	<field-descriptor id="5"
+   	<field-descriptor id="4"
          name="mail"
          column="MAIL"
     	 jdbc-type="VARCHAR"/>
     
-    <field-descriptor id="6"
+    <field-descriptor id="5"
          name="initialStatement"
          column="INITIAL_STATEMENT"
     	 jdbc-type="VARCHAR"/>
     	 
-    <field-descriptor id="7"
+    <field-descriptor id="6"
          name="introduction"
          column="INTRODUCTION"
     	 jdbc-type="VARCHAR"/>
     	 
-    <field-descriptor id="8"
+    <field-descriptor id="7"
          name="style"
          column="STYLE"
     	 jdbc-type="VARCHAR"/>		 	 
@@ -57,13 +53,6 @@
 	<foreignkey field-id-ref="2"/>
 	
 	</reference-descriptor>
-    <reference-descriptor
-         name="initialSection"
-         class-ref="Dominio.Section"
-         proxy="true"
-      >
-    <foreignkey field-id-ref="3"/>
-    </reference-descriptor>
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
@@ -161,14 +150,14 @@
       <reference-descriptor
          name="site"
          class-ref="Dominio.Site"
-         proxy="true"
+         proxy="false"
       >
          <foreignkey field-id-ref="4"/>
       </reference-descriptor>
       <reference-descriptor
          name="superiorSection"
          class-ref="Dominio.Section"
-         proxy="true"
+         proxy="false"
       >   
          <foreignkey field-id-ref="5"/>
       </reference-descriptor>

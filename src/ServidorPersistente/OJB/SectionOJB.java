@@ -37,23 +37,23 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 		ISection superiorSection,
 		String name)
 		throws ExcepcaoPersistencia {
+			
+			Section section = null;
+			section = (Section) superiorSection;
 		try {
 			
 			ISection resultSection = null;
-			Section section = (Section) superiorSection;
+			
 			String oqlQuery = "select section from " + Section.class.getName();
 			oqlQuery += " where name = $1 ";
 			oqlQuery +=	" and site.executionCourse.code = $2";
 			oqlQuery += " and site.executionCourse.executionPeriod.name = $3";
 			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $4";
 			if (section == null) {
-				
 				oqlQuery += " and is_undefined(keySuperiorSection) " ;
-				
 			} else {
-				
 				oqlQuery += " and keySuperiorSection = $5";
-				}
+			}
 
 			query.create(oqlQuery);
 			
@@ -162,7 +162,7 @@ public List readBySite(ISite site) throws ExcepcaoPersistencia {
 		// If there is nothing to write, simply return.
 		if (section == null) { System.out.println("a section está a null");return;}
 		System.out.println("vou ler da base de dados");
-		ISection sectionFromDB= this.readBySiteAndSectionAndName(section.getSite(),section.getSuperiorSection(),section.getName());
+		ISection sectionFromDB = this.readBySiteAndSectionAndName(section.getSite(), section.getSuperiorSection(), section.getName());
 		
 		// If section is not in database, then write it.
 		if (sectionFromDB == null){

@@ -12,8 +12,6 @@ public interface ISite {
 
 	public IDisciplinaExecucao getExecutionCourse();
 	public void setExecutionCourse(IDisciplinaExecucao executionCourse);
-	ISection getInitialSection();
-	public void setInitialSection(ISection section);
 	public String getAlternativeSite();
 	public void setAlternativeSite(String alternativeSite);
 	public String getMail();

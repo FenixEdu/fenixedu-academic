@@ -4,7 +4,6 @@
  */
 package Dominio;
 
-import java.util.List;
 
 /**
  * @author Ivo Brandão
@@ -15,9 +14,6 @@ public class Site implements ISite {
 	private IDisciplinaExecucao executionCourse;
 	private Integer keyExecutionCourse;
 
-	private ISection initialSection;
-	private Integer keyInitialSection;
-	
 	private String alternativeSite;
 	private String mail;
 
@@ -39,18 +35,6 @@ public class Site implements ISite {
 		setExecutionCourse(executionCourse);
 	}
 
-	/** 
-	* Construtor
-	*/
-	
-	public Site(ISection initialSection, List sections, IDisciplinaExecucao executionCourse, List announcements, String initialStatement,String introduction){
-		setInitialSection(initialSection);
-		setExecutionCourse(executionCourse);
-		setInitialStatement(initialStatement);
-		setIntroduction(introduction);
-	}
-	
-	
 	/**
 	 * @return IDisciplinaExecucao
 	 */
@@ -119,9 +103,9 @@ public class Site implements ISite {
 	/**
 	 * @return ISection
 	 */
-	public ISection getInitialSection() {
-		return initialSection;
-	}
+//	public ISection getInitialSection() {
+//		return initialSection;
+//	}
 
 	
 
@@ -144,9 +128,9 @@ public class Site implements ISite {
 	 * Sets the initialSection.
 	 * @param initialSection The initialSection to set
 	 */
-	public void setInitialSection(ISection initialSection) {
-		this.initialSection = initialSection;
-	}
+//	public void setInitialSection(ISection initialSection) {
+//		this.initialSection = initialSection;
+//	}
 
 	
 
@@ -161,17 +145,17 @@ public class Site implements ISite {
 	/**
 	 * @return Integer
 	 */
-	public Integer getKeyInitialSection() {
-		return keyInitialSection;
-	}
+//	public Integer getKeyInitialSection() {
+//		return keyInitialSection;
+//	}
 
 	/**
 	 * Sets the keyInitialSection.
 	 * @param keyInitialSection The keyInitialSection to set
 	 */
-	public void setKeyInitialSection(Integer keyInitialSection) {
-		this.keyInitialSection = keyInitialSection;
-	}
+//	public void setKeyInitialSection(Integer keyInitialSection) {
+//		this.keyInitialSection = keyInitialSection;
+//	}
 	
 	/**
 	 * @return String
@@ -195,7 +179,7 @@ public class Site implements ISite {
 			String result = "[SITE";
 			result += ", codInt=" + getInternalCode();
 			result += ", executionCourse=" + getExecutionCourse();
-			result += ", initialSection=" + getInitialSection();
+//			result += ", initialSection=" + getInitialSection();
 			result += ", initialStatement=" + getInitialStatement();
 			result += ", introduction=" + getIntroduction();
 			result += ", mail =" + getMail();

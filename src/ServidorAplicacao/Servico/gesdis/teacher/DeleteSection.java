@@ -39,10 +39,10 @@ public Boolean run(InfoSection infoSection) throws FenixServiceException {
 
 			/* we may only delete non-initial sections */
 			ISite completeSite = sp.getIPersistentSite().readByExecutionCourse(site.getExecutionCourse());
-			InfoSection initialSection = Cloner.copyISection2InfoSection(completeSite.getInitialSection());
-			if (initialSection.equals(infoSection)){
-				throw new FenixServiceException("Initial Section");
-			}
+//			InfoSection initialSection = Cloner.copyISection2InfoSection(completeSite.getInitialSection());
+//			if (initialSection.equals(infoSection)){
+//				throw new FenixServiceException("Initial Section");
+//			}
 			
 			ISection superiorSection = null;
 			if (infoSection.getSuperiorInfoSection()!=null) {

@@ -57,7 +57,7 @@ public class SectionOJBTest extends TestCaseOJB {
 		super.setUp();
 
 		try {
-
+			System.out.println("SectionOJBTest.setUp");
 			persistentSupport = SuportePersistenteOJB.getInstance();
 
 			persistentSite = persistentSupport.getIPersistentSite();
@@ -89,6 +89,7 @@ public class SectionOJBTest extends TestCaseOJB {
 			e.printStackTrace();
 			fail("Error");
 		}
+		System.out.println("SectionOJBTest.setUp");		
 	}
 
 	protected void tearDown() {
@@ -380,6 +381,7 @@ public class SectionOJBTest extends TestCaseOJB {
 		ISite site = null;
 		ISection sectionToWrite = null;
 
+		System.out.println("vou escrever fora");
 		//write section without superior section 
 
 		try {
