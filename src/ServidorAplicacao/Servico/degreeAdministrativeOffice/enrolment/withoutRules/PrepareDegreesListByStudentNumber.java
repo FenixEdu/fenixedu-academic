@@ -118,14 +118,16 @@ public class PrepareDegreesListByStudentNumber implements IService {
             return (InfoExecutionDegree) infoExecutionDegreeList.get(0);
         }
 
-        final Integer degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree()
-                .getIdInternal();
+//        final Integer degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree()
+//                .getIdInternal();
+        
+        final Integer degreeCurricularPlanCode = studentCurricularPlan.getDegreeCurricularPlan().getIdInternal();
+        
         List infoExecutionDegreeListWithDegreeCode = (List) CollectionUtils.select(
                 infoExecutionDegreeList, new Predicate() {
                     public boolean evaluate(Object input) {
                         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) input;
-                        return infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-                                .getIdInternal().equals(degreeCode);
+                        return infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanCode);
                     }
                 });
         if (!infoExecutionDegreeListWithDegreeCode.isEmpty()) {
