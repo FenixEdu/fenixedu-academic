@@ -577,4 +577,11 @@
         <description/>
         <isTransactional>true</isTransactional>
     </filter>         
+    <filter>
+        <name>StudentIsUserFilter</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.student.StudentIsUserFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>         
 </filterDefinitions>

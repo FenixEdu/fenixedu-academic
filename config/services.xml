@@ -5769,7 +5769,7 @@
     	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.UnEnrollStudentFromShift</implementationClass>
     	<isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="StudentAuthorization"/>
+            <chain name="StudentIsUserAndHasStudentRoleFilter"/>
         </filterChains>
     </service>
     <service>
@@ -5778,7 +5778,7 @@
     	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.EnrollStudentInShifts</implementationClass>
     	<isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="StudentAuthorization"/>
+            <chain name="StudentIsUserAndHasStudentRoleFilter"/>
         </filterChains>
     </service>
 </serviceDefinitions>
