@@ -49,6 +49,19 @@
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext"
                   msg="errors.different.passwords"/>
+                  
+     <validator name="validateDate"
+            classname="ServidorApresentacao.validator.form.ValidateDate"
+               method="validate"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionErrors,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext"
+                  msg="errors.invalid.date"/>
+                  
+                  
    </global>
 
 </form-validation>
