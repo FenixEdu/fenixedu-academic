@@ -27,9 +27,11 @@ import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import ServidorApresentacao.Action.exceptions.FenixTransactionException;
+import ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.CurricularCourseType;
@@ -59,11 +61,16 @@ public class CurricularCourseEnrolmentManagerDispatchAction
 
 		Object args[] = { userView };
 
-		InfoEnrolmentContext infoEnrolmentContext =
-			(InfoEnrolmentContext) ServiceUtils.executeService(
-				userView,
-				"ShowAvailableCurricularCourses",
-				args);
+		InfoEnrolmentContext infoEnrolmentContext = null;
+		try {
+			infoEnrolmentContext =
+				(InfoEnrolmentContext) ServiceUtils.executeService(
+					userView,
+					"ShowAvailableCurricularCourses",
+					args);
+		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
+			throw new OutOfCurricularEnrolmentPeriodActionException(e.getMessageKey(), e.getStartDate(), e.getEndDate(), mapping.findForward("globalOutOfPeriod"));
+		}
 
 		session.setAttribute(
 			SessionConstants.INFO_ENROLMENT_CONTEXT_KEY,
@@ -85,16 +92,11 @@ public class CurricularCourseEnrolmentManagerDispatchAction
 
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		System.out.println(
-			"===================================================");
+		
 		InfoEnrolmentContext infoEnrolmentContext =
 			processEnrolment(request, enrolmentForm, session);
 
-		System.out.println(
-			"INFO ENROLMENT CONTEXT:"
-				+ infoEnrolmentContext.getActualEnrolment().size());
-		System.out.println(
-			"===================================================");
+
 		Object args[] = { infoEnrolmentContext };
 
 		infoEnrolmentContext =
@@ -137,9 +139,15 @@ public class CurricularCourseEnrolmentManagerDispatchAction
 
 		Object args[] = { infoEnrolmentContext };
 
-		ServiceUtils.executeService(userView, "ConfirmActualEnrolment", args);
-
-		return getNextForward(request, mapping);
+		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ConfirmActualEnrolment", args);
+		if (infoEnrolmentContext.getEnrolmentValidationResult().isSucess()){
+			return getNextForward(request, mapping); 
+		}else{
+			session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
+			saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
+			return mapping.findForward(forwards[0]);
+		}
+		
 	}
 
 	public ActionForward startEnrolmentInOptional(
