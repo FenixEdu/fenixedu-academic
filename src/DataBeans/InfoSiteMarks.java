@@ -17,7 +17,7 @@ public class InfoSiteMarks implements ISiteComponent {
 	public boolean equals(Object objectToCompare) {
 		boolean result = false;
 
-		if (objectToCompare instanceof InfoSiteStudents
+		if (objectToCompare instanceof InfoSiteMarks
 			&& (((((InfoSiteMarks) objectToCompare).getInfoEvaluation() != null
 				&& this.getInfoEvaluation() != null
 				&& ((InfoSiteMarks) objectToCompare).getInfoEvaluation().equals(this.getInfoEvaluation()))

@@ -13,6 +13,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -59,6 +60,9 @@ public class ReadMasterDegrees implements IServico {
 			
 			// Read the degrees
 			result = sp.getICursoExecucaoPersistente().readMasterDegrees(executionYear.getYear());	
+			if(result == null || result.size() == 0){
+				throw new NonExistingServiceException();
+			}
 
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");

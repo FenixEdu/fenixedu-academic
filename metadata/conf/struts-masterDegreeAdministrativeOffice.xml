@@ -750,6 +750,16 @@
 	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 
 	         
       </action>
+      <action path="/marksSubmissionAction"
+      		  input="/marksManagement/marksSubmission.jsp"
+      	      name="marksSubmissionForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.SubmitMarksAction"
+              validate="true">
+	         <forward name="MarksSubmission" path="/marksManagement/marksSubmission.jsp"/> 
+	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 	         
+      </action>
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

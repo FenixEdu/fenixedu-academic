@@ -69,8 +69,6 @@ public class ReadStudentsAndMarksByEvaluation implements IServico {
 		IDisciplinaExecucao executionCourse = null;
 		IEvaluation evaluation = null;
 		InfoEvaluation infoEvaluation = null;
-		//		IExam exam = null;
-		//		InfoExam infoExam = null;
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -92,14 +90,6 @@ public class ReadStudentsAndMarksByEvaluation implements IServico {
 			IPersistentEvaluation evaluationDAO = sp.getIPersistentEvaluation();
 			evaluation = (IEvaluation) evaluationDAO.readByOId(evaluation, false);
 			infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
-
-			//Exam
-			//			exam = new Exam();
-			//			exam.setIdInternal(examCode);
-			//
-			//			IPersistentExam examDAO = sp.getIPersistentExam();
-			//			exam = (IExam) examDAO.readByOId(exam, false);
-			//			infoExam = Cloner.copyIExam2InfoExam(exam);
 
 			//Attends
 			IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();

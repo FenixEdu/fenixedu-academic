@@ -15,7 +15,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.MessageResources;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.ICurricularCourse;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -43,7 +43,6 @@ public class MarksManagementDispatchAction extends DispatchAction {
 
 		if (session != null) {
 
-			// Create the Degree Type List
 			String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
 
 			// Get the Degree List			
@@ -53,9 +52,16 @@ public class MarksManagementDispatchAction extends DispatchAction {
 			ArrayList degreeList = null;
 			try {
 				degreeList = (ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", args);
-			} catch (ExistingServiceException e) {
+			} catch (NonExistingServiceException e) {
+				ActionErrors errors = new ActionErrors();
+				errors.add("nonExisting", new ActionError("message.public.notfound.degrees", executionYear));
+				saveErrors(request, errors);
+				return mapping.getInputForward();
+
+		}catch (ExistingServiceException e) {
 				throw new ExistingActionException(e);
 			}
+			request.setAttribute("executionYear", executionYear);
 			request.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
 
 			return mapping.findForward("ChooseMasterDegree");
@@ -74,36 +80,33 @@ public class MarksManagementDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 		MessageResources messages = getResources(request);
 
-		if (session != null) {
+		String executionYear = (String) request.getParameter("executionYear");
 
-			String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
+		DynaActionForm chooseMasterDegreeForm = (DynaActionForm) form;
+		String degree = (String) chooseMasterDegreeForm.get("degree");
 
-			DynaActionForm chooseMasterDegreeForm = (DynaActionForm) form;
-			String degree = (String) chooseMasterDegreeForm.get("degree");
+		request.setAttribute("executionYear", executionYear);
+		request.setAttribute("degree", degree);
 
-			request.setAttribute("degree", degree);
-
-			// Get the Execution Course List			
-			Object args[] = { executionYear, degree };
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos serviceManager = GestorServicos.manager();
-			ArrayList curricularCourseList = null;
-			try {
-				curricularCourseList = (ArrayList) serviceManager.executar(userView, "ReadCurricularCoursesByDegree", args);
-			} catch (NonExistingServiceException e) {
-				ActionErrors errors = new ActionErrors();
-				errors.add("nonExisting" ,new ActionError("message.public.notfound.curricularCourses"));
-				saveErrors(request, errors);
-				return mapping.findForward("ChooseCurricularCourse");
-
-			} catch (ExistingServiceException e) {
-				throw new ExistingActionException(e);
-			}
-			request.setAttribute("curricularCourses", curricularCourseList);
-
+		// Get the Execution Course List			
+		Object args[] = { executionYear, degree };
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		GestorServicos serviceManager = GestorServicos.manager();
+		ArrayList curricularCourseList = null;
+		try {
+			curricularCourseList = (ArrayList) serviceManager.executar(userView, "ReadCurricularCoursesByDegree", args);
+		} catch (NonExistingServiceException e) {
+			ActionErrors errors = new ActionErrors();
+			errors.add("nonExisting", new ActionError("message.public.notfound.curricularCourses"));
+			saveErrors(request, errors);
 			return mapping.findForward("ChooseCurricularCourse");
-		} else
-			throw new Exception();
+
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e);
+		}
+		request.setAttribute("curricularCourses", curricularCourseList);
+
+		return mapping.findForward("ChooseCurricularCourse");
 	}
 
 	public ActionForward showMarksManagementMenu(
@@ -115,64 +118,27 @@ public class MarksManagementDispatchAction extends DispatchAction {
 
 		HttpSession session = request.getSession(false);
 
-		if (session != null) {
+		String executionYear = (String) request.getParameter("executionYear");
 
-			String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
+		DynaActionForm chooseCurricularCourseForm = (DynaActionForm) form;
+		Integer curricularCourseCode = (Integer) chooseCurricularCourseForm.get("curricularCourseCode");
 
-			DynaActionForm chooseCurricularCourseForm = (DynaActionForm) form;
-			Integer curricularCourseCode = (Integer) chooseCurricularCourseForm.get("curricularCourseCode");
+		//			Get curricular course 
+		Object args[] = { curricularCourseCode };
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		GestorServicos serviceManager = GestorServicos.manager();
+		ICurricularCourse curricularCourse = null;
+		try {
+			curricularCourse = (ICurricularCourse) serviceManager.executar(userView, "ReadCurricularCourseByIdInternal", args);
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e);
+		}
 
-			//			Get execution course 
-			Object args[] = { executionYear, curricularCourseCode};
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos serviceManager = GestorServicos.manager();
-			IDisciplinaExecucao executionCourse = null;
-			try {
-				executionCourse = (IDisciplinaExecucao) serviceManager.executar(userView, "ReadExecutionCourseByCurricularCourseAndYear", args);
-			} catch (ExistingServiceException e) {
-				throw new ExistingActionException(e);
-			}
-			
-			request.setAttribute("curricularCourse", executionCourse.getNome());
-			request.setAttribute("degree", request.getParameter("degree"));
-			request.setAttribute("objectCode", executionCourse.getIdInternal());
+		request.setAttribute("executionYear", executionYear);
+		request.setAttribute("degree", request.getParameter("degree"));
+		request.setAttribute("curricularCourse", curricularCourse.getName());
+		request.setAttribute("curricularCourseCode", curricularCourseCode);
 
-			return mapping.findForward("ShowMarksManagementMenu");
-		} else
-			throw new Exception();
-	}
-
-	public ActionForward getStudentsAndMarksByCurricularCourse(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-
-		HttpSession session = request.getSession(false);
-
-		if (session != null) {
-
-			String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
-
-			DynaActionForm chooseExecutionCourseForm = (DynaActionForm) form;
-			String executionCourse = (String) chooseExecutionCourseForm.get("executionCourse");
-
-			// Get 			
-			Object args[] = { executionCourse };
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos serviceManager = GestorServicos.manager();
-			ArrayList executionCourseList = null;
-			try {
-				executionCourseList = (ArrayList) serviceManager.executar(userView, "ReadExecutionCoursesByMasterDegree", args);
-			} catch (ExistingServiceException e) {
-				throw new ExistingActionException(e);
-			}
-			request.setAttribute("useCase", request.getAttribute("useCase"));
-			request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, executionCourseList);
-
-			return mapping.findForward("ChooseExecutionCourse");
-		} else
-			throw new Exception();
+		return mapping.findForward("ShowMarksManagementMenu");
 	}
 }

@@ -2,15 +2,14 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="title.masterDegree.administrativeOffice.marksManagement" /></h2>
 <br />
 <span class="error"><html:errors/></span>
-<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="<%= SessionConstants.EXECUTION_YEAR %>" />
+<logic:present name="<%= SessionConstants.DEGREE_LIST %>">
+<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
 <br />
 <bean:message key="title.masterDegree.administrativeOffice.chooseDegree" />
-<logic:present name="<%= SessionConstants.DEGREE_LIST %>">
 <html:form action="/marksManagementDispatchAction?method=chooseCurricularCourse">
 	<table>
     <!-- Degree -->
@@ -24,6 +23,7 @@
         </tr>
 	</table>
 	<br />
+	<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
 	<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
 </html:form>
 </logic:present>
