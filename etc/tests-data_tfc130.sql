@@ -20,35 +20,35 @@ INSERT INTO PERSON VALUES (1, 123456789, 'Lisboa', '2002-10-12', '2002-10-12','N
                            '1700-200', 'l200', 'frequesia morada', 'concelho morada',
                            'distrito morada', '214443523', '96546321', 's@h.c','http',
                            '9876543210', 'Profissao', 'user',MD5("pass"), 63,
-                           '9786453120', 1, 0, 0);
+                           '9786453120', 1, 1, 1);
 INSERT INTO PERSON VALUES (2, 9876543210, 'Lisboa', '2002-10-12', '2002-10-12','Jorge',
                            '2002-10-12', 'Nome do Pai', 'Nome da Mae', 'Portuguesa',
                            'Freguesia', 'Concelho', 'Distrito', 'Morada', 'localidade',
                            '1700-200', 'l200', 'frequesia morada', 'concelho morada',
                            'distrito morada', '214443523', '96546321', 's@h.c','http',
                            '9876543210', 'Profissao', 'jorge',MD5("a"), 63,
-                           '9876543210', 1, 0, 0);
+                           '9876543210', 1, 1, 1);
 INSERT INTO PERSON VALUES (3, 1111111111, 'Lisboa', '2002-10-12', '2002-10-12','Nome da Pessoa',
                            '2002-10-12', 'Nome do Pai', 'Nome da Mae', 'Portuguesa',
                            'Freguesia', 'Concelho', 'Distrito', 'Morada', 'localidade',
                            '1700-200', 'l200', 'frequesia morada', 'concelho morada',
                            'distrito morada', '214443523', '96546321', 's@h.c','http',
                            '1111111111', 'Profissao', '3',MD5("pass"), 63,
-                           '1111111111', 1, 0, 0);
+                           '1111111111', 1, 1, 1);
 INSERT INTO PERSON VALUES (4, 2222222222, 'Lisboa', '2002-10-12', '2002-10-12','Jorge',
                            '2002-10-12', 'Nome do Pai', 'Nome da Mae', 'Portuguesa',
                            'Freguesia', 'Concelho', 'Distrito', 'Morada', 'localidade',
                            '1700-200', 'l200', 'frequesia morada', 'concelho morada',
                            'distrito morada', '214443523', '96546321', 's@h.c','http',
                            '2222222222', 'Profissao', '4',MD5("a"), 63,
-                           '2222222222', 1, 0, 0);
+                           '2222222222', 1, 1, 1);
 INSERT INTO PERSON VALUES (5, 3333333333, 'Lisboa', '2002-10-12', '2002-10-12','Nome da Pessoa',
                            '2002-10-12', 'Nome do Pai', 'Nome da Mae', 'Portuguesa',
                            'Freguesia', 'Concelho', 'Distrito', 'Morada', 'localidade',
                            '1700-200', 'l200', 'frequesia morada', 'concelho morada',
                            'distrito morada', '214443523', '96546321', 's@h.c','http',
                            '3333333333', 'Profissao', '45498',MD5("pass"), 63,
-                           '3333333333', 1, 0, 0);
+                           '3333333333', 1, 1, 1);
                            
 INSERT INTO PERSON VALUES (6, 4444444, 'Lisboa', '2002-10-12', '2005-11-1','Nuno',
                            '1900-5-12', 'Manuel', 'Maria', 'Portuguesa',
@@ -69,7 +69,7 @@ INSERT INTO PERSON VALUES (7, 55555555, 'Lisboa', "2002-10-12", "2005-11-1",'Joa
 # Data for table 'ROLE'
 #-----------------------------
 delete from ROLE;
-insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (1,1,null,'/index.do','portal.person');
+insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (1,1,'/person','/index.do','portal.person');
 insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (2,2,'/student','/index.do','portal.student');
 insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (3,3,'/teacher','/index.do','portal.teacher');
 insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (4,4,'/sop','/paginaPrincipal.jsp','portal.sop');
