@@ -40,14 +40,15 @@ public class ValidateDate {
 		String sProperty3 = field.getVarValue("day");
 		Integer day = new Integer(ValidatorUtil.getValueAsString(bean,sProperty3));
 
-		if ((day.intValue() == -1) || (month.intValue() == -1) || (year.intValue() == -1))
-			return true;
+//		if ((day.intValue() == -1) || (month.intValue() == -1) || (year.intValue() == -1))
+//			return false;
 		
 		if (!GenericValidator.isBlankOrNull(valueString)) {
 			  if (!Data.validDate(day, month, year) || 
 			      year == null || month == null || day == null ||
 			      year.intValue() < 1 || month.intValue() < 0 || day.intValue() < 1) 
 				 errors.add(field.getKey(),new ActionError("errors.invalid.date", field.getArg0().getKey()));
+
 				 return false;
 		}
 
