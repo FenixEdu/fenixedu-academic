@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -152,14 +153,17 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				Collections.reverse(items);
 				InfoWebSiteItem lastInfoWebSiteItem = (InfoWebSiteItem) items.get(0);
 
-				calendarLast.setTime(lastInfoWebSiteItem.getOnlineBeginDay());
+				// need to know what to sort
+				calendarLast.setTime(dateToSort(infoWebSiteSection, lastInfoWebSiteItem));
+				//				calendarLast.setTime(lastInfoWebSiteItem.getOnlineBeginDay());
 
 				// get items with the same month as last
 				Iterator iterItems = infoWebSiteSection.getInfoItemsList().iterator();
 				while (iterItems.hasNext()) {
 					InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterItems.next();
 					calendarCycle.clear();
-					calendarCycle.setTime(infoWebSiteItem.getOnlineBeginDay());
+					calendarCycle.setTime(dateToSort(infoWebSiteSection, infoWebSiteItem));
+					//					calendarCycle.setTime(infoWebSiteItem.getOnlineBeginDay());
 					if (calendarCycle.get(Calendar.MONTH) == calendarLast.get(Calendar.MONTH)) {
 						monthList.add(infoWebSiteItem);
 					}
@@ -184,7 +188,8 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				while (iterItems.hasNext()) {
 					InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterItems.next();
 					calendarCycle.clear();
-					calendarCycle.setTime(infoWebSiteItem.getOnlineBeginDay());
+					//					calendarCycle.setTime(infoWebSiteItem.getOnlineBeginDay());
+					calendarCycle.setTime(dateToSort(infoWebSiteSection, infoWebSiteItem));
 
 					// get collection of months present in database
 					Integer monthToCreateLink = new Integer(calendarCycle.get(Calendar.MONTH));
@@ -204,7 +209,8 @@ public class SendWebSiteSectionFileToServer implements IServico {
 					while (iterAllItems.hasNext()) {
 						InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterAllItems.next();
 						calendarCycle.clear();
-						calendarCycle.setTime(infoWebSiteItem.getOnlineBeginDay());
+						calendarCycle.setTime(dateToSort(infoWebSiteSection, infoWebSiteItem));
+						//						calendarCycle.setTime(infoWebSiteItem.getOnlineBeginDay());
 						if (calendarCycle.get(Calendar.MONTH) == monthLink.intValue()) {
 							thisMonthList.add(infoWebSiteItem);
 						}
@@ -289,6 +295,16 @@ public class SendWebSiteSectionFileToServer implements IServico {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
 		return Boolean.TRUE;
+	}
+
+	private Date dateToSort(InfoWebSiteSection infoWebSiteSection, InfoWebSiteItem infoWebSiteItem) {
+		Date dateToSort = infoWebSiteItem.getCreationDate();
+		if (infoWebSiteSection.getWhatToSort().equals("ITEM_BEGIN_DAY")) {
+			dateToSort = infoWebSiteItem.getItemBeginDayCalendar().getTime();
+		} else if (infoWebSiteSection.getWhatToSort().equals("ITEM_END_DAY")) {
+			dateToSort = infoWebSiteItem.getItemEndDayCalendar().getTime();
+		}
+		return dateToSort;
 	}
 
 	private File buildFile(String fileContent, String fileName) throws Exception {
@@ -467,7 +483,8 @@ public class SendWebSiteSectionFileToServer implements IServico {
 		Calendar currentMonth,
 		String currentMonthFileName) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(infoWebSiteItem.getOnlineBeginDay());
+		calendar.setTime(dateToSort(infoWebSiteSection, infoWebSiteItem));
+		//		calendar.setTime(infoWebSiteItem.getOnlineBeginDay());
 
 		String fileName = null;
 		if (calendar.get(Calendar.MONTH) == currentMonth.get(Calendar.MONTH)) {
