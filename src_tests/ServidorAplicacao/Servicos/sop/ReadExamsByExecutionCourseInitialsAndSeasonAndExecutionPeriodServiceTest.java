@@ -16,11 +16,12 @@ import DataBeans.InfoExam;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoViewExamByDayAndShift;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servicos.TestCaseRequeiersAuthorizationServices;
 import Util.Season;
 
 public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriodServiceTest
-	extends TestCaseReadServices {
+	extends TestCaseRequeiersAuthorizationServices {
 
 	public ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriodServiceTest(
 		java.lang.String testName) {
@@ -48,24 +49,11 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriodServic
 		super.tearDown();
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod";
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+	public void testReadValidResult() {
 		String executionCourseInitials = "RCI";
 		Season season = new Season(Season.SEASON1);
 		InfoExecutionYear infoExecutionYear =
@@ -73,22 +61,17 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriodServic
 		InfoExecutionPeriod infoExecutionPeriod =
 			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
 
-		Object[] result =
-			{ executionCourseInitials, season, infoExecutionPeriod };
-		return result;
-	}
+		args = new Object[3];		
+		args[0] = executionCourseInitials;
+		args[1] = season;
+		args[2] = infoExecutionPeriod;
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-	protected int getNumberOfItemsToRetrieve() {
-		return 1;
-	}
+		try {
+			callServiceWithAuthorizedUserView();
+		} catch (FenixServiceException e) {
+			fail("Unexpected exception: " + e);
+		}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
-	 */
-	protected Object getObjectToCompare() {
 		InfoViewExamByDayAndShift infoViewExamByDayAndShift =
 			new InfoViewExamByDayAndShift();
 
@@ -96,13 +79,8 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriodServic
 		infoExam.setSeason(new Season(Season.SEASON1));
 
 		infoViewExamByDayAndShift.setInfoExam(infoExam);
-
-
-		return infoViewExamByDayAndShift;
-	}
-
-	protected boolean needsAuthorization() {
-		return true;
+		
+		assertEquals("Result was unexpected!", infoViewExamByDayAndShift, result);
 	}
 
 }
