@@ -8,7 +8,6 @@ package ServidorPersistente.Seminaries;
 import java.util.List;
 
 import Dominio.Seminaries.ICaseStudy;
-import Dominio.Seminaries.ITheme;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 
