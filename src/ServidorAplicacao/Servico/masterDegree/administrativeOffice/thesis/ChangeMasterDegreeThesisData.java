@@ -105,7 +105,7 @@ public class ChangeMasterDegreeThesisData implements IServico
 					InfoExternalPerson externalAssistentGuider = (InfoExternalPerson) iterator.next();
 					if (externalAssistentGuider.getIdInternal().equals(externalGuider.getIdInternal()))
 					{
-						throw new GuiderAlreadyChosenServiceException("error.exception.masterDegree.guiderAlreadyChosen");
+						throw new GuiderAlreadyChosenServiceException("error.exception.masterDegree.externalGuiderAlreadyChosen");
 					}
 				}
 			}
@@ -159,7 +159,8 @@ public class ChangeMasterDegreeThesisData implements IServico
 			sp.getIPersistentMasterDegreeThesisDataVersion().simpleLockWrite(
 				masterDegreeThesisDataVersion);
 
-		} catch (ExcepcaoPersistencia ex)
+		}
+		catch (ExcepcaoPersistencia ex)
 		{
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
