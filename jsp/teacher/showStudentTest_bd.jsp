@@ -72,8 +72,7 @@
 				
 				<% if (((String)questionLabel).startsWith("image/")){%>
 					<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-					<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciceCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
-					
+					<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciceCode="+ questionCode+"&amp;studentCode="+ studentCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
 					<logic:equal name="imageLabel" value="true">
 						</td><td>
 					</logic:equal>
@@ -105,7 +104,7 @@
 				<td>
 					<bean:define id="cardinality" name="question" property="questionCardinality"/>
 			<table><td>
-				<bean:define id="index" value="0"/>
+				<%-- <bean:define id="index" value="0"/> --%>
 				<bean:define id="optionOrder" value="<%= (new Integer(Integer.parseInt(questionOrder.toString()) -1)).toString() %>"/>
 				<bean:define id="indexOption" value="0"/>
 				<bean:define id="correct" value="false"/>
