@@ -23,10 +23,10 @@ insert into CURRICULAR_COURSE_ENROLMENT_INFO values (3, 0, 0, 0);
 
 -- -----------------------------
 -- Data for table 'STUDENT_CURRICULAR_PLAN'
--- (ID_INTERNAL, KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE, START_DATE, KEY_BRANCH)
+-- (ID_INTERNAL, KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE, START_DATE, KEY_BRANCH, SPECIALIZATION)
 -- -----------------------------
 delete from STUDENT_CURRICULAR_PLAN;
-insert into STUDENT_CURRICULAR_PLAN values (1, 6, 1, 1, '0000-00-00', 2);
+insert into STUDENT_CURRICULAR_PLAN values (1, 6, 1, 1, '0000-00-00', 2, 1);
 
 -- -----------------------------
 -- Data for table 'ENROLMENT_PERIOD'

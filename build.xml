@@ -622,6 +622,9 @@
 		/>
 	</target>
 
+	<target name="load-database-for-enrolment" depends="load-db-with-actual-degree, load-db-with-enrolment-info" description="load-db-with-actual-degree, load-db-with-enrolment-info">
+	</target>
+
 	<!-- Targets for tomcat -->
 
     
