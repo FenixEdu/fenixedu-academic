@@ -130,9 +130,23 @@
         <!-- Data de Nascimento -->
         <tr>
          <td><bean:message key="candidate.birth" /></td>
-          <td><bean:message key="candidate.year" /> <html:text property="birthYear"/></td>
-          <td><bean:message key="candidate.month" /> <html:text property="birthMonth"/></td>
-          <td><bean:message key="candidate.day" /> <html:text property="birthDay"/></td>
+
+          <td><bean:message key="candidate.year" />   
+             <html:select property="birthYear">
+                <html:options collection="years" property="value" labelProperty="label"/>
+             </html:select>
+          </td>          
+          <td><bean:message key="candidate.month" />   
+             <html:select property="birthMonth">
+                <html:options collection="months" property="value" labelProperty="label"/>
+             </html:select>
+          </td>          
+          <td><bean:message key="candidate.day" />   
+             <html:select property="birthDay">
+                <html:options collection="monthDays" property="value" labelProperty="label"/>
+             </html:select>
+          </td>          
+
           <tr><td><td><html:errors property="birthYear"/></td></td>
               <td><html:errors property="birthMonth"/></td>
               <td><html:errors property="birthDay"/></td>
@@ -174,9 +188,21 @@
 	<!-- Data de Emissao do Documento de Identificacao -->
         <tr>
          <td><bean:message key="candidate.identificationDocumentIssueDate" /></td>
-          <td><bean:message key="candidate.year" /> <html:text property="idIssueDateYear"/></td>
-          <td><bean:message key="candidate.month" /> <html:text property="idIssueDateMonth"/></td>
-          <td><bean:message key="candidate.day" /> <html:text property="idIssueDateDay"/></td>
+          <td><bean:message key="candidate.year" />   
+             <html:select property="idIssueDateYear">
+                <html:options collection="years" property="value" labelProperty="label"/>
+             </html:select>
+          </td>          
+          <td><bean:message key="candidate.month" />   
+             <html:select property="idIssueDateMonth">
+                <html:options collection="months" property="value" labelProperty="label"/>
+             </html:select>
+          </td>          
+          <td><bean:message key="candidate.day" />   
+             <html:select property="idIssueDateDay">
+                <html:options collection="monthDays" property="value" labelProperty="label"/>
+             </html:select>
+          </td>          
           <tr><td><td><html:errors property="idIssueDateYear"/></td></td>
               <td><html:errors property="idIssueDateMonth"/></td>
               <td><html:errors property="idIssueDateDay"/></td>
@@ -307,6 +333,9 @@
         
         <td colspan="2">
            <html:submit property="Alterar">Alterar</html:submit>
+        </td>
+        <td colspan="2">
+           <html:reset property="Reset">Dados Originais</html:reset>
         </td>
       </html:form>  
    </table>

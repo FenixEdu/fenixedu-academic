@@ -58,12 +58,12 @@
 	<form-property name="webSite" type="java.lang.String" />
 	<form-property name="contributorNumber" type="java.lang.String" />
 	<form-property name="occupation" type="java.lang.String" />
-	<form-property name="birthDay" type="java.lang.Integer" /> 
-        <form-property name="birthMonth" type="java.lang.Integer" /> 
-	<form-property name="birthYear" type="java.lang.Integer" /> 
-	<form-property name="idIssueDateDay" type="java.lang.Integer" /> 
-        <form-property name="idIssueDateMonth" type="java.lang.Integer" /> 
-	<form-property name="idIssueDateYear" type="java.lang.Integer" /> 
+	<form-property name="birthDay" type="java.lang.String" /> 
+    <form-property name="birthMonth" type="java.lang.String" /> 
+	<form-property name="birthYear" type="java.lang.String" /> 
+	<form-property name="idIssueDateDay" type="java.lang.String" /> 
+    <form-property name="idIssueDateMonth" type="java.lang.String" /> 
+	<form-property name="idIssueDateYear" type="java.lang.String" /> 
  
       </form-bean>
 
@@ -92,7 +92,7 @@
 
       <!-- action definition -->
       <action name="authenticationForm"
-              type="ServidorApresentacao.Action.MasterDegree.Candidate.AuthenticationFormAction"
+              type="ServidorApresentacao.Action.masterDegree.candidate.AuthenticationFormAction"
               path="/authenticationForm"
               input="/autenticacaoCand.jsp"
               scope="request"
@@ -108,13 +108,13 @@
 	
       <!-- Action for Visualization Of the Candidate's Application Information -->
       <action path="/visualizeApplicationInfo"
-      	      type="ServidorApresentacao.Action.MasterDegree.Candidate.VisualizeApplicationInfoAction">
+      	      type="ServidorApresentacao.Action.masterDegree.candidate.VisualizeApplicationInfoAction">
       	  <forward name="Success" path="/visualizeApplicationInfo.jsp"/>      	      
       </action>
 
       <!-- Action For LogOff -->
       <action path="/logoff"
-      	      type="ServidorApresentacao.Action.MasterDegree.Candidate.LogOffAction">
+      	      type="ServidorApresentacao.Action.masterDegree.candidate.LogOffAction">
       	  <forward name="Success" path="/index.do"/>      	      
       </action>
       
@@ -124,7 +124,7 @@
 	      name="changeApplicationInfoForm"
 	      validate="false"
               scope="request"
-      	      type="ServidorApresentacao.Action.MasterDegree.Candidate.PrepareApplicationInfoChangeFormAction">
+      	      type="ServidorApresentacao.Action.masterDegree.candidate.PrepareApplicationInfoChangeFormAction">
       	  <forward name="Success" path="/changeApplicationInfo.jsp"/>
       	  <forward name="Unchangeable" path="/unchangeable.jsp"/>
       </action>
@@ -133,7 +133,7 @@
       <action path="/changeApplicationInfoForm"
       	      attribute="changeApplicationInfoForm"
       	      name="changeApplicationInfoForm"
-              type="ServidorApresentacao.Action.MasterDegree.Candidate.ChangeCandidateApplicationFormAction"
+              type="ServidorApresentacao.Action.masterDegree.candidate.ChangeCandidateApplicationFormAction"
               input="/changeApplicationInfo.jsp"
               scope="request">
         <forward name="Success" path="/changeSuccess.jsp"/>
