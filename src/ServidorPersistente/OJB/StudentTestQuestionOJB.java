@@ -99,18 +99,16 @@ public class StudentTestQuestionOJB extends ObjectFenixOJB implements
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTest
                 .getIdInternal());
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction())
-                .getBroker();
-        QueryByCriteria queryCriteria = new QueryByCriteria(
-                StudentTestQuestion.class, criteria, false);
-        queryCriteria.addGroupBy("keyStudent");
-        List result = (List) pb.getCollectionByQuery(queryCriteria);
+        List result = queryList(StudentTestQuestion.class, criteria, true);
         lockRead(result);
         List studentList = new ArrayList();
         Iterator iterator = result.iterator();
-        while (iterator.hasNext())
-            studentList.add(((IStudentTestQuestion) iterator.next())
-                    .getStudent());
+        while (iterator.hasNext()) {
+            IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) iterator
+                    .next();
+            if (!studentList.contains(studentTestQuestion.getStudent()))
+                    studentList.add(studentTestQuestion.getStudent());
+        }
         return studentList;
     }
 

@@ -381,7 +381,7 @@ public class EditDistributedTest implements IService {
             Calendar beginDate, Calendar beginHour, Calendar endDate,
             Calendar endHour, boolean dateChanges) {
         IAdvisory advisory = new Advisory();
-        advisory.setCreated(null);
+        advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(endDate.getTime());
         advisory.setSender("Docente da disciplina "
                 + ((IExecutionCourse) distributedTest.getTestScope()
