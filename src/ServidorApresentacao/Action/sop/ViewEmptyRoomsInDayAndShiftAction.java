@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.sop;
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -33,34 +35,50 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
 			GestorServicos gestor = GestorServicos.manager();
 			IUserView userView = SessionUtils.getUserView(request);
 
-			Calendar examDateAndTime =
-							(Calendar) session.getAttribute(
-								SessionConstants.EXAM_DATEANDTIME);
+			Calendar dateAndTime =
+				(Calendar) session.getAttribute(
+					SessionConstants.EXAM_DATEANDTIME);
 
-						Calendar examDate = Calendar.getInstance();
-						Calendar examTime = Calendar.getInstance();
+			Calendar date = Calendar.getInstance();
+			Calendar time = Calendar.getInstance();
 
-						examDate.set(
-							Calendar.DAY_OF_MONTH,
-							examDateAndTime.get(Calendar.DAY_OF_MONTH));
-						examDate.set(Calendar.MONTH, examDateAndTime.get(Calendar.MONTH));
-						examDate.set(Calendar.YEAR, examDateAndTime.get(Calendar.YEAR));
-						examDate.set(Calendar.HOUR_OF_DAY, 0);
-						examDate.set(Calendar.MINUTE, 0);
-						examDate.set(Calendar.SECOND, 0);
+			date.set(
+				Calendar.DAY_OF_MONTH,
+				dateAndTime.get(Calendar.DAY_OF_MONTH));
+			date.set(Calendar.MONTH, dateAndTime.get(Calendar.MONTH));
+			date.set(Calendar.YEAR, dateAndTime.get(Calendar.YEAR));
+			date.set(Calendar.HOUR_OF_DAY, 0);
+			date.set(Calendar.MINUTE, 0);
+			date.set(Calendar.SECOND, 0);
 
-						examTime.set(Calendar.DAY_OF_MONTH, 1);
-						examTime.set(Calendar.MONTH, 1);
-						examTime.set(Calendar.YEAR, 1970);
-						examTime.set(
-							Calendar.HOUR_OF_DAY,
-							examDateAndTime.get(Calendar.HOUR_OF_DAY));
-						examTime.set(Calendar.MINUTE, 0);
-						examTime.set(Calendar.SECOND, 0);
+			time.set(Calendar.DAY_OF_MONTH, 1);
+			time.set(Calendar.MONTH, 1);
+			time.set(Calendar.YEAR, 1970);
+			time.set(
+				Calendar.HOUR_OF_DAY,
+				dateAndTime.get(Calendar.HOUR_OF_DAY));
+			time.set(Calendar.MINUTE, 0);
+			time.set(Calendar.SECOND, 0);
 
 			// Chamar servico que vai ler salas vazias no dia escolhido
+			Object[] args = { date, time };
+			List infoRoomsList =
+				(List) gestor.executar(
+					userView,
+					"ReadRoomsWithNoExamsInDayAndBeginning",
+					args);
 
-System.out.println("TA Na action....");
+			if (infoRoomsList != null && infoRoomsList.isEmpty()) {
+				request.removeAttribute(SessionConstants.INFO_EMPTY_ROOMS_KEY);
+			} else {
+				request.setAttribute(
+					SessionConstants.INFO_EMPTY_ROOMS_KEY,
+					infoRoomsList);
+				request.setAttribute(
+					"dateAndTime",
+					session.getAttribute(
+						SessionConstants.EXAM_DATEANDTIME_STR));
+			}
 
 			return mapping.findForward("View");
 		} else

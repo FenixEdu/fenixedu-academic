@@ -163,7 +163,7 @@ public abstract class SessionConstants {
 	public static final String AVAILABLE_ROOM_OCCUPATION	= "availableRoomOccupation";
 	public static final String AVAILABLE_ROOMS              = "availableRooms";
 	public static final String ALL_INFO_EXAMS_KEY           = "ALL_INFO_EXAMS_KEY";
-
+	public static final String INFO_EMPTY_ROOMS_KEY         = "INFO_EMPTY_ROOMS_KEY";
 
 	// -------------------------------------------------------------------------------
 	//    Messy Constants Section - For All Sorts of Purposes

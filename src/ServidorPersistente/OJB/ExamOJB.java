@@ -13,8 +13,14 @@ package ServidorPersistente.OJB;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
+import org.apache.ojb.odmg.HasBroker;
 import org.odmg.QueryException;
 
+import Dominio.CursoExecucao;
 import Dominio.Exam;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
@@ -26,8 +32,17 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
 	public List readBy(Calendar day, Calendar beginning)
 		throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select exams from " + Exam.class.getName();
+
+			PersistenceBroker broker = ((HasBroker) odmg.currentTransaction()).getBroker(); 
+
+			Criteria criteria = new Criteria();
+			criteria.addEqualTo("day",day);
+			criteria.addEqualTo("beginning",beginning);				
+			Query queryPB = new QueryByCriteria(Exam.class, criteria);
+			return (List) broker.getCollectionByQuery(queryPB);			
+			
+/* 		try {
+ 			String oqlQuery = "select exams from " + Exam.class.getName();
 			oqlQuery += " where day = $1";
 			oqlQuery += " and beginning = $2";
 			query.create(oqlQuery);
@@ -37,9 +52,10 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 			lockRead(result);
 
 			return result;
+			
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		}*/
 	}
 
 	public List readAll() throws ExcepcaoPersistencia {

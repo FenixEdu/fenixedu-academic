@@ -67,9 +67,6 @@ public class ViewAllExamsByDegreeAndCurricularYearAction extends Action {
 					} else {
 						infoViewAllExams.setInfoExecutionCourseAndExamsList(infoExecutionCourseAndExamsList);
 					}						
-					if(infoViewAllExams.getInfoExecutionDegree() != null) System.out.println("## ExecutionDegree :" +infoViewAllExams.getInfoExecutionDegree());
-					if(infoViewAllExams.getCurricularYear() != null) System.out.println("## CurricularYear " +infoViewAllExams.getCurricularYear());
-					if(infoViewAllExams.getInfoExecutionCourseAndExamsList() != null) System.out.println("## Lista de exames.size:" + infoViewAllExams.getInfoExecutionCourseAndExamsList().size());					
 					infoViewAllExamsList.add(infoViewAllExams);
 				}						
 			}

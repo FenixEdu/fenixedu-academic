@@ -9,12 +9,13 @@
 	<html:hidden property="method" value="choose"/>
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="nextPage" value='<%= pageContext.findAttribute(SessionConstants.NEXT_PAGE).toString() %>'/>
+
 		<table width="100%">
 	    	<tr>
 	            <td class="infoop">Por favor, proceda &agrave; escolha do dia pretendido.</td>
 	         </tr>
 	   	</table>
-<br />
+		<br />
 		<table cellpadding="0" cellspacing="0">
            	<tr>
                 <td width="50"><bean:message key="property.exam.year"/>:</td>
@@ -38,6 +39,7 @@
           	</tr>
 		</table>
        	<br />
+       	
        	<table width="100%">
 	   		<tr>
 	        	<td class="infoop">Escolha o turno de exame pretendido.</td>
@@ -56,6 +58,7 @@
             </tr>
       	</table>
         <br />
+
 <html:submit styleClass="inputbutton">
 	<bean:message key="lable.choose"/>
 </html:submit>

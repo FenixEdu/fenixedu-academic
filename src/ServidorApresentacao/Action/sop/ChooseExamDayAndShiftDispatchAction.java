@@ -116,9 +116,6 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 			examDateAndTime);
 
 		String nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
-			if (nextPage==null) System.out.println("Next Page parameter e NULL :(");
-			else System.out.println("Next Page parameter NAO e NULL :) " + nextPage);
-
 		return mapping.findForward(nextPage);
 
 	}
