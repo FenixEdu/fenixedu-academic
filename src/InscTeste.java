@@ -30,7 +30,9 @@ public class InscTeste {
 		Object serviceArgs1[] = {userView};
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
 		showFinalSpan(infoEnrolmentContext);
-
+		showActualEnrolments(infoEnrolmentContext);
+		showChosenCurricularCoursesForOptionalCurricularCourses(infoEnrolmentContext);
+		
 //		Object serviceArgs2[] = { infoEnrolmentContext };
 //		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs2);
 //		showAvailableDegreesForOption(infoEnrolmentContext);
@@ -161,7 +163,7 @@ public class InscTeste {
 		}
 	}
 
-	private static void showCosenCurricularCoursesForOptionalCurricularCourse(InfoEnrolmentContext infoEnrolmentContext) {
+	private static void showChosenCurricularCoursesForOptionalCurricularCourses(InfoEnrolmentContext infoEnrolmentContext) {
 		System.out.println();
 		System.out.println("CHOSEN COURSE AND OPTIONAL COURSE:");
 		Iterator iterator = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().iterator();
