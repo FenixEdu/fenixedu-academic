@@ -96,7 +96,7 @@
         <arg0 key="message.sectionName" resource="true"/>
       </field>
 
-      <field property="order" depends="required" page="1">
+      <field property="sectionOrder" depends="required" page="1">
         <arg0 key="message.sectionOrder" resource="true"/>
       </field>
     </form>

@@ -18,7 +18,7 @@
 		<bean:message key="message.sectionOrder"/>
 	</td>
 	<td>
-		<html:text size="5" property="order"/>
+		<html:text size="5" property="sectionOrder"/>
 	</td>
 </tr>
 <tr>

@@ -42,5 +42,6 @@
 	</td>
 </tr>
 
+<html:hidden property="method" value="edit" />
 </table>
 </html:form>

@@ -45,7 +45,7 @@ public class InsertSectionAction extends FenixAction {
 
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		String sectionName = (String) dynaForm.get("name");
-		Integer order = (Integer) dynaForm.get("order");
+		Integer order = (Integer) dynaForm.get("sectionOrder");
 
 		HttpSession session = request.getSession();
 
