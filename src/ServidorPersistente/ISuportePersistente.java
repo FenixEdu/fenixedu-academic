@@ -123,7 +123,11 @@ public interface ISuportePersistente {
 	public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence();
 	
 	public IPersistentCurricularCourseEquivalenceRestriction getIPersistentCurricularCourseEquivalenceRestriction();
-
+	
+	public IPersistentMetadata getIPersistentMetadata();
+	public IPersistentQuestion getIPersistentQuestion();
+	public IPersistentTest getIPersistentTest();
+	public IPersistentTestQuestion getIPersistentTestQuestion();
 }
 
 

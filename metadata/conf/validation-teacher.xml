@@ -3,6 +3,31 @@
 <form-validation>
   <formset>
    
+   <!-- validation for testsForm -->
+   <form name="testForm">
+   	<field property="title" depends="required" page="1">
+    	<arg0 key="message.title" resource="true"/>
+    </field>
+  	</form>
+   
+   <form name="questionForm">
+	<field property="questionValue" depends="required, integer" page="1">
+		<arg0 key="message.questionValue" resource="true"/>
+	</field>
+   </form>
+   
+   <form name="testEditionForm">
+   	<field property="title" depends="required" page="1">
+    	<arg0 key="message.title" resource="true"/>
+    </field>
+   </form>
+   
+   <form name="testQuestionForm">
+	<field property="testQuestionValue" depends="required, integer" page="1">
+		<arg0 key="message.questionValue" resource="true"/>
+	</field>
+   </form>
+   
    <!-- validation for summaryForm -->
    <form name="summaryForm">
    

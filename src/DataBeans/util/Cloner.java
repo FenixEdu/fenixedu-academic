@@ -11,7 +11,6 @@ import org.apache.commons.collections.Transformer;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoBranch;
-import DataBeans.InfoCandidateEnrolment;
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoClass;
 import DataBeans.InfoContributor;
@@ -24,7 +23,6 @@ import DataBeans.InfoCurriculum;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDepartment;
-import DataBeans.InfoDepartmentCourse;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
@@ -39,8 +37,6 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoFinalEvaluation;
 import DataBeans.InfoFrequenta;
-import DataBeans.InfoGratuity;
-import DataBeans.InfoGroupProperties;
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
 import DataBeans.InfoGuideSituation;
@@ -48,9 +44,11 @@ import DataBeans.InfoItem;
 import DataBeans.InfoLesson;
 import DataBeans.InfoMark;
 import DataBeans.InfoMasterDegreeCandidate;
+import DataBeans.InfoMetadata;
 import DataBeans.InfoPerson;
 import DataBeans.InfoPrice;
 import DataBeans.InfoProfessorShip;
+import DataBeans.InfoQuestion;
 import DataBeans.InfoRole;
 import DataBeans.InfoRoom;
 import DataBeans.InfoSection;
@@ -58,11 +56,11 @@ import DataBeans.InfoShift;
 import DataBeans.InfoSite;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
-import DataBeans.InfoStudentGroup;
-import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoStudentKind;
 import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
+import DataBeans.InfoTest;
+import DataBeans.InfoTestQuestion;
 import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
 import Dominio.*;
@@ -2429,4 +2427,42 @@ public abstract class Cloner {
 		return departmentCourse;
 	}
 
+	public static InfoMetadata copyIMetadata2InfoMetadata(IMetadata metadata){
+		InfoMetadata infoMetadata = new InfoMetadata();
+		copyObjectProperties(infoMetadata,metadata);
+		InfoExecutionCourse infoExecutionCourse = copyIExecutionCourse2InfoExecutionCourse(metadata.getExecutionCourse());
+		infoMetadata.setInfoExecutionCourse(infoExecutionCourse);
+		return infoMetadata;
+	}
+			
+	public static InfoQuestion copyIQuestion2InfoQuestion(IQuestion question){
+		InfoQuestion infoQuestion = new InfoQuestion();
+		copyObjectProperties(infoQuestion,question);
+		InfoMetadata infoMetadata = copyIMetadata2InfoMetadata(question.getMetadata());
+		infoQuestion.setInfoMetadata(infoMetadata);
+		return infoQuestion;
+	}
+	public static InfoTest copyITest2InfoTest(ITest test){
+		InfoTest infoTest = new InfoTest();
+		copyObjectProperties(infoTest,test);
+		InfoExecutionCourse infoExecutionCourse = copyIExecutionCourse2InfoExecutionCourse(test.getExecutionCourse());
+		infoTest.setInfoExecutionCourse(infoExecutionCourse);
+		return infoTest;
+	}
+	
+	public static InfoTestQuestion copyITestQuestion2InfoTestQuestion(ITestQuestion testQuestion){
+		InfoTestQuestion infoTestQuestion = new InfoTestQuestion();
+		//copyObjectProperties(infoTestQuestion,testQuestion);
+		infoTestQuestion.setIdInternal(testQuestion.getIdInternal());
+		infoTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
+		infoTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
+		InfoTest infoTest = copyITest2InfoTest(testQuestion.getTest());
+		infoTestQuestion.setTest(infoTest);
+		InfoQuestion infoQuestion = copyIQuestion2InfoQuestion(testQuestion.getQuestion());
+		infoTestQuestion.setQuestion(infoQuestion);
+		return infoTestQuestion;
+	}
+
+
+	
 }
