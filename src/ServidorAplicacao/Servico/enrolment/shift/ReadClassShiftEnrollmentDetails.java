@@ -167,9 +167,9 @@ public class ReadClassShiftEnrollmentDetails implements IService
 
             Integer klassId = klass.getIdInternal();
 
-            List associatedShifts = klass.getAssociatedShifts();
+//            List associatedShifts = klass.getAssociatedShifts();
 
-            for (int j = 0; i < shifts.size(); i++)
+            for (int j = 0; j < shifts.size(); j++)
             {
                 ITurno shift = (ITurno) shifts.get(i);
 
@@ -275,7 +275,7 @@ public class ReadClassShiftEnrollmentDetails implements IService
     {
         IStudent student =
             (IStudent) studentDAO.readByOId(new Student(infoStudent.getIdInternal()), false);
-        if (student != null)
+        if (student == null)
         {
             throw new StudentNotFoundServiceException();
         }
