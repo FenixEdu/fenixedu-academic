@@ -1,7 +1,7 @@
 package ServidorAplicacao.Servico.student;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import DataBeans.InfoStudent;
+import DataBeans.InfoStudentWithInfoPerson;
 import Dominio.IStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -16,7 +16,7 @@ public class ReadStudentByNumberAndDegreeType implements IService {
                 degreeType);
 
         if (student != null) {
-            return InfoStudent.newInfoFromDomain(student);
+            return InfoStudentWithInfoPerson.newInfoFromDomain(student);
         }
 
         return null;
