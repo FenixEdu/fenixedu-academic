@@ -164,7 +164,6 @@ public class DMLRelationDescriptor
             final CollectionDescriptor collectionDescriptor = findInverseCollectionDescriptor(objectReferenceDescriptor, foreignKeyField);
             if (collectionDescriptor != null) {
                 collectionDescriptor2 = collectionDescriptor;
-                //System.out.println("Setting...");
             } else {
                 System.out.println("No inverse reference found for: "
                         + classDescriptor1.getFullTableName()
@@ -187,8 +186,8 @@ public class DMLRelationDescriptor
             //System.out.println("   collectionDescriptors.getAttributeName()= " + collectionDescriptor.getAttributeName());
             Vector foreignKeyFields = collectionDescriptor.getForeignKeyFields();
             for (final Iterator fkIiterator = foreignKeyFields.iterator(); fkIiterator.hasNext(); ) {
-                //System.out.println("   fkIiterator= " + fkIiterator.next());
-                if (foreignKeyField.equals(foreignKeyField) && collectionDescriptor.getItemClassName().equals(objectReferenceDescriptor.getClassDescriptor().getClassOfObject())) {
+                Object fk = fkIiterator.next();
+                if (foreignKeyField.equals(fk) && collectionDescriptor.getItemClassName().equals(objectReferenceDescriptor.getClassDescriptor().getClassOfObject())) {
                     return collectionDescriptor;
                 }
             }

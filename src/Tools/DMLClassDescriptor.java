@@ -69,7 +69,7 @@ public class DMLClassDescriptor
         protected boolean isSupportedDMLField(final Class fieldType)
         {
             // System.out.println("fieldType: " + fieldType);
-            return fieldType.getName().startsWith("java.lang.");
+            return fieldType.getName().startsWith("java.lang.") || fieldType.getName().equals("java.util.Date");
         }
 
         public String getAttributeName()
