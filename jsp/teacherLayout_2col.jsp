@@ -4,67 +4,50 @@
 <html:html xhtml="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link href="<%= request.getContextPath() %>/CSS/gesdis-alt.css" rel="stylesheet" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/dotist.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <%-- Layout component parameters : header, navLocal, body --%>
-
-
-<!-- Navbar Lateral e Body Content -->
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-   <tr>
-     <td  align="left"  bgcolor="#B5BED6"  class="barraist">
-     <img alt="" border="0"  src="<%= request.getContextPath() %>/images/LogoIST.gif"  />
+<!-- Header -->
+<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="header" width="25%"><img alt="" height="60" src="<%= request.getContextPath() %>/images/dotist_sop.gif" width="192" />
 	</td>
-    <td id="principal" bgcolor="#FFFFFF">
-      <div id="header"><h4><tiles:getAsString name="institutionName" ignore="true"/></h4></div>
-      <h1><tiles:getAsString name="executionCourseName"  ignore="true"/></h1>
-      <br />
-	  <tiles:insert attribute="body" />      
-    </td>	
-    <td id="barranav" bgcolor="#EBEFFA" valign="top">
-      <div class="blue-bckgr">
-        <h3>Navega&ccedil;&atilde;o</h3>
-      </div>
-      <div id="nav">
-      <tiles:insert attribute="navbar" ignore="true"/>	
-<%--        <ul>
-		  <li><a href="index.html">P&aacute;gina Inicial</a></li>
-          <li><a href="anuncios.html">An&uacute;ncios</a></li>
-          <li><div class="selected">Objectivos</div></li>
-          <li><a href="programa.html">Programa</a></li>
-          <li><a href="horario.html">Hor&aacute;rio</a></li>
-          <li><a href="bibliografia.html">Bibliografia</a></li>
-          <li> <a href="/" onclick="houdini('seccao');return false;">Sec&ccedil;&atilde;o</a></li>
-        </ul>
-        <dl id="seccao" style="display: none;">
-          <dd><a href="#">item1</a></dd>
-          <dd><a href="#">item2</a></dd>
-          <dd><a href="#">item3</a></dd>
-        </dl> 
-        <ul>
-          <li><a href="#">Login GesDis</a></li>
-        </ul>--%>
-      </div>
-<%--      <br />
-      <div class="blue-bckgr">
-        <h3>Contacto</h3>
-      </div>
-      <p class="contacto">Prof. Ant&oacute;nio Gomes</p>
-      <p class="contacto">Dep. Matem&aacute;tica</p>
-      <p class="contacto">Tel. +351 21 8417000</p>
-      <p class="contacto">Ext. 1000</p>
-      <p class="contacto"><a href="mailto:a.gomes@math.ist.utl.pt">a.gomes@math.ist.utl.pt</a></p>
-      <br />
-      <h3>Personaliza&ccedil;&atilde;o</h3>
-      <center>
-        <p> <a href="#" onclick="setActiveStyleSheet('default'); return false;"><img src="Images/css_orig.gif" width="20" height="20" border="0" alt="" /></a> <a href="#" onclick="setActiveStyleSheet('alt1'); return false;"><img src="Images/css_alt1.gif" width="20" height="20" border="0" alt="" /></a> </p>
-      </center> --%>
+    <td class="header"><div align="right"><h1><tiles:getAsString name="serviceName" ignore="true"/></h1></div>
     </td>
   </tr>
 </table>
+<!-- End Header -->
+<!-- NavGeral -->
+<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="navbargeral"><tiles:insert attribute="navGeral" ignore="true"/>
+    </td>
+  </tr>
+</table>
+<!-- End NavGeral -->
+<!-- Navbar Lateral e Body Content -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+   <tr>
+    <td width="25%" align="left" valign="top" nowrap="nowrap" class="navlateral"><tiles:insert attribute="navLocal" ignore="true"/>
+    </td>
+   
+      <td width="100%" align="left" valign="top" bgcolor="#FFFFFF" class="bodycontent">
+      	 <tiles:getAsString name="executionCourseName"  ignore="true"/>
+      		<tiles:insert attribute="body" />
+	</td>
+  
+  </tr>
+</table>
 <!--End Navbar Lateral e Body Content -->
-
+<!-- Footer -->
+<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="footer"><tiles:insert attribute="footer" ignore="true"/>
+    </td>
+  </tr>
+</table>
+<!--End Footer -->
 </body>
 </html:html>
 
