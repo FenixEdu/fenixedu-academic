@@ -4,6 +4,7 @@
  */
 package Tools.io;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -14,7 +15,7 @@ import Util.FileUtils;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class ReverseFile {
 
@@ -41,23 +42,20 @@ public class ReverseFile {
 
     protected static void reverseFile(final String inputFilename, final String outputFilename)
             throws IOException {
-        String filecontents = null;
-        try {
-            filecontents = FileUtils.readFile(inputFilename);
-        } catch (IOException e) {
-            return;
-        }
-        final String[] lines = filecontents.split("\n");
+        if ((new File(inputFilename)).exists()) {
+            final String filecontents = FileUtils.readFile(inputFilename);
+            final String[] lines = filecontents.split("\n");
 
-        final FileWriter fileWriter = new FileWriter(outputFilename, false);
-        for (int i = lines.length; i > 0; i--) {
-            fileWriter.write(lines[i - 1]);
-            fileWriter.write("\n");
-        }
-        fileWriter.close();
+            final FileWriter fileWriter = new FileWriter(outputFilename, false);
+            for (int i = lines.length; i > 0; i--) {
+                fileWriter.write(lines[i - 1]);
+                fileWriter.write("\n");
+            }
+            fileWriter.close();
 
-        if (logger.isDebugEnabled())
-            logger.debug("Wrote " + lines.length + " lines to " + outputFilename);
+            if (logger.isDebugEnabled())
+                logger.debug("Wrote " + lines.length + " lines to " + outputFilename);
+        }
     }
 
 }
