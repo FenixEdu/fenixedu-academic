@@ -33,7 +33,15 @@
 		<p style="text-align:left;margin-bottom:0px">
 			<b><bean:message key="label.degreeSelected.courses" />:</b>
 		</p>
-		<bean:size id="wantedCoursesSize" name="infoShiftEnrollment" property="infoAttendingCourses"/>
+		
+		<logic:present name="infoShiftEnrollment" property="infoAttendingCourses">
+			<bean:size id="wantedCoursesSize" name="infoShiftEnrollment" property="infoAttendingCourses"/>	
+			<bean:define id="attendingCourses" name="infoShiftEnrollment" property="infoAttendingCourses"/>
+		</logic:present>
+		<logic:notPresent name="infoShiftEnrollment" property="infoAttendingCourses">
+			<bean:define id="wantedCoursesSize" value="0"/>
+		</logic:notPresent>
+		
 		<bean:define id="executionCourses" name="infoShiftEnrollment" property="infoExecutionCoursesList" />
 		<html:select property="wantedCourse" size="8" styleClass="courseEnroll">
 			<html:options collection="executionCourses" labelProperty="nome" property="idInternal"/>
@@ -59,17 +67,23 @@
 				<bean:message key="label.attendCourses" />:
 			</b>
 		</p>
-		<bean:define id="attendingCourses" name="infoShiftEnrollment" property="infoAttendingCourses"/>
-		<html:select property="removedCourse" size="8" styleClass="courseEnroll">
-			<html:options collection="attendingCourses" labelProperty="nome"  property="idInternal"/>
-		</html:select>
-		<logic:notEqual name="wantedCoursesSize" value="0">
-			<p style="text-align:center;margin-top:1px">
-				<html:submit property="method" styleClass="inputbutton" style="width:100%">
-					<bean:message key="button.removeCourse"/>
-				</html:submit>
-			</p>
-		</logic:notEqual>
+		<logic:present name="attendingCourses">
+			<html:select property="removedCourse" size="8" styleClass="courseEnroll">
+				<html:options collection="attendingCourses" labelProperty="nome"  property="idInternal"/>
+			</html:select>
+			<logic:notEqual name="wantedCoursesSize" value="0">
+				<p style="text-align:center;margin-top:1px">
+					<html:submit property="method" styleClass="inputbutton" style="width:100%">
+						<bean:message key="button.removeCourse"/>
+					</html:submit>
+				</p>
+			</logic:notEqual>
+		</logic:present>
+		<logic:notPresent name="attendingCourses">
+			<br />
+			<span class="error"><bean:message key="message.noStudentExecutionCourses" /></span>
+		</logic:notPresent>		
+
 	</div>
 	<br/>
 	<br/>
@@ -79,13 +93,7 @@
 		<html:submit property="method" styleClass="inputbutton">
 			<bean:message key="button.continue.enrolment"/>
 		</html:submit>
-	</logic:notEqual>
-	<logic:equal name="wantedCoursesSize" value="0">
-		<p style="text-align:center;margin-top:1px">
-			<span class="error"><bean:message key="message.noStudentExecutionCourses" /><span class="error">		
-		</p>
-	</logic:equal>
-		
+	</logic:notEqual>	
 	<html:submit property="method" styleClass="inputbutton" style="width:35%">
 		<bean:message key="button.exit.enrollment"/>
 	</html:submit>		
