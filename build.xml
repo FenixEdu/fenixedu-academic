@@ -294,10 +294,9 @@
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                 <include name="**/SessionUtilsTest.java"/>
+                 <include name="**/EditarTurnoFor*.java"/>
             <!-- start of tests that are failing -->    
              <!--    <exclude name="**/CriarAulaFormActionTest.java" /> 		 -->
-                 <exclude name="**/EditarAulaFormActionTest.java" /> 
             	 <exclude name="**/CriarAulaFormActionTest.java" /> 
             	 <exclude name="**/ApagarTurnoFormActionTest.java" />
             	 <exclude name="**/ApagarAulaFormActionTest.java" /> 
