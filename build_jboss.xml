@@ -257,6 +257,7 @@
 		<copy todir="${build.web-client}">
 			<fileset dir="${web-content}" >
 				<include name="**/*.*"/>
+				<exclude name="WEB-INF//*.*"/>
 			</fileset>
 		</copy>
 		<copy todir="${build.web-client.webinf.classes}">
