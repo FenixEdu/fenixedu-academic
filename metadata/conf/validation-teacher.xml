@@ -12,69 +12,45 @@
 
 <form-validation>
   <formset>
-    <!-- Validacao para o formulario de autenticacao -->
-    <form name="autenticacaoForm">
-      <field property="utilizador" depends="required">
-        <arg0 key="Utilizador" resource="false"/>
+   
+   <!-- Validacao para o formulario de executionCourseCurriculumForm -->
+    <form name="executionCourseCurriculumForm">
+      <field property="generalObjectives" depends="required" page="1">
+        <arg0 key="message.generalObjectives" resource="true"/>
       </field>
 
-      <field property="password" depends="required">
-        <arg0 key="Password" resource="false"/>
+      <field property="operacionalObjectives" depends="required" page="1" >
+        <arg0 key="message.operacionalObjectives" resource="true"/>
+      </field>
+
+      <field property="program" depends="required" page="1">
+        <arg0 key="message.program" resource="true"/>
       </field>
     </form>
-
-    <!-- Validacao para o parametro nomeSitio -->
-    <form name="obterSitioForm">
-      <field property="nomeSitio" depends="required">
-        <arg0 key="Nome do sitio" resource="false"/>
-      </field>
-	</form>
-
-    <!-- Validacao para o parametro nomeSitio -->
-    <form name="obterSeccaoForm">
-    </form>
-
-    <!-- Validacao para o formulario de inserir item -->
-    <form name="docente.inserirItemForm">
-      <field property="nome" depends="required">
-        <arg0 key="Nome" resource="false"/>
+   
+   
+    <form name="executionCourseObjectivesForm">
+      <field property="generalObjectives" depends="required" page="1">
+        <arg0 key="message.generalObjectives" resource="true"/>
       </field>
 
-      <field property="texto" depends="required">
-        <arg0 key="Texto" resource="false"/>
+      <field property="operacionalObjectives" depends="required" page="1">
+        <arg0 key="message.operacionalObjectives" resource="true"/>
       </field>
     </form>
-
-    <!-- Validacao para o formulario de editar item -->
-    <form name="docente.editarItemForm">
-      <field property="nome" depends="required">
-        <arg0 key="Nome" resource="false"/>
-      </field>
-
-      <field property="texto" depends="required">
-        <arg0 key="Texto" resource="false"/>
+   
+    <form name="executionCourseProgramForm">
+      <field property="program" depends="required" page="1">
+        <arg0 key="message.program" resource="true"/>
       </field>
     </form>
-    
-    <!-- Validacao para o formulario de inserir anuncio -->
-    <form name="docente.inserirAnuncioForm">
-      <field property="titulo" depends="required">
-        <arg0 key="Titulo" resource="false"/>
-      </field>
-      <field property="informacao" depends="required">
-        <arg0 key="Informacao" resource="false"/>
+   
+   <!-- Validation for the teacher number form -->
+   <form name="teacherForm">
+      <field property="teacherNumber" depends="required, integer" page="1">
+        <arg0 key="message.teacherNumber" resource="true"/>
       </field>
     </form>
-    
-    <form name="docente.editarAnuncioForm">
-      <field property="titulo" depends="required">
-        <arg0 key="Titulo" resource="false"/>
-      </field>
-      <field property="informacao" depends="required">
-        <arg0 key="Informacao" resource="false"/>
-      </field>
-    </form>
-      
 	<!-- Validacao para o formulario de bibliografia -->
     <form name="bibliographicReferenceForm">
       <field property="title" depends="required" page="1">

@@ -20,18 +20,26 @@
       </form-bean>
      <!--curriculum forms --> 
      <form-bean name="executionCourseCurriculumForm"
-		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">		
+		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">		
 		<form-property name="generalObjectives" type="java.lang.String" />
 		<form-property name="operacionalObjectives" type="java.lang.String" />
 		<form-property name="program" type="java.lang.String" />
+		<form-property name="page" type="java.lang.Integer" initial="0"/>
 	</form-bean>
 	
     	<form-bean name="executionCourseObjectivesForm"
-    		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">		
+    		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">		
     		<form-property name="generalObjectives" type="java.lang.String" />
     		<form-property name="operacionalObjectives" type="java.lang.String" />
+    		<form-property name="page" type="java.lang.Integer" initial="0"/>
     	</form-bean>
     	
+    		
+    <form-bean name="executionCourseProgramForm"
+		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+		<form-property name="program" type="java.lang.String" />
+		<form-property name="page" type="java.lang.Integer" initial="0"/>
+	</form-bean>
 	<!-- Announcement Forms  -->
     <form-bean name="insertAnnouncementForm"
     	type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -41,16 +49,9 @@
         <form-property name="page" type="java.lang.Integer" initial="0" />
     </form-bean>    			
     	
-	<form-bean name="executionCourseObjectivesForm"
-		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">		
-		<form-property name="generalObjectives" type="java.lang.String" />
-		<form-property name="operacionalObjectives" type="java.lang.String" />
-	</form-bean>
 	
-	<form-bean name="executionCourseProgramForm"
-		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-		<form-property name="program" type="java.lang.String" />
-	</form-bean>
+	
+	
 	
 	<form-bean name="bibliographicReferenceForm"
 				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -65,9 +66,10 @@
 	</form-bean>    			
 	<!--Teacher form -->
    <form-bean name="teacherForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
+				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                 dynamic="true">        
-            <form-property name="teacherNumber" type="java.lang.Integer" />
+            <form-property name="teacherNumber" type="java.lang.String" />
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
      </form-bean>    	
 
     </form-beans>
@@ -168,16 +170,28 @@
 	
 	<!-- Actions For Teachers  -->
 	<action 
-		name="teacherForm"
 		input="/viewTeachers.jsp"
 		parameter="method"
 		path="/teachersManagerDA"
         type="ServidorApresentacao.Action.teacher.TeacherManagerDispatchAction"
-		>    
+        >    
 	<exception type="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
          	   key="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                /> 
+                	
+    <forward name="viewTeachers" path="/viewTeachers.jsp"/>  
+     
+    
+	</action>
+	<action 
+		name="teacherForm"
+		input="/associateTeacher.jsp"
+		parameter="method"
+		path="/teacherManagerDA"
+		type="ServidorApresentacao.Action.teacher.TeacherManagerDispatchAction"
+        validate="true">    
+	
     <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
          	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
@@ -190,14 +204,14 @@
     <forward name="associateTeacher" path="/associateTeacher.jsp"/>    
     
 	</action>
-	
 	<!-- Actions For Objectives and Program -->
 	<action 
 		name="executionCourseObjectivesForm"
 		parameter="method"
+		input="/editObjectives.jsp"
 		path="/objectivesManagerDA"
-        type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
-		>    
+		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
+        validate="true">    
     <forward name="viewObjectives" path="/viewObjectives.jsp"/>    
     <forward name="editObjectives" path="/editObjectives.jsp"/>
      
@@ -206,9 +220,10 @@
 	<action 
 		name="executionCourseProgramForm"
 		parameter="method"
+		input="/editProgram.jsp"
 		path="/programManagerDA"
-        type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
-		>    
+		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
+        validate="true"	>    
      <forward name="viewProgram" path="/viewProgram.jsp"/>
      <forward name="editProgram" path="/editProgram.jsp"/>
      
@@ -217,11 +232,11 @@
 	<action 
 		name="executionCourseCurriculumForm"
 		parameter="method"
+		input="/viewObjectives.jsp"
 		path="/curriculumManagerDA"
-        type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
-		>    
-   <!--  <forward name="viewCurriculum" path="/viewSite.jsp"/>  trocar depois dos css-->
-      <forward name="viewCurriculum" path="/navbar.jsp"/>
+		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
+        validate="true"	>    
+       <forward name="viewCurriculum" path="/navbar.jsp"/>
 	</action>
 	
 	<action	path="/index"

@@ -43,7 +43,7 @@
 <logic:equal name="<%= SessionConstants.IS_RESPONSIBLE %>" value="true">
 <table>
 <tr><td>
-	<html:link page="/teachersManagerDA.do?method=prepareAssociateTeacher">
+	<html:link page="/teacherManagerDA.do?method=prepareAssociateTeacher">
 	<bean:message key="link.addTeacher"/>
 </html:link>
 </tr>

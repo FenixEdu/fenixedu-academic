@@ -4,13 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-
-
-		
-	
-
-<span class="error"><html:errors/></span>	
 <html:form action="/programManagerDA">
+<html:hidden property="page" value="1"/>	
 <table>		
 	
 	<tr>
@@ -19,7 +14,8 @@
 		<td><html:text name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="program" >
 	</html:text>
 		</td>
-		
+		<td> <span class="error" ><html:errors property="program"/></span>	
+		</td>
 	</tr>
 	<tr>
 		<td>

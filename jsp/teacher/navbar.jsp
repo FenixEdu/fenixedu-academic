@@ -21,13 +21,9 @@
 	<bean:message key="link.program"/>
 </html:link></td>
 </tr>
+
 <tr><td><html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference">
 	<bean:message key="link.bibliography"/>
-</html:link></td>
-</tr>
-<tr><td>
-	<html:link page="/logoff.do">
-	<bean:message key="link.logout"/>
 </html:link></td>
 </tr>
 <tr><td>
@@ -35,4 +31,10 @@
 	<bean:message key="link.teachers"/>
 </html:link></td>
 </tr>
+<tr><td>
+	<html:link page="/logoff.do">
+	<bean:message key="link.logout"/>
+</html:link></td>
+</tr>
+
 </table>

@@ -140,7 +140,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 				(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 			DynaActionForm teacherForm = (DynaActionForm) form;	
 						
-			Integer teacherNumber= (Integer) teacherForm.get("teacherNumber");	
+			Integer teacherNumber= new Integer((String) teacherForm.get("teacherNumber"));	
 			Object args[] = { infoSite.getInfoExecutionCourse(), teacherNumber };
 			try {
 				Boolean result =

@@ -6,6 +6,7 @@
 	
 		
 			<html:form action="/curriculumManagerDA">
+			<html:hidden property="page" value="1"/>	
 <table>		
 	
 	<tr>
@@ -14,7 +15,8 @@
 		<td><html:text  property="generalObjectives" >
 	</html:text>
 		</td>
-		
+		<td> <span class="error" ><html:errors property="generalObjectives"/></span>	
+		</td>
 	</tr>
 	<tr>
 		<td><bean:message key="label.operacionalObjectives" />
@@ -22,7 +24,8 @@
 		<td><html:text  property="operacionalObjectives" >
 	</html:text>
 		</td>
-		
+		<td> <span class="error" ><html:errors property="operacionalObjectives"/></span>	
+		</td>
 	</tr>
 	<tr>
 		<td><bean:message key="label.program" />	
@@ -30,7 +33,8 @@
 		<td><html:text  property="program" >
 	</html:text>
 		</td>
-		
+		<td> <span class="error" ><html:errors property="program"/></span>	
+		</td>
 	</tr>
 	<tr>
 		<td>
@@ -39,6 +43,7 @@
     </html:reset>
 		</td>
 		<td>
+			
 			 <html:hidden property="method" value="insertCurriculum"/>
     <html:submit >
 	<bean:message key="button.save"/>
