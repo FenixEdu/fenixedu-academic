@@ -30,8 +30,10 @@ import ServidorPersistente.IPersistentAnnouncement;
 import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.IPersistentSection;
@@ -235,5 +237,20 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentAnnouncement getIPersistentAnnouncement() {
 			return new AnnouncementOJB();
 		}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentExecutionYear()
+	 */
+	public IPersistentExecutionYear getIPersistentExecutionYear() {
+		return new ExecutionYearOJB();
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentCurriculum()
+	 */
+	public IPersistentCurriculum getIPersistentCurriculum() {
+		return new CurriculumOJB();
+	}
 
 }

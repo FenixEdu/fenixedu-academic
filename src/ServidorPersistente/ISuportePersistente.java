@@ -51,6 +51,7 @@ public interface ISuportePersistente {
 	
 	public IPersistentSite getIPersistentSite();
 	public IPersistentSection getIPersistentSection();
-	public IPersistentItem getPersistentItem();
+	public IPersistentItem getIPersistentItem();
 	public IPersistentAnnouncement getIPersistentAnnouncement();
+	public IPersistentCurriculum getIPersistentCurriculum();
 }
