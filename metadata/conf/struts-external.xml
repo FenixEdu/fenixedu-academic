@@ -6,22 +6,20 @@
 
 	<data-sources/>
 
-  <!-- ========== Action Mapping Definitions ============================== -->
-  <action-mappings type="org.apache.struts.action.ActionMapping">
-    <action type="ServidorApresentacao.Action.externalServices.InfoGroupsByExecutionCourse"
-            path="/infoGroupsByExecutionCourse"
-	        scope="request"
-			validate="true">
-    </action>
-  </action-mappings>
-  
-    <action-mappings type="org.apache.struts.action.ActionMapping">
-    <action type="ServidorApresentacao.Action.externalServices.StudentInfoByUsername"
-            path="/infoStudent"
-	        scope="request"
-			validate="true">
-    </action>
-  </action-mappings>
+	<!-- ========== Action Mapping Definitions ============================== -->
+	<action-mappings type="org.apache.struts.action.ActionMapping">
+		<action type="ServidorApresentacao.Action.externalServices.InfoGroupsByExecutionCourse"
+            	path="/infoGroupsByExecutionCourse"
+		        scope="request"
+				validate="true">
+	    </action>
+
+		<action type="ServidorApresentacao.Action.externalServices.StudentInfoByUsername"
+	            path="/infoStudent"
+	        	scope="request"
+				validate="true">
+		</action>
+	</action-mappings>
   
   <!-- ========== Controller Configuration ================================ -->
 
