@@ -11,7 +11,6 @@
 <link href="<%= request.getContextPath() %>/CSS/exam_map.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<html:errors/>
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>
 <!-- Header -->
 <table width="100%%" border="0" cellspacing="0" cellpadding="0">
