@@ -136,6 +136,7 @@ public class InfoSite {
 		result += ", introduction=" + getIntroduction();	
 		result += ", mail =" + getMail();
 		result += ", alternativeSite="+getAlternativeSite();
+		result += ", style="+getStyle();
 		result += "]";
 		return result;
 	}
