@@ -26,6 +26,14 @@
 		<html:hidden property="articlesChaptersPublicationsNumberId"/>
 		<html:hidden property="method" value="edit"/>
 		<html:hidden property="page" value="1"/>
+		<table class="listClasses" width="100%">
+			<tr>
+				<td>
+					<p align="left"><b><bean:message key="message.teacherInformation.warning" /></b></p>
+				</td>
+			</tr>
+		</table>
+		</br>
 		<table class="infoselected" width="100%">
 			<tr>
 				<td width="70%"><b><bean:message key="message.teacherInformation.name" /></b>
@@ -117,23 +125,6 @@
 		</table>
 		<br />
 		<p class="infoop"><span class="emphasis-box">4</span>
-			<bean:message key="message.teacherInformation.serviceRegime" />
-			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
-			<bean:message key="label.doublePoint" />
-		</p>
-		<table width="100%" border="1" cellspacing="1">	
-			<logic:iterate id="providerRegimeType" name="providerRegimeTypeList" scope="request">
-				<tr>
-					<td><bean:message name="providerRegimeType" property="name" bundle="ENUMERATION_RESOURCES"/></td>
-					<td><html:radio property="serviceProviderRegimeTypeName"
-					  		  idName="providerRegimeType"
-							  value="name"/>
-					</td>
-				</tr>
-			</logic:iterate>			
-		</table>
-		<br />
-		<p class="infoop"><span class="emphasis-box">5</span>
 			<bean:message key="message.teacherInformation.externalActivities" />
 			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
@@ -148,7 +139,45 @@
 				<bean:write name="infoExternalActivity" property="activity" />
 			</logic:iterate>
 		<br />
+		<p class="infoop"><span class="emphasis-box">5</span>
+		<bean:message key="message.teacherInformation.ownPublications" />
+		</p>
+			<div class="gen-button">
+				<html:link page="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0">
+					<bean:message key="label.teacherInformation.manage" />
+				</html:link>
+			</div>
+		</logic:lessThan>
+		<br />
+		<table style="text-align:left" width="100%">	
+			<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
+				<tr>
+					<td class="listClasses" style="text-align:left">
+						<bean:write name="infoOldPublication" property="publication" />
+					</td>
+				</tr>
+			</logic:iterate>
+		</table>
+		<br />
 		<p class="infoop"><span class="emphasis-box">6</span>
+		<bean:message key="message.teacherInformation.cientificPublications" /></p>
+		<div class="gen-button">
+			<html:link page="/readOldPublications.do?oldPublicationType=Cientific&amp;page=0">
+				<bean:message key="label.teacherInformation.manage" />
+			</html:link>
+		</div>
+		<br />	
+		<table style="text-align:left" width="100%">
+			<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldCientificPublications">
+				<tr>
+					<td class="listClasses" style="text-align:left">
+						<bean:write name="infoOldPublication" property="publication" />
+					</td>
+				</tr>
+			</logic:iterate>
+		</table>
+		<br />
+		<p class="infoop"><span class="emphasis-box">7</span>
 			<bean:message key="message.teacherInformation.numberOfPublications" /></p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 			<tr>
@@ -183,42 +212,21 @@
 			</tr>
 		</table>
 		<br />
-		<p class="infoop"><span class="emphasis-box">7</span>
-		<bean:message key="message.teacherInformation.ownPublications" />
-		</p>
-			<div class="gen-button">
-				<html:link page="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0">
-					<bean:message key="label.teacherInformation.manage" />
-				</html:link>
-			</div>
-		</logic:lessThan>
-		<br />
-		<table style="text-align:left" width="100%">	
-			<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
-				<tr>
-					<td class="listClasses" style="text-align:left">
-						<bean:write name="infoOldPublication" property="publication" />
-					</td>
-				</tr>
-			</logic:iterate>
-		</table>
-		<br />
 		<p class="infoop"><span class="emphasis-box">8</span>
-		<bean:message key="message.teacherInformation.cientificPublications" /></p>
-		<div class="gen-button">
-			<html:link page="/readOldPublications.do?oldPublicationType=Cientific&amp;page=0">
-				<bean:message key="label.teacherInformation.manage" />
-			</html:link>
-		</div>
-		<br />	
-		<table style="text-align:left" width="100%">
-			<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldCientificPublications">
+			<bean:message key="message.teacherInformation.serviceRegime" />
+			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
+			<bean:message key="label.doublePoint" />
+		</p>
+		<table width="100%" border="1" cellspacing="1">	
+			<logic:iterate id="providerRegimeType" name="providerRegimeTypeList" scope="request">
 				<tr>
-					<td class="listClasses" style="text-align:left">
-						<bean:write name="infoOldPublication" property="publication" />
+					<td><bean:message name="providerRegimeType" property="name" bundle="ENUMERATION_RESOURCES"/></td>
+					<td><html:radio property="serviceProviderRegimeTypeName"
+					  		  idName="providerRegimeType"
+							  value="name"/>
 					</td>
 				</tr>
-			</logic:iterate>
+			</logic:iterate>			
 		</table>
 		<br />
 		<p class="infoop"><span class="emphasis-box">9</span>
@@ -262,7 +270,7 @@
 		</p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 			<tr>
-				<td></td>
+				<td class="listClasses-header">&nbsp;</td>
 				<td class="listClasses-header"><bean:message key="message.teacherInformation.numberOfStudents" /></td>
 				<td class="listClasses-header"><bean:message key="message.teacherInformation.description" /></td>
 			</tr>
@@ -290,7 +298,7 @@
 		</p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-			<td></td>
+			<td class="listClasses-header">&nbsp;</td>
 			<td class="listClasses-header"><bean:message key="message.teacherInformation.teachers" /></td>
 			<td class="listClasses-header"><bean:message key="message.teacherInformation.supportLessons" /></td>
 			<td class="listClasses-header"><bean:message key="message.teacherInformation.investigation" /></td>

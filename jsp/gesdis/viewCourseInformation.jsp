@@ -10,54 +10,55 @@
 	<bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 	<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
 	<br/>
-	<table>
+	<table class="infoselected" width="100%">
 		<tr>
-			<td>
-				 <bean:message key="message.courseInformation.courseName" /> 
-				&nbsp;<bean:write name="executionCourse" property="nome" />
-			</td>
-			<td></td>
-			<td></td>
-			<td>
-				<bean:message key="message.courseInformation.executionYear" />
-				&nbsp;<bean:write name="executionYear" property="year" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<logic:iterate id="curricularCourse" name="siteCourseInformation" property="infoCurricularCourses">
-			  <logic:iterate id="curricularCourseScope" name="curricularCourse" property="infoScopes">
-				<bean:message key="message.courseInformation.curricularYear" />&nbsp;
-				<bean:write name="curricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year" />,
-				<bean:message key="message.courseInformation.semester" />&nbsp;
-				<bean:write name="curricularCourseScope" property="infoCurricularSemester.semester" />
-			  </logic:iterate>
-			  <bean:message key="message.courseInformation.courseType" />,
+		<td>
+		<b><bean:message key="message.courseInformation.courseName" /></b>&nbsp;<bean:write name="executionCourse" property="nome" />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
+		<b><bean:message key="message.courseInformation.executionYear" /></b>
+		&nbsp;<bean:write name="executionYear" property="year" />
+
+		<logic:iterate id="curricularCourse" name="siteCourseInformation" property="infoCurricularCourses">
+			<blockquote style="margin-top:1px">
+	  			<logic:iterate id="curricularCourseScope" name="curricularCourse" property="infoScopes">
+	  				<br />
+	  				<b><bean:message key="message.courseInformation.curricularYear" /></b>
+					&nbsp;<bean:write name="curricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year" />
+					&nbsp;&nbsp;&nbsp;
+					<b><bean:message key="message.courseInformation.semester" /></b>
+					&nbsp;<bean:write name="curricularCourseScope" property="infoCurricularSemester.semester" />
+					<br />			
+			 	</logic:iterate>	
+				<b><bean:message key="message.courseInformation.courseType" /></b>
 			  	<logic:equal name="curricularCourse" property="mandatory" value="true">
-			  	<bean:message key="message.courseInformation.mandatory" />
+			  		<bean:message key="message.courseInformation.mandatory" />
 			  	</logic:equal>
 			  	<logic:equal name="curricularCourse" property="mandatory" value="false">
-			  	<bean:message key="message.courseInformation.optional" />
+			  		<bean:message key="message.courseInformation.optional" />
 			  	</logic:equal>
-			  	<!-- VER -->
-			 <%--<bean:message key="message.courseInformation.courseSemesterOrAnual" />&nbsp;
+			</blockquote>			 	
+			  	<%-- VER --%>
+			 	<%--<bean:message key="message.courseInformation.courseSemesterOrAnual" />&nbsp;
 			 	<bean:write name="curricularCourse" property="curricularCourseExecutionScope.type" />--%>
-			</logic:iterate>
-			</td>
-			<td></td>
-		</tr>
-		<tr>
-		<logic:iterate id="infoTeacher" name="siteCourseInformation" property="infoResponsibleTeachers">
-			<td><bean:message key="message.courseInformation.responsibleForTheCourse" />
-			&nbsp;<bean:write name="infoTeacher" property="infoPerson.nome" /></td>
-			<td><bean:message key="message.courseInformation.categoryOfTheResponsibleForCourse" />
-			&nbsp; <bean:write name="infoTeacher" property="infoCategory.longName" /></td>
 		</logic:iterate>
-			<td></td>
-			<td></td>
+		<logic:iterate id="infoTeacher" name="siteCourseInformation" property="infoResponsibleTeachers">
+			<b><bean:message key="message.courseInformation.responsibleForTheCourse" /></b>
+			<bean:write name="infoTeacher" property="infoPerson.nome" />
+			&nbsp;&nbsp;&nbsp;
+			<b><bean:message key="message.courseInformation.categoryOfTheResponsibleForCourse" /></b>
+			<bean:write name="infoTeacher" property="infoCategory.longName" /> <br />
+		</logic:iterate>
+		</td>
 		</tr>
 	</table>
-	<br />
 	<p class="infoop"><span class="emphasis-box">1</span>
 	<bean:message key="message.courseInformation.timeTable" /></p>
 	<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
@@ -187,12 +188,9 @@
 	<br />
 	<p class="infoop"><span class="emphasis-box">6</span>
 	<bean:message key="message.courseInformation.courseBibliographicReference" /></p>
-	<table>
+	<table border="0" cellspacing="1" style="margin-top:10px" width="100%">
 		<tr>
-			<td class="listClasses-header"><bean:message key="message.courseInformation.coursePrincipalBibliographicReference" /></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td class="listClasses-header" colspan="4"><bean:message key="message.courseInformation.coursePrincipalBibliographicReference" /></td>
 		</tr>
 		<logic:iterate id="infoBibliographicReference" name="siteCourseInformation" property="infoBibliographicReferences">
 		<logic:equal name="infoBibliographicReference" property="optional" value="false">
@@ -205,9 +203,9 @@
 		</logic:equal>
 		</logic:iterate>
 	</table>
-	<table border="0" cellspacing="1" style="margin-top:10px">
+	<table border="0" cellspacing="1" style="margin-top:10px" width="100%">
 		<tr>
-			<td class="listClasses-header"><bean:message key="message.courseInformation.courseSecondaryBibliographicReference" /></td>
+			<td class="listClasses-header" colspan="4"><bean:message key="message.courseInformation.courseSecondaryBibliographicReference" /></td>
 		</tr>
 		<logic:iterate id="infoBibliographicReference" name="siteCourseInformation" property="infoBibliographicReferences">
 		<logic:equal name="infoBibliographicReference" property="optional" value="true">

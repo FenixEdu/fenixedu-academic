@@ -15,6 +15,14 @@
 	<bean:define id="executionCourse" name="siteCourseInformation" property="infoExecutionCourse"/>
 	<bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 	<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
+	<table class="listClasses" width="100%">
+			<tr>
+				<td>
+					<p align="left"><b><bean:message key="message.courseInformation.warning" /></b></p>
+				</td>
+			</tr>
+		</table>
+		</br>
 	<table class="infoselected" width="100%">
 		<tr>
 		<td>
@@ -181,7 +189,7 @@
 		<br />
 		<p class="infoop"><span class="emphasis-box">6</span>
 		<bean:message key="message.courseInformation.courseBibliographicReference" /></p>
-		<table>
+		<table border="0" cellspacing="1" style="margin-top:10px" width="100%">
 			<tr>
 				<td class="listClasses-header" colspan="4"><bean:message key="message.courseInformation.coursePrincipalBibliographicReference" /></td>
 			</tr>
@@ -196,7 +204,7 @@
 				</logic:equal>
 			</logic:iterate>
 		</table>
-		<table border="0" cellspacing="1" style="margin-top:10px">
+		<table border="0" cellspacing="1" style="margin-top:10px" width="100%">
 			<tr>
 				<td class="listClasses-header" colspan="4"><bean:message key="message.courseInformation.courseSecondaryBibliographicReference" /></td>
 			</tr>
