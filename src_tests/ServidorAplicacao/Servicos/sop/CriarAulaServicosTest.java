@@ -12,7 +12,6 @@ package ServidorAplicacao.Servicos.sop;
  * @author tfc130
  */
 import java.util.Calendar;
-import java.util.HashSet;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,7 +22,6 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoLessonServiceResult;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
 import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
@@ -141,12 +139,8 @@ public class CriarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 
 		GestorServicos serviceManager = GestorServicos.manager();
 		Object result = null;
-		HashSet privileges = new HashSet();
-		privileges.add("CriarAula");
-		privileges.add("LerAulasDeDisciplinaExecucaoETipo");
-		UserView userView = new UserView("user", privileges);
 		try {
-			result = serviceManager.executar(userView, "CriarAula", argsCriarAula);
+			result = serviceManager.executar(_userView, "CriarAula", argsCriarAula);
 			fail("testCreateExistingLessonCompleteMatch");
 		} catch (ExistingServiceException ex) {
 			// all is ok
@@ -155,7 +149,7 @@ public class CriarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		}
 	}
 
-//	write new existing lesson with intercepting match
+	//	write new existing lesson with intercepting match
 	 public void testCreateExistingLessonInterceptingMatch() {
 
 		 InfoRoom infoSala = new InfoRoom("Ga1", "Pavilhao Central", new Integer(0), new TipoSala(1), new Integer(100), new Integer(50));
@@ -174,12 +168,8 @@ public class CriarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		 argsCriarAula[0] = new InfoLesson(new DiaSemana(2), inicio, fim, new TipoAula(1), infoSala, infoDisciplinaExecucao);
 		 GestorServicos serviceManager = GestorServicos.manager();
 		 Object result = null;
-		 HashSet privileges = new HashSet();
-		 privileges.add("CriarAula");
-		 privileges.add("LerAulasDeDisciplinaExecucaoETipo");
-		 UserView userView = new UserView("user", privileges);
 		 try {
-			result = serviceManager.executar(userView, "CriarAula", argsCriarAula);
+			result = serviceManager.executar(_userView, "CriarAula", argsCriarAula);
 			fail("testCreateExistingLessonInterceptingMatch: Expected an Exception");
 		 } catch (InterceptingServiceException ex) {
 		 	assertNotNull("testCreateExistingLessonInterceptingMatch");
@@ -230,12 +220,8 @@ public class CriarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				infoDisciplinaExecucao);
 		GestorServicos serviceManager = GestorServicos.manager();
 		Object result = null;
-		HashSet privileges = new HashSet();
-	    privileges.add("CriarAula");
-		privileges.add("LerAulasDeDisciplinaExecucaoETipo");
-		UserView userView = new UserView("user", privileges);
 				try {
-			result = serviceManager.executar(userView, "CriarAula", argsCriarAula);
+			result = serviceManager.executar(_userView, "CriarAula", argsCriarAula);
 			assertTrue(
 				"testCreateNonExistingAula",
 				((InfoLessonServiceResult) result).isSUCESS());
