@@ -85,7 +85,6 @@ public class SiteOJBTest extends TestCaseOJB{
 		try{
 			 persistentSupport.iniciarTransaccao();
 		 	 executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","LEEC");	
-		 	 System.out.println("EXECUTION COURSE"+executionCourse.toString());
 		 	 assertNotNull(executionCourse);
 		 	 persistentSupport.confirmarTransaccao();
 		
