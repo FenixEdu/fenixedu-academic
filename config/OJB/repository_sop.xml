@@ -388,8 +388,20 @@
 
 
 <!-- Definitions for Dominio.Evaluation -->
-<class-descriptor class="Dominio.Evaluation">
+<class-descriptor class="Dominio.Evaluation" table="EVALUATION">
     <extent-class class-ref="Dominio.Exam" />
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+    <field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+      />
 </class-descriptor>
 
 

@@ -15,7 +15,7 @@ import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
-import DataBeans.InfoSiteExam;
+import DataBeans.InfoSiteEvaluation;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSiteProgram;
@@ -80,7 +80,7 @@ public class PublicTilesComponentController extends ControllerSupport {
 
 		} else if (component instanceof InfoSiteSection) {
 			tileContext.putAttribute("body", "/publico/viewSection_bd.jsp");
-		} else if (component instanceof InfoSiteExam) {
+		} else if (component instanceof InfoSiteEvaluation) {
 			tileContext.putAttribute("body", "/publico/exam.jsp");
 		}
 
