@@ -1469,19 +1469,36 @@ public class TeacherAdministrationSiteComponentBuilder {
     					ITurno shift = (ITurno) iter.next();
     					List allStudentGroups = persistentStudentGroup
 						.readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet(), shift);
-
     					infoSiteShift = new InfoSiteShift();
     					infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
     					List infoLessons = infoSiteShift.getInfoShift().getInfoLessons();
-          
+    					
     					ComparatorChain chainComparator = new ComparatorChain();
     					chainComparator.addComparator(new BeanComparator("diaSemana.diaSemana"));
     					chainComparator.addComparator(new BeanComparator("inicio"));
     					chainComparator.addComparator(new BeanComparator("fim"));
     					chainComparator.addComparator(new BeanComparator("infoSala.nome"));
-         
+    					
     					Collections.sort(infoLessons, chainComparator);
-          
+    					
+    					Iterator iterLessons =  infoLessons.iterator();
+    				    StringBuffer weekDay = new StringBuffer();
+    				    StringBuffer beginDay = new StringBuffer();
+    				    StringBuffer endDay = new StringBuffer();
+    				    StringBuffer room = new StringBuffer();
+    				    while(iterLessons.hasNext()){
+    				    	InfoLesson infoLesson = (InfoLesson)iterLessons.next();
+    				    	weekDay.append(infoLesson.getDiaSemana().getDiaSemana());
+    				    	beginDay.append(infoLesson.getInicio().getTimeInMillis());
+    				    	endDay.append(infoLesson.getFim().getTimeInMillis());
+    				    	room.append(infoLesson.getInfoSala().getNome());
+    				    }
+    				    
+    				    infoSiteShift.setOrderByWeekDay(weekDay.toString());
+    				    infoSiteShift.setOrderByBeginHour(beginDay.toString());
+    				    infoSiteShift.setOrderByEndHour(endDay.toString());
+    				    infoSiteShift.setOrderByRoom(room.toString());
+    						
     					if (groupProperties.getGroupMaximumNumber() != null) {
 
     						int vagas = 
@@ -1520,16 +1537,23 @@ public class TeacherAdministrationSiteComponentBuilder {
     					infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
     				}
     	
-        /* Sort the list of shifts */
+    				/* Sort the list of shifts */
 
     				ComparatorChain chainComparator = new ComparatorChain();
     				chainComparator.addComparator(new BeanComparator(
     				"infoSiteShift.infoShift.tipo"));
     				chainComparator.addComparator(new BeanComparator(
-    				"infoSiteShift.infoShift.nome"));
-        
+    				"infoSiteShift.orderByWeekDay"));
+    				chainComparator.addComparator(new BeanComparator(
+    				"infoSiteShift.orderByBeginHour"));
+    				chainComparator.addComparator(new BeanComparator(
+    				"infoSiteShift.orderByEndHour"));
+    				chainComparator.addComparator(new BeanComparator(
+    				"infoSiteShift.orderByRoom"));
+    				
     				Collections.sort(infoSiteShiftsAndGroups, chainComparator);
-    			}
+    				
+    				}
        
     			if(!groupProperties.getAttendsSet().getStudentGroupsWithoutShift().isEmpty()){
     				InfoSiteGroupsByShift infoSiteGroupsByShift = null;
@@ -1605,13 +1629,33 @@ public class TeacherAdministrationSiteComponentBuilder {
     						infoSiteShiftAux = new InfoSiteShift();
     						infoSiteShiftAux.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
     						List infoLessons = infoSiteShiftAux.getInfoShift().getInfoLessons();
+    						
     						ComparatorChain chainComparator = new ComparatorChain();
     						chainComparator.addComparator(new BeanComparator("diaSemana.diaSemana"));
     						chainComparator.addComparator(new BeanComparator("inicio"));
     						chainComparator.addComparator(new BeanComparator("fim"));
     						chainComparator.addComparator(new BeanComparator("infoSala.nome"));
+    						
     						Collections.sort(infoLessons, chainComparator);
     		          
+    						Iterator iterLessons =  infoLessons.iterator();
+        				    StringBuffer weekDay = new StringBuffer();
+        				    StringBuffer beginDay = new StringBuffer();
+        				    StringBuffer endDay = new StringBuffer();
+        				    StringBuffer room = new StringBuffer();
+        				    while(iterLessons.hasNext()){
+        				    	InfoLesson infoLesson = (InfoLesson)iterLessons.next();
+        				    	weekDay.append(infoLesson.getDiaSemana().getDiaSemana());
+        				    	beginDay.append(infoLesson.getInicio().getTimeInMillis());
+        				    	endDay.append(infoLesson.getFim().getTimeInMillis());
+        				    	room.append(infoLesson.getInfoSala().getNome());
+        				    }
+        				    
+        				    infoSiteShiftAux.setOrderByWeekDay(weekDay.toString());
+        				    infoSiteShiftAux.setOrderByBeginHour(beginDay.toString());
+        				    infoSiteShiftAux.setOrderByEndHour(endDay.toString());
+        				    infoSiteShiftAux.setOrderByRoom(room.toString());
+    						
     						if (groupProperties.getGroupMaximumNumber() != null) {
 
     							int vagas = 
@@ -1649,8 +1693,15 @@ public class TeacherAdministrationSiteComponentBuilder {
     					ComparatorChain chainComparator = new ComparatorChain();
     					chainComparator.addComparator(new BeanComparator(
     					"infoSiteShift.infoShift.tipo"));
-    					chainComparator.addComparator(new BeanComparator(
-    					"infoSiteShift.infoShift.nome"));
+        				chainComparator.addComparator(new BeanComparator(
+        				"infoSiteShift.orderByWeekDay"));
+        				chainComparator.addComparator(new BeanComparator(
+        				"infoSiteShift.orderByBeginHour"));
+        				chainComparator.addComparator(new BeanComparator(
+        				"infoSiteShift.orderByEndHour"));
+        				chainComparator.addComparator(new BeanComparator(
+        				"infoSiteShift.orderByRoom"));
+
     					Collections.sort(infoSiteShiftsAndGroups, chainComparator);
     				}
     			}

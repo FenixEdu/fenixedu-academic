@@ -15,7 +15,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoGroupPropertiesWithInfoGroupPropertiesExecutionCourseAccepted;
-import DataBeans.InfoShift;
+import DataBeans.InfoLesson;
 import DataBeans.InfoShiftWithInfoLessons;
 import DataBeans.InfoSiteGroupsByShift;
 import DataBeans.InfoSiteProjects;
@@ -26,7 +26,6 @@ import DataBeans.InfoSiteStudentInformation;
 import DataBeans.InfoStudentGroup;
 import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoStudentGroupAttendWithAllUntilPersons;
-import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.GroupProperties;
 import Dominio.IExecutionCourse;
@@ -162,6 +161,8 @@ public class GroupSiteComponentBuilder {
             IGroupProperties groupProperties = (IGroupProperties) sp
                     .getIPersistentGroupProperties().readByOID(
                             GroupProperties.class, groupPropertiesCode);
+            
+            if(groupProperties == null)return null;
 
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
 			.getInstance();
@@ -222,6 +223,24 @@ public class GroupSiteComponentBuilder {
             			"infoSala.nome"));
                    
             			Collections.sort(infoLessons, chainComparator);
+            			
+            			Iterator iterLessons =  infoLessons.iterator();
+    				    StringBuffer weekDay = new StringBuffer();
+    				    StringBuffer beginDay = new StringBuffer();
+    				    StringBuffer endDay = new StringBuffer();
+    				    StringBuffer room = new StringBuffer();
+    				    while(iterLessons.hasNext()){
+    				    	InfoLesson infoLesson = (InfoLesson)iterLessons.next();
+    				    	weekDay.append(infoLesson.getDiaSemana().getDiaSemana());
+    				    	beginDay.append(infoLesson.getInicio().getTimeInMillis());
+    				    	endDay.append(infoLesson.getFim().getTimeInMillis());
+    				    	room.append(infoLesson.getInfoSala().getNome());
+    				    }
+    				    
+    				    infoSiteShift.setOrderByWeekDay(weekDay.toString());
+    				    infoSiteShift.setOrderByBeginHour(beginDay.toString());
+    				    infoSiteShift.setOrderByEndHour(endDay.toString());
+    				    infoSiteShift.setOrderByRoom(room.toString());
                     
             			infoSiteShift.setNrOfGroups(new Integer(allStudentGroups
             					.size()));
@@ -259,8 +278,14 @@ public class GroupSiteComponentBuilder {
             		chainComparator.addComparator(new BeanComparator(
             		"infoSiteShift.infoShift.tipo"));
             		chainComparator.addComparator(new BeanComparator(
-            		"infoSiteShift.infoShift.nome"));
-
+    				"infoSiteShift.orderByWeekDay"));
+    				chainComparator.addComparator(new BeanComparator(
+    				"infoSiteShift.orderByBeginHour"));
+    				chainComparator.addComparator(new BeanComparator(
+    				"infoSiteShift.orderByEndHour"));
+    				chainComparator.addComparator(new BeanComparator(
+    				"infoSiteShift.orderByRoom"));
+            		
             		Collections.sort(infoSiteShiftsAndGroups, chainComparator);
             	}
             	
@@ -340,6 +365,24 @@ public class GroupSiteComponentBuilder {
     						chainComparator.addComparator(new BeanComparator("infoSala.nome"));
     						Collections.sort(infoLessons, chainComparator);
     		          
+    						Iterator iterLessons =  infoLessons.iterator();
+        				    StringBuffer weekDay = new StringBuffer();
+        				    StringBuffer beginDay = new StringBuffer();
+        				    StringBuffer endDay = new StringBuffer();
+        				    StringBuffer room = new StringBuffer();
+        				    while(iterLessons.hasNext()){
+        				    	InfoLesson infoLesson = (InfoLesson)iterLessons.next();
+        				    	weekDay.append(infoLesson.getDiaSemana().getDiaSemana());
+        				    	beginDay.append(infoLesson.getInicio().getTimeInMillis());
+        				    	endDay.append(infoLesson.getFim().getTimeInMillis());
+        				    	room.append(infoLesson.getInfoSala().getNome());
+        				    }
+        				    
+        				    infoSiteShiftAux.setOrderByWeekDay(weekDay.toString());
+        				    infoSiteShiftAux.setOrderByBeginHour(beginDay.toString());
+        				    infoSiteShiftAux.setOrderByEndHour(endDay.toString());
+        				    infoSiteShiftAux.setOrderByRoom(room.toString());
+    						
     						infoSiteShiftAux.setNrOfGroups(new Integer(allStudentGroupsAux
     		    					.size())); 
     						
@@ -374,8 +417,15 @@ public class GroupSiteComponentBuilder {
     					chainComparator.addComparator(new BeanComparator(
     					"infoSiteShift.infoShift.tipo"));
     					chainComparator.addComparator(new BeanComparator(
-    					"infoSiteShift.infoShift.nome"));
-    					Collections.sort(infoSiteShiftsAndGroups, chainComparator);
+        				"infoSiteShift.orderByWeekDay"));
+        				chainComparator.addComparator(new BeanComparator(
+        				"infoSiteShift.orderByBeginHour"));
+        				chainComparator.addComparator(new BeanComparator(
+        				"infoSiteShift.orderByEndHour"));
+        				chainComparator.addComparator(new BeanComparator(
+        				"infoSiteShift.orderByRoom"));
+
+        				Collections.sort(infoSiteShiftsAndGroups, chainComparator);
     				}
     			}
             	
