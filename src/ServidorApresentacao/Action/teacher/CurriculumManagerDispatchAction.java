@@ -20,46 +20,49 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author jmota
  */
 public class CurriculumManagerDispatchAction extends FenixDispatchAction {
-
 	public ActionForward acessObjectives(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		try {
+			SessionUtils.validSessionVerification(request, mapping);
+			HttpSession session = getSession(request);
+
+			UserView userView =
+				(UserView) session.getAttribute(SessionConstants.U_VIEW);
+			InfoSite infoSite =
+				(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+
+			Object args[] = { infoSite.getInfoExecutionCourse()};
+			GestorServicos serviceManager = GestorServicos.manager();
+			InfoCurriculum curriculumView =
+				(InfoCurriculum) serviceManager.executar(
+					userView,
+					"ReadCurriculum",
+					args);
+			session.setAttribute(
+				SessionConstants.EXECUTION_COURSE_CURRICULUM,
+				curriculumView);
+
+			return mapping.findForward("viewObjectives");
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		} catch (FenixActionException e) {
+			throw e;
+		} 
+	}
+	public ActionForward prepareEditObjectives(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
 		SessionUtils.validSessionVerification(request, mapping);
-
-		HttpSession session = getSession(request);
-		session.removeAttribute(SessionConstants.INFO_SITE_SECTION);
-		session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT);
-		session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
-		//		session.removeAttribute("ReferenciaBibliografica");
-		session.removeAttribute(SessionConstants.EXECUTION_COURSE_CURRICULUM);
-		UserView userView =
-			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		InfoSite infoSite =
-			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-		if (infoSite != null) {
-
-			try {
-				Object args[] = { infoSite.getInfoExecutionCourse()};
-				GestorServicos serviceManager = GestorServicos.manager();
-				InfoCurriculum curriculumView =
-					(InfoCurriculum) serviceManager.executar(
-						userView,
-						"ReadCurriculum",
-						args);
-				session.setAttribute(
-					SessionConstants.EXECUTION_COURSE_CURRICULUM,
-					curriculumView);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			return mapping.findForward("viewObjectives");
-		} else {
-			throw new FenixActionException();
-		}
+		return mapping.findForward("editObjectives");
 	}
+
 	public ActionForward editObjectives(
 		ActionMapping mapping,
 		ActionForm form,
@@ -72,7 +75,6 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		InfoCurriculum oldCurriculum =
 			(InfoCurriculum) session.getAttribute(
 				SessionConstants.EXECUTION_COURSE_CURRICULUM);
-
 		InfoCurriculum newCurriculum = new InfoCurriculum();
 		BeanUtils.copyProperties(oldCurriculum, newCurriculum);
 		newCurriculum.setGeneralObjectives(
@@ -97,7 +99,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		}
 		return mapping.findForward("viewObjectives");
 	}
-	
+
 	public ActionForward acessProgram(
 		ActionMapping mapping,
 		ActionForm form,
@@ -106,7 +108,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		throws Exception {
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = getSession(request);
-	
+
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		InfoSite infoSite =
@@ -135,33 +137,31 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
-			HttpSession session = request.getSession();
-			DynaActionForm objectivesForm = (DynaActionForm) form;
-			InfoCurriculum oldCurriculum =
-				(InfoCurriculum) session.getAttribute(
-					SessionConstants.EXECUTION_COURSE_CURRICULUM);
-
-			InfoCurriculum newCurriculum = new InfoCurriculum();
-			BeanUtils.copyProperties(oldCurriculum, newCurriculum);
-			newCurriculum.setProgram(
-				(String) objectivesForm.get("program"));
-			Object args[] = { oldCurriculum, newCurriculum };
-			UserView userView =
-				(UserView) session.getAttribute(SessionConstants.U_VIEW);
-			try {
-				GestorServicos serviceManager = GestorServicos.manager();
-				InfoCurriculum curriculumView =
-					(InfoCurriculum) serviceManager.executar(
-						userView,
-						"EditCurriculum",
-						args);
-				session.setAttribute(
-					SessionConstants.EXECUTION_COURSE_CURRICULUM,
-					curriculumView);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
+		SessionUtils.validSessionVerification(request, mapping);
+		HttpSession session = request.getSession();
+		DynaActionForm objectivesForm = (DynaActionForm) form;
+		InfoCurriculum oldCurriculum =
+			(InfoCurriculum) session.getAttribute(
+				SessionConstants.EXECUTION_COURSE_CURRICULUM);
+		InfoCurriculum newCurriculum = new InfoCurriculum();
+		BeanUtils.copyProperties(oldCurriculum, newCurriculum);
+		newCurriculum.setProgram((String) objectivesForm.get("program"));
+		Object args[] = { oldCurriculum, newCurriculum };
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		try {
+			GestorServicos serviceManager = GestorServicos.manager();
+			InfoCurriculum curriculumView =
+				(InfoCurriculum) serviceManager.executar(
+					userView,
+					"EditCurriculum",
+					args);
+			session.setAttribute(
+				SessionConstants.EXECUTION_COURSE_CURRICULUM,
+				curriculumView);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 		return mapping.findForward("viewProgram");
 	}
 	public ActionForward prepareEditProgram(

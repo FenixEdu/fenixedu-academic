@@ -1,6 +1,8 @@
 package ServidorApresentacao.Action;
 
-public class ExcepcaoSessaoInexistente extends Exception {
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+
+public class ExcepcaoSessaoInexistente extends FenixActionException {
   
   /**
    * Constructor for SessaoInexistente.

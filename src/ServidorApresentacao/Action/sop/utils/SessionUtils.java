@@ -25,6 +25,7 @@ import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
 
 /**
@@ -106,7 +107,7 @@ public final class SessionUtils {
 	public static void validSessionVerification(
 		HttpServletRequest request,
 		ActionMapping mapping)
-		throws Exception {
+		throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
 

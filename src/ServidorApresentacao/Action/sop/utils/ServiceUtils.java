@@ -8,6 +8,7 @@
  */
 package ServidorApresentacao.Action.sop.utils;
 
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 
@@ -22,7 +23,7 @@ public abstract class ServiceUtils {
 		IUserView userView,
 		String serviceName,
 		Object[] args)
-		throws Exception {
+		throws FenixServiceException {
 		GestorServicos serviceManager = GestorServicos.manager();
 		return serviceManager.executar(userView, serviceName, args);
 	}

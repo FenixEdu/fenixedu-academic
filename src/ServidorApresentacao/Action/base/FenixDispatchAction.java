@@ -9,7 +9,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import ServidorApresentacao.Action.ExcepcaoSessaoInexistente;
+import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
@@ -35,10 +35,10 @@ public abstract class FenixDispatchAction extends DispatchAction {
 	}
 
   protected HttpSession getSession(HttpServletRequest request) 
-      throws ExcepcaoSessaoInexistente {
+      throws InvalidSessionActionException {
     HttpSession result = request.getSession(false);
     if (result == null)
-      throw new ExcepcaoSessaoInexistente();
+      throw new InvalidSessionActionException();
     
     return result;
   }
