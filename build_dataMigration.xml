@@ -1075,21 +1075,6 @@
 		</java>
 	</target>
 
-	<!--<target name="make-equivalences-for-all-students-past-enrolments" depends="create-and-update-all-students-enrolments">-->
-	<target name="make-equivalences-for-all-students-past-enrolments" depends="compile-proj">
-		<java classname="middleware.studentMigration.enrollments.MakeEquivalencesForAllStudentsPastEnrolments" fork="yes" failonerror="false" maxmemory="512m">
-			<classpath>
-				<pathelement path="${webapp.classes}"/>
-				<pathelement path="${config}"/>
-				<pathelement path="${sql}"/>
-				<pathelement path="${src}"/>
-				<fileset dir="${webapp.lib}">
-					<include name="**/*.jar"/>
-				</fileset>
-			</classpath>
-		</java>
-	</target>
-
 	<target name="create-branch-codes-and-acronyms" depends="compile-proj">
 		<java classname="middleware.databaseClean.CreateBranchCodesAndAcronyms" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>
@@ -1124,6 +1109,20 @@
 		</exec>
 		<exec executable="${sql}/middleware/commands/migrateAllStudenCurricularPlans.bat" vmlauncher="true" os="Windows, Windows 2000, Windows XP">
 		</exec>
+	</target>
+
+	<target name="make-equivalences-for-all-students-past-enrolments" depends="compile-proj">
+		<java classname="middleware.studentMigration.enrollments.MakeEquivalencesForAllStudentsPastEnrolments" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
 	</target>
 
 	<!-- ********************************************************* -->

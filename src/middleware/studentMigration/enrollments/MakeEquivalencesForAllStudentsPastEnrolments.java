@@ -54,7 +54,6 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 
 				fenixPersistentSuport.iniciarTransaccao();
 
-//				fenixPersistentSuport.clearCache();
 				System.gc();
 
 				System.out.println("[INFO] Reading Students...");
