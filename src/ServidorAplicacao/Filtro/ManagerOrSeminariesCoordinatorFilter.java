@@ -37,10 +37,15 @@ public class ManagerOrSeminariesCoordinatorFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Integer SCPIDINternal = (Integer) request.getServiceParameters().getParameter(1);
-        this.doesThisSCPBelongToASeminaryCandidate(SCPIDINternal);        
+        
+        boolean seminaryCandidate = false;
+        if(SCPIDINternal != null){
+            seminaryCandidate = this.doesThisSCPBelongToASeminaryCandidate(SCPIDINternal);
+        }
+                
         if (((id != null && id.getRoles() != null
-                && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType1()) && !AuthorizationUtils
-                .containsRole(id.getRoles(), getRoleType2())))
+                && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType1()) && !(AuthorizationUtils
+                .containsRole(id.getRoles(), getRoleType2()) && seminaryCandidate)))
                 || (id == null) || (id.getRoles() == null)) {
             throw new NotAuthorizedFilterException();
         }
