@@ -27,6 +27,12 @@
 		&nbsp;
 	</td>
 	<td>
+		<bean:write name="actualPage"/>/<bean:write name="numberOfPages"/>
+	</td>
+	<td>
+		&nbsp;
+	</td>
+	<td>
 	<logic:present name="nextSpan">
 		<html:link page='<%= "/searchGrantOwner.do?page=0&amp;method=doSearch&amp;startIndex=" + request.getAttribute("nextSpan") + "&amp;name=" + request.getAttribute("name") + "&amp;justGrantOwner=" + request.getAttribute("justGrantOwner") %>' >
  		   	<bean:message key="link.grant.owner.list.after.page"/>

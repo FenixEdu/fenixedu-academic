@@ -35,16 +35,15 @@ public class CalculateStatGrantOwnerByCriteria implements IService {
 
             //Querys count
             Integer totalNumberOfGrantOwners = persistentGrantOwner.countAll();
-            Integer numberOfGrantOwnersByCriteria = persistentGrantContract.countAllByCriteria(
+            Integer numberOfGrantOwnersByCriteria = persistentGrantOwner.countAllByCriteria(
                     infoStatGrantOwner.getJustActiveContracts(), infoStatGrantOwner
                             .getJustInactiveContracts(), infoStatGrantOwner.getDateBeginContract(),
-                    infoStatGrantOwner.getDateEndContract(), infoStatGrantOwner.getGrantType(),
-                    "grantOwner.idInternal");
+                    infoStatGrantOwner.getDateEndContract(), infoStatGrantOwner.getGrantType());
             Integer totalNumberOfGrantContracts = persistentGrantContract.countAll();
             Integer numberOfGrantContractsByCriteria = persistentGrantContract.countAllByCriteria(
                     infoStatGrantOwner.getJustActiveContracts(), infoStatGrantOwner
                             .getJustInactiveContracts(), infoStatGrantOwner.getDateBeginContract(),
-                    infoStatGrantOwner.getDateEndContract(), infoStatGrantOwner.getGrantType(), null);
+                    infoStatGrantOwner.getDateEndContract(), infoStatGrantOwner.getGrantType());
             //Set the result info
             InfoStatResultGrantOwner infoStatResultGrantOwner = new InfoStatResultGrantOwner();
             infoStatResultGrantOwner.setNumberOfGrantContractsByCriteria(numberOfGrantContractsByCriteria);

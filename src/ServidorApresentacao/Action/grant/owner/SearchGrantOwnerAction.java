@@ -65,6 +65,8 @@ public class SearchGrantOwnerAction extends SearchAction {
 	            }
 	            result = infoListGrantOwner;
 	            request.setAttribute("numberOfTotalElementsInSearch",numberOfElementsOfSearch);
+	            request.setAttribute("actualPage", getActualPage(startIndex));
+	            request.setAttribute("numberOfPages", getTotalNumberOfPages(numberOfElementsOfSearch));
             }
         }
         return result;
@@ -96,5 +98,12 @@ public class SearchGrantOwnerAction extends SearchAction {
     }
     private Integer getBeforeSpan(Integer startIndex, Integer numberOfElementsInResult) {
         return new Integer(startIndex.intValue() - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue());
+    }
+    
+    private Integer getActualPage(Integer startIndex) {
+        return new Integer((startIndex.intValue() / SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue()) + 1);
+    }
+    private Integer getTotalNumberOfPages(Integer numberOfElements) {
+        return new Integer((numberOfElements.intValue() / SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue()) +1 );
     }
 }

@@ -128,11 +128,14 @@ public class GrantContractOJB extends ServidorPersistente.OJB.ObjectFenixOJB
 		}
 		return result;
 	}
-	
-	
-	public Integer countAllByCriteria(Boolean justActiveContracts,
+
+    public Integer countAll() {
+        return new Integer(count(GrantContract.class, new Criteria()));
+    }
+
+    public Integer countAllByCriteria(Boolean justActiveContracts,
 			Boolean justDesactiveContracts, Date dateBeginContract,
-			Date dateEndContract, Integer grantTypeId, String groupBy) throws ExcepcaoPersistencia {
+			Date dateEndContract, Integer grantTypeId) throws ExcepcaoPersistencia {
 
 		Criteria criteria = new Criteria();
 
@@ -156,20 +159,6 @@ public class GrantContractOJB extends ServidorPersistente.OJB.ObjectFenixOJB
 		if(grantTypeId != null) {
 		    criteria.addEqualTo("grantType.idInternal", grantTypeId);
 		}
-		return countAllByCriteriaGroupByGrantOwner(criteria, groupBy);
+		return new Integer(count(GrantContract.class, criteria));
 	}
-	    
-    private Integer countAllByCriteriaGroupByGrantOwner(Criteria criteria, String groupBy) {
-        
-        if(groupBy != null) {
-            return new Integer(count(GrantContract.class, criteria, groupBy));
-        }
-        return new Integer(count(GrantContract.class, criteria));
-    }
-            
-    public Integer countAll() {
-        return new Integer(count(GrantContract.class, new Criteria()));
-    }
-
-
 }

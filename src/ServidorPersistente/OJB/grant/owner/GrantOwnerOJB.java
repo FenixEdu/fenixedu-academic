@@ -1,6 +1,8 @@
 package ServidorPersistente.OJB.grant.owner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -128,5 +130,34 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB implem
         Criteria criteria = new Criteria();
         return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan, criteria, orderBy, true);
     }
+    
+    public Integer countAllByCriteria(Boolean justActiveContracts,
+			Boolean justDesactiveContracts, Date dateBeginContract,
+			Date dateEndContract, Integer grantTypeId) throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+
+		if (justActiveContracts != null && justActiveContracts.booleanValue()) {
+			criteria.addGreaterOrEqualThan("grantContracts.contractRegimes.dateEndContract",Calendar.getInstance().getTime());
+			criteria.addEqualTo("grantContracts.endContractMotive", "");
+		}
+		if (justDesactiveContracts != null
+				&& justDesactiveContracts.booleanValue()) {
+			criteria.addLessOrEqualThan("grantContracts.contractRegimes.dateEndContract",Calendar.getInstance().getTime());
+			criteria.addNotEqualTo("grantContracts.endContractMotive", "");
+		}
+
+		if (dateBeginContract != null) {
+			criteria.addGreaterOrEqualThan("grantContracts.contractRegimes.dateBeginContract",dateBeginContract);
+		}
+		if (dateEndContract != null) {
+			criteria.addLessOrEqualThan("grantContracts.contractRegimes.dateEndContract",dateEndContract);
+		}
+		
+		if(grantTypeId != null) {
+		    criteria.addEqualTo("grantContracts.grantType.idInternal", grantTypeId);
+		}
+		return new Integer(count(GrantOwner.class, criteria));
+	}
 
 }
