@@ -10,21 +10,23 @@ import Util.PeriodState;
  * Dominio
  * 
  */
-public class ExecutionPeriod implements IExecutionPeriod {
+public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
 
 	private Integer semester;
 	private PeriodState state;
 	protected IExecutionYear executionYear;
 	protected String name;
-	private Integer internalCode;
 	private Integer keyExecutionYear;
 	/**
 	 * Constructor for ExecutionPeriod.
 	 */
 	public ExecutionPeriod() {
-		super();
 	}
 
+	public ExecutionPeriod(Integer idInternal) {
+		setIdInternal(idInternal);
+		}
+		
 	public ExecutionPeriod(String name, IExecutionYear executionYear) {
 		setName(name);
 		setExecutionYear(executionYear);
@@ -55,21 +57,8 @@ public class ExecutionPeriod implements IExecutionPeriod {
 		this.name = name;
 	}
 
-	/**
-	 * Returns the internalCode.
-	 * @return Integer
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
-	}
-
-	/**
-	 * Sets the internalCode.
-	 * @param internalCode The internalCode to set
-	 */
-	public void setInternalCode(Integer internalCode) {
-		this.internalCode = internalCode;
-	}
+	
+	
 
 	/**
 	 * Returns the keyExecutionYear.
@@ -97,7 +86,7 @@ public class ExecutionPeriod implements IExecutionPeriod {
 
 	public String toString() {
 		String result = "[EXECUTION_PERIOD";
-		result += ", internalCode=" + internalCode;
+		result += ", internalCode=" + getIdInternal();
 		result += ", name=" + name;
 		result += ", executionYear=" + getExecutionYear();
 		result += "]\n";

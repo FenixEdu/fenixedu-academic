@@ -6,7 +6,7 @@ import Util.PeriodState;
 /**
  * @author Nuno & Joana
  */
-public class InfoExecutionPeriod {
+public class InfoExecutionPeriod extends InfoObject {
 
 	private String name;
 	private InfoExecutionYear infoExecutionYear;

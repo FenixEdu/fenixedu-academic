@@ -75,10 +75,10 @@ public class ExecutionPeriodOJB
 		else if (
 			(executionPeriodToWrite instanceof ExecutionPeriod)
 				&& ((ExecutionPeriod) executionPeriodFromDB)
-					.getInternalCode()
+					.getIdInternal()
 					.equals(
 					((ExecutionPeriod) executionPeriodToWrite)
-						.getInternalCode())) {
+						.getIdInternal())) {
 			super.lockWrite(executionPeriodToWrite);
 			// else Throw an already existing exception
 		} else

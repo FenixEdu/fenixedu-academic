@@ -10,7 +10,7 @@ import Util.PeriodState;
  * Dominio
  * 
  */
-public interface IExecutionPeriod {
+public interface IExecutionPeriod extends IDomainObject {
 	public String getName();
 	public IExecutionYear getExecutionYear();
 	public void setExecutionYear(IExecutionYear executionYear);
