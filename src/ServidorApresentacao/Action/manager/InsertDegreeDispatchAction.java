@@ -73,6 +73,7 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e.getMessage());
 		}
+		System.out.println("RESULTADO DO INSERT"+serviceResult);
 
 		try {	
 				List degrees = null;
@@ -89,7 +90,7 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 					}	
 					if(serviceResult.get(1) != null)
 					{
-						error = new ActionError("message.existingDegreeName", serviceResult.get(1));
+						error = new ActionError("message.existingDegreeName", serviceResult.get(1),serviceResult.get(2));
 						actionErrors.add("message.existingDegreeName", error);
 					}			
 					saveErrors(request, actionErrors);

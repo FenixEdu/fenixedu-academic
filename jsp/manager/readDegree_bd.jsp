@@ -6,36 +6,42 @@
 <span class="error"><html:errors/></span>
 <bean:define id="degreeId" name="degreeId"/>
 <table>
-<tr>
-<td>
-<logic:present name="infoDegree" >
 	
-		<h3><bean:message key="message.degree.editing" /></h3>
-</td>
-<td><h2><b><bean:write name="infoDegree" property="sigla" /> - </b></h2>
-</td>
-<td><h2><bean:write name="infoDegree" property="nome" /></h2>
-</td>
-
-<td>
-	<ul style="list-style-type: square;">
-	<li><html:link page="/editDegree.do?method=prepareEdit"  paramId="degreeId" paramName="degreeId"><bean:message key="label.manager.edit.degree"/></html:link></li>
-	</ul>
-</td>	
-</logic:present>
+<tr>
+	<logic:present name="infoDegree" >
+	<td>
+		<h3><bean:message key="label.manager.degree.editing" /></h3>
+	</td>
+	<td>
+		<h2><b><bean:write name="infoDegree" property="sigla" /> - </b></h2>
+	</td>
+	<td>
+		<h2><bean:write name="infoDegree" property="nome" /></h2>
+	</td>
+	</logic:present>		
 </tr>
 </table>
 
+		<h3><bean:message key="label.manager.degreeCurricularPlans" /></h3>
+
+<ul style="list-style-type: square;">
+	<li><html:link page="/editDegree.do?method=prepareEdit"  paramId="degreeId" paramName="degreeId"><bean:message key="label.manager.edit.degree"/></html:link></li>
+</ul>
+
 <logic:present name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>" scope="request">
 <logic:notEmpty name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>" >
+	
 <ul style="list-style-type: square;">
-<li><html:link page="/insertDegreeCurricularPlan.do?method=prepareInsert"><bean:message key="label.manager.insert.degreeCurricularPlan"/></html:link></li>			
+	<li><html:link page="/insertDegreeCurricularPlan.do?method=prepareInsert"><bean:message key="label.manager.insert.degreeCurricularPlan"/></html:link></li>			
 </ul>
+
 <br>
+	
 <html:form action="/deleteDegrees" method="get">
 <table width="50%" cellpadding="0" border="0">
 	<tr>
 		<td class="listClasses-header">
+			
 		</td>
 		<td class="listClasses-header"><bean:message key="label.manager.degreeCurricularPlan.name" />
 		</td>

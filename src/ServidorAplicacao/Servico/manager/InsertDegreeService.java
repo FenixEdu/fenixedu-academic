@@ -52,9 +52,10 @@ public class InsertDegreeService implements IServico {
 				String code = infoDegree.getSigla();
 				String name = infoDegree.getNome();
 				TipoCurso type = infoDegree.getTipoCurso();
-				List errors = new ArrayList(2);
-//				errors.add(null);
-//				errors.add(null);
+				List errors = new ArrayList(3);
+				errors.add(null);
+				errors.add(null);
+				errors.add(null);
 				int modified = 0;
 			
 				while(iter.hasNext()) {
@@ -63,9 +64,11 @@ public class InsertDegreeService implements IServico {
 						modified++;
 		        		errors.set(0, code);
 					}
-					if(name.compareToIgnoreCase(degreeIter.getNome())==0 && type.equals((TipoCurso) degreeIter.getTipoCurso())) {
+					
+					if(name.compareToIgnoreCase(degreeIter.getNome())==0 && type.equals((TipoCurso) degreeIter.getTipoCurso()) ){
 						modified++;
-						errors.set(1, name);
+						errors.set(2, name);
+						errors.set(1, type.toString());
 					}
 				}
 

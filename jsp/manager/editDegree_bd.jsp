@@ -3,13 +3,15 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%--<logic:present name="infoDegree">--%>
-	
+	<logic:present name="degreeId" >
 <h2><bean:message key="message.editDegree" /></h2>
 <br/>
 <table>
 <html:form action="/editDegree" method="get">
 	<html:hidden property="page" value="1"/>
+	
+	<bean:define id="degreeId" name="degreeId" />
+<html:hidden  property="degreeId" />
 	
 <tr>
 	<td>
@@ -50,6 +52,8 @@
 </tr>
 
 </table>
+
+
 <br />
 <html:submit styleClass="inputbutton">
 <bean:message key="button.save"/>
@@ -57,6 +61,7 @@
 <html:reset  styleClass="inputbutton">
 <bean:message key="label.clear"/>
 </html:reset>			
+
 <html:hidden property="method" value="edit" />
 </html:form>
-</logic:present> 	
+</logic:present>
