@@ -22,11 +22,6 @@ import Dominio.IStudentCurricularPlan;
 import Dominio.ScientificArea;
 import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentApplyPrecedencesRule;
-import ServidorAplicacao
-	.strategy
-	.enrolment
-	.rules
-	.EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCoursesToEnrollFilterRule;
 import ServidorAplicacao.strategy.enrolment.rules.IEnrolmentRule;
 import ServidorAplicacao.strategy.enrolment.strategys.EnrolmentStrategy;
 import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategy;
@@ -84,8 +79,8 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 
 		IEnrolmentRule enrolmentRule = new EnrolmentApplyPrecedencesRule();
 		setStudentEnrolmentContext(enrolmentRule.apply(getStudentEnrolmentContext()));
-		enrolmentRule = new EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCoursesToEnrollFilterRule();
-		setStudentEnrolmentContext(enrolmentRule.apply(getStudentEnrolmentContext()));
+//		enrolmentRule = new EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCoursesToEnrollFilterRule();
+//		setStudentEnrolmentContext(enrolmentRule.apply(getStudentEnrolmentContext()));
 		
 		return studentEnrolmentContext;
 	}
@@ -149,6 +144,20 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		}
 
 		selectDesiredCurricularCourses(enrollmentsWithAprovedState, commonAreasCurricularCourses);
+		selectDesiredCurricularCourses(enrollmentsWithEnrolledState, commonAreasCurricularCourses);
+
+		List areas = branchDAO.readByDegreeCurricularPlan(studentCurricularPlan.getDegreeCurricularPlan());
+		List finalAreas = new ArrayList();
+		iterator = areas.iterator();
+		while (iterator.hasNext())
+		{
+			IBranch area = (IBranch) iterator.next();
+			if (!area.getBranchType().equals(BranchType.COMMON_BRANCH))
+			{
+				finalAreas.add(area);
+			}
+		}
+		studentEnrolmentContext.setAreas(finalAreas);
 
 		if (studentCurricularPlan.getBranch() != null)
 		{
@@ -187,10 +196,22 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 
 		creditsInAnySecundaryArea = getGivenCreditsInAnySecundaryArea(studentCurricularPlan);
 
+		List studentApprovedEnrollmentsFromSpecializationAndSecundaryAreas =
+			selectCurricularCoursesFromSpecializationAndSecundaryAreas(
+				studentApprovedEnrollments,
+				studentCurricularPlan.getBranch(),
+				studentCurricularPlan.getSecundaryBranch());
+		
+		List studentCurrentSemesterEnrollmentsFromSpecializationAndSecundaryAreas =
+		selectCurricularCoursesFromSpecializationAndSecundaryAreas(
+				studentCurrentSemesterEnrollments,
+				studentCurricularPlan.getBranch(),
+				studentCurricularPlan.getSecundaryBranch());
+		
 		calculateGroupsCreditsFromEnrollments(
 			studentCurricularPlan,
-			studentApprovedEnrollments,
-			studentCurrentSemesterEnrollments,
+			studentApprovedEnrollmentsFromSpecializationAndSecundaryAreas,
+			studentCurrentSemesterEnrollmentsFromSpecializationAndSecundaryAreas,
 			creditsInScientificAreas,
 			creditsInSpecializationAreaGroups,
 			creditsInSecundaryAreaGroups);
@@ -206,8 +227,8 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			creditsInSpecializationAreaGroups,
 			creditsInSecundaryAreaGroups,
 			creditsInAnySecundaryArea,
-			studentApprovedEnrollments,
-			studentCurrentSemesterEnrollments,
+			studentApprovedEnrollmentsFromSpecializationAndSecundaryAreas,
+			studentCurrentSemesterEnrollmentsFromSpecializationAndSecundaryAreas,
 			executionPeriod.getSemester());
 	}
 
@@ -1066,5 +1087,39 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			Integer key = (Integer) iterator.next();
 			map.remove(key);
 		}
+	}
+
+	/**
+	 * @param enrollments
+	 * @param specializationArea
+	 * @param secundaryArea
+	 * @return enrollmentsToKeep
+	 */
+	private List selectCurricularCoursesFromSpecializationAndSecundaryAreas(
+		List enrollments,
+		IBranch specializationArea,
+		IBranch secundaryArea)
+	{
+		List enrollmentsToKeep = new ArrayList();
+		Iterator iterator = enrollments.iterator();
+		while(iterator.hasNext())
+		{
+			IEnrolment enrolment = (IEnrolment) iterator.next();
+			Iterator iterator2 = enrolment.getCurricularCourse().getScopes().iterator();
+			while(iterator2.hasNext())
+			{
+				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator2.next();
+				if (curricularCourseScope.getBranch().equals(specializationArea)
+					|| curricularCourseScope.getBranch().equals(secundaryArea))
+				{
+					if (!enrollmentsToKeep.contains(enrolment))
+					{
+						enrollmentsToKeep.add(enrolment);
+					}
+				}
+			}
+		}
+		
+		return enrollmentsToKeep;
 	}
 }

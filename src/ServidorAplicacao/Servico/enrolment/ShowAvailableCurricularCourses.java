@@ -1,7 +1,5 @@
 package ServidorAplicacao.Servico.enrolment;
 
-import java.util.List;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
@@ -13,7 +11,6 @@ import ServidorAplicacao.strategy.enrolment.strategys.EnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategy;
 import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategyFactory;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -36,7 +33,6 @@ public class ShowAvailableCurricularCourses implements IService
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			IPersistentStudent studentDAO = persistentSuport.getIPersistentStudent();
-			IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
 			IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport.getIStudentCurricularPlanPersistente();
 
 			IStudent student = studentDAO.readStudentByNumberAndDegreeType(studentNumber, TipoCurso.LICENCIATURA_OBJ);
@@ -53,9 +49,6 @@ public class ShowAvailableCurricularCourses implements IService
 
 					StudentEnrolmentContext studentEnrolmentContext = strategy.getAvailableCurricularCourses();
 					
-					List areas = branchDAO.readByDegreeCurricularPlan(studentCurricularPlan.getDegreeCurricularPlan());
-					studentEnrolmentContext.setAreas(areas);
-
 					return InfoStudentEnrolmentContext.cloneStudentEnrolmentContextToInfoStudentEnrolmentContext(
 						studentEnrolmentContext);
 				} else

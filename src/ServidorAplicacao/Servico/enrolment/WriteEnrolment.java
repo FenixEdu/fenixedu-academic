@@ -49,8 +49,15 @@ public class WriteEnrolment implements IService
 				(IStudentCurricularPlan) studentCurricularPlanDAO.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 			ICurricularCourse curricularCourse =
 				(ICurricularCourse) curricularCourseDAO.readByOID(CurricularCourse.class, curricularCourseID);
-			IExecutionPeriod executionPeriod =
-				(IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class, executionPerriodID);
+			
+			IExecutionPeriod executionPeriod = null;
+			if (executionPeriodDAO == null)
+			{
+				executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+			} else
+			{
+				executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class, executionPerriodID);
+			}
 
 			IEnrolment enrolment =
 				enrolmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(

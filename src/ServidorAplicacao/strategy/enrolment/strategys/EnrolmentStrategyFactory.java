@@ -36,22 +36,6 @@ public class EnrolmentStrategyFactory implements IEnrolmentStrategyFactory
 	{
 		IEnrolmentStrategy strategyInstance = null;
 
-		//		if (enrolmentContext.getStudent() == null)
-		//		{
-		//			throw new IllegalArgumentException("Must initialize student in context!");
-		//		}
-		//
-		//		if (enrolmentContext.getSemester() == null)
-		//		{
-		//			throw new IllegalArgumentException("Must initialize semester in context!");
-		//		}
-		//
-		//		if (enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled() == null)
-		//		{
-		//			throw new IllegalArgumentException("Must initialize
-		// FinalCurricularCoursesScopesSpanToBeEnrolled in context!");
-		//		}
-
 		if (studentCurricularPlan == null)
 		{
 			throw new IllegalArgumentException("Must initialize StudentCurricularPlan!");
