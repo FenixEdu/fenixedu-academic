@@ -98,3 +98,14 @@ create table QUALIFICATION(
    TITLE varchar(200),
    primary key (ID_INTERNAL))
    type=InnoDB;
+
+   
+drop table if exists CREDITS_MANAGER_DEPARTMENT;
+create table CREDITS_MANAGER_DEPARTMENT (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_PERSON int(11) not null,
+   KEY_DEPARTMENT int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_PERSON, KEY_DEPARTMENT))
+   type=InnoDB;   
+   
