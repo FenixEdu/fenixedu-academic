@@ -290,6 +290,16 @@
         <forward name="Sucess" path="/manageExecutionPeriods.do?method=prepare"/>
       </action>
 
+	<!-- ========== CACHE MANIPULATION ========== -->
+      <action path="/manageCache"
+		      input="/manageCache.do?method=prepare"
+              type="ServidorApresentacao.Action.manager.ManageCacheDA"
+              parameter="method"
+              >
+          <forward name="Manage" path="df.page.manage-cache"/>
+          <forward name="CacheCleared" path="/manageCache.do?method=prepare"/>
+      </action>
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

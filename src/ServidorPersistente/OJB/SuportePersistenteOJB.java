@@ -13,6 +13,7 @@ package ServidorPersistente.OJB;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.cache.CacheFilterRegistry;
 import org.apache.ojb.odmg.HasBroker;
 import org.apache.ojb.odmg.OJB;
 import org.odmg.Database;
@@ -33,7 +34,8 @@ import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCandidateEnrolment;
 import ServidorPersistente.IPersistentCandidateSituation;
-import ServidorPersistente.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
+import ServidorPersistente
+	.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCreditsTeacher;
@@ -112,8 +114,50 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			HasBroker hasBroker = ((HasBroker) _odmg.currentTransaction());
 			if (hasBroker != null) {
 				hasBroker.getBroker().clearCache();
-			}				
+			}
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#clearCache()
+	 */
+	public Integer getNumberCachedItems() {
+		Integer numberCachedObjects = null;
+
+		if (_odmg != null) {
+			HasBroker hasBroker = ((HasBroker) _odmg.currentTransaction());
+			if (hasBroker != null) {
+				PersistenceBroker broker = hasBroker.getBroker();
+
+				System.out.println(
+					"###########################################33");
+				System.out.println(
+					"broker.serviceObjectCache().class= "
+						+ broker.serviceObjectCache().getClass());
+
+				CacheFilterRegistry cacheFilter =
+					(CacheFilterRegistry) broker.serviceObjectCache();
+
+				System.out.println(
+					"###########################################33");
+				System.out.println(
+					"broker.serviceObjectCache().class= "
+						+ cacheFilter.getCache(
+							null,
+							null,
+							CacheFilterRegistry.METHOD_LOOKUP));
+
+				FenixObjectCacheDefaultImpl cache =
+					(FenixObjectCacheDefaultImpl) cacheFilter.getCache(
+						null,
+						null,
+						CacheFilterRegistry.METHOD_LOOKUP);
+
+				numberCachedObjects = cache.getNumberOfCachedObjects();
+			}
+		}
+
+		return numberCachedObjects;
 	}
 
 	public static synchronized SuportePersistenteOJB getInstance()
@@ -139,7 +183,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	}
 
 	private void init() throws ExcepcaoPersistencia {
-		
+
 		_odmg = OJB.getInstance();
 		try {
 			openDatabase();
@@ -240,8 +284,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new EnrolmentOJB();
 	}
 	public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation() {
-			return new EnrolmentEvaluationOJB();
-		}
+		return new EnrolmentEvaluationOJB();
+	}
 	public ITurmaTurnoPersistente getITurmaTurnoPersistente() {
 		return new TurmaTurnoOJB();
 	}
@@ -437,7 +481,6 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentEvaluationMethod getIPersistentEvaluationMethod() {
 		return new EvaluationMethodOJB();
 	}
-	
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {
 		return new PersistentEnrolmentPeriod();
@@ -487,7 +530,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentEmployee getIPersistentEmployee() {
 		return new EmployeeOJB();
 	}
-	
+
 	public IPersistentEnrolmentEquivalenceRestriction getIPersistentEnrolmentEquivalenceRestriction() {
 		return new EnrolmentEquivalenceRestrictionOJB();
 	}
@@ -495,18 +538,18 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	/* (non-Javadoc)
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSummary()
 	 */
-	public IPersistentSummary getIPersistentSummary() {		
+	public IPersistentSummary getIPersistentSummary() {
 		return new SummaryOJB();
 	}
 
-public IPersistentQualification getIPersistentQualification() {
+	public IPersistentQualification getIPersistentQualification() {
 		return new QualificationOJB();
 	}
-	
+
 	public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment() {
-			return new CandidateEnrolmentOJB();
-		}
-		
+		return new CandidateEnrolmentOJB();
+	}
+
 	public IPersistentStudentGroup getIPersistentStudentGroup() {
 		return new StudentGroupOJB();
 	}

@@ -65,14 +65,15 @@ public abstract class SessionConstants {
 	public static final String ROOM_OID = "roomOID";
 	public static final String SELECTED_ROOM_INDEX = "selectedRoomIndex";
 	public static final String SELECTED_ROOMS = "selectedRooms";	
-     //	-------------------------------------------------------------------------------
-	 //    GesDis Constants - For Manager
-	 // -------------------------------------------------------------------------------
+
+    //	-------------------------------------------------------------------------------
+	//    Constants - For Manager
+	// -------------------------------------------------------------------------------
 	public static final String INFO_DEGREES_LIST = "Lista de licenciaturas";
 	public static final String DEGREE = "degree";
 	public static final String INFO_DEGREE = "info_degree";
 	public static final String INFO_DEGREE_CURRICULAR_PLANS_LIST = "lista de planos curriculares";
-	
+	public static final String NUMBER_CACHED_ITEMS = "number_cached_items";
 	
 	// -------------------------------------------------------------------------------
 	//    GesDis Constants - For GesDis

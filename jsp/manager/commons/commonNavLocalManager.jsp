@@ -16,7 +16,11 @@
 	</html:link>
 </strong></p>
 
-<p><strong>&raquo; Gest&atilde;o da Cache</strong></p>
+<p><strong>&raquo; 
+	<html:link page="/manageCache.do?method=prepare">
+		Gest&atilde;o da Cache
+	</html:link>
+</strong></p>
 
 <p><strong>&raquo; Gest&atilde;o de Previlégios</strong></p>
 <ul>

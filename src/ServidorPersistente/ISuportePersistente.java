@@ -16,6 +16,8 @@ public interface ISuportePersistente {
 	public void confirmarTransaccao() throws ExcepcaoPersistencia;
 	public void cancelarTransaccao() throws ExcepcaoPersistencia;
 	public void clearCache();
+	public Integer getNumberCachedItems();
+
 	//public IPessoaPersistente getIPessoaPersistente();
 
 	public IAulaPersistente getIAulaPersistente();
