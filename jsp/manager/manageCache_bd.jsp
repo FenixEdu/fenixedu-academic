@@ -37,7 +37,6 @@
 		<html:form action="/manageCache" focus="executionDegreeOID">
 			<html:hidden property="method" value="setResponseRefreshTimeout"/>
 			<html:hidden property="page" value="1"/>
-			<html:hidden property="responseRefreshTimeout" value="<%= currentRefreshValue %>"/>
 			<html:text
 				property="responseRefreshTimeout"
 				size="6"
