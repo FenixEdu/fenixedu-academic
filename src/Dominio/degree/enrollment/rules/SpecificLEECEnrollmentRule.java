@@ -117,10 +117,10 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule
 
 		if (givenCreditsInScientificAreas != null && !givenCreditsInScientificAreas.isEmpty())
 		{
-			Iterator iterator = givenCreditsInScientificAreas.iterator();
-			while (iterator.hasNext())
+			int size = givenCreditsInScientificAreas.size();
+			for (int i = 0; i < size; i++)
 			{
-				CreditsInScientificArea creditsInScientificArea = (CreditsInScientificArea) iterator.next();
+				CreditsInScientificArea creditsInScientificArea = (CreditsInScientificArea) givenCreditsInScientificAreas.get(i);
 				sumInHashMap(creditsInScientificAreas, creditsInScientificArea.getScientificArea().getIdInternal(),
 					creditsInScientificArea.getGivenCredits());
 			}
@@ -138,10 +138,11 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule
 
 		if (givenCreditsInAnySecundaryAreas != null && !givenCreditsInAnySecundaryAreas.isEmpty())
 		{
-			Iterator iterator = givenCreditsInAnySecundaryAreas.iterator();
-			while (iterator.hasNext())
+			int size = givenCreditsInAnySecundaryAreas.size();
+			for (int i = 0; i < size; i++)
 			{
-				CreditsInAnySecundaryArea creditsInAnySecundaryArea = (CreditsInAnySecundaryArea) iterator.next();
+				CreditsInAnySecundaryArea creditsInAnySecundaryArea = (CreditsInAnySecundaryArea) givenCreditsInAnySecundaryAreas
+					.get(i);
 				creditsInAnySecundaryAreas += creditsInAnySecundaryArea.getGivenCredits().intValue();
 			}
 		}
@@ -164,10 +165,10 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule
 
 	private void cleanHashMap(HashMap map, List keysOfItemsToRemove)
 	{
-		Iterator iterator = keysOfItemsToRemove.iterator();
-		while (iterator.hasNext())
+		int size = keysOfItemsToRemove.size();
+		for (int i = 0; i < size; i++)
 		{
-			Integer key = (Integer) iterator.next();
+			Integer key = (Integer) keysOfItemsToRemove.get(i);
 			map.remove(key);
 		}
 	}
@@ -189,10 +190,11 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule
 		List specializationAndSecundaryAreaCurricularCoursesToCountForCredits, HashMap creditsInScientificAreas,
 		HashMap creditsInSpecializationAreaGroups, HashMap creditsInSecundaryAreaGroups) throws ExcepcaoPersistencia
 	{
-		Iterator iterator = specializationAndSecundaryAreaCurricularCoursesToCountForCredits.iterator();
-		while (iterator.hasNext())
+		int size = specializationAndSecundaryAreaCurricularCoursesToCountForCredits.size();
+		for (int i = 0; i < size; i++)
 		{
-			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+			ICurricularCourse curricularCourse = (ICurricularCourse) specializationAndSecundaryAreaCurricularCoursesToCountForCredits
+				.get(i);
 
 			if (curricularCourseBelongsToAScientificAreaPresentInMoreThanOneBranch(curricularCourse, studentCurricularPlan))
 			{
@@ -658,10 +660,10 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule
 		List groups = curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan.getSecundaryBranch(),
 			AreaType.SECONDARY_OBJ);
 
-		Iterator iterator = groups.iterator();
-		while (iterator.hasNext())
+		int size = groups.size();
+		for (int i = 0; i < size; i++)
 		{
-			ICurricularCourseGroup group = (ICurricularCourseGroup) iterator.next();
+			ICurricularCourseGroup group = (ICurricularCourseGroup) groups.get(i);
 
 			if (!isSecundaryGroupDone(studentCurricularPlan, group, creditsInSecundaryAreaGroups, creditsInAnySecundaryArea))
 			{
@@ -682,10 +684,10 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule
 		List groups = curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan.getBranch(),
 			AreaType.SPECIALIZATION_OBJ);
 
-		Iterator iterator = groups.iterator();
-		while (iterator.hasNext())
+		int size = groups.size();
+		for (int i = 0; i < size; i++)
 		{
-			ICurricularCourseGroup group = (ICurricularCourseGroup) iterator.next();
+			ICurricularCourseGroup group = (ICurricularCourseGroup) groups.get(i);
 
 			if (!isSpecializationGroupDone(studentCurricularPlan, group, creditsInSpecializationAreaGroups))
 			{

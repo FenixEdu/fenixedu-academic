@@ -2,16 +2,11 @@ package Dominio.degree.enrollment.rules;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.collections.Transformer;
 
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
-
-import commons.CollectionUtils;
 
 /**
  * @author Nuno Correia
@@ -19,11 +14,12 @@ import commons.CollectionUtils;
  */
 public class MaxOfAcumulatedEnrollmentsRule extends SelectionUponMaximumNumberEnrollmentRule implements IEnrollmentRule {
 
-    Map acumulatedEnrollments;
-    List enrolledEnrollments;
-    int maxTotalNAC;
-    int availableNACToEnroll;
-    int currentSemester;
+//	private Map acumulatedEnrollments;
+	private List enrolledEnrollments;
+	private int maxTotalNAC;
+	private int availableNACToEnroll;
+	private IStudentCurricularPlan studentCurricularPlan;
+//	private int currentSemester;
 
     /**
      * 
@@ -31,21 +27,25 @@ public class MaxOfAcumulatedEnrollmentsRule extends SelectionUponMaximumNumberEn
      */
     public MaxOfAcumulatedEnrollmentsRule(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod) {
         
-        super(executionPeriod, studentCurricularPlan.getBranch());
-        List enrollments = studentCurricularPlan.getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
+        super.executionPeriod = executionPeriod;
+        super.studentBranch = studentCurricularPlan.getBranch();
+//        List enrollments = studentCurricularPlan.getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
+//
+//        List curricularCourses = (List) CollectionUtils.collect(enrollments, new Transformer() {
+//
+//            public Object transform(Object obj) {
+//                ICurricularCourse curricularCourse = ((IEnrolment) obj).getCurricularCourse();
+//                String key = curricularCourse.getCode() + curricularCourse.getName()
+//                        + curricularCourse.getDegreeCurricularPlan().getDegree().getNome()
+//                        + curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso();
+//                return (key);
+//            }
+//        });
+//
+//        acumulatedEnrollments = CollectionUtils.getCardinalityMap(curricularCourses);
+        studentCurricularPlan.calculateStudentAcumulatedEnrollments();
 
-        List curricularCourses = (List) CollectionUtils.collect(enrollments, new Transformer() {
-
-            public Object transform(Object obj) {
-                ICurricularCourse curricularCourse = ((IEnrolment) obj).getCurricularCourse();
-                String key = curricularCourse.getCode() + curricularCourse.getName()
-                        + curricularCourse.getDegreeCurricularPlan().getDegree().getNome()
-                        + curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso();
-                return (key);
-            }
-        });
-
-        acumulatedEnrollments = CollectionUtils.getCardinalityMap(curricularCourses);
+        this.studentCurricularPlan = studentCurricularPlan;
         enrolledEnrollments = studentCurricularPlan.getStudentEnrolledEnrollments();
         maxTotalNAC = studentCurricularPlan.getMaximumNumberOfAcumulatedEnrollments().intValue();
     }
@@ -112,7 +112,7 @@ public class MaxOfAcumulatedEnrollmentsRule extends SelectionUponMaximumNumberEn
      */
     private Integer getIncrementNAC(ICurricularCourse curricularCourse) {
 
-        if (getCurricularCourseAcumulatedEnrolments(curricularCourse).intValue() > 1)
+        if (this.studentCurricularPlan.getCurricularCourseAcumulatedEnrolments(curricularCourse).intValue() > 1)
             return curricularCourse.getMaximumValueForAcumulatedEnrollments();
         else
             return curricularCourse.getMinimumValueForAcumulatedEnrollments();
@@ -123,17 +123,17 @@ public class MaxOfAcumulatedEnrollmentsRule extends SelectionUponMaximumNumberEn
      * @param curricularCourse
      * @return Integer
      */
-    private Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse) {
-
-        String key = curricularCourse.getCode() + curricularCourse.getName() + curricularCourse.getDegreeCurricularPlan().getDegree().getNome()
-                + curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso();
-
-        Integer curricularCourseAcumulatedEnrolments = (Integer) acumulatedEnrollments.get(key);
-
-        if (curricularCourseAcumulatedEnrolments == null)
-            curricularCourseAcumulatedEnrolments = new Integer(0);
-
-        return curricularCourseAcumulatedEnrolments;
-    }
+//    private Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse) {
+//
+//        String key = curricularCourse.getCode() + curricularCourse.getName() + curricularCourse.getDegreeCurricularPlan().getDegree().getNome()
+//                + curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso();
+//
+//        Integer curricularCourseAcumulatedEnrolments = (Integer) acumulatedEnrollments.get(key);
+//
+//        if (curricularCourseAcumulatedEnrolments == null)
+//            curricularCourseAcumulatedEnrolments = new Integer(0);
+//
+//        return curricularCourseAcumulatedEnrolments;
+//    }
 
 }

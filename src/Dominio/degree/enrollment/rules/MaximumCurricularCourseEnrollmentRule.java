@@ -14,14 +14,15 @@ import Dominio.IStudentCurricularPlan;
  */
 public class MaximumCurricularCourseEnrollmentRule extends SelectionUponMaximumNumberEnrollmentRule implements IEnrollmentRule {
 
-    List enrollments;
-    int maxCoursesToBeEnrolled;
+    private List enrollments;
+    private int maxCoursesToBeEnrolled;
 
     public MaximumCurricularCourseEnrollmentRule(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod) {
 
-        super(executionPeriod, studentCurricularPlan.getBranch());
-        maxCoursesToBeEnrolled = studentCurricularPlan.getMaximumNumberOfCoursesToEnroll().intValue();
-        enrollments = studentCurricularPlan.getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
+        super.executionPeriod = executionPeriod;
+        super.studentBranch = studentCurricularPlan.getBranch();
+        this.maxCoursesToBeEnrolled = studentCurricularPlan.getMaximumNumberOfCoursesToEnroll().intValue();
+        this.enrollments = studentCurricularPlan.getStudentEnrolledEnrollments();
 
     }
 
