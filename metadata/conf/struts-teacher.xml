@@ -219,7 +219,7 @@
 
 	<action     path="/bibliographicReferenceManager"
 				parameter="method"      			
-				scope="request"
+				scope="session"
       			name="bibliographicReferenceForm"
                 type="ServidorApresentacao.Action.teacher.BibliographicReferenceManagerDispatchAction"            
                 validate="false">	           
