@@ -130,22 +130,22 @@ public class ShowAvailableCurricularCourses implements IServico {
 		List aux1 = (List) CollectionUtils.union(enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled(), enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
 		
 		Iterator iterator = aux1.iterator();
-		List aux2 = new ArrayList();
-		List aux3 = new ArrayList();
+		List noOptionalCourseScopes = new ArrayList();
+		List optionalCourseScopes = new ArrayList();
 		while (iterator.hasNext()) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 			if (notOptionalCurricularCoursesTemporarilyEnroled.contains(curricularCourseScope.getCurricularCourse())) {
-				aux2.add(curricularCourseScope);
+				noOptionalCourseScopes.add(curricularCourseScope);
 			}
 			if (optionalCurricularCoursesTemporarilyEnroled.contains(curricularCourseScope.getCurricularCourse())) {
-				aux3.add(curricularCourseScope);
+				optionalCourseScopes.add(curricularCourseScope);
 			}
 		}
-		enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().removeAll(aux2);
-		enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().removeAll(aux2);
-		enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().removeAll(aux3);
-		enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().removeAll(aux3);
-		enrolmentContext.setActualEnrolment(aux2);
+//		enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().removeAll(noOptionalCourseScopes);
+//		enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().removeAll(noOptionalCourseScopes);
+//		enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().removeAll(optionalCourseScopes);
+//		enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().removeAll(optionalCourseScopes);
+		enrolmentContext.setActualEnrolment(noOptionalCourseScopes);
 		enrolmentContext.setOptionalCurricularCoursesEnrolments(enrolmentsInOptionalCurricularCourses);
 		
 		return enrolmentContext;
