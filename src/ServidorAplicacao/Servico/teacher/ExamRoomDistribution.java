@@ -58,7 +58,7 @@ public class ExamRoomDistribution implements IServico {
 		return "ExamRoomDistribution";
 	}
 
-	public Boolean run(Integer examCode, List roomsIds)
+	public Boolean run(Integer executionCourseCode, Integer examCode, List roomsIds, boolean sms)
 		throws FenixServiceException {
 
 		Boolean result = new Boolean(false);
@@ -66,7 +66,7 @@ public class ExamRoomDistribution implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExam persistentExam = sp.getIPersistentExam();
 			ISalaPersistente persistentRoom = sp.getISalaPersistente();
-			
+
 			IFrequentaPersistente persistentAttends =
 				sp.getIFrequentaPersistente();
 			IPersistentExamStudentRoom persistentExamStudentRoom =
@@ -74,7 +74,7 @@ public class ExamRoomDistribution implements IServico {
 			IExam exam =
 				(IExam) persistentExam.readByOId(new Exam(examCode), true);
 			if (exam == null) {
-				throw new InvalidArgumentsServiceException();
+				throw new InvalidArgumentsServiceException("exam");
 			}
 
 			List students = exam.getStudentsEnrolled();
@@ -97,12 +97,12 @@ public class ExamRoomDistribution implements IServico {
 						new Sala((Integer) iterRoom.next()),
 						true);
 				if (room == null) {
-					throw new InvalidArgumentsServiceException();
+					throw new InvalidArgumentsServiceException("room");
 				}
 				rooms.add(room);
 			}
 			if (!exam.getAssociatedRooms().containsAll(rooms)) {
-				throw new InvalidArgumentsServiceException();
+				throw new InvalidArgumentsServiceException("rooms");
 			}
 
 			Iterator iter = rooms.iterator();
@@ -110,25 +110,42 @@ public class ExamRoomDistribution implements IServico {
 				ISala room = (ISala) iter.next();
 				int i = 0;
 				while (i <= room.getCapacidadeExame().intValue()) {
+					IStudent student =
+						(IStudent) getRandomObjectFromList(students);
 					IExamStudentRoom examStudentRoom =
-						new ExamStudentRoom(
-							exam,
-							(IStudent) getRandomObjectFromList(students),
-							room);
+						persistentExamStudentRoom.readBy(exam, student, room);
+					if (examStudentRoom == null) {
+						examStudentRoom =
+							new ExamStudentRoom(
+								exam,
+								(IStudent) getRandomObjectFromList(students),
+								room);
+					} else {
+						examStudentRoom.setRoom(room);
+					}
 					persistentExamStudentRoom.lockWrite(examStudentRoom);
+					if (sms) {
+						sendSMSToStudent(examStudentRoom);
+					}
 					i++;
 				}
 			}
-			if (students.size()>0){
-				//throw new too many students for the rooms exception 
+			if (students.size() > 0) {
+				throw new InvalidArgumentsServiceException("students");
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
 
-	
-
 		return result;
+
+	}
+
+	/**
+	 * @param examStudentRoom
+	 */
+	private void sendSMSToStudent(IExamStudentRoom examStudentRoom) {
+		// TODO fill this method when we have sms
 
 	}
 
