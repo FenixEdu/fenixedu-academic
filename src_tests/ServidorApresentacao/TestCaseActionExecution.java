@@ -114,43 +114,21 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 			}
 		}
 
-		if( (pathOfAction != null) && (nameOfAction != null) &&
-			(forward != null) ) {
+		if (((pathOfAction != null) && (nameOfAction != null)) &&
+			((forward != null) || (forwardPath != null))) 
+			{
 //			perform
 			actionPerform();
 //			checks for errors
 			verifyNoActionErrors();
-//			checks forward
-			verifyForward(forward);
 
-//			CurricularYearAndSemesterAndInfoExecutionDegree ctx = SessionUtils.getContext(getRequest());
-//			assertNotNull("Context is null!", ctx);
+//			checks forward			
+			if (forward != null) 
+				verifyForward(forward);
 
-			Set keys = null;
-			Iterator keysIterator = null;
-			if(existingAttributesList != null) {
-				keys = existingAttributesList.keySet();
-				keysIterator = keys.iterator();
-			} else if(nonExistingAttributesList != null) {
-				keys = nonExistingAttributesList.keySet();
-				keysIterator = keys.iterator();
-			}
-			if(keys != null) {
-				while(keysIterator.hasNext()) {
-					Integer key = (Integer) keysIterator.next();
-					verifyScopeAttributes(key.intValue(), (List) existingAttributesList.get(key), (List) nonExistingAttributesList.get(key));
-				}
-			}
-		}
-
-		if( (pathOfAction != null) && (nameOfAction != null) &&
-			(forwardPath != null) ) {
-//			perform
-			actionPerform();
-//			checks for errors
-			verifyNoActionErrors();
-//			checks forward
-			verifyForwardPath(forwardPath);
+//			checks forward path			
+			if (forwardPath != null) 
+				verifyForwardPath(forwardPath);
 
 //			CurricularYearAndSemesterAndInfoExecutionDegree ctx = SessionUtils.getContext(getRequest());
 //			assertNotNull("Context is null!", ctx);
