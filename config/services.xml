@@ -1238,15 +1238,6 @@
         </filterChains>
     </service>
     <service>
-        <name>ReadAllExecutionPeriods</name>
-        <implementationClass>ServidorAplicacao.Servico.manager.ReadExecutionPeriods</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
         <name>ReadExecutionPeriodForExecutionCourseAssociation</name>
         <implementationClass>ServidorAplicacao.Servico.manager.ReadExecutionPeriod</implementationClass>
         <description/>
@@ -8418,7 +8409,7 @@
 		<filterChains>
 		</filterChains>
 	</service>
-<!--<service>
+	<service>
 		<name>ChangeStudentCurricularPlanState</name>
 		<implementationClass> 
 			ServidorAplicacao.Servico.manager.ChangeStudentCurricularPlanState
@@ -8428,5 +8419,5 @@
 		<filterChains>
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
-	</service> -->
+	</service>
 </serviceDefinitions>
