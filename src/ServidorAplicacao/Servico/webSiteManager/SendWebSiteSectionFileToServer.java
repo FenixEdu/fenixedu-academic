@@ -364,7 +364,6 @@ public class SendWebSiteSectionFileToServer implements IServico {
 					+ "<meta name=\"description\" content=\"O Instituto Superior Técnico é a maior escola de engenharia, ciência e tecnologia em Portugal.\" />\n"
 					+ "<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"../../css/iststyle.css\" />\n"
 					+ "<link rel=\"stylesheet\" type=\"text/css\" media=\"print\" href=\"../../css/print.css\" />\n"
-					+ "<script type=\"text/javascript\" src=\"../../scripts/cssbox_script.js\"></script>\n"
 					+ "</head>\n"
 					+ "<body>\n"
 					+ "<div id=\"header\">\n"
