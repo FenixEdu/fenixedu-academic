@@ -3,7 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<html:form action="sendMailToAllStudents.do" method="get">
+<bean:message key="message.label.Hints"/>
+<h3>
+	<html:form action="sendMailToAllStudents.do" method="get">
+</h3>
 	<table>
 		<tr>
 			<td>
