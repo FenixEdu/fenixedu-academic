@@ -63,14 +63,17 @@
         		 username="${server.username}"
         		 password="${server.password}"
         		 command="${server.dumpScript}; zip ${server.dumpFilename}.zip ${server.dumpFilename}; rm ${server.dumpFilename}"
+        		 timeout="0"
         		 />
 
 		<!-- Transfer DB Dump File to Destination -->
         <scp file="${server.username}:${server.password}@${server.hostname}:/root/${server.dumpFilename}.zip"
         	 todir="${basedir}"
+        	 trust="true"
         	 />
         <scp file="${server.dumpFilename}.zip"
         	 todir="${destination.username}:${destination.password}@${destination.hostname}:~"
+        	 trust="true"
         	 />
 
 		<!-- Remove DB Dump File from Server -->
@@ -78,6 +81,7 @@
         		 username="${server.username}"
         		 password="${server.password}"
         		 command="rm ${server.dumpFilename}.zip"
+        		 timeout="0"
         		 />
 
 		<!-- Remove temporary local copy of DB Dump File -->
@@ -88,6 +92,7 @@
         		 username="${destination.username}"
         		 password="${destination.password}"
         		 command="loadFenixImage"
+        		 timeout="0"
         		 />
 
     </target>
@@ -118,11 +123,13 @@
         		 username="${server.username}"
         		 password="${server.password}"
         		 command="${server.dumpScript}; zip ${server.dumpFilename}.zip ${server.dumpFilename}; rm ${server.dumpFilename}"
+        		 timeout="0"
         		 />
 
 		<!-- Transfer DB Dump File -->
         <scp file="${server.username}:${server.password}@${server.hostname}:/root/${server.dumpFilename}.zip"
         	 todir="${basedir}"
+        	 trust="true"
         	 />
 
 		<!-- Remove DB Dump File from Server -->
@@ -130,9 +137,10 @@
         		 username="${server.username}"
         		 password="${server.password}"
         		 command="rm ${server.dumpFilename}.zip"
+        		 timeout="0"
         		 />
 
-		<unzip src="${server.dumpFilename}.zip" dest="${basedir}"/>
+		<unzip src="${server.dumpFilename}.zip" dest="${basedir}/${server.dumpFilename}"/>
 		<delete file="${server.dumpFilename}.zip"/>		
 
     </target>
