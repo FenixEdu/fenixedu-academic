@@ -5,3 +5,4 @@ RequestUtils methods also use the following parameters:
 eYName -> executionYear name
 ePName -> executionPeriod year
 exeCode -> executionCourse code
+evaluationElements -> evaluation evaluationElements
