@@ -111,9 +111,12 @@
 				<form-property name="idGrantContract" type="java.lang.Integer"/>
 				<form-property name="contractNumber" type="java.lang.String"/>
 				<form-property name="endContractMotive" type="java.lang.String"/>
+				
 				<form-property name="grantContractOrientationTeacherId" type="java.lang.Integer"/>
 				<form-property name="grantContractOrientationTeacherNumber" type="java.lang.String"/>
 				<form-property name="grantType" type="java.lang.String"/>
+				<form-property name="grantCostCenterId" type="java.lang.Integer"/>
+				<form-property name="keyCostCenterNumber" type="java.lang.String"/>
 				<!-- Grant Contract Regime -->
 				<form-property name="grantContractRegimeId" type="java.lang.Integer"/>
 				<form-property name="dateBeginContract" type="java.lang.String"/>
@@ -216,6 +219,9 @@
 				<form-property name="idContract" type="java.lang.Integer"/>
 				<form-property name="contractNumber" type="java.lang.String"/>
 				<!-- Grant Contract Regime -->
+				<form-property name="grantCostCenterId" type="java.lang.Integer"/>
+				<form-property name="keyCostCenterNumber" type="java.lang.String"/>
+				<form-property name="designation" type="java.lang.String"/>
 				<form-property name="grantContractRegimeId" type="java.lang.Integer"/>
 				<form-property name="state" type="java.lang.Integer"/>
 				<form-property name="grantContractRegimeTeacherNumber" type="java.lang.String"/>
