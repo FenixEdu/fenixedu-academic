@@ -32,7 +32,7 @@
             </td>
             <td nowrap class="formTD" align="left">
             	<html:select property="month">
-		            <option value="" selected="selected">[Mês]</option>
+		            <option value="" selected="selected">[Mï¿½s]</option>
 		            <html:options collection="<%= SessionConstants.LABLELIST_MONTHSOFYEAR %>" property="value" labelProperty="label"/>
 	            </html:select>
             </td>
@@ -63,7 +63,7 @@
             </td>
             <td nowrap="nowrap" align="left">
             	<html:select property="season">
-                  	<option value="" selected="selected">[Época]</option>           
+                  	<option value="" selected="selected">[ï¿½poca]</option>           
 		            <html:options collection="<%= SessionConstants.LABLELIST_SEASONS %>" property="value" labelProperty="label"/>                  	             
                 </html:select>
             </td>
@@ -100,8 +100,6 @@
 			<td nowrap class="formTD" align="right">
            		Capacidade Exame
 			</td>
-	       	<td>
-            </td>
 		</tr>
 		<logic:iterate id="infoRoom" name="<%= SessionConstants.INFO_EXAMS_KEY %>" property="infoExam.associatedRooms">
 		<tr>
@@ -110,9 +108,6 @@
 			</td>
 			<td nowrap class="formTD" align="right">
 				<bean:write name="infoRoom" property="capacidadeExame"/>
-			</td>
-			<td nowrap class="formTD" align="right">
-				Link remove de <bean:write name="infoRoom" property="nome"/>
 			</td>
 		</tr>
 		</logic:iterate>
