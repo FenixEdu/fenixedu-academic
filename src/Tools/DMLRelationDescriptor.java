@@ -235,4 +235,41 @@ public class DMLRelationDescriptor
         return key;
     }
 
+    public void appendDMLDescription(final StringBuffer stringBuffer)
+    {
+        stringBuffer.append("\n\nrelation ");
+        stringBuffer.append("???");
+        stringBuffer.append(" {");
+
+        stringBuffer.append("\n\t");
+        stringBuffer.append(classDescriptor1.getClassNameOfObject());
+        stringBuffer.append(" playsRole ");
+        if (objectReferenceDescriptor2 != null) {
+            stringBuffer.append(objectReferenceDescriptor2.getAttributeName());
+            stringBuffer.append(";");
+        } else if (collectionDescriptor2 != null) {
+            stringBuffer.append(collectionDescriptor2.getAttributeName());
+            stringBuffer.append(" {\n\t\tnmultiplicity *;\n\t}");
+        } else {
+            stringBuffer.append("???");
+            stringBuffer.append(" {\n\t\tnmultiplicity ???;\n\t}");
+        }
+
+        stringBuffer.append("\n\t");
+        stringBuffer.append(classDescriptor2.getClassNameOfObject());
+        stringBuffer.append(" playsRole ");
+        if (objectReferenceDescriptor1 != null) {
+            stringBuffer.append(objectReferenceDescriptor1.getAttributeName());
+            stringBuffer.append(";");
+        } else if (collectionDescriptor1 != null) {
+            stringBuffer.append(collectionDescriptor1.getAttributeName());
+            stringBuffer.append(" {\n\t\tnmultiplicity *;\n\t}");
+        } else {
+            stringBuffer.append("???");
+            stringBuffer.append(" {\n\t\tnmultiplicity ???;\n\t}");
+        }
+
+        stringBuffer.append("\n}");
+    }
+
 }

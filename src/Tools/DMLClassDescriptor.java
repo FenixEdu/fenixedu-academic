@@ -215,20 +215,20 @@ public class DMLClassDescriptor
         }
         stringBuffer.append("\n}");
 
-        for (final Iterator iterator = objectReferenceDescriptors.values().iterator(); iterator
-                .hasNext();)
-        {
-            final DMLObjectReferenceDescriptor dmlObjectReferenceDescriptor = (DMLObjectReferenceDescriptor) iterator
-                    .next();
-            dmlObjectReferenceDescriptor.appendDMLDescription(stringBuffer);
-        }
-
-        for (final Iterator iterator = collectionDescriptors.values().iterator(); iterator.hasNext();)
-        {
-            final DMLCollectionDescriptor dmlCollectionDescriptor = (DMLCollectionDescriptor) iterator
-                    .next();
-            dmlCollectionDescriptor.appendDMLDescription(stringBuffer);
-        }
+//        for (final Iterator iterator = objectReferenceDescriptors.values().iterator(); iterator
+//                .hasNext();)
+//        {
+//            final DMLObjectReferenceDescriptor dmlObjectReferenceDescriptor = (DMLObjectReferenceDescriptor) iterator
+//                    .next();
+//            dmlObjectReferenceDescriptor.appendDMLDescription(stringBuffer);
+//        }
+//
+//        for (final Iterator iterator = collectionDescriptors.values().iterator(); iterator.hasNext();)
+//        {
+//            final DMLCollectionDescriptor dmlCollectionDescriptor = (DMLCollectionDescriptor) iterator
+//                    .next();
+//            dmlCollectionDescriptor.appendDMLDescription(stringBuffer);
+//        }
     }
 
     protected void addAttributeDescriptor(final FieldDescriptor fieldDescriptor)

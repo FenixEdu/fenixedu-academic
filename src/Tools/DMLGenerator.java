@@ -7,6 +7,7 @@ package Tools;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +35,7 @@ public class DMLGenerator
         final Map descriptorTable = getDescriptorTable();
         final Map dmlDescriptorTable = new HashMap(descriptorTable.size());
         final Map relationsTable = new MultiHashMap();
+        final Set incompleteRelationsTable = new HashSet();
 
         logger.info("Repository contains " + descriptorTable.size() + " mapped classes.");
 
@@ -61,16 +63,17 @@ public class DMLGenerator
                         System.out.println("Relations table already contains value for key: " + key);
                     }
                 } else {
-                    //System.out.println("Key is null.");
+                    incompleteRelationsTable.add(dMLRelationDescriptor);
                 }
             }
         }
 
-        System.out.println("Found a total of " + relationsTable.size() + " relations.");
+        System.out.println("Found a total of " + relationsTable.size() + " complete relations.");
+        System.out.println("Found a total of " + incompleteRelationsTable.size() + " incomplete relations.");
 
         try
         {
-            generateDMLFile("dml.file", dmlDescriptorTable);
+            generateDMLFile("dml.file", dmlDescriptorTable, relationsTable, incompleteRelationsTable);
         } catch (IOException e)
         {
             throw new RuntimeException(e);
@@ -96,7 +99,7 @@ public class DMLGenerator
         return dmlClassDescriptor;
     }
 
-    protected static void generateDMLFile(final String filename, final Map dmlDescriptorTable)
+    protected static void generateDMLFile(final String filename, final Map dmlDescriptorTable, Map relationsTable, Set incompleteRelationsTable)
             throws IOException
     {
         final StringBuffer stringBuffer = new StringBuffer(dmlDescriptorTable.size() * 5 * 80);
@@ -105,6 +108,17 @@ public class DMLGenerator
             final DMLClassDescriptor dmlClassDescriptor = (DMLClassDescriptor) iterator.next();
             dmlClassDescriptor.appendDMLDescription(stringBuffer);
         }
+
+        for (final Iterator iterator = relationsTable.values().iterator(); iterator.hasNext(); ) {
+            final DMLRelationDescriptor dmlRelationDescriptor = (DMLRelationDescriptor) iterator.next();
+            dmlRelationDescriptor.appendDMLDescription(stringBuffer);
+        }
+
+        for (final Iterator iterator = incompleteRelationsTable.iterator(); iterator.hasNext(); ) {
+            final DMLRelationDescriptor dmlRelationDescriptor = (DMLRelationDescriptor) iterator.next();
+            dmlRelationDescriptor.appendDMLDescription(stringBuffer);
+        }
+
         writeFile(filename, stringBuffer.toString(), false);
     }
 
