@@ -175,7 +175,7 @@ public class UpdateStudentEnrolments
 		Iterator iterator = enrolments2Write.iterator();
 		while (iterator.hasNext())
 		{
-			
+
 			final MwEnrolment mwEnrolment = (MwEnrolment) iterator.next();
 
 			// Get the Degree Of the Student
@@ -232,62 +232,15 @@ public class UpdateStudentEnrolments
 					{
 						if (hasDiferentDegrees(curricularCourses))
 						{
-							IFrequentaPersistente attendDAO = sp.getIFrequentaPersistente();
-
-							List attendList = attendDAO.readByStudentNumberInCurrentExecutionPeriod(mwEnrolment.getNumber());
-							List attendsWithCurricularCourseCode = (List) CollectionUtils.select(attendList, new Predicate()
+							curricularCourse = getCurricularCourseFromAnotherDegree(mwEnrolment, sp);
+							if (curricularCourse == null)
 							{
-
-								public boolean evaluate(Object input)
-								{
-									IFrequenta attend = (IFrequenta) input;
-
-									String courseCode = mwEnrolment.getCoursecode();
-									List associatedCurricularCourses = attend.getDisciplinaExecucao().getAssociatedCurricularCourses();
-									Iterator iterator = associatedCurricularCourses.iterator();
-									while (iterator.hasNext())
-									{
-										ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-										if (curricularCourse.getCode().equals(courseCode))
-										{
-											return true;
-										}
-									}
-									return false;
-								}
-							});
-
-							if (attendsWithCurricularCourseCode.size() > 0)
-							{
-								List associatedCurricularCourses =
-									((IFrequenta) attendsWithCurricularCourseCode.get(0)).getDisciplinaExecucao().getAssociatedCurricularCourses();
-
-								curricularCourse = (ICurricularCourse) associatedCurricularCourses.get(0);
-								//								System.out.println("AQUI encontrei" + associatedCurricularCourses.size());
-								//								
-								//								System.out.println("\tCadeira:"+ mwEnrolment.getCoursecode());
-								//								
-								//								Iterator iterator2 = associatedCurricularCourses.iterator();
-								//								List aux = new ArrayList();
-								//								while (iterator2.hasNext())
-								//								{
-								//									ICurricularCourse curricularCourse2 = (ICurricularCourse) iterator2.next();
-								//									aux.add(curricularCourse2.getName() + ";"+curricularCourse2.getDegreeCurricularPlan().getName() + ";"+curricularCourse2.getCode());
-								//								}
-								//								System.out.println("\t"+aux);
-							} else
-							{
-								ReportEnrolment.addNotFoundCurricularCourse(
-									mwEnrolment.getCoursecode(),
-									String.valueOf(mwEnrolment.getDegreecode().intValue()),
-									new ArrayList());
 								return;
 							}
 						} else
 						{
 							curricularCourse = (ICurricularCourse) curricularCourses.get(0);
 						}
-
 					} else
 					{
 						System.out.println(
@@ -308,73 +261,165 @@ public class UpdateStudentEnrolments
 			}
 
 			// Get the Curricular Course Scope
-			
+
 			ICurricularCourseScope curricularCourseScope =
 				getCurricularCourseScopeToEnrollIn(studentCurricularPlan, mwEnrolment, curricularCourse, branch, sp);
-			
-			if (curricularCourseScope == null) {
-				return;
-			} 
-				
 
-			// Create the Enrolment
-			IEnrolment enrolment = new Enrolment();
-			sp.getIPersistentEnrolment().simpleLockWrite(enrolment);
-			enrolment.setCurricularCourseScope(curricularCourseScope);
-			enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-			enrolment.setEnrolmentState(EnrolmentState.ENROLED);
-			enrolment.setExecutionPeriod(executionPeriod);
-			enrolment.setStudentCurricularPlan(studentCurricularPlan);
-
-			// Create The Enrolment Evaluation
-			IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-			sp.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
-
-			enrolmentEvaluation.setCheckSum(null);
-			enrolmentEvaluation.setEmployee(null);
-			enrolmentEvaluation.setEnrolment(enrolment);
-			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-			enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-			enrolmentEvaluation.setExamDate(null);
-			enrolmentEvaluation.setGrade(null);
-			enrolmentEvaluation.setGradeAvailableDate(null);
-			enrolmentEvaluation.setObservation(null);
-			enrolmentEvaluation.setPersonResponsibleForGrade(null);
-			enrolmentEvaluation.setWhen(null);
-
-			enrolmentWritten++;
-
-			// Update the Corresponding Attend if it exists
-
-			IDisciplinaExecucao executionCourse =
-				sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
-			if (executionCourse == null)
+			if (curricularCourseScope == null)
 			{
-
-				ReportEnrolment.addExecutionCourseNotFound(
-					mwEnrolment.getCoursecode(),
-					mwEnrolment.getDegreecode().toString(),
-					mwEnrolment.getNumber().toString());
-				//				System.out.println("No Execution Found for Curricular Course " + mwEnrolment.getCoursecode());
-				//				executionCoursesNotFound++;
 				return;
 			}
-			IStudent student = sp.getIPersistentStudent().readByNumero(mwEnrolment.getNumber(), TipoCurso.LICENCIATURA_OBJ);
 
-			IFrequenta attend = sp.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student, executionCourse);
+			IEnrolment enrolment = createEnrolment(studentCurricularPlan, sp, curricularCourseScope);
 
+			// Update the Corresponding Attend if it exists
+			IFrequenta attend = updateAttend(curricularCourse, executionPeriod, enrolment, mwEnrolment, sp);
 			if (attend == null)
 			{
 				//				System.out.println("Student " + mwEnrolment.getNumber() + " has no Attend for " + mwEnrolment.getCoursecode() + " from Degree " + mwEnrolment.getDegreecode());
 				attendsNotFound++;
 				return;
-			} else
+
+			}
+		}
+	}
+
+	/**
+	 * @param curricularCourse
+	 * @param executionPeriod2
+	 * @param sp
+	 * @return
+	 */
+	private static IFrequenta updateAttend(
+		ICurricularCourse curricularCourse,
+		IExecutionPeriod executionPeriod2,
+		IEnrolment enrolment,
+		MwEnrolment mwEnrolment,
+		SuportePersistenteOJB sp)
+		throws ExcepcaoPersistencia
+	{
+		IDisciplinaExecucao executionCourse =
+			sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+		IFrequenta attend = null;
+		if (executionCourse == null)
+		{
+
+			ReportEnrolment.addExecutionCourseNotFound(
+				mwEnrolment.getCoursecode(),
+				mwEnrolment.getDegreecode().toString(),
+				mwEnrolment.getNumber().toString());
+			//				System.out.println("No Execution Found for Curricular Course " + mwEnrolment.getCoursecode());
+			//				executionCoursesNotFound++;
+		} else
+		{
+			IStudent student = sp.getIPersistentStudent().readByNumero(mwEnrolment.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+			attend = sp.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student, executionCourse);
+
+			if (attend != null)
 			{
 				sp.getIFrequentaPersistente().simpleLockWrite(attend);
 				attend.setEnrolment(enrolment);
 				attendsUpdated++;
 			}
+
 		}
+		return attend;
+	}
+
+	private static IEnrolment createEnrolment(
+		IStudentCurricularPlan studentCurricularPlan,
+		SuportePersistenteOJB sp,
+		ICurricularCourseScope curricularCourseScope)
+		throws ExcepcaoPersistencia
+	{
+		// Create the Enrolment
+		IEnrolment enrolment = new Enrolment();
+		sp.getIPersistentEnrolment().simpleLockWrite(enrolment);
+		enrolment.setCurricularCourseScope(curricularCourseScope);
+		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+		enrolment.setEnrolmentState(EnrolmentState.ENROLED);
+		enrolment.setExecutionPeriod(executionPeriod);
+		enrolment.setStudentCurricularPlan(studentCurricularPlan);
+
+		// Create The Enrolment Evaluation
+		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
+		sp.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
+
+		enrolmentEvaluation.setCheckSum(null);
+		enrolmentEvaluation.setEmployee(null);
+		enrolmentEvaluation.setEnrolment(enrolment);
+		enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+		enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+		enrolmentEvaluation.setExamDate(null);
+		enrolmentEvaluation.setGrade(null);
+		enrolmentEvaluation.setGradeAvailableDate(null);
+		enrolmentEvaluation.setObservation(null);
+		enrolmentEvaluation.setPersonResponsibleForGrade(null);
+		enrolmentEvaluation.setWhen(null);
+
+		enrolmentWritten++;
+		return enrolment;
+	}
+
+	/**
+	 * @param mwEnrolment
+	 * @param sp
+	 * @return
+	 */
+	private static ICurricularCourse getCurricularCourseFromAnotherDegree(final MwEnrolment mwEnrolment, SuportePersistenteOJB sp)
+		throws ExcepcaoPersistencia
+	{
+		IFrequentaPersistente attendDAO = sp.getIFrequentaPersistente();
+		ICurricularCourse curricularCourse = null;
+		List attendList = attendDAO.readByStudentNumberInCurrentExecutionPeriod(mwEnrolment.getNumber());
+		List attendsWithCurricularCourseCode = (List) CollectionUtils.select(attendList, new Predicate()
+		{
+
+			public boolean evaluate(Object input)
+			{
+				IFrequenta attend = (IFrequenta) input;
+
+				String courseCode = mwEnrolment.getCoursecode();
+				List associatedCurricularCourses = attend.getDisciplinaExecucao().getAssociatedCurricularCourses();
+				Iterator iterator = associatedCurricularCourses.iterator();
+				while (iterator.hasNext())
+				{
+					ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+					if (curricularCourse.getCode().equals(courseCode))
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+		});
+
+		if (attendsWithCurricularCourseCode.size() > 0)
+		{
+			List associatedCurricularCourses =
+				((IFrequenta) attendsWithCurricularCourseCode.get(0)).getDisciplinaExecucao().getAssociatedCurricularCourses();
+
+			curricularCourse = (ICurricularCourse) associatedCurricularCourses.get(0);
+			//								System.out.println("AQUI encontrei" + associatedCurricularCourses.size());
+			//								
+			//								System.out.println("\tCadeira:"+ mwEnrolment.getCoursecode());
+			//								
+			//								Iterator iterator2 = associatedCurricularCourses.iterator();
+			//								List aux = new ArrayList();
+			//								while (iterator2.hasNext())
+			//								{
+			//									ICurricularCourse curricularCourse2 = (ICurricularCourse) iterator2.next();
+			//									aux.add(curricularCourse2.getName() + ";"+curricularCourse2.getDegreeCurricularPlan().getName() + ";"+curricularCourse2.getCode());
+			//								}
+			//								System.out.println("\t"+aux);
+		} else
+		{
+			ReportEnrolment.addNotFoundCurricularCourse(
+				mwEnrolment.getCoursecode(),
+				String.valueOf(mwEnrolment.getDegreecode().intValue()),
+				new ArrayList());
+		}
+		return curricularCourse;
 	}
 
 	/**
@@ -387,7 +432,8 @@ public class UpdateStudentEnrolments
 		IStudentCurricularPlan studentCurricularPlan,
 		MwEnrolment mwEnrolment,
 		ICurricularCourse curricularCourse,
-		IBranch branch, SuportePersistenteOJB sp)
+		IBranch branch,
+		SuportePersistenteOJB sp)
 		throws ExcepcaoPersistencia
 	{
 		boolean sameDegree = true;
@@ -397,10 +443,11 @@ public class UpdateStudentEnrolments
 				curricularCourse,
 				mwEnrolment.getCurricularcourseyear(),
 				mwEnrolment.getCurricularcoursesemester());
-		ICurricularCourseScope curricularCourseScope = null;		
-		if (!curricularCourse.getDegreeCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan())) {
+		ICurricularCourseScope curricularCourseScope = null;
+		if (!curricularCourse.getDegreeCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan()))
+		{
 			return (ICurricularCourseScope) curricularCourseScopes.get(0);
-		}				
+		}
 
 		if ((curricularCourseScopes == null) || (curricularCourseScopes.isEmpty()))
 		{
