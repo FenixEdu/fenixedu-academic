@@ -36,6 +36,9 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public ICurricularCourse readCurricularCourseByNameAndCode(String name, String code) throws ExcepcaoPersistencia {
 		try {
 			ICurricularCourse curricularCourse = null;
@@ -63,42 +66,35 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 	}
 	
-	public List readCurricularCoursesByName(String name) throws ExcepcaoPersistencia {
-			try {
-					String oqlQuery = "select all from " + CurricularCourse.class.getName();
-					oqlQuery += " where name = $1";
-					query.create(oqlQuery);
-					query.bind(name);
+	public ICurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(IDegreeCurricularPlan degreeCurricularPlan, String name, String code) throws ExcepcaoPersistencia {
+		try {
+				ICurricularCourse curricularCourse = null;
+				String oqlQuery = "select all from " + CurricularCourse.class.getName();
+				oqlQuery += " where name = $1";
+				oqlQuery += " and code = $2";
+				oqlQuery += " and degreeCurricularPlan.degree.sigla = $3";
+				oqlQuery += " and degreeCurricularPlan.name = $4";
+				query.create(oqlQuery);
+				query.bind(name);
+				query.bind(code);
+				query.bind(degreeCurricularPlan.getDegree().getSigla());
+				query.bind(degreeCurricularPlan.getName());
 
-					List result = (List) query.execute();
-					try {
-							lockRead(result);
-					} catch (ExcepcaoPersistencia ex) {
-						throw ex;
-					}
-				return result;
+				List result = (List) query.execute();
+				try {
+					lockRead(result);
+				} catch (ExcepcaoPersistencia ex) {
+					throw ex;
+				}
+
+				if ((result != null) && (result.size() != 0)) {
+					curricularCourse = (ICurricularCourse) result.get(0);
+				}
+				return curricularCourse;
+
 			} catch (QueryException ex) {
 				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
-	}
-	
-	public List readCurricularCoursesByCode(String code) throws ExcepcaoPersistencia {
-				try {
-						String oqlQuery = "select all from " + CurricularCourse.class.getName();
-						oqlQuery += " where code = $1";
-						query.create(oqlQuery);
-						query.bind(code);
-
-						List result = (List) query.execute();
-						try {
-								lockRead(result);
-						} catch (ExcepcaoPersistencia ex) {
-							throw ex;
-						}
-					return result;
-				} catch (QueryException ex) {
-					throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-				}
 		}
 
 	public void lockWrite(ICurricularCourse curricularCourseToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
