@@ -231,6 +231,14 @@
     <forward name="associateTeacher" path="/associateTeacher.jsp"/>    
     
 	</action>
+	
+ 	<action path="/deleteSection"
+              type="ServidorApresentacao.Action.teacher.DeleteSectionAction">
+          <forward name="AccessSiteManagement" path="/viewSite.jsp"/>
+      </action>
+	
+	
+	
 	<!-- Actions For Objectives and Program -->
 	<action 
 		name="executionCourseObjectivesForm"

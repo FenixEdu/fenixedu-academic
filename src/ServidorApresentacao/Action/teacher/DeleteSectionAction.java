@@ -56,30 +56,22 @@ public class DeleteSectionAction extends FenixAction{
 		try {
 			Object deleteSectionArguments[] = { infoSection };
 			GestorServicos manager = GestorServicos.manager();
-			Boolean result = (Boolean) manager.executar(userView, "ServidorAplicacao.Servico.gesdis.teacher.DeleteSection", deleteSectionArguments);
+			Boolean result = (Boolean) manager.executar(userView, "DeleteSection", deleteSectionArguments);
 
 			session.removeAttribute(SessionConstants.INFO_SECTION);
 			session.removeAttribute("Sections");
 			
-//			nao sei s é + correcto ir buscar assim o infosite ou pla sessao		
 			InfoSite infoSite = infoSection.getInfoSite();
 			Object readSectionsArguments[] = { infoSite };
-			List allInfoSections = (List) manager.executar(null, "ServidorAplicacao.Servico.gesdis.ReadSections", readSectionsArguments);
+			List allInfoSections = (List) manager.executar(null, "ReadSections", readSectionsArguments);
 			session.setAttribute("Sections", allInfoSections);	
 		
 		    InfoSection infoSuperiorSection = infoSection.getSuperiorInfoSection();
         	if(infoSuperiorSection == null) { 
     
-
-//			   Object ReadTeacherSiteArguments[] = { infoSite.getInfoExecutionCourse() };
-//			   infoSite = (InfoSite) manager.executar(userView,  "ServidorAplicacao.Servico.gesdis.teacher.ReadTeacherSite", ReadTeacherSiteArguments);
-
-//	           session.setAttribute("Site", infoSite);
-
 					return mapping.findForward("AccessSiteManagement");		
 		   	}
 		    else {
-//			        session.setAttribute("superiorSection", null);
 			        return mapping.findForward("AccessSectionManagement");
 		          }
 		   }
