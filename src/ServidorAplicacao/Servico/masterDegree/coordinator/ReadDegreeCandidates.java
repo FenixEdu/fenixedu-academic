@@ -84,7 +84,7 @@ public class ReadDegreeCandidates implements IServico {
         } 
 
 		if (candidates == null)
-			throw new ExcepcaoInexistente("No Candidates Found !!");	
+			return new ArrayList();	
 		
 		
 		Iterator iterator = candidates.iterator();

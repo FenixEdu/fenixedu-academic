@@ -54,28 +54,29 @@ public class ReadCoordinatedDegreesAction extends ServidorApresentacao.Action.ba
 	  } catch (FenixServiceException e) {
 		  throw new FenixActionException(e);
 	  }
-	  
+
 	  Iterator iterator = degrees.iterator();
 	  
 	  while(iterator.hasNext()){
 	  	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
 		try {
 		  Object argsTemp[] = {infoExecutionDegree };
+
 		  List result = (List) gestor.executar(userView, "ReadDegreeCandidates", argsTemp);
 		  
 		  candidates.add(new Integer(result.size()));
 		  
 		} catch (FenixServiceException e) {
-			candidates.add(new Integer(0));
+			throw new FenixActionException(e);
 		}
 	  }
 
-
-	  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATES_AMMOUNT, candidates);
 	  if (degrees.size() == 1) {
 	  	session.setAttribute(SessionConstants.MASTER_DEGREE, (InfoExecutionDegree) degrees.get(0));
+		session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, candidates.get(0));
 		return mapping.findForward("Success");
 	  }
+	  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATES_AMMOUNT, candidates);
       session.setAttribute(SessionConstants.MASTER_DEGREE_LIST, degrees);
       return mapping.findForward("ChooseDegree");
 

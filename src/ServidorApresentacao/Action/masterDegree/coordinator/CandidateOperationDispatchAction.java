@@ -17,6 +17,7 @@ import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -44,8 +45,11 @@ public class CandidateOperationDispatchAction extends DispatchAction {
 	  try {
 		candidates = (List) gestor.executar(userView, "ReadDegreeCandidates", args);
 	  } catch (FenixServiceException e) {
-		  throw new NonExistingActionException("error.exception.nonExistingCandidates","", e);
+		  throw new FenixActionException(e);
 	  }	  
+	  
+	  if (candidates.size() == 0)
+	  	throw new NonExistingActionException("error.exception.nonExistingCandidates","", null);
 
 	  session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
 	  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
