@@ -1,0 +1,203 @@
+
+
+
+
+<!-- Definitions for . -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<class-descriptor 
+  class="Dominio.Funcionario"
+  table="ass_FUNCIONARIO"
+>
+  <field-descriptor id="0"
+    name="codigoInterno"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+    primarykey="true"
+  />
+  <field-descriptor id="1"
+    name="chavePessoa"
+    column="chavePessoa"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="2"
+    name="numeroMecanografico"
+    column="numeroMecanografico"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="3"
+    name="chaveHorarioActual"
+    column="chaveHorarioActual"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="4"
+    name="antiguidade"
+    column="antiguidade"
+    jdbc-type="DATE"
+  />
+  <field-descriptor id="5"
+    name="chaveFuncResponsavel"
+    column="chaveFuncResponsavel"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="6"
+    name="chaveCCLocalTrabalho"
+    column="chaveCCLocalTrabalho"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="7"
+    name="chaveCCCorrespondencia"
+    column="chaveCCCorrespondencia"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="8"
+    name="chaveCCVencimento"
+    column="chaveCCVencimento"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="9"
+    name="calendario"
+    column="calendario"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor id="10"
+    name="chaveStatus"
+    column="chaveStatus"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="11"
+    name="dataInicio"
+    column="dataInicio"
+    jdbc-type="DATE"
+  />
+  <field-descriptor id="12"
+    name="dataFim"
+    column="dataFim"
+    jdbc-type="DATE"
+  />
+  <field-descriptor id="13"
+    name="quem"
+    column="quem"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="14"
+    name="quando"
+    column="quando"
+    jdbc-type="TIMESTAMP"
+  />
+</class-descriptor>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
