@@ -23,6 +23,7 @@
 	<bean:message key="button.insertItem"/>
 </html:link>
 
+
 <logic:iterate id="item" name="<%= SessionConstants.INFO_SECTION_ITEMS_LIST %>">
   <logic:equal name="item" property="urgent" value="true"><font color="red"></logic:equal>
 	  <h2><bean:write name="item" property="name"/></h2>
@@ -31,7 +32,7 @@
   
 <br>
   
-  <html:link page="/deleteItem.do">
+  <html:link page="/deleteItem.do" indexed="true">
 	<bean:message key="button.deleteItem"/>
 </html:link>
 
@@ -40,6 +41,5 @@
 	<bean:message key="button.editItem"/>
 </html:link>
 <br> 
-
 
 </logic:iterate>

@@ -11,7 +11,6 @@ package ServidorApresentacao.Action.teacher;
  *
  */
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,35 +44,32 @@ public class DeleteItemAction extends FenixAction{
 		HttpSession session = request.getSession(false);
 	
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		String indexString = (String) request.getParameter("index");
+		Integer index = new Integer(indexString);
 		
-		InfoItem infoItem = (InfoItem) session.getAttribute(SessionConstants.INFO_ITEM);
+		List infoItemsList =
+							(List) session.getAttribute(
+								SessionConstants.INFO_SECTION_ITEMS_LIST);
 		
+		InfoItem infoItem = (InfoItem) infoItemsList.get(index.intValue());		
 		
 		try {
 			Object deleteItemArguments[] = { infoItem };
 			GestorServicos manager = GestorServicos.manager();
+			
 			Boolean result = (Boolean) manager.executar(userView, "DeleteItem", deleteItemArguments);
 
-			session.removeAttribute(SessionConstants.INFO_ITEM);
 			session.removeAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST);
-			
 			InfoSection infoSection = infoItem.getInfoSection();
-			Object readItemArguments[] = { infoSection };
-			List allInfoItens = (List) manager.executar(null, "ReadItems", readItemArguments);
-			
-			Collections.sort(allInfoItens);
+			Object readItensArguments[] = { infoSection };
+			List allInfoItens = (List) manager.executar(null, "ReadItems", readItensArguments);
+
+           	Collections.sort(allInfoItens);
 			session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST, allInfoItens);	
-			
-			
-			Iterator iterator = allInfoItens.iterator();
-						while (iterator.hasNext()){
-							InfoItem infoItem2 = (InfoItem) iterator.next();
-							System.out.println("infoItem2: " + infoItem2);
-						}
 		    
 		    
         	
-			        return mapping.findForward("AccessItemManagement");
+		 return mapping.findForward("AccessSectionManagement");
 		          
 		   }
 			catch (FenixServiceException fenixServiceException){

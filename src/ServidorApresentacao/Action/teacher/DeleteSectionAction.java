@@ -41,14 +41,7 @@ public class DeleteSectionAction extends FenixAction{
 				throws FenixActionException {
 					
 		HttpSession session = request.getSession(false);
-//		DynaActionForm deleteSectionForm = (DynaActionForm) form;				
-//					
-//		String option = (String) deleteSectionForm.get("option");
-//
-//		  if (option.equals("Yes") == false)
-//			  return mapping.findForward("AccessSectionManagement");
-//		
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+	    UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		
 		InfoSection infoSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 		InfoSection infoSuperiorSection = infoSection.getSuperiorInfoSection();

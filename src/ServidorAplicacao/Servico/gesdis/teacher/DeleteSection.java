@@ -57,7 +57,7 @@ public class DeleteSection implements IServico {
 					superiorSection,
 					infoSection.getName());
 			
-			//			if (deletedSection == null) throw new FenixServiceException("non existing section");
+				if (deletedSection == null) throw new FenixServiceException("non existing section");
 
 			Integer deletedSectionOrder = deletedSection.getSectionOrder();
 

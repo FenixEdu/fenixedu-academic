@@ -223,19 +223,6 @@
     
 	</action>
 	
- 	<action path="/deleteSection"
- 			 input="/viewSection.jsp"
-              type="ServidorApresentacao.Action.teacher.DeleteSectionAction">
-          <forward name="AccessSiteManagement" path="/viewSite.do"/>
-          <forward name="AccessSectionManagement" path="/viewSection.do"/>
-      </action>
-	
-	
- 	<action path="/deleteItem"
- 			 input="/viewSection.jsp"
-              type="ServidorApresentacao.Action.teacher.DeleteItemAction">
-          <forward name="AccessItemManagement" path="/viewSection.do"/>
-    </action>
 	
 	<!-- Actions For Objectives and Program -->
 	<action 
@@ -316,6 +303,21 @@
         type="ServidorApresentacao.Action.teacher.ViewSectionAction">    
      <forward name="Sucess" path="/viewSection.jsp"/>         
 	</action>
+	
+	<!-- Delete Section -->
+	<action path="/deleteSection"
+ 			 input="/viewSection.jsp"
+              type="ServidorApresentacao.Action.teacher.DeleteSectionAction">
+          <forward name="AccessSiteManagement" path="/viewSite.do"/>
+          <forward name="AccessSectionManagement" path="/viewSection.do"/>
+      </action>
+	
+	<!-- Delete Item -->
+ 	<action path="/deleteItem"
+ 			 input="/viewSection.jsp"
+              type="ServidorApresentacao.Action.teacher.DeleteItemAction">
+          <forward name="AccessSectionManagement" path="/viewSection.jsp"/>
+    </action>
 	
 	<!-- Edit Item -->
 	
