@@ -5,7 +5,7 @@ import Dominio.ICurso;
 
 public class MWDegreeTranslation  
 {
-	private String degreeCode;
+	private Integer degreeCode;
 	private Integer keyDegree;
 	private ICurso degree;	
 
@@ -28,7 +28,7 @@ public class MWDegreeTranslation
 	/**
 	 * @return
 	 */
-	public String getDegreeCode()
+	public Integer getDegreeCode()
 	{
 		return this.degreeCode;
 	}
@@ -36,7 +36,7 @@ public class MWDegreeTranslation
 	/**
 	 * @param degreeCode
 	 */
-	public void setDegreeCode(String degreeCode)
+	public void setDegreeCode(Integer degreeCode)
 	{
 		this.degreeCode = degreeCode;
 	}
