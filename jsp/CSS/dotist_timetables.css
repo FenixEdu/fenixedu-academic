@@ -10,15 +10,14 @@
 	text-align: center;
 	height: 20px;
 	vertical-align: middle;
-	border-left-width: 1px;
+	border-color: #000000;
+	border-left-width: 2px;
 	border-left-style: solid;
-	border-left-color: #000000;
-	border-right-width: 1px;
+	border-right-width: 2px;
 	border-right-style: solid;
-	border-right-color: #000000;
-	border-top-width: 1px;
+	border-top-width: 2px;
 	border-top-style: solid;
-	border-top-color: #000000;
+
 }
 
 .horarioHeader {
@@ -29,12 +28,11 @@
 	text-align: center;
 	height: 20px;
 	vertical-align: middle;
-	border-right-width: 1px;
+	border-color: #000000;
+	border-right-width: 2px;
 	border-right-style: solid;
-	border-right-color: #000000;
-	border-top-width: 1px;
+	border-top-width: 2px;
 	border-top-style: solid;
-	border-top-color: #000000;
 }
 
 .horariosHoras {
@@ -44,15 +42,13 @@
 	text-align: center;
 	vertical-align: middle;
 	height: 20px;
+	border-color: #000000;
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
-	border-bottom-color: #000000;
-	border-right-width: 1px;
+	border-right-width: 2px;
 	border-right-style: solid;
-	border-right-color: #000000;
-	border-left-width: 1px;
+	border-left-width: 2px;
 	border-left-style: solid;
-	border-left-color: #000000;
 }
 
 .horariosHoras_first {
@@ -62,9 +58,31 @@
 	text-align: center;
 	vertical-align: middle;
 	height: 20px;
-	border-width: 1px;
-	border-style: solid;
 	border-color: #000000;
+	border-top-width: 2px;
+	border-top-style: solid;
+	border-left-width: 2px;
+	border-left-style: solid;
+	border-right-width: 2px;
+	border-right-style: solid;	
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+.horariosHoras_bottom {
+	font-size: 11px;
+	color: #333333;
+	background-color: #CCCCCC;
+	text-align: center;
+	vertical-align: middle;
+	height: 20px;
+	border-color: #000000;
+	border-left-width: 2px;
+	border-left-style: solid;
+	border-right-width: 2px;
+	border-right-style: solid;	
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
 }
 
 .timeTable_line{
@@ -75,97 +93,219 @@
 }
 
 .slot_start_top{
-	border-top-width: 1px;
+	border-color: #000000;
+	border-top-width: 2px;
 	border-top-style: solid;
-	border-top-color: #000000;
 }
 
 .slot_start_top_right{
-	border-top-width: 1px;
+	border-color: #000000;
+	border-top-width: 2px;
 	border-top-style: solid;
-	border-top-color: #000000;
 	border-right-width: 1px;
 	border-right-style: solid;
-	border-right-color: #000000;
+
+}
+
+.slot_start_top_right_last{
+	border-color: #000000;
+	border-top-width: 2px;
+	border-top-style: solid;
+	border-right-width: 2px;
+	border-right-style: solid;
 }
 
 .slot_start_right{
+	border-color: #000000;
 	border-right-width: 1px;
 	border-right-style: solid;
-	border-right-color: #000000;
+}
+
+.slot_start_right_last{
+	border-color: #000000;
+	border-right-width: 2px;
+	border-right-style: solid;
+}
+
+.slot_start_end_right{
+	border-color: #000000;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
 }
 
 .slot_right{
+	border-color: #000000;
 	border-right-width: 1px;
 	border-right-style: solid;
-	border-right-color: #000000;
+}
+
+.slot_right_last{
+	border-color: #000000;
+	border-right-width: 2px;
+	border-right-style: solid;
 }
 
 .slot_end_right{
+	border-color: #000000;
 	border-right-width: 1px;
 	border-right-style: solid;
-	border-right-color: #000000;
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
-	border-bottom-color: #000000;
+}
+
+.slot_end_right_last{
+	border-color: #000000;
+	border-right-width: 2px;
+	border-right-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
 }
 
 .slot_empty{
+	border-color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
+}
+
+.slot_empty_lessonAfter{
+	border-color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+.slot_empty_lessonAfter_last{
+	border-color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-right-width: 2px;
+	border-right-style: solid;
+}
+
+.slot_empty_lesson{
+	border-color: #000000;
 	border-right-width: 1px;
+	border-right-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
+}
+
+.slot_empty_last{
+	border-color: #000000;
+	border-right-width: 2px;
 	border-right-style: solid;
 	border-right-color: #000000;
 	border-bottom-width: 1px;
 	border-bottom-style: dashed;
-	border-bottom-color: #000000;
 }
 
 .slot_empty_right{
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: #000000;
+	border-color: #000000;
 	border-bottom-width: 1px;
 	border-bottom-style: dashed;
-	border-bottom-color: #000000;
+}
+
+.slot_empty_right_lessonAfter{
+	border-color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+.slot_empty_right_lesson{
+	border-color: #000000;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
+}
+
+.slot_empty_right_last{
+	border-color: #000000;
+	border-right-width: 2px;
+	border-right-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
 }
 
 .slot_empty_top_right{
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: #000000;
+	border-color: #000000;
 	border-bottom-width: 1px;
 	border-bottom-style: dashed;
-	border-bottom-color: #000000;
-	border-top-width: 1px;
+	border-top-width: 2px;
 	border-top-style: solid;
-	border-top-color: #000000;
 }
 
-.slot_empty_right_bottom{
-	border-right-width: 1px;
+.slot_empty_top_right_last{
+	border-color: #000000;
+	border-right-width: 2px;
 	border-right-style: solid;
-	border-right-color: #000000;
 	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #000000;
-}
-
-.slot_empty_bottom{
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #000000;
+	border-bottom-style: dashed;
+	border-top-width: 2px;
+	border-top-style: solid;
 }
 
 .slot_empty_top{
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: #000000;
+	border-color: #000000;
 	border-bottom-width: 1px;
 	border-bottom-style: dashed;
-	border-bottom-color: #000000;
+	border-top-width: 2px;
+	border-top-style: solid;
+}
+
+.slot_empty_top_last{
+	border-color: #000000;
+	border-right-width: 2px;
+	border-right-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
+	border-top-width: 2px;
+	border-top-style: solid;
+}
+
+.slot_empty_top_right_bottom{
+	border-color: #000000;
+	border-right-width: 1px;
+	border-right-style: dashed;
 	border-top-width: 1px;
 	border-top-style: solid;
-	border-top-color: #000000;
+}
+
+.slot_empty_right_lessonAfter_last{
+	border-color: #000000;
+	border-right-width: 2px;
+	border-right-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+.slot_empty_right_bottom{
+	border-color: #000000;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+}
+
+.slot_empty_right_bottom_last{
+	border-color: #000000;
+	border-right-width: 2px;
+	border-right-style: solid;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+}
+
+.slot_empty_bottom{
+	border-color: #000000;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+}
+
+.slot_empty_bottom_last{
+	border-color: #000000;
+	border-right-width: 2px;
+	border-right-style: solid;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
 }
