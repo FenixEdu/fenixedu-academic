@@ -19,7 +19,6 @@ import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 
 /**
- * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
