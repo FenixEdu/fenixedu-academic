@@ -39,7 +39,7 @@ import Util.TipoCurso;
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  * @author Fernanda Quitério 12/Fev/2004
  */
-public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
+public class StudentCurriculumAuthorizationFilter extends Filtro {
 
     public StudentCurriculumAuthorizationFilter() {
         super();

@@ -119,7 +119,6 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      */
     public Object execute(IUserView id, String service, String method, Object[] args)
             throws FenixServiceException, EJBException {
-        try {
             try {
                 Calendar serviceStartTime = null;
                 Calendar serviceEndTime = null;
@@ -147,35 +146,16 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                     verifyResultIsSerializable(service, method, serviceResult);
                 }
                 return serviceResult;
-            } catch (ExecutedServiceException ex) {
-                if (ex.getServiceThrownException() instanceof FenixServiceException) {
-                    throw (FenixServiceException) ex.getServiceThrownException();
-                }
-                throw ex;
-
-            } catch (ExecutedFilterException ex) {
-                if (ex.getCause() instanceof FenixServiceException) {
-                    System.out.println("ExecutedFilterException= " + ex.getCause().getClass().getName());
-                    throw (FenixServiceException) ex.getCause();
-                }
-                throw ex;
-
-            } catch (FilterChainFailedException ex) {
-                if (ex.getCause() instanceof FenixServiceException) {
-                    System.out.println("FilterChainFailedException= "
-                            + ex.getCause().getClass().getName());
-                    throw (FenixServiceException) ex.getCause();
-                }
-                //TODO: What's wrong with berserk?? It isn't throwing
-                // correct exception
-                System.out.println("else= " + ex.getClass().getName());
-                throw new NotAuthorizedException();
-
-            }
         } catch (Exception e) {
-            System.out.println("Exception= " + e.getClass().getName());
+            System.out.println("###################Exception= " + e.getClass().getName());
             throw (EJBException) new EJBException(e).initCause(e);
         }
+	        catch (Throwable t)
+	        {
+	            System.out.println("##################Throwable: " + t);
+	            t.printStackTrace();
+	            throw (EJBException) new EJBException(t.getMessage());
+	        }
     }
 
     private void verifyResultIsSerializable(Object service, String method, Object serviceResult) {

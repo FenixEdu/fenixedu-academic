@@ -607,6 +607,7 @@
          name="professorship"
          class-ref="Dominio.Professorship"
          proxy="true"
+		 refresh="true"
     >
     	<foreignkey field-ref="keyProfessorship"/>
     </reference-descriptor>

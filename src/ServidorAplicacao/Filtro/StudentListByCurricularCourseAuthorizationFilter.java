@@ -27,7 +27,7 @@ import Util.TipoCurso;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class StudentListByCurricularCourseAuthorizationFilter extends AccessControlFilter {
+public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 
     /**
      *  

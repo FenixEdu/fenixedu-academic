@@ -1,6 +1,8 @@
 package ServidorAplicacao.Filtro;
 
 import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.FilterParameters;
 import ServidorAplicacao.IUserView;
 
 /**
@@ -26,4 +28,12 @@ abstract public class Filtro extends AccessControlFilter
     protected Object[] getServiceCallArguments(ServiceRequest request) {
         return request.getArguments();
     }
+    
+    abstract public void execute (ServiceRequest request, ServiceResponse response) throws Exception;
+    
+    public void execute(ServiceRequest request, ServiceResponse response, FilterParameters filterParameters) throws Exception
+    {
+        this.execute(request, response);
+    }
+
 }

@@ -21,6 +21,8 @@ public abstract class ServiceUtils {
 
     public static Object executeService(IUserView userView, String serviceName, Object[] serviceArgs)
             throws FenixServiceException {
+        if (serviceArgs == null)
+            serviceArgs = new Object[0];
         return ServiceManagerServiceFactory.executeService(userView, serviceName, serviceArgs);
     }
 

@@ -15,7 +15,7 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.Student;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Filtro.AccessControlFilter;
+import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
@@ -28,7 +28,7 @@ import Util.TipoCurso;
  * @author Fernanda Quitério 13/Fev/2004
  *  
  */
-public class StudentShiftEnrollmentAuthorizationFilter extends AccessControlFilter {
+public class StudentShiftEnrollmentAuthorizationFilter extends Filtro {
 
     //	private static String DEGREE_LEEC_CODE = new String("LEEC");
 

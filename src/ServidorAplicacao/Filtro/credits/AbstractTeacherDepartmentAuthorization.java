@@ -13,8 +13,8 @@ import Dominio.IPessoa;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Filtro.AccessControlFilter;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
+import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -31,7 +31,7 @@ import Util.RoleType;
  * 
  * @author jpvl
  */
-public abstract class AbstractTeacherDepartmentAuthorization extends AccessControlFilter {
+public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
 
     /*
      * (non-Javadoc)
