@@ -7,7 +7,6 @@ package DataBeans;
 import java.util.List;
 import java.util.ListIterator;
 
-
 /**
  * @author asnr and scpo
  *
@@ -17,7 +16,6 @@ public class InfoSiteStudentGroup implements ISiteComponent {
 	private List infoSiteStudentInformationList;
 	private InfoStudentGroup infoStudentGroup;
 	private Object nrOfElements;
-
 
 	/**
 	* @return
@@ -29,11 +27,10 @@ public class InfoSiteStudentGroup implements ISiteComponent {
 	/**
 	* @param list
 	*/
-		public void setInfoStudentGroup(InfoStudentGroup infoStudentGroup) {
-			this.infoStudentGroup = infoStudentGroup;
-		}
-	
-	
+	public void setInfoStudentGroup(InfoStudentGroup infoStudentGroup) {
+		this.infoStudentGroup = infoStudentGroup;
+	}
+
 	/**
 	* @return
 	*/
@@ -44,13 +41,10 @@ public class InfoSiteStudentGroup implements ISiteComponent {
 	/**
 	* @param list
 	*/
-		public void setNrOfElements(Object nrOfElements) {
-			this.nrOfElements = nrOfElements;
-		}
-	
-	
-	
-	
+	public void setNrOfElements(Object nrOfElements) {
+		this.nrOfElements = nrOfElements;
+	}
+
 	/**
 	* @return
 	*/
@@ -67,14 +61,19 @@ public class InfoSiteStudentGroup implements ISiteComponent {
 
 	public boolean equals(Object objectToCompare) {
 		boolean result = false;
-				
-		if (objectToCompare instanceof InfoSiteStudentGroup){
-			result = (this.getInfoStudentGroup().equals(((InfoSiteStudentGroup) objectToCompare).getInfoStudentGroup()));
-			}
+
+		if (objectToCompare instanceof InfoSiteStudentGroup) {
+			if (this.getInfoStudentGroup() == null && ((InfoSiteStudentGroup) objectToCompare).getInfoStudentGroup() == null)
+				result = true;
+			else
+				result = (this.getInfoStudentGroup().equals(((InfoSiteStudentGroup) objectToCompare).getInfoStudentGroup()));
+
+		}
 
 		if (((InfoSiteStudentGroup) objectToCompare).getInfoSiteStudentInformationList() == null
-			&& this.getInfoSiteStudentInformationList() == null && result) {
-				
+			&& this.getInfoSiteStudentInformationList() == null
+			&& result) {
+
 			return true;
 		}
 
@@ -82,7 +81,7 @@ public class InfoSiteStudentGroup implements ISiteComponent {
 			|| this.getInfoSiteStudentInformationList() == null
 			|| ((InfoSiteStudentGroup) objectToCompare).getInfoSiteStudentInformationList().size()
 				!= this.getInfoSiteStudentInformationList().size()) {
-				
+
 			return false;
 		}
 
@@ -93,7 +92,7 @@ public class InfoSiteStudentGroup implements ISiteComponent {
 			InfoSiteStudentInformation infoSiteStudentInformation2 = (InfoSiteStudentInformation) iter2.next();
 
 			if (!infoSiteStudentInformation1.equals(infoSiteStudentInformation2)) {
-				
+
 				result = false;
 			}
 		}

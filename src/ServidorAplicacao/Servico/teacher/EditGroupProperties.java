@@ -168,26 +168,24 @@ public class EditGroupProperties implements IServico {
 			groupProperties = (IGroupProperties) persistentGroupProperties.readByOId(groupProperties, false);
 
 			if (checkIfAlreadyExists(infoGroupProperties, groupProperties)) {
-				result = checkIfIsPossibleToEdit(infoGroupProperties, groupProperties); 
-				//if (result.size() = 0) {
-					IDisciplinaExecucao executionCourse =
-						(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(objectCode), false);
+				result = checkIfIsPossibleToEdit(infoGroupProperties, groupProperties);
+				IDisciplinaExecucao executionCourse =
+					(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(objectCode), false);
 
-					groupProperties.setEnrolmentBeginDay(infoGroupProperties.getEnrolmentBeginDay());
-					groupProperties.setEnrolmentEndDay(infoGroupProperties.getEnrolmentEndDay());
-					groupProperties.setEnrolmentPolicy(infoGroupProperties.getEnrolmentPolicy());
-					groupProperties.setExecutionCourse(executionCourse);
-					groupProperties.setGroupMaximumNumber(infoGroupProperties.getGroupMaximumNumber());
-					groupProperties.setIdealCapacity(infoGroupProperties.getIdealCapacity());
-					groupProperties.setIdInternal(infoGroupProperties.getIdInternal());
-					groupProperties.setMaximumCapacity(infoGroupProperties.getMaximumCapacity());
-					groupProperties.setMinimumCapacity(infoGroupProperties.getMinimumCapacity());
+				groupProperties.setEnrolmentBeginDay(infoGroupProperties.getEnrolmentBeginDay());
+				groupProperties.setEnrolmentEndDay(infoGroupProperties.getEnrolmentEndDay());
+				groupProperties.setEnrolmentPolicy(infoGroupProperties.getEnrolmentPolicy());
+				groupProperties.setExecutionCourse(executionCourse);
+				groupProperties.setGroupMaximumNumber(infoGroupProperties.getGroupMaximumNumber());
+				groupProperties.setIdealCapacity(infoGroupProperties.getIdealCapacity());
+				groupProperties.setIdInternal(infoGroupProperties.getIdInternal());
+				groupProperties.setMaximumCapacity(infoGroupProperties.getMaximumCapacity());
+				groupProperties.setMinimumCapacity(infoGroupProperties.getMinimumCapacity());
 
-					groupProperties.setName(infoGroupProperties.getName());
-					groupProperties.setProjectDescription(infoGroupProperties.getProjectDescription());
-					groupProperties.setShiftType(infoGroupProperties.getShiftType());
-					persistentGroupProperties.lockWrite(groupProperties);
-				//}
+				groupProperties.setName(infoGroupProperties.getName());
+				groupProperties.setProjectDescription(infoGroupProperties.getProjectDescription());
+				groupProperties.setShiftType(infoGroupProperties.getShiftType());
+				persistentGroupProperties.lockWrite(groupProperties);
 
 			}
 		} catch (ExcepcaoPersistencia e) {

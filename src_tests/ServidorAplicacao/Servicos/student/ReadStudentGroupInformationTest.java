@@ -53,8 +53,8 @@ public class ReadStudentGroupInformationTest extends TestCaseReadServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		Object[] result = { new Integer(7)};
-		return result;
+	
+		return null;
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
@@ -86,7 +86,7 @@ public class ReadStudentGroupInformationTest extends TestCaseReadServices {
 			infoSiteStudentInformationList.add(infoSiteStudentInformation);
 			infoSiteStudentGroup.setInfoSiteStudentInformationList(infoSiteStudentInformationList);
 			infoSiteStudentGroup.setInfoStudentGroup(Cloner.copyIStudentGroup2InfoStudentGroup(studentGroup));
-									
+			infoSiteStudentGroup.setNrOfElements(new Integer(3));						
 			sp.confirmarTransaccao();
 		}catch (ExcepcaoPersistencia ex) {
 		ex.printStackTrace();;

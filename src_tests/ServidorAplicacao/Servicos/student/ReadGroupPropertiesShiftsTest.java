@@ -42,19 +42,18 @@ public class ReadGroupPropertiesShiftsTest extends TestCaseReadServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		Object[] result = { new Integer(6) };
+		Object[] result = { new Integer(6), new Integer(9) };
 		return result;
-	
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] result = { new Integer(5) };
+		Object[] result = { new Integer(5), new Integer(34) };
 		return result;
 
 	}
 
 	protected int getNumberOfItemsToRetrieve() {
-		return 2;
+		return 3;
 	}
 
 	protected Object getObjectToCompare() {

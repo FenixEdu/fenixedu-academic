@@ -152,7 +152,7 @@ public class ReadShiftsAndGroups implements IServico {
 
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
-			throw new FenixServiceException("error.impossibleReadProjectShifts");
+			throw new FenixServiceException("error.impossibleReadShiftsAndGroups");
 		}
 		infoSiteShiftsAndGroups.setInfoSiteGroupsByShiftList(infoSiteShiftsAndGroupsList);
 

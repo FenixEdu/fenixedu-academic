@@ -17,16 +17,14 @@ import ServidorAplicacao.Servicos.TestCaseCreateServices;
  */
 public class CreateStudentGroupTest extends TestCaseCreateServices {
 
-
 	IDisciplinaExecucao executionCourse = null;
-	
+
 	/**
 	 * @param testName
 	 */
 	public CreateStudentGroupTest(String testName) {
 		super(testName);
 	}
-
 
 	/**
 	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
@@ -39,11 +37,10 @@ public class CreateStudentGroupTest extends TestCaseCreateServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		
-		Object[] args = { new Integer(25),new Integer(1),new Integer(3),new Integer(9),null};
+
+		Object[] args = { new Integer(25), new Integer(1), new Integer(3), new Integer(9), null };
 		return args;
 	}
-	
 
 	/**
 	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
@@ -51,10 +48,11 @@ public class CreateStudentGroupTest extends TestCaseCreateServices {
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
 		List studentCodes = new ArrayList();
-		studentCodes.add(new Integer(10));
-		studentCodes.add(new Integer(11));
-		Object[] args = { new Integer(25),new Integer(5),new Integer(3),new Integer(9),studentCodes};
+		studentCodes.add(new String("14"));
+		studentCodes.add(new String("15"));
+		Object[] args = { new Integer(25), new Integer(5), new Integer(3), new Integer(9), studentCodes };
 		return args;
+
 	}
 
 	/**

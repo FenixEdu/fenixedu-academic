@@ -1,7 +1,10 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import java.util.ArrayList;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoSiteStudentGroup;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 
 /**
@@ -37,21 +40,26 @@ public class PrepareCreateStudentGroupTest extends TestCaseReadServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		Object[] result = {new Integer(26), new Integer(1)};
-		return result;
+	
+		return null;
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] result = {new Integer(25), new Integer(5)};
+		Object[] result = {new Integer(26), new Integer(1)};
 		return result;
+		
 	}
 
 	protected int getNumberOfItemsToRetrieve() {
-		return 5;
+		return 0;
 	}
 
 	protected Object getObjectToCompare() {
-		return null;
+		InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+		infoSiteStudentGroup.setInfoSiteStudentInformationList(new ArrayList());
+		infoSiteStudentGroup.setNrOfElements(new Integer(1));
+		return infoSiteStudentGroup;
+		
 	}
 
 }
