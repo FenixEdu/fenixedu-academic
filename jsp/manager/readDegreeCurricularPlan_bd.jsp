@@ -3,9 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
-<%@ page import="Util.Data" %>
-<%@ page import="java.util.Date" %>
-
 <table>
 	<tr>
 		<logic:present name="infoDegreeCurricularPlan">
