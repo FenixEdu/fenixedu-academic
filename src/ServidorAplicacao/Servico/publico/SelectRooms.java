@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoRoom;
+import DataBeans.util.Cloner;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -71,9 +72,10 @@ public class SelectRooms implements IServico {
 
 	  while (iter.hasNext()) {
 		sala = (ISala)iter.next();
-		salasView.add(new InfoRoom(sala.getNome(), sala.getEdificio(),
-				   sala.getPiso(), sala.getTipo(),
-				   sala.getCapacidadeNormal(), sala.getCapacidadeExame()));
+		salasView.add(Cloner.copyRoom2InfoRoom(sala));
+//		salasView.add(new InfoRoom(sala.getNome(), sala.getEdificio(),
+//				   sala.getPiso(), sala.getTipo(),
+//				   sala.getCapacidadeNormal(), sala.getCapacidadeExame()));
 	  }
 
 	  return salasView;

@@ -151,35 +151,11 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		throws Exception {
 		HttpSession session = request.getSession(false);
 		DynaActionForm indexForm = (DynaActionForm) form;
-
+		System.out.println("### ExecutionPeriod-chooseForViewRoom - IN");
 		IUserView userView = (IUserView) session.getAttribute("UserView");
 		GestorServicos gestor = GestorServicos.manager();
 
-		ArrayList infoExecutionPeriodList =
-			(ArrayList) request.getAttribute(
-				SessionConstants.LIST_INFOEXECUTIONPERIOD);
-		Integer index = (Integer) indexForm.get("index");
-
-		if (infoExecutionPeriodList != null && index != null) {
-			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) infoExecutionPeriodList.get(
-					index.intValue());
-			//			request.setAttribute(
-			//				"executionYearName",
-			//				infoExecutionPeriod.getInfoExecutionYear().getYear());
-			//			request.setAttribute(
-			//				"executionPeriodName",
-			//				infoExecutionPeriod.getName());
-			//
-			//			request.setAttribute(
-			//				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-			//				infoExecutionPeriodList.get(index.intValue()));
-
-			request.setAttribute(
-				SessionConstants.EXECUTION_PERIOD,
-				infoExecutionPeriod);
-		}
-
+		// get selected execution period
 		Object argsReadExecutionPeriods[] = {
 		};
 		ArrayList executionPeriods =
@@ -188,19 +164,29 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 				"ReadExecutionPeriods",
 				argsReadExecutionPeriods);
 
-		// if executionPeriod was previously selected,form has that
-		// value as default
-		InfoExecutionPeriod selectedExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-		if (selectedExecutionPeriod != null) {
+		Integer index = (Integer) indexForm.get("index");
+		InfoExecutionPeriod selectedInfoExecutionPeriod = null;
+		if (executionPeriods != null && index != null) {
+			selectedInfoExecutionPeriod =
+				(InfoExecutionPeriod) executionPeriods.get(index.intValue());
+			request.setAttribute(
+				SessionConstants.EXECUTION_PERIOD,
+				selectedInfoExecutionPeriod);
+			request.setAttribute(
+				SessionConstants.EXECUTION_PERIOD_OID,
+				selectedInfoExecutionPeriod.getIdInternal());
+		}
+
+		// set form with selected value
+		if (selectedInfoExecutionPeriod != null) {
 			indexForm = (DynaActionForm) form;
 			indexForm.set(
 				"index",
-				new Integer(executionPeriods.indexOf(selectedExecutionPeriod)));
+				new Integer(
+					executionPeriods.indexOf(selectedInfoExecutionPeriod)));
 		}
-		//----------------------------------------------
 
+		// create execution periods label/value bean
 		ArrayList executionPeriodsLabelValueList = new ArrayList();
 		for (int i = 0; i < executionPeriods.size(); i++) {
 			InfoExecutionPeriod infoExecutionPeriod =
@@ -212,18 +198,37 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 						+ infoExecutionPeriod.getInfoExecutionYear().getYear(),
 					"" + i));
 		}
-
-		request.setAttribute(
-			SessionConstants.LIST_INFOEXECUTIONPERIOD,
-			executionPeriods);
-
 		request.setAttribute(
 			SessionConstants.LABELLIST_EXECUTIONPERIOD,
 			executionPeriodsLabelValueList);
 
-		InfoRoom infoRoom = (InfoRoom) request.getAttribute("publico.infoRoom");
+		// read lessons of (previously selected) room in selected executionPeriod
+		InfoRoom infoRoom = null;
+		Object argsReadRoomByOID[] = new Object[1];
+		if (request.getParameter(SessionConstants.ROOM_OID) != null) {
+			argsReadRoomByOID[0] =
+				new Integer(request.getParameter(SessionConstants.ROOM_OID));
+		} else {
+			System.out.println(
+				"###### ExecutionPeriodDA-chooseViewRoom: missing ROOM_OID in request");
+		}
 
-		Object argsReadLessons[] = { selectedExecutionPeriod, infoRoom };
+		try {
+			infoRoom =
+				(InfoRoom) ServiceUtils.executeService(
+					null,
+					"ReadRoomByOID",
+					argsReadRoomByOID);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException();
+		}
+//		System.out.println("###### ExecutionPeriodDA-chooseViewRoom - infoRoom:" + infoRoom);
+		request.setAttribute(SessionConstants.ROOM, infoRoom);
+		request.setAttribute(SessionConstants.ROOM_OID,	infoRoom.getIdInternal());
+//		System.out.println("###### ExecutionPeriodDA-chooseViewRoom - infoExecutionPeriod:"
+//				+ selectedInfoExecutionPeriod);
+
+		Object argsReadLessons[] = { selectedInfoExecutionPeriod, infoRoom };
 
 		try {
 			List lessons;
@@ -240,7 +245,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException();
 		}
-
+		System.out.println("### ExecutionPeriod-chooseForViewRoom - OUT");
 		return mapping.findForward("viewRoom");
 	}
 

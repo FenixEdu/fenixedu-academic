@@ -21,6 +21,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ContextUtils {
 
 	public static final void setExecutionPeriodContext(HttpServletRequest request) {
+		System.out.println("### setExecutionPeriodContext - IN");
 		String executionPeriodOIDString =
 			(String) request.getAttribute(
 				SessionConstants.EXECUTION_PERIOD_OID);
@@ -64,6 +65,8 @@ public class ContextUtils {
 		// Place it in request
 		request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
 		request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+		System.out.println("### ExecutionPeriod in request- "+infoExecutionPeriod);
+		System.out.println("### setExecutionPeriodContext - OUT");		
 	}
 
 	/**

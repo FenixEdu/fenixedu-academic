@@ -1,11 +1,23 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <center><font color='#034D7A' size='5'> <b> <bean:message key="title.editarSala"/> </b> </font></center>
 <br/>
 <span class="error"><html:errors/></span>
 <html:form action="/editarSala">
+Index: <bean:write name="selectedRoomIndex" scope="request"/>
+	<bean:define id="infoRoomOID" name="<%= SessionConstants.ROOM_OID%>" scope="request"/>
+	<html:hidden property="<%= SessionConstants.ROOM_OID%>" value="<%=infoRoomOID.toString()%>"/>
+	<html:hidden property="selectRoomsName" value="<%= ""+request.getAttribute("selectRoomsName")%>"/>            
+	<html:hidden property="selectRoomsBuilding" value="<%= ""+request.getAttribute("selectRoomsBuilding")%>"/>
+	<html:hidden property="selectRoomsFloor" value="<%= ""+request.getAttribute("selectRoomsFloor")%>"/>
+	<html:hidden property="selectRoomsType" value="<%= ""+request.getAttribute("selectRoomsType")%>"/>
+	<html:hidden property="selectRoomsCapacityNormal" value="<%= ""+request.getAttribute("selectRoomsCapacityNormal")%>"/>
+	<html:hidden property="selectRoomsCapacityExame" value="<%= ""+request.getAttribute("selectRoomsCapacityExame")%>"/>
+	<html:hidden property="selectRoomsIndex" value="<%= ""+request.getAttribute("selectedRoomsIndex")%>"/>	
+	
   <table align="center" cellspacing="10">
     <tr>
       <td align="right" height="40"><bean:message key="sala.name"/></td>

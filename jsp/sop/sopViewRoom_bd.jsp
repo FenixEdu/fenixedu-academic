@@ -8,6 +8,7 @@
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 <h2><bean:message key="title.view.room"/></h2>
 <br />
+Periodo Execucao: <bean:write name="<%=SessionConstants.EXECUTION_PERIOD_OID%>" scope="request"/>
 <html:form action="/chooseExecutionPeriod">
 	<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
@@ -15,7 +16,10 @@
 		    <td nowrap="nowrap"><jsp:include page="selectExecutionPeriodList.jsp"/></td>
 			<td width="10"></td>
 			<td>
+				<bean:define id="infoRoomOID" name="<%= SessionConstants.ROOM%>" property="idInternal" scope="request"/>
 				<html:hidden property="method" value="chooseForViewRoom"/>
+				<html:hidden property="<%= SessionConstants.ROOM_OID%>" value="<%=infoRoomOID.toString()%>"/>
+				<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />				
 				<html:hidden property="page" value="1"/>
 			    <html:submit styleClass="inputbutton"><bean:message key="label.choose"/>
           		</html:submit>
@@ -24,7 +28,7 @@
 	</table>
 </html:form> 
 <br />
-<logic:present name="publico.infoRoom" scope="request">
+<logic:present name="<%= SessionConstants.ROOM%>" scope="request">
             <table width="100%">
                 <tr>
                     <td class="listClasses-header">
@@ -48,22 +52,22 @@
                 </tr>
                 <tr>
 					<td class="listClasses">
-						<bean:write name="publico.infoRoom" property="nome"/>
+						<bean:write name="<%= SessionConstants.ROOM%>" property="nome"/>
 					</td>
                     <td class="listClasses">
-                        <bean:write name="publico.infoRoom" property="tipo"/>
+                        <bean:write name="<%= SessionConstants.ROOM%>" property="tipo"/>
                     </td>
 					<td class="listClasses">
-						<bean:write name="publico.infoRoom" property="edificio"/>
+						<bean:write name="<%= SessionConstants.ROOM%>" property="edificio"/>
 					</td>
 					<td class="listClasses">
-						<bean:write name="publico.infoRoom" property="piso"/>
+						<bean:write name="<%= SessionConstants.ROOM%>" property="piso"/>
 					</td>
                     <td class="listClasses">
-                         <bean:write name="publico.infoRoom" property="capacidadeNormal"/>
+                         <bean:write name="<%= SessionConstants.ROOM%>" property="capacidadeNormal"/>
                     </td>
                     <td class="listClasses">
-                        <bean:write name="publico.infoRoom" property="capacidadeExame"/>
+                        <bean:write name="<%= SessionConstants.ROOM%>" property="capacidadeExame"/>
                     </td>
                 </tr>
             </table>
@@ -71,7 +75,7 @@
 	<br />	
 	<div align="center"><app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"/></div>
 	</logic:present>
-	<logic:notPresent name="publico.infoRoom" scope="request">
+	<logic:notPresent name="<%= SessionConstants.ROOM%>" scope="request">
 		<table align="center">
 			<tr>
 				<td>

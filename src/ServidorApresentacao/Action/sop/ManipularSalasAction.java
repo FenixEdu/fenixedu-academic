@@ -24,7 +24,11 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
+import ServidorApresentacao
+	.Action
+	.exceptions
+	.notAuthorizedActionDeleteException;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.Util;
 import Util.TipoSala;
 
@@ -56,9 +60,6 @@ public class ManipularSalasAction extends FenixAction {
 		return sala;
 	}
 
-	/**
-	 * @returns the name of the selected sala.
-	 **/
 	private List getSalas(HttpServletRequest request)
 		throws FenixActionException {
 
@@ -67,12 +68,12 @@ public class ManipularSalasAction extends FenixAction {
 		Object argsSelectRooms[] =
 			{
 				 new InfoRoom(
-					readRequestValue(request, "name"),
-					readRequestValue(request, "building"),
-					readIntegerRequestValue(request, "floor"),
-					readTypeRoomRequestValue(request, "type"),
-					readIntegerRequestValue(request, "capacityNormal"),
-					readIntegerRequestValue(request, "capacityExame"))};
+					readRequestValue(request, "selectRoomsName"),
+					readRequestValue(request, "selectRoomsBuilding"),
+					readIntegerRequestValue(request, "selectRoomsFloor"),
+					readTypeRoomRequestValue(request, "selectRoomsType"),
+					readIntegerRequestValue(request, "selectRoomsCapacityNormal"),
+					readIntegerRequestValue(request, "selectRoomsCapacityExame"))};
 
 		List listaSalasBean = null;
 		try {
@@ -133,9 +134,23 @@ public class ManipularSalasAction extends FenixAction {
 		HttpSession session = getSession(request);
 		InfoRoom salaBean = getSelectedSala(form, request);
 		request.removeAttribute(mapping.getAttribute());
-
 		request.setAttribute("salaFormBean", salaBean);
-		request.setAttribute("publico.infoRoom", salaBean);
+
+		request.setAttribute(SessionConstants.ROOM, salaBean);
+		request.setAttribute(
+			SessionConstants.ROOM_OID,
+			salaBean.getIdInternal());
+		request.setAttribute("name", readRequestValue(request, "name"));
+		request.setAttribute("building", readRequestValue(request, "building"));
+		request.setAttribute("floor", readRequestValue(request, "floor"));
+		request.setAttribute("type", readRequestValue(request, "type"));
+		request.setAttribute(
+			"capacityNormal",
+			readRequestValue(request, "capacityNormal"));
+		request.setAttribute(
+			"capacityExame",
+			readRequestValue(request, "capacityExame"));
+
 		return (mapping.findForward("VerSala"));
 	}
 
@@ -154,6 +169,30 @@ public class ManipularSalasAction extends FenixAction {
 
 		HttpSession session = getSession(request);
 		InfoRoom salaBean = getSelectedSala(form, request);
+		DynaActionForm posicaoSalaFormBean = (DynaActionForm) form;
+		Integer index = (Integer) posicaoSalaFormBean.get("index");
+		request.setAttribute("selectedRoomIndex",index);	
+			
+		request.setAttribute("selectRoomsName", readRequestValue(request, "selectRoomsName"));
+		request.setAttribute("selectRoomsBuilding", readRequestValue(request, "selectRoomsBuilding"));
+		request.setAttribute("selectRoomsFloor", readRequestValue(request, "selectRoomsFloor"));
+		request.setAttribute("selectRoomsType", readRequestValue(request, "selectRoomsType"));
+		request.setAttribute("selectRoomsCapacityNormal",readRequestValue(request, "selectRoomsCapacityNormal"));
+		request.setAttribute("selectRoomsCapacityExame",readRequestValue(request, "selectRoomsCapacityExame"));
+
+		System.out.println("### ManipularSalas - prepareEditRoom");
+		System.out.println("## SelectRooms-name:"+readRequestValue(request, "selectRoomsName"));
+		System.out.println("## SelectRooms-building-"+readRequestValue(request, "selectRoomsBuilding"));
+		System.out.println("## SelectRooms-floor-"+readIntegerRequestValue(request, "selectRoomsFloor"));
+		System.out.println("## SelectRooms-type-"+readTypeRoomRequestValue(request, "selectRoomsType"));
+		System.out.println("## SelectRooms-capacityExam-"+readIntegerRequestValue(request, "selectRoomsCapacityNormal"));
+		System.out.println("## SelectRooms-capacityNormal-"+readIntegerRequestValue(request, "selectRoomsCapacityExame") );
+		System.out.println("## SelectedRoomIndex-"+readRequestValue(request, "selectedRoomIndex") );		
+
+		request.setAttribute(SessionConstants.ROOM, salaBean);
+		request.setAttribute(
+			SessionConstants.ROOM_OID,
+			salaBean.getIdInternal());
 
 		List edificios = Util.readExistingBuldings(null, null);
 		List tipos = Util.readTypesOfRooms(null, null);
@@ -164,22 +203,23 @@ public class ManipularSalasAction extends FenixAction {
 
 		// create the bean that holds the information about the sala to edit
 		DynaActionFormClass cl;
-
 		ModuleConfig moduleConfig = (ModuleConfig) mapping.getModuleConfig();
-
 		FormBeanConfig formBeanConfig =
 			moduleConfig.findFormBeanConfig("roomForm");
 		cl = DynaActionFormClass.createDynaActionFormClass(formBeanConfig);
-
 		DynaActionForm criarSalaForm = (DynaActionForm) cl.newInstance();
-
 		criarSalaForm.set("name", salaBean.getNome());
 		criarSalaForm.set("building", salaBean.getEdificio());
-		criarSalaForm.set("floor", String.valueOf(salaBean.getPiso().intValue()));
+		criarSalaForm.set(
+			"floor",
+			String.valueOf(salaBean.getPiso().intValue()));
 		criarSalaForm.set("type", String.valueOf(salaBean.getTipo().getTipo()));
-		criarSalaForm.set("capacityNormal", String.valueOf(salaBean.getCapacidadeNormal()));
-		criarSalaForm.set("capacityExame", String.valueOf(salaBean.getCapacidadeExame()));
-
+		criarSalaForm.set(
+			"capacityNormal",
+			String.valueOf(salaBean.getCapacidadeNormal()));
+		criarSalaForm.set(
+			"capacityExame",
+			String.valueOf(salaBean.getCapacidadeExame()));
 		request.setAttribute("criarSalaForm", criarSalaForm);
 
 		return (mapping.findForward("EditarSala"));
@@ -217,7 +257,6 @@ public class ManipularSalasAction extends FenixAction {
 		/* Actualiza a lista de salas no "scope" de request */
 		listaSalasBean.remove(selectedSala);
 		request.removeAttribute(mapping.getAttribute());
-
 		if (listaSalasBean.isEmpty()) {
 			request.removeAttribute("publico.infoRooms");
 		} else {
@@ -234,7 +273,7 @@ public class ManipularSalasAction extends FenixAction {
 			obj = (String) request.getAttribute(name);
 		else if (
 			request.getParameter(name) != null
-				&& !request.getParameter(name).equals("") 
+				&& !request.getParameter(name).equals("")
 				&& !request.getParameter(name).equals("null"))
 			obj = (String) request.getParameter(name);
 		return obj;
@@ -259,4 +298,5 @@ public class ManipularSalasAction extends FenixAction {
 		else
 			return null;
 	}
+
 }

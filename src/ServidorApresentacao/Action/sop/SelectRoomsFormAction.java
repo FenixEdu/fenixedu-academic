@@ -12,13 +12,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import Util.TipoSala;
 
 /**
@@ -48,13 +46,6 @@ public class SelectRoomsFormAction extends FenixAction {
 						readTypeRoomFormValue(roomForm, "type"),
 						readIntegerFormValue(roomForm, "capacityNormal"),
 						readIntegerFormValue(roomForm, "capacityExame"))};
-
-			System.out.println("## selectRoomsArgs - name: "+readFormValue(roomForm, "name"));
-			System.out.println("## selectRoomsArgs - building: "+readFormValue(roomForm, "building"));
-			System.out.println("## selectRoomsArgs - floor: "+readIntegerFormValue(roomForm, "floor"));
-			System.out.println("## selectRoomsArgs - type: "+readTypeRoomFormValue(roomForm, "type"));
-			System.out.println("## selectRoomsArgs - capacityNormal: "+readIntegerFormValue(roomForm, "capacityNormal"));
-			System.out.println("## selectRoomsArgs - capacityExam: " +readIntegerFormValue(roomForm, "capacityExame"));			
 			List infoRooms;
 			try {
 				infoRooms =
@@ -70,48 +61,51 @@ public class SelectRoomsFormAction extends FenixAction {
 				Collections.sort(infoRooms);
 				request.removeAttribute("publico.infoRooms");
 				request.setAttribute("publico.infoRooms", infoRooms);
-				request.removeAttribute("name");
-				request.setAttribute("name", readFormValue(roomForm, "name"));
-				request.removeAttribute("building");
+				request.removeAttribute("selectRoomsName");
+				request.setAttribute("selectRoomsName", readFormValue(roomForm, "name"));
+				request.removeAttribute("selectRoomsBuilding");
 				request.setAttribute(
-					"building",
+					"selectRoomsBuilding",
 					readFormValue(roomForm, "building"));
-				request.removeAttribute("floor");
-				request.setAttribute("floor", readFormValue(roomForm, "floor"));
-				request.removeAttribute("type");
-				request.setAttribute("type", readFormValue(roomForm, "type"));
-				request.removeAttribute("capacityNormal");
-				request.setAttribute(
-					"capacityNormal",
-					readFormValue(roomForm, "capacityNormal"));
-				request.removeAttribute("capacityExame");
-				request.setAttribute(
-					"capacityExame",
-					readFormValue(roomForm, "capacityExame"));
+				request.removeAttribute("selectRoomsFloor");
+				request.setAttribute("selectRoomsFloor", readFormValue(roomForm, "floor"));
+				request.removeAttribute("selectRoomsType");
+				request.setAttribute("selectRoomsType", readFormValue(roomForm, "type"));
+				request.removeAttribute("selectRoomsCapacityNormal");
+				request.setAttribute("selectRoomsCapacityNormal",readFormValue(roomForm, "capacityNormal"));
+				request.removeAttribute("selectRoomsCapacityExame");
+				request.setAttribute("selectRoomsCapacityExame",readFormValue(roomForm, "capacityExame"));
 			} else {
 				request.removeAttribute("publico.infoRooms");
-				request.removeAttribute("name");
-				request.removeAttribute("building");
-				request.removeAttribute("floor");
-				request.removeAttribute("type");
-				request.removeAttribute("capacityNormal");
-				request.removeAttribute("capacityExame");
+				request.removeAttribute("selectRoomsName");
+				request.removeAttribute("selectRoomsBuilding");
+				request.removeAttribute("selectRoomsFloor");
+				request.removeAttribute("selectRoomsType");
+				request.removeAttribute("selectRoomsCapacityNormal");
+				request.removeAttribute("selectRoomsCapacityExame");
 			}
+			System.out.println("### SelectRoomsFormAction");
+			System.out.println("## SelectRooms-name:"+readRequestValue(request, "selectRoomsName"));
+			System.out.println("## SelectRooms-building-"+readRequestValue(request, "selectRoomsBuilding"));
+			System.out.println("## SelectRooms-floor-"+readIntegerRequestValue(request, "selectRoomsFloor"));
+			System.out.println("## SelectRooms-type-"+readTypeRoomRequestValue(request, "selectRoomsType"));
+			System.out.println("## SelectRooms-capacityExam-"+readIntegerRequestValue(request, "selectRoomsCapacityNormal"));
+			System.out.println("## SelectRooms-capacityNormal-"+readIntegerRequestValue(request, "selectRoomsCapacityExame") );
 
-			InfoExecutionPeriod executionPeriod;
-			Object args[] = {
-			};
-			try {
-				executionPeriod =
-					(InfoExecutionPeriod) gestor.executar(
-						null,
-						"ReadCurrentExecutionPeriod",
-						args);
-			} catch (FenixServiceException e1) {
-				throw new FenixActionException(e1);
-			}
-
-			RequestUtils.setExecutionPeriodToRequest(request, executionPeriod);
+//			InfoExecutionPeriod executionPeriod;
+//			Object args[] = {
+//			};
+//			try {
+//				executionPeriod =
+//					(InfoExecutionPeriod) gestor.executar(
+//						null,
+//						"ReadCurrentExecutionPeriod",
+//						args);
+//			} catch (FenixServiceException e1) {
+//				throw new FenixActionException(e1);
+//			}
+//
+//			RequestUtils.setExecutionPeriodToRequest(request, executionPeriod);
 			return mapping.findForward("Sucess");
 		} else
 			throw new FenixActionException();
@@ -146,4 +140,36 @@ public class SelectRoomsFormAction extends FenixAction {
 			return null;
 	}
 
+	private String readRequestValue(HttpServletRequest request, String name) {
+		String obj = null;
+		if (request.getAttribute(name) != null
+			&& !((String) request.getAttribute(name)).equals(""))
+			obj = (String) request.getAttribute(name);
+		else if (
+			request.getParameter(name) != null
+				&& !request.getParameter(name).equals("")
+				&& !request.getParameter(name).equals("null"))
+			obj = (String) request.getParameter(name);
+		return obj;
+	}
+
+	private Integer readIntegerRequestValue(
+		HttpServletRequest request,
+		String name) {
+		String obj = readRequestValue(request, name);
+		if (obj != null)
+			return new Integer(obj);
+		else
+			return null;
+	}
+
+	private TipoSala readTypeRoomRequestValue(
+		HttpServletRequest request,
+		String name) {
+		Integer obj = readIntegerRequestValue(request, name);
+		if (obj != null)
+			return new TipoSala(obj);
+		else
+			return null;
+	}
 }

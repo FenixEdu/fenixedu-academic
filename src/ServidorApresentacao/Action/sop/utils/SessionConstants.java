@@ -14,7 +14,7 @@ package ServidorApresentacao.Action.sop.utils;
  * 
  */
 public abstract class SessionConstants {
-	
+
 	// Constants for Student Shift Enrolment	
 	public static final String INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY ="INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY";
 
@@ -59,7 +59,8 @@ public abstract class SessionConstants {
 	public static final String DEGREES = "licenciaturas";
 	public static final String LIST_INFOEXECUTIONPERIOD = "infoExecutionPeriodList";	
 	public static final String LABELLIST_EXECUTIONPERIOD = "executionPeriodLabelList";	
-
+	public static final String ROOM = "room";
+	public static final String ROOM_OID = "roomOID";
 
      //	-------------------------------------------------------------------------------
 	 //    GesDis Constants - For Manager
