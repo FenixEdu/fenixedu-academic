@@ -22,7 +22,7 @@ public class EnrollmentInPreviousYearCurricularCourseRule implements IEnrollment
 
     public EnrollmentInPreviousYearCurricularCourseRule(IStudentCurricularPlan studentCurricularPlan) {
 
-        temporaryEnrollments = studentCurricularPlan.getStudentTemporarilyEnrolledEnrollments();
+        temporaryEnrollments = studentCurricularPlan.getAllStudentEnrolledEnrollments();
         studentBranch = studentCurricularPlan.getBranch();
     }
 

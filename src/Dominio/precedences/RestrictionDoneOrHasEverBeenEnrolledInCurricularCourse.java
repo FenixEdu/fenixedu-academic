@@ -17,7 +17,6 @@ public class RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse extends Rest
 	public boolean evaluate(PrecedenceContext precedenceContext)
 	{
 		ICurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
-		precedenceContext.getStudentCurricularPlan().calculateStudentAcumulatedEnrollments();
 		return super.evaluate(precedenceContext)
 			|| (precedenceContext.getStudentCurricularPlan().getCurricularCourseAcumulatedEnrollments(curricularCourse).intValue() > 0);
 	}

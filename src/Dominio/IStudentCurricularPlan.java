@@ -53,7 +53,7 @@ public interface IStudentCurricularPlan extends IDomainObject
             throws ExcepcaoPersistencia;
 	public List getAllStudentEnrolledEnrollments();
 	public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
-	public List getStudentTemporarilyEnrolledEnrollments();
+//	public List getStudentTemporarilyEnrolledEnrollments();
 	public Integer getMinimumNumberOfCoursesToEnroll();
 	public Integer getMaximumNumberOfCoursesToEnroll();
 	public Integer getMaximumNumberOfAcumulatedEnrollments();
@@ -61,7 +61,6 @@ public interface IStudentCurricularPlan extends IDomainObject
 	public int getNumberOfEnrolledCurricularCourses();
 	public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse);
 	public boolean isCurricularCourseEnrolled(ICurricularCourse curricularCourse);
-    public void calculateStudentAcumulatedEnrollments();
     public Integer getCurricularCourseAcumulatedEnrollments(ICurricularCourse curricularCourse);
 	public List getNotNeedToEnrollCurricularCourses();
 	public void setNotNeedToEnrollCurricularCourses(List notNeedToEnrollCurricularCourses);

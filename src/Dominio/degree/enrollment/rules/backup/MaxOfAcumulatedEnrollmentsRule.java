@@ -44,7 +44,6 @@ public class MaxOfAcumulatedEnrollmentsRule extends SelectionUponMaximumNumberEn
 //        });
 //
 //        acumulatedEnrollments = CollectionUtils.getCardinalityMap(curricularCourses);
-        studentCurricularPlan.calculateStudentAcumulatedEnrollments();
 
         this.studentCurricularPlan = studentCurricularPlan;
         enrolledEnrollments = studentCurricularPlan.getAllStudentEnrolledEnrollments();

@@ -18,7 +18,6 @@ public class MaximumNumberOfAcumulatedEnrollmentsRule implements IEnrollmentRule
 	public MaximumNumberOfAcumulatedEnrollmentsRule(IStudentCurricularPlan studentCurricularPlan)
 	{
 		this.studentCurricularPlan = studentCurricularPlan;
-		this.studentCurricularPlan.calculateStudentAcumulatedEnrollments();
 	}
 
 	public List apply(List curricularCoursesToBeEnrolledIn)
