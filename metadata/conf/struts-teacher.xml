@@ -185,16 +185,19 @@
 	<global-forwards type="org.apache.struts.action.ActionForward">
       <forward name="index" path="/index.do" redirect="true"/>
       <forward name="firstPage" path="/teacherAuthentication.jsp"/>
+     
     </global-forwards>
 
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
-
+     
+     <action path="/naoExecutado" forward="/error.jsp"/>
+	
 	<action name="accessAnnouncementManagementAction"
     	type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" path="/accessAnnouncementManagementAction">
         <forward name="AnnouncementManagement"  path="/announcementManagement.do" redirect="true"/>
 	</action>
-
+<!-- esta action faz sentido??????-->
 	<action path="/announcementManagement" forward="announcementManagement"/>
 
 	<action name="announcementManagementForm"
