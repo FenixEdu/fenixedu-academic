@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+<!DOCTYPE form-validation PUBLIC
+      "-//Apache Software Foundation//DTD Struts Validation Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/validation_1_1.dtd">
+-->
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+
+<form-validation>
+  <formset>
+    <!-- Validacao para o formulario de autenticacao -->
+    <form name="autenticacaoForm">
+      <field property="utilizador" depends="required">
+        <arg0 key="Utilizador" resource="false"/>
+      </field>
+
+      <field property="password" depends="required">
+        <arg0 key="Password" resource="false"/>
+      </field>
+    </form>
+
+    <!-- Validacao para o parametro nomeSitio -->
+    <form name="obterSitioForm">
+      <field property="nomeSitio" depends="required">
+        <arg0 key="Nome do sitio" resource="false"/>
+      </field>
+	</form>
+
+    <!-- Validacao para o parametro nomeSitio -->
+    <form name="obterSeccaoForm">
+    </form>
+
+    <!-- Validacao para o formulario de inserir item -->
+    <form name="docente.inserirItemForm">
+      <field property="nome" depends="required">
+        <arg0 key="Nome" resource="false"/>
+      </field>
+
+      <field property="texto" depends="required">
+        <arg0 key="Texto" resource="false"/>
+      </field>
+    </form>
+
+    <!-- Validacao para o formulario de editar item -->
+    <form name="docente.editarItemForm">
+      <field property="nome" depends="required">
+        <arg0 key="Nome" resource="false"/>
+      </field>
+
+      <field property="texto" depends="required">
+        <arg0 key="Texto" resource="false"/>
+      </field>
+    </form>
+    
+    <!-- Validacao para o formulario de inserir anuncio -->
+    <form name="docente.inserirAnuncioForm">
+      <field property="titulo" depends="required">
+        <arg0 key="Titulo" resource="false"/>
+      </field>
+      <field property="informacao" depends="required">
+        <arg0 key="Informacao" resource="false"/>
+      </field>
+    </form>
+    
+    <form name="docente.editarAnuncioForm">
+      <field property="titulo" depends="required">
+        <arg0 key="Titulo" resource="false"/>
+      </field>
+      <field property="informacao" depends="required">
+        <arg0 key="Informacao" resource="false"/>
+      </field>
+    </form>
+    
+    <!-- Validacao para o formulario de inserir referencia bibliografica -->
+    <form name="docente.inserirReferenciaBibliograficaForm">
+      <field property="titulo" depends="required">
+        <arg0 key="Titulo" resource="false"/>
+      </field>
+      <field property="ano" depends="required, integer">
+        <arg0 key="Ano" resource="false"/>
+      </field>
+    </form>
+    
+    <form name="docente.editarReferenciaBibliograficaForm">
+      <field property="titulo" depends="required">
+        <arg0 key="Titulo" resource="false"/>
+      </field>
+      <field property="ano" depends="required, integer">
+        <arg0 key="Ano" resource="false"/>
+      </field>
+    </form>
+    
+  </formset>
+</form-validation>
