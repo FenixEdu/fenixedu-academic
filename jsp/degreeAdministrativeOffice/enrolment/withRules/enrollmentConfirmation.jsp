@@ -113,7 +113,7 @@
 				<bean:write name="enrollmentElem" property="infoCurricularCourse.name"/>
 			</td>
 			<td class="listClasses">
-					<bean:message name="enrollmentElem" property="condition.name" bundle="ENUMERATION_RESOURCES"/>
+				<a href="@enrollment.faq.url@" target="_blank"><bean:message name="enrollmentElem" property="condition.name" bundle="ENUMERATION_RESOURCES"/></a>
 			</td>
 		</tr>
 	</logic:iterate>
