@@ -80,8 +80,9 @@ public abstract class SessionConstants {
 	public static final String DEGREE_LIST = "degree_list";
 	public static final String NEW_MASTER_DEGREE_CANDIDATE = "new_master_degree_candidate";
 	public static final String APPLICATION_INFO = "application_info";
+	public static final String CANDIDATE_SITUATION = "candidate_situation";
+	public static final String CANDIDATE_SITUATION_LIST = "candidate_situation_list";
 	
-
 	// Person constants
 	public static final String IDENTIFICATION_DOCUMENT_TYPE_LIST = "identification_document_type_list";
 

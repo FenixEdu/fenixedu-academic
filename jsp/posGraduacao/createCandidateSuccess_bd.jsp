@@ -1,10 +1,12 @@
+<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <html>
   <head>
-    <title><bean:message key="title.candidate.visualizeApplicationInfo" /></title>
+    <title><bean:message key="title.masterDegree.administrativeOffice.createCandidate" /></title>
   </head>
   <body>
     <div align="center">
@@ -13,6 +15,7 @@
       </font>
     </div>
     <table>
+    <bean:define id="newCandidate" name="<%= SessionConstants.NEW_MASTER_DEGREE_CANDIDATE %>" scope="session" />
       <logic:present name="newCandidate">
           <!-- Name -->
           <tr>

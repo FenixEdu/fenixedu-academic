@@ -72,27 +72,11 @@ public class CreateMasterDegreeCandidate implements IServico {
 			IPessoa person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(), 
 							 newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
 			
-			if (person == null) {
-				// Create the new Person
-				
-				person = new Pessoa();
-				person.setNome(newMasterDegreeCandidate.getInfoPerson().getNome());
-				person.setNumeroDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao());
-				person.setTipoDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
-				
-				// Generate Person Username
-				
-				String username = GenerateUsername.getUsername();
-				person.setUsername(username);
-				
-				sp.getIPessoaPersistente().escreverPessoa(person);
-			}
-			
 			// Read the Execution of this degree in the current execution Year
 			
 			ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeNameAndExecutionYear(
-			             newMasterDegreeCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getNome(),
-			             Cloner.copyInfoExecutionYear2IExecutionYear(newMasterDegreeCandidate.getInfoExecutionDegree().getInfoExecutionYear()));
+						 newMasterDegreeCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getNome(),
+						 Cloner.copyInfoExecutionYear2IExecutionYear(newMasterDegreeCandidate.getInfoExecutionDegree().getInfoExecutionYear()));
 			
 			// Create the Candidate
 			
@@ -121,6 +105,25 @@ public class CreateMasterDegreeCandidate implements IServico {
 								masterDegreeCandidate.getSpecialization());
 
 			masterDegreeCandidate.setCandidateNumber(number);
+			
+
+			if (person == null) {
+				// Create the new Person
+				
+				person = new Pessoa();
+				person.setNome(newMasterDegreeCandidate.getInfoPerson().getNome());
+				person.setNumeroDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao());
+				person.setTipoDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
+				
+				// Generate Person Username
+				
+				String username = GenerateUsername.getCandidateUsername(masterDegreeCandidate);
+				person.setUsername(username);
+				
+				sp.getIPessoaPersistente().escreverPessoa(person);
+			}
+			
+			masterDegreeCandidate.setPerson(person);
 			
 			// Write the new Candidate
 			sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);		

@@ -37,7 +37,7 @@ public class SituationName {
     public static final String DESISTIU_STRING = "Desistiu";
     public static final String SUPRA_NUMERARIO_STRING = "Supra Numerário";
     public static final String EXTRAORDINARIO_STRING = "Extraordinário";
-    public static final String DOCENTE_ENSINO_SUPERIOR_STRING = "Docento do Ensino Superior";
+    public static final String DOCENTE_ENSINO_SUPERIOR_STRING = "Docente do Ensino Superior";
     public static final String PRE_CANDIDATO_STRING = "Pré-Candidato";
 	public static final String DEFAULT = "[Escolha uma Situação]";
     
@@ -91,7 +91,7 @@ public class SituationName {
 	    return "ERRO!"; // Nunca e atingido
     }
     
-    public ArrayList toArrayList() {
+    public static ArrayList toArrayList() {
 		ArrayList result = new ArrayList();
 		result.add(new LabelValueBean(SituationName.DEFAULT, null));
 	    result.add(new LabelValueBean(SituationName.PENDENTE_STRING , SituationName.PENDENTE_STRING));

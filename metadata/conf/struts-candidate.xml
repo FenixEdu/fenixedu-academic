@@ -87,6 +87,7 @@
 		 parameter="method"
       	      type="ServidorApresentacao.Action.masterDegree.candidate.ChangeApplicationInfoDispatchAction">
       	  <forward name="Success" path="/changeSuccess.jsp"/>
+      	  <forward name="Unchangeable" path="/changeUnsuccess.jsp"/>
       	  <forward name="prepareReady" path="/changeApplicationInfo.jsp"/>
       </action>
 

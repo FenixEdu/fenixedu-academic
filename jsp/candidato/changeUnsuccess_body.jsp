@@ -1,6 +1,8 @@
+<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <html>
   <body>
@@ -12,27 +14,28 @@
     </div>  
    
    <table>
+   <bean:define id="situation" name="<%= SessionConstants.CANDIDATE_SITUATION %>" scope="session" />
     <logic:present name="situation">
         <!-- Situacao da Candidatura -->
         <tr>
-	        <td><h2><bean:message key="candidate.applicationInfoSituation" /></h2></td>
+	        <td><h2><bean:message key="label.candidate.applicationInfoSituation" /></h2></td>
         </tr>
         
         <!-- Situacao -->
         <tr>
-            <td><bean:message key="candidate.infoCandidateSituation" /></td>
+            <td><bean:message key="label.candidate.infoCandidateSituation" /></td>
             <td><bean:write name="situation" property="situation"/></td>
         </tr>
         
         <!-- Data da Situacao -->
         <tr>
-            <td><bean:message key="candidate.infoCandidateSituationDate" /></td>
+            <td><bean:message key="label.candidate.infoCandidateSituationDate" /></td>
             <td><bean:write name="situation" property="date"/></td>
         </tr>
         
         <!-- Observacoes -->
         <tr>
-            <td><bean:message key="candidate.infoCandidateSituationRemarks" /></td>
+            <td><bean:message key="label.candidate.infoCandidateSituationRemarks" /></td>
             <td><bean:write name="situation" property="remarks"/></td>
         </tr>
     </logic:present>

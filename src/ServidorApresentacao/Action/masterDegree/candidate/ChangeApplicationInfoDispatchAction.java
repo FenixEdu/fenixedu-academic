@@ -28,6 +28,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.SituationName;
 
 public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 
@@ -57,7 +58,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 	  changeArgs[0] = newMasterDegreeCandidate;
 	  changeArgs[1] = userView;
 
-	  userView = (IUserView) gestor.executar(userView, "ChangeApplicationInfo", changeArgs);
+	  gestor.executar(userView, "ChangeApplicationInfo", changeArgs);
  
 	  return mapping.findForward("Success");
 	} else
@@ -88,6 +89,12 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 		  result = gestor.executar(userView, "ReadActiveCandidateSituation", changeArgs);
 		
 		  InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result; 
+
+		  if (!infoMasterDegreeCandidate.getInfoCandidateSituation().getSituation().equals(SituationName.PENDENTE_STRING)){
+		  	session.setAttribute(SessionConstants.CANDIDATE_SITUATION, infoMasterDegreeCandidate.getInfoCandidateSituation());
+			return mapping.findForward("Unchangeable");
+		  }
+			
 
 		  changeApplicationInfoForm.set("majorDegree", infoMasterDegreeCandidate.getMajorDegree());
 		  changeApplicationInfoForm.set("majorDegreeSchool", infoMasterDegreeCandidate.getMajorDegreeSchool());
