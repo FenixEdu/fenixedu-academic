@@ -5,6 +5,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <table>
 <tr><td>
+	<html:link page="/alternativeSite.do?method=management">
+		<bean:message key="link.alternative"/>
+	</html:link>
+</tr>
+<tr><td>
 	<html:link page="/viewSite.do">
 	<bean:message key="link.home"/>
 </html:link>
