@@ -16,6 +16,12 @@
  			<b><bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/></b>
 		</td>
 	<tr>
+	<logic:present name="<%= SessionConstants.INFO_BRANCH %>" >
+		<bean:define id="infoBranch" name="<%= SessionConstants.INFO_BRANCH %>" scope="session" />
+	 		<td>Area de Especialização em <b><bean:write name="infoBranch" property="name"/></b>   			
+			</td>	
+		<tr>
+	</logic:present>
  		<td><p>O Aluno nº <bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/> - <b><bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/></b><p/></td>
     <tr>
  		<td>concluiu a parte escolar do curso de <bean:write name="infoStudentCurricularPlan" property="specialization"/> acima indicado, constituída pelas seguintes disciplinas e classificações:<br /><br /></td>

@@ -190,6 +190,7 @@ public abstract class SessionConstants {
 	public static final String DAYS_LIST = "days_list";
 	public static final String MONTHS_LIST = "months_list";
 	public static final String YEARS_LIST = "years_list";
+	public static final String INFO_BRANCH = "info_branch";
 	
 	
 
