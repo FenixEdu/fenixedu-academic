@@ -1,0 +1,38 @@
+<class-descriptor class="Dominio.Precedence" table="PRECEDENCE">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+	<field-descriptor name="keyCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
+    <reference-descriptor name="curricularCourse" class-ref="Dominio.CurricularCourse">
+	    <foreignkey field-ref="keyCurricularCourse"/>
+    </reference-descriptor>
+    <collection-descriptor name="restrictions" element-class-ref="Restriction" proxy="true">
+       <inverse-foreignkey field-ref="keyPrecedence"/>
+    </collection-descriptor> 
+</class-descriptor>
+
+<class-descriptor class="Dominio.Restriction">
+    <extent-class class-ref="Dominio.CurricularCourseRestriction" />
+    <extent-class class-ref="Dominio.NumberOfCurricularCourseDoneRestriction" />
+</class-descriptor>
+
+<class-descriptor class="Dominio.CurricularCourseDoneRestriction" table="RESTRICTION">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+    <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
+    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
+    <reference-descriptor name="precedence" class-ref="Dominio.Precedence" proxy="true">
+	    <foreignkey field-ref="keyPrecedence"/>
+    </reference-descriptor>
+	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
+    <reference-descriptor name="precedentCurricularCourse" class-ref="Dominio.CurricularCourse">
+	    <foreignkey field-ref="keyPrecedentCurricularCourse"/>
+    </reference-descriptor>
+</class-descriptor>
+
+<class-descriptor class="Dominio.NumberOfCurricularCourseDoneRestriction" table="RESTRICTION">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+    <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
+    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
+    <reference-descriptor name="precedence" class-ref="Dominio.Precedence" proxy="true">
+	    <foreignkey field-ref="keyPrecedence"/>
+    </reference-descriptor>
+	<field-descriptor name="numberOfCurricularCourseDone" column="NUMBER_OF_CURRICULAR_COURSE_DONE" jdbc-type="INTEGER" nullable="false"/>
+</class-descriptor>
