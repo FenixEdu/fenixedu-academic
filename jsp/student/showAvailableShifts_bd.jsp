@@ -109,31 +109,36 @@
 						<logic:iterate name="list" id="sublist" property="list" indexId="groupIndex">
 
 		<tr>
-		<td class="listClasses">
+		<bean:size id="rowspan" name="sublist" property="list" />
+		<td class="listClasses" rowspan="<bean:write name='rowspan'/>">
 			<bean:write name="sublist" property="type"/>
 		</td>
 		
-							<logic:iterate name="sublist" id="shiftWithLessons" property="list" >
-						<bean:define id="shift" name="shiftWithLessons" property="infoShift" />
-					
-				<td class="listClasses">				
-									<logic:iterate id="lesson" name="shiftWithLessons" property="infoLessons">
-									
-									<bean:write name="lesson" property="diaSemana"/>
-										das
-										<dt:format pattern="HH:mm">
-											<bean:write name="lesson" property="inicio.time.time"/>
-										</dt:format>
-										até as 
-										<dt:format pattern="HH:mm">
-											<bean:write name="lesson" property="fim.time.time"/>
-										</dt:format>
-										<br />
-									</logic:iterate>
-					</td>
-				<td class="listClasses">
-					<html:radio property='<%= "shifts[" + index + "]" %>' idName="shift" value="idInternal" />			
-				</td>					
+							<logic:iterate id="shiftWithLessons" name="sublist"  property="list" >
+								<tr>
+											<bean:define id="shift" name="shiftWithLessons" property="infoShift" />
+						
+									<td class="listClasses">				
+														<logic:iterate id="lesson" name="shiftWithLessons" property="infoLessons">
+														
+														<bean:write name="lesson" property="diaSemana"/>
+															das
+															<dt:format pattern="HH:mm">
+																<bean:write name="lesson" property="inicio.time.time"/>
+															</dt:format>
+															até as 
+															<dt:format pattern="HH:mm">
+																<bean:write name="lesson" property="fim.time.time"/>
+															</dt:format>
+															na 
+															<bean:write name="shift" property="infoRoom.nome"/>
+															<br />
+														</logic:iterate>
+										</td>
+									<td class="listClasses">
+										<html:radio property='<%= "shifts[" + index + "]" %>' idName="shift" value="idInternal" />			
+									</td>					
+								</tr>
 							</logic:iterate>
 					<bean:define id="index" value="<%=  (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
 				</tr>
