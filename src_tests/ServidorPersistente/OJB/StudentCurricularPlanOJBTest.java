@@ -346,5 +346,18 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 			fail("    -> Failed Reading Existing");
 		}
 	}
+	
+	public void testReadStudentActiveCurricularPlan(){
+		IStudentCurricularPlan studentCurricularPlan = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600),new TipoCurso(TipoCurso.LICENCIATURA));
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace(System.out);
+			fail("Reading Actual Student Curricular Plan");
+		}
+		assertNotNull("Student curricular plan must be not null!",studentCurricularPlan);
+	}
 
 }
