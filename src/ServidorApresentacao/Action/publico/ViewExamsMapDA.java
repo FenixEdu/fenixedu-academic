@@ -37,7 +37,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ViewExamsMapDA extends FenixContextDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
         HttpSession session = request.getSession(true);
 
         if (session != null) {
@@ -139,19 +139,17 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
     
     private InfoExamsMap getInfoExamsMap(InfoExecutionDegree infoExecutionDegree,InfoExecutionPeriod infoExecutionPeriod,
      							 List curricularYears, IUserView userView,HttpServletRequest request)  
-     							 throws FenixActionException{
+     							 throws FenixActionException, FenixServiceException{
 	   request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
 
 	   Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
 
 	   InfoExamsMap infoExamsMap;
 	   try {
-		   infoExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView,
+	       infoExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView,
 				   "ReadFilteredExamsMap", args);
 	   } catch (NonExistingServiceException e) {
 		   throw new NonExistingActionException(e);
-	   } catch (FenixServiceException e) {
-		   throw new FenixActionException(e);
 	   }
 	   return infoExamsMap;
 	   

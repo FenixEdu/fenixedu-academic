@@ -38,7 +38,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ViewExamsMapDANew extends FenixContextDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
         HttpSession session = request.getSession(true);
 
         if (session != null) {
@@ -103,8 +103,6 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
                         "ReadFilteredExamsMap", args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException(e);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
             }
             request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
 

@@ -470,7 +470,7 @@
             validate="false"
             type="ServidorApresentacao.Action.publico.ChooseExamsMapContextDA"
             >
-        <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
+		<forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
         <forward name="showExamsMap" path="/viewExamsMap.do?method=view"/>
     </action>
     <action input="/chooseExamsMapContextDANew.do?method=prepare&amp;page=0"
@@ -481,7 +481,7 @@
             validate="true"
             type="ServidorApresentacao.Action.publico.ChooseExamsMapContextDANew"
             >
-         <forward name="prepare" path="/chooseExamsMapContextDANew.do?method=choose&amp;page=0"/>
+        <forward name="prepare" path="/chooseExamsMapContextDANew.do?method=choose&amp;page=0"/>
         <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
         <forward name="showExamsMap" path="/viewExamsMapNew.do?method=view"/>
     </action>
@@ -491,7 +491,11 @@
             parameter="method"
             name="examForm"
             validate="false"
+			input="/notFound.do"
             >
+			<exception type="ServidorAplicacao.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
+                key="error.exams.period.undefined" 
+                handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
         <forward name="viewExamsMap" path="viewExamsMapOld"/>
         <forward name="viewExecutionCourseByCode" path="/siteViewer.do?method=executionCourseViewer"/>
         <forward name="Sucess" path="viewAllExamsByDegreeAndCurricularYear"/>
