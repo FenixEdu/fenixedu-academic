@@ -23,7 +23,7 @@ public class InfoExamStudentRoom extends InfoObject {
 	 * @param infoExam
 	 */
 	public void setInfoExam(InfoExam infoExam) {
-		this.this.infoExam = this.infoExam;
+		this.infoExam = infoExam;
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class InfoExamStudentRoom extends InfoObject {
 	 * @param infoRoom
 	 */
 	public void setInfoRoom(InfoRoom infoRoom) {
-		this.this.infoRoom = this.infoRoom;
+		this.infoRoom = infoRoom;
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class InfoExamStudentRoom extends InfoObject {
 	 * @param infoStudent
 	 */
 	public void setInfoStudent(InfoStudent infoStudent) {
-		this.this.infoStudent = this.infoStudent;
+		this.infoStudent = infoStudent;
 	}
 
 }
