@@ -315,7 +315,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
 		throws Exception {
 
-		HttpSession session = request.getSession(false);
+		//HttpSession session = request.getSession(false);
 		InfoExecutionPeriod infoExecutionPeriod =
 			(InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY);

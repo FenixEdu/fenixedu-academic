@@ -179,7 +179,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 
 	public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
 		try {
-			IStudentCurricularPlan studentCurricularPlan = null;
+			//IStudentCurricularPlan studentCurricularPlan = null;
 
 			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
 			oqlQuery += " where degreeCurricularPlan.name = $1";
@@ -198,7 +198,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 
 	public List readByUsername(String username) throws ExcepcaoPersistencia {
 		try {
-			IStudentCurricularPlan studentCurricularPlan = null;
+			//IStudentCurricularPlan studentCurricularPlan = null;
 
 			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
 			oqlQuery += " where student.person.username = $1";
@@ -217,7 +217,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 
 	public List readByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia {
 		try {
-			IStudentCurricularPlan studentCurricularPlan = null;
+			//IStudentCurricularPlan studentCurricularPlan = null;
 			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
 			oqlQuery += " where student.number = $1" ;
 			oqlQuery += " and student.degreeType = $2";

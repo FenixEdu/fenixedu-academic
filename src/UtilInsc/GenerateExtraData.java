@@ -23,8 +23,6 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
 import Dominio.Teacher;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -52,8 +50,8 @@ public class GenerateExtraData {
 
 	private static final int MAX = 5;
 
-	private static GestorServicos gestor = GestorServicos.manager();
-	private static IUserView userView = null;
+	//private static GestorServicos gestor = GestorServicos.manager();
+	//private static IUserView userView = null;
 	private static ISuportePersistente persistentSupport =	null;
 
 	public static void main(String[] args) {
@@ -187,7 +185,7 @@ public class GenerateExtraData {
 			try {
 				degreeCurricularPlan2 = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlan);
 				IExecutionYear executionYear = persistentExecutionYear.readActualExecutionYear();
-				ITeacher teacher = (ITeacher) persistentTeacher.readTeacherByNumber(new Integer(1));
+				ITeacher teacher = persistentTeacher.readTeacherByNumber(new Integer(1));
 				ICursoExecucao executionDegree = new CursoExecucao();
 				executionDegree.setCoordinator(teacher);
 				executionDegree.setCurricularPlan(degreeCurricularPlan2);
@@ -338,7 +336,7 @@ public class GenerateExtraData {
 		ICurricularCourse curricularCourseToAssociate = null;
 		IExecutionPeriod executionPeriod = null;
 		try {
-			curricularCourseToAssociate = (ICurricularCourse) persistentCurricularCourse.readCurricularCourseByNameAndCode(curricularCourse.getName(), curricularCourse.getCode());
+			curricularCourseToAssociate = persistentCurricularCourse.readCurricularCourseByNameAndCode(curricularCourse.getName(), curricularCourse.getCode());
 			executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace(System.out);

@@ -82,7 +82,7 @@ public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersiste
 			if (result.size() != 0) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
-					listade.add((IDegreeCurricularPlan) iterator.next());
+					listade.add(iterator.next());
 			}
 			return listade;
 		} catch (QueryException ex) {

@@ -142,7 +142,7 @@ public class BranchOJB extends ObjectFenixOJB implements IPersistentBranch {
 			if( (result != null) && (result.size() != 0) ) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
-					list.add((IBranch) iterator.next());
+					list.add(iterator.next());
 			}
 			return list;
 		} catch (QueryException ex) {

@@ -38,7 +38,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
 
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			GestorServicos gestor = GestorServicos.manager();
+			//GestorServicos gestor = GestorServicos.manager();
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 

@@ -132,10 +132,10 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 			if (infoEvaluation instanceof InfoExam) {
 				InfoExam infoExam = (InfoExam) infoEvaluation;
 				DynaValidatorForm periodForm = (DynaValidatorForm) form;
-				periodForm.set("enrollmentBeginDayFormatted", (String) infoExam.getEnrollmentBeginDayFormatted());
-				periodForm.set("enrollmentBeginTimeFormatted", (String) infoExam.getEnrollmentBeginTimeFormatted());
-				periodForm.set("enrollmentEndDayFormatted", (String) infoExam.getEnrollmentEndDayFormatted());
-				periodForm.set("enrollmentEndTimeFormatted", (String) infoExam.getEnrollmentEndTimeFormatted());
+				periodForm.set("enrollmentBeginDayFormatted", infoExam.getEnrollmentBeginDayFormatted());
+				periodForm.set("enrollmentBeginTimeFormatted", infoExam.getEnrollmentBeginTimeFormatted());
+				periodForm.set("enrollmentEndDayFormatted", infoExam.getEnrollmentEndDayFormatted());
+				periodForm.set("enrollmentEndTimeFormatted", infoExam.getEnrollmentEndTimeFormatted());
 			}
 		}
 

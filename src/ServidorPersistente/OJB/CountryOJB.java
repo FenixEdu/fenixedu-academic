@@ -124,7 +124,7 @@ public class CountryOJB extends ObjectFenixOJB implements IPersistentCountry {
             if (result.size() != 0) {
                 ListIterator iterator = result.listIterator();
                 while(iterator.hasNext())
-                    countryList.add((ICountry)iterator.next());
+                    countryList.add(iterator.next());
             }
             return countryList;
         } catch (QueryException ex) {

@@ -806,23 +806,23 @@ public class ExecutionPeriodOJB
 		}
 	}
 
-	private class PREDICATE_ANY_EXECUTION_COURSE implements Predicate {
-
-		private List executionCourses;
-
-		public PREDICATE_ANY_EXECUTION_COURSE(List executionCourses) {
-			this.executionCourses = executionCourses;
-		}
-
-		public boolean evaluate(Object arg0) {
-			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) arg0;
-
-			return CollectionUtils.find(
-				this.executionCourses,
-				new PREDICATE_EXECUTION_COURSE(executionCourse))
-				!= null;
-		}
-	}
+//	private class PREDICATE_ANY_EXECUTION_COURSE implements Predicate {
+//
+//		private List executionCourses;
+//
+//		public PREDICATE_ANY_EXECUTION_COURSE(List executionCourses) {
+//			this.executionCourses = executionCourses;
+//		}
+//
+//		public boolean evaluate(Object arg0) {
+//			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) arg0;
+//
+//			return CollectionUtils.find(
+//				this.executionCourses,
+//				new PREDICATE_EXECUTION_COURSE(executionCourse))
+//				!= null;
+//		}
+//	}
 
 	private class PREDICATE_LESSON implements Predicate {
 

@@ -2,9 +2,7 @@ package ServidorApresentacao.TagLib.sop.v3.renderers;
 
 import java.util.List;
 
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
-import DataBeans.InfoShift;
 import ServidorApresentacao.TagLib.sop.v3.LessonSlot;
 import ServidorApresentacao.TagLib.sop.v3.LessonSlotContentRenderer;
 
@@ -25,9 +23,9 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer
 
 		List infoShiftList = lesson.getInfoShiftList();
 		for (int index = 0; index < infoShiftList.size(); index++) {
-			InfoShift infoShift = (InfoShift) infoShiftList.get(index);
-			InfoExecutionCourse infoExecutionCourse =
-				infoShift.getInfoDisciplinaExecucao();
+			//InfoShift infoShift = (InfoShift) infoShiftList.get(index);
+			//InfoExecutionCourse infoExecutionCourse =
+			//	infoShift.getInfoDisciplinaExecucao();
 			strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(
 				")&nbsp;");
 		}

@@ -189,8 +189,8 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
 		for (int i = 0; i < examsMapSlot.getExams().size(); i++) {
 			InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);
-			InfoExecutionCourse infoExecutionCourse =
-				infoExam.getInfoExecutionCourse();
+			//InfoExecutionCourse infoExecutionCourse =
+			//	infoExam.getInfoExecutionCourse();
 			String courseInitials =
 				infoExam.getInfoExecutionCourse().getSigla();
 

@@ -125,7 +125,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			if ((result != null) && (result.size() != 0)) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
-					list.add((ICurricularCourse) iterator.next());
+					list.add(iterator.next());
 			}
 			return list;
 		} catch (QueryException ex) {
@@ -151,7 +151,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			if ((result != null) && (result.size() != 0)) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
-					list.add((ICurricularCourse) iterator.next());
+					list.add(iterator.next());
 			}
 			return list;
 
@@ -214,7 +214,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			if ((result != null) && (result.size() != 0)) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
-					list.add((ICurricularCourse) iterator.next());
+					list.add(iterator.next());
 			}
 			return list;
 

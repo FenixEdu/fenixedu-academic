@@ -25,7 +25,7 @@ public class PrepararCriarSalaFormAction extends FenixDispatchAction {
 					 HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 			
-	  HttpSession sessao = getSession(request);
+	  //HttpSession sessao = getSession(request);
 
 	  List edificios = Util.readExistingBuldings("*", null);
 	  List tipos = Util.readTypesOfRooms("*", null);
@@ -44,7 +44,7 @@ public class PrepararCriarSalaFormAction extends FenixDispatchAction {
 					 HttpServletRequest request, HttpServletResponse response)
 		throws Exception
 	{
-	  HttpSession sessao = getSession(request);
+	  //HttpSession sessao = getSession(request);
     
 	  List edificios = Util.readExistingBuldings("escolher", "");
 	  List tipos = Util.readTypesOfRooms("escolher", "");

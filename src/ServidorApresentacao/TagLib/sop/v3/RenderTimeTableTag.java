@@ -37,11 +37,11 @@ public final class RenderTimeTableTag extends TagSupport {
 	private final Integer slotSizeMinutes = new Integer(30);
 	
 
-	private final int HORA_MINIMA = 8;
-	private final int HORA_MAXIMA = 24;
+	//private final int HORA_MINIMA = 8;
+	//private final int HORA_MAXIMA = 24;
 
 	// Factor de divisão das celulas.
-	private final int COL_SPAN_FACTOR = 24;
+	//private final int COL_SPAN_FACTOR = 24;
 	
 	private ColorPicker colorPicker;
 

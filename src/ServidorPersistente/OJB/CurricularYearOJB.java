@@ -106,7 +106,7 @@ public class CurricularYearOJB extends ObjectFenixOJB implements IPersistentCurr
 			if( (result != null) && (result.size() != 0) ) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
-					list.add((ICurricularYear) iterator.next());
+					list.add(iterator.next());
 			}
 			return list;
 		} catch (QueryException ex) {

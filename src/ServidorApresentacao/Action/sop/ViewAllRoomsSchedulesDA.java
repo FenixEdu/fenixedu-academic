@@ -32,9 +32,9 @@ public class ViewAllRoomsSchedulesDA  extends FenixContextDispatchAction {
 
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			GestorServicos gestor = GestorServicos.manager();
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			//GestorServicos gestor = GestorServicos.manager();
+			//IUserView userView =
+			//	(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 			/* Criar o bean de pavilhoes */				
 			List pavillionsNamesList = new ArrayList();

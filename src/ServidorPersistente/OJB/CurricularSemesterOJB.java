@@ -109,7 +109,7 @@ public class CurricularSemesterOJB extends ObjectFenixOJB implements IPersistent
 			if( (result != null) && (result.size() != 0) ) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
-					list.add((ICurricularSemester) iterator.next());
+					list.add(iterator.next());
 			}
 			return list;
 		} catch (QueryException ex) {

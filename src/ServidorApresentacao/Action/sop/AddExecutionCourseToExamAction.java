@@ -30,7 +30,7 @@ public class AddExecutionCourseToExamAction extends FenixAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession(false);
+		//HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
 		InfoExecutionCourse executionCourse =

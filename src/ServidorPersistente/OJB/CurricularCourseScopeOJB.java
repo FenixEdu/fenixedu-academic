@@ -135,7 +135,7 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 			if ((result != null) && (result.size() != 0)) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
-					list.add((ICurricularCourseScope) iterator.next());
+					list.add(iterator.next());
 			}
 			return list;
 		} catch (QueryException ex) {

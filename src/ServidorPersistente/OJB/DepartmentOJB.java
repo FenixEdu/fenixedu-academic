@@ -132,7 +132,7 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
             if (result.size() != 0) {
                 ListIterator iterator = result.listIterator();
                 while(iterator.hasNext())
-                    listade.add((IDepartment)iterator.next());
+                    listade.add(iterator.next());
             }
             return listade;
         } catch (QueryException ex) {

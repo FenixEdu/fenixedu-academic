@@ -15,7 +15,6 @@ import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -23,9 +22,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
 
 /**
@@ -40,8 +37,8 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession(false);
-		IUserView userView = SessionUtils.getUserView(request);
+		//HttpSession session = request.getSession(false);
+		//IUserView userView = SessionUtils.getUserView(request);
 
 		String nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
 		if (nextPage != null)
@@ -74,8 +71,8 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession(false);
-		IUserView userView = SessionUtils.getUserView(request);
+		//HttpSession session = request.getSession(false);
+		//IUserView userView = SessionUtils.getUserView(request);
 
 		DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
 

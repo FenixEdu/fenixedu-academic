@@ -101,7 +101,7 @@ public class DisciplinaDepartamentoOJB extends ObjectFenixOJB implements IDiscip
             if (result.size() != 0) {
                 ListIterator iterator = result.listIterator();
                 while(iterator.hasNext())
-                    listade.add((IDisciplinaDepartamento)iterator.next());
+                    listade.add(iterator.next());
             }
             return listade;
         } catch (QueryException ex) {

@@ -140,7 +140,7 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
             if(result.size() != 0) {
                 ListIterator iterator = result.listIterator();
                 while(iterator.hasNext())
-                    listap.add((IPessoa)iterator.next());
+                    listap.add(iterator.next());
             }
             return listap;
         } catch(QueryException ex) {

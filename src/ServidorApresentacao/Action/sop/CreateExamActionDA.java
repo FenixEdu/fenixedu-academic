@@ -5,7 +5,6 @@ import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -35,7 +34,7 @@ public class CreateExamActionDA extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-			HttpSession session = request.getSession(false);
+			//HttpSession session = request.getSession(false);
 			
 			String nextPage = request.getParameter("nextPage");
 			request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
@@ -69,7 +68,7 @@ public class CreateExamActionDA extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-			HttpSession session = request.getSession(false);
+			//HttpSession session = request.getSession(false);
 			IUserView userView = SessionUtils.getUserView(request);
 
 			DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;

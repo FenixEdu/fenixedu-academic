@@ -41,7 +41,7 @@ public abstract class RequestUtils {
 
 		List executionCourseList = SessionUtils.getExecutionCourses(request);
 
-		HttpSession session = request.getSession(false);
+		//HttpSession session = request.getSession(false);
 
 		InfoExecutionPeriod infoExecutionPeriod =
 			(InfoExecutionPeriod) request.getAttribute(
@@ -350,7 +350,7 @@ public abstract class RequestUtils {
 	public static final InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
+		//HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
 		// Read executionPeriod from request

@@ -17,9 +17,7 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.odmg.HasBroker;
 import org.odmg.QueryException;
 
 import Dominio.CursoExecucao;
@@ -111,7 +109,7 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
 	 * @see ServidorPersistente.ICursoExecucaoPersistente#readByExecutionYear(Dominio.IExecutionYear)
 	 */
 	public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia {
-		PersistenceBroker broker = ((HasBroker) odmg.currentTransaction()).getBroker();
+		//PersistenceBroker broker = ((HasBroker) odmg.currentTransaction()).getBroker();
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("executionYear.year", executionYear.getYear());
