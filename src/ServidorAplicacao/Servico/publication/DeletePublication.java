@@ -21,17 +21,13 @@ public class DeletePublication implements IService {
 	}
 
 	public void run(final Integer publicationId) throws ExcepcaoPersistencia {
-	    System.out.println("dentro do run:inicio");
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 		
 		IPersistentPublication persistentPublication = sp.getIPersistentPublication();
-
-		System.out.println("dentro do run:agora");
 
 		//IPublication publication = (IPublication)persistentPublication.readByOID(Publication.class,publicationId);
 		
 		persistentPublication.deleteByOID(Publication.class,publicationId);
 		
-		System.out.println("dentro do run:fim");
 	}
 }

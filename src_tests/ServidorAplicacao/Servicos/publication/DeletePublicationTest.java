@@ -58,8 +58,8 @@ public class DeletePublicationTest extends ServiceTestCase {
             
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets_templates/servicos/publication/testDeletePublicationOKExpectedDataSet.xml");
 
-            System.out.println(getNameOfServiceToBeTested() + " was SUCCESSFULLY run by class: "
-                    + this.getClass().getName());
+            System.out.println(getNameOfServiceToBeTested() + " was SUCCESSFULLY run by test: "
+                    + "testDeletePublicationOK");
         } catch (Exception e) {
             fail("Deleting Publication " + e);
         }
@@ -76,8 +76,8 @@ public class DeletePublicationTest extends ServiceTestCase {
             fail(getNameOfServiceToBeTested() + "failed since it deleted a non existant publication");
             
         } catch (Exception e) {
-            System.out.println(getNameOfServiceToBeTested() + " was SUCCESSFULLY run by class: "
-                    + this.getClass().getName());
+            System.out.println(getNameOfServiceToBeTested() + " was SUCCESSFULLY run by test: "
+                    + "testDeletePublicationNonExistent");
             
         }
     }

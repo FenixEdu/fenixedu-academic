@@ -132,6 +132,7 @@
                encoding="${encoding}"
                fork="yes">
 			<include name="ServidorAplicacao/Servicos/publication/*Test.java"/>
+			<include name="ServidorAplicacao/Filtros/publication/*Test.java"/>
 		</javac>
 	</target>
 	
@@ -144,6 +145,7 @@
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
                 	<include name="ServidorAplicacao/Servicos/publication/*Test.java"/>                  
+					<include name="ServidorAplicacao/Filtros/publication/*Test.java"/>
                 </fileset>
             </batchtest>
             <classpath>

@@ -52,13 +52,11 @@ public class PublicationAuthorAuthorizationFilter extends DomainObjectAuthorizat
                     Publication.class, objectId);
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             IAuthor author = persistentAuthor.readAuthorByKeyPerson(teacher.getPerson().getIdInternal());
-            System.out.println("author we're looking for: "+author.getKeyPerson());
             
             //check if the teacher is any of the owners of the publication
             Iterator iterator = publication.getPublicationAuthors().iterator();
             while (iterator.hasNext()) {
                 IAuthor ownerAuthor = (IAuthor) iterator.next();
-                System.out.println("teachernumber: "+ownerAuthor.getKeyPerson());
                 if (ownerAuthor.getKeyPerson().equals(author.getKeyPerson()))
                         return true;
             }
@@ -68,9 +66,7 @@ public class PublicationAuthorAuthorizationFilter extends DomainObjectAuthorizat
         } catch (ExcepcaoPersistencia e) {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
-        } catch (Exception e) {
-            System.out.println("Filter error(Unknown): " + e.getMessage());
-            return false;
         }
+  
     }
 }
