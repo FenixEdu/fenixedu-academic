@@ -79,3 +79,10 @@ INSERT INTO professorships VALUES (1, 26);
 DELETE FROM responsablefor;
 INSERT INTO responsablefor VALUES (1, 25);
 INSERT INTO responsablefor VALUES (1, 26);
+
+#
+# Data for table 'announcement'
+#
+
+DELETE FROM announcement;
+INSERT INTO announcement VALUES (1, 'announcement1', '2003-01-21', '2003-01-21', 'information1', 1);
