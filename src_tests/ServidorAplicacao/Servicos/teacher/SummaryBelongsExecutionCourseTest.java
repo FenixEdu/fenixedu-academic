@@ -16,10 +16,10 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public abstract class SummaryBelongsExecutionCourseTestCase
+public abstract class SummaryBelongsExecutionCourseTest
 	extends ServiceNeedsAuthenticationTestCase {
 
-	protected SummaryBelongsExecutionCourseTestCase(String name) {
+	protected SummaryBelongsExecutionCourseTest(String name) {
 		super(name);
 	}
 

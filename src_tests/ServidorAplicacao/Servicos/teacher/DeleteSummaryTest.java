@@ -9,18 +9,18 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
  * @author Sérgio Montelobo
  * 
  */
-public class DeleteSummaryTest extends SummaryBelongsExecutionCourseTestCase {
+public class DeleteSummaryTest extends SummaryBelongsExecutionCourseTest {
 
 	public DeleteSummaryTest(String testName) {
 		super(testName);
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testDeleteSummaryDataSet.xml";
+		return "etc/datasets/servicos/teacher/testDeleteSummaryDataSet.xml";
 	}
 
 	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/testExpectedDeleteSummaryDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedDeleteSummaryDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {

@@ -32,11 +32,11 @@ public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testInsertSummaryDataSet.xml";
+		return "etc/datasets/servicos/teacher/testInsertSummaryDataSet.xml";
 	}
 
 	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/testExpectedInsertSummaryDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedInsertSummaryDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {

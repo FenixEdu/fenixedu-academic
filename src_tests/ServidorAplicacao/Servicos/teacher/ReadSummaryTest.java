@@ -17,7 +17,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Leonor Almeida
  * @author Sérgio Montelobo
  */
-public class ReadSummaryTest extends SummaryBelongsExecutionCourseTestCase {
+public class ReadSummaryTest extends SummaryBelongsExecutionCourseTest {
 
 	/**
 	 * @param testName
@@ -27,11 +27,7 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testReadSummaryDataSet.xml";
-	}
-
-	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/testExpectedReadSummaryDataSet.xml";
+		return "etc/datasets/servicos/teacher/testReadSummaryDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {
@@ -108,7 +104,7 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 
 			assertTrue(newSummary.compareTo(oldSummary));
 			// verifica se a base de dados nao foi alterada
-			compareDataSet(getExpectedDataSetFilePath());
+			compareDataSet(getDataSetFilePath());
 		}
 		catch (FenixServiceException ex) {
 			fail("Reading the Summary of a Site" + ex);

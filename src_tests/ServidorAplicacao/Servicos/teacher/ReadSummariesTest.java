@@ -24,11 +24,7 @@ public class ReadSummariesTest extends ServiceNeedsAuthenticationTestCase {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testReadSummariesDataSet.xml";
-	}
-
-	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/testExpectedReadSummariesDataSet.xml"; 
+		return "etc/datasets/servicos/teacher/testReadSummariesDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {
@@ -93,7 +89,7 @@ public class ReadSummariesTest extends ServiceNeedsAuthenticationTestCase {
 			assertEquals(infoSummaries.size(), 2);
 			
 			// verifica se a base de dados nao foi alterada
-			compareDataSet(getExpectedDataSetFilePath());
+			compareDataSet(getDataSetFilePath());
 		} catch (FenixServiceException ex) {
 			fail("Reading the Summaries of a Site with summaries" + ex);
 		} catch (Exception ex) {
@@ -126,7 +122,7 @@ public class ReadSummariesTest extends ServiceNeedsAuthenticationTestCase {
 			List infoSummaries = infoSiteSummaries.getInfoSummaries();
 			assertEquals(infoSummaries.size(), 0);
 			// verifica se a base de dados nao foi alterada
-			compareDataSet(getExpectedDataSetFilePath());
+			compareDataSet(getDataSetFilePath());
 		} catch (FenixServiceException ex) {
 			fail("Reading the Summaries of a Site without summaries" + ex);
 		} catch (Exception ex) {

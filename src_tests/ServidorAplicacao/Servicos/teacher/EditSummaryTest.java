@@ -17,7 +17,7 @@ import Util.TipoAula;
  * @author Leonor Almeida
  * @author Sérgio Montelobo
  */
-public class EditSummaryTest extends SummaryBelongsExecutionCourseTestCase {
+public class EditSummaryTest extends SummaryBelongsExecutionCourseTest {
 
 	/**
 	 * @param testName
@@ -27,11 +27,11 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testEditSummaryDataSet.xml";
+		return "etc/datasets/servicos/teacher/testEditSummaryDataSet.xml";
 	}
 
 	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/testExpectedEditSummaryDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedEditSummaryDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {
