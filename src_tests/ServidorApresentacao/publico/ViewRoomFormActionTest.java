@@ -30,7 +30,7 @@ public class ViewRoomFormActionTest extends TestCasePresentation {
 	public void setUp() {
 		super.setUp();
 		// define ficheiro de configuração Struts a utilizar
-		setServletConfigFile("/WEB-INF/tests/web-publico.xml");
+		setServletConfigFile("/WEB-INF/web.xml");
 
 	}
 
@@ -74,7 +74,7 @@ public class ViewRoomFormActionTest extends TestCasePresentation {
 		//verifica ausencia de erros
 		verifyNoActionErrors();
 	}
-
+	// TODO: do this test
 	//  public void testUnsuccessfulSelectRooms() {      
 	//	// define mapping de origem
 	//	setRequestPathInfo("publico", "/viewRoom");
