@@ -181,8 +181,12 @@ public abstract class SessionConstants {
 	public static final String RESPONSIBLE_EMPLOYEE = "responsible_employee";
 	public static final String DISSERTATION_TITLE = "dissertation_title";
 	public static final String LAST_MODIFICATION = "last_modification";
-	
-	
+	public static final String JURIES_LIST = "juries_list";
+	public static final String CLASSIFICATION = "classification";
+	public static final String FINAL_RESULT = "final_result";
+	public static final String ATTACHED_COPIES_NUMBER = "attached_copies_number";
+	public static final String PROOF_DATE = "proof_date";
+	public static final String THESIS_DELIVERY_DATE = "thesis_delivery_date";
 	
 	
 	
