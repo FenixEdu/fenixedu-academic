@@ -42,7 +42,19 @@
 		<move file="build.properties"
 			  tofile="build.properties_backup"
 			  />
-		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-tests.properties"
+		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-tests_extra.properties"
+			 todir="./"
+			 />
+		<move file="build_fenix-tests.properties"
+			  tofile="build.properties"
+			  />
+		<property file="build.properties"/>
+
+		<!-- Deploy the application-->
+		<antcall target="deploy"/>
+
+		<delete file="build.properties"/>
+		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-tests_intra.properties"
 			 todir="./"
 			 />
 		<move file="build_fenix-tests.properties"
