@@ -304,8 +304,8 @@
 	
 	<action path="/viewSite"
         type="ServidorApresentacao.Action.teacher.ReadSite">    
-   <!--  <forward name="viewSite" path="/viewSite.jsp"/>          -->
-		<forward name="viewSite" path="df.page.initial.management.execution_course"/>
+	  <forward name="viewSite" path="/viewSite.jsp"/>   
+   <!--		<forward name="viewSite" path="df.page.initial.management.execution_course"/> -->
 	</action>
 	
 	<!-- Insert Section -->
