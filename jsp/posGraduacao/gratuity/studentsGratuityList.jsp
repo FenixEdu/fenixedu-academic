@@ -66,6 +66,8 @@
 					<center><bean:message key="label.number"/></center></html:link></th>
 				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=studentName&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
 					<center><bean:message key="label.masterDegree.administrativeOffice.studentName"/></center></html:link></th>
+				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=scplan&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
+					<center><bean:message key="label.masterDegree.gratuity.SCPlan"/></center></html:link></th>	
 				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=gratuitySituation&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
 					<center><bean:message key="label.masterDegree.administrativeOffice.guide.reimbursementGuide.state"/></center></html:link></th>
 				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=payedValue&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
@@ -74,6 +76,7 @@
 					<center><bean:message key="label.masterDegree.gratuity.notPayedValue"/></center></html:link></th>
 				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=insurance&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
 					<center><bean:message key="label.masterDegree.gratuity.insurance"/></center></html:link></th>					
+				
 			</tr>
 			<logic:iterate id="infoGratuitySituation" name="infoGratuitySituationList" indexId="row">
 				<bean:define id="isEven">
@@ -86,6 +89,7 @@
 					<tr>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.number"/></center></td>
 						<td bgcolor='#C0C0C0'><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/></td>
+						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.stringPt"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:message key="<%= "label.gratuitySituationType." + situationType.toString()%>"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>	
@@ -97,6 +101,7 @@
 					<tr>
 						<td><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.number"/></center></td>
 						<td><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/></td>
+						<td><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.stringPt"/></center></td>
 						<td><center><bean:message key="<%= "label.gratuitySituationType." + situationType.toString()%>"/></center></td>
 						<td><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>
 						<td><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>

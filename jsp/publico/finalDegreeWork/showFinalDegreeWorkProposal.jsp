@@ -193,6 +193,16 @@
 		</tr>
 		<tr>
 			<td bgcolor="#a2aebc" align="center" colspan="3">
+				<bean:message key="label.teacher.finalWork.deliverable"/>
+			</td>
+		</tr>
+		<tr>
+			<td bgcolor="#eae7e4" align="center" colspan="3">
+				<bean:write name="finalDegreeWorkProposal" property="deliverable"/>
+			</td>
+		</tr>
+		<tr>
+			<td bgcolor="#a2aebc" align="center" colspan="3">
 				<bean:message key="label.teacher.finalWork.url"/>
 			</td>
 		</tr>

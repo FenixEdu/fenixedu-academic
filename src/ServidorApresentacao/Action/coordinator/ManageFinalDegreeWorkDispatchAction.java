@@ -287,8 +287,13 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
                     }
                     finalWorkForm.set("observations", infoProposal.getObservations());
                     finalWorkForm.set("location", infoProposal.getLocation());
-                    finalWorkForm.set("companyAdress", infoProposal.getCompanyAdress());
-                    finalWorkForm.set("companyName", infoProposal.getCompanionName());
+
+					finalWorkForm.set(
+						"companyAdress",
+						infoProposal.getCompanyAdress());
+					finalWorkForm.set(
+						"companyName",
+						infoProposal.getCompanyName());
                     if (infoProposal.getOrientator() != null
                             && infoProposal.getOrientator().getIdInternal() != null)
                     {
