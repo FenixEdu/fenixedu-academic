@@ -30,9 +30,11 @@ public class CursoExecucao implements ICursoExecucao {
 	public CursoExecucao() {
 	}
 
-	public CursoExecucao(String anoLectivo, ICurso curso) {
+	public CursoExecucao(String anoLectivo, ICurso curso,IExecutionYear executionYear,IPlanoCurricularCurso curricularPlan) {
 		setAnoLectivo(anoLectivo);
 		setCurso(curso);
+		setExecutionYear(executionYear);
+		setCurricularPlan(curricularPlan);
 	}
 
 	public Integer getCodigoInterno() {

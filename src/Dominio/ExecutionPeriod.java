@@ -17,7 +17,13 @@ public class ExecutionPeriod implements IExecutionPeriod {
 	 * Constructor for ExecutionPeriod.
 	 */
 	public ExecutionPeriod() {
-		super();
+			super();
+		
+		}
+	public ExecutionPeriod(String name,IExecutionYear executionYear) {
+		setName(name);
+		setExecutionYear(executionYear);
+		
 	}
 
 	/**

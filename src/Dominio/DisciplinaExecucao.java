@@ -28,7 +28,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
     public DisciplinaExecucao() { }
     public DisciplinaExecucao(String nome, String sigla, String programa,
                               ICursoExecucao licenciaturaExecucao,Double theoreticalHours, 
-                              Double praticalHours, Double theoPratHours, Double labHours) {
+                              Double praticalHours, Double theoPratHours, Double labHours,IExecutionPeriod executionPeriod) {
         setNome(nome);
         setSigla(sigla);
         setLicenciaturaExecucao(licenciaturaExecucao);
@@ -38,6 +38,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 		setPraticalHours(praticalHours);
 		setTheoPratHours(theoPratHours);
 		setLabHours(labHours);
+		setExecutionPeriod(executionPeriod);
     }
 
 

@@ -7,8 +7,10 @@ import java.util.StringTokenizer;
 
 import Dominio.Curso;
 import Dominio.CursoExecucao;
+import Dominio.ExecutionYear;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
+import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.PlanoCurricularCurso;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -95,9 +97,10 @@ public class LoadDegrees extends DataFileLoader{
 			degreeCurricularPlanDAO.lockWrite(degreeCurricularPlan);
 
 			// Criar licenciaturas execução.
-
+			IExecutionYear executionYear = new ExecutionYear("2002/03");
+			IPlanoCurricularCurso curricularPlan = new PlanoCurricularCurso("planoCurricular",degree);
 			ICursoExecucao executionDegree =
-				new CursoExecucao("2002/2003", degree);
+				new CursoExecucao("2002/2003", degree,executionYear,curricularPlan);
 
 			iLicenciaturaExecucaoPersistente.lockWrite(executionDegree);
 
