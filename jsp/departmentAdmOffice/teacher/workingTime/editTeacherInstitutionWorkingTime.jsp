@@ -2,20 +2,19 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
-<bean:define id="hoursPattern">HH:mm</bean:define>
-<%--
-<bean:define id="infoTeacher" name="infoProfessorship" property="infoTeacher" scope="request" />
-<bean:define id="infoExecutionCourse" name="infoProfessorship" property="infoExecutionCourse" scope="request" />
+
+<bean:define id="infoTeacher" name="infoTeacher" scope="request" />
+<bean:define id="infoExecutionPeriod" name="infoExecutionPeriod" scope="request" />
+
 
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
 	<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/> <br />
 
-	<b> <bean:message key="label.execution-course.name" /></b> <bean:write name="infoExecutionCourse" property="nome"/>
+	<b> <bean:message key="label.execution-period.name" /></b> <bean:write name="infoExecutionPeriod" property="name"/>
 </p>
---%>
+
 <h3>
 	<logic:present name="infoTeacherInstitutionWorkingTime">
 		<bean:message key="label.teacher-institution-working-time.edit"/>
@@ -24,6 +23,11 @@
 		<bean:message key="label.teacher-institution-working-time.create"/>			
 	</logic:notPresent>
 </h3>
+<logic:messagesPresent>
+	<html:errors/>
+</logic:messagesPresent>
+
+
 <html:form action="/manageTeacherInstitutionWorkingTime">
 	<html:hidden property="method" value="edit"/>
 	<html:hidden property="page" value="1"/>	
@@ -42,7 +46,7 @@
 
 		<tr>
 			<td>
-				<bean:message key="label.teacher-institution-working-time.start-time"/>(<i><bean:write name="hoursPattern"/></i>)
+				<bean:message key="label.teacher-institution-working-time.start-time"/>
 			</td>
 			<td>
 				<html:text property="startTimeHour" size="3"/>:<html:text property="startTimeMinutes" size="3"/>
@@ -50,7 +54,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="label.teacher-institution-working-time.end-time"/>(<i><bean:write name="hoursPattern"/></i>)
+				<bean:message key="label.teacher-institution-working-time.end-time"/>
 			</td>
 			<td>
 				<html:text property="endTimeHour" size="3"/>:<html:text property="endTimeMinutes" size="3"/>
