@@ -1,0 +1,17 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<!-- ======================================================= -->
+	<!-- Master layout -->
+	<!-- ======================================================= -->
+	<!-- Master layout and default tiles used by all pages -->
+	<definition name="definition.student.masterPage" page="/fenixLayoutStudent_2col_photo.jsp">
+	  <put name="title" value=".IST - portalEstudante" />
+	  <put name="serviceName" value="Portal do Estudante" />	
+	  <put name="navGeral" value="" />
+	  <put name="photos" value="/student/commonEntrPhotosStudent.jsp" />
+	  <put name="body" value="/student/main_bd.jsp" />
+	  <put name="footer" value="/student/commonFooterStudent.jsp" />
+	</definition>
+</tiles-definitions>
