@@ -2,11 +2,17 @@
  * Created on 14/Nov/2003
  *  
  */
-package ServidorAplicacao.Filtro.teacher;
+package ServidorAplicacao.Filtro.gesdis;
 
+import java.util.List;
+
+import DataBeans.InfoExecutionCourse;
+import DataBeans.gesdis.InfoCourseReport;
+import Dominio.DisciplinaExecucao;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
-import Dominio.teacher.Career;
-import Dominio.teacher.ICareer;
+import Dominio.ResponsibleFor;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
@@ -14,10 +20,11 @@ import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.teacher.IPersistentCareer;
 import Util.RoleType;
 
 /**
@@ -25,10 +32,11 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class CareerTeacherAuthorizationFilter extends AuthorizationByRoleFilter
+public class EditCourseInformationAuthorizationFilter extends AuthorizationByRoleFilter
 {
 
-    private static CareerTeacherAuthorizationFilter instance = new CareerTeacherAuthorizationFilter();
+    private static EditCourseInformationAuthorizationFilter instance =
+        new EditCourseInformationAuthorizationFilter();
 
     /**
 	 * The singleton access method of this class.
@@ -40,7 +48,7 @@ public class CareerTeacherAuthorizationFilter extends AuthorizationByRoleFilter
         return instance;
     }
 
-    private CareerTeacherAuthorizationFilter()
+    private EditCourseInformationAuthorizationFilter()
     {
     }
 
@@ -64,7 +72,7 @@ public class CareerTeacherAuthorizationFilter extends AuthorizationByRoleFilter
                 && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())))
                 || (id == null)
                 || (id.getRoles() == null)
-                || ((arguments[0] != null) && (!careerBelongsToTeacher(id, (Integer) arguments[0]))))
+                || (!isResponsibleFor(id, (InfoCourseReport) arguments[1])))
             {
                 throw new NotAuthorizedException();
             }
@@ -74,18 +82,29 @@ public class CareerTeacherAuthorizationFilter extends AuthorizationByRoleFilter
         }
     }
 
-    private boolean careerBelongsToTeacher(IUserView id, Integer careerId)
+    private boolean isResponsibleFor(IUserView id, InfoCourseReport infoCourseReport)
     {
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCareer persistentCareer = sp.getIPersistentCareer();
+            
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            ICareer career = (ICareer) persistentCareer.readByOID(Career.class, careerId);
+            Integer teacherId = teacher.getIdInternal();
 
-            if (!career.getTeacher().equals(teacher))
+            InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
+            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+                sp.getIDisciplinaExecucaoPersistente();
+            IDisciplinaExecucao executionCourse =
+                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+                    new DisciplinaExecucao(infoExecutionCourse.getIdInternal()),
+                    false);
+
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+            IResponsibleFor responsibleFor = new ResponsibleFor(teacher, executionCourse);
+
+            if (!responsiblesFor.contains(responsibleFor))
                 return false;
             return true;
         } catch (ExcepcaoPersistencia e)
@@ -95,7 +114,6 @@ public class CareerTeacherAuthorizationFilter extends AuthorizationByRoleFilter
         } catch (Exception e)
         {
             System.out.println("Filter error(Unknown): " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }

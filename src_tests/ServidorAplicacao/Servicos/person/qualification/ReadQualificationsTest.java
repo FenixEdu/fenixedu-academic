@@ -81,7 +81,7 @@ public class ReadQualificationsTest extends QualificationServiceNeedsAuthenticat
 		//Grant Owner qualification
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(1));
-		info.setPersonInfo(getInfoPersonGO());
+		info.setInfoPerson(getInfoPersonGO());
 
 		Integer infoManagerPersonCode = new Integer(17);
 
@@ -96,7 +96,7 @@ public class ReadQualificationsTest extends QualificationServiceNeedsAuthenticat
 		//Teacher qualification
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(4));
-		info.setPersonInfo(getInfoPersonT());
+		info.setInfoPerson(getInfoPersonT());
 
 		Integer infoManagerPersonCode = new Integer(18);
 
@@ -258,7 +258,7 @@ public class ReadQualificationsTest extends QualificationServiceNeedsAuthenticat
 			Object[] argserv = getAuthorizeArgumentsGrantOwnerManager();
 
 			//Invalid qualification
-			 ((InfoQualification) argserv[1]).getPersonInfo().setIdInternal(null);
+			 ((InfoQualification) argserv[1]).getInfoPerson().setIdInternal(null);
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 

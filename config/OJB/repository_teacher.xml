@@ -42,6 +42,7 @@
 <class-descriptor class="Dominio.teacher.WeeklyOcupation" table="WEEKLY_OCUPATION">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="research" column="RESEARCH" jdbc-type="INTEGER"/>
+    <field-descriptor name="management" column="MANAGEMENT" jdbc-type="INTEGER"/>
     <field-descriptor name="other" column="OTHER" jdbc-type="INTEGER"/>
 	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 	<reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
@@ -64,7 +65,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="providerRegimeType" 
     				  column="PROVIDER_REGIME_TYPE" 
-    				  conversion="ServidorPersistente.Conversores.ServiceProviderTypeFieldConversion" 
+    				  conversion="ServidorPersistente.Conversores.ProviderRegimeTypeFieldConversion" 
     				  jdbc-type="INTEGER"/>
     <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
     <reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">

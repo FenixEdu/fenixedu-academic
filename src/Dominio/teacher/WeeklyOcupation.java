@@ -15,6 +15,7 @@ import Dominio.ITeacher;
 public class WeeklyOcupation extends DomainObject implements IWeeklyOcupation
 {
     private Integer research;
+    private Integer management;
     private Integer other;
     private ITeacher teacher;
     private Integer keyTeacher;
@@ -92,6 +93,22 @@ public class WeeklyOcupation extends DomainObject implements IWeeklyOcupation
     public void setKeyTeacher(Integer keyTeacher)
     {
         this.keyTeacher = keyTeacher;
+    }
+
+    /**
+     * @return Returns the management.
+     */
+    public Integer getManagement()
+    {
+        return management;
+    }
+
+    /**
+     * @param management The management to set.
+     */
+    public void setManagement(Integer management)
+    {
+        this.management = management;
     }
 
 }

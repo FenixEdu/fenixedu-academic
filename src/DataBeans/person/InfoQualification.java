@@ -34,7 +34,7 @@ public class InfoQualification extends InfoObject
 					&& getSchool().equals(((InfoQualification) obj).getSchool())
 					&& getTitle().equals(((InfoQualification) obj).getTitle())
 					&& getYear().equals(((InfoQualification) obj).getYear())
-					&& getPersonInfo().equals(((InfoQualification) obj).getPersonInfo());
+					&& getInfoPerson().equals(((InfoQualification) obj).getInfoPerson());
 		}
 		return result;
 	}
@@ -42,7 +42,7 @@ public class InfoQualification extends InfoObject
 	/**
 	 * @return InfoPerson
 	 */
-	public InfoPerson getPersonInfo()
+	public InfoPerson getInfoPerson()
 	{
 		return infoPerson;
 	}
@@ -85,7 +85,7 @@ public class InfoQualification extends InfoObject
 	 * @param infoPerson
 	 *                    The personInfo to set
 	 */
-	public void setPersonInfo(InfoPerson infoPerson)
+	public void setInfoPerson(InfoPerson infoPerson)
 	{
 		this.infoPerson = infoPerson;
 	}

@@ -1,82 +1,121 @@
 /*
  * Created on 12/Nov/2003
- * 
- * To change the template for this generated file go to Window - Preferences -
- * Java - Code Generation - Code and Comments
+ *  
  */
 package ServidorAplicacao.Servico.gesdis;
 
-import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import DataBeans.InfoObject;
+import DataBeans.gesdis.InfoCourseReport;
+import DataBeans.util.Cloner;
+import Dominio.IDomainObject;
 import Dominio.gesdis.ICourseReport;
-import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- * 
- * To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Generation - Code and Comments
+ *  
  */
-public class EditCourseInformation implements IServico {
+public class EditCourseInformation extends EditDomainObjectService
+{
 
-	private static EditCourseInformation service = new EditCourseInformation();
-	
-	/**
+    private static EditCourseInformation service = new EditCourseInformation();
+
+    /**
 	 * The singleton access method of this class.
 	 */
-	public static EditCourseInformation getService() {
-		return service;
-	}
-	
-	/**
+    public static EditCourseInformation getService()
+    {
+        return service;
+    }
+
+    /**
 	 * The constructor of this class.
 	 */
-	private EditCourseInformation() {
-	}
-	
-	/**
+    private EditCourseInformation()
+    {
+    }
+
+    /**
 	 * The name of the service
 	 */
-	public final String getNome() {
-		return "EditCourseInformation";
-	}
+    public final String getNome()
+    {
+        return "EditCourseInformation";
+    }
 
-	/**
+    /**
 	 * Executes the service.
 	 */
-	public Boolean run(Integer executionCourseId, String report)
-		throws FenixServiceException {
+    //	public Boolean run(Integer executionCourseId, InfoCourseReport infoCourseReport)
+    //		throws FenixServiceException {
+    //
+    //		try {
+    //			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    //			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+    //				sp.getIDisciplinaExecucaoPersistente();
+    //
+    //			IDisciplinaExecucao executionCourse =
+    //				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+    //					new DisciplinaExecucao(executionCourseId),
+    //					false);
+    //
+    //			IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
+    //            ICourseReport oldCourseReport = Cloner.copyInfoCourseReport2ICourseReport(infoCourseReport);
+    //            
+    //            ICourseReport newCourseReport = new CourseReport();
+    //            newCourseReport.setIdInternal(oldCourseReport.getIdInternal());
+    //			persistentCourseReport.simpleLockWrite(newCourseReport);
+    //            PropertyUtils.copyProperties(newCourseReport, oldCourseReport);
+    //
+    //			return new Boolean(true);
+    //		} catch (Exception e) {
+    //			throw new FenixServiceException(e);
+    //		}
+    //	}
 
-		try {
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
+	 */
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
+    {
+        IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
+        return persistentCourseReport;
+    }
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
+	 */
+    protected IDomainObject clone2DomainObject(InfoObject infoObject)
+    {
+        ICourseReport courseReport =
+            Cloner.copyInfoCourseReport2ICourseReport((InfoCourseReport) infoObject);
+        return courseReport;
+    }
 
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-					new DisciplinaExecucao(executionCourseId),
-					false);
+    protected boolean canCreate(IDomainObject domainObject, ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
+        IDisciplinaExecucaoPersistente persistentExecutionCourse =
+            sp.getIDisciplinaExecucaoPersistente();
 
-			IPersistentCourseReport persistentCourseReport =
-				sp.getIPersistentCourseReport();
+        ICourseReport oldCourseReport = (ICourseReport) domainObject;
+        ICourseReport newCourseReport =
+            persistentCourseReport.readCourseReportByExecutionCourse(oldCourseReport.getExecutionCourse());
 
-			ICourseReport courseReport = persistentCourseReport.readCourseReportByExecutionCourse(executionCourse);
-
-			persistentCourseReport.simpleLockWrite(courseReport);
-			courseReport.setReport(report);
-			
-
-			return new Boolean(true);
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+        if ((newCourseReport != null)
+            && !(newCourseReport.getIdInternal().equals(oldCourseReport.getIdInternal())))
+            return false;
+        return true;
+    }
 }

@@ -77,7 +77,7 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 		//Grant Owner qualification
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(2));
-		info.setPersonInfo(getInfoPersonGO());
+		info.setInfoPerson(getInfoPersonGO());
 
 		Integer infoManagerPersonKey = new Integer(17);
 
@@ -92,7 +92,7 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 		//Teacher qualification
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(3));
-		info.setPersonInfo(getInfoPersonT());
+		info.setInfoPerson(getInfoPersonT());
 
 		Integer infoManagerPersonKey = new Integer(18);
 
@@ -105,7 +105,7 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 		//valid Grant Owner qualification
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(1));
-		info.setPersonInfo(getInfoPersonGO());
+		info.setInfoPerson(getInfoPersonGO());
 		Integer infoManagerPersonKey = new Integer(17);
 
 		Object[] args = { infoManagerPersonKey, info };
@@ -117,7 +117,7 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 		//valid teacher qualification
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(4));
-		info.setPersonInfo(getInfoPersonT());
+		info.setInfoPerson(getInfoPersonT());
 
 		Integer infoManagerPersonKey = new Integer(18);
 

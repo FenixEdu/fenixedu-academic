@@ -15,9 +15,11 @@ import Dominio.ITeacher;
 public interface IWeeklyOcupation extends IDomainObject
 {
     public Integer getResearch();
+    public Integer getManagement();
     public Integer getOther();
     public ITeacher getTeacher();
     public void setResearch(Integer research);
+    public void setManagement(Integer management);
     public void setOther(Integer other);
     public void setTeacher(ITeacher teacher); 
 }

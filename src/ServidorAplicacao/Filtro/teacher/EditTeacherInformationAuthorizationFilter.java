@@ -4,6 +4,8 @@
  */
 package ServidorAplicacao.Filtro.teacher;
 
+import DataBeans.teacher.InfoServiceProviderRegime;
+import DataBeans.teacher.InfoWeeklyOcupation;
 import Dominio.ITeacher;
 import Dominio.teacher.Career;
 import Dominio.teacher.ICareer;
@@ -25,10 +27,11 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class CareerTeacherAuthorizationFilter extends AuthorizationByRoleFilter
+public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRoleFilter
 {
 
-    private static CareerTeacherAuthorizationFilter instance = new CareerTeacherAuthorizationFilter();
+    private static EditTeacherInformationAuthorizationFilter instance =
+        new EditTeacherInformationAuthorizationFilter();
 
     /**
 	 * The singleton access method of this class.
@@ -40,7 +43,7 @@ public class CareerTeacherAuthorizationFilter extends AuthorizationByRoleFilter
         return instance;
     }
 
-    private CareerTeacherAuthorizationFilter()
+    private EditTeacherInformationAuthorizationFilter()
     {
     }
 
@@ -64,7 +67,9 @@ public class CareerTeacherAuthorizationFilter extends AuthorizationByRoleFilter
                 && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())))
                 || (id == null)
                 || (id.getRoles() == null)
-                || ((arguments[0] != null) && (!careerBelongsToTeacher(id, (Integer) arguments[0]))))
+                || (!argumentsBelongToTeacher(id,
+                    (InfoServiceProviderRegime) arguments[0],
+                    (InfoWeeklyOcupation) arguments[1])))
             {
                 throw new NotAuthorizedException();
             }
@@ -74,18 +79,23 @@ public class CareerTeacherAuthorizationFilter extends AuthorizationByRoleFilter
         }
     }
 
-    private boolean careerBelongsToTeacher(IUserView id, Integer careerId)
+    private boolean argumentsBelongToTeacher(
+        IUserView id,
+        InfoServiceProviderRegime infoServiceProviderRegime,
+        InfoWeeklyOcupation infoWeeklyOcupation)
     {
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCareer persistentCareer = sp.getIPersistentCareer();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            ICareer career = (ICareer) persistentCareer.readByOID(Career.class, careerId);
+            Integer teacherId = teacher.getIdInternal();
 
-            if (!career.getTeacher().equals(teacher))
+            if (!infoServiceProviderRegime.getInfoTeacher().getIdInternal().equals(teacherId))
+                return false;
+
+            if (!infoWeeklyOcupation.getInfoTeacher().getIdInternal().equals(teacherId))
                 return false;
             return true;
         } catch (ExcepcaoPersistencia e)
@@ -95,7 +105,6 @@ public class CareerTeacherAuthorizationFilter extends AuthorizationByRoleFilter
         } catch (Exception e)
         {
             System.out.println("Filter error(Unknown): " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }

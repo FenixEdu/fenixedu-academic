@@ -82,7 +82,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setSchool("tagus");
 		info.setTitle("title");
 		info.setYear(new Integer(2001));
-		info.setPersonInfo(getInfoPersonGO());
+		info.setInfoPerson(getInfoPersonGO());
 
 		Integer infoManagerPersonKey = new Integer(17);
 
@@ -101,7 +101,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setSchool("tagus");
 		info.setTitle("Sr. Dr. Eng.");
 		info.setYear(new Integer(2001));
-		info.setPersonInfo(getInfoPersonT());
+		info.setInfoPerson(getInfoPersonT());
 
 		Integer infoManagerPersonKey = new Integer(18);
 
@@ -117,7 +117,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setSchool("tagus");
 		info.setTitle("title");
 		info.setYear(new Integer(2001));
-		info.setPersonInfo(getInfoPersonGO());
+		info.setInfoPerson(getInfoPersonGO());
 
 		Integer infoManagerPersonKey = new Integer(17);
 
@@ -133,7 +133,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setSchool("tagus");
 		info.setTitle("Sr. Dr. Eng.");
 		info.setYear(new Integer(2001));
-		info.setPersonInfo(getInfoPersonT());
+		info.setInfoPerson(getInfoPersonT());
 
 		Integer infoManagerPersonKey = new Integer(18);
 
@@ -148,7 +148,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setIdInternal(new Integer(2));
 		info.setSchool("NewSchool");
 		info.setYear(new Integer(2003));
-		info.setPersonInfo(getInfoPersonGO());
+		info.setInfoPerson(getInfoPersonGO());
 		Integer infoManagerPersonKey = new Integer(17);
 
 		Object[] args = { infoManagerPersonKey, info };
@@ -162,7 +162,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setIdInternal(new Integer(1));
 		info.setYear(new Integer(2000));
 		info.setSchool("tagus");
-		info.setPersonInfo(getInfoPersonT());
+		info.setInfoPerson(getInfoPersonT());
 		Integer infoManagerPersonKey = new Integer(18);
 
 		Object[] args = { infoManagerPersonKey, info };

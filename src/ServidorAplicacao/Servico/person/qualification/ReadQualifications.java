@@ -76,7 +76,7 @@ public class ReadQualifications implements IServico
 			List qualifications = null;
 			qualifications =
 				persistentQualification.readQualificationsByPerson(
-					Cloner.copyInfoPerson2IPerson(infoQualification.getPersonInfo()));
+					Cloner.copyInfoPerson2IPerson(infoQualification.getInfoPerson()));
 			
 			return qualifications;
 

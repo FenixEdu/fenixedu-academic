@@ -1,18 +1,167 @@
 /*
  * Created on 16/Nov/2003
- *
+ *  
  */
 package DataBeans.teacher;
 
+import java.util.List;
+
 import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
+import DataBeans.InfoTeacher;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
 public class InfoSiteTeacherInformation extends InfoObject implements ISiteComponent
 {
-       // TODO: falta fazer isto .......
+    private InfoTeacher infoTeacher;
+    private List infoQualifications;
+    private List infoProfessionalCareers;
+    private List infoTeachingCareers;
+    private InfoServiceProviderRegime infoServiceProviderRegime;
+    private List infoExternalActivities;
+    private List infoExecutionCourses;
+    private InfoWeeklyOcupation infoWeeklyOcupation;
+    // TODO: faltam os estágios, tfc's, mestrados, doutoramentos
+    // TODO: faltam os cargos de gestão
+    // TODO: faltam as publicacoes
+        
+    /**
+     * 
+     */
+    public InfoSiteTeacherInformation()
+    {
+    }
+ 
+    /**
+     * @return Returns the infoExternalActivities.
+     */
+    public List getInfoExternalActivities()
+    {
+        return infoExternalActivities;
+    }
+
+    /**
+     * @param infoExternalActivities The infoExternalActivities to set.
+     */
+    public void setInfoExternalActivities(List infoExternalActivities)
+    {
+        this.infoExternalActivities = infoExternalActivities;
+    }
+
+    /**
+     * @return Returns the infoExecutionCourses.
+     */
+    public List getInfoExecutionCourses()
+    {
+        return infoExecutionCourses;
+    }
+
+    /**
+     * @param infoExecutionCourses The infoExecutionCourses to set.
+     */
+    public void setInfoExecutionCourses(List infoExecutionCourses)
+    {
+        this.infoExecutionCourses = infoExecutionCourses;
+    }
+
+    /**
+     * @return Returns the infoProfessionalCareers.
+     */
+    public List getInfoProfessionalCareers()
+    {
+        return infoProfessionalCareers;
+    }
+
+    /**
+     * @param infoProfessionalCareers The infoProfessionalCareers to set.
+     */
+    public void setInfoProfessionalCareers(List infoProfessionalCareers)
+    {
+        this.infoProfessionalCareers = infoProfessionalCareers;
+    }
+
+    /**
+     * @return Returns the infoQualifications.
+     */
+    public List getInfoQualifications()
+    {
+        return infoQualifications;
+    }
+
+    /**
+     * @param infoQualifications The infoQualifications to set.
+     */
+    public void setInfoQualifications(List infoQualifications)
+    {
+        this.infoQualifications = infoQualifications;
+    }
+
+    /**
+     * @return Returns the infoServiceProviderRegime.
+     */
+    public InfoServiceProviderRegime getInfoServiceProviderRegime()
+    {
+        return infoServiceProviderRegime;
+    }
+
+    /**
+     * @param infoServiceProviderRegime The infoServiceProviderRegime to set.
+     */
+    public void setInfoServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime)
+    {
+        this.infoServiceProviderRegime = infoServiceProviderRegime;
+    }
+
+    /**
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher()
+    {
+        return infoTeacher;
+    }
+
+    /**
+     * @param infoTeacher The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher)
+    {
+        this.infoTeacher = infoTeacher;
+    }
+
+    /**
+     * @return Returns the infoTeachingCareers.
+     */
+    public List getInfoTeachingCareers()
+    {
+        return infoTeachingCareers;
+    }
+
+    /**
+     * @param infoTeachingCareers The infoTeachingCareers to set.
+     */
+    public void setInfoTeachingCareers(List infoTeachingCareers)
+    {
+        this.infoTeachingCareers = infoTeachingCareers;
+    }
+
+    /**
+     * @return Returns the infoWeeklyOcupation.
+     */
+    public InfoWeeklyOcupation getInfoWeeklyOcupation()
+    {
+        return infoWeeklyOcupation;
+    }
+
+    /**
+     * @param infoWeeklyOcupation The infoWeeklyOcupation to set.
+     */
+    public void setInfoWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation)
+    {
+        this.infoWeeklyOcupation = infoWeeklyOcupation;
+    }
+
 }

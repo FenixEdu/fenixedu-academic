@@ -21,6 +21,7 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
 
 	private InfoTeacher infoTeacher;
     private Integer research;
+    private Integer management;
     private Integer other;
 
 	public InfoWeeklyOcupation() {
@@ -74,6 +75,22 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
         this.research = research;
     }
 
+    /**
+     * @return Returns the management.
+     */
+    public Integer getManagement()
+    {
+        return management;
+    }
+
+    /**
+     * @param management The management to set.
+     */
+    public void setManagement(Integer management)
+    {
+        this.management = management;
+    }
+    
     public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof InfoWeeklyOcupation) {

@@ -6,17 +6,13 @@ package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.InfoObject;
 import DataBeans.teacher.InfoExternalActivity;
-import DataBeans.teacher.InfoWeeklyOcupation;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.teacher.IExternalActivity;
-import Dominio.teacher.IWeeklyOcupation;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
-import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
-import ServidorPersistente.teacher.IPersistentWeeklyOcupation;
 
 /**
  * @author Leonor Almeida

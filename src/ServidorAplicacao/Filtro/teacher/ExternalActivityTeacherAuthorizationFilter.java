@@ -65,9 +65,8 @@ public class ExternalActivityTeacherAuthorizationFilter extends AuthorizationByR
                 && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())))
                 || (id == null)
                 || (id.getRoles() == null)
-                || ((arguments[0] instanceof Integer)
-                    && (arguments[0] != null)
-                    && !externalActivityBelongsToTeacher(id, (Integer) arguments[0])))
+                || ((arguments[0] != null)
+                    && (!externalActivityBelongsToTeacher(id, (Integer) arguments[0]))))
             {
                 throw new NotAuthorizedException();
             }
@@ -86,7 +85,8 @@ public class ExternalActivityTeacherAuthorizationFilter extends AuthorizationByR
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IExternalActivity externalActivity = (IExternalActivity) persistentExternalActivity.readByOID(
+            IExternalActivity externalActivity =
+                (IExternalActivity) persistentExternalActivity.readByOID(
                     ExternalActivity.class,
                     externalActivityId);
 

@@ -1,99 +1,148 @@
 /*
  * Created on 7/Nov/2003
- * 
- * To change the template for this generated file go to Window - Preferences -
- * Java - Code Generation - Code and Comments
+ *  
  */
 package ServidorAplicacao.Servicos.gesdis;
 
+import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
+import DataBeans.gesdis.InfoCourseReport;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- * 
- * To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Generation - Code and Comments
+ *  
  */
-public class EditCourseInformationTest
-	extends ServiceNeedsAuthenticationTestCase {
+public class EditCourseInformationTest extends ServiceNeedsAuthenticationTestCase
+{
 
-	/**
+    /**
 	 * @param testName
 	 */
-	public EditCourseInformationTest(String name) {
-		super(name);
-	}
+    public EditCourseInformationTest(String name)
+    {
+        super(name);
+    }
 
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/gesdis/testEditCourseInformationDataSet.xml";
-	}
+    protected String getDataSetFilePath()
+    {
+        return "etc/datasets/servicos/gesdis/testEditCourseInformationDataSet.xml";
+    }
 
-	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/servicos/gesdis/testExpectedEditCourseInformationDataSet.xml";
-	}
+    protected String getNameOfServiceToBeTested()
+    {
+        return "EditCourseInformation";
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "EditCourseInformation";
-	}
+    protected String[] getAuthenticatedAndAuthorizedUser()
+    {
 
-	protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "user", "pass", getApplication()};
+        return args;
+    }
 
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-	}
+    protected String[] getAuthenticatedAndUnauthorizedUser()
+    {
 
-	protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "jorge", "pass", getApplication()};
+        return args;
+    }
 
-		String[] args = { "jorge", "pass", getApplication()};
-		return args;
-	}
+    protected String[] getNotAuthenticatedUser()
+    {
 
-	protected String[] getNotAuthenticatedUser() {
+        String[] args = { "jccm", "pass", getApplication()};
+        return args;
+    }
 
-		String[] args = { "jccm", "pass", getApplication()};
-		return args;
-	}
+    protected Object[] getAuthorizeArguments()
+    {
+        Integer courseReportId = new Integer(1);
 
-	protected Object[] getAuthorizeArguments() {
+        InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+        infoExecutionYear.setIdInternal(new Integer(1));
 
-		Integer executionCourseId = new Integer(24);
-		String courseReport = new String("novo relatorio da disciplina");
+        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
+        infoExecutionPeriod.setIdInternal(new Integer(1));
+        infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
 
-		Object[] args = { executionCourseId, courseReport };
-		return args;
-	}
+        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+        infoExecutionCourse.setIdInternal(new Integer(24));
+        infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
-	protected String getApplication() {
-		return Autenticacao.EXTRANET;
-	}
+        InfoCourseReport infoCourseReport = new InfoCourseReport();
+        infoCourseReport.setIdInternal(courseReportId);
+        infoCourseReport.setReport("novo relatorio da disciplina");
+        infoCourseReport.setInfoExecutionCourse(infoExecutionCourse);
 
-	public void testSuccessfull() {
+        Object[] args = { courseReportId, infoCourseReport };
+        return args;
+    }
 
-		try {
+    protected String getApplication()
+    {
+        return Autenticacao.EXTRANET;
+    }
 
-			Boolean result = null;
+    public void testSuccessfullWithCourseReport()
+    {
+        try
+        {
+            Boolean result = null;
 
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args);
+            result =
+                (Boolean) gestor.executar(
+                    userView,
+                    getNameOfServiceToBeTested(),
+                    getAuthorizeArguments());
 
-			result =
-				(Boolean) gestor.executar(
-					userView,
-					getNameOfServiceToBeTested(),
-					getAuthorizeArguments());
+            assertTrue(result.booleanValue());
+            // verifica as alteracoes da base de dados
+            compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/gesdis/testExpectedEditCourseInformationWithCourseReportDataSet.xml");
+        } catch (Exception ex)
+        {
+            fail("Editing a Course Information with a CourseReport " + ex);
+        }
+    }
 
-			assertTrue(result.booleanValue());
-			// verifica as alteracoes da base de dados
-			compareDataSetUsingExceptedDataSetTablesAndColumns(
-				getExpectedDataSetFilePath());
-		} catch (FenixServiceException ex) {
-			fail("Editing a Course Information " + ex);
-		} catch (Exception ex) {
-			fail("Editing a Course Information " + ex);
-		}
-	}
+    public void testSuccessfullWithoutCourseReport()
+    {
+        try
+        {
+            Boolean result = null;
+
+            String[] args = { "maria", "pass", getApplication()};
+            IUserView userView = authenticateUser(args);
+
+            InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+            infoExecutionYear.setIdInternal(new Integer(1));
+
+            InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
+            infoExecutionPeriod.setIdInternal(new Integer(1));
+            infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
+
+            InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+            infoExecutionCourse.setIdInternal(new Integer(25));
+            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+
+            InfoCourseReport infoCourseReport = new InfoCourseReport();
+            infoCourseReport.setReport("relatorio da disciplina");
+            infoCourseReport.setInfoExecutionCourse(infoExecutionCourse);
+
+            Object[] serviceArgs = { null, infoCourseReport };
+
+            result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
+
+            assertTrue(result.booleanValue());
+            // verifica as alteracoes da base de dados
+            compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/gesdis/testExpectedEditCourseInformationWithoutCourseReportDataSet.xml");
+        } catch (Exception ex)
+        {
+            fail("Editing a Course Information without a CourseReport " + ex);
+        }
+    }
 }

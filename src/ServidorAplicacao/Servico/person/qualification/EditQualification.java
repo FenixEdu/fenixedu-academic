@@ -122,9 +122,9 @@ public class EditQualification implements IServico
 			if (infoQualification.getMark() != null)
 				qualification.setMark(infoQualification.getMark());
 
-			if (infoQualification.getPersonInfo() != null)
+			if (infoQualification.getInfoPerson() != null)
 				qualification.setPerson(
-					Cloner.copyInfoPerson2IPerson(infoQualification.getPersonInfo()));
+					Cloner.copyInfoPerson2IPerson(infoQualification.getInfoPerson()));
 
 			if (infoQualification.getSchool() != null)
 				qualification.setSchool(infoQualification.getSchool());

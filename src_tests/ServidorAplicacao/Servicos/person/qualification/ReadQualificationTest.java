@@ -77,7 +77,7 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 		//A Grant Owner qualification
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(1));
-		info.setPersonInfo(getInfoPersonGO());
+		info.setInfoPerson(getInfoPersonGO());
 
 		Integer infoManagerPersonCode = new Integer(17);
 
@@ -92,7 +92,7 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 		//A teacher qualification
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(4));
-		info.setPersonInfo(getInfoPersonT());
+		info.setInfoPerson(getInfoPersonT());
 
 		Integer infoManagerPersonCode = new Integer(18);
 

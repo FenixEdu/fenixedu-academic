@@ -128,7 +128,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro
 			IGrantOwner grantowner = null;
 			grantowner =
 				persistentGrantOwner.readGrantOwnerByPerson(
-					((InfoQualification) arguments[1]).getPersonInfo().getIdInternal());
+					((InfoQualification) arguments[1]).getInfoPerson().getIdInternal());
 
 			if (grantowner != null) //The grant owner exists!
 			{
@@ -165,7 +165,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro
 			ITeacher teacher = null;
 			teacher =
 				persistentTeacher.readTeacherByUsername(
-					((InfoQualification) arguments[1]).getPersonInfo().getUsername());
+					((InfoQualification) arguments[1]).getInfoPerson().getUsername());
 
 			if (teacher != null) //The teacher exists!
 			{
@@ -192,7 +192,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro
 	{
 		try
 		{
-			if (arguments[0].equals(((InfoQualification) arguments[1]).getPersonInfo().getIdInternal()))
+			if (arguments[0].equals(((InfoQualification) arguments[1]).getInfoPerson().getIdInternal()))
 			{
 				return true;
 			}

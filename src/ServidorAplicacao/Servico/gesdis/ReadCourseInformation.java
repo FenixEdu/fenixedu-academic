@@ -72,10 +72,8 @@ public class ReadCourseInformation implements IServico
 	 */
     public SiteView run(Integer executionCourseId) throws FenixServiceException
     {
-
         try
         {
-
             SiteView siteView = new SiteView();
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();

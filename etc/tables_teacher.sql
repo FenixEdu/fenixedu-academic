@@ -22,6 +22,7 @@ drop table if exists WEEKLY_OCUPATION;
 create table WEEKLY_OCUPATION (
    ID_INTERNAL integer(11) not null auto_increment,
    RESEARCH integer(10),
+   MANAGEMENT integer(10),
    OTHER integer(10),
    KEY_TEACHER integer(11) not null,
    primary key (ID_INTERNAL),

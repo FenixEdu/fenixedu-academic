@@ -42,23 +42,25 @@ public class ReadCourseInformationTest extends ServiceNeedsAuthenticationTestCas
         return "etc/datasets/servicos/gesdis/testReadCourseInformationDataSet.xml";
     }
 
+    protected String getExpectedDataSetFilePath()
+    {
+        return "etc/datasets/servicos/gesdis/testExpectedReadCourseInformationDataSet.xml";
+    }
+
     protected String[] getAuthenticatedAndAuthorizedUser()
     {
-
         String[] args = { "user", "pass", getApplication()};
         return args;
     }
 
     protected String[] getAuthenticatedAndUnauthorizedUser()
     {
-
         String[] args = { "jorge", "pass", getApplication()};
         return args;
     }
 
     protected String[] getNotAuthenticatedUser()
     {
-
         String[] args = { "jccm", "pass", getApplication()};
         return args;
     }
@@ -70,7 +72,6 @@ public class ReadCourseInformationTest extends ServiceNeedsAuthenticationTestCas
 	 */
     protected Object[] getAuthorizeArguments()
     {
-
         Integer executionCourseId = new Integer(24);
 
         Object[] args = { executionCourseId };
@@ -89,10 +90,8 @@ public class ReadCourseInformationTest extends ServiceNeedsAuthenticationTestCas
 
     public void testSuccessfull()
     {
-
         try
         {
-
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView userView = authenticateUser(args);
 
@@ -101,12 +100,10 @@ public class ReadCourseInformationTest extends ServiceNeedsAuthenticationTestCas
             // TODO: verificar os dados do siteView?????'
             // verifica as alteracoes da base de dados
             compareDataSetUsingExceptedDataSetTablesAndColumns(getDataSetFilePath());
-        }
-        catch (FenixServiceException ex)
+        } catch (FenixServiceException ex)
         {
             fail("Reading a Course Information " + ex);
-        }
-        catch (Exception ex)
+        } catch (Exception ex)
         {
             fail("Reading a Course Information " + ex);
         }
