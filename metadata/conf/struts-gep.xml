@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE struts-config PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    <!-- ========== Data Source Configuration =============================== -->
+    <!-- ========== Form Bean Definitions ================================== -->
+    <form-beans type="org.apache.struts.action.ActionFormBean">
+        <!-- Form vazio -->
+        <form-bean name="searchExecutionDegreeInformationForm" 
+            type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+            <form-property name="executionDegreeId" type="java.lang.Integer"/>
+        </form-bean>
+    </form-beans>
+    <!-- ========== Global Exception Definitions ============================== -->
+    <global-exceptions>
+        <exception type="ServidorAplicacao.NotAuthorizedException" 
+            key="ServidorAplicacao.NotAuthorizedException" path="/naoAutorizado.do" 
+            handler="ServidorApresentacao.config.FenixExceptionHandler"/>
+        <exception type="ServidorAplicacao.NotExecutedException" 
+            key="ServidorAplicacao.NotExecutedException" path="/naoExecutado.do" 
+            handler="ServidorApresentacao.config.FenixExceptionHandler" />
+        <exception type="ServidorAplicacao.Servico.ExcepcaoInexistente" 
+            key="ServidorAplicacao.Servico.ExcepcaoInexistente" path="/naoExistente.do" 
+            handler="ServidorApresentacao.config.FenixExceptionHandler" />
+        <exception type="ServidorAplicacao.FenixServiceException" 
+            key="ServidorAplicacao.FenixServiceException" path="/naoExecutado.do" 
+            handler="ServidorApresentacao.config.FenixExceptionHandler" />
+    </global-exceptions>
+    <!-- ========== Global Forward Definitions =============================== -->
+    <global-forwards type="org.apache.struts.action.ActionForward">
+    </global-forwards>
+    <!-- ========== Action Mapping Definitions =============================== -->
+    <action-mappings type="org.apache.struts.action.ActionMapping">
+        <action path="/index" forward="index" />
+        <action path="/searchTeachersInformation" 
+            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
+            name="searchExecutionDegreeInformationForm" 
+            input="/searchTeachersInformation?method=searchForm" scope="request" parameter="method" 
+            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            <set-property property="serviceName" value="ReadTeachersInformation"/>
+            <set-property property="objectAttribute" value="infoSiteTeacherInformation"/>
+            <set-property property="listAttribute" value="infoSiteTeachersInformation"/>
+            <set-property property="notFoundMessageKey" value="label.gep.notFound"/>
+            <forward name="search-form" path="search-teachers-information"/>
+            <forward name="list-one" path="view-teachers-information"/>
+            <forward name="list-many" path="view-teachers-information"/>
+        </action>
+        <action path="/searchCoursesInformation" 
+            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
+            name="searchExecutionDegreeInformationForm" 
+            input="/searchCoursesInformation?method=searchForm" scope="request" parameter="method" 
+            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            <set-property property="serviceName" value="ReadCoursesInformation"/>
+            <set-property property="objectAttribute" value="infoSiteCourseInformation"/>
+            <set-property property="listAttribute" value="infoSiteCoursesInformation"/>
+            <set-property property="notFoundMessageKey" value="label.gep.notFound"/>
+            <forward name="search-form" path="search-courses-information"/>
+            <forward name="list-one" path="view-courses-information"/>
+            <forward name="list-many" path="view-courses-information"/>
+        </action>
+        <!-- Read Teacher Information -->
+        <action path="/readTeacherInformation" scope="request" 
+            type="ServidorApresentacao.Action.coordinator.ReadTeacherInformationAction" >
+            <forward name="show" path="view-teacher-information"/>
+        </action>
+        
+        <action path="/readCourseInformation" scope="request" 
+            type="ServidorApresentacao.Action.gep.ReadCourseInformationAction" >
+            <forward name="show" path="view-course-information"/>
+        </action>
+    </action-mappings>
+    <!-- ========== Controller Configuration ================================ -->
+    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+    <!-- ========== Message Resources Definitions ============================ -->
+    <message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>
+    <!-- ========== Plug Ins Configuration ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames" 
+            value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml"/>
+    </plug-in>
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" 
+            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/gep/tiles-gep-definitions.xml,/WEB-INF/tiles/gep/tiles-gep-pages-definitions.xml" 
+            />
+        <set-property property="moduleAware" value="true" />
+        <set-property property="definitions-parser-validate" value="true" />
+    </plug-in>
+</struts-config>

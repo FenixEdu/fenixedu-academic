@@ -1,0 +1,26 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+    <definition name="index" extends="definition.gep.two-column">
+        <put name="body" value="/gep/index.jsp"></put>
+    </definition>
+    <definition name="view-teachers-information" extends="definition.gep.two-column">
+        <put name="body" value="/gep/teachers/viewTeachersInformation.jsp"/>
+    </definition>
+    <definition name="view-teacher-information" extends="definition.gep.two-column">
+        <put name="body" value="/teacher/information/viewTeacherInformation.jsp"/>
+    </definition>
+    <definition name="search-teachers-information" extends="definition.gep.two-column">
+        <put name="body" value="/gep/teachers/searchTeachersInformation.jsp"/>
+    </definition>
+    <definition name="view-courses-information" extends="definition.gep.two-column">
+        <put name="body" value="/gep//courses/viewCoursesInformation.jsp"/>
+    </definition>
+    <definition name="view-course-information" extends="definition.gep.two-column">
+        <put name="body" value="/gep/courses/viewCourseInformation.jsp"/>
+    </definition>
+    <definition name="search-courses-information" extends="definition.gep.two-column">
+        <put name="body" value="/gep/courses/searchCoursesInformation.jsp"/>
+    </definition>
+</tiles-definitions>

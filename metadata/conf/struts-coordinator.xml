@@ -120,6 +120,7 @@
        <form-bean name="courseInformationForm" 
                    type="org.apache.struts.validator.DynaValidatorForm" 
                     dynamic="true">
+            <form-property name="executionCourseId" type="java.lang.Integer"/>
         </form-bean>
     </form-beans>
     
@@ -371,6 +372,13 @@
             type="ServidorApresentacao.Action.coordinator.ReadTeachersInformationAction" >
             <forward name="show" path="view-teachers-information"/>
         </action>
+        
+        <!-- Read Teacher Information -->
+        <action path="/readTeacherInformation" 
+            scope="request"
+            type="ServidorApresentacao.Action.coordinator.ReadTeacherInformationAction" >
+            <forward name="show" path="view-teacher-information"/>
+        </action>
 
 		<!-- ======== coordination team mappings ======= -->
 		 <action path="/viewCoordinationTeam"
@@ -448,7 +456,7 @@
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>

@@ -60,6 +60,7 @@ public interface IPersistentProfessorship extends IPersistentObject
 	 */
     public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
         throws ExcepcaoPersistencia;
+
     /**
 	 * @param teacher
 	 * @param executionYear
@@ -68,6 +69,16 @@ public interface IPersistentProfessorship extends IPersistentObject
     public List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear)
         throws ExcepcaoPersistencia;
 
-    public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+    /**
+	 * @param executionDegrees
+	 * @return
+	 */
+    public List readByExecutionDegrees(List executionDegrees) throws ExcepcaoPersistencia;
 
+    /**
+	 * @param executionDegree
+	 * @return @throws
+	 *         ExcepcaoPersistencia
+	 */
+    public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
 }

@@ -4,9 +4,16 @@
  */
 package DataBeans.gesdis;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import DataBeans.ISiteComponent;
+import DataBeans.InfoCurriculum;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
 
@@ -29,8 +36,7 @@ public class InfoSiteCourseInformation implements ISiteComponent
     private InfoCourseReport infoCourseReport;
 
     public InfoSiteCourseInformation()
-    {
-    }
+    {}
 
     /**
 	 * @return Returns the infoCourseReport.
@@ -183,5 +189,47 @@ public class InfoSiteCourseInformation implements ISiteComponent
     public void setInfoEvaluationMethod(InfoEvaluationMethod infoEvaluationMethod)
     {
         this.infoEvaluationMethod = infoEvaluationMethod;
+    }
+
+    public Date getLastModificationDate()
+    {
+        List dates = new ArrayList();
+        dates.add(infoCourseReport.getLastModificationDate());
+        dates.addAll(CollectionUtils.collect(infoCurriculums, new Transformer()
+        {
+            public Object transform(Object arg0)
+            {
+                InfoCurriculum infoCurriculum = (InfoCurriculum) arg0;
+                return infoCurriculum.getLastModificationDate();
+            }
+        }));
+        return getMostRecentDate(dates);
+    }
+
+    /**
+	 * @param dates
+	 * @return
+	 */
+    private Date getMostRecentDate(List dates)
+    {
+        Date maxDate = new Date(Long.MAX_VALUE);
+        Date minDate = maxDate;
+        Iterator iter = dates.iterator();
+        while (iter.hasNext())
+        {
+            Date date = (Date) iter.next();
+
+            if (date == null)
+                continue;
+
+            if (date.getTime() < minDate.getTime())
+                minDate = date;
+        }
+
+        // if the minDate is equal to maxDate then the information wasn't filled
+        if (minDate == maxDate)
+            minDate = null;
+
+        return minDate;
     }
 }

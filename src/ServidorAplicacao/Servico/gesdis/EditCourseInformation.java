@@ -22,21 +22,10 @@ import ServidorPersistente.gesdis.IPersistentCourseReport;
  */
 public class EditCourseInformation extends EditDomainObjectService
 {
-
-    private static EditCourseInformation service = new EditCourseInformation();
-
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static EditCourseInformation getService()
-    {
-        return service;
-    }
-
     /**
 	 * The constructor of this class.
 	 */
-    private EditCourseInformation()
+    public EditCourseInformation()
     {
     }
 

@@ -7,6 +7,8 @@ package ServidorPersistente.OJB;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
@@ -48,8 +50,7 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
             List result = (List) query.execute();
             lockRead(result);
             return result;
-        }
-        catch (QueryException ex)
+        } catch (QueryException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
@@ -59,10 +60,12 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 	 * (non-Javadoc)
 	 * 
 	 * @see ServidorPersistente.IPersistentProfessorship#readByTeacherIDAndExecutionCourseID(Dominio.ITeacher,
-	 *          Dominio.IDisciplinaExecucao)
+	 *      Dominio.IDisciplinaExecucao)
 	 */
-    public IProfessorship readByTeacherIDAndExecutionCourseID(ITeacher teacher,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia
+    public IProfessorship readByTeacherIDAndExecutionCourseID(
+        ITeacher teacher,
+        IExecutionCourse executionCourse)
+        throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
@@ -70,14 +73,19 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
         return (IProfessorship) queryObject(Professorship.class, criteria);
     }
 
-    public IProfessorship readByTeacherAndExecutionCourse(ITeacher teacher,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia
+    public IProfessorship readByTeacherAndExecutionCourse(
+        ITeacher teacher,
+        IExecutionCourse executionCourse)
+        throws ExcepcaoPersistencia
     {
         try
         {
             IProfessorship professorship = null;
-            String oqlQuery = "select professorship from " + Professorship.class.getName()
-                    + " where teacher.teacherNumber = $1" + " and executionCourse.sigla = $2"
+            String oqlQuery =
+                "select professorship from "
+                    + Professorship.class.getName()
+                    + " where teacher.teacherNumber = $1"
+                    + " and executionCourse.sigla = $2"
                     + " and executionCourse.executionPeriod.name = $3"
                     + " and executionCourse.executionPeriod.executionYear.year = $4";
 
@@ -92,15 +100,16 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
             if (result.size() != 0)
                 professorship = (IProfessorship) result.get(0);
             return professorship;
-        }
-        catch (QueryException ex)
+        } catch (QueryException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }
 
-    public IProfessorship readByTeacherAndExecutionCoursePB(ITeacher teacher,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia
+    public IProfessorship readByTeacherAndExecutionCoursePB(
+        ITeacher teacher,
+        IExecutionCourse executionCourse)
+        throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
 
@@ -115,7 +124,9 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
         try
         {
 
-            String oqlQuery = "select professorship from " + Professorship.class.getName()
+            String oqlQuery =
+                "select professorship from "
+                    + Professorship.class.getName()
                     + " where teacher.teacherNumber = $1";
 
             query.create(oqlQuery);
@@ -125,8 +136,7 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
             lockRead(result);
 
             return result;
-        }
-        catch (QueryException ex)
+        } catch (QueryException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
@@ -151,7 +161,7 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
     }
 
     public void lockWrite(IProfessorship professorship)
-            throws ExcepcaoPersistencia, ExistingPersistentException
+        throws ExcepcaoPersistencia, ExistingPersistentException
     {
         IProfessorship professorshipFromDB = null;
 
@@ -160,7 +170,9 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
             return;
 
         // Read professorship from database.
-        professorshipFromDB = this.readByTeacherAndExecutionCourse(professorship.getTeacher(),
+        professorshipFromDB =
+            this.readByTeacherAndExecutionCourse(
+                professorship.getTeacher(),
                 professorship.getExecutionCourse());
 
         // If professorship is not in database, then write it.
@@ -168,14 +180,14 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
             super.lockWrite(professorship);
 
         // else If the professorship is mapped to the database, then write any existing changes.
-        else if ((professorship instanceof Professorship)
-                && ((Professorship) professorshipFromDB).getIdInternal()
-                        .equals(((Professorship) professorship).getIdInternal()))
+        else if (
+            (professorship instanceof Professorship)
+                && ((Professorship) professorshipFromDB).getIdInternal().equals(
+                    ((Professorship) professorship).getIdInternal()))
         {
             super.lockWrite(professorship);
             // else Throw an already existing exception
-        }
-        else
+        } else
             throw new ExistingPersistentException();
     }
 
@@ -183,51 +195,88 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 	 * (non-Javadoc)
 	 * 
 	 * @see ServidorPersistente.IPersistentProfessorship#readByTeacherAndTypeOfDegree(Dominio.ITeacher,
-	 *          Util.TipoCurso)
+	 *      Util.TipoCurso)
 	 */
     public List readByTeacherAndTypeOfDegree(ITeacher teacher, TipoCurso degreeType)
-            throws ExcepcaoPersistencia
+        throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
         criteria.addEqualTo(
-                "executionCourse.associatedCurricularCourses.degreeCurricularPlan.degree.tipoCurso",
-                degreeType);
+            "executionCourse.associatedCurricularCourses.degreeCurricularPlan.degree.tipoCurso",
+            degreeType);
         return queryList(Professorship.class, criteria, true);
     }
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.IPersistentProfessorship#readByTeacherAndExecutionPeriod(Dominio.ITeacher, Dominio.IExecutionPeriod)
-     */
-    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentProfessorship#readByTeacherAndExecutionPeriod(Dominio.ITeacher,
+	 *      Dominio.IExecutionPeriod)
+	 */
+    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
+        throws ExcepcaoPersistencia
     {
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
-		criteria.addEqualTo("executionCourse.executionPeriod.idInternal", executionPeriod.getIdInternal());
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
+        criteria.addEqualTo(
+            "executionCourse.executionPeriod.idInternal",
+            executionPeriod.getIdInternal());
         return queryList(Professorship.class, criteria);
     }
 
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentTeacher#readByExecutionDegree(Dominio.ICursoExecucao)
+	 */
+    public List readByExecutionDegrees(List executionDegrees) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        List executionDegreesIds = (List) CollectionUtils.collect(executionDegrees, new Transformer()
+        {
+            public Object transform(Object o)
+            {
+                return ((ICursoExecucao) o).getCurricularPlan().getIdInternal();
+            }
+        });
+        criteria.addIn(
+            "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
+            executionDegreesIds);
+        return queryList(Professorship.class, criteria, true);
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentProfessorship#readByExecutionDegree(Dominio.ICursoExecucao)
+	 */
     public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo(
-                "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
-                executionDegree.getCurricularPlan().getIdInternal());
+            "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
+            executionDegree.getCurricularPlan().getIdInternal());
         criteria.addEqualTo(
                 "executionCourse.executionPeriod.executionYear.idInternal",
                 executionDegree.getExecutionYear().getIdInternal());
-        return queryList(Professorship.class, criteria);
+        return queryList(Professorship.class, criteria, true);
     }
-    /* (non-Javadoc)
-     * @see ServidorPersistente.IPersistentProfessorship#readByTeacherAndExecutionYear(Dominio.ITeacher, Dominio.IExecutionYear)
-     */
-    public List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear) throws ExcepcaoPersistencia
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentProfessorship#readByTeacherAndExecutionYear(Dominio.ITeacher,
+	 *      Dominio.IExecutionYear)
+	 */
+    public List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear)
+        throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
-        criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal", executionYear.getIdInternal());
+        criteria.addEqualTo(
+            "executionCourse.executionPeriod.executionYear.idInternal",
+            executionYear.getIdInternal());
         return queryList(Professorship.class, criteria);
     }
-    
-   
 }

@@ -8,22 +8,25 @@ import Dominio.ITeacher;
 import Dominio.teacher.Career;
 import Dominio.teacher.ICareer;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Filtro.framework.DomainObjectTeacherAuthorizationFilter;
+import ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.teacher.IPersistentCareer;
+import Util.RoleType;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class CareerTeacherAuthorizationFilter extends DomainObjectTeacherAuthorizationFilter
+public class CareerTeacherAuthorizationFilter extends DomainObjectAuthorizationFilter
 {
 
-    public CareerTeacherAuthorizationFilter() {}
+    public CareerTeacherAuthorizationFilter() 
+	{
+	}
 
     /*
 	 * (non-Javadoc)
@@ -31,7 +34,7 @@ public class CareerTeacherAuthorizationFilter extends DomainObjectTeacherAuthori
 	 * @see ServidorAplicacao.Filtro.framework.DomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
 	 *      java.lang.Integer)
 	 */
-    protected boolean domainObjectBelongsToTeacher(IUserView id, Integer objectId)
+    protected boolean verifyCondition(IUserView id, Integer objectId)
     {
         try
         {
@@ -53,5 +56,13 @@ public class CareerTeacherAuthorizationFilter extends DomainObjectTeacherAuthori
             e.printStackTrace();
             return false;
         }
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#getRoleType()
+     */
+    protected RoleType getRoleType()
+    {
+        return RoleType.TEACHER;
     }
 }

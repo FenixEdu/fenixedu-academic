@@ -597,6 +597,10 @@
             column="KEY_PERSON"
             jdbc-type="INTEGER"
          />
+         <field-descriptor name="lastModificationDate" 
+    				  column="LAST_MODIFICATION_DATE" 
+    				  jdbc-type="TIMESTAMP"
+    				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/>
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"

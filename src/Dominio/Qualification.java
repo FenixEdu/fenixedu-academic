@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.util.Date;
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
@@ -12,6 +14,7 @@ public class Qualification extends DomainObject implements IQualification
 	private String school;
 	private String title;
     private String degree;
+    private Date lastModificationDate;
 	private Integer personKey;
 
 	private IPessoa person;
@@ -29,6 +32,7 @@ public class Qualification extends DomainObject implements IQualification
 		result += "\n  - Title : " + title;
 		result += "\n  - Mark : " + mark;
 		result += "\n  - Person : " + person;
+        result += "\n  - Last Modication Date : " + lastModificationDate;
 
 		return result;
 	}
@@ -143,5 +147,21 @@ public class Qualification extends DomainObject implements IQualification
     public void setDegree(String degree)
     {
         this.degree = degree;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IQualification#SetLastModificationDate(java.util.Date)
+     */
+    public void setLastModificationDate(Date lastModificationDate)
+    {
+        this.lastModificationDate = lastModificationDate;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IQualification#getLastModificationDate()
+     */
+    public Date getLastModificationDate()
+    {
+        return lastModificationDate;
     }
 }

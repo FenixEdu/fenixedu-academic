@@ -25,7 +25,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import DataBeans.InfoObject;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -45,6 +44,8 @@ import ServidorApresentacao.mapping.framework.SearchActionMapping;
  *   								<forward name="list-many" path="..."/>
  * 		</action>
  * </pre>
+ * 
+ * 
  * 
  * 
  * 
@@ -157,8 +158,8 @@ public class SearchAction extends DispatchAction
             Iterator iterator = result.iterator();
             while (iterator.hasNext())
             {
-                InfoObject infoObject = (InfoObject) iterator.next();
-                request.setAttribute(mapping.getObjectAttribute(), infoObject);
+                Object object = iterator.next();
+                request.setAttribute(mapping.getObjectAttribute(), object);
                 break;
             }
             actionForward = mapping.findForward("list-one");
@@ -172,19 +173,37 @@ public class SearchAction extends DispatchAction
         }
 
         prepareFormConstants(mapping, request, form);
+        materializeSearchCriteria(mapping, request, form);
         request.setAttribute(mapping.getListAttribute(), result);
         return actionForward;
     }
 
     /**
-     * @param request
-     * @param form
-     * @return
-     */
-    protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form) throws Exception
+	 * If we search an object(s) using some criteria (for instance the idInternal) we may wan't to use
+	 * it after the search. This method transforms the search criteria (the idInternal) into an object
+	 * set in the request.
+	 * 
+	 * @param mapping
+	 * @param request
+	 * @param form
+	 */
+    protected void materializeSearchCriteria(
+        SearchActionMapping mapping,
+        HttpServletRequest request,
+        ActionForm form)
+        throws Exception
+    {}
+
+    /**
+	 * @param request
+	 * @param form
+	 * @return
+	 */
+    protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form)
+        throws Exception
     {
-		Map formProperties = BeanUtils.describe(form);
-        return new Object [] {formProperties};
+        Map formProperties = BeanUtils.describe(form);
+        return new Object[] { formProperties };
     }
     /**
 	 * @param searchActionMapping
@@ -218,8 +237,18 @@ public class SearchAction extends DispatchAction
         HttpServletRequest request,
         ActionForm form)
         throws Exception
-    {
-    }
+    {}
+
+    /**
+	 * Shows the form that performs the search
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return @throws
+	 *         Exception
+	 */
     public ActionForward searchForm(
         ActionMapping mapping,
         ActionForm form,
@@ -230,6 +259,7 @@ public class SearchAction extends DispatchAction
         prepareFormConstants(mapping, request, form);
         return mapping.findForward("search-form");
     }
+
     /**
 	 * Uses the request parameter sortBy to sort the result. Delegates on method
 	 * 

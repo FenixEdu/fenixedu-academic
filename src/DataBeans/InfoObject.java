@@ -12,7 +12,6 @@ import java.io.Serializable;
 public abstract class InfoObject implements Serializable
 {
     private Integer idInternal;
-	private Integer ackOptLock;
 
     public InfoObject()
     {
@@ -51,21 +50,4 @@ public abstract class InfoObject implements Serializable
         else
             return super.hashCode();
     }
-
-	/**
-	 * @return Returns the ackOptLock.
-	 */
-	public Integer getAckOptLock()
-	{
-		return ackOptLock;
-	}
-
-	/**
-	 * @param ackOptLock The ackOptLock to set.
-	 */
-	public void setAckOptLock(Integer ackOptLock)
-	{
-		this.ackOptLock = ackOptLock;
-	}
-
 }

@@ -1,70 +1,81 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
-	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" 
+    "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
-	<definition name="coordinationTeam" extends="definition.coordinator.two-column">
-		<put name="body" value="/coordinator/coordinationTeam/viewCoordinationTeam.jsp" />
+    <definition name="coordinationTeam" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/coordinationTeam/viewCoordinationTeam.jsp" />
+    </definition>
+    <definition name="addCoordinator" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/coordinationTeam/addCoordinator.jsp" />
+    </definition>
+    <definition name="degreeSiteMenu" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/coordinator/degreeSite/help.jsp" />
+    </definition>
+    <definition name="viewInformation" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/coordinator/degreeSite/viewDegreeInfo.jsp" />
+    </definition>
+    <definition name="viewDescriptionCurricularPlan" 
+        extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/coordinator/degreeSite/viewDescriptionCurricularPlan.jsp" />
+    </definition>
+    <definition name="editOK" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/coordinator/degreeSite/editOK.jsp" />
+    </definition>
+    <definition name="viewHistoric" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/coordinator/degreeSite/viewHistoric.jsp" />
+    </definition>
+    <definition name="viewSite" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/coordinator/degreeSite/viewDegreeInfo.jsp" />
+    </definition>
+    <definition name="activeDegreeCurricularPlan" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" 
+            />
+        <put name="body" value="/coordinator/degreeCurricularPlan/showActiveDegreeCurricularPlan.jsp" />
+    </definition>
+    <definition name="degreeCurricularPlanHistory" 
+        extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" 
+            />
+        <put name="body" value="/coordinator/degreeCurricularPlan/showDegreeCurricularPlanHistory.jsp" />
+    </definition>
+    <definition name="viewCurricularCourseInformation" 
+        extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" 
+            />
+        <put name="body" value="/coordinator/degreeCurricularPlan/viewCurricularCourseInformation.jsp" />
+    </definition>
+    <definition name="prepareViewCurricularCourseInformationHistory" 
+        extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" 
+            />
+        <put name="body" 
+            value="/coordinator/degreeCurricularPlan/prepareViewCurricularCourseInformationHistory.jsp" 
+            />
+    </definition>
+    <definition name="editCurriculum" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" 
+            />
+        <put name="body" value="/coordinator/degreeCurricularPlan/editCurriculum.jsp" />
+    </definition>
+    <definition name="editCurriculumEn" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" 
+            />
+        <put name="body" value="/coordinator/degreeCurricularPlan/editCurriculumEn.jsp" />
+    </definition>
+    <definition name="view-course-information" extends="definition.coordinator.two-column">
+        <put name="body" value="/gesdis/viewCourseInformation.jsp"></put>
+    </definition>
+    <definition name="view-teachers-information" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/teachers/viewTeachersInformation.jsp"/>
+    </definition>
+    <definition name="view-teacher-information" extends="definition.coordinator.two-column">
+		 <put name="body" value="/teacher/information/viewTeacherInformation.jsp" />
 	</definition>
-	<definition name="addCoordinator" extends="definition.coordinator.two-column">
-		<put name="body" value="/coordinator/coordinationTeam/addCoordinator.jsp" />
-	</definition>
-	<definition name="degreeSiteMenu" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
-		<put name="body" value="/coordinator/degreeSite/help.jsp" />
-	</definition>
-	
-	<definition name="viewInformation" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
-		<put name="body" value="/coordinator/degreeSite/viewDegreeInfo.jsp" />
-	</definition>
-	
-	<definition name="viewDescriptionCurricularPlan" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
-		<put name="body" value="/coordinator/degreeSite/viewDescriptionCurricularPlan.jsp" />
-	</definition>	
-	
-	<definition name="editOK" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
-		<put name="body" value="/coordinator/degreeSite/editOK.jsp" />
-	</definition>	
-	
-	<definition name="viewHistoric" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
-		<put name="body" value="/coordinator/degreeSite/viewHistoric.jsp" />
-	</definition>
-	
-	<definition name="viewSite" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
-		<put name="body" value="/coordinator/degreeSite/viewDegreeInfo.jsp" />
-	</definition>		
-
-	<definition name="activeDegreeCurricularPlan" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
-		<put name="body" value="/coordinator/degreeCurricularPlan/showActiveDegreeCurricularPlan.jsp" />
-	</definition>		
-	
-	<definition name="degreeCurricularPlanHistory" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
-		<put name="body" value="/coordinator/degreeCurricularPlan/showDegreeCurricularPlanHistory.jsp" />
-	</definition>		
-
-	<definition name="viewCurricularCourseInformation" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
-		<put name="body" value="/coordinator/degreeCurricularPlan/viewCurricularCourseInformation.jsp" />
-	</definition>		
-	
-	<definition name="prepareViewCurricularCourseInformationHistory" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
-		<put name="body" value="/coordinator/degreeCurricularPlan/prepareViewCurricularCourseInformationHistory.jsp" />
-	</definition>	
-	
-	<definition name="editCurriculum" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
-		<put name="body" value="/coordinator/degreeCurricularPlan/editCurriculum.jsp" />
-	</definition>	
-	<definition name="editCurriculumEn" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
-		<put name="body" value="/coordinator/degreeCurricularPlan/editCurriculumEn.jsp" />
-	</definition>	
-</tiles-definitions>	
+</tiles-definitions>

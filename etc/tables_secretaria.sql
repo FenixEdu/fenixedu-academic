@@ -45,6 +45,7 @@ create table QUALIFICATION(
    SCHOOL varchar(200) not null,
    TITLE varchar(200),
    DEGREE varchar(200),
+   LAST_MODIFICATION_DATE timestamp(14) not null,   
    primary key (ID_INTERNAL),
    unique U1 (YEAR,SCHOOL,KEY_PERSON))
    type=InnoDB;

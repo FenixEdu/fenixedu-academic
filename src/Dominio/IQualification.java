@@ -1,6 +1,8 @@
 
 package Dominio;
 
+import java.util.Date;
+
 
 /**
  * 
@@ -16,6 +18,7 @@ public interface IQualification extends IDomainObject {
 	public void setTitle(String title);
     public void setDegree(String degree);
 	public void setPerson(IPessoa person);
+    public void setLastModificationDate(Date lastModificationDate);
 	
 	public Integer getYear();
 	public String getMark();
@@ -23,5 +26,5 @@ public interface IQualification extends IDomainObject {
 	public String getTitle();
     public String getDegree();
 	public IPessoa getPerson();
-	
+	public Date getLastModificationDate();
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
@@ -23,8 +24,8 @@ import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.gesdis.InfoSiteCourseInformation;
 import DataBeans.util.Cloner;
-import Dominio.Aula;
 import Dominio.ExecutionCourse;
+import Dominio.IAula;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -36,7 +37,6 @@ import Dominio.ISite;
 import Dominio.ITeacher;
 import Dominio.ResponsibleFor;
 import Dominio.gesdis.ICourseReport;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -58,23 +58,12 @@ import Util.TipoAula;
  * @author Sergio Montelobo
  *  
  */
-public class ReadCourseInformation implements IServico
+public class ReadCourseInformation implements IService
 {
-
-    private static ReadCourseInformation service = new ReadCourseInformation();
-
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadCourseInformation getService()
-    {
-        return service;
-    }
-
     /**
 	 *  
 	 */
-    private ReadCourseInformation()
+    public ReadCourseInformation()
     {
     }
 
@@ -293,18 +282,21 @@ public class ReadCourseInformation implements IServico
             ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
             InfoCurricularCourse infoCurricularCourse =
                 Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+            List infoScopes = getInfoScopes(curricularCourse.getScopes(), sp);
+            infoCurricularCourse.setInfoScopes(infoScopes);
             ICurriculum curriculum =
                 persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+            InfoCurriculum infoCurriculum = null;
             if (curriculum == null)
             {
-                InfoCurriculum infoCurriculum = new InfoCurriculum();
-                infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
-                infoCurriculums.add(infoCurriculum);
+                infoCurriculum = new InfoCurriculum();
+                
             } else
             {
-                infoCurriculums.add(Cloner.copyICurriculum2InfoCurriculum(curriculum));
+                infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
             }
-
+            infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
+            infoCurriculums.add(infoCurriculum);
         }
         return infoCurriculums;
     }
@@ -394,7 +386,7 @@ public class ReadCourseInformation implements IServico
         Iterator iter = lessons.iterator();
         while (iter.hasNext())
         {
-            Aula lesson = (Aula) iter.next();
+            IAula lesson = (IAula) iter.next();
             infoLessons.add(Cloner.copyILesson2InfoLesson(lesson));
         }
         return infoLessons;

@@ -32,6 +32,13 @@ public class PublicationsNumber extends DomainObject implements IPublicationsNum
         super();
     }
     /**
+     * @param publicationsNumberId
+     */
+    public PublicationsNumber(Integer idInternal)
+    {
+        super(idInternal);
+    }
+    /**
      * @return Returns the international.
      */
     public Integer getInternational()

@@ -53,6 +53,9 @@ import ServidorApresentacao.mapping.framework.CRUDMapping;
  * 
  * 
  * 
+ * 
+ * 
+ * 
  * Methods availables are: <br>
  * 
  * <pre>
@@ -61,6 +64,9 @@ import ServidorApresentacao.mapping.framework.CRUDMapping;
  * 	<b>delete</b> <br>
  *     <b>read</b>
  * </pre>
+ * 
+ * 
+ * 
  * 
  * 
  * 
@@ -141,7 +147,11 @@ public class CRUDActionByOID extends DispatchAction
         return crudMapping.findForward("successfull-edit");
     }
 
-    protected Object[] getEditServiceArguments(ActionForm form, CRUDMapping crudMapping, InfoObject infoObject, HttpServletRequest request)
+    protected Object[] getEditServiceArguments(
+        ActionForm form,
+        CRUDMapping crudMapping,
+        InfoObject infoObject,
+        HttpServletRequest request)
     {
         Object[] args = { getOIDProperty(crudMapping, form), infoObject };
         return args;
@@ -156,22 +166,13 @@ public class CRUDActionByOID extends DispatchAction
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping)
         throws FenixActionException
     {
-        InfoObject infoObject;
         try
         {
-            infoObject = (InfoObject) Class.forName(mapping.getInfoObjectClassName()).newInstance();
-        } catch (Exception e)
-        {
-            e.printStackTrace(System.out);
-            throw new FenixActionException(e);
-        }
+            InfoObject infoObject =
+                (InfoObject) Class.forName(mapping.getInfoObjectClassName()).newInstance();
 
-        try
-        {
             Map formPropertiesHashMap = PropertyUtils.describe(form);
-
             Iterator iterator = formPropertiesHashMap.entrySet().iterator();
-
             while (iterator.hasNext())
             {
                 Map.Entry entry = (Map.Entry) iterator.next();
@@ -213,13 +214,11 @@ public class CRUDActionByOID extends DispatchAction
                     }
                 }
             }
-        } catch (Exception e1)
+            return infoObject;
+        } catch (Exception e)
         {
-            // TODO Auto-generated catch block
-            e1.printStackTrace(System.out);
-            throw new FenixActionException(e1);
+            throw new FenixActionException(e);
         }
-        return infoObject;
     }
 
     /**
@@ -379,11 +378,13 @@ public class CRUDActionByOID extends DispatchAction
         throws FenixServiceException
     {
         IUserView userView = SessionUtils.getUserView(request);
-        Integer oid= getOIDProperty(crudMapping, form);
+        Integer oid = getOIDProperty(crudMapping, form);
         InfoObject infoObject = null;
-        if (oid != null) {
-	        Object[] args = { getOIDProperty(crudMapping, form)};
-	        infoObject = (InfoObject) ServiceUtils.executeService(userView, crudMapping.getReadService(), args);
+        if (oid != null)
+        {
+            Object[] args = { getOIDProperty(crudMapping, form)};
+            infoObject =
+                (InfoObject) ServiceUtils.executeService(userView, crudMapping.getReadService(), args);
         }
         return infoObject;
     }

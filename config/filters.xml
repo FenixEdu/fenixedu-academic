@@ -20,7 +20,7 @@
     </filter>
     <filter>
         <name>TimeTableManagerAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.TimeTableManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
@@ -33,7 +33,7 @@
     </filter>
     <filter>
         <name>GrantOwnerManagerAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.grant.GrantOwnerManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
@@ -52,7 +52,7 @@
     </filter>
     <filter>
         <name>MasterDegreeAdministrativeOfficeAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
@@ -65,7 +65,15 @@
     </filter>
     <filter>
         <name>CoordinatorAuthorization</name>
-        <implementationClass>ServidorAplicacao.Filtro.CoordinatorAuthorizationFilter</implementationClass>
+        <implementationClass>
+            ServidorAplicacao.Filtro.CoordinatorAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
+        <name>ExecutionDegreeCoordinatorAuthorization</name>
+        <implementationClass>
+            ServidorAplicacao.Filtro.coordinator.ExecutionDegreeCoordinatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
@@ -77,21 +85,21 @@
     </filter>
     <filter>
         <name>ExecutionCourseResponsibleForTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ExecutionCourseResponsibleForTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseLecturingTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>StudentListByDegreeAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.StudentListByDegreeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
@@ -104,62 +112,63 @@
     </filter>
     <filter>
         <name>StudentCurriculumAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.StudentCurriculumAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>StudentListByCurricularCourseAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.StudentListByCurricularCourseAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>StudentListByCurricularCourseScopeAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.StudentListByCurricularCourseScopeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CandidateApprovalAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.CandidateApprovalAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadCandidatesForSelectionAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ReadCandidatesForSelectionAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>DegreeAdministrativeOfficeAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.DegreeAdministrativeOfficeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EquivalenceAuthorization</name>
-        <implementationClass>ServidorAplicacao.Filtro.EquivalenceAuthorizationFilter</implementationClass>
+        <implementationClass>
+            ServidorAplicacao.Filtro.EquivalenceAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>DegreeAdministrativeOfficeSuperUserAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.DegreeAdministrativeOfficeSuperUserAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadCandidatesForSelectionAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ReadCandidatesForSelectionAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
@@ -172,341 +181,363 @@
     </filter>
     <filter>
         <name>ScientificCouncilAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ScientificCouncilAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadCandidateEnrolmentsByCandidateIDAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadExecutionDegreeByCandidateIDAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ReadExecutionDegreeByCandidateIDAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>WriteCandidateEnrolmentsAuhorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.WriteCandidateEnrolmentsAuhorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>GetCandidatesByIDAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.GetCandidatesByIDAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>DegreeAndMasterAdministrativeOfficeAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.DegreeAndMasterAdministrativeOfficeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CandidacyAccess</name>
-        <implementationClass>ServidorAplicacao.Filtro.Seminaries.CandidacyAccessFilter</implementationClass>
+        <implementationClass>
+            ServidorAplicacao.Filtro.Seminaries.CandidacyAccessFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CandidaciesAccess</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.Seminaries.CandidaciesAccessFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ManagerOrSeminariesCoordinator</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ManagerOrSeminariesCoordinatorFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>SeminaryCoordinatorOrStudent</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.SeminaryCoordinatorOrStudentFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadShiftsByExecutionCourseIDAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ReadShiftsByExecutionCourseIDAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>SearchExecutionCoursesAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.SearchExecutionCoursesAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>SeminaryCoordinator</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.Seminaries.SeminaryCoordinatorFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndCurricularCourseLecturingTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ExecutionCourseAndCurricularCourseLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndSummaryLecturingTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndAnnouncementLecturingTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndItemLecturingTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ExecutionCourseAndItemLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndSectionLecturingTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CurrentDegreeCoordinatorAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.CurrentDegreeCoordinatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>DegreeCoordinatorAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.DegreeCoordinatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ResponsibleDegreeCoordinatorAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ResponsibleDegreeCoordinatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>QualificationManagerAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.person.QualificationManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadQualificationsAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.person.ReadQualificationsAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadQualificationAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.person.ReadQualificationAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndExamLecturingTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.ExecutionCourseAndExamLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CareerTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.teacher.CareerTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditCareerTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.teacher.EditCareerTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditOldPublicationTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.teacher.EditOldPublicationTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>OldPublicationTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.teacher.OldPublicationTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExternalActivityTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.teacher.ExternalActivityTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditExternalActivityTeacherAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.teacher.EditExternalActivityTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditTeacherInformationAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.teacher.EditTeacherInformationAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditCourseInformationAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.gesdis.EditCourseInformationAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadCourseInformationAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.gesdis.ReadCourseInformationAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
+        <name>ReadCourseInformationCoordinatorAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.gesdis.ReadCourseInformationCoordinatorAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
+        <name>GEPAuthorization</name>
+        <implementationClass> ServidorAplicacao.Filtro.gep.GEPAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
+        <name>ReadTeacherInformationCoordinatorAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.teacher.ReadTeacherInformationCoordinatorAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
         <name>ExamStudentAuthorization</name>
-        <implementationClass>ServidorAplicacao.Filtro.ExamStudentAuthorizationFilter</implementationClass>
+        <implementationClass>
+            ServidorAplicacao.Filtro.ExamStudentAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditSupportLessonAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.credits.EditSupportLessonAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadDeleteSupportLessonAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.credits.ReadDeleteSupportLessonAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditTeacherInstitutionWorkingTimeAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.credits.EditTeacherInstitutionWorkingTimeAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadDeleteTeacherInstitutionWorkingTimeAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.credits.ReadDeleteTeacherInstitutionWorkingTimeAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditTeacherDegreeFinalProjectStudentAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.credits.EditTeacherDegreeFinalProjectStudentAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadDeleteTeacherDegreeFinalProjectStudentAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.credits.ReadDeleteTeacherDegreeFinalProjectStudentAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CreditsServiceWithInfoTeacherArgumentAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.credits.CreditsServiceWithInfoTeacherArgumentAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CreditsServiceWithTeacherIdArgumentAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.credits.CreditsServiceWithTeacherIdArgumentAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorization</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CreditsServiceWithTeacherIdInSecondArgumentAuthorizationFilter</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.credits.CreditsServiceWithTeacherIdInSecondArgumentAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CreditsServiceWithInfoProfessorshipArgumentAuthorizationFilter</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.credits.CreditsServiceWithInfoProfessorshipArgumentAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadStudentTestToDoFilter</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.student.tests.ReadStudentTestToDoFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadStudentTestForCorrectionFilter</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Filtro.student.tests.ReadStudentTestForCorrectionFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>

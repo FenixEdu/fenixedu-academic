@@ -10,39 +10,25 @@ import Dominio.ITeacher;
 import Dominio.teacher.ExternalActivity;
 import Dominio.teacher.IExternalActivity;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Filtro.Filtro;
-import ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter;
+import ServidorAplicacao.Filtro.framework.EditDomainObjectAuthorizationFilter;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
+import Util.RoleType;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainObjectTeacherAuthorizationFilter
+public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainObjectAuthorizationFilter
 {
-
-    private static EditExternalActivityTeacherAuthorizationFilter instance =
-        new EditExternalActivityTeacherAuthorizationFilter();
-
-    /**
-	 * The singleton access method of this class.
-	 * 
-	 * @return Returns the instance of this class responsible for the authorization access to services.
-	 */
-    public static Filtro getInstance()
-    {
-        return instance;
-    }
-
     /* (non-Javadoc)
      * @see ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView, DataBeans.InfoObject)
      */
-    protected boolean domainObjectBelongsToTeacher(IUserView id, InfoObject infoOject)
+    protected boolean verifyCondition(IUserView id, InfoObject infoOject)
     {
         try
         {
@@ -74,5 +60,13 @@ public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainOb
             System.out.println("Filter error(Unknown): " + e.getMessage());
             return false;
         }
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorAplicacao.Filtro.framework.EditDomainObjectAuthorizationFilter#getRoleType()
+     */
+    protected RoleType getRoleType()
+    {
+        return RoleType.TEACHER;
     }
 }

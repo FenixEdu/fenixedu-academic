@@ -19,7 +19,7 @@
     </servlet>
     <servlet>
         <servlet-name>action</servlet-name>
-        <servlet-class>org.apache.struts.action.ActionServlet</servlet-class> 
+        <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
         <init-param>
             <param-name>config</param-name>
             <param-value>/WEB-INF/conf/struts-default.xml</param-value>
@@ -51,7 +51,7 @@
         <init-param>
             <param-name>config/teacher</param-name>
             <param-value>/WEB-INF/conf/struts-teacher.xml</param-value>
-        </init-param>        
+        </init-param>
         <init-param>
             <param-name>config/treasury</param-name>
             <param-value>/WEB-INF/conf/struts-treasury.xml</param-value>
@@ -59,23 +59,23 @@
         <init-param>
             <param-name>config/coordinator</param-name>
             <param-value>/WEB-INF/conf/struts-coordinator.xml</param-value>
-        </init-param>        
+        </init-param>
         <init-param>
             <param-name>config/person</param-name>
             <param-value>/WEB-INF/conf/struts-person.xml</param-value>
-        </init-param>   
+        </init-param>
         <init-param>
             <param-name>config/employee</param-name>
             <param-value>/WEB-INF/conf/struts-employee.xml</param-value>
-        </init-param>              
+        </init-param>
         <init-param>
             <param-name>config/assiduousness</param-name>
             <param-value>/WEB-INF/conf/struts-assiduousness.xml</param-value>
-        </init-param>        
-         <init-param>
+        </init-param>
+        <init-param>
             <param-name>config/manager</param-name>
             <param-value>/WEB-INF/conf/struts-manager.xml</param-value>
-        </init-param> 
+        </init-param>
         <init-param>
             <param-name>config/degreeAdministrativeOffice</param-name>
             <param-value>/WEB-INF/conf/struts-degreeAdministrativeOffice.xml</param-value>
@@ -107,6 +107,10 @@
         <init-param>
             <param-name>config/departmentAdmOffice</param-name>
             <param-value>/WEB-INF/conf/struts-departmentAdmOffice.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/gep</param-name>
+            <param-value>/WEB-INF/conf/struts-gep.xml</param-value>
         </init-param>
         <init-param>
             <param-name>debug</param-name>
