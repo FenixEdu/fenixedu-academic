@@ -13,7 +13,6 @@ import DataBeans.util.Cloner;
 import Dominio.ISection;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.ISuportePersistente;
@@ -63,8 +62,8 @@ public class ReadItems implements IServico {
 
 			itemsList = persistentItem.readAllItemsBySection(section);
 
-			if (itemsList == null || itemsList.isEmpty())
-				throw new InvalidArgumentsServiceException();
+//			if (itemsList == null || itemsList.isEmpty())
+//				throw new InvalidArgumentsServiceException();
 
 			return itemsList;
 
