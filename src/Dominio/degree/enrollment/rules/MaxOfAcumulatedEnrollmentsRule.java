@@ -20,9 +20,7 @@ import commons.CollectionUtils;
 public class MaxOfAcumulatedEnrollmentsRule implements IEnrollmentRule {
 
     Map acumulatedEnrollments;
-
     List enrolledEnrollments;
-
     int maxTotalNAC;
 
     /**
@@ -35,7 +33,7 @@ public class MaxOfAcumulatedEnrollmentsRule implements IEnrollmentRule {
         List curricularCourses = (List) CollectionUtils.collect(enrollments, new Transformer() {
 
             public Object transform(Object obj) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) obj;
+                ICurricularCourse curricularCourse = ((IEnrolment) obj).getCurricularCourse();
                 String key = curricularCourse.getCode() + curricularCourse.getName() + curricularCourse.getDegreeCurricularPlan().getName()
                         + curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
                 return (key);
