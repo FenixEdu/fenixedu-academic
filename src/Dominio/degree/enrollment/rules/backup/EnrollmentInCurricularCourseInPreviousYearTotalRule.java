@@ -1,4 +1,4 @@
-package Dominio.degree.enrollment.rules;
+package Dominio.degree.enrollment.rules.backup;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +10,7 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularYear;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
+import Dominio.degree.enrollment.rules.IEnrollmentRule;
 
 /**
  * @author Nuno Correia
@@ -35,14 +36,14 @@ public class EnrollmentInCurricularCourseInPreviousYearTotalRule implements IEnr
         studentEnrolledEnrollments = sortCurricularCoursesByYear(studentEnrolledEnrollments);
 
         ICurricularCourse lastCurricularCourse = (ICurricularCourse) studentEnrolledEnrollments.get(studentEnrolledEnrollments.size() - 1);
-        ICurricularYear maxCurricularYear = lastCurricularCourse.getCurricularYearByBranch(studentBranch, executionPeriod.getSemester());
+        ICurricularYear maxCurricularYear = lastCurricularCourse.getCurricularYearByBranchAndSemester(studentBranch, executionPeriod.getSemester());
         int maxYear = maxCurricularYear.getYear().intValue();
 
         curricularCoursesToBeEnrolledIn = sortCurricularCoursesByYear(curricularCoursesToBeEnrolledIn);
 
         for (int iter = 0; iter < curricularCoursesToBeEnrolledIn.size(); iter++) {
             ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesToBeEnrolledIn.get(iter);
-            ICurricularYear curricularYear = curricularCourse.getCurricularYearByBranch(studentBranch, executionPeriod.getSemester());
+            ICurricularYear curricularYear = curricularCourse.getCurricularYearByBranchAndSemester(studentBranch, executionPeriod.getSemester());
             int year = maxCurricularYear.getYear().intValue();
 
             if (year >= maxYear)
@@ -61,8 +62,8 @@ public class EnrollmentInCurricularCourseInPreviousYearTotalRule implements IEnr
 
                 ICurricularCourse curricularCourse1 = (ICurricularCourse) obj1;
                 ICurricularCourse curricularCourse2 = (ICurricularCourse) obj2;
-                ICurricularYear curricularYear1 = curricularCourse1.getCurricularYearByBranch(studentBranch, executionPeriod.getSemester());
-                ICurricularYear curricularYear2 = curricularCourse2.getCurricularYearByBranch(studentBranch, executionPeriod.getSemester());
+                ICurricularYear curricularYear1 = curricularCourse1.getCurricularYearByBranchAndSemester(studentBranch, executionPeriod.getSemester());
+                ICurricularYear curricularYear2 = curricularCourse2.getCurricularYearByBranchAndSemester(studentBranch, executionPeriod.getSemester());
 
                 return curricularYear1.getYear().intValue() - curricularYear2.getYear().intValue();
             }

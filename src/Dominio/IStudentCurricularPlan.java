@@ -56,7 +56,6 @@ public interface IStudentCurricularPlan extends IDomainObject
 	public List getStudentApprovedEnrollments();
 	public List getStudentEnrolledEnrollments();
 	public List getStudentTemporarilyEnrolledEnrollments();
-	public List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
 	public Integer getMinimumNumberOfCoursesToEnroll();
 	public Integer getMaximumNumberOfCoursesToEnroll();
 	public Integer getMaximumNumberOfAcumulatedEnrollments();
@@ -66,6 +65,8 @@ public interface IStudentCurricularPlan extends IDomainObject
 	public boolean isCurricularCourseEnrolled(ICurricularCourse curricularCourse);
     public void calculateStudentAcumulatedEnrollments();
     public Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse);
+	public List getNotNeedToEnrollCurricularCourses();
+	public void setNotNeedToEnrollCurricularCourses(List notNeedToEnrollCurricularCourses);
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes
 	// -------------------------------------------------------------

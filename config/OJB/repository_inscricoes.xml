@@ -519,6 +519,15 @@
 			proxy="true">
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>    
+
+	<collection-descriptor
+			name="notNeedToEnrollCurricularCourses"
+			element-class-ref="Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse"
+			refresh="true"
+			proxy="true">
+		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
+	</collection-descriptor>
+
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -1571,6 +1580,47 @@
 			proxy="true">
 		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>		
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse" table="NOT_NEED_TO_ENROLL_IN_CURRICULAR_COURSE">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="curricularCourseKey"
+		column="KEY_CURRICULAR_COURSE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="studentCurricularPlanKey"
+		column="KEY_STUDENT_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<reference-descriptor
+			name="curricularCourse"
+			class-ref="Dominio.CurricularCourse"
+			proxy="true">
+		<foreignkey field-ref="curricularCourseKey"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="studentCurricularPlan"
+			class-ref="Dominio.StudentCurricularPlan"
+			proxy="true">
+		<foreignkey field-ref="studentCurricularPlanKey"/>
+	</reference-descriptor>
 </class-descriptor>
 
 <!-- Mapping of User defined classes ends here -->

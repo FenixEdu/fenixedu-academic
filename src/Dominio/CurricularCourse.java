@@ -476,22 +476,6 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
         mandatory = boolean1;
     }
 
-    public ICurricularCourseScope getCurricularCourseScope(IBranch branch, Integer curricularSemester)
-    {
-        ICurricularCourseScope curricularCourseScope = null;
-        Iterator iterator = this.getScopes().iterator();
-        while (iterator.hasNext())
-        {
-            ICurricularCourseScope curricularCourseScope2 = (ICurricularCourseScope) iterator.next();
-            if (curricularCourseScope2.getBranch().equals(branch)
-                && curricularCourseScope2.getCurricularSemester().getSemester().equals(curricularSemester))
-            {
-                curricularCourseScope = curricularCourseScope2;
-                break;
-            }
-        }
-        return curricularCourseScope;
-    }
     public IUniversity getUniversity()
     {
         return university;
@@ -545,56 +529,6 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
     {
         this.scientificArea = scientificArea;
     }
-
-    public ICurricularYear getCurricularYearByBranch(IBranch branch, Integer semester)
-    {
-    	if(this.getScopes().size() == 1)
-    	{
-    	    return ((ICurricularCourseScope) this.getScopes().get(0)).getCurricularSemester().getCurricularYear();
-    	} else
-    	{
-    	    ICurricularYear maxCurricularYear =  new CurricularYear(new Integer(0));
-    	    ICurricularYear actualCurricularYear = null;
-    	    
-    		Iterator iterator = this.getScopes().iterator();
-    		while(iterator.hasNext())
-    		{
-    			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-    			actualCurricularYear = curricularCourseScope.getCurricularSemester().getCurricularYear();
-    			
-    			if (maxCurricularYear.getYear().intValue() < actualCurricularYear.getYear().intValue()) {
-    			    if(branch != null && semester != null
-    			       && curricularCourseScope.getBranch().equals(branch)
-    			       && curricularCourseScope.getCurricularSemester().getSemester().equals(semester))
-    			        maxCurricularYear = actualCurricularYear;
-    			    
-    			    if(branch != null && semester == null && curricularCourseScope.getBranch().equals(branch))
-    			        maxCurricularYear = actualCurricularYear;
-    			    
-    			    if(branch == null && semester != null && curricularCourseScope.getCurricularSemester().getSemester().equals(semester))
-    			        maxCurricularYear = actualCurricularYear;
-    			    
-    			    if(branch == null && semester == null)
-    			        maxCurricularYear = actualCurricularYear;
-    			}
-    			    			
-    			/*if(branch != null && curricularCourseScope.getBranch().equals(branch) && scopeSemester.equals(semester))
-    			{
-    			    if (maxCurricularYear.getYear().intValue() < actualCurricularYear.getYear().intValue())
-                        maxCurricularYear = actualCurricularYear;
-    				//return curricularCourseScope.getCurricularSemester().getCurricularYear();
-				} else {
-				    if(branch == null && scopeSemester.equals(semester)) {
-				        if (maxCurricularYear.getYear().intValue() < actualCurricularYear.getYear().intValue())
-				            maxCurricularYear = actualCurricularYear;
-				    }
-				}*/
-			}
-    		return maxCurricularYear;
-		}
-    	
-		//return ((ICurricularCourseScope) this.getScopes().get(0)).getCurricularSemester().getCurricularYear();
-	}
 
     /**
 	 * @return Returns the ectsCredits.
@@ -690,6 +624,73 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
 	public void setMandatoryEnrollment(Boolean mandatoryEnrollment)
 	{
 		this.mandatoryEnrollment = mandatoryEnrollment;
+	}
+
+    public ICurricularCourseScope getCurricularCourseScope(IBranch branch, Integer curricularSemester)
+    {
+        ICurricularCourseScope curricularCourseScope = null;
+        Iterator iterator = this.getScopes().iterator();
+        while (iterator.hasNext())
+        {
+            ICurricularCourseScope curricularCourseScope2 = (ICurricularCourseScope) iterator.next();
+            if (curricularCourseScope2.getBranch().equals(branch)
+                && curricularCourseScope2.getCurricularSemester().getSemester().equals(curricularSemester))
+            {
+                curricularCourseScope = curricularCourseScope2;
+                break;
+            }
+        }
+        return curricularCourseScope;
+    }
+
+    public ICurricularYear getCurricularYearByBranchAndSemester(IBranch branch, Integer semester)
+    {
+    	if(this.getScopes().size() == 1)
+    	{
+    	    return ((ICurricularCourseScope) this.getScopes().get(0)).getCurricularSemester().getCurricularYear();
+    	} else
+    	{
+    	    ICurricularYear maxCurricularYear =  new CurricularYear(new Integer(0));
+    	    ICurricularYear actualCurricularYear = null;
+    	    
+    		Iterator iterator = this.getScopes().iterator();
+    		while(iterator.hasNext())
+    		{
+    			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
+    			actualCurricularYear = curricularCourseScope.getCurricularSemester().getCurricularYear();
+    			
+    			if (maxCurricularYear.getYear().intValue() < actualCurricularYear.getYear().intValue()) {
+    			    if(branch != null && semester != null
+    			       && curricularCourseScope.getBranch().equals(branch)
+    			       && curricularCourseScope.getCurricularSemester().getSemester().equals(semester))
+    			        maxCurricularYear = actualCurricularYear;
+    			    
+    			    if(branch != null && semester == null && curricularCourseScope.getBranch().equals(branch))
+    			        maxCurricularYear = actualCurricularYear;
+    			    
+    			    if(branch == null && semester != null && curricularCourseScope.getCurricularSemester().getSemester().equals(semester))
+    			        maxCurricularYear = actualCurricularYear;
+    			    
+    			    if(branch == null && semester == null)
+    			        maxCurricularYear = actualCurricularYear;
+    			}
+    			    			
+    			/*if(branch != null && curricularCourseScope.getBranch().equals(branch) && scopeSemester.equals(semester))
+    			{
+    			    if (maxCurricularYear.getYear().intValue() < actualCurricularYear.getYear().intValue())
+                        maxCurricularYear = actualCurricularYear;
+    				//return curricularCourseScope.getCurricularSemester().getCurricularYear();
+				} else {
+				    if(branch == null && scopeSemester.equals(semester)) {
+				        if (maxCurricularYear.getYear().intValue() < actualCurricularYear.getYear().intValue())
+				            maxCurricularYear = actualCurricularYear;
+				    }
+				}*/
+			}
+    		return maxCurricularYear;
+		}
+    	
+		//return ((ICurricularCourseScope) this.getScopes().get(0)).getCurricularSemester().getCurricularYear();
 	}
 
 	// -------------------------------------------------------------

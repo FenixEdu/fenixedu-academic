@@ -9,6 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import Dominio.degree.enrollment.INotNeedToEnrollInCurricularCourse;
 import Dominio.degree.enrollment.rules.IEnrollmentRule;
 import Util.AreaType;
 import Util.EnrolmentState;
@@ -46,6 +47,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
     // For enrollment purposes only
 	protected Map acumulatedEnrollments;
+	protected List notNeedToEnrollCurricularCourses;
 
 	public StudentCurricularPlan()
 	{
@@ -391,12 +393,23 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	// BEGIN: Only for enrollment purposes
 	// -------------------------------------------------------------
 
+	public List getNotNeedToEnrollCurricularCourses()
+	{
+		return notNeedToEnrollCurricularCourses;
+	}
+
+	public void setNotNeedToEnrollCurricularCourses(List notNeedToEnrollCurricularCourses)
+	{
+		this.notNeedToEnrollCurricularCourses = notNeedToEnrollCurricularCourses;
+	}
+
 	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType)
 	{
 		List setOfCurricularCoursesToEnroll = this.getCommonBranchAndStudentBranchesCourses(executionPeriod.getSemester());
 		List enrollmentRules = this.getListOfEnrollmentRules(executionPeriod, enrollmentRuleType);
+		int size = enrollmentRules.size();
 		
-		for (int i = 0; i < enrollmentRules.size(); i++)
+		for (int i = 0; i < size; i++)
 		{
 			IEnrollmentRule enrollmentRule = (IEnrollmentRule) enrollmentRules.get(i);
 			setOfCurricularCoursesToEnroll = enrollmentRule.apply(setOfCurricularCoursesToEnroll);
@@ -407,68 +420,6 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		}
 
 		return setOfCurricularCoursesToEnroll;
-	}
-
-	public List getStudentApprovedEnrollments()
-	{
-		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
-		{
-			public boolean evaluate(Object obj)
-			{
-				IEnrolment enrollment = (IEnrolment) obj;
-				return enrollment.getEnrolmentState().equals(EnrolmentState.APROVED);
-			}
-		});
-	}
-
-	public List getStudentEnrolledEnrollments()
-	{
-		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
-		{
-			public boolean evaluate(Object obj)
-			{
-				IEnrolment enrollment = (IEnrolment) obj;
-				return enrollment.getEnrolmentState().equals(EnrolmentState.ENROLED);
-			}
-		});
-	}
-
-	public List getStudentTemporarilyEnrolledEnrollments()
-	{
-		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
-		{
-			public boolean evaluate(Object obj)
-			{
-				IEnrolment enrollment = (IEnrolment) obj;
-				return (enrollment.getEnrolmentState().equals(EnrolmentState.APROVED) && enrollment.getCondition().equals(
-					EnrollmentCondition.TEMPORARY));
-			}
-		});
-	}
-
-	public List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment()
-	{
-		List studentEnrolledEnrollments = this.getStudentEnrolledEnrollments();
-
-		final List result = (List) CollectionUtils.collect(studentEnrolledEnrollments, new Transformer()
-		{
-			public Object transform(Object obj)
-			{
-				IEnrolment enrollment = (IEnrolment) obj;
-				String key = enrollment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment();
-				return (key);
-			}
-		});
-
-		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
-		{
-			public boolean evaluate(Object obj)
-			{
-				IEnrolment enrollment = (IEnrolment) obj;
-				String key = enrollment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment();
-				return result.contains(key);
-			}
-		});
 	}
 
 	public Integer getMinimumNumberOfCoursesToEnroll()
@@ -564,22 +515,18 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
     public void calculateStudentAcumulatedEnrollments()
     {
-    	// FIXME [DAVID]: Perguntar ao Luis se o objecto tiver na cache do OJB o que acontece aos atributos?
-//    	if (this.getAcumulatedEnrollmentsMap() == null)
-//    	{
-            List enrollments = this.getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
+        List enrollments = this.getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
 
-            List curricularCourses = (List) CollectionUtils.collect(enrollments, new Transformer()
-    		{
-    			public Object transform(Object obj)
-    			{
-    				ICurricularCourse curricularCourse = ((IEnrolment) obj).getCurricularCourse();
-    				return curricularCourse.getCurricularCourseUniqueKeyForEnrollment();
-    			}
-    		});
+        List curricularCourses = (List) CollectionUtils.collect(enrollments, new Transformer()
+		{
+			public Object transform(Object obj)
+			{
+				ICurricularCourse curricularCourse = ((IEnrolment) obj).getCurricularCourse();
+				return curricularCourse.getCurricularCourseUniqueKeyForEnrollment();
+			}
+		});
 
-            setAcumulatedEnrollmentsMap(CollectionUtils.getCardinalityMap(curricularCourses));
-//    	}
+        setAcumulatedEnrollmentsMap(CollectionUtils.getCardinalityMap(curricularCourses));
     }
 
     public Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse)
@@ -596,14 +543,67 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		return curricularCourseAcumulatedEnrolments;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	public List getStudentApprovedEnrollments()
+	{
+		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+				return enrollment.getEnrolmentState().equals(EnrolmentState.APROVED);
+			}
+		});
+	}
+
+	public List getStudentEnrolledEnrollments()
+	{
+		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+				return enrollment.getEnrolmentState().equals(EnrolmentState.ENROLED);
+			}
+		});
+	}
+
+	public List getStudentTemporarilyEnrolledEnrollments()
+	{
+		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+				return (enrollment.getEnrolmentState().equals(EnrolmentState.APROVED) && enrollment.getCondition().equals(
+					EnrollmentCondition.TEMPORARY));
+			}
+		});
+	}
+
+	protected List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment()
+	{
+		List studentEnrolledEnrollments = this.getStudentEnrolledEnrollments();
+
+		final List result = (List) CollectionUtils.collect(studentEnrolledEnrollments, new Transformer()
+		{
+			public Object transform(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+				String key = enrollment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment();
+				return (key);
+			}
+		});
+
+		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+				String key = enrollment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment();
+				return result.contains(key);
+			}
+		});
+	}
 	
     protected Map getAcumulatedEnrollmentsMap()
 	{
@@ -622,8 +622,14 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	
     protected List getStudentNotNeedToEnrollCourses()
 	{
-		// TODO [DAVID]: Add code here.
-		return null;
+		return (List) CollectionUtils.collect(this.getNotNeedToEnrollCurricularCourses(), new Transformer()
+		{
+			public Object transform(Object obj)
+			{
+				INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (INotNeedToEnrollInCurricularCourse) obj;
+				return notNeedToEnrollInCurricularCourse.getCurricularCourse();
+			}
+		});
 	}
 
     protected List getCommonBranchAndStudentBranchesCourses(final Integer semester)
@@ -668,4 +674,5 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes
 	// -------------------------------------------------------------
+
 }

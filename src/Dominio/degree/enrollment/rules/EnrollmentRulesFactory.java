@@ -98,8 +98,8 @@ public class EnrollmentRulesFactory
 	{
 		List result = new ArrayList();
 		
-		result.add(0, new MaximumCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
-		result.add(1, new MaxOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
+//		result.add(0, new MaximumCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
+//		result.add(1, new MaxOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
 		
 		return result;
 	}
@@ -109,8 +109,8 @@ public class EnrollmentRulesFactory
 	{
 		List result = new ArrayList();
 		
-		result.add(0, new MaximumCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
-		result.add(1, new MaxOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
+//		result.add(0, new MaximumCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
+//		result.add(1, new MaxOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
 		result.add(2, new PrecedencesApplyToSpanEnrollmentRule(studentCurricularPlan, executionPeriod));
 
 		if (degreeCurricularPlan.getDegree().getTipoCurso().equals(TipoCurso.LICENCIATURA_OBJ)

@@ -1,4 +1,4 @@
-package Dominio.degree.enrollment.rules;
+package Dominio.degree.enrollment.rules.backup;
 
 import java.util.Iterator;
 import java.util.List;
@@ -8,6 +8,7 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IStudentCurricularPlan;
+import Dominio.degree.enrollment.rules.IEnrollmentRule;
 
 /**
  * @author Nuno Correia

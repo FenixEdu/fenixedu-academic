@@ -1,4 +1,4 @@
-package Dominio.degree.enrollment.rules;
+package Dominio.degree.enrollment.rules.backup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
+import Dominio.degree.enrollment.rules.IEnrollmentRule;
 
 /**
  * @author Nuno Correia
