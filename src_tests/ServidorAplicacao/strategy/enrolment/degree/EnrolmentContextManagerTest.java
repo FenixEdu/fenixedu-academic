@@ -10,11 +10,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.CurricularCourse;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.Servicos.TestCaseServicos;
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentStrategyFactory;
-import ServidorAplicacao.strategy.enrolment.degree.IEnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -69,6 +66,9 @@ public class EnrolmentContextManagerTest extends TestCaseServicos {
 		} catch (ExcepcaoPersistencia e2) {
 			e2.printStackTrace(System.out);
 			fail("Getting initial enrolment Context");
+		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
+			e.printStackTrace();
+			fail("No valid enrolment period!");
 		}
 
 		IEnrolmentStrategyFactory enrolmentStrategyFactory =

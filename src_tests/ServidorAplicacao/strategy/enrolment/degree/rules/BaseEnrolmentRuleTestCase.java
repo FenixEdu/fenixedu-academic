@@ -11,6 +11,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
@@ -76,6 +77,9 @@ abstract public class BaseEnrolmentRuleTestCase extends TestCase {
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			fail("Getting enrolment context!");
+		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
+			e.printStackTrace();
+			fail("No valid enrolment period!");
 		}	
 		return enrolmentContext;
 	}

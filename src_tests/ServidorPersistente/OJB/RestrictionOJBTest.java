@@ -20,6 +20,7 @@ import Dominio.IRestriction;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.NumberOfCurricularCourseDoneRestriction;
+import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -186,6 +187,9 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			fail("Getting enrolment context!");
+		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
+			e.printStackTrace();
+			fail("No valid enrolment period!");
 		}	
 		return enrolmentContext;
 	}
