@@ -11,9 +11,9 @@ import DataBeans.util.Cloner;
 import Dominio.IGroupProperties;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.enrolmentGroupPolicy.strategys.EnrolmentGroupPolicyStrategyFactory;
-import ServidorAplicacao.strategy.enrolmentGroupPolicy.strategys.IEnrolmentGroupPolicyStrategy;
-import ServidorAplicacao.strategy.enrolmentGroupPolicy.strategys.IEnrolmentGroupPolicyStrategyFactory;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import ServidorPersistente.ISuportePersistente;
 
 /**
@@ -53,9 +53,9 @@ public class VerifyStudentGroupAtributes implements IServico {
 
 	public Boolean run(InfoStudentGroup infoStudentGroup,Integer numberOfStudentsToEnrole) throws FenixServiceException{
 
-		IEnrolmentGroupPolicyStrategyFactory enrolmentGroupPolicyStrategyFactory = EnrolmentGroupPolicyStrategyFactory.getInstance();
+		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
 		IGroupProperties groupProperties = Cloner.copyInfoGroupProperties2IGroupProperties(infoStudentGroup.getInfoGroupProperties());
-		IEnrolmentGroupPolicyStrategy strategy = enrolmentGroupPolicyStrategyFactory.getEnrolmentGroupPolicyStrategyInstance(groupProperties);
+		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
 		
 		
 		boolean result = strategy.enrolmentPolicy(groupProperties,numberOfStudentsToEnrole.intValue(),Cloner.copyInfoStudentGroup2IStudentGroup(infoStudentGroup));
