@@ -12,16 +12,16 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.RoleType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -120,7 +120,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
         InfoDepartment teacherDepartment = (InfoDepartment) ServiceUtils.executeService(userView,
                 "ReadDepartmentByTeacher", args2);
 
-        if (!request.isUserInRole(RoleType.CREDITS_MANAGER.getName())) {
+        if (!request.isUserInRole(RoleType.CREDITS_MANAGER.toString())) {
             Object args[] = { userView.getUtilizador() };
 
             InfoDepartment userDepartment = (InfoDepartment) ServiceUtils.executeService(userView,

@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.util.RoleType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
  * @author jpvl
@@ -106,12 +106,11 @@ public class InfoRole extends InfoObject {
 
     public boolean equals(Object o) {
         return ((o instanceof InfoRole) &&
-
         this.roleType.equals(((InfoRole) o).getRoleType()));
     }
 
     public int hashCode() {
-        return this.roleType.getValue();
+        return this.roleType.hashCode();
     }
 
     public void copyFromDomain(final IRole role) {

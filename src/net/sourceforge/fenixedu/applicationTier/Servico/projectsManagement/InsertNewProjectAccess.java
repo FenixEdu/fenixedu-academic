@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.IPersonRole;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.PersonRole;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectAccess;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
@@ -24,7 +25,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
-import net.sourceforge.fenixedu.util.RoleType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**

@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.student;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
-import net.sourceforge.fenixedu.util.RoleType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
  * @author Nuno Correia

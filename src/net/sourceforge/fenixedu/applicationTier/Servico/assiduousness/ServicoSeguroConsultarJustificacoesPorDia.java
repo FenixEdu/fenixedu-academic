@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.assiduousness;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Funcionario;
 import net.sourceforge.fenixedu.applicationTier.ServicoAutorizacao;
 import net.sourceforge.fenixedu.applicationTier.ServicoSeguro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
+import net.sourceforge.fenixedu.domain.Funcionario;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFuncionarioPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IJustificacaoPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistente;

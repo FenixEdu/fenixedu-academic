@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.util.RoleType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
  * @author jorge

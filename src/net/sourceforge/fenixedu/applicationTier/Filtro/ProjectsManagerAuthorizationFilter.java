@@ -5,7 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.util.RoleType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
  * @author Susana Fernandes

@@ -7,7 +7,7 @@ import java.util.Iterator;
 import net.sourceforge.fenixedu.applicationTier.ICandidateView;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.util.RoleType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
  * @author jorge

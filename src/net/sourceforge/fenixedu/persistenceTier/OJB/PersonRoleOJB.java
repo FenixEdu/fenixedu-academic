@@ -21,7 +21,7 @@ public class PersonRoleOJB extends PersistentObjectOJB implements IPersistentPer
     public IPersonRole readByPersonAndRole(IPerson person, IRole role) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("person.username", person.getUsername());
-        crit.addEqualTo("role.roleType", new Integer(role.getRoleType().getValue()));
+        crit.addEqualTo("role.roleType", role.getRoleType());
         return (IPersonRole) queryObject(PersonRole.class, crit);
 
     }

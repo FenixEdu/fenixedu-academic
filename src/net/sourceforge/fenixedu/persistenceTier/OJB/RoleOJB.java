@@ -6,9 +6,9 @@ import org.apache.ojb.broker.query.Criteria;
 
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
-import net.sourceforge.fenixedu.util.RoleType;
 
 /**
  * 
@@ -22,7 +22,7 @@ public class RoleOJB extends PersistentObjectOJB implements IPersistentRole {
 
     public IRole readByRoleType(RoleType roleType) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("roleType", new Integer(roleType.getValue()));
+        crit.addEqualTo("roleType", roleType);
         return (IRole) queryObject(Role.class, crit);
 
     }

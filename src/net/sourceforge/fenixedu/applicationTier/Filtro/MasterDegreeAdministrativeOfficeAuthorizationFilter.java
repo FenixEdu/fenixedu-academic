@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
  * @version
  */
 
-import net.sourceforge.fenixedu.util.RoleType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class MasterDegreeAdministrativeOfficeAuthorizationFilter extends AuthorizationByRoleFilter {
 

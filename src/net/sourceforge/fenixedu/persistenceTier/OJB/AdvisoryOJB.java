@@ -3,16 +3,16 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.ojb.broker.query.Criteria;
-
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AdvisoryRecipients;
-import net.sourceforge.fenixedu.util.RoleType;
+
+import org.apache.ojb.broker.query.Criteria;
 
 /**
  * Created on 2003/09/06
@@ -40,14 +40,14 @@ public class AdvisoryOJB extends PersistentObjectOJB implements IPersistentAdvis
 
         Criteria criteria = new Criteria();
         if (advisoryRecipients.equals(AdvisoryRecipients.STUDENTS)) {
-            criteria.addEqualTo("personRoles.roleType", RoleType.getEnum(RoleType.STUDENT_TYPE));
+            criteria.addEqualTo("personRoles.roleType", RoleType.STUDENT);
         }
         if (advisoryRecipients.equals(AdvisoryRecipients.TEACHERS)) {
-            criteria.addEqualTo("personRoles.roleType", RoleType.getEnum(RoleType.TEACHER_TYPE));
+            criteria.addEqualTo("personRoles.roleType", RoleType.TEACHER);
         }
         if (advisoryRecipients.equals(AdvisoryRecipients.EMPLOYEES)) {
-            criteria.addEqualTo("personRoles.roleType", RoleType.getEnum(RoleType.EMPLOYEE_TYPE));
-            criteria.addNotEqualTo("personRoles.roleType", RoleType.getEnum(RoleType.TEACHER_TYPE));
+            criteria.addEqualTo("personRoles.roleType", RoleType.EMPLOYEE);
+            criteria.addNotEqualTo("personRoles.roleType", RoleType.TEACHER);
         }
 
         int numberOfRecipients = count(Person.class, criteria);

@@ -9,14 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.applicationTier.Executor;
 import net.sourceforge.fenixedu.applicationTier.PersistenceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoAutorizacaoLer;
@@ -27,9 +19,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoAutorizaca
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoSeguroAlterarPessoa;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoSeguroLerPessoa;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.formbeans.person.DadosForm;
 import net.sourceforge.fenixedu.util.EMail;
 import net.sourceforge.fenixedu.util.RandomPassword;
+
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 public final class ForgotPasswordAction extends Action {
 

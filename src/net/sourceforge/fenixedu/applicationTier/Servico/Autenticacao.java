@@ -23,9 +23,9 @@ import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.RoleType;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -134,7 +134,7 @@ public class Autenticacao implements IServico {
 
                 public boolean evaluate(Object arg0) {
                     InfoRole role = (InfoRole) arg0;
-                    if (role.getRoleType().getValue() == RoleType.EMPLOYEE_TYPE) {
+                    if (role.getRoleType() == RoleType.EMPLOYEE) {
                         return false;
                     }
                     return true;

@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
@@ -52,7 +53,6 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.GratuityState;
-import net.sourceforge.fenixedu.util.RoleType;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.State;
@@ -144,8 +144,7 @@ public class RegisterCandidate implements IService {
                     masterDegreeCandidate.getPerson().getPersonRoles(), new Predicate() {
                         public boolean evaluate(Object arg0) {
                             IRole role = (IRole) arg0;
-                            return role.getRoleType().getValue() == RoleType.MASTER_DEGREE_CANDIDATE
-                                    .getValue();
+                            return role.getRoleType() == RoleType.MASTER_DEGREE_CANDIDATE;
                         }
                     });
             if (role != null) {

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.util.RoleType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
  * 11/Mar/2003
@@ -24,5 +24,5 @@ public interface IRole extends IDomainObject {
     void setPage(String page);
 
     //void setRolePersons(Collection rolePersons);
-    void setRoleType(RoleType roleName);
+    void setRoleType(RoleType roleType);
 }

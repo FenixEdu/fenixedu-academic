@@ -16,9 +16,9 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.RoleType;
 
 /**
  * 17/Fev/2003
@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.util.RoleType;
  */
 public class RequestWrapperFilter implements Filter {
 
-    public void init(FilterConfig config) throws ServletException {
+    public void init(FilterConfig config) {
     }
 
     public void destroy() {
@@ -80,7 +80,7 @@ public class RequestWrapperFilter implements Filter {
          */
         public boolean isUserInRole(String role) {
             IUserView userView = SessionUtils.getUserView(this);
-            RoleType roleType = RoleType.getEnum(role);
+            RoleType roleType = RoleType.valueOf(role);
             InfoRole infoRole = new InfoRole();
             infoRole.setRoleType(roleType);
             return userView.getRoles().contains(infoRole);
