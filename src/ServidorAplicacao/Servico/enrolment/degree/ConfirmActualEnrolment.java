@@ -139,15 +139,22 @@ public class ConfirmActualEnrolment implements IServico {
 			Iterator iterator2 = enrolmentContext.getOptionalCurricularCoursesEnrolments().iterator();
 			while (iterator2.hasNext()) {
 				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator2.next();
-				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourse());
+				
+				IEnrolmentInOptionalCurricularCourse enrolment = (IEnrolmentInOptionalCurricularCourse) persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(enrolmentInOptionalCurricularCourse.getStudentCurricularPlan(), enrolmentInOptionalCurricularCourse.getCurricularCourse(), enrolmentInOptionalCurricularCourse.getExecutionPeriod());
 				ICurricularCourse curricularCourseForOption = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourseForOption());
-				enrolmentInOptionalCurricularCourse.setCurricularCourse(curricularCourse);
-				enrolmentInOptionalCurricularCourse.setCurricularCourseForOption(curricularCourseForOption);
-				enrolmentInOptionalCurricularCourse.setExecutionPeriod(executionPeriod);
-				enrolmentInOptionalCurricularCourse.setStudentCurricularPlan(studentCurricularPlan);
-				persistentEnrolment.lockWrite(enrolmentInOptionalCurricularCourse);
+				
+				if(enrolment == null) {
+					ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourse());
+					enrolmentInOptionalCurricularCourse.setCurricularCourse(curricularCourse);
+					enrolmentInOptionalCurricularCourse.setCurricularCourseForOption(curricularCourseForOption);
+					enrolmentInOptionalCurricularCourse.setExecutionPeriod(executionPeriod);
+					enrolmentInOptionalCurricularCourse.setStudentCurricularPlan(studentCurricularPlan);
+					persistentEnrolment.lockWrite(enrolmentInOptionalCurricularCourse);
+				} else {
+					enrolment.setCurricularCourseForOption(curricularCourseForOption);
+					persistentEnrolment.lockWrite(enrolment);
+				}
 			}
-			
 		} catch (ExistingPersistentException e1) {
 			e1.printStackTrace();
 			throw e1;

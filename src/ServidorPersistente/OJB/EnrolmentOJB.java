@@ -1,8 +1,6 @@
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.odmg.QueryException;
 
@@ -35,8 +33,7 @@ public class EnrolmentOJB
 		}
 	}
 
-	public void lockWrite(IEnrolment enrolmentToWrite)
-		throws ExcepcaoPersistencia, ExistingPersistentException {
+	public void lockWrite(IEnrolment enrolmentToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
 
 		IEnrolment enrolmentFromDB = null;
 
@@ -46,25 +43,17 @@ public class EnrolmentOJB
 		}
 
 		// Read Enrolment from database.
-		/*		enrolmentFromDB =
-					this.readEnrolmentByStudentCurricularPlanAndCurricularCourse(
-						enrolmentToWrite.getStudentCurricularPlan(),
-						enrolmentToWrite.getCurricularCourse());
-		*/
-		enrolmentFromDB =(IEnrolment) this.readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
-				enrolmentToWrite.getStudentCurricularPlan(),
-				enrolmentToWrite.getCurricularCourse(),
-				enrolmentToWrite.getExecutionPeriod());
+		enrolmentFromDB =(IEnrolment) this.readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(enrolmentToWrite.getStudentCurricularPlan(), enrolmentToWrite.getCurricularCourse(), enrolmentToWrite.getExecutionPeriod());
 		// If Enrolment is not in database, then write it.
 		if (enrolmentFromDB == null) {
 			super.lockWrite(enrolmentToWrite);
-			// else If the Enrolment is mapped to the database, then write any existing changes.
+		// else If the Enrolment is mapped to the database, then write any existing changes.
 		} else if (
 			(enrolmentToWrite instanceof Enrolment)
 				&& ((Enrolment) enrolmentFromDB).getInternalID().equals(
 					((Enrolment) enrolmentToWrite).getInternalID())) {
 			super.lockWrite(enrolmentToWrite);
-			// else Throw an already existing exception
+		// else Throw an already existing exception
 		} else
 			throw new ExistingPersistentException();
 	}
@@ -77,10 +66,7 @@ public class EnrolmentOJB
 		}
 	}
 
-	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(
-		IStudentCurricularPlan studentCurricularPlan,
-		ICurricularCourse curricularCourse)
-		throws ExcepcaoPersistencia {
+	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
 
 		try {
 			IEnrolment enrolment = null;
@@ -91,10 +77,8 @@ public class EnrolmentOJB
 			oqlQuery += " and curricularCourse.name = $4";
 			oqlQuery += " and curricularCourse.code = $5";
 			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $6";
-			oqlQuery
-				+= " and curricularCourse.degreeCurricularPlan.degree.nome = $7";
-			oqlQuery
-				+= " and curricularCourse.degreeCurricularPlan.degree.sigla = $8";
+			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.nome = $7";
+			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.sigla = $8";
 
 			query.create(oqlQuery);
 
@@ -104,29 +88,16 @@ public class EnrolmentOJB
 			query.bind(curricularCourse.getName());
 			query.bind(curricularCourse.getCode());
 			query.bind(curricularCourse.getDegreeCurricularPlan().getName());
-			query.bind(
-				curricularCourse
-					.getDegreeCurricularPlan()
-					.getDegree()
-					.getNome());
-			query.bind(
-				curricularCourse
-					.getDegreeCurricularPlan()
-					.getDegree()
-					.getSigla());
+			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getNome());
+			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
 
 			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
+			lockRead(result);
 
 			if ((result != null) && (result.size() != 0)) {
 				enrolment = (IEnrolment) result.get(0);
 			}
 			return enrolment;
-
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
@@ -135,23 +106,11 @@ public class EnrolmentOJB
 	public List readAll() throws ExcepcaoPersistencia {
 
 		try {
-			ArrayList list = new ArrayList();
 			String oqlQuery = "select all from " + Enrolment.class.getName();
 			query.create(oqlQuery);
 			List result = (List) query.execute();
-
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-					list.add((IEnrolment) iterator.next());
-			}
-			return list;
+			lockRead(result);
+			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
@@ -163,7 +122,6 @@ public class EnrolmentOJB
 		throws ExcepcaoPersistencia {
 
 		try {
-			ArrayList list = new ArrayList();
 			String oqlQuery = "select all from " + Enrolment.class.getName();
 			oqlQuery += " where studentCurricularPlan.student.number = $1";
 			oqlQuery += " and studentCurricularPlan.student.degreeType = $2";
@@ -178,19 +136,9 @@ public class EnrolmentOJB
 			query.bind(enrolmentState.getState());
 
 			List result = (List) query.execute();
+			lockRead(result);
 
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-					list.add((IEnrolment) iterator.next());
-			}
-			return list;
+			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
@@ -199,9 +147,8 @@ public class EnrolmentOJB
 	/* (non-Javadoc)
 	 * @see ServidorPersistente.IPersistentEnrolment#readAllByStudentCurricularPlan(Dominio.IStudentCurricularPlan)
 	 */
-	public List readAllByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
-		throws ExcepcaoPersistencia {
-		List enrolments = new ArrayList();
+	public List readAllByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
+		List enrolments = null;
 		try {
 			String oqlQuery =
 				"select all from "
@@ -217,7 +164,6 @@ public class EnrolmentOJB
 			query.bind(studentCurricularPlan.getCurrentState());
 
 			enrolments = (List) query.execute();
-
 			lockRead(enrolments);
 		} catch (QueryException e) {
 			e.printStackTrace();
@@ -226,9 +172,6 @@ public class EnrolmentOJB
 		return enrolments;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentEnrolment#readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(Dominio.IStudentCurricularPlan, Dominio.ICurricularCourse, Dominio.IExecutionPeriod)
-	 */
 	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
 		IStudentCurricularPlan studentCurricularPlan,
 		ICurricularCourse curricularCourse,
@@ -243,10 +186,8 @@ public class EnrolmentOJB
 			oqlQuery += " and curricularCourse.name = $4";
 			oqlQuery += " and curricularCourse.code = $5";
 			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $6";
-			oqlQuery
-				+= " and curricularCourse.degreeCurricularPlan.degree.nome = $7";
-			oqlQuery
-				+= " and curricularCourse.degreeCurricularPlan.degree.sigla = $8";
+			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.nome = $7";
+			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.sigla = $8";
 			oqlQuery += " and executionPeriod.name = $9";
 			oqlQuery += " and executionPeriod.executionYear.year = $10";
 
@@ -258,10 +199,7 @@ public class EnrolmentOJB
 			query.bind(curricularCourse.getName());
 			query.bind(curricularCourse.getCode());
 			query.bind(curricularCourse.getDegreeCurricularPlan().getName());
-			query.bind(
-				curricularCourse
-					.getDegreeCurricularPlan()
-					.getDegree()
+			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree()
 					.getNome());
 			query.bind(
 				curricularCourse
@@ -273,17 +211,12 @@ public class EnrolmentOJB
 			query.bind(executionPeriod.getExecutionYear().getYear());
 
 			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
+			lockRead(result);
 
 			if ((result != null) && (result.size() != 0)) {
 				enrolment = (IEnrolment) result.get(0);
 			}
 			return enrolment;
-
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
