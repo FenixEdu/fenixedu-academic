@@ -24,6 +24,7 @@ import java.util.List;
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
+import DataBeans.InfoMasterDegreeCandidateWithInfoPerson;
 import DataBeans.util.Cloner;
 import Dominio.ICandidateSituation;
 import Dominio.ICursoExecucao;
@@ -92,14 +93,19 @@ public class ReadDegreeCandidates implements IServico {
 		while(iterator.hasNext()){
 			// For all candidates ...
 			IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next();
-			InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate); 
 
+			//CLONER
+			//InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate); 
+			InfoMasterDegreeCandidate infoMasterDegreeCandidate =
+			    InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate); 
 			// Copy all Situations			
 			List situations = new ArrayList();
 			Iterator situationIter = masterDegreeCandidate.getSituations().iterator();
 			while(situationIter.hasNext()){
-				InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) situationIter.next()); 
-				situations.add(infoCandidateSituation);
+			    //CLONER
+				//InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) situationIter.next()); 
+			    InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain((ICandidateSituation) situationIter.next());
+			    situations.add(infoCandidateSituation);
 			
 				// Check if this is the Active Situation
 				if 	(infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))

@@ -1,12 +1,3 @@
-/*
- * ReadMasterDegreeCandidateByUsername.java
- *
- * The Service ReadMasterDegreeCandidateByUsername reads the information of a
- * Candidate and returns it
- * 
- * Created on 02 de Dezembro de 2002, 16:25
- */
-
 /**
  *
  * Autores :
@@ -21,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.util.Cloner;
+import DataBeans.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus;
 import Dominio.ICursoExecucao;
 import Dominio.ITeacher;
 import ServidorAplicacao.IServico;
@@ -87,7 +78,12 @@ public class ReadCoordinatedDegrees implements IServico {
 		List result = new ArrayList();
 		while(iterator.hasNext()){
 			ICursoExecucao executionDegree = (ICursoExecucao) iterator.next(); 
-			result.add(Cloner.get(executionDegree));
+			
+			//CLONER
+			//result.add(Cloner.get(executionDegree));
+			result
+                    .add(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus
+                            .newInfoFromDomain(executionDegree));
 		}
 
 		return result;

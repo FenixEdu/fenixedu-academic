@@ -288,7 +288,7 @@
       <action path="/index"
       	      type="ServidorApresentacao.Action.masterDegree.coordinator.ReadCoordinatedDegreesAction">
       	  <forward name="ChooseDegree" path="/chooseDegreePage.jsp"/>
-          <forward name="Success" path="/indexCoordinator.jsp"/>      	      
+          <forward name="oneDegreeSucces" path="/chooseDegree.do"/>      	      
       </action> 
 
       <!-- Dispatch Action to Choose the Degree -->
@@ -524,8 +524,7 @@
 				parameter="method"
 				name="curricularCourseInformationForm"
 				scope="request"
-				validate="true"
-				input="/chooseDegree.do">
+				validate="true">
 		   <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
         key="ServidorApresentacao.Action.exceptions.FenixActionException"
         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
