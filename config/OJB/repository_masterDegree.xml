@@ -173,45 +173,40 @@
 	     jdbc-type="INTEGER"
 	  />
 	  <field-descriptor id="32"
-	     name="executionYearKey"
-	     column="EXECUTION_YEAR_KEY"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor id="33"
 	     name="specialization"
 	     column="SPECIALIZATION"
 	     jdbc-type="INTEGER"
 	     conversion="ServidorPersistente.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
 	  />
-	  <field-descriptor id="34"
+	  <field-descriptor id="33"
 	     name="majorDegreeSchool"
 	     column="MAJOR_DEGREE_SCHOOL"
 	     jdbc-type="VARCHAR"
 	  />
-	  <field-descriptor id="35"
+	  <field-descriptor id="34"
 	     name="majorDegreeYear"
 	     column="MAJOR_DEGREE_YEAR"
 	     jdbc-type="INTEGER"
 	  />
-	 <field-descriptor id="36"
+	 <field-descriptor id="35"
 	     name="average"
 	     column="AVERAGE"
 	     jdbc-type="DOUBLE"
 	  />
 
-	 <field-descriptor id="37"
-	     name="degreeKey"
-	     column="DEGREE_KEY"
+	 <field-descriptor id="36"
+	     name="executionDegreeKey"
+	     column="EXECUTION_DEGREE_KEY"
 	     jdbc-type="INTEGER"
 	  />
 	  
-	 <field-descriptor id="38"
+	 <field-descriptor id="37"
 	     name="countryKey"
 	     column="COUNTRY_KEY"
 	     jdbc-type="INTEGER"
 	  />
 	  
-	 <field-descriptor id="39"
+	 <field-descriptor id="38"
 	     name="identificationDocumentExpirationDate"
 	     column="IDENTIFICATION_DOCUMENT_EXPIRATION_DATE"
 	     jdbc-type="DATE"
@@ -219,11 +214,11 @@
 	  
 	  
       	  <reference-descriptor
-         	name="degree"
-         	class-ref="Dominio.Curso"
+         	name="executionDegree"
+         	class-ref="Dominio.CursoExecucao"
          	proxy="true"
       	  >
-          <foreignkey field-id-ref="37"/>
+          <foreignkey field-id-ref="36"/>
           </reference-descriptor>
           
           <reference-descriptor
@@ -231,7 +226,7 @@
          	class-ref="Dominio.Country"
          	proxy="true"
       	  >
-          <foreignkey field-id-ref="38"/>
+          <foreignkey field-id-ref="37"/>
           </reference-descriptor>
 
           <reference-descriptor
@@ -242,13 +237,6 @@
           <foreignkey field-id-ref="12"/>
           </reference-descriptor>
 
-          <reference-descriptor
-         	name="executionYear"
-         	class-ref="Dominio.ExecutionYear"
-         	proxy="true"
-      	  >
-          <foreignkey field-id-ref="32"/>
-          </reference-descriptor>
 
          <collection-descriptor
 	         name="situations"
