@@ -278,11 +278,52 @@
     </form>
 
    <!-- validation for marks Submission -->
+   <!--	validator threeArgsDate is only valid when used in year field and fields have to be named year, month an day  -->
     <form name="marksSubmissionForm">
 	  <field property="teacherNumber" depends="required, integer" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.responsibleTeacher" />
       </field>
+	  <field property="year" depends="required, integer, range, threeArgsDate" page="1">
+      	<arg0 key="label.exam.enrollment.year" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1900</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>2100</var-value>
+        </var>
+      </field>
+	  <field property="month" depends="required, integer, range" page="1">
+        <arg0 key="label.month" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>12</var-value>
+        </var>
+      </field>
+	  <field property="day" depends="required, integer, range" page="1">
+        <arg0 key="label.day" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>31</var-value>
+        </var>
+      </field>
     </form>
+    
 	<!-- validation for marks Submission -->
     <form name="studentNumberForm">
 	  <field property="studentNumber" depends="required, integer" page="1">

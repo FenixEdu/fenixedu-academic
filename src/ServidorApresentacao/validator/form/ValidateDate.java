@@ -4,6 +4,7 @@
  */
 package ServidorApresentacao.validator.form;
 
+import java.util.Calendar;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +14,10 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.commons.validator.ValidatorAction;
 import org.apache.commons.validator.ValidatorUtil;
 import org.apache.struts.action.ActionErrors;
+import org.apache.struts.validator.FieldChecks;
 import org.apache.struts.validator.Resources;
 
 import Util.Data;
-
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -24,50 +25,104 @@ import Util.Data;
  */
 public class ValidateDate {
 
-
 	public static boolean validate(
 		Object bean,
-		ValidatorAction va, 
+		ValidatorAction va,
 		Field field,
 		ActionErrors errors,
-		HttpServletRequest request, 
+		HttpServletRequest request,
 		ServletContext application) {
-			
-		String valueString = ValidatorUtil.getValueAsString(bean,field.getProperty());
-		
-		
-		String sProperty2 = ValidatorUtil.getValueAsString(bean,field.getVarValue("month"));
-		String sProperty3 = ValidatorUtil.getValueAsString(bean,field.getVarValue("day"));
-		
-		if (((valueString == null) && (sProperty2 == null) && (sProperty3 == null)) ||
-			((valueString.length() == 0) && (sProperty2.length() == 0) && (sProperty3.length() == 0))){
-//			errors.add(field.getKey(),Resources.getActionError(request, va, field));
+
+		String valueString = ValidatorUtil.getValueAsString(bean, field.getProperty());
+
+		String sProperty2 = ValidatorUtil.getValueAsString(bean, field.getVarValue("month"));
+		String sProperty3 = ValidatorUtil.getValueAsString(bean, field.getVarValue("day"));
+
+		if (((valueString == null) && (sProperty2 == null) && (sProperty3 == null))
+			|| ((valueString.length() == 0) && (sProperty2.length() == 0) && (sProperty3.length() == 0))) {
+			//			errors.add(field.getKey(),Resources.getActionError(request, va, field));
 			return true;
 		}
 
 		Integer year = null;
 		Integer month = null;
 		Integer day = null;
-		
+
 		try {
 			year = new Integer(valueString);
 			month = new Integer(sProperty2);
 			day = new Integer(sProperty3);
-		} catch(NumberFormatException e){
-			errors.add(field.getKey(),Resources.getActionError(request, va, field));
+		} catch (NumberFormatException e) {
+			errors.add(field.getKey(), Resources.getActionError(request, va, field));
 			return false;
 		}
-		
-		if (!GenericValidator.isBlankOrNull(valueString)) {
-			  if (!Data.validDate(day, month, year) || 
-			      year == null || month == null || day == null ||
-			      year.intValue() < 1 || month.intValue() < 0 || day.intValue() < 1) 
-				 errors.add(field.getKey(),Resources.getActionError(request, va, field));
 
-				 return false;
+		if (!GenericValidator.isBlankOrNull(valueString)) {
+			if (!Data.validDate(day, month, year)
+				|| year == null
+				|| month == null
+				|| day == null
+				|| year.intValue() < 1
+				|| month.intValue() < 0
+				|| day.intValue() < 1)
+				errors.add(field.getKey(), Resources.getActionError(request, va, field));
+
+			return false;
 		}
 
 		return true;
 	}
+
+//	this validator is only valid when used in year field 
+	public static boolean threeArgsDate(
+		Object bean1,
+		Object bean2,
+		Object bean3,
+		ValidatorAction va,
+		Field field,
+		ActionErrors errors,
+		HttpServletRequest request,
+		ServletContext application) {
+
+		String valueString1 = ValidatorUtil.getValueAsString(bean1, field.getProperty());
 		
+		String sProperty2 = ValidatorUtil.getValueAsString(bean2, field.getVarValue("month"));
+		String sProperty3 = ValidatorUtil.getValueAsString(bean3, field.getVarValue("day"));
+
+		if (((valueString1 == null) && (sProperty2 == null) && (sProperty3 == null))
+			|| ((valueString1.length() == 0) && (sProperty2.length() == 0) && (sProperty3.length() == 0))) {
+			//			errors.add(field.getKey(),Resources.getActionError(request, va, field));
+			return true;
+		}
+
+		Integer year = null;
+		Integer month = null;
+		Integer day = null;
+
+		try {
+			year = new Integer(valueString1);
+			month = new Integer(sProperty2);
+			day = new Integer(sProperty3);
+		} catch (NumberFormatException e) {
+			errors.add(field.getKey(), Resources.getActionError(request, va, field));
+			return false;
+		}
+		String date = new String(day.toString() + "/" + month.toString() + "/" + year);
+		String datePattern = new String("dd/mm/yyyy"); 
+		if(!GenericValidator.isDate(date, datePattern, false)){
+			throw new IllegalArgumentException();
+		}
+
+		/*
+		try {
+			Calendar calendar = Calendar.getInstance();
+			calendar.clear();
+			calendar.setLenient(false);
+			calendar.set(year.intValue(), month.intValue() - 1, day.intValue());
+		} catch (IllegalArgumentException e) {
+			errors.add(field.getKey(), Resources.getActionError(request, va, field));
+			return false;
+		}*/
+		return true;
+	}
 }

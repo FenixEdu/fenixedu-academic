@@ -1,5 +1,6 @@
 package DataBeans;
 
+import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -11,11 +12,17 @@ import java.util.ListIterator;
 public class InfoSiteEnrolmentEvaluation implements ISiteComponent {
 	private List enrolmentEvaluations;
 	private InfoTeacher infoTeacher;
+	private Date lastEvaluationDate;
 
 	public boolean equals(Object objectToCompare) {
 		boolean result = false;
 
 		if (objectToCompare instanceof InfoSiteEnrolmentEvaluation
+			&& (((((InfoSiteEnrolmentEvaluation) objectToCompare).getLastEvaluationDate() != null
+				&& this.getLastEvaluationDate() != null
+				&& ((InfoSiteEnrolmentEvaluation) objectToCompare).getLastEvaluationDate().equals(this.getLastEvaluationDate()))
+				|| ((InfoSiteEnrolmentEvaluation) objectToCompare).getLastEvaluationDate() == null
+				&& this.getLastEvaluationDate() == null))
 			&& (((((InfoSiteEnrolmentEvaluation) objectToCompare).getInfoTeacher() != null
 				&& this.getInfoTeacher() != null
 				&& ((InfoSiteEnrolmentEvaluation) objectToCompare).getInfoTeacher().equals(this.getInfoTeacher()))
@@ -48,7 +55,21 @@ public class InfoSiteEnrolmentEvaluation implements ISiteComponent {
 		}
 		return result;
 	}
-	
+
+	/**
+	 * @return
+	 */
+	public Date getLastEvaluationDate() {
+		return lastEvaluationDate;
+	}
+
+	/**
+	 * @param lastEvaluationDate
+	 */
+	public void setLastEvaluationDate(Date lastEvaluationDate) {
+		this.lastEvaluationDate = lastEvaluationDate;
+	}
+
 	/**
 	 * @return
 	 */

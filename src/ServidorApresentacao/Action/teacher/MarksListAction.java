@@ -204,7 +204,7 @@ public class MarksListAction extends DispatchAction {
 
 		Integer executionCourseCode = getFromRequest("objectCode", request);
 
-		//Read evalauations
+		//Read evaluations
 		Object[] argsReadEvaluations = { executionCourseCode };
 
 		List infoEvaluationsList;

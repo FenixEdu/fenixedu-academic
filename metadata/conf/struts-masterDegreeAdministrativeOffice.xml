@@ -254,9 +254,12 @@
 
             <form-property name="page" type="java.lang.Integer" initial="0" />
             <form-property name="studentName" type="java.lang.String" />
-            <form-property name="studentNumber" type="java.lang.Integer" />
+            <form-property name="studentNumber" type="java.lang.String" />
             <form-property name="grade" type="java.lang.String" />
             <form-property name="teacherNumber" type="java.lang.String" />
+			<form-property name="year" type="java.lang.String" />
+			<form-property name="month" type="java.lang.String" />
+			<form-property name="day" type="java.lang.String" />				        
       </form-bean>
 
    </form-beans>
@@ -840,7 +843,6 @@
 			 <forward name="studentMarks" path="/marksManagement/showStudentMarks.jsp"/> 
 			 <forward name="editStudentMark" path="/marksManagement/editStudentMark.jsp"/> 
       </action>
-      
       <action path="/marksSubmission"
       		  input="/marksSubmission.do?method=prepare&amp;page=0"
       	      name="marksSubmissionForm"
@@ -848,6 +850,12 @@
 		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.SubmitMarksAction"
               validate="true">
+              
+              <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	  	key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+               	handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               />       
+              
 	         <forward name="MarksSubmission" path="/marksManagement/marksSubmission.jsp"/> 
 	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 	         
       </action>
