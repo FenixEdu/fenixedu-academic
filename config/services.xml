@@ -3168,7 +3168,7 @@
 	<service>
 		<idInternal>413293</idInternal>
 		<name>RemoveProfessorshipByDepartment</name>
-		<implementationClass>ServidorAplicacao.Servico.teacher.DeleteTeacher</implementationClass>
+		<implementationClass>ServidorAplicacao.Servico.department.professorship.RemoveProfessorship</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
