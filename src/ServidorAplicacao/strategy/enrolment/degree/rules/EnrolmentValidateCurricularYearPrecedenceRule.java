@@ -74,18 +74,18 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 
 		for(int i = (year - 1); i > 0; i--) {
 			final int j = i;
-			List precedentCurricularCourses = (List) CollectionUtils.select(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled(), new Predicate() {
+			List precedentCurricularCourseScopes = (List) CollectionUtils.select(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled(), new Predicate() {
 				public boolean evaluate(Object obj) {
 					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
 					return curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() == j;
 				}
 			});
 					
-			iterator = precedentCurricularCourses.iterator();
+			iterator = precedentCurricularCourseScopes.iterator();
 			while (iterator.hasNext()) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 //				ICurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
-				if( (!enrolmentContext.getActualEnrolments().contains(curricularCourseScope)) && (!curricularCoursesOfOption.contains(curricularCourseScope)) ){
+				if( (!enrolmentContext.getActualEnrolments().contains(curricularCourseScope)) && (!curricularCoursesOfOption.contains(curricularCourseScope.getCurricularCourse())) ){
 					enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MUST_ENROLL_IN_EARLIER_CURRICULAR_COURSES);
 					return enrolmentContext;
 				}				
