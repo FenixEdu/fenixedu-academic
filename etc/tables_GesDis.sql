@@ -140,7 +140,7 @@ create table SUPPORT_LESSONS_TIMETABLE (
    KEY_TEACHER int(11) not null default '0',
    KEY_EXECUTION_COURSE int(11) not null default '0',
    primary key (ID_INTERNAL),
-   unique U1 (KEY_TEACHER, DAY, BEGINNING, END))   
+   unique U1 (KEY_TEACHER, WEEKDAY, START_TIME, END_TIME))   
    type=InnoDB comment="InnoDB free: 372736 kB";
 
 #----------------------------
