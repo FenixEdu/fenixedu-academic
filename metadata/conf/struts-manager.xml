@@ -504,6 +504,7 @@
        <forward name="viewExecutionCoursesToAssociate" path="df.page.read-execution-courses"/>  
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/> 
        <forward name="readAvailableExecutionPeriods" path="/readExecutionPeriodToAssociateExecutionCoursesAction.do"/>   
+       <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>
        	           	      
     </action>
     
@@ -511,14 +512,12 @@
 	<action
 	    path="/dissociateExecutionCourse"
 	    name="curricularCourseForm"
-		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.DissociateExecutionCourseDA"
+		type="ServidorApresentacao.Action.manager.DissociateExecutionCourseAction"
         validate="true"> 
         <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-       <forward name="dissociateExecutionCourse" path="df.page.dissociate-execution-course"/>      	          
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>  	          
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
 	</action>
     

@@ -16,6 +16,10 @@
 
 <html:form action="/deleteDegrees" method="get">
 
+ <bean:define id="onclick">
+			return confirm('<bean:message key="message.confirm.delete.degrees"/>')
+		  </bean:define>
+
 <table width="100%" cellpadding="0" border="0">
 	<tr>
 		<td class="listClasses-header">
@@ -27,10 +31,12 @@
 		<td class="listClasses-header"><bean:message key="label.manager.degree.tipoCurso" />
 		</td>
 	</tr>
+		
 		 
 	<logic:iterate id="degree" name="Lista de licenciaturas">			
 		<tr>	
 			<td class="listClasses">
+			
 			<html:multibox property="internalIds">
 			<bean:write name="degree" property="idInternal"/>
 			</html:multibox>
@@ -42,13 +48,20 @@
 			<bean:define id="tipoCurso" name="degree" property="tipoCurso"/>
 			<td class="listClasses"><%= tipoCurso.toString() %>
 			</td>
-	 	</tr>	
+	 	</tr>
+	 		
 	 </logic:iterate>
 	
 </table>
+
 <br>
 <br>	
-<html:submit><bean:message key="label.manager.delete.selected.degrees"/></html:submit>
+
+  <html:submit onclick='<%=onclick.toString() %>'>
+  
+   <bean:message key="label.manager.delete.selected.degrees"/>
+  </html:submit>
+
 </html:form> 
 </logic:notEmpty>	 	
 </logic:present>

@@ -13,6 +13,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -55,6 +56,10 @@ public class ReadExecutionCoursesByExecutionPeriod implements IServico {
 		executionPeriodToRead.setIdInternal(executionPeriodId);
 		
 			IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOId(executionPeriodToRead, false);
+			
+			if(executionPeriod == null)
+			throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
+			
 			allExecutionCoursesFromExecutionPeriod = 
 			(List) sp.getIDisciplinaExecucaoPersistente().readByExecutionPeriod(executionPeriod);
 		    

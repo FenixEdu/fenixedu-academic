@@ -38,6 +38,10 @@
 	
 <html:form action="/deleteDegreeCurricularPlans" method="get">
 
+ <bean:define id="onclick">
+			return confirm('<bean:message key="message.confirm.delete.degree.curricular.plans"/>')
+		  </bean:define>
+
 <html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 <table width="70%" cellpadding="0" border="0">
 	<tr>
@@ -68,7 +72,7 @@
 </table>
 <br>
 <br>	
-<html:submit><bean:message key="label.manager.delete.selected.degreeCurricularPlans"/></html:submit>
+<html:submit onclick='<%=onclick.toString() %>'><bean:message key="label.manager.delete.selected.degreeCurricularPlans"/></html:submit>
 </html:form> 
 </logic:notEmpty>	 	
 </logic:present>

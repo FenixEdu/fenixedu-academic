@@ -36,6 +36,11 @@
 <logic:notEmpty name="curricularCoursesList">
 	
 	<html:form action="/deleteCurricularCourses" method="get">
+	
+	 <bean:define id="onclick">
+			return confirm('<bean:message key="message.confirm.delete.curricular.courses"/>')
+		  </bean:define>
+	
 		<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 		<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 			<table width="100%" cellpadding="0" border="0">
@@ -64,7 +69,7 @@
 			
 <br>
 
-		<html:submit><bean:message key="label.manager.delete.selected.curricularCourses"/></html:submit>
+		<html:submit onclick='<%=onclick.toString() %>'><bean:message key="label.manager.delete.selected.curricularCourses"/></html:submit>
 	</html:form> 
 </logic:notEmpty>	 	
 </logic:present>
@@ -82,6 +87,11 @@
 <logic:notEmpty name="executionDegreesList">
 	
 	<html:form action="/deleteExecutionDegrees" method="get">
+	
+	<bean:define id="onclick">
+			return confirm('<bean:message key="message.confirm.delete.execution.degrees"/>')
+		  </bean:define>
+		  
 		<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 		<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 			<table width="70%" cellpadding="0" border="0">
@@ -139,7 +149,7 @@
 			
 <br>	
 
-		<html:submit><bean:message key="label.manager.delete.selected.executionDegrees"/></html:submit>
+		<html:submit onclick='<%=onclick.toString() %>'><bean:message key="label.manager.delete.selected.executionDegrees"/></html:submit>
 	</html:form> 
 </logic:notEmpty>	 	
 </logic:present>

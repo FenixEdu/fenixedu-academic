@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -15,8 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionPeriod;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -25,7 +23,7 @@ import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author lmac1
@@ -33,11 +31,14 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+	public ActionForward prepare(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = SessionUtils.getUserView(request);
 
 		Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
 
@@ -45,10 +46,16 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 
 		List infoExecutionCoursesList = null;
 		try {
-			infoExecutionCoursesList = (List) ServiceUtils.executeService(userView, "ReadExecutionCoursesByExecutionPeriod", args);
+			infoExecutionCoursesList =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadExecutionCoursesByExecutionPeriod",
+					args);
 
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("message.nonExistingCurricularCourse", "", e);
+			throw new NonExistingActionException(
+				e.getMessage(),
+				mapping.findForward("readAvailableExecutionPeriods"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -56,14 +63,24 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 		InfoExecutionPeriod infoExecutionPeriod = null;
 
 		try {
-			infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadExecutionPeriod", args);
+			infoExecutionPeriod =
+				(InfoExecutionPeriod) ServiceUtils.executeService(
+					userView,
+					"ReadExecutionPeriod",
+					args);
 
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("message.nonExistingExecutionPeriod", "", e);
+			throw new NonExistingActionException(
+				e.getMessage(),
+				mapping.findForward("readAvailableExecutionPeriods"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException);
 		}
-		String ExecutionPeriodNameAndYear = new String(infoExecutionPeriod.getName() + "-" + infoExecutionPeriod.getInfoExecutionYear().getYear());
+		String ExecutionPeriodNameAndYear =
+			new String(
+				infoExecutionPeriod.getName()
+					+ "-"
+					+ infoExecutionPeriod.getInfoExecutionYear().getYear());
 		request.setAttribute("executionPeriodNameAndYear", ExecutionPeriodNameAndYear);
 
 		request.setAttribute("infoExecutionCoursesList", infoExecutionCoursesList);
@@ -71,27 +88,45 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 		return mapping.findForward("viewExecutionCoursesToAssociate");
 	}
 
-	public ActionForward associate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+	public ActionForward associate(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
+		IUserView userView = SessionUtils.getUserView(request);
+
 		DynaActionForm associateForm = (DynaActionForm) form;
 
 		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 		Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
 
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		//			System.out.println("EEEEEEEEEEEEEEEEE"+(String)associateForm.get("executionCourseId"));
-		Integer executionCourseId = new Integer((String) associateForm.get("executionCourseId"));
+		Integer executionCourseId =
+			new Integer((String) associateForm.get("executionCourseId"));
 
 		Object args[] = { executionCourseId, curricularCourseId, executionPeriodId };
-		GestorServicos manager = GestorServicos.manager();
 
 		try {
-			manager.executar(userView, "AssociateExecutionCourseToCurricularCourse", args);
+			ServiceUtils.executeService(
+				userView,
+				"AssociateExecutionCourseToCurricularCourse",
+				args);
 		} catch (ExistingServiceException e) {
-			throw new ExistingActionException(e.getMessage(), mapping.findForward("readAvailableExecutionPeriods"));
+			throw new ExistingActionException(
+				e.getMessage(),
+				mapping.findForward("readAvailableExecutionPeriods"));
 		} catch (NonExistingServiceException ex) {
-			throw new NonExistingActionException(ex.getMessage());
+			if (ex.getMessage().equals((String) "message.nonExistingCurricularCourse"))
+				throw new NonExistingActionException(
+					ex.getMessage(),
+					mapping.findForward("readDegreeCurricularPlan"));
+			else if (ex.getMessage().equals((String) "message.nonExisting.executionCourse"))
+				throw new NonExistingActionException(ex.getMessage(), "");
+			else
+				throw new NonExistingActionException(
+					ex.getMessage(),
+					mapping.findForward("readAvailableExecutionPeriods"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

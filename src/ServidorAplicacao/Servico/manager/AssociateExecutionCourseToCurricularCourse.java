@@ -52,12 +52,12 @@ public class AssociateExecutionCourseToCurricularCourse implements IServico {
 				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(curricularCourseId), false);
 				
 				if(curricularCourse == null)
-					throw new NonExistingServiceException("b", null);
+					throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 					
 				List executionCourses = curricularCourse.getAssociatedExecutionCourses();
 				
 				Iterator iter = executionCourses.iterator();
-				System.out.println("executionCoursesAssociados"+executionCourses);
+			
 				while(iter.hasNext()){
 				Integer associatedExecutionPeriodId = ((IDisciplinaExecucao) iter.next()).getExecutionPeriod().getIdInternal();
 				if(associatedExecutionPeriodId.equals(executionPeriodId))
@@ -66,7 +66,7 @@ public class AssociateExecutionCourseToCurricularCourse implements IServico {
 				
 				executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseId), false);
 				if(executionCourse == null)
-					throw new NonExistingServiceException("c", null);
+					throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
 				else {
 						List curricularCourses = executionCourse.getAssociatedCurricularCourses();
 						if(!executionCourses.contains(executionCourse) && !curricularCourses.contains(curricularCourse)) {
