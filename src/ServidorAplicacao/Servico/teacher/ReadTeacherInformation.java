@@ -9,37 +9,38 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoTeacher;
 import DataBeans.SiteView;
+import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoOrientation;
-import DataBeans.teacher.InfoProfessionalCareer;
 import DataBeans.teacher.InfoPublicationsNumber;
 import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoSiteTeacherInformation;
-import DataBeans.teacher.InfoTeachingCareer;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IProfessorship;
 import Dominio.IQualification;
 import Dominio.ITeacher;
+import Dominio.teacher.ICareer;
 import Dominio.teacher.IExternalActivity;
 import Dominio.teacher.IOldPublication;
 import Dominio.teacher.IOrientation;
-import Dominio.teacher.IProfessionalCareer;
 import Dominio.teacher.IPublicationsNumber;
 import Dominio.teacher.IServiceProviderRegime;
-import Dominio.teacher.ITeachingCareer;
 import Dominio.teacher.IWeeklyOcupation;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentQualification;
 import ServidorPersistente.IPersistentTeacher;
@@ -104,46 +105,12 @@ public class ReadTeacherInformation implements IServico
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
             infoSiteTeacherInformation.setInfoTeacher(infoTeacher);
 
-            IPersistentQualification persistentQualification = sp.getIPersistentQualification();
-            List qualifications =
-                persistentQualification.readQualificationsByPerson(teacher.getPerson());
-            List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer()
-            {
-                public Object transform(Object o)
-                {
-                    IQualification qualification = (IQualification) o;
-                    return Cloner.copyIQualification2InfoQualification(qualification);
-                }
-            });
+            infoSiteTeacherInformation.setInfoQualifications(getInfoQualifications(sp, teacher));
 
-            infoSiteTeacherInformation.setInfoQualifications(infoQualifications);
-
-            IPersistentCareer persistentCareer = sp.getIPersistentCareer();
-            List professionalCareers =
-                persistentCareer.readAllByTeacherAndCareerType(teacher, CareerType.PROFESSIONAL);
-            List infoProfessionalCareers = new ArrayList();
-            Iterator iter = professionalCareers.iterator();
-            while (iter.hasNext())
-            {
-                IProfessionalCareer professionalCareer = (IProfessionalCareer) iter.next();
-                InfoProfessionalCareer infoProfessionalCareer =
-                    (InfoProfessionalCareer) Cloner.copyICareer2InfoCareer(professionalCareer);
-                infoProfessionalCareers.add(infoProfessionalCareer);
-            }
-            infoSiteTeacherInformation.setInfoProfessionalCareers(infoProfessionalCareers);
-
-            List teachingCareers =
-                persistentCareer.readAllByTeacherAndCareerType(teacher, CareerType.TEACHING);
-            List infoTeachingCareers = new ArrayList();
-            iter = teachingCareers.iterator();
-            while (iter.hasNext())
-            {
-                ITeachingCareer teachingCareer = (ITeachingCareer) iter.next();
-                InfoTeachingCareer infoTeachingCareer =
-                    (InfoTeachingCareer) Cloner.copyICareer2InfoCareer(teachingCareer);
-                infoTeachingCareers.add(infoTeachingCareer);
-            }
-            infoSiteTeacherInformation.setInfoTeachingCareers(infoTeachingCareers);
+            infoSiteTeacherInformation.setInfoProfessionalCareers(
+                getInfoCareers(sp, teacher, CareerType.PROFESSIONAL));
+            infoSiteTeacherInformation.setInfoTeachingCareers(
+                getInfoCareers(sp, teacher, CareerType.TEACHING));
 
             IPersistentServiceProviderRegime persistentServiceProviderRegime =
                 sp.getIPersistentServiceProviderRegime();
@@ -161,45 +128,9 @@ public class ReadTeacherInformation implements IServico
                 infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
             }
 
-            IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
-            List externalActivities = persistentExternalActivity.readAllByTeacher(teacher);
+            infoSiteTeacherInformation.setInfoExternalActivities(getInfoExternalActivities(sp, teacher));
 
-            List infoExternalActivities =
-                (List) CollectionUtils.collect(externalActivities, new Transformer()
-            {
-                public Object transform(Object o)
-                {
-                    IExternalActivity externalActivity = (IExternalActivity) o;
-                    return Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
-                }
-            });
-            infoSiteTeacherInformation.setInfoExternalActivities(infoExternalActivities);
-
-            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-            List professorShips = persistentProfessorship.readByTeacher(teacher);
-            List infoExecutionCourses = (List) CollectionUtils.collect(professorShips, new Transformer()
-            {
-                public Object transform(Object o)
-                {
-                    IProfessorship professorship = (IProfessorship) o;
-                    IExecutionCourse executionCourse = professorship.getExecutionCourse();
-                    List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-                    List infoCurricularCourses =
-                        (List) CollectionUtils.collect(curricularCourses, new Transformer()
-                    {
-                        public Object transform(Object o)
-                        {
-                            ICurricularCourse curricularCourse = (ICurricularCourse) o;
-                            return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-                        }
-                    });
-                    InfoExecutionCourse infoExecutionCourse =
-                        Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-                    infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
-                    return infoExecutionCourse;
-                }
-            });
-            infoSiteTeacherInformation.setInfoExecutionCourses(infoExecutionCourses);
+            infoSiteTeacherInformation.setInfoExecutionCourses(getInfoExecutionCourses(sp, teacher));
 
             IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
             IWeeklyOcupation weeklyOcupation = persistentWeeklyOcupation.readByTeacher(teacher);
@@ -220,192 +151,202 @@ public class ReadTeacherInformation implements IServico
                 infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
             }
 
-            IPersistentOrientation persistentOrientation = sp.getIPersistentOrientation();
-            IOrientation degreeOrientation =
-                persistentOrientation.readByTeacherAndOrientationType(teacher, OrientationType.DEGREE);
-            if (degreeOrientation != null)
-            {
-                infoSiteTeacherInformation.setInfoDegreeOrientation(
-                    Cloner.copyIOrientation2InfoOrientation(degreeOrientation));
-            } else
-            {
-                InfoOrientation infoOrientation = new InfoOrientation();
-                infoOrientation.setInfoTeacher(infoTeacher);
-                infoOrientation.setNumberOfStudents(new Integer(0));
-                infoOrientation.setDescription(new String());
-                infoOrientation.setOrientationType(OrientationType.DEGREE);
-                infoSiteTeacherInformation.setInfoDegreeOrientation(infoOrientation);
-            }
+            infoSiteTeacherInformation.setInfoDegreeOrientation(
+                getInfoOrientation(sp, teacher, OrientationType.DEGREE));
+            infoSiteTeacherInformation.setInfoMasterOrientation(
+                getInfoOrientation(sp, teacher, OrientationType.MASTER));
+            infoSiteTeacherInformation.setInfoPhdOrientation(
+                getInfoOrientation(sp, teacher, OrientationType.PHD));
 
-            IOrientation masterOrientation =
-                persistentOrientation.readByTeacherAndOrientationType(teacher, OrientationType.MASTER);
-            if (masterOrientation != null)
-            {
-                infoSiteTeacherInformation.setInfoMasterOrientation(
-                    Cloner.copyIOrientation2InfoOrientation(masterOrientation));
-            } else
-            {
-                InfoOrientation infoOrientation = new InfoOrientation();
-                infoOrientation.setInfoTeacher(infoTeacher);
-                infoOrientation.setNumberOfStudents(new Integer(0));
-                infoOrientation.setDescription(new String());
-                infoOrientation.setOrientationType(OrientationType.MASTER);
-                infoSiteTeacherInformation.setInfoMasterOrientation(infoOrientation);
-            }
+            infoSiteTeacherInformation.setInfoArticleChapterPublicationsNumber(getInfoPublicationsNumber(sp, teacher, PublicationType.ARTICLES_CHAPTERS));
+            infoSiteTeacherInformation.setInfoEditBookPublicationsNumber(getInfoPublicationsNumber(sp, teacher, PublicationType.EDITOR_BOOK));
+            infoSiteTeacherInformation.setInfoAuthorBookPublicationsNumber(getInfoPublicationsNumber(sp, teacher, PublicationType.AUTHOR_BOOK));
+            infoSiteTeacherInformation.setInfoMagArticlePublicationsNumber(getInfoPublicationsNumber(sp, teacher, PublicationType.MAG_ARTICLE));
+            infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(getInfoPublicationsNumber(sp, teacher, PublicationType.COMUNICATION));
 
-            IOrientation phdOrientation =
-                persistentOrientation.readByTeacherAndOrientationType(teacher, OrientationType.PHD);
-            if (phdOrientation != null)
-            {
-                infoSiteTeacherInformation.setInfoPhdOrientation(
-                    Cloner.copyIOrientation2InfoOrientation(phdOrientation));
-            } else
-            {
-                InfoOrientation infoOrientation = new InfoOrientation();
-                infoOrientation.setInfoTeacher(infoTeacher);
-                infoOrientation.setNumberOfStudents(new Integer(0));
-                infoOrientation.setDescription(new String());
-                infoOrientation.setOrientationType(OrientationType.PHD);
-                infoSiteTeacherInformation.setInfoPhdOrientation(infoOrientation);
-            }
-
-            IPersistentPublicationsNumber persistentPublicationsNumber =
-                sp.getIPersistentPublicationsNumber();
-            IPublicationsNumber comunicationPublicationsNumber =
-                persistentPublicationsNumber.readByTeacherAndPublicationType(
-                    teacher,
-                    PublicationType.COMUNICATION);
-            if (comunicationPublicationsNumber != null)
-            {
-                infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(
-                    Cloner.copyIPublicationsNumber2InfoPublicationsNumber(
-                        comunicationPublicationsNumber));
-            } else
-            {
-                InfoPublicationsNumber infoPublicationsNumber = new InfoPublicationsNumber();
-                infoPublicationsNumber.setInfoTeacher(infoTeacher);
-                infoPublicationsNumber.setNational(new Integer(0));
-                infoPublicationsNumber.setInternational(new Integer(0));
-                infoPublicationsNumber.setPublicationType(PublicationType.COMUNICATION);
-                infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(infoPublicationsNumber);
-            }
-
-            IPublicationsNumber magArticlePublicationsNumber =
-                persistentPublicationsNumber.readByTeacherAndPublicationType(
-                    teacher,
-                    PublicationType.MAG_ARTICLE);
-            if (magArticlePublicationsNumber != null)
-            {
-                infoSiteTeacherInformation.setInfoMagArticlePublicationsNumber(
-                    Cloner.copyIPublicationsNumber2InfoPublicationsNumber(magArticlePublicationsNumber));
-            } else
-            {
-                InfoPublicationsNumber infoPublicationsNumber = new InfoPublicationsNumber();
-                infoPublicationsNumber.setInfoTeacher(infoTeacher);
-                infoPublicationsNumber.setNational(new Integer(0));
-                infoPublicationsNumber.setInternational(new Integer(0));
-                infoPublicationsNumber.setPublicationType(PublicationType.MAG_ARTICLE);
-                infoSiteTeacherInformation.setInfoMagArticlePublicationsNumber(infoPublicationsNumber);
-            }
-
-            IPublicationsNumber authorBookPublicationsNumber =
-                persistentPublicationsNumber.readByTeacherAndPublicationType(
-                    teacher,
-                    PublicationType.AUTHOR_BOOK);
-            if (authorBookPublicationsNumber != null)
-            {
-                infoSiteTeacherInformation.setInfoAuthorBookPublicationsNumber(
-                    Cloner.copyIPublicationsNumber2InfoPublicationsNumber(authorBookPublicationsNumber));
-            } else
-            {
-                InfoPublicationsNumber infoPublicationsNumber = new InfoPublicationsNumber();
-                infoPublicationsNumber.setInfoTeacher(infoTeacher);
-                infoPublicationsNumber.setNational(new Integer(0));
-                infoPublicationsNumber.setInternational(new Integer(0));
-                infoPublicationsNumber.setPublicationType(PublicationType.AUTHOR_BOOK);
-                infoSiteTeacherInformation.setInfoAuthorBookPublicationsNumber(infoPublicationsNumber);
-            }
-
-            IPublicationsNumber editorBookPublicationsNumber =
-                persistentPublicationsNumber.readByTeacherAndPublicationType(
-                    teacher,
-                    PublicationType.EDITOR_BOOK);
-            if (editorBookPublicationsNumber != null)
-            {
-                infoSiteTeacherInformation.setInfoEditBookPublicationsNumber(
-                    Cloner.copyIPublicationsNumber2InfoPublicationsNumber(editorBookPublicationsNumber));
-            } else
-            {
-                InfoPublicationsNumber infoPublicationsNumber = new InfoPublicationsNumber();
-                infoPublicationsNumber.setInfoTeacher(infoTeacher);
-                infoPublicationsNumber.setNational(new Integer(0));
-                infoPublicationsNumber.setInternational(new Integer(0));
-                infoPublicationsNumber.setPublicationType(PublicationType.EDITOR_BOOK);
-                infoSiteTeacherInformation.setInfoEditBookPublicationsNumber(infoPublicationsNumber);
-            }
-
-            IPublicationsNumber articlesChaptersPublicationsNumber =
-                persistentPublicationsNumber.readByTeacherAndPublicationType(
-                    teacher,
-                    PublicationType.ARTICLES_CHAPTERS);
-            if (articlesChaptersPublicationsNumber != null)
-            {
-                infoSiteTeacherInformation.setInfoArticleChapterPublicationsNumber(
-                    Cloner.copyIPublicationsNumber2InfoPublicationsNumber(
-                        articlesChaptersPublicationsNumber));
-            } else
-            {
-                InfoPublicationsNumber infoPublicationsNumber = new InfoPublicationsNumber();
-                infoPublicationsNumber.setInfoTeacher(infoTeacher);
-                infoPublicationsNumber.setNational(new Integer(0));
-                infoPublicationsNumber.setInternational(new Integer(0));
-                infoPublicationsNumber.setPublicationType(PublicationType.ARTICLES_CHAPTERS);
-                infoSiteTeacherInformation.setInfoArticleChapterPublicationsNumber(
-                    infoPublicationsNumber);
-            }
-
-            IPersistentOldPublication persistentOldPublication = sp.getIPersistentOldPublication();
-            List oldCientificPublications =
-                persistentOldPublication.readAllByTeacherAndOldPublicationType(
-                    teacher,
-                    OldPublicationType.CIENTIFIC);
-            infoSiteTeacherInformation
-                .setInfoOldCientificPublications(
-                    (List) CollectionUtils
-                    .collect(oldCientificPublications, new Transformer()
-            {
-                public Object transform(Object o)
-                {
-                    IOldPublication oldPublication = (IOldPublication) o;
-                    return Cloner.copyIOldPublication2InfoOldPublication(oldPublication);
-                }
-            }));
-
-            List oldDidacitcPublications =
-                persistentOldPublication.readAllByTeacherAndOldPublicationType(
-                    teacher,
-                    OldPublicationType.DIDACTIC);
-            infoSiteTeacherInformation
-                .setInfoOldDidacticPublications(
-                    (List) CollectionUtils
-                    .collect(oldDidacitcPublications, new Transformer()
-            {
-                public Object transform(Object o)
-                {
-                    IOldPublication oldPublication = (IOldPublication) o;
-                    return Cloner.copyIOldPublication2InfoOldPublication(oldPublication);
-                }
-            }));
+            infoSiteTeacherInformation.setInfoOldCientificPublications(
+                getInfoOldPublications(sp, teacher, OldPublicationType.CIENTIFIC));
+            infoSiteTeacherInformation.setInfoOldDidacticPublications(
+                getInfoOldPublications(sp, teacher, OldPublicationType.DIDACTIC));
 
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-            infoSiteTeacherInformation.setInfoExecutionPeriod(Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod));
-            
+            infoSiteTeacherInformation.setInfoExecutionPeriod(
+                Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod));
+
             // TODO: faltam os cargos de gestão
             return new SiteView(infoSiteTeacherInformation);
         } catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
         }
+    }
+
+    private List getInfoExternalActivities(ISuportePersistente sp, ITeacher teacher)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
+        List externalActivities = persistentExternalActivity.readAllByTeacher(teacher);
+
+        List infoExternalActivities =
+            (List) CollectionUtils.collect(externalActivities, new Transformer()
+        {
+            public Object transform(Object o)
+            {
+                IExternalActivity externalActivity = (IExternalActivity) o;
+                return Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
+            }
+        });
+        return infoExternalActivities;
+    }
+
+    private List getInfoExecutionCourses(ISuportePersistente sp, ITeacher teacher)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        List professorShips = persistentProfessorship.readByTeacher(teacher);
+
+        // filter only the execution courses of the current execution year
+        professorShips = (List) CollectionUtils.select(professorShips, new Predicate()
+        {
+            IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+            public boolean evaluate(Object o)
+            {
+                IProfessorship professorShip = (IProfessorship) o;
+                IExecutionCourse executionCourse = professorShip.getExecutionCourse();
+                IExecutionYear executionYear = executionCourse.getExecutionPeriod().getExecutionYear();
+                return executionYear.equals(this.executionYear);
+            }
+        });
+        List infoExecutionCourses = (List) CollectionUtils.collect(professorShips, new Transformer()
+        {
+            public Object transform(Object o)
+            {
+                IProfessorship professorship = (IProfessorship) o;
+                IExecutionCourse executionCourse = professorship.getExecutionCourse();
+                List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+                List infoCurricularCourses =
+                    (List) CollectionUtils.collect(curricularCourses, new Transformer()
+                {
+                    public Object transform(Object o)
+                    {
+                        ICurricularCourse curricularCourse = (ICurricularCourse) o;
+                        return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                    }
+                });
+                InfoExecutionCourse infoExecutionCourse =
+                    Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
+                return infoExecutionCourse;
+            }
+        });
+        return infoExecutionCourses;
+    }
+
+    private List getInfoQualifications(ISuportePersistente sp, ITeacher teacher)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentQualification persistentQualification = sp.getIPersistentQualification();
+        List qualifications = persistentQualification.readQualificationsByPerson(teacher.getPerson());
+        List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer()
+        {
+            public Object transform(Object o)
+            {
+                IQualification qualification = (IQualification) o;
+                return Cloner.copyIQualification2InfoQualification(qualification);
+            }
+        });
+        return infoQualifications;
+    }
+
+    private List getInfoCareers(ISuportePersistente sp, ITeacher teacher, CareerType careerType)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentCareer persistentCareer = sp.getIPersistentCareer();
+        List careers = persistentCareer.readAllByTeacherAndCareerType(teacher, careerType);
+        List infoCareers = (List) CollectionUtils.collect(careers, new Transformer()
+        {
+            public Object transform(Object o)
+            {
+                ICareer career = (ICareer) o;
+                return Cloner.copyICareer2InfoCareer(career);
+            }
+        });
+        return infoCareers;
+    }
+
+    private List getInfoOldPublications(
+        ISuportePersistente sp,
+        ITeacher teacher,
+        OldPublicationType oldPublicationType)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentOldPublication persistentOldPublication = sp.getIPersistentOldPublication();
+        List oldCientificPublications =
+            persistentOldPublication.readAllByTeacherAndOldPublicationType(teacher, oldPublicationType);
+
+        List infoOldPublications =
+            (List) CollectionUtils.collect(oldCientificPublications, new Transformer()
+        {
+            public Object transform(Object o)
+            {
+                IOldPublication oldPublication = (IOldPublication) o;
+                return Cloner.copyIOldPublication2InfoOldPublication(oldPublication);
+            }
+        });
+        return infoOldPublications;
+    }
+
+    private InfoOrientation getInfoOrientation(
+        ISuportePersistente sp,
+        ITeacher teacher,
+        OrientationType orientationType)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentOrientation persistentOrientation = sp.getIPersistentOrientation();
+        IOrientation orientation =
+            persistentOrientation.readByTeacherAndOrientationType(teacher, orientationType);
+        InfoOrientation infoOrientation = null;
+        if (orientation != null)
+        {
+            infoOrientation = Cloner.copyIOrientation2InfoOrientation(orientation);
+        } else
+        {
+            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            infoOrientation = new InfoOrientation();
+            infoOrientation.setInfoTeacher(infoTeacher);
+            infoOrientation.setNumberOfStudents(new Integer(0));
+            infoOrientation.setDescription(new String());
+            infoOrientation.setOrientationType(orientationType);
+        }
+        return infoOrientation;
+    }
+
+    private InfoPublicationsNumber getInfoPublicationsNumber(
+        ISuportePersistente sp,
+        ITeacher teacher,
+        PublicationType publicationType)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentPublicationsNumber persistentPublicationsNumber =
+            sp.getIPersistentPublicationsNumber();
+        IPublicationsNumber publicationsNumber =
+            persistentPublicationsNumber.readByTeacherAndPublicationType(teacher, publicationType);
+        InfoPublicationsNumber infoPublicationsNumber = null;
+        if (publicationsNumber != null)
+        {
+            infoPublicationsNumber =
+                Cloner.copyIPublicationsNumber2InfoPublicationsNumber(publicationsNumber);
+        } else
+        {
+            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            infoPublicationsNumber = new InfoPublicationsNumber();
+            infoPublicationsNumber.setInfoTeacher(infoTeacher);
+            infoPublicationsNumber.setNational(new Integer(0));
+            infoPublicationsNumber.setInternational(new Integer(0));
+            infoPublicationsNumber.setPublicationType(publicationType);
+        }
+        return infoPublicationsNumber;
     }
 }

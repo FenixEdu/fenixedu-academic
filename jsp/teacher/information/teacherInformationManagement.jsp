@@ -8,10 +8,11 @@
 
 <logic:present name="infoSiteTeacherInformation"> 
 	<html:form action="/teacherInformation">
+		<logic:messagesPresent>
 		<span class="error">
 			<html:errors/>
 		</span>
-		<br />
+		</logic:messagesPresent>
 		<html:hidden property="teacherId"/>
 		<html:hidden property="weeklyOcupationId"/>
 		<html:hidden property="serviceProviderRegimeId"/>
@@ -25,15 +26,15 @@
 		<html:hidden property="articlesChaptersPublicationsNumberId"/>
 		<html:hidden property="method" value="edit"/>
 		<html:hidden property="page" value="1"/>
-		<table>
+		<table class="infoselected" width="100%">
 			<tr>
-				<td width="70%"><bean:message key="message.teacherInformation.name" />
+				<td width="70%"><b><bean:message key="message.teacherInformation.name" /></b>
 					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nome" /> </td> 
-				<td width="30%"><bean:message key="message.teacherInformation.birthDate" />
+				<td width="30%"><b><bean:message key="message.teacherInformation.birthDate" /></b>
 					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nascimento" /> </td>	
 			</tr>
 			<tr>
-				<td><bean:message key="message.teacherInformation.category" />
+				<td><b><bean:message key="message.teacherInformation.category" /></b>
 					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.shortName" /></td>
 			</tr>
 		</table>
@@ -246,9 +247,9 @@
 								<bean:write name="infoCurricularCourse" 
 											property="infoDegreeCurricularPlan.infoDegree.nome" />
 							</td>
-<%--							<td class="listClasses"><bean:write name="infoExecutionCourse" property="" /></td>
-							<td class="listClasses"><bean:write name="infoExecutionCourse" property="" /></td>
-							<td class="listClasses"><bean:write name="infoExecutionCourse" property="" /></td>--%>
+							<td class="listClasses">&nbsp;<%--<bean:write name="infoExecutionCourse" property="" />--%></td>
+							<td class="listClasses">&nbsp;<%--<bean:write name="infoExecutionCourse" property="" />--%></td>
+							<td class="listClasses">&nbsp;<%--<bean:write name="infoExecutionCourse" property="" />--%></td>
 					</tr>
 				</logic:iterate>
 			</logic:iterate>
