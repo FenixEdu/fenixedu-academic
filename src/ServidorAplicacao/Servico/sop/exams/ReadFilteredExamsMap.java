@@ -29,6 +29,7 @@ import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -93,21 +94,21 @@ public class ReadFilteredExamsMap implements IServico
         endSeason2.set(Calendar.SECOND, 0);
         endSeason2.set(Calendar.MILLISECOND, 0);
 
-		if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LEC"))
-		{
-			startSeason1.set(Calendar.DAY_OF_MONTH, 21);
-			endSeason2.set(Calendar.DAY_OF_MONTH, 17);
-		}
-		if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LET"))
-		{
-			startSeason1.set(Calendar.DAY_OF_MONTH, 21);
-			endSeason2.set(Calendar.DAY_OF_MONTH, 17);
-		}
-		if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LA"))
-		{
-			startSeason1.set(Calendar.DAY_OF_MONTH, 21);
-			endSeason2.set(Calendar.DAY_OF_MONTH, 17);
-		}
+        if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LEC"))
+        {
+            startSeason1.set(Calendar.DAY_OF_MONTH, 21);
+            endSeason2.set(Calendar.DAY_OF_MONTH, 17);
+        }
+        if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LET"))
+        {
+            startSeason1.set(Calendar.DAY_OF_MONTH, 21);
+            endSeason2.set(Calendar.DAY_OF_MONTH, 17);
+        }
+        if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LA"))
+        {
+            startSeason1.set(Calendar.DAY_OF_MONTH, 21);
+            endSeason2.set(Calendar.DAY_OF_MONTH, 17);
+        }
 
         // Set Exam Season info
         infoExamsMap.setStartSeason1(startSeason1);
@@ -124,6 +125,7 @@ public class ReadFilteredExamsMap implements IServico
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
 
             // List of execution courses
             List infoExecutionCourses = new ArrayList();
@@ -170,11 +172,31 @@ public class ReadFilteredExamsMap implements IServico
                     // Exams
                     for (int k = 0; k < associatedExams.size(); k++)
                     {
-                    	if (! (associatedExams.get(k) instanceof IExam))
-						{
-							continue;
-						}
+                        if (!(associatedExams.get(k) instanceof IExam))
+                        {
+                            continue;
+                        }
                         InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) associatedExams.get(k));
+                        int numberOfStudentsForExam = 0;
+                        List curricularCourseIDs = new ArrayList();
+                        for (int l = 0; l < infoExam.getAssociatedCurricularCourseScope().size(); l++)
+                        {
+                            InfoCurricularCourseScope scope =
+                                (InfoCurricularCourseScope) infoExam.getAssociatedCurricularCourseScope().get(l);
+                            InfoCurricularCourse infoCurricularCourse = scope.getInfoCurricularCourse();
+                            if (!curricularCourseIDs.contains(infoCurricularCourse.getIdInternal()))
+                            {
+                                curricularCourseIDs.add(infoCurricularCourse.getIdInternal());
+                                List enroledStudents =
+                                    persistentEnrolment.readByCurricularCourseAndExecutionPeriod(
+                                        Cloner.copyInfoCurricularCourse2CurricularCourse(
+                                            infoCurricularCourse),
+                                        executionPeriod);
+                                numberOfStudentsForExam += enroledStudents.size();
+                            }
+                        }
+
+                        infoExam.setEnrolledStudents(new Integer(numberOfStudentsForExam));
 
                         List associatedCurricularCourseScope = new ArrayList();
                         associatedCurricularCourseScope = infoExam.getAssociatedCurricularCourseScope();

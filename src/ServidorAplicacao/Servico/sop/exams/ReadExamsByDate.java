@@ -16,13 +16,15 @@ import DataBeans.InfoExam;
 import DataBeans.InfoViewExam;
 import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
-import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
 import Dominio.ICurso;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
+import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoSala;
@@ -62,17 +64,18 @@ public class ReadExamsByDate implements IServico
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
 
             // Read exams on requested day, start and end time
             List exams = sp.getIPersistentExam().readBy(day, beginning, end);
 
             IExam tempExam = null;
             InfoExam tempInfoExam = null;
-            List tempAssociatedCurricularCourses = null;
+            //List tempAssociatedCurricularCourses = null;
             ICurso tempDegree = null;
             List tempInfoExecutionCourses = null;
             List tempInfoDegrees = null;
-            Integer numberStudentesAttendingCourse = null;
+            //            Integer numberStudentesAttendingCourse = null;
             int totalNumberStudents = 0;
 
             // For every exam return:
@@ -87,7 +90,10 @@ public class ReadExamsByDate implements IServico
                 tempInfoExam = Cloner.copyIExam2InfoExam(tempExam);
                 tempInfoDegrees = new ArrayList();
                 tempInfoExecutionCourses = new ArrayList();
-                int totalNumberStudentsForExam = 0;
+                // int totalNumberStudentsForExam = 0;
+                IExecutionPeriod executionPeriod =
+                    ((IExecutionCourse) tempExam.getAssociatedExecutionCourses().get(0))
+                        .getExecutionPeriod();
 
                 if (tempExam.getAssociatedExecutionCourses() != null)
                 {
@@ -98,26 +104,47 @@ public class ReadExamsByDate implements IServico
                         tempInfoExecutionCourses.add(Cloner.get(executionCourse));
 
                         // prepare degrees associated with exam
-                        tempAssociatedCurricularCourses =
-                            executionCourse.getAssociatedCurricularCourses();
-                        for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++)
-                        {
-                            tempDegree =
-                                ((ICurricularCourse) tempAssociatedCurricularCourses.get(j))
-                                    .getDegreeCurricularPlan()
-                                    .getDegree();
-                            tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
-                        }
+                        //                        tempAssociatedCurricularCourses =
+                        //                            executionCourse.getAssociatedCurricularCourses();
+                        //                        for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++)
+                        //                        {
+                        //                            tempDegree =
+                        //                                ((ICurricularCourse) tempAssociatedCurricularCourses.get(j))
+                        //                                    .getDegreeCurricularPlan()
+                        //                                    .getDegree();
+                        //                            tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
+                        //                        }
 
                         // determine number of students attending course and
                         // exam
-                        numberStudentesAttendingCourse =
-                            sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(
-                                executionCourse);
-                        totalNumberStudents += numberStudentesAttendingCourse.intValue();
-                        totalNumberStudentsForExam += numberStudentesAttendingCourse.intValue();
+                        //                        numberStudentesAttendingCourse =
+                        //                            sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(
+                        //                                executionCourse);
+                        //                        totalNumberStudents += numberStudentesAttendingCourse.intValue();
+                        //                        totalNumberStudentsForExam += numberStudentesAttendingCourse.intValue();
                     }
                 }
+                int numberOfStudentsForExam = 0;
+                List curricularCourseIDs = new ArrayList();
+                for (int j = 0; j < tempExam.getAssociatedCurricularCourseScope().size(); j++)
+                {
+                    ICurricularCourseScope scope =
+                        (ICurricularCourseScope) tempExam.getAssociatedCurricularCourseScope().get(j);
+                    if (!curricularCourseIDs.contains(scope.getCurricularCourse().getIdInternal()))
+                    {
+                        curricularCourseIDs.add(scope.getCurricularCourse().getIdInternal());
+                        List enroledStudents =
+                            persistentEnrolment.readByCurricularCourseAndExecutionPeriod(
+                                scope.getCurricularCourse(),
+                                executionPeriod);
+                        numberOfStudentsForExam += enroledStudents.size();
+
+                        tempDegree = scope.getCurricularCourse().getDegreeCurricularPlan().getDegree();
+                        tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
+
+                    }
+                }
+                totalNumberStudents += numberOfStudentsForExam;
 
                 // add exam and degree info to result list
                 infoViewExams.add(
@@ -125,7 +152,8 @@ public class ReadExamsByDate implements IServico
                         tempInfoExam,
                         tempInfoExecutionCourses,
                         tempInfoDegrees,
-                        new Integer(totalNumberStudentsForExam)));
+                        new Integer(numberOfStudentsForExam)));
+
             }
 
             infoViewExam.setInfoViewExamsByDayAndShift(infoViewExams);

@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.util.Cloner;
-import Dominio.Sala;
+import Dominio.ISala;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -71,7 +71,7 @@ public class SearchRooms implements IServico
             Iterator iter = rooms.iterator();
             while (iter.hasNext())
             {
-                Sala room = (Sala) iter.next();
+                ISala room = (ISala) iter.next();
                 infoRooms.add(Cloner.copyRoom2InfoRoom(room));
             }
 

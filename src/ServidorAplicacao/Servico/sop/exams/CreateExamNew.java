@@ -23,6 +23,7 @@ import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
+import Dominio.IPeriod;
 import Dominio.IRoomOccupation;
 import Dominio.ISala;
 import Dominio.Period;
@@ -150,7 +151,7 @@ public class CreateExamNew implements IServico
             Iterator iterExecutionCourses = executionCourseList.iterator();
             while (iterExecutionCourses.hasNext())
             {
-                ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourses.next();
+                IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
                 for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++)
                 {
                     IExam examAux = (IExam) executionCourse.getAssociatedExams().get(i);
@@ -174,12 +175,12 @@ public class CreateExamNew implements IServico
             // Rooms
             List roomsList = new ArrayList();
 
-            Period period = null;
+            IPeriod period = null;
             if (roomIDArray.length != 0)
 			{
 				try
 	            {
-					period = (Period) sp.getIPersistentPeriod().readBy(examDate, examDate);
+					period = (IPeriod) sp.getIPersistentPeriod().readBy(examDate, examDate);
 					if (period == null)
 					{
 						period = new Period(examDate, examDate);

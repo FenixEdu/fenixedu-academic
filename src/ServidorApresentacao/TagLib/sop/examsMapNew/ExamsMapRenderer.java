@@ -419,7 +419,10 @@ public class ExamsMapRenderer implements IExamsMapRenderer
                         	strBuffer.append("</td>");
                         	strBuffer.append("<td>");
 
-							Integer numAlunos = infoExecutionCourse.getNumberOfAttendingStudents();
+							//Integer numAlunos = infoExecutionCourse.getNumberOfAttendingStudents();
+							
+							Integer numAlunos = season1Exam.getEnrolledStudents();
+							
 							strBuffer.append(numAlunos);
 							strBuffer.append(" alunos inscritos");
 							
@@ -588,7 +591,9 @@ public class ExamsMapRenderer implements IExamsMapRenderer
 						{
 							strBuffer.append("</td>");
 							strBuffer.append("<td>");
-							Integer numAlunos = infoExecutionCourse.getNumberOfAttendingStudents();
+//							Integer numAlunos = infoExecutionCourse.getNumberOfAttendingStudents();
+							Integer numAlunos = season2Exam.getEnrolledStudents();
+
 							strBuffer.append(numAlunos);
 							strBuffer.append(" alunos inscritos");
 							

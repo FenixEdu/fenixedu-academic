@@ -110,7 +110,7 @@ public class EditExamNew implements IServico
             Iterator iterExecutionCourses = exam.getAssociatedExecutionCourses().iterator();
             while (iterExecutionCourses.hasNext())
             {
-                ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourses.next();
+                IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
                 for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++)
                 {
                     IEvaluation evaluation =
@@ -216,7 +216,7 @@ public class EditExamNew implements IServico
                 if (exam.getAssociatedRoomOccupation() != null
                     && exam.getAssociatedRoomOccupation().size() != 0)
                 {
-                    period = ((RoomOccupation) exam.getAssociatedRoomOccupation().get(0)).getPeriod();
+                    period = ((IRoomOccupation) exam.getAssociatedRoomOccupation().get(0)).getPeriod();
 
 ///
 					List rooms = period.getRoomOccupations();

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.Sala;
+import Dominio.ISala;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -63,7 +63,7 @@ public class ReadAllBuildings implements IServico
             Iterator iter = buildings.iterator();
             while (iter.hasNext())
             {
-                Sala room = (Sala) iter.next();
+                ISala room = (ISala) iter.next();
                 if (!buildingNames.contains(room.getEdificio()))
                 {
 					buildingNames.add(room.getEdificio());

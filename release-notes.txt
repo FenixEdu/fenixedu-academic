@@ -83,6 +83,10 @@ KNOWN ISSUES:
   year. This must be resolved by establishing dates when the information must be introduced
   into the database.
 - update to table credits is not very correct on the of ManagementCreditLine and Service Exemption situations.
+- When we insert an invalid date on create/edit exam the selected rooms, scopes and
+season is lost
+- When we select a curricular year in associate execution course to exam and, after
+ that, we change the selected curricular year the system throws an exception 
 
 
 
