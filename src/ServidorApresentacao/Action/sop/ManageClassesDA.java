@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -21,11 +23,7 @@ import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -72,7 +70,7 @@ public class ManageClassesDA
 		if (classesList != null && !classesList.isEmpty()) {
 			BeanComparator nameComparator = new BeanComparator("nome");
 			Collections.sort(classesList, nameComparator);
-			
+
 			request.setAttribute(SessionConstants.CLASSES, classesList);
 		}
 
@@ -157,20 +155,31 @@ public class ManageClassesDA
 		throws Exception {
 
 		DynaActionForm deleteClassesForm = (DynaActionForm) form;
-		String[] selectedClasses = (String[]) deleteClassesForm.get("selectedItems");
+		String[] selectedClasses =
+			(String[]) deleteClassesForm.get("selectedItems");
 
-		List classOIDs = new ArrayList();
-		for (int i = 0; i < selectedClasses.length; i++) {
-			classOIDs.add(new Integer(selectedClasses[i]));
+		if (selectedClasses.length == 0) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+				"errors.classes.notSelected",
+				new ActionError("errors.classes.notSelected"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+
+		} else {
+			List classOIDs = new ArrayList();
+			for (int i = 0; i < selectedClasses.length; i++) {
+				classOIDs.add(new Integer(selectedClasses[i]));
+			}
+
+			Object args[] = { classOIDs };
+			ServiceUtils.executeService(
+				SessionUtils.getUserView(request),
+				"DeleteClasses",
+				args);
+
+			return mapping.findForward("ShowShiftList");
 		}
-
-		Object args[] = { classOIDs };
-		ServiceUtils.executeService(
-			SessionUtils.getUserView(request),
-			"DeleteClasses",
-			args);
-
-		return mapping.findForward("ShowShiftList");
 	}
 
 }

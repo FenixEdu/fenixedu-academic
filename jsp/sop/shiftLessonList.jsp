@@ -139,7 +139,7 @@ Aulas já atribuidas ao turno
 				</tr>
 			</logic:iterate>
 		</table>
-		<html:submit styleClass="inputbutton">
+		<html:submit styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 			<bean:message key="link.delete"/>
 		</html:submit>
 	  </html:form>

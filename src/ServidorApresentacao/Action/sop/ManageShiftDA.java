@@ -24,7 +24,11 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftExecutionCourse;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftType;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
-import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao
+	.Action
+	.sop
+	.base
+	.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -167,21 +171,31 @@ public class ManageShiftDA
 		String[] selectedClasses =
 			(String[]) removeClassesForm.get("selectedItems");
 
-		List classOIDs = new ArrayList();
-		for (int i = 0; i < selectedClasses.length; i++) {
-			classOIDs.add(new Integer(selectedClasses[i]));
+		if (selectedClasses.length == 0) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+				"errors.classes.notSelected",
+				new ActionError("errors.classes.notSelected"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+		} else {
+
+			List classOIDs = new ArrayList();
+			for (int i = 0; i < selectedClasses.length; i++) {
+				classOIDs.add(new Integer(selectedClasses[i]));
+			}
+
+			InfoShift infoShift =
+				(InfoShift) request.getAttribute(SessionConstants.SHIFT);
+
+			Object args[] = { infoShift, classOIDs };
+			ServiceUtils.executeService(
+				SessionUtils.getUserView(request),
+				"RemoveClasses",
+				args);
+
+			return mapping.findForward("EditShift");
 		}
-
-		InfoShift infoShift =
-			(InfoShift) request.getAttribute(SessionConstants.SHIFT);
-
-		Object args[] = { infoShift, classOIDs };
-		ServiceUtils.executeService(
-			SessionUtils.getUserView(request),
-			"RemoveClasses",
-			args);
-
-		return mapping.findForward("EditShift");
 	}
 
 	public ActionForward deleteLessons(
@@ -195,18 +209,30 @@ public class ManageShiftDA
 		String[] selectedLessons =
 			(String[]) deleteLessonsForm.get("selectedItems");
 
-		List lessonOIDs = new ArrayList();
-		for (int i = 0; i < selectedLessons.length; i++) {
-			lessonOIDs.add(new Integer(selectedLessons[i]));
+		if (selectedLessons.length == 0) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+				"errors.lessons.notSelected",
+				new ActionError("errors.lessons.notSelected"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+
+		} else {
+
+			List lessonOIDs = new ArrayList();
+			for (int i = 0; i < selectedLessons.length; i++) {
+				lessonOIDs.add(new Integer(selectedLessons[i]));
+			}
+
+			Object args[] = { lessonOIDs };
+			ServiceUtils.executeService(
+				SessionUtils.getUserView(request),
+				"DeleteLessons",
+				args);
+
+			return mapping.findForward("EditShift");
+
 		}
-
-		Object args[] = { lessonOIDs };
-		ServiceUtils.executeService(
-			SessionUtils.getUserView(request),
-			"DeleteLessons",
-			args);
-
-		return mapping.findForward("EditShift");
 	}
 
 	public ActionForward viewStudentsEnroled(
@@ -225,13 +251,14 @@ public class ManageShiftDA
 				infoShift.getInfoDisciplinaExecucao());
 
 		Object args[] = { shiftKey };
-		List students = (List) ServiceUtils.executeService(
-			SessionUtils.getUserView(request),
-			"LerAlunosDeTurno",
-			args);
+		List students =
+			(List) ServiceUtils.executeService(
+				SessionUtils.getUserView(request),
+				"LerAlunosDeTurno",
+				args);
 
 		Collections.sort(students, new BeanComparator("number"));
-		
+
 		if (students != null && !students.isEmpty()) {
 			request.setAttribute(SessionConstants.STUDENT_LIST, students);
 		}

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -22,11 +24,7 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -225,23 +223,34 @@ public class ManageClassDA
 		throws Exception {
 
 		DynaActionForm removeShiftsForm = (DynaActionForm) form;
-		String[] selectedShifts = (String[]) removeShiftsForm.get("selectedItems");
+		String[] selectedShifts =
+			(String[]) removeShiftsForm.get("selectedItems");
 
-		List shiftOIDs = new ArrayList();
-		for (int i = 0; i < selectedShifts.length; i++) {
-			shiftOIDs.add(new Integer(selectedShifts[i]));
+		if (selectedShifts.length == 0) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+				"errors.shifts.notSelected",
+				new ActionError("errors.shifts.notSelected"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+
+		} else {
+			List shiftOIDs = new ArrayList();
+			for (int i = 0; i < selectedShifts.length; i++) {
+				shiftOIDs.add(new Integer(selectedShifts[i]));
+			}
+
+			InfoClass infoClass =
+				(InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+
+			Object args[] = { infoClass, shiftOIDs };
+			ServiceUtils.executeService(
+				SessionUtils.getUserView(request),
+				"RemoveShifts",
+				args);
+
+			return mapping.findForward("EditClass");
 		}
-
-		InfoClass infoClass =
-			(InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
-
-		Object args[] = { infoClass, shiftOIDs };
-		ServiceUtils.executeService(
-			SessionUtils.getUserView(request),
-			"RemoveShifts",
-			args);
-
-		return mapping.findForward("EditClass");
 	}
 
 }

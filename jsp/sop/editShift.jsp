@@ -113,7 +113,7 @@
 							 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 
 					<html:submit styleClass="inputbutton">
-						<bean:message key="label.classes"/>
+						<bean:message key="label.classes.add"/>
 					</html:submit>			
 				</html:form>
 			</td>

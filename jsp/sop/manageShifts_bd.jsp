@@ -55,6 +55,9 @@
 			<td class="listClasses-header">
 	        </td>
 		</tr>
+		<bean:define id="deleteConfirm">
+			return confirm('<bean:message key="message.confirm.delete.shift"/>')
+		</bean:define>
 		<logic:iterate id="infoShift" name="<%= SessionConstants.SHIFTS %>">
 			<bean:define id="infoShiftOID" name="infoShift" property="idInternal"/>
 			<bean:define id="infoExecutionCourseOID" name="infoShift" property="infoDisciplinaExecucao.idInternal"/>
@@ -129,14 +132,15 @@
   										+ "&amp;"
 			  							+ SessionConstants.EXECUTION_DEGREE_OID
   										+ "="
-  										+ pageContext.findAttribute("executionDegreeOID") %>">
+  										+ pageContext.findAttribute("executionDegreeOID") %>"
+  										onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 						<bean:message key="link.delete"/>
 					</html:link>
 				</td>
 			</tr>
 		</logic:iterate>
 	</table>
-	<html:submit styleClass="inputbutton">
+	<html:submit styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 		<bean:message key="label.delete"/>
 	</html:submit>
   </html:form>

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -22,11 +24,7 @@ import DataBeans.InfoShift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -168,20 +166,30 @@ public class ManageShiftsDA
 		throws Exception {
 
 		DynaActionForm deleteShiftsForm = (DynaActionForm) form;
-		String[] selectedShifts = (String[]) deleteShiftsForm.get("selectedItems");
+		String[] selectedShifts =
+			(String[]) deleteShiftsForm.get("selectedItems");
 
-		List shiftOIDs = new ArrayList();
-		for (int i = 0; i < selectedShifts.length; i++) {
-			shiftOIDs.add(new Integer(selectedShifts[i]));
+		if (selectedShifts.length == 0) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+				"errors.shifts.notSelected",
+				new ActionError("errors.shifts.notSelected"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+		} else {
+
+			List shiftOIDs = new ArrayList();
+			for (int i = 0; i < selectedShifts.length; i++) {
+				shiftOIDs.add(new Integer(selectedShifts[i]));
+			}
+
+			Object args[] = { shiftOIDs };
+			ServiceUtils.executeService(
+				SessionUtils.getUserView(request),
+				"DeleteShifts",
+				args);
+
+			return mapping.findForward("ShowShiftList");
 		}
-
-		Object args[] = { shiftOIDs };
-		ServiceUtils.executeService(
-			SessionUtils.getUserView(request),
-			"DeleteShifts",
-			args);
-
-		return mapping.findForward("ShowShiftList");
 	}
-
 }
