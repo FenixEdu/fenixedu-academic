@@ -6976,5 +6976,24 @@
         <filterChains>         
         </filterChains>
     </service>
-
+	<service>
+        <name>ReadInsuranceTransactionByStudentIDAndExecutionYearID</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadInsuranceTransactionByStudentIDAndExecutionYearID</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
+	    <service>
+        <name>ReadAllTransactionsByGratuitySituationID</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadAllTransactionsByGratuitySituationID</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>
