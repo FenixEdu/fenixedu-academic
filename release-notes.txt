@@ -43,6 +43,7 @@ BUG FIXES:
 - Department office portal - fixed wrong argument for service call
 - Department office portal - fixed class ProfessorShip method afterInsert. It was generating nullPointerException 
 - Master Degree Portal - fixed date of end of scholarship
+- [ #262 ] Error when selecting candidates on the Coordinator's Portal of Pedro Henriques (D2006) - MC04/06 
 - Corrected EditGuideInformation service because was causing the system crash
 - Removed the possibility to edit payed guides.
 
