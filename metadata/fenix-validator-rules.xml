@@ -1,0 +1,54 @@
+<!--
+
+   This file contains the default Struts Validator pluggable validator
+   definitions.  It should be placed somewhere under /WEB-INF and
+   referenced in the struts-config.xml under the plug-in element
+   for the ValidatorPlugIn.
+
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,
+                                                  /WEB-INF/validation.xml"/>
+      </plug-in>
+
+   These are the default error messages associated with
+   each validator defined in this file.  They should be
+   added to your projects ApplicationResources.properties
+   file or you can associate new ones by modifying the
+   pluggable validators msg attributes in this file.
+
+   # Struts Validator Error Messages
+   errors.required={0} is required.
+   errors.minlength={0} can not be less than {1} characters.
+   errors.maxlength={0} can not be greater than {1} characters.
+   errors.invalid={0} is invalid.
+
+   errors.byte={0} must be an byte.
+   errors.short={0} must be an short.
+   errors.integer={0} must be an integer.
+   errors.long={0} must be an long.
+   errors.float={0} must be an float.
+   errors.double={0} must be an double.
+
+   errors.date={0} is not a date.
+   errors.range={0} is not in the range {1} through {2}.
+   errors.creditcard={0} is not a valid credit card number.
+   errors.email={0} is an invalid e-mail address.
+
+-->
+
+<form-validation>
+
+   <global>
+     <validator name="twoFields"
+            classname="ServidorApresentacao.validator.form.ValidateTwoFields"
+               method="validate"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionErrors,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext"
+                  msg="errors.different.passwords"/>
+   </global>
+
+</form-validation>
