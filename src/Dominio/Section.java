@@ -28,25 +28,26 @@ public class Section implements ISection {
 	 */
 	public Section() {}
 
-	/** 
-		 * Construtor
-		 */
-		public Section(String name, ISite site, ISection superiorSection) {
-
-			setName(name);
-			setSite(site);
-			setSuperiorSection(superiorSection);
-			
-		}
 
 	/** 
 	 * Construtor
 	 */
-	public Section(String name, Integer order, Date lastModifiedDate, 
+	public Section(String name, ISite site, ISection superiorSection) {
+
+		setName(name);
+		setSite(site);
+		setSuperiorSection(superiorSection);
+			
+	}
+
+	/** 
+	 * Construtor
+	 */
+	public Section(String name, Integer sectionOrder, Date lastModifiedDate, 
 		ISite site, ISection superiorSection, List inferiorSections, List items) {
 
 		setName(name);
-		setSectionOrder(order);
+		setSectionOrder(sectionOrder);
 		setLastModifiedDate(lastModifiedDate);
 		setSite(site);
 		setSuperiorSection(superiorSection);
