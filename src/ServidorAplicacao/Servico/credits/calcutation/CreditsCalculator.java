@@ -7,19 +7,14 @@ package ServidorAplicacao.Servico.credits.calcutation;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.IAula;
 import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
-import Dominio.IShiftProfessorship;
 import Dominio.ISupportLesson;
 import Dominio.ITeacher;
-import Dominio.ITurno;
 import Dominio.credits.IOtherTypeCreditLine;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
-import Dominio.util.TransformationUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.credits.IPersistentOtherTypeCreditLine;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
@@ -62,40 +57,41 @@ public class CreditsCalculator
         throws ExcepcaoPersistencia
     {
 
-        IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentShiftProfessorship();
-
-        List shiftProfessorshipList = null;
-        if (shiftProfessorshipDeleted.isEmpty())
-        {
-            shiftProfessorshipList =
-                shiftProfessorshipDAO.readByTeacherAndExecutionPeriod(
-                    professorship.getTeacher(),
-                    professorship.getExecutionCourse().getExecutionPeriod());
-        } else
-        {
-            List shiftProfessorshipsIds = TransformationUtils.transformToIds(shiftProfessorshipDeleted);
-            shiftProfessorshipList =
-                shiftProfessorshipDAO.readByTeacherAndExecutionPeriodWithDifferentIds(
-                    professorship.getTeacher(),
-                    professorship.getExecutionCourse().getExecutionPeriod(),
-                    shiftProfessorshipsIds);
-        }
-
-        shiftProfessorshipList.removeAll(shiftProfessorshipAdded);
-        shiftProfessorshipList.addAll(shiftProfessorshipAdded);
-
-        Iterator iterator = shiftProfessorshipList.iterator();
-
-        double hours = 0;
-
-        while (iterator.hasNext())
-        {
-            IShiftProfessorship shiftProfessorship = (IShiftProfessorship) iterator.next();
-            double shiftHours = calcuteShiftHours(shiftProfessorship.getShift());
-            hours += shiftHours * shiftProfessorship.getPercentage().doubleValue() / 100;
-        }
-
-        return new Double(hours);
+//        IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentShiftProfessorship();
+//
+//        List shiftProfessorshipList = null;
+//        if (shiftProfessorshipDeleted.isEmpty())
+//        {
+//            shiftProfessorshipList =
+//                shiftProfessorshipDAO.readByTeacherAndExecutionPeriod(
+//                    professorship.getTeacher(),
+//                    professorship.getExecutionCourse().getExecutionPeriod());
+//        } else
+//        {
+//            List shiftProfessorshipsIds = TransformationUtils.transformToIds(shiftProfessorshipDeleted);
+//            shiftProfessorshipList =
+//                shiftProfessorshipDAO.readByTeacherAndExecutionPeriodWithDifferentIds(
+//                    professorship.getTeacher(),
+//                    professorship.getExecutionCourse().getExecutionPeriod(),
+//                    shiftProfessorshipsIds);
+//        }
+//
+//        shiftProfessorshipList.removeAll(shiftProfessorshipAdded);
+//        shiftProfessorshipList.addAll(shiftProfessorshipAdded);
+//
+//        Iterator iterator = shiftProfessorshipList.iterator();
+//
+//        double hours = 0;
+//
+//        while (iterator.hasNext())
+//        {
+//            IShiftProfessorship shiftProfessorship = (IShiftProfessorship) iterator.next();
+//            double shiftHours = calcuteShiftHours(shiftProfessorship.getShift());
+//            hours += shiftHours * shiftProfessorship.getPercentage().doubleValue() / 100;
+//        }
+//
+        //return new Double(hours);
+        return new Double(0);
     }
 
     /**
@@ -260,22 +256,22 @@ public class CreditsCalculator
         return new Double(numberOfStudents);
     }
 
-    /**
-     * @param turno
-     * @return
-     */
-    private double calcuteShiftHours(ITurno shift)
-    {
-        Iterator lessonsIterator = shift.getAssociatedLessons().iterator();
-        double hours = 0;
-        while (lessonsIterator.hasNext())
-        {
-            IAula lesson = (IAula) lessonsIterator.next();
-            TimePeriod timePeriod = new TimePeriod(lesson.getInicio(), lesson.getFim());
-            hours += timePeriod.hours().doubleValue();
-        }
-        return hours;
-    }
+//    /**
+//     * @param turno
+//     * @return
+//     */
+//    private double calcuteShiftHours(ITurno shift)
+//    {
+//        Iterator lessonsIterator = shift.getAssociatedLessons().iterator();
+//        double hours = 0;
+//        while (lessonsIterator.hasNext())
+//        {
+//            IAula lesson = (IAula) lessonsIterator.next();
+//            TimePeriod timePeriod = new TimePeriod(lesson.getInicio(), lesson.getFim());
+//            hours += timePeriod.hours().doubleValue();
+//        }
+//        return hours;
+//    }
 
     /**
      * @param teacher
