@@ -1,8 +1,12 @@
 /*
- * Created on 11/Abr/2003
+ * Created on 14/Abr/2003
  */
-package ServidorApresentacao.teacher;
 
+package ServidorApresentacao.teacher;
+/**
+ * @author lmac1
+ *
+ */
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
@@ -23,17 +27,18 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-/**
- * @author lmac1
- *
- */
+public class InsertItemDispatchActionTest extends TestCasePresentationTeacherPortal {
 
-public class InsertItemActionTest extends TestCasePresentationTeacherPortal {
 
+	private InfoItem infoItem = null;
+		
+	private String itemOrder = null;
+	private String urgent = null;
+		
 	/**
 	 * @param testName
 	 */
-	public InsertItemActionTest(String testName) {
+	public InsertItemDispatchActionTest(String testName) {
 		super(testName);
 	}
 
@@ -100,6 +105,7 @@ public class InsertItemActionTest extends TestCasePresentationTeacherPortal {
 		
 		result.put(SessionConstants.INFO_SECTION, infoSection);
 		result.put(SessionConstants.INFO_SECTION_ITEMS_LIST, infoItemsList);
+			
 				
 	  }catch (ExcepcaoPersistencia exception) {
 	  exception.printStackTrace(System.out);
@@ -116,14 +122,23 @@ public class InsertItemActionTest extends TestCasePresentationTeacherPortal {
 		
 	return null;
 	}
+	
 	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
-			
-		return null;
+		Map result = new Hashtable();
 		
-	}
+		urgent = new String ("false");
+		itemOrder = new String("1");
+		
+		result.put("method","insert");
+		result.put("information","information");
+		result.put("itemName","itemName");
+		result.put("itemOrder",itemOrder);
+		result.put("urgent",urgent);
+		return result;
+    }
 
 	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()

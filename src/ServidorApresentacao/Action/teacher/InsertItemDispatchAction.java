@@ -40,28 +40,28 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-
-		InfoSection infoSection =
-			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-		List infoItemsList = null;
-
-		GestorServicos manager = GestorServicos.manager();
-		Object readSectionArgs[] = { infoSection };
-
-		try {
-			infoItemsList =
-				(ArrayList) manager.executar(
-					null,
-					"ReadItems",
-					readSectionArgs);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-
-		session.setAttribute(
-			SessionConstants.INFO_SECTION_ITEMS_LIST,
-			infoItemsList);
+//		HttpSession session = request.getSession(false);
+//
+//		InfoSection infoSection =
+//			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
+//		List infoItemsList = null;
+//
+//		GestorServicos manager = GestorServicos.manager();
+//		Object readSectionArgs[] = { infoSection };
+//
+//		try {
+//			infoItemsList =
+//				(ArrayList) manager.executar(
+//					null,
+//					"ReadItems",
+//					readSectionArgs);
+//		} catch (FenixServiceException fenixServiceException) {
+//			throw new FenixActionException(fenixServiceException.getMessage());
+//		}
+//
+//		session.setAttribute(
+//			SessionConstants.INFO_SECTION_ITEMS_LIST,
+//			infoItemsList);
 
 		return mapping.findForward("insertItem");
 	}
@@ -79,19 +79,23 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		InfoSection infoSection =
 			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-		List infoItemsList = null;
+			
+		List items =(List) session.getAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST);
+			//PUSEMOS EM COMENTARIO
+			
+//		List infoItemsList = null;
 		GestorServicos manager = GestorServicos.manager();
-		Object readSectionArgs[] = { infoSection };
-		ArrayList items;
-		try {
-			items =
-				(ArrayList) manager.executar(
-					null,
-					"ReadItems",
-					readSectionArgs);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+//		Object readSectionArgs[] = { infoSection };
+//		ArrayList items;
+//		try {
+//			items =
+//				(ArrayList) manager.executar(
+//					null,
+//					"ReadItems",
+//					readSectionArgs);
+//		} catch (FenixServiceException fenixServiceException) {
+//			throw new FenixActionException(fenixServiceException.getMessage());
+//		}
 
 		InfoItem newInfoItem = new InfoItem();
 
