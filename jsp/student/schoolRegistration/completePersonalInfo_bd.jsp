@@ -10,6 +10,8 @@
 <html:form action="/showStudentInquiry">
  <br/>
  <logic:present name="personalInfo">
+ <bean:define id="infoPersonId" name="personalInfo" property="idInternal"/>
+ <html:hidden property="idInternal" value="<%= infoPersonId.toString()%>"/>
 		<table width="100%" cellpadding="0" cellspacing="0">
           <!-- Dados Pessoais -->
           <tr>
@@ -53,30 +55,18 @@
           <tr>
             <td width="30%"><bean:message key="label.person.identificationDocumentIssueDate" /></td>
 			<td class="greytxt">
-				<html:select property="DayOfEmissionDateOfDocumentId">
-	                <html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
-                </html:select>
-                <html:select property="MonthOfEmissionDateOfDocumentId">
-	                <html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
-                </html:select>
-                <html:select property="YearOfEmissionDateOfDocumentId">
-	                <html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
-                </html:select>
+				<html:text size="2" maxlength="2" property="dayOfEmissionDateOfDocumentId"/> /
+				<html:text size="2" maxlength="2" property="monthOfEmissionDateOfDocumentId"/> /
+				<html:text size="4" maxlength="4" property="yearOfEmissionDateOfDocumentId"/> (dd/mm/aaaa)
 			</td>            
           </tr>
           <!-- Data de Validade do Documento de Identificacao -->
           <tr>
             <td width="30%"><bean:message key="label.person.identificationDocumentExpirationDate" /></td>
             <td class="greytxt">
-				<html:select property="DayOfExpirationDateOfDocumentId">
-	                <html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
-                </html:select>
-                <html:select property="MonthOfExpirationDateOfDocumentId">
-	                <html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
-                </html:select>
-                <html:select property="YearOfExpirationDateOfDocumentId">
-	                <html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
-                </html:select>
+				<html:text size="2" maxlength="2" property="dayOfExpirationDateOfDocumentId"/> /
+				<html:text size="2" maxlength="2" property="monthOfExpirationDateOfDocumentId"/> /
+				<html:text size="4" maxlength="4" property="yearOfExpirationDateOfDocumentId"/> (dd/mm/aaaa)								            
 			</td>   
           </tr>
           <!-- Numero de Contribuinte -->
@@ -170,8 +160,8 @@
           <tr>
             <td width="30%"><bean:message key="label.person.postCode" /></td>
             <td class="greytxt">
-            	<html:text size="4" maxlength="4" property="PrimaryAreaCode"/> - 
-            	<html:text size="3" maxlength="3" property="SecondaryAreaCode"/>
+            	<html:text size="4" maxlength="4" property="primaryAreaCode"/> - 
+            	<html:text size="3" maxlength="3" property="secondaryAreaCode"/>
           </tr>
           <!-- Area do Codigo Postal -->
           <tr>
@@ -222,12 +212,16 @@
           <!-- E-Mail -->
           <tr>
             <td width="30%"><bean:message key="label.person.email" /></td>
-            <td class="greytxt"><html:text size="40" maxlength="50" property="email"/></td>
+            <td class="greytxt"><html:text size="40" maxlength="50" property="email"/> 
+            					<bean:message key="label.person.availableEmail" />
+            					<html:checkbox property="availableEmail"/></td>            
           </tr>
           <!-- WebPage -->
           <tr>
             <td width="30%"><bean:message key="label.person.webSite" /></td>
-            <td class="greytxt"><html:text size="40" maxlength="200" property="webAddress"/></td>
+            <td class="greytxt"><html:text size="40" maxlength="200" property="webAddress"/> 
+					            <bean:message key="label.person.availableWebSite" />
+					            <html:checkbox property="availableWebAdress"/></td>
           </tr>
        </logic:present>
        	</table>

@@ -5,7 +5,6 @@
 package ServidorApresentacao.Action.student.schoolRegistration;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +20,7 @@ import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
-import Util.Data;
 import Util.EstadoCivil;
-import Util.Sexo;
-import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author Nuno Correia
@@ -39,17 +35,13 @@ public class EnrollAction extends FenixAction {
         DynaActionForm totalForm = (DynaActionForm) form;
         HashMap answersMap = (HashMap) totalForm.get("answersMap");
 
-        Integer idInternal = (Integer) totalForm.get("idIternal");
-        Integer documentIdNumber = (Integer) totalForm.get("documentIdNumber");
-        String emissionLocationOfDocumentID = (String) totalForm.get("emissionLocationOfDocumentID");
+        Integer idInternal = new Integer((String) totalForm.get("idInternal"));
         Integer dayOfEmissionDateOfDocumentId = (Integer) totalForm.get("dayOfEmissionDateOfDocumentId");
         Integer monthOfEmissionDateOfDocumentId = (Integer) totalForm.get("monthOfEmissionDateOfDocumentId");
         Integer yearOfEmissionDateOfDocumentId = (Integer) totalForm.get("yearOfEmissionDateOfDocumentId");
         Integer dayOfExpirationDateOfDocumentId = (Integer) totalForm.get("dayOfExpirationDateOfDocumentId");
         Integer monthOfExpirationDateOfDocumentId = (Integer) totalForm.get("monthOfExpirationDateOfDocumentId");
-        Integer yearOfExpirationDateOfDocumentId = (Integer) totalForm.get("yearOfExpirationDateOfDocumentId");
-        String name = (String) totalForm.get("name");
-        String dateOfBirth = (String) totalForm.get("dateOfBirth");
+        Integer yearOfExpirationDateOfDocumentId = (Integer) totalForm.get("yearOfExpirationDateOfDocumentId");      
         String nameOfFather = (String) totalForm.get("nameOfFather");
         String nameOfMother = (String) totalForm.get("nameOfMother");
         String nacionality = (String) totalForm.get("nacionality");
@@ -70,10 +62,7 @@ public class EnrollAction extends FenixAction {
         String webAddress = (String) totalForm.get("webAddress");
         String contributorNumber = (String) totalForm.get("contributorNumber");
         String occupation = (String) totalForm.get("occupation");
-        String username = (String) totalForm.get("username");
         String password = (String) totalForm.get("password");
-        String typeIdDocument = (String) totalForm.get("typeIdDocument");
-        String sex = (String) totalForm.get("sex");
         String maritalStatus = (String) totalForm.get("maritalStatus");
       
         InfoPerson infoPerson = new InfoPerson();
@@ -83,14 +72,9 @@ public class EnrollAction extends FenixAction {
                 dayOfEmissionDateOfDocumentId.intValue());
         ExpirationDateOfDocumentId.set(yearOfExpirationDateOfDocumentId.intValue(), monthOfExpirationDateOfDocumentId.intValue(),
                 dayOfExpirationDateOfDocumentId.intValue());
-        
-        infoPerson.setNumeroDocumentoIdentificacao(documentIdNumber.toString());
-        infoPerson.setLocalEmissaoDocumentoIdentificacao(emissionLocationOfDocumentID);        
+                
         infoPerson.setDataEmissaoDocumentoIdentificacao(EmissionDateOfDocumentId.getTime());
         infoPerson.setDataValidadeDocumentoIdentificacao(ExpirationDateOfDocumentId.getTime());
-        infoPerson.setNome(name);
-        Date birthDate = Data.convertStringDate(dateOfBirth, "-");
-        infoPerson.setNascimento(birthDate);
         infoPerson.setNomePai(nameOfFather);
         infoPerson.setNomeMae(nameOfMother);
         infoPerson.setNacionalidade(nacionality);
@@ -110,16 +94,16 @@ public class EnrollAction extends FenixAction {
         infoPerson.setEnderecoWeb(webAddress);
         infoPerson.setNumContribuinte(contributorNumber);
         infoPerson.setProfissao(occupation);
-        infoPerson.setUsername(username);
-        infoPerson.setPassword(password);
-        infoPerson.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(typeIdDocument));
-        infoPerson.setSexo(new Sexo(sex));
+        infoPerson.setPassword(password);    
         infoPerson.setEstadoCivil(new EstadoCivil(maritalStatus));
+        infoPerson.setIdInternal(idInternal);
 
-        Object args[] = { userView, answersMap, infoPerson};
+        Object args[] = { userView, answersMap, infoPerson };
         ServiceUtils.executeService(userView, "SchoolRegistration", args);
 
-        return mapping.findForward("viewQuestions");
+        System.out.println("O id da pessoa na Accao é: " + infoPerson.getIdInternal());
+        
+        return mapping.findForward("");
     }
 
 }

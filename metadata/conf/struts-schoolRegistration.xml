@@ -16,16 +16,17 @@
         <form-property name="newPassword" type="java.lang.String" />
         <form-property name="reTypeNewPassword" type="java.lang.String" />
         
-      	<form-property name="DocumentIdNumber" type="java.lang.Integer" />
-		<form-property name="EmissionLocationOfDocumentID" type="java.lang.String" />
-		<form-property name="DayOfEmissionDateOfDocumentId" type="java.lang.Integer" />
-		<form-property name="MonthOfEmissionDateOfDocumentId" type="java.lang.Integer" />
-		<form-property name="YearOfEmissionDateOfDocumentId" type="java.lang.Integer" />
-		<form-property name="DayOfExpirationDateOfDocumentId" type="java.lang.Integer" />
-		<form-property name="MonthOfExpirationDateOfDocumentId" type="java.lang.Integer" />
-		<form-property name="YearOfExpirationDateOfDocumentId" type="java.lang.Integer" />
+      	<form-property name="idInternal" type="java.lang.String" />
+      	<form-property name="documentIdNumber" type="java.lang.Integer" />
+		<form-property name="emissionLocationOfDocumentID" type="java.lang.String" />
+		<form-property name="dayOfEmissionDateOfDocumentId" type="java.lang.Integer" />
+		<form-property name="monthOfEmissionDateOfDocumentId" type="java.lang.Integer" />
+		<form-property name="yearOfEmissionDateOfDocumentId" type="java.lang.Integer" />
+		<form-property name="dayOfExpirationDateOfDocumentId" type="java.lang.Integer" />
+		<form-property name="monthOfExpirationDateOfDocumentId" type="java.lang.Integer" />
+		<form-property name="yearOfExpirationDateOfDocumentId" type="java.lang.Integer" />
 		<form-property name="name" type="java.lang.String" />
-		<form-property name="DateOfBirth" type="java.lang.Integer" />
+		<form-property name="dateOfBirth" type="java.lang.Integer" />
 		<form-property name="nameOfFather" type="java.lang.String" />
 		<form-property name="nameOfMother" type="java.lang.String" />
 		<form-property name="nacionality" type="java.lang.String" />
@@ -34,8 +35,8 @@
 		<form-property name="districtOfBirth" type="java.lang.String" />
 		<form-property name="address" type="java.lang.String" />
 		<form-property name="area" type="java.lang.String" />
-		<form-property name="PrimaryAreaCode" type="java.lang.Integer" />
-		<form-property name="SecondaryAreaCode" type="java.lang.Integer" />
+		<form-property name="primaryAreaCode" type="java.lang.Integer" />
+		<form-property name="secondaryAreaCode" type="java.lang.Integer" />
 		<form-property name="areaOfAreaCode" type="java.lang.String" />
 		<form-property name="parishOfResidence" type="java.lang.String" />
 		<form-property name="districtSubdivisionOfResidence" type="java.lang.String" />
@@ -43,7 +44,9 @@
 		<form-property name="phone" type="java.lang.Integer" />
 		<form-property name="mobile" type="java.lang.Integer" />
 		<form-property name="email" type="java.lang.String" />
+		<form-property name="availableEmail" type="java.lang.Boolean" />
 		<form-property name="webAddress" type="java.lang.String" />
+		<form-property name="availableWebAdress" type="java.lang.Boolean" />
 		<form-property name="contributorNumber" type="java.lang.String" />
 		<form-property name="occupation" type="java.lang.String" />
 		<form-property name="username" type="java.lang.String" />
@@ -96,22 +99,13 @@
       	    >
       	  	<forward name="Success" path="definition.schoolRegistration.personalInfo"/>      	      
       	</action>
-
-		<action path="/schoolRegistrationInquiry"
-			scope="request"
-			name="schoolRegistrationForm"
-			type="ServidorApresentacao.Action.student.schoolRegistration.InquiryAction"
-			input="/VisualizeFistTimeStudentPersonalInfoAction.do"
-			>
-			<forward name="viewQuestions" path="definition.schoolRegistration.inquiry"/>
-		</action>
-<!--		<action path="/schoolRegistration"
-			scope="request"
+		
+		<action path="/schoolRegistration"
 			name="schoolRegistrationForm"
 			type="ServidorApresentacao.Action.student.schoolRegistration.EnrollAction"
 			input="/VisualizeFistTimeStudentPersonalInfoAction.do"
 			>
-		</action>-->
+		</action>
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

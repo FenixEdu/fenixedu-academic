@@ -20,6 +20,7 @@ import Dominio.student.SchoolRegistrationInquiryAnswer;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.enrollment.WriteEnrollment;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
@@ -48,8 +49,13 @@ public class SchoolRegistration implements IService {
         String user = userView.getUtilizador();
         Integer studentNumber = new Integer(user.substring(1));
         
+        System.out.println("O id da pessoa do catano e camandro é: " + infoPerson.getIdInternal());
         writeInquiryAnswers(suportePersistente,studentNumber,answers);
+        System.out.println("Já escrevi as respostas!");
         enrollStudent1stTime1stYear(suportePersistente,studentNumber);
+        System.out.println("Já inscrevi o aluno rookie!");
+        updatePersonalInfo(suportePersistente,infoPerson);
+        System.out.println("Já estaaaaaaaaa!");
 
     }
 
@@ -72,6 +78,7 @@ public class SchoolRegistration implements IService {
             Integer executionPeriodId = persistentEP.readActualExecutionPeriod().getIdInternal();
             we.run(null,scp.getIdInternal(),cc.getIdInternal(),executionPeriodId,CurricularCourseEnrollmentType.DEFINITIVE);
         }
+        sp.confirmarTransaccao();
     }
 
     private void writeInquiryAnswers(ISuportePersistente sp, Integer studentNumber, HashMap answers) throws ExcepcaoPersistencia,
@@ -97,11 +104,11 @@ public class SchoolRegistration implements IService {
     private void updatePersonalInfo(ISuportePersistente sp, InfoPerson infoPerson)throws ExcepcaoPersistencia,
     		FenixServiceException {
         
+        sp.iniciarTransaccao();
         IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
-        IPessoa pessoa = (IPessoa) pessoaPersistente.readByOID(Pessoa.class,infoPerson.getIdInternal());
+        IPessoa pessoa = (IPessoa) pessoaPersistente.readByOID(Pessoa.class,infoPerson.getIdInternal());        
         pessoaPersistente.simpleLockWrite(pessoa);
         
-        pessoa.setCodigoFiscal(infoPerson.getCodigoFiscal());
         pessoa.setCodigoPostal(infoPerson.getCodigoPostal());
         pessoa.setConcelhoMorada(infoPerson.getConcelhoMorada());
         pessoa.setConcelhoNaturalidade(infoPerson.getConcelhoNaturalidade());
@@ -114,24 +121,17 @@ public class SchoolRegistration implements IService {
         pessoa.setEstadoCivil(infoPerson.getEstadoCivil());
         pessoa.setFreguesiaMorada(infoPerson.getFreguesiaMorada());
         pessoa.setFreguesiaNaturalidade(infoPerson.getFreguesiaNaturalidade());
-        pessoa.setLocalEmissaoDocumentoIdentificacao(infoPerson.getLocalEmissaoDocumentoIdentificacao());
         pessoa.setLocalidade(infoPerson.getLocalidade());
         pessoa.setLocalidadeCodigoPostal(infoPerson.getLocalidadeCodigoPostal());
         pessoa.setMorada(infoPerson.getMorada());
         pessoa.setNacionalidade(infoPerson.getNacionalidade());
-        pessoa.setNascimento(infoPerson.getNascimento());
-        pessoa.setNome(infoPerson.getNome());
         pessoa.setNomeMae(infoPerson.getNomeMae());
         pessoa.setNomePai(infoPerson.getNomePai());
-        pessoa.setNumContribuinte(infoPerson.getNumContribuinte());
-        pessoa.setNumeroDocumentoIdentificacao(infoPerson.getNumeroDocumentoIdentificacao());
-        pessoa.setPassword(infoPerson.getPassword());
-        pessoa.setProfissao(infoPerson.getProfissao());
-        pessoa.setSexo(infoPerson.getSexo());
+        pessoa.setNumContribuinte(infoPerson.getNumContribuinte());        
+        pessoa.setPassword(PasswordEncryptor.encryptPassword("pass"/*infoPerson.getPassword()*/));
+        pessoa.setProfissao(infoPerson.getProfissao());       
         pessoa.setTelefone(infoPerson.getTelefone());
         pessoa.setTelemovel(infoPerson.getTelemovel());
-        pessoa.setTipoDocumentoIdentificacao(infoPerson.getTipoDocumentoIdentificacao());
-        pessoa.setUsername(infoPerson.getUsername());
         
     }
 }

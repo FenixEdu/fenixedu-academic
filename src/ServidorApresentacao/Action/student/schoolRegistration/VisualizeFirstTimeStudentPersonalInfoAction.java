@@ -60,9 +60,6 @@ extends ServidorApresentacao.Action.base.FenixAction {
 
 		request.setAttribute("personalInfo", infoPerson);
 		session.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, new EstadoCivil().toArrayList());
-		session.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
-        session.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
-        session.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
         
 //		Get List of available Countries
         Object result = null;
