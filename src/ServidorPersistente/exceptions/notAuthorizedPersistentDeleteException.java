@@ -1,15 +1,14 @@
 /*
  * Created on 6/Mar/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
+ * 
  */
 package ServidorPersistente.exceptions;
 
 import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
- * @author jmota
+ * @author João Mota
  */
 public class notAuthorizedPersistentDeleteException
 	extends ExcepcaoPersistencia {

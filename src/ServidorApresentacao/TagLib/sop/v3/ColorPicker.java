@@ -1,8 +1,7 @@
 /*
  * Created on 27/Fev/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
+ * 
  */
 package ServidorApresentacao.TagLib.sop.v3;
 

@@ -1,8 +1,7 @@
 /*
  * Created on 26/Fev/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
+ *
  */
 package ServidorApresentacao.config;
 
@@ -22,7 +21,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 
 /**
  * This handler requires that mapping receive should have a forward name 'beginTransaction'
- * @author jmota
+ * @author João Luz
  */
 public class FenixTransactionExceptionHandler extends ExceptionHandler {
 

@@ -15,7 +15,7 @@ import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author jmota
+ * @author João Mota
  */
 public class SelectClasses implements IServico {
 

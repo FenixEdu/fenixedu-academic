@@ -22,7 +22,7 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 
 /**
- * @author jmota
+ * @author João Mota
  */
 public class CurriculumOJBTest extends TestCaseOJB {
 

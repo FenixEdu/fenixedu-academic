@@ -6,7 +6,7 @@
 package ServidorPersistente.OJB;
 /**
  *
- * @author jmota
+ * @author João Mota
  */
 import java.util.List;
 

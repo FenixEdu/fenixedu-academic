@@ -1,13 +1,12 @@
 /*
  * Created on 5/Mar/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
+ * 
  */
 package ServidorApresentacao.Action.exceptions;
 
 /**
- * @author jmota
+ * @author João Mota
  */
 public class InvalidTimeIntervalActionException extends FenixActionException {
 	public static String key = "errors.lesson.invalid.time.interval";

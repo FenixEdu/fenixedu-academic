@@ -20,7 +20,7 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
- * @author jmota
+ * @author João Mota
  */
 public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 	public ActionForward acessObjectives(

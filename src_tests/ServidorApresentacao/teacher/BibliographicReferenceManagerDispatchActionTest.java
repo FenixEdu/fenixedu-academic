@@ -1,8 +1,6 @@
 /*
  * Created on 18/Mar/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package ServidorApresentacao.teacher;
 
@@ -26,8 +24,6 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author PTRLV
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class BibliographicReferenceManagerDispatchActionTest
 	extends TestCasePresentationTeacherPortal {

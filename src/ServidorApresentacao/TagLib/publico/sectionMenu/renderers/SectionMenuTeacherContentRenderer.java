@@ -1,8 +1,7 @@
 /*
  * Created on 7/Abr/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
  */
 package ServidorApresentacao.TagLib.publico.sectionMenu.renderers;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -10,10 +9,9 @@ import javax.servlet.jsp.tagext.TagSupport;
 import DataBeans.InfoSection;
 
 /**
- * @author jmota
+ * @author João Mota
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
  */
 public class SectionMenuTeacherContentRenderer extends TagSupport
 	implements ISectionMenuSlotContentRenderer {

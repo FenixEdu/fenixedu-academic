@@ -1,8 +1,7 @@
 /*
  * Created on 25/Mar/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
  */
 package ServidorAplicacao.Servico.gesdis;
 
@@ -25,10 +24,9 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author jmota
+ * @author João Mota
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
  */
 public class ReadTeachersByExecutionCourseResponsibility implements IServico {
 	private static ReadTeachersByExecutionCourseResponsibility service = new ReadTeachersByExecutionCourseResponsibility();

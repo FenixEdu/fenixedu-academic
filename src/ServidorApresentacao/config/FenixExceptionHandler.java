@@ -28,7 +28,7 @@ import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * @author jmota
+ * @author João Mota
  */
 public class FenixExceptionHandler extends ExceptionHandler {
 

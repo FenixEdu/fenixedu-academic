@@ -26,7 +26,7 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoAula;
 /**
- * @author jmota
+ * @author João Mota
  */
 
 public class ShowShiftListAction extends Action {

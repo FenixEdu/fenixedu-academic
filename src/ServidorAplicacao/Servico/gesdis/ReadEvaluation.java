@@ -1,8 +1,7 @@
 /*
  * Created on 23/Abr/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
  */
 package ServidorAplicacao.Servico.gesdis;
 
@@ -18,10 +17,9 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author jmota
+ * @author João Mota
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
  */
 public class ReadEvaluation implements IServico {
 

@@ -1,8 +1,7 @@
 /*
  * Created on 7/Abr/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
  */
 package ServidorApresentacao.TagLib.publico.sectionMenu;
 
@@ -20,10 +19,9 @@ import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuCont
 import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.ISectionMenuSlotContentRenderer;
 
 /**
- * @author jmota
+ * @author João Mota
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
  */
 public class RenderSectionMenuTag extends TagSupport {
 

@@ -1,7 +1,7 @@
 package ServidorPersistente.OJB;
 
 /**
- * @author jmota
+ * @author João Mota
  *
  */
 

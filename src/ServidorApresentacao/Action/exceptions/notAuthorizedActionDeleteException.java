@@ -1,13 +1,12 @@
 /*
  * Created on 6/Mar/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
+ *
  */
 package ServidorApresentacao.Action.exceptions;
 
 /**
- * @author jmota
+ * @author João Mota
  */
 public class notAuthorizedActionDeleteException extends FenixActionException {
 	public static String key = "errors.invalid.delete.with.objects";

@@ -24,7 +24,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.EMail;
 
 /**
- * @author jmota
+ * @author João Mota
  */
 public class ExceptionHandlingAction extends FenixDispatchAction {
 	

@@ -26,10 +26,9 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * @author jmota
+ * @author João Mota
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
  */
 public class EditEvaluationDispatchAction extends FenixDispatchAction {
 

@@ -21,10 +21,10 @@ import ServidorPersistente.IPersistentSite;
 
 /**
  * @author Ivo Brandão
- */ 
+ */
 public class AnnouncementOJBTest extends TestCaseOJB {
-	
-	private SuportePersistenteOJB persistentSupport = null; 
+
+	private SuportePersistenteOJB persistentSupport = null;
 	private IPersistentAnnouncement persistentAnnouncement = null;
 	private IPersistentSite persistentSite = null;
 	private IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
@@ -35,23 +35,23 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 	private IDisciplinaExecucao executionCourse = null;
 	private IExecutionPeriod executionPeriod = null;
 	private IExecutionYear executionYear = null;
-	
-    public AnnouncementOJBTest(java.lang.String testName) {
-        super(testName);
-    }
-     
-    public static void main(java.lang.String[] args) {
-        junit.textui.TestRunner.run(suite());
-    }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AnnouncementOJBTest.class);
-        
-        return suite;
-    }
-    
-    protected void setUp() {
-        super.setUp();
+
+	public AnnouncementOJBTest(java.lang.String testName) {
+		super(testName);
+	}
+
+	public static void main(java.lang.String[] args) {
+		junit.textui.TestRunner.run(suite());
+	}
+
+	public static Test suite() {
+		TestSuite suite = new TestSuite(AnnouncementOJBTest.class);
+
+		return suite;
+	}
+
+	protected void setUp() {
+		super.setUp();
 		try {
 			persistentSupport = SuportePersistenteOJB.getInstance();
 		} catch (ExcepcaoPersistencia e) {
@@ -60,16 +60,20 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		}
 		persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
 		persistentSite = persistentSupport.getIPersistentSite();
-		persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
-		persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-		persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-		
+		persistentExecutionCourse =
+			persistentSupport.getIDisciplinaExecucaoPersistente();
+		persistentExecutionPeriod =
+			persistentSupport.getIPersistentExecutionPeriod();
+		persistentExecutionYear =
+			persistentSupport.getIPersistentExecutionYear();
+
 		//read existing executionYear
 		try {
 			persistentSupport.iniciarTransaccao();
-			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
 			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			fail("Error while setting up: readExecutionYearByName");
 		}
 		assertNotNull(executionYear);
@@ -77,9 +81,12 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		//read existing executionPeriod
 		try {
 			persistentSupport.iniciarTransaccao();
-			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+			executionPeriod =
+				persistentExecutionPeriod.readByNameAndExecutionYear(
+					"2º Semestre",
+					executionYear);
 			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			fail("Error while setting up: readByNameAndExecutionYear");
 		}
 		assertNotNull(executionPeriod);
@@ -87,9 +94,13 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		//read existing executionCourse
 		try {
 			persistentSupport.iniciarTransaccao();
-			executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
+			executionCourse =
+				persistentExecutionCourse
+					.readByExecutionCourseInitialsAndExecutionPeriod(
+					"TFCI",
+					executionPeriod);
 			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			fail("Error while setting up: readByExecutionCourseInitialsAndExecutionPeriod");
 		}
 		assertNotNull(executionCourse);
@@ -99,281 +110,291 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			site = persistentSite.readByExecutionCourse(executionCourse);
 			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			fail("Error while setting up: readByExecutionCourse");
 		}
 		assertNotNull(site);
-		
-    }
-    
-    protected void tearDown() {
-        super.tearDown();
-    }
-     
-    public void testLockWrite() {
-		IAnnouncement announcement = null;
 
-        // write non existing
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.YEAR, 2003);
-		calendar.set(Calendar.MONTH, Calendar.JANUARY);
-		calendar.set(Calendar.DATE, 21);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		
-		Timestamp date = new Timestamp(calendar.getTime().getTime());
-
-		announcement = new Announcement("newTitle", date, date, "newInformation", this.site);
-
-        try {
-        	persistentSupport.iniciarTransaccao();
-            persistentAnnouncement.lockWrite(announcement);
-            persistentSupport.confirmarTransaccao();
-        } catch(ExcepcaoPersistencia excepcaoPersistencia) {
-		    fail("testLockWrite: write non Existing");	
-        }
-        
-        IAnnouncement announcementRead = null;        
-        try {
-            persistentSupport.iniciarTransaccao();
-			announcementRead = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("newTitle", date, this.site);
-            persistentSupport.confirmarTransaccao();
-        } catch(ExcepcaoPersistencia excepcaoPersistencia) {
-            fail("testLockWrite: unexpected exception reading");
-        }
-        assertNotNull(announcementRead);
-		assertNotNull(announcementRead);
-		assertEquals(announcementRead.getTitle(), "newTitle");
-//		assertEquals(announcementRead.getCreationDate(), date);
-//		assertEquals(announcementRead.getLastModifiedDate(), date);
-		assertEquals(announcementRead.getInformation(), "newInformation");
-		assertEquals(announcementRead.getSite(), site);
-        
-    }
-
-    public void testDeleteAllAnnouncements() {
-		try {
-			persistentSupport.iniciarTransaccao();
-			List announcements = persistentAnnouncement.readAll();
-			assertTrue("testDeleteAllAnnouncements: read existing announcements",announcements.size()>0);
-			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testDeleteAllAnnouncements: read existing announcementse");
-		}
-		
-
-		//erase all existing        
-        try {
-            persistentSupport.iniciarTransaccao();
-            persistentAnnouncement.deleteAll();
-            persistentSupport.confirmarTransaccao();
-        } catch(ExcepcaoPersistencia ex2) {
-            fail("testDeleteAllAnnouncements: deleteAll");
-        }
-
-		try {
-			persistentSupport.iniciarTransaccao();
-			List announcements = persistentAnnouncement.readAll();
-			assertTrue("testDeleteAllAnnouncements: read again deleted announcements",announcements.size()==0);
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testDeleteAllAnnouncements: read again deleted announcements");
-		}
-		
-    }
-
-    public void testReadAnnouncementByTitleAndDateAndSite() {
-        IAnnouncement announcement = null;
-
-		//read existing
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.YEAR, 2003);
-		calendar.set(Calendar.MONTH, Calendar.JANUARY);
-		calendar.set(Calendar.DATE, 21);
-		calendar.set(Calendar.HOUR_OF_DAY, 13);
-		calendar.set(Calendar.MINUTE, 20);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		
-		Timestamp date = new Timestamp(calendar.getTime().getTime());
-        try {
-            persistentSupport.iniciarTransaccao();
-            announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
-            persistentSupport.confirmarTransaccao();
-        } catch(ExcepcaoPersistencia excepcaoPersistencia) {
-            fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
-        }
-        assertNotNull(announcement);
-        assertEquals(announcement.getTitle(), "announcement1deTFCI");
-//		assertEquals(announcement.getCreationDate(), date);
-//		assertEquals(announcement.getLastModifiedDate(), date);
-		assertEquals(announcement.getInformation(), "information1");
-		assertEquals(announcement.getSite(), site);
-
-		//read unexisting
-		announcement = null;
-		try {
-			persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("unexistingAnnouncement", date, site);
-			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
-		}
-		assertNull(announcement);
 	}
 
-    public void testDeleteAnnouncement() {
-        IAnnouncement announcement = null;
-
-		//read existing        
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.YEAR, 2003);
-		calendar.set(Calendar.MONTH, Calendar.JANUARY);
-		calendar.set(Calendar.DATE, 21);
-		calendar.set(Calendar.HOUR_OF_DAY, 13);
-		calendar.set(Calendar.MINUTE,20);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		
-		Timestamp date = new Timestamp(calendar.getTime().getTime());		
-        try {
-            persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
-            persistentSupport.confirmarTransaccao();
-        } catch(ExcepcaoPersistencia ex) {
-            fail("testDeleteAnnouncement: readAnnouncementByTitleAndCreationDateAndSite existing");
-        }
-        assertNotNull(announcement);
-
-		//erase it
-        try {
-            persistentSupport.iniciarTransaccao();
-            persistentAnnouncement.delete(announcement);
-            persistentSupport.confirmarTransaccao();
-        } catch(ExcepcaoPersistencia ex2) {
-            fail("testDeleteAnnouncement: delete");
-        }
-        
-        //read it again
-		announcement = null;
-		try {
-			persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
-			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia ex) {
-			fail("testDeleteAnnouncement: readAnnouncementByTitleAndCreationDateAndSite unexisting");
-		}
-		assertNull(announcement);
-    }
-    
-	public void testReadAnnouncementsBySite() {
-
-		List result = null;
-		
-		try {
-			persistentSupport.iniciarTransaccao();
-			result = persistentAnnouncement.readAnnouncementsBySite(this.site);
-			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testReadAnnouncementsBySite: readAnnouncementsBySite: " + excepcaoPersistencia);	
-		}
-		assertNotNull(result);
-		assertEquals(result.isEmpty(), false);        
+	protected void tearDown() {
+		super.tearDown();
 	}
+
+	    public void testLockWrite() {
+			IAnnouncement announcement = null;
 	
-	public void testReadLastAnnouncementForSite() {
-
-		IAnnouncement newAnnouncement = null;
-
-		Calendar calendar = Calendar.getInstance();
-		Timestamp actualDate = new Timestamp(calendar.getTime().getTime());
-
-		newAnnouncement = new Announcement("newTitle", actualDate, actualDate, "newInformation", this.site);
-		try {
-		  	persistentSupport.iniciarTransaccao();
-			persistentAnnouncement.lockWrite(newAnnouncement);
-			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-		  fail("testReadLastAnnouncementForSite: write non Existing");	
-		}
-		
-		try {
-			persistentSupport.iniciarTransaccao();
-			newAnnouncement = persistentAnnouncement.readLastAnnouncementForSite(this.site);
-			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testReadAnnouncementsBySite: readAnnouncementsBySite: " + excepcaoPersistencia);	
-		}
-		assertNotNull(newAnnouncement);
-		assertEquals(newAnnouncement.getCreationDate(), actualDate);
-	}
+	        // write non existing
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.YEAR, 2003);
+			calendar.set(Calendar.MONTH, Calendar.JANUARY);
+			calendar.set(Calendar.DATE, 21);
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			
+			Timestamp date = new Timestamp(calendar.getTime().getTime());
 	
-	public void testReadAll() {
-
+			announcement = new Announcement("newTitle", date, date, "newInformation", this.site);
+	
+	        try {
+	        	persistentSupport.iniciarTransaccao();
+	            persistentAnnouncement.lockWrite(announcement);
+	            persistentSupport.confirmarTransaccao();
+	        } catch(ExcepcaoPersistencia excepcaoPersistencia) {
+			    fail("testLockWrite: write non Existing");	
+	        }
+	        
+	        IAnnouncement announcementRead = null;        
+	        try {
+	            persistentSupport.iniciarTransaccao();
+				announcementRead = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("newTitle", date, this.site);
+	            persistentSupport.confirmarTransaccao();
+	        } catch(ExcepcaoPersistencia excepcaoPersistencia) {
+	            fail("testLockWrite: unexpected exception reading");
+	        }
+	        assertNotNull(announcementRead);
+			assertNotNull(announcementRead);
+			assertEquals(announcementRead.getTitle(), "newTitle");
+	//		assertEquals(announcementRead.getCreationDate(), date);
+	//		assertEquals(announcementRead.getLastModifiedDate(), date);
+			assertEquals(announcementRead.getInformation(), "newInformation");
+			assertEquals(announcementRead.getSite(), site);
+	        
+	    }
+	
+	    public void testDeleteAllAnnouncements() {
+			try {
+				persistentSupport.iniciarTransaccao();
+				List announcements = persistentAnnouncement.readAll();
+				assertTrue("testDeleteAllAnnouncements: read existing announcements",announcements.size()>0);
+				persistentSupport.confirmarTransaccao();
+			} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+				fail("testDeleteAllAnnouncements: read existing announcementse");
+			}
+			
+	
+			//erase all existing        
+	        try {
+	            persistentSupport.iniciarTransaccao();
+	            persistentAnnouncement.deleteAll();
+	            persistentSupport.confirmarTransaccao();
+	        } catch(ExcepcaoPersistencia ex2) {
+	            fail("testDeleteAllAnnouncements: deleteAll");
+	        }
+	
+			try {
+				persistentSupport.iniciarTransaccao();
+				List announcements = persistentAnnouncement.readAll();
+				assertTrue("testDeleteAllAnnouncements: read again deleted announcements",announcements.size()==0);
+			} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+				fail("testDeleteAllAnnouncements: read again deleted announcements");
+			}
+			
+	    }
+	
+	    public void testReadAnnouncementByTitleAndDateAndSite() {
+	        IAnnouncement announcement = null;
+	
+			//read existing
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.YEAR, 2003);
+			calendar.set(Calendar.MONTH, Calendar.JANUARY);
+			calendar.set(Calendar.DATE, 21);
+			calendar.set(Calendar.HOUR_OF_DAY, 13);
+			calendar.set(Calendar.MINUTE, 20);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			
+			Timestamp date = new Timestamp(calendar.getTime().getTime());
+	        try {
+	            persistentSupport.iniciarTransaccao();
+	            announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
+	            persistentSupport.confirmarTransaccao();
+	        } catch(ExcepcaoPersistencia excepcaoPersistencia) {
+	            fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
+	        }
+	        assertNotNull(announcement);
+	        assertEquals(announcement.getTitle(), "announcement1deTFCI");
+	//		assertEquals(announcement.getCreationDate(), date);
+	//		assertEquals(announcement.getLastModifiedDate(), date);
+			assertEquals(announcement.getInformation(), "information1");
+			assertEquals(announcement.getSite(), site);
+	
+			//read unexisting
+			announcement = null;
+			try {
+				persistentSupport.iniciarTransaccao();
+				announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("unexistingAnnouncement", date, site);
+				persistentSupport.confirmarTransaccao();
+			} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+				fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
+			}
+			assertNull(announcement);
+		}
+	
+	    public void testDeleteAnnouncement() {
+	        IAnnouncement announcement = null;
+	
+			//read existing        
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.YEAR, 2003);
+			calendar.set(Calendar.MONTH, Calendar.JANUARY);
+			calendar.set(Calendar.DATE, 21);
+			calendar.set(Calendar.HOUR_OF_DAY, 13);
+			calendar.set(Calendar.MINUTE,20);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			
+			Timestamp date = new Timestamp(calendar.getTime().getTime());		
+	        try {
+	            persistentSupport.iniciarTransaccao();
+				announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
+	            persistentSupport.confirmarTransaccao();
+	        } catch(ExcepcaoPersistencia ex) {
+	            fail("testDeleteAnnouncement: readAnnouncementByTitleAndCreationDateAndSite existing");
+	        }
+	        assertNotNull(announcement);
+	
+			//erase it
+	        try {
+	            persistentSupport.iniciarTransaccao();
+	            persistentAnnouncement.delete(announcement);
+	            persistentSupport.confirmarTransaccao();
+	        } catch(ExcepcaoPersistencia ex2) {
+	            fail("testDeleteAnnouncement: delete");
+	        }
+	        
+	        //read it again
+			announcement = null;
+			try {
+				persistentSupport.iniciarTransaccao();
+				announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
+				persistentSupport.confirmarTransaccao();
+			} catch(ExcepcaoPersistencia ex) {
+				fail("testDeleteAnnouncement: readAnnouncementByTitleAndCreationDateAndSite unexisting");
+			}
+			assertNull(announcement);
+	    }
+	    
+		public void testReadAnnouncementsBySite() {
+	
+			List result = null;
 			
 			try {
 				persistentSupport.iniciarTransaccao();
-				List announcements=persistentAnnouncement.readAll();
-				assertEquals("testReadAll: failed reading all announcements",5,announcements.size());
+				result = persistentAnnouncement.readAnnouncementsBySite(this.site);
 				persistentSupport.confirmarTransaccao();
 			} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			  fail("testReadAll: failed reading all announcements");	
+				fail("testReadAnnouncementsBySite: readAnnouncementsBySite: " + excepcaoPersistencia);	
 			}
-				}
-				
-//	public void testReadbyOID() {
-//		   IAnnouncement announcement = null;
-//
-//		   //read existing
-//		   Calendar calendar = Calendar.getInstance();
-//		   calendar.set(Calendar.YEAR, 2003);
-//		   calendar.set(Calendar.MONTH, Calendar.JANUARY);
-//		   calendar.set(Calendar.DATE, 21);
-//		   calendar.set(Calendar.HOUR_OF_DAY, 13);
-//		   calendar.set(Calendar.MINUTE, 20);
-//		   calendar.set(Calendar.SECOND, 0);
-//		   calendar.set(Calendar.MILLISECOND, 0);
-//		
-//		   Timestamp date = new Timestamp(calendar.getTime().getTime());
-//		   try {
-//			   persistentSupport.iniciarTransaccao();
-//			   announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
-//			   persistentSupport.confirmarTransaccao();
-//		   } catch(ExcepcaoPersistencia excepcaoPersistencia) {
-//			   fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
-//		   }
-//		   assertNotNull(announcement);
-//		   assertEquals(announcement.getTitle(), "announcement1deTFCI");
-////		   assertEquals(announcement.getCreationDate(), date);
-////		   assertEquals(announcement.getLastModifiedDate(), date);
-//		   assertEquals(announcement.getInformation(), "information1");
-//		   assertEquals(announcement.getSite(), site);
-//			//test
-//			try {
-//				IAnnouncement announcement2 = new Announcement();
-//				//((Announcement)announcement2).setIdInternal(((Announcement)announcement).getIdInternal());
-//				((Announcement)announcement).setIdInternal(null);
-//				persistentSupport.iniciarTransaccao();
-//				IAnnouncement announcement1 = (IAnnouncement) persistentAnnouncement.readByOId(announcement);
-//				persistentSupport.confirmarTransaccao();
-////				assertEquals("readbyOID test",announcement,announcement1);
-//				System.out.println(announcement1);
-//			} catch (ExcepcaoPersistencia e) {
-//				fail("readbyOID test");
-//			}
-//
-//		   //read unexisting
-//		   announcement = null;
-//		   try {
-//			   persistentSupport.iniciarTransaccao();
-//			   announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("unexistingAnnouncement", date, site);
-//			   persistentSupport.confirmarTransaccao();
-//		   } catch(ExcepcaoPersistencia excepcaoPersistencia) {
-//			   fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
-//		   }
-//		   assertNull(announcement);
-//	   }
-			
+			assertNotNull(result);
+			assertEquals(result.isEmpty(), false);        
+		}
+		
+		public void testReadLastAnnouncementForSite() {
 	
+			IAnnouncement newAnnouncement = null;
+	
+			Calendar calendar = Calendar.getInstance();
+			Timestamp actualDate = new Timestamp(calendar.getTime().getTime());
+	
+			newAnnouncement = new Announcement("newTitle", actualDate, actualDate, "newInformation", this.site);
+			try {
+			  	persistentSupport.iniciarTransaccao();
+				persistentAnnouncement.lockWrite(newAnnouncement);
+				persistentSupport.confirmarTransaccao();
+			} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+			  fail("testReadLastAnnouncementForSite: write non Existing");	
+			}
+			
+			try {
+				persistentSupport.iniciarTransaccao();
+				newAnnouncement = persistentAnnouncement.readLastAnnouncementForSite(this.site);
+				persistentSupport.confirmarTransaccao();
+			} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+				fail("testReadAnnouncementsBySite: readAnnouncementsBySite: " + excepcaoPersistencia);	
+			}
+			assertNotNull(newAnnouncement);
+			assertEquals(newAnnouncement.getCreationDate(), actualDate);
+		}
+		
+		public void testReadAll() {
+	
+				
+				try {
+					persistentSupport.iniciarTransaccao();
+					List announcements=persistentAnnouncement.readAll();
+					assertEquals("testReadAll: failed reading all announcements",5,announcements.size());
+					persistentSupport.confirmarTransaccao();
+				} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+				  fail("testReadAll: failed reading all announcements");	
+				}
+					}
+					
+//	public void testReadbyOID() {
+//		IAnnouncement announcement = null;
+//
+//		//read existing
+//		Calendar calendar = Calendar.getInstance();
+//		calendar.set(Calendar.YEAR, 2003);
+//		calendar.set(Calendar.MONTH, Calendar.JANUARY);
+//		calendar.set(Calendar.DATE, 21);
+//		calendar.set(Calendar.HOUR_OF_DAY, 13);
+//		calendar.set(Calendar.MINUTE, 20);
+//		calendar.set(Calendar.SECOND, 0);
+//		calendar.set(Calendar.MILLISECOND, 0);
+//
+//		Timestamp date = new Timestamp(calendar.getTime().getTime());
+//		try {
+//			persistentSupport.iniciarTransaccao();
+//			announcement =
+//				persistentAnnouncement
+//					.readAnnouncementByTitleAndCreationDateAndSite(
+//					"announcement1deTFCI",
+//					date,
+//					this.site);
+//			persistentSupport.confirmarTransaccao();
+//		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+//			fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
+//		}
+//		assertNotNull(announcement);
+//		assertEquals(announcement.getTitle(), "announcement1deTFCI");
+//		//		   assertEquals(announcement.getCreationDate(), date);
+//		//		   assertEquals(announcement.getLastModifiedDate(), date);
+//		assertEquals(announcement.getInformation(), "information1");
+//		assertEquals(announcement.getSite(), site);
+//		//test
+//		try {
+//			IAnnouncement announcement2 = new Announcement();
+//			//((Announcement)announcement2).setIdInternal(((Announcement)announcement).getIdInternal());
+//			//				((Announcement)announcement).setIdInternal(null);
+//
+//			IAnnouncement announcement1 =
+//				(IAnnouncement) persistentAnnouncement.readByOId(announcement);
+//
+//			//				assertEquals("readbyOID test",announcement,announcement1);
+//			System.out.println(announcement1);
+//		} catch (ExcepcaoPersistencia e) {
+//			fail("readbyOID test");
+//		}
+//
+//		//read unexisting
+//		announcement = null;
+//		try {
+//			persistentSupport.iniciarTransaccao();
+//			announcement =
+//				persistentAnnouncement
+//					.readAnnouncementByTitleAndCreationDateAndSite(
+//					"unexistingAnnouncement",
+//					date,
+//					site);
+//			persistentSupport.confirmarTransaccao();
+//		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+//			fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
+//		}
+//		assertNull(announcement);
+//	}
+
 }

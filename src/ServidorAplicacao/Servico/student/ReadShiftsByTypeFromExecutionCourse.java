@@ -15,7 +15,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
 /**
- * @author jmota
+ * @author João Mota
  *
  */
 public class ReadShiftsByTypeFromExecutionCourse implements IServico {

@@ -1,8 +1,6 @@
 /*
  * Created on 12/Mar/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
  */
 package ServidorAplicacao.Servicos.gesdis.teacher;
 
@@ -24,7 +22,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author jmota
+ * @author João Mota
  */
 public class AssociateTeacherTest extends TestCaseCreateServices {
 
