@@ -16,10 +16,12 @@ public class AttendacyStateSelectionType
     public static final int ALL_TYPE = 1;
     public static final int ENROLLED_TYPE = 2;
     public static final int NOT_ENROLLED_TYPE = 3;
+    public static final int IMPROVEMENT_TYPE = 4;
  
 	public static final AttendacyStateSelectionType ALL =  new AttendacyStateSelectionType(AttendacyStateSelectionType.ALL_TYPE);
 	public static final AttendacyStateSelectionType ENROLLED =  new AttendacyStateSelectionType(AttendacyStateSelectionType.ENROLLED_TYPE);
 	public static final AttendacyStateSelectionType NOT_ENROLLED =  new AttendacyStateSelectionType(AttendacyStateSelectionType.NOT_ENROLLED_TYPE);
+	public static final AttendacyStateSelectionType IMPROVEMENT =  new AttendacyStateSelectionType(AttendacyStateSelectionType.IMPROVEMENT_TYPE);
 
     private Integer selectionType;    
     

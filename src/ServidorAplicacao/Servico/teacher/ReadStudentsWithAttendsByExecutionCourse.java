@@ -19,6 +19,7 @@ import DataBeans.InfoAttendsSummary;
 import DataBeans.InfoAttendsWithInfoStudentAndPersonAndInfoEnrollment;
 import DataBeans.InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups;
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoDegreeCurricularPlanWithDegree;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseWithExecutionPeriod;
 import DataBeans.InfoForReadStudentsWithAttendsByExecutionCourse;
@@ -85,14 +86,14 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
     }
     
 
-    public Object run(Integer executionCourseCode, List curricularPlansIds, AttendacyStateSelectionType seleccao, List shiftIds) throws ExcepcaoInexistente,
+    public Object run(Integer executionCourseCode, List curricularPlansIds, List enrollmentTypeFilters, List shiftIds) throws ExcepcaoInexistente,
             FenixServiceException{
         ISite site = null;
         try {
             final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             final IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
 
-            IExecutionCourse executionCourse = (IExecutionCourse)sp.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,executionCourseCode);
+            final IExecutionCourse executionCourse = (IExecutionCourse)sp.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,executionCourseCode);
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(executionCourse);
             
             IPersistentSite persistentSite = sp.getIPersistentSite();
@@ -140,27 +141,33 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                 attends=(List)CollectionUtils.select(attends,pCourses);
             }
             
-            // filter by Enrollment (only enrolled students)
-            if (!seleccao.equals(AttendacyStateSelectionType.ALL)) 
+            // filter by Enrollment type
+            if (enrollmentTypeFilters != null) 
             {
-                Predicate pInscritos = new Predicate()
-                {
-                    public boolean evaluate (Object o)
-                    {
-                        IFrequenta attendance = (IFrequenta)o;
-                        
-                        if (attendance.getEnrolment() != null)
-                            return true;
-                        else
-                            return false;                        
+                boolean enrolledFilter = enrollmentTypeFilters.contains(AttendacyStateSelectionType.ENROLLED);
+                boolean notEnrolledFilter = enrollmentTypeFilters.contains(AttendacyStateSelectionType.NOT_ENROLLED);
+                boolean improvementFilter = enrollmentTypeFilters.contains(AttendacyStateSelectionType.IMPROVEMENT);
+                
+                List newAttends = new ArrayList();
+                Iterator attendsIterator = attends.iterator();
+                while(attendsIterator.hasNext()){
+                    IFrequenta attendacy = (IFrequenta)attendsIterator.next();
+                    
+                    // improvement student (he/she is enrolled)
+                    if (improvementFilter && attendacy.getEnrolment() != null &&
+                            (!attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))){
+                        newAttends.add(attendacy);
+                    
+                    // normal student (cannot be an improvement student)
+                    } else if (enrolledFilter && attendacy.getEnrolment() != null &&
+                            (attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))){
+                        newAttends.add(attendacy);
+                    // not enrolled student
+                    } else if (notEnrolledFilter && attendacy.getEnrolment() == null){
+                        newAttends.add(attendacy);
                     }
-                };
-                
-                if (seleccao.equals(AttendacyStateSelectionType.ENROLLED))
-                    attends = (List) CollectionUtils.select(attends,pInscritos);
-                else if (seleccao.equals(AttendacyStateSelectionType.NOT_ENROLLED))
-                    attends = (List) CollectionUtils.selectRejected(attends,pInscritos);
-                
+                }
+                attends = newAttends;
             }
             
             
@@ -227,8 +234,8 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                 
                 IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlanFromAttends(iFrequenta);
                 IDegreeCurricularPlan degreeCP = studentCurricularPlan.getDegreeCurricularPlan();
-                InfoDegreeCurricularPlan infoDCP = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCP);
-                
+                InfoDegreeCurricularPlan infoDCP = InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCP);
+
                 infoComposition.setAttendingStudentInfoDCP(infoDCP);
                 
                 Map infoShifts = getShiftsByAttends(shifts,iFrequenta,sp);
@@ -427,7 +434,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         for(Iterator dcpIterator = degreeCPs.iterator();dcpIterator.hasNext();){
             IDegreeCurricularPlan dcp = (IDegreeCurricularPlan)dcpIterator.next();
             
-            result.add(InfoDegreeCurricularPlan.newInfoFromDomain(dcp));
+            result.add(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(dcp));
         }
         
         return result;        

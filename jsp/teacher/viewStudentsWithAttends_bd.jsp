@@ -7,6 +7,7 @@
 <%@ page import="Util.AttendacyStateSelectionType" %>
 <%@ page import="DataBeans.InfoExecutionCourse" %>
 <%@ page import="DataBeans.InfoDegreeCurricularPlan" %>
+<%@ page import="DataBeans.InfoDegree" %>
 <%@ page import="DataBeans.InfoGroupProperties" %>
 <%@ page import="DataBeans.InfoStudentGroup" %>
 <%@ page import="DataBeans.InfoLesson" %>
@@ -14,9 +15,11 @@
 <%@ page import="DataBeans.InfoForReadStudentsWithAttendsByExecutionCourse" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.GregorianCalendar" %>
 <%@ page import="java.util.TreeMap" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
 
 <script language="Javascript" type="text/javascript">
 <!--
@@ -99,7 +102,7 @@ function cleanSelect(checkboxes) {
 						<bean:message key="label.attends.allStudents"/>
 					</td>
 					<td>
-						<html:radio property="hasEnrollment" value="<%= AttendacyStateSelectionType.ALL.toString() %>" />
+						<html:multibox property="enrollmentType" value="<%= AttendacyStateSelectionType.ALL.toString() %>" onclick="invertSelect(document.forms[0].enrollmentType)" />
 					</td>
 				</tr>
 				<tr>
@@ -107,7 +110,15 @@ function cleanSelect(checkboxes) {
 						<bean:message key="label.attends.enrolledStudents"/>
 					</td>
 					<td>		
-						<html:radio property="hasEnrollment" value="<%= AttendacyStateSelectionType.ENROLLED.toString() %>" />
+						<html:multibox property="enrollmentType" value="<%= AttendacyStateSelectionType.ENROLLED.toString() %>" onclick="cleanSelect(document.forms[0].enrollmentType)" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<bean:message key="label.attends.improvementStudents"/>
+					</td>
+					<td>		
+						<html:multibox property="enrollmentType" value="<%= AttendacyStateSelectionType.IMPROVEMENT.toString() %>" onclick="cleanSelect(document.forms[0].enrollmentType)" />
 					</td>
 				</tr>
 				<tr>
@@ -115,7 +126,7 @@ function cleanSelect(checkboxes) {
 						<bean:message key="label.attends.notEnrolledStudents"/>
 					</td>
 					<td>
-						<html:radio property="hasEnrollment" value="<%= AttendacyStateSelectionType.NOT_ENROLLED.toString() %>" />
+						<html:multibox property="enrollmentType" value="<%= AttendacyStateSelectionType.NOT_ENROLLED.toString() %>" onclick="cleanSelect(document.forms[0].enrollmentType)" />
 					</td>
 				</tr>
 			</table>				
@@ -134,9 +145,18 @@ function cleanSelect(checkboxes) {
 		
 				<logic:iterate id="dcp" type="DataBeans.InfoDegreeCurricularPlan" name="degreeCurricularPlans">
 					<bean:define id="dcpID" name="dcp" property="idInternal"/>
+					<bean:define id="degree" type="DataBeans.InfoDegree" name="dcp" property="infoDegree"/>
 					<tr>
 						<td>
-							<bean:write name="dcp" property="name"/>
+							<%
+								String sigla = degree.getSigla();
+								Date dataInicio = dcp.getInitialDate();
+								Calendar dataInicioCalendar = new GregorianCalendar();
+								dataInicioCalendar.setTime(dataInicio);						
+								int year = dataInicioCalendar.get(Calendar.YEAR);
+								
+								out.print(sigla + " " + year);
+							%>
 						</td>
 						<td>
 							<html:multibox property="coursesIDs" value="<%= dcpID.toString() %>" onclick="cleanSelect(document.forms[0].coursesIDs)"/>
@@ -203,111 +223,6 @@ function cleanSelect(checkboxes) {
 	</tr>
 </table>
 <html:submit property="submition"><bean:message key="button.selectShift"/></html:submit>
-<%--
-	<tr><td>&nbsp;</td></tr>
-	<tr valign="top">
-		<td>
-			<bean:define id="degreeCurricularPlans" name="studentsComponent" property="infoDegreeCurricularPlans"/>
-			<bean:message key="label.attends.courses"/>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<td>
-						<bean:message key="label.attends.allCourses"/>
-					</td>
-					<td>
-						<html:multibox property="coursesIDs" value="0" onclick="invertSelect()"/>
-					</td>
-				</tr>
-		
-				<logic:iterate id="dcp" type="DataBeans.InfoDegreeCurricularPlan" name="degreeCurricularPlans">
-					<bean:define id="dcpID" name="dcp" property="idInternal"/>
-					<tr>
-						<td>
-							<bean:write name="dcp" property="name"/>
-						</td>
-						<td>
-							<html:multibox property="coursesIDs" value="<%= dcpID.toString() %>" onclick="cleanSelect()"/>
-						</td>					
-					</tr>
-				</logic:iterate>
-			</table>
-		</td>
-	</tr>
-	<tr><td>&nbsp;</td></tr>
-	<tr>
-		<td>
-			<bean:message key="label.attends.allStudents"/>
-		</td>
-		<td>
-			<html:radio property="hasEnrollment" value="<%= AttendacyStateSelectionType.ALL.toString() %>" />
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<bean:message key="label.attends.enrolledStudents"/>
-		</td>
-		<td>		
-			<html:radio property="hasEnrollment" value="<%= AttendacyStateSelectionType.ENROLLED.toString() %>" />
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<bean:message key="label.attends.notEnrolledStudents"/>
-		</td>
-		<td>
-			<html:radio property="hasEnrollment" value="<%= AttendacyStateSelectionType.NOT_ENROLLED.toString() %>" />
-		</td>
-	</tr>
-	<tr><td>&nbsp;</td></tr>
-	<tr>
-		<td>
-			<bean:message key="label.selectShift"/>
-		</td>
-		<td colspan="3">
-
-
-			<bean:message key="label.select.SelectShift"/>
-			<html:multibox property="shiftIDs" value="0"/>
-
-
-
-							<bean:define id="shifts" name="studentsComponent" property="infoShifts" />
-							<logic:iterate type="DataBeans.InfoShift" name="shifts" id="shift">
-									<%
-									String text = new String();
-									text += shift.getNome();
-									text += "   (";
-									for (Iterator iterator= shift.getInfoLessons().iterator(); iterator.hasNext();)
-									{
-										InfoLesson lesson= (InfoLesson) iterator.next();
-										text += lesson.getDiaSemana().toString() + "  ";
-										text += lesson.getInicio().get(Calendar.HOUR_OF_DAY) + ":";
-										text += lesson.getInicio().get(Calendar.MINUTE) + "-";
-										text += lesson.getFim().get(Calendar.HOUR_OF_DAY) + ":";
-										text += lesson.getFim().get(Calendar.MINUTE) + " ";
-										text += lesson.getInfoSala().getNome();
-										if (iterator.hasNext())
-											text += " ;";
-									}
-									text += ")"; 
-									%>
-								<%= text %>
-								<html:multibox property="shiftIDs" value="<%= shift.getIdInternal().toString() %>"/>
-							</logic:iterate>
-					</td>
-		</tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>
-				<html:submit property="submition"><bean:message key="button.selectShift"/></html:submit>
-			</td>
-		</tr>
-</table>
---%>
-
-
 
 <table cellspacing="1" cellpadding="1">
 	<tr>
@@ -468,7 +383,19 @@ function cleanSelect(checkboxes) {
 					</logic:notPresent>
 				</td>
 				<td class="listClasses">
-					<bean:write name="attend" property="attendingStudentInfoDCP.name"/>
+					<bean:define id="infoDCP" type="DataBeans.InfoDegreeCurricularPlan" name="attend" property="attendingStudentInfoDCP"/>
+					<bean:define id="degree" type="DataBeans.InfoDegree" name="infoDCP" property="infoDegree"/>
+					
+					<%
+						String sigla = degree.getSigla();
+						Date dataInicio = infoDCP.getInitialDate();
+						Calendar dataInicioCalendar = new GregorianCalendar();
+						dataInicioCalendar.setTime(dataInicio);						
+						int year = dataInicioCalendar.get(Calendar.YEAR);
+						
+						out.print(sigla + " " + year);					
+					%>
+
 				</td>
 				<td  class="listClasses" title="<bean:write name="attendacy" property="aluno.infoPerson.nome"/>">
 						<bean:define id="shortName" value="" type="java.lang.String"/>

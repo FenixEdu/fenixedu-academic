@@ -41,7 +41,8 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         HttpSession session = request.getSession(false);
         Integer executionCourseID = null;
         List coursesIDs = null;
-        String hasEnrollment = null;
+        List enrollmentTypeList = null;
+        String[] enrollmentType = null;
         List shiftIDs = null;
         try {
             executionCourseID = new Integer(request.getParameter("objectCode"));
@@ -50,10 +51,18 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         }
         
         Integer checkedCoursesIds[] = (Integer[]) formBean.get("coursesIDs");
-        hasEnrollment = (String) formBean.get("hasEnrollment");
+        enrollmentType = (String[]) formBean.get("enrollmentType");
         Integer checkedShiftIds[] = (Integer[]) formBean.get("shiftIDs");
         
-        AttendacyStateSelectionType attendacyState = new AttendacyStateSelectionType(hasEnrollment);
+        enrollmentTypeList = new ArrayList();
+        for(int i = 0; i < enrollmentType.length; i++){
+            if(enrollmentType[i].equals(AttendacyStateSelectionType.ALL.toString())){
+                enrollmentTypeList = null;
+                break;
+            } else {
+                enrollmentTypeList.add(new AttendacyStateSelectionType(enrollmentType[i]));
+            }
+        }
         
         coursesIDs = new ArrayList();
         for(int i = 0; i < checkedCoursesIds.length; i++){
@@ -79,7 +88,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
 
        
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { executionCourseID, coursesIDs, attendacyState, shiftIDs };
+        Object args[] = { executionCourseID, coursesIDs, enrollmentTypeList, shiftIDs };
         TeacherAdministrationSiteView siteView = null;
 
         try {
@@ -120,10 +129,8 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         DynaActionForm formBean = (DynaActionForm)form;
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         
-        AttendacyStateSelectionType attendacyState = AttendacyStateSelectionType.ALL;
-        
         // all the information, no filtering applied
-        Object args[] = { executionCourseID, null, attendacyState, null };
+        Object args[] = { executionCourseID, null, null, null };
         TeacherAdministrationSiteView siteView = null;
 
         try {
@@ -157,10 +164,16 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
             cbShifts[i] = ((InfoShift)infoShifts.get(i-1)).getIdInternal();
         }
         
-        
+//      filling the enrollment filters checkboxes in the form-bean
+        String cbFilters[] = new String[4]; // 4 selection criteria
+        cbFilters[0] = AttendacyStateSelectionType.ALL.toString();
+        cbFilters[1] = AttendacyStateSelectionType.ENROLLED.toString();
+        cbFilters[2] = AttendacyStateSelectionType.NOT_ENROLLED.toString();
+        cbFilters[3] = AttendacyStateSelectionType.IMPROVEMENT.toString();        
+
         formBean.set("coursesIDs",cbCourses);
         formBean.set("shiftIDs",cbShifts);
-        formBean.set("hasEnrollment",AttendacyStateSelectionType.ALL.toString());
+        formBean.set("enrollmentType",cbFilters);
 
         return mapping.findForward("success");
     }
