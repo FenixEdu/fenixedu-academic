@@ -747,6 +747,13 @@
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
 	</filterChain>
+	<filterChain>
+		<name>EmployeeBelongsToTeacherDepartment</name>
+		<expression>EmployeeBelongsToTeacherDepartment</expression>
+    	<description>Verifies whether a given employee belongs to the same department the teacher does</description>
+		<invocationTiming>1</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>	
 
 	<filterChain>
 		<name>ReadStudentCurricularPlansAccess</name>
@@ -755,4 +762,5 @@
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
 	</filterChain>
+
 </filterChainsDefinitions>
