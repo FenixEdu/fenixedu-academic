@@ -1,17 +1,14 @@
 package ServidorAplicacao.Servicos.commons;
 
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import Dominio.ExecutionPeriod;
-import Dominio.ExecutionYear;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.util.Cloner;
 import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
 import ServidorAplicacao.Servicos.TestCaseServicos;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -20,10 +17,9 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *
  */
 public class ReadActualExecutionPeriodTest extends TestCaseServicos {
-	protected ISuportePersistente _suportePersistente = null;
-	protected IPersistentExecutionPeriod persistentExecutionPeriod=null;
-	protected IPersistentExecutionYear persistentExecutionYear=null;
-
+	protected ISuportePersistente sp = null;
+	private IPersistentExecutionPeriod executionPeriodDAO = null;
+	
 	/**
 	 * Constructor for SelectShiftsTest.
 	 * @param testName
@@ -42,6 +38,14 @@ public class ReadActualExecutionPeriodTest extends TestCaseServicos {
 
 	protected void setUp() {
 		super.setUp();
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace(System.out);
+			fail("Getting persistent support!");
+		}
+		
 	}
 
 	protected void tearDown() {
@@ -49,59 +53,27 @@ public class ReadActualExecutionPeriodTest extends TestCaseServicos {
 	}
 
 	/**
-	 * FIXME: The OJB method doesn't quite work ... it returns the first
-	 * execution period on the database, it doesn't return the Actual one ...
-	 * 
-	 * The test only checks if the service returns something ...
-	 * 
+	 * The test only checks if the service returns something, the real test is done on Persistent layer.
 	 */
-
 	public void testReadActualExecutionPeriod() {
-		Object result = null;
-
-		//Empty database	
+		InfoExecutionPeriod executionPeriod = null;
 		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			SuportePersistenteOJB.getInstance().getIPersistentExecutionPeriod().deleteAll();
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		} catch (ExcepcaoPersistencia excepcao) {
-			fail("Exception when setUp");
-		}
-		try {
-			result =
-				_gestor.executar(_userView, "ReadActualExecutionPeriod", null);
+			executionPeriod =
+				(InfoExecutionPeriod) ServiceUtils.executeService(_userView, "ReadActualExecutionPeriod", null);
 		} catch (Exception ex) {
-			fail("testReadAll: no Shifts to read");
+			ex.printStackTrace(System.out);
+			fail("Executing service ReadActualExecutionPeriod");
 		}
-		assertNull(result);
-		
-//		assertEquals(
-//			"testReadAll: no Shifts to read aqui",
-//			0,
-//			((List) result).size());
-
-		// 1 class in database
-		
+		IExecutionPeriod expectedIExecutionPeriod = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
-			IExecutionYear executionYear = new ExecutionYear("2002/2003");
-			persistentExecutionYear.writeExecutionYear(executionYear);
-			IExecutionPeriod executionPeriod = new ExecutionPeriod("2 semestre", executionYear);
-		    persistentExecutionPeriod.writeExecutionPeriod(executionPeriod);
-			_suportePersistente.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia excepcao) {
-			fail("Exception when setUp");
+			sp.iniciarTransaccao();
+			expectedIExecutionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+			sp.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Reading execution period using persistent layer!");
 		}
-
-		try {
-			result =
-				_gestor.executar(_userView, "ReadActualExecutionPeriod", null);
-			assertEquals(
-				"testReadAll: Actual Period",
-				1,
-				((List) result).size());
-		} catch (Exception ex) {
-			fail("testReadAll: Actual Period");
-		}
+		InfoExecutionPeriod expectedInfoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(expectedIExecutionPeriod);
+		assertEquals(expectedInfoExecutionPeriod, executionPeriod);
 	}
 }
