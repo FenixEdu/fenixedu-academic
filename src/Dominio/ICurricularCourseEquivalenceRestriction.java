@@ -11,7 +11,7 @@ package Dominio;
  *
  * 7/Jul/2003
  */
-public interface ICurricularCourseEquivalenceRestricition extends IDomainObject{
+public interface ICurricularCourseEquivalenceRestriction extends IDomainObject{
 
 	public abstract ICurricularCourseEquivalence getCurricularCourseEquivalence();
 	public abstract ICurricularCourse getEquivalentCurricularCourse();

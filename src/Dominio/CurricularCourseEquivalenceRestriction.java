@@ -7,7 +7,7 @@ package Dominio;
 /**
  * @author jpvl
  */
-public class CurricularCourseEquivalenceRestriction extends DomainObject implements ICurricularCourseEquivalenceRestricition {
+public class CurricularCourseEquivalenceRestriction extends DomainObject implements ICurricularCourseEquivalenceRestriction {
 	private ICurricularCourseEquivalence curricularCourseEquivalence;
 	private ICurricularCourse equivalentCurricularCourse;
 
@@ -22,8 +22,8 @@ public class CurricularCourseEquivalenceRestriction extends DomainObject impleme
 
 	public boolean equals(Object obj) {
 		boolean result = false;
-		if ((result) && (obj instanceof ICurricularCourseEquivalenceRestricition)) {
-			ICurricularCourseEquivalenceRestricition curricularCourseEquivalenceRestricition = (ICurricularCourseEquivalenceRestricition) obj;
+		if ((result) && (obj instanceof ICurricularCourseEquivalenceRestriction)) {
+			ICurricularCourseEquivalenceRestriction curricularCourseEquivalenceRestricition = (ICurricularCourseEquivalenceRestriction) obj;
 			result = curricularCourseEquivalenceRestricition.getCurricularCourseEquivalence().equals(this.getCurricularCourseEquivalence()) && curricularCourseEquivalenceRestricition.getEquivalentCurricularCourse().equals(this.getEquivalentCurricularCourse());
 		}
 		return result;

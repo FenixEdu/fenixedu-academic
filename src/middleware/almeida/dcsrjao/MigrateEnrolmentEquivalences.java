@@ -12,9 +12,10 @@ public class MigrateEnrolmentEquivalences {
 	}
 
 	public static void main(String[] args) {
-		LoadCurricularCoursesEquivalencesFromFileToTable.main(true);
-		CreateEnrolmentEquivalences.main(true);
-		LoadCurricularCoursesEquivalencesFromFileToTable.main(false);
-		CreateEnrolmentEquivalences.main(false);
+		String x[] = {"","" };
+		LoadCurricularCoursesEquivalencesFromFileToTable.main(x);
+		CreateEnrolmentEquivalences.main(x);
+//		LoadCurricularCoursesEquivalencesFromFileToTable.main(false);
+//		CreateEnrolmentEquivalences.main(false);
 	}
 }

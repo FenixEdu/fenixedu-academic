@@ -222,11 +222,11 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 			return;
 		}
 
-		this.newStudentCurricularPlan = processNewStudentCurricularPlan(almeida_enrolment);
-		if (this.newStudentCurricularPlan == null) {
-			loader.numberUntreatableElements++;
-			return;
-		}
+//		this.newStudentCurricularPlan = processNewStudentCurricularPlan(almeida_enrolment);
+//		if (this.newStudentCurricularPlan == null) {
+//			loader.numberUntreatableElements++;
+//			return;
+//		}
 
 		this.executionPeriod = processExecutionPeriod(almeida_enrolment.getAnoins(), almeida_enrolment.getSemdis());
 		if (this.executionPeriod == null) {
@@ -319,44 +319,44 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 		return degreeCurricularPlan;
 	}
 
-	private IStudentCurricularPlan processNewStudentCurricularPlan(Almeida_enrolment almeida_enrolment) {
-		IStudentCurricularPlan studentCurricularPlan = null;
-		Integer studentNumber = null;
-		try {
-			studentNumber = new Integer(almeida_enrolment.getNumalu());
-		} catch (NumberFormatException e) {
-			errorMessage = "\n O numero de aluno " + almeida_enrolment.getNumalu() + " é inválido! Registos: ";
-			errorDBID = almeida_enrolment.getId_internal() + ", ";
-			error = loader.setErrorMessage(errorMessage, errorDBID, error);
-			return null;
-		}
-		IStudent student = persistentObjectOJB.readStudentByNumberAndDegreeType(studentNumber, TipoCurso.LICENCIATURA_OBJ);
-		if (student != null) {
-			StudentCurricularPlanState studentCurricularPlanState = StudentCurricularPlanState.ACTIVE_OBJ;
-			int newYear = new Integer(2003).intValue();
-			Calendar newCalendar = Calendar.getInstance();
-			newCalendar.set(newYear, Calendar.SEPTEMBER, 1);
-			Date newDate = newCalendar.getTime();
-			studentCurricularPlan =
-				persistentObjectOJB.readStudentCurricularPlanByUnique(student, this.newDegreeCurricularPlan, this.newBranch, studentCurricularPlanState);
-			if (studentCurricularPlan == null) {
-				studentCurricularPlan = new StudentCurricularPlan();
-				studentCurricularPlan.setBranch(this.newBranch);
-				studentCurricularPlan.setCurrentState(studentCurricularPlanState);
-				studentCurricularPlan.setDegreeCurricularPlan(this.newDegreeCurricularPlan);
-				studentCurricularPlan.setStudent(student);
-				studentCurricularPlan.setStartDate(newDate);
-				writeElement(studentCurricularPlan);
-				loader.numberElementsWritten--;
-			}
-		} else {
-			errorMessage = "\n O aluno numero " + almeida_enrolment.getNumalu() + " não existe! Registos: ";
-			errorDBID = almeida_enrolment.getId_internal() + ",";
-			error = loader.setErrorMessage(errorMessage, errorDBID, error);
-		}
-
-		return studentCurricularPlan;
-	}
+//	private IStudentCurricularPlan processNewStudentCurricularPlan(Almeida_enrolment almeida_enrolment) {
+//		IStudentCurricularPlan studentCurricularPlan = null;
+//		Integer studentNumber = null;
+//		try {
+//			studentNumber = new Integer(almeida_enrolment.getNumalu());
+//		} catch (NumberFormatException e) {
+//			errorMessage = "\n O numero de aluno " + almeida_enrolment.getNumalu() + " é inválido! Registos: ";
+//			errorDBID = almeida_enrolment.getId_internal() + ", ";
+//			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+//			return null;
+//		}
+//		IStudent student = persistentObjectOJB.readStudentByNumberAndDegreeType(studentNumber, TipoCurso.LICENCIATURA_OBJ);
+//		if (student != null) {
+//			StudentCurricularPlanState studentCurricularPlanState = StudentCurricularPlanState.ACTIVE_OBJ;
+//			int newYear = new Integer(2003).intValue();
+//			Calendar newCalendar = Calendar.getInstance();
+//			newCalendar.set(newYear, Calendar.SEPTEMBER, 1);
+//			Date newDate = newCalendar.getTime();
+//			studentCurricularPlan =
+//				persistentObjectOJB.readStudentCurricularPlanByUnique(student, this.newDegreeCurricularPlan, this.newBranch, studentCurricularPlanState);
+//			if (studentCurricularPlan == null) {
+//				studentCurricularPlan = new StudentCurricularPlan();
+//				studentCurricularPlan.setBranch(this.newBranch);
+//				studentCurricularPlan.setCurrentState(studentCurricularPlanState);
+//				studentCurricularPlan.setDegreeCurricularPlan(this.newDegreeCurricularPlan);
+//				studentCurricularPlan.setStudent(student);
+//				studentCurricularPlan.setStartDate(newDate);
+//				writeElement(studentCurricularPlan);
+//				loader.numberElementsWritten--;
+//			}
+//		} else {
+//			errorMessage = "\n O aluno numero " + almeida_enrolment.getNumalu() + " não existe! Registos: ";
+//			errorDBID = almeida_enrolment.getId_internal() + ",";
+//			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+//		}
+//
+//		return studentCurricularPlan;
+//	}
 
 	private EnrolmentState processGrade(Almeida_enrolment almeida_enrolment) {
 		String grade = almeida_enrolment.getResult();
@@ -418,9 +418,9 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 			int month = 0;
 			int day = 0;
 			try {
-				year = (new Integer(almeida_enrolment.getDatexa().substring(0, 3))).intValue();
-				month = (new Integer(almeida_enrolment.getDatexa().substring(5, 6))).intValue();
-				day = (new Integer(almeida_enrolment.getDatexa().substring(8, 9))).intValue();
+				year = (new Integer(almeida_enrolment.getDatexa().substring(0, 4))).intValue();
+				month = (new Integer(almeida_enrolment.getDatexa().substring(5, 7))).intValue();
+				day = (new Integer(almeida_enrolment.getDatexa().substring(8, 10))).intValue();
 			} catch (NumberFormatException e) {
 				errorMessage = "\n A data de exame " + almeida_enrolment.getDatexa() + " é inválida! Registos: ";
 				errorDBID = almeida_enrolment.getId_internal() + ", ";

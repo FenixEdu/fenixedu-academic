@@ -6,7 +6,7 @@
  */
 package ServidorPersistente;
 
-import Dominio.ICurricularCourseEquivalenceRestricition;
+import Dominio.ICurricularCourseEquivalenceRestriction;
 
 /**
  * @author dcs-rjao
@@ -15,5 +15,5 @@ import Dominio.ICurricularCourseEquivalenceRestricition;
  */
 public interface IPersistentCurricularCourseEquivalenceRestriction extends IPersistentObject {
 	public  void deleteAll() throws ExcepcaoPersistencia;
-	public void delete(ICurricularCourseEquivalenceRestricition curricularCourseEquivalenceRestricition) throws ExcepcaoPersistencia;
+	public void delete(ICurricularCourseEquivalenceRestriction curricularCourseEquivalenceRestricition) throws ExcepcaoPersistencia;
 }

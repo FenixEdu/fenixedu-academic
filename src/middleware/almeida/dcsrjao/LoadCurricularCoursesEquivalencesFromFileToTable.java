@@ -9,13 +9,8 @@ import Dominio.CurricularCourseEquivalence;
 import Dominio.CurricularCourseEquivalenceRestriction;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseEquivalence;
-import Dominio.ICurricularCourseEquivalenceRestricition;
+import Dominio.ICurricularCourseEquivalenceRestriction;
 import Dominio.IDegreeCurricularPlan;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourseEquivalence;
-import ServidorPersistente.IPersistentCurricularCourseEquivalenceRestriction;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  *
@@ -29,48 +24,48 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 	private static final String ONE_SPACE = " ";
 	private IDegreeCurricularPlan oldDegreeCurricularPlan = null;
 	private IDegreeCurricularPlan newDegreeCurricularPlan = null;
-	private String inputFilename = "";
+	private String inputFilename = "equivalenciasLEQAfter1997.txt";
 	private boolean before1977 = true;
 
 	public LoadCurricularCoursesEquivalencesFromFileToTable() {
 	}
 
-	public static void main(boolean flag) {
+	public static void main(String[] args) {
 		if (loader == null) {
 			loader = new LoadCurricularCoursesEquivalencesFromFileToTable();
 		}
 
-		logString = "";
-		loader.before1977 = flag;
-		if (loader.before1977 == true) {
-			loader.inputFilename = "equivalenciasLEQBefore1997.txt";
-		} else {
-			loader.inputFilename = "equivalenciasLEQAfter1997.txt";
-		}
-		ISuportePersistente suportePersistente = null;
-		try {
-			suportePersistente = SuportePersistenteOJB.getInstance();
-			suportePersistente.iniciarTransaccao();
-			IPersistentCurricularCourseEquivalence persistentCurricularCourseEquivalence = suportePersistente.getIPersistentCurricularCourseEquivalence();
-			IPersistentCurricularCourseEquivalenceRestriction persistentCurricularCourseEquivalenceRestriction =
-				suportePersistente.getIPersistentCurricularCourseEquivalenceRestriction();
-			persistentCurricularCourseEquivalence.deleteAll();
-			persistentCurricularCourseEquivalenceRestriction.deleteAll();
-			suportePersistente.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			try {
-				suportePersistente.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia e1) {
-				logString = "Erro ao apagar as tabelas CurricularCourseEquivalence e CurricularCourseEquivalenceRestriction";
-				logString = loader.report(logString);
-				loader.writeToFile(logString);
-				return;
-			}
-			logString = "Erro ao apagar as tabelas CurricularCourseEquivalence e CurricularCourseEquivalenceRestriction";
-			logString = loader.report(logString);
-			loader.writeToFile(logString);
-			return;
-		}
+//		logString = "";
+//		loader.before1977 = flag;
+//		if (loader.before1977 == true) {
+//			loader.inputFilename = "equivalenciasLEQBefore1997.txt";
+//		} else {
+//			loader.inputFilename = "equivalenciasLEQAfter1997.txt";
+//		}
+//		ISuportePersistente suportePersistente = null;
+//		try {
+//			suportePersistente = SuportePersistenteOJB.getInstance();
+//			suportePersistente.iniciarTransaccao();
+//			IPersistentCurricularCourseEquivalence persistentCurricularCourseEquivalence = suportePersistente.getIPersistentCurricularCourseEquivalence();
+////			IPersistentCurricularCourseEquivalenceRestriction persistentCurricularCourseEquivalenceRestriction =
+////				suportePersistente.getIPersistentCurricularCourseEquivalenceRestriction();
+//			persistentCurricularCourseEquivalence.deleteAll();
+////			persistentCurricularCourseEquivalenceRestriction.deleteAll();
+//			suportePersistente.confirmarTransaccao();
+//		} catch (ExcepcaoPersistencia e) {
+//			try {
+//				suportePersistente.cancelarTransaccao();
+//			} catch (ExcepcaoPersistencia e1) {
+//				logString = "Erro ao apagar as tabelas CurricularCourseEquivalence e CurricularCourseEquivalenceRestriction";
+//				logString = loader.report(logString);
+//				loader.writeToFile(logString);
+//				return;
+//			}
+//			logString = "Erro ao apagar as tabelas CurricularCourseEquivalence e CurricularCourseEquivalenceRestriction";
+//			logString = loader.report(logString);
+//			loader.writeToFile(logString);
+//			return;
+//		}
 
 		loader.persistentObjectOJB = new PersistentObjectOJBReader();
 		loader.setupDAO();
@@ -100,6 +95,7 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 	}
 
 	protected void processLine(String line) {
+		loader.setupDAO();
 		loader.printLine(getClassName());
 		StringTokenizer stringTokenizer = new StringTokenizer(line, getFieldSeparator());
 
@@ -121,6 +117,7 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 				+ " do plano "
 				+ this.oldDegreeCurricularPlan.getName()
 				+ " não existe!";
+			loader.shutdownDAO();
 			return;
 		}
 
@@ -136,6 +133,7 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 					+ " do plano "
 					+ this.oldDegreeCurricularPlan.getName()
 					+ " não existe!";
+				loader.shutdownDAO();
 				return;
 			}
 		}
@@ -150,6 +148,7 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 				+ " do plano "
 				+ this.newDegreeCurricularPlan.getName()
 				+ " não existe!";
+			loader.shutdownDAO();
 			return;
 		}
 
@@ -162,7 +161,7 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 			writeElement(curricularCourseEquivalence);
 
 			oldCurricularCourse1 = (ICurricularCourse) iterator1.next();
-			ICurricularCourseEquivalenceRestricition curricularCourseEquivalenceRestricition1 =
+			ICurricularCourseEquivalenceRestriction curricularCourseEquivalenceRestricition1 =
 				persistentObjectOJB.readCurricularCourseEquivalenceRestrictionByUnique(oldCurricularCourse1, curricularCourseEquivalence);
 			if (curricularCourseEquivalenceRestricition1 == null) {
 				curricularCourseEquivalenceRestricition1 = new CurricularCourseEquivalenceRestriction();
@@ -184,7 +183,7 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 				ICurricularCourse oldCurricularCourse2 = null;
 				while (iterator2.hasNext()) {
 					oldCurricularCourse2 = (ICurricularCourse) iterator2.next();
-					ICurricularCourseEquivalenceRestricition curricularCourseEquivalenceRestricition2 =
+					ICurricularCourseEquivalenceRestriction curricularCourseEquivalenceRestricition2 =
 						persistentObjectOJB.readCurricularCourseEquivalenceRestrictionByUnique(oldCurricularCourse2, curricularCourseEquivalence);
 					if (curricularCourseEquivalenceRestricition2 == null) {
 						curricularCourseEquivalenceRestricition2 = new CurricularCourseEquivalenceRestriction();
@@ -215,6 +214,7 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 				}
 			}
 		}
+		loader.shutdownDAO();
 	}
 
 	protected String getFilename() {

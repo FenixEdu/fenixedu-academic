@@ -1,7 +1,7 @@
 package ServidorPersistente.OJB;
 
 import Dominio.CurricularCourseEquivalenceRestriction;
-import Dominio.ICurricularCourseEquivalenceRestricition;
+import Dominio.ICurricularCourseEquivalenceRestriction;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseEquivalenceRestriction;
 
@@ -22,7 +22,7 @@ public class CurricularCourseEquivalenceRestrictionOJB extends ObjectFenixOJB im
 		}
 	}
 
-	public void delete(ICurricularCourseEquivalenceRestricition curricularCourseEquivalenceRestricition) throws ExcepcaoPersistencia {
+	public void delete(ICurricularCourseEquivalenceRestriction curricularCourseEquivalenceRestricition) throws ExcepcaoPersistencia {
 		try {
 			super.delete(curricularCourseEquivalenceRestricition);
 		} catch (ExcepcaoPersistencia ex) {
