@@ -8,6 +8,8 @@ import Util.RoleType;
  * @author jorge
  */
 public interface IUserView { 
+	/*Acrecentado por Fernanda Quitério & Tania Pousão */
+	String getUtilizador();
 	Collection getRoles();
 	ICandidateView getCandidateView();
 	boolean hasRoleType(RoleType roleType);

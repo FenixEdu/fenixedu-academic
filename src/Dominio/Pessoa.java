@@ -1,4 +1,5 @@
 package Dominio;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -82,7 +83,7 @@ public class Pessoa implements IPessoa {
 		this.codigoFiscal = "";
 	}
 
-	public Pessoa(TipoDocumentoIdentificacao idDocumentType,String userName) {
+	public Pessoa(TipoDocumentoIdentificacao idDocumentType, String userName) {
 		this.numeroDocumentoIdentificacao = "";
 		this.tipoDocumentoIdentificacao = idDocumentType;
 		this.localEmissaoDocumentoIdentificacao = "";
@@ -112,6 +113,121 @@ public class Pessoa implements IPessoa {
 		this.numContribuinte = "";
 		this.profissao = "";
 		this.username = userName;
+		this.pais = null;
+		this.codigoFiscal = "";
+	}
+
+	/* Construtor sem país
+	 * Acrescentado por Fernanda Quitério & Tânia Pousão 
+	 * Devido ao JDBC */
+	public Pessoa(
+		Integer codigoInterno,
+		String numeroDocumentoIdentificacao,
+		TipoDocumentoIdentificacao tipoDocumentoIdentificacao,
+		String localEmissaoDocumentoIdentificacao,
+		Date dataEmissaoDocumentoIdentificacao,
+		Date dataValidadeDocumentoIdentificacao,
+		String nome,
+		Sexo sexo,
+		EstadoCivil estadoCivil,
+		Date nascimento,
+		String nomePai,
+		String nomeMae,
+		String nacionalidade,
+		String freguesiaNaturalidade,
+		String concelhoNaturalidade,
+		String distritoNaturalidade,
+		String morada,
+		String localidade,
+		String codigoPostal,
+		String localidadeCodigoPostal,
+		String freguesiaMorada,
+		String concelhoMorada,
+		String distritoMorada,
+		String telefone,
+		String telemovel,
+		String email,
+		String enderecoWeb,
+		String numContribuinte,
+		String profissao,
+		String username,
+		String password,
+		String codigoFiscal) {
+		setCodigoInterno(codigoInterno);
+		setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
+		setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
+		setLocalEmissaoDocumentoIdentificacao(localEmissaoDocumentoIdentificacao);
+		setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
+		setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
+		setNome(nome);
+		setSexo(sexo);
+		setEstadoCivil(estadoCivil);
+		setNascimento(nascimento);
+		setNomePai(nomePai);
+		setNomeMae(nomeMae);
+		setNacionalidade(nacionalidade);
+		setFreguesiaNaturalidade(freguesiaNaturalidade);
+		setConcelhoNaturalidade(concelhoNaturalidade);
+		setDistritoNaturalidade(distritoNaturalidade);
+		setMorada(morada);
+		setLocalidade(localidade);
+		setCodigoPostal(codigoPostal);
+		setLocalidadeCodigoPostal(localidadeCodigoPostal);
+		setFreguesiaMorada(freguesiaMorada);
+		setConcelhoMorada(concelhoMorada);
+		setDistritoMorada(distritoMorada);
+		setTelefone(telefone);
+		setTelemovel(telemovel);
+		setEmail(email);
+		setEnderecoWeb(enderecoWeb);
+		setNumContribuinte(numContribuinte);
+		setProfissao(profissao);
+		setUsername(username);
+		setPassword(password);
+		setCodigoFiscal(codigoFiscal);
+	}
+
+	/* Acrescentado por Fernanda Quitério & Tânia Pousão 
+		 * Devido à aplicacao Assiduidade no usecase Inserir Funcionario */
+	public Pessoa(
+		String numeroDocumentoIdentificacao,
+		int tipoDocumentoIdentificacao,
+		String nome,
+		String username,
+		String password) {
+		Calendar calendario = Calendar.getInstance();
+		calendario.set(1970, Calendar.JANUARY, 31, 00, 00, 00);
+
+		setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
+		setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(tipoDocumentoIdentificacao));
+		this.localEmissaoDocumentoIdentificacao = "";
+		this.dataEmissaoDocumentoIdentificacao = null;
+		this.dataValidadeDocumentoIdentificacao = null;
+		setNome(nome);
+		this.sexo = null;
+		this.estadoCivil = null;
+		this.nascimento = null;
+		this.nomePai = "";
+		this.nomeMae = "";
+		this.nacionalidade = "";
+		this.freguesiaNaturalidade = "";
+		this.concelhoNaturalidade = "";
+		this.distritoNaturalidade = "";
+		this.morada = "";
+		this.localidade = "";
+		this.codigoPostal = "";
+		this.localidadeCodigoPostal = "";
+		this.freguesiaMorada = "";
+		this.concelhoMorada = "";
+		this.distritoMorada = "";
+		this.telefone = "";
+		this.telemovel = "";
+		this.email = "";
+		this.enderecoWeb = "";
+		this.numContribuinte = "";
+		this.profissao = "";
+		setUsername(username);
+		setPassword(password);
 		this.pais = null;
 		this.codigoFiscal = "";
 	}
@@ -186,10 +302,8 @@ public class Pessoa implements IPessoa {
 	public boolean equals(Object o) {
 		return (
 			(o instanceof IPessoa)
-				&& (numeroDocumentoIdentificacao
-					.equals(((IPessoa) o).getNumeroDocumentoIdentificacao()))
-				&& (tipoDocumentoIdentificacao
-					== ((IPessoa) o).getTipoDocumentoIdentificacao()));
+				&& (numeroDocumentoIdentificacao.equals(((IPessoa) o).getNumeroDocumentoIdentificacao()))
+				&& (tipoDocumentoIdentificacao == ((IPessoa) o).getTipoDocumentoIdentificacao()));
 	}
 
 	/** Getter for property chavePais.
@@ -423,7 +537,6 @@ public class Pessoa implements IPessoa {
 		return personRoles;
 	}
 
-
 	/** Getter for property profissao.
 	 * @return Value of property profissao.
 	 *
@@ -516,8 +629,7 @@ public class Pessoa implements IPessoa {
 	 * @param concelhoNaturalidade New value of property concelhoNaturalidade.
 	 *
 	 */
-	public void setConcelhoNaturalidade(
-		java.lang.String concelhoNaturalidade) {
+	public void setConcelhoNaturalidade(java.lang.String concelhoNaturalidade) {
 		this.concelhoNaturalidade = concelhoNaturalidade;
 	}
 
@@ -525,20 +637,16 @@ public class Pessoa implements IPessoa {
 	 * @param dataEmissaoDocumentoIdentificacao New value of property dataEmissaoDocumentoIdentificacao.
 	 *
 	 */
-	public void setDataEmissaoDocumentoIdentificacao(
-		java.util.Date dataEmissaoDocumentoIdentificacao) {
-		this.dataEmissaoDocumentoIdentificacao =
-			dataEmissaoDocumentoIdentificacao;
+	public void setDataEmissaoDocumentoIdentificacao(java.util.Date dataEmissaoDocumentoIdentificacao) {
+		this.dataEmissaoDocumentoIdentificacao = dataEmissaoDocumentoIdentificacao;
 	}
 
 	/** Setter for property dataValidadeDocumentoIdentificacao.
 	 * @param dataValidadeDocumentoIdentificacao New value of property dataValidadeDocumentoIdentificacao.
 	 *
 	 */
-	public void setDataValidadeDocumentoIdentificacao(
-		java.util.Date dataValidadeDocumentoIdentificacao) {
-		this.dataValidadeDocumentoIdentificacao =
-			dataValidadeDocumentoIdentificacao;
+	public void setDataValidadeDocumentoIdentificacao(java.util.Date dataValidadeDocumentoIdentificacao) {
+		this.dataValidadeDocumentoIdentificacao = dataValidadeDocumentoIdentificacao;
 	}
 
 	/** Setter for property distritoMorada.
@@ -553,8 +661,7 @@ public class Pessoa implements IPessoa {
 	 * @param distritoNaturalidade New value of property distritoNaturalidade.
 	 *
 	 */
-	public void setDistritoNaturalidade(
-		java.lang.String distritoNaturalidade) {
+	public void setDistritoNaturalidade(java.lang.String distritoNaturalidade) {
 		this.distritoNaturalidade = distritoNaturalidade;
 	}
 
@@ -594,8 +701,7 @@ public class Pessoa implements IPessoa {
 	 * @param freguesiaNaturalidade New value of property freguesiaNaturalidade.
 	 *
 	 */
-	public void setFreguesiaNaturalidade(
-		java.lang.String freguesiaNaturalidade) {
+	public void setFreguesiaNaturalidade(java.lang.String freguesiaNaturalidade) {
 		this.freguesiaNaturalidade = freguesiaNaturalidade;
 	}
 
@@ -603,10 +709,8 @@ public class Pessoa implements IPessoa {
 	 * @param localEmissaoDocumentoIdentificacao New value of property localEmissaoDocumentoIdentificacao.
 	 *
 	 */
-	public void setLocalEmissaoDocumentoIdentificacao(
-		java.lang.String localEmissaoDocumentoIdentificacao) {
-		this.localEmissaoDocumentoIdentificacao =
-			localEmissaoDocumentoIdentificacao;
+	public void setLocalEmissaoDocumentoIdentificacao(java.lang.String localEmissaoDocumentoIdentificacao) {
+		this.localEmissaoDocumentoIdentificacao = localEmissaoDocumentoIdentificacao;
 	}
 
 	/** Setter for property localidade.
@@ -621,8 +725,7 @@ public class Pessoa implements IPessoa {
 	 * @param localidadeCodigoPostal New value of property localidadeCodigoPostal.
 	 *
 	 */
-	public void setLocalidadeCodigoPostal(
-		java.lang.String localidadeCodigoPostal) {
+	public void setLocalidadeCodigoPostal(java.lang.String localidadeCodigoPostal) {
 		this.localidadeCodigoPostal = localidadeCodigoPostal;
 	}
 
@@ -686,8 +789,7 @@ public class Pessoa implements IPessoa {
 	 * @param numeroDocumentoIdentificacao New value of property numeroDocumentoIdentificacao.
 	 *
 	 */
-	public void setNumeroDocumentoIdentificacao(
-		java.lang.String numeroDocumentoIdentificacao) {
+	public void setNumeroDocumentoIdentificacao(java.lang.String numeroDocumentoIdentificacao) {
 		this.numeroDocumentoIdentificacao = numeroDocumentoIdentificacao;
 	}
 
@@ -714,7 +816,6 @@ public class Pessoa implements IPessoa {
 	public void setPersonRoles(Collection personRoles) {
 		this.personRoles = personRoles;
 	}
-
 
 	/** Setter for property profissao.
 	 * @param profissao New value of property profissao.
@@ -767,11 +868,11 @@ public class Pessoa implements IPessoa {
 	public String toString() {
 		String result = "Person :\n";
 		result += "\n  - Internal Code : " + codigoInterno;
-		result += "\n  - Identification Document Number : "+ numeroDocumentoIdentificacao;
-		result += "\n  - Identification Document Type : "+ tipoDocumentoIdentificacao;
-		result += "\n  - Identification Document Issue Place : "+ localEmissaoDocumentoIdentificacao;
-		result += "\n  - Identification Document Issue Date : "+ dataEmissaoDocumentoIdentificacao;
-		result += "\n  - Identification Document Expiration Date : "+ dataValidadeDocumentoIdentificacao;
+		result += "\n  - Identification Document Number : " + numeroDocumentoIdentificacao;
+		result += "\n  - Identification Document Type : " + tipoDocumentoIdentificacao;
+		result += "\n  - Identification Document Issue Place : " + localEmissaoDocumentoIdentificacao;
+		result += "\n  - Identification Document Issue Date : " + dataEmissaoDocumentoIdentificacao;
+		result += "\n  - Identification Document Expiration Date : " + dataValidadeDocumentoIdentificacao;
 		result += "\n  - Name : " + nome;
 		result += "\n  - Sex : " + sexo;
 		result += "\n  - Marital Status : " + estadoCivil;
