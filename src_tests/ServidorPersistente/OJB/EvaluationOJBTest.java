@@ -280,4 +280,135 @@ public class EvaluationOJBTest extends TestCaseOJB {
 		}
 	}
 
+	public void testDelete() {
+		System.out.println("4 - testDelete()");
+		IExecutionYear executionYear;
+		IExecutionPeriod executionPeriod;
+		IDisciplinaExecucao executionCourse;
+		IEvaluation evaluation;
+		IEvaluation evaluationFromDB;
+		try {
+			System.out.println("4.1 - delete existing evaluation");
+			persistentSupport.iniciarTransaccao();
+			executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull("failed reading ExecutionYear", executionYear);
+			executionPeriod =
+				persistentExecutionPeriod.readByNameAndExecutionYear(
+					"2º Semestre",
+					executionYear);
+			assertNotNull("failed reading  ExecutionPeriod", executionPeriod);
+			executionCourse =
+				persistentExecutionCourse
+					.readByExecutionCourseInitialsAndExecutionPeriod(
+					"TFCI",
+					executionPeriod);
+			assertNotNull("failed reading executionCourse", executionCourse);
+
+			evaluation =
+				persistentEvaluation.readByExecutionCourse(executionCourse);
+			assertNotNull("failed reading existing evaluation", evaluation);
+			persistentEvaluation.delete(evaluation);
+			persistentSupport.confirmarTransaccao();
+
+		} catch (ExcepcaoPersistencia ex) {
+			fail("    -> Failed  deleting existing evaluation");
+
+		}
+		try {
+			System.out.println("4.2 - read deleted evaluation");
+			persistentSupport.iniciarTransaccao();
+			executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull("failed reading ExecutionYear", executionYear);
+			executionPeriod =
+				persistentExecutionPeriod.readByNameAndExecutionYear(
+					"2º Semestre",
+					executionYear);
+			assertNotNull("failed reading  ExecutionPeriod", executionPeriod);
+			executionCourse =
+				persistentExecutionCourse
+					.readByExecutionCourseInitialsAndExecutionPeriod(
+					"TFCI",
+					executionPeriod);
+			assertNotNull("failed reading executionCourse", executionCourse);
+			evaluationFromDB =
+				persistentEvaluation.readByExecutionCourse(executionCourse);
+			assertNull("failed reading written evaluation", evaluationFromDB);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("    -> Failed reading deleted evaluation");
+		}
+
+	}
+
+	public void testReadByExecutionCourse() {
+		System.out.println("5 - testReadByExecutionCourse()");
+		IExecutionYear executionYear;
+		IExecutionPeriod executionPeriod;
+		IDisciplinaExecucao executionCourse;
+		IEvaluation evaluation;
+		IEvaluation evaluationFromDB;
+		try {
+			System.out.println("5.1 - read unexisting evaluation");
+			persistentSupport.iniciarTransaccao();
+			executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull("failed reading ExecutionYear", executionYear);
+			executionPeriod =
+				persistentExecutionPeriod.readByNameAndExecutionYear(
+					"2º Semestre",
+					executionYear);
+			assertNotNull("failed reading  ExecutionPeriod", executionPeriod);
+			executionCourse =
+				persistentExecutionCourse
+					.readByExecutionCourseInitialsAndExecutionPeriod(
+					"PO",
+					executionPeriod);
+			assertNotNull("failed reading executionCourse", executionCourse);
+			evaluationFromDB =
+				persistentEvaluation.readByExecutionCourse(executionCourse);
+			assertNull(
+				"failed reading unexisting evaluation",
+				evaluationFromDB);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("    -> Failed reading unexisting evaluation");
+		}
+		try {
+			System.out.println("5.2 - read existing evaluation");
+			persistentSupport.iniciarTransaccao();
+			executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull("failed reading ExecutionYear", executionYear);
+			executionPeriod =
+				persistentExecutionPeriod.readByNameAndExecutionYear(
+					"2º Semestre",
+					executionYear);
+			assertNotNull("failed reading  ExecutionPeriod", executionPeriod);
+			executionCourse =
+				persistentExecutionCourse
+					.readByExecutionCourseInitialsAndExecutionPeriod(
+					"TFCI",
+					executionPeriod);
+			assertNotNull("failed reading executionCourse", executionCourse);
+			evaluationFromDB =
+				persistentEvaluation.readByExecutionCourse(executionCourse);
+			assertNotNull(
+				"failed reading existing evaluation",
+				evaluationFromDB);
+			assertEquals(
+				"failed reading written evaluation",
+				evaluationFromDB.getExecutionCourse(),
+				executionCourse);
+			assertEquals(
+				"failed reading written evaluation",
+				evaluationFromDB.getEvaluationElements(),
+				"bla");
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("    -> Failed reading existing evaluation");
+		}
+	}
+
 }
