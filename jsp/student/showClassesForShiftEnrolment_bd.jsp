@@ -91,6 +91,7 @@
 <div align="center"><app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/></div><br />
 </logic:present>
 <logic:notPresent name="infoStudentShiftEnrolment" property="allowedClasses">
-	Não existem turmas disponíveis.
+<div class="error" align="center">Não existem turmas disponíveis.</div>
 </logic:notPresent>
+<br />
 
