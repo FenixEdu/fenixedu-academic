@@ -3,7 +3,7 @@ package ServidorAplicacao.strategy.enrolment.degree.strategys;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterAutomaticEnrolmentRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterCurricularYearPrecedence;
-import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterFinalistRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterTFCRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterNACandNDRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterRestrictedOptionalCoursesRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterRestrictedOptionalDegreeRule;
@@ -42,7 +42,7 @@ public class EnrolmentStrategyLARQ implements IEnrolmentStrategy {
 		enrolmentRule = new EnrolmentFilterAutomaticEnrolmentRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);		
 
-		enrolmentRule = new EnrolmentFilterFinalistRule();
+		enrolmentRule = new EnrolmentFilterTFCRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
 //		enrolmentRule = new EnrolmentFilterAnualCurricularCourseRule();

@@ -79,6 +79,8 @@ public class EnrolmentFilterCurricularYearPrecedence implements IEnrolmentRule {
 			Iterator iterator2 = curricularCoursesScopesNeverEnroled.iterator();
 			while (iterator2.hasNext()) {
 				ICurricularCourseScope curricularCourseScope2 = (ICurricularCourseScope) iterator2.next();
+				// If there is a curricular course from a previous year that the student cannot be enrolled in,
+				// we have to remove all the curricular courses from that year beyond.
 				if(
 					(curricularCourseScope2.getCurricularSemester().getCurricularYear().getYear().intValue() < year) &&
 					(!enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().contains(curricularCourseScope2)) &&

@@ -13,12 +13,16 @@ public class CurricularCourseType {
 	public static final int OPTIONAL_COURSE = 2;
 	public static final int PROJECT_COURSE = 3;
 	public static final int TFC_COURSE = 4;
+	public static final int TRAINING_COURSE = 5;
+	public static final int LABORATORY_COURSE = 6;
 
 
 	public static final CurricularCourseType NORMAL_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.NORMAL_COURSE);
 	public static final CurricularCourseType OPTIONAL_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE);
 	public static final CurricularCourseType PROJECT_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.PROJECT_COURSE);
 	public static final CurricularCourseType TFC_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.TFC_COURSE);
+	public static final CurricularCourseType TRAINING_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.TRAINING_COURSE);
+	public static final CurricularCourseType LABORATORY_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.LABORATORY_COURSE);
 
 	private Integer type;
 
@@ -67,6 +71,12 @@ public class CurricularCourseType {
 				break;
 			case OPTIONAL_COURSE:
 				valueS = "OPTIONAL_COURSE";
+				break;
+			case TRAINING_COURSE:
+				valueS = "TRAINING_COURSE";
+				break;		
+			case LABORATORY_COURSE:
+				valueS = "LABORATORY_COURSE";
 				break;
 			default:
 				break;

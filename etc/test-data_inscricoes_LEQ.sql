@@ -51,19 +51,19 @@ insert into CURRICULAR_COURSE values (2, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE
 insert into CURRICULAR_COURSE values (3, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ÁLGEBRA LINEAR", "QN", 1, 1, 1);
 insert into CURRICULAR_COURSE values (4, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "COMPUTAÇÃO E PROGRAMAÇÃO", "AZ9", 1, 1, 0);
 insert into CURRICULAR_COURSE values (5, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTRODUÇÃO À LIGAÇÃO QUÍMICA", "GU", 1, 1, 0);
-insert into CURRICULAR_COURSE values (6, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "LABORATÓRIO DE QUÍMICA GERAL I", "AGU", 1, 1, 0);
+insert into CURRICULAR_COURSE values (6, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "LABORATÓRIO DE QUÍMICA GERAL I", "AGU", 6, 1, 0);
 -- PRIMEIRO ANO, SEGUNDO SEMESTRE:
 insert into CURRICULAR_COURSE values (7, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "QUÍMICA ORGÂNICA I", "HU", 1, 1, 0);
 insert into CURRICULAR_COURSE values (8, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "MECÂNICA E ONDAS", "AZH", 1, 1, 0);
 insert into CURRICULAR_COURSE values (9, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ANÁLISE MATEMÁTICA II", "P5", 1, 1, 1);
 insert into CURRICULAR_COURSE values (10, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "QUÍMICA DAS SOLUÇÕES AQUOSAS", "AGW", 1, 1, 0);
-insert into CURRICULAR_COURSE values (11, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "LABORATÓRIO DE QUÍMICA GERAL II", "AGX", 1, 1, 0);
+insert into CURRICULAR_COURSE values (11, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "LABORATÓRIO DE QUÍMICA GERAL II", "AGX", 6, 1, 0);
 insert into CURRICULAR_COURSE values (12, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PRINCÍPIOS BÁSICOS DE ENGENHARIA DE PROCESSOS", "AH2", 1, 1, 0);
 -- SEGUNDO ANO, PRIMEIRO SEMESTRE:
 insert into CURRICULAR_COURSE values (13, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA III", "UN", 1, 1, 1);
 insert into CURRICULAR_COURSE values (14, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "TERMODINÂMICA QUÍMICA", "LP", 1, 1, 0);
 insert into CURRICULAR_COURSE values (15, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROBABILIDADES E ESTATÍSTICA", "SF", 1, 1, 0);
-insert into CURRICULAR_COURSE values (16, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "LABORATÓRIO DE QUÍMICA ORGÂNICA", "AIF", 1, 1, 0);
+insert into CURRICULAR_COURSE values (16, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "LABORATÓRIO DE QUÍMICA ORGÂNICA", "AIF", 6, 1, 0);
 insert into CURRICULAR_COURSE values (17, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "QUÍMICA ORGÂNICA II", "AJM", 1, 1, 0);
 insert into CURRICULAR_COURSE values (18, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ELECTROMAGNETISMO E ÓPTICA", "AZI", 1, 1, 0);
 -- SEGUNDO ANO, SEGUNDO SEMESTRE:
@@ -72,17 +72,17 @@ insert into CURRICULAR_COURSE values (20, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ANÁLIS
 insert into CURRICULAR_COURSE values (21, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "QUÍMICA FÍSICA", "XW", 1, 1, 0);
 insert into CURRICULAR_COURSE values (22, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "TERMODINÂMICA DE ENGENHARIA QUÍMICA", "AII", 1, 1, 0);
 insert into CURRICULAR_COURSE values (23, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROCESSOS DE ENGENHARIA QUÍMICA I", "AIK", 1, 1, 0);
-insert into CURRICULAR_COURSE values (24, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "LABORATÓRIO DE ENGENHARIA QUÍMICA I", "AJL", 1, 1, 0);
+insert into CURRICULAR_COURSE values (24, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "LABORATÓRIO DE ENGENHARIA QUÍMICA I", "AJL", 6, 1, 0);
 -- TERCEIRO ANO, PRIMEIRO SEMESTRE:
 insert into CURRICULAR_COURSE values (25, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ANÁLISE QUÍMICA", "AN", 1, 1, 0);
 insert into CURRICULAR_COURSE values (26, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FENÓMENOS DE TRANSFERÊNCIA II", "C5", 1, 1, 0);
 insert into CURRICULAR_COURSE values (27, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ANÁLISE E SIMULAÇÃO NUMÉRICA", "AZ7", 1, 1, 0);
 insert into CURRICULAR_COURSE values (28, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROCESSOS DE ENGENHARIA QUÍMICA II", "AL6", 1, 1, 0);
-insert into CURRICULAR_COURSE values (29, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "LABORATÓRIO DE ENGENHARIA QUÍMICA II", "AL7", 1, 1, 0);
+insert into CURRICULAR_COURSE values (29, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "LABORATÓRIO DE ENGENHARIA QUÍMICA II", "AL7", 6, 1, 0);
 insert into CURRICULAR_COURSE values (30, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "MATERIAIS E CORROSÃO", "AMD", 1, 1, 0);
 -- TERCEIRO ANO, SEGUNDO SEMESTRE:
 insert into CURRICULAR_COURSE values (31, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "OPERAÇÕES EM SISTEMAS MULTIFÁSICOS", "AL8", 1, 1, 0);
-insert into CURRICULAR_COURSE values (32, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "LABORATÓRIO DE ENGENHARIA QUÍMICA III", "AL9", 1, 1, 0);
+insert into CURRICULAR_COURSE values (32, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "LABORATÓRIO DE ENGENHARIA QUÍMICA III", "AL9", 6, 1, 0);
 insert into CURRICULAR_COURSE values (33, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ENGENHARIA DAS REACÇÕES I", "AME", 1, 1, 0);
 insert into CURRICULAR_COURSE values (34, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FENÓMENOS DE TRANSFERÊNCIA III", "AMG", 1, 1, 0);
 insert into CURRICULAR_COURSE values (35, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROCESSOS DE SEPARAÇÃO I", "AMH", 1, 1, 0);
@@ -90,14 +90,14 @@ insert into CURRICULAR_COURSE values (36, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FUNDAM
 -- QUARTO ANO, PRIMEIRO SEMESTRE:
 insert into CURRICULAR_COURSE values (37, 1, 1, 4.0, 3.0, 2.0, 0.0, 2.0, "OPTIMIZAÇÃO DE PROCESSOS", "7W", 1, 1, 0);
 insert into CURRICULAR_COURSE values (38, 1, 1, 4.0, 3.0, 0.0, 2.0, 2.0, "CONTROLO E INSTRUMENTAÇÃO DE PROCESSOS", "APK", 1, 1, 0);
-insert into CURRICULAR_COURSE values (39, 1, 1, 4.0, 3.0, 1.0, 2.0, 2.0, "LABORATÓRIOS DE ENGENHARIA QUÍMICA IV", "APL", 1, 1, 0);
+insert into CURRICULAR_COURSE values (39, 1, 1, 4.0, 3.0, 1.0, 2.0, 2.0, "LABORATÓRIOS DE ENGENHARIA QUÍMICA IV", "APL", 6, 1, 0);
 insert into CURRICULAR_COURSE values (40, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ENGENHARIA DAS REACÇÕES II", "AR7", 1, 1, 0);
 insert into CURRICULAR_COURSE values (41, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROCESSOS DE SEPARAÇÃO II", "AR8", 1, 1, 0);
 insert into CURRICULAR_COURSE values (42, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "OPÇÃO I", "", 2, 1, 0);
 -- QUARTO ANO, SEGUNDO SEMESTRE:
 insert into CURRICULAR_COURSE values (43, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "ENGENHARIA QUÍMICA INTEGRADA I", "APM", 1, 1, 0);
 insert into CURRICULAR_COURSE values (44, 1, 1, 4.0, 3.0, 0.0, 0.0, 0.0, "SÍNTESE E INTEGRAÇÃO DE PROCESSOS", "APO", 1, 1, 0);
-insert into CURRICULAR_COURSE values (45, 1, 1, 4.0, 3.0, 0.0, 3.0, 0.0, "LABORATÓRIOS DE ENGENHARIA QUÍMICA V", "APP", 1, 1, 0);
+insert into CURRICULAR_COURSE values (45, 1, 1, 4.0, 3.0, 0.0, 3.0, 0.0, "LABORATÓRIOS DE ENGENHARIA QUÍMICA V", "APP", 6, 1, 0);
 insert into CURRICULAR_COURSE values (46, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "TECNOLOGIA AMBIENTAL", "APQ", 1, 1, 0);
 insert into CURRICULAR_COURSE values (47, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "DIMENSIONAMENTO E OPTIMIZAÇÃO DE EQUIPAMENTOS E UTILIDADES", "APN", 1, 1, 0);
 insert into CURRICULAR_COURSE values (48, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "OPÇÃO II", "", 2, 1, 0);
@@ -106,7 +106,7 @@ insert into CURRICULAR_COURSE values (49, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "PROJEC
 insert into CURRICULAR_COURSE values (50, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ENGENHARIA QUÍMICA INTEGRADA II", "AV6", 1, 1, 0);
 insert into CURRICULAR_COURSE values (51, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO III", "", 2, 1, 0);
 -- QUINTO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (52, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESTÁGIO", "AV2", 1, 1, 0);
+insert into CURRICULAR_COURSE values (52, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESTÁGIO", "AV2", 5, 1, 0);
 -- QUARTO ANO, PRIMEIRO SEMESTRE, OPÇÕES:
 insert into CURRICULAR_COURSE values (53, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "RISCOS NATURAIS E TECNOLÓGICOS", "AH0", 1, 1, 0);
 insert into CURRICULAR_COURSE values (54, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "GESTÃO PELA QUALIDADE TOTAL", "ALE", 1, 1, 0);
@@ -306,11 +306,16 @@ insert into ENROLMENT values (46, 1, 46, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (47, 1, 47, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (48, 1, 48, 1, 1, 'Dominio.Enrolment', null);
 
+insert into ENROLMENT values (49, 1, 49, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (50, 1, 50, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (51, 1, 51, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 70);
+
 -- -----------------------------
 -- Data for table 'PRECEDENCE'
 -- -----------------------------
 -- (ID_INTERNAL, KEY_CURRICULAR_COURSE, SCOPE_TO_APPLY)
 delete from PRECEDENCE;
+-- precedencias do tipo Dominio.RestrictionCurricularCourseDone
 insert into PRECEDENCE values (1, 14, 'SP');
 insert into PRECEDENCE values (2, 17, 'SP');
 insert into PRECEDENCE values (3, 22, 'SP');
@@ -323,6 +328,25 @@ insert into PRECEDENCE values (9, 24, 'SP');
 insert into PRECEDENCE values (10, 9, 'SP');
 insert into PRECEDENCE values (11, 13, 'SP');
 insert into PRECEDENCE values (12, 20, 'SP');
+
+-- precedencias do tipo Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse
+insert into PRECEDENCE values (13, 10, 'SP');
+insert into PRECEDENCE values (14, 12, 'SP');
+insert into PRECEDENCE values (15, 7, 'SP');
+insert into PRECEDENCE values (16, 14, 'SP');
+insert into PRECEDENCE values (17, 26, 'SP');
+insert into PRECEDENCE values (18, 25, 'SP');
+insert into PRECEDENCE values (19, 34, 'SP');
+
+-- precedencias para os laboratorios
+insert into PRECEDENCE values (20, 6, 'SP');
+insert into PRECEDENCE values (21, 11, 'SP');
+insert into PRECEDENCE values (22, 16, 'SP');
+insert into PRECEDENCE values (23, 24, 'SP');
+insert into PRECEDENCE values (24, 29, 'SP');
+insert into PRECEDENCE values (25, 32, 'SP');
+insert into PRECEDENCE values (26, 39, 'SP');
+insert into PRECEDENCE values (27, 45, 'SP');
 
 -- -----------------------------
 -- Data for table 'RESTRICTION'
@@ -342,6 +366,30 @@ insert into RESTRICTION values (10, 'Dominio.RestrictionCurricularCourseDone', 9
 insert into RESTRICTION values (11, 'Dominio.RestrictionCurricularCourseDone', 10, 2, 0);
 insert into RESTRICTION values (12, 'Dominio.RestrictionCurricularCourseDone', 11,9, 0);
 insert into RESTRICTION values (13, 'Dominio.RestrictionCurricularCourseDone', 12, 13, 0);
+
+insert into RESTRICTION values (14, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 13, 1, 0);
+insert into RESTRICTION values (15, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 14, 1, 0);
+insert into RESTRICTION values (16, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 15, 1, 0);
+insert into RESTRICTION values (17, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 15, 5, 0);
+insert into RESTRICTION values (18, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 16, 9, 0);
+insert into RESTRICTION values (19, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 17, 13, 0);
+insert into RESTRICTION values (20, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 18, 15, 0);
+insert into RESTRICTION values (21, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 19, 20, 0);
+insert into RESTRICTION values (22, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 19, 26, 0);
+
+insert into RESTRICTION values (23, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 20, 5, 0);
+insert into RESTRICTION values (24, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 21, 1, 0);
+insert into RESTRICTION values (25, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 21, 10, 0);
+insert into RESTRICTION values (26, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 22, 7, 0);
+insert into RESTRICTION values (27, 'Dominio.RestrictionCurricularCourseDone', 23, 12, 0);
+insert into RESTRICTION values (28, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 24, 22, 0);
+insert into RESTRICTION values (29, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 24, 30, 0);
+insert into RESTRICTION values (30, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 25, 31, 0);
+insert into RESTRICTION values (31, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 25, 33, 0);
+insert into RESTRICTION values (32, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 26, 35, 0);
+insert into RESTRICTION values (33, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 26, 41, 0);
+insert into RESTRICTION values (34, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 27, 40, 0);
+insert into RESTRICTION values (35, 'Dominio.RestrictionDoneOrAlreadyEnrolledInCurricularCourse', 27, 38, 0);
 
 -- -----------------------------
 -- Data for table 'DEGREE_ENROLMENT_INFO'

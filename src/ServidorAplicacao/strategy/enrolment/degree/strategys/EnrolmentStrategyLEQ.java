@@ -3,12 +3,14 @@ package ServidorAplicacao.strategy.enrolment.degree.strategys;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterAutomaticEnrolmentRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterCurricularYearPrecedence;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterLEQTrainingCourseRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterNACandNDRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterPrecedenceSpanRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterRestrictedOptionalCoursesRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterRestrictedOptionalDegreeRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterSemesterRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentValidateCurricularYearPrecedenceRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentValidateLEQLaboratoryRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentValidateNACandNDRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
 
@@ -37,6 +39,9 @@ public class EnrolmentStrategyLEQ implements IEnrolmentStrategy {
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
 		enrolmentRule = new EnrolmentFilterAutomaticEnrolmentRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);		
+
+		enrolmentRule = new EnrolmentFilterLEQTrainingCourseRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);		
 
 		//	NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
@@ -68,6 +73,9 @@ public class EnrolmentStrategyLEQ implements IEnrolmentStrategy {
 		this.enrolmentContext = validateRule.apply(this.enrolmentContext);
 
 		validateRule = new EnrolmentValidateCurricularYearPrecedenceRule();
+		this.enrolmentContext = validateRule.apply(this.enrolmentContext);
+
+		validateRule = new EnrolmentValidateLEQLaboratoryRule();
 		this.enrolmentContext = validateRule.apply(this.enrolmentContext);
 
 		return this.enrolmentContext;

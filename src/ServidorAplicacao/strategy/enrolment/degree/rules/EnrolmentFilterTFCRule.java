@@ -10,7 +10,7 @@ import Util.CurricularCourseType;
  * 3/Abr/2003
  */
 
-public class EnrolmentFilterFinalistRule implements IEnrolmentRule {
+public class EnrolmentFilterTFCRule implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 
