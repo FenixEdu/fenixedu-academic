@@ -730,9 +730,8 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return result;
 	}
 
-	public IEnrolmentEquivalenceRestriction readEnrolmentEquivalenceRestrictionByUnique(IEnrolment enrolment, IEnrolmentEquivalence enrolmentEquivalence) {
+	public IEnrolmentEquivalenceRestriction readEnrolmentEquivalenceRestrictionByUnique(IEnrolment enrolment) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("enrolmentEquivalence.idInternal", enrolmentEquivalence.getIdInternal());
 		criteria.addEqualTo("equivalentEnrolment.idInternal", enrolment.getIdInternal());
 		List result = query(EnrolmentEquivalenceRestriction.class, criteria);
 		if (result.size() == 1) {

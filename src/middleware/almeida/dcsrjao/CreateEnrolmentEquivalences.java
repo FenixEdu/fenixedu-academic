@@ -14,7 +14,6 @@ import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
 import Dominio.EnrolmentEquivalenceRestriction;
 import Dominio.EnrolmentEvaluation;
-import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.IBranch;
@@ -32,7 +31,6 @@ import Dominio.IExecutionYear;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
-import Util.CurricularCourseType;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
@@ -124,7 +122,6 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 		loader.setupDAO();
 		List oldStudentCurricularPlanList = null;
 		oldStudentCurricularPlanList = loader.persistentObjectOJB.readAllStudentCurricularPlansFromDegreeCurricularPlan(loader.oldDegreeCurricularPlan);
-		loader.numOfStudentsTotal = oldStudentCurricularPlanList.size();
 		loader.shutdownDAO();
 
 		IStudentCurricularPlan oldStudentCurricularPlan = null;
@@ -132,10 +129,11 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 		//		for (int i = 0; i < 50; i++) {
 		while (iterator.hasNext()) {
 			oldStudentCurricularPlan = (IStudentCurricularPlan) iterator.next();
-//			oldStudentCurricularPlan = (IStudentCurricularPlan) oldStudentCurricularPlanList.get(i);
+			//			oldStudentCurricularPlan = (IStudentCurricularPlan) oldStudentCurricularPlanList.get(i);
 			loader.printIteration(loader.getClassName(), oldStudentCurricularPlan.getIdInternal().longValue());
 			loader.setupDAO();
 			loader.numberOfStudentBeingIterated = oldStudentCurricularPlan.getStudent().getNumber();
+			loader.numOfStudentsTotal++;
 			loader.processOldStudentCurricularPlanIteration(oldStudentCurricularPlan);
 			loader.shutdownDAO();
 		}
@@ -180,16 +178,18 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 	}
 
 	private void processOldStudentCurricularPlanIteration(IStudentCurricularPlan oldStudentCurricularPlan) {
-		Integer firstEnrolmentYear = persistentObjectOJB.readFirstEnrolmentYearOfStudentCurricularPlan(oldStudentCurricularPlan);
-		
-		if(oldStudentCurricularPlan.getIdInternal().intValue() == 1628){
+		if (oldStudentCurricularPlan.getStudent().getNumber().intValue() == 47207) {
 			System.out.print("w");
+		} else {
+			return;
 		}
-		
+
+		Integer firstEnrolmentYear = persistentObjectOJB.readFirstEnrolmentYearOfStudentCurricularPlan(oldStudentCurricularPlan);
+
 		IStudentCurricularPlan newStudentCurricularPlan = null;
-		if(firstEnrolmentYear.intValue() < 1997){
+		if (firstEnrolmentYear.intValue() < 1997) {
 			this.numOfStudentsBefore1997++;
-		}else {
+		} else {
 			this.numOfAllAprovedEnrolmentsAfter1997ForActualStudent = 0;
 			this.numOfAllAprovedEnrolmentsAfter1997WithEquivalenceForStudentBeingIterated = 0;
 			this.numOfAllAprovedEnrolmentsAfter1997WithNoEquivalenceForStudentBeingIterated = 0;
@@ -213,15 +213,20 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 						(ICurricularCourseEquivalenceRestriction) courseEquivalenceRestrictionsIterator.next();
 
 					ICurricularCourse equivalentCurricularCourse = curricularCourseEquivalenceRestriction.getEquivalentCurricularCourse();
-					
+
 					List enrolmentsInEquivalentCourse = null;
-					
-					if(curricularCourseEquivalenceRestriction.getYearOfEquivalence().equals("")){
-						enrolmentsInEquivalentCourse = persistentObjectOJB.readEnrolmentsByCurricularCourseAndStudentCurricularPlan(equivalentCurricularCourse, oldStudentCurricularPlan);
-					}else{
-						enrolmentsInEquivalentCourse = persistentObjectOJB.readEnrolmentsByCurricularCourseAndStudentCurricularPlanAndAcademicYear(equivalentCurricularCourse, oldStudentCurricularPlan, curricularCourseEquivalenceRestriction.getYearOfEquivalence());
+
+					if (curricularCourseEquivalenceRestriction.getYearOfEquivalence().equals("")) {
+						enrolmentsInEquivalentCourse =
+							persistentObjectOJB.readEnrolmentsByCurricularCourseAndStudentCurricularPlan(equivalentCurricularCourse, oldStudentCurricularPlan);
+					} else {
+						enrolmentsInEquivalentCourse =
+							persistentObjectOJB.readEnrolmentsByCurricularCourseAndStudentCurricularPlanAndAcademicYear(
+								equivalentCurricularCourse,
+								oldStudentCurricularPlan,
+								curricularCourseEquivalenceRestriction.getYearOfEquivalence());
 					}
-											
+
 					if ((enrolmentsInEquivalentCourse != null) && (!enrolmentsInEquivalentCourse.isEmpty())) {
 						enrolmentsInRestrictions.addAll(enrolmentsInEquivalentCourse);
 					}
@@ -235,19 +240,12 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 				});
 
 				if (aprovedEnrolmentsInRestrictions.size() == numRestrictionsNecessaryToEquivalence) {
-					IEnrolment newEnrolment = processNewEnrolment(curricularCourseEquivalence.getCurricularCourse(), newStudentCurricularPlan);
-					if (newEnrolment == null) {
-						return;
-					}
+					IEnrolment newEnrolment =
+						processNewEnrolment(aprovedEnrolmentsInRestrictions, curricularCourseEquivalence.getCurricularCourse(), newStudentCurricularPlan);
+					if (newEnrolment != null) {
 
-					IEnrolmentEvaluation enrolmentEvaluation = processEnrolmentEvaluation(newEnrolment, aprovedEnrolmentsInRestrictions);
-					if (enrolmentEvaluation == null) {
-						return;
-					}
-
-					IEnrolmentEquivalence enrolmentEquivalence = processEnrolmentEquivalence(newEnrolment, aprovedEnrolmentsInRestrictions);
-					if (enrolmentEquivalence == null) {
-						return;
+						processEnrolmentEvaluation(newEnrolment, aprovedEnrolmentsInRestrictions);
+						processEnrolmentEquivalence(newEnrolment, aprovedEnrolmentsInRestrictions);
 					}
 				}
 			}
@@ -339,7 +337,10 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 		return equivalentEnrolmentEvaluation;
 	}
 
-	private IEnrolment processNewEnrolment(ICurricularCourse curricularCourseToEnrol, IStudentCurricularPlan newStudentCurricularPlan) {
+	private IEnrolment processNewEnrolment(
+		List aprovedEnrolmentsInRestrictions,
+		ICurricularCourse curricularCourseToEnrol,
+		IStudentCurricularPlan newStudentCurricularPlan) {
 		int year = 2003;
 		// o semestre vai a 1 porque não interessa qual o semestre curricular do novo enrolment (por equivalencia)
 		IExecutionPeriod executionPeriod = processExecutionPeriod(year, 1);
@@ -366,15 +367,16 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 			return null;
 		}
 
+		// por cauda das opções
+		IEnrolment oldEnrolment = (IEnrolment) aprovedEnrolmentsInRestrictions.get(0);
+		if (persistentObjectOJB.readEnrolmentEquivalenceRestrictionByUnique(oldEnrolment) != null) {
+			return null;
+		}
+
 		IEnrolment newEnrolment = persistentObjectOJB.readEnrolmentByUnique(newStudentCurricularPlan, curricularCourseScope, executionPeriod);
 		if (newEnrolment == null) {
-			
-			if(curricularCourseToEnrol.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)){
-				newEnrolment = new EnrolmentInOptionalCurricularCourse();
-			}else{
-				newEnrolment = new Enrolment();	
-			}
-			
+
+			newEnrolment = new Enrolment();
 			newEnrolment.setCurricularCourseScope(curricularCourseScope);
 			newEnrolment.setExecutionPeriod(executionPeriod);
 			newEnrolment.setStudentCurricularPlan(newStudentCurricularPlan);
@@ -382,16 +384,12 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 			newEnrolment.setEnrolmentState(EnrolmentState.APROVED);
 			writeElement(newEnrolment);
 		} else {
-			errorMessage =
-				"\n O aluno "
-					+ newStudentCurricularPlan.getStudent().getNumber().intValue()
-					+ " já tem uma inscrição por equivalência para a cadeira = "
-					+ curricularCourseScope.getCurricularCourse().getName()
-					+ "!";
-			errorDBID = "";
-			error = loader.setErrorMessage(errorMessage, errorDBID, error);
-			this.numOfAllAprovedEnrolmentsAfter1997WithNoEquivalenceForStudentBeingIterated++;
-			numberUntreatableElements++;
+
+			// por cauda das opções
+			// o else não é erro, mas é uma situação complicada, significa que o aluno fez duas ou mais cadeiras que dão equivalencia
+			// à opção X e pelo menos uma delas à opção Y, neste caso não sabemos o que dá equivalencia à X nem à Y
+			// por isso, a primeira da lista vai para a X e a segunda (else) retorna-se null, deste modo, a segunda não é ligada a X
+			// e na proxima iteração será ligada a Y			
 			return null;
 		}
 
@@ -400,8 +398,8 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 	}
 
 	private IEnrolmentEquivalence processEnrolmentEquivalence(IEnrolment newEnrolment, List aprovedEnrolmentsInRestrictions) {
-		IEnrolmentEquivalence enrolmentEquivalence = persistentObjectOJB.readEnrolmentEquivalenceByUnique(newEnrolment);
 
+		IEnrolmentEquivalence enrolmentEquivalence = persistentObjectOJB.readEnrolmentEquivalenceByUnique(newEnrolment);
 		if (enrolmentEquivalence == null) {
 			enrolmentEquivalence = new EnrolmentEquivalence();
 			enrolmentEquivalence.setEnrolment(newEnrolment);
@@ -411,7 +409,7 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 			while (iterator.hasNext()) {
 				IEnrolment oldEnrolment = (IEnrolment) iterator.next();
 				IEnrolmentEquivalenceRestriction enrolmentEquivalenceRestriction =
-					persistentObjectOJB.readEnrolmentEquivalenceRestrictionByUnique(oldEnrolment, enrolmentEquivalence);
+					persistentObjectOJB.readEnrolmentEquivalenceRestrictionByUnique(oldEnrolment);
 				if (enrolmentEquivalenceRestriction == null) {
 					enrolmentEquivalenceRestriction = new EnrolmentEquivalenceRestriction();
 					enrolmentEquivalenceRestriction.setEnrolmentEquivalence(enrolmentEquivalence);
@@ -420,9 +418,9 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 					numberElementsWritten--;
 				} else {
 					errorMessage =
-						"\n já existe uma restricão entre o enrolment novo = "
-							+ newEnrolment.getIdInternal()
-							+ " e o enrolment antigo = "
+						"\n O enrolmentEquivalenceRestriction ["
+							+ enrolmentEquivalenceRestriction.getIdInternal()
+							+ "] já é um enrolmentEquivalenceRestrictionma para o enrolment "
 							+ oldEnrolment.getIdInternal()
 							+ "!";
 					errorDBID = "";
@@ -430,7 +428,12 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 				}
 			}
 		} else {
-			errorMessage = "\n já existe uma equivalência para o enrolment" + newEnrolment.getIdInternal() + "!";
+			errorMessage =
+				"\n O enrolmentEquivalence ["
+					+ enrolmentEquivalence.getIdInternal()
+					+ "] já é uma equivalência para o enrolment "
+					+ newEnrolment.getIdInternal()
+					+ "!";
 			errorDBID = "";
 			error = loader.setErrorMessage(errorMessage, errorDBID, error);
 			return null;

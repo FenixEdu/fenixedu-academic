@@ -22,10 +22,16 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 	private static LoadCurricularCoursesEquivalencesFromFileToTable loader = null;
 	private static String logString = "";
 	private static final String ONE_SPACE = " ";
-	private IDegreeCurricularPlan oldDegreeCurricularPlan = null;
-	private IDegreeCurricularPlan newDegreeCurricularPlan = null;
+	private IDegreeCurricularPlan oldLEQDegreeCurricularPlan = null;
+	private IDegreeCurricularPlan oldLQDegreeCurricularPlan = null;
+	private IDegreeCurricularPlan oldLEBLDegreeCurricularPlan = null;
+	private IDegreeCurricularPlan newLEQDegreeCurricularPlan = null;
 	private String inputFilename = "equivalenciasLEQAfter1997.txt";
 	private boolean before1977 = true;
+	private final String NAME_OF_OLD_LEQ_DEGREE_CURRICULAR_PLAN = "LEQ";
+	private final String NAME_OF_OLD_LQ_DEGREE_CURRICULAR_PLAN = "LQ";
+	private final String NAME_OF_OLD_LEBL_DEGREE_CURRICULAR_PLAN = "LEBL";
+	private final String NAME_OF_NEW_DEGREE_CURRICULAR_PLAN = "LEQ2003/2004";
 
 	public LoadCurricularCoursesEquivalencesFromFileToTable() {
 	}
@@ -69,18 +75,36 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 
 		loader.persistentObjectOJB = new PersistentObjectOJBReader();
 		loader.setupDAO();
-		loader.oldDegreeCurricularPlan = loader.persistentObjectOJB.readDegreeCurricularPlanByName(InfoForMigration.NAME_OF_OLD_DEGREE_CURRICULAR_PLAN);
-		if (loader.oldDegreeCurricularPlan == null) {
-			logString = "o plano curricular " + InfoForMigration.NAME_OF_OLD_DEGREE_CURRICULAR_PLAN + " não existe!";
+		loader.oldLEQDegreeCurricularPlan = loader.persistentObjectOJB.readDegreeCurricularPlanByName(loader.NAME_OF_OLD_LEQ_DEGREE_CURRICULAR_PLAN);
+		if (loader.oldLEQDegreeCurricularPlan == null) {
+			logString = "o plano curricular " + loader.NAME_OF_OLD_LEQ_DEGREE_CURRICULAR_PLAN + " não existe!";
 			logString = loader.report(logString);
 			loader.writeToFile(logString);
 			loader.shutdownDAO();
 			return;
 		}
 
-		loader.newDegreeCurricularPlan = loader.persistentObjectOJB.readDegreeCurricularPlanByName(InfoForMigration.NAME_OF_NEW_DEGREE_CURRICULAR_PLAN);
-		if (loader.newDegreeCurricularPlan == null) {
-			logString = "o plano curricular " + InfoForMigration.NAME_OF_NEW_DEGREE_CURRICULAR_PLAN + " não existe!";
+		loader.oldLQDegreeCurricularPlan = loader.persistentObjectOJB.readDegreeCurricularPlanByName(loader.NAME_OF_OLD_LQ_DEGREE_CURRICULAR_PLAN);
+		if (loader.oldLEQDegreeCurricularPlan == null) {
+			logString = "o plano curricular " + loader.NAME_OF_OLD_LQ_DEGREE_CURRICULAR_PLAN + " não existe!";
+			logString = loader.report(logString);
+			loader.writeToFile(logString);
+			loader.shutdownDAO();
+			return;
+		}
+
+		loader.oldLEBLDegreeCurricularPlan = loader.persistentObjectOJB.readDegreeCurricularPlanByName(loader.NAME_OF_OLD_LEBL_DEGREE_CURRICULAR_PLAN);
+		if (loader.oldLEQDegreeCurricularPlan == null) {
+			logString = "o plano curricular " + loader.NAME_OF_OLD_LEBL_DEGREE_CURRICULAR_PLAN + " não existe!";
+			logString = loader.report(logString);
+			loader.writeToFile(logString);
+			loader.shutdownDAO();
+			return;
+		}
+
+		loader.newLEQDegreeCurricularPlan = loader.persistentObjectOJB.readDegreeCurricularPlanByName(loader.NAME_OF_NEW_DEGREE_CURRICULAR_PLAN);
+		if (loader.newLEQDegreeCurricularPlan == null) {
+			logString = "o plano curricular " + loader.NAME_OF_NEW_DEGREE_CURRICULAR_PLAN + " não existe!";
 			logString = loader.report(logString);
 			loader.writeToFile(logString);
 			loader.shutdownDAO();
@@ -116,46 +140,13 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 			oldCourseName1ToGiveEquivalence = oldCourseName1ToGiveEquivalence.substring(1);
 			newCourseNameToGetEquivalence = stringTokenizer.nextToken();
 		}
-				
-		if (numberTokens == 2){
-			newCourseNameToGetEquivalence = stringTokenizer.nextToken();
-		}
-		
-		List oldCurricularCourse1List =
-			persistentObjectOJB.readListOfCurricularCoursesByNameAndDegreCurricularPlan(oldCourseName1ToGiveEquivalence, this.oldDegreeCurricularPlan);
-		if (oldCurricularCourse1List == null) {
-			loader.numberUntreatableElements++;
-			logString += "\nERRO: Na linha ["
-				+ (numberLinesProcessed + 1)
-				+ "] o curricular course "
-				+ oldCourseName1ToGiveEquivalence
-				+ " do plano "
-				+ this.oldDegreeCurricularPlan.getName()
-				+ " não existe!";
-			loader.shutdownDAO();
-			return;
-		}
 
-		List oldCurricularCourse2List = null;
-		if (!oldCourseName2ToGiveEquivalence.equals("")) {
-			oldCurricularCourse2List =
-				persistentObjectOJB.readListOfCurricularCoursesByNameAndDegreCurricularPlan(oldCourseName2ToGiveEquivalence, this.oldDegreeCurricularPlan);
-			if (oldCurricularCourse2List == null) {
-				loader.numberUntreatableElements++;
-				logString += "\nERRO: Na linha ["
-					+ (numberLinesProcessed + 1)
-					+ "] o curricular course "
-					+ oldCourseName2ToGiveEquivalence
-					+ " do plano "
-					+ this.oldDegreeCurricularPlan.getName()
-					+ " não existe!";
-				loader.shutdownDAO();
-				return;
-			}
+		if (numberTokens == 2) {
+			newCourseNameToGetEquivalence = stringTokenizer.nextToken();
 		}
 
 		ICurricularCourse newCurricularCourse =
-			persistentObjectOJB.readCurricularCourseByNameAndDegreeCurricularPlan(newCourseNameToGetEquivalence, this.newDegreeCurricularPlan);
+			persistentObjectOJB.readCurricularCourseByNameAndDegreeCurricularPlan(newCourseNameToGetEquivalence, this.newLEQDegreeCurricularPlan);
 		if (newCurricularCourse == null) {
 			loader.numberUntreatableElements++;
 			logString += "\nERRO: Na linha ["
@@ -163,12 +154,81 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 				+ "] o curricular course "
 				+ newCourseNameToGetEquivalence
 				+ " do plano "
-				+ this.newDegreeCurricularPlan.getName()
+				+ this.newLEQDegreeCurricularPlan.getName()
 				+ " não existe!";
 			loader.shutdownDAO();
 			return;
 		}
 
+		List oldCurricularCourse1ListForLEQ =
+			readListOfCurricularCoursesByDegreeCurricularPlan(oldCourseName1ToGiveEquivalence, this.oldLEQDegreeCurricularPlan);
+
+		List oldCurricularCourse1ListForLQ = readListOfCurricularCoursesByDegreeCurricularPlan(oldCourseName1ToGiveEquivalence, this.oldLQDegreeCurricularPlan);
+
+		List oldCurricularCourse1ListForLEBL =
+			readListOfCurricularCoursesByDegreeCurricularPlan(oldCourseName1ToGiveEquivalence, this.oldLEBLDegreeCurricularPlan);
+
+		List oldCurricularCourse2ListForLEQ = null;
+		List oldCurricularCourse2ListForLQ = null;
+		List oldCurricularCourse2ListForLEBL = null;
+
+		if (!oldCourseName2ToGiveEquivalence.equals("")) {
+			oldCurricularCourse2ListForLEQ =
+				readListOfCurricularCoursesByDegreeCurricularPlan(oldCourseName2ToGiveEquivalence, this.oldLEQDegreeCurricularPlan);
+
+			oldCurricularCourse2ListForLQ = readListOfCurricularCoursesByDegreeCurricularPlan(oldCourseName2ToGiveEquivalence, this.oldLQDegreeCurricularPlan);
+
+			oldCurricularCourse2ListForLEBL =
+				readListOfCurricularCoursesByDegreeCurricularPlan(oldCourseName2ToGiveEquivalence, this.oldLEBLDegreeCurricularPlan);
+
+		}
+
+		if (oldCurricularCourse1ListForLEQ != null) {
+
+			processCurricularCoursesEquivalencesForDegreeCurricularPlan(
+				oldCurricularCourse1ListForLEQ,
+				newCurricularCourse,
+				yearOfEquivalence,
+				oldCurricularCourse2ListForLEQ);
+		}
+		if (oldCurricularCourse1ListForLQ != null) {
+			processCurricularCoursesEquivalencesForDegreeCurricularPlan(
+				oldCurricularCourse1ListForLQ,
+				newCurricularCourse,
+				yearOfEquivalence,
+				oldCurricularCourse2ListForLQ);
+		}
+		if (oldCurricularCourse1ListForLQ != null) {
+			processCurricularCoursesEquivalencesForDegreeCurricularPlan(
+				oldCurricularCourse1ListForLQ,
+				newCurricularCourse,
+				yearOfEquivalence,
+				oldCurricularCourse2ListForLQ);
+		}
+		
+		loader.shutdownDAO();
+	}
+
+	private List readListOfCurricularCoursesByDegreeCurricularPlan(String oldCourseName1ToGiveEquivalence, IDegreeCurricularPlan plan) {
+		List oldCurricularCourse1List = persistentObjectOJB.readListOfCurricularCoursesByNameAndDegreCurricularPlan(oldCourseName1ToGiveEquivalence, plan);
+		if ((oldCurricularCourse1List == null) && (plan.equals(this.newLEQDegreeCurricularPlan))) {
+			loader.numberUntreatableElements++;
+			logString += "\nERRO: Na linha ["
+				+ (numberLinesProcessed + 1)
+				+ "] o curricular course "
+				+ oldCourseName1ToGiveEquivalence
+				+ " do plano "
+				+ plan.getName()
+				+ " não existe!";
+		}
+		return oldCurricularCourse1List;
+	}
+
+	private void processCurricularCoursesEquivalencesForDegreeCurricularPlan(
+		List oldCurricularCourse1List,
+		ICurricularCourse newCurricularCourse,
+		String yearOfEquivalence,
+		List oldCurricularCourse2List) {
 		Iterator iterator1 = oldCurricularCourse1List.iterator();
 		ICurricularCourse oldCurricularCourse1 = null;
 		ICurricularCourseEquivalence curricularCourseEquivalence = null;
@@ -176,7 +236,6 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 			curricularCourseEquivalence = new CurricularCourseEquivalence();
 			curricularCourseEquivalence.setCurricularCourse(newCurricularCourse);
 			writeElement(curricularCourseEquivalence);
-
 			oldCurricularCourse1 = (ICurricularCourse) iterator1.next();
 			ICurricularCourseEquivalenceRestriction curricularCourseEquivalenceRestricition1 =
 				persistentObjectOJB.readCurricularCourseEquivalenceRestrictionByUnique(oldCurricularCourse1, curricularCourseEquivalence, yearOfEquivalence);
@@ -202,7 +261,10 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 				while (iterator2.hasNext()) {
 					oldCurricularCourse2 = (ICurricularCourse) iterator2.next();
 					ICurricularCourseEquivalenceRestriction curricularCourseEquivalenceRestricition2 =
-						persistentObjectOJB.readCurricularCourseEquivalenceRestrictionByUnique(oldCurricularCourse2, curricularCourseEquivalence, yearOfEquivalence);
+						persistentObjectOJB.readCurricularCourseEquivalenceRestrictionByUnique(
+							oldCurricularCourse2,
+							curricularCourseEquivalence,
+							yearOfEquivalence);
 					if (curricularCourseEquivalenceRestricition2 == null) {
 						curricularCourseEquivalenceRestricition2 = new CurricularCourseEquivalenceRestriction();
 						curricularCourseEquivalenceRestricition2.setCurricularCourseEquivalence(curricularCourseEquivalence);
@@ -223,7 +285,6 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 						curricularCourseEquivalence = new CurricularCourseEquivalence();
 						curricularCourseEquivalence.setCurricularCourse(newCurricularCourse);
 						writeElement(curricularCourseEquivalence);
-
 						curricularCourseEquivalenceRestricition1 = new CurricularCourseEquivalenceRestriction();
 						curricularCourseEquivalenceRestricition1.setCurricularCourseEquivalence(curricularCourseEquivalence);
 						curricularCourseEquivalenceRestricition1.setEquivalentCurricularCourse(oldCurricularCourse1);
@@ -234,7 +295,7 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 				}
 			}
 		}
-		loader.shutdownDAO();
+
 	}
 
 	protected String getFilename() {

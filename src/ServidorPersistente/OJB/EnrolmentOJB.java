@@ -254,28 +254,33 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 	 * @see ServidorPersistente.IPersistentEnrolment#readAllByStudentCurricularPlan(Dominio.IStudentCurricularPlan)
 	 */
 	public List readAllByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
-		List enrolments = null;
-		try {
-			String oqlQuery =
-				"select all from "
-					+ Enrolment.class.getName()
-					+ " where studentCurricularPlan.student.number = $1"
-					+ " and studentCurricularPlan.student.degreeType = $2"
-					+ " and studentCurricularPlan.currentState = $3";
+//		List enrolments = null;
+//		try {
+//			String oqlQuery =
+//				"select all from "
+//					+ Enrolment.class.getName()
+//					+ " where studentCurricularPlan.student.number = $1"
+//					+ " and studentCurricularPlan.student.degreeType = $2"
+//					+ " and studentCurricularPlan.currentState = $3";
+//
+//			query.create(oqlQuery);
+//
+//			query.bind(studentCurricularPlan.getStudent().getNumber());
+//			query.bind(studentCurricularPlan.getStudent().getDegreeType());
+//			query.bind(studentCurricularPlan.getCurrentState());
+//
+//			enrolments = (List) query.execute();
+//			lockRead(enrolments);
+//		} catch (QueryException e) {
+//			e.printStackTrace();
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
+//		}
+//		return enrolments;
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("studentCurricularPlanKey", studentCurricularPlan.getIdInternal());
+		List result = queryList(Enrolment.class, criteria);
+		return result;
 
-			query.create(oqlQuery);
-
-			query.bind(studentCurricularPlan.getStudent().getNumber());
-			query.bind(studentCurricularPlan.getStudent().getDegreeType());
-			query.bind(studentCurricularPlan.getCurrentState());
-
-			enrolments = (List) query.execute();
-			lockRead(enrolments);
-		} catch (QueryException e) {
-			e.printStackTrace();
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
-		}
-		return enrolments;
 	}
 
 	//	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(

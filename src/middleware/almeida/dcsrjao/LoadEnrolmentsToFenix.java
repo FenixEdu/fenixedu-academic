@@ -631,6 +631,7 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 			newCurricularCourse.setName(processedCurricularCourse.getName());
 			newCurricularCourse.setType(processedCurricularCourse.getType());
 			newCurricularCourse.setUniversity(this.university);
+			newCurricularCourse.setBasic(processedCurricularCourse.getBasic());
 			writeElement(newCurricularCourse);
 			numberElementsWritten--;
 

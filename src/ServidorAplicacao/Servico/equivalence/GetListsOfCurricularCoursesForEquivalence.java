@@ -75,7 +75,8 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 
 				if(!studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE_OBJ)) {
 					List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentCurricularPlan);
-	
+//					printEnrolments(studentEnrolments);
+
 					List studentAprovedEnrolments = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 						public boolean evaluate(Object obj) {
 							IEnrolment enrolment = (IEnrolment) obj;
@@ -165,6 +166,15 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 		}
 	}
 	
+//	private void printEnrolments(List studentEnrolments) {
+//		Iterator iterator = studentEnrolments.iterator();
+//		while(iterator.hasNext()) {
+//			IEnrolment enrolment = (IEnrolment) iterator.next();
+//			System.out.print("Cadeira: " + enrolment.getCurricularCourseScope().getCurricularCourse().getName());
+//			System.out.println(" estado: " + enrolment.getEnrolmentState());
+//		}
+//	}
+
 	private List cloneCurricularCourseScopesToInfoCurricularCourseScopes(List curricularCourseScopes) {
 		List infoCurricularCourseScopes = new ArrayList();
 		Iterator iterator = curricularCourseScopes.iterator();

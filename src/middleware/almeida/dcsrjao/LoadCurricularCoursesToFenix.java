@@ -81,6 +81,9 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 			curricularCourse.setName(almeida_disc.getNomedis());
 			curricularCourse.setCode(almeida_disc.getCoddis());
 			
+			// nao ha informacao disponivel para deduzir este campo, por isso, todas sao as disciplinas não BASIC
+			curricularCourse.setBasic(new Boolean(false));
+			
 			curricularCourse.setUniversity(processUniversity(almeida_disc));
 
 			// nao ha informacao disponivel para deduzir este campo, por isso, todas sao as disciplinas sao semestrais
@@ -89,9 +92,9 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 			if (almeida_disc.getTipo() == 0) {
 				curricularCourse.setMandatory(new Boolean(true));
 				curricularCourse.setType(CurricularCourseType.NORMAL_COURSE_OBJ);
-			} else if (almeida_disc.getTipo() == 1) {
-				curricularCourse.setMandatory(new Boolean(false));
-				curricularCourse.setType(CurricularCourseType.OPTIONAL_COURSE_OBJ);
+//			} else if (almeida_disc.getTipo() == 1) {
+//				curricularCourse.setMandatory(new Boolean(false));
+//				curricularCourse.setType(CurricularCourseType.OPTIONAL_COURSE_OBJ);
 			} else {
 				errorMessage = "\n O tipo " + almeida_disc.getTipo() + " é inválido! Registos: ";
 				errorDBID = almeida_disc.getCodint() + ",";
