@@ -205,6 +205,11 @@
          jdbc-type="INTEGER"
          conversion="ServidorPersistente.Conversores.TipoAula2EnumTipoAulaFieldConversion"
       />
+      <field-descriptor id="8"
+         name="keyExecutionPeriod"
+         column="KEY_EXECUTION_PERIOD"
+         jdbc-type="INTEGER"
+      />
       <reference-descriptor
          name="sala"
          class-ref="Dominio.Sala"
@@ -217,6 +222,12 @@
       >
          <foreignkey field-id-ref="6"/>
       </reference-descriptor>      
+      <reference-descriptor
+         name="executionPeriod"
+         class-ref="Dominio.ExecutionPeriod"
+      >
+         <foreignkey field-id-ref="8"/>
+      </reference-descriptor>     
    </class-descriptor>
 
 <!-- Definitions for Dominio.TurmaTurno -->
@@ -388,7 +399,7 @@
 
 
 <!-- Definitions for Dominio.Evaluation -->
-<class-descriptor class="Dominio.Evaluation">
+<class-descriptor class="Dominio.Evaluation" table="EVALUATION">
     <extent-class class-ref="Dominio.Exam" />
     <extent-class class-ref="Dominio.FinalEvaluation" />
       <field-descriptor
@@ -552,6 +563,7 @@
 	  </collection-descriptor>
 	</class-descriptor>
 
+
 <!-- Definitions for Dominio.Mark -->
    <class-descriptor
    	  class="Dominio.Mark"
@@ -601,6 +613,10 @@
       </reference-descriptor> 
       
    </class-descriptor> 
+
+
+
+
 
 <!-- Definitions for Dominio.ExamExecutionCourse -->
    <class-descriptor
