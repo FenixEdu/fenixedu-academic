@@ -4,7 +4,6 @@
  */
 package ServidorApresentacao.Action.teacher.workingTime;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,6 +21,7 @@ import DataBeans.InfoTeacher;
 import DataBeans.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import DataBeans.teacher.workTime.TeacherInstitutionWorkingTimeDTO;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.framework.CRUDActionByOID;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -94,56 +94,50 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID
 	 *          DataBeans.InfoObject, org.apache.struts.action.ActionForm,
 	 *          javax.servlet.http.HttpServletRequest)
 	 */
-    protected void populateFormFromInfoObject(
-        ActionMapping mapping,
-        InfoObject infoObject,
-        ActionForm form,
-        HttpServletRequest request)
-        throws FenixActionException
+    protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject,
+            ActionForm form, HttpServletRequest request) throws FenixActionException
     {
-        InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime =
-            (InfoTeacherInstitutionWorkTime) infoObject;
+        InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime) infoObject;
         DynaActionForm teacherInstitutionWorkTimeForm = (DynaActionForm) form;
 
         teacherInstitutionWorkTimeForm.set("idInternal", infoTeacherInstitutionWorkTime.getIdInternal());
-        teacherInstitutionWorkTimeForm.set(
-            "teacherId",
-            infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal());
-        teacherInstitutionWorkTimeForm.set(
-            "executionPeriodId",
-            infoTeacherInstitutionWorkTime.getInfoExecutionPeriod().getIdInternal());
 
-        teacherInstitutionWorkTimeForm.set(
-            "weekDay",
-            getWeekDayString(infoTeacherInstitutionWorkTime.getWeekDay()));
+        String teacherId = String.valueOf(infoTeacherInstitutionWorkTime.getInfoTeacher()
+                .getIdInternal());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-		Date startTime = infoTeacherInstitutionWorkTime.getStartTime();
-		Date endTime = infoTeacherInstitutionWorkTime.getEndTime();
+        teacherInstitutionWorkTimeForm.set("teacherId", teacherId);
 
-		if (startTime != null || endTime != null)
-		{
-			Calendar time = Calendar.getInstance();
-			if (startTime != null)
-			{
-				time.setTime(startTime);
-				teacherInstitutionWorkTimeForm.set("startTimeHour", String.valueOf(time.get(Calendar.HOUR_OF_DAY)));
-				teacherInstitutionWorkTimeForm.set("startTimeMinutes", String.valueOf(time.get(Calendar.MINUTE)));
-			}
-			if (endTime != null)
-			{
-				time.setTime(endTime);
-				teacherInstitutionWorkTimeForm.set("endTimeHour", String.valueOf(time.get(Calendar.HOUR_OF_DAY)));
-				teacherInstitutionWorkTimeForm.set("endTimeMinutes", String.valueOf(time.get(Calendar.MINUTE)));
-			}
-		}
-        teacherInstitutionWorkTimeForm.set(
-            "startTime",
-            sdf.format(infoTeacherInstitutionWorkTime.getStartTime()));
-        teacherInstitutionWorkTimeForm.set(
-            "endTime",
-            sdf.format(infoTeacherInstitutionWorkTime.getEndTime()));
+        String executionPeriodId = String.valueOf(infoTeacherInstitutionWorkTime
+                .getInfoExecutionPeriod().getIdInternal());
 
+        teacherInstitutionWorkTimeForm.set("executionPeriodId", executionPeriodId);
+
+        teacherInstitutionWorkTimeForm.set("weekDay", getWeekDayString(infoTeacherInstitutionWorkTime
+                .getWeekDay()));
+        ;
+        Date startTime = infoTeacherInstitutionWorkTime.getStartTime();
+        Date endTime = infoTeacherInstitutionWorkTime.getEndTime();
+
+        if (startTime != null || endTime != null)
+        {
+            Calendar time = Calendar.getInstance();
+            if (startTime != null)
+            {
+                time.setTime(startTime);
+                teacherInstitutionWorkTimeForm.set("startTimeHour", String.valueOf(time.get(
+                        Calendar.HOUR_OF_DAY)));
+                teacherInstitutionWorkTimeForm.set("startTimeMinutes", String.valueOf(time.get(
+                        Calendar.MINUTE)));
+            }
+            if (endTime != null)
+            {
+                time.setTime(endTime);
+                teacherInstitutionWorkTimeForm.set("endTimeHour", String.valueOf(time.get(
+                        Calendar.HOUR_OF_DAY)));
+                teacherInstitutionWorkTimeForm.set("endTimeMinutes", String.valueOf(time.get(
+                        Calendar.MINUTE)));
+            }
+        }
     }
 
     /*
@@ -153,59 +147,53 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID
 	 *          ServidorApresentacao.mapping.framework.CRUDMapping)
 	 */
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping)
-        throws FenixActionException
+            throws FenixActionException
     {
         DynaActionForm teacherInstitutionWorkTimeForm = (DynaActionForm) form;
-        InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime =
-            new InfoTeacherInstitutionWorkTime();
+        InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = new InfoTeacherInstitutionWorkTime();
 
-        infoTeacherInstitutionWorkTime.setIdInternal(
-            (Integer) teacherInstitutionWorkTimeForm.get("idInternal"));
-        InfoTeacher infoTeacher =
-            new InfoTeacher((Integer) teacherInstitutionWorkTimeForm.get("teacherId"));
+        infoTeacherInstitutionWorkTime.setIdInternal((Integer) teacherInstitutionWorkTimeForm.get(
+                "idInternal"));
+        InfoTeacher infoTeacher = new InfoTeacher(Integer.valueOf(
+                (String) teacherInstitutionWorkTimeForm.get("teacherId")));
         infoTeacherInstitutionWorkTime.setInfoTeacher(infoTeacher);
 
-        InfoExecutionPeriod infoExecutionPeriod =
-            new InfoExecutionPeriod((Integer) teacherInstitutionWorkTimeForm.get("executionPeriodId"));
+        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod(Integer.valueOf(
+                (String) teacherInstitutionWorkTimeForm.get("executionPeriodId")));
         infoTeacherInstitutionWorkTime.setInfoExecutionPeriod(infoExecutionPeriod);
 
         DiaSemana weekDay = getWeekDay((String) teacherInstitutionWorkTimeForm.get("weekDay"));
         infoTeacherInstitutionWorkTime.setWeekDay(weekDay);
 
-		Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
 
-		setHoursAndMinutes(
-			calendar,
-			Integer.valueOf((String) teacherInstitutionWorkTimeForm.get("startTimeHour")),
-			Integer.valueOf((String) teacherInstitutionWorkTimeForm.get("startTimeMinutes")));
-		infoTeacherInstitutionWorkTime.setStartTime(new Date(calendar.getTimeInMillis()));
+        setHoursAndMinutes(calendar, Integer.valueOf((String) teacherInstitutionWorkTimeForm.get(
+                "startTimeHour")),
+                Integer.valueOf((String) teacherInstitutionWorkTimeForm.get("startTimeMinutes")));
+        infoTeacherInstitutionWorkTime.setStartTime(new Date(calendar.getTimeInMillis()));
 
-		setHoursAndMinutes(
-			calendar,
-			Integer.valueOf((String) teacherInstitutionWorkTimeForm.get("endTimeHour")),
-			Integer.valueOf((String) teacherInstitutionWorkTimeForm.get("endTimeMinutes")));
-		infoTeacherInstitutionWorkTime.setEndTime(new Date(calendar.getTimeInMillis()));
+        setHoursAndMinutes(calendar, Integer.valueOf((String) teacherInstitutionWorkTimeForm.get(
+                "endTimeHour")),
+                Integer.valueOf((String) teacherInstitutionWorkTimeForm.get("endTimeMinutes")));
+        infoTeacherInstitutionWorkTime.setEndTime(new Date(calendar.getTimeInMillis()));
 
         return infoTeacherInstitutionWorkTime;
     }
-	/**
+    /**
 	 * @param calendar
 	 * @param integer
 	 * @param integer2
 	 */
-	private void setHoursAndMinutes(Calendar calendar, Integer hour, Integer minutes)
-	{
-		calendar.set(Calendar.HOUR_OF_DAY, hour != null ? hour.intValue() : 0);
-		calendar.set(Calendar.MINUTE, minutes != null ? minutes.intValue() : 0);
-	}
+    private void setHoursAndMinutes(Calendar calendar, Integer hour, Integer minutes)
+    {
+        calendar.set(Calendar.HOUR_OF_DAY, hour != null ? hour.intValue() : 0);
+        calendar.set(Calendar.MINUTE, minutes != null ? minutes.intValue() : 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+    }
 
-    
-    public ActionForward list(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
+    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception
     {
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -213,20 +201,46 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID
         if (infoTeacher == null)
         {
             DynaActionForm teacherInstitutionWorkTimeForm = (DynaActionForm) form;
-            Integer teacherId = (Integer) teacherInstitutionWorkTimeForm.get("teacherId");
+            Integer teacherId = Integer.valueOf((String) teacherInstitutionWorkTimeForm.get("teacherId"));
             infoTeacher = new InfoTeacher(teacherId);
         }
-        Object args[] = { infoTeacher };
+        Object args[] = {infoTeacher};
 
-        TeacherInstitutionWorkingTimeDTO teacherInstitutionWorkingTimeDTO =
-            (TeacherInstitutionWorkingTimeDTO) ServiceUtils.executeService(
-                userView,
-                "ReadTeacherInstitutionWorkingTime",
-                args);
+        TeacherInstitutionWorkingTimeDTO teacherInstitutionWorkingTimeDTO = (TeacherInstitutionWorkingTimeDTO) ServiceUtils
+                .executeService(userView, "ReadTeacherInstitutionWorkingTime", args);
 
         request.setAttribute("teacherInstitutionWorkingTime", teacherInstitutionWorkingTimeDTO);
-      
+
         return mapping.findForward("list-teacher-institution-working-time");
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorApresentacao.Action.framework.CRUDActionByOID#prepareFormConstants(org.apache.struts.action.ActionMapping,
+	 *          org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest)
+	 */
+    protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request) throws FenixServiceException
+    {
+        super.prepareFormConstants(mapping, form, request);
+        IUserView userView = SessionUtils.getUserView(request);
+        DynaActionForm teacherInstitutionWorkTimeForm = (DynaActionForm) form;
+
+        Integer teacherId = Integer.valueOf((String) teacherInstitutionWorkTimeForm.get("teacherId"));
+        Object args[] = {teacherId};
+        InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView,
+                "ReadTeacherByOID", args);
+        request.setAttribute("infoTeacher", infoTeacher);
+
+        Integer executionPeriodId = Integer.valueOf((String) teacherInstitutionWorkTimeForm.get(
+                "executionPeriodId"));
+        args[0] = executionPeriodId;
+
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
+                userView, "ReadExecutionPeriodByOID", args);
+        request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);
+
     }
 
 }
