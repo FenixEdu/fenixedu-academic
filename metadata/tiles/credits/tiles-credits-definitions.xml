@@ -23,5 +23,13 @@
 	<definition name="creditsResume" page="/credits/commons/creditsResume.jsp">
 		<put name="infoCredits"/>
 	</definition>
+
+	<definition name="teacher-search-form-layout" page="/credits/commons/searchTeacherLayout.jsp">
+			<put name="searchInfo" value=""></put>
+	</definition>
+
+	<definition name="teacherContextTile" page="/credits/commons/teacherContextTile.jsp">
+			<put name="infoTeacher" value=""></put>
+	</definition>
 	
 </tiles-definitions>

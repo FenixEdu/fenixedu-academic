@@ -12,9 +12,6 @@ import Dominio.ITeacher;
 public abstract class CreditLine extends DomainObject implements ICreditLine
 {
     private ITeacher teacher;
-    private Double credits;
-    
-    
     /**
      * @param idInternal
      */
@@ -28,22 +25,6 @@ public abstract class CreditLine extends DomainObject implements ICreditLine
      */
     public CreditLine()
     {
-    }
-
-    /**
-     * @return Returns the credits.
-     */
-    public Double getCredits()
-    {
-        return credits;
-    }
-
-    /**
-     * @param credits The credits to set.
-     */
-    public void setCredits(Double credits)
-    {
-        this.credits = credits;
     }
 
     /**

@@ -369,6 +369,111 @@
 	</logic:empty>
 </table>								
 
+<%-- ========================== Management Position Lines =============================== --%>
+<h2>
+<span class="emphasis-box">5</span> <bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+</h2>
+
+<bean:define id="managementPositions" name="teacherCreditsSheet" property="infoManagementPositions"/>
+
+<table width="100%" cellspacing="1" cellpadding="3" style="margin-bottom:0;margin-top:0">
+	<tr>
+		<td colspan="2" class="listClasses-subheader">
+				<bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+<%--				<logic:present role="role.credits.manager">
+					<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
+					(<html:link page='<%= "/teacherSearchForOtherTypeCreditLine.do?page=0&amp;method=doSearch&amp;teacherNumber=" + teacherNumber + "&amp;executionPeriodId=" + executionPeriodId %>'>
+						<bean:message key="link.teacherCreditsTeacher.shiftProfessorship.management" />
+					</html:link>)
+				</logic:present> --%>
+		</td>
+	</tr>
+
+	<logic:notEmpty name="managementPositions">
+		<tr>
+			<td class="listClasses-header" style="text-align:left"><bean:message key="label.managementPosition.position" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+			<td class="listClasses-header" width="10%"><bean:message key="label.managementPosition.start" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+			<td class="listClasses-header" width="10%"><bean:message key="label.managementPosition.end" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+		</tr>
+		<logic:iterate id="managementPosition" name="managementPositions" >
+			<tr>
+				<td class="listClasses" style="text-align:left">
+					<bean:write name="managementPosition" property="position"/>
+				</td>
+				<td class="listClasses">
+					<dt:format patternId="hoursPattern">
+						<bean:write name="managementPosition" property="start.time"/>
+					</dt:format>
+				</td>
+				<td class="listClasses">
+					<dt:format patternId="hoursPattern">
+						<bean:write name="managementPosition" property="end.time"/>
+					</dt:format>
+				</td>
+			</tr>
+		</logic:iterate>
+	</logic:notEmpty>
+	<logic:empty name="managementPositions">
+		<tr>
+			<td colspan="3" class="listClasses"> 
+				<i><bean:message key="message.managementPositions.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>						
+			</td>
+		</tr>
+	</logic:empty>
+</table>								
+
+<%-- ========================== Service Exemption Lines =============================== --%>
+<h2>
+<span class="emphasis-box">6</span> <bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+</h2>
+
+<bean:define id="serviceExemptions" name="teacherCreditsSheet" property="infoServiceExemptions"/>
+
+<table width="100%" cellspacing="1" cellpadding="3" style="margin-bottom:0;margin-top:0">
+	<tr>
+		<td colspan="2" class="listClasses-subheader">
+				<bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+<%--				<logic:present role="role.credits.manager">
+					<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
+					(<html:link page='<%= "/teacherSearchForOtherTypeCreditLine.do?page=0&amp;method=doSearch&amp;teacherNumber=" + teacherNumber + "&amp;executionPeriodId=" + executionPeriodId %>'>
+						<bean:message key="link.teacherCreditsTeacher.shiftProfessorship.management" />
+					</html:link>)
+				</logic:present> --%>
+		</td>
+	</tr>
+
+	<logic:notEmpty name="serviceExemptions">
+		<tr>
+			<td class="listClasses-header" style="text-align:left"><bean:message key="label.serviceExemption.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+			<td class="listClasses-header" width="10%"><bean:message key="label.serviceExemption.start" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+			<td class="listClasses-header" width="10%"><bean:message key="label.serviceExemption.end" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+		</tr>
+		<logic:iterate id="serviceExemption" name="serviceExemptions" >
+			<tr>
+				<td class="listClasses" style="text-align:left">
+					<bean:message name="serviceExemption" property="type.value" bundle="ENUMERATION_RESOURCES"/>
+				</td>
+				<td class="listClasses">
+					<dt:format patternId="hoursPattern">
+						<bean:write name="serviceExemption" property="start.time"/>
+					</dt:format>
+				</td>
+				<td class="listClasses">
+					<dt:format patternId="hoursPattern">
+						<bean:write name="serviceExemption" property="end.time"/>
+					</dt:format>
+				</td>
+			</tr>
+		</logic:iterate>
+	</logic:notEmpty>
+	<logic:empty name="serviceExemptions">
+		<tr>
+			<td colspan="3" class="listClasses"> 
+				<i><bean:message key="message.serviceExemptions.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>						
+			</td>
+		</tr>
+	</logic:empty>
+</table>								
 
 <%-- ================================================================================== --%>
 

@@ -12,6 +12,7 @@ public class OtherTypeCreditLine extends CreditLine implements IOtherTypeCreditL
 {
     private IExecutionPeriod executionPeriod;
     private String reason;
+    private Double credits;
 
     public OtherTypeCreditLine()
     {
@@ -58,6 +59,22 @@ public class OtherTypeCreditLine extends CreditLine implements IOtherTypeCreditL
     public void setReason(String reason)
     {
         this.reason = reason;
+    }
+
+    /**
+     * @return Returns the credits.
+     */
+    public Double getCredits()
+    {
+        return credits;
+    }
+
+    /**
+     * @param credits The credits to set.
+     */
+    public void setCredits(Double credits)
+    {
+        this.credits = credits;
     }
 
 }

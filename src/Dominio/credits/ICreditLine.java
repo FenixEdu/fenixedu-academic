@@ -12,14 +12,6 @@ import Dominio.ITeacher;
 public interface ICreditLine extends IDomainObject
 {
     /**
-     * @return Returns the credits.
-     */
-    public abstract Double getCredits();
-    /**
-     * @param credits The credits to set.
-     */
-    public abstract void setCredits(Double credits);
-    /**
      * @return Returns the teacher.
      */
     public abstract ITeacher getTeacher();

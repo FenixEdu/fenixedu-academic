@@ -1,7 +1,7 @@
 /*
  * Created on 29/Fev/2004
  */
-package ServidorAplicacao.Servico.credits;
+package ServidorAplicacao.Servico.credits.otherTypeCreditLine;
 
 import Dominio.Credits;
 import Dominio.ICredits;

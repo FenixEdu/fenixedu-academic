@@ -3,6 +3,50 @@
 <form-validation>
     <formset>
 
+		<form name="ManagementPositionForm">
+			<field property="position" depends="required" page="1">
+				<arg0 key="label.managementPosition.position" />
+			</field>
+			<field property="start" depends="required, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<arg0 key="label.managementPosition.start"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+				</var>
+			</field>
+			<field property="end" depends="required, date" page="1">
+				<msg name="end" key="errors.invalid.date"/>
+				<arg0 key="label.managementPosition.end"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+				</var>
+			</field>
+		</form>
+		<form name="ServiceExemptionForm">
+			<field property="type" depends="required" page="1">
+				<arg0 key="label.serviceExemption.type"/>
+			</field>
+			<field property="start" depends="required, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<arg0 key="label.serviceExemption.start"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+				</var>
+			</field>
+			<field property="end" depends="required, date" page="1">
+				<msg name="end" key="errors.invalid.date"/>
+				<arg0 key="label.serviceExemption.end"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+				</var>
+			</field>
+		</form>
+
+
 		<!-- Initial form to search a Grant Owner -->
         <form name="searchGrantOwnerForm">
             <field property="idNumber" depends="integer" page="1">

@@ -7,12 +7,12 @@ package ServidorPersistente.Conversores;
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-import Util.RoleType;
+import Util.credits.ServiceExemptionType;
 
 /**
  * @author jpvl
  */
-public class RoleTypeFieldConversion implements FieldConversion
+public class ServiceExemptionTypeFieldConversion implements FieldConversion
 {
 
     /*
@@ -22,10 +22,10 @@ public class RoleTypeFieldConversion implements FieldConversion
      */
     public Object javaToSql(Object obj) throws ConversionException
     {
-        if (obj instanceof RoleType)
+        if (obj instanceof ServiceExemptionType)
         {
-            RoleType roleType = (RoleType) obj;
-            return new Integer(roleType.getValue());
+            ServiceExemptionType serviceExemptionType = (ServiceExemptionType) obj;
+            return new Integer(serviceExemptionType.getValue());
         }
         return obj;
     }
@@ -37,23 +37,23 @@ public class RoleTypeFieldConversion implements FieldConversion
      */
     public Object sqlToJava(Object obj) throws ConversionException
     {
-        RoleType roleType = null;
+        ServiceExemptionType serviceExemptionType = null;
         if (obj instanceof Integer)
         {
-            Integer roleTypeId = (Integer) obj;
+            Integer serviceExemptionId = (Integer) obj;
 
-            roleType = RoleType.getEnum(roleTypeId.intValue());
+            serviceExemptionType = ServiceExemptionType.getEnum(serviceExemptionId.intValue());
 
-            if (roleType == null)
+            if (serviceExemptionType == null)
             {
                 throw new IllegalArgumentException(
-                    this.getClass().getName() + ": Illegal role type!(" + obj + ")");
+                    this.getClass().getName() + ": Illegal service exemption type!(" + obj + ")");
             }
         } else
         {
-            throw new IllegalArgumentException("Illegal role type!(" + obj + ")");
+            throw new IllegalArgumentException("Illegal service exemption type!(" + obj + ")");
         }
-        return roleType;
+        return serviceExemptionType;
 
     }
 

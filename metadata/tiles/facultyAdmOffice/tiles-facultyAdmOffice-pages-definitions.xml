@@ -69,8 +69,35 @@
 	<definition name="manageGrantProject" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantProject.jsp"></put>
 	</definition>
-		<definition name="editGrantProjectForm" extends="facultyAdmOffice.masterPage">
+	<definition name="editGrantProjectForm" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantProject.jsp"></put>
+	</definition>
+	
+	<!-- CREDITS related tiles =================================================================== -->
+	<!-- == USE CASE : List Teacher Service Exemptions =========================================== -->
+	<definition name="searchTeacherFormForListServiceExemptions" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/credits/serviceExemption/searchTeacherFormForListServiceExemptions.jsp"></put>
+	</definition>
+	<definition name="listTeacherServiceExemptions" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/credits/serviceExemption/listTeacherServiceExemptions.jsp"></put>
+	</definition>
+
+	<!-- == USE CASE : List Teacher Management Positions ========================================== -->
+	<definition name="searchTeacherFormForListManagementPositions" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/credits/managementPosition/searchTeacherFormForListManagementPositions.jsp"></put>
+	</definition>
+	<definition name="listTeacherManagementPositions" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/credits/managementPosition/listTeacherManagementPositions.jsp"></put>
+	</definition>
+	
+	<!-- == USE CASE : Edit Service Exemption =========================================== -->
+	<definition name="editServiceExemption" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/credits/serviceExemption/editServiceExemption.jsp"></put>
+	</definition>
+	
+	<!-- == USE CASE : Edit Service Exemption =========================================== -->
+	<definition name="editManagementPosition" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/credits/managementPosition/editManagementPosition.jsp"></put>
 	</definition>
 	
 </tiles-definitions>

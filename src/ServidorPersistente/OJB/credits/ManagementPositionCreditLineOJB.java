@@ -1,0 +1,49 @@
+/*
+ * Created on 29/Fev/2004
+ */
+package ServidorPersistente.OJB.credits;
+
+import java.util.List;
+
+import org.apache.ojb.broker.query.Criteria;
+
+import Dominio.IExecutionPeriod;
+import Dominio.ITeacher;
+import Dominio.credits.ManagementPositionCreditLine;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.credits.IPersistentManagementPositionCreditLine;
+
+/**
+ * @author jpvl
+ */
+public class ManagementPositionCreditLineOJB extends ObjectFenixOJB implements IPersistentManagementPositionCreditLine
+{
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.credits.IPersistentManagementPosistionCreditLine#readByTeacherAndExecutionPeriod(Dominio.ITeacher, Dominio.IExecutionPeriod)
+     */
+    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        
+        criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
+        criteria.addGreaterThan("end", executionPeriod.getBeginDate());
+        criteria.addGreaterOrEqualThan("start", executionPeriod.getEndDate());
+        
+        return queryList(ManagementPositionCreditLine.class, criteria);
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.credits.IPersistentManagementPositionCreditLine#readByTeacher(java.lang.Integer)
+     */
+    public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        
+        criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
+        
+        return queryList(ManagementPositionCreditLine.class, criteria);
+    }
+
+}

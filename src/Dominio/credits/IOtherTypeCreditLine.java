@@ -26,4 +26,14 @@ public interface IOtherTypeCreditLine extends ICreditLine
      * @param reason The reason to set.
      */
     public abstract void setReason(String reason);
+    
+    /**
+     * @return Returns the credits.
+     */
+    public abstract Double getCredits();
+    /**
+     * @param credits The credits to set.
+     */
+    public abstract void setCredits(Double credits);
+    
 }

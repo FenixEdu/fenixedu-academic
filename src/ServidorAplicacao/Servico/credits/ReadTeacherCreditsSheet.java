@@ -14,7 +14,9 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
+import DataBeans.credits.InfoManagementPositionCreditLine;
 import DataBeans.credits.InfoOtherTypeCreditLine;
+import DataBeans.credits.InfoServiceExemptionCreditLine;
 import DataBeans.credits.TeacherCreditsSheetDTO;
 import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import DataBeans.teacher.credits.InfoCredits;
@@ -34,7 +36,9 @@ import Dominio.IShiftProfessorship;
 import Dominio.ISupportLesson;
 import Dominio.ITeacher;
 import Dominio.ResponsibleFor;
+import Dominio.credits.IManagementPositionCreditLine;
 import Dominio.credits.IOtherTypeCreditLine;
+import Dominio.credits.IServiceExemptionCreditLine;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -47,7 +51,9 @@ import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.credits.IPersistentCredits;
+import ServidorPersistente.credits.IPersistentManagementPositionCreditLine;
 import ServidorPersistente.credits.IPersistentOtherTypeCreditLine;
+import ServidorPersistente.credits.IPersistentServiceExemptionCreditLine;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
@@ -312,6 +318,9 @@ public class ReadTeacherCreditsSheet implements IService
 
             List otherTypeCreditLineList = readOtherTypeCreditLine(teacher, executionPeriod, sp);
 
+            List infoManagementPositions = readManagementPositions(teacher, executionPeriod, sp);
+            List infoServiceExemptions = readServiceExcemptions(teacher, executionPeriod, sp);
+
             InfoCredits infoCredits = readCredits(teacher, executionPeriod, sp);
 
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
@@ -336,6 +345,9 @@ public class ReadTeacherCreditsSheet implements IService
             teacherCreditsSheetDTO.setDetailedProfessorshipList(detailedProfessorshipList);
 
             teacherCreditsSheetDTO.setInfoTeacherOtherTypeCreditLineList(otherTypeCreditLineList);
+            
+            teacherCreditsSheetDTO.setInfoManagementPositions(infoManagementPositions);
+            teacherCreditsSheetDTO.setInfoServiceExemptions(infoServiceExemptions);
 
         } catch (ExcepcaoPersistencia e)
         {
@@ -344,6 +356,72 @@ public class ReadTeacherCreditsSheet implements IService
         }
 
         return teacherCreditsSheetDTO;
+    }
+
+    /**
+     * @param teacher
+     * @param executionPeriod
+     * @param sp
+     * @return
+     */
+    private List readServiceExcemptions(
+        ITeacher teacher,
+        IExecutionPeriod executionPeriod,
+        ISuportePersistente sp) throws ExcepcaoPersistencia
+    {
+        IPersistentServiceExemptionCreditLine serviceExemptionCreditLineDAO =
+            sp.getIPersistentServiceExemptionCreditLine();
+        
+        List serviceExemptions = serviceExemptionCreditLineDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
+        
+        List infoServiceExemptions =
+            (List) CollectionUtils.collect(serviceExemptions, new Transformer()
+                    {
+
+                public Object transform(Object input)
+                {
+                    IServiceExemptionCreditLine serviceExemptionCreditLine =
+                        (IServiceExemptionCreditLine) input;
+                    InfoServiceExemptionCreditLine infoServiceExemptionCreditLine =
+                        Cloner.copyIServiceExemptionCreditLine2InfoServiceExemptionCreditLine(serviceExemptionCreditLine);
+                    return infoServiceExemptionCreditLine;
+                }
+            });
+        
+        return infoServiceExemptions;
+    }
+
+    /**
+     * @param teacher
+     * @param executionPeriod
+     * @param sp
+     * @return
+     */
+    private List readManagementPositions(
+        ITeacher teacher,
+        IExecutionPeriod executionPeriod,
+        ISuportePersistente sp) throws ExcepcaoPersistencia
+    {
+        IPersistentManagementPositionCreditLine managementPosistionCreditLineDAO =
+            sp.getIPersistentManagementPositionCreditLine();
+        
+        List managementPositions = managementPosistionCreditLineDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
+        
+        List infoManagementPositions =
+            (List) CollectionUtils.collect(managementPositions, new Transformer()
+                    {
+
+                public Object transform(Object input)
+                {
+                    IManagementPositionCreditLine managementPositionCreditLine =
+                        (IManagementPositionCreditLine) input;
+                    InfoManagementPositionCreditLine infoManagementPositionCreditLine =
+                        Cloner.copyIManagementPositionCreditLine2InfoManagementPositionCreditLine(managementPositionCreditLine);
+                    return infoManagementPositionCreditLine;
+                }
+            });
+        
+        return infoManagementPositions;
     }
 
     /**

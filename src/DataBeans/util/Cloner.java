@@ -105,7 +105,9 @@ import DataBeans.Seminaries.InfoEquivalency;
 import DataBeans.Seminaries.InfoModality;
 import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
+import DataBeans.credits.InfoManagementPositionCreditLine;
 import DataBeans.credits.InfoOtherTypeCreditLine;
+import DataBeans.credits.InfoServiceExemptionCreditLine;
 import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import DataBeans.gaugingTests.physics.InfoGaugingTestResult;
 import DataBeans.gesdis.InfoCourseHistoric;
@@ -147,8 +149,12 @@ import Dominio.Seminaries.ICourseEquivalency;
 import Dominio.Seminaries.IModality;
 import Dominio.Seminaries.ISeminary;
 import Dominio.Seminaries.ITheme;
+import Dominio.credits.IManagementPositionCreditLine;
 import Dominio.credits.IOtherTypeCreditLine;
+import Dominio.credits.IServiceExemptionCreditLine;
+import Dominio.credits.ManagementPositionCreditLine;
 import Dominio.credits.OtherTypeCreditLine;
+import Dominio.credits.ServiceExemptionCreditLine;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import Dominio.gaugingTests.physics.IGaugingTestResult;
@@ -4915,4 +4921,61 @@ public abstract class Cloner
         otherTypeCreditLine.setExecutionPeriod(executionPeriod);
         return otherTypeCreditLine;
     }
+    
+    public static IServiceExemptionCreditLine copyInfoServiceExemptionCreditLine2IServiceExemptionCreditLine(InfoServiceExemptionCreditLine creditLine)
+    {
+        ITeacher teacher = null;
+        if (creditLine.getInfoTeacher() != null )
+        {
+            teacher = copyInfoTeacher2Teacher(creditLine.getInfoTeacher());
+        }
+        
+        IServiceExemptionCreditLine serviceExemptionCreditLine = new ServiceExemptionCreditLine();
+        
+        copyObjectProperties(serviceExemptionCreditLine, creditLine);
+        
+        serviceExemptionCreditLine.setTeacher(teacher);
+        return serviceExemptionCreditLine;
+    }
+    
+    public static IManagementPositionCreditLine copyInfoManagementPositionCreditLine2IManagementPositionCreditLine(InfoManagementPositionCreditLine creditLine)
+    {
+        ITeacher teacher = null;
+        if (creditLine.getInfoTeacher() != null )
+        {
+            teacher = copyInfoTeacher2Teacher(creditLine.getInfoTeacher());
+        }
+        
+        IManagementPositionCreditLine managementPositionCreditLine = new ManagementPositionCreditLine();
+        
+        copyObjectProperties(managementPositionCreditLine, creditLine);
+        
+        managementPositionCreditLine.setTeacher(teacher);
+        return managementPositionCreditLine;
+    }
+    
+    public static InfoManagementPositionCreditLine copyIManagementPositionCreditLine2InfoManagementPositionCreditLine(IManagementPositionCreditLine creditLine)
+    {
+        InfoTeacher infoTeacher = copyITeacher2InfoTeacher(creditLine.getTeacher());
+        
+        InfoManagementPositionCreditLine infoCreditLine = new InfoManagementPositionCreditLine();
+        
+        copyObjectProperties(infoCreditLine, creditLine);
+        
+        infoCreditLine.setInfoTeacher(infoTeacher);
+        return infoCreditLine;
+    }
+    
+    public static InfoServiceExemptionCreditLine copyIServiceExemptionCreditLine2InfoServiceExemptionCreditLine(IServiceExemptionCreditLine creditLine)
+    {
+        InfoTeacher infoTeacher = copyITeacher2InfoTeacher(creditLine.getTeacher());
+        
+        InfoServiceExemptionCreditLine infoCreditLine = new InfoServiceExemptionCreditLine();
+        
+        copyObjectProperties(infoCreditLine, creditLine);
+        
+        infoCreditLine.setInfoTeacher(infoTeacher);
+        return infoCreditLine;
+    }
+    
 }

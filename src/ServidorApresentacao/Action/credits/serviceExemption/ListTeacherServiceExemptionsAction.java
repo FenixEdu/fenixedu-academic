@@ -1,23 +1,19 @@
 /*
- * Created on Dec 3, 2003 by jpvl
- *  
+ * Created on 7/Mar/2004
  */
-package ServidorApresentacao.Action.credits;
+package ServidorApresentacao.Action.credits.serviceExemption;
 
-import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoTeacher;
-import DataBeans.credits.TeacherCreditsSheetDTO;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -25,7 +21,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author jpvl
  */
-public class ReadTeacherCreditsSheetAction extends Action
+public class ListTeacherServiceExemptionsAction extends Action
 {
 
     /*
@@ -44,20 +40,15 @@ public class ReadTeacherCreditsSheetAction extends Action
         throws Exception
     {
         IUserView userView = SessionUtils.getUserView(request);
+
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
-        DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer executionPeriodId = (Integer) dynaForm.get("executionPeriodId");
-        Object args[] = { infoTeacher, executionPeriodId };
-        TeacherCreditsSheetDTO teacherCreditsSheetDTO =
-            (TeacherCreditsSheetDTO) ServiceUtils.executeService(
-                userView,
-                "ReadTeacherCreditsSheet",
-                args);
         
-        BeanComparator dateComparator = new BeanComparator("start");
-        Collections.sort(teacherCreditsSheetDTO.getInfoManagementPositions(), dateComparator);
-        Collections.sort(teacherCreditsSheetDTO.getInfoServiceExemptions(), dateComparator);
-        request.setAttribute("teacherCreditsSheet", teacherCreditsSheetDTO);
+        Object args[] = { infoTeacher.getIdInternal() };
+        
+        List infoServiceExemptions = (List) ServiceUtils.executeService(userView, "ReadTeacherServiceExemptions", args);
+        
+        request.setAttribute("infoServiceExemptions", infoServiceExemptions);
+        
         return mapping.findForward("successfull-read");
     }
 }

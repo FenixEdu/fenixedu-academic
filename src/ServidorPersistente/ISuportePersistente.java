@@ -15,7 +15,9 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquival
 import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
 import ServidorPersistente.credits.IPersistentCredits;
+import ServidorPersistente.credits.IPersistentManagementPositionCreditLine;
 import ServidorPersistente.credits.IPersistentOtherTypeCreditLine;
+import ServidorPersistente.credits.IPersistentServiceExemptionCreditLine;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import ServidorPersistente.gesdis.IPersistentCourseHistoric;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
@@ -263,4 +265,8 @@ public interface ISuportePersistente
     public IPersistentDelegate getIPersistentDelegate();
     
     public IPersistentOtherTypeCreditLine getIPersistentOtherTypeCreditLine();
+    
+    public IPersistentServiceExemptionCreditLine getIPersistentServiceExemptionCreditLine();
+    public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine();
+    
 }

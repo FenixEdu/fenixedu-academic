@@ -11,7 +11,6 @@ import DataBeans.InfoTeacher;
  */
 public abstract class InfoCreditLine extends InfoObject
 {
-    private Double credits;
     private InfoTeacher infoTeacher;
     
     /**
@@ -28,22 +27,6 @@ public abstract class InfoCreditLine extends InfoObject
     public void setInfoTeacher(InfoTeacher infoTeacher)
     {
         this.infoTeacher = infoTeacher;
-    }
-
-    /**
-     * @return Returns the credits.
-     */
-    public Double getCredits()
-    {
-        return credits;
-    }
-
-    /**
-     * @param credits The credits to set.
-     */
-    public void setCredits(Double credits)
-    {
-        this.credits = credits;
     }
 
 }

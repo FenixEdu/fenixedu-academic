@@ -17,6 +17,26 @@
 			<form-bean name="teacherSearchForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="teacherNumber" type="java.lang.String"/>
+				<form-property name="executionPeriodId" type="java.lang.Integer"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
+
+			<form-bean name="ManagementPositionForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="idInternal" type="java.lang.Integer"/>
+				<form-property name="teacherId" type="java.lang.Integer"/>				
+				<form-property name="position" type="java.lang.String"/>
+				<form-property name="start" type="java.lang.String"/>
+				<form-property name="end" type="java.lang.String"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
+			<form-bean name="ServiceExemptionForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="idInternal" type="java.lang.Integer"/>
+				<form-property name="teacherId" type="java.lang.Integer"/>				
+				<form-property name="type" type="java.lang.String"/>
+				<form-property name="start" type="java.lang.String"/>
+				<form-property name="end" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 			
@@ -206,7 +226,12 @@
     	<action path="/index" type="ServidorApresentacao.Action.commons.VoidAction" name="voidForm">
     		<forward name="Success" path="index"/>
     	</action>
-	   	<action path="/teacherSearch" input="search-teacher-form" name="teacherSearchForm" scope="request"
+    	
+    <!-- == USE CASE: List Teacher Management Positions ========================================= -->	
+	   	<action path="/prepareManagementPositionsManagement" 
+	   			input="/prepareManagementPositionsManagement.do?method=searchForm&amp;page=0" 
+	   			name="teacherSearchForm" 
+	   			scope="request"
 	   			parameter="method"
 	   			type="ServidorApresentacao.Action.framework.SearchAction"
 	   			className="ServidorApresentacao.mapping.framework.SearchActionMapping">
@@ -214,10 +239,97 @@
   			<set-property property="objectAttribute" value="infoTeacher"/>
   			<set-property property="listAttribute" value="infoTeacherList"/>
    			<set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
-   			<forward name="search-form" path="teacher-search-form"/>
-  			<forward name="list-one" path="view-teacher-credits-sheet"/> 
-    		<forward name="list-many" path="view-teachers-for-credits-sheet"/>
+   			<forward name="search-form" path="searchTeacherFormForListManagementPositions"/>
+  			<forward name="list-one" path="/listManagementPositions.do"/> 
+    		<forward name="list-many" path=""/>
     	</action>
+	   	<action path="/listManagementPositions" 
+	   			type="ServidorApresentacao.Action.credits.managementPosition.ListTeacherManagementPositionsAction">
+   			<forward name="successfull-read" path="listTeacherManagementPositions"/>
+    	</action>
+    	
+    <!-- == USE CASE: List Teacher Service Exemptions ========================================== -->	
+	   	<action path="/prepareServiceExemptionsManagement" 
+	   			input="/prepareServiceExemptionsManagement.do?method=searchForm&amp;page=0" 
+	   			name="teacherSearchForm" 
+	   			scope="request"
+	   			parameter="method"
+	   			type="ServidorApresentacao.Action.framework.SearchAction"
+	   			className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+			<set-property property="serviceName" value="FindTeachersService"/>
+  			<set-property property="objectAttribute" value="infoTeacher"/>
+  			<set-property property="listAttribute" value="infoTeacherList"/>
+   			<set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
+   			<forward name="search-form" path="searchTeacherFormForListServiceExemptions"/>
+  			<forward name="list-one" path="/listServiceExemptions.do"/> 
+    		<forward name="list-many" path=""/>
+    	</action>
+	   	<action path="/listServiceExemptions" 
+	   			type="ServidorApresentacao.Action.credits.serviceExemption.ListTeacherServiceExemptionsAction">
+   			<forward name="successfull-read" path="listTeacherServiceExemptions"/>
+    	</action>
+
+    <!-- == USE CASE: Edit Teacher Management Position =============================================== -->	
+        <action path="/CRUDManagementPosition" name="ManagementPositionForm" 
+            input="/CRUDManagementPosition.do?method=prepareEdit&amp;page=0" 
+            type="ServidorApresentacao.Action.credits.managementPosition.CRUDManagementPositionAction" 
+            parameter="method" scope="request" 
+            className="ServidorApresentacao.mapping.framework.CRUDMapping" validate="true">
+            <set-property property="editService" value="EditManagementPositionService"/>
+            <set-property property="deleteService" value="DeleteManagementPositionService"/>
+            <set-property property="readService" value="ReadManagementPositionByOidService"/>
+            <set-property property="oidProperty" value="idInternal"/>
+            <set-property property="requestAttribute" value="infoManagementPosition" />
+            <set-property property="infoObjectClassName" 
+                value="DataBeans.credits.InfoManagementPositionCreditLine" />
+            <forward name="show-form" path="editManagementPosition"/>
+            <forward name="successfull-edit" 
+                path="/prepareManagementPositionsManagement.do?method=doSearch"/>
+            <forward name="successfull-read" path=""/>
+            <forward name="successfull-delete" 
+                path="/prepareManagementPositionsManagement.do?method=doSearch"/>
+        </action>		
+
+    <!-- == USE CASE: Edit Teacher Service Excemption =============================================== -->	
+        <action path="/CRUDServiceExemption" name="ServiceExemptionForm" 
+            input="/CRUDServiceExemption.do?method=prepareEdit&amp;page=0" 
+            type="ServidorApresentacao.Action.credits.serviceExemption.CRUDServiceExemptionAction" 
+            parameter="method" scope="request" 
+            className="ServidorApresentacao.mapping.framework.CRUDMapping" validate="true">
+            <set-property property="editService" value="EditServiceExemptionService"/>
+            <set-property property="deleteService" value="DeleteServiceExemptionService"/>
+            <set-property property="readService" value="ReadServiceExemptionByOidService"/>
+            <set-property property="oidProperty" value="idInternal"/>
+            <set-property property="requestAttribute" value="infoServiceExemption" />
+            <set-property property="infoObjectClassName" 
+                value="DataBeans.credits.InfoServiceExemptionCreditLine" />
+            <forward name="show-form" path="editServiceExemption"/>
+            <forward name="successfull-edit" 
+                path="/prepareServiceExemptionsManagement.do?method=doSearch"/>
+            <forward name="successfull-read" path=""/>
+            <forward name="successfull-delete" 
+                path="/prepareServiceExemptionsManagement.do?method=doSearch"/>
+        </action>		
+    	
+    <!-- ==  USE CASE : Read Teacher Credits Sheet =================================== -->
+        <action path="/teacherSearchForTeacherCreditsSheet" 
+            input="search-for-institution-working-time-management" name="teacherSearchForm" 
+            scope="request" parameter="method" type="ServidorApresentacao.Action.framework.SearchAction" 
+            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            <set-property property="serviceName" value="FindTeachersService"/>
+            <set-property property="objectAttribute" value="infoTeacher"/>
+            <set-property property="listAttribute" value="infoTeacherList"/>
+            <set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
+            <forward name="search-form" path="searchForTeacherCreditsSheet"/>
+            <forward name="list-one" path="/showTeacherCreditsSheet.do"/>
+            <forward name="list-many" path=""/>
+        </action>
+    
+        <action path="/showTeacherCreditsSheet" name="executionPeriodForm"
+            type="ServidorApresentacao.Action.credits.ReadTeacherCreditsSheetAction">
+            <forward name="successfull-read" path="showTeacherCreditsSheet"/>
+        </action>
+        <!-- =======================================================================  -->
 
     <!-- ===================== USE CASE: SEARCH GRANT OWNER ============================== -->
 	<action path="/searchGrantOwner" 
@@ -451,7 +563,7 @@
 	</plug-in>
 	    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
-					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-pages-definitions.xml" />
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/credits/tiles-credits-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-pages-definitions.xml" />
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>    

@@ -18,9 +18,6 @@
 	  <put name="navLocal" value="/departmentAdmOffice/commons/localCreditsNavigationBar.jsp" />
 	</definition>
 
-	<definition name="teacher-search-form-layout" page="/departmentAdmOffice/commons/searchTeacherLayout.jsp">
-			<put name="searchInfo" value=""></put>
-	</definition>
 	<definition name="show-teacher-professorships-layout" page="/departmentAdmOffice/teacher/showTeacherProfessorshipsLayout.jsp">
 			<put name="infoTeacher"/>
 			<put name="executionCourseLink"/>

@@ -35,7 +35,9 @@ import ServidorPersistente.OJB.Seminaries.EquivalencyOJB;
 import ServidorPersistente.OJB.Seminaries.ModalityOJB;
 import ServidorPersistente.OJB.Seminaries.ThemeOJB;
 import ServidorPersistente.OJB.credits.CreditsOJB;
+import ServidorPersistente.OJB.credits.ManagementPositionCreditLineOJB;
 import ServidorPersistente.OJB.credits.OtherTypeCreditLineOJB;
+import ServidorPersistente.OJB.credits.ServiceExemptionCreditLineOJB;
 import ServidorPersistente.OJB.degree.finalProject.TeacherDegreeFinalProjectStudentOJB;
 import ServidorPersistente.OJB.gaugingTests.physics.GaugingTestResultOJB;
 import ServidorPersistente.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
@@ -75,7 +77,9 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquival
 import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
 import ServidorPersistente.credits.IPersistentCredits;
+import ServidorPersistente.credits.IPersistentManagementPositionCreditLine;
 import ServidorPersistente.credits.IPersistentOtherTypeCreditLine;
+import ServidorPersistente.credits.IPersistentServiceExemptionCreditLine;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import ServidorPersistente.gesdis.IPersistentCourseHistoric;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
@@ -1199,11 +1203,21 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new DelegateOJB();
     }
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.ISuportePersistente#getIPeristentOtherTypeCreditLine()
-     */
     public IPersistentOtherTypeCreditLine getIPersistentOtherTypeCreditLine()
     {
         return new OtherTypeCreditLineOJB();
+    }
+
+    public IPersistentServiceExemptionCreditLine getIPersistentServiceExemptionCreditLine()
+    {
+        return new ServiceExemptionCreditLineOJB();
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.ISuportePersistente#getIPersistentManagementPosistionCreditLine()
+     */
+    public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine()
+    {
+        return new ManagementPositionCreditLineOJB();
     }
 }
