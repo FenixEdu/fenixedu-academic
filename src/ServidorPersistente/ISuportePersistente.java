@@ -133,7 +133,7 @@ public interface ISuportePersistente
 	public IPersistentPersonRole getIPersistentPersonRole();
 
 	public IPersistentPrecedence getIPersistentPrecedence();
-	public IPersistentRestriction getIPersistentRestriction();
+	public IPersistentRestrictionByCurricularCourse getIPersistentRestrictionByCurricularCourse();
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
 	public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo();

@@ -556,9 +556,9 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new PrecedenceOJB();
     }
 
-    public IPersistentRestriction getIPersistentRestriction()
+    public IPersistentRestrictionByCurricularCourse getIPersistentRestrictionByCurricularCourse()
     {
-        return new RestrictionOJB();
+        return new RestrictionByCurricularCourseOJB();
     }
 
     public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod()
