@@ -102,18 +102,16 @@
 				<bean:message key="link.serviceExemptions.management"/>
 			</html:link>
 		</li>
+		<li>
+			<html:link page="/teacherSearchForTeacherCreditsSheet.do?method=searchForm&amp;page=0" > 
+				<bean:message key="link.creditsSheet.view"/>  
+			</html:link> 
+		</li>
 	</ul>
 	<br />
 	<br />
 	&raquo;	As funcionalidades abaixo <br />estarão brevemente disponíveis.
-	<ul>
-		<li>
-		
-<%--			<html:link page="/prepareCreditsSheetView.do?method=searchForm&amp;page=0" > --%>
-				<bean:message key="link.creditsSheet.view"/>  
-<%--			</html:link> --%>
-		</li>
-	</ul>
+	<br />
 	<b>Relatórios</b>
 	<ul>
 		<li>

@@ -25,8 +25,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author jpvl
  */
-public class ReadTeacherCreditsSheetAction extends Action
-{
+public class ReadTeacherCreditsSheetAction extends Action {
 
     /*
      * (non-Javadoc)
@@ -36,35 +35,43 @@ public class ReadTeacherCreditsSheetAction extends Action
      *      javax.servlet.http.HttpServletRequest,
      *      javax.servlet.http.HttpServletResponse)
      */
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
-        DynaActionForm dynaForm = (DynaActionForm) form;        
-        InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
-        if (infoTeacher == null){
-            Integer teacherNumber = (Integer)dynaForm.get("teacherNumber");
+        DynaActionForm dynaForm = (DynaActionForm) form;
+        InfoTeacher infoTeacher = (InfoTeacher) request
+                .getAttribute("infoTeacher");
+        if (infoTeacher == null) {
+            Integer teacherNumber = null;
+
+            if(request.getParameter("teacherNumber") != null && request.getParameter("teacherNumber").length() > 0) {
+                teacherNumber = new Integer(request.getParameter("teacherNumber"));
+            } else if (dynaForm.get("teacherNumber") != null) {
+                teacherNumber = (Integer) dynaForm.get("teacherNumber");
+            }
+            
             infoTeacher = new InfoTeacher();
             infoTeacher.setTeacherNumber(teacherNumber);
         }
 
-        Integer executionPeriodId = (Integer) dynaForm.get("executionPeriodId");
-     
-        Object args[] = { infoTeacher, executionPeriodId };
-        TeacherCreditsSheetDTO teacherCreditsSheetDTO =
-            (TeacherCreditsSheetDTO) ServiceUtils.executeService(
-                userView,
-                "ReadTeacherCreditsSheet",
-                args);
+        Integer executionPeriodId = null;
+        if(request.getParameter("executionPeriodId") != null && request.getParameter("executionPeriodId").length() > 0) {
+            executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
+        } else if(dynaForm.get("executionPeriodId") != null) {
+            executionPeriodId = (Integer) dynaForm.get("executionPeriodId");
+        }
         
+        Object args[] = { infoTeacher, executionPeriodId};
+        TeacherCreditsSheetDTO teacherCreditsSheetDTO = (TeacherCreditsSheetDTO) ServiceUtils
+                .executeService(userView, "ReadTeacherCreditsSheet", args);
+
         BeanComparator dateComparator = new BeanComparator("start");
-        Collections.sort(teacherCreditsSheetDTO.getInfoManagementPositions(), dateComparator);
-        Collections.sort(teacherCreditsSheetDTO.getInfoServiceExemptions(), dateComparator);
+        Collections.sort(teacherCreditsSheetDTO.getInfoManagementPositions(),
+                dateComparator);
+        Collections.sort(teacherCreditsSheetDTO.getInfoServiceExemptions(),
+                dateComparator);
         request.setAttribute("teacherCreditsSheet", teacherCreditsSheetDTO);
         return mapping.findForward("successfull-read");
     }

@@ -151,5 +151,15 @@
 	<definition name="editManagementPosition" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/credits/managementPosition/editManagementPosition.jsp"></put>
 	</definition>
+	<!-- == USE CASE : Credits Sheet ========================================== -->
+	<definition name="searchForTeacherCreditsSheet" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/credits/searchTeacher.jsp"></put>
+	</definition>
+	<definition name="showTeacherCreditsSheet" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/credits/showTeacherCreditsSheet.jsp"></put>
+	</definition>
+	<definition name="listTeacherCredits" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/teacher/credits/listTeacherCredits.jsp"></put>
+	</definition>
 	
 </tiles-definitions>
