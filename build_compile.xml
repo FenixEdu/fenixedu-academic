@@ -31,7 +31,7 @@
 
 	<!-- Compilation options -->
 	<property name="compile.debug"       value="on"/>
-  	<property name="compile.deprecation" value="on"/>
+  	<property name="compile.deprecation" value="off"/>
   	<property name="compile.optimize"    value="on"/>
 
 
@@ -397,7 +397,11 @@
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
-               encoding="${encoding}">
+               encoding="${encoding}"
+			   nowarn="true"
+			   memoryInitialSize="256m"
+			   memoryMaximumSize="256m"
+			   fork="true">
 			<src path="${src}"/>
 		</javac>
 	</target>
