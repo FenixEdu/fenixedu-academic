@@ -292,6 +292,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 
 			// Remove the Lesson that is being edited from the list
 			// of intercepting lessons.
+			// TODO : this aspect is not yet contemplated in the tests.
 			if (oldLesson != null && oldLesson instanceof Aula)
 				for (int ipto = 0; ipto < lessonList.size(); ipto++)
 					if (((Aula) lessonList.get(ipto))
