@@ -26,9 +26,29 @@
 	</h2>
 	<ul>
 		<li>
-			<html:link  page="/chooseExecutionCourse.do">
+		   		<html:link page="<%= "/chooseExecutionCourse.do?"
+					+ SessionConstants.CLASS_VIEW_OID
+				  	+ "="
+				  	+ pageContext.findAttribute("classOID")
+				  	+ "&amp;"
+					+ SessionConstants.EXECUTION_COURSE_OID
+				  	+ "="
+				  	+ pageContext.findAttribute("executionCourseOID")
+				  	+ "&amp;"
+					+ SessionConstants.EXECUTION_PERIOD_OID
+				  	+ "="
+				  	+ pageContext.findAttribute("executionPeriodOID")
+				  	+ "&amp;"
+				  	+ SessionConstants.CURRICULAR_YEAR_OID
+					+ "="
+				  	+ pageContext.findAttribute("curricularYearOID")
+				  	+ "&amp;"
+					+ SessionConstants.EXECUTION_DEGREE_OID
+				  	+ "="
+					+ pageContext.findAttribute("executionDegreeOID") %>">
 				<bean:message key="label.addShift"/>
 			</html:link>
+
 		</li>
 	</ul>
 </logic:notPresent>
@@ -77,14 +97,57 @@
 				</td>
 				<logic:present name="available">
 					<td class="listClasses">
-						<html:link paramId="shiftIndex" paramName="shiftIndex" href="ClassShiftManagerDA.do?method=addClassShift">
+		   		<html:link page="<%= "/ClassShiftManagerDA.do?method=addClassShift&amp;shiftIndex="
+		   			+ pageContext.findAttribute("shiftIndex")
+		   			+ "&amp;"
+					+ SessionConstants.CLASS_VIEW_OID
+				  	+ "="
+				  	+ pageContext.findAttribute("classOID")
+				  	+ "&amp;"
+					+ SessionConstants.EXECUTION_COURSE_OID
+				  	+ "="
+				  	+ pageContext.findAttribute("executionCourseOID")
+				  	+ "&amp;"
+					+ SessionConstants.EXECUTION_PERIOD_OID
+				  	+ "="
+				  	+ pageContext.findAttribute("executionPeriodOID")
+				  	+ "&amp;"
+				  	+ SessionConstants.CURRICULAR_YEAR_OID
+					+ "="
+				  	+ pageContext.findAttribute("curricularYearOID")
+				  	+ "&amp;"
+					+ SessionConstants.EXECUTION_DEGREE_OID
+				  	+ "="
+					+ pageContext.findAttribute("executionDegreeOID") %>">
 							<bean:message key="label.add"/>
 						</html:link>
 					</td>
 				</logic:present>
 				<logic:notPresent name="available">
 					<td class="listClasses">
-						<html:link paramId="shiftIndex" paramName="shiftIndex" href="ClassShiftManagerDA.do?method=removeClassShift">
+
+		   		<html:link page="<%= "/ClassShiftManagerDA.do?method=removeClassShift&amp;shiftIndex="
+		   			+ pageContext.findAttribute("shiftIndex")
+		   			+ "&amp;"
+					+ SessionConstants.CLASS_VIEW_OID
+				  	+ "="
+				  	+ pageContext.findAttribute("classOID")
+				  	+ "&amp;"
+					+ SessionConstants.EXECUTION_COURSE_OID
+				  	+ "="
+				  	+ pageContext.findAttribute("executionCourseOID")
+				  	+ "&amp;"
+					+ SessionConstants.EXECUTION_PERIOD_OID
+				  	+ "="
+				  	+ pageContext.findAttribute("executionPeriodOID")
+				  	+ "&amp;"
+				  	+ SessionConstants.CURRICULAR_YEAR_OID
+					+ "="
+				  	+ pageContext.findAttribute("curricularYearOID")
+				  	+ "&amp;"
+					+ SessionConstants.EXECUTION_DEGREE_OID
+				  	+ "="
+					+ pageContext.findAttribute("executionDegreeOID") %>">
 							<bean:message key="label.delete"/>
 						</html:link>
 					</td>

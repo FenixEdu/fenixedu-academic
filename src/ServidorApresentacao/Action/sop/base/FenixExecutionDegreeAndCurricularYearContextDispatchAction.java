@@ -31,11 +31,12 @@ public abstract class FenixExecutionDegreeAndCurricularYearContextDispatchAction
 		HttpServletResponse response)
 		throws Exception {
 
-		ActionForward actionForward =
-			super.execute(mapping, actionForm, request, response);
-
+		System.out.println("###################### Setting degree in request...");
 		ContextUtils.setExecutionDegreeContext(request);
 		ContextUtils.setCurricularYearContext(request);
+
+		ActionForward actionForward =
+			super.execute(mapping, actionForm, request, response);
 
 		return actionForward;
 	}

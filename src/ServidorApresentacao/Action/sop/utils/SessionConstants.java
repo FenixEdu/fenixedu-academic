@@ -46,6 +46,7 @@ public abstract class SessionConstants {
 	// -------------------------------------------------------------------------------
 	//    General Purpose Constants - For Context
 	// -------------------------------------------------------------------------------
+	public static final String CLASS_VIEW_OID = "class_oid";
 	public static final String CURRICULAR_YEAR = "curricular_year";
 	public static final String CURRICULAR_YEAR_OID = "curricular_year_oid";
 	public static final String EXECUTION_COURSE = "execution_course";

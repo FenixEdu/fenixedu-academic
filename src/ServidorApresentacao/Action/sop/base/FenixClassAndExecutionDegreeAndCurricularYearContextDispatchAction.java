@@ -1,5 +1,5 @@
 /*
- * Created on 2003/07/31
+ * Created on 2003/08/05
  *
  */
 package ServidorApresentacao.Action.sop.base;
@@ -15,8 +15,9 @@ import ServidorApresentacao.Action.utils.ContextUtils;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
+ * 
  */
-public abstract class FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction
+public abstract class FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction
 	extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 	/**
 	 * Tests if the session is valid.
@@ -30,8 +31,7 @@ public abstract class FenixExecutionCourseAndExecutionDegreeAndCurricularYearCon
 		HttpServletResponse response)
 		throws Exception {
 
-
-		ContextUtils.setExecutionCourseContext(request);
+		ContextUtils.setClassContext(request);
 
 		ActionForward actionForward =
 			super.execute(mapping, actionForm, request, response);

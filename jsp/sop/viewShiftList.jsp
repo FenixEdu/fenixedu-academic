@@ -7,5 +7,6 @@
   <tiles:put name="body-context" value=""/>  
   <tiles:put name="body" value="/sop/viewShiftList_bd.jsp" />
   <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
+  <tiles:put name="context" value="/commons/contextClassAndExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
 </tiles:insert>
 

@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import DataBeans.InfoClass;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
@@ -205,7 +206,10 @@ public class ContextUtils {
 		}
 
 		Integer executionCourseOID = null;
-		if (executionCourseOIDString != null) {
+		System.out.println("executionCourseOID" + executionCourseOID);
+		if (executionCourseOIDString != null
+			&& !executionCourseOIDString.equals("")
+			&& !executionCourseOIDString.equals("null")) {
 			executionCourseOID = new Integer(executionCourseOIDString);
 		}
 
@@ -277,6 +281,47 @@ public class ContextUtils {
 			}
 		}
 	}
+
+	/**
+	 * @param request
+	 */
+	public static void setClassContext(HttpServletRequest request) {
+		String classOIDString =
+			(String) request.getAttribute(
+				SessionConstants.CLASS_VIEW_OID);
+		System.out.println("Class from request: " + classOIDString);
+		if (classOIDString == null) {
+			classOIDString =
+				request.getParameter(SessionConstants.CLASS_VIEW_OID);
+			System.out.println("Class from parameter: " + classOIDString);
+		}
+
+		Integer classOID = null;
+		if (classOIDString != null) {
+			classOID = new Integer(classOIDString);
+		}
+
+		InfoClass infoClass = null;
+
+		if (classOID != null) {
+			// Read from database
+			try {
+				Object[] args = { classOID };
+				infoClass =
+					(InfoClass) ServiceUtils.executeService(
+						null,
+						"ReadClassByOID",
+						args);
+			} catch (FenixServiceException e) {
+				e.printStackTrace();
+			}
+
+			// Place it in request
+			request.setAttribute(
+				SessionConstants.CLASS_VIEW,
+				infoClass);
+		}
+	}	
 
 	public static void setSelectedRoomsContext(HttpServletRequest request)
 		throws FenixActionException {
@@ -388,7 +433,7 @@ public class ContextUtils {
 			request.getParameter(name) != null
 				&& !request.getParameter(name).equals("")
 				&& !request.getParameter(name).equals("null"))
-			obj = (String) request.getParameter(name);
+			obj = request.getParameter(name);
 
 		if (obj != null) {
 			System.out.println(name + " in request: " + obj);

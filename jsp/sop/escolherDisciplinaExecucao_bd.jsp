@@ -25,6 +25,8 @@
           </tr>
         </table>
 <br />
+<html:hidden property="<%= SessionConstants.CLASS_VIEW_OID %>"
+			 value="<%= pageContext.findAttribute("classOID").toString() %>"/>
 <html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 			 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 <html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"

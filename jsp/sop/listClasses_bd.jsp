@@ -32,13 +32,28 @@
 			return confirm('<bean:message key="message.confirm.delete.class"/>')
 		  </bean:define>
 			<logic:iterate id="classView" name="classesList" scope="request">
+			<bean:define id="classOID"
+						 type="java.lang.Integer"
+						 name="classView"
+						 property="idInternal"/>
 		<tr>
 		  <td nowrap="nowrap" class="listClasses">
-			  <div align="center">
-			    <html:link paramId="className" paramName="classView" paramProperty="nome" href="ClassManagerDA.do?method=viewClass">
-			    </html:link>
-		    </div>
-		    <html:link paramId="className" paramName="classView" paramProperty="nome" href="ClassManagerDA.do?method=viewClass">
+		   		<html:link page="<%= "/ClassManagerDA.do?method=viewClass&amp;"
+					+ SessionConstants.CLASS_VIEW_OID
+				  	+ "="
+				  	+ pageContext.findAttribute("classOID")
+				  	+ "&amp;"
+					+ SessionConstants.EXECUTION_PERIOD_OID
+				  	+ "="
+				  	+ pageContext.findAttribute("executionPeriodOID")
+				  	+ "&amp;"
+				  	+ SessionConstants.CURRICULAR_YEAR_OID
+					+ "="
+				  	+ pageContext.findAttribute("curricularYearOID")
+				  	+ "&amp;"
+					+ SessionConstants.EXECUTION_DEGREE_OID
+				  	+ "="
+					+ pageContext.findAttribute("executionDegreeOID") %>">
 			  <div align="center">
 			    <jsp:getProperty name="classView" property="nome" />
 			    </div>
@@ -46,7 +61,24 @@
 		  </td>
 		  <td nowrap="nowrap" class="listClasses">
 			<div align="center">
-			  <html:link paramId="className" paramName="classView" paramProperty="nome" href="ClassManagerDA.do?method=deleteClass" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
+
+		   		<html:link page="<%= "/ClassManagerDA.do?method=deleteClass&amp;"
+					+ SessionConstants.CLASS_VIEW_OID
+				  	+ "="
+				  	+ pageContext.findAttribute("classOID")
+				  	+ "&amp;"
+					+ SessionConstants.EXECUTION_PERIOD_OID
+				  	+ "="
+				  	+ pageContext.findAttribute("executionPeriodOID")
+				  	+ "&amp;"
+				  	+ SessionConstants.CURRICULAR_YEAR_OID
+					+ "="
+				  	+ pageContext.findAttribute("curricularYearOID")
+				  	+ "&amp;"
+					+ SessionConstants.EXECUTION_DEGREE_OID
+				  	+ "="
+					+ pageContext.findAttribute("executionDegreeOID") %>"
+					onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 			    <bean:message key="label.delete"/>
 			  </html:link>
 		      </div></td>

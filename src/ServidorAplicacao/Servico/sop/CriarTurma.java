@@ -26,57 +26,64 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CriarTurma implements IServico {
 
-  private static CriarTurma _servico = new CriarTurma();
-  /**
-   * The singleton access method of this class.
-   **/
-  public static CriarTurma getService() {
-    return _servico;
-  }
+	private static CriarTurma _servico = new CriarTurma();
+	/**
+	 * The singleton access method of this class.
+	 **/
+	public static CriarTurma getService() {
+		return _servico;
+	}
 
-  /**
-   * The actor of this class.
-   **/
-  private CriarTurma() { }
+	/**
+	 * The actor of this class.
+	 **/
+	private CriarTurma() {
+	}
 
-  /**
-   * Devolve o nome do servico
-   **/
-  public final String getNome() {
-    return "CriarTurma";
-  }
+	/**
+	 * Devolve o nome do servico
+	 **/
+	public final String getNome() {
+		return "CriarTurma";
+	}
 
-  public Object run(InfoClass infoTurma) throws FenixServiceException {
-                        
-    ITurma turma = null;
-    boolean result = false;
+	public Object run(InfoClass infoTurma) throws FenixServiceException {
 
-    try {
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      
-      turma = Cloner.copyInfoClass2Class(infoTurma);
-      
-      IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-      ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
-      
-      turma.setExecutionDegree(executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(turma.getExecutionDegree().getCurricularPlan(), turma.getExecutionDegree().getExecutionYear()));
-      
-      
-      turma.setExecutionPeriod(executionPeriodDAO.readByNameAndExecutionYear(turma.getExecutionPeriod().getName(), turma.getExecutionPeriod().getExecutionYear()));
-      
-      
-      try {
-		sp.getITurmaPersistente().lockWrite(turma);
-	} catch (ExistingPersistentException ex) {
-	throw new ExistingServiceException(ex);
-}
-      
-      result = true;
-    } catch (ExcepcaoPersistencia ex) {
-		throw new FenixServiceException(ex.getMessage());
-    }
-    
-    return new Boolean (result);
-  }
-  
+		ITurma turma = null;
+		InfoClass infoClass = null;
+
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+			turma = Cloner.copyInfoClass2Class(infoTurma);
+
+			IPersistentExecutionPeriod executionPeriodDAO =
+				sp.getIPersistentExecutionPeriod();
+			ICursoExecucaoPersistente executionDegreeDAO =
+				sp.getICursoExecucaoPersistente();
+
+			turma.setExecutionDegree(
+				executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(
+					turma.getExecutionDegree().getCurricularPlan(),
+					turma.getExecutionDegree().getExecutionYear()));
+
+			turma.setExecutionPeriod(
+				executionPeriodDAO.readByNameAndExecutionYear(
+					turma.getExecutionPeriod().getName(),
+					turma.getExecutionPeriod().getExecutionYear()));
+
+			try {
+				sp.getITurmaPersistente().lockWrite(turma);
+				infoClass = Cloner.copyClass2InfoClass(turma);
+			} catch (ExistingPersistentException ex) {
+				throw new ExistingServiceException(ex);
+			}
+
+		} catch (ExcepcaoPersistencia ex) {
+			throw new FenixServiceException(ex.getMessage());
+		}
+
+		return infoClass;
+	}
+
 }

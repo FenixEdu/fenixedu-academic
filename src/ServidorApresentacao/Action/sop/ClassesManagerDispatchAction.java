@@ -12,15 +12,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import ServidorApresentacao.Action.sop.base.FenixClassAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -30,7 +30,8 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  *
  * 
  */
-public class ClassesManagerDispatchAction extends DispatchAction {
+public class ClassesManagerDispatchAction
+	extends FenixClassAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 	static public final String CLASS_LIST_KEY = "classesList";
 
 	public ActionForward listClasses(
@@ -39,26 +40,42 @@ public class ClassesManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			
-		HttpSession session = request.getSession(false);
-		
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-		
-		Integer curricularYear = (Integer) request.getAttribute(SessionConstants.CURRICULAR_YEAR_KEY);
-		
-		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
-		
-		
-		Object argsLerTurmas[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear};
 
-		List classesList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),"LerTurmas", argsLerTurmas);
-		
+		//HttpSession session = request.getSession(false);
+
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
+
+		InfoCurricularYear infoCurricularYear =
+			(InfoCurricularYear) request.getAttribute(
+				SessionConstants.CURRICULAR_YEAR);
+
+		Integer curricularYear = infoCurricularYear.getYear();
+
+		InfoExecutionDegree infoExecutionDegree =
+			(InfoExecutionDegree) request.getAttribute(
+				SessionConstants.EXECUTION_DEGREE);
+
+		Object argsLerTurmas[] =
+			{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
+
+
+		System.out.println("### Calling service: ReadClasses");
+		List classesList =
+			(List) ServiceUtils.executeService(
+				SessionUtils.getUserView(request),
+				"LerTurmas",
+				argsLerTurmas);
+
+		System.out.println("### Classes List size = " + classesList.size());
+
 		if (classesList != null && !classesList.isEmpty())
 			request.setAttribute(CLASS_LIST_KEY, classesList);
 
-		request.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
+		request.removeAttribute(SessionConstants.EXECUTION_COURSE);
 		request.removeAttribute(SessionConstants.CLASS_VIEW);
-		
+
 		return mapping.findForward("listClasses");
 	}
 

@@ -12,7 +12,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -21,11 +20,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixExecutionDegreeAndCurricularYearContextAction;
+import ServidorApresentacao.Action.sop.base.FenixClassAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -35,7 +30,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * 
  */
 public class ChooseExecutionCourseAction
-	extends FenixExecutionDegreeAndCurricularYearContextAction {
+	extends FenixClassAndExecutionDegreeAndCurricularYearContextAction {
 
 	public ActionForward execute(
 		ActionMapping mapping,
@@ -46,7 +41,7 @@ public class ChooseExecutionCourseAction
 
 		super.execute(mapping, form, request, response);
 
-		HttpSession session = request.getSession(false);
+		//HttpSession session = request.getSession(false);
 
 		DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 
@@ -72,8 +67,8 @@ public class ChooseExecutionCourseAction
 				infoCourse);
 			return mapping.findForward("forwardChoose");
 		} else {
-			request.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
-			//session.removeAttribute(SessionConstants.CLASS_VIEW);
+			request.removeAttribute(SessionConstants.EXECUTION_COURSE);
+			//request.removeAttribute(SessionConstants.CLASS_VIEW);
 			return mapping.findForward("showForm");
 		}
 	}

@@ -30,8 +30,11 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
 		throws Exception {
 
 		ContextUtils.setExecutionPeriodContext(request);
+
+		ActionForward actionForward =
+			super.execute(mapping, actionForm, request, response);
 		
-		return super.execute(mapping, actionForm, request, response);
+		return actionForward;
 	}
 
 }
