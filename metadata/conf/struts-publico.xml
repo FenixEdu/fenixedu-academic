@@ -315,6 +315,12 @@
      <forward name="Sucess" path="/viewSection.jsp"/>         
 	</action>
 	
+	<!-- Evaluation viewer -->
+	<action path="/viewEvaluation"
+        type="ServidorApresentacao.Action.publico.ViewEvaluationAction">    
+     <forward name="Sucess" path="/viewEvaluation.jsp"/>         
+	</action>
+	
 <!-- End of Gesdis-->
 
 <!-- EXAMS -->
