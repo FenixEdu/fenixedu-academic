@@ -30,18 +30,16 @@ public class AuthenticationAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-			IUserView userView = null;
-			try {
-		DynaActionForm authenticationForm = (DynaActionForm) form;
+		IUserView userView = null;
+		try {
+			DynaActionForm authenticationForm = (DynaActionForm) form;
 
-		GestorServicos gestor = GestorServicos.manager();
-		Object argsAutenticacao[] =
-			{
-				authenticationForm.get("username"),
-				authenticationForm.get("password")};
-		
+			GestorServicos gestor = GestorServicos.manager();
+			Object argsAutenticacao[] =
+				{
+					authenticationForm.get("username"),
+					authenticationForm.get("password")};
 
-		
 			userView =
 				(IUserView) gestor.executar(
 					null,
@@ -56,8 +54,8 @@ public class AuthenticationAction extends FenixAction {
 			return mapping.getInputForward();
 
 		} catch (FenixServiceException e) {
-		throw new FenixActionException(e);
-	}
+			throw new FenixActionException(e);
+		}
 
 		// Invalidate existing session if it exists
 		HttpSession sessao = request.getSession(false);
