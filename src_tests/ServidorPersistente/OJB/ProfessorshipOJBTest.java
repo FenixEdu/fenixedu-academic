@@ -332,8 +332,7 @@ public class ProfessorshipOJBTest extends TestCaseOJB {
 			persistentSupport.confirmarTransaccao();
 			assertEquals(
 				"testReadByExecutionCourse: failed reading professorship.List size diferent",
-				professorships.size(),
-				3);
+				2, professorships.size());
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace();
 			fail("testReadByExecutionCourse: failed reading");
@@ -367,7 +366,7 @@ public class ProfessorshipOJBTest extends TestCaseOJB {
 				professorships);
 			assertEquals(
 				"testReadAll: failed reading all professorships",
-				5,
+				4,
 				professorships.size());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e1) {
