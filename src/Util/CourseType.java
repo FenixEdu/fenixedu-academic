@@ -8,7 +8,7 @@ package Util;
  * @author asnr and scpo
  *
  */
-public class CourseType {
+public class CourseType extends FenixUtil {
 	
 	public static final int NORMAL = 0;
 	public static final int EXTRA_CURRICULAR = 1;

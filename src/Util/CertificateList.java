@@ -1,6 +1,5 @@
 package Util;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
@@ -11,7 +10,7 @@ import org.apache.struts.util.LabelValueBean;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class CertificateList implements Serializable {
+public class CertificateList extends FenixUtil {
 
 	public static final int MATRICULA = 1;
 	public static final int MATRICULA_INSCRICAO = 2;

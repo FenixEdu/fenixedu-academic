@@ -1,6 +1,5 @@
 package Util;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +8,7 @@ import java.util.ArrayList;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class DocumentReason implements Serializable {
+public class DocumentReason extends FenixUtil {
 
 	public static final int FAMILY_ALLOWANCE = 1;
 	public static final int MILITARY_PURPOSE = 2;

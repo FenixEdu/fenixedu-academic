@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.enum.ValuedEnum;
 import org.apache.struts.util.LabelValueBean;
 
 /**
@@ -15,7 +14,7 @@ import org.apache.struts.util.LabelValueBean;
  *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  *
  */
-public final class MasterDegreeClassification extends ValuedEnum {
+public final class MasterDegreeClassification extends FenixValuedEnum {
 
 	public static final int APPROVED_TYPE = 1;
 	public static final int NOT_APPROVED_TYPE = 2;

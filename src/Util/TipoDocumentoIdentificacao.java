@@ -13,12 +13,11 @@
  */
 package Util;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
 
-public class TipoDocumentoIdentificacao implements Serializable {
+public class TipoDocumentoIdentificacao extends FenixUtil {
 
     public static final int BILHETE_DE_IDENTIDADE = 1;
     public static final int PASSAPORTE = 2;

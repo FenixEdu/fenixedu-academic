@@ -4,14 +4,13 @@
  */
 package Util;
 
-import java.io.Serializable;
 
 /**
  * This class tells in which step of the enrolment this precedence is to be applied.
   * 	TO_APPLY_DURING_ENROLMENT  
  * @author jpvl
  */
-public class PrecedenceScopeToApply implements Serializable{
+public class PrecedenceScopeToApply extends FenixUtil{
 	public static final int TO_APPLY_TO_SPAN_INT = 1;
 	public static final int TO_APLLY_DURING_ENROLMENT_INT = 2;
 	public static final int TO_APLLY_TO_OPTION_LIST_INT = 3;

@@ -1,13 +1,12 @@
 package Util;
 
-import java.io.Serializable;
 
 /**
  * @author David Santos
  * Feb 6, 2004
  */
 
-public class PeriodToApplyRestriction implements Serializable
+public class PeriodToApplyRestriction extends FenixUtil
 {
 	public static final int BOTH_SEMESTERS_INT = 0;
 	public static final int FIRST_SEMESTER_INT = 1;

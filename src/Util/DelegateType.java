@@ -8,14 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.enum.ValuedEnum;
-
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida</a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo</a>
  *  
  */
-public class DelegateType extends ValuedEnum
+public class DelegateType extends FenixValuedEnum
 {
     public static final int DEGREE_TYPE = 1;
     public static final int FIRST_YEAR_TYPE = 2;

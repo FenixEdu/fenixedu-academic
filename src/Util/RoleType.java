@@ -4,17 +4,14 @@
  */
 package Util;
 
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.enum.ValuedEnum;
-
 /**
  * @author jpvl
  */
-public final class RoleType extends ValuedEnum implements Serializable
+public final class RoleType extends FenixValuedEnum 
 {
 	/* must match with field ROLE_TYPE in table ROLE */
 	public static final int PERSON_TYPE = 1;

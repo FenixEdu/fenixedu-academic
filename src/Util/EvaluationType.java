@@ -1,6 +1,5 @@
 package Util;
 
-import java.io.Serializable;
 
 
 /**
@@ -9,7 +8,7 @@ import java.io.Serializable;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class EvaluationType implements Serializable {
+public class EvaluationType extends FenixUtil {
 
 	public static final int EXAM = 1;
 	public static final int FINAL = 2;

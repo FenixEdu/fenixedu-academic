@@ -1,72 +1,84 @@
 package Util;
 
-import java.io.Serializable;
-
 /**
- * @author dcs-rjao
- *
- * 25/Mar/2003
+ * @author dcs-rjao 25/Mar/2003
  */
-public class StudentType implements Serializable {
+public class StudentType extends FenixUtil
+{
 
-	public static final int NORMAL = 1;
-	public static final int WORKING_STUDENT = 2;
+    public static final int NORMAL = 1;
 
-	private Integer state;
+    public static final int WORKING_STUDENT = 2;
 
-	/** Creates a new instance of StudentType */
-	public StudentType() {
-	}
+    private Integer state;
 
-	public StudentType(int state) {
-		this.state = new Integer(state);
-	}
+    /** Creates a new instance of StudentType */
+    public StudentType()
+    {
+    }
 
-	public StudentType(Integer state) {
-		this.state = state;
-	}
+    public StudentType(int state)
+    {
+        this.state = new Integer(state);
+    }
 
-	/** Getter for property state.
-	 * @return Value of property state.
-	 *
-	 */
-	public java.lang.Integer getState() {
-		return state;
-	}
+    public StudentType(Integer state)
+    {
+        this.state = state;
+    }
 
-	/** Setter for property state.
-	 * @param state New value of property state.
-	 *
-	 */
-	public void setState(Integer state) {
-		this.state = state;
-	}
+    /**
+     * Getter for property state.
+     * 
+     * @return Value of property state.
+     */
+    public java.lang.Integer getState()
+    {
+        return state;
+    }
 
-	public boolean equals(Object o) {
-		if (o instanceof StudentType) {
-			StudentType aux = (StudentType) o;
-			return this.state.equals(aux.getState());
-		} else {
-			return false;
-		}
-	}
+    /**
+     * Setter for property state.
+     * 
+     * @param state
+     *            New value of property state.
+     */
+    public void setState(Integer state)
+    {
+        this.state = state;
+    }
 
-	public String toString() {
+    public boolean equals(Object o)
+    {
+        if (o instanceof StudentType)
+        {
+            StudentType aux = (StudentType) o;
+            return this.state.equals(aux.getState());
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-		int value = this.state.intValue();
-		String valueS = null;
+    public String toString()
+    {
 
-		switch (value) {
-			case NORMAL :
-				valueS = "FIRST_SEASON";
-				break;
-			case WORKING_STUDENT :
-				valueS = "WORKING_STUDENT";
-				break;
-			default:
-				break;
-		}
+        int value = this.state.intValue();
+        String valueS = null;
 
-		return "[" + this.getClass().getName() + ": " + valueS + "]";
-	}
+        switch (value)
+        {
+            case NORMAL:
+                valueS = "FIRST_SEASON";
+                break;
+            case WORKING_STUDENT:
+                valueS = "WORKING_STUDENT";
+                break;
+            default:
+                break;
+        }
+
+        return "[" + this.getClass().getName() + ": " + valueS + "]";
+    }
 }

@@ -17,7 +17,7 @@ import DataBeans.InfoExecutionDegree;
  * @author Tânia Pousão
  *  
  */
-public class ExecutionDegreesFormat
+public class ExecutionDegreesFormat extends FenixUtil
 {
 	public static List buildExecutionDegreeLabelValueBean(List executionDegreeList)
 	{

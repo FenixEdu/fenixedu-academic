@@ -58,7 +58,7 @@ import Tools.SmartDataSetGeneratorForLEECTestBattery;
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class GeraXml
+public class GeraXml extends FenixUtil
 {
 
     private static final String CC_FILE_PATH = "CurricularCoursesFilePath";

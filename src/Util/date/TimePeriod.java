@@ -7,10 +7,12 @@ package Util.date;
 import java.util.Calendar;
 import java.util.Date;
 
+import Util.FenixUtil;
+
 /**
  * @author jpvl
  */
-public class TimePeriod
+public class TimePeriod extends FenixUtil
 {
     private long start;
 

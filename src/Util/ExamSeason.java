@@ -1,13 +1,12 @@
 package Util;
 
-import java.io.Serializable;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  *
  * 22/Abr/2003
  */
-public class ExamSeason implements Serializable {
+public class ExamSeason extends FenixUtil {
 
 	public static final int FIRST_SEASON = 1;
 	public static final int SECOND_SEASON = 2;

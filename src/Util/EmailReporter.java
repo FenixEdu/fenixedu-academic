@@ -4,7 +4,6 @@
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package Util;
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ import javax.mail.event.TransportListener;
  * Created at 26/Set/2003, 20:02:21
  * 
  */
-public class EmailReporter implements TransportListener, Serializable 
+public class EmailReporter extends FenixUtil implements TransportListener 
 {
 	private List invalid;
 	private List validUndelivered;

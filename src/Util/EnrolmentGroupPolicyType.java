@@ -4,13 +4,12 @@
  */
 package Util;
 
-import java.io.Serializable;
 
 /**
  * @author asnr and scpo
  *
  */
-public class EnrolmentGroupPolicyType implements Serializable {
+public class EnrolmentGroupPolicyType extends FenixUtil {
 	
 	public static final int ATOMIC = 1;
 	public static final int INDIVIDUAL = 2;

@@ -4,7 +4,6 @@
  */
 package Util;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +12,7 @@ import org.apache.struts.util.LabelValueBean;
 /**
  * @author Susana Fernandes
  */
-public class CorrectionAvailability implements Serializable {
+public class CorrectionAvailability extends FenixUtil {
 	public static final int NEVER = 1;
 	public static final int ALWAYS = 2;
 	public static final int AFTER_CLOSING = 3;

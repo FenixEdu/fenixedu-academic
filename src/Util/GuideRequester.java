@@ -13,12 +13,11 @@
 
 package Util;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
 
-public class GuideRequester implements Serializable {
+public class GuideRequester extends FenixUtil {
 
     public static final int CANDIDATE = 1;
     public static final int STUDENT = 2;

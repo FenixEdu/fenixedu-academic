@@ -1,19 +1,15 @@
 package Util;
 
-import java.io.Serializable;
 import java.util.Iterator;
-import java.util.Map;
-
-import org.apache.commons.lang.enum.ValuedEnum;
-
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Fernanda Quitério
  * 28/Nov/2003
  * 
  */
-public class CreditLineType extends ValuedEnum implements Serializable
+public class CreditLineType extends FenixValuedEnum 
 {
 	public static final int MANAGEMENT_POSITION_TYPE = 1;
 	public static final int SERVICE_EXEMPTION_TYPE = 2;

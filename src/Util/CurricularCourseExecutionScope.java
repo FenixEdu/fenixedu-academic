@@ -1,13 +1,12 @@
 package Util;
 
-import java.io.Serializable;
 
 /**
  * @author dcs-rjao
  *
  * 25/Mar/2003
  */
-public class CurricularCourseExecutionScope implements Serializable {
+public class CurricularCourseExecutionScope extends FenixUtil {
 
 	public static final int SEMESTRIAL = 1;
 	public static final int ANUAL = 2;

@@ -1,6 +1,5 @@
 package Util;
 
-import java.io.Serializable;
 
 
 /**
@@ -9,7 +8,7 @@ import java.io.Serializable;
  * 19/Mar/2003
  */
 
-public class CurricularCourseType implements Serializable {
+public class CurricularCourseType extends FenixUtil {
 
 	public static final int NORMAL_COURSE = 1;
 	public static final int OPTIONAL_COURSE = 2;

@@ -8,14 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.enum.ValuedEnum;
-
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class CareerType extends ValuedEnum
+public class CareerType extends FenixValuedEnum
 {
 
     public static final int PROFESSIONAL_TYPE = 1;

@@ -15,7 +15,7 @@ import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 /**
  * @author Fernanda Quitério & Tania Pousão
  */
-public class LeituraFicheiroFuncionarioCorreio {
+public class LeituraFicheiroFuncionarioCorreio extends FenixUtil {
 
   /* sera' que posso ter aqui um Map? */
 //  private Hashtable estrutura;

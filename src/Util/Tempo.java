@@ -1,8 +1,7 @@
 package Util;
 
-import java.io.Serializable;
 
-public class Tempo implements Serializable {
+public class Tempo extends FenixUtil {
   private int _hora;
   private int _minutos;
   private int _segundos;

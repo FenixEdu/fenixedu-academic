@@ -1,11 +1,10 @@
 package Util;
 
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Locale;
 import java.util.regex.PatternSyntaxException;
 
-public abstract class FormataData extends DateFormat implements Serializable {
+public abstract class FormataData extends FenixDateFormat  {
   
   private FormataData() {
   }

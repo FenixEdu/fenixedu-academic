@@ -4,12 +4,11 @@
  */
 package Util;
 
-import java.io.Serializable;
 
 /**
  * @author jpvl
  */
-public class PeriodState implements Serializable {
+public class PeriodState extends FenixUtil {
 	private String stateCode;
 	public static final PeriodState CLOSED = new PeriodState(PeriodState.CLOSED_CODE);
 	public static final PeriodState OPEN = new PeriodState(PeriodState.OPEN_CODE);

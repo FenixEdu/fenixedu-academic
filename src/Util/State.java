@@ -14,12 +14,11 @@
 
 package Util;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
 
-public class State implements Serializable {
+public class State extends FenixUtil {
 
 	public static final int INACTIVE = 0;
     public static final int ACTIVE = 1;

@@ -8,14 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.enum.ValuedEnum;
-
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class ProviderRegimeType extends ValuedEnum
+public class ProviderRegimeType extends FenixValuedEnum
 {
 
     public static final int EXCLUSIVE_TYPE = 1;

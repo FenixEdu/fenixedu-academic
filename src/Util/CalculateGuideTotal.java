@@ -1,12 +1,11 @@
 package Util;
 
-import java.io.Serializable;
 import java.util.Iterator;
 
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
 
-public class CalculateGuideTotal implements Serializable {
+public class CalculateGuideTotal extends FenixUtil {
 	
 	public CalculateGuideTotal() {}
 

@@ -8,14 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.enum.ValuedEnum;
-
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class OldPublicationType extends ValuedEnum
+public class OldPublicationType extends FenixValuedEnum
 {
 	public static final int DIDACTIC_TYPE = 1;
 	public static final int CIENTIFIC_TYPE = 2;

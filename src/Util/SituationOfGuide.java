@@ -1,6 +1,5 @@
 package Util;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
@@ -12,7 +11,7 @@ import org.apache.struts.util.LabelValueBean;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class SituationOfGuide implements Serializable {
+public class SituationOfGuide extends FenixUtil {
 
 	public static final int NON_PAYED = 1;
 	public static final int PAYED = 2;

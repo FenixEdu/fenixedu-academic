@@ -1,6 +1,5 @@
 package Util;
 
-import java.io.Serializable;
 
 
 /**
@@ -9,7 +8,7 @@ import java.io.Serializable;
  * 19/Mar/2003
  */
 
-public class EnrolmentEquivalenceType implements Serializable {
+public class EnrolmentEquivalenceType extends FenixUtil {
 
 	public static final int EQUIVALENT_COURSE = 1;
 	

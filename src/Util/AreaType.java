@@ -13,7 +13,7 @@ import org.apache.struts.util.LabelValueBean;
  * @author Ricardo Rodrigues
  *
  */
-public class AreaType
+public class AreaType extends FenixUtil
 {
 
     public static final int SPECIALIZATION = 1;

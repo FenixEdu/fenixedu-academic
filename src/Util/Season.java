@@ -9,12 +9,11 @@
  */
 package Util;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
 
-public class Season implements Serializable {
+public class Season extends FenixUtil {
 
     public static final int SEASON1 = 1;
     public static final int SEASON2 = 2;

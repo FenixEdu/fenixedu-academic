@@ -12,12 +12,11 @@
 
 package Util;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
 
-public class Specialization implements Serializable
+public class Specialization extends FenixUtil
 {
 
 	public static final int MESTRADO = 1;

@@ -4,13 +4,12 @@
  */
 package Util;
 
-import java.io.Serializable;
 
 /**
  * @author Luis Cruz
  *
  */
-public class AdvisoryRecipients implements Serializable {
+public class AdvisoryRecipients extends FenixUtil {
 
 	public static final int STUDENTS = 1;
 	public static final int TEACHERS = 2;

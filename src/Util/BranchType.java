@@ -1,13 +1,12 @@
 package Util;
 
-import java.io.Serializable;
 
 /**
  * @author David Santos
  * Jan 13, 2004
  */
 
-public class BranchType implements Serializable
+public class BranchType extends FenixUtil
 {
 	public static final int COMMON_BRANCH_INT = 1;
 	public static final int SPECIALIZATION_BRANCH_INT = 2;

@@ -1,5 +1,4 @@
 package Util;
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +13,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class EMail implements Serializable
+public class EMail extends FenixUtil
 {
 	private String Servidor;
 	private String Origem;

@@ -7,9 +7,8 @@
 
 package Util;
 
-import java.io.Serializable;
 
-public class Mes implements Serializable {
+public class Mes extends FenixUtil {
 
 	public static final int JANEIRO = 1;
 	public static final int FEVEREIRO = 2;

@@ -1,12 +1,11 @@
 package Util;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.apache.struts.util.LabelValueBean;
 
-public class Data implements Serializable {
+public class Data extends FenixUtil {
 	private int _dia;
 	private int _mes;
 	private int _ano;

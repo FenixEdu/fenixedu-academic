@@ -8,14 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.enum.ValuedEnum;
-
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
  *13/Nov/2003
  *
  */
-public class ReimbursementGuideState extends ValuedEnum
+public class ReimbursementGuideState extends FenixValuedEnum
 {
 
     public static final int ISSUED_TYPE = 1;

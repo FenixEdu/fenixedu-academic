@@ -8,13 +8,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.enum.ValuedEnum;
-
 /**
  * @author Tânia Pousão
  *
  */
-public class GratuitySituationType extends ValuedEnum
+public class GratuitySituationType extends FenixValuedEnum
 {
 	public static final int DEBTOR_TYPE = 1;
 	public static final int CREDITOR_TYPE = 2;

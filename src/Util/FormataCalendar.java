@@ -1,13 +1,12 @@
 package Util;
 
-import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  *
  * @author  Fernanda Quitério & Tania Pousão
  */
-public abstract class FormataCalendar implements Serializable {
+public abstract class FormataCalendar extends FenixUtil {
 
 	/** Creates a new instance of FormataCalendar */
 	public FormataCalendar() {

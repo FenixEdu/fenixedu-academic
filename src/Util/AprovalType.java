@@ -13,7 +13,7 @@ import org.apache.commons.lang.enum.ValuedEnum;
  * @author pica
  * @author barbosa
  */
-public class AprovalType extends ValuedEnum
+public class AprovalType extends FenixValuedEnum  
 {
 	public static int YES_TYPE = 0;
 	public static int NO_TYPE = 1;

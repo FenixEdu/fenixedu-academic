@@ -8,14 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.enum.ValuedEnum;
-
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class PublicationType extends ValuedEnum
+public class PublicationType extends FenixValuedEnum
 {
 
     public static final int COMUNICATION_TYPE = 1;

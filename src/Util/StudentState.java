@@ -1,88 +1,104 @@
 package Util;
 
-import java.io.Serializable;
-
 /**
- * @author dcs-rjao
- *
- * 25/Mar/2003
+ * @author dcs-rjao 25/Mar/2003
  */
-public class StudentState implements Serializable {
+public class StudentState extends FenixUtil
+{
 
-	public static final int BASE = 1;
-	public static final int INSCRITO = 2;
-	public static final int PRESCRITO = 3;
-	public static final int INTERRUPCAO = 4;
-	public static final int AUSENTE = 5;
-	public static final int LICENCIADO = 6;
+    public static final int BASE = 1;
 
-	private Integer state;
+    public static final int INSCRITO = 2;
 
-	/** Creates a new instance of StudentState */
-	public StudentState() {
-	}
+    public static final int PRESCRITO = 3;
 
-	public StudentState(int state) {
-		this.state = new Integer(state);
-	}
+    public static final int INTERRUPCAO = 4;
 
-	public StudentState(Integer state) {
-		this.state = state;
-	}
+    public static final int AUSENTE = 5;
 
-	/** Getter for property state.
-	 * @return Value of property state.
-	 *
-	 */
-	public java.lang.Integer getState() {
-		return state;
-	}
+    public static final int LICENCIADO = 6;
 
-	/** Setter for property state.
-	 * @param state New value of property state.
-	 *
-	 */
-	public void setState(Integer state) {
-		this.state = state;
-	}
+    private Integer state;
 
-	public boolean equals(Object o) {
-		if (o instanceof StudentState) {
-			StudentState aux = (StudentState) o;
-			return this.state.equals(aux.getState());
-		} else {
-			return false;
-		}
-	}
+    /** Creates a new instance of StudentState */
+    public StudentState()
+    {
+    }
 
-	public String toString() {
+    public StudentState(int state)
+    {
+        this.state = new Integer(state);
+    }
 
-		int value = this.state.intValue();
-		String valueS = null;
+    public StudentState(Integer state)
+    {
+        this.state = state;
+    }
 
-		switch (value) {
-			case BASE :
-				valueS = "BASE";
-				break;
-			case INSCRITO :
-				valueS = "INSCRITO";
-				break;
-			case PRESCRITO :
-				valueS = "PRESCRITO";
-				break;
-			case INTERRUPCAO :
-				valueS = "INTERRUPCAO";
-				break;
-			case AUSENTE :
-				valueS = "AUSENTE";
-				break;
-			case LICENCIADO :
-				valueS = "LICENCIADO";
-				break;
-			default:
-				break;
-		}
+    /**
+     * Getter for property state.
+     * 
+     * @return Value of property state.
+     */
+    public java.lang.Integer getState()
+    {
+        return state;
+    }
 
-		return "[" + this.getClass().getName() + ": " + valueS + "]";
-	}
+    /**
+     * Setter for property state.
+     * 
+     * @param state
+     *            New value of property state.
+     */
+    public void setState(Integer state)
+    {
+        this.state = state;
+    }
+
+    public boolean equals(Object o)
+    {
+        if (o instanceof StudentState)
+        {
+            StudentState aux = (StudentState) o;
+            return this.state.equals(aux.getState());
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public String toString()
+    {
+
+        int value = this.state.intValue();
+        String valueS = null;
+
+        switch (value)
+        {
+            case BASE:
+                valueS = "BASE";
+                break;
+            case INSCRITO:
+                valueS = "INSCRITO";
+                break;
+            case PRESCRITO:
+                valueS = "PRESCRITO";
+                break;
+            case INTERRUPCAO:
+                valueS = "INTERRUPCAO";
+                break;
+            case AUSENTE:
+                valueS = "AUSENTE";
+                break;
+            case LICENCIADO:
+                valueS = "LICENCIADO";
+                break;
+            default:
+                break;
+        }
+
+        return "[" + this.getClass().getName() + ": " + valueS + "]";
+    }
 }

@@ -9,13 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.enum.ValuedEnum;
-
 /**
  * @author Tânia Pousão
  *  
  */
-public class ExemptionGratuityType extends ValuedEnum
+public class ExemptionGratuityType extends FenixValuedEnum
 {
 	public static final int INSTITUTION_TYPE = 1;
 	public static final int INSTITUTION_GRANT_OWNER_TYPE = 2;
