@@ -72,9 +72,11 @@ public class SiglaDataLoader {
 		SiglaDataLoader loader = new SiglaDataLoader();
 		PersistenceBroker broker =
 			PersistenceBrokerFactory.defaultPersistenceBroker();
+		
 		updateFenix(loader, broker);
 		loader.printSiglaProblems(loader);
 		loader.printFenixProblems(loader);
+		
 		broker.close();
 	}
 
@@ -279,7 +281,9 @@ public class SiglaDataLoader {
 			&& (siglaCurricularCourse.getEnder_web() != null
 				&& !siglaCurricularCourse.getEnder_web().equals(""))) {
 			site.setAlternativeSite(siglaCurricularCourse.getEnder_web());
+			broker.beginTransaction();
 			broker.store(site);
+			broker.commitTransaction();
 		}
 
 	}
@@ -339,7 +343,7 @@ public class SiglaDataLoader {
 
 	private static void storeBibliographicReference(IDisciplinaExecucao executionCourse, Plano_curricular_2003final siglaCurricularCourse, PersistenceBroker broker, String title) {
 		if (title!=null && !title.equals("")){
-			IBibliographicReference bibliographicReference1 =
+			IBibliographicReference bibliographicReference =
 						new BibliographicReference(
 							executionCourse,
 							title,
@@ -347,7 +351,17 @@ public class SiglaDataLoader {
 							" ",
 							" ",
 							new Boolean(false));
-					broker.store(bibliographicReference1);
+					
+					Criteria crit = new Criteria();
+					crit.addEqualTo("title",bibliographicReference.getTitle());
+					Query query = new QueryByCriteria(BibliographicReference.class,crit);
+					IBibliographicReference reference = (IBibliographicReference) broker.getObjectByQuery(query);
+					if (reference==null){
+						broker.beginTransaction();	
+						broker.store(bibliographicReference);
+						broker.commitTransaction();
+					}	
+					
 		}
 		
 	}
@@ -436,7 +450,9 @@ public class SiglaDataLoader {
 					curricularCourse,
 					siglaCurricularCourse,
 					broker);
+				broker.beginTransaction();
 				broker.store(curricularCourse);
+				broker.commitTransaction();
 			}
 		}
 
@@ -484,8 +500,9 @@ public class SiglaDataLoader {
 			curriculum.setProgramEn(
 				siglaCurricularCourse.getIngles_progr_res());
 		}
-
+		broker.beginTransaction();
 		broker.store(curriculum);
+		broker.commitTransaction();
 	}
 
 	/**
