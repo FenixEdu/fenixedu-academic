@@ -71,7 +71,7 @@ public class UtilsTestCase
 				Assert.fail("Failed to get property " + property + " from " + object.getClass().getName());
 			}
 
-			failed = !expectedObjectList.contains(value);
+			failed = failed || !expectedObjectList.contains(value);
 			receivedList.add(value);
 
 		}
