@@ -109,7 +109,7 @@
             name="ConsultarFuncionarioMostrarForm"
             scope="session"
             validate="false"
-            input="/index" >
+            input="/mainPortalPage.jsp" >
     </action>
     
     <action path="/consultarFuncionarioEscolha"
