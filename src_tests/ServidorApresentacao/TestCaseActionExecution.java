@@ -37,7 +37,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 
 //		defines struts config file to use
 		setServletConfigFile(getServletConfigFile());
-
+		
 		this.gestor = GestorServicos.manager();
 		String argsAutenticacao[] = {"user", "pass"};
 		try {

@@ -26,9 +26,11 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.NotAuthorizedException;
-import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
+import ServidorApresentacao.Action.sop.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -83,10 +85,14 @@ public class ClassManagerDispatchAction extends DispatchAction {
 
 				Object argsCriarTurma[] = { infoClass };
 
-				ServiceUtils.executeService(
-					userView,
-					"CriarTurma",
-					argsCriarTurma);
+				try {
+					ServiceUtils.executeService(
+						userView,
+						"CriarTurma",
+						argsCriarTurma);
+				} catch (ExistingServiceException e) {
+					throw new ExistingActionException("A Turma",e);
+				}
 				return viewClass(mapping, form, request, response);
 			} else {
 				ActionErrors actionErrors = new ActionErrors();

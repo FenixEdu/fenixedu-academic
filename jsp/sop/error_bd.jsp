@@ -17,7 +17,7 @@
    	 <center><b><bean:message key="link.goBack"/></b></center>
     </html:link>
     <html:form action="/exceptionHandling.do?method=sendEmail">
-    <table align="center"  cellpadding='20' cellspacing='10'>
+    <table align="center" >
     	<tr><td>
     	<bean:message key="property.email"/></td><td>
     	<html:text property="email" value=""/> </td>

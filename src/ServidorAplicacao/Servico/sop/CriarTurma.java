@@ -14,12 +14,15 @@ package ServidorAplicacao.Servico.sop;
 import DataBeans.InfoClass;
 import DataBeans.util.Cloner;
 import Dominio.ITurma;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CriarTurma implements IServico {
 
@@ -43,7 +46,7 @@ public class CriarTurma implements IServico {
     return "CriarTurma";
   }
 
-  public Object run(InfoClass infoTurma) {
+  public Object run(InfoClass infoTurma) throws FenixServiceException {
                         
     ITurma turma = null;
     boolean result = false;
@@ -62,11 +65,15 @@ public class CriarTurma implements IServico {
       turma.setExecutionPeriod(executionPeriodDAO.readByNameAndExecutionYear(turma.getExecutionPeriod().getName(), turma.getExecutionPeriod().getExecutionYear()));
       
       
-      sp.getITurmaPersistente().lockWrite(turma);
+      try {
+		sp.getITurmaPersistente().lockWrite(turma);
+	} catch (ExistingPersistentException ex) {
+	throw new ExistingServiceException(ex);
+}
       
       result = true;
     } catch (ExcepcaoPersistencia ex) {
-      ex.printStackTrace();
+		throw new FenixServiceException(ex.getMessage());
     }
     
     return new Boolean (result);
