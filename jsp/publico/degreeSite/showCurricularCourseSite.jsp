@@ -44,6 +44,9 @@
 
 
 <!-- EXECUTION COURSES LINK  -->
+<bean:size id="listSize" name="infoCurricularCourse" property="infoAssociatedExecutionCourses" />
+
+<logic:greaterThan name="listSize" value="1">
 <div class="col_right">
   <table class="box" cellspacing="0">
 		<tr>
@@ -64,6 +67,7 @@
 		</tr>  
   </table>
 </div>
+</logic:greaterThan>
 
 <!-- 	CURRICULAR COURSE SCOPES  -->
 <h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.scope" />	</h2>
