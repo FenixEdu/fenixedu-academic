@@ -121,7 +121,29 @@
 				<tr> 
 					<td>&nbsp;</td>
 				</tr>
-			</logic:present >				
+			</logic:present >	
+			
+			
+		<!-- External Juries -->
+		<logic:present name="<%= SessionConstants.EXTERNAL_JURIES_LIST %>" scope="request">
+			<tr>
+				<th align="left" colspan="2"><bean:message key="label.masterDegree.administrativeOffice.externalJuries"/></th>				
+			</tr>
+			<bean:define id="externalJuriesList" name="<%= SessionConstants.EXTERNAL_JURIES_LIST %>" type="java.util.List"/>
+			<tr>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>				
+			</tr>					
+			<logic:iterate id="externalJury" name="externalJuriesList">
+				<tr>
+					<td align="left" ><bean:write name="externalJury" property="infoPerson.nome"/></td>
+					<td align="left"><bean:write name="externalJury" property="workLocation"/></td>					
+				</tr>				
+			</logic:iterate>
+			<tr> 
+				<td>&nbsp;</td>
+			</tr>
+		</logic:present>				
 		
 	</table>
 
