@@ -31,7 +31,7 @@
 	
 	 <span class="error"><html:errors/></span> 	
 
-<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;executionCourseCode=" + request.getParameter("executionCourseCode") + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode") + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
     	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
 	<br/>
 	
@@ -78,7 +78,7 @@
 	 <span class="error"><html:errors/></span> 	
 
 
-	<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;executionCourseCode=" + request.getParameter("executionCourseCode") + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+	<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode") + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
     	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
 	<br/>	
 	<bean:define id="nrOfElements" name="infoSiteStudentGroup" property="nrOfElements"/>

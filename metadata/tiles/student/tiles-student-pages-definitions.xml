@@ -76,6 +76,18 @@
 		<put name="body" value="/student/viewShiftsAndGroups_bd.jsp" />		
 	</definition>
 
+	<definition name="view-StudentsAndGroups-ByShift" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewStudentsAndGroupsByShift_bd.jsp" />		
+	</definition>
+
+	<definition name="view-StudentsAndGroups-WithoutShift" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewStudentsAndGroupsWithoutShift_bd.jsp" />		
+	</definition>
+
+	<definition name="view-All-StudentsAndGroups" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewAllStudentsAndGroups_bd.jsp" />		
+	</definition>
+
 	<definition name="view-StudentGroup-Information" extends="definition.student.masterPage">
 		<put name="body" value="/student/viewStudentGroupInformation_bd.jsp" />		
 	</definition>

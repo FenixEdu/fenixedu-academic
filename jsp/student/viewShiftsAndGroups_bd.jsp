@@ -34,7 +34,7 @@
 	<h2><bean:message key="title.ShiftsAndGroups"/></h2>
 	<br>
 
-	<table width="95%" cellpadding="0" cellspacing="0">
+	<table width="100%" cellpadding="0" cellspacing="0">
 		<tr>
 			<td class="infoop">
 				<bean:message key="label.student.viewShiftsAndGroups.description" />
@@ -50,8 +50,17 @@
 	</html:link>
 
 	<br/>
+	
+	<br>
+	<html:link page="<%="/viewAllStudentsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+    	<bean:message key="link.viewAllStudentsAndGroups"/>
+    	</html:link>
+	
 	<br/>
-
+	
+	<br>
+	<br/>
+	
   <table align="left" width="95%" cellspacing='1' cellpadding='1'>	
 	<tbody>		
 	
@@ -87,7 +96,9 @@
 			<tr>
 								
 								<td  class="listClasses">
+								<html:link page="<%="/viewStudentsAndGroupsWithoutShift.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 									Sem Turno
+								</html:link>	
 								</td>
 								
 								<td class="listClasses">
@@ -153,8 +164,11 @@
 					<tr>
 						
 						<td  class="listClasses" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
-							<bean:write name="infoShift" property="nome"/>
+							<html:link page="<%="/viewStudentsAndGroupsByShift.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+								<bean:write name="infoShift" property="nome"/>
+							</html:link>	
 						</td>
+						
 						<td class="listClasses">
 							<bean:write name="infoLesson" property="diaSemana"/> &nbsp;
 						</td>

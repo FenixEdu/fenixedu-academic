@@ -3665,7 +3665,28 @@
             <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
         </filterChains>
     </service>
-    <service>
+	<service>
+        <name>ReadStudentsAndGroupsByShiftID</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.publico.ReadStudentsAndGroupsByShiftID</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </service>
+	<service>
+        <name>ReadStudentsAndGroupsWithoutShift</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.publico.ReadStudentsAndGroupsWithoutShift</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </service>
+	<service>
+        <name>ReadAllStudentsAndGroups</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.publico.ReadAllStudentsAndGroups</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </service>
+	<service>
         <name>PrepareEditAttendsSetMembers</name>
         <implementationClass> 
             ServidorAplicacao.Servico.teacher.PrepareEditAttendsSetMembers</implementationClass>

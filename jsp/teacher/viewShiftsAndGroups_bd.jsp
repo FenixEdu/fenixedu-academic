@@ -38,6 +38,7 @@
 		<br/>
 		<br/>
 		
+		
 		<table width="95%" border="0" style="text-align: left;">
 		<tbody>
 		<b><bean:message key="label.groupPropertiesManagement"/></b>&nbsp
@@ -75,10 +76,15 @@
 			</tr>
 		</table>
 		
-		<br/>
+		<br>
 		     <span class="error"><html:errors/></span> 	
+		
+		<html:link page="<%="/viewAllStudentsAndGroups.do?method=viewAllStudentsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+    	<bean:message key="link.viewAllStudentsAndGroups"/>
+    	</html:link>
 		<br/>
-		<br/>
+		
+		
 		
 		<table width="95%" border="0" style="text-align: left;">
 		<tbody>
@@ -114,7 +120,10 @@
 		<br/>
 		     <span class="error"><html:errors/></span> 	
 		<br/>
-		<br/>
+		<html:link page="<%="/viewAllStudentsAndGroups.do?method=viewAllStudentsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+    	<bean:message key="link.viewAllStudentsAndGroups"/>
+    	</html:link>
+    	<br/>
 		
 		<table width="95%" border="0" style="text-align: left;">
 		<tbody>
@@ -172,7 +181,9 @@
 			<tr>
 								
 								<td  class="listClasses">
-									Sem Turno
+									<html:link page="<%="/viewStudentsAndGroupsWithoutShift.do?method=viewStudentsAndGroupsWithoutShift&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" >
+		               					Sem Turno
+									</html:link>
 								</td>
 								
 								<td class="listClasses">
@@ -239,7 +250,10 @@
 							<tr>
 								
 								<td  class="listClasses" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
-									<bean:write name="infoShift" property="nome"/>
+									<html:link page="<%="/viewStudentsAndGroupsByShift.do?method=viewStudentsAndGroupsByShift&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" >
+		               					<bean:write name="infoShift" property="nome"/>
+									</html:link>
+									
 								</td>
 								<td class="listClasses">
 									<bean:write name="infoLesson" property="diaSemana"/> &nbsp;
@@ -316,6 +330,7 @@
 
 	        </tbody>    
 		</table>
+		
 	</logic:notPresent>	
 
 </logic:present>

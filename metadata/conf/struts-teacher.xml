@@ -1313,7 +1313,22 @@
             <forward name="viewAttendsSet" path="/viewAttendsSet.jsp"/>
             <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
         </action>        
-        <action path="/createGroupProperties" name="groupPropertiesForm" parameter="method" 
+		<action path="/viewStudentsAndGroupsByShift" parameter="method" scope="request"
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <forward name="viewStudentsAndGroupsByShift" path="/viewStudentsAndGroupsByShift.jsp"/>
+			<forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+		</action>
+		<action path="/viewStudentsAndGroupsWithoutShift" parameter="method" scope="request"
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <forward name="viewStudentsAndGroupsWithoutShift" path="/viewStudentsAndGroupsWithoutShift.jsp"/>
+			<forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+		</action>          
+		<action path="/viewAllStudentsAndGroups" parameter="method" scope="request"
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <forward name="viewAllStudentsAndGroups" path="/viewAllStudentsAndGroups.jsp"/>
+			<forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+		</action>
+		<action path="/createGroupProperties" name="groupPropertiesForm" parameter="method" 
             input="/createGroupProperties.do?method=prepareCreateGroupProperties&amp;page=0" 
             scope="request" 
             type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction" 

@@ -61,6 +61,7 @@ import DataBeans.InfoSiteSentedProjectProposalsWaiting;
 import DataBeans.InfoSiteShifts;
 import DataBeans.InfoSiteShiftsAndGroups;
 import DataBeans.InfoSiteStudentGroup;
+import DataBeans.InfoSiteStudentsAndGroups;
 import DataBeans.InfoSiteTeachers;
 import DataBeans.SiteView;
 import DataBeans.TeacherAdministrationSiteView;
@@ -2263,6 +2264,108 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		return viewShiftsAndGroups(mapping, form, request, response);
 
 	}
+	
+	
+	public ActionForward viewStudentsAndGroupsByShift(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException
+			{
+		HttpSession session = request.getSession(false);
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		String groupPropertiesString = request.getParameter("groupPropertiesCode");
+		Integer groupPropertiesCode = new Integer(groupPropertiesString);
+		String shiftCodeString = request.getParameter("shiftCode");
+		Integer shiftCode = new Integer(shiftCodeString);
+
+		InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
+		Object args[] = {groupPropertiesCode, shiftCode};
+		try
+		{
+			infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ServiceManagerServiceFactory.executeService(
+					userView, "ReadStudentsAndGroupsByShiftID", args);
+		}catch (ExistingServiceException e){
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noGroupProperties");
+			actionErrors.add("error.noGroupProperties", error);
+			saveErrors(request, actionErrors);
+			return prepareViewExecutionCourseProjects(mapping, form, request, response);
+		} catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
+		readSiteView(request, null, null, null, null);
+		request.setAttribute("infoSiteStudentsAndGroups", infoSiteStudentsAndGroups);
+		return mapping.findForward("viewStudentsAndGroupsByShift");
+			}
+
+	
+
+	public ActionForward viewStudentsAndGroupsWithoutShift(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException
+			{
+		HttpSession session = request.getSession(false);
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		String groupPropertiesString = request.getParameter("groupPropertiesCode");
+		Integer groupPropertiesCode = new Integer(groupPropertiesString);
+		
+
+		InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
+		Object args[] = {groupPropertiesCode};
+		try
+		{
+			infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ServiceManagerServiceFactory.executeService(
+					userView, "ReadStudentsAndGroupsWithoutShift", args);
+		}catch (ExistingServiceException e){
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noGroupProperties");
+			actionErrors.add("error.noGroupProperties", error);
+			saveErrors(request, actionErrors);
+			return prepareViewExecutionCourseProjects(mapping, form, request, response);
+		} catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
+		readSiteView(request, null, null, null, null);
+		request.setAttribute("infoSiteStudentsAndGroups", infoSiteStudentsAndGroups);
+		return mapping.findForward("viewStudentsAndGroupsWithoutShift");
+			}
+
+	
+	public ActionForward viewAllStudentsAndGroups(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException
+			{
+		HttpSession session = request.getSession(false);
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		String groupPropertiesString = request.getParameter("groupPropertiesCode");
+		Integer groupPropertiesCode = new Integer(groupPropertiesString);
+		
+
+		InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
+		Object args[] = {groupPropertiesCode};
+		try
+		{
+			infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ServiceManagerServiceFactory.executeService(
+					userView, "ReadAllStudentsAndGroups", args);
+		}catch (ExistingServiceException e){
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noGroupProperties");
+			actionErrors.add("error.noGroupProperties", error);
+			saveErrors(request, actionErrors);
+			return prepareViewExecutionCourseProjects(mapping, form, request, response);
+		} catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
+		readSiteView(request, null, null, null, null);
+		request.setAttribute("infoSiteStudentsAndGroups", infoSiteStudentsAndGroups);
+		return mapping.findForward("viewAllStudentsAndGroups");
+			}
+
 	
 	public ActionForward prepareEditStudentGroupShift(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)

@@ -447,6 +447,32 @@
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>
       </action>
 
+	<action type="ServidorApresentacao.Action.student.ViewStudentsAndGroupsByShiftAction"
+              path="/viewStudentsAndGroupsByShift"
+              scope="request"
+             validate="true">
+        <forward name="sucess" path="view-StudentsAndGroups-ByShift"/>
+        <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>
+      </action>
+
+	<action type="ServidorApresentacao.Action.student.ViewStudentsAndGroupsWithoutShiftAction"
+              path="/viewStudentsAndGroupsWithoutShift"
+              scope="request"
+             validate="true">
+        <forward name="sucess" path="view-StudentsAndGroups-WithoutShift"/>
+        <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>
+      </action>	
+
+
+	<action type="ServidorApresentacao.Action.student.ViewAllStudentsAndGroupsAction"
+              path="/viewAllStudentsAndGroups"
+              scope="request"
+             validate="true">
+        <forward name="sucess" path="view-All-StudentsAndGroups"/>
+        <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>
+      </action>	
+
+
       	<action type="ServidorApresentacao.Action.student.ViewStudentGroupInformationAction"
               path="/viewStudentGroupInformation"
               scope="request"
