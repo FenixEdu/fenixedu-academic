@@ -316,15 +316,25 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
 
 
 	public ICursoExecucao readByDegreeNameAndExecutionYear(String name, IExecutionYear executionYear) throws ExcepcaoPersistencia {
-
-
-		
 		Criteria criteria = new Criteria();
 
 		criteria.addEqualTo("academicYear", executionYear.getIdInternal());
 		criteria.addLike("curricularPlan.degree.nome", name);
 		
 		return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
+
+	}
+
+	public ICursoExecucao readByDegreeNameAndExecutionYearAndDegreeType(String name, IExecutionYear executionYear, TipoCurso degreeType) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+
+		criteria.addEqualTo("academicYear", executionYear.getIdInternal());
+		criteria.addLike("curricularPlan.degree.nome", name);
+		criteria.addEqualTo("curricularPlan.degree.tipoCurso", degreeType);
+		
+		
+		return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
+
 
 	}
 

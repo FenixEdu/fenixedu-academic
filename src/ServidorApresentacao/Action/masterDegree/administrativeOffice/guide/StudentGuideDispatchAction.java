@@ -62,6 +62,21 @@ public class StudentGuideDispatchAction extends DispatchAction {
 			String specializationGratuityQuantityString = (String) studentGuideForm.get("specializationGratuityQuantity");
 			String specializationGratuityAmountString = (String) studentGuideForm.get("specializationGratuityAmount");
 			
+			String othersGratuityAmountString = (String) studentGuideForm.get("othersGratuityAmount");
+			Integer othersGratuityAmount = null;
+			
+			if ((othersGratuityAmountString != null) && (othersGratuityAmountString.length() > 0)) {
+				try {
+					othersGratuityAmount = new Integer(othersGratuityAmountString);
+					if (othersGratuityAmount.intValue() < 0)
+						throw new NumberFormatException(); 
+				} catch(NumberFormatException e){
+					throw new InvalidInformationInFormActionException(new Throwable());
+				}
+			}
+			 
+			String othersGratuityDescription = (String) studentGuideForm.get("othersGratuityDescription");
+			
 			
 			Iterator iterator = certificateList.iterator();
 			
@@ -105,6 +120,16 @@ public class StudentGuideDispatchAction extends DispatchAction {
 				infoGuideEntry.setDocumentType(DocumentType.GRATUITY_TYPE);
 				infoGuideEntry.setPrice(new Double(specializationGratuityAmountString));
 				infoGuideEntry.setQuantity(new Integer(specializationGratuityQuantityString));
+				infoGuide.getInfoGuideEntries().add(infoGuideEntry);
+			}
+			
+			if (othersGratuityAmount != null) {
+				InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
+				infoGuideEntry.setDescription(othersGratuityDescription);
+				infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
+				infoGuideEntry.setDocumentType(DocumentType.GRATUITY_TYPE);
+				infoGuideEntry.setPrice(new Double(othersGratuityAmountString));
+				infoGuideEntry.setQuantity(new Integer(1));
 				infoGuide.getInfoGuideEntries().add(infoGuideEntry);
 			}
 			

@@ -267,6 +267,9 @@
 			<form-property name="studentGuideList" type="java.lang.String"/>
 			<form-property name="specializationGratuityQuantity" type="java.lang.String"/>
 			<form-property name="specializationGratuityAmount" type="java.lang.String"/>
+			<form-property name="othersGratuityAmount" type="java.lang.String"/>
+			<form-property name="othersGratuityDescription" type="java.lang.String"/>
+			
       
       </form-bean>
       

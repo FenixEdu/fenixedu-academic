@@ -48,10 +48,21 @@
 		<td><html:text property="specializationGratuityAmount" size='2'/> <bean:message key="label.currencySymbol" /></td>
 	</tr>
    
+	<tr>
+		<td>
+			<bean:message key="label.otherGratuity" /><html:text property="othersGratuityDescription" size='40'/>
+		</td>
+		
+		<td>
+		</td>
+         <td>
+        </td>
+		<td><html:text property="othersGratuityAmount" size='2'/> <bean:message key="label.currencySymbol" /></td>
+	</tr>
    
    </table>
-<br />
-        <br />
+   <br />
+   <br />
 <html:submit value="Submeter" styleClass="inputbutton" property="ok"/>
 </html:form>
 
