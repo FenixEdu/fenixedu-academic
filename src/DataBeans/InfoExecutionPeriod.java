@@ -11,6 +11,7 @@ public class InfoExecutionPeriod {
 	private String name;
 	private InfoExecutionYear infoExecutionYear;
 	private PeriodState state;
+	private Integer semester;
 
 	public InfoExecutionPeriod() {
 
@@ -86,6 +87,20 @@ public class InfoExecutionPeriod {
 	 */
 	public void setState(PeriodState state) {
 		this.state = state;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getSemester() {
+		return semester;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setSemester(Integer integer) {
+		semester = integer;
 	}
 
 }

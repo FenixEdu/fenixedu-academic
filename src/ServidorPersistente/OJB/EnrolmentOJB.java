@@ -9,6 +9,7 @@ import org.odmg.QueryException;
 import Dominio.Enrolment;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
@@ -45,11 +46,15 @@ public class EnrolmentOJB
 		}
 
 		// Read Enrolment from database.
-		enrolmentFromDB =
-			this.readEnrolmentByStudentCurricularPlanAndCurricularCourse(
+		/*		enrolmentFromDB =
+					this.readEnrolmentByStudentCurricularPlanAndCurricularCourse(
+						enrolmentToWrite.getStudentCurricularPlan(),
+						enrolmentToWrite.getCurricularCourse());
+		*/
+		enrolmentFromDB =(IEnrolment) this.readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
 				enrolmentToWrite.getStudentCurricularPlan(),
-				enrolmentToWrite.getCurricularCourse());
-
+				enrolmentToWrite.getCurricularCourse(),
+				enrolmentToWrite.getExecutionPeriod());
 		// If Enrolment is not in database, then write it.
 		if (enrolmentFromDB == null) {
 			super.lockWrite(enrolmentToWrite);
@@ -219,5 +224,68 @@ public class EnrolmentOJB
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
 		}
 		return enrolments;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentEnrolment#readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(Dominio.IStudentCurricularPlan, Dominio.ICurricularCourse, Dominio.IExecutionPeriod)
+	 */
+	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+		IStudentCurricularPlan studentCurricularPlan,
+		ICurricularCourse curricularCourse,
+		IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia {
+		try {
+			IEnrolment enrolment = null;
+			String oqlQuery = "select all from " + Enrolment.class.getName();
+			oqlQuery += " where studentCurricularPlan.student.number = $1";
+			oqlQuery += " and studentCurricularPlan.student.degreeType = $2";
+			oqlQuery += " and studentCurricularPlan.currentState = $3";
+			oqlQuery += " and curricularCourse.name = $4";
+			oqlQuery += " and curricularCourse.code = $5";
+			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $6";
+			oqlQuery
+				+= " and curricularCourse.degreeCurricularPlan.degree.nome = $7";
+			oqlQuery
+				+= " and curricularCourse.degreeCurricularPlan.degree.sigla = $8";
+			oqlQuery += " and executionPeriod.name = $9";
+			oqlQuery += " and executionPeriod.executionYear.year = $10";
+
+			query.create(oqlQuery);
+
+			query.bind(studentCurricularPlan.getStudent().getNumber());
+			query.bind(studentCurricularPlan.getStudent().getDegreeType());
+			query.bind(studentCurricularPlan.getCurrentState());
+			query.bind(curricularCourse.getName());
+			query.bind(curricularCourse.getCode());
+			query.bind(curricularCourse.getDegreeCurricularPlan().getName());
+			query.bind(
+				curricularCourse
+					.getDegreeCurricularPlan()
+					.getDegree()
+					.getNome());
+			query.bind(
+				curricularCourse
+					.getDegreeCurricularPlan()
+					.getDegree()
+					.getSigla());
+
+			query.bind(executionPeriod.getName());
+			query.bind(executionPeriod.getExecutionYear().getYear());
+
+			List result = (List) query.execute();
+			try {
+				lockRead(result);
+			} catch (ExcepcaoPersistencia ex) {
+				throw ex;
+			}
+
+			if ((result != null) && (result.size() != 0)) {
+				enrolment = (IEnrolment) result.get(0);
+			}
+			return enrolment;
+
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 	}
 }

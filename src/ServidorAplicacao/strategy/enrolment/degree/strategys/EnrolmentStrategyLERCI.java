@@ -41,11 +41,11 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		enrolmentRule = new EnrolmentFilterSemesterRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
-		enrolmentRule = new EnrolmentFilterPrecedenceRule();
-		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
-
 		enrolmentRule = new EnrolmentFilterAutomaticEnrolmentRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);		
+
+		enrolmentRule = new EnrolmentFilterPrecedenceRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
 		//	NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
 		enrolmentRule = new EnrolmentFilterNACandNDRule();
@@ -78,20 +78,6 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		validateRule = new EnrolmentValidateCurricularYearPrecedenceRule();
 		this.enrolmentContext = validateRule.apply(this.enrolmentContext);
 
-//		if (this.enrolmentContext.getEnrolmentValidationResult().isSucess()) {
-//			try {
-//				EnrolmentTemporarilyEnrol.apply(this.enrolmentContext);
-//				//				FIXME: David-Ricardo: Aqui as strings devem ser keys do aplication resource.
-//				this.enrolmentContext.getEnrolmentValidationResult().setSucessMessage("Inscrição realizada com sucesso");
-//				return this.enrolmentContext;
-//			} catch (ExcepcaoPersistencia e) {
-//				e.printStackTrace();
-//				//				FIXME: David-Ricardo: Aqui as strings devem ser keys do aplication resource.
-//				this.enrolmentContext.getEnrolmentValidationResult().setSucessMessage("Erro no acesso à base de dados");
-//				return this.enrolmentContext;
-//			}
-//
-//		}
 		return this.enrolmentContext;
 	}
 

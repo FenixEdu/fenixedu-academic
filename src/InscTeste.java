@@ -72,15 +72,12 @@ public class InscTeste {
 		Object serviceArgs9[] = { infoEnrolmentContext };
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs9);
 		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
-
-		infoEnrolmentContext.getActualEnrolment().addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesEnroledByStudent());
-
+*/
 		for(int i = 0; i < 4; i++) {
 			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
 			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 		}
 
-*/
 //		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(0);
 //		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 //		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(1);
@@ -95,12 +92,10 @@ public class InscTeste {
 //		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 
 
-/*		Object serviceArgs10[] = {infoEnrolmentContext};
+		Object serviceArgs10[] = {infoEnrolmentContext};
 		infoEnrolmentContext = executeService("ValidateActualEnrolment", serviceArgs10);
 		showActualEnrolments(infoEnrolmentContext);
-		showEnrolmentValidationResultMesages(infoEnrolmentContext);
-*/
-//		System.out.println(infoEnrolmentContext.getEnrolmentValidationResult().getMessage());
+		showEnrolmentValidationResultMessages(infoEnrolmentContext);
 
 //		Object serviceArgs11[] = {userView};
 //		executeService("ChangeEnrolmentStateFromTemporarilyToEnroled", serviceArgs11);		
@@ -187,7 +182,7 @@ public class InscTeste {
 	}
 
 
-	private static void showEnrolmentValidationResultMesages(InfoEnrolmentContext infoEnrolmentContext) {
+	private static void showEnrolmentValidationResultMessages(InfoEnrolmentContext infoEnrolmentContext) {
 		System.out.println();
 		System.out.println("ENROLMENT VALIDATION MESSAGES:");
 		Set keySet = infoEnrolmentContext.getEnrolmentValidationResult().getMessage().keySet();
