@@ -354,6 +354,7 @@
     <collection-descriptor
          name="guideEntries"
          refresh="true"
+     	proxy="true"
          element-class-ref="Dominio.GuideEntry"
        >
        <inverse-foreignkey field-ref="keyGuide"/>
@@ -362,6 +363,7 @@
     <collection-descriptor
          name="guideSituations"
          refresh="true"
+     	proxy="true"
          element-class-ref="Dominio.GuideSituation"
        >
        <inverse-foreignkey field-ref="keyGuide"/>
@@ -370,6 +372,7 @@
       <collection-descriptor
          name="reimbursementGuides"
          refresh="true"
+     	proxy="true"
          element-class-ref="Dominio.reimbursementGuide.ReimbursementGuide"
        >
        <inverse-foreignkey field-ref="keyGuide"/>
