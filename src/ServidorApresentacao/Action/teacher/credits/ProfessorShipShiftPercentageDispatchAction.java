@@ -102,10 +102,13 @@ public class ProfessorShipShiftPercentageDispatchAction
 		IUserView userView = SessionUtils.getUserView(request);
 		InfoTeacher infoTeacher =
 			(InfoTeacher) session.getAttribute(SessionConstants.INFO_TEACHER);
-
+		ActionErrors actionErrors = new ActionErrors();
 		List infoTeacherShiftPercentageList =
-			processForm((DynaActionForm) form, request);
-
+			processForm((DynaActionForm) form, request, actionErrors);
+		if (!actionErrors.isEmpty()){
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+		}
 		Object[] args =
 			{
 				infoTeacher,
@@ -118,7 +121,7 @@ public class ProfessorShipShiftPercentageDispatchAction
 				args);
 
 		if (shiftWithErrors.size() > 0) {
-			ActionErrors actionErrors = new ActionErrors();
+			actionErrors = new ActionErrors();
 
 			Iterator iterator = shiftWithErrors.listIterator();
 			while (iterator.hasNext()) {
@@ -150,7 +153,7 @@ public class ProfessorShipShiftPercentageDispatchAction
 	}
 
 
-	private List processForm(DynaActionForm form, HttpServletRequest request) {
+	private List processForm(DynaActionForm form, HttpServletRequest request, ActionErrors actionErrors) {
 		List infoTeacherShiftPercentageList = new ArrayList();
 
 		InfoTeacherShiftPercentage infoTeacherShiftPercentage =
@@ -165,19 +168,25 @@ public class ProfessorShipShiftPercentageDispatchAction
 			Integer shiftInternalCode = shiftProfessorships[i];
 			if (shiftInternalCode != null) {
 				Double percentage = null;
+				String percentageStr = request.getParameter("percentage_" + shiftInternalCode);
+
 				try {
-					System.out.println("Ola=======================");
 					percentage =
-						new Double(
-							Double.parseDouble(
-								request.getParameter(
-									"percentage_" + shiftInternalCode)));
+						new Double(	Double.parseDouble(percentageStr));
+							
 				} catch (NumberFormatException e) {
-					e.printStackTrace(System.out);
-					
+					if (percentageStr != null && !percentageStr.equals("")){
+						ActionError actionError = new ActionError("error.double.format", percentageStr);
+						actionErrors.add("error.double.format", actionError);
+					}
 				}
+				
 
 				if (percentage != null) {
+					if (percentage.doubleValue() < 0){
+						ActionError actionError = new ActionError("error.non.positive",percentageStr);
+						actionErrors.add("error.non.positive",actionError);
+					}
 					infoTeacherShiftPercentage =
 						new InfoTeacherShiftPercentage();
 					infoTeacherShiftPercentage.setPercentage(percentage);
