@@ -70,6 +70,7 @@ public abstract class SessionConstants {
 	public static final String GUIDE_REQUESTER_LIST = "guide_requester_list";
 	public static final String GUIDE = "guide";
 
+	public static final String CONTRIBUTOR_ACTION = "CONTRIBUTOR_ACTION_VERIFY_THIS_CONSTANT";
 
 	// -------------------------------------------------------------------------------
 	//    Person Constants - For Person
