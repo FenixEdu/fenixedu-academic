@@ -21,7 +21,7 @@
 <br/>
 
 <h2> <bean:message key="label.exam.enrollment.period"/></h2>
-
+<span class="error"><html:errors/></span>
 <html:form action="/examEnrollmentEditionManager" >
 	
 <logic:empty name="component" property="infoExamEnrollment">	
