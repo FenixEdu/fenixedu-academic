@@ -83,11 +83,14 @@ public class EnrolmentEvaluationType {
 			case IMPROVEMENT :
 				valueS = "IMPROVEMENT";
 				break;
+			case NORMAL :
+				valueS = "NORMAL";
+				break;
 			default :
 				break;
 		}
 
-		return "[" + this.getClass().getName() + ": " + valueS + "]\n";
+		return valueS ;
 	}
 
 	public EnrolmentEvaluationType(String type) {

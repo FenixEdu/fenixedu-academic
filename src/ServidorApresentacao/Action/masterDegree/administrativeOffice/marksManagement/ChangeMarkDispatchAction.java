@@ -17,15 +17,17 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.MessageResources;
 
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoSiteEnrolmentEvaluation;
+import DataBeans.InfoStudent;
+import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import Util.Data;
 import Util.EnrolmentEvaluationType;
 import Util.FormataData;
 
@@ -84,11 +86,13 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 		GestorServicos serviceManager = GestorServicos.manager();
 		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		List infoSiteEnrolmentEvaluations = null;
+		
 		request.setAttribute("executionYear", executionYear);
 		request.setAttribute("degree", degree);
 		request.setAttribute("curricularCourse", curricularCourse);
 		request.setAttribute("curricularCourseCode", curricularCourseCode);
 		request.setAttribute("scopeCode", curricularCourseCode);
+		
 		try {
 			infoSiteEnrolmentEvaluations =
 				(List) serviceManager.executar(userView, "ReadStudentsAndMarksByCurricularCourse", args);
@@ -184,16 +188,19 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 			String curricularCourse = getFromRequest("curricularCourse", request);
 			Integer curricularCourseCode = new Integer(getFromRequest("curricularCourseCode", request));	
 			Integer enrolmentEvaluationCode = Integer.valueOf(getFromRequest("idInternal",request));
-			String grade = getFromRequest("grade",request);		
-			Integer enrolmentEvaluationType = Integer.valueOf(getFromRequest("enrolmentEvaluationType.type",request));
+			String grade = getFromRequest("grade",request);	
+			Integer evaluationType = Integer.valueOf(getFromRequest("enrolmentEvaluationType.type",request));
+			EnrolmentEvaluationType enrolmentEvaluationType = new EnrolmentEvaluationType(evaluationType);
 			Integer teacherNumber = Integer.valueOf(getFromRequest("teacherNumber",request));
 			String examDay = FormataData.getDay(getFromRequest("examDate",request));
 			String examMonth = FormataData.getMonth(getFromRequest("examDate",request));
 			String examYear = FormataData.getYear(getFromRequest("examDate",request));	
 			String observation = getFromRequest("observation",request);	
-			boolean result = true;
-			result = Data.validDate(Integer.valueOf(examDay),Integer.valueOf(examMonth),Integer.valueOf(examYear));
-
+			Integer studentNumber = Integer.valueOf(getFromRequest("studentNumber",request));	
+			
+//			boolean result = true;
+//			result = Data.validDate(Integer.valueOf(examDay),Integer.valueOf(examMonth),Integer.valueOf(examYear));
+//
 //
 //			if (!result){
 //				ActionErrors actionErrors = new ActionErrors();
@@ -206,8 +213,8 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 //				
 //			}
 			Locale locale = new Locale("pt", "PT");
-			Date examDate = DateFormat.getDateInstance(DateFormat.LONG, locale).parse(getFromRequest("examDate",request));
-			Date gradeAvailableDate = DateFormat.getDateInstance(DateFormat.LONG, locale).parse(getFromRequest("gradeAvailableDate",request));
+			Date examDate = DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(getFromRequest("examDate",request));
+			Date gradeAvailableDate = DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(getFromRequest("gradeAvailableDate",request));
 			
 			
 			InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
@@ -215,16 +222,29 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 			
 			infoTeacher.setTeacherNumber(teacherNumber);
 			
-			infoEnrolmentEvaluation.setEnrolmentEvaluationType(new EnrolmentEvaluationType(enrolmentEvaluationType));
+			InfoStudent infoStudent = new InfoStudent();
+			infoStudent.setNumber(studentNumber);
+			
+			InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
+			infoStudentCurricularPlan.setInfoStudent(infoStudent);
+			
+			InfoEnrolment infoEnrolment = new InfoEnrolment();
+			infoEnrolment.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+			
+
+			infoEnrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
+
 			infoEnrolmentEvaluation.setGrade(grade);
 			infoEnrolmentEvaluation.setExamDate(examDate);
-			infoEnrolmentEvaluation.setExamDate(gradeAvailableDate);
+			infoEnrolmentEvaluation.setGradeAvailableDate(gradeAvailableDate);
 			infoEnrolmentEvaluation.setObservation(observation);
+			infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
+			
 			
 //			Object args[] = {enrolmentEvaluationCode,infoEnrolmentEvaluation,infoTeacher};
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			GestorServicos serviceManager = GestorServicos.manager();
-			Object args[] = {enrolmentEvaluationCode,infoEnrolmentEvaluation,infoTeacher, userView};
+			Object args[] = {curricularCourseCode, enrolmentEvaluationCode,infoEnrolmentEvaluation,infoTeacher.getTeacherNumber(), userView};
 			InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 			try {
 				Object resultObj = (Object) serviceManager.executar(userView, "AlterStudentEnrolmentEvaluation", args);

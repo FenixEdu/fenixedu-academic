@@ -334,14 +334,25 @@
       </field>
     </form>
     
-	<!-- validation for marks Submission -->
+	<!-- validation for Student enrolment evaluation -->
+    
     <form name="studentNumberForm">
-	  <field property="studentNumber" depends="required, integer" page="1">
+      <field property="studentNumber" depends="integer" page="1">
         <arg0 key="label.number" />
       </field>
       <field property="teacherNumber" depends="required, integer" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.responsibleTeacher" />
       </field>
+      <field property="grade" depends="required" page="1">
+        <arg0 key="label.mark" />
+      </field>
+      <field property="examDate" depends="required" page="1">
+        <arg0 key="label.examDate" />
+      </field>
+      <field property="gradeAvailableDate" depends="required" page="1">
+        <arg0 key="label.gradeAvailableDate" />
+      </field>
+     
     </form>
     	<!-- validation for the Choose Certificate Info Form -->
     <form name="choosePersonForm">  

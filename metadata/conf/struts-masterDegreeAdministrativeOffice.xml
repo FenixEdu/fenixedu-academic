@@ -252,10 +252,13 @@
                  dynamic="true">
 
          <form-property name="page" type="java.lang.Integer" />
-         <form-property name="studentNumber" type="java.lang.String" />
-         <form-property name="studentName" type="java.lang.String" /> 
+         <form-property name="studentNumber" type="java.lang.Integer" />         
        	 <form-property name="grade" type="java.lang.String" />
          <form-property name="teacherNumber" type="java.lang.String" />
+         <form-property name="examDate" type="java.lang.String" /> -->
+         <form-property name="gradeAvailableDate" type="java.lang.String" /> -->
+         <form-property name="enrolmentEvaluationType" type="java.lang.String" />
+         <form-property name="observation" type="java.lang.String" />
 	  </form-bean>
 	  
 	  <!-- Bean to submit final evaluation -->
@@ -881,7 +884,7 @@
       </action>
       
       <action path="/changeMarkDispatchAction"
-      		  input="/marksManagement/editMarkStudent.jsp"
+      		  input="/changeMarkDispatchAction.do?method=chooseStudentEvaluation&amp;page=0"
       	      name="studentNumberForm"
 		      parameter="method"
 		      scope="request"
@@ -894,6 +897,7 @@
 	         <forward name="changeStudentMark" path="/marksManagement/showMarksManagementMenu.jsp"/>
 			 <forward name="studentMarks" path="/marksManagement/showStudentMarks.jsp"/> 
 			 <forward name="editStudentMark" path="/marksManagement/editStudentMark.jsp"/> 
+			 <forward name="chooseCurricularCourse" path="/marksManagement/chooseCurricularCourseToManageMarks.jsp"/>
       </action>
       <action path="/marksSubmission"
       		  input="/marksSubmission.do?method=prepare&amp;page=0"

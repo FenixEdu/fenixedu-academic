@@ -1,13 +1,16 @@
 package ServidorPersistente.OJB;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.EnrolmentEvaluation;
+import Dominio.Funcionario;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
+import Dominio.IPessoa;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -40,11 +43,24 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
 		}
 
 		// Read Enrolment from database.
+		
 		enrolmentEvaluationFromDB =
-			(IEnrolmentEvaluation) this.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
-				enrolmentEvaluationToWrite.getEnrolment(),
-				new EnrolmentEvaluationType(enrolmentEvaluationToWrite.getEnrolmentEvaluationType().getType()),
-				enrolmentEvaluationToWrite.getGrade());
+					(IEnrolmentEvaluation) this.readByUnique(enrolmentEvaluationToWrite.getExamDate(),
+						enrolmentEvaluationToWrite.getGradeAvailableDate(),
+						enrolmentEvaluationToWrite.getPersonResponsibleForGrade(),
+						enrolmentEvaluationToWrite.getWhen(),
+						enrolmentEvaluationToWrite.getEmployee(),
+						enrolmentEvaluationToWrite.getObservation());
+						
+					
+		
+		
+		
+//		enrolmentEvaluationFromDB =
+//			(IEnrolmentEvaluation) this.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
+//				enrolmentEvaluationToWrite.getEnrolment(),
+//				new EnrolmentEvaluationType(enrolmentEvaluationToWrite.getEnrolmentEvaluationType().getType()),
+//				enrolmentEvaluationToWrite.getGrade());
 		// If Enrolment is not in database, then write it.
 		if (enrolmentEvaluationFromDB == null) {
 			super.lockWrite(enrolmentEvaluationToWrite);
@@ -187,4 +203,24 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
 			List examsWithRepetition = (List) queryList(EnrolmentEvaluation.class, criteria);
 			return  examsWithRepetition;
 		}
+		
+	public IEnrolmentEvaluation readByUnique(
+				Date examDate,
+				Date gradeAvailableDate,
+				IPessoa person,
+				Date whenAlter,
+				Funcionario employee,
+				String observation)throws ExcepcaoPersistencia {
+				Integer employeeInt = Integer.valueOf(Integer.toString(employee.getCodigoInterno()));
+				Criteria criteria = new Criteria();
+				criteria.addEqualTo("examDate", examDate);
+				criteria.addEqualTo("gradeAvailableDate", gradeAvailableDate);
+				criteria.addEqualTo("personResponsibleForGradeKey",person.getIdInternal());			
+				criteria.addEqualTo("when", whenAlter);
+				criteria.addEqualTo("employeeKey", employeeInt);
+				criteria.addEqualTo("observation", observation);
+	
+				IEnrolmentEvaluation evaluationsWithRepetition = (IEnrolmentEvaluation) queryObject(EnrolmentEvaluation.class, criteria);
+		return (IEnrolmentEvaluation) evaluationsWithRepetition;
+			}
 }
