@@ -20,8 +20,8 @@ public class TestCasePresentation extends MockStrutsTestCase {
 		super(testName);
 	}
 
-	public void setUp(){
-		
+	public void setUp() {
+
 		try {
 			super.setUp();
 		} catch (Exception e) {
@@ -29,7 +29,7 @@ public class TestCasePresentation extends MockStrutsTestCase {
 			fail("Setting up!");
 		}
 		
-		//		The following code backs up the contents of the database
+		// The following code backs up the contents of the database
 		// and loads the database with the data set required to run
 		// the test cases.
 		try {
@@ -54,5 +54,4 @@ public class TestCasePresentation extends MockStrutsTestCase {
 			System.out.println("Tear down failed: " + ex);
 		}
 	}
-
 }

@@ -27,7 +27,7 @@ public class EditarTurnoFormActionTest extends TestCasePresentation {
         
     return suite;
   }
-  public void setUp() throws Exception {
+  public void setUp() {
     super.setUp();
     // define ficheiro de configuracao Struts a utilizar
     setServletConfigFile("/WEB-INF/tests/web-sop.xml");

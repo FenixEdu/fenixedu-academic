@@ -33,7 +33,7 @@ public class ChooseExecutionCourseActionTest extends TestCasePresentation {
 		return suite;
 	}
 	
-	public void setUp() throws Exception {
+	public void setUp() {
 		super.setUp();
 
 		//defines struts config file to use
