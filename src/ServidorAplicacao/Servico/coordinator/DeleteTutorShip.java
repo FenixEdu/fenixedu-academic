@@ -27,7 +27,8 @@ public class DeleteTutorShip implements IService
 	{
 	}
 
-	public Object run(Integer tutorNumber, List tutorIds2Delete) throws FenixServiceException
+	public Object run(
+		Integer executionDegreeId, Integer tutorNumber, List tutorIds2Delete) throws FenixServiceException
 	{
 
 		if (tutorNumber == null)

@@ -7,7 +7,8 @@ package ServidorAplicacao.Servico.coordinator;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import Dominio.CursoExecucao;
+import Dominio.ICursoExecucao;
 import Dominio.IStudent;
 import Dominio.ITeacher;
 import Dominio.ITutor;
@@ -15,6 +16,7 @@ import Dominio.Tutor;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPersistentTutor;
@@ -26,7 +28,7 @@ import Util.TipoCurso;
  * @author Tânia Pousão
  *  
  */
-public class InsertTutorShipWithManyStudent implements IService
+public class InsertTutorShipWithManyStudent extends InsertTutorShip
 {
 
 	public InsertTutorShipWithManyStudent()
@@ -34,7 +36,12 @@ public class InsertTutorShipWithManyStudent implements IService
 
 	}
 
-	public Object run(Integer teacherNumber, Integer studentNumberFirst, Integer studentNumberSecond) throws FenixServiceException
+	public Object run(
+		Integer executionDegreeId,
+		Integer teacherNumber,
+		Integer studentNumberFirst,
+		Integer studentNumberSecond)
+		throws FenixServiceException
 	{
 		if (teacherNumber == null || studentNumberFirst == null || studentNumberSecond == null)
 		{
@@ -42,17 +49,31 @@ public class InsertTutorShipWithManyStudent implements IService
 		}
 
 		ISuportePersistente sp = null;
-		List studentsErrors = new ArrayList(); 
+		List studentsErrors = new ArrayList();
 		try
 		{
 			sp = SuportePersistenteOJB.getInstance();
+
+			//execution degree
+			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+			ICursoExecucao executionDegree = new CursoExecucao();
+			executionDegree.setIdInternal(executionDegreeId);
+			executionDegree =
+				(ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
+			String degreeCode = null;
+			if (executionDegree != null
+				&& executionDegree.getCurricularPlan() != null
+				&& executionDegree.getCurricularPlan().getDegree() != null)
+			{
+				degreeCode = executionDegree.getCurricularPlan().getDegree().getSigla();
+			}
 
 			//teacher
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 			ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
 			if (teacher == null)
 			{
-				throw new NonExistingServiceException();
+				throw new NonExistingServiceException("error.tutor.unExistTeacher");
 			}
 
 			//students in the range [studentNumberFirst, studentNumberSecond]
@@ -61,12 +82,20 @@ public class InsertTutorShipWithManyStudent implements IService
 				IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 				Integer studentNumber = new Integer(i);
 				IStudent student =
-				persistentStudent.readStudentByNumberAndDegreeType(
+					persistentStudent.readStudentByNumberAndDegreeType(
 						studentNumber,
 						TipoCurso.LICENCIATURA_OBJ);
 				if (student == null)
 				{
 					//student doesn't exists...
+					studentsErrors.add(studentNumber);
+					continue;
+				}
+
+				if (!verifyStudentOfThisDegree(student, TipoCurso.LICENCIATURA_OBJ, degreeCode)
+					.booleanValue())
+				{
+					//student doesn't belong to this degree
 					studentsErrors.add(studentNumber);
 					continue;
 				}
@@ -88,7 +117,8 @@ public class InsertTutorShipWithManyStudent implements IService
 			e.printStackTrace();
 			throw new FenixServiceException("error.tutor.associateManyStudent");
 		}
-		
+
+		//return student's number list that unchained an error
 		return studentsErrors;
 	}
 }

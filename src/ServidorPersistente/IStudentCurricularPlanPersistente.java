@@ -14,7 +14,6 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IBranch;
-import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;

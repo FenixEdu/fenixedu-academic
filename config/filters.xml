@@ -555,5 +555,12 @@
             ServidorAplicacao.Filtro.DirectiveCouncilAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
-    </filter>    
+    </filter>
+    <filter>
+        <name>CoordinatorAndLEECAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.CoordinatorAndLEECAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>         
 </filterDefinitions>

@@ -5,7 +5,7 @@
 <h2><bean:message key="label.tutor"/></h2>
 <span class="error"><html:errors/></span><br/>
 
-<html:form action="/tutorManagement">
+<html:form action="/tutorManagement" focus="tutorNumber">
 
 <html:hidden property="executionDegreeId" value="<%=  request.getAttribute("executionDegreeId").toString() %>"/>
 <html:hidden property="method" value="readTutor" />

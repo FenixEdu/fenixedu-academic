@@ -82,6 +82,9 @@
 	<definition name="chooseTutor" extends="definition.coordinator.two-column">
 		 <put name="body" value="/coordinator/tutors/chooseTutor.jsp" />
 	</definition>
+	<definition name="notAutorized" extends="definition.coordinator.two-column">
+		 <put name="body" value="/coordinator/tutors/notAutorized.jsp" />
+	</definition>
 	<definition name="showStudentsByTutor" extends="definition.coordinator.two-column">
 		 <put name="body" value="/coordinator/tutors/showStudentsByTutor.jsp" />
 		 <put name="body-context" value="/coordinator/tutors/context.jsp" />

@@ -5625,7 +5625,7 @@
     	<implementationClass>ServidorAplicacao.Servico.coordinator.ReadStudentsByTutor</implementationClass>
     	<isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="CoordinatorAuthorization"/>
+            <chain name="CoordinatorAndLEECAuthorization"/>
         </filterChains>
     </service>  
     <service>
@@ -5635,4 +5635,38 @@
     	<isTransactional>True</isTransactional>
         <filterChains/>
     </service> 
+    <service>
+    	<name>InsertTutorShipWithOneStudent</name>
+    	<description>Associate one student to the teacher</description>
+    	<implementationClass>ServidorAplicacao.Servico.coordinator.InsertTutorShipWithOneStudent</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorAndLEECAuthorization"/>
+        </filterChains>
+    </service>  
+    <service>
+    	<name>InsertTutorShipWithManyStudent</name>
+    	<description>Associate a range of students to the teacher</description>
+    	<implementationClass>ServidorAplicacao.Servico.coordinator.InsertTutorShipWithManyStudent</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorAndLEECAuthorization"/>
+        </filterChains>
+    </service>  
+    <service>
+    	<name>DeleteTutorShip</name>
+    	<description>Delete a tutor ship</description>
+    	<implementationClass>ServidorAplicacao.Servico.coordinator.DeleteTutorShip</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorAndLEECAuthorization"/>
+        </filterChains>
+    </service>     
+    <service>
+    	<name>UserCoordinatorByExecutionDegree</name>
+    	<description>Verify the user logged is coordinator of this degree</description>
+    	<implementationClass>ServidorAplicacao.Servico.coordinator.UserCoordinatorByExecutionDegree</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains/>
+    </service>    
 </serviceDefinitions>

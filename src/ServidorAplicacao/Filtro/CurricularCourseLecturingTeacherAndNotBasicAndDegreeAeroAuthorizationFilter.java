@@ -62,16 +62,6 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
 
-        System.out
-                        .println("CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizationFilter-->Execute");
-
-        System.out.println("1-->" + (id.getRoles() == null));
-        System.out.println("2-->" + (!AuthorizationUtils.containsRole(id.getRoles(), getRoleType())));
-        System.out.println("3-->" + (!lecturesExecutionCourse(id, argumentos)));
-        System.out.println("4-->" + (!CurricularCourseBelongsExecutionCourse(id, argumentos)));
-        System.out.println("5-->" + (!CurricularCourseNotBasic(argumentos)));
-        System.out.println("6-->" + (!CurricularCourseAeroDegree(argumentos)));
-
         if ((id == null) || (id.getRoles() == null)
                         || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
                         || !lecturesExecutionCourse(id, argumentos)

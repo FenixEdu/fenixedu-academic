@@ -578,4 +578,11 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AuthorizationByRoleFilter</filterClass>
     </filterChain>
+    <filterChain>
+        <name>CoordinatorAndLEECAuthorization</name>
+        <expression>CoordinatorAndLEECAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AuthorizationByRoleFilter</filterClass>
+    </filterChain>
 </filterChainsDefinitions>

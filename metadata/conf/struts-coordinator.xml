@@ -127,12 +127,12 @@
       		type="org.apache.struts.validator.DynaValidatorForm"
 	        dynamic="true">
         <form-property name="page" type="java.lang.Integer" initial="0"/>
-        <form-property name="executionDegreeId" type="java.lang.Integer"/>
-	    <form-property name="tutorNumber" type="java.lang.Integer"/>
+        <form-property name="executionDegreeId" type="java.lang.String"/>
+	    <form-property name="tutorNumber" type="java.lang.String"/>
 	    <form-property name="deletedTutorsIds" type="java.lang.Integer[]" />
-   	    <form-property name="studentNumber" type="java.lang.Integer"/>
-	    <form-property name="studentNumberFirst" type="java.lang.Integer"/>
-	    <form-property name="studentNumberSecond" type="java.lang.Integer"/>	    
+   	    <form-property name="studentNumber" type="java.lang.String"/>
+	    <form-property name="studentNumberFirst" type="java.lang.String"/>
+	    <form-property name="studentNumberSecond" type="java.lang.String"/>	    
       </form-bean>
     </form-beans>
     
@@ -471,6 +471,7 @@
 	  	scope="request"
 	  	input="/tutorManagement.do?method=prepareChooseTutor&amp;page=0"
 	  >
+	  	<forward name="notAuthorized" path="notAutorized" />
 	  	<forward name="chooseTutor" path="chooseTutor" />
 	  	<forward name="showStudentsByTutor" path="showStudentsByTutor" />
 	  </action>
@@ -480,9 +481,9 @@
 	  	name="tutorForm"
 	  	parameter="method"
 	  	scope="request"
-	  	input="/tutorManagement.do?method=prepareChooseTutor&amp;page=0"
+	  	input="/tutorManagement.do?method=readTutor&amp;page=0"
 	  >
-	  	<forward name="confirmation" path="/tutorManagement.do?method=readTutor" />
+	  	<forward name="confirmation" path="/tutorManagement.do?method=readTutor&amp;page=0" />
 	  	<forward name="cancel" path="/tutorManagement.do?method=prepareChooseTutor" />
 	  </action>
     </action-mappings>

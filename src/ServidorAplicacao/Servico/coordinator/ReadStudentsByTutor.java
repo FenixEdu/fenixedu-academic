@@ -33,7 +33,8 @@ public class ReadStudentsByTutor implements IService
 	}
 
 	
-	public List run(Integer tutorNumber) throws FenixServiceException{
+	public List run(
+		Integer executionDegreeId, Integer tutorNumber) throws FenixServiceException{
 		if(tutorNumber == null){
 			throw new FenixServiceException("error.tutor.impossibleOperation");
 		}
@@ -51,7 +52,7 @@ public class ReadStudentsByTutor implements IService
 			
 			List tutorStudents = persistentTutor.readStudentsByTeacher(teacher);
 			if(tutorStudents == null || tutorStudents.size() <= 0){
-				throw new FenixServiceException("error.tutor.noStudent");
+				return infoTutorStudents;
 			}
 		
 			//Clone
