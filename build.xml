@@ -124,6 +124,9 @@
 		  <replacefilter 
 		    token="@db.alias@" 
 		    property="db.alias"/>
+		  <replacefilter 
+		    token="@application@" 
+		    property="application"/>
 		</replace>
 		<antcall target="validate-xml"/>
     </target>
@@ -342,7 +345,7 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                  <include name="**/StudentCurricularPlanOJBTest.java"/> 
+                  <include name="**/RestrictionOJBTest.java"/> 
 				<!-- 	<include name="**/ProfessorshipOJBTest.java"/> -->
 					<!-- Theese tests where already failling, no need for me to worry about them for now -->
                <!--     <include name="**/CurriculumOJBTest.java"/>
@@ -379,7 +382,7 @@
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
                     <!--<include name="**/*Test.java"/>-->
-                    <include name="**/person/*Test.java"/>
+                    <include name="**/EnrolmentContextManagerTest.java"/>
                     <exclude name="**/BaseEnrolmentRuleTest.java.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
@@ -707,14 +710,13 @@
 	</target>
 
 	<target name="validate-xml">
-<!--		<xmlvalidate warn="false" failonerror="false">
+		<xmlvalidate warn="false" failonerror="false">
 				<fileset dir="${webapp.metadata}" includes="**/*.xml">
 					<exclude name="**/repository*.xml"/>
 					<exclude name="**/validator-rules.xml"/>
 					<exclude name="**/fenix-validator-rules.xml"/>					
 				</fileset>
 		</xmlvalidate>
-		-->
 	</target>
 	
 	
