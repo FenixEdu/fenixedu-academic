@@ -81,11 +81,9 @@ public class InsertSectionServiceTest extends TestCaseCreateServices {
 			IExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName("2002/2003");
 			IExecutionPeriod executionPeriod = sp.getIPersistentExecutionPeriod().readByNameAndExecutionYear("2º Semestre", executionYear);
 			executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("PO", executionPeriod);
-//			executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","LEEC");
 		
 			site= isp.readByExecutionCourse(executionCourse);
 			
-			System.out.println("ARGS INTERNALCODE DO SITE"+site.toString());
 			sp.confirmarTransaccao();	
 		
 			} catch (ExcepcaoPersistencia e) {

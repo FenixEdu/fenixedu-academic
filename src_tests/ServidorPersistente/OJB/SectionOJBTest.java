@@ -315,6 +315,57 @@ public class SectionOJBTest extends TestCaseOJB {
 			}
 	
 		}
+		
+	/** Test of readBySite method, of class ServidorPersistente.OJB.SectionOJB. */
+		public void testReadBySite() {
+			List sectionsList = null;
+
+			// read existing SectionsList
+			try {
+				persistentSupport.iniciarTransaccao();
+				site = persistentSite.readByExecutionCourse(executionCourse2);
+				sectionsList = persistentSection.readBySite(site);
+				persistentSupport.confirmarTransaccao();
+
+			} catch (ExcepcaoPersistencia ex) {
+				fail("testReadBySite:fail read existing site");
+			}
+			assertEquals(sectionsList.size(), 4);
+			
+			// read unexisting SectionsList
+			try {
+				persistentSupport.iniciarTransaccao();
+				IDisciplinaExecucao executionCourse4 =
+								persistentExecutionCourse
+									.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
+									"naoExiste",
+									"2002/2003",
+									"LEEC");
+				assertNull(executionCourse4);
+				ISite nonExistingSite = persistentSite.readByExecutionCourse(executionCourse4);
+				List nonExistingSections = persistentSection.readBySite(nonExistingSite);
+				assertTrue(nonExistingSections.isEmpty());
+				persistentSupport.confirmarTransaccao();
+			} catch (ExcepcaoPersistencia ex) {
+				fail("testReadBySite:fail read unexisting sectionsList");
+			}
+		}
+		
+	/** Test of readAll method, of class ServidorPersistente.OJB.SectionOJB. */
+			public void testReadAll() {
+				List sectionsList = null;
+
+				// read existing SectionsList
+				try {
+					persistentSupport.iniciarTransaccao();
+					sectionsList = persistentSection.readAll();
+					persistentSupport.confirmarTransaccao();
+
+				} catch (ExcepcaoPersistencia ex) {
+					fail("testReadAll:fail reading all sections");
+				}
+				assertEquals(sectionsList.size(), 5);
+			}
 
 	/** Test of delete() method, of class ServidorPersistente.OJB.SectionOJB.*/
 

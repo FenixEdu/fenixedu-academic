@@ -133,7 +133,7 @@ public class InsertItemTest extends TestCaseCreateServices {
 			System.out.println("failed setting up the test data");
 			}
 			
-			InfoSection infoSection =Cloner.copyISection2InfoSection(section);
+			InfoSection infoSection = Cloner.copyISection2InfoSection(section);
 			
 			argsInsertItem[0] = new InfoItem("item1 da seccao1dePO","Item1dePO",new Integer(1),infoSection,new Boolean(true));
 	
@@ -145,4 +145,5 @@ public class InsertItemTest extends TestCaseCreateServices {
 	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
 		return null;
 	}
+	
 }

@@ -99,7 +99,7 @@ public class EditItemServiceTest extends TestCaseDeleteAndEditServices {
 							persistentSection.readBySiteAndSectionAndName(site,null,"Seccao1deTFCI");
 			
 			IPersistentItem persistentItem=sp.getIPersistentItem();
-			IItem item=persistentItem.readBySectionAndName(section,"Item1deTFCI");			
+			IItem item = persistentItem.readBySectionAndName(section,"Item1deTFCI");			
 			sp.confirmarTransaccao();
 			oldInfoItem= Cloner.copyIItem2InfoItem(item);
 			newInfoItem= Cloner.copyIItem2InfoItem(item);

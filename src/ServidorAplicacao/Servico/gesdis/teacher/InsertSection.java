@@ -52,7 +52,6 @@ public class InsertSection implements IServico {
 	private void organizeExistingSectionsOrder(ISection superiorSection, ISite site, int insertSectionOrder)
 	throws FenixServiceException {
 		
-		System.out.println("ENTRA NO ORGANIZE");
 		IPersistentSection persistentSection=null;
 		try{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
@@ -69,11 +68,8 @@ public class InsertSection implements IServico {
 					int sectionOrder = iterSection.getSectionOrder().intValue();
 
 					if (sectionOrder >= insertSectionOrder) {
-						System.out.println("SectionOrder"+sectionOrder);
 						iterSection.setSectionOrder(new Integer(sectionOrder+1));
 						persistentSection.lockWrite(iterSection);
-						System.out.println("ORGANIZE; DP DO LOCK");
-						System.out.println("SectionOrder,dp do lock"+iterSection.getSectionOrder());
 						
 					}
 		   			
@@ -137,21 +133,17 @@ public class InsertSection implements IServico {
 					executionPeriod);
 		
 			site = persistentSuport.getIPersistentSite().readByExecutionCourse(executionCourse);
-
-			System.out.println("NO RUN SITE-INTERNAL CODE"+site.toString());
 			
 			InfoSection fatherInfoSection = infoSection.getSuperiorInfoSection();
 
-			if(fatherInfoSection != null){ 
+			if(fatherInfoSection != null) 
 				fatherSection = Cloner.copyInfoSection2ISection(fatherInfoSection);
-//				fatherSection = persistentSuport.getIPersistentSection().readBySiteAndSectionAndName(site, null, fatherInfoSection.getName());
-			}
 
 			ISection existingSection = persistentSection.readBySiteAndSectionAndName(site, fatherSection, infoSection.getName());
 			
 			if (existingSection != null)
 				throw new ExistingServiceException();
-			System.out.println("NO RUN INFOSECTION-INTERNAL CODE"+infoSection.toString());
+			
 			section = Cloner.copyInfoSection2ISection(infoSection);
 			section.setSite(site);
 			section.setSuperiorSection(fatherSection);
@@ -160,12 +152,9 @@ public class InsertSection implements IServico {
 				fatherSection,
 				site,
 				infoSection.getSectionOrder().intValue());
-			System.out.println("DEPOIS DO ORGANIZE NO RUN");
-			System.out.println("NO RUN A SECTION"+section.toString());
-			
-//			persistentSuport.iniciarTransaccao();				
+							
 			persistentSection.lockWrite(section);
-//			persistentSuport.confirmarTransaccao();
+
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
 			throw new FenixServiceException(excepcaoPersistencia);

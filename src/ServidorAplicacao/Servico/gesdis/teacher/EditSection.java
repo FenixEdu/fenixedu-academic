@@ -47,6 +47,8 @@ public class EditSection implements IServico {
 	 * @param site
 	 * @throws FenixServiceException
 	 */
+	
+//	this method reorders some sections but not the section that we are editing
 	private void organizeSectionsOrder(int newOrder, int oldOrder, ISection superiorSection, ISite site) throws FenixServiceException {
 
 			IPersistentSection persistentSection = null;
@@ -65,7 +67,7 @@ public class EditSection implements IServico {
 						ISection iterSection = (ISection) iterSections.next();
 						int iterSectionOrder = iterSection.getSectionOrder().intValue();
 
-						if (iterSectionOrder > oldOrder) {
+						if (iterSectionOrder > oldOrder && iterSectionOrder <= newOrder) {
 							iterSection.setSectionOrder(new Integer(iterSectionOrder - 1));
 							persistentSection.lockWrite(iterSection);
 						}
@@ -75,7 +77,7 @@ public class EditSection implements IServico {
 
 							int iterSectionOrder = iterSection.getSectionOrder().intValue();
 
-							if (iterSectionOrder >= newOrder) {
+							if (iterSectionOrder >= newOrder && iterSectionOrder < oldOrder) {
 
 								iterSection.setSectionOrder(new Integer(iterSectionOrder + 1));
 								persistentSection.lockWrite(iterSection);
@@ -100,8 +102,6 @@ public class EditSection implements IServico {
 			ISite site = Cloner.copyInfoSite2ISite(oldInfoSection.getInfoSite());
 			
 			InfoSection fatherInfoSection = oldInfoSection.getSuperiorInfoSection();
-
-			//System.out.println("FatherInfoSection" + fatherInfoSection.getInternalCode());
 
 			if(fatherInfoSection != null) 
 				fatherSection = Cloner.copyInfoSection2ISection(fatherInfoSection);

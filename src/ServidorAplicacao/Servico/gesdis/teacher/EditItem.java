@@ -49,6 +49,7 @@ public class EditItem implements IServico {
 
 	}
 
+// this method reorders some items but not the item that we are editing 
 	private void organizeItemsOrder(
 		int newOrder,
 		int oldOrder,
@@ -75,7 +76,7 @@ public class EditItem implements IServico {
 
 					int iterItemOrder = iterItem.getItemOrder().intValue();
 
-					if (iterItemOrder > oldOrder) {
+					if (iterItemOrder > oldOrder && iterItemOrder <= newOrder) {
 
 						iterItem.setItemOrder(new Integer(iterItemOrder - 1));
 
@@ -88,7 +89,7 @@ public class EditItem implements IServico {
 
 					int iterItemOrder = iterItem.getItemOrder().intValue();
 
-					if (iterItemOrder >= newOrder) {
+					if (iterItemOrder >= newOrder && iterItemOrder < oldOrder) {
 
 						iterItem.setItemOrder(new Integer(iterItemOrder + 1));
 
