@@ -181,14 +181,6 @@
          <foreignkey field-id-ref="29"/>
     </reference-descriptor>
     <collection-descriptor
-         name="privilegios"
-         collection-class="org.apache.ojb.broker.util.collections.ManageableHashSet"
-         element-class-ref="Dominio.Privilegio"
-      >
-         <inverse-foreignkey field-id-ref="2"/>
-      </collection-descriptor>    
-    
-    <collection-descriptor
          name="personRoles"
          element-class-ref="Dominio.Role"
          proxy="false"
