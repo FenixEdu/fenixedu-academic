@@ -18,6 +18,11 @@ public class ExamExecutionCourse extends DomainObject implements IExamExecutionC
 	private Integer keyExecutionCourse;
 
 	public ExamExecutionCourse() {}
+	
+	public ExamExecutionCourse(IExam exam, IDisciplinaExecucao executionCourse) {
+		this.setExam(exam);
+		this.setExecutionCourse(executionCourse);
+	}
 
 	public boolean equals(Object obj) {
 		if (obj instanceof ExamExecutionCourse) {
