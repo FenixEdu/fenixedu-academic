@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+		<definition name="view-qualifications" extends="teacher-information">
+		<put name="body" value="/person/qualificationsManagement.jsp" />
+	</definition>
+	<definition name="edit-qualification" extends="teacher-information">
+		<put name="body" value="/person/editQualification.jsp" />
+	</definition>
+</tiles-definitions>
