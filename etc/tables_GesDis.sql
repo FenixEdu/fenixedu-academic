@@ -164,7 +164,7 @@ drop table if exists STUDENT_GROUP;
 create table STUDENT_GROUP (
    ID_INTERNAL int(11) unsigned not null auto_increment,   
    GROUP_NUMBER int(11) unsigned not null,
-   KEY_SHIFT int(11),
+   KEY_SHIFT int(11) unsigned not null,
    KEY_GROUP_PROPERTIES int(11) unsigned not null,
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (GROUP_NUMBER, KEY_GROUP_PROPERTIES))
