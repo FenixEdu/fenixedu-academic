@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -24,8 +23,10 @@ import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoContributor;
+import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoGuide;
+import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -99,11 +100,13 @@ public class CreateGuideDispatchAction extends DispatchAction
                 throw new ExistingActionException(e);
             }
 
-            BeanComparator nameComparator =
-                new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
-            Collections.sort(degreeList, nameComparator);
+            //BeanComparator nameComparator =  new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
+            //Collections.sort(degreeList, nameComparator);
+			Collections.sort(degreeList, new ComparatorByNameForInfoExecutionDegree());
+			List newDegreeList = degreeList;
+			List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
 
-            session.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
+            session.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
             session.removeAttribute(SessionConstants.PRINT_PASSWORD);
             session.removeAttribute(SessionConstants.PRINT_INFORMATION);
 
@@ -134,6 +137,7 @@ public class CreateGuideDispatchAction extends DispatchAction
             session.setAttribute(SessionConstants.CONTRIBUTOR_LIST, contributorList);
 
             session.setAttribute(SessionConstants.GUIDE_REQUESTER_LIST, GuideRequester.toArrayList());
+			session.setAttribute(SessionConstants.EXECUTION_YEAR, executionYear);
 
             return mapping.findForward("PrepareSuccess");
         } else
@@ -163,6 +167,7 @@ public class CreateGuideDispatchAction extends DispatchAction
             String graduationType = (String) createGuideForm.get("graduationType");
             String degree = (String) createGuideForm.get("degree");
             String numberString = (String) createGuideForm.get("number");
+			String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
 
             Integer number = new Integer(numberString);
             String requesterType = (String) createGuideForm.get("requester");
@@ -192,6 +197,24 @@ public class CreateGuideDispatchAction extends DispatchAction
 			types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_TYPE);
 			types.add(DocumentType.GRATUITY_TYPE);
 			
+			InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+
+			try
+			{
+				Object args[] = { executionYear ,degree  };
+				infoExecutionDegree =
+					(InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+						userView,
+						"ReadDegreeByYearAndCode",
+						args);
+
+			} catch (NonExistingServiceException e)
+			{
+				throw new NonExistingActionException("A lista de guias para estudantes", e);
+			} catch (FenixServiceException e)
+			{
+				throw new FenixActionException(e);
+			}
 
             Object argsAux[] = { GraduationType.MASTER_DEGREE_TYPE, types };
 
@@ -216,18 +239,19 @@ public class CreateGuideDispatchAction extends DispatchAction
             session.setAttribute(SessionConstants.CERTIFICATE_LIST, studentGuideList);
 
             // Verify the chosen degree
-            Iterator iterator = degrees.iterator();
-            InfoExecutionDegree infoExecutionDegree = null;
-            while (iterator.hasNext())
-            {
-                InfoExecutionDegree infoExecutionDegreeTemp = (InfoExecutionDegree) iterator.next();
-                if (infoExecutionDegreeTemp
-                    .getInfoDegreeCurricularPlan()
-                    .getInfoDegree()
-                    .getNome()
-                    .equals(degree))
-                    infoExecutionDegree = infoExecutionDegreeTemp;
-            }
+//            Iterator iterator = degrees.iterator();
+//            InfoExecutionDegree infoExecutionDegree = null;
+//            while (iterator.hasNext())
+//            {
+//			
+//                InfoExecutionDegree infoExecutionDegreeTemp = (InfoExecutionDegree) iterator.next();
+//                if (infoExecutionDegreeTemp
+//                    .getInfoDegreeCurricularPlan()
+//                    .getInfoDegree()
+//                    .getNome()
+//                    .equals(degree))
+//                    infoExecutionDegree = infoExecutionDegreeTemp;
+//            }
             String contributorName = (String) createGuideForm.get("contributorName");
             String contributorAddress = (String) createGuideForm.get("contributorAddress");
 
@@ -470,4 +494,48 @@ public class CreateGuideDispatchAction extends DispatchAction
         return mapping.findForward("CreateSuccess");
 
     }
+	private List buildExecutionDegreeLabelValueBean(List executionDegreeList)
+			{
+				List executionDegreeLabels = new ArrayList();
+				Iterator iterator = executionDegreeList.iterator();
+				while (iterator.hasNext())
+				{
+					InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+					String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+
+					name =
+						infoExecutionDegree
+							.getInfoDegreeCurricularPlan()
+							.getInfoDegree()
+							.getTipoCurso()
+							.toString()
+							+ " em "
+							+ name;
+
+					name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
+						? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName()
+						: "";
+
+					executionDegreeLabels.add(
+						new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getName()));
+				}
+				return executionDegreeLabels;
+		}
+	private boolean duplicateInfoDegree(
+				List executionDegreeList,
+				InfoExecutionDegree infoExecutionDegree)
+			{
+				InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+				Iterator iterator = executionDegreeList.iterator();
+
+				while (iterator.hasNext())
+				{
+					InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+					if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+						&& !(infoExecutionDegree.equals(infoExecutionDegree2)))
+						return true;
+
+				}
+				return false;
+			}
 }
