@@ -7,6 +7,6 @@
 <br />
 <div align="right" style="margin-right: 100px;">Chefe de Secção,</div>
 <br />
-<div align="right" style="margin-right: 100px;"><p>(Josefina Miranda)</p></div>
+<div align="right" style="margin-right: 100px;">(Josefina Miranda)</div>
 <br />
 <p><bean:write name="<%= SessionConstants.DATE %>" /></p>
