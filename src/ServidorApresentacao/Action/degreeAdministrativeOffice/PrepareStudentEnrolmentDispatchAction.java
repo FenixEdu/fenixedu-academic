@@ -79,7 +79,7 @@ public class PrepareStudentEnrolmentDispatchAction extends DispatchAction {
 			throw new FenixActionException(e);
 		}
 		session.setAttribute(SessionConstants.ENROLMENT_ACTOR_KEY, student);
-		session.setAttribute(SessionConstants.DEGREE_LIST, this.getExecutionDegreesLableValueBeanList(infoExecutionDegreesList));
+		request.setAttribute(SessionConstants.DEGREE_LIST, this.getExecutionDegreesLableValueBeanList(infoExecutionDegreesList));
 		session.setAttribute(SessionConstants.DEGREES, infoExecutionDegreesList);
 		return mapping.findForward(forwards[1]);
 	}

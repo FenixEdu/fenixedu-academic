@@ -14,7 +14,7 @@
 <html:form action="/prepareEnrolmentContext.do">
 	<table border="0">
 		<tr>
-			<td align="left"><bean:message key="label.choose.degree"/>:&nbsp;</td>
+			<td align="left"><bean:message key="label.choose.degree"/>&nbsp;</td>
 			<td align="left">
 				<html:select property="infoExecutionDegreeName" size="1">
 					<html:options collection="infoExecutionDegreesNamesList" property="value" labelProperty="label"/>
@@ -22,7 +22,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left"><bean:message key="label.choose.semester"/>:&nbsp;</td>
+			<td align="left"><bean:message key="label.choose.semester"/>&nbsp;</td>
 			<td align="left">
 				<html:select property="semester" size="1">
 <%--
@@ -35,7 +35,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left"><bean:message key="label.choose.year"/>:&nbsp;</td>
+			<td align="left"><bean:message key="label.choose.year"/>&nbsp;</td>
 			<td align="left">
 				<html:select property="year" size="1">
 					<html:option value="1"><bean:message key="label.first.year"/></html:option>

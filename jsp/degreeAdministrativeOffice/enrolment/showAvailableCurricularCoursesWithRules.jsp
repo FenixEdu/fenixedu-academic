@@ -23,7 +23,7 @@
 <bean:size id="sizeToBeEnroled" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled"/>
 
 <logic:notEqual name="sizeAutomaticalyEnroled" value="0">
-	<b><bean:message key="label.mandatory.enrolment.curricular.courses"/>:</b><br/>
+	<b><bean:message key="label.mandatory.enrolment.curricular.courses"/></b><br/>
 	<logic:iterate id="curricularCourseScope" name="infoEnrolmentContext" property="infoCurricularCoursesScopesAutomaticalyEnroled">
 		<bean:write name="curricularCourseScope" property="infoCurricularCourse.name"/><br/>
 	</logic:iterate>
@@ -34,14 +34,12 @@
 		<html:hidden property="step" value="0"/>
 		<html:hidden property="method" value="verifyEnrolment"/>
 		<html:hidden property="optionalCourseIndex" value=""/>
+		<b><bean:message key="label.enrolment.curricular.courses"/></b>
 		<table>
 			<tr>
-				<td colspan="3"><b><bean:message key="label.enrolment.curricular.courses"/>:</b></td>
-			</tr>
-			<tr>
 				<td>&nbsp;</td>
-				<td><u>Nome da disciplina</u></td>
-				<td align="right"><u>Ano</u></td>
+				<td><u><bean:message key="label.curricular.course.name"/></u></td>
+				<td><u><bean:message key="label.curricular.course.year"/></u></td>
 			</tr>
 			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled" indexId="index">
 				<logic:equal name="curricularScope" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
@@ -76,7 +74,6 @@
 						<bean:write name="curricularScope" property="infoCurricularSemester.infoCurricularYear.year"/>
 					</td>
 				</tr>
-		 		<br/>
 			</logic:iterate>
 			<tr>
 				<td colspan="3" align="center">

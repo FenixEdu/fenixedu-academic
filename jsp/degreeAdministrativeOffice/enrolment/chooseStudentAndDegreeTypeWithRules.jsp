@@ -12,11 +12,10 @@
 <center>
 <p>&nbsp;</p>
 <html:form action="/prepareStudentEnrolment.do?method=withRules">
-	<%--<html:hidden property="page" value="1"/>--%>
 	<html:hidden property="method" value="start"/>
 	<table border="0">
 		<tr>
-			<td align="left"><bean:message key="label.choose.degree.type"/>:&nbsp;</td>
+			<td align="left"><bean:message key="label.choose.degree.type"/>&nbsp;</td>
 			<td align="left">
 				<html:select property="degreeType" size="1">
 					<html:options collection="degreeTypeList" property="value" labelProperty="label"/>
@@ -24,10 +23,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left"><bean:message key="label.choose.student"/>:&nbsp;</td>
+			<td align="left"><bean:message key="label.choose.student"/>&nbsp;</td>
 			<td align="left">
 				<input type="text" name="studentNumber" size="5" value=""/>
-				<%--<html:text property="studentNumber" size="5" value=""/>--%>
 			</td>
 		</tr>
 	</table>

@@ -18,7 +18,10 @@ public abstract class SessionConstants {
 	// -------------------------------------------------------------------------------
 	//    Degree Administrative Office Constants
 	// -------------------------------------------------------------------------------
-//	public static final String ENROLMENT_MODE_KEY = "mode";
+	public static final String ENROLMENT_STUDENT_NUMBER_KEY = "studentNumber";
+	public static final String ENROLMENT_SEMESTER_KEY = "semester";
+	public static final String ENROLMENT_YEAR_KEY = "year";
+	public static final String ENROLMENT_DEGREE_NAME_KEY = "degreeName";
 	public static final String ENROLMENT_ACTOR_KEY = "actor";
 
 	//

@@ -11,13 +11,19 @@
 		<put name="body" value=""/>
 		<put name="footer" value="/degreeAdministrativeOffice/commons/copyrightDefault.jsp"/>
 	</definition>
-	<definition name="definition.degreeAdministrativeOffice.curricular.course.enrolment" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/enrolmentContext.jsp"/>
-	</definition>
-	<definition name="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/enrolmentInOptionalCurricularCourseContext.jsp"/>
-	</definition>
+
 	<definition name="definition.out.of.period" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/outOfPeriod.jsp"/>
+	</definition>
+
+	<definition name="definition.degreeAdministrativeOffice.curricular.course.enrolment.with.rules" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/enrolmentContextWithRules.jsp"/>
+	</definition>
+	<definition name="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment.with.rules" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/enrolmentInOptionalCurricularCourseContext.jsp"/>
+	</definition>
+
+	<definition name="definition.degreeAdministrativeOffice.curricular.course.enrolment.without.rules" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/enrolmentContextWithoutRules.jsp"/>
 	</definition>
 </tiles-definitions>

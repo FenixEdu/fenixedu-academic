@@ -7,35 +7,33 @@
 	</definition>
 
 	<definition name="df.page.chooseStudentAndDegreeTypeWithRules" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/chooseStudentAndDegreeTypeWithRules.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseStudentAndDegreeTypeWithRules.jsp"/>
 	</definition>
 	<definition name="df.page.chooseStudentAndDegreeTypeWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/chooseStudentAndDegreeTypeWithoutRules.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseStudentAndDegreeTypeWithoutRules.jsp"/>
 	</definition>
 	<definition name="df.page.chooseDegreeAndCurricularSemesterAndCurricularYear" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/chooseDegreeAndCurricularSemesterAndCurricularYear.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseDegreeAndCurricularSemesterAndCurricularYear.jsp"/>
 	</definition>
 
-	<definition name="df.page.acceptEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
+	<definition name="df.page.acceptEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.with.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptEnrolment.jsp"/>
 	</definition>
-	<definition name="df.page.showAvailableCurricularCoursesWithRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
+	<definition name="df.page.showAvailableCurricularCoursesWithRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.with.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/showAvailableCurricularCoursesWithRules.jsp"/>
 	</definition>
-	<definition name="df.page.verifyEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
+	<definition name="df.page.verifyEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.with.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/verifyEnrolment.jsp"/>
 	</definition>
-
-	<definition name="df.page.concreteOptionalList" extends="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment">
+	<definition name="df.page.concreteOptionalList" extends="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment.with.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/concreteOptionalList.jsp"/>
 	</definition>
-	<definition name="df.page.searchOptionalCurricularCourses" extends="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment">
+	<definition name="df.page.searchOptionalCurricularCourses" extends="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment.with.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/searchOptionalCurricularCourses.jsp"/>
 	</definition>
 
 
-	<definition name="df.page.showAvailableCurricularCoursesWithoutRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
+	<definition name="df.page.showAvailableCurricularCoursesWithoutRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.without.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/showAvailableCurricularCoursesWithoutRules.jsp"/>
 	</definition>
-
 </tiles-definitions>

@@ -36,9 +36,24 @@ public class PrepareEnrolmentContextAction extends Action {
 		HttpSession session = request.getSession();
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		List infoExecutionDegreesList = (List) session.getAttribute(SessionConstants.DEGREES);
-		InfoStudent infoStudent = (InfoStudent) session.getAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+
+		InfoStudent infoStudent = (InfoStudent) session.getAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
+		if(infoStudent == null) {
+			InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
+			infoStudent = infoEnrolmentContext.getInfoStudent();
+		}
+
+		List infoExecutionDegreesList = (List) session.getAttribute(SessionConstants.DEGREES);
+		if(infoExecutionDegreesList == null) {
+			try {
+				InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
+				Object args[] = { infoExecutionPeriod.getInfoExecutionYear(), infoEnrolmentContext.getChosenOptionalInfoDegree().getTipoCurso() };
+				infoExecutionDegreesList = (List) ServiceUtils.executeService(userView, "ReadExecutionDegreesByExecutionYearAndDegreeType", args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+		}
 
 		Integer infoExecutionDegreeIndex = new Integer((String) getDegreeAndCurricularSemesterAndCurricularYearForm.get("infoExecutionDegreeName"));
 		Integer semester = new Integer((String) getDegreeAndCurricularSemesterAndCurricularYearForm.get("semester"));
@@ -55,12 +70,15 @@ public class PrepareEnrolmentContextAction extends Action {
 			throw new FenixActionException(e);
 		}
 
-//		FIXME DAVID-RICARDO: Devido a remover estes atributos, se for feito um refresh á página e o código desta action for executado sem executar o código da action que coloca estes atributos na sessão, vai dar uma excepção (java.lang.NullPointerException) na linha 47.
-//		session.removeAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
-//		session.removeAttribute(SessionConstants.DEGREE_LIST);
-//		session.removeAttribute(SessionConstants.DEGREES);
+		session.removeAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
+		session.removeAttribute(SessionConstants.DEGREE_LIST);
+		session.removeAttribute(SessionConstants.DEGREES);
 
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
+		request.setAttribute(SessionConstants.ENROLMENT_STUDENT_NUMBER_KEY, infoStudent.getNumber());
+		request.setAttribute(SessionConstants.ENROLMENT_SEMESTER_KEY, semester);
+		request.setAttribute(SessionConstants.ENROLMENT_YEAR_KEY, year);
+		request.setAttribute(SessionConstants.ENROLMENT_DEGREE_NAME_KEY, infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
 
 		return mapping.findForward(forwards[0]);
 	}

@@ -531,7 +531,8 @@ public abstract class EnrolmentContextManager {
 
 		List curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan.getCurricularCourses();
 
-		// Transform a list of curricular courses into all of its scopes.
+		// Transform a list of curricular courses into all of its scopes that matters
+		// in relation to the selected semester and the selected year.
 		List curricularCoursesScopesFromDegreeCurricularPlan = new ArrayList();
 		Iterator iterator1 = curricularCoursesFromDegreeCurricularPlan.iterator();
 		while(iterator1.hasNext()) {
@@ -552,16 +553,12 @@ public abstract class EnrolmentContextManager {
 		List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentActiveCurricularPlan);
 
 		// Enrolments that have state ENROLED, TEMPORARILY_ENROLED and APROVED are to be subtracted from list of possible choices.
-//		final Integer semester2 = new Integer(semester.intValue());
-//		final Integer year2 = new Integer(year.intValue());
 		List invalidStudentEnrolments = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
 				return	enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED_OBJ) ||
 						enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED_OBJ) ||
-						enrolment.getEnrolmentState().equals(EnrolmentState.APROVED_OBJ);/* &&
-						enrolment.getCurricularCourseScope().getCurricularSemester().getSemester().equals(semester2) &&
-						enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear().equals(year2);*/
+						enrolment.getEnrolmentState().equals(EnrolmentState.APROVED_OBJ);
 			}
 		});
 
@@ -571,24 +568,29 @@ public abstract class EnrolmentContextManager {
 				return enrolment.getCurricularCourseScope();
 			}
 		});
+
 		// TODO DAVID-RICARDO: Ainda falta filtrar esta lista para obter apenas as cadeiras que têm execução no periodo de execução em causa.
-//		List possibleCurricularCoursesScopesToChoose = (List) CollectionUtils.subtract(curricularCoursesScopesFromDegreeCurricularPlan, invalidStudentCurricularCoursesScopes);
 		List possibleCurricularCoursesScopesToChoose = EnrolmentContextManager.subtract(curricularCoursesScopesFromDegreeCurricularPlan, invalidStudentCurricularCoursesScopes);
 		
-		enrolmentContext.setCurricularCoursesFromStudentCurricularPlan(new ArrayList());
-		enrolmentContext.setEnrolmentsAprovedByStudent(new ArrayList());
 		enrolmentContext.setAcumulatedEnrolments(null);
+		enrolmentContext.setCurricularCoursesFromStudentCurricularPlan(new ArrayList());
 		enrolmentContext.setCurricularCoursesScopesAutomaticalyEnroled(new ArrayList());
 		enrolmentContext.setActualEnrolments(new ArrayList());
 		enrolmentContext.setDegreesForOptionalCurricularCourses(new ArrayList());
 		enrolmentContext.setOptionalCurricularCoursesEnrolments(new ArrayList());
 		enrolmentContext.setOptionalCurricularCoursesToChooseFromDegree(new ArrayList());
 
-		enrolmentContext.setStudent(student);
+		enrolmentContext.setStudent(student); // To keep the actor
+		enrolmentContext.setChosenOptionalDegree(degreeCurricularPlan.getDegree()); // To keep the chosen degree
 		enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
 		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(possibleCurricularCoursesScopesToChoose);
 		enrolmentContext.setExecutionPeriod(executionPeriod);
 		enrolmentContext.setEnrolmentValidationResult(new EnrolmentValidationResult());
+
+		// In this case the enrolments can have the state ENROLED, TEMPORARILY_ENROLED and APROVED as,
+		// the purpose here is to now witch curricular courses from the selected degree curricular plan
+		// the student cannot do because he is already enrolled or as already done.
+		enrolmentContext.setEnrolmentsAprovedByStudent(invalidStudentEnrolments);
 
 		return enrolmentContext;
 	}
@@ -602,23 +604,13 @@ public abstract class EnrolmentContextManager {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 				if(fromList.contains(curricularCourseScope)) {
 					result.remove(curricularCourseScope);
+				} else {
+					EnrolmentContextManager.removeScopeWithSameCurricularCourse(result, fromList, curricularCourseScope.getCurricularCourse());
 				}
-				EnrolmentContextManager.removeScopeWithSameCurricularCourse(result, fromList, curricularCourseScope.getCurricularCourse());
 			}
 		}
 		return result;
 	}
-
-//	private static boolean sameCurricularCourse(List fromList, ICurricularCourse curricularCourse) {
-//		Iterator iterator = fromList.iterator();
-//		while(iterator.hasNext()) {
-//			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-//			if(curricularCourseScope.getCurricularCourse().equals(curricularCourse)) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
 
 	private static void removeScopeWithSameCurricularCourse(List result, List fromList, ICurricularCourse curricularCourse) {
 		Iterator iterator = fromList.iterator();
