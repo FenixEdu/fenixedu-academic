@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 	<html:link page="/viewSite.do">
 	<li><bean:message key="link.home"/></li>
 </html:link>
@@ -27,4 +27,6 @@
 	<html:link page="/logoff.do">
 	<li><bean:message key="link.logout"/></li>
 </html:link>
-
+<logic:present name="<%= SessionConstants.SECTIONS %>" >
+<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" />
+</logic:present>
