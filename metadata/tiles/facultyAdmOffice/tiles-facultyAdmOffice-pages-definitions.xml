@@ -2,15 +2,18 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
+	<!-- MAIN PAGE -->
 	<definition name="index" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/index.jsp"></put>
 	</definition>
+	<!-- TEACHER -->
 	<definition name="teacher-search-form" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/searchTeacher.jsp"></put>
 	</definition>
 	<definition name="teacher-search-form" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/teacherSearch.do?method=searchForm"></put>
 	</definition>
+	<!-- GRANT OWNER -->
 	<definition name="searchGrantOwnerForm" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/owner/searchGrantOwnerForm.jsp"></put>
 	</definition>
@@ -23,18 +26,29 @@
 	<definition name="manageGrantOwner" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/owner/manageGrantOwner.jsp"></put>
 	</definition>
+	<!-- GRANT CONTRACT -->
 	<definition name="editGrantContractForm" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantContractForm.jsp"></put>
 	</definition>
 	<definition name="manageGrantContract" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantContract.jsp"></put>
 	</definition>
+	<!-- GRANT SUBSIDY -->
+	<definition name="editGrantSubsidyForm" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantSubsidy.jsp"></put>
+	</definition>
+	<!-- GRANT QUALIFICATION -->
 	<definition name="manageGrantQualification" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/qualification/manageGrantQualification.jsp"></put>
 	</definition>
 	<definition name="editGrantQualificationForm" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/qualification/editGrantQualificationForm.jsp"></put>
 	</definition>
-
-	
+	<!-- GRANT TYPE -->
+	<definition name="manageGrantType" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantType.jsp"></put>
+	</definition>
+	<definition name="editGrantTypeForm" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantType.jsp"></put>
+	</definition>
 </tiles-definitions>

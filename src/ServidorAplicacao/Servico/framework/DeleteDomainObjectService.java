@@ -4,8 +4,7 @@
  */
 package ServidorAplicacao.Servico.framework;
 
-import Dominio.IDomainObject;
-import ServidorAplicacao.IServico;
+infoQualification.setDate(date);import Dominio.IDomainObject;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -18,7 +17,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Sergio Montelobo
  * @author jpvl
  */
-public abstract class DeleteDomainObjectService implements IServico
+public abstract class DeleteDomainObjectService implements IService
 {
     public void run(Integer objectId) throws FenixServiceException
     {
@@ -62,11 +61,11 @@ public abstract class DeleteDomainObjectService implements IServico
     }
 
     /**
-     * By default returns true
-     * 
-     * @param newDomainObject
-     * @return
-     */
+	 * By default returns true
+	 * 
+	 * @param newDomainObject
+	 * @return
+	 */
     protected boolean canDelete(IDomainObject newDomainObject, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
@@ -76,15 +75,15 @@ public abstract class DeleteDomainObjectService implements IServico
     /**
      * This is the class in witch the broker will read and delete the
      * DomainObject
-     * 
-     * @return
-     */
+	 * 
+	 * @return
+	 */
     protected abstract Class getDomainObjectClass();
 
     /**
-     * @param sp
-     * @return
-     */
+	 * @param sp
+	 * @return
+	 */
     protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
         throws ExcepcaoPersistencia;
 }

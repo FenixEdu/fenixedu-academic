@@ -31,27 +31,12 @@ import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
  */
 public class ReadAllContractsByGrantOwner implements IService
 {
-	private static ReadAllContractsByGrantOwner service = new ReadAllContractsByGrantOwner();
-	/**
-	 * The singleton access method of this class.
-	 */
-	public static ReadAllContractsByGrantOwner getService()
-	{
-		return service;
-	}
 	/**
 	 * The constructor of this class.
 	 */
-	private ReadAllContractsByGrantOwner()
+	public ReadAllContractsByGrantOwner()
 	{
-	}
-	/**
-	 * The name of the service
-	 */
-	public final String getNome()
-	{
-		return "ReadAllContractsByGrantOwner";
-	}
+    }
 
 	public List run(Integer grantOwnerId) throws FenixServiceException
 	{
@@ -74,19 +59,9 @@ public class ReadAllContractsByGrantOwner implements IService
 		if (contracts == null)
 			return new ArrayList();
 
-//		ArrayList contractList = (ArrayList) CollectionUtils.collect(contracts, new Transformer()
-//		{
-//			public Object transform(Object input)
-//			{
-//				IGrantContract contract = (IGrantContract) input;
-//				InfoGrantContract infoGrantContract =
-//					Cloner.copyIGrantContract2InfoGrantContract(contract);
-//				return infoGrantContract;
-//			}
-//		});
-
 		Iterator contractIter = contracts.iterator();
 		ArrayList contractList = new ArrayList();
+        
 		//gather information related to each contract
 		while (contractIter.hasNext())
 		{

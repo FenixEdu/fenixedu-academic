@@ -42,6 +42,7 @@ public class GrantContractOJB
 		List contractsList = null;
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("key_grant_owner", grantOwnerId);
+        criteria.addOrderBy("number", false);
 		contractsList = queryList(GrantContract.class,criteria);
 		return contractsList;
     }

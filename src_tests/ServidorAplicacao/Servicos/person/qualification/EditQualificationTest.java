@@ -82,7 +82,6 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setMark("mark");
 		info.setSchool("tagus");
 		info.setTitle("title");
-		info.setYear(new Integer(2001));
 		info.setInfoPerson(getInfoPersonGO());
 
 		Object[] args = { info.getIdInternal(), info };
@@ -99,7 +98,6 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setMark("mark");
 		info.setSchool("tagus");
 		info.setTitle("Sr. Dr. Eng.");
-		info.setYear(new Integer(2001));
 		info.setInfoPerson(getInfoPersonT());
 
 		Object[] args = { info.getIdInternal(), info };
@@ -113,7 +111,6 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setMark("mark");
 		info.setSchool("tagus");
 		info.setTitle("title");
-		info.setYear(new Integer(2001));
 		info.setInfoPerson(getInfoPersonGO());
 
 		Object[] args = { info.getIdInternal(), info };
@@ -127,7 +124,6 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setMark("mark");
 		info.setSchool("tagus");
 		info.setTitle("Sr. Dr. Eng.");
-		info.setYear(new Integer(2001));
 		info.setInfoPerson(getInfoPersonT());
 
 		Object[] args = { info.getIdInternal(), info };
@@ -140,7 +136,6 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(2));
 		info.setSchool("NewSchool");
-		info.setYear(new Integer(2003));
 		info.setMark("mark");
 		info.setTitle("title");
 		info.setInfoPerson(getInfoPersonGO());
@@ -154,7 +149,6 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		//Teacher qualification that already exists
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(1));
-		info.setYear(new Integer(2000));
 		info.setSchool("tagus");
 		info.setMark("mark");
 		info.setTitle("title");

@@ -28,104 +28,6 @@ import org.odmg.Transaction;
 import pt.utl.ist.berserk.storage.ITransactionBroker;
 import pt.utl.ist.berserk.storage.exceptions.StorageException;
 import ServidorPersistente.*;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IAulaPersistente;
-import ServidorPersistente.ICursoExecucaoPersistente;
-import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IDisciplinaDepartamentoPersistente;
-import ServidorPersistente.IFrequentaPersistente;
-import ServidorPersistente.IPersistentAdvisory;
-import ServidorPersistente.IPersistentAnnouncement;
-import ServidorPersistente.IPersistentBibliographicReference;
-import ServidorPersistente.IPersistentBranch;
-import ServidorPersistente.IPersistentCandidateEnrolment;
-import ServidorPersistente.IPersistentCandidateSituation;
-import ServidorPersistente.IPersistentContributor;
-import ServidorPersistente.IPersistentCoordinator;
-import ServidorPersistente.IPersistentCountry;
-import ServidorPersistente.IPersistentCreditsInAnySecundaryArea;
-import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentCurricularCourseEquivalence;
-import ServidorPersistente.IPersistentCurricularCourseEquivalenceRestriction;
-import ServidorPersistente.IPersistentCurricularCourseGroup;
-import ServidorPersistente.IPersistentCurricularCourseScope;
-import ServidorPersistente.IPersistentCurricularSemester;
-import ServidorPersistente.IPersistentCurricularYear;
-import ServidorPersistente.IPersistentCurriculum;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
-import ServidorPersistente.IPersistentDegreeCurricularPlanEnrolmentInfo;
-import ServidorPersistente.IPersistentDegreeInfo;
-import ServidorPersistente.IPersistentDepartment;
-import ServidorPersistente.IPersistentDistributedTest;
-import ServidorPersistente.IPersistentEmployee;
-import ServidorPersistente.IPersistentEnrolment;
-import ServidorPersistente.IPersistentEnrolmentEquivalence;
-import ServidorPersistente.IPersistentEnrolmentEvaluation;
-import ServidorPersistente.IPersistentEnrolmentPeriod;
-import ServidorPersistente.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
-import ServidorPersistente.IPersistentEvaluation;
-import ServidorPersistente.IPersistentEvaluationExecutionCourse;
-import ServidorPersistente.IPersistentEvaluationMethod;
-import ServidorPersistente.IPersistentExam;
-import ServidorPersistente.IPersistentExamExecutionCourse;
-import ServidorPersistente.IPersistentExamStudentRoom;
-import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPersistentExternalPerson;
-import ServidorPersistente.IPersistentGratuity;
-import ServidorPersistente.IPersistentGratuitySituation;
-import ServidorPersistente.IPersistentGratuityValues;
-import ServidorPersistente.IPersistentGroupProperties;
-import ServidorPersistente.IPersistentGuide;
-import ServidorPersistente.IPersistentGuideEntry;
-import ServidorPersistente.IPersistentGuideSituation;
-import ServidorPersistente.IPersistentItem;
-import ServidorPersistente.IPersistentMark;
-import ServidorPersistente.IPersistentMasterDegreeCandidate;
-import ServidorPersistente.IPersistentMasterDegreeProofVersion;
-import ServidorPersistente.IPersistentMasterDegreeThesis;
-import ServidorPersistente.IPersistentMasterDegreeThesisDataVersion;
-import ServidorPersistente.IPersistentMetadata;
-import ServidorPersistente.IPersistentPaymentPhase;
-import ServidorPersistente.IPersistentPersonRole;
-import ServidorPersistente.IPersistentPossibleCurricularCourseForOptionalCurricularCourse;
-import ServidorPersistente.IPersistentPrecedence;
-import ServidorPersistente.IPersistentPrice;
-import ServidorPersistente.IPersistentProfessorship;
-import ServidorPersistente.IPersistentQualification;
-import ServidorPersistente.IPersistentQuestion;
-import ServidorPersistente.IPersistentResponsibleFor;
-import ServidorPersistente.IPersistentRestriction;
-import ServidorPersistente.IPersistentRole;
-import ServidorPersistente.IPersistentScientificArea;
-import ServidorPersistente.IPersistentSection;
-import ServidorPersistente.IPersistentShiftProfessorship;
-import ServidorPersistente.IPersistentSite;
-import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IPersistentStudentGroup;
-import ServidorPersistente.IPersistentStudentGroupAttend;
-import ServidorPersistente.IPersistentStudentKind;
-import ServidorPersistente.IPersistentStudentTestLog;
-import ServidorPersistente.IPersistentStudentTestQuestion;
-import ServidorPersistente.IPersistentSummary;
-import ServidorPersistente.IPersistentTeacher;
-import ServidorPersistente.IPersistentTest;
-import ServidorPersistente.IPersistentTestQuestion;
-import ServidorPersistente.IPersistentUniversity;
-import ServidorPersistente.IPersistentWebSite;
-import ServidorPersistente.IPersistentWebSiteItem;
-import ServidorPersistente.IPersistentWebSiteSection;
-import ServidorPersistente.IPersistentWorkLocation;
-import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.ISalaPersistente;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.ITurmaPersistente;
-import ServidorPersistente.ITurmaTurnoPersistente;
-import ServidorPersistente.ITurnoAlunoPersistente;
-import ServidorPersistente.ITurnoAulaPersistente;
-import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.Seminaries.CandidacyOJB;
 import ServidorPersistente.OJB.Seminaries.CaseStudyChoiceOJB;
 import ServidorPersistente.OJB.Seminaries.CaseStudyOJB;
@@ -138,8 +40,13 @@ import ServidorPersistente.OJB.gaugingTests.physics.GaugingTestResultOJB;
 import ServidorPersistente.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import ServidorPersistente.OJB.gesdis.CourseReportOJB;
 import ServidorPersistente.OJB.grant.contract.GrantContractOJB;
+import ServidorPersistente.OJB.grant.contract.GrantCostCenterOJB;
 import ServidorPersistente.OJB.grant.contract.GrantOrientationTeacherOJB;
+import ServidorPersistente.OJB.grant.contract.GrantPartOJB;
+import ServidorPersistente.OJB.grant.contract.GrantPaymentEntityOJB;
+import ServidorPersistente.OJB.grant.contract.GrantProjectOJB;
 import ServidorPersistente.OJB.grant.contract.GrantResponsibleTeacherOJB;
+import ServidorPersistente.OJB.grant.contract.GrantSubsidyOJB;
 import ServidorPersistente.OJB.grant.contract.GrantTypeOJB;
 import ServidorPersistente.OJB.grant.owner.GrantOwnerOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideOJB;
@@ -168,9 +75,14 @@ import ServidorPersistente.credits.IPersistentCredits;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantContract;
+import ServidorPersistente.grant.IPersistentGrantCostCenter;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
 import ServidorPersistente.grant.IPersistentGrantOwner;
+import ServidorPersistente.grant.IPersistentGrantPart;
+import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
+import ServidorPersistente.grant.IPersistentGrantProject;
 import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
+import ServidorPersistente.grant.IPersistentGrantSubsidy;
 import ServidorPersistente.grant.IPersistentGrantType;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
@@ -1037,5 +949,45 @@ public class SuportePersistenteOJB
 	}
 	public IPersistentCreditsInSpecificScientificArea getIPersistentCreditsInSpecificScientificArea() {
 		return new CreditsInSpecificScientificAreaOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantCostCenter()
+	 */
+	public IPersistentGrantCostCenter getIPersistentGrantCostCenter()
+	{
+		return new GrantCostCenterOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantPart()
+	 */
+	public IPersistentGrantPart getIPersistentGrantPart()
+	{
+		return new GrantPartOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantPaymentEntity()
+	 */
+	public IPersistentGrantPaymentEntity getIPersistentGrantPaymentEntity()
+	{
+		return new GrantPaymentEntityOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantProject()
+	 */
+	public IPersistentGrantProject getIPersistentGrantProject()
+	{
+		return new GrantProjectOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantSubsidy()
+	 */
+	public IPersistentGrantSubsidy getIPersistentGrantSubsidy()
+	{
+		return new GrantSubsidyOJB();
 	}
 }

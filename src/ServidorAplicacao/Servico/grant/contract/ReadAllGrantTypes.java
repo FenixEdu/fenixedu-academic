@@ -27,28 +27,13 @@ import ServidorPersistente.grant.IPersistentGrantType;
  */
 public class ReadAllGrantTypes implements IService
 {
-    private static ReadAllGrantTypes service = new ReadAllGrantTypes();
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadAllGrantTypes getService()
-    {
-        return service;
-    }
     /**
 	 * The constructor of this class.
 	 */
-    private ReadAllGrantTypes()
+    public ReadAllGrantTypes()
     {
     }
-    /**
-	 * The name of the service
-	 */
-    public final String getNome()
-    {
-        return "ReadAllGrantTypes";
-    }
-
+    
     public List run() throws FenixServiceException
     {
         List grantTypes = null;

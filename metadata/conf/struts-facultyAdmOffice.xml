@@ -22,7 +22,6 @@
 			
 			<form-bean name="searchGrantOwnerForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<!-- Values of search by name and/or identification document -->
 				<form-property name="name" type="java.lang.String"/>
 				<form-property name="idNumber" type="java.lang.String"/>
 				<form-property name="idType" type="java.lang.Integer"/>
@@ -31,7 +30,6 @@
 			
 			<form-bean name="searchGrantOwnerByNumberForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<!-- Value of search by Grant Owner Number -->
 				<form-property name="idGrantOwner" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer"/>
 			</form-bean>
@@ -77,7 +75,7 @@
 				<form-property name="sex" type="java.lang.Integer"/>								
 				<form-property name="maritalStatus" type="java.lang.Integer"/>	
 				<form-property name="country" type="java.lang.Integer"/>
-				<!-- Method property-->
+				<!-- Page property-->
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 			
@@ -96,7 +94,50 @@
 				<form-property name="idGrantContract" type="java.lang.Integer"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
+
+			<form-bean name="editGrantTypeForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="idInternal" type="java.lang.Integer"/>
+				<form-property name="name" type="java.lang.String"/>
+				<form-property name="sigla" type="java.lang.String"/>
+				<form-property name="minPeriodDays" type="java.lang.String"/>								
+				<form-property name="maxPeriodDays" type="java.lang.String"/>
+				<form-property name="indicativeValue" type="java.lang.String"/>
+				<form-property name="source" type="java.lang.String"/>				
+				<form-property name="state" type="java.lang.String"/>												
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
+
+			<form-bean name="editGrantQualificationForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="idInternal" type="java.lang.Integer"/>
+				<form-property name="idQualification" type="java.lang.Integer"/>
+				<form-property name="idPerson" type="java.lang.Integer"/>
+				<form-property name="mark" type="java.lang.String"/>
+				<form-property name="school" type="java.lang.String"/>								
+				<form-property name="title" type="java.lang.String"/>
+				<form-property name="degree" type="java.lang.String"/>
+				<form-property name="qualificationDate" type="java.lang.String"/>				
+				<form-property name="branch" type="java.lang.String"/>												
+				<form-property name="specializationArea" type="java.lang.String"/>												
+				<form-property name="degreeRecognition" type="java.lang.String"/>												
+				<form-property name="equivalenceDate" type="java.lang.String"/>												
+				<form-property name="equivalenceSchool" type="java.lang.String"/>												
+				<form-property name="username" type="java.lang.String"/>												
+				<form-property name="country" type="java.lang.Integer"/>																							
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
 			
+			<form-bean name="editGrantSubsidyForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="idGrantOwner" type="java.lang.Integer"/>
+				<form-property name="idGrantContract" type="java.lang.Integer"/>
+				<form-property name="idGrantSubsidy" type="java.lang.Integer"/>
+				<form-property name="value" type="java.lang.String"/>
+				<form-property name="valueFullName" type="java.lang.String"/>
+				<form-property name="totalCost" type="java.lang.String"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
 			
     </form-beans>
 
@@ -142,8 +183,6 @@
     		<forward name="list-many" path="view-teachers-for-credits-sheet"/>
     	</action>
 
-
-
     <!-- ===================== USE CASE: SEARCH GRANT OWNER ============================== -->
 	<action path="/searchGrantOwner" 
 			input="/searchGrantOwner.do?page=0&amp;method=searchForm"
@@ -180,6 +219,7 @@
 			name="editGrantOwnerForm" 
 			scope="request"
    			parameter="method"
+   			validate="true"
    			type="ServidorApresentacao.Action.grant.owner.EditGrantOwnerAction">
    			<forward name="edit-grant-owner-form" path="editGrantOwnerForm"/>
    			<forward name="grant-owner-main" path="searchGrantOwnerForm"/>
@@ -197,7 +237,7 @@
   			<forward name="manage-grant-owner" path="manageGrantOwner"/> 
     </action>
 
-    <!-- ===================== USE CASE: MANAGE GRANT OWNER ============================== -->
+    <!-- ===================== USE CASE: MANAGE GRANT CONTRACT ============================== -->
 	<action path="/manageGrantContract" 
 			input="/manageGrantContract.do?page=0&amp;method=prepareManageGrantContractForm" 
 			name="voidForm" 
@@ -214,10 +254,23 @@
 			name="editGrantContractForm" 
 			scope="request"
    			parameter="method"
+   			validate="true"
    			type="ServidorApresentacao.Action.grant.contract.EditGrantContractAction">
   			<forward name="edit-grant-contract" path="editGrantContractForm"/>
   			<forward name="manage-grant-contract" path="/manageGrantContract.do?method=prepareManageGrantContractForm"/>
-  			<forward name="search-main-page" path="/searchGrantOwner.do?page=0&amp;method=searchForm"/>
+  			<forward name="search-main-page" path="searchGrantOwner"/>
+    </action>
+    
+     <!-- ===================== USE CASE: EDIT GRANT SUBSIDY ============================== -->
+	<action path="/editGrantSubsidy" 
+			input="/editGrantSubsidy.do?page=0&amp;method=prepareEditGrantSubsidyForm" 
+			name="editGrantSubsidyForm" 
+			scope="request"
+   			parameter="method"
+   			validate="true"
+   			type="ServidorApresentacao.Action.grant.contract.EditGrantSubsidyAction">
+  			<forward name="edit-grant-subsidy" path="editGrantSubsidyForm"/>
+  			<forward name="manage-grant-contract" path="/manageGrantContract.do?method=prepareManageGrantContractForm"/>
     </action>
 
     <!-- ===================== USE CASE: MANAGE GRANT QUALIFICATION ============================== -->
@@ -233,12 +286,36 @@
     <!-- ===================== USE CASE: EDIT GRANT QUALIFICATION ============================== -->
 	<action path="/editGrantQualification" 
 			input="/editGrantQualification.do?page=0&amp;method=prepareEditGrantQualificationForm" 
-			name="voidForm"
+			name="editGrantQualificationForm"
 			scope="request"
    			parameter="method"
+     		validate="true"
    			type="ServidorApresentacao.Action.grant.qualification.EditGrantQualificationAction">
   			<forward name="edit-grant-qualification" path="editGrantQualificationForm"/>
   			<forward name="manage-grant-qualification" path="/manageGrantQualification.do?method=prepareManageGrantQualificationForm"/>
+    </action>
+
+
+    <!-- ===================== USE CASE: MANAGE GRANT TYPE  ============================== -->
+	<action path="/manageGrantType" 
+			input="/manageGrantType.do?page=0&amp;method=prepareManageGrantTypeForm" 
+			name="voidForm"
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.contract.ManageGrantTypeAction">
+  			<forward name="manage-grant-type" path="manageGrantType"/> 
+    </action>
+
+    <!-- ===================== USE CASE: EDIT GRANT TYPE ============================== -->
+	<action path="/editGrantType" 
+			input="/editGrantType.do?page=0&amp;method=prepareEditGrantTypeForm" 
+			name="editGrantTypeForm"
+			scope="request"
+   			parameter="method"
+     		validate="true"
+   			type="ServidorApresentacao.Action.grant.contract.EditGrantTypeAction">
+  			<forward name="edit-grant-type" path="editGrantTypeForm"/>
+  			<forward name="manage-grant-type" path="/manageGrantType.do?method=prepareManageGrantTypeForm"/>
     </action>
 
 

@@ -86,7 +86,12 @@ public class EditGrantOwnerAction extends DispatchAction
 				}
 				catch (Exception e)
 				{
-					return setError(request, mapping, "errors.grant.unrecoverable", null, null);
+					return setError(
+						request,
+						mapping,
+						"errors.grant.unrecoverable",
+						"manage-grant-owner",
+						null);
 				}
 			}
 			else if (personId != null)
@@ -105,7 +110,12 @@ public class EditGrantOwnerAction extends DispatchAction
 				}
 				catch (Exception e)
 				{
-					return setError(request, mapping, "errors.grant.unrecoverable", null, null);
+					return setError(
+						request,
+						mapping,
+						"errors.grant.unrecoverable",
+						"manage-grant-owner",
+						null);
 				}
 			}
 		}
@@ -142,7 +152,7 @@ public class EditGrantOwnerAction extends DispatchAction
 		}
 		catch (Exception e)
 		{
-			return setError(request, mapping, "errors.grant.unrecoverable", null, null);
+			return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-owner", null);
 		}
 
 		//Adding a select country line to the list (presentation reasons)
@@ -168,14 +178,15 @@ public class EditGrantOwnerAction extends DispatchAction
 		throws Exception
 	{
 		DynaValidatorForm editGrantOwnerForm = (DynaValidatorForm) form;
-		InfoGrantOwner infoGrantOwner = populateInfoFromForm(editGrantOwnerForm);
-
-		if (infoGrantOwner.getPersonInfo().getTipoDocumentoIdentificacao() == null)
-			return setError(request, mapping, "errors.grant.owner.idtype", null, null);
-
 		Integer grantOwnerId = null;
+        InfoGrantOwner infoGrantOwner = null;
 		try
 		{
+			infoGrantOwner = populateInfoFromForm(editGrantOwnerForm);
+
+			if (infoGrantOwner.getPersonInfo().getTipoDocumentoIdentificacao() == null)
+				return setError(request, mapping, "errors.grant.owner.idtype", null, null);
+
 			//Edit Grant Owner
 			Object[] args = { infoGrantOwner };
 			IUserView userView = SessionUtils.getUserView(request);
@@ -189,11 +200,15 @@ public class EditGrantOwnerAction extends DispatchAction
 		{
 			return setError(request, mapping, "errors.grant.owner.exists", null, null);
 		}
+        catch (Exception e)
+        {
+            return setError(request, mapping, "errors.grant.unrecoverable", null, null);
+        }
 
 		try
 		{
 			//Read the grant owner by person
-			Object[] args2 = { grantOwnerId};
+			Object[] args2 = { grantOwnerId };
 			infoGrantOwner =
 				(InfoGrantOwner) ServiceUtils.executeService(
 					SessionUtils.getUserView(request),
@@ -208,9 +223,7 @@ public class EditGrantOwnerAction extends DispatchAction
 		if (infoGrantOwner != null)
 			request.setAttribute("idInternal", infoGrantOwner.getIdInternal());
 		else
-		{
 			return setError(request, mapping, "errors.grant.owner.readafterwrite", null, null);
-		}
 
 		return mapping.findForward("manage-grant-owner");
 	}
@@ -222,7 +235,7 @@ public class EditGrantOwnerAction extends DispatchAction
 		throws Exception
 	{
 		InfoPerson infoPerson = infoGrantOwner.getPersonInfo();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 		form.set("idInternalPerson", infoPerson.getIdInternal().toString());
 		form.set("idNumber", infoPerson.getNumeroDocumentoIdentificacao());
@@ -300,7 +313,7 @@ public class EditGrantOwnerAction extends DispatchAction
 			form.set("cardCopyNumber", infoGrantOwner.getCardCopyNumber().toString());
 		if (infoGrantOwner.getDateSendCGD() != null)
 		{
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 			form.set("dateSendCGD", sdf.format(infoGrantOwner.getDateSendCGD()));
 		}
 	}
@@ -315,7 +328,7 @@ public class EditGrantOwnerAction extends DispatchAction
 		InfoPerson infoPerson = new InfoPerson();
 
 		//Format of date in the form
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 		try
 		{

@@ -22,9 +22,18 @@
 	
 	<br/>
 	<strong>&raquo; <bean:message key="ling.group.grantPropertiesManagement.title"/></strong>
+	<ul>
+		<li>
+			<html:link page="/manageGrantType.do?method=prepareManageGrantTypeForm">
+		    	<bean:message key="link.manage.grant.type"/>
+		    </html:link>
+		</li>
+	</ul>
+	
 	<br/>
 	
 </logic:present>
+
 <logic:present role="creditsManager">
 	<%-- TEACHER CREDITS MANAGEMENT APPLICATIONS --%>
 	<strong>&raquo; <bean:message key="link.group.creditsManagement.title"/></strong>

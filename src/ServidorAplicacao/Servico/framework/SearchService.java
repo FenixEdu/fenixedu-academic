@@ -10,9 +10,9 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoObject;
 import Dominio.IDomainObject;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -23,7 +23,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  * @author jpvl
  */
-public abstract class SearchService implements IServico
+public abstract class SearchService implements IService
 {
     /**
 	 * @param searchParameters

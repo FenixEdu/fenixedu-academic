@@ -40,10 +40,9 @@ public class SearchGrantOwnerByNumberAction extends DispatchAction
 		{
 			//Read attributes from FormBean
 			DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
-			String idGrantOwner = (String) searchGrantOwnerForm.get("idGrantOwner");
-			//Run the service			
-			Integer arg = new Integer(idGrantOwner);
-			Object[] args = { null, null, null, arg };
+			Integer idGrantOwner = new Integer((String) searchGrantOwnerForm.get("idGrantOwner"));
+			
+			Object[] args = { null, null, null, idGrantOwner};
 			IUserView userView = SessionUtils.getUserView(request);
 			infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner", args);
 		}

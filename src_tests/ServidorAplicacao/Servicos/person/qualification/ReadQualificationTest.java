@@ -107,7 +107,6 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 
 			//Verify if the data jas been correctly read
 			assertEquals(infoQualification.getMark(), "mark");
-			assertEquals(infoQualification.getYear(), new Integer(1999));
 			assertEquals(infoQualification.getSchool(), "ist");
 			assertEquals(infoQualification.getTitle(), "Sr. Dr. Eng.");
 
@@ -141,7 +140,6 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 			InfoQualification infoQualification = (InfoQualification)ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			assertEquals(infoQualification.getMark(), "mark");
-			assertEquals(infoQualification.getYear(), new Integer(1999));
 			assertEquals(infoQualification.getSchool(), "ist");
 			assertEquals(infoQualification.getTitle(), "Sr. Dr. Eng.");
 

@@ -5,10 +5,20 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
 
+<%-- Presenting errors --%>
+<logic:messagesPresent>
+<center><b><bean:message key="label.grant.contract.information"/></b></center>
+<span class="error">
+	<html:errors/>
+</span><br/>
+</logic:messagesPresent>
+
+<logic:messagesNotPresent>
+
 <%--  CONTRATOS --%>    
 <p class="infoselected">
 	<b><bean:message key="label.grant.contract.information"/></b><br/>
-    <bean:message key="label.grant.owner.idInternal"/>:&nbsp;<bean:write name="grantOwnerNumber"/><br/>
+    <bean:message key="label.grant.owner.number"/>:&nbsp;<bean:write name="grantOwnerNumber"/><br/>
     <bean:message key="label.grant.owner.name"/>:&nbsp;<bean:write name="grantOwnerName"/>
 </p>
 
@@ -31,7 +41,8 @@
         <td class="listClasses-header">
             <bean:message key="label.grant.contract.responsibleTeacher"/>
         </td>
-        <td class="listClasses-header"></td>
+        <td class="listClasses-header">&nbsp;</td>
+        <td class="listClasses-header">&nbsp;</td>
     </tr>   
     <%-- Table with result of search --%>
     <logic:iterate id="infoGrantContract" name="infoGrantContractList">
@@ -41,7 +52,7 @@
             </td>
             <td class="listClasses">
                 <logic:present name="infoGrantContract" property="dateBeginContract">
-                    <dt:format pattern="yyyy-MM-dd">
+                    <dt:format pattern="dd-MM-yyyy">
                         <bean:write name="infoGrantContract" property="dateBeginContract.time"/>
                     </dt:format>
                 </logic:present>
@@ -51,7 +62,7 @@
             </td>
             <td class="listClasses">
                 <logic:present name="infoGrantContract" property="dateEndContract">
-                    <dt:format pattern="yyyy-MM-dd">
+                    <dt:format pattern="dd-MM-yyyy">
                         <bean:write name="infoGrantContract" property="dateEndContract.time"/>
                     </dt:format>
                 </logic:present>
@@ -74,9 +85,16 @@
             <td class="listClasses">
                     <bean:define id="idContract" name="infoGrantContract" property="idInternal"/>
                     <html:link page='<%= "/editGrantContract.do?method=prepareEditGrantContractForm&amp;idContract=" + idContract %>' > 
-                        <bean:message key="label.grant.contract.edit" />
+                        <bean:message key="link.grant.contract.edit" />
                     </html:link>        
-            </td>       
+            </td>
+            <td class="listClasses">
+                    <bean:define id="idContract" name="infoGrantContract" property="idInternal"/>
+                    <bean:define id="idGrantOwner" name="infoGrantContract" property="grantOwnerInfo.idInternal"/>
+                    <html:link page='<%= "/editGrantSubsidy.do?method=prepareEditGrantSubsidyForm&amp;idContract=" + idContract+"&idGrantOwner="+idGrantOwner %>' > 
+                        <bean:message key="link.manage.grant.subsidy" />
+                    </html:link>        
+            </td>
         </tr>
     </logic:iterate>
     </table>
@@ -87,11 +105,11 @@
     <p align="center"><bean:message key="message.grant.contract.nonExistentContracts" /></p>
 </logic:notPresent>
     
-<br/>
+<br/><br/>
 
 <bean:message key="message.grant.contract.creation"/>:&nbsp;
 <html:link page='<%= "/editGrantContract.do?method=prepareEditGrantContractForm&amp;idInternal=" + request.getAttribute("idInternal").toString() %>'>
-	<bean:message key="label.grant.contract.create"/>
+	<bean:message key="link.grant.contract.create"/>
 </html:link>
 
 <br/><br/><br/>
@@ -105,3 +123,5 @@
 	</html:submit>
 </html:form>		
 </center>
+
+</logic:messagesNotPresent>

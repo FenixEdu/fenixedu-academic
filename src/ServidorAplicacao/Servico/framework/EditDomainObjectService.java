@@ -10,9 +10,9 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoObject;
 import Dominio.IDomainObject;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -27,7 +27,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author jpvl
  * @author Barbosa
  */
-public abstract class EditDomainObjectService implements IServico
+public abstract class EditDomainObjectService implements IService
 {
 
     /**
@@ -156,8 +156,8 @@ public abstract class EditDomainObjectService implements IServico
 	 * 
 	 * @param objectId
 	 * @param infoObject
-	 * @return @throws
-	 *              FenixServiceException
+	 * @return 
+     * @throws FenixServiceException
 	 * 
 	 * TODO Remove objectId from method signature.
 	 */

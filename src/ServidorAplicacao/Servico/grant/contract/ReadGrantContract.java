@@ -31,26 +31,11 @@ import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
  */
 public class ReadGrantContract extends ReadDomainObjectService implements IService
 {
-	private static ReadGrantContract service = new ReadGrantContract();
-	/**
-	 * The singleton access method of this class.
-	 */
-	public static ReadGrantContract getService()
-	{
-		return service;
-	}
 	/**
 	 * The constructor of this class.
 	 */
-	private ReadGrantContract()
+	public ReadGrantContract()
 	{
-	}
-	/**
-	 * The name of the service
-	 */
-	public final String getNome()
-	{
-		return "ReadGrantContract";
 	}
 
 	/*

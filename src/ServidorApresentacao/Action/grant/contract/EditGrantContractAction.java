@@ -4,7 +4,6 @@
 
 package ServidorApresentacao.Action.grant.contract;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -45,27 +44,6 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class EditGrantContractAction extends DispatchAction
 {
 	/*
-	 * Sets an error to be displayed in the page and sets the mapping forward
-	 */
-	private ActionForward setError(
-		HttpServletRequest request,
-		ActionMapping mapping,
-		String errorMessage,
-		String forwardPage,
-		Object actionArg)
-	{
-		ActionErrors errors = new ActionErrors();
-		ActionError error = new ActionError(errorMessage,actionArg);
-		errors.add(errorMessage, error);
-		saveErrors(request, errors);
-
-		if (forwardPage != null)
-			return mapping.findForward(forwardPage);
-		else
-			return mapping.getInputForward();
-	}
-
-	/*
 	 * Fills the form with the correspondent data
 	 */
 	public ActionForward prepareEditGrantContractForm(
@@ -93,41 +71,41 @@ public class EditGrantContractAction extends DispatchAction
 
 				//Populate the form
 				setFormGrantContract(grantContractForm, infoGrantContract);
-				request.setAttribute(
-					"idInternal",
-					infoGrantContract.getGrantOwnerInfo().getIdInternal());
+				request.setAttribute("idInternal",infoGrantContract.getGrantOwnerInfo().getIdInternal());
 			}
 			catch (FenixServiceException e)
 			{
-				return setError(request, mapping, "errors.grant.contract.read", null,null);
+				return setError(request, mapping, "errors.grant.contract.read", "manage-grant-contract", null);
 			}
+            catch (Exception e)
+            {
+                return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract", null);
+            }
 		}
 		else
 		{
 			//New contract
-			if (request.getParameter("idInternal") != null)
-			{
+            try
+            {
 				grantContractForm.set("idInternal", new Integer(request.getParameter("idInternal")));
 				request.setAttribute("idInternal", new Integer(request.getParameter("idInternal")));
 			}
-			else
+			catch(Exception e)
 			{
-				return setError(request, mapping, "errors.grant.unrecoverable", "search-main-page",null);
+				return setError(request,mapping,"errors.grant.unrecoverable", "manage-grant-contract", null);
 			}
 		}
 
 		try
 		{
 			//Read grant types for the contract
-			Object[] args2 = {
-			};
-			List grantTypeList =
-				(List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args2);
+			Object[] args2 = { };
+			List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args2);
 			request.setAttribute("grantTypeList", grantTypeList);
 		}
 		catch (FenixServiceException e)
 		{
-			return setError(request, mapping, "errors.grant.type.read", "manage-grant-owner",null);
+			return setError(request, mapping, "errors.grant.type.read", "manage-grant-contract", null);
 		}
 		return mapping.findForward("edit-grant-contract");
 	}
@@ -162,33 +140,56 @@ public class EditGrantContractAction extends DispatchAction
 		}
 		catch (GrantResponsibleTeacherPeriodNotWithinContractPeriodException e)
 		{
-			return setError(request, mapping, "errors.grant.contract.responsible.teacher.periodconflict", null,null);
+			return setError(
+				request,
+				mapping,
+				"errors.grant.contract.responsible.teacher.periodconflict",
+				null,
+				null);
 		}
 		catch (GrantOrientationTeacherPeriodNotWithinContractPeriodException e)
 		{
-			return setError(request, mapping, "errors.grant.contract.orientation.teacher.periodconflict", null,null);
+			return setError(
+				request,
+				mapping,
+				"errors.grant.contract.orientation.teacher.periodconflict",
+				null,
+				null);
 		}
 		catch (GrantContractEndDateBeforeBeginDateException e)
 		{
-			return setError(request, mapping, "errors.grant.contract.conflictdates", null,null);
+			return setError(request, mapping, "errors.grant.contract.conflictdates", null, null);
 		}
 		catch (GrantTypeNotFoundException e)
 		{
-			return setError(request, mapping, "errors.grant.type.not.found", null,null);
+			return setError(request, mapping, "errors.grant.type.not.found", null, null);
 		}
 		catch (GrantResponsibleTeacherNotFoundException e)
 		{
-			return setError(request, mapping, "errors.grant.contract.responsible.teacher.not.found", null,responsibleTeacherNumber);
+			return setError(
+				request,
+				mapping,
+				"errors.grant.contract.responsible.teacher.not.found",
+				null,
+				responsibleTeacherNumber);
 		}
 		catch (GrantOrientationTeacherNotFoundException e)
 		{
-			return setError(request, mapping, "errors.grant.contract.orientation.teacher.not.found", null,orientationTeacherNumber);
+			return setError(
+				request,
+				mapping,
+				"errors.grant.contract.orientation.teacher.not.found",
+				null,
+				orientationTeacherNumber);
 		}
 		catch (FenixServiceException e)
 		{
-			return setError(request, mapping, "errors.grant.contract.bd.create", null,null);
+			return setError(request, mapping, "errors.grant.contract.bd.create", null, null);
 		}
-
+        catch (Exception e)
+        {
+            return setError(request, mapping, "errors.grant.unrecoverable", null, null);
+        }
 		request.setAttribute("idInternal", editGrantContractForm.get("idInternal"));
 
 		return mapping.findForward("manage-grant-contract");
@@ -198,9 +199,10 @@ public class EditGrantContractAction extends DispatchAction
 	 * Populates form from InfoContract
 	 */
 	private void setFormGrantContract(DynaValidatorForm form, InfoGrantContract infoGrantContract)
+		throws Exception
 	{
 		//BeanUtils.copyProperties(form, infoGrantContract);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 		form.set("idGrantContract", infoGrantContract.getIdInternal());
 		if (infoGrantContract.getDateBeginContract() != null)
@@ -235,6 +237,7 @@ public class EditGrantContractAction extends DispatchAction
 	}
 
 	private InfoGrantContract populateInfoFromForm(DynaValidatorForm editGrantContractForm)
+		throws Exception
 	{
 		InfoGrantContract infoGrantContract = new InfoGrantContract();
 		InfoGrantOrientationTeacher orientationTeacher = new InfoGrantOrientationTeacher();
@@ -245,41 +248,33 @@ public class EditGrantContractAction extends DispatchAction
 		InfoGrantType grantType = new InfoGrantType();
 
 		//Format of date in the form
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 		//set dateBeginContract and dateEndContract
-		try
+		if (editGrantContractForm.get("dateBeginContract") != null
+			&& !editGrantContractForm.get("dateBeginContract").equals(""))
 		{
-			if (editGrantContractForm.get("dateBeginContract") != null
-				&& !editGrantContractForm.get("dateBeginContract").equals(""))
-			{
-				infoGrantContract.setDateBeginContract(
-					sdf.parse((String) editGrantContractForm.get("dateBeginContract")));
-				responsibleTeacher.setBeginDate(
-					sdf.parse((String) editGrantContractForm.get("dateBeginContract")));
-				orientationTeacher.setBeginDate(
-					sdf.parse((String) editGrantContractForm.get("dateBeginContract")));
-			}
-			if (editGrantContractForm.get("dateEndContract") != null
-				&& !editGrantContractForm.get("dateEndContract").equals(""))
-			{
-				infoGrantContract.setDateEndContract(
-					sdf.parse((String) editGrantContractForm.get("dateEndContract")));
-				responsibleTeacher.setEndDate(
-					sdf.parse((String) editGrantContractForm.get("dateEndContract")));
-				orientationTeacher.setEndDate(
-					sdf.parse((String) editGrantContractForm.get("dateEndContract")));
-			}
+			infoGrantContract.setDateBeginContract(
+				sdf.parse((String) editGrantContractForm.get("dateBeginContract")));
+			responsibleTeacher.setBeginDate(
+				sdf.parse((String) editGrantContractForm.get("dateBeginContract")));
+			orientationTeacher.setBeginDate(
+				sdf.parse((String) editGrantContractForm.get("dateBeginContract")));
 		}
-		catch (ParseException e)
+		if (editGrantContractForm.get("dateEndContract") != null
+			&& !editGrantContractForm.get("dateEndContract").equals(""))
 		{
-			//return setError(request,mapping,"",null,null);
+			infoGrantContract.setDateEndContract(
+				sdf.parse((String) editGrantContractForm.get("dateEndContract")));
+			responsibleTeacher.setEndDate(
+				sdf.parse((String) editGrantContractForm.get("dateEndContract")));
+			orientationTeacher.setEndDate(
+				sdf.parse((String) editGrantContractForm.get("dateEndContract")));
 		}
 
-		//set IdInternal
+
 		if (editGrantContractForm.get("idGrantContract") != null)
 			infoGrantContract.setIdInternal((Integer) editGrantContractForm.get("idGrantContract"));
-		//set grantContractNumber
 		if (editGrantContractForm.get("contractNumber") != null
 			&& !editGrantContractForm.get("contractNumber").equals(""))
 			infoGrantContract.setContractNumber(
@@ -287,13 +282,10 @@ public class EditGrantContractAction extends DispatchAction
 		infoGrantOwner.setIdInternal((Integer) editGrantContractForm.get("idInternal"));
 		infoGrantContract.setGrantOwnerInfo(infoGrantOwner);
 
-		//set endContractMotive
 		infoGrantContract.setEndContractMotive((String) editGrantContractForm.get("endContractMotive"));
-		//set TipoBolsa
 		grantType.setSigla((String) editGrantContractForm.get("grantType"));
 		infoGrantContract.setGrantTypeInfo(grantType);
 
-		//set grantOrientationTeacher
 		orientationInfoTeacher.setTeacherNumber(
 			new Integer((String) editGrantContractForm.get("grantOrientationTeacher")));
 		orientationTeacher.setOrientationTeacherInfo(orientationInfoTeacher);
@@ -301,7 +293,6 @@ public class EditGrantContractAction extends DispatchAction
 			(Integer) editGrantContractForm.get("grantOrientationTeacherIdInternal"));
 		infoGrantContract.setGrantOrientationTeacherInfo(orientationTeacher);
 
-		//set grantResponsibleTeacher
 		responsibleInfoTeacher.setTeacherNumber(
 			new Integer((String) editGrantContractForm.get("grantResponsibleTeacher")));
 		responsibleTeacher.setResponsibleTeacherInfo(responsibleInfoTeacher);
@@ -311,4 +302,26 @@ public class EditGrantContractAction extends DispatchAction
 
 		return infoGrantContract;
 	}
+
+	/*
+	 * Sets an error to be displayed in the page and sets the mapping forward
+	 */
+	private ActionForward setError(
+		HttpServletRequest request,
+		ActionMapping mapping,
+		String errorMessage,
+		String forwardPage,
+		Object actionArg)
+	{
+		ActionErrors errors = new ActionErrors();
+		ActionError error = new ActionError(errorMessage, actionArg);
+		errors.add(errorMessage, error);
+		saveErrors(request, errors);
+
+		if (forwardPage != null)
+			return mapping.findForward(forwardPage);
+		else
+			return mapping.getInputForward();
+	}
+
 }

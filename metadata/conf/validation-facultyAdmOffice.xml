@@ -28,11 +28,11 @@
 				<arg0 key="label.grant.contract.beginDate" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
-				 	<var-value>dd/MM/yyyy</var-value>
+				 	<var-value>dd-MM-yyyy</var-value>
 				</var>
 				<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)/(.||..)/2...)$</var-value>
+					<var-value>^((.||..)-(.||..)-2...)$</var-value>
 				</var>
 		    </field>
             <field property="dateEndContract" depends="required, mask, date" page="1">
@@ -41,11 +41,11 @@
 				<arg0 key="label.grant.contract.endDate" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
-					<var-value>dd/MM/yyyy</var-value>
+					<var-value>dd-MM-yyyy</var-value>
 	        	</var>
 		    	<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)/(.||..)/2...)$</var-value>
+					<var-value>^((.||..)-(.||..)-2...)$</var-value>
 	        	</var>
 		    </field>	    
             <field property="grantResponsibleTeacher" depends="required, integer" page="1">
@@ -57,23 +57,106 @@
 				<arg0 key="label.grant.contract.orientationTeacher" resource="true"/>
 		    </field>
 		</form>
+		
+		<!-- Edit Grant Type Form -->
+		<form name="editGrantTypeForm">
+            <field property="state" depends="mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.type.state" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+				 	<var-value>dd-MM-yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+				</var>
+		    </field>
+            <field property="name" depends="required" page="1">
+				<arg0 key="label.grant.type.name" resource="true"/>
+            </field>
+            <field property="sigla" depends="required" page="1">
+				<arg0 key="label.grant.type.sigla" resource="true"/>
+            </field>
+            <field property="minPeriodDays" depends="integer" page="1">
+				<msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.type.minPeriodDays" resource="true"/>
+		    </field>
+		    <field property="maxPeriodDays" depends="integer" page="1">
+				<msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.type.maxPeriodDays" resource="true"/>
+		    </field>
+		    <field property="indicativeValue" depends="double" page="1">
+				<msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.type.indicativeValue" resource="true"/>
+		    </field>
+		</form>
+
+		<!-- Edit Grant Qualification Form -->
+		<form name="editGrantQualificationForm">
+			<field property="degree" depends="required" page="1">
+				<arg0 key="label.grant.qualification.degree" resource="true"/>
+            </field>
+            <field property="school" depends="required" page="1">
+				<arg0 key="label.grant.qualification.school" resource="true"/>
+            </field>			
+            <field property="date" depends="required, mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.qualification.qualificationDate" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+				 	<var-value>dd-MM-yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+				</var>
+		    </field>
+		    <field property="equivalenceDate" depends="mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.qualification.equivalenceDate" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+				 	<var-value>dd-MM-yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+				</var>
+		    </field>
+		</form>
+
+		<!-- Edit Grant Subsidy Form -->
+        <form name="editGrantSubsidyForm">
+            <field property="value" depends="required, double" page="1">
+				<msg name="number" key="errors.double"/>
+				<arg0 key="label.grant.subsidy.value" resource="true"/>
+		    </field>
+		    <field property="totalCost" depends="required, double" page="1">
+				<msg name="number" key="errors.double"/>
+				<arg0 key="label.grant.subsidy.totalCost" resource="true"/>
+		    </field>
+		</form>
 
         <!-- Edit a Grant Owner form -->
     	<form name="editGrantOwnerForm">
-			<field property="dateSendCGD" depends="required, mask, date" page="1">
+			<field property="dateSendCGD" depends="mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 				<msg name="mask" key="errors.invalid.date"/>
 				<arg0 key="label.grant.owner.dateSendCGD" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
-					<var-value>dd/MM/yyyy</var-value>
+					<var-value>dd-MM-yyyy</var-value>
 				</var>
 				<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)/(.||..)/2...)$</var-value>
+					<var-value>^((.||..)-(.||..)-2...)$</var-value>
 					</var>
 			</field>	    
-			<field property="cardCopyNumber" depends="required,integer" page="1">
+			<field property="cardCopyNumber" depends="integer" page="1">
 				<msg name="number" key="errors.integer"/>
 				<arg0 key="label.grant.owner.cardCopyNumber" resource="true"/>
 			</field>
@@ -82,44 +165,46 @@
 				<msg name="number" key="errors.integer"/>
 				<arg0 key="label.grant.owner.idNumber" resource="true"/>
 			</field>
-			
-			<field property="idDate" depends="mask, date" page="1">
+			<field property="name" depends="required" page="1">
+				<arg0 key="label.grant.owner.infoperson.name" resource="true"/>
+			</field>
+			<field property="idDate" depends="required,mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 				<msg name="mask" key="errors.invalid.date"/>
 				<arg0 key="label.grant.owner.infoperson.idDate" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
-					<var-value>dd/MM/yyyy</var-value>
+					<var-value>dd-MM-yyyy</var-value>
 				</var>
 				<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)/(.||..)/....)$</var-value>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
 				</var>
 			</field>
-			<field property="idValidDate" depends="mask, date" page="1">
+			<field property="idValidDate" depends="required, mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 				<msg name="mask" key="errors.invalid.date"/>
 				<arg0 key="label.grant.owner.infoperson.idValidDate" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
-					<var-value>dd/MM/yyyy</var-value>
+					<var-value>dd-MM-yyyy</var-value>
 				</var>
 				<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)/(.||..)/2...)$</var-value>
+					<var-value>^((.||..)-(.||..)-2...)$</var-value>
 				</var>
 			</field>
-			<field property="birthdate" depends="mask, date" page="1">
+			<field property="birthdate" depends="required, mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 				<msg name="mask" key="errors.invalid.date"/>
 				<arg0 key="label.grant.owner.infoperson.birthdate" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
-					<var-value>dd/MM/yyyy</var-value>
+					<var-value>dd-MM-yyyy</var-value>
 				</var>
 				<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)/(.||..)/....)$</var-value>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
 				</var>
 			</field>
 			<field property="areaCode" depends="mask" page="2">
@@ -144,11 +229,7 @@
 			<field property="cellphone" depends="integer" page="1">
 				<msg name="cellphone" key="errors.integer"/>
 				<arg0 key="label.grant.owner.infoperson.cellPhone" resource="true"/>
-			</field>
-			
-	    <!--Sera que estes valores tb tem que ser checados????
-		<form-property name="email" type="java.lang.String"/>	
-		<form-property name="homepage" type="java.lang.String"/>-->
+			</field>			
     	</form>
 
     </formset>

@@ -18,9 +18,14 @@ import ServidorPersistente.credits.IPersistentCredits;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantContract;
+import ServidorPersistente.grant.IPersistentGrantCostCenter;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
 import ServidorPersistente.grant.IPersistentGrantOwner;
+import ServidorPersistente.grant.IPersistentGrantPart;
+import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
+import ServidorPersistente.grant.IPersistentGrantProject;
 import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
+import ServidorPersistente.grant.IPersistentGrantSubsidy;
 import ServidorPersistente.grant.IPersistentGrantType;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
@@ -188,6 +193,11 @@ public interface ISuportePersistente
     public IPersistentGrantResponsibleTeacher getIPersistentGrantResponsibleTeacher();
     //by Barbosa (November 20th, 2003)
     public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher();
+    public IPersistentGrantCostCenter getIPersistentGrantCostCenter();
+    public IPersistentGrantPart getIPersistentGrantPart();
+    public IPersistentGrantPaymentEntity getIPersistentGrantPaymentEntity();
+    public IPersistentGrantProject getIPersistentGrantProject();
+    public IPersistentGrantSubsidy getIPersistentGrantSubsidy();
 
     public IPersistentAdvisory getIPersistentAdvisory();
 

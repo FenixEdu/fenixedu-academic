@@ -24,7 +24,6 @@ public class SearchGrantOwnerAction extends SearchAction
 	protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form)
 		throws Exception
 	{
-		//Read attributes from FormBean
 		DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
 		String name = (String) searchGrantOwnerForm.get("name");
 		String idNumber = (String) searchGrantOwnerForm.get("idNumber");
@@ -47,5 +46,4 @@ public class SearchGrantOwnerAction extends SearchAction
 		List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
 		request.setAttribute("documentTypeList", documentTypeList);
 	}
-
 }

@@ -34,6 +34,7 @@ import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherNotFoun
 import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherPeriodConflictException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherPeriodNotWithinContractPeriodException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantTypeNotFoundException;
+import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.IPersistentTeacher;
@@ -48,28 +49,13 @@ import ServidorPersistente.grant.IPersistentGrantType;
  * @author Barbosa
  * @author Pica
  */
-public class EditGrantContract extends ServidorAplicacao.Servico.framework.EditDomainObjectService
+public class EditGrantContract extends EditDomainObjectService
 {
-	private static EditGrantContract service = new EditGrantContract();
-	/**
-	 * The singleton access method of this class.
-	 */
-	public static EditGrantContract getService()
-	{
-		return service;
-	}
 	/**
 	 * The constructor of this class.
 	 */
-	private EditGrantContract()
+	public EditGrantContract()
 	{
-	}
-	/**
-	 * The name of the service
-	 */
-	public final String getNome()
-	{
-		return "EditGrantContract";
 	}
 
 	protected IDomainObject clone2DomainObject(InfoObject infoObject)

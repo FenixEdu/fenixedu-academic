@@ -23,12 +23,20 @@
 	<html:hidden property="method" value="edit"/>
 	<html:hidden property="idInternal"/>
 	<html:hidden property="infoPerson#idInternal"/>
+	<html:hidden property="countryIdInternal"/>
+	<html:hidden property="branch" />
+	<html:hidden property="specializationArea" />
+	<html:hidden property="degreeRecognition" />
+	<html:hidden property="tempEquivalenceDate" />
+	<html:hidden property="equivalenceSchool" />
 	<table>
 		<tr>
 			<td><bean:message key="message.teacherInformation.year" /></td>
 		</tr>
 		<tr>
-			<td><html:text property="year"/></td>
+			<td>
+				<html:text property="tempDate"/>&nbsp;(dd/mm/aaaa)
+			</td>
 		<tr/>
 		<tr>
 			<td><bean:message key="message.teacherInformation.school" /></td>

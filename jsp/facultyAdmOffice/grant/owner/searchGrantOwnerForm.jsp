@@ -7,14 +7,14 @@
 	<html:hidden property="method" value="doSearch"/>
 	<html:hidden property="page" value="1"/>
 
-	<%-- Presenting Errors--%>
+	<%-- Presenting Errors --%>
 	<logic:messagesPresent>
 	<p align="center"><span class="error">
 	<html:errors/>
 	</span></p><br/>
 	</logic:messagesPresent>    
 	
-	<%-- Search Form --%>
+	<%-- Search Form By Identification Information --%>
 	<table>
 		<tr>
 			<td align="left"><bean:message key="label.grant.owner.name"/>:&nbsp;</td>
@@ -45,10 +45,11 @@
 
 	<html:hidden property="method" value="searchGrantOwner"/>
 	<html:hidden property="page" value="1"/>
-	
+
+	<%-- Search Form By Grant Owner number --%>	
 	<table>
 		<tr>
-			<td align="left"><bean:message key="label.grant.owner.idInternal"/>:&nbsp;</td>
+			<td align="left"><bean:message key="label.grant.owner.number"/>:&nbsp;</td>
 			<td><html:text property="idGrantOwner"/></td>
 		</tr>
 	</table>

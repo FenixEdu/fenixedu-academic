@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+
 <%-- Present number of hits of search --%>
 <bean:size id="resultSize" name="infoGrantOwnerList"/>
 <p><bean:message key="label.grant.owner.searchresult" arg0="<%= resultSize.toString() %>"/></p>
@@ -16,7 +17,7 @@
 			<bean:message key="label.grant.owner.documentidentification"/>
 		</td>		
 		<td class="listClasses-header">
-			<%-- blank --%>
+			&nbsp;<%-- blank --%>
 		</td>				
 	</tr>
 	<tr>
@@ -24,7 +25,7 @@
 			<bean:message key="label.grant.owner.infoperson.name"/>
 		</td>
 		<td class="listClasses-header">
-			<bean:message key="label.grant.owner.idInternal"/>
+			<bean:message key="label.grant.owner.number"/>
 		</td>
 		<td class="listClasses-header">
 			<bean:message key="label.grant.owner.infoperson.socialSecurityNumber"/>
@@ -74,7 +75,7 @@
 							   paramId="personId"
 							   paramName="infoGrantOwner"
 							   paramProperty="personInfo.idInternal">
-						<bean:message key="label.grant.owner.create" />
+						<bean:message key="link.create.grant.owner" />
 					</html:link>
 				</logic:notPresent>
 			</td>
@@ -84,7 +85,8 @@
 
 <br/><br/>
 
+<%-- Create a new person Grant Owner --%>
 <bean:message key="message.grant.owner.creation"/>:&nbsp;
 <html:link page="/editGrantOwner.do?method=prepareEditGrantOwnerForm">
-	<bean:message key="label.grant.owner.create"/>
+	<bean:message key="link.create.person.grant.owner"/>
 </html:link>

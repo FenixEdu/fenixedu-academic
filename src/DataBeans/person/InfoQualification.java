@@ -4,7 +4,10 @@
  */
 package DataBeans.person;
 
+import java.util.Date;
+
 import DataBeans.ISiteComponent;
+import DataBeans.InfoCountry;
 import DataBeans.InfoObject;
 import DataBeans.InfoPerson;
 
@@ -15,12 +18,19 @@ import DataBeans.InfoPerson;
 
 public class InfoQualification extends InfoObject implements ISiteComponent
 {
-	private Integer year;
 	private String mark;
 	private String school;
 	private String title;
-    private String degree;
+	private String degree;
 	private InfoPerson infoPerson;
+
+	private Date date;
+	private String branch;
+	private String specializationArea;
+	private String degreeRecognition;
+	private Date equivalenceDate;
+	private String equivalenceSchool;
+	private InfoCountry infoCountry;
 
 	public InfoQualification()
 	{
@@ -32,9 +42,8 @@ public class InfoQualification extends InfoObject implements ISiteComponent
 		if (obj != null && obj instanceof InfoQualification)
 		{
 			result =
-				getMark().equals(((InfoQualification) obj).getDegree())
-					&& getSchool().equals(((InfoQualification) obj).getSchool())
-					&& getYear().equals(((InfoQualification) obj).getYear())
+				getSchool().equals(((InfoQualification) obj).getSchool())
+					&& getDate().equals(((InfoQualification) obj).getDate())
 					&& getInfoPerson().equals(((InfoQualification) obj).getInfoPerson());
 		}
 		return result;
@@ -46,14 +55,6 @@ public class InfoQualification extends InfoObject implements ISiteComponent
 	public InfoPerson getInfoPerson()
 	{
 		return infoPerson;
-	}
-
-	/**
-	 * @return Integer
-	 */
-	public Integer getYear()
-	{
-		return year;
 	}
 
 	/**
@@ -84,7 +85,7 @@ public class InfoQualification extends InfoObject implements ISiteComponent
 	 * Sets the personInfo.
 	 * 
 	 * @param infoPerson
-	 *                    The personInfo to set
+	 *            The personInfo to set
 	 */
 	public void setInfoPerson(InfoPerson infoPerson)
 	{
@@ -102,21 +103,10 @@ public class InfoQualification extends InfoObject implements ISiteComponent
 	}
 
 	/**
-	 * Sets the qualification year
-	 * 
-	 * @param year
-	 *                    The Year to set
-	 */
-	public void setYear(Integer year)
-	{
-		this.year = year;
-	}
-
-	/**
 	 * Sets the school of qualification
 	 * 
 	 * @param school;
-	 *                    The school to set
+	 *            The school to set
 	 */
 	public void setSchool(String school)
 	{
@@ -127,27 +117,147 @@ public class InfoQualification extends InfoObject implements ISiteComponent
 	 * Sets the title of qualification
 	 * 
 	 * @param title;
-	 *                    The title to set
+	 *            The title to set
 	 */
 	public void setTitle(String title)
 	{
 		this.title = title;
 	}
 
-    /**
-     * @return Returns the degree.
-     */
-    public String getDegree()
-    {
-        return degree;
-    }
+	/**
+	 * @return Returns the degree.
+	 */
+	public String getDegree()
+	{
+		return degree;
+	}
 
-    /**
-     * @param degree The degree to set.
-     */
-    public void setDegree(String degree)
-    {
-        this.degree = degree;
-    }
+	/**
+	 * @param degree
+	 *            The degree to set.
+	 */
+	public void setDegree(String degree)
+	{
+		this.degree = degree;
+	}
+
+	/**
+	 * @return Returns the branch.
+	 */
+	public String getBranch()
+	{
+		return branch;
+	}
+
+	/**
+	 * @param branch
+	 *            The branch to set.
+	 */
+	public void setBranch(String branch)
+	{
+		this.branch = branch;
+	}
+
+	/**
+	 * @return Returns the degreeRecognition.
+	 */
+	public String getDegreeRecognition()
+	{
+		return degreeRecognition;
+	}
+
+	/**
+	 * @param degreeRecognition
+	 *            The degreeRecognition to set.
+	 */
+	public void setDegreeRecognition(String degreeRecognition)
+	{
+		this.degreeRecognition = degreeRecognition;
+	}
+
+	/**
+	 * @return Returns the equivalenceDate.
+	 */
+	public Date getEquivalenceDate()
+	{
+		return equivalenceDate;
+	}
+
+	/**
+	 * @param equivalenceDate
+	 *            The equivalenceDate to set.
+	 */
+	public void setEquivalenceDate(Date equivalenceDate)
+	{
+		this.equivalenceDate = equivalenceDate;
+	}
+
+	/**
+	 * @return Returns the equivalenceSchool.
+	 */
+	public String getEquivalenceSchool()
+	{
+		return equivalenceSchool;
+	}
+
+	/**
+	 * @param equivalenceSchool
+	 *            The equivalenceSchool to set.
+	 */
+	public void setEquivalenceSchool(String equivalenceSchool)
+	{
+		this.equivalenceSchool = equivalenceSchool;
+	}
+
+	/**
+	 * @return Returns the infoCountry.
+	 */
+	public InfoCountry getInfoCountry()
+	{
+		return infoCountry;
+	}
+
+	/**
+	 * @param infoCountry
+	 *            The infoCountry to set.
+	 */
+	public void setInfoCountry(InfoCountry infoCountry)
+	{
+		this.infoCountry = infoCountry;
+	}
+
+	/**
+	 * @return Returns the qualificationDate.
+	 */
+	public Date getDate()
+	{
+		return date;
+	}
+
+	/**
+	 * @param qualificationDate
+	 *            The qualificationDate to set.
+	 */
+	public void setDate(Date qualificationDate)
+	{
+		this.date = qualificationDate;
+	}
+
+	/**
+	 * @return Returns the specializationArea.
+	 */
+	public String getSpecializationArea()
+	{
+		return specializationArea;
+	}
+
+	/**
+	 * @param specializationArea
+	 *            The specializationArea to set.
+	 */
+	public void setSpecializationArea(String specializationArea)
+	{
+		this.specializationArea = specializationArea;
+	}
 
 }

@@ -72,13 +72,19 @@
       <form-bean name="qualificationForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
+        <form-property name="tempDate" type="java.lang.String"/>
      	<form-property name="page" type="java.lang.Integer"/>
         <form-property name="idInternal" type="java.lang.Integer" initial="0"/>
         <form-property name="mark" type="java.lang.String" />
-        <form-property name="year" type="java.lang.String" />
         <form-property name="school" type="java.lang.String" />
         <form-property name="degree" type="java.lang.String" />
-        <form-property name="title" type="java.lang.String" />
+        <form-property name="title" type="java.lang.String" />       
+        <form-property name="branch" type="java.lang.String" />
+        <form-property name="specializationArea" type="java.lang.String" />
+        <form-property name="degreeRecognition" type="java.lang.String" />
+        <form-property name="tempEquivalenceDate" type="java.lang.String" />
+        <form-property name="equivalenceSchool" type="java.lang.String" />
+        <form-property name="countryIdInternal" type="java.lang.Integer" />
         <form-property name="infoPerson#idInternal" type="java.lang.Integer" />
       </form-bean>
 
@@ -179,7 +185,7 @@
    	  <action path="/qualificationForm"
 		   	  name="qualificationForm"
 		   	  input="/qualificationForm.do?method=prepareEdit&amp;page=0"
-   	          type="ServidorApresentacao.Action.framework.CRUDActionByOID"
+   	          type="ServidorApresentacao.Action.person.QualificationAction"
    	          parameter="method"
    	          scope="request"
    	          validate="true"

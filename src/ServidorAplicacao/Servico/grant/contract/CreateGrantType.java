@@ -10,6 +10,7 @@ import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.IGrantType;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
@@ -20,29 +21,13 @@ import ServidorPersistente.grant.IPersistentGrantType;
  * @author  Pica
  *  
  */
-public class CreateGrantType extends ServidorAplicacao.Servico.framework.EditDomainObjectService
+public class CreateGrantType extends EditDomainObjectService
 {
-
-	private static CreateGrantType service = new CreateGrantType();
-	/**
-	 * The singleton access method of this class.
-	 */
-	public static CreateGrantType getService()
-	{
-		return service;
-	}
 	/**
 	 * The constructor of this class.
 	 */
-	private CreateGrantType()
+	public CreateGrantType()
 	{
-	}
-	/**
-	 * The name of the service
-	 */
-	public final String getNome()
-	{
-		return "CreateGrantType";
 	}
 
 	/* (non-Javadoc)

@@ -4,17 +4,19 @@
 
 package ServidorApresentacao.Action.grant.qualification;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.person.InfoSiteQualifications;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
@@ -24,45 +26,73 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class ManageGrantQualificationAction extends DispatchAction
 {
-    /*
-     * Fills the form with the correspondent data
-     */
-    public ActionForward prepareManageGrantQualificationForm(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
-        Integer idInternal = null;
-        Integer idInternalPerson = null;
+	/*
+	 * Fills the form with the correspondent data
+	 */
+	public ActionForward prepareManageGrantQualificationForm(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
+		try
+		{
+			Integer idInternal = null;
+			Integer idInternalPerson = null;
+			String username = null;
 
-        //TODO.. verificar so que null.. ou tb verificar se são strings vazias!!!
-        if (request.getParameter("idInternal") != null)
-            idInternal = new Integer(request.getParameter("idInternal"));
-        else if ((Integer) request.getAttribute("idInternal") != null)
-            idInternal = (Integer) request.getAttribute("idInternal");
-        
-        //TODO.. verificar so que null.. ou tb verificar se são strings vazias!!!
-        if (request.getParameter("idInternalPerson") != null)
-            idInternalPerson = new Integer(request.getParameter("idInternalPerson"));
-        else if ((Integer) request.getAttribute("idInternalPerson") != null)
-            idInternalPerson = (Integer) request.getAttribute("idInternalPerson");
-        
-        //Run the service
-        Object[] args = { idInternal };
-        IUserView userView = SessionUtils.getUserView(request);
-        List infoGrantQualificationList = null;
-        //(List) ServiceUtils.executeService(userView, "ReadAllQualificationByPerson", args);
-        //TODO... fazer este serviço
+			if (request.getParameter("idInternal") != null)
+				idInternal = new Integer(request.getParameter("idInternal"));
+			if (request.getParameter("idPerson") != null)
+				idInternalPerson = new Integer(request.getParameter("idPerson"));
+			username = request.getParameter("username");
 
-        //If they exist put them on request
-        if (infoGrantQualificationList != null && !infoGrantQualificationList.isEmpty())
-            request.setAttribute("infoGrantQualificationList", infoGrantQualificationList);
+			Object[] args = { username };
+			IUserView userView = SessionUtils.getUserView(request);
+			InfoSiteQualifications infoSiteQualifications =
+				(InfoSiteQualifications) ServiceUtils.executeService(
+					userView,
+					"ReadQualifications",
+					args);
 
-        request.setAttribute("idInternal", idInternal);
-        request.setAttribute("idInternalPerson", idInternalPerson);
-        
-        return mapping.findForward("manage-grant-qualification");
-    }
+			if (infoSiteQualifications != null)
+			{
+				if (infoSiteQualifications.getInfoPerson() != null)
+					request.setAttribute("grantOwnerName",infoSiteQualifications.getInfoPerson().getNome());
+				if (infoSiteQualifications.getInfoQualifications() != null
+					&& !infoSiteQualifications.getInfoQualifications().isEmpty())
+					request.setAttribute("infoQualificationList",infoSiteQualifications.getInfoQualifications());
+			}
+			request.setAttribute("idInternal", idInternal);
+			request.setAttribute("idPerson", idInternalPerson);
+			request.setAttribute("username", username);
+		}
+		catch (Exception e)
+		{
+			return setError(request,mapping,"errors.grant.unrecoverable","manage-grant-qualification",null);
+		}
+		return mapping.findForward("manage-grant-qualification");
+	}
+
+	/*
+	 * Sets an error to be displayed in the page and sets the mapping forward
+	 */
+	private ActionForward setError(
+		HttpServletRequest request,
+		ActionMapping mapping,
+		String errorMessage,
+		String forwardPage,
+		Object actionArg)
+	{
+		ActionErrors errors = new ActionErrors();
+		ActionError error = new ActionError(errorMessage, actionArg);
+		errors.add(errorMessage, error);
+		saveErrors(request, errors);
+
+		if (forwardPage != null)
+			return mapping.findForward(forwardPage);
+		else
+			return mapping.getInputForward();
+	}
 }

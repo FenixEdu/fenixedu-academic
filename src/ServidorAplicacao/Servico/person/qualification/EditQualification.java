@@ -24,14 +24,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public class EditQualification extends EditDomainObjectService
 {
 
-    private static EditQualification service = new EditQualification();
-
-    public static EditQualification getService()
-    {
-        return service;
-    }
-
-    private EditQualification()
+    public EditQualification()
     {
     }
 
@@ -78,8 +71,8 @@ public class EditQualification extends EditDomainObjectService
         IPersistentQualification persistentQualification = sp.getIPersistentQualification();
         IQualification oldQualification = (IQualification) domainObject;
         IQualification newQualification =
-            persistentQualification.readByYearAndSchoolAndPerson(
-                oldQualification.getYear(),
+            persistentQualification.readByDateAndSchoolAndPerson(
+                oldQualification.getDate(),
                 oldQualification.getSchool(),
                 oldQualification.getPerson());
         return newQualification;

@@ -2,8 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<strong><p align="center"><bean:message key="label.grant.contract.edition"/></p></strong>
-<br/>
+
+<strong><p align="center"><bean:message key="label.grant.contract.edition"/></p></strong><br/>
+
 <html:form action="/editGrantContract" style="display:inline">
 	<%-- Presenting errors --%>
 	<logic:messagesPresent>
@@ -30,7 +31,9 @@
 				<bean:message key="label.grant.contract.beginDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateBeginContract"/>* &nbsp;(dd/mm/aaaa)
+				<html:text property="dateBeginContract"/>
+				<bean:message key="label.requiredfield"/>&nbsp;
+				<bean:message key="label.dateformat"/>
 			</td>
 		</tr>
 		<tr>
@@ -38,7 +41,9 @@
 				<bean:message key="label.grant.contract.endDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateEndContract"/>* &nbsp;(dd/mm/aaaa)
+				<html:text property="dateEndContract"/>
+				<bean:message key="label.requiredfield"/>&nbsp;
+				<bean:message key="label.dateformat"/>
 			</td>
 		</tr>
 		<tr>
@@ -64,7 +69,8 @@
 				<bean:message key="label.grant.contract.responsibleTeacher"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="grantResponsibleTeacher"/>*
+				<html:text property="grantResponsibleTeacher"/>
+				<bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 	
@@ -73,7 +79,8 @@
 				<bean:message key="label.grant.contract.orientationTeacher"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="grantOrientationTeacher"/>*
+				<html:text property="grantOrientationTeacher"/>
+				<bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 	</table>

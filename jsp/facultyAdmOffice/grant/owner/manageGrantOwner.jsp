@@ -4,15 +4,25 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
-<strong><p align="center"><bean:message key="label.grant.owner.management"/></p></strong>
-<br/>
+<strong><p align="center"><bean:message key="label.grant.owner.management"/></p></strong><br/>
+
+<%-- Presenting errors --%>
+<logic:messagesPresent>
+<span class="error">
+	<html:errors/>
+</span><br/>
+</logic:messagesPresent>
+
+
+<logic:messagesNotPresent>
+
 <table>
 	<tr>
 		<td colspan="2"><b><bean:message key="label.grant.owner.information"/></b></td>
 	</tr>
 	<tr>
 		<td >
-			<bean:message key="label.grant.owner.idInternal"/>:&nbsp;
+			<bean:message key="label.grant.owner.number"/>:&nbsp;
 		</td>
 		<td>
 			<bean:write name="infoGrantOwner" property="grantOwnerNumber"/>
@@ -385,10 +395,13 @@
 <br/>
 
 <html:form action="/editGrantOwner">
-	<html:hidden property="method" value="prepareEditGrantOwnerForm"/>				
+	<%-- Editar Bolseiro --%>
 	<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
+	
 	<html:hidden property="idGrantOwner" value="<%= idGrantOwner.toString() %>"/>
+	<html:hidden property="method" value="prepareEditGrantOwnerForm"/>				
 	<html:hidden property="loaddb" value="1"/>
+	
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.edit"/>
 	</html:submit> 
@@ -410,10 +423,11 @@
 <strong><p align='center'><bean:message key="label.grant.qualification.manage"/></p></strong>
 <bean:message key="message.grant.qualification.manage" />:&nbsp;
 <bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
+<bean:define id="username" name="infoGrantOwner" property="personInfo.username"/>
 <bean:define id="idPerson" name="infoGrantOwner" property="personInfo.idInternal"/>
-<html:link page='<%= "/manageGrantQualification.do?method=prepareManageGrantQualificationForm&amp;idInternal=" +  idGrantOwner.toString() + "&amp;idInternalPerson=" + idPerson.toString() %>' > 
+<html:link page='<%= "/manageGrantQualification.do?method=prepareManageGrantQualificationForm&amp;idInternal=" +  idGrantOwner.toString() + "&amp;idPerson=" + idPerson.toString() + "&amp;username=" + username.toString()%>' > 
 	<bean:message key="link.manage.grant.qualification" />
 </html:link>		
 
-
+</logic:messagesNotPresent>
 

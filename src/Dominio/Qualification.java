@@ -9,13 +9,20 @@ import java.util.Date;
 public class Qualification extends DomainObject implements IQualification
 {
 
-	private Integer year;
 	private String mark;
 	private String school;
 	private String title;
     private String degree;
     private Date lastModificationDate;
 	private Integer personKey;
+    private Date date;
+	private String branch;
+    private String specializationArea;
+    private String degreeRecognition;
+    private Date equivalenceDate;
+    private String equivalenceSchool;
+    private ICountry country;
+    private Integer countryKey;
 
 	private IPessoa person;
 
@@ -27,13 +34,18 @@ public class Qualification extends DomainObject implements IQualification
 	{
 		String result = "Qualification :\n";
 		result += "\n  - Internal Code : " + getIdInternal();
-		result += "\n  - Year: " + year;
 		result += "\n  - School : " + school;
 		result += "\n  - Title : " + title;
 		result += "\n  - Mark : " + mark;
 		result += "\n  - Person : " + person;
         result += "\n  - Last Modication Date : " + lastModificationDate;
-
+        result += "\n  - Branch : " + branch;
+        result += "\n  - Specialization Area : " + specializationArea;
+        result += "\n  - Degree Recognition : " + degreeRecognition;
+        result += "\n  - Equivalence School : " + equivalenceSchool;
+        result += "\n  - Equivalence Date : " +  equivalenceDate;
+        result += "\n  - Country : " + country.getName();
+        
 		return result;
 	}
 
@@ -117,21 +129,6 @@ public class Qualification extends DomainObject implements IQualification
 		this.title = title;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getYear()
-	{
-		return year;
-	}
-
-	/**
-	 * @param year
-	 */
-	public void setYear(Integer year)
-	{
-		this.year = year;
-	}
 
     /**
      * @return Returns the degree.
@@ -164,4 +161,132 @@ public class Qualification extends DomainObject implements IQualification
     {
         return lastModificationDate;
     }
+	/**
+	 * @return Returns the branch.
+	 */
+	public String getBranch()
+	{
+		return branch;
+	}
+
+	/**
+	 * @param branch The branch to set.
+	 */
+	public void setBranch(String Branch)
+	{
+		branch = Branch;
+	}
+
+	/**
+	 * @return Returns the degreeRecognition.
+	 */
+	public String getDegreeRecognition()
+	{
+		return degreeRecognition;
+	}
+
+	/**
+	 * @param degreeRecognition The degreeRecognition to set.
+	 */
+	public void setDegreeRecognition(String degreeRecognition)
+	{
+		this.degreeRecognition = degreeRecognition;
+	}
+
+	/**
+	 * @return Returns the equivalenceDate.
+	 */
+	public Date getEquivalenceDate()
+	{
+		return equivalenceDate;
+	}
+
+	/**
+	 * @param equivalenceDate The equivalenceDate to set.
+	 */
+	public void setEquivalenceDate(Date equivalenceDate)
+	{
+		this.equivalenceDate = equivalenceDate;
+	}
+
+	/**
+	 * @return Returns the equivalenceSchool.
+	 */
+	public String getEquivalenceSchool()
+	{
+		return equivalenceSchool;
+	}
+
+	/**
+	 * @param equivalenceSchool The equivalenceSchool to set.
+	 */
+	public void setEquivalenceSchool(String equivalenceSchool)
+	{
+		this.equivalenceSchool = equivalenceSchool;
+	}
+
+	/**
+	 * @return Returns the specializationArea.
+	 */
+	public String getSpecializationArea()
+	{
+		return specializationArea;
+	}
+
+	/**
+	 * @param specializationArea The specializationArea to set.
+	 */
+	public void setSpecializationArea(String specializationArea)
+	{
+		this.specializationArea = specializationArea;
+	}
+
+	/**
+	 * @return Returns the qualificationDate.
+	 */
+	public Date getDate()
+	{
+		return date;
+	}
+
+	/**
+	 * @param qualificationDate The qualificationDate to set.
+	 */
+	public void setDate(Date date)
+	{
+		this.date = date;
+	}
+
+	/**
+	 * @param country The country to set.
+	 */
+	public void setCountry(ICountry country)
+	{
+		this.country = country;
+	}
+
+	/**
+	 * @return Returns the country.
+	 */
+	public ICountry getCountry()
+	{
+		return country;
+	}
+
+	/**
+	 * @return Returns the countryKey.
+	 */
+	public Integer getCountryKey()
+	{
+		return countryKey;
+	}
+
+	/**
+	 * @param countryKey The countryKey to set.
+	 */
+	public void setCountryKey(Integer countryKey)
+	{
+		this.countryKey = countryKey;
+	}
+
 }

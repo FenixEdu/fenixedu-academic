@@ -2,8 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<br/><strong><p align="center"><bean:message key="label.grant.owner.edition"/></p></strong>
-<br/>
+
+<br/><strong><p align="center"><bean:message key="label.grant.owner.edition"/></p></strong><br/>
+
 <html:form action="/editGrantOwner" style="display:inline">
 
 	<%-- Presenting Errors--%>
@@ -31,11 +32,11 @@
 	</tr>
 	<tr>
 		<td align="left"><bean:message key="label.grant.owner.dateSendCGD"/>:&nbsp;</td>
-		<td><html:text property="dateSendCGD"/>*&nbsp;(dd/mm/aaaa)</td>
+		<td><html:text property="dateSendCGD"/>&nbsp;<bean:message key="label.dateformat"/></td>
 	</tr>
 	<tr>
 		<td align="left"><bean:message key="label.grant.owner.cardCopyNumber"/>:&nbsp;</td>
-		<td><html:text property="cardCopyNumber"/>*</td>
+		<td><html:text property="cardCopyNumber"/></td>
 	</tr>
 </table>
 
@@ -50,7 +51,7 @@
 			<bean:message key="label.grant.owner.infoperson.idNumber"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="idNumber"/>*
+			<html:text property="idNumber"/><bean:message key="label.requiredfield"/>
 		</td>
 	</tr>
 	<tr>
@@ -60,7 +61,7 @@
 		<td>
 			<html:select property="idType">
 				<html:options collection="documentTypeList" property="value" labelProperty="label"/>
-			</html:select>*
+			</html:select><bean:message key="label.requiredfield"/>
 		</td>
 	</tr>
 	<tr>
@@ -76,7 +77,8 @@
 			<bean:message key="label.grant.owner.infoperson.idDate"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="idDate"/>&nbsp;(dd/mm/aaaa)
+			<html:text property="idDate"/><bean:message key="label.requiredfield"/>
+			&nbsp;<bean:message key="label.dateformat"/>
 		</td>
 	</tr>
 	<tr>
@@ -84,7 +86,8 @@
 			<bean:message key="label.grant.owner.infoperson.idValidDate"/>:&nbsp;
 		</td>
 		<td>
-				<html:text property="idValidDate"/>&nbsp;(dd/mm/aaaa)
+			<html:text property="idValidDate"/><bean:message key="label.requiredfield"/>
+			&nbsp;<bean:message key="label.dateformat"/>
 		</td>
 	</tr>
 </table>
@@ -97,7 +100,7 @@
 	</tr>
 	<tr>
 		<td align="left"><bean:message key="label.grant.owner.infoperson.name"/>:&nbsp;</td>
-		<td><html:text property="name" size="70"/></td>
+		<td><html:text property="name" size="70"/><bean:message key="label.requiredfield"/></td>
 	</tr>
 	<tr>
 		<td align="left"><bean:message key="label.grant.owner.infoperson.sex"/>:&nbsp;</td>
@@ -120,7 +123,8 @@
 			<bean:message key="label.grant.owner.infoperson.birthdate"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="birthdate"/>&nbsp;(dd/mm/aaaa)
+			<html:text property="birthdate"/><bean:message key="label.requiredfield"/>
+			&nbsp;<bean:message key="label.dateformat"/>
 		</td>
 	</tr>
 	<tr>

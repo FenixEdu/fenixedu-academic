@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <h2><bean:message key="title.teacherInformation"/></h2>
 <logic:present name="infoSiteTeacherInformation"> 
 	<html:form action="/teacherInformation">
@@ -61,7 +62,11 @@
 			</tr>
 			<logic:iterate id="infoQualification" name="infoSiteTeacherInformation" property="infoQualifications">
 			<tr>
-				<td class="listClasses"><bean:write name="infoQualification" property="year" /></td>
+				<td class="listClasses">
+					<dt:format pattern="dd-MM-yyyy">
+						<bean:write name="infoQualification" property="date.time" />
+					</dt:format>
+				</td>
 				<td class="listClasses"><bean:write name="infoQualification" property="school" /></td>
 				<td class="listClasses"><bean:write name="infoQualification" property="title" /></td>
 				<td class="listClasses"><bean:write name="infoQualification" property="degree" /></td>

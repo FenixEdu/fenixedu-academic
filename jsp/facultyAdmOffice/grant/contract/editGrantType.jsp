@@ -3,13 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<strong><p align="center">
-	<bean:message key="label.grant.type.edition"/>
-</p></strong>
-
-<br/>
+<strong><p align="center"><bean:message key="label.grant.type.edition"/></p></strong><br/>
 
 <html:form action="/editGrantType" style="display:inline">
+
 	<%-- Presenting errors --%>
 	<logic:messagesPresent>
 	<span class="error">
@@ -29,7 +26,7 @@
 				<bean:message key="label.grant.type.name"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="name"/>*
+				<html:text property="name"/><bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		<tr>
@@ -37,7 +34,7 @@
 				<bean:message key="label.grant.type.sigla"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="sigla"/>*
+				<html:text property="sigla"/><bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		<tr>
@@ -78,7 +75,7 @@
 				<bean:message key="label.grant.type.state"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="state"/>&nbsp;(dd-mm-aaaa)
+				<html:text property="state"/>&nbsp;<bean:message key="label.dateformat"/>
 			</td>
 		</tr>
 	</table>
@@ -88,6 +85,7 @@
 	<table>
 		<tr>
 			<td>
+				<%-- Save button (edit/create) --%>
 				<html:submit styleClass="inputbutton">
 					<bean:message key="button.save"/>
 				</html:submit>
@@ -95,6 +93,7 @@
 			</td>
 			<td>
 				<html:form action="/manageGrantType" style="display:inline">
+					<%-- button cancel --%>
 					<html:hidden property="method" value="prepareManageGrantTypeForm"/>
 					<html:submit styleClass="inputbutton" style="display:inline">
 						<bean:message key="button.cancel"/>
