@@ -287,11 +287,15 @@
 	
 	<!-- Insert Section -->
 	<action name="sectionForm"
-		input="/viewSection.jsp"
+		input="/createSection.jsp"
 		path="/createSection"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.InsertSectionAction"
         validate="true">    
+        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               /> 
        <forward name="viewSite" path="/viewSite.jsp"/>
 	</action>
 
@@ -302,7 +306,11 @@
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.EditSectionDispatchAction"
-        validate="false" >
+        validate="true" >
+        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               /> 
        <forward name="editSection" path="/editSection.jsp"/>
        <forward name="prepareEditSection" path="/editSection.do?method=prepareEdit"/>
        <forward name="viewSite" path="/viewSite.do"/>

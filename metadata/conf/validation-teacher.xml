@@ -95,8 +95,22 @@
       <field property="name" depends="required" page="1">
         <arg0 key="message.sectionName" resource="true"/>
       </field>
+      <field property="sectionOrder" depends="required" page="1">
+        <arg0 key="message.sectionOrder" resource="true"/>
+      </field>
 
     </form>         
+		
+	<!-- validation for editSectionForm -->
+    <form name="editSectionForm">
+      <field property="name" depends="required" page="1">
+        <arg0 key="message.sectionName" resource="true"/>
+      </field>
+      <field property="sectionOrder" depends="required" page="1">
+        <arg0 key="message.sectionOrder" resource="true"/>
+      </field>
+
+    </form>      	
 		          
 		<!-- validation for itemForm -->
     <form name="itemForm">
