@@ -4,25 +4,32 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <ul>
 	<logic:iterate id="infoClass" name="infoClassEnrollmentDetails" property="infoClassList">
+		<bean:define id="infoClassId" name="infoClass" property="idInternal"/>
 		<li>
 			<logic:present name="classId" >
-				present
-				<logic:notEqual name="infoClass" property="idInternal" value="<%= classId.toString() %>"> 
-					<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=proceedToShiftEnrolment&amp;studentId=" + request.getParameter("studentId").toString() + "&amp;classId=" + request.getParameter("classId").toString()%>">
+				<bean:define id="classIdSelected" name="classId" />
+				<logic:notEqual name="infoClassId" value="<%= classIdSelected.toString() %>">
+					<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=proceedToShiftEnrolment&amp;studentId=" + request.getParameter("studentId").toString() + "&amp;classId=" + pageContext.findAttribute("infoClassId").toString()%>">
 						<bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome" />			
 					</html:link>
-				<logic:notEqual>
-				<logic:equal name="infoClass" property="idInternal" value="<%= classId.toString() %>"> 
-					<bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome" />			
-				<logic:equal>
-				
-			<logic:present>			
+				</logic:notEqual>
+				<logic:equal name="infoClassId" value="<%= classIdSelected.toString() %>"> 
+					<b><bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome" /></b>			
+				</logic:equal>
+			</logic:present>			
 			<logic:notPresent name="classId" >
-				not present
-				<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=proceedToShiftEnrolment&amp;studentId=" + request.getParameter("studentId").toString()%>">
+				<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=proceedToShiftEnrolment&amp;studentId=" + request.getParameter("studentId").toString()  + "&amp;classId=" + pageContext.findAttribute("infoClassId").toString() %>">
 					<bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome" />			
 				</html:link>
-			<logic:notPresent>						
+			</logic:notPresent>						
 		</li>
 	</logic:iterate>
+	
+	<p>
+	<li>
+		<html:link href="<%= request.getContextPath() + "/dotIstPortal.do?prefix=/student&amp;page=/index.do" %>">
+			<bean:message key="label.Terminar" />
+		</html:link>	
+	</li>
+	</p>
 </ul>
