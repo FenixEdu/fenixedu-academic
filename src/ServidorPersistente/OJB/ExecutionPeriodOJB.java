@@ -34,6 +34,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.PeriodState;
+import Util.TipoCurso;
 
 /**
  * Created on 11/Fev/2003
@@ -525,7 +526,11 @@ public class ExecutionPeriodOJB
 		criteria.addEqualTo(
 			"academicYear",
 			executionPeriodToExportDataFrom.getExecutionYear().getIdInternal());
+		criteria.addEqualTo(
+			"curricularPlan.degree.tipoCurso",
+			new TipoCurso(TipoCurso.LICENCIATURA));
 
+		
 		int numberOfExecutionDegreesToTransfer =
 			count(CursoExecucao.class, criteria);
 
@@ -670,9 +675,10 @@ public class ExecutionPeriodOJB
 			"academicYear",
 			executionPeriodToImportDataTo.getExecutionYear().getIdInternal());
 		criteria.addEqualTo(
-			"keyCurricularPlan",
+			"curricularPlan.degree.idInternal",
 			executionDegreeToTransfer
 				.getDegreeCurricularPlan()
+				.getDegree()
 				.getIdInternal());
 		if (queryObject(CursoExecucao.class, criteria) == null) {
 
