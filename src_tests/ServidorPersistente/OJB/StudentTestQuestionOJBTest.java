@@ -10,8 +10,10 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
+import Dominio.IQuestion;
 import Dominio.IStudent;
 import Dominio.IStudentTestQuestion;
+import Dominio.Question;
 import Dominio.Student;
 import Dominio.StudentTestQuestion;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -61,7 +63,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 			assertNotNull("there is no student with id=9", student);
 
 			IDistributedTest distributedTest =
-				new DistributedTest(new Integer(25));
+				new DistributedTest(new Integer(1));
 			distributedTest =
 				(IDistributedTest) persistentSuport
 					.getIPersistentDistributedTest()
@@ -69,7 +71,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 					distributedTest,
 					false);
 			assertNotNull(
-				"there is no distributedTest with id=25",
+				"there is no distributedTest with id=1",
 				distributedTest);
 
 			List result =
@@ -96,7 +98,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 				SuportePersistenteOJB.getInstance();
 			persistentSuport.iniciarTransaccao();
 			IDistributedTest distributedTest =
-				new DistributedTest(new Integer(26));
+				new DistributedTest(new Integer(2));
 			distributedTest =
 				(IDistributedTest) persistentSuport
 					.getIPersistentDistributedTest()
@@ -104,7 +106,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 					distributedTest,
 					false);
 			assertNotNull(
-				"there is no distributedTest with id=26",
+				"there is no distributedTest with id=2",
 				distributedTest);
 			List result =
 				persistentSuport
@@ -155,14 +157,46 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 		}
 	}
 
+	public void testReadByQuestion() {
+		System.out.println("4-> Test ReadByQuestion");
+		try {
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+			persistentSuport.iniciarTransaccao();
+
+			IQuestion question = new Question(new Integer("4"));
+			question =
+				(IQuestion) persistentSuport
+					.getIPersistentQuestion()
+					.readByOId(
+					question,
+					false);
+
+			List studentTestQuestions =
+				persistentSuport
+					.getIPersistentStudentTestQuestion()
+					.readByQuestion(
+					question);
+			assertNotNull(
+				"there is no studentTestQuestions whith this question",
+				studentTestQuestions);
+			assertEquals(
+				"wrong number of student test questions",
+				2,
+				studentTestQuestions.size());
+			persistentSuport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			fail("exception: ExcepcaoPersistencia");
+		}
+	}
 	public void testReadStudentsByDistributedTest() {
-		System.out.println("4-> Test ReadStudentsByDistributedTest");
+		System.out.println("5-> Test ReadStudentsByDistributedTest");
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
 			persistentSuport.iniciarTransaccao();
 			IDistributedTest distributedTest =
-				new DistributedTest(new Integer(27));
+				new DistributedTest(new Integer(3));
 			distributedTest =
 				(IDistributedTest) persistentSuport
 					.getIPersistentDistributedTest()
@@ -170,7 +204,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 					distributedTest,
 					false);
 			assertNotNull(
-				"there is no distributedTest with id=27",
+				"there is no distributedTest with id=3",
 				distributedTest);
 			List result =
 				persistentSuport
@@ -191,14 +225,14 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 
 	public void testReadStudentTestQuestionsByDistributedTest() {
 		System.out.println(
-			"5-> Test ReadStudentTestQuestionsByDistributedTest");
+			"6-> Test ReadStudentTestQuestionsByDistributedTest");
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
 			persistentSuport.iniciarTransaccao();
 
 			IDistributedTest distributedTest =
-				new DistributedTest(new Integer(25));
+				new DistributedTest(new Integer(1));
 			distributedTest =
 				(IDistributedTest) persistentSuport
 					.getIPersistentDistributedTest()
@@ -206,7 +240,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 					distributedTest,
 					false);
 			assertNotNull(
-				"there is no distributedTest with id=25",
+				"there is no distributedTest with id=1",
 				distributedTest);
 
 			List result =
@@ -227,14 +261,14 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 	}
 
 	public void testDeleteByDistributedTest() {
-		System.out.println("6-> Test DeleteByDistributedTest");
+		System.out.println("7-> Test DeleteByDistributedTest");
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
 			persistentSuport.iniciarTransaccao();
 
 			IDistributedTest distributedTest =
-				new DistributedTest(new Integer(25));
+				new DistributedTest(new Integer(1));
 			distributedTest =
 				(IDistributedTest) persistentSuport
 					.getIPersistentDistributedTest()
@@ -242,7 +276,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 					distributedTest,
 					false);
 			assertNotNull(
-				"there is no distributed test with id=25",
+				"there is no distributed test with id=1",
 				distributedTest);
 
 			persistentSuport
@@ -272,16 +306,16 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 	}
 
 	public void testDelete() {
-		System.out.println("7-> Test Delete");
+		System.out.println("8-> Test Delete");
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
 			persistentSuport.iniciarTransaccao();
 
 			IStudentTestQuestion studentTestQuestion =
-				new StudentTestQuestion(new Integer(51));
+				new StudentTestQuestion(new Integer(1));
 			assertNotNull(
-				"there is no studentTestQuestion with id=51",
+				"there is no studentTestQuestion with id=1",
 				studentTestQuestion);
 			studentTestQuestion =
 				(IStudentTestQuestion) persistentSuport
@@ -293,9 +327,9 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 
 			persistentSuport.iniciarTransaccao();
 			IDistributedTest distributedTest =
-				new DistributedTest(new Integer(25));
+				new DistributedTest(new Integer(1));
 			assertNotNull(
-				"there is no distributed test with id=25",
+				"there is no distributed test with id=1",
 				distributedTest);
 			List result =
 				persistentSuport

@@ -33,7 +33,7 @@
 </logic:equal>
 
 <html:form action="/studentTests">
-<html:hidden property="method" value="prepareToDoTest"/>
+<html:hidden property="method" value="viewTestsToDo"/>
 <html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 <html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 

@@ -10,8 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import DataBeans.InfoMetadata;
-import DataBeans.util.Cloner;
 import Dominio.Advisory;
 import Dominio.DisciplinaExecucao;
 import Dominio.DistributedTest;
@@ -39,7 +37,6 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.CorrectionAvailability;
 import Util.TestType;
-import UtilTests.ParseMetadata;
 import UtilTests.ParseQuestion;
 
 /**
@@ -159,19 +156,9 @@ public class EditDistributedTest implements IServico {
 								studentTestQuestionExample
 									.getTestQuestionValue());
 							studentTestQuestion.setResponse(new Integer(0));
-							String studentQuestionFileName =
-								getStudentQuestionFileName(
-									studentTestQuestionExample
-										.getQuestion()
-										.getMetadata());
-
-							IPersistentQuestion persistentQuestion =
-								persistentSuport.getIPersistentQuestion();
 							IQuestion question =
-								(
-									IQuestion) persistentQuestion
-										.readByFileNameAndMetadataId(
-									studentQuestionFileName,
+								getStudentQuestion(
+									persistentSuport.getIPersistentQuestion(),
 									studentTestQuestionExample
 										.getQuestion()
 										.getMetadata());
@@ -223,25 +210,19 @@ public class EditDistributedTest implements IServico {
 		}
 	}
 
-	private String getStudentQuestionFileName(IMetadata metadata)
-		throws FenixServiceException {
-		InfoMetadata infoMetadata = Cloner.copyIMetadata2InfoMetadata(metadata);
-		ParseMetadata p = new ParseMetadata();
-		try {
-			infoMetadata =
-				p.parseMetadata(metadata.getMetadataFile(), infoMetadata);
-		} catch (Exception e) {
-			throw new FenixServiceException(e);
+	private IQuestion getStudentQuestion(
+		IPersistentQuestion persistentQuestion,
+		IMetadata metadata)
+		throws ExcepcaoPersistencia {
+		List questions = new ArrayList();
+		IQuestion question = null;
+		questions = persistentQuestion.readByMetadata(metadata);
+		if (questions.size() != 0) {
+			Random r = new Random();
+			int questionIndex = r.nextInt(questions.size());
+			question = (IQuestion) questions.get(questionIndex);
 		}
-
-		Random r = new Random();
-		int questionIndex = r.nextInt(infoMetadata.getMembers().size());
-		String xmlFileName =
-			(String) infoMetadata.getMembers().get(questionIndex);
-		if (xmlFileName == null) {
-			throw new InvalidArgumentsServiceException();
-		}
-		return xmlFileName;
+		return question;
 	}
 
 	private List returnStudentsFromShiftsArray(

@@ -14,6 +14,7 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.odmg.HasBroker;
 
 import Dominio.IDistributedTest;
+import Dominio.IQuestion;
 import Dominio.IStudent;
 import Dominio.IStudentTestQuestion;
 import Dominio.StudentTestQuestion;
@@ -57,6 +58,13 @@ public class StudentTestQuestionOJB
 		return queryList(StudentTestQuestion.class, criteria);
 	}
 
+	public List readByQuestion(IQuestion question)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyQuestion", question.getIdInternal());
+		return queryList(StudentTestQuestion.class, criteria);
+	}
+
 	public List readStudentsByDistributedTest(IDistributedTest distributedTest)
 		throws ExcepcaoPersistencia {
 
@@ -88,9 +96,21 @@ public class StudentTestQuestionOJB
 
 	public List readStudentTestQuestionsByDistributedTest(IDistributedTest distributedTest)
 		throws ExcepcaoPersistencia {
-		IStudentTestQuestion studentTestQuestion =
-			(StudentTestQuestion) readByDistributedTest(distributedTest).get(0);
-		return readByStudentAndDistributedTest(studentTestQuestion.getStudent(), distributedTest);
+		List result = null;
+		IStudentTestQuestion studentTestQuestion = null;
+
+		List studentTestQuestions = readByDistributedTest(distributedTest);
+		if (studentTestQuestions != null && studentTestQuestions.size() != 0) {
+			studentTestQuestion =
+				(StudentTestQuestion) readByDistributedTest(
+					distributedTest).get(
+					0);
+			result =
+				readByStudentAndDistributedTest(
+					studentTestQuestion.getStudent(),
+					distributedTest);
+		}
+		return result;
 	}
 
 	public void deleteByDistributedTest(IDistributedTest distributedTest)

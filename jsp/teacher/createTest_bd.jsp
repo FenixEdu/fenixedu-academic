@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<h2><bean:message key="title.createTest"/></h2>
+<h2><bean:message key="link.createTest"/></h2>
 
 <bean:define id="bodyComponent" name="siteView" property="commonComponent"/>
 

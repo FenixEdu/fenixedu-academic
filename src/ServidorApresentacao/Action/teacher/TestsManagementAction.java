@@ -16,10 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.upload.FormFile;
 import org.dbunit.util.Base64;
 
 import DataBeans.ISiteComponent;
@@ -36,6 +39,7 @@ import DataBeans.comparators.InfoShiftComparatorByLessonType;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -124,7 +128,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
+		
 		Integer testCode = getCodeFromRequest(request, "testCode");
 
 		Object[] args = { executionCourseId, testCode };
@@ -1097,6 +1101,129 @@ public class TestsManagementAction extends FenixDispatchAction {
 		return mapping.findForward("showStudentTestLog");
 	}
 
+	public ActionForward exercicesFirstPage(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+		List badXmls = (List) request.getAttribute("badXmls");
+
+		HttpSession session = request.getSession(false);
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		SiteView siteView = null;
+		try {
+			Object[] args = { executionCourseId };
+			siteView =
+				(SiteView) ServiceUtils.executeService(
+					userView,
+					"ReadMetadatas",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("badXmls", badXmls);
+		request.setAttribute("siteView", siteView);
+		return mapping.findForward("exercicesFirstPage");
+	}
+
+	public ActionForward insertNewExercice(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		request.setAttribute("siteView", readSiteView(request));
+		return mapping.findForward("insertNewExercice");
+	}
+
+	public ActionForward loadExerciceFiles(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception, NotExecuteException {
+
+		IUserView userView =
+			(IUserView) request.getSession(false).getAttribute(
+				SessionConstants.U_VIEW);
+		FormFile metadataFile =
+			(FormFile) ((DynaActionForm) form).get("metadataFile");
+		FormFile xmlZipFile =
+			(FormFile) ((DynaActionForm) form).get("xmlZipFile");
+
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+		request.setAttribute("siteView", readSiteView(request));
+
+		if (!(metadataFile.getContentType().equals("text/xml"))) {
+			error(request, "error.badMetadataFile");
+			return mapping.findForward("insertNewExercice");
+		}
+		if (!(xmlZipFile
+			.getContentType()
+			.equals("application/x-zip-compressed"))) {
+			error(request, "error.badXmlZipFile");
+			return mapping.findForward("insertNewExercice");
+		}
+		String path = getServlet().getServletContext().getRealPath("/");
+		List badXmls = null;
+		try {
+			Object[] args = { executionCourseId, metadataFile, xmlZipFile, path};
+			badXmls =
+				(List) ServiceUtils.executeService(
+					userView,
+					"InsertExercice",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("badXmls", badXmls);
+		return exercicesFirstPage(mapping, form, request, response);
+	}
+
+	public ActionForward removeExercice(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		IUserView userView =
+			(IUserView) request.getSession(false).getAttribute(
+				SessionConstants.U_VIEW);
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+		Integer questionCode = getCodeFromRequest(request, "questionCode");
+		Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
+		Integer studentCode = getCodeFromRequest(request, "studentCode");
+		
+		request.setAttribute("objectCode", executionCourseId);
+		request.setAttribute("questionCode", questionCode);
+		request.setAttribute("testCode", distributedTestCode);
+		request.setAttribute("studentCode", studentCode);
+		request.setAttribute("siteView", readSiteView(request));
+		String path = getServlet().getServletContext().getRealPath("/");
+		try {
+			Object[] args = { executionCourseId, questionCode, path};
+			ServiceUtils.executeService(userView, "DeleteExercice", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		return showStudentTest(mapping, form, request, response);
+	}
+
+	private void error(HttpServletRequest request, String error) {
+		ActionErrors actionErrors = new ActionErrors();
+		actionErrors.add("FileNotExist", new ActionError(error));
+		saveErrors(request, actionErrors);
+	}
+	
 	private SiteView readSiteView(HttpServletRequest request)
 		throws FenixActionException {
 

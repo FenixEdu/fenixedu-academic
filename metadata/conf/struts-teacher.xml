@@ -27,6 +27,13 @@
 			<form-property name="objectCode" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
+		<form-bean name="exerciceForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			<form-property name="metadataFile" type="org.apache.struts.upload.FormFile"/>
+			<form-property name="xmlZipFile" type="org.apache.struts.upload.FormFile"/>
+			<form-property name="objectCode" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
 		<form-bean name="questionForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
 			<form-property name="questionValue" type="java.lang.String"/>
@@ -833,6 +840,19 @@
 				<forward name="showStudentTest" path="/showStudentTest.jsp"/>
 				<forward name="showDistributedTestStudents" path="/showDistributedTestStudents.jsp"/>
 				<forward name="showStudentTestLog" path="/showStudentTestLog.jsp"/>
+				<forward name="removeExercice" path="/removeExercice.jsp"/>
+		</action>
+		<action path="/exercicesManagement"
+				name="exerciceForm"
+				input="/exercicesManagement.do?method=insertNewExercice&amp;page=0"
+				scope="request"
+				parameter="method"
+				type="ServidorApresentacao.Action.teacher.TestsManagementAction"
+				validate="true">
+				<forward name="testsFirstPage" path="/testsFirstPage.jsp"/>
+				<forward name="exercicesFirstPage" path="/exercicesFirstPage.jsp"/>
+				<forward name="insertNewExercice" path="/insertNewExercice.jsp"/>
+				<forward name="insertXmlPaths" path="/insertXmlPaths.jsp"/>
 		</action>
 		<action path="/questionsManagement"
 				name="questionForm"

@@ -25,25 +25,25 @@
 <table>
 	<logic:notEqual name="metadata" property="difficulty" value="">
 		<tr>
-			<td><b><bean:message key="message.tests.difficulty"/></b></td>
+			<td><b><bean:message key="label.test.difficulty"/>:</b></td>
 			<td><bean:write name="metadata" property="difficulty"/></td>
 		</tr>
 	</logic:notEqual>
 	<logic:notEqual name="metadata" property="level" value="">
 		<tr>
-			<td><b><bean:message key="message.tests.level"/></b></td>
+			<td><b><bean:message key="label.test.ano"/>:</b></td>
 			<td><bean:write name="metadata" property="level"/></td>
 		</tr>
 	</logic:notEqual>
 	<logic:notEqual name="metadata" property="mainSubject" value="">
 		<tr>
-			<td><b><bean:message key="message.tests.mainSubject"/></b></td>
+			<td><b><bean:message key="label.test.materiaPrincipal"/>:</b></td>
 			<td><bean:write name="metadata" property="mainSubject"/></td>
 		</tr>
 	</logic:notEqual>	
 	<bean:size id="secondarySubjectSize" name="metadata" property="secondarySubject"/>
 	<logic:notEqual name="secondarySubjectSize" value="0">
-		<tr><td><b><bean:message key="message.tests.secondarySubject"/></b></td>
+		<tr><td><b><bean:message key="label.test.materiaSecundaria"/>:</b></td>
 		<logic:iterate id="secondarySubject" name="metadata" property="secondarySubject">
 			<td><bean:write name="secondarySubject"/></td>
 		</tr>
@@ -61,7 +61,7 @@
 	</logic:notEqual>
 	<tr>
 		<bean:size id="quantidadeExercicios" name="metadata" property="members"/>
-		<td><b><bean:message key="message.tests.quantidadeExercicios"/></b></td>
+		<td><b><bean:message key="label.test.quantidadeExercicios"/>:</b></td>
 		<td><bean:write name="quantidadeExercicios"/></td>
 	</tr>
 	<tr>

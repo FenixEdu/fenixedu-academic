@@ -38,7 +38,7 @@ public class InsertDistributedTestTest extends TestCaseDeleteAndEditServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		IDistributedTest distributedTest = new DistributedTest(new Integer(25));
+		IDistributedTest distributedTest = new DistributedTest(new Integer(1));
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
@@ -71,7 +71,7 @@ public class InsertDistributedTestTest extends TestCaseDeleteAndEditServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		IDistributedTest distributedTest = new DistributedTest(new Integer(25));
+		IDistributedTest distributedTest = new DistributedTest(new Integer(1));
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();

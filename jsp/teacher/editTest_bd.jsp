@@ -54,7 +54,7 @@
 		<tr><td><table><tr><td>
 			<div class="gen-button">
 			<html:link page="<%= "/testQuestionEdition.do?method=prepareEditTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
-			<bean:message key="link.editTestQuestion" />
+			<bean:message key="title.editTestQuestion" />
 			</html:link>&nbsp;&nbsp;&nbsp;</div></td>
 			<td><div class="gen-button">
 			<html:link page="<%= "/testEdition.do?method=deleteTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">

@@ -90,7 +90,7 @@ public class ParseQuestion extends DefaultHandler {
 		return infoStudentTestQuestion;
 	}
 
-	private void parseFile(String file) throws Exception {
+	public void parseFile(String file) throws Exception {
 		listQuestion = new ArrayList();
 		listOptions = new ArrayList();
 		listResponse = new ArrayList();
@@ -121,7 +121,6 @@ public class ParseQuestion extends DefaultHandler {
 		throws SAXException {
 		current =
 			new Element(uri, localName, qName, new AttributesImpl(attributes));
-
 		if (qName.equals("presentation")) {
 			question = true;
 		} else if (qName.equals("response_lid")) {
@@ -276,7 +275,8 @@ public class ParseQuestion extends DefaultHandler {
 					v.add("");
 					vRandom.add(new Integer(v.size()).toString());
 					continue;
-				}else v.add(new Integer(v.size()+1).toString());
+				} else
+					v.add(new Integer(v.size() + 1).toString());
 			}
 		}
 
@@ -285,8 +285,8 @@ public class ParseQuestion extends DefaultHandler {
 		it = vRandom.iterator();
 		while (it.hasNext()) {
 			String id = (String) it.next();
-			while (!ready) {
-				int index = r.nextInt(v.size());
+			while (!ready) {				
+				int index = (r.nextInt(1000)%4);			
 				if (v.elementAt(index).equals("")) {
 					v.removeElementAt(index);
 					ready = true;

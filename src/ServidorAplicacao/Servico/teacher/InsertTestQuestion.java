@@ -21,7 +21,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentMetadata;
-import ServidorPersistente.IPersistentQuestion;
 import ServidorPersistente.IPersistentTest;
 import ServidorPersistente.IPersistentTestQuestion;
 import ServidorPersistente.ISuportePersistente;
@@ -73,17 +72,10 @@ public class InsertTestQuestion implements IServico {
 			} catch (Exception e) {
 				throw new FenixServiceException(e);
 			}
-			String xmlFileName = (String) infoMetadata.getMembers().get(0);
-			if (xmlFileName == null) {
-				throw new InvalidArgumentsServiceException();
-			}
-
-			IPersistentQuestion persistentQuestion =
-				persistentSuport.getIPersistentQuestion();
 			IQuestion question =
-				(IQuestion) persistentQuestion.readByFileNameAndMetadataId(
-					xmlFileName,
-					metadata);
+				(IQuestion) persistentSuport
+					.getIPersistentQuestion()
+					.readExampleQuestionByMetadata(metadata);
 			if (question == null) {
 				throw new InvalidArgumentsServiceException();
 			}

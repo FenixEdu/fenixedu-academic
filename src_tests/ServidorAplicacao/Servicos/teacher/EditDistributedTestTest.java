@@ -38,7 +38,7 @@ public class EditDistributedTestTest extends TestCaseDeleteAndEditServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		IDistributedTest distributedTest = new DistributedTest(new Integer(25));
+		IDistributedTest distributedTest = new DistributedTest(new Integer(1));
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
@@ -57,7 +57,7 @@ public class EditDistributedTestTest extends TestCaseDeleteAndEditServices {
 		Object[] args =
 			{
 				new Integer(26),
-				new Integer(25),
+				new Integer(1),
 				new String("nova informação do teste"),
 				distributedTest.getBeginDate(),
 				distributedTest.getBeginHour(),
@@ -72,7 +72,7 @@ public class EditDistributedTestTest extends TestCaseDeleteAndEditServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		IDistributedTest distributedTest = new DistributedTest(new Integer(25));
+		IDistributedTest distributedTest = new DistributedTest(new Integer(1));
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();

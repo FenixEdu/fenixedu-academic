@@ -38,6 +38,26 @@ public class ParseMetadata extends DefaultHandler {
 	public void MySAXParserBean() {
 	}
 
+	public List parseMetadata(String file) throws Exception {
+		SAXParserFactory spf = SAXParserFactory.newInstance();
+		spf.setValidating(false);
+		SAXParser saxParser = spf.newSAXParser();
+		XMLReader reader = saxParser.getXMLReader();
+		reader.setContentHandler(this);
+		try {
+			StringReader sr = new StringReader(file);
+			InputSource input = new InputSource(sr);
+			reader.parse(input);
+		} catch (MalformedURLException e) {
+			throw e;
+		} catch (FileNotFoundException e) {
+			throw e;
+		} catch (IOException e) {
+			throw e;
+		}
+		return getMembers();
+	}
+
 	public InfoMetadata parseMetadata(String file, InfoMetadata infoMetadata)
 		throws Exception {
 		SAXParserFactory spf = SAXParserFactory.newInstance();
@@ -171,5 +191,18 @@ public class ParseMetadata extends DefaultHandler {
 		infoMetadata.setAuthor(authorList);
 		infoMetadata.setMembers(membersList);
 		return infoMetadata;
+	}
+
+	private List getMembers() {
+		List result = new ArrayList();
+		Iterator it = vector.iterator();
+		while (it.hasNext()) {
+			Element element = (Element) it.next();
+			String tag = element.getQName();
+			Attributes atts = element.getAttributes();
+			if ((tag.equals("location")))
+				result.add((Object) element.getValue());
+		}
+		return result;
 	}
 }

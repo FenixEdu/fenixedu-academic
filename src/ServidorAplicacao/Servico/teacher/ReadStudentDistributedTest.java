@@ -71,8 +71,7 @@ public class ReadStudentDistributedTest implements IServico {
 					.readByStudentAndDistributedTest(student, distributedTest);
 			Iterator it = studentTestQuestionList.iterator();
 			while (it.hasNext()) {
-				IStudentTestQuestion studentTestQuestion =
-					(IStudentTestQuestion) it.next();
+				IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it.next();
 				InfoStudentTestQuestion infoStudentTestQuestion =
 					Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(
 						studentTestQuestion);

@@ -39,7 +39,7 @@ public class ReadStudentDistributedTestTest extends TestCaseReadServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(26), new Integer(25), new Integer(9)};
+		Object[] args = { new Integer(26), new Integer(1), new Integer(9)};
 		return args;
 	}
 
@@ -54,7 +54,7 @@ public class ReadStudentDistributedTestTest extends TestCaseReadServices {
 			sp.iniciarTransaccao();
 
 			IStudentTestQuestion studentTestQuestion =
-				new StudentTestQuestion(new Integer(25));
+				new StudentTestQuestion(new Integer(1));
 			studentTestQuestion =
 				(IStudentTestQuestion) sp
 					.getIPersistentStudentTestQuestion()

@@ -18,10 +18,11 @@
 	<bean:define id="student" name="testQuestion" property="student" type="DataBeans.InfoStudent"/>
 	<bean:define id="person" name="student" property="infoPerson" type="DataBeans.InfoPerson"/>
 	<bean:define id="studentCode" name="person" property="username"/>
-	
+	<bean:define id="studentId" name="student" property="idInternal"/>
 	<bean:define id="objectCode" name="distributedTest" property="infoExecutionCourse.idInternal"/>
 	<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
-	<html:hidden property="distributedTestCode" value="<%= testCode.toString() %>"/>
+	<bean:define id="distributedTestCode" name="distributedTest" property="idInternal"/>
+	<html:hidden property="distributedTestCode" value="<%=distributedTestCode.toString() %>"/>
 	
 	
 		<h2><bean:write name="distributedTest" property="title"/></h2>
@@ -35,6 +36,13 @@
 			<bean:define id="question" name="testQuestion" property="question" type="DataBeans.InfoQuestion"/>
 			<bean:define id="questionCode" name="question" property="idInternal"/>
 			<bean:define id="questionOrder" name="testQuestion" property="testQuestionOrder"/>
+			<%--
+			<tr><td><div class="gen-button">
+				<html:link page="<%= "/testsManagement.do?method=removeExercice&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("distributedTestCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")%>">
+					<bean:message key="label.change" />
+				</html:link>
+			</div></td></tr>
+			--%>
 			<tr>
 				<td><b><bean:message key="message.tests.question" /></b>&nbsp;<bean:write name="questionOrder"/></td>
 			</tr>

@@ -84,8 +84,9 @@ public class ReadQuestion implements IServico {
 			IQuestion question = null;
 			if (questionId.equals(new Integer(-1))) {
 				question =
-					(IQuestion) persistentQuestion
-						.readByFileNameAndMetadataId((String)infoMetadata.getMembers().get(0),metadata);
+					(IQuestion) persistentSuport
+						.getIPersistentQuestion()
+						.readExampleQuestionByMetadata(metadata);
 			} else {
 				question = new Question(questionId);
 				question =

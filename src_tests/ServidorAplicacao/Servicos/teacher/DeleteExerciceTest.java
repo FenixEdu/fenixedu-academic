@@ -1,5 +1,5 @@
 /*
- * Created on 11/Ago/2003
+ * Created on 25/Set/2003
  *
  */
 package ServidorAplicacao.Servicos.teacher;
@@ -9,9 +9,9 @@ import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 /**
  * @author Susana Fernandes
  */
-public class InsertTestQuestionTest extends TestCaseDeleteAndEditServices {
+public class DeleteExerciceTest extends TestCaseDeleteAndEditServices {
 
-	public InsertTestQuestionTest(String testName) {
+	public DeleteExerciceTest(String testName) {
 		super(testName);
 	}
 
@@ -24,7 +24,7 @@ public class InsertTestQuestionTest extends TestCaseDeleteAndEditServices {
 	}
 
 	protected String getNameOfServiceToBeTested() {
-		return "InsertTestQuestion";
+		return "DeleteExercice";
 	}
 
 	protected boolean needsAuthorization() {
@@ -32,18 +32,16 @@ public class InsertTestQuestionTest extends TestCaseDeleteAndEditServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
 		Object[] args =
 			{
 				new Integer(26),
 				new Integer(1),
-				new Integer(1),
-				new Integer(4),
-				new Integer(5)};
+				new String("e:\\eclipse-SDK-2.1-win32\\eclipse\\workspace\\fenix\\build\\app\\")};
 		return args;
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 		return null;
 	}
-
 }

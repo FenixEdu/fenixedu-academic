@@ -2,7 +2,24 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<h2><bean:message key="title.showAvailableQuestions"/></h2>
+<h2><bean:message key="link.exerciceManagement"/></h2>
+
+<logic:present name="badXmls">
+	<bean:size id="badXmlsListSize" name="badXmls"/>
+	<logic:equal name="badXmlsListSize" value="0">
+		<span class="error"><bean:message key="message.sucessfullInsert"/></span>
+	</logic:equal>
+	<logic:notEqual name="badXmlsListSize" value="0">
+		<span class="error"><bean:message key="message.not.insertedList"/></span>
+		<table>
+		<logic:iterate id="xmlName" name="badXmls">
+			<tr><td><bean:write name="xmlName"/></td></tr>
+		</logic:iterate>
+		</table>
+	</logic:notEqual>
+</logic:present>
+<br/>
+<br/>
 
 <logic:present name="siteView"> 
 <bean:define id="component" name="siteView" property="commonComponent"/>
@@ -14,12 +31,16 @@
 <logic:equal name="metadatasSize" value="0">
 	<span class="error"><bean:message key="message.tests.no.exercices"/></span>
 </logic:equal>
+<table>
+	<tr><td>
+		<div class="gen-button">
+			<html:link page="<%= "/exercicesManagement.do?method=insertNewExercice&amp;objectCode=" + pageContext.findAttribute("objectCode")%>">
+				<bean:message key="label.test.insertQuestion" />
+			</html:link>
+		</div>
+	</td></tr>
+</table>
 <logic:notEqual name="metadatasSize" value="0">
-	<table>
-		<tr>
-			<td class="infoop"><bean:message key="message.showAvailableQuestions.information" /></td>
-		</tr>
-	</table>
 	<br/>
 	<br/>
 	<table>
@@ -45,32 +66,8 @@
 		<bean:size id="quantidadeExercicios" name="metadata" property="members"/> 
 		<td class="listClasses"><bean:write name="quantidadeExercicios"/></td>		
 		<bean:define id="metadataCode" name="metadata" property="idInternal" />
-		<td>
-			<div class="gen-button">
-			<html:link page="<%= "/questionsManagement.do?method=prepareInsertTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") + "&amp;metadataCode=" + metadataCode%>">
-			<bean:message key="title.insertTestQuestionExercice" />
-			</html:link></div>
-		</td>	
 	</tr>
 	</logic:iterate>
 	</table>
 </logic:notEqual>
-<br/>
-<br/>
-	<table>
-	<tr><td>
-		<div class="gen-button">
-			<html:link page="<%= "/testEdition.do?method=editTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") %>">
-				<bean:message key="link.editTest" />
-			</html:link>
-		</div>
-	</td>
-	<td>
-		<div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=deleteTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") %>">
-				<bean:message key="link.removeTest" />
-			</html:link>
-		</div>
-	</td></tr>
-	</table>
 </logic:present>
