@@ -28,6 +28,14 @@ public class StudentGroupAttend extends DomainObject implements IStudentGroupAtt
 	public StudentGroupAttend() {}
 	
 	/** 
+	* Construtor
+	*/
+	public StudentGroupAttend(Integer idInternal){
+			setIdInternal(idInternal);
+		}
+	
+	
+	/** 
 	 * Construtor
 	 */
 	public StudentGroupAttend(IStudentGroup studentGroup,IFrequenta attend) {

@@ -31,6 +31,13 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	public GroupProperties() {}
 	
 	/** 
+ 	* Construtor
+ 	*/
+	public GroupProperties(Integer idInternal){
+			setIdInternal(idInternal);
+		}
+	
+	/** 
 	 * Construtor
 	 */
 	public GroupProperties(IDisciplinaExecucao executionCourse,String name) {

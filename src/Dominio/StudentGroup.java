@@ -21,6 +21,13 @@ public class StudentGroup extends DomainObject implements IStudentGroup {
 	public StudentGroup() {}
 	
 	/** 
+	* Construtor
+	*/
+	public StudentGroup(Integer idInternal){
+			setIdInternal(idInternal);
+		}
+	
+	/** 
 	 * Construtor
 	 */
 	public StudentGroup(Integer groupNumber,IGroupProperties groupProperties, ITurno shift) {
