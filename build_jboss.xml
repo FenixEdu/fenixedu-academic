@@ -65,6 +65,7 @@
 		<patternset id="config.web-client">
 			<include name="**/ServidorApresentacao/**/*.*"/>
 			<include name="jndi.properties*"/>
+			<include name="logAnalyser.properties*"/>
 		</patternset>
 	</fileset>
 
@@ -326,6 +327,7 @@
 		<mkdir dir="${build.web-client.webinf}"/>
 		<mkdir dir="${build.web-client.webinf.classes}"/>
 		<mkdir dir="${build.web-client.webinf.libs}"/>
+		<mkdir dir="${log.image.directory}"/>
 
 		<!-- Copy needed configuration files for application server -->
 		<copy todir="${build.web-client}">
@@ -399,6 +401,7 @@
 			<include name="**/**/*.xml"/>
 			<include name="**/**/ApplicationResources.properties"/>
             <include name="**/**/IstFtpServerConfig.properties"/>
+			<include name="**/**/logAnalyser.properties"/>
 			<include name="index.html"/>
 
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
@@ -417,6 +420,9 @@
 
 		  	<replacefilter token="@login.page@"
 		  				   property="login.page"/>
+
+		  	<replacefilter token="@log.image.directory@"
+		  				   property="log.image.directory"/>
 
 		<replacefilter 
 		    token="@index.html.link@" 
