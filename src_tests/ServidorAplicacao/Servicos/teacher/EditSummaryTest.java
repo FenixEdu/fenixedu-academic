@@ -38,19 +38,19 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 		return "EditSummary";
 	}
 
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 
 		String[] args = { "julia", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 
 		String[] args = { "jccm", "pass", getApplication()};
 		return args;
@@ -150,7 +150,7 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 
 		try {
 
-			String[] args1 = getAuthorizedUser();
+			String[] args1 = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args1);
 
 			Object[] args2 = getAuthorizeArguments();

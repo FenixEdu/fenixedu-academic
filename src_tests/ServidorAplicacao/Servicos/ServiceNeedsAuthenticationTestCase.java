@@ -26,9 +26,9 @@ public abstract class ServiceNeedsAuthenticationTestCase
 
 	protected void setUp() {
 		super.setUp();
-		userView = authenticateUser(getAuthorizedUser());
-		userView2 = authenticateUser(getUnauthorizedUser());
-		userView3 = authenticateUser(getNonTeacherUser());
+		userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
+		userView2 = authenticateUser(getAuthenticatedAndUnauthorizedUser());
+		userView3 = authenticateUser(getNotAuthenticatedUser());
 
 	}
 
@@ -131,9 +131,9 @@ public abstract class ServiceNeedsAuthenticationTestCase
 		}
 	}
 
-	protected abstract String[] getAuthorizedUser();
-	protected abstract String[] getUnauthorizedUser();
-	protected abstract String[] getNonTeacherUser();
+	protected abstract String[] getAuthenticatedAndAuthorizedUser();
+	protected abstract String[] getAuthenticatedAndUnauthorizedUser();
+	protected abstract String[] getNotAuthenticatedUser();
 	protected abstract String getNameOfServiceToBeTested();
 	protected abstract Object[] getAuthorizeArguments();
 	protected abstract String getDataSetFilePath();

@@ -3,13 +3,15 @@ package ServidorAplicacao.Servicos.teacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  * 
  */
-public class EditBibliographicReferenceTest extends BibliographicReferenceBelongsExecutionCourse {
+public class EditBibliographicReferenceTest extends ServiceNeedsAuthenticationTestCase {
 
 	String author = "Shari Pfleeger";
 	String title = "Software Engineering: Theory and Practice";
@@ -32,31 +34,30 @@ public class EditBibliographicReferenceTest extends BibliographicReferenceBelong
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testEditBibliographicReferenceDataSet.xml";
+		return "etc/datasets/servicos/teacher/testEditBibliographicReferenceDataSet.xml";
 	}
 
 	protected String getRecomendedExpectedDataSetFilePath() {
-		return "etc/datasets/testExpectedEditRecomendedBibliographicReferenceDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedEditRecomendedBibliographicReferenceDataSet.xml";
 	}
 
 	protected String getOptionalExpectedDataSetFilePath() {
-		return "etc/datasets/testExpectedEditOptionalBibliographicReferenceDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedEditOptionalBibliographicReferenceDataSet.xml";
 	}
 
-
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 
 		String[] args = { "julia", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 
 		String[] args = { "fiado", "pass", getApplication()};
 		return args;
@@ -67,15 +68,7 @@ public class EditBibliographicReferenceTest extends BibliographicReferenceBelong
 		Integer executionCourseCode = new Integer(24);
 		Integer bibliographicReferenceCode = new Integer(1);
 
-		Object[] args =
-			{
-				executionCourseCode,
-				bibliographicReferenceCode,
-				title,
-				author,
-				reference,
-				year,
-				optional };
+		Object[] args = { executionCourseCode, bibliographicReferenceCode, title, author, reference, year, optional };
 
 		return args;
 	}
@@ -85,15 +78,7 @@ public class EditBibliographicReferenceTest extends BibliographicReferenceBelong
 		Integer executionCourseCode = new Integer(24);
 		Integer bibliographicReferenceCode = new Integer(1);
 
-		Object[] args =
-			{
-				executionCourseCode,
-				bibliographicReferenceCode,
-				title,
-				author,
-				reference,
-				year,
-				optional };
+		Object[] args = { executionCourseCode, bibliographicReferenceCode, title, author, reference, year, optional };
 
 		return args;
 	}
@@ -103,15 +88,7 @@ public class EditBibliographicReferenceTest extends BibliographicReferenceBelong
 		Integer executionCourseCode = new Integer(24);
 		Integer bibliographicReferenceCode = new Integer(123);
 
-		Object[] args =
-			{
-				executionCourseCode,
-				bibliographicReferenceCode,
-				title,
-				author,
-				reference,
-				year,
-				optional };
+		Object[] args = { executionCourseCode, bibliographicReferenceCode, title, author, reference, year, optional };
 
 		return args;
 	}
@@ -120,11 +97,11 @@ public class EditBibliographicReferenceTest extends BibliographicReferenceBelong
 		return Autenticacao.EXTRANET;
 	}
 
-	public void testSuccessfullEditRecomendedBibliographicReference() {
+	public void testEditRecomendedBibliographicReferenceByAuthenticatedAndAuthorizedUser() {
 
 		try {
 
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
 			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
@@ -135,32 +112,50 @@ public class EditBibliographicReferenceTest extends BibliographicReferenceBelong
 		} catch (FenixServiceException ex) {
 			fail("testSuccessfullEditRecomendedBibliographicReference" + ex);
 		} catch (Exception ex) {
-			fail(
-				"testSuccessfullEditRecomendedBibliographicReference error on compareDataSet" + ex);
+			fail("testSuccessfullEditRecomendedBibliographicReference error on compareDataSet" + ex);
 		}
 	}
 
-	//	public void testSuccessfullEditOptionalBibliographicReference() {
-	//
-	//		try {
-	//			author = "Shari Pfleeger";
-	//			title = "Software Engineering: Theory and Practice";
-	//			reference = "Optional bibliografy";
-	//			year = "2002";
-	//			optional = new Boolean(true);
-	//			String[] args = getAuthorizedUser();
-	//			IUserView userView = authenticateUser(args);
-	//
-	//			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
-	//
-	//			// verificar as alteracoes da bd
-	//			compareDataSet(getOptionalExpectedDataSetFilePath());
-	//
-	//		} catch (FenixServiceException ex) {
-	//			fail("testSuccessfullEditOptionalBibliographicReference" + ex);
-	//		} catch (Exception ex) {
-	//			fail("testSuccessfullEditOptionalBibliographicReference error on compareDataSet" + ex);
-	//		}
-	//	}
+	public void testEditOptionalBibliographicReferenceAuthenticatedAndAuthorizedUser() {
+
+		try {
+			author = "Shari Pfleeger";
+			title = "Software Engineering: Theory and Practice";
+			reference = "Optional bibliografy";
+			year = "2002";
+			optional = new Boolean(true);
+			String[] args = getAuthenticatedAndAuthorizedUser();
+			IUserView userView = authenticateUser(args);
+
+			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+
+			// verificar as alteracoes da bd
+			compareDataSet(getOptionalExpectedDataSetFilePath());
+
+		} catch (FenixServiceException ex) {
+			fail("testSuccessfullEditOptionalBibliographicReference" + ex);
+		} catch (Exception ex) {
+			fail("testSuccessfullEditOptionalBibliographicReference error on compareDataSet" + ex);
+		}
+	}
+
+	public void testEditBibliographicReferenceNotBelongsExecutionCourse() {
+
+		Object serviceArguments[] = getTestBibliographicReferenceUnsuccessfullArguments();
+
+		Object result = null;
+
+		try {
+			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			fail(getNameOfServiceToBeTested() + "fail testBibliographicReferenceNotBelongsExecutionCourse");
+		} catch (NotAuthorizedException ex) {
+
+			System.out.println(
+				"testBibliographicReferenceNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
+					+ getNameOfServiceToBeTested());
+		} catch (Exception ex) {
+			fail(getNameOfServiceToBeTested() + "fail testBibliographicReferenceNotBelongsExecutionCourse");
+		}
+	}
 
 }

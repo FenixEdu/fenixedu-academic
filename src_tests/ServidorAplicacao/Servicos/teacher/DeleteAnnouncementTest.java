@@ -52,7 +52,7 @@ public class DeleteAnnouncementTest
 	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizedUser()
 	 */
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
@@ -60,7 +60,7 @@ public class DeleteAnnouncementTest
 	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getUnauthorizedUser()
 	 */
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 		String[] args = { "julia", "pass", getApplication()};
 		return args;
 	}
@@ -68,7 +68,7 @@ public class DeleteAnnouncementTest
 	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNonTeacherUser()
 	 */
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 		String[] args = { "jccm", "pass", getApplication()};
 		return args;
 	}
@@ -119,7 +119,7 @@ public class DeleteAnnouncementTest
 			Object[] argserv = { infoExecutionCourseCode, announcementCode };
 
 			//Criar o utilizador
-			IUserView arguser = authenticateUser(getAuthorizedUser());
+			IUserView arguser = authenticateUser(getAuthenticatedAndAuthorizedUser());
 
 			//Executar o serviço	
 			gestor.executar(arguser, getNameOfServiceToBeTested(), argserv);
@@ -171,7 +171,7 @@ public class DeleteAnnouncementTest
 			Object[] argserv = { infoExecutionCourseCode, announcementCode };
 
 			//Criar o utilizador
-			IUserView arguser = authenticateUser(getAuthorizedUser());
+			IUserView arguser = authenticateUser(getAuthenticatedAndAuthorizedUser());
 
 			//Executar o serviço	
 			gestor.executar(arguser, getNameOfServiceToBeTested(), argserv);

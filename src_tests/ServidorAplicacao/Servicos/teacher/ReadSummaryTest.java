@@ -38,19 +38,19 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 		return "ReadSummary";
 	}
 
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 
 		String[] args = { "julia", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 
 		String[] args = { "jccm", "pass", getApplication()};
 		return args;
@@ -84,7 +84,7 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 
 			SiteView result = null;
 
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
 			ISummary newSummary = (ISummary) new Summary(new Integer(261));

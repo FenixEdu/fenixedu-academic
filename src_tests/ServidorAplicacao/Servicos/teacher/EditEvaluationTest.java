@@ -4,13 +4,15 @@ import DataBeans.InfoCurriculum;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  * 
  */
-public class EditEvaluationTest extends EvaluationMethodBelongsExecutionCourse {
+public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase {
 
 	/**
 	 * @param testName
@@ -27,30 +29,30 @@ public class EditEvaluationTest extends EvaluationMethodBelongsExecutionCourse {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testEditEvaluationMethodDataSet.xml";
+		return "etc/datasets/servicos/teacher/testEditEvaluationMethodDataSet.xml";
 	}
 
 	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/testExpectedEditEvaluationMethodDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedEditEvaluationMethodDataSet.xml";
 	}
 
 	protected String getExpectedNewCurriculumDataSetFilePath() {
-		return "etc/datasets/testExpectedNewCurriculumEvaluatioMethodDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedNewCurriculumEvaluatioMethodDataSet.xml";
 	}
 
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 
 		String[] args = { "julia", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 
 		String[] args = { "fiado", "pass", getApplication()};
 		return args;
@@ -134,10 +136,10 @@ public class EditEvaluationTest extends EvaluationMethodBelongsExecutionCourse {
 		return Autenticacao.EXTRANET;
 	}
 
-	public void testSuccessfullEditEvaluationMethod() {
+	public void testEditEvaluationMethod() {
 
 		try {
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
 			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
@@ -152,11 +154,11 @@ public class EditEvaluationTest extends EvaluationMethodBelongsExecutionCourse {
 		}
 	}
 
-	public void testSuccessfullEditEvaluationMethodWithNoCurriculum() {
+	public void testEditEvaluationMethodWithNoCurriculum() {
 
 		System.out.println("Starting: testSuccessfullEditEvaluationMethodWithNoCurriculum");
 		try {
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
 			gestor.executar(
@@ -172,6 +174,25 @@ public class EditEvaluationTest extends EvaluationMethodBelongsExecutionCourse {
 			fail("EditEvaluationTest" + ex);
 		} catch (Exception ex) {
 			fail("EditEvaluationTest error on compareDataSet" + ex);
+		}
+	}
+
+	public void testEvaluationMethodNotBelongsExecutionCourse() {
+
+		Object serviceArguments[] = getTestEvaluationMethodUnsuccessfullArguments();
+
+		Object result = null;
+
+		try {
+			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			fail(getNameOfServiceToBeTested() + "fail testEvaluationMethodNotBelongsExecutionCourse");
+		} catch (NotAuthorizedException ex) {
+
+			System.out.println(
+				"testEvaluationMethodNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
+					+ getNameOfServiceToBeTested());
+		} catch (Exception ex) {
+			fail(getNameOfServiceToBeTested() + "fail testEvaluationMethodNotBelongsExecutionCourse");
 		}
 	}
 }

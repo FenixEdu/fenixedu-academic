@@ -19,7 +19,7 @@ public abstract class AnnouncementBelongsToExecutionCourseTest
 
 	public void testAnnouncementNotBelongsToExecutionCourse() {
 		Object[] serviceArguments = getAnnouncementUnsuccessfullArguments();
-		IUserView userView = authenticateUser(getAuthorizedUser());
+		IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
 		
 		try {
 			gestor.executar(
@@ -52,9 +52,9 @@ public abstract class AnnouncementBelongsToExecutionCourseTest
 	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase
 	 */
-	protected abstract String[] getAuthorizedUser();
-	protected abstract String[] getUnauthorizedUser();
-	protected abstract String[] getNonTeacherUser();
+	protected abstract String[] getAuthenticatedAndAuthorizedUser();
+	protected abstract String[] getAuthenticatedAndUnauthorizedUser();
+	protected abstract String[] getNotAuthenticatedUser();
 	protected abstract String getNameOfServiceToBeTested();
 	protected abstract Object[] getAuthorizeArguments();
 	protected abstract String getDataSetFilePath();

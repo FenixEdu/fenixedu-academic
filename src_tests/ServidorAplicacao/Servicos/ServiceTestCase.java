@@ -120,7 +120,9 @@ public abstract class ServiceTestCase extends TestCase {
 			int size = tableNamesToFilter.size();
 			String[] tableNames = new String[size];
 			for (int i = 0; i < size; i++)
+			{
 				tableNames[i] = (String) tableNamesToFilter.get(i);
+			}
 
 			IDataSet filteredDateSet =
 				new FilteredDataSet(tableNames, currentDataSet);
@@ -162,6 +164,7 @@ public abstract class ServiceTestCase extends TestCase {
 					+ ex);
 		}
 
+		
 		StringTokenizer st = new StringTokenizer(stringTableNamesToFilter, ",");
 		while (st.hasMoreElements())
 			listTableNamesToFilter.add(st.nextElement());
@@ -171,6 +174,7 @@ public abstract class ServiceTestCase extends TestCase {
 			defaultListTableNamesToFilter.add(st.nextElement());
 
 		listTableNamesToFilter.addAll(defaultListTableNamesToFilter);
+		
 
 		return listTableNamesToFilter;
 	}

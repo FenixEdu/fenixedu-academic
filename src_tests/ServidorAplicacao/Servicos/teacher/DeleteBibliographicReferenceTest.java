@@ -4,14 +4,14 @@ import junit.framework.TestSuite;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  * 
  */
-public class DeleteBibliographicReferenceTest
-	extends BibliographicReferenceBelongsExecutionCourse {
+public class DeleteBibliographicReferenceTest extends ServiceNeedsAuthenticationTestCase {
 
 	public static void main(java.lang.String[] args) {
 		TestSuite suite = new TestSuite(DeleteBibliographicReferenceTest.class);
@@ -28,26 +28,26 @@ public class DeleteBibliographicReferenceTest
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testDeleteBibliographicReferenceDataSet.xml";
+		return "etc/datasets/servicos/teacher/testDeleteBibliographicReferenceDataSet.xml";
 	}
 
 	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/testExpectedDeleteBibliographicReferenceDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedDeleteBibliographicReferenceDataSet.xml";
 	}
 
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 
 		String[] args = { "julia", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 
 		String[] args = { "fiado", "pass", getApplication()};
 		return args;
@@ -87,11 +87,11 @@ public class DeleteBibliographicReferenceTest
 		return Autenticacao.EXTRANET;
 	}
 
-	public void testSuccessfullDeleteBibliographicReference() {
+	public void testDeleteBibliographicReferenceByAuthenticatedAndAuthorizedUser() {
 
 		try {
 
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
 			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
@@ -105,17 +105,14 @@ public class DeleteBibliographicReferenceTest
 		}
 	}
 
-	public void testUnsuccessfullDeleteBibliographicReference() {
+	public void testDeleteBibliographicReferenceByAuthenticatedAndNotAuthorizedUser() {
 
 		try {
 
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(
-				userView,
-				getNameOfServiceToBeTested(),
-				getTestBibliographicReferenceUnsuccessfullArguments());
+			gestor.executar(userView, getNameOfServiceToBeTested(), getTestBibliographicReferenceUnsuccessfullArguments());
 
 			fail("testUnsuccessfullDeleteBibliographicReference deletion of an unexisting bibliography");
 

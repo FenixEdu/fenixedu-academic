@@ -42,17 +42,17 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 		return "etc/datasets/servicos/teacher/testReadSiteItemDataSet.xml";
 	}
 
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 		String[] args = { "13", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 		String[] args = { "3", "pass", getApplication()};
 		return args;
 	}

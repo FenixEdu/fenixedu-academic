@@ -35,19 +35,19 @@ public class ReadSummariesTest extends ServiceNeedsAuthenticationTestCase {
 		return "ReadSummaries";
 	}
 
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 
 		String[] args = { "user", "pass", getApplication() };
 		return args;
 	}
 
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 
 		String[] args = { "julia", "pass", getApplication() };
 		return args;
 	}
 
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 
 		String[] args = { "jccm", "pass", getApplication() };
 		return args;
@@ -75,7 +75,7 @@ public class ReadSummariesTest extends ServiceNeedsAuthenticationTestCase {
 			int tipoAula = TipoAula.TEORICA;
 			TipoAula summaryType = new TipoAula(tipoAula);
 
-			String[] args1 = getAuthorizedUser();
+			String[] args1 = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args1);
 
 			Object[] args2 = { executionCourseId, summaryType };
@@ -109,7 +109,7 @@ public class ReadSummariesTest extends ServiceNeedsAuthenticationTestCase {
 			int tipoAula = TipoAula.DUVIDAS;
 			TipoAula summaryType = new TipoAula(tipoAula);
 
-			String[] args1 = getAuthorizedUser();
+			String[] args1 = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args1);
 
 			Object[] args2 = { executionCourseId, summaryType };

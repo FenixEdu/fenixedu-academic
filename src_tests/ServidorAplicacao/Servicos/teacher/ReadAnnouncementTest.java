@@ -53,7 +53,7 @@ public class ReadAnnouncementTest
 	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizedUser()
 		 */
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
@@ -61,7 +61,7 @@ public class ReadAnnouncementTest
 	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getUnauthorizedUser()
 	 */
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 		String[] args = { "nmsn", "pass", getApplication()};
 		return args;
 	}
@@ -69,7 +69,7 @@ public class ReadAnnouncementTest
 	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNonTeacherUser()
 	 */
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 		String[] args = { "fiado", "pass", getApplication()};
 		return args;
 	}
@@ -141,7 +141,7 @@ public class ReadAnnouncementTest
 					obj2 };
 
 			//Utilizador Válido
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView id = authenticateUser(args);
 
 			//Execução do serviço
@@ -236,7 +236,7 @@ public class ReadAnnouncementTest
 					obj2 };
 
 			//Utilizador válido
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView id = authenticateUser(args);
 
 			//Execução do serviço

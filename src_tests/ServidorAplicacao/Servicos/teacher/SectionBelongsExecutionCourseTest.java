@@ -74,11 +74,11 @@ public abstract class SectionBelongsExecutionCourseTest
 	}
 
 	protected abstract Object[] getAuthorizeArguments();
-	protected abstract String[] getAuthorizedUser();
+	protected abstract String[] getAuthenticatedAndAuthorizedUser();
 	protected abstract String getDataSetFilePath();
 	protected abstract String getNameOfServiceToBeTested();
-	protected abstract String[] getNonTeacherUser();
-	protected abstract String[] getUnauthorizedUser();
+	protected abstract String[] getNotAuthenticatedUser();
+	protected abstract String[] getAuthenticatedAndUnauthorizedUser();
 	protected abstract Object[] getTestSectionSuccessfullArguments();
 	protected abstract Object[] getTestSectionUnsuccessfullArguments();
 	protected abstract String getApplication();

@@ -4,13 +4,14 @@ import DataBeans.InfoCurriculum;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Nuno Correia 
  * @author Ricardo Rodrigues
  * 
  */
-public class EditProgramTest extends ProgramBelongsExecutionCourse {
+public class EditProgramTest extends ServiceNeedsAuthenticationTestCase {
 
 	/**
 	 * @param testName
@@ -27,30 +28,30 @@ public class EditProgramTest extends ProgramBelongsExecutionCourse {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testEditProgramDataSet.xml";
+		return "etc/datasets/servicos/teacher/testEditProgramDataSet.xml";
 	}
 
 	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/testExpectedEditProgramDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedEditProgramDataSet.xml";
 	}
 
 	protected String getExpectedNewCurriculumDataSetFilePath() {
-		return "etc/datasets/testExpectedNewCurriculumProgramDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedNewCurriculumProgramDataSet.xml";
 	}
 
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 
 		String[] args = { "julia", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 
 		String[] args = { "fiado", "pass", getApplication()};
 		return args;
@@ -137,7 +138,7 @@ public class EditProgramTest extends ProgramBelongsExecutionCourse {
 	public void testSuccessfullEditProgram() {
 
 		try {
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
 			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
@@ -151,18 +152,15 @@ public class EditProgramTest extends ProgramBelongsExecutionCourse {
 			fail("testSuccessfullEditProgram error on compareDataSet" + ex);
 		}
 	}
-	
+
 	public void testSuccessfullEditProgramWithNoCurriculum() {
 
 		System.out.println("Starting: testSuccessfullEditProgramWithNoCurriculum");
 		try {
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(
-				userView,
-				getNameOfServiceToBeTested(),
-				getTestProgramCurricularCourseWithNoCurriculumArguments());
+			gestor.executar(userView, getNameOfServiceToBeTested(), getTestProgramCurricularCourseWithNoCurriculumArguments());
 
 			// verificar as alteracoes da bd
 			compareDataSet(getExpectedNewCurriculumDataSetFilePath());

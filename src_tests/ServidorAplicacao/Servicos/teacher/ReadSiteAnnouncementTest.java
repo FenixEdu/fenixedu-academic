@@ -42,17 +42,17 @@ public class ReadSiteAnnouncementTest
 		return "TeacherAdministrationSiteComponentService";
 	}
 
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 		String[] args = { "nmsn", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 		String[] args = { "fiado", "pass", getApplication()};
 		return args;
 	}
@@ -80,7 +80,7 @@ public class ReadSiteAnnouncementTest
 
 		try {
 			SiteView result = null;
-			String[] args1 = getAuthorizedUser();
+			String[] args1 = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args1);
 
 			Object[] args2 = getAuthorizeArguments();
@@ -116,7 +116,7 @@ public class ReadSiteAnnouncementTest
 			Object obj1 = null;
 			Object obj2 = null;
 
-			String[] args1 = getAuthorizedUser();
+			String[] args1 = getAuthenticatedAndAuthorizedUser();
 			Object[] args2 =
 				{
 					infoExecutionCourseCode,

@@ -4,8 +4,8 @@ import DataBeans.InfoCurriculum;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Nuno Correia
@@ -13,7 +13,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  */
 
-public class EditObjectivesTest extends ObjectivesBelongsExecutionCourse {
+public class EditObjectivesTest extends ServiceNeedsAuthenticationTestCase {
 
 	/**
 	 * @param testName
@@ -30,30 +30,30 @@ public class EditObjectivesTest extends ObjectivesBelongsExecutionCourse {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testEditObjectivesDataSet.xml";
+		return "etc/datasets/servicos/teacher/testEditObjectivesDataSet.xml";
 	}
 
 	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/testExpectedEditObjectivesDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedEditObjectivesDataSet.xml";
 	}
 
 	protected String getExpectedNewCurriculumDataSetFilePath() {
-		return "etc/datasets/testExpectedNewCurriculumObjectivesDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedNewCurriculumObjectivesDataSet.xml";
 	}
 
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 
 		String[] args = { "julia", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 
 		String[] args = { "fiado", "pass", getApplication()};
 		return args;
@@ -68,7 +68,7 @@ public class EditObjectivesTest extends ObjectivesBelongsExecutionCourse {
 		String GeneralObjectivesEN = "General Objectives in English";
 		String OperationalObjectivesPT = "Operational Objectives in Portuguese";
 		String OperationalObjectivesEN = "Operational Objectives in English";
-		
+
 		InfoCurriculum infoCurriculum = new InfoCurriculum();
 
 		infoCurriculum.setIdInternal(curricularCourseCode);
@@ -91,7 +91,7 @@ public class EditObjectivesTest extends ObjectivesBelongsExecutionCourse {
 		String GeneralObjectivesEN = "General Objectives in English";
 		String OperationalObjectivesPT = "Operational Objectives in Portuguese";
 		String OperationalObjectivesEN = "Operational Objectives in English";
-		
+
 		InfoCurriculum infoCurriculum = new InfoCurriculum();
 
 		infoCurriculum.setIdInternal(curricularCourseCode);
@@ -114,7 +114,7 @@ public class EditObjectivesTest extends ObjectivesBelongsExecutionCourse {
 		String GeneralObjectivesEN = "General Objectives in English";
 		String OperationalObjectivesPT = "Operational Objectives in Portuguese";
 		String OperationalObjectivesEN = "Operational Objectives in English";
-		
+
 		InfoCurriculum infoCurriculum = new InfoCurriculum();
 
 		infoCurriculum.setIdInternal(curricularCourseCode);
@@ -136,7 +136,7 @@ public class EditObjectivesTest extends ObjectivesBelongsExecutionCourse {
 		String GeneralObjectivesEN = "General Objectives in English";
 		String OperationalObjectivesPT = "Operational Objectives in Portuguese";
 		String OperationalObjectivesEN = "Operational Objectives in English";
-		
+
 		InfoCurriculum infoCurriculum = new InfoCurriculum();
 
 		infoCurriculum.setIdInternal(curricularCourseCode);
@@ -153,10 +153,10 @@ public class EditObjectivesTest extends ObjectivesBelongsExecutionCourse {
 		return Autenticacao.EXTRANET;
 	}
 
-	public void testSuccessfullEditObjectives() {
+	public void testEditObjectives() {
 
 		try {
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
 			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
@@ -170,17 +170,14 @@ public class EditObjectivesTest extends ObjectivesBelongsExecutionCourse {
 			fail("EditObjectivesTest error on compareDataSet" + ex);
 		}
 	}
-	
-	public void testSuccessfullEditObjectivesWithNoCurriculum() {
+
+	public void testEditObjectivesWithNoCurriculum() {
 
 		try {
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
-			
-			gestor.executar(
-				userView,
-				getNameOfServiceToBeTested(),
-				getTestObjectivesCurricularCourseWithNoCurriculumArguments());
+
+			gestor.executar(userView, getNameOfServiceToBeTested(), getTestObjectivesCurricularCourseWithNoCurriculumArguments());
 
 			// verificar as alteracoes da bd
 			compareDataSet(getExpectedNewCurriculumDataSetFilePath());
@@ -189,6 +186,24 @@ public class EditObjectivesTest extends ObjectivesBelongsExecutionCourse {
 			fail("EditObjectivesTest" + ex);
 		} catch (Exception ex) {
 			fail("EditObjectivesTest error on compareDataSet" + ex);
+		}
+	}
+
+	public void testObjectivesNotBelongsExecutionCourse() {
+
+		Object serviceArguments[] = getTestObjectivesUnsuccessfullArguments();
+
+		Object result = null;
+
+		try {
+			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			fail(getNameOfServiceToBeTested() + "fail testObjectivesNotBelongsExecutionCourse");
+		} catch (NotAuthorizedException ex) {
+
+			System.out.println(
+				"testObjectivesNotBelongsExecutionCourse was SUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
+		} catch (Exception ex) {
+			fail(getNameOfServiceToBeTested() + "fail testObjectivesNotBelongsExecutionCourse");
 		}
 	}
 }

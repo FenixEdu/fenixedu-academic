@@ -77,11 +77,11 @@ public abstract class SummaryBelongsExecutionCourseTestCase
 	}
 
 	protected abstract Object[] getAuthorizeArguments();
-	protected abstract String[] getAuthorizedUser();
+	protected abstract String[] getAuthenticatedAndAuthorizedUser();
 	protected abstract String getDataSetFilePath();
 	protected abstract String getNameOfServiceToBeTested();
-	protected abstract String[] getNonTeacherUser();
-	protected abstract String[] getUnauthorizedUser();
+	protected abstract String[] getNotAuthenticatedUser();
+	protected abstract String[] getAuthenticatedAndUnauthorizedUser();
 	protected abstract String getApplication();
 
 	protected abstract Object[] getTestSummaryUnsuccessfullArguments();

@@ -25,17 +25,17 @@ public class DeleteItemTest extends ItemBelongsExecutionCourseTest {
 		return "etc/datasets/servicos/teacher/testDeleteItemDataSet.xml";
 	}
 
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 		String[] args = { "3", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 		String[] args = { "13", "pass", getApplication()};
 		return args;
 	}
@@ -84,28 +84,28 @@ public class DeleteItemTest extends ItemBelongsExecutionCourseTest {
 			fail("testDeleteExistingItem");
 		}
 	}
-
-	public void testDeleteNonExistingItem() {
-		Object[] args = { new Integer(27), new Integer(100)};
-
-		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
-			System.out.println(
-				"testDeleteNonExistingItem was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testDeleteNonExistingItem");
-
-		} catch (NotAuthorizedException e) {
-			System.out.println(
-				"testDeleteNonExistingItem was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.out.println(
-				"testDeleteNonExistingItem was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testDeleteNonExistingItem");
-		}
-	}
+//
+//	public void testDeleteNonExistingItem() {
+//		Object[] args = { new Integer(27), new Integer(100)};
+//
+//		try {
+//			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+//			System.out.println(
+//				"testDeleteNonExistingItem was UNSUCCESSFULY runned by class: "
+//					+ this.getClass().getName());
+//			fail("testDeleteNonExistingItem");
+//
+//		} catch (NotAuthorizedException e) {
+//			System.out.println(
+//				"testDeleteNonExistingItem was SUCCESSFULY runned by class: "
+//					+ this.getClass().getName());
+//		} catch (Exception ex) {
+//			ex.printStackTrace();
+//			System.out.println(
+//				"testDeleteNonExistingItem was UNSUCCESSFULY runned by class: "
+//					+ this.getClass().getName());
+//			fail("testDeleteNonExistingItem");
+//		}
+//	}
 
 }

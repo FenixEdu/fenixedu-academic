@@ -27,19 +27,19 @@ public class DeleteSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 		return "DeleteSummary";
 	}
 
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 
 		String[] args = { "julia", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 
 		String[] args = { "jccm", "pass", getApplication()};
 		return args;
@@ -65,7 +65,7 @@ public class DeleteSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 
 		try {
 			
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
 			gestor.executar(
