@@ -59,9 +59,10 @@ public class PrintGuideDispatchAction extends DispatchAction {
 				} catch (FenixServiceException e) {
 					throw new FenixActionException();
 				}
+				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
 				if ((passwordPrint != null) && passwordPrint.booleanValue())
 					infoMasterDegreeCandidate.getInfoPerson().setPassword(infoGuide.getInfoPerson().getPassword());
-				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+					
 				
 			} else if (infoGuide.getGuideRequester().equals(GuideRequester.STUDENT_TYPE)){
 				// TODO: Comming soon :)
@@ -73,6 +74,7 @@ public class PrintGuideDispatchAction extends DispatchAction {
 
 			String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 			session.setAttribute(SessionConstants.DATE, formatedDate);			
+			
 			
 			return mapping.findForward("PrintReady");
 		  } else
