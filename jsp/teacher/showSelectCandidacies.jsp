@@ -11,6 +11,12 @@
 		<bean:message key="label.selectCandicaciesGrid.Title"/>
 	</h2>
 	<html:form action="/selectCandidacies.do" method="get">
+		<html:select property="seminaryID">
+			<html:option value="-1" key="label.seminary.candidaciesGrid.select">
+				<bean:message key="label.seminary.candidaciesGrid.select"/>
+			</html:option>
+			<html:options collection="seminaries" property="idInternal" labelProperty="name"/>
+		</html:select>
 		<table>
 			<tr>
 				<td class="listClasses-header">
@@ -32,7 +38,7 @@
 					E-Mail
 				</td>
 				<td class="listClasses-header">
-					Aprovado
+					Aceite
 				</td>
 			</tr>
 			<logic:present name="candidacies">
@@ -60,10 +66,10 @@
 								%>
 							</td>
 							<td class="listClasses">
-								<bean:write name="candidacy" property="classification"/>
+								<bean:write name="candidacy" property="infoClassification.aritmeticClassification"/>
 							</td>
 							<td class="listClasses">
-								<bean:write name="candidacy" property="completedCourses"/>
+								<bean:write name="candidacy" property="infoClassification.completedCourses"/>
 							</td>
 							<td class="listClasses">
 								<a href=mailto:<%=candidacy.getStudent().getInfoPerson().getEmail()%>>

@@ -238,7 +238,7 @@
 										Cadeiras Feitas
 									</td>
 									<td class="listClasses-header">
-										Aprovado
+										Aceite
 									</td>
 									<td class="listClasses-header">
 										E-Mail
@@ -290,9 +290,18 @@
 										</html:link>
 									</td>
 									<td class="listClasses">
-										<bean:write name="candidacy" property="student.number"/>
+										<html:link page="/viewCandidateCurriculum.do" 
+												paramId="username" 
+												paramName="candidacy" 
+												paramProperty="student.infoPerson.username">
+											<bean:write name="candidacy" property="student.number"/>
+										</html:link>
 									</td>
 									<td  class="listClasses" title="<bean:write name="candidacy" property="student.infoPerson.nome"/>">
+										<html:link page="/viewCandidateCurriculum.do" 
+											paramId="username" 
+											paramName="candidacy" 
+											paramProperty="student.infoPerson.username">
 										<%
 										String shortName = candidacy.getStudent().getInfoPerson().getNome();
 										String[] names = shortName.split(" ");
@@ -300,12 +309,13 @@
 										String lastName = names[names.length-1];
 										out.print(firstName + " " + lastName);
 										%>
+										</html:link>
 									</td>
 									<td class="listClasses">
-										<bean:write name="candidacy" property="classification"/>
+										<bean:write name="candidacy" property="infoClassification.aritmeticClassification"/>
 									</td>
 									<td class="listClasses">
-										<bean:write name="candidacy" property="completedCourses"/>
+										<bean:write name="candidacy" property="infoClassification.completedCourses"/>
 									</td>
 									<td class="listClasses">
 										<logic:equal name="candidacy" property="approved" value="true">
@@ -373,12 +383,14 @@
 											
 											for (int i= 0; i < motivationVector.length && i < 15; i++)
 												motivationDigest += motivationVector[i] + " ";
-											motivationDigest+= "[...]";
+											if (motivationVector.length > 15)
+												motivationDigest+= "[...]";
 
 											out.print(motivationDigest);
 
 										%>
 									</td>
+									<bean:size id="selectedCasesSize" name="candidacy" property="cases"/>
 									<logic:iterate indexId="index" name="candidacy" property="cases" id="caseStudy" type="DataBeans.Seminaries.InfoCaseStudy">
 										<td  class="listClasses" title="<bean:write name="caseStudy" property="name"/>">
 											<html:link page="/showCandidacies.do"
@@ -389,6 +401,14 @@
 											</html:link>
 										</td>
 									</logic:iterate>
+
+									<%
+									for (int toStuff = 5 - selectedCasesSize.intValue();toStuff>=1;toStuff--)
+									{
+										out.print("<td class=\"listClasses\">N/A</td>");
+									}
+									%>
+
 								</tr>
 							</logic:iterate>
 							</table>
