@@ -125,6 +125,9 @@ public class SearchTeachersInformationAction extends SearchAction
                     infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
             }
         });
+
+        infoExecutionDegrees = buildLabelValueBeans(infoExecutionDegrees);
+        
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
     }
 }

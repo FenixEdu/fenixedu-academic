@@ -4,6 +4,7 @@
  */
 package ServidorApresentacao.Action.framework;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -24,7 +26,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.util.LabelValueBean;
 
+import commons.CollectionUtils;
+
+import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -302,6 +308,38 @@ public class SearchAction extends DispatchAction
             actionForward = doSearch(searchActionMapping, form, request, response);
         }
         return actionForward;
+    }
+    
+    protected List buildLabelValueBeans(List executionDegrees) {
+        List copyExecutionDegrees = new ArrayList();
+        copyExecutionDegrees.addAll(executionDegrees);
+        List result = new ArrayList();
+        Iterator iter = executionDegrees.iterator();
+        while (iter.hasNext()) {
+            final InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iter.next();
+            List equalDegrees = 
+                (List) CollectionUtils.select(copyExecutionDegrees, new Predicate() {
+                public boolean evaluate(Object arg0) {
+                    InfoExecutionDegree infoExecutionDegreeElem = (InfoExecutionDegree) arg0;
+                    if(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome().
+                            equals(infoExecutionDegreeElem.getInfoDegreeCurricularPlan().getInfoDegree().getNome())) {
+                        return true;
+                    }
+                    return false; 
+                }
+            });
+            if(equalDegrees.size() == 1) {
+                copyExecutionDegrees.remove(infoExecutionDegree);
+                result.add(new LabelValueBean(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), 
+                        infoExecutionDegree.getIdInternal().toString()));
+            } else {
+                result.add(new LabelValueBean(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome() 
+                        + " - " 
+                        + infoExecutionDegree.getInfoDegreeCurricularPlan().getName(), 
+                        infoExecutionDegree.getIdInternal().toString()));
+            }
+        }
+        return result;
     }
 
 }

@@ -23,7 +23,7 @@
 			<td>
 				<html:select property="executionDegreeId">
 					<html:option key="label.selectAll" bundle="GEP_RESOURCES" value="all"/>
-					<html:options collection="infoExecutionDegrees" labelProperty="infoDegreeCurricularPlan.infoDegree.nome" property="idInternal"/>
+					<html:options collection="infoExecutionDegrees" labelProperty="label" property="value"/>
 				</html:select>
 			</td>
 		</tr>

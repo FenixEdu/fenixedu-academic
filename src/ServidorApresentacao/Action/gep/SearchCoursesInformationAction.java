@@ -265,6 +265,10 @@ public class SearchCoursesInformationAction extends SearchAction
                                         .getNome());
             }
         });
+        
+        infoExecutionDegrees = buildLabelValueBeans(infoExecutionDegrees);
+        
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
     }
+    
 }
