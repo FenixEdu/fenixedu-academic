@@ -169,8 +169,7 @@
 									</logic:equal>
 									<logic:equal name="formatDate" value="01/01/2003">
 										<bean:message key="label.gep.courseInformation.previousYear" bundle="GEP_RESOURCES"/>
-									</logic:equal>
-								
+									</logic:equal>								
 								</logic:present>
 								<logic:notPresent name="infoSiteCourseInformation" property="lastModificationDate"> 
 									<bean:message key="label.gep.courseInformation.notModified" 
@@ -181,9 +180,9 @@
 		         	</logic:equal>
 	         	</logic:present>
 	         	<logic:notPresent name="infoExecutionDegree">
-					<tr>
-	         			<td class="listClasses">
-	         				<table>
+	         		<tr>
+						<td class="listClasses">
+							<table>
 								<logic:iterate id="infoCurricularCourseScope" name="infoCurricularCourse" property="infoScopes">
 									<tr>
 		   				         	 	<td><bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/></td>
@@ -192,41 +191,42 @@
    				         	 	 	</tr>
 	   				         	 </logic:iterate>
    				         	 </table>
-   				        </td>
-   				        <td class="listClasses" >&nbsp;
-							<html:link page="/readCourseInformation.do"
+   				         </td>
+   				         <td class="listClasses" >&nbsp;
+							<html:link page="readCourseInformation.do"
 								       paramId="executionCourseId" 
 								       paramName="infoSiteCourseInformation"
 								       paramProperty="infoExecutionCourse.idInternal">
-		   					        <bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.nome"/>-
-				       		   		<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.sigla"/>
+		   					        <bean:write name="infoCurricularCourse" property="name"/>-
+				       		   		<bean:write name="infoCurricularCourse" property="code"/>
 					      	</html:link>
 		       			</td>
 		       			<td class="listClasses">&nbsp;
-	   				   		<bean:write name="infoCurricularCourse" property="code"/>
+	   				   		<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.sigla"/>
 			         	</td>
 			         	<td class="listClasses" >&nbsp;
-   				        		<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.name"/>
+   				        	<bean:write name="infoSiteCourseInformation" 
+   				        				property="infoExecutionCourse.infoExecutionPeriod.name"/>
 		         		</td>
 		         		<td class="listClasses" >
 				       		<logic:equal name="infoCurricularCourse" property="basic" value="true">
 				       			<bean:message key="label.yes" bundle="GEP_RESOURCES"/>
 			       			</logic:equal>
-	   							<logic:notEqual name="infoCurricularCourse" property="basic" value="true">
+   							<logic:notEqual name="infoCurricularCourse" property="basic" value="true">
 				       			<bean:message key="label.no" bundle="GEP_RESOURCES"/>
 			       			</logic:notEqual>
 			       		</td>
 						<td class="listClasses" >&nbsp;
-							<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoResponsibleTeachers">
-								<bean:write name="infoTeacher" property="infoPerson.nome" />
-								<br />
-							</logic:iterate>
-						</td>
-						<td class="listClasses" >&nbsp;
+							<ul>
 							<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoLecturingTeachers">
-								<bean:write name="infoTeacher" property="infoPerson.nome" />
-								<br />
+								<li><bean:write name="infoTeacher" property="infoPerson.nome" />
+								 <% if (
+							    	 ((DataBeans.gesdis.InfoSiteCourseInformation)infoSiteCourseInformation).getInfoResponsibleTeachers().contains(infoTeacher)
+							    	 ){%>
+							    	 (<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>) <% }  %> 
+								</li>
 							</logic:iterate>
+							</ul>
 						</td>
 						<td class="listClasses" >&nbsp;
 							<logic:present name="infoSiteCourseInformation" property="lastModificationDate"> 

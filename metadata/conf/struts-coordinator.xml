@@ -74,7 +74,7 @@
       
       <!-- Dynamic-FormBean for searchExecutionCourse -->
       <form-bean name="degreeInfoForm"
-								 type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">		
+				 type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">		
 			 	<form-property name="page" type="java.lang.Integer" initial="0"/>
 				<form-property name="description" type="java.lang.String" />				 
 				<form-property name="objectives" type="java.lang.String" />
@@ -150,7 +150,13 @@
 		<form-property name="studentNumber" type="java.lang.String"/>
 		<form-property name="page" type="java.lang.Integer" initial="0"/>
 	</form-bean>
-		      
+	
+	<!-- TEACHING REPORT FORM  -->
+	<form-bean name="teachingReportForm" 
+			   type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="executionCourseId" type="java.lang.Integer" />
+	</form-bean>
+			      
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -548,6 +554,19 @@
         	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
     </action>	  
     
+      <!-- Teaching Report -->
+	<action type="ServidorApresentacao.Action.gesdis.TeachingReportAction" 
+			path="/viewTeachingReport" name="teachingReportForm" 
+			input="/viewTeachingReport.do?method=read" 
+			parameter="method" validate="true" scope="request">
+			<exception 
+				type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
+				key="error.exception.notAuthorized" 
+				handler="ServidorApresentacao.config.FenixNotAuthorizedExceptionHandler" 
+				/>
+			<forward name="successfull-read" path="view-teaching-report"/>
+	</action>
+		
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

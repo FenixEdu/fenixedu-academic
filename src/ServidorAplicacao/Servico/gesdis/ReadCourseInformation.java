@@ -342,8 +342,7 @@ public class ReadCourseInformation implements IService
             IEnrolment enrolment = (IEnrolment) iter.next();
             EnrolmentState enrolmentState = enrolment.getEnrolmentState();
             if (enrolmentState.equals(EnrolmentState.APROVED)
-                || enrolmentState.equals(EnrolmentState.NOT_APROVED)
-                || enrolmentState.equals(EnrolmentState.NOT_EVALUATED))
+                || enrolmentState.equals(EnrolmentState.NOT_APROVED))
             {
                 evaluated++;
             }
