@@ -11,11 +11,12 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoFrequenta;
+import DataBeans.InfoFrequentaWithAll;
 import DataBeans.InfoMark;
+import DataBeans.InfoMarkWithInfoAttendAndInfoStudent;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
 import DataBeans.TeacherAdministrationSiteView;
-import DataBeans.util.Cloner;
 import Dominio.Evaluation;
 import Dominio.ExecutionCourse;
 import Dominio.IEvaluation;
@@ -78,7 +79,9 @@ public class ReadStudentsAndMarksByEvaluation implements IService
             evaluation.setIdInternal(evaluationCode);
             IPersistentEvaluation evaluationDAO = sp.getIPersistentEvaluation();
             evaluation = (IEvaluation)evaluationDAO.readByOId(evaluation, false);
-            infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+            //CLONER
+            //infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+            infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
             //Attends
             IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
@@ -93,7 +96,9 @@ public class ReadStudentsAndMarksByEvaluation implements IService
                 public Object transform(Object input)
                 {
                     IFrequenta attend = (IFrequenta)input;
-                    InfoFrequenta infoAttend = Cloner.copyIFrequenta2InfoFrequenta(attend);
+                    //CLONER
+                    //InfoFrequenta infoAttend = Cloner.copyIFrequenta2InfoFrequenta(attend);
+                    InfoFrequenta infoAttend = InfoFrequentaWithAll.newInfoFromDomain(attend);
                     return infoAttend;
                 }
             });
@@ -103,7 +108,9 @@ public class ReadStudentsAndMarksByEvaluation implements IService
                 public Object transform(Object input)
                 {
                     IMark mark = (IMark)input;
-                    InfoMark infoMark = Cloner.copyIMark2InfoMark(mark);
+                    //CLONER
+                    //InfoMark infoMark = Cloner.copyIMark2InfoMark(mark);
+                    InfoMark infoMark = InfoMarkWithInfoAttendAndInfoStudent.newInfoFromDomain(mark);
                     return infoMark;
                 }
             });

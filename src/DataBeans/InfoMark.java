@@ -6,6 +6,8 @@
 
 package DataBeans;
 
+import Dominio.IMark;
+
 /**
  *
  * @author  tfc130
@@ -106,4 +108,21 @@ public class InfoMark extends InfoObject{
 		publishedMark = string;
 	}
 
+	public void copyFromDomain(IMark mark) {
+		super.copyFromDomain(mark);
+		if(mark != null) {
+			setMark(mark.getMark());
+			setPublishedMark(mark.getPublishedMark());
+		}
+	}
+	
+	public static InfoMark newInfoFromDomain(IMark mark) {
+		InfoMark infoMark = null;
+		if(mark != null) {
+			infoMark = new InfoMark();
+			infoMark.copyFromDomain(mark);
+		}
+		
+		return infoMark;
+	}
 }
