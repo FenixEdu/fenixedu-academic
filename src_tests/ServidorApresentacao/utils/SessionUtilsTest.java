@@ -11,9 +11,7 @@ package ServidorApresentacao.utils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -49,9 +47,8 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IDepartamento;
 import Dominio.IDisciplinaDepartamento;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IPessoa;
-import Dominio.Pessoa;
-import Dominio.Privilegio;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -62,12 +59,13 @@ import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
 import Util.TipoCurso;
-import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author jpvl
@@ -92,6 +90,9 @@ public class SessionUtilsTest extends TestCase {
 	protected IDisciplinaExecucaoPersistente _executionCourseDAO;
 	protected IPersistentCurricularCourse _curricularCourseDAO;
 	protected IPersistentDegreeCurricularPlan _degreeCurriculumDAO;
+	protected IPersistentExecutionYear executionYearDAO;
+	protected IPersistentExecutionPeriod executionPeriodDAO;
+	
 
 	protected ICursoExecucao _executionDegree;
 	protected ICurso _degree;
@@ -116,104 +117,109 @@ public class SessionUtilsTest extends TestCase {
 	/*
 	 * @see TestCase#setUp()
 	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-		_ctx = new ServletContextSimulator();
+	protected void setUp() {
+		try {
+			super.setUp();
+			_ctx = new ServletContextSimulator();
 
-		startPersistentLayer();
+			startPersistentLayer();
 
-		IPessoa person = new Pessoa();
+			_degree =
+				new Curso(
+					_degreeInitials,
+					_degreeName,
+					new TipoCurso(TipoCurso.LICENCIATURA));
+			_sp.iniciarTransaccao();
+			IExecutionYear executionYear =
+				executionYearDAO.readExecutionYearByName(_schoolYear);
+			if (executionYear == null) {
+				executionYear = new ExecutionYear(_schoolYear);
+				executionYearDAO.lockWrite(executionYear);
+			}
+			_sp.confirmarTransaccao();
+			_executionDegree =
+				new CursoExecucao(
+					executionYear,
+					new DegreeCurricularPlan("plano1", _degree));
 
-		Set privileges = new HashSet();
-		person.setNome("Marvin");
-		person.setUsername("45498");
-		person.setNumeroDocumentoIdentificacao("010101010101");
-		person.setCodigoFiscal("010101010101");
-		person.setTipoDocumentoIdentificacao(
-			new TipoDocumentoIdentificacao(
-				TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
-		privileges.add(
-			new Privilegio(
-				person,
-				new String("LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular")));
+			IDegreeCurricularPlan degreeCurriculum =
+				new DegreeCurricularPlan("Plano 1", _degree);
 
-		person.setPrivilegios(privileges);
+			IDisciplinaExecucao _executionCourse = null;
+			ICurricularCourse _curricularCourse = null;
 
-		_degree =
-			new Curso(
-				_degreeInitials,
-				_degreeName,
-				new TipoCurso(TipoCurso.LICENCIATURA));
-		_executionDegree =
-			new CursoExecucao(
-				new ExecutionYear(_schoolYear),
-				new DegreeCurricularPlan("plano1", _degree));
+			_executionCourseList = new ArrayList();
 
-		IDegreeCurricularPlan degreeCurriculum =
-			new DegreeCurricularPlan("Plano 1", _degree);
+			_sp.iniciarTransaccao();
+			for (int i = 1; i < 10; i++) {
+				IDepartamento d = new Departamento("nome" + i, "sigla" + i);
+				IDisciplinaDepartamento dd =
+					new DisciplinaDepartamento("Disciplina " + i, "D" + i, d);
+				_curricularCourse =
+					new CurricularCourse(
+						new Double(1.0),
+						new Double(2.0),
+						new Double(2.0),
+						new Double(0),
+						new Double(0),
+						"Disciplina " + i,
+						"D" + i,
+						dd,
+						degreeCurriculum);
 
-		IDisciplinaExecucao _executionCourse = null;
-		ICurricularCourse _curricularCourse = null;
-
-		_executionCourseList = new ArrayList();
-
-		_sp.iniciarTransaccao();
-		for (int i = 1; i < 10; i++) {
-			IDepartamento d = new Departamento("nome" + i, "sigla" + i);
-			IDisciplinaDepartamento dd =
-				new DisciplinaDepartamento("Disciplina " + i, "D" + i, d);
-			_curricularCourse =
-				new CurricularCourse(
-					new Double(1.0),
-					new Double(2.0),
-					new Double(2.0),
-					new Double(0),
-					new Double(0),
-//					new Integer(_curricularYear),
-//					new Integer(_semester),
-					"Disciplina " + i,
-					"D" + i,
-					dd,
-					degreeCurriculum);
-			_executionCourse =
-				new DisciplinaExecucao(
-					"Disciplina " + i,
-					"D" + i,
-					"Programa",
-					new Double(2.0),
-					new Double(2.0),
-					new Double(0),
-					new Double(0),
-					new ExecutionPeriod(
+				IExecutionPeriod executionPeriod =
+					executionPeriodDAO.readByNameAndExecutionYear(
 						"2º Semestre",
-						new ExecutionYear("2002/2003")));
+						executionYear);
+				if (executionPeriod == null) {
+					executionPeriod =
+						new ExecutionPeriod("2º Semestre", executionYear);
+					executionPeriodDAO.lockWrite(executionPeriod);
+				}
 
-			List list = new ArrayList();
+				_executionCourse =
+					new DisciplinaExecucao(
+						"Disciplina " + i,
+						"D" + i,
+						"Programa",
+						new Double(2.0),
+						new Double(2.0),
+						new Double(0),
+						new Double(0),
+						executionPeriod);
 
-			list.add(_curricularCourse);
-			_executionCourse.setAssociatedCurricularCourses(list);
+				List list = new ArrayList();
 
-			_sp.getIDepartamentoPersistente().escreverDepartamento(d);
-			_sp
-				.getIDisciplinaDepartamentoPersistente()
-				.escreverDisciplinaDepartamento(
-				dd);
+				list.add(_curricularCourse);
+				_executionCourse.setAssociatedCurricularCourses(list);
 
-			_curricularCourseDAO.lockWrite(_curricularCourse);
-			_executionCourseDAO.escreverDisciplinaExecucao(_executionCourse);
+				_sp.getIDepartamentoPersistente().escreverDepartamento(d);
+				_sp
+					.getIDisciplinaDepartamentoPersistente()
+					.escreverDisciplinaDepartamento(
+					dd);
 
-			InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+				_curricularCourseDAO.lockWrite(_curricularCourse);
+				_executionCourseDAO.escreverDisciplinaExecucao(
+					_executionCourse);
 
-			copyExecutionCourseToInfoExecutionCourse(
-				infoExecutionCourse,
-				_executionCourse);
-			_executionCourseList.add(infoExecutionCourse);
+				InfoExecutionCourse infoExecutionCourse =
+					new InfoExecutionCourse();
+
+				copyExecutionCourseToInfoExecutionCourse(
+					infoExecutionCourse,
+					_executionCourse);
+				_executionCourseList.add(infoExecutionCourse);
+			}
+
+			_executionDegreeDAO.lockWrite(_executionDegree);
+
+			_sp.confirmarTransaccao();
+		} catch (Exception e) {
+
+			e.printStackTrace(System.out);
+			fail("Fail in setUp!");
 		}
-
-		_executionDegreeDAO.lockWrite(_executionDegree);
-		_personDAO.escreverPessoa(person);
-
-		_sp.confirmarTransaccao();
 
 	}
 	/**
@@ -258,6 +264,8 @@ public class SessionUtilsTest extends TestCase {
 		_curricularCourseDAO = _sp.getIPersistentCurricularCourse();
 		_degreeCurriculumDAO = _sp.getIPersistentDegreeCurricularPlan();
 		_personDAO = _sp.getIPessoaPersistente();
+		executionYearDAO = _sp.getIPersistentExecutionYear();
+		executionPeriodDAO = _sp.getIPersistentExecutionPeriod();
 		cleanData();
 	}
 
@@ -342,17 +350,15 @@ public class SessionUtilsTest extends TestCase {
 			"Obtnained object from session must be not null!",
 			userView2);
 		assertEquals(userView, userView2);
-
 	}
 
 	public void testGetExecutionCoursesAlreadyInSession() {
 		HttpServletRequestSimulator request =
 			new HttpServletRequestSimulator(_ctx);
 
-		CurricularYearAndSemesterAndInfoExecutionDegree c =
-			createCurricularYearAndSemesterAndInfoExecutionDegree();
+		createCurricularYearAndSemesterAndInfoExecutionDegree();
 
-		IUserView userView = setToSessionUserView(request);
+		setToSessionUserView(request);
 
 		List executionCourseList = new ArrayList();
 
@@ -377,8 +383,7 @@ public class SessionUtilsTest extends TestCase {
 		HttpServletRequestSimulator request =
 			new HttpServletRequestSimulator(_ctx);
 
-		CurricularYearAndSemesterAndInfoExecutionDegree c =
-			createCurricularYearAndSemesterAndInfoExecutionDegree();
+		
 
 		setToSessionUserView(request);
 		List infoExecutionCourseList = null;
@@ -408,10 +413,12 @@ public class SessionUtilsTest extends TestCase {
 	private IUserView createUserView() {
 		InfoRole infoRole = new InfoRole();
 		infoRole.setRoleType(RoleType.STUDENT);
-
+		InfoRole sopRole = new InfoRole();
+		sopRole.setRoleType(RoleType.TIME_TABLE_MANAGER);
 		Collection roles = new ArrayList();
 		roles.add(infoRole);
-		
+		roles.add(sopRole);
+
 		IUserView userView = new UserView("45498", roles);
 		return userView;
 	}
