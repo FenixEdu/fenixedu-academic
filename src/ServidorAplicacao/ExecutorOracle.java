@@ -8,6 +8,7 @@ import Util.ErrorConstants;
 /**
  *
  * @author  Fernanda Quitério & Tania Pousão
+ * @deprecated
  */
 public class ExecutorOracle {
   /* Singleton */
@@ -48,7 +49,7 @@ public class ExecutorOracle {
     }
   }
   
-  public void doIt(ServicoSeguro ss) throws NotAuthorizeException,
+  synchronized public void doIt(ServicoSeguro ss) throws NotAuthorizeException,
   NotExecuteException,
   PersistenceException {
     try {
