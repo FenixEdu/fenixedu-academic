@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author João Mota
  */
-public class InfoTeacher {
+public class InfoTeacher extends InfoObject{
 
 	private Integer teacherNumber;
 	private InfoPerson infoPerson;
