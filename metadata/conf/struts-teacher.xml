@@ -258,7 +258,7 @@
 		path="/curriculumManagerDA"
 		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
         validate="true"	>    
-       <forward name="viewCurriculum" path="/navbar.jsp"/>
+       <forward name="viewCurriculum" path="/viewSite.jsp"/>
 	</action>
 	
 	<action	path="/index"
@@ -269,7 +269,7 @@
 	
 	<action path="/viewSite"
         type="ServidorApresentacao.Action.teacher.ReadSite">    
-     <forward name="viewSite" path="/navbar.jsp"/>         
+     <forward name="viewSite" path="/viewSite.jsp"/>         
 	</action>
 	</action-mappings>
 
