@@ -106,8 +106,8 @@
 		<tr>
 		<bean:define id="linkName" name="infoLink" property="linkName"/>
 		<td><img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /></td>
-		<td>
-			<html:link page="<%= "/fileDownload.do?itemCode=" + itemCode %>" paramId="fileName" paramName="infoLink" paramProperty="link" ><bean:write name="infoLink" property="linkName"/></html:link>
+		<td><bean:define id="link" name="infoLink" oroperty="link"/>
+			<html:link page="<%= "/fileDownload.do?itemCode=" + itemCode + "&fileName=" + link %>" ><bean:write name="infoLink" property="linkName"/></html:link>
 		</td>
 		<td>&nbsp;&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> </td>
 			<td><html:link page="<%= "/fileDelete.do?method=deleteFile&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>" paramId="fileName" paramName="infoLink" paramProperty="link" onclick="<%= "return confirm('Tem a certeza que deseja apagar o ficheiro "+linkName+"?')"%>" >Apagar Ficheiro</html:link>
