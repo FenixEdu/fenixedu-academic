@@ -9,6 +9,15 @@
 
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
+	 <!-- FILE UPLOAD -->
+      <form-bean name="fileForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="linkName" type="java.lang.String" />          
+        <form-property name="theFile"  type="org.apache.struts.upload.FormFile" /> 
+      </form-bean>
+      
+	
 		<!-- test form -->
 		<form-bean name="testForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
@@ -1085,6 +1094,41 @@
        	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
        	<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
 	</action>
+	
+	<!-- FILE UPLOAD 	-->
+		  <action path="/prepareFileUpload" 
+ 			 input="/viewSection.jsp"
+ 			 parameter="method"
+             type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+      		  <forward  name="uploadItemFile" path="/uploadItemFile.jsp"/>  	  
+     </action> 	
+     
+      <action path="/fileUpload" 
+      		  name="fileForm"	
+ 			  parameter="method"
+              type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">	 
+            <forward  name="viewSection" path="/viewSection.jsp"/> 
+            <forward  name="uploadItemFile" path="/uploadItemFile.jsp"/>  	 
+     </action>
+     
+    
+     
+      <action path="/fileDelete" 
+      		  parameter="method"
+      		  type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction" >
+      		  <forward  name="viewSection" path="/viewSection.jsp"/>  	  
+     </action> 
+     
+      <action path="/fileDownload" 
+      		  type="ServidorApresentacao.Action.fileManager.FileRetrievingAction" >
+      		  <forward  name="xpto1" path="/xpto1.jsp"/>  		  
+     </action>	 
+     
+     <action path="/fileList" 
+      		  type="ServidorApresentacao.Action.fileManager.FileListingAction" >
+      		  <forward  name="xpto1" path="/xpto1.jsp"/>  		  
+     </action>	
+	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
