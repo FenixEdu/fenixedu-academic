@@ -19,6 +19,7 @@ import Dominio.Exam;
 import Dominio.ExamStudentRoom;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
+import Dominio.IExamStudentRoom;
 import Dominio.ISite;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
@@ -84,12 +85,12 @@ public class ReadStudentsEnrolledInExam implements IServico {
 						ExamStudentRoom examStudentRoom = (ExamStudentRoom) input;
 						return Cloner.copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);
 					}}) ; 
-
-			List students = exam.getStudentsEnrolled();
+			
+			List students = examStudentRoomDAO.readBy(exam);
 			List infoStudents = new ArrayList();
 			Iterator iter = students.iterator();
 			while (iter.hasNext()) {
-				IStudent student = (IStudent) iter.next();
+				IStudent student = ((IExamStudentRoom) iter.next()).getStudent();
 				InfoStudent infoStudent =
 					Cloner.copyIStudent2InfoStudent(student);
 				infoStudents.add(infoStudent);

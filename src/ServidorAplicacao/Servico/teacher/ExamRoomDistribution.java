@@ -100,9 +100,14 @@ public class ExamRoomDistribution implements IServico {
 				throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);		
 			}
 
-
-			List students = exam.getStudentsEnrolled();
-			if (students == null) {
+			List examStudentRoomList = persistentExamStudentRoom.readBy(exam);
+			Iterator iterExamStudentRoomList = examStudentRoomList.iterator();
+			List students = new ArrayList();
+			while(iterExamStudentRoomList.hasNext()){
+				students.add(((IExamStudentRoom)iterExamStudentRoomList.next()).getStudent());
+			}
+			
+			if (students.isEmpty()) {
 				List executionCourses = exam.getAssociatedExecutionCourses();
 				Iterator iterCourse = executionCourses.iterator();
 				while (iterCourse.hasNext()) {
