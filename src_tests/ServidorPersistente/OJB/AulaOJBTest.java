@@ -12,17 +12,25 @@ package ServidorPersistente.OJB;
  *
  * @author tfc130
  */
+import java.util.Calendar;
 import java.util.List;
 
-import junit.framework.*;
-import java.util.List;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.apache.ojb.odmg.OJB;
-import org.odmg.QueryException;
-import org.odmg.OQLQuery;
 import org.odmg.Implementation;
-import ServidorPersistente.*;
-import Dominio.*;
-import Util.*;
+import org.odmg.OQLQuery;
+import org.odmg.QueryException;
+
+import Dominio.Aula;
+import Dominio.IAula;
+import Dominio.ICurricularCourse;
+import Dominio.IDisciplinaExecucao;
+import Dominio.ISala;
+import ServidorPersistente.ExcepcaoPersistencia;
+import Util.DiaSemana;
+import Util.TipoAula;
 
 public class AulaOJBTest extends TestCaseOJB {
   public AulaOJBTest(java.lang.String testName) {
@@ -49,34 +57,101 @@ public class AulaOJBTest extends TestCaseOJB {
     
   /** Test of readByDiaSemanaAndInicioAndFimAndSala method, of class ServidorPersistente.OJB.AulaOJB. */
   public void testreadByDiaSemanaAndInicioAndFimAndSala() {
-    IAula aula = null;
-    // read existing Aula
-    try {
-    	_suportePersistente.iniciarTransaccao();
-    	aula = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(_diaSemana1, _inicio, _fim, _sala1);
-    	_suportePersistente.confirmarTransaccao();
-    	assertEquals("testReadByDiaSemanaAndInicioAndFimAndSala:read existing aula", _aula1, aula);
-    } catch (ExcepcaoPersistencia ex) {
-    	fail("testReadByDiaSemanaAndInicioAndFimAndSala:fail read existing aula");
-    }
-        
-    // read unexisting Aula
+    IAula lesson = null;
+    ISala room = null;
+    IDisciplinaExecucao executionCourse = null;
+    
+	DiaSemana weekDay = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+    
+    Calendar startTime = Calendar.getInstance();
+	startTime.set(Calendar.HOUR_OF_DAY, 8);
+	startTime.set(Calendar.MINUTE, 00);
+	startTime.set(Calendar.SECOND, 00);
+	Calendar endTime = Calendar.getInstance();
+	endTime.set(Calendar.HOUR_OF_DAY, 9);
+	endTime.set(Calendar.MINUTE, 30);
+	endTime.set(Calendar.SECOND, 00);
+
+    
+	try {
+		_suportePersistente.iniciarTransaccao();
+		room = _salaPersistente.readByName("GA1");
+		assertNotNull(room);
+		
+		executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		assertNotNull(executionCourse);
+		lesson = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(weekDay, startTime, endTime, room);
+		_suportePersistente.confirmarTransaccao();
+	} catch (ExcepcaoPersistencia ex) {
+		fail("testReadByDiaSemanaAndInicioAndFimAndSala:fail read existing aula");
+	}
+
+	assertNotNull(lesson);
+	assertTrue(lesson.getDiaSemana().getDiaSemana().equals(new Integer(DiaSemana.SEGUNDA_FEIRA)));
+	
+	assertEquals(lesson.getFim().get(Calendar.HOUR_OF_DAY), endTime.get(Calendar.HOUR_OF_DAY));
+	assertEquals(lesson.getFim().get(Calendar.MINUTE), endTime.get(Calendar.MINUTE));
+	
+	assertEquals(lesson.getInicio().get(Calendar.HOUR_OF_DAY), startTime.get(Calendar.HOUR_OF_DAY));
+	assertEquals(lesson.getInicio().get(Calendar.MINUTE), startTime.get(Calendar.MINUTE));
+	
+	assertEquals(lesson.getTipo().getTipo(), new Integer(TipoAula.TEORICA));
+	
+	assertEquals(lesson.getSala(), room);
+	
+	assertEquals(lesson.getDisciplinaExecucao(), executionCourse);
+	
+	
+    
+    // read unexisting lesson
     try {
       _suportePersistente.iniciarTransaccao();
-      aula = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(_diaSemana2, _inicio, _fim, _sala2);
+      lesson = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(new DiaSemana(DiaSemana.DOMINGO), startTime, endTime, room);
       _suportePersistente.confirmarTransaccao();
-      assertNull("testReadByDiaSemanaAndInicioAndFimAndSala:fail read unexisting aula", aula);
+      assertNull("testReadByDiaSemanaAndInicioAndFimAndSala:fail read unexisting aula", lesson);
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByDiaSemanaAndInicioAndFimAndSala:fail read unexisting aula");
     }
   }
 
-  // write new existing aula
+  // write new existing lesson
   public void testCreateExistingAula() {
-    //IAula aula = new Aula(_diaSemana1, _inicio, _fim, _tipoAula, _sala1, _disciplinaExecucao1);
+	IAula lesson = new Aula();
+	ISala room = null;
+	IDisciplinaExecucao executionCourse = null;
+    
+	DiaSemana weekDay = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+    
+	Calendar startTime = Calendar.getInstance();
+	startTime.set(Calendar.HOUR_OF_DAY, 8);
+	startTime.set(Calendar.MINUTE, 00);
+	startTime.set(Calendar.SECOND, 00);
+	Calendar endTime = Calendar.getInstance();
+	endTime.set(Calendar.HOUR_OF_DAY, 9);
+	endTime.set(Calendar.MINUTE, 30);
+	endTime.set(Calendar.SECOND, 00);
+
+	try {
+		_suportePersistente.iniciarTransaccao();
+		room = _salaPersistente.readByName("GA1");
+		assertNotNull(room);
+		
+		executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		assertNotNull(executionCourse);
+		_suportePersistente.confirmarTransaccao();
+	} catch (ExcepcaoPersistencia ex) {
+		fail("testReadByDiaSemanaAndInicioAndFimAndSala:fail read existing aula");
+	}
+
+	lesson.setDiaSemana(weekDay);
+	lesson.setFim(endTime);
+	lesson.setInicio(startTime);
+	lesson.setSala(room);
+		
+	
     try {
       _suportePersistente.iniciarTransaccao();
-      _aulaPersistente.lockWrite(_aula1);
+      _aulaPersistente.lockWrite(lesson);
       _suportePersistente.confirmarTransaccao();
       fail("testCreateExistingAula");
     } catch (ExcepcaoPersistencia ex) {
@@ -86,21 +161,32 @@ public class AulaOJBTest extends TestCaseOJB {
 
   // write new non-existing aula
   public void testCreateNonExistingAula() {
-    IAula aula = null;
+    IAula lesson = null;
+    
+	Calendar startTime = Calendar.getInstance();
+	startTime.set(Calendar.HOUR_OF_DAY, 8);
+	startTime.set(Calendar.MINUTE, 00);
+	startTime.set(Calendar.SECOND, 00);
+	Calendar endTime = Calendar.getInstance();
+	endTime.set(Calendar.HOUR_OF_DAY, 9);
+	endTime.set(Calendar.MINUTE, 30);
+	endTime.set(Calendar.SECOND, 00);
+
+    
     try {
       _suportePersistente.iniciarTransaccao();
-      ISala sala = _salaPersistente.readByName(_sala2.getNome());
-      IDisciplinaExecucao de =
-        _disciplinaExecucaoPersistente
-      	  .readBySiglaAndAnoLectivAndSiglaLicenciatura(
-      	  _disciplinaExecucao1.getSigla(),
-      	  _disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
-      	  _disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla());
-      aula = new Aula(_diaSemana2, _inicio, _fim, _tipoAula, sala, de);
-      _suportePersistente.confirmarTransaccao();
+      ISala room = _salaPersistente.readByName("GA1");
+      assertNotNull(room);
+      
+      IDisciplinaExecucao de = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+	  assertNotNull(de);
+
+	  _suportePersistente.confirmarTransaccao();      	  
+      	  
+      lesson = new Aula(new DiaSemana(DiaSemana.DOMINGO), startTime, endTime, new TipoAula(TipoAula.TEORICA), room, de);
 
       _suportePersistente.iniciarTransaccao();
-      _aulaPersistente.lockWrite(aula);
+      _aulaPersistente.lockWrite(lesson);
       _suportePersistente.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testCreateNonExistingAula");
@@ -110,13 +196,41 @@ public class AulaOJBTest extends TestCaseOJB {
   /** Test of write method, of class ServidorPersistente.OJB.AulaOJB. */
   public void testWriteExistingUnchangedObject() {
     // write item already mapped into memory
+
+	IAula lesson = null;
+	ISala room = null;
+	IDisciplinaExecucao executionCourse = null;
+    
+	DiaSemana weekDay = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+    
+	Calendar startTime = Calendar.getInstance();
+	startTime.set(Calendar.HOUR_OF_DAY, 8);
+	startTime.set(Calendar.MINUTE, 00);
+	startTime.set(Calendar.SECOND, 00);
+	Calendar endTime = Calendar.getInstance();
+	endTime.set(Calendar.HOUR_OF_DAY, 9);
+	endTime.set(Calendar.MINUTE, 30);
+	endTime.set(Calendar.SECOND, 00);
+
+    
+	try {
+		_suportePersistente.iniciarTransaccao();
+		room = _salaPersistente.readByName("GA1");
+		assertNotNull(room);
+		
+		executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		assertNotNull(executionCourse);
+		lesson = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(weekDay, startTime, endTime, room);
+		_suportePersistente.confirmarTransaccao();
+	} catch (ExcepcaoPersistencia ex) {
+		fail("testReadByDiaSemanaAndInicioAndFimAndSala:fail read existing aula");
+	}
+
+	assertNotNull(lesson);
+
     try {
     	_suportePersistente.iniciarTransaccao();
-    	IAula aula = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(_diaSemana1, _inicio, _fim, _sala1);
-    	_suportePersistente.confirmarTransaccao();
-    	    	
-		_suportePersistente.iniciarTransaccao();
-      	_aulaPersistente.lockWrite(aula);
+      	_aulaPersistente.lockWrite(lesson);
       	_suportePersistente.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testWriteExistingUnchangedObject");
@@ -125,42 +239,92 @@ public class AulaOJBTest extends TestCaseOJB {
 
   /** Test of write method, of class ServidorPersistente.OJB.AulaOJB. */
   public void testWriteExistingChangedObject() {
-    IAula aula1 = null;
-    IAula aula2 = null;
-      
-    // write aula already mapped into memory
-    try {
-      _suportePersistente.iniciarTransaccao();
-      aula1 = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(_diaSemana1, _inicio, _fim, _sala1);
-      aula1.setTipo(new TipoAula(TipoAula.PRATICA));
-      _suportePersistente.confirmarTransaccao();
 
-      _suportePersistente.iniciarTransaccao();
-      aula2 = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(_diaSemana1, _inicio, _fim, _sala1);
-      _suportePersistente.confirmarTransaccao();
+	IAula lesson1 = null;
+	IAula lesson2 = null;
+	ISala room = null;
+	IDisciplinaExecucao executionCourse = null;
+    
+	DiaSemana weekDay = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+    
+	Calendar startTime = Calendar.getInstance();
+	startTime.set(Calendar.HOUR_OF_DAY, 8);
+	startTime.set(Calendar.MINUTE, 00);
+	startTime.set(Calendar.SECOND, 00);
+	Calendar endTime = Calendar.getInstance();
+	endTime.set(Calendar.HOUR_OF_DAY, 9);
+	endTime.set(Calendar.MINUTE, 30);
+	endTime.set(Calendar.SECOND, 00);
 
-      assertTrue(aula2.getTipo().equals(new TipoAula(TipoAula.PRATICA)));
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testWriteExistingChangedObject");
-    }
+    
+	try {
+		_suportePersistente.iniciarTransaccao();
+		room = _salaPersistente.readByName("GA1");
+		assertNotNull(room);
+		
+		executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		assertNotNull(executionCourse);
+		lesson1 = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(weekDay, startTime, endTime, room);
+		assertNotNull(lesson1);
+		lesson1.setDiaSemana(new DiaSemana(DiaSemana.DOMINGO));
+	
+		_suportePersistente.confirmarTransaccao();
+	} catch (ExcepcaoPersistencia ex) {
+		fail("testReadByDiaSemanaAndInicioAndFimAndSala:fail read existing aula");
+	}
+
+	
+	try {
+		_suportePersistente.iniciarTransaccao();
+		lesson2 = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(new DiaSemana(DiaSemana.DOMINGO), startTime, endTime, room);
+		assertNotNull(lesson2);
+		_suportePersistente.confirmarTransaccao();
+	} catch (ExcepcaoPersistencia ex) {
+		fail("testReadByDiaSemanaAndInicioAndFimAndSala:fail read existing aula");
+	}
   }
 
   /** Test of delete method, of class ServidorPersistente.OJB.AulaOJB. */
   public void testDeleteAula() {
-    try {
-    	_suportePersistente.iniciarTransaccao();
-    	IAula aula = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(_diaSemana1, _inicio, _fim, _sala1);
-    	_suportePersistente.confirmarTransaccao();
+	IAula lesson = null;
+	ISala room = null;
+	IDisciplinaExecucao executionCourse = null;
+    
+	DiaSemana weekDay = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+    
+	Calendar startTime = Calendar.getInstance();
+	startTime.set(Calendar.HOUR_OF_DAY, 8);
+	startTime.set(Calendar.MINUTE, 00);
+	startTime.set(Calendar.SECOND, 00);
+	Calendar endTime = Calendar.getInstance();
+	endTime.set(Calendar.HOUR_OF_DAY, 9);
+	endTime.set(Calendar.MINUTE, 30);
+	endTime.set(Calendar.SECOND, 00);
 
-      _suportePersistente.iniciarTransaccao();
-      _aulaPersistente.delete(aula);
-      _suportePersistente.confirmarTransaccao();
+    
+	try {
+		_suportePersistente.iniciarTransaccao();
+		room = _salaPersistente.readByName("GA1");
+		assertNotNull(room);
+		
+		executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		assertNotNull(executionCourse);
+		lesson = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(weekDay, startTime, endTime, room);
+		_suportePersistente.confirmarTransaccao();
+	
+		assertNotNull(lesson);
 
-      _suportePersistente.iniciarTransaccao();
-      IAula aula2 = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(_diaSemana1, _inicio, _fim, _sala1);
-      _suportePersistente.confirmarTransaccao();
+       _suportePersistente.iniciarTransaccao();
+       _aulaPersistente.delete(lesson);
+       _suportePersistente.confirmarTransaccao();
 
-      assertNull("testDeleteAula", aula2);
+		lesson = null;
+
+       _suportePersistente.iniciarTransaccao();
+       lesson = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(_diaSemana1, _inicio, _fim, _sala1);
+       _suportePersistente.confirmarTransaccao();
+
+      assertNull("testDeleteAula", lesson);
     } catch (ExcepcaoPersistencia ex) {
       fail("testDeleteAula");
     }
@@ -196,74 +360,33 @@ public class AulaOJBTest extends TestCaseOJB {
 
   /** Test of readByDisciplinaExecucao method, of class ServidorPersistente.OJB.AulaOJB. */
   public void testreadByDisciplinaExecucao() {
-    List aulas = null;
+    List lessons = null;
     // read existing disciplinaExecucao
-    try {
-      _suportePersistente.iniciarTransaccao();
-      aulas = _aulaPersistente.readByExecutionCourse(_disciplinaExecucao1);
-      _suportePersistente.confirmarTransaccao();
-      assertEquals("testReadByDisciplinaExecucao: Existing", 5, aulas.size());
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByDisciplinaExecucao:fail read existing disciplinaExecucao");
-    }
-      
-    // read unexisting disciplinaExecucao
-    try {
-      _suportePersistente.iniciarTransaccao();
-      aulas = _aulaPersistente.readByExecutionCourse(_disciplinaExecucao2);
-      assertTrue("testReadByDisciplinaExecucao: Unexisting", aulas.isEmpty());
-      _suportePersistente.confirmarTransaccao();
+    
+	IDisciplinaExecucao executionCourse1 = null;
+	IDisciplinaExecucao executionCourse2 = null;
+    
+	try {
+		_suportePersistente.iniciarTransaccao();
+		executionCourse1 = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		assertNotNull(executionCourse1);
+
+		executionCourse2 = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+		assertNotNull(executionCourse2);
+
+        lessons = _aulaPersistente.readByExecutionCourse(executionCourse1);
+        assertEquals("testReadByDisciplinaExecucao: Existing", 5, lessons.size());
+  
+  
+  		// read unexisting disciplinaExecucao
+    
+        lessons = _aulaPersistente.readByExecutionCourse(executionCourse2);
+        assertTrue("testReadByDisciplinaExecucao: Unexisting", lessons.isEmpty());
+        _suportePersistente.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByDisciplinaExecucao:fail read unexisting disciplinaExecucao");
     }
   }
 
-  /** Test of readByDisciplinaExecucaoETipo method, of class ServidorPersistente.OJB.AulaOJB. */
-  public void testreadByDisciplinaExecucaoETipo() {
-    List aulas = null;
-    // read existing disciplinaExecucao
-    try {
-      _suportePersistente.iniciarTransaccao();
-      aulas = _aulaPersistente.readByDisciplinaExecucaoETipo(_disciplinaExecucao1.getSigla(), _tipoAula);
-      _suportePersistente.confirmarTransaccao();
-      assertEquals("testReadByDisciplinaExecucaoETipo: Existing", 5, aulas.size());
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByDisciplinaExecucaoETipo:fail read existing disciplinaExecucao");
-    }
-
-    // read unexisting disciplinaExecucao
-    try {
-      _suportePersistente.iniciarTransaccao();
-      aulas = _aulaPersistente.readByDisciplinaExecucaoETipo(_disciplinaExecucao2.getSigla(), _tipoAula);
-      assertTrue("testReadByDisciplinaExecucaoETipo: Unexisting", aulas.isEmpty());
-      _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByDisciplinaExecucaoETipo:fail read unexisting disciplinaExecucao");
-    }
-  }
-
-  /** Test of readBySalaEmSemestre method, of class ServidorPersistente.OJB.AulaOJB. */
-  public void testreadBySalaEmSemestre() {
-    List aulas = null;
-    // read existing disciplinaExecucao
-    try {
-      _suportePersistente.iniciarTransaccao();
-      aulas = _aulaPersistente.readBySalaEmSemestre(_sala1.getNome(), new Integer(1));
-      _suportePersistente.confirmarTransaccao();
-      assertEquals("testReadBySalaEmSemestre: Existing", 21, aulas.size());
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadBySalaEmSemestre:fail read existing aulas em sala");
-    }
-
-    // read unexisting disciplinaExecucao
-    try {
-      _suportePersistente.iniciarTransaccao();
-      aulas = _aulaPersistente.readBySalaEmSemestre(_sala3.getNome(), new Integer(1));
-      assertTrue("testReadBySalaEmSemestre: Unexisting", aulas.isEmpty());
-      _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadBySalaEmSemestre:fail read unexisting aulas em sala");
-    }
-  }
 
 }

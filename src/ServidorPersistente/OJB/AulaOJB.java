@@ -117,28 +117,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 
 			List result = (List) query.execute();
 			lockRead(result);
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-
-	public List readByDisciplinaExecucaoETipo(String sigla, TipoAula tipoAula)
-		throws ExcepcaoPersistencia {
-		try {
-			//			List aulas = new ArrayList();
-			String oqlQuery = "select aulas from " + Aula.class.getName();
-			oqlQuery += " where tipo = $1";
-			oqlQuery += " and disciplinaExecucao.sigla = $2";
-			query.create(oqlQuery);
-			query.bind(tipoAula);
-			query.bind(sigla);
-			List result = (List) query.execute();
-			lockRead(result);
-			//			for (int i = 0; i != result.size(); i++)
-			//				aulas.add((IAula) (result.get(i)));
-			//			return aulas;
-			return result;
+			return result; 
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
