@@ -20,6 +20,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.TipoCurso;
 
 /**
  * 
@@ -57,9 +58,9 @@ public class MasterDegreeThesisOperations extends DispatchAction {
 
 		InfoStudent infoStudent = null;
 
-		Object args[] = { degreeType, studentNumber };
+		Object args[] = { studentNumber, new TipoCurso(degreeType)};
 		try {
-			infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "GetStudentByNumberAndDegreeType", args);
+			infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "ReadStudentByNumberAndDegreeType", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

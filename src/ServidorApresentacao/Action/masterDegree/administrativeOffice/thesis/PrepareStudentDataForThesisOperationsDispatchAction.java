@@ -62,9 +62,9 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends Dispatc
 		InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
 		/* * * get student * * */
-		Object argsStudent[] = { degreeType, studentNumber };
+		Object argsStudent[] = { studentNumber,new TipoCurso(degreeType) };
 		try {
-			infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "GetStudentByNumberAndDegreeType", argsStudent);
+			infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "ReadStudentByNumberAndDegreeType", argsStudent);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
