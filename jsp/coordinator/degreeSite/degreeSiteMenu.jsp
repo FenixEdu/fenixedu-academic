@@ -6,7 +6,7 @@
 
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
-	<bean:define id="infoExecutionDegreeId" name="infoExecutionDegree" property="idInternal"/>
+	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegree" property="idInternal"/>
 	
 	</br>
 	</br>
@@ -19,7 +19,7 @@
 			<b><bean:message key="link.coordinator.degreeSite.edit" /></b>
 			<ul>
 				<li>
-					<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+					<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;infoExecutionDegreeID=" + infoExecutionDegreeID.toString()%>">
 					    <bean:message key="label.description" />&nbsp;<bean:message key="label.degree" />
 					</html:link>
 					<br/>
@@ -27,7 +27,7 @@
 					</html:link>
 				</li>
 				<li>
-					<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+					<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;infoExecutionDegreeID=" + infoExecutionDegreeID.toString()%>">
 					    <bean:message key="label.accessRequirements" />
 					</html:link>
 					<br/>
@@ -35,7 +35,7 @@
 					</html:link>
 				</li>
 				<li>
-					<html:link page="<%= "/degreeSiteManagement.do?method=viewDescriptionCurricularPlan&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+					<html:link page="<%= "/degreeSiteManagement.do?method=viewDescriptionCurricularPlan&amp;infoExecutionDegreeID=" + infoExecutionDegreeID.toString()%>">
 					    <bean:message key="label.description" />&nbsp;<bean:message key="label.curricularPlan" /> 
 					</html:link>
 					<br/>
@@ -45,14 +45,14 @@
 			</ul>
 		</li>
 		<li>
-			<html:link page="<%= "/degreeSiteManagement.do?method=viewHistoric&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewHistoric&amp;infoExecutionDegreeID=" + infoExecutionDegreeID.toString()%>">
 			    <bean:message key="link.coordinator.degreeSite.historic" /></html:link>
 			    <br/>
 				<br/>
 			</html:link>
 		</li>
 		<li>
-			<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;executionDegreeId=" + infoExecutionDegreeId.toString() %>" target="_blank">
+			<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;executionDegreeID=" + infoExecutionDegreeID.toString() %>" target="_blank">
 			    <bean:message key="link.coordinator.degreeSite.viewSite" /></html:link>
 			    <br/>
 				<br/>

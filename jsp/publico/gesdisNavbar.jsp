@@ -38,7 +38,10 @@
  <dl id="seccao" style="display: none;">
 <logic:iterate id="curricularCourse" name="curricularCourses">
 	<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal" />
- 	<dd><html:link page="<%= "/viewSite.do?method=curricularCourse&amp;objectCode=" + pageContext.findAttribute("objectCode")  +"&amp;ccCode=" +  pageContext.findAttribute("curricularCourseId")+ "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>">
+	<bean:define id="degreeID" name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.idInternal" />
+ 	<dd>
+ 	<%--<html:link page="<%= "/viewSite.do?method=curricularCourse&amp;objectCode=" + pageContext.findAttribute("objectCode")  +"&amp;ccCode=" +  pageContext.findAttribute("curricularCourseId")+ "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>">--%>
+	<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseId") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  pageContext.getAttribute("degreeID")%>" > 	
 				<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>-<bean:write name="curricularCourse" property="name"/>
 	</html:link></dd>
 </logic:iterate>

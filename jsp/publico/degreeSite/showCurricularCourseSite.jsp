@@ -10,18 +10,18 @@
 
 <bean:define id="infoCurricularCourse" name="infoCurriculum" property="infoCurricularCourse" />
 <bean:define id="infoDegree" name="infoCurriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree" />
-<bean:define id="degreeCurricularPlanId" name="infoCurriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.idInternal" />
+<bean:define id="degreeCurricularPlanID" name="infoCurriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.idInternal" />
 
 <div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > <a href="http://www.ist.utl.pt/html/ensino/ensino.shtml">Ensino</a> &gt;&nbsp;
-	<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeId=" + request.getAttribute("degreeId").toString() %>">
+	<%--<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">--%>
 		<bean:write name="infoDegree" property="tipoCurso" />&nbsp<bean:write name="infoDegree" property="nome" />
-	</html:link>&gt;&nbsp;
-	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeId=" +  request.getAttribute("degreeId") %>" >
+	<%--</html:link>--%>&gt;&nbsp;
+	<%--<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") %>" >--%>
 		<bean:message key="label.curricularPlan"/>
-	</html:link>&gt;&nbsp;
-	<html:link page="<%= "/showDegreeCurricularPlan.do?method=showCurricularPlan&amp;degreeId=" + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId=" + pageContext.findAttribute("degreeCurricularPlanId").toString() + "&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
+	<%--</html:link>--%>&gt;&nbsp;
+	<%--<html:link page="<%= "/showDegreeCurricularPlan.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >--%>
 		<bean:message key="label.curriculum"/>
-	</html:link>&gt;&nbsp;
+	<%--</html:link>--%>&gt;&nbsp;
 	<bean:write name="infoCurricularCourse" property="name" />
 	
 </div>	
@@ -52,9 +52,9 @@
 		<tr>
 			<td class="box_cell">
 				<logic:iterate id="infoExecutionCourse" name="infoCurricularCourse" property="infoAssociatedExecutionCourses">
-					<bean:define id="executionCourseId" name="infoExecutionCourse" property="idInternal" />
+					<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal" />
 					<p>
-					<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseId").toString() %>" target="_blank" >
+					<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseID").toString() %>" target="_blank" >
 						<bean:write name="infoExecutionCourse" property="nome" />
 					</html:link>
 					<br />

@@ -42,9 +42,9 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
 
 		HttpSession session = request.getSession(true);
 
-		Integer executionPeriodOId = getFromRequest("executionPeriodOId", request);
-		Integer degreeId = getFromRequest("degreeId", request);
-		Integer curricularCourseId = getFromRequest("curricularCourseId", request);
+		Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+		Integer degreeId = getFromRequest("degreeID", request);
+		Integer curricularCourseId = getFromRequest("curricularCourseID", request);
 
 		GestorServicos gestorServicos = GestorServicos.manager();
 		Object[] args = { curricularCourseId, executionPeriodOId };
@@ -90,7 +90,7 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
 
 		request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
 		request.setAttribute("infoCurriculum", infoCurriculum);
-		request.setAttribute("degreeId", degreeId);
+		request.setAttribute("degreeID", degreeId);
 		return mapping.findForward("showCurricularCourseSite");
 	}
 
@@ -104,9 +104,9 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
 
 		HttpSession session = request.getSession(true);
 
-		Integer executionPeriodOId = getFromRequest("executionPeriodOId", request);
-		Integer degreeId = getFromRequest("degreeId", request);
-		Integer executionCourseId = getFromRequest("executionCourseId", request);
+		Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+		Integer degreeId = getFromRequest("degreeID", request);
+		Integer executionCourseId = getFromRequest("executionCourseID", request);
 
 		ISiteComponent firstPageComponent = new InfoSiteFirstPage();
 		ISiteComponent commonComponent = new InfoSiteCommon();

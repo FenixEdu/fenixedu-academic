@@ -6,17 +6,17 @@
 
 <ul class="treemenu">
 	<li>
-		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeId=" +  request.getAttribute("degreeId") %>" >
+		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") %>" >
 	    	<bean:message key="label.description"/>
 	    </html:link>                
     </li>
     <li>
-    	<html:link page="<%= "/showDegreeSite.do?method=showAccessRequirements&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeId=" +  request.getAttribute("degreeId") %>" >
+    	<html:link page="<%= "/showDegreeSite.do?method=showAccessRequirements&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") %>" >
         	<bean:message key="label.accessRequirements"/>
         </html:link>
 	</li>
 	<li>
-    	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeId=" +  request.getAttribute("degreeId") %>" >
+    	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") %>" >
 			<bean:message key="label.curricularPlan"/>
         </html:link>
 	</li>

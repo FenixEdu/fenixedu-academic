@@ -54,8 +54,8 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
 
-        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeId", request);
-        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
+        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
+        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
 
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
         request.setAttribute("inEnglish", inEnglish);
@@ -107,7 +107,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         fillForm(infoDegreeInfo, degreeInfoForm);
         Integer infoDegreeInfoId = infoDegreeInfo.getIdInternal();
 
-        request.setAttribute("infoDegreeInfoId", infoDegreeInfoId);
+        request.setAttribute("infoDegreeInfoID", infoDegreeInfoId);
 
         return mapping.findForward("viewInformation");
     }
@@ -125,11 +125,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
 
-        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeId", request);
-        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
+        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
+        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
 
-        Integer infoDegreeInfoId = getFromRequest("infoDegreeInfoId", request);
-        request.setAttribute("infoDegreeInfoId", infoDegreeInfoId);
+        Integer infoDegreeInfoId = getFromRequest("infoDegreeInfoID", request);
+        request.setAttribute("infoDegreeInfoID", infoDegreeInfoId);
 
         String info2Edit = getFromRequestString("info", request);
         request.setAttribute("info", info2Edit);
@@ -243,8 +243,8 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
 
-        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeId", request);
-        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
+        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
+        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
 
         Object[] args = { infoExecutionDegreeId };
 
@@ -296,7 +296,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
             "descriptionDegreeCurricularPlanEn",
             infoDegreeCurricularPlan.getDescriptionEn());
 
-        request.setAttribute("infoDegreeCurricularPlanId", infoDegreeCurricularPlan.getIdInternal());
+        request.setAttribute("infoDegreeCurricularPlanID", infoDegreeCurricularPlan.getIdInternal());
 
         return mapping.findForward("viewDescriptionCurricularPlan");
     }
@@ -314,11 +314,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
 
-        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeId", request);
-        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
+        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
+        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
 
-        Integer infoDegreeCurricularPlanId = getFromRequest("infoDegreeCurricularPlanId", request);
-        request.setAttribute("infoDegreeCurricularPlanId", infoDegreeCurricularPlanId);
+        Integer infoDegreeCurricularPlanId = getFromRequest("infoDegreeCurricularPlanID", request);
+        request.setAttribute("infoDegreeCurricularPlanID", infoDegreeCurricularPlanId);
 
         DynaActionForm descriptionCurricularPlanForm = (DynaActionForm) form;
 
@@ -378,7 +378,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         HttpSession session = request.getSession(false);
         ActionErrors errors = new ActionErrors();
 
-        Integer executionDegreeId = getFromRequest("infoExecutionDegreeId", request);
+        Integer executionDegreeId = getFromRequest("infoExecutionDegreeID", request);
 
         GestorServicos gestorServicos = GestorServicos.manager();
 
@@ -425,7 +425,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         }
 
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
-        request.setAttribute("infoExecutionDegreeId", executionDegreeId);
+        request.setAttribute("infoExecutionDegreeID", executionDegreeId);
 
         return mapping.findForward("viewHistoric");
     }

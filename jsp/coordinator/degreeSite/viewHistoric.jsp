@@ -11,9 +11,9 @@
 
 <logic:present name="infoExecutionDegrees">
 <logic:iterate id="infoExecutionDegree" name="infoExecutionDegrees">
-	<bean:define id="executionDegreeId" name="infoExecutionDegree" property="idInternal" />
+	<bean:define id="executionDegreeID" name="infoExecutionDegree" property="idInternal" />
 	<p>
-		<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;executionDegreeId=" + pageContext.findAttribute("executionDegreeId") %>" target="_blank">
+		<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;executionDegreeID=" + pageContext.findAttribute("executionDegreeID") %>" target="_blank">
 			<bean:message key="link.coordinator.degreeSite.viewSite" />&nbsp;<bean:message key="label.the" />&nbsp;<bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/>
 		</html:link>
 	</p>

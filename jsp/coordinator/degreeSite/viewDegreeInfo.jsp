@@ -6,6 +6,14 @@
 <p><span class="error"><html:errors/></span></p>
 
 <html:form action="/degreeSiteManagement">
+	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegreeID"/>
+	<html:hidden property="infoExecutionDegreeID" value="<%=  infoExecutionDegreeID.toString() %>"/>
+	
+	<bean:define id="infoDegreeInfoID" name="infoDegreeInfoID"/>
+	<html:hidden property="infoDegreeInfoID" value="<%=  infoDegreeInfoID.toString() %>"/>
+
+	<html:hidden property="method" value="editDegreeInformation" />
+
 	<logic:notPresent name="inEnglish">
 		<h2><bean:message key="title.coordinator.degreeSite.edit"/></h2>
 	</logic:notPresent>
@@ -16,14 +24,49 @@
 		<h2><bean:message key="title.coordinator.degreeSite.editEnglish"/></h2>
 	</logic:present>
 
-	<bean:define id="infoExecutionDegreeId" name="infoExecutionDegreeId"/>
-	<html:hidden property="infoExecutionDegreeId" value="<%=  infoExecutionDegreeId.toString() %>"/>
-	
-	<bean:define id="infoDegreeInfoId" name="infoDegreeInfoId"/>
-	<html:hidden property="infoDegreeInfoId" value="<%=  infoDegreeInfoId.toString() %>"/>
+	<logic:present name="inEnglish">		
+		<div class="gen-button">
+			<logic:present name="info" >
+			<logic:equal name="info" value="description" >		
+			<img src="<%= request.getContextPath() %>/images/portugal-flag.gif" alt="Icon: English version!" width="16" height="12" />
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;infoExecutionDegreeID=" + infoExecutionDegreeID.toString()%>">
+				<bean:message key="link.coordinator.degreeSite.editPortuguese"/>
+			</html:link>
+			</logic:equal>
+			</logic:present>			
+			
+			<logic:present name="info" >
+			<logic:equal name="info" value="acess" >		
+			<img src="<%= request.getContextPath() %>/images/portugal-flag.gif" alt="Icon: English version!" width="16" height="12" />
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;infoExecutionDegreeID=" + infoExecutionDegreeID.toString()%>">
+				<bean:message key="link.coordinator.degreeSite.editPortuguese"/>
+			</html:link>
+			</logic:equal>
+			</logic:present>				
+		</div>
+	</logic:present>	
 
-	<html:hidden property="method" value="editDegreeInformation" />
-
+	<logic:notPresent name="inEnglish">		
+		<div class="gen-button">
+			<logic:present name="info" >
+			<logic:equal name="info" value="description" >
+			<img src="<%= request.getContextPath() %>/images/england-flag.gif" alt="Icon: English version!" width="16" height="12" />
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;inEnglish=true&amp;infoExecutionDegreeID=" + infoExecutionDegreeID.toString()%>">
+				<bean:message key="link.coordinator.degreeSite.editEnglish"/>
+			</html:link>
+			</logic:equal>
+			</logic:present>
+				
+			<logic:present name="info" >
+			<logic:equal name="info" value="acess" >			
+			<img src="<%= request.getContextPath() %>/images/england-flag.gif" alt="Icon: English version!" width="16" height="12" />
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;inEnglish=true&amp;infoExecutionDegreeID=" + infoExecutionDegreeID.toString()%>">
+				<bean:message key="link.coordinator.degreeSite.editEnglish"/>
+			</html:link>			
+			</logic:equal>
+			</logic:present>			
+		</div>
+	</logic:notPresent>
 	<table>	
 		<logic:notPresent name="inEnglish">	
 				<logic:present name="info" >
@@ -266,44 +309,4 @@
 		<bean:message key="label.clear"/>
 	</html:reset>  
 	</br></br>
-	
-	<logic:notPresent name="inEnglish">		
-		<div class="gen-button">
-			<logic:present name="info" >
-			<logic:equal name="info" value="description" >
-			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;inEnglish=true&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
-				<bean:message key="link.coordinator.degreeSite.editEnglish"/>
-			</html:link>
-			</logic:equal>
-			</logic:present>
-				
-			<logic:present name="info" >
-			<logic:equal name="info" value="acess" >			
-			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;inEnglish=true&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
-				<bean:message key="link.coordinator.degreeSite.editEnglish"/>
-			</html:link>			
-			</logic:equal>
-			</logic:present>			
-		</div>
-	</logic:notPresent>
-
-	<logic:present name="inEnglish">		
-		<div class="gen-button">
-			<logic:present name="info" >
-			<logic:equal name="info" value="description" >		
-			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
-				<bean:message key="link.coordinator.degreeSite.editPortuguese"/>
-			</html:link>
-			</logic:equal>
-			</logic:present>			
-			
-			<logic:present name="info" >
-			<logic:equal name="info" value="acess" >		
-			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
-				<bean:message key="link.coordinator.degreeSite.editPortuguese"/>
-			</html:link>
-			</logic:equal>
-			</logic:present>				
-		</div>
-	</logic:present>	
 </html:form> 

@@ -41,9 +41,9 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 
         HttpSession session = request.getSession(true);
 
-        Integer executionPeriodOId = getFromRequest("executionPeriodOId", request);
-        Integer degreeId = getFromRequest("degreeId", request);
-        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanId", request);
+        Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+        Integer degreeId = getFromRequest("degreeID", request);
+        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
 
         GestorServicos gestorServicos = GestorServicos.manager();
         Object[] args = { degreeCurricularPlanId };
@@ -86,7 +86,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 
         request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
-        request.setAttribute("degreeId", degreeId);
+        request.setAttribute("degreeID", degreeId);
         return mapping.findForward("showDegreeCurricularPlan");
     }
 

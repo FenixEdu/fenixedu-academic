@@ -5,17 +5,17 @@
 
 <p><span class="error"><html:errors/></span></p>
 
-<logic:present name="infoDegreeCurricularPlanId" >
+<logic:present name="infoDegreeCurricularPlanID" >
 
 <html:form action="/degreeSiteManagement">
 
 	<h2><bean:message key="title.coordinator.degreeSite.edit"/></h2>
 
-	<bean:define id="infoExecutionDegreeId" name="infoExecutionDegreeId"/>
-	<html:hidden property="infoExecutionDegreeId" value="<%=  infoExecutionDegreeId.toString() %>"/>
+	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegreeID"/>
+	<html:hidden property="infoExecutionDegreeID" value="<%=  infoExecutionDegreeID.toString() %>"/>
 	
-	<bean:define id="infoDegreeCurricularPlanId" name="infoDegreeCurricularPlanId"/>
-	<html:hidden property="infoDegreeCurricularPlanId" value="<%=  infoDegreeCurricularPlanId.toString() %>"/>
+	<bean:define id="infoDegreeCurricularPlanID" name="infoDegreeCurricularPlanID"/>
+	<html:hidden property="infoDegreeCurricularPlanID" value="<%=  infoDegreeCurricularPlanID.toString() %>"/>
 
 	<html:hidden property="method" value="editDescriptionDegreeCurricularPlan" />
 	

@@ -5,7 +5,7 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoExecutionPeriod" %>
 <span class="error"><html:errors/></span>
-	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<%--	<table width="100%" border="0" cellpadding="0" cellspacing="0">
   		<tr>
     		<td class="infoop">
     			<html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" ><h2 style="display: inline;"><bean:message key="link.degree.consult"/></h2></html:link>
@@ -16,7 +16,7 @@
 <p>
 <bean:message key="message.public.index.degree.consult"/>
 </p>
-<br />
+<br />--%>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
   		<tr>
     		<td class="infoop">

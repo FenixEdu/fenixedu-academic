@@ -7,6 +7,6 @@
 <h2><bean:message key="link.coordinator.degreeSite.management"/></h2>
 
 <p><bean:message key="text.coordinator.degreeSite.editOK"/><br />
-<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;executionDegreeId=" + request.getAttribute("infoExecutionDegreeId")%>" target="_blank">
+<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;executionDegreeID=" + request.getAttribute("infoExecutionDegreeID")%>" target="_blank">
 <bean:message key="link.coordinator.degreeSite.viewSite" /></p>
 </html:link>
