@@ -532,4 +532,13 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    <filterChain>
+        <name>RepositoryDescriptorPerThreadFilter</name>
+        <expression>
+            RepositoryDescriptorPerThreadFilter</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>
+            ServidorAplicacao.Filtro.MetadataManager.RepositoryDescriptorPerThreadFilter</filterClass>
+    </filterChain>
 </filterChainsDefinitions>

@@ -5310,4 +5310,19 @@
             <chain name="ManagerAuthorization"/>
         </filterChains>            	
     </service>
+    <service>
+    	<name>ReadAllDepartments</name>
+    	<description>Service that retrieves all departments from the database</description>
+    	<implementationClass>ServidorAplicacao.Servico.department.ReadAllDepartments</implementationClass>
+    	<isTransactional>true</isTransactional>
+        <filterChains/>                    	
+    </service>
+    <service>
+    	<name>ReadProfessorshipsAndResponsibilitiesByDepartment</name>
+    	<description>Service that retrieves all professorships by department from the database</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.publico.teachersBody.ReadProfessorshipsAndResponsibilitiesByDepartment</implementationClass>
+    	<isTransactional>true</isTransactional>
+        <filterChains/>                    	
+    </service>
 </serviceDefinitions>

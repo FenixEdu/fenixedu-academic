@@ -117,6 +117,7 @@
                 dynamic="true">
         <form-property name="executionYearId" type="java.lang.Integer"/>
         <form-property name="executionDegreeId" type="java.lang.Integer"/>
+        <form-property name="departmentId" type="java.lang.Integer"/>
       </form-bean>
   </form-beans>     
      

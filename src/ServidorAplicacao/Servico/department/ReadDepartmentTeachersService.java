@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Servico.department;
 
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,23 +44,30 @@ public class ReadDepartmentTeachersService extends SearchService
         return "ReadDepartmentTeachersService";
     }
 
-    /* (non-Javadoc)
-     * @see ServidorAplicacao.Servico.framework.SearchService#cloneDomainObject(Dominio.IDomainObject)
-     */
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servico.framework.SearchService#cloneDomainObject(Dominio.IDomainObject)
+	 */
     protected InfoObject cloneDomainObject(IDomainObject object)
     {
         return Cloner.copyITeacher2InfoTeacher((ITeacher) object);
     }
 
-    /* (non-Javadoc)
-     * @see ServidorAplicacao.Servico.framework.SearchService#doSearch(java.util.HashMap, ServidorPersistente.ISuportePersistente)
-     */
-    protected List doSearch(HashMap searchParameters, ISuportePersistente sp) throws ExcepcaoPersistencia
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servico.framework.SearchService#doSearch(java.util.HashMap,
+	 *      ServidorPersistente.ISuportePersistente)
+	 */
+    protected List doSearch(HashMap searchParameters, ISuportePersistente sp)
+        throws ExcepcaoPersistencia
     {
         Integer departmentId = Integer.valueOf((String) searchParameters.get("idInternal"));
         IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
-        IDepartment department = (IDepartment) departmentDAO.readByOId(new Department(departmentId), false);
-        
+        IDepartment department =
+            (IDepartment) departmentDAO.readByOId(new Department(departmentId), false);
+
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
         return teacherDAO.readByDepartment(department);
     }

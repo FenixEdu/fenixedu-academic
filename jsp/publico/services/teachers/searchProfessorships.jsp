@@ -34,5 +34,19 @@
             name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/> </html:option>
       </logic:iterate>
     </html:select>
-    <html:submit/>
+    <html:submit>Submeter</html:submit>
+</html:form>
+
+<h2>Consulta Por Departmento</h2>
+<html:form action="/searchProfessorships" >
+    <html:hidden property="method" value="showTeachersBodyByDepartment"/>
+    <html:select property="departmentId">
+        
+    <logic:iterate id="department" name="departments" > 
+   <bean:define    id="departmentId"   name="department" property="idInternal"/>
+        <html:option value="<%= departmentId.toString() %>"> <bean:write name="department" 
+            property="name"/>  </html:option>
+      </logic:iterate>
+    </html:select>
+    <html:submit>Submeter</html:submit>
 </html:form>

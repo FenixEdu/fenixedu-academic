@@ -511,4 +511,11 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
+    <filter>
+        <name>RepositoryDescriptorPerThreadFilter</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.MetadataManager.RepositoryDescriptorPerThreadFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>
 </filterDefinitions>

@@ -1,12 +1,9 @@
 /*
- * SitioOJB.java
  * 
- * Created on 25 de Agosto de 2002, 1:02
  */
 
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -143,28 +140,12 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
         }
     }
 
-    public ArrayList lerTodosOsDepartamentos() throws ExcepcaoPersistencia
-    {
-        try
-        {
-            ArrayList listade = new ArrayList();
-            String oqlQuery = "select all from " + Department.class.getName();
-            query.create(oqlQuery);
-            List result = (List) query.execute();
-            super.lockRead(result);
-            if (result.size() != 0)
-            {
-                ListIterator iterator = result.listIterator();
-                while (iterator.hasNext())
-                    listade.add(iterator.next());
-            }
-            return listade;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+    public List readAllDepartments() throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();  
+        return queryList(Department.class,crit);
     }
+    
+   
 
     public void apagarDepartamento(IDepartment disciplina) throws ExcepcaoPersistencia
     {

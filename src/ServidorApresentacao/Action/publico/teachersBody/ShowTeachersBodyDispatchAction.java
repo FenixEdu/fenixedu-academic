@@ -53,6 +53,8 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction
             List executionYears =
                 (List) ServiceUtils.executeService(null, "ReadAllExecutionYears", null);
 
+            List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments", null);
+
             Collections.sort(executionDegrees, new ComparatorByNameForInfoExecutionDegree());
 
             Iterator iter = executionDegrees.iterator();
@@ -70,6 +72,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction
 
             request.setAttribute("executionDegrees", executionDegrees);
             request.setAttribute("executionYears", executionYears);
+            request.setAttribute("departments", departments);
         }
         catch (FenixServiceException e)
         {
@@ -154,7 +157,46 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction
         throws FenixActionException
     {
 
-        return null;
+        DynaActionForm departmentForm = (DynaActionForm) actionForm;
+        Integer departmentId = (Integer) departmentForm.get("departmentId");
+        try
+        {
+
+            Object[] args = { departmentId };
+
+            List detailedProfessorShipsListofLists =
+                (List) ServiceUtils.executeService(
+                    null,
+                    "ReadProfessorshipsAndResponsibilitiesByDepartment",
+                    args);
+            Collections.sort(detailedProfessorShipsListofLists, new Comparator()
+            {
+
+                public int compare(Object o1, Object o2)
+                {
+                    List list1 = (List) o1;
+                    List list2 = (List) o2;
+                    DetailedProfessorship dt1 = (DetailedProfessorship) list1.get(0);
+                    DetailedProfessorship dt2 = (DetailedProfessorship) list2.get(0);
+
+                    return dt1
+                        .getInfoProfessorship()
+                        .getInfoExecutionCourse()
+                        .getNome()
+                        .compareToIgnoreCase(
+                        dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
+                }
+
+            });
+
+            request.setAttribute("detailedProfessorShipsListofLists", detailedProfessorShipsListofLists);
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+
+        return mapping.findForward("showProfessorships");
     }
 
 }
