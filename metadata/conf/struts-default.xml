@@ -73,7 +73,9 @@
 			  type="ServidorApresentacao.Action.AuthenticationAction"
 			  name="authenticationForm" 	  		  
 			  input="/loginPage.jsp"
-	  		  scope="request">
+	  		  scope="request"
+	  		  className="ServidorApresentacao.mapping.ActionMappingForAuthentication">
+	  		  <set-property property="application" value="@application@"/>
 		<forward name="sucess" path="/home.do"/>
 	  </action>
 
