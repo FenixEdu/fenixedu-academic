@@ -342,12 +342,4 @@ public class CurricularCourse implements ICurricularCourse {
 	public void setScopes(List scopes) {
 		this.scopes = scopes;
 	}
-
-//	/* (non-Javadoc)
-//	 * @see java.lang.Object#hashCode()
-//	 */
-//	public int hashCode() {
-//		return name.hashCode() + code.hashCode();
-//	}
-
 }

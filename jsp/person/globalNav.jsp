@@ -1,1 +1,1 @@
-&Aacuterea Pessoa
+&Aacute;rea Pessoa

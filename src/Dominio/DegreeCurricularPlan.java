@@ -190,12 +190,4 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	public void setCurricularCourses(List curricularCourses) {
 		this.curricularCourses = curricularCourses;		
 	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	public int hashCode() {
-		return name.hashCode();
-	}
-
 }

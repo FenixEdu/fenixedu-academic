@@ -113,12 +113,4 @@ public class Curso implements ICurso {
 	public void setTipoCurso(TipoCurso tipoCurso) {
 		this.tipoCurso = tipoCurso;
 	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	public int hashCode() {
-		return getSigla().hashCode()+getNome().hashCode();
-	}
-
 }

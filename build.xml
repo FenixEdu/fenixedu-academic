@@ -145,7 +145,7 @@
             description="Creates web application"
             >
 	    <jar jarfile="${deploy.home}/${app.name}.war"
-         basedir="${build.home}" update="true"/>
+         basedir="${build.home}/app/" update="true"/>
     </target>
     
 
@@ -697,12 +697,13 @@
 	</target>
 
 	<target name="validate-xml">
-		<xmlvalidate warn="false" failonerror="false">
+<!--		<xmlvalidate warn="false" failonerror="false">
 				<fileset dir="${webapp.metadata}" includes="**/*.xml">
 					<exclude name="**/repository*.xml"/>
 					<exclude name="**/validator-rules.xml"/>
 					<exclude name="**/fenix-validator-rules.xml"/>					
 				</fileset>
 		</xmlvalidate>
+		-->
 	</target>
 </project>
