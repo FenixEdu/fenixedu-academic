@@ -10,7 +10,6 @@ import java.util.HashSet;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import servletunit.struts.MockStrutsTestCase;
 import DataBeans.InfoClass;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
@@ -27,6 +26,7 @@ import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
+import ServidorApresentacao.TestCasePresentation;
 import ServidorApresentacao.Action.sop.ClassShiftManagerDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -42,7 +42,7 @@ import ServidorPersistente.ITurnoPersistente;
  * @author João Mota
  *
  */
-public class ClassShiftManagerDispatchActionTest extends MockStrutsTestCase {
+public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 	protected ISuportePersistente _suportePersistente = null;
 	protected ICursoPersistente _cursoPersistente = null;
 	protected ICursoExecucaoPersistente _cursoExecucaoPersistente = null;
@@ -153,7 +153,7 @@ public class ClassShiftManagerDispatchActionTest extends MockStrutsTestCase {
 		getSession().setAttribute(SessionConstants.U_VIEW, userView);
 
 		//fills the form
-		addRequestParameter("shiftName", "turno2");
+		addRequestParameter("shiftName", "turno3");
 
 		//		Coloca contexto em sessão
 		InfoDegree iL =
@@ -177,7 +177,7 @@ public class ClassShiftManagerDispatchActionTest extends MockStrutsTestCase {
 			new InfoExecutionCourse(
 				"Trabalho Final de Curso I",
 				"TFCI",
-				"",
+				"programa1",
 				new Double(0),
 				new Double(0),
 				new Double(0),
@@ -190,7 +190,7 @@ public class ClassShiftManagerDispatchActionTest extends MockStrutsTestCase {
 		InfoClass oldClass =
 			new InfoClass(
 				"10501",
-				new Integer(5),
+				new Integer(1),
 				iLE,
 				new InfoExecutionPeriod(
 					"2º Semestre",
@@ -214,57 +214,57 @@ public class ClassShiftManagerDispatchActionTest extends MockStrutsTestCase {
 
 	}
 
-	//	public void testUnAuthorizedRemoveClassShift() {
-	//		//set request path
-	//		setRequestPathInfo("sop", "/ClassShiftManagerDA");
-	//		//sets needed objects to session/request
-	//		addRequestParameter("method", "removeClassShift");
-	//
-	//		//coloca credenciais na sessao
-	//		HashSet privilegios = new HashSet();
-	//		IUserView userView = new UserView("user", privilegios);
-	//		getSession().setAttribute(SessionConstants.U_VIEW, userView);
-	//
-	//		//fills the form
-	//		addRequestParameter("shiftName", "turno1");
-	//
-	//		//		Coloca contexto em sessão
-	//		InfoDegree iL =
-	//			new InfoDegree(
-	//				"LEIC",
-	//				"Licenciatura de Engenharia Informatica e de Computadores");
-	//		InfoExecutionDegree iLE =
-	//			new InfoExecutionDegree(
-	//				new InfoDegreeCurricularPlan("plano1", iL),
-	//				new InfoExecutionYear("2002/2003"));
-	//		getSession().setAttribute(
-	//			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-	//			new InfoExecutionPeriod(
-	//				"2º Semestre",
-	//				new InfoExecutionYear("2002/2003")));
-	//		getSession().setAttribute(
-	//			SessionConstants.INFO_EXECUTION_DEGREE_KEY,
-	//			iLE);
-	//
-	//		//puts old classview in session
-	//		InfoClass oldClass =
-	//			new InfoClass(
-	//				"10501",
-	//				new Integer(5),
-	//				iLE,
-	//				new InfoExecutionPeriod(
-	//					"2º Semestre",
-	//					new InfoExecutionYear("2002/2003")));
-	//		getSession().setAttribute(SessionConstants.CLASS_VIEW, oldClass);
-	//
-	//		//action perform
-	//		actionPerform();
-	//
-	//		//verify that there are errors
-	//		String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
-	//		verifyActionErrors(errors);
-	//
-	//	}
+	public void testUnAuthorizedRemoveClassShift() {
+		//set request path
+		setRequestPathInfo("sop", "/ClassShiftManagerDA");
+		//sets needed objects to session/request
+		addRequestParameter("method", "removeClassShift");
+
+		//coloca credenciais na sessao
+		HashSet privilegios = new HashSet();
+		IUserView userView = new UserView("user", privilegios);
+		getSession().setAttribute(SessionConstants.U_VIEW, userView);
+
+		//fills the form
+		addRequestParameter("shiftName", "turno1");
+
+		//		Coloca contexto em sessão
+		InfoDegree iL =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
+		InfoExecutionDegree iLE =
+			new InfoExecutionDegree(
+				new InfoDegreeCurricularPlan("plano1", iL),
+				new InfoExecutionYear("2002/2003"));
+		getSession().setAttribute(
+			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+			new InfoExecutionPeriod(
+				"2º Semestre",
+				new InfoExecutionYear("2002/2003")));
+		getSession().setAttribute(
+			SessionConstants.INFO_EXECUTION_DEGREE_KEY,
+			iLE);
+
+		//puts old classview in session
+		InfoClass oldClass =
+			new InfoClass(
+				"10501",
+				new Integer(5),
+				iLE,
+				new InfoExecutionPeriod(
+					"2º Semestre",
+					new InfoExecutionYear("2002/2003")));
+		getSession().setAttribute(SessionConstants.CLASS_VIEW, oldClass);
+
+		//action perform
+		actionPerform();
+
+		//verify that there are errors
+		String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
+		verifyActionErrors(errors);
+
+	}
 	//
 	//	public void testAuthorizedRemoveClassShift() {
 	//		//set request path
