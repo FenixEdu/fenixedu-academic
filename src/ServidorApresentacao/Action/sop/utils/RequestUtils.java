@@ -145,4 +145,14 @@ public abstract class RequestUtils {
 		
 		return sections;
 	}
+	
+	public static final void setSiteToRequest(HttpServletRequest request,InfoSite infoSite) {
+		if (infoSite!=null) {
+			request.setAttribute("siteMail",infoSite.getMail());
+			request.setAttribute("altSite",infoSite.getAlternativeSite());
+			request.setAttribute("initStat",infoSite.getInitialStatement());
+			request.setAttribute("intro",infoSite.getIntroduction());
+			
+		}
+	}
 }
