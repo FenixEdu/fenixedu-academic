@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import DataBeans.InfoRole;
+import ServidorAplicacao.ICandidateView;
 import ServidorAplicacao.IUserView;
 import Util.RoleType;
 
@@ -13,6 +14,7 @@ import Util.RoleType;
 public class UserView implements IUserView {
 	private String utilizador;
 	private Collection roles;
+	private ICandidateView candidateView;
 
 	public UserView(String utilizador, Collection roles) {
 		setUtilizador(utilizador);
@@ -39,6 +41,8 @@ public class UserView implements IUserView {
 	}
 
 
+	
+
 	/**
 	 * @return Collection
 	 */
@@ -52,6 +56,20 @@ public class UserView implements IUserView {
 	 */
 	public void setRoles(Collection roles) {
 		this.roles = roles;
+	}
+
+	/**
+	 * @return
+	 */
+	public ICandidateView getCandidateView() {
+		return candidateView;
+	}
+
+	/**
+	 * @param view
+	 */
+	public void setCandidateView(ICandidateView view) {
+		candidateView = view;
 	}
 
 }

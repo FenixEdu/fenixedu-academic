@@ -10,17 +10,23 @@ package ServidorAplicacao.Servico;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
+import Dominio.ICandidateSituation;
+import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
 import Dominio.IRole;
 import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.ICandidateView;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.RoleType;
+import Util.State;
 
 public class Autenticacao implements IServico {
 
@@ -73,6 +79,43 @@ public class Autenticacao implements IServico {
 				}
 			}
 			UserView userView = new UserView(pessoa.getUsername(), roles);
+			
+			// Check if the Person is a Candidate
+			
+			if (userView.hasRoleType(RoleType.MASTER_DEGREE_CANDIDATE)){
+				List masterDegreeCandidates = null; 
+				try {
+					masterDegreeCandidates = SuportePersistenteOJB.getInstance().getIPersistentMasterDegreeCandidate().
+											readMasterDegreeCandidatesByUsername(userView.getUtilizador());
+				} catch(ExcepcaoPersistencia ex) {
+					ex.printStackTrace(System.out);
+					throw new FenixServiceException(ex.getMessage());
+				}
+				
+				// Create a list with the active situations of the Candidate
+				ICandidateView candidateView = null;
+				List situations = new ArrayList();
+				
+				Iterator iterator = masterDegreeCandidates.iterator();
+				while(iterator.hasNext()){
+					IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next();
+					Iterator situationIter = masterDegreeCandidate.getSituations().iterator();
+					while(situationIter.hasNext()){
+						ICandidateSituation candidateSituation = (ICandidateSituation) situationIter.next();
+						if (candidateSituation.getValidation().equals(new State(State.ACTIVE)))
+							situations.add(Cloner.copyICandidateSituation2InfoCandidateSituation(candidateSituation));						
+					}
+				}
+				candidateView = new CandidateView(situations);
+				
+				userView.setCandidateView(candidateView);
+				
+				System.out.println(userView.getCandidateView().getInfoApplicationInfos().size());				
+				System.out.println(userView.getCandidateView().changeablePersonalInfo());				
+				
+			} else userView.setCandidateView(null);
+			
+			
 			return userView;
 		} else
 			throw new ExcepcaoAutenticacao("Autenticacao incorrecta");

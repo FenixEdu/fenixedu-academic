@@ -9,5 +9,6 @@ import Util.RoleType;
  */
 public interface IUserView { 
 	Collection getRoles();
+	ICandidateView getCandidateView();
 	boolean hasRoleType(RoleType roleType);
 }
