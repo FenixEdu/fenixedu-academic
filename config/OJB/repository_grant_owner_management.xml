@@ -1,1 +1,44 @@
-<!-- fazer :)  -->
+<!-- Please keep user defined mappings in this file only
+     to avoid mixing user defined and system mappings. -->   
+<!-- Mapping of User defined classes starts here -->
+
+<!-- Definitions for Dominio.grant.owner.GrantOwner -->
+   <class-descriptor
+   	  class="Dominio.grant.owner.GrantOwner"
+   	  table="grant_owner"
+   >
+      <field-descriptor 
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+       <field-descriptor
+		name="keyPerson"
+		column="KEY_PERSON"
+		jdbc-type="INTEGER"
+	/>
+	 <field-descriptor
+		name="number"
+		column="NUMBER"
+		jdbc-type="INTEGER"
+	/>
+	 <field-descriptor
+		name="dateSendCGD"
+		column="DATE_SEND_CGD"
+		jdbc-type="TIMESTAMP"
+	/>
+	 <field-descriptor
+		name="cardCopyNumber"
+		column="CARD_COPY_NUMBER"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+			name="person"
+			class-ref="Dominio.Pessoa"
+			proxy="true">
+		<foreignkey field-ref="keyPerson"/>
+	</reference-descriptor>   
+   </class-descriptor>
+	
