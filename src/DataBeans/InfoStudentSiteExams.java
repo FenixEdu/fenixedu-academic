@@ -13,20 +13,19 @@ import java.util.List;
  */
 public class InfoStudentSiteExams implements ISiteComponent {
 	private List examsToEnroll;
-	private List examsEnrolled;
-	private List studentDistributions;
+	private List examsEnrolledDistributions;
 
 	/**
 	 * @param studentDistributions
 	 */
-	public void setStudentDistributions(List studentDistributions) {
-		this.studentDistributions = studentDistributions;
+	public void setExamsEnrolledDistributions(List studentDistributions) {
+		this.examsEnrolledDistributions = studentDistributions;
 	}
 	
 	public InfoExamStudentRoom getInfoExamStudentRoom (int examIdInternal) {
 		InfoExamStudentRoom infoExamStudentRoom = null;
-		for (int i=0; i < studentDistributions.size(); i++) {
-			infoExamStudentRoom = (InfoExamStudentRoom) studentDistributions.get(0);
+		for (int i=0; i < examsEnrolledDistributions.size(); i++) {
+			infoExamStudentRoom = (InfoExamStudentRoom) examsEnrolledDistributions.get(0);
 			if (infoExamStudentRoom.getIdInternal().intValue() == examIdInternal) {
 				break;
 			}
@@ -41,17 +40,12 @@ public class InfoStudentSiteExams implements ISiteComponent {
 	}
 	public InfoStudentSiteExams(
 		List examEnrollmentsToEnroll,
-		List examEnrollmentsEnrolled) {
-		setExamsEnrolled(examEnrollmentsEnrolled);
+		List studentDistributions) {
+		;
 		setExamsToEnroll(examEnrollmentsToEnroll);
+		setExamsEnrolledDistributions(studentDistributions);
 	}
-	/**
-	 * @return
-	 */
-	public List getExamsEnrolled() {
-		return examsEnrolled;
-	}
-
+	
 	/**
 	 * @return
 	 */
@@ -59,12 +53,7 @@ public class InfoStudentSiteExams implements ISiteComponent {
 		return examsToEnroll;
 	}
 
-	/**
-	 * @param list
-	 */
-	public void setExamsEnrolled(List list) {
-		examsEnrolled = list;
-	}
+	
 
 	/**
 	 * @param list
@@ -78,8 +67,7 @@ public class InfoStudentSiteExams implements ISiteComponent {
 		if (arg0 instanceof InfoStudentSiteExams) {
 			InfoStudentSiteExams component = (InfoStudentSiteExams) arg0;
 			result =
-				listEquals(getExamsEnrolled(), component.getExamsEnrolled())
-					&& listEquals(
+				listEquals(
 						getExamsToEnroll(),
 						component.getExamsToEnroll());
 
@@ -104,4 +92,11 @@ public class InfoStudentSiteExams implements ISiteComponent {
 
 		return result;
 	}
+	/**
+	 * @return
+	 */
+	public List getExamsEnrolledDistributions() {
+		return examsEnrolledDistributions;
+	}
+
 }

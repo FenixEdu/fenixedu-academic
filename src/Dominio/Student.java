@@ -1,7 +1,5 @@
 package Dominio;
 
-import java.util.List;
-
 import Util.StudentState;
 import Util.TipoCurso;
 
@@ -22,7 +20,7 @@ public class Student extends DomainObject implements IStudent {
 	private Integer personKey;
 	private Integer studentKindKey;
 	private IPessoa person;
-	private List examsEnrolled;
+	
 	
 	public Student(Integer idInternal){
 		setIdInternal(idInternal);
@@ -185,18 +183,6 @@ public class Student extends DomainObject implements IStudent {
 		this.studentKindKey = studentKindKey;
 	}
 
-	/**
-	 * @return
-	 */
-	public List getExamsEnrolled() {
-		return examsEnrolled;
-	}
-
-	/**
-	 * @param list
-	 */
-	public void setExamsEnrolled(List list) {
-		examsEnrolled = list;
-	}
+	
 
 }

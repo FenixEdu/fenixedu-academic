@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %> 
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="examsToEnroll" name="component" property="examsToEnroll" />
-<bean:define id="examsEnrolled" name="component" property="examsEnrolled" />
+<bean:define id="examsEnrolled" name="component" property="examsEnrolledDistributions" />
 
 <logic:empty name="examsToEnroll" >
 	<logic:empty name="examsEnrolled">
@@ -44,6 +44,7 @@
 </logic:notEmpty>
 <br/>
 <br/>
+<html:errors/>
 <logic:notEmpty name="examsEnrolled" >
 	<h2><bean:message key="label.examsEnrolled"/></h2>
 	<table width="90%" align="center">
@@ -55,7 +56,8 @@
 			<td class="listClasses-header" >&nbsp;</td>
 			
 		</tr>	
-		<logic:iterate id="exam" name="examsEnrolled" type="DataBeans.InfoExam">
+		<logic:iterate id="examStudentRoom" name="examsEnrolled" type="DataBeans.InfoExamStudentRoom">
+			<bean:define id="exam" name="examStudentRoom" property="infoExam"/>
 			<bean:define id="objectCode" name="exam" property="idInternal"/>	
 			<bean:define id="infoExecutionCourse" name="exam" property="infoExecutionCourse"/>
 			<tr>
@@ -64,20 +66,20 @@
 				<td class="listClasses"><bean:write name="exam" property="date"/></td>
 				<td class="listClasses"><bean:write name="exam" property="beginningHour"/></td>
 				<td class="listClasses">
-					<logic:present name="component" property='<%= "infoExamStudentRoom["+ exam.getIdInternal()+"]" %>'>
-						<bean:define id="distribution" name="component" property='<%= "infoExamStudentRoom["+ exam.getIdInternal()+"]" %>'/>
-						&nbsp;
-						<logic:present name="distribution" property="infoRoom">
-							<bean:write name="distribution" property="infoRoom.nome"/>
-						</logic:present>
-					</logic:present>
-					<logic:notPresent name="component" property='<%= "infoExamStudentRoom["+ exam.getIdInternal()+"]" %>'>
+					<logic:notPresent name="examStudentRoom" property="infoRoom">
+						<logic:match name="exam" property="enrollmentAuthorization" value="true">
 						<html:link 
 							page="<%= "/examEnrollmentManager.do?method=unEnrollStudent&amp;objectCode="+ pageContext.findAttribute("objectCode") %>" >
 								<bean:message key="label.unEnroll" />
-						</html:link>
+						</html:link> 
+						</logic:match>
+						<logic:notMatch name="exam" property="enrollmentAuthorization" value="true">
+						&nbsp;
+						</logic:notMatch>
 					</logic:notPresent>
-					
+					<logic:present name="examStudentRoom" property="infoRoom">
+							<bean:write name="examStudentRoom" property="infoRoom.nome"/>						
+					</logic:present>		
 				</td>
 			</tr>
 		</logic:iterate>

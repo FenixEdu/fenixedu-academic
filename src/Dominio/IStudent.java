@@ -6,8 +6,6 @@
 
 package Dominio;
 
-import java.util.List;
-
 import Util.StudentState;
 import Util.TipoCurso;
 
@@ -22,7 +20,7 @@ public interface IStudent extends IDomainObject {
 	public IPessoa getPerson();
 	public IStudentKind getStudentKind();
 	public TipoCurso getDegreeType();
-	public List getExamsEnrolled() ;
+	
 
 	
 	public void setNumber(Integer number);
@@ -30,5 +28,5 @@ public interface IStudent extends IDomainObject {
 	public void setPerson(IPessoa person);
 	public void setDegreeType(TipoCurso degreeType);	
 	public void setStudentKind(IStudentKind studentKind);
-	public void setExamsEnrolled(List list);
+	
 }

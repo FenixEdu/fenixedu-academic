@@ -18,6 +18,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.Exam;
+import Dominio.ExamStudentRoom;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.IExamExecutionCourse;
@@ -52,8 +53,10 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 	public void delete(IExam exam) throws ExcepcaoPersistencia {
 
 		// TODO : Return indication if exam can be romoved or not.
-		if (exam.getStudentsEnrolled() != null
-			|| exam.getStudentsEnrolled().isEmpty()) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("exam.idInternal", exam.getIdInternal());
+		List examEnrollments = queryList(ExamStudentRoom.class, criteria);
+		if (examEnrollments != null || !examEnrollments.isEmpty()) {
 
 			List associatedExecutionCourses =
 				exam.getAssociatedExecutionCourses();
