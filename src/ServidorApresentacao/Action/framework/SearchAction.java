@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoObject;
 import ServidorAplicacao.IUserView;
@@ -27,16 +27,21 @@ import ServidorApresentacao.mapping.framework.SearchActionMapping;
 
 /**
  * Example:
+ * 
  * <pre>
- * 	  <action path="...."  type="...."  name="..." input="..." scope="request" className="ServidorApresentacao.framework.actions.mappings.SearchActionMapping"> 
+ * 	  <action path="...."  type="...."  name="..." input="..." scope="request" className="ServidorApresentacao.mapping.framework.SearchActionMapping"> 
  * 								<set-property property="serviceName" value="..."/>
  * 								<set-property property="objectAttribute" value="..."/>
  * 								<set-property property="listAttribute" value="..."/>
  *  								<set-property property="notFoundMessageKey" value="..."/>
+ * 								<forward name="search-form" path="..."/>* 
  * 								<forward name="list-one" path="..."/> 
  *   								<forward name="list-many" path="..."/>
  * 		</action>
  * </pre>
+ * 
+ * 
+ * 
  * 
  * The properties are:
  * <ul>
@@ -50,6 +55,7 @@ import ServidorApresentacao.mapping.framework.SearchActionMapping;
  * </u>
  * 
  * <b>Notes:</b><br>
+ * 
  * <pre>
  * <li>The Struts Exception handling feature should be used to handle exceptions from the services configured.
  * </li>
@@ -58,25 +64,26 @@ import ServidorApresentacao.mapping.framework.SearchActionMapping;
  * @see ServidorApresentacao.framework.actions.mappings.SearchActionMapping
  * @author jpvl
  */
-public abstract class SearchAction extends Action
+public class SearchAction extends DispatchAction
 {
     /**
 	 * Invokes the service <code>serviceName</code>.
+	 * 
 	 * @param mapping
-	 *                   should be an instance of @see ServidorApresentacao.framework.actions.mappings.SearchActionMapping
+	 *                   should be an instance of
+	 * @see ServidorApresentacao.framework.actions.mappings.SearchActionMapping
 	 * @param form
 	 * @param request
 	 * @param response
-	 * @return 
-	 * 	if search result size equals to 1 returns <code>list-one</code> forward.<br> 
-	 * 	if search result size greater then 1 returns <code>list-many</code> forward. <br>
-	 * 	if search result size equals to 0 returns <code>inputForward</code> 		   
-	 * 		
+	 * @return if search result size equals to 1 returns <code>list-one</code> forward. <br>if search
+	 *              result size greater then 1 returns <code>list-many</code> forward. <br>if search
+	 *              result size equals to 0 returns <code>inputForward</code>
+	 * 
 	 * @throws Exception
 	 * 
 	 * TODO: Some verifications should be done... not tested yet
 	 */
-    public ActionForward execute(
+    public ActionForward doSearch(
         ActionMapping mapping,
         ActionForm form,
         HttpServletRequest request,
@@ -110,9 +117,31 @@ public abstract class SearchAction extends Action
             actionForward = mapping.findForward("list-one");
         } else
         {
-            request.setAttribute(searchActionMapping.getListAttribute(), result);
             actionForward = mapping.findForward("list-many");
         }
+		request.setAttribute(searchActionMapping.getListAttribute(), result);
         return actionForward;
+    }
+
+    public ActionForward searchForm(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
+        prepareFormConstants(mapping, request, form);
+        return mapping.findForward("search-form");
+    }
+
+    /**
+	 * By default does nothing. Should be used to load constants on any scope and initialize form
+	 * 
+	 * @param mapping
+	 * @param request
+	 * @param form
+	 */
+    protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request, ActionForm form)
+    {
     }
 }
