@@ -9,6 +9,7 @@ import Dominio.CursoExecucao;
 import Dominio.ICursoExecucao;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -55,7 +56,7 @@ public class ReadExecutionDegree implements IServico {
 	}
      
 	if (executionDegree == null) {
-		return null;
+		throw new NonExistingServiceException();
 	}
 
 	InfoExecutionDegree infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree); 

@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -28,9 +26,11 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -48,27 +48,22 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
 		Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
-		InfoExecutionDegree oldInfoExecutionDegree;
+		InfoExecutionDegree oldInfoExecutionDegree = null;
 		Object args[] = { executionDegreeId };
 		GestorServicos manager = GestorServicos.manager();
 
 		try {
 				oldInfoExecutionDegree = (InfoExecutionDegree) manager.executar(userView, "ReadExecutionDegree", args);
 				
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("O curso execução", mapping.findForward("readDegreeCurricularPlan"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
 
-		if (oldInfoExecutionDegree == null) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = new ActionError("message.nonExistingExecutionDegree");
-			actionErrors.add("message.nonExistingExecutionDegree", error);
-			saveErrors(request, actionErrors);
-			return mapping.findForward("readDegreeCurricularPlan");
-		}
-
 		String label, value;
 		List result;
+		
 		/*   Needed service and creation of bean of InfoTeachers for use in jsp   */
 		try {
 			result = (List) manager.executar(userView, "ReadAllTeachers", null);
@@ -152,24 +147,18 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 		Object args[] = { infoExecutionDegree, executionDegreeId };
 
 		GestorServicos manager = GestorServicos.manager();
-		Boolean result;
 
 		try {
-				result = (Boolean) manager.executar(userView, "EditExecutionDegree", args);
+				manager.executar(userView, "EditExecutionDegree", args);
 				
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
+		} catch (NonExistingServiceException ex) {
+			throw new NonExistingActionException("O curso execução", mapping.findForward("readDegreeCurricularPlan"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
 		
-		if(!result.booleanValue()) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = new ActionError("message.nonExistingExecutionDegree");
-			actionErrors.add("message.nonExistingExecutionDegree", error);
-			saveErrors(request, actionErrors);
-		}
-
 		return mapping.findForward("readDegreeCurricularPlan");
 	}
 }
