@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
 <table>
 	<tr>
 		<td class="infoop"><bean:message key="message.showExercice.information" /></td>
@@ -28,10 +29,22 @@
 <html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 <html:hidden property="metadataCode" value="<%= metadataCode.toString() %>"/>
 <table>
+	<logic:notEqual name="metadata" property="description" value="">
+		<tr>
+			<td><b><bean:message key="label.description"/>:</b></td>
+			<td><bean:write name="metadata" property="description"/></td>
+		</tr>
+	</logic:notEqual>
 	<logic:notEqual name="metadata" property="difficulty" value="">
 		<tr>
 			<td><b><bean:message key="label.test.difficulty"/>:</b></td>
 			<td><bean:write name="metadata" property="difficulty"/></td>
+		</tr>
+	</logic:notEqual>
+	<logic:notEqual name="metadata" property="learningTime" value="">
+		<tr>
+			<td><b><bean:message key="label.test.learningTime"/>:</b></td>
+			<td><bean:write name="metadata" property="learningTime"/></td>
 		</tr>
 	</logic:notEqual>
 	<logic:notEqual name="metadata" property="level" value="">
@@ -46,29 +59,24 @@
 			<td><bean:write name="metadata" property="mainSubject"/></td>
 		</tr>
 	</logic:notEqual>	
-	<bean:size id="secondarySubjectSize" name="metadata" property="secondarySubject"/>
-	<logic:notEqual name="secondarySubjectSize" value="0">
-		<tr><td><b><bean:message key="label.test.materiaSecundaria"/>:</b></td>
-		<logic:iterate id="secondarySubject" name="metadata" property="secondarySubject">
-			<td><bean:write name="secondarySubject"/></td>
+	<logic:notEqual name="metadata" property="secondarySubject" value="">
+		<tr>
+			<td><b><bean:message key="label.test.materiaSecundaria"/>:</b></td>
+			<td><bean:write name="metadata" property="secondarySubject"/></td>
 		</tr>
-		<tr><td></td>
-		</logic:iterate>
 	</logic:notEqual>
-	<bean:size id="authorSize" name="metadata" property="author"/>
-	<logic:notEqual name="authorSize" value="0">
-		<tr><td><b><bean:message key="message.tests.author"/></b></td>
-		<logic:iterate id="author" name="metadata" property="author">
-			<td><bean:write name="author"/></td>
+	<logic:notEqual name="metadata" property="author" value="">
+		<tr>
+			<td><b><bean:message key="message.tests.author"/></b></td>
+			<td><bean:write name="metadata" property="author"/></td>
 		</tr>
-		<tr><td></td>
-		</logic:iterate>
 	</logic:notEqual>
-	<tr>
-		<bean:size id="quantidadeExercicios" name="metadata" property="members"/>
-		<td><b><bean:message key="label.test.quantidadeExercicios"/>:</b></td>
-		<td><bean:write name="quantidadeExercicios"/></td>
-	</tr>
+	<logic:notEqual name="metadata" property="numberOfMembers" value="">
+		<tr>
+			<td><b><bean:message key="label.test.quantidadeExercicios"/></b></td>
+			<td><bean:write name="metadata" property="numberOfMembers"/></td>
+		</tr>
+	</logic:notEqual>
 	<tr>
 	<td><b><bean:message key="message.tests.questionCardinality"/></b></td>
 	<td><bean:write name="iquestion" property="questionCardinality"/></td>		
@@ -96,7 +104,8 @@
 <br/>
 <table>
 	<tr>
-		<td><html:submit styleClass="inputbutton"> <bean:message key="button.insert"/></html:submit></html:form></td>
+		<td><html:submit styleClass="inputbutton"> <bean:message key="button.insert"/></html:submit></td>
+		</html:form>
 		<html:form action="/testsManagement">
 		<html:hidden property="page" value="0"/>
 		<html:hidden property="method" value="showAvailableQuestions"/>

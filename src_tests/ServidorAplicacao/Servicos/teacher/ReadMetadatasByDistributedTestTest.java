@@ -4,130 +4,105 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoMetadata;
 import DataBeans.InfoSiteMetadatas;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
-
-import Dominio.ExecutionCourse;
-import Dominio.IExecutionCourse;
-import Dominio.IMetadata;
-import Dominio.Metadata;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentMetadata;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import UtilTests.ParseMetadata;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Susana Fernandes
  *  
  */
-public class ReadMetadatasByDistributedTestTest extends TestCaseReadServices
+public class ReadMetadatasByDistributedTestTest extends ServiceNeedsAuthenticationTestCase
 {
 
-    public ReadMetadatasByDistributedTestTest(String testName)
-    {
-        super(testName);
+	public ReadMetadatasByDistributedTestTest(String testName)
+	{
+		super(testName);
+	}
 
-    }
+	protected String getDataSetFilePath()
+	{
+		return "etc/datasets/servicos/teacher/testReadMetadatasByDistributedTestTestDataSet.xml";
+	}
 
-    protected String getNameOfServiceToBeTested()
-    {
-        return "ReadMetadatasByDistributedTest";
-    }
+	protected String getNameOfServiceToBeTested()
+	{
+		return "ReadMetadatasByDistributedTest";
+	}
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
-        return null;
-    }
+	protected String[] getAuthenticatedAndAuthorizedUser()
+	{
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
-        Object[] args = { new Integer(26), new Integer(3)};
-        return args;
-    }
+		String[] args = { "D2543", "pass", getApplication()};
+		return args;
+	}
 
-    protected int getNumberOfItemsToRetrieve()
-    {
-        return 0;
-    }
+	protected String[] getAuthenticatedAndUnauthorizedUser()
+	{
 
-    protected Object getObjectToCompare()
-    {
-        InfoSiteMetadatas bodyComponent = new InfoSiteMetadatas();
-        InfoExecutionCourse infoExecutionCourse = null;
-        List infoMetadatas = new ArrayList();
-        try
-        {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            sp.iniciarTransaccao();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IPersistentMetadata persistentMetadata = sp.getIPersistentMetadata();
-            IExecutionCourse executionCourse = new ExecutionCourse(new Integer(26));
+		String[] args = { "L48283", "pass", getApplication()};
+		return args;
+	}
 
-            executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
-            assertNotNull("executionCourse null", executionCourse);
+	protected String[] getNotAuthenticatedUser()
+	{
 
-            IMetadata metadata2 = new Metadata(new Integer(2));
-            metadata2 = (IMetadata) persistentMetadata.readByOId(metadata2, false);
-            assertNotNull("metadata null", metadata2);
-            IMetadata metadata3 = new Metadata(new Integer(3));
-            metadata3 = (IMetadata) persistentMetadata.readByOId(metadata3, false);
-            assertNotNull("metadata null", metadata3);
-            IMetadata metadata4 = new Metadata(new Integer(4));
-            metadata4 = (IMetadata) persistentMetadata.readByOId(metadata4, false);
-            assertNotNull("metadata null", metadata4);
-            IMetadata metadata6 = new Metadata(new Integer(6));
-            metadata6 = (IMetadata) persistentMetadata.readByOId(metadata6, false);
-            assertNotNull("metadata null", metadata6);
+		String[] args = { "L48283", "pass", getApplication()};
+		return args;
+	}
 
-            sp.confirmarTransaccao();
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-            InfoMetadata infoMetadata2 = Cloner.copyIMetadata2InfoMetadata(metadata2);
-            InfoMetadata infoMetadata3 = Cloner.copyIMetadata2InfoMetadata(metadata3);
-            InfoMetadata infoMetadata4 = Cloner.copyIMetadata2InfoMetadata(metadata4);
-            InfoMetadata infoMetadata6 = Cloner.copyIMetadata2InfoMetadata(metadata6);
+	protected Object[] getAuthorizeArguments()
+	{
+		Integer executionCourseId = new Integer(34882);
+		Integer distributedTestId = new Integer(189);
+		String path = new String("e:\\eclipse\\workspace\\fenix\\build\\standalone\\");
 
-            ParseMetadata p = new ParseMetadata();
-            try
-            {
-                infoMetadata2 = p.parseMetadata(metadata2.getMetadataFile(), infoMetadata2, "");
-                infoMetadata3 = p.parseMetadata(metadata3.getMetadataFile(), infoMetadata3, "");
-                infoMetadata4 = p.parseMetadata(metadata4.getMetadataFile(), infoMetadata4, "");
-                infoMetadata6 = p.parseMetadata(metadata6.getMetadataFile(), infoMetadata6, "");
-            }
-            catch (Exception e)
-            {
-                fail("exception: ExcepcaoPersistencia ");
-            }
-            infoMetadatas.add(infoMetadata2);
-            infoMetadatas.add(infoMetadata3);
-            infoMetadatas.add(infoMetadata4);
-            infoMetadatas.add(infoMetadata6);
-        }
-        catch (ExcepcaoPersistencia e)
-        {
-            fail("exception: ExcepcaoPersistencia ");
-        }
+		Object[] args = { executionCourseId, distributedTestId, path };
+		return args;
 
-        bodyComponent.setExecutionCourse(infoExecutionCourse);
-        bodyComponent.setInfoMetadatas(infoMetadatas);
-        SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
-        return siteView;
+	}
 
-    }
+	protected String getApplication()
+	{
+		return Autenticacao.EXTRANET;
+	}
 
-    protected boolean needsAuthorization()
-    {
-        return true;
-    }
+	public void testSuccessfull()
+	{
+
+		try
+		{
+			IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
+			Object[] args = getAuthorizeArguments();
+			SiteView siteView =
+				(SiteView) ServiceManagerServiceFactory.executeService(
+					userView,
+					getNameOfServiceToBeTested(),
+					args);
+
+			InfoSiteMetadatas bodyComponent = (InfoSiteMetadatas) siteView.getComponent();
+
+			InfoExecutionCourse infoExecutionCourse = bodyComponent.getExecutionCourse();
+			assertEquals(infoExecutionCourse.getIdInternal(), args[0]);
+			List infoMetadatasList = bodyComponent.getInfoMetadatas();
+			assertEquals(infoMetadatasList.size(), 57);
+
+			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+		}
+		catch (FenixServiceException ex)
+		{
+			fail("Read Metadatas By Distributed Test" + ex);
+		}
+		catch (Exception ex)
+		{
+			fail("Read Metadatas By Distributed Test" + ex);
+		}
+	}
 }

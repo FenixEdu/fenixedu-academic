@@ -21,6 +21,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.struts.util.LabelValueBean;
+
 import DataBeans.comparators.CalendarDateComparator;
 import DataBeans.comparators.CalendarHourComparator;
 import Dominio.DistributedTest;
@@ -70,7 +72,7 @@ public class ChangeStudentTestQuestion implements IServico
 		return "ChangeStudentTestQuestion";
 	}
 
-	public boolean run(
+	public List run(
 		Integer executionCourseId,
 		Integer distributedTestId,
 		Integer oldQuestionId,
@@ -83,6 +85,7 @@ public class ChangeStudentTestQuestion implements IServico
 		throws FenixServiceException
 	{
 		this.path = path.replace('\\', '/');
+		List result = new ArrayList();
 		try
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
@@ -153,16 +156,28 @@ public class ChangeStudentTestQuestion implements IServico
 
 				if (!compareDates(studentTestQuestion.getDistributedTest().getEndDate(),
 					studentTestQuestion.getDistributedTest().getEndHour()))
+				{
+
+					result.add(
+						new LabelValueBean(
+							studentTestQuestion.getDistributedTest().getTitle().concat(
+								" (Ficha Fechada)"),
+							studentTestQuestion.getStudent().getNumber().toString()));
 					canDelete = false;
+				}
 				else
 				{
+					result.add(
+						new LabelValueBean(
+							studentTestQuestion.getDistributedTest().getTitle(),
+							studentTestQuestion.getStudent().getNumber().toString()));
 					IQuestion newQuestion = new Question();
 					if (newMetadataId == null)
 					{
 						newQuestion =
 							getNewQuestion(persistentQuestion, oldQuestion.getMetadata(), oldQuestion);
 						if (newQuestion == null || newQuestion.equals(oldQuestion))
-							return false;
+							return null;
 					}
 					else
 					{
@@ -200,6 +215,7 @@ public class ChangeStudentTestQuestion implements IServico
 					removeLocation(
 						oldQuestion.getMetadata().getMetadataFile(),
 						oldQuestion.getXmlFileName()));
+				metadata.setNumberOfMembers(new Integer(metadata.getNumberOfMembers().intValue() - 1));
 				removeOldTestQuestion(persistentSuport, oldQuestion);
 				List metadataQuestions = metadata.getVisibleQuestions();
 
@@ -214,7 +230,9 @@ public class ChangeStudentTestQuestion implements IServico
 						persistentMetadata.delete(metadata);
 				}
 				else
+				{
 					oldQuestion.setVisibility(new Boolean(false));
+				}
 
 			}
 		}
@@ -222,7 +240,7 @@ public class ChangeStudentTestQuestion implements IServico
 		{
 			throw new FenixServiceException(e);
 		}
-		return true;
+		return result;
 	}
 
 	private IQuestion getNewQuestion(
@@ -234,7 +252,7 @@ public class ChangeStudentTestQuestion implements IServico
 
 		List questions = metadata.getVisibleQuestions();
 		IQuestion question = null;
-		
+
 		if (questions.size() != 0)
 		{
 			if (questions.size() == 1)
@@ -334,7 +352,7 @@ public class ChangeStudentTestQuestion implements IServico
 				oldQuestion.getMetadata(),
 				oldQuestion);
 
-		if (newQuestion == null || newQuestion.compareTo(oldQuestion))
+		if (newQuestion == null || newQuestion.equals(oldQuestion))
 		{
 			while (it.hasNext())
 			{

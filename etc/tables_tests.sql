@@ -8,7 +8,16 @@ CREATE TABLE METADATA (
   ACK_OPT_LOCK int(11),
   KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
   METADATA_FILE blob not null,
+  DESCRIPTION text,
+  DIFFICULTY text,
+  LEARNINGTIME varchar(10),
+  LEVEL text,
+  MAIN_SUBJECT text,
+  SECONDARY_SUBJECT text,
+  AUTHOR text,
+  NUMBER_OF_MEMBERS int(5) not null default '1',
   VISIBILITY bit not null default '1',
+
   PRIMARY KEY  (ID_INTERNAL)
 ) TYPE=InnoDB;
 

@@ -7,7 +7,8 @@ package Dominio;
 /**
  * @author Susana Fernandes
  */
-public interface IQuestion extends IDomainObject {
+public interface IQuestion extends IDomainObject
+{
 	public abstract Integer getKeyMetadata();
 	public abstract IMetadata getMetadata();
 	public abstract String getXmlFile();
@@ -18,5 +19,5 @@ public interface IQuestion extends IDomainObject {
 	public abstract void setXmlFile(String string);
 	public abstract void setXmlFileName(String string);
 	public abstract void setVisibility(Boolean boolean1);
-	public abstract boolean compareTo(Object obj);
+	public abstract boolean equals(Object obj);
 }

@@ -72,7 +72,7 @@ public class Question extends DomainObject implements IQuestion
 		visibility = boolean1;
 	}
 
-	public boolean compareTo(Object obj)
+	public boolean equals(Object obj)
 	{
 		boolean resultado = false;
 		if (obj instanceof IQuestion)

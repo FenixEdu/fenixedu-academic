@@ -13,7 +13,6 @@ import DataBeans.InfoStudentTestQuestion;
 import DataBeans.comparators.CalendarDateComparator;
 import DataBeans.comparators.CalendarHourComparator;
 import DataBeans.util.Cloner;
-
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IStudent;
@@ -33,98 +32,88 @@ import UtilTests.ParseQuestion;
 /**
  * @author Susana Fernandes
  */
-public class InsertStudentTestResponses implements IServico {
-	private static InsertStudentTestResponses service =
-		new InsertStudentTestResponses();
+public class InsertStudentTestResponses implements IServico
+{
+	private static InsertStudentTestResponses service = new InsertStudentTestResponses();
 	private String path = new String();
 
-	public static InsertStudentTestResponses getService() {
+	public static InsertStudentTestResponses getService()
+	{
 		return service;
 	}
 
-	public String getNome() {
+	public String getNome()
+	{
 		return "InsertStudentTestResponses";
 	}
 
-	public boolean run(
-		String userName,
-		Integer distributedTestId,
-		String[] options,
-		String path)
-		throws FenixServiceException {
+	public boolean run(String userName, Integer distributedTestId, String[] options, String path)
+		throws FenixServiceException
+	{
 		List infoStudentTestQuestionList = new ArrayList();
 		this.path = path.replace('\\', '/');
-		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
-			IStudent student =
-				persistentSuport.getIPersistentStudent().readByUsername(
-					userName);
+		try
+		{
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
 			if (student == null)
 				throw new FenixServiceException();
-			IDistributedTest distributedTest =
-				new DistributedTest(distributedTestId);
+			IDistributedTest distributedTest = new DistributedTest(distributedTestId);
 			if (distributedTest == null)
 				throw new FenixServiceException();
 			distributedTest =
-				(IDistributedTest) persistentSuport
-					.getIPersistentDistributedTest()
-					.readByOId(
+				(IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(
 					distributedTest,
 					false);
 			String event = new String("Submeter Teste;");
 			for (int i = 0; i < options.length; i++)
 				event = event.concat(options[i] + ";");
 
-			if (compareDates(distributedTest.getEndDate(),
-				distributedTest.getEndHour())) {
+			if (compareDates(distributedTest.getEndDate(), distributedTest.getEndHour()))
+			{
 				List studentTestQuestionList =
 					persistentSuport
 						.getIPersistentStudentTestQuestion()
 						.readByStudentAndDistributedTest(
-							student,
-							distributedTest);
+						student,
+						distributedTest);
 				Iterator it = studentTestQuestionList.iterator();
 				if (studentTestQuestionList.size() == 0)
 					return false;
 				IPersistentStudentTestQuestion persistentStudentTestQuestion =
 					persistentSuport.getIPersistentStudentTestQuestion();
 				ParseQuestion parse = new ParseQuestion();
-				while (it.hasNext()) {
-					IStudentTestQuestion studentTestQuestion =
-						(IStudentTestQuestion) it.next();
+				while (it.hasNext())
+				{
+					IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it.next();
 					if (studentTestQuestion.getResponse().intValue() != 0
-						&& distributedTest.getTestType().equals(
-							new TestType(1))) {
+						&& distributedTest.getTestType().equals(new TestType(1)))
+					{
 						//não pode aceitar nova resposta
-					} else {
+					}
+					else
+					{
 						InfoStudentTestQuestion infoStudentTestQuestion =
-							Cloner
-								.copyIStudentTestQuestion2InfoStudentTestQuestion(
-								studentTestQuestion);
-						try {
+							Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
+						try
+						{
 							infoStudentTestQuestion.setQuestion(
 								parse.parseQuestion(
-									infoStudentTestQuestion
-										.getQuestion()
-										.getXmlFile(),
+									infoStudentTestQuestion.getQuestion().getXmlFile(),
 									infoStudentTestQuestion.getQuestion(),
 									this.path));
 							infoStudentTestQuestion =
-								parse.getOptionsShuffle(
-									infoStudentTestQuestion,
-									this.path);
-						} catch (Exception e) {
+								parse.getOptionsShuffle(infoStudentTestQuestion, this.path);
+						}
+						catch (Exception e)
+						{
 							throw new FenixServiceException(e);
 						}
 						studentTestQuestion.setResponse(
 							new Integer(
-								options[studentTestQuestion
-									.getTestQuestionOrder()
-									.intValue()
-									- 1]));
-						if (studentTestQuestion.getResponse().intValue()
-							!= 0) {
+								options[studentTestQuestion.getTestQuestionOrder().intValue() - 1]));
+						if (studentTestQuestion.getResponse().intValue() != 0)
+						{
 
 							if (infoStudentTestQuestion
 								.getQuestion()
@@ -132,16 +121,12 @@ public class InsertStudentTestResponses implements IServico {
 								.contains(studentTestQuestion.getResponse()))
 								studentTestQuestion.setTestQuestionMark(
 									new Double(
-										studentTestQuestion
-											.getTestQuestionValue()
-											.doubleValue()));
+										studentTestQuestion.getTestQuestionValue().doubleValue()));
 							else
 								studentTestQuestion.setTestQuestionMark(
 									new Double(
 										- (
-											infoStudentTestQuestion
-												.getTestQuestionValue()
-												.intValue()
+											infoStudentTestQuestion.getTestQuestionValue().intValue()
 												* (java
 													.lang
 													.Math
@@ -153,8 +138,7 @@ public class InsertStudentTestResponses implements IServico {
 															- 1,
 														-1)))));
 						}
-						persistentStudentTestQuestion.lockWrite(
-							studentTestQuestion);
+						persistentStudentTestQuestion.lockWrite(studentTestQuestion);
 					}
 				}
 				IPersistentStudentTestLog persistentStudentTestLog =
@@ -167,19 +151,24 @@ public class InsertStudentTestResponses implements IServico {
 				studentTestLog.setEvent(event);
 
 				persistentStudentTestLog.simpleLockWrite(studentTestLog);
-			} else
+			}
+			else
 				return false;
-		} catch (ExcepcaoPersistencia e) {
+		}
+		catch (ExcepcaoPersistencia e)
+		{
 			throw new FenixServiceException(e);
 		}
 		return true;
 	}
 
-	private boolean compareDates(Calendar date, Calendar hour) {
+	private boolean compareDates(Calendar date, Calendar hour)
+	{
 		Calendar calendar = Calendar.getInstance();
 		CalendarDateComparator dateComparator = new CalendarDateComparator();
 		CalendarHourComparator hourComparator = new CalendarHourComparator();
-		if (dateComparator.compare(calendar, date) <= 0) {
+		if (dateComparator.compare(calendar, date) <= 0)
+		{
 			if (dateComparator.compare(calendar, date) == 0)
 				if (hourComparator.compare(calendar, hour) <= 0)
 					return true;

@@ -10,7 +10,6 @@ import java.util.List;
 import DataBeans.InfoMetadata;
 import DataBeans.InfoQuestion;
 import DataBeans.util.Cloner;
-
 import Dominio.IMetadata;
 import Dominio.IQuestion;
 import Dominio.ITest;
@@ -27,7 +26,6 @@ import ServidorPersistente.IPersistentTest;
 import ServidorPersistente.IPersistentTestQuestion;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import UtilTests.ParseMetadata;
 import UtilTests.ParseQuestion;
 
 /**
@@ -71,16 +69,6 @@ public class InsertTestQuestion implements IServico {
 			}
 			InfoMetadata infoMetadata =
 				Cloner.copyIMetadata2InfoMetadata(metadata);
-			ParseMetadata p = new ParseMetadata();
-			try {
-				infoMetadata =
-					p.parseMetadata(
-						metadata.getMetadataFile(),
-						infoMetadata,
-						this.path);
-			} catch (Exception e) {
-				throw new FenixServiceException(e);
-			}
 			IQuestion question =
 				(IQuestion) persistentSuport
 					.getIPersistentQuestion()

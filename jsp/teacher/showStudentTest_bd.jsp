@@ -9,10 +9,16 @@
 	</logic:empty>
 	
 	<logic:notEmpty name="infoStudentTestQuestionList" >
+	
 	<logic:present name="successfulChanged">
-		<logic:equal name="successfulChanged" value="true">
-			<span class="error"><bean:message key="message.successfulChanged"/></span>
-		</logic:equal>
+		<span class="error"><bean:message key="message.successfulChanged"/></span>
+		<br/>
+		<table>
+		<logic:iterate id="changed" name="successfulChanged">
+		<tr><td><bean:write name="changed" property="label"/></td>
+		<td><bean:write name="changed" property="value"/></td></tr>
+		</logic:iterate>
+		</table>
 	</logic:present>
 
 	<html:form action="/testsManagement">

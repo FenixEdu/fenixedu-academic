@@ -62,12 +62,19 @@
 	<br/>
 	<table>
 	<tr>
-		<td width="150" class="listClasses-header"><bean:message key="label.test.materiaPrincipal"/></td>
-		<td width="150" class="listClasses-header"><bean:message key="label.test.difficulty"/></td>
+		<td class="listClasses-header"><bean:message key="label.description"/></td>
+		<td class="listClasses-header"><bean:message key="label.test.materiaPrincipal"/></td>
+		<td class="listClasses-header"><bean:message key="label.test.difficulty"/></td>
 		<td width="90" class="listClasses-header"><bean:message key="label.test.quantidadeExercicios"/></td>
 	</tr>
 	<logic:iterate id="metadata" name="component" property="infoMetadatas" type="DataBeans.InfoMetadata">
 	<tr>
+		<logic:notEqual name="metadata" property="description" value="">
+			<td class="listClasses"><bean:write name="metadata" property="description"/></td>
+		</logic:notEqual>
+		<logic:equal name="metadata" property="description" value="">
+			<td class="listClasses"><bean:message key="message.tests.notDefined"/></td>
+		</logic:equal>
 		<logic:notEqual name="metadata" property="mainSubject" value="">
 			<td class="listClasses"><bean:write name="metadata" property="mainSubject"/></td>
 		</logic:notEqual>
@@ -80,8 +87,13 @@
 		<logic:equal name="metadata" property="difficulty" value="">
 			<td class="listClasses"><bean:message key="message.tests.notDefined"/></td>
 		</logic:equal>
-		<bean:size id="quantidadeExercicios" name="metadata" property="members"/> 
-		<td class="listClasses"><bean:write name="quantidadeExercicios"/></td>		
+		<logic:notEqual name="metadata" property="numberOfMembers" value="">
+			<td class="listClasses"><bean:write name="metadata" property="numberOfMembers"/></td>
+		</logic:notEqual>
+		<logic:equal name="metadata" property="numberOfMembers" value="">
+			<td class="listClasses"><bean:message key="message.tests.notDefined"/></td>
+		</logic:equal>
+		
 		<bean:define id="metadataCode" name="metadata" property="idInternal" />
 		<td><div class="gen-button">
 			<bean:define id="exerciceCode" name="metadata" property="idInternal"/>

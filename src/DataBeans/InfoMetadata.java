@@ -10,121 +10,79 @@ import java.util.List;
  * @author Susana Fernandes
  */
 
-public class InfoMetadata extends InfoObject {
+public class InfoMetadata extends InfoObject
+{
 	private String metadataFile;
 	private InfoExecutionCourse infoExecutionCourse;
+
+	private String description;
+	private String difficulty;
+	private String learningTime;
+	private String level;
+	private String mainSubject;
+	private String secondarySubject;
+	private String author;
+	private Integer numberOfMembers;
 	private Boolean visibility;
 	private List visibleQuestions;
 
-	private String difficulty;
-	private String level;
-	private String mainSubject;
-	private List secondarySubject;
-	private List author;
-	private List members;
-
-	public InfoMetadata() {
+	public InfoMetadata()
+	{
 	}
 
-	public InfoExecutionCourse getInfoExecutionCourse() {
-		return infoExecutionCourse;
-	}
-
-	public String getMetadataFile() {
-		return metadataFile;
-	}
-
-	public Boolean getVisibility() {
-		return visibility;
-	}
-
-	public void setVisibility(Boolean boolean1) {
-		visibility = boolean1;
-	}
-
-	public void setInfoExecutionCourse(InfoExecutionCourse course) {
-		infoExecutionCourse = course;
-	}
-
-	public void setMetadataFile(String string) {
-		metadataFile = string;
-	}
-
-	public String getDifficulty() {
-		return difficulty;
-	}
-
-	public String getLevel() {
-		return level;
-	}
-
-	public String getMainSubject() {
-		return mainSubject;
-	}
-
-	public List getMembers() {
-		return members;
-	}
-
-	public List getSecondarySubject() {
-		return secondarySubject;
-	}
-
-	public void setDifficulty(String string) {
-		difficulty = string;
-	}
-
-	public void setLevel(String string) {
-		level = string;
-	}
-
-	public void setMainSubject(String string) {
-		mainSubject = string;
-	}
-
-	public void setMembers(List list) {
-		members = list;
-	}
-
-	public void setSecondarySubject(List list) {
-		secondarySubject = list;
-	}
-
-	public List getAuthor() {
+	public String getAuthor()
+	{
 		return author;
 	}
 
-	public void setAuthor(List list) {
-		author = list;
+	public String getDescription()
+	{
+		return description;
 	}
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof InfoMetadata) {
-			InfoMetadata infoMetadata = (InfoMetadata) obj;
-			result = getIdInternal().equals(infoMetadata.getIdInternal());
-			result =
-				result
-					|| (getInfoExecutionCourse()
-						.equals(infoMetadata.getInfoExecutionCourse())
-						&& (getMetadataFile()
-							.equals(infoMetadata.getMetadataFile()))
-						&& (getDifficulty().equals(infoMetadata.getDifficulty()))
-						&& (getLevel().equals(infoMetadata.getLevel()))
-						&& (getMainSubject()
-							.equals(infoMetadata.getMainSubject()))
-						&& (getSecondarySubject()
-							.containsAll(infoMetadata.getSecondarySubject()))
-						&& (infoMetadata
-							.getSecondarySubject()
-							.containsAll(getSecondarySubject()))
-						&& (getAuthor().containsAll(infoMetadata.getAuthor()))
-						&& (infoMetadata.getAuthor().containsAll(getAuthor()))
-						&& (getMembers().containsAll(infoMetadata.getMembers()))
-						&& (infoMetadata.getMembers().containsAll(getMembers()))
-						&& (getVisibility().equals(infoMetadata.getVisibility())));
-		}
-		return result;
+	public String getDifficulty()
+	{
+		return difficulty;
+	}
+
+	public InfoExecutionCourse getInfoExecutionCourse()
+	{
+		return infoExecutionCourse;
+	}
+
+	public String getLearningTime()
+	{
+		return learningTime;
+	}
+
+	public String getLevel()
+	{
+		return level;
+	}
+
+	public String getMainSubject()
+	{
+		return mainSubject;
+	}
+
+	public String getMetadataFile()
+	{
+		return metadataFile;
+	}
+
+	public Integer getNumberOfMembers()
+	{
+		return numberOfMembers;
+	}
+
+	public String getSecondarySubject()
+	{
+		return secondarySubject;
+	}
+
+	public Boolean getVisibility()
+	{
+		return visibility;
 	}
 
 	public List getVisibleQuestions()
@@ -132,9 +90,90 @@ public class InfoMetadata extends InfoObject {
 		return visibleQuestions;
 	}
 
+	public void setAuthor(String string)
+	{
+		author = string;
+	}
+
+	public void setDescription(String string)
+	{
+		description = string;
+	}
+
+	public void setDifficulty(String string)
+	{
+		difficulty = string;
+	}
+
+	public void setInfoExecutionCourse(InfoExecutionCourse course)
+	{
+		infoExecutionCourse = course;
+	}
+
+	public void setLearningTime(String string)
+	{
+		learningTime = string;
+	}
+
+	public void setLevel(String string)
+	{
+		level = string;
+	}
+
+	public void setMainSubject(String string)
+	{
+		mainSubject = string;
+	}
+
+	public void setMetadataFile(String string)
+	{
+		metadataFile = string;
+	}
+
+	public void setNumberOfMembers(Integer integer)
+	{
+		numberOfMembers = integer;
+	}
+
+	public void setSecondarySubject(String string)
+	{
+		secondarySubject = string;
+	}
+
+	public void setVisibility(Boolean boolean1)
+	{
+		visibility = boolean1;
+	}
+
 	public void setVisibleQuestions(List list)
 	{
 		visibleQuestions = list;
+	}
+
+	public boolean equals(Object obj)
+	{
+		boolean result = false;
+		if (obj instanceof InfoMetadata)
+		{
+			InfoMetadata infoMetadata = (InfoMetadata) obj;
+			result = getIdInternal().equals(infoMetadata.getIdInternal());
+			result =
+				result
+					|| (getInfoExecutionCourse().equals(infoMetadata.getInfoExecutionCourse())
+						&& (getMetadataFile().equals(infoMetadata.getMetadataFile()))
+						&& (getDescription().equals(infoMetadata.getDescription()))
+						&& (getDifficulty().equals(infoMetadata.getDifficulty()))
+						&& (getLearningTime().equals(infoMetadata.getLearningTime()))
+						&& (getLevel().equals(infoMetadata.getLevel()))
+						&& (getMainSubject().equals(infoMetadata.getMainSubject()))
+						&& (getSecondarySubject().equals(infoMetadata.getSecondarySubject()))
+						&& (getAuthor().equals(infoMetadata.getAuthor()))
+						&& (getNumberOfMembers().equals(infoMetadata.getNumberOfMembers()))
+						&& (getVisibility().equals(infoMetadata.getVisibility()))
+						&& (getVisibleQuestions().containsAll(infoMetadata.getVisibleQuestions()))
+						&& (infoMetadata.getVisibleQuestions().containsAll(getVisibleQuestions())));
+		}
+		return result;
 	}
 
 }

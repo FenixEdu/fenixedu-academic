@@ -41,14 +41,15 @@
 <br/>
 <br/>
 <table><tr>
-	<td><html:submit styleClass="inputbutton"> <bean:message key="label.change"/></html:submit></html:form></td>
+	<td><html:submit styleClass="inputbutton"> <bean:message key="label.change"/></html:submit></td>
+	</html:form>
+	<html:form action="/testEdition">
+	<html:hidden property="page" value="0"/>
+	<html:hidden property="method" value="editTest"/>
+	<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+	<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 	<td>
-		<html:form action="/testEdition">
-		<html:hidden property="page" value="0"/>
-		<html:hidden property="method" value="editTest"/>
-		<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
-		<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
-			<html:submit styleClass="inputbutton"><bean:message key="link.goBack"/></html:submit>
+		<html:submit styleClass="inputbutton"><bean:message key="link.goBack"/></html:submit>
 	</td>
 </tr></table>
 <br/>

@@ -4,130 +4,105 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
-import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoMetadata;
 import DataBeans.InfoQuestion;
 import DataBeans.InfoSiteQuestion;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
-import Dominio.ExecutionCourse;
-import Dominio.IExecutionCourse;
-import Dominio.IMetadata;
-import Dominio.IQuestion;
-import Dominio.Metadata;
-import Dominio.Question;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentMetadata;
-import ServidorPersistente.IPersistentQuestion;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import UtilTests.ParseMetadata;
-import UtilTests.ParseQuestion;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadQuestionTest extends TestCaseReadServices
+public class ReadQuestionTest extends ServiceNeedsAuthenticationTestCase
 {
 
-    /**
-	 * @param testName
-	 */
-    public ReadQuestionTest(String testName)
-    {
-        super(testName);
+	public ReadQuestionTest(String testName)
+	{
+		super(testName);
+	}
 
-    }
+	protected String getDataSetFilePath()
+	{
+		return "etc/datasets/servicos/teacher/testReadQuestionTestDataSet.xml";
+	}
 
-    protected String getNameOfServiceToBeTested()
-    {
-        return "ReadQuestion";
-    }
+	protected String getNameOfServiceToBeTested()
+	{
+		return "ReadQuestion";
+	}
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
-        return null;
-    }
+	protected String[] getAuthenticatedAndAuthorizedUser()
+	{
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
-        //Object[] args = { new Integer(26), new Integer(2), new Integer(1)};
-        Object[] args = { new Integer(26), new Integer(2), new Integer(-1)};
-        return args;
-    }
+		String[] args = { "D2543", "pass", getApplication()};
+		return args;
+	}
 
-    protected int getNumberOfItemsToRetrieve()
-    {
-        return 0;
-    }
+	protected String[] getAuthenticatedAndUnauthorizedUser()
+	{
 
-    protected Object getObjectToCompare()
-    {
-        InfoSiteQuestion bodyComponent = new InfoSiteQuestion();
-        InfoExecutionCourse infoExecutionCourse = null;
-        InfoQuestion infoQuestion = null;
+		String[] args = { "L48283", "pass", getApplication()};
+		return args;
+	}
 
-        try
-        {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            sp.iniciarTransaccao();
+	protected String[] getNotAuthenticatedUser()
+	{
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = new ExecutionCourse(new Integer(26));
-            executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
-            assertNotNull("executionCourse null", executionCourse);
+		String[] args = { "L48283", "pass", getApplication()};
+		return args;
+	}
 
-            IPersistentMetadata persistentMetadata = sp.getIPersistentMetadata();
-            IMetadata metadata = new Metadata(new Integer(2));
-            metadata = (IMetadata) persistentMetadata.readByOId(metadata, false);
-            assertNotNull("Metadata null", metadata);
+	protected Object[] getAuthorizeArguments()
+	{
+		Integer executionCourseId = new Integer(34882);
+		Integer metadataId = new Integer(3);
+		Integer questionId = new Integer(448);
+		String path = new String("e:\\eclipse\\workspace\\fenix\\build\\standalone\\");
 
-            IPersistentQuestion persistentQuestion = sp.getIPersistentQuestion();
-            IQuestion question = new Question(new Integer(1));
-            question = (IQuestion) persistentQuestion.readByOId(question, false);
-            assertNotNull("Question null", question);
+		Object[] args = { executionCourseId, metadataId, questionId, path };
+		return args;
 
-            sp.confirmarTransaccao();
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+	}
 
-            InfoMetadata infoMetadata = Cloner.copyIMetadata2InfoMetadata(metadata);
-            ParseMetadata p = new ParseMetadata();
-            try
-            {
-                infoMetadata = p.parseMetadata(metadata.getMetadataFile(), infoMetadata, "");
-            }
-            catch (Exception e)
-            {
-                fail("exception: ExcepcaoPersistencia ");
-            }
-            infoQuestion = Cloner.copyIQuestion2InfoQuestion(question);
-            infoQuestion.setInfoMetadata(infoMetadata);
-            ParseQuestion parse = new ParseQuestion();
-            try
-            {
-                infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, "");
-            }
-            catch (Exception e)
-            {
-                fail("exception: ExcepcaoPersistencia ");
-            }
-        }
-        catch (ExcepcaoPersistencia e)
-        {
-            fail("exception: ExcepcaoPersistencia ");
-        }
-        bodyComponent.setInfoQuestion(infoQuestion);
-        bodyComponent.setExecutionCourse(infoExecutionCourse);
-        SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
-        return siteView;
-    }
+	protected String getApplication()
+	{
+		return Autenticacao.EXTRANET;
+	}
 
-    protected boolean needsAuthorization()
-    {
-        return true;
-    }
+	public void testSuccessfull()
+	{
+
+		try
+		{
+			IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
+			Object[] args = getAuthorizeArguments();
+			SiteView siteView =
+				(SiteView) ServiceManagerServiceFactory.executeService(
+					userView,
+					getNameOfServiceToBeTested(),
+					args);
+
+			InfoSiteQuestion bodyComponent = (InfoSiteQuestion) siteView.getComponent();
+			InfoExecutionCourse infoExecutionCourse = bodyComponent.getExecutionCourse();
+			assertEquals(infoExecutionCourse.getIdInternal(), args[0]);
+			InfoQuestion infoQuestion = bodyComponent.getInfoQuestion();
+			assertEquals(infoQuestion.getInfoMetadata().getIdInternal(), args[1]);
+			if (!args[2].equals(new Integer(-1)))
+				assertEquals(infoQuestion.getIdInternal(), args[2]);
+
+			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+		}
+		catch (FenixServiceException ex)
+		{
+			fail("Read Question " + ex);
+		}
+		catch (Exception ex)
+		{
+			fail("Read Question " + ex);
+		}
+	}
 }

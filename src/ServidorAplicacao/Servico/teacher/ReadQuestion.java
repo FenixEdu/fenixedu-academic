@@ -26,103 +26,86 @@ import ServidorPersistente.IPersistentMetadata;
 import ServidorPersistente.IPersistentQuestion;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import UtilTests.ParseMetadata;
 import UtilTests.ParseQuestion;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadQuestion implements IServico {
+public class ReadQuestion implements IServico
+{
 	private static ReadQuestion service = new ReadQuestion();
 	private String path = new String();
 
-	public static ReadQuestion getService() {
+	public static ReadQuestion getService()
+	{
 		return service;
 	}
 
-	public String getNome() {
+	public String getNome()
+	{
 		return "ReadQuestion";
 	}
 
-	public SiteView run(
-		Integer executionCourseId,
-		Integer metadataId,
-		Integer questionId,
-		String path)
-		throws FenixServiceException {
+	public SiteView run(Integer executionCourseId, Integer metadataId, Integer questionId, String path)
+		throws FenixServiceException
+	{
 		this.path = path.replace('\\', '/');
-		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
+		try
+		{
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse persistentExecutionCourse =
 				persistentSuport.getIPersistentExecutionCourse();
-			IExecutionCourse executionCourse =
-				new ExecutionCourse(executionCourseId);
+			IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
 			executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(
-					executionCourse,
-					false);
-			if (executionCourse == null) {
+				(IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
+			if (executionCourse == null)
+			{
 				throw new InvalidArgumentsServiceException();
 			}
-			IPersistentMetadata persistentMetadata =
-				persistentSuport.getIPersistentMetadata();
+			IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
 			IMetadata metadata = new Metadata(metadataId);
-			metadata =
-				(IMetadata) persistentMetadata.readByOId(metadata, false);
-			if (metadata == null) {
+			metadata = (IMetadata) persistentMetadata.readByOId(metadata, false);
+			if (metadata == null)
+			{
 				throw new InvalidArgumentsServiceException();
 			}
-			InfoMetadata infoMetadata =
-				Cloner.copyIMetadata2InfoMetadata(metadata);
-			ParseMetadata p = new ParseMetadata();
-			try {
-				infoMetadata =
-					p.parseMetadata(
-						metadata.getMetadataFile(),
-						infoMetadata,
-						this.path);
-			} catch (Exception e) {
-				throw new FenixServiceException(e);
-			}
-			IPersistentQuestion persistentQuestion =
-				persistentSuport.getIPersistentQuestion();
+			InfoMetadata infoMetadata = Cloner.copyIMetadata2InfoMetadata(metadata);
+			IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
 			IQuestion question = null;
-			if (questionId.equals(new Integer(-1))) {
+			if (questionId.equals(new Integer(-1)))
+			{
 				question =
-					(IQuestion) persistentSuport
-						.getIPersistentQuestion()
-						.readExampleQuestionByMetadata(metadata);
-			} else {
-				question = new Question(questionId);
-				question =
-					(IQuestion) persistentQuestion.readByOId(question, false);
+					(IQuestion) persistentSuport.getIPersistentQuestion().readExampleQuestionByMetadata(
+						metadata);
 			}
-			if (question == null) {
+			else
+			{
+				question = new Question(questionId);
+				question = (IQuestion) persistentQuestion.readByOId(question, false);
+			}
+			if (question == null)
+			{
 				throw new InvalidArgumentsServiceException();
 			}
-			InfoQuestion infoQuestion =
-				Cloner.copyIQuestion2InfoQuestion(question);
+			InfoQuestion infoQuestion = Cloner.copyIQuestion2InfoQuestion(question);
 			infoQuestion.setInfoMetadata(infoMetadata);
 			ParseQuestion parse = new ParseQuestion();
-			try {
-				infoQuestion =
-					parse.parseQuestion(
-						infoQuestion.getXmlFile(),
-						infoQuestion,
-						this.path);
-			} catch (Exception e) {
+			try
+			{
+				infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, this.path);
+			}
+			catch (Exception e)
+			{
 				throw new FenixServiceException(e);
 			}
 			InfoSiteQuestion bodyComponent = new InfoSiteQuestion();
 			bodyComponent.setInfoQuestion(infoQuestion);
-			bodyComponent.setExecutionCourse(
-				 (InfoExecutionCourse) Cloner.get(
-					executionCourse));
-			SiteView siteView =
-				new ExecutionCourseSiteView(bodyComponent, bodyComponent);
+			bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
+			SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
 			return siteView;
-		} catch (ExcepcaoPersistencia e) {
+		}
+		catch (ExcepcaoPersistencia e)
+		{
 			throw new FenixServiceException(e);
 		}
 	}

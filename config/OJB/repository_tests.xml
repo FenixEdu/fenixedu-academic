@@ -3,8 +3,8 @@
 <!-- ******************************** -->
 <class-descriptor class="Dominio.Metadata"
                   table="METADATA">
-    <field-descriptor id="1"
-        name="idInternal"
+	<field-descriptor id="1"
+		name="idInternal"
         column="ID_INTERNAL"
         jdbc-type="INTEGER"
         primarykey="true"
@@ -19,23 +19,58 @@
          name="metadataFile"
          column="METADATA_FILE"
     	 jdbc-type="LONGVARCHAR"
-      />
+    />
     <field-descriptor id="4"
-        name="visibility"
-        column="VISIBILITY"
-        jdbc-type="BIT"
+		name="description"
+		column="DESCRIPTION"
+    	jdbc-type="LONGVARCHAR"
+      />
+    <field-descriptor id="5"
+		name="difficulty"
+		column="DIFFICULTY"
+		jdbc-type="LONGVARCHAR"
+    />
+	<field-descriptor id="6"
+		name="learningTime"
+ 		column="LEARNINGTIME"
+		jdbc-type="VARCHAR"
+    />
+    <field-descriptor id="7"
+		name="level"
+ 		column="LEVEL"
+  		jdbc-type="LONGVARCHAR"
+    />
+    <field-descriptor id="8"
+		name="mainSubject"
+		column="MAIN_SUBJECT"
+		jdbc-type="LONGVARCHAR"
+    />
+    <field-descriptor id="9"
+		name="secondarySubject"
+		column="SECONDARY_SUBJECT"
+		jdbc-type="LONGVARCHAR"
+    />
+	<field-descriptor id="10"
+		name="author"
+		column="AUTHOR"
+		jdbc-type="LONGVARCHAR"
 	/>
-      <field-descriptor
-      	name="ackOptLock"
+	<field-descriptor id="11"
+		name="numberOfMembers"
+		column="NUMBER_OF_MEMBERS"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor id="12"
+		name="visibility"
+		column="VISIBILITY"
+		jdbc-type="BIT"
+	/>
+	<field-descriptor
+		name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
       	locking="true"
-      />
-    <reference-descriptor
-         name="executionCourse"
-         class-ref="Dominio.ExecutionCourse"
-         proxy="true"
-    >
+	/>
     <collection-descriptor
 		name="visibleQuestions"
 		element-class-ref="Dominio.Question"
@@ -44,7 +79,12 @@
 		<query-customizer class="ServidorPersistente.customQueries.QuestionFilter">
 	    </query-customizer>
 	</collection-descriptor>
-	<foreignkey field-id-ref="2"/>
+	<reference-descriptor
+         name="executionCourse"
+         class-ref="Dominio.ExecutionCourse"
+         proxy="true"
+    >
+    <foreignkey field-id-ref="2"/>
 	</reference-descriptor>
 	<attribute
 		attribute-name="cacheable"
