@@ -27,6 +27,7 @@ import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
 import Dominio.Student;
+import Dominio.Turma;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -44,313 +45,278 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public class ReadClassShiftEnrollmentDetails implements IService
 {
 
-	/**
-	 * @author jpvl
-	 */
-	public class StudentNotFoundServiceException extends FenixServiceException
-	{
+    /**
+     * @author jpvl
+     */
+    public class StudentNotFoundServiceException extends FenixServiceException
+    {
 
-	}
-	/**
-	 *  
-	 */
-	public ReadClassShiftEnrollmentDetails()
-	{
-		super();
-	}
+    }
 
-	public InfoClassEnrollmentDetails run(InfoStudent infoStudent) throws FenixServiceException
-	{
-		InfoClassEnrollmentDetails enrollmentDetails = null;
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    /**
+     *  
+     */
+    public ReadClassShiftEnrollmentDetails()
+    {
+        super();
+    }
 
-			IPersistentStudent studentDAO = sp.getIPersistentStudent();
-			ITurmaPersistente classDAO = sp.getITurmaPersistente();
-			IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-			ITurnoAlunoPersistente shiftStudentDAO = sp.getITurnoAlunoPersistente();
-			ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
+    public InfoClassEnrollmentDetails run(InfoStudent infoStudent,
+            Integer klassId) throws FenixServiceException
+    {
+        InfoClassEnrollmentDetails enrollmentDetails = null;
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			//Current Execution Period
-			IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+            IPersistentStudent studentDAO = sp.getIPersistentStudent();
+            ITurmaPersistente classDAO = sp.getITurmaPersistente();
+            IPersistentExecutionPeriod executionPeriodDAO = sp
+                    .getIPersistentExecutionPeriod();
+            ITurnoAlunoPersistente shiftStudentDAO = sp
+                    .getITurnoAlunoPersistente();
+            ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
-			//Student
-			IStudent student = readStudent(infoStudent, studentDAO);
+            //Current Execution Period
+            IExecutionPeriod executionPeriod = executionPeriodDAO
+                    .readActualExecutionPeriod();
 
-			//Classes
-			List classList =
-				classDAO.readClassesThatContainsStudentAttendsOnExecutionPeriod(
-					student,
-					executionPeriod);
+            //Student
+            IStudent student = readStudent(infoStudent, studentDAO);
 
-			//Shifts correspond to student attends
-			List shiftAttendList =
-				shiftDAO.readShiftsThatContainsStudentAttendsOnExecutionPeriod(student, executionPeriod);
+            //Classes
+            List classList = classDAO
+                    .readClassesThatContainsStudentAttendsOnExecutionPeriod(
+                            student, executionPeriod);
+            
+            //Class selected
+            ITurma klass = null;
+            if (klassId != null)
+            {
+                klass = (ITurma) classDAO.readByOId(new Turma(klassId), false);
+            }
 
-			//Shifts enrolment
-			List studentShifts =
-				shiftStudentDAO.readByStudentAndExecutionPeriod(student, executionPeriod);
-			List shifts = collectShifts(studentShifts);
-			List infoShifts = collectInfoShifts(shifts);
+            //Shifts correspond to student attends
+            List shiftAttendList = shiftDAO
+                    .readShiftsThatContainsStudentAttendsOnExecutionPeriod(
+                            student, executionPeriod);
 
-			List infoClassList = new ArrayList();
-			Map classExecutionCourseShiftEnrollmentDetailsMap =
-				createMapAndPopulateInfoClassList(
-					shiftStudentDAO,
-					classList,
-					shiftAttendList,
-					infoClassList);
+            //Shifts enrolment
+            List studentShifts = shiftStudentDAO
+                    .readByStudentAndExecutionPeriod(student, executionPeriod);
+            List shifts = collectShifts(studentShifts);
+            List infoShifts = collectInfoShifts(shifts);
 
-			enrollmentDetails = new InfoClassEnrollmentDetails();
-			enrollmentDetails.setInfoStudent(Cloner.copyIStudent2InfoStudent(student));
-			//enrollmentDetails.setInfoShiftEnrolledList(studentShifts);
-			enrollmentDetails.setInfoShiftEnrolledList(infoShifts);
-			enrollmentDetails.setInfoClassList(infoClassList);
-			enrollmentDetails.setClassExecutionCourseShiftEnrollmentDetailsMap(
-				classExecutionCourseShiftEnrollmentDetailsMap);
+            List infoClassList = new ArrayList();
+            Map classExecutionCourseShiftEnrollmentDetailsMap = createMapAndPopulateInfoClassList(
+                    shiftStudentDAO, classList, shiftAttendList, infoClassList,
+                    klass);
 
-			//Only prints for test			
-//			ListIterator iterator = infoClassList.listIterator();
-//			while (iterator.hasNext())
-//			{
-//				InfoClass infoClass = (InfoClass) iterator.next();
-//				System.out.println(
-//						"class: " + infoClass.getNome());
-//
-//				List details =
-//					(List) classExecutionCourseShiftEnrollmentDetailsMap.get(infoClass.getIdInternal());
-//
-//				ListIterator iterator2 = details.listIterator();
-//				while (iterator2.hasNext())
-//				{
-//					ExecutionCourseShiftEnrollmentDetails details2 =
-//						(ExecutionCourseShiftEnrollmentDetails) iterator2.next();
-//					System.out.println(
-//						"execution course: " + details2.getInfoExecutionCourse().getNome());
-//					System.out.println("shifts: " + details2.getShiftEnrollmentDetailsList().size());
-//
-//					ListIterator iterator3 = details2.getShiftEnrollmentDetailsList().listIterator();
-//					while (iterator3.hasNext())
-//					{
-//						ShiftEnrollmentDetails details3 = (ShiftEnrollmentDetails) iterator3.next();
-//
-//						System.out.println(
-//							"ShiftEnrollmentDetails: " + details3.getInfoShift().getNome());
-//					}
-//				}
-//			}
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace(System.out);
-			throw new FenixServiceException("Problems on database!", e);
-		}
+            enrollmentDetails = new InfoClassEnrollmentDetails();
+            enrollmentDetails.setInfoStudent(Cloner.getInstance()
+                    .copyIStudent2InfoStudent(student));
+            //enrollmentDetails.setInfoShiftEnrolledList(studentShifts);
+            enrollmentDetails.setInfoShiftEnrolledList(infoShifts);
+            enrollmentDetails.setInfoClassList(infoClassList);
+            enrollmentDetails
+                    .setClassExecutionCourseShiftEnrollmentDetailsMap(classExecutionCourseShiftEnrollmentDetailsMap);
 
-		return enrollmentDetails;
-	}
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace(System.out);
+            throw new FenixServiceException("Problems on database!", e);
+        }
 
-	/**
-	 * @param shifts
-	 */
-	private List collectInfoShifts(List shifts)
-	{
-		/* Prepare return */
-		List infoShifts = (List) CollectionUtils.collect(shifts, new Transformer()
-		{
+        return enrollmentDetails;
+    }
 
-			public Object transform(Object input)
-			{
-				ITurno shift = (ITurno) input;
-				InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-				return infoShift;
-			}
-		});
+    /**
+     * @param shifts
+     */
+    private List collectInfoShifts(List shifts)
+    {
+        /* Prepare return */
+        List infoShifts = (List) CollectionUtils.collect(shifts,
+                new Transformer()
+                {
 
-		return infoShifts;
-	}
+                    public Object transform(Object input)
+                    {
+                        ITurno shift = (ITurno) input;
+                        InfoShift infoShift = Cloner.getInstance().copyITurno2InfoShift(shift);
+                        return infoShift;
+                    }
+                });
 
-	/**
-	 * @param studentShifts
-	 * @return
-	 */
-	private List collectShifts(List studentShifts)
-	{
-		List shifts = (List) CollectionUtils.collect(studentShifts, new Transformer()
-		{
+        return infoShifts;
+    }
 
-			public Object transform(Object input)
-			{
-				ITurnoAluno shiftStudent = (ITurnoAluno) input;
-				return shiftStudent.getShift();
-			}
-		});
-		return shifts;
-	}
+    /**
+     * @param studentShifts
+     * @return
+     */
+    private List collectShifts(List studentShifts)
+    {
+        List shifts = (List) CollectionUtils.collect(studentShifts,
+                new Transformer()
+                {
 
-	/**
-	 * @param shiftStudentDAO
-	 * @param classList
-	 * @param shifts
-	 * @param infoClassList
-	 * @return
-	 */
-	private Map createMapAndPopulateInfoClassList(
-		ITurnoAlunoPersistente shiftStudentDAO,
-		List classList,
-		List shiftsAttendList,
-		List infoClassList)
-	{
-		Map classExecutionCourseShiftEnrollmentDetailsMap = new HashMap();
+                    public Object transform(Object input)
+                    {
+                        ITurnoAluno shiftStudent = (ITurnoAluno) input;
+                        return shiftStudent.getShift();
+                    }
+                });
+        return shifts;
+    }
 
-		/* shift id -> ShiftEnrollmentDetails */
-		Map shiftsTreated = new HashMap();
+    /**
+     * @param shiftStudentDAO
+     * @param classList
+     * @param shifts
+     * @param infoClassList
+     * @return
+     */
+    private Map createMapAndPopulateInfoClassList(
+            ITurnoAlunoPersistente shiftStudentDAO, List classList,
+            List shiftsAttendList, List infoClassList, ITurma klassToTreat)
+    {
+        Map classExecutionCourseShiftEnrollmentDetailsMap = new HashMap();
 
-		/* executionCourse id -> ExecutionCourseShiftEnrollmentDetails */
-		Map executionCourseTreated = new HashMap();
+        /* shift id -> ShiftEnrollmentDetails */
+        Map shiftsTreated = new HashMap();
 
-		for (int i = 0; i < classList.size(); i++)
-		{
-			// Clean auxiliar
-			shiftsTreated = new HashMap();
-			executionCourseTreated = new HashMap();
-		
-			//Clone class
-			ITurma klass = (ITurma) classList.get(i);
-			InfoClass infoClass = Cloner.copyClass2InfoClass(klass);
-			infoClassList.add(infoClass);
+        /* executionCourse id -> ExecutionCourseShiftEnrollmentDetails */
+        Map executionCourseTreated = new HashMap();
 
-			Integer klassId = klass.getIdInternal();
-			List shiftsRequired =
-				(List) CollectionUtils.intersection(klass.getAssociatedShifts(), shiftsAttendList);
-			if (shiftsRequired != null)
-			{
-				for (int j = 0; j < shiftsRequired.size(); j++)
-				{
-					ITurno shift = (ITurno) shiftsRequired.get(j);
+        for (int i = 0; i < classList.size(); i++)
+        {
+            // Clean auxiliar
+            shiftsTreated.clear();
+            executionCourseTreated.clear();
 
-					ShiftEnrollmentDetails shiftEnrollmentDetails =
-						createShiftEnrollmentDetails(shiftStudentDAO, shiftsTreated, shift);
+            //Clone class
+            ITurma klass = (ITurma) classList.get(i);
+            InfoClass infoClass = Cloner.getInstance().copyITurma2InfoClass(klass);
+            infoClassList.add(infoClass);
 
-					ExecutionCourseShiftEnrollmentDetails executionCourseShiftEnrollmentDetails =
-						createExecutionCourseShiftEnrollmentDetails(executionCourseTreated, shift);
-					executionCourseShiftEnrollmentDetails.addShiftEnrollmentDetails(
-						shiftEnrollmentDetails);
+            Integer klassId = klass.getIdInternal();
+            if ((klassToTreat == null && i == 0)
+                    || (klassToTreat != null && klassId.equals(klassToTreat.getIdInternal())))
+            {
 
-					List executionCourseShiftEnrollmentDetailsList =
-						(List) classExecutionCourseShiftEnrollmentDetailsMap.get(klassId);
-					if (executionCourseShiftEnrollmentDetailsList == null)
-					{
-						executionCourseShiftEnrollmentDetailsList = new ArrayList();
-						executionCourseShiftEnrollmentDetailsList.add(
-								executionCourseShiftEnrollmentDetails);
-						classExecutionCourseShiftEnrollmentDetailsMap.put(
-							klassId,
-							executionCourseShiftEnrollmentDetailsList);
-					}
-					else
-					{
-						if (!executionCourseShiftEnrollmentDetailsList.contains(executionCourseShiftEnrollmentDetails))
-						{
-							executionCourseShiftEnrollmentDetailsList.add(
-								executionCourseShiftEnrollmentDetails);
-						}
-					}
-				}
-			}		
-		}
-		return classExecutionCourseShiftEnrollmentDetailsMap;
-	}
+                List shiftsRequired = (List) CollectionUtils.intersection(klass
+                        .getAssociatedShifts(), shiftsAttendList);
+                if (shiftsRequired != null)
+                {
+                    for (int j = 0; j < shiftsRequired.size(); j++)
+                    {
+                        ITurno shift = (ITurno) shiftsRequired.get(j);
 
-	/**
-	 * @param executionCourseTreated
-	 * @param shift
-	 * @return
-	 */
-	private ExecutionCourseShiftEnrollmentDetails createExecutionCourseShiftEnrollmentDetails(
-		Map executionCourseTreated,
-		ITurno shift)
-	{
-		IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-		ExecutionCourseShiftEnrollmentDetails executionCourseShiftEnrollmentDetails =
-			(ExecutionCourseShiftEnrollmentDetails) executionCourseTreated.get(
-				executionCourse.getIdInternal());
+                        ShiftEnrollmentDetails shiftEnrollmentDetails = createShiftEnrollmentDetails(
+                                shiftStudentDAO, shiftsTreated, shift);
 
-		if (executionCourseShiftEnrollmentDetails == null)
-		{
-			executionCourseShiftEnrollmentDetails = new ExecutionCourseShiftEnrollmentDetails();
-			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-			executionCourseShiftEnrollmentDetails.setInfoExecutionCourse(infoExecutionCourse);
+                        ExecutionCourseShiftEnrollmentDetails executionCourseShiftEnrollmentDetails = createExecutionCourseShiftEnrollmentDetails(
+                                executionCourseTreated, shift);
+                        executionCourseShiftEnrollmentDetails
+                                .addShiftEnrollmentDetails(shiftEnrollmentDetails);
 
-			executionCourseTreated.put(
-				executionCourse.getIdInternal(),
-				executionCourseShiftEnrollmentDetails);
-		}
+                        List executionCourseShiftEnrollmentDetailsList = (List) classExecutionCourseShiftEnrollmentDetailsMap
+                                .get(klassId);
+                        if (executionCourseShiftEnrollmentDetailsList == null)
+                        {
+                            executionCourseShiftEnrollmentDetailsList = new ArrayList();
+                            executionCourseShiftEnrollmentDetailsList
+                                    .add(executionCourseShiftEnrollmentDetails);
+                            classExecutionCourseShiftEnrollmentDetailsMap.put(
+                                    klassId,
+                                    executionCourseShiftEnrollmentDetailsList);
+                        }
+                        else
+                        {
+                            if (!executionCourseShiftEnrollmentDetailsList
+                                    .contains(executionCourseShiftEnrollmentDetails))
+                            {
+                                executionCourseShiftEnrollmentDetailsList
+                                        .add(executionCourseShiftEnrollmentDetails);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return classExecutionCourseShiftEnrollmentDetailsMap;
+    }
 
-		return executionCourseShiftEnrollmentDetails;
-	}
+    /**
+     * @param executionCourseTreated
+     * @param shift
+     * @return
+     */
+    private ExecutionCourseShiftEnrollmentDetails createExecutionCourseShiftEnrollmentDetails(
+            Map executionCourseTreated, ITurno shift)
+    {
+        IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+        ExecutionCourseShiftEnrollmentDetails executionCourseShiftEnrollmentDetails = (ExecutionCourseShiftEnrollmentDetails) executionCourseTreated
+                .get(executionCourse.getIdInternal());
 
-	/**
-	 * @param shiftStudentDAO
-	 * @param shiftsTreated
-	 * @param shift
-	 * @return
-	 */
-	private ShiftEnrollmentDetails createShiftEnrollmentDetails(
-		ITurnoAlunoPersistente shiftStudentDAO,
-		Map shiftsTreated,
-		ITurno shift)
-	{
-		ShiftEnrollmentDetails shiftEnrollmentDetails =
-			(ShiftEnrollmentDetails) shiftsTreated.get(shift.getIdInternal());
-		if (shiftEnrollmentDetails == null)
-		{
-			shiftEnrollmentDetails = new ShiftEnrollmentDetails();
+        if (executionCourseShiftEnrollmentDetails == null)
+        {
+            executionCourseShiftEnrollmentDetails = new ExecutionCourseShiftEnrollmentDetails();
+            InfoExecutionCourse infoExecutionCourse = Cloner
+                    .getInstance().copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            executionCourseShiftEnrollmentDetails
+                    .setInfoExecutionCourse(infoExecutionCourse);
 
-			InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-			int occupation = shiftStudentDAO.readNumberOfStudentsByShift(shift);
-			shiftEnrollmentDetails.setInfoShift(infoShift);
-			shiftEnrollmentDetails.setVacancies(new Integer(shift.getLotacao().intValue() - occupation));
+            executionCourseTreated.put(executionCourse.getIdInternal(),
+                    executionCourseShiftEnrollmentDetails);
+        }
 
-			shiftsTreated.put(shift.getIdInternal(), shiftEnrollmentDetails);
-		}
-		return shiftEnrollmentDetails;
-	}
+        return executionCourseShiftEnrollmentDetails;
+    }
 
-	/**
-	 * @param associatedShifts
-	 * @return
-	 */
-	private List collectExecutionCourses(List shifts)
-	{
-		List executionCoursesCollected = new ArrayList();
-		for (int i = 0; i < shifts.size(); i++)
-		{
-			ITurno shift = (ITurno) shifts.get(i);
-			IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-			if (!executionCoursesCollected.contains(executionCourse))
-			{
-				executionCoursesCollected.add(executionCourse);
-			}
-		}
-		return executionCoursesCollected;
-	}
+    /**
+     * @param shiftStudentDAO
+     * @param shiftsTreated
+     * @param shift
+     * @return
+     */
+    private ShiftEnrollmentDetails createShiftEnrollmentDetails(
+            ITurnoAlunoPersistente shiftStudentDAO, Map shiftsTreated,
+            ITurno shift)
+    {
+        ShiftEnrollmentDetails shiftEnrollmentDetails = (ShiftEnrollmentDetails) shiftsTreated
+                .get(shift.getIdInternal());
+        if (shiftEnrollmentDetails == null)
+        {
+            shiftEnrollmentDetails = new ShiftEnrollmentDetails();
 
-	/**
-	 * @param infoStudent
-	 * @param studentDAO
-	 * @return @throws
-	 *         StudentNotFoundServiceException
-	 */
-	private IStudent readStudent(InfoStudent infoStudent, IPersistentStudent studentDAO)
-		throws StudentNotFoundServiceException
-	{
-		IStudent student =
-			(IStudent) studentDAO.readByOId(new Student(infoStudent.getIdInternal()), false);
-		if (student == null)
-		{
-			throw new StudentNotFoundServiceException();
-		}
-		return student;
-	}
+            InfoShift infoShift = Cloner.getInstance().copyITurno2InfoShift(shift);
+            int occupation = shiftStudentDAO.readNumberOfStudentsByShift(shift);
+            shiftEnrollmentDetails.setInfoShift(infoShift);
+            shiftEnrollmentDetails.setVacancies(new Integer(shift.getLotacao()
+                    .intValue()
+                    - occupation));
+
+            shiftsTreated.put(shift.getIdInternal(), shiftEnrollmentDetails);
+        }
+        return shiftEnrollmentDetails;
+    }
+
+    /**
+     * @param infoStudent
+     * @param studentDAO
+     * @return @throws
+     *         StudentNotFoundServiceException
+     */
+    private IStudent readStudent(InfoStudent infoStudent,
+            IPersistentStudent studentDAO)
+            throws StudentNotFoundServiceException
+    {
+        IStudent student = (IStudent) studentDAO.readByOId(new Student(
+                infoStudent.getIdInternal()), false);
+        if (student == null) { throw new StudentNotFoundServiceException(); }
+        return student;
+    }
 }
