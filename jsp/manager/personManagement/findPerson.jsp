@@ -34,16 +34,6 @@
 			<html:text property="name" size="50"/>
 		</td>		
 	</tr>
-	
-	<tr>
-		<td>
-			<bean:message key="label.identificationDocumentNumber" />:
-		</td>
-		<td>
-			<html:text property="documentIdNumber" size="25"/>
-		</td>		
-	</tr>
-	
 	<tr>
 		<td>
 			<bean:message key="label.emailWord" />

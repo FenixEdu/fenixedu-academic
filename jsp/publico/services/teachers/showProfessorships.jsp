@@ -14,7 +14,9 @@
     	
     </tr>
     <logic:iterate id="detailedProfessorShipsList" name="detailedProfessorShipsListofLists" indexId="i">
-    <tr>
+      
+    
+          <tr>
        
          <logic:iterate id="detailedProfessorship" name="detailedProfessorShipsList" length="1">
             <td >
@@ -49,13 +51,8 @@
             </logic:iterate>
           </td>  
           
-    </tr>
+      </tr>
     </logic:iterate>
-    </table>    
-    <logic:empty name="detailedProfessorShipsListofLists">
-		<strong><bean:message key="message.noResults" /></strong>
-	</logic:empty>
+    </table>
+    
 </logic:present>
-<logic:notPresent name="detailedProfessorShipsListofLists">
-	<strong><bean:message key="message.noResults" /></strong>
-</logic:notPresent>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project basedir="."  default="leec_test_battery" name="Tests">
 
+	<taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask"/>
+	
 	<property name="encoding" value="ISO-8859-1"/>
 
     <property name="src" location="src"/>
@@ -15,6 +17,7 @@
 	<property name="src.tests.cache" location="${src.tests}/ServidorPersistente/cache"/>
 	<property name="src.tests.cloner" location="${src.tests}/DataBeans/util"/>
 	<property name="src.tests.jboss" location="${src.tests}/framework"/>
+	<property name="src.tests.services" location="${src.tests}/ServidorAplicacao"/>
 
 	<property name="build.home" location="build"/>
 	<property name="build.app-server" value="${build.home}/app-server"/>
@@ -88,6 +91,103 @@
                fork="yes"
                />
 	</target>
+
+	<target name="compile-service-tests-examsV4"
+			depends="compile-app-server"
+            description="Compiles application server.">
+		<mkdir dir="${build.tests.services}"/>
+		<javac classpath="${build.app-server}"
+               destdir="${build.tests.services}"
+               extdirs="${lib}" 
+               srcdir="${src.tests}"
+               debug="true"
+               optimize="true"
+               deprecation="true"
+               encoding="${encoding}"
+               fork="yes">
+            <include name="Tools/*.java"/>
+            <include name="ServidorAplicacao/Servicos/*.java"/>
+            <include name="ServidorAplicacao/Servicos/sop/exams/*.java"/>
+            <!--
+			<include name="ServidorAplicacao/Servicos/sop/exams/*Test.java"/>
+			-->
+		</javac>
+	</target>
+
+    <target name="create-tables"
+            description="Cria as tabelas da base de dados.">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}"
+            classpath="${lib}/mysql-connector-java-3.0.7.jar"
+        >
+        DROP DATABASE IF EXISTS ${db.name};
+        CREATE DATABASE ${db.name};
+        </sql>
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+			 <include name="tables.sql" />
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
+
+    <target name="run-tests-examsV4"
+    		depends="compile-service-tests-examsV4"
+            description="Executes tests for branch ExamsV4">
+        <antcall target="create-tables"/>
+        <junit haltonfailure="false" printsummary="yes" dir="${basedir}">
+            <formatter type="plain" usefile="false"/>
+            <batchtest fork="yes">
+                <fileset dir="${src.tests}">
+                
+
+<!--	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadCurricularYearByOIDTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExecutionDegreeByOIDTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExecutionDegreesByExecutionYearTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExecutionPeriodsTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExecutionPeriodsNoPeriodsTest.java"/>
+
+	                <include name="ServidorAplicacao/Servicos/sop/exams/CreateExamNewTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/DeleteExamNewTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/EditExamNewTest.java"/>
+		            <include name="ServidorAplicacao/Servicos/sop/exams/ReadAllBuildingsTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadAllBuildingsNoBuildingsTest.java"/>
+					<include name="ServidorAplicacao/Servicos/sop/exams/ReadAvailableRoomsForExamTest.java"/>                
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExamByOIDTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExamsByDateTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExamsMapByRoomsTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadFilteredExamsMapTest.java"/>
+                    <include name="ServidorAplicacao/Servicos/sop/exams/SearchRoomsTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExecutionCourseWithAssociatedCurricularCoursesTest.java"/>
+-->
+
+                	<include name="ServidorAplicacao/Servicos/sop/exams/*Test.java"/>                  
+
+                </fileset>
+            </batchtest>
+            <classpath>
+                <pathelement path="${build.app-server}"/>
+                <pathelement path="${build.tests.services}"/>
+                <pathelement path="${sql}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </junit>
+    </target>
 
 	<target name="compile-tests-cache"
 			depends="compile-app-server"
@@ -188,6 +288,123 @@
 			</classpath>
 		</java>
 	</target>
+	
+	<target name="prepare">
+		<!-- Create build directories as needed -->
+		<mkdir dir="${webapp.classes}"/>	
+		<mkdir dir="${webapp.lib}"/>
+
+		<!-- Copy external dependencies as required -->
+		<copy todir="${webapp.metadata}">
+			<fileset dir="${basedir}/metadata"/>    
+		</copy>
+
+		<copy todir="${webapp.lib}">
+			<fileset dir="${basedir}/lib">    
+				<exclude name="servlet.jar"/>
+				<exclude name="strutstest.jar"/>
+			</fileset>
+			<fileset dir="${basedir}/lib_web">
+				<exclude name="servlet.jar"/>
+				<exclude name="strutstest.jar"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${webapp.classes}">
+			<fileset dir="${basedir}/config"/>
+		</copy>
+	</target>
+	
+	
+	<target name="compile-proj"
+            description="Compila o projecto principal" depends="prepare">
+        <tstamp/>
+        <javac destdir="${webapp.classes}"
+               extdirs="${lib};${libs.web}"
+               debug="${compile.debug}"
+               optimize="${compile.optimize}"
+               deprecation="${compile.deprecation}"
+               encoding="${encoding}"
+               memoryInitialSize="512m"
+               memoryMaximumSize="512m"
+               fork="yes">
+			<src path="${src};${src.tests}"/>
+        </javac>
+		<replace dir="${webapp.metadata}" propertyFile="build.properties">
+	    	<include name="**/**/*.xml"/>
+	    	<include name="**/**/ApplicationResources.properties"/>
+	    	<include name="**/ServidorPersistenteConfig.properties"/>
+	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
+
+			<replacefilter token="&lt;!-- @validation.doctype@ -->" property="validation.doctype"/>
+
+			<replacefilter token="@login.page@" property="login.page"/>
+
+			<replacefilter token="@db.user@" property="db.user"/>
+			<replacefilter token="@db.pass@" property="db.pass"/>
+			<replacefilter token="@db.name@" property="db.name"/>
+			<replacefilter token="@db.alias@" property="db.alias"/>
+
+			<replacefilter token="@application@" property="application"/>
+		</replace>
+    </target>
+	<target name="replace-tokens-for-ileec">
+		<delete file="${sql}/middleware/PopulateTables_generated.sql"/>
+		<copy file="${sql}/middleware/ileec/populateTablesIleec.sql" toFile="${sql}/middleware/PopulateTables_generated.sql"/>
+		<replace dir="${sql}/middleware" propertyFile="middleware.properties">
+			<include name="PopulateTables_generated.sql"/>
+			<replacefilter token="@load.data.infile.rootIleec@" property="load.data.infile.rootIleec"/>
+		</replace>
+	</target>
+	
+	<target name="generate-dataset-examsV4"
+			description="Generates a dataset using the parameters specified in SmartDataSetGenerator.properties"
+			depends="compile-app-server">
+		<java classname="Tools.SmartDataSetGeneratorMain" fork="true">
+			<classpath refid="runtime-classpath" />
+		</java>
+	</target>
+	
+	
+	<target name="generate-leec-dataset"  >
+		
+		<java classname="Util.GeraXml" fork="yes" failonerror="true" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<arg value="${number}" />
+			<arg value="${file}" />
+		</java>
+		
+	</target>
+
+	<target name="leec-test-battery-loop" >
+		<property file="etc/LEEC_Enrollment_Tests_Arguments/LEEC_Test_Battery.properties"/>
+		
+		<script language="javascript">
+		  <![CDATA[
+      
+        
+         for (i= project.getProperty("start");i<=project.getProperty("end");i++)
+         {
+         
+          var callTask = project.createTask("antcall");	
+		  callTask.setTarget("generate-leec-dataset");	
+		  var param1 = callTask.createParam();
+	      param1.setName("number");
+          param1.setValue(i);
+		  var param2 = callTask.createParam();
+          param2.setName("file");
+		  param2.setValue("input");
+		  leec_test_battery_datasets.addTask(callTask); 
+         
+         }
 
 	<path id="runtime-classpath">
     	<fileset dir="${libs.web}">
@@ -423,8 +640,5 @@
 		</java>
        
     </target>
-	
-	
-	
 	
 </project>

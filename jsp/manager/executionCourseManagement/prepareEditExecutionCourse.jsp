@@ -4,18 +4,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
-
 <span class="error"><html:errors/></span>
-
 <p>
 <bean:write name="executionPeriodName"/>
-<logic:present name="executionDegreeName">
-	<logic:notEmpty name="executionDegreeName">
-		> <bean:write name="executionDegreeName"/>
-	</logic:notEmpty>
-</logic:present>
+<logic:notEmpty name="executionDegreeName">
+	> <bean:write name="executionDegreeName"/>
+</logic:notEmpty>
 </p>
-
 <logic:present name="<%=SessionConstants.EXECUTION_COURSE_LIST_KEY%>">
 	<table>
 		<tr>	
@@ -40,12 +35,11 @@
 								</td>
 								<td class="listClasses">
 									<bean:define id="executionCourseId" name="executionCourse" property="idInternal"/> 
-									&nbsp;
-									<html:link page="<%="/editExecutionCourse.do?method=editExecutionCourse&amp;executionCourseId=" + executionCourseId.toString() + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriod") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
+									&nbsp;<html:link page="<%="/editExecutionCourse.do?method=editExecutionCourse&amp;executionCourseId=" + executionCourseId.toString() + "&amp;executionPeriodName=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionDegreeName=" + pageContext.findAttribute("executionDegreeName") + "&amp;executionPeriodId=" + pageContext.findAttribute("executionPeriodId") + "&amp;executionDegreeId=" + pageContext.findAttribute("executionDegreeId") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;getNotLinked=" + pageContext.findAttribute("getNotLinked")%>">
 										<bean:message key="label.manager.executionCourseManagement.edit"/>
 									</html:link>
 									/
-									<html:link page="<%="/editExecutionCourse.do?method=deleteExecutionCourse&amp;executionCourseId=" + executionCourseId.toString() + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriod") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
+									<html:link page="<%="/editExecutionCourse.do?method=deleteExecutionCourse&amp;executionCourseId=" + executionCourseId.toString() + "&amp;executionPeriodName=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionDegreeName=" + pageContext.findAttribute("executionDegreeName") + "&amp;executionPeriodId=" + pageContext.findAttribute("executionPeriodId") + "&amp;executionDegreeId=" + pageContext.findAttribute("executionDegreeId") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
 										<bean:message key="label.manager.executionCourseManagement.delete"/>
 									</html:link>&nbsp;
 								</td>

@@ -749,5 +749,152 @@
         </field>
     </form>
 
+
+	<!-- Validations for the NEW EXAMS INTERFACE -->
+
+	<!-- Validation for chooseDegreeAndYearContextForm Form -->
+    <form name="showExamsManagementForm">
+      <field property="executionDegree" depends="required, integer" page="1">
+        <arg0 key="property.context.degree" />
+      </field>
+
+      <field property="curricularYear" depends="required, range" page="1">
+        <arg0 key="property.context.curricular.year"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>5</var-value>
+        </var>
+      </field>
+    </form>
+    
+    <form name="chooseExamsExecutionPeriodForm">
+      <field property="executionPeriod" depends="required, integer" page="1">
+        <arg0 key="property.index"/>
+      </field>
+    </form>
+
+	<!-- Validation for exam context form -->
+	<form name="examNewForm">
+		<field property="day" depends="required, integer" page="4">
+			<arg0 key="property.exam.day"/>
+		</field>
+		<field property="month" depends="required, integer" page="4">
+			<arg0 key="property.exam.month"/>
+		</field>
+		<field property="year" depends="required, integer" page="4">
+			<arg0 key="property.exam.year"/>
+		</field>
+		<field property="beginningHour" depends="required,integer" page="4">
+			<arg0 key="property.time.start"/>
+		</field>
+		<field property="beginningMinute" depends="required,integer" page="4">
+			<arg0 key="property.minute.start"/>
+		</field>
+		<field property="endHour" depends="required,integer" page="4">
+			<arg0 key="property.time.end"/>
+		</field>
+		<field property="endMinute" depends="required,integer" page="4">
+			<arg0 key="property.minute.end"/>
+		</field>
+		<field property="season" depends="required, integer" page="6">
+			<arg0 key="property.exam.season"/>
+		</field>
+		<field property="scopes" depends="validateMultiBox" page="6">
+			<arg0 key="property.exam.scope"/>
+		</field>
+<!--		<field property="executionCourses" depends="required" page="1>
+			<arg0 key="property.executionCourse"/>
+		</field>
+		<field property="rooms" depends="" page="1>
+			<arg0 key="property.exam.rooms"/>
+		</field>
+-->	</form>
+
+	<!-- Validation for room search form -->
+	<form name="roomSearchForm">
+		<field property="day" depends="required, integer" page="1">
+			<arg0 key="property.exam.day"/>
+		</field>
+		<field property="month" depends="required, integer" page="1">
+			<arg0 key="property.exam.month"/>
+		</field>
+		<field property="year" depends="required, integer" page="1">
+			<arg0 key="property.exam.year"/>
+		</field>
+		<field property="beginningHour" depends="required,integer" page="1">
+			<arg0 key="property.time.start"/>
+		</field>
+		<field property="beginningMinute" depends="required,integer" page="1">
+			<arg0 key="property.minute.start"/>
+		</field>
+		<field property="endHour" depends="required,integer" page="1">
+			<arg0 key="property.time.end"/>
+		</field>
+		<field property="endMinute" depends="required,integer" page="1">
+			<arg0 key="property.minute.end"/>
+		</field>
+		<field property="normal" depends="integer" page="1">
+			<arg0 key="property.room.capacity.normal"/>
+		</field>
+		<field property="exam" depends="integer" page="1">
+			<arg0 key="property.room.capacity.exame"/>
+		</field>
+	</form>
+
+	<form name="roomExamSearchForm">
+		<field property="floor" depends="integer" page="1">
+			<arg0 key="property.room.floor"/>
+		</field>
+		<field property="normal" depends="integer" page="1">
+			<arg0 key="property.room.capacity.normal"/>
+		</field>
+		<field property="exam" depends="integer" page="1">
+			<arg0 key="property.room.capacity.exam"/>
+		</field>
+	</form>
+	<form name="examSearchByDegreeAndYearForm">
+		<field property="index" depends="integer" page="1">
+			<arg0 key="property.context.degree"/>
+		</field>
+        <field property="selectAllCurricularYears"
+               depends="multiBoxWithSelectAllCheckBox" page="1">
+                  <arg0 key="ano curricular" resource="true"/>
+                  <var>
+                     <var-name>secondProperty</var-name>
+                     <var-value>selectedCurricularYears</var-value>
+                  </var>
+        </field>
+	</form>
+	
+	<form name="examSearchByDateForm">
+		<field property="day" depends="required, integer" page="1">
+			<arg0 key="property.exam.day"/>
+		</field>
+		<field property="month" depends="required, integer" page="1">
+			<arg0 key="property.exam.month"/>
+		</field>
+		<field property="year" depends="required, integer" page="1">
+			<arg0 key="property.exam.year"/>
+		</field>
+		<field property="beginningHour" depends="integer" page="1">
+			<arg0 key="property.time.start"/>
+		</field>
+		<field property="beginningMinute" depends="integer" page="1">
+			<arg0 key="property.minute.start"/>
+		</field>
+		<field property="endHour" depends="integer" page="1">
+			<arg0 key="property.time.end"/>
+		</field>
+		<field property="endMinute" depends="integer" page="1">
+			<arg0 key="property.minute.end"/>
+		</field>
+	</form>
+
   </formset>
 </form-validation>

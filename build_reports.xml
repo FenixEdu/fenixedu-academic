@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project basedir="."  default="generate_unitTest-reports-examsV4" name="Reports">
+
+	<property name="lib" location="lib" />
+
+	<property location="etc" name="sql"/>
+
+	<property name="src.tests" location="src_tests"/>
+
+	<property name="build.home" location="build"/>
+	<property name="build.app-server" value="${build.home}/app-server"/>
+	<property name="build.tests" value="${build.home}/tests"/>
+	<property name="build.tests.services" value="${build.tests}/services"/>
+
+	<property location="report" name="reports.tests"/>
+
+	<target name="generate_unitTest-reports-examsV4"
+            description="Generates unit test reports for examsV4 branch">
+		<ant antfile="build_tests.xml" target="compile-service-tests-examsV4"/>
+		<ant antfile="build_tests.xml" target="create-tables"/>
+		<delete dir="${reports.tests}"/>
+		<mkdir dir="${reports.tests}"/>
+		<junit printsummary="yes" haltonfailure="no">
+			<formatter type="xml"/>
+            <classpath>
+                <pathelement path="${build.app-server}"/>
+                <pathelement path="${build.tests.services}"/>
+                <pathelement path="${sql}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+            <batchtest fork="yes" todir="${reports.tests}">
+                <fileset dir="${src.tests}">
+	                <!--
+	               	<include name="ServidorAplicacao/Servicos/sop/exams/CreateExamNewTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/DeleteExamNewTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/EditExamNewTest.java"/> 
+		            <include name="ServidorAplicacao/Servicos/sop/exams/ReadAllBuildingsTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadAllBuildingsNoBuildingsTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadAvailableRoomsForExamTest.java"/>                
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExamByOIDTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExamsByDateTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadFilteredExamsMapTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/SearchRoomsTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExecutionCourseWithAssociatedCurricularCoursesTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExamsMapByRoomsTest.java"/>
+
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadCurricularYearByOIDTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExecutionDegreeByOIDTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExecutionDegreesByExecutionYearTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExecutionPeriodsTest.java"/>
+	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExecutionPeriodsNoPeriodsTest.java"/>
+                	-->
+
+                	<include name="ServidorAplicacao/Servicos/sop/exams/*Test.java"/>                  
+                </fileset>
+            </batchtest>
+		</junit>
+		<junitreport todir="${reports.tests}">
+			<fileset dir="${reports.tests}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report
+				format="frames"
+				todir="${reports.tests}/html"
+				styledir="${basedir}/docs/reports-style"/>
+		</junitreport>
+    </target>
+	
+</project>

@@ -3384,6 +3384,26 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
+            <chain name="ReadTeachersInformationAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>EditStudentGroupShift</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.EditStudentGroupShift</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ReadCoursesInformationAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>PrepareEditStudentGroupMembers</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.PrepareEditStudentGroupMembers</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
             <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
         </filterChains>
     </service>
@@ -6267,25 +6287,24 @@
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service> 
-	<service>
-        <name>PrepareStudentEnrolmentContextForOptionalCoursesEnrolment</name>
-        <description></description>
-        <implementationClass>
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.PrepareStudentEnrolmentContextForOptionalCoursesEnrolment</implementationClass>
-        <isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="EnrollmentWithoutRulesAuthorization"/>
-        </filterChains>
-    </service>
     <service>
-        <name>WriteEnrolmentInOptionalCourse</name>
-        <description>Enrolls student in curricular course</description>
-        <implementationClass>ServidorAplicacao.Servico.enrolment.WriteEnrolmentInOptionalCourse</implementationClass>
-        <isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
-        </filterChains>
-    </service>
+		<name>CreateExamNew</name>
+		<implementationClass>ServidorAplicacao.Servico.sop.exams.CreateExamNew</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TimeTableManagerAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>EditExamNew</name>
+		<implementationClass>ServidorAplicacao.Servico.sop.exams.EditExamNew</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TimeTableManagerAuthorization"/>
+		</filterChains>
+	</service>
 	<service>
         <name>EditCurriculumByManager</name>
         <implementationClass>ServidorAplicacao.Servico.manager.EditCurriculum</implementationClass>
@@ -6337,4 +6356,73 @@
         <filterChains>
         </filterChains>
     </service>
+	<service>
+		<name>ReadExecutionCoursewithAssociatedCurricularCourses</name>
+		<implementationClass>ServidorAplicacao.Servico.sop.exams.ReadExecutionCoursewithAssociatedCurricularCourses</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TimeTableManagerAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>ReadFilteredExamsMap</name>
+		<implementationClass>ServidorAplicacao.Servico.sop.exams.ReadFilteredExamsMap</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains></filterChains>
+	</service>
+	<service>
+		<name>ReadExamByOID</name>
+		<implementationClass>ServidorAplicacao.Servico.sop.exams.ReadExamByOID</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains></filterChains>
+	</service>
+	<service>
+		<name>ReadAvailableRoomsForExam</name>
+		<implementationClass>ServidorAplicacao.Servico.sop.exams.ReadAvailableRoomsForExam</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TimeTableManagerAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteExamNew</name>
+		<implementationClass>ServidorAplicacao.Servico.sop.exams.DeleteExamNew</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TimeTableManagerAuthorization"/>
+		</filterChains>
+	</service>
+    <service>
+		<name>ReadAllBuildings</name>
+		<implementationClass>ServidorAplicacao.Servico.sop.exams.ReadAllBuildings</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>
+	<service>
+		<name>SearchRooms</name>
+		<implementationClass>ServidorAplicacao.Servico.sop.exams.SearchRooms</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>
+	<service>
+		<name>ReadExamsMapByRooms</name>
+		<implementationClass>ServidorAplicacao.Servico.sop.exams.ReadExamsMapByRooms</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>
+	<service>
+		<name>ReadExamsByDate</name>
+		<implementationClass>ServidorAplicacao.Servico.sop.exams.ReadExamsByDate</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>
 </serviceDefinitions>

@@ -4,9 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
-
 <span class="error"><html:errors/></span>
-
 <logic:present name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
 	<html:form action="/editExecutionCourseChooseExPeriod">  
 		<html:hidden property="method" value="prepareEditECChooseExecDegreeAndCurYear"/>

@@ -463,138 +463,6 @@
       </reference-descriptor> 
    </class-descriptor>   
 
-
-<!-- Definitions for Dominio.Evaluation -->
-<class-descriptor class="Dominio.Evaluation" table="EVALUATION">
-    <extent-class class-ref="Dominio.Exam" />
-    <extent-class class-ref="Dominio.FinalEvaluation" />
-    <extent-class class-ref="Dominio.OnlineTest" />
-      <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-    <field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-</class-descriptor>
-
-
-
-<!-- Definitions for Dominio.Exam -->
-   <class-descriptor
-   	  class="Dominio.Exam"
-   	  table="EVALUATION"
-   >
-      <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-         name="day"
-         column="DAY"
-         jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
-      />
-      <field-descriptor
-         name="beginning"
-         column="BEGINNING"
-         jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
-      />
-      <field-descriptor
-         name="end"
-         column="END"
-         jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
-      />
-      <field-descriptor
-         name="season"
-         column="SEASON"
-         jdbc-type="INTEGER"
-         conversion="ServidorPersistente.Conversores.Season2EnumSeasonFieldConversion"
-      />
-      <field-descriptor
-         name="enrollmentBeginDay"
-         column="ENROLLMENT_BEGIN_DAY"
-        jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
-      />
-      <field-descriptor
-         name="enrollmentBeginTime"
-         column="ENROLLMENT_BEGIN_TIME"
-        jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
-      />
-       <field-descriptor
-         name="enrollmentEndDay"
-         column="ENROLLMENT_END_DAY"
-        jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
-      />
-      <field-descriptor
-         name="enrollmentEndTime"
-         column="ENROLLMENT_END_TIME"
-        jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
-      />
-      <field-descriptor
-         name="publishmentMessage"
-         column="PUBLISHMENT_MESSAGE"
-        jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-	<collection-descriptor
-			name="associatedExecutionCourses"
-			element-class-ref="Dominio.ExecutionCourse"
-			indirection-table="EXAM_EXECUTION_COURSE"
-			proxy="true"
-			auto-retrieve="true"
-			auto-update="false"
-			auto-delete="false"
-			refresh="true"
-			>
-		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
-		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
-	</collection-descriptor>
-	<collection-descriptor
-			name="associatedRooms"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			element-class-ref="Dominio.Sala"
-			indirection-table="EXAM_ROOM"
-			proxy="true"
-			auto-retrieve="true"
-			auto-update="false"
-			auto-delete="false"
-			>
-		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
-		<fk-pointing-to-element-class column="KEY_ROOM"/>
-	</collection-descriptor>
-</class-descriptor>
-
 <class-descriptor class="Dominio.ExamStudentRoom"  table="EXAM_STUDENT_ROOM">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" 
       					autoincrement="true"/>
@@ -756,10 +624,6 @@
       </reference-descriptor>
    </class-descriptor>
    
-
-
-
-
 <!-- Definitions for Dominio.EvaluationExecutionCourse -->
    <class-descriptor
    	  class="Dominio.EvaluationExecutionCourse"
@@ -802,4 +666,481 @@
       </reference-descriptor>
    </class-descriptor>
    
-<!-- Mapping of User defined classes ends here -->
+<!-- Definitions for Dominio.RoomOccupation -->
+   <class-descriptor
+   	  class="Dominio.RoomOccupation"
+   	  table="ROOM_OCCUPATION"
+   >
+      <field-descriptor id="1"
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor id="2"
+         name="startTime"
+         column="START_TIME"
+         jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+      <field-descriptor id="3"
+         name="endTime"
+         column="END_TIME"
+         jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+     <field-descriptor id="4"
+         name="dayOfWeek"
+         column="WEEKDAY"
+         jdbc-type="INTEGER"
+         conversion="ServidorPersistente.Conversores.DiaSemana2EnumDiaSemanaFieldConversion"
+      />
+      <field-descriptor id="5"
+         name="keyRoom"
+         column="KEY_ROOM"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor id="6"
+         name="keyPeriod"
+         column="KEY_PERIOD"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+      <reference-descriptor
+         name="room"
+         class-ref="Dominio.Sala"
+      >
+         <foreignkey field-id-ref="5"/>
+      </reference-descriptor>
+      <reference-descriptor
+         name="period"
+         class-ref="Dominio.Period"
+      >
+         <foreignkey field-id-ref="6"/>
+      </reference-descriptor>
+   </class-descriptor>
+
+
+<!-- Definitions for Dominio.Period -->
+   <class-descriptor
+   	  class="Dominio.Period"
+   	  table="PERIOD"
+   >
+      <field-descriptor id="1"
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor id="2"
+         name="startDate"
+         column="START_DATE"
+         jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+      <field-descriptor id="3"
+         name="endDate"
+         column="END_DATE"
+         jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+      <collection-descriptor
+         name="roomOccupations"
+         collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         element-class-ref="Dominio.RoomOccupation"
+         proxy="true"
+         auto-retrieve="true"
+         refresh="true"
+         >
+         <inverse-foreignkey field-ref="keyPeriod"/>
+      </collection-descriptor>
+   </class-descriptor>
+
+<!-- Definitions for Dominio.Evaluation -->
+<class-descriptor class="Dominio.Evaluation" table="EVALUATION">
+    <extent-class class-ref="Dominio.Exam" />
+    <extent-class class-ref="Dominio.WrittenTest" />
+    <extent-class class-ref="Dominio.WrittenEvaluation" />
+    <extent-class class-ref="Dominio.FinalEvaluation" />
+    <extent-class class-ref="Dominio.OnlineTest" />
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+    <field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+</class-descriptor>
+
+
+<!-- Definitions for Dominio.WrittenTest -->
+   <class-descriptor
+   	  class="Dominio.WrittenTest"
+   	  table="EVALUATION"
+   >
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="day"
+         column="DAY"
+         jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+      <field-descriptor
+         name="beginning"
+         column="BEGINNING"
+         jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+      <field-descriptor
+         name="end"
+         column="END"
+         jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+      <field-descriptor
+         name="enrollmentBeginDay"
+         column="ENROLLMENT_BEGIN_DAY"
+        jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+      <field-descriptor
+         name="enrollmentBeginTime"
+         column="ENROLLMENT_BEGIN_TIME"
+        jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+       <field-descriptor
+         name="enrollmentEndDay"
+         column="ENROLLMENT_END_DAY"
+        jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+      <field-descriptor
+         name="enrollmentEndTime"
+         column="ENROLLMENT_END_TIME"
+        jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+      <field-descriptor
+         name="publishmentMessage"
+         column="PUBLISHMENT_MESSAGE"
+        jdbc-type="VARCHAR"
+      />
+       <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+   <collection-descriptor
+			name="associatedExecutionCourses"
+			element-class-ref="Dominio.ExecutionCourse"
+			indirection-table="EXAM_EXECUTION_COURSE"
+			proxy="true"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			refresh="true"
+			>
+		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
+		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="associatedRoomOccupation"
+			element-class-ref="Dominio.RoomOccupation"
+			indirection-table="WRITTEN_EVALUATION_ROOM_OCCUPATION"
+			proxy="true"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			refresh="true"
+			>
+		<fk-pointing-to-this-class column="KEY_WRITTEN_EVALUATION"/>
+		<fk-pointing-to-element-class column="KEY_ROOM_OCCUPATION"/>
+	</collection-descriptor>
+
+</class-descriptor>
+
+
+
+<!-- Definitions for Dominio.Exam -->
+   <class-descriptor
+   	  class="Dominio.Exam"
+   	  table="EVALUATION"
+   >
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="day"
+         column="DAY"
+         jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+      <field-descriptor
+         name="beginning"
+         column="BEGINNING"
+         jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+      <field-descriptor
+         name="end"
+         column="END"
+         jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+      <field-descriptor
+         name="season"
+         column="SEASON"
+         jdbc-type="INTEGER"
+         conversion="ServidorPersistente.Conversores.Season2EnumSeasonFieldConversion"
+      />
+      <field-descriptor
+         name="enrollmentBeginDay"
+         column="ENROLLMENT_BEGIN_DAY"
+        jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+      <field-descriptor
+         name="enrollmentBeginTime"
+         column="ENROLLMENT_BEGIN_TIME"
+        jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+       <field-descriptor
+         name="enrollmentEndDay"
+         column="ENROLLMENT_END_DAY"
+        jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+      <field-descriptor
+         name="enrollmentEndTime"
+         column="ENROLLMENT_END_TIME"
+        jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+      <field-descriptor
+         name="publishmentMessage"
+         column="PUBLISHMENT_MESSAGE"
+        jdbc-type="VARCHAR"
+      />
+       <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+	<collection-descriptor
+			name="associatedExecutionCourses"
+			element-class-ref="Dominio.ExecutionCourse"
+			indirection-table="EXAM_EXECUTION_COURSE"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			proxy="true"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			refresh="true"
+			>
+		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
+		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="associatedRooms"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			element-class-ref="Dominio.Sala"
+			indirection-table="EXAM_ROOM"
+			proxy="true"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			>
+		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
+		<fk-pointing-to-element-class column="KEY_ROOM"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="associatedRoomOccupation"
+			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
+			element-class-ref="Dominio.RoomOccupation"
+			indirection-table="WRITTEN_EVALUATION_ROOM_OCCUPATION"
+			proxy="true"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			refresh="true"
+			>
+		<fk-pointing-to-this-class column="KEY_WRITTEN_EVALUATION"/>
+		<fk-pointing-to-element-class column="KEY_ROOM_OCCUPATION"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="associatedCurricularCourseScope"
+			element-class-ref="Dominio.CurricularCourseScope"
+			indirection-table="WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			proxy="true"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			refresh="true"
+			>
+		<fk-pointing-to-this-class column="KEY_WRITTEN_EVALUATION"/>
+		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_SCOPE"/>
+	</collection-descriptor>
+</class-descriptor>
+
+<!-- Definitions for Dominio.WrittenEvaluation -->
+   <class-descriptor
+   	  class="Dominio.WrittenEvaluation"
+   	  table="EVALUATION"
+   >
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="day"
+         column="DAY"
+         jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+      <field-descriptor
+         name="beginning"
+         column="BEGINNING"
+         jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+      <field-descriptor
+         name="end"
+         column="END"
+         jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+      <field-descriptor
+         name="enrollmentBeginDay"
+         column="ENROLLMENT_BEGIN_DAY"
+        jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+      <field-descriptor
+         name="enrollmentBeginTime"
+         column="ENROLLMENT_BEGIN_TIME"
+        jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+       <field-descriptor
+         name="enrollmentEndDay"
+         column="ENROLLMENT_END_DAY"
+        jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+      <field-descriptor
+         name="enrollmentEndTime"
+         column="ENROLLMENT_END_TIME"
+        jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+      <field-descriptor
+         name="publishmentMessage"
+         column="PUBLISHMENT_MESSAGE"
+        jdbc-type="VARCHAR"
+      />
+       <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+	<collection-descriptor
+			name="associatedExecutionCourses"
+			element-class-ref="Dominio.ExecutionCourse"
+			indirection-table="EXAM_EXECUTION_COURSE"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			proxy="true"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			refresh="true"
+			>
+		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
+		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="associatedCurricularCourseScope"
+			element-class-ref="Dominio.CurricularCourseScope"
+			indirection-table="WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE"
+			proxy="true"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			refresh="true"
+			>
+		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
+		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_SCOPE"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="associatedRoomOccupation"
+			element-class-ref="Dominio.RoomOccupation"
+			indirection-table="WRITTEN_EVALUATION_ROOM_OCCUPATION"
+			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
+			proxy="true"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			refresh="true"
+			>
+		<fk-pointing-to-this-class column="KEY_WRITTEN_EVALUATION"/>
+		<fk-pointing-to-element-class column="KEY_ROOM_OCCUPATION"/>
+	</collection-descriptor>
+</class-descriptor>

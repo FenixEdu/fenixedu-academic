@@ -1,0 +1,527 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<dataset>
+  <BRANCH ID_INTERNAL='1' BRANCH_CODE='' BRANCH_NAME='' KEY_DEGREE_CURRICULAR_PLAN='24' ACK_OPT_LOCK='1' BRANCH_TYPE='COMNBR'/>
+  <BRANCH ID_INTERNAL='66' BRANCH_CODE='1010' BRANCH_NAME='RAMO DE PROGRAMAÇÃO E SISTEMAS DE INFORMAÇÃO' KEY_DEGREE_CURRICULAR_PLAN='10' BRANCH_ACRONYM='PSI' ACK_OPT_LOCK='1' BRANCH_TYPE='SPECBR'/>
+  <BRANCH ID_INTERNAL='67' BRANCH_CODE='1020' BRANCH_NAME='RAMO DE SISTEMAS COMPUTACIONAIS' KEY_DEGREE_CURRICULAR_PLAN='10' BRANCH_ACRONYM='SC' ACK_OPT_LOCK='1' BRANCH_TYPE='SPECBR'/>
+  <BRANCH ID_INTERNAL='68' BRANCH_CODE='1030' BRANCH_NAME='RAMO DE INTELIGÊNCIA ARTIFICIAL' KEY_DEGREE_CURRICULAR_PLAN='10' BRANCH_ACRONYM='IA' ACK_OPT_LOCK='1' BRANCH_TYPE='SPECBR'/>
+  <BRANCH ID_INTERNAL='69' BRANCH_CODE='1040' BRANCH_NAME='RAMO DE INFORMÁTICA INDUSTRIAL' KEY_DEGREE_CURRICULAR_PLAN='10' BRANCH_ACRONYM='II' ACK_OPT_LOCK='1' BRANCH_TYPE='SPECBR'/>
+  <BRANCH ID_INTERNAL='7902' BRANCH_CODE='' BRANCH_NAME='' KEY_DEGREE_CURRICULAR_PLAN='48' ACK_OPT_LOCK='1' BRANCH_TYPE='COMNBR'/>
+  <BRANCH ID_INTERNAL='8262' BRANCH_CODE='' BRANCH_NAME='' KEY_DEGREE_CURRICULAR_PLAN='88' ACK_OPT_LOCK='1' BRANCH_TYPE='COMNBR'/>
+  <BRANCH ID_INTERNAL='8265' BRANCH_CODE='1010' BRANCH_NAME='RAMO DE PROGRAMAÇÃO E SISTEMAS DE INFORMAÇÃO' KEY_DEGREE_CURRICULAR_PLAN='88' BRANCH_ACRONYM='PSI' ACK_OPT_LOCK='1' BRANCH_TYPE='SPECBR'/>
+  <BRANCH ID_INTERNAL='8275' BRANCH_CODE='1030' BRANCH_NAME='RAMO DE SISTEMAS COMPUTACIONAIS' KEY_DEGREE_CURRICULAR_PLAN='88' BRANCH_ACRONYM='SC' ACK_OPT_LOCK='3' BRANCH_TYPE='SPECBR'/>
+  <BRANCH ID_INTERNAL='8534' BRANCH_CODE='1050' BRANCH_NAME='RAMO DE ROBÓTICA E SISTEMAS INDUSTRIAS' KEY_DEGREE_CURRICULAR_PLAN='88' BRANCH_ACRONYM='II' ACK_OPT_LOCK='4' BRANCH_TYPE='SPECBR'/>
+  <CURRICULAR_COURSE ID_INTERNAL='743' KEY_DEGREE_CURRICULAR_PLAN='10' CREDITS='0.0' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' NAME='APRENDIZAGEM (M)' CODE='ANC' TYPE='1' BASIC='0' ACK_OPT_LOCK='1' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' ENROLLMENT_WEIGTH='1' ECTS_CREDITS='0.0'/>
+  <CURRICULAR_COURSE ID_INTERNAL='830' KEY_DEGREE_CURRICULAR_PLAN='10' CREDITS='0.0' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='2.0' NAME='REPRESENTAÇÃO DO CONHECIMENTO' CODE='PO' TYPE='1' BASIC='0' ACK_OPT_LOCK='1' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' ENROLLMENT_WEIGTH='1' ECTS_CREDITS='0.0'/>
+  <CURRICULAR_COURSE ID_INTERNAL='835' KEY_DEGREE_CURRICULAR_PLAN='10' CREDITS='0.0' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' NAME='APRENDIZAGEM' CODE='0B' TYPE='1' BASIC='0' ACK_OPT_LOCK='4' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' ENROLLMENT_WEIGTH='1' ECTS_CREDITS='0.0'/>
+  <CURRICULAR_COURSE ID_INTERNAL='3047' KEY_DEGREE_CURRICULAR_PLAN='48' CREDITS='4.0' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='2.0' NAME='ROBÓTICA' CODE='AU6' TYPE='1' EXECUTION_SCOPE='1' MANDATORY='0' BASIC='0' KEY_SCIENTIFIC_AREA='4' ACK_OPT_LOCK='2' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' ENROLLMENT_WEIGTH='1' ECTS_CREDITS='0.0'/>
+  <CURRICULAR_COURSE ID_INTERNAL='3172' KEY_DEGREE_CURRICULAR_PLAN='88' CREDITS='0.0' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' NAME='APRENDIZAGEM' CODE='0B' TYPE='2' EXECUTION_SCOPE='1' BASIC='0' ACK_OPT_LOCK='1' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' ENROLLMENT_WEIGTH='1' ECTS_CREDITS='0.0'/>
+  <CURRICULAR_COURSE ID_INTERNAL='3184' KEY_DEGREE_CURRICULAR_PLAN='88' CREDITS='0.0' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='2.0' NAME='ROBÓTICA' CODE='2O' TYPE='2' EXECUTION_SCOPE='1' BASIC='0' ACK_OPT_LOCK='1' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' ENROLLMENT_WEIGTH='1' ECTS_CREDITS='0.0'/>
+  <CURRICULAR_COURSE ID_INTERNAL='3261' KEY_DEGREE_CURRICULAR_PLAN='88' CREDITS='0.0' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' NAME='REPRESENTAÇÃO DO CONHECIMENTO' CODE='PO' TYPE='1' EXECUTION_SCOPE='1' BASIC='0' ACK_OPT_LOCK='1' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' ENROLLMENT_WEIGTH='1' ECTS_CREDITS='0.0'/>
+  <CURRICULAR_COURSE_EXECUTION_COURSE INTERNAL_CODE='923' KEY_CURRICULAR_COURSE='830' KEY_EXECUTION_COURSE='36723'/>
+  <CURRICULAR_COURSE_EXECUTION_COURSE INTERNAL_CODE='924' KEY_CURRICULAR_COURSE='3261' KEY_EXECUTION_COURSE='36723'/>
+  <CURRICULAR_COURSE_EXECUTION_COURSE INTERNAL_CODE='925' KEY_CURRICULAR_COURSE='743' KEY_EXECUTION_COURSE='36422'/>
+  <CURRICULAR_COURSE_EXECUTION_COURSE INTERNAL_CODE='926' KEY_CURRICULAR_COURSE='835' KEY_EXECUTION_COURSE='36422'/>
+  <CURRICULAR_COURSE_EXECUTION_COURSE INTERNAL_CODE='927' KEY_CURRICULAR_COURSE='3172' KEY_EXECUTION_COURSE='36422'/>
+  <CURRICULAR_COURSE_EXECUTION_COURSE INTERNAL_CODE='928' KEY_CURRICULAR_COURSE='3047' KEY_EXECUTION_COURSE='36721'/>  
+  <CURRICULAR_COURSE_EXECUTION_COURSE INTERNAL_CODE='929' KEY_CURRICULAR_COURSE='3184' KEY_EXECUTION_COURSE='36721'/>    
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='681' KEY_CURRICULAR_SEMESTER='8' KEY_CURRICULAR_COURSE='830' KEY_BRANCH='1' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='2.0' SCOPE_TYPE='0' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-10-24' END_DATE='2003-10-24' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='682' KEY_CURRICULAR_SEMESTER='6' KEY_CURRICULAR_COURSE='830' KEY_BRANCH='1' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-10-24' END_DATE='2003-10-24' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='724' KEY_CURRICULAR_SEMESTER='10' KEY_CURRICULAR_COURSE='835' KEY_BRANCH='1' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-10-24' END_DATE='2003-10-24' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='731' KEY_CURRICULAR_SEMESTER='10' KEY_CURRICULAR_COURSE='743' KEY_BRANCH='1' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-10-24' END_DATE='2003-10-24' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='2915' KEY_CURRICULAR_SEMESTER='10' KEY_CURRICULAR_COURSE='3172' KEY_BRANCH='8265' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-10-24' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='3004' KEY_CURRICULAR_SEMESTER='6' KEY_CURRICULAR_COURSE='3261' KEY_BRANCH='8262' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-10-24' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17190' KEY_CURRICULAR_SEMESTER='8' KEY_CURRICULAR_COURSE='830' KEY_BRANCH='66' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='2.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' WEIGTH='1' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17191' KEY_CURRICULAR_SEMESTER='8' KEY_CURRICULAR_COURSE='830' KEY_BRANCH='67' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='2.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' WEIGTH='1' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17192' KEY_CURRICULAR_SEMESTER='8' KEY_CURRICULAR_COURSE='830' KEY_BRANCH='69' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='2.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' WEIGTH='1' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17222' KEY_CURRICULAR_SEMESTER='10' KEY_CURRICULAR_COURSE='835' KEY_BRANCH='66' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' WEIGTH='1' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17223' KEY_CURRICULAR_SEMESTER='10' KEY_CURRICULAR_COURSE='835' KEY_BRANCH='67' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' WEIGTH='1' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17224' KEY_CURRICULAR_SEMESTER='10' KEY_CURRICULAR_COURSE='835' KEY_BRANCH='69' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' WEIGTH='1' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17335' KEY_CURRICULAR_SEMESTER='8' KEY_CURRICULAR_COURSE='3184' KEY_BRANCH='8534' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='2.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='0' MIN_INCREMENT_NAC='0' WEIGTH='0' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='2'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17537' KEY_CURRICULAR_SEMESTER='8' KEY_CURRICULAR_COURSE='3261' KEY_BRANCH='8265' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='0' MIN_INCREMENT_NAC='0' WEIGTH='0' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='2'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17574' KEY_CURRICULAR_SEMESTER='6' KEY_CURRICULAR_COURSE='830' KEY_BRANCH='68' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='2.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' WEIGTH='1' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17679' KEY_CURRICULAR_SEMESTER='10' KEY_CURRICULAR_COURSE='743' KEY_BRANCH='66' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' WEIGTH='1' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17680' KEY_CURRICULAR_SEMESTER='10' KEY_CURRICULAR_COURSE='743' KEY_BRANCH='67' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' WEIGTH='1' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17681' KEY_CURRICULAR_SEMESTER='10' KEY_CURRICULAR_COURSE='743' KEY_BRANCH='68' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' WEIGTH='1' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17682' KEY_CURRICULAR_SEMESTER='10' KEY_CURRICULAR_COURSE='743' KEY_BRANCH='69' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' WEIGTH='1' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17850' KEY_CURRICULAR_SEMESTER='8' KEY_CURRICULAR_COURSE='3261' KEY_BRANCH='8275' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='0' MIN_INCREMENT_NAC='0' WEIGTH='0' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17851' KEY_CURRICULAR_SEMESTER='8' KEY_CURRICULAR_COURSE='3261' KEY_BRANCH='8534' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='0' MIN_INCREMENT_NAC='0' WEIGTH='0' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17868' KEY_CURRICULAR_SEMESTER='10' KEY_CURRICULAR_COURSE='3172' KEY_BRANCH='8275' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='0' MIN_INCREMENT_NAC='0' WEIGTH='0' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='17869' KEY_CURRICULAR_SEMESTER='10' KEY_CURRICULAR_COURSE='3172' KEY_BRANCH='8534' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='0' MIN_INCREMENT_NAC='0' WEIGTH='0' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_COURSE_SCOPE ID_INTERNAL='18276' KEY_CURRICULAR_SEMESTER='8' KEY_CURRICULAR_COURSE='3047' KEY_BRANCH='7902' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='2.0' SCOPE_TYPE='0' MAX_INCREMENT_NAC='0' MIN_INCREMENT_NAC='0' WEIGTH='0' CREDITS='0.0' ECTS_CREDITS='0.0' BEGIN_DATE='2003-02-19' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_SEMESTER ID_INTERNAL='6' KEY_CURRICULAR_YEAR='3' SEMESTER='2' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_SEMESTER ID_INTERNAL='8' KEY_CURRICULAR_YEAR='4' SEMESTER='2' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_SEMESTER ID_INTERNAL='10' KEY_CURRICULAR_YEAR='5' SEMESTER='2' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_YEAR ID_INTERNAL='3' YEAR='3' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_YEAR ID_INTERNAL='4' YEAR='4' ACK_OPT_LOCK='1'/>
+  <CURRICULAR_YEAR ID_INTERNAL='5' YEAR='5' ACK_OPT_LOCK='1'/>
+  <DEGREE ID_INTERNAL='10' CODE='LEIC' NAME='Engenharia Informática e de Computadores' TYPE_DEGREE='1' ACK_OPT_LOCK='1'/>
+  <DEGREE ID_INTERNAL='14' CODE='LEEC' NAME='Engenharia Electrotécnica e de Computadores' TYPE_DEGREE='1' ACK_OPT_LOCK='1'/>
+  <DEGREE ID_INTERNAL='24' CODE='MEEC' NAME='Engenharia Electrotécnica e de Computadores' TYPE_DEGREE='2' ACK_OPT_LOCK='1'/>
+  <DEGREE_CURRICULAR_PLAN ID_INTERNAL='10' NAME='LEIC - Currículo Antigo' KEY_DEGREE='10' STATE='1' INITIAL_DATE='2000-08-01' DEGREE_DURATION='0' MINIMAL_YEAR_FOR_OPTIONAL_COURSES='0' MARK_TYPE='20' NEEDED_CREDITS='0.0' NUMERUS_CLAUSUS='0' ACK_OPT_LOCK='2'/>
+  <DEGREE_CURRICULAR_PLAN ID_INTERNAL='24' NAME='MEEC02/04' KEY_DEGREE='24' STATE='1' INITIAL_DATE='2002-08-01' END_DATE='2004-07-31' DEGREE_DURATION='2' MINIMAL_YEAR_FOR_OPTIONAL_COURSES='0' MARK_TYPE='5' NEEDED_CREDITS='20.0' NUMERUS_CLAUSUS='150' ACK_OPT_LOCK='3'/>
+  <DEGREE_CURRICULAR_PLAN ID_INTERNAL='48' NAME='LEEC2003/2004' KEY_DEGREE='14' STATE='1' INITIAL_DATE='2003-08-01' DEGREE_DURATION='0' MINIMAL_YEAR_FOR_OPTIONAL_COURSES='0' MARK_TYPE='20' NUMERUS_CLAUSUS='25' DESCRIPTION='&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;O curso é constituído por um tronco
+  comum, área de especialização, área secundária e trabalho final de
+  curso, tem a duração de cinco anos lectivos (tipicamente cinco
+  disciplinas por semestre nos primeiros dois anos e quatro nos
+  restantes) e está organizado pelo sistema de unidades de crédito.  O
+  número mínimo de unidades de crédito necessário à obtenção da
+  licenciatura é de 176 (todas as disciplinas correspondem a 4
+  créditos, excepto o Trabalho Final de Curso que corresponde a
+  8).&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;No modelo global que foi considerado
+  para a LEEC teve-se em vista proporcionar aos alunos uma formação de
+  qualidade em Engenharia Electrotécnica e de Computadores, com uma
+  sólida formação de base e com uma componente especializada
+  subdividida em Área de Especialização destinada à formação mais
+  especializada, e Área Secundária de menor dimensão, para alargar o
+  espectro da sua formação. O tronco comum é constituído por um
+  conjunto obrigatório de 26 disciplinas. Uma área de especialização
+  corresponde à frequência de 12 disciplinas que não pertençam ao
+  tronco comum e formem um todo coerente do ponto de vista
+  científico-pedagógico. Uma área secundária corresponde à frequência
+  de 3 disciplinas que não pertençam ao tronco comum e formem
+  igualmente um todo coerente do ponto de vista
+  cientifico-pedagógico. A escolha da área secundária é
+  obrigatoriamente distinta da área de especialização e os respectivos
+  créditos deverão ser obtidos em disciplinas distintas das que são
+  frequentadas na respectiva área de especialização.&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;A formação de base ocupa um pouco
+  mais que os primeiros 5 semestres do curso. A partir do 6º semestre,
+  o conceito de &quot;ano&quot; deixa de ser relevante num regime de
+  créditos. Isto é, chegando ao 3º ano, 2º semestre, e optando por uma
+  dada área de especialização, o aluno poderá escolher, entre um leque
+  relativamente largo de disciplinas, as que tem que fazer para
+  prefazer um dado número de créditos nessa área. A frequência de uma
+  dada disciplina não está assim condicionada a um &quot;ano&quot;, mas ao facto
+  de o aluno ter obtido aprovação nas disciplinas indicadas como
+  precedência dessa disciplina. &lt;/font&gt;&lt;/p&gt;
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;&lt;b&gt;1. Regime de Créditos&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;
+&lt;table width=&quot;75%&quot; border=&quot;1&quot; align=&quot;center&quot;&gt;
+  &lt;tr&gt; 
+    &lt;td width=&quot;51%&quot;&gt; 
+      &lt;div align=&quot;center&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;&lt;b&gt;Grupo&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;
+    &lt;/td&gt;
+    &lt;td width=&quot;49%&quot;&gt; 
+      &lt;div align=&quot;center&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;&lt;b&gt;N.º de créditos (disciplinas)&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt; 
+    &lt;td width=&quot;51%&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;Bases de Engenharia &lt;/font&gt;&lt;/td&gt;
+    &lt;td width=&quot;49%&quot;&gt; 
+      &lt;div align=&quot;center&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;52 (13)&lt;/font&gt;&lt;/div&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt; 
+    &lt;td width=&quot;51%&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;Bases de Eng. Electrotécnica 
+      e de Computadores&lt;/font&gt;&lt;/td&gt;
+    &lt;td width=&quot;49%&quot;&gt; 
+      &lt;div align=&quot;center&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;56 (14)&lt;/font&gt;&lt;/div&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt; 
+    &lt;td width=&quot;51%&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;Área de Especialização&lt;/font&gt;&lt;/td&gt;
+    &lt;td width=&quot;49%&quot;&gt; 
+      &lt;div align=&quot;center&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;44 (11)&lt;/font&gt;&lt;/div&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt; 
+    &lt;td width=&quot;51%&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;Área Secundária&lt;/font&gt;&lt;/td&gt;
+    &lt;td width=&quot;49%&quot;&gt; 
+      &lt;div align=&quot;center&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;12 (3)&lt;/font&gt;&lt;/div&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt; 
+    &lt;td width=&quot;51%&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;Trabalho Final de Curso&lt;/font&gt;&lt;/td&gt;
+    &lt;td width=&quot;49%&quot;&gt; 
+      &lt;div align=&quot;center&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;8 (2)&lt;/font&gt;&lt;/div&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt; 
+    &lt;td width=&quot;51%&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;Formação Livre&lt;/font&gt;&lt;/td&gt;
+    &lt;td width=&quot;49%&quot;&gt; 
+      &lt;div align=&quot;center&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;4 (1)&lt;/font&gt;&lt;/div&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt; 
+    &lt;td width=&quot;51%&quot;&gt; 
+      &lt;div align=&quot;left&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;&lt;b&gt;Total&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;
+    &lt;/td&gt;
+    &lt;td width=&quot;49%&quot;&gt; 
+      &lt;div align=&quot;center&quot;&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;176 (44)&lt;/font&gt;&lt;/div&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;&lt;b&gt;2. Áreas de Especialização e
+Secundárias&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;Foram definidas as seguintes cinco
+  Áreas de Especialização (AE): Computadores; Energia; Sistemas de
+  Decisão e Controlo; Sistemas Electrónicos; e
+  Telecomunicações.&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;Qualquer destas áreas constitui
+  também uma Área Secundária (AS). Para além destas cinco áreas
+  secundárias, existe também: Economia e Gestão. &lt;/font&gt;&lt;/p&gt; 
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;&lt;b&gt;2.1. Área de Especialização:
+  &quot;Computadores&quot;&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;A actualidade desta área de
+  especialização é indiscutível. Através da escolha desta área, a
+  sólida formação de base em engenharia electrotécnica adquirida
+  durante os três primeiros anos do curso pode ser complementada com
+  tópicos avançados de arquitectura de computadores, metodologias de
+  programação, redes de comunicações, sistemas multimédia,
+  aprendizagem automática e electrónica de sistemas
+  computacionais. &lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;&lt;b&gt;2.2. Área de Especialização:
+&quot;Energia&quot;&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;A produção, transporte, distribuição,
+  processamento e utilização da energia eléctrica, continua a ser hoje
+  uma das áreas mais relevantes da engenharia electrotécnica. Sem um
+  fornecimento seguro, fiável e económico desta forma de energia, a
+  sociedade moderna ficaria incapacitada.&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;O Sistema de Energia
+  Eléctrica-compreendendo as centrais eléctricas, as redes e as cargas
+  - com dimensão à escala continental, resultante da interligação
+  entre os sistemas nacionais - constitui um dos mais complexos
+  sistemas jamais concebidos por cientistas e engenheiros. Esta área
+  de especialização abrange a conversão electromecânica de energia, a
+  produção convencional e descentralizada, o transporte e distribuição
+  em (muito) alta, média e baixa tensão, a análise de redes e sistemas
+  de energia, as máquinas eléctricas, a electrónica industrial e de
+  energia, o controlo dos sistemas e dos accionamentos, a protecção e
+  automação dos equipamentos e instalações, e a qualidade da energia
+  eléctrica.&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;A reestruturação que em todo o mundo
+  se tem vindo a operar no sector eléctrico-tradicionalmente assente
+  em monopólios naturais - visando a criação de um ambiente mais
+  competitivo - bem como os progressos no uso da energia eléctrica -
+  na indústria, nos serviços, nos transportes e nas residências -
+  permite antever um crescimento sustentado das oportunidades
+  profissionais para os licenciados que optem por esta área de
+  especialização.  &lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;&lt;b&gt;2.3. Área de Especialização: &quot;Sistemas, 
+  Decisão e Controlo&quot;&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;Num sistema de decisão e controlo os
+  dados recolhidos sobre um determinado processo (ângulos das juntas
+  num braço robot, temperaturas numa caldeira, carros por hora num
+  ponto da auto-estrada) são tratados por forma a serem tomadas
+  decisões. Por exemplo, observando o trãnsito numa auto-estrada
+  podemos querer decidir se ele segue um padrão normal ou se há
+  variações devidas a um acidente. Isto implica o processamento por
+  computador de imagens recolhidas por câmaras e ainda o
+  reconhecimento automático de padrões do trânsito (anormalmente fraco
+  ou forte, veículos muito juntos, etc.). Um outro exemplo é controlo
+  da temperatura numa caldeira. Através de sucessivas medidas de
+  temperatura, um computador pode efectuar cálculos para decidir se
+  certas válvulas devem ser mais ou menos abertas por forma a que a
+  temperatura se mantenha no valor desejado.&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;O domínio das técnicas da Engenharia
+  dos Sistemas de Decisão e Controlo é uma condição indispensável para
+  a modernização da Indústria.  Para intervir, à escala nacional, num
+  ambiente industrial caracterizado por uma sofisticação crescente, é
+  fundamental preparar, com tempo, recursos humanos capazes de tornar
+  essa intervenção eficaz em domínios tão diversos como as
+  engenharias, a medicina, o controlo e gestão da produção, o
+  ambiente, etc.. Os alunos desta área têm uma formação marcadamente
+  interdisciplinar e são confrontados com aplicações que incluem:
+  sistemas para controlo de processos e sistemas industriais;
+  manipuladores robóticos e robots autónomos (para ambientes fabris ou
+  em tarefas de prospecção, inspecção e manutenção em ambientes
+  terrestres, submarinos ou aéreos); sistemas de automação; sistemas
+  de visão artificial; biomedicina e bioengenharia; controlo em tempo
+  real de sistemas complexos; etc. &lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;&lt;b&gt;2.4. Área de Especialização:
+&quot;Sistemas Electrónicos&quot;&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;O objectivo da especialização em
+  Sistemas Electrónicos é a formação de profissionais com qualificação
+  superior dotados de capacidades para intervir, de forma inovadora,
+  na introdução e acompanhamento das novas tecnologias de realização
+  de sistemas electrónicos na indústria nacional. As áreas de actuação
+  do Engenheiro desta especialidade, são a concepção, projecto e
+  realização de circuitos e sistemas electrónicos para aplicação em
+  campos muito diversificados de Engenharia. &lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;&lt;b&gt;2.5. Área de Especialização:
+&quot;Telecomunicações&quot;&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Helvetica, Arial&quot;&gt;Estudam-se, nesta área específica, as
+  bases científicas dos sistemas de comunicação e das técnicas de
+  desenvolvimento, projecto e realização desses sistemas, contemplando
+  quase exclusivamente os que dependem da tecnologia
+  electrónica. Entre as matérias ministradas, destaca-se a atenção
+  dispensada às modernas técnicas digitais, que permitem integrar numa
+  mesma rede os serviços de telecomunicações convencionais e as
+  aplicações de natureza informática. &lt;/font&gt;&lt;/p&gt;' ENROLLMENT_STRATEGY_CLASS_NAME='class ServidorAplicacao.strategy.enrolment.strategys.student.EnrolmentStrategyLEEC' ACK_OPT_LOCK='1'/>
+  <DEGREE_CURRICULAR_PLAN ID_INTERNAL='88' NAME='LEIC 2003' KEY_DEGREE='10' STATE='1' INITIAL_DATE='2003-08-01' DEGREE_DURATION='0' MINIMAL_YEAR_FOR_OPTIONAL_COURSES='0' MARK_TYPE='20' NEEDED_CREDITS='0.0' NUMERUS_CLAUSUS='0' DESCRIPTION='      &lt;UL&gt;
+        &lt;LI&gt;&lt;A href=&quot;http://leic.dei.ist.utl.pt/estrutura/index.html&quot;&gt;Elenco de disciplinas da licenciatura&lt;/A&gt; 
+        &lt;/LI&gt;&lt;/UL&gt;&lt;/B&gt;
+      &lt;P&gt;A Licenciatura em Engenharia Informática e Computadores tem uma duração 
+      de cinco anos, com 40 disciplinas semestrais e um trabalho final no 5º ano 
+      do curso. Os alunos frequentam em comum as 28 disciplinas dos primeiros 
+      três anos, após o que optam por uma área de especialização principal e uma 
+      área de especialização complementar. &lt;O:P&gt;&lt;/O:P&gt;&lt;/P&gt;
+      &lt;P&gt;As disciplinas são qualificadas quanto à profundidade, maturidade do 
+      ensino e maturidade da aprendizagem praticado em três tipos de 
+      qualificativos, L, M e A:&lt;/P&gt;
+      &lt;UL&gt;
+        &lt;LI&gt;
+        &lt;P&gt;As disciplinas do tipo L (Licenciatura) são as disciplinas típicas 
+        dos primeiros 3 anos da Licenciatura, correspondendo a 4 unidades de 
+        crédito. &lt;/P&gt;
+        &lt;LI&gt;
+        &lt;P&gt;As disciplinas do tipo M (Mestrado) são disciplinas típicas do final 
+        da licenciatura e do início da pós-graduação, requerendo já maturidade 
+        nos conhecimentos e na abordagem das matérias em estudo. Em certos 
+        casos, os estudantes dos dois últimos anos da Licenciatura podem ter 
+        acesso a frequência de disciplinas de tipo M.&amp;nbsp; &lt;/P&gt;
+        &lt;LI&gt;
+        &lt;P&gt;As disciplinas do tipo A (Avançadas) são disciplinas altamente 
+        especializadas, ao nível terminal do mestrado ou de preparação para o 
+        doutoramento. &lt;/P&gt;&lt;/LI&gt;&lt;/UL&gt;
+      &lt;P&gt;O Trabalho Final de Curso constitui uma componente essencial deste 
+      curso, realizado sob orientação de um dos Professores da Licenciatura, 
+      normalmente no quadro das actividades de investigação e desenvolvimento 
+      tecnológico em que se encontra envolvido. &lt;O:P&gt;
+      &lt;P&gt;A componente do portfolio pessoal permite aos alunos integrar 
+      formalmente no seu currículo um número de valências adicionais, que 
+      complementam a sua formação técnico/científica. A criação do portfolio 
+      pessoal como uma componente curricular vai ao encontro de recomendações 
+      internacionais que indicam que a formação técnica dos alunos deve ser 
+      complementada com uma sólida formação social e humanística. 
+      &lt;P&gt;Entre as actividades que contam com créditos para o currículo pessoal 
+      contam-se a aprendizagem de línguas estrangeiras, cursos de comunicação 
+      oral e escrita, organização de eventos, gestão associativa, etc. 
+      &lt;O:P&gt;&lt;/O:P&gt;&lt;/P&gt;
+      &lt;P&gt;O IST dispõe de um conjunto único em Portugal de infraestruturas de 
+      I&amp;amp;D, quer nos seus &lt;A 
+      href=&quot;http://www.ist.utl.pt/pt/estrutura_interna/estrutura_interna.html#unidades_academicas&quot;&gt;Departamentos&lt;/A&gt; 
+      e Centros de Investigação, quer nas suas instituições associadas, das 
+      quais se destacam no contexto deste curso, o &lt;A 
+      href=&quot;http://www.inesc-id.pt&quot; target=_top&gt;INESC-ID&lt;/A&gt; - Instituto de 
+      Engenharia de Sistemas e Computadores. Investigação e Desenvolvimento em 
+      Lisboa, o &lt;A href=&quot;http://www.isr.ist.utl.pt&quot; target=_top&gt;ISR&lt;/A&gt; - 
+      Instituto de Sistemas e Robótica, o &lt;A href=&quot;http://www.it.pt&quot; 
+      target=_top&gt;IT&lt;/A&gt; - Instituto das Telecomunicações, e o &lt;A 
+      href=&quot;http://lemac18.lemac.ist.utl.pt/IDMEC/P/index.html&quot; 
+      target=_top&gt;IDMEC&lt;/A&gt; - Instituto da Engenharia Mecânica.&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;As áreas científicas obrigatórias do curso são: Arquitectura e Sistemas 
+      Operativos, Computação Gráfica e Multimédia, Decisão e Controlo, Economia 
+      e Gestão, Física, Inteligência Artificial, Matemática, Metodologia e 
+      Tecnologia da Programação, Redes de Computadores, Sistemas de Informação 
+      &lt;O:P&gt;&lt;/O:P&gt;&lt;/P&gt;
+      &lt;P&gt;No quarto ano da licenciatura, o aluno opta por uma área de 
+      especialização principal (AEP), onde deve frequentar 5 disciplinas, e por 
+      uma área de especialização complementar (AEC) onde deverá frequentar 3 
+      disciplinas, das 5 disponíveis. A área de especialização principal deverá 
+      ser escolhida de entre umas das 5 AEPs disponíveis. A área de 
+      especialização complementar deverá ser escolhida de entre 7 áreas de 
+      especialização, 5 principais e 2 complementares.&lt;O:P&gt; &lt;/O:P&gt;&lt;/P&gt;
+      &lt;P&gt;As disciplinas optativas do 5º ano são seleccionadas de entre as 
+      disciplinas de especialidade das áreas que o aluno não tenha frequentado, 
+      ou de entre disciplinas de outras licenciaturas desde que previamente 
+      sancionadas pelo Coordenador da LEIC. &lt;O:P&gt;&lt;/O:P&gt;&lt;/P&gt;
+      &lt;P&gt;A decisão de seguir a via do Mestrado integrado será feira no início do 
+      4º ano, sendo elegíveis os alunos que tenham concluído todas as cadeiras 
+      até ao final do 1º semestre&amp;nbsp; do 3º ano com média igual ou superior a 
+      14 valores. Poderá ser eventualmente considerado um aluno que não tenha 
+      concluído até duas destas cadeiras, desde que a média das cadeiras 
+      realizadas menos o número de cadeiras por realizar seja igual ou superior 
+      a 14 valores. Neste caso, os alunos deverão optar por 4 disciplinas em 
+      regime M no 4º e 5º anos do curso, e o seu trabalho final de curso será 
+      realizado individualmente tendo em vista, para além da normal apresentação 
+      e defesa do trabalho realizado, o seu enquadramento na óptica do futuro 
+      desenvolvimento em tese de mestrado.&lt;O:P&gt; &lt;/O:P&gt;
+      &lt;P&gt;&lt;B&gt;1. AEP: Programação e Sistemas de Informação&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;A área de especialização em Programação e Sistemas de Informação dá aos 
+      alunos uma formação que lhes permite desenvolver efectivamente sistemas de 
+      informação complexos. Este perfil corresponde a uma formação mais avançada 
+      nas áreas de programação, engenharia de software, sistemas de informação e 
+      bases de dados. As designações profissionais que se aplicarão naturalmente 
+      aos licenciados com este perfil são: engenheiro de software; engenheiro de 
+      sistemas; engenheiro de sistemas de informação; e arquitecto de sistemas 
+      de informação. Esta área, sendo uma das áreas de especialização centrais 
+      da LEIC, corresponderá previsivelmente ao perfil de licenciados com mais 
+      procura no mercado nacional e internacional. Todas as empresas que 
+      necessitem de desenvolver, manter e actualizar sistemas de informação 
+      terão interesse em licenciados com esta especialização. Empregadores 
+      típicos serão as empresas de serviços da área da banca e seguros, empresas 
+      fornecedoras de serviços informáticos e empresas de telecomunicações. Esta 
+      área confere aos alunos competências profissionais específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Análise e projecto de sistemas de informação complexos. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Técnicas de gestão de projecto de sistemas de informação. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Modelação e uso de dados em sistemas de informação. &lt;/P&gt;
+      &lt;P&gt;&lt;B&gt;2. AEP: Arquitectura e Sistemas Distribuídos&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;O objectivo desta área é formar especialistas em sistemas 
+      computacionais, com domínio das suas componentes de hardware e software. 
+      Este perfil corresponde assim a uma formação mais avançada na área da 
+      arquitectura, dos sistemas operativos e das tecnologias subjacentes à 
+      criação de sistemas computacionais distribuídos de elevada complexidade. 
+      As designações profissionais que se aplicarão com naturalidade aos 
+      licenciados com esta área de especialização serão engenheiro de sistemas 
+      ou arquitecto de sistemas. Existem vários empregadores que requerem os 
+      conhecimentos fornecidos por esta área de especialização, entre os quais 
+      se destacam os das áreas que têm necessidades prementes de sistemas com 
+      arquitecturas complexas: banca, seguradoras, e operadores de 
+      telecomunicações. Esta área confere aos alunos competências profissionais 
+      específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Análise e projecto de sistemas computacionais complexos. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Desenvolvimento de aplicações em sistemas distribuídos &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Gestão, configuração e operação de sistemas de computadores. &lt;/P&gt;
+      &lt;P&gt;&lt;B&gt;3. AEP: Sistemas Computacionais&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;Esta área de especialização tem como objectivo formar alunos com 
+      sólidos conhecimentos da realidade física que suporta os sistemas 
+      computacionais. Alunos com formação nesta área estarão especialmente 
+      vocacionados para o desenvolvimento de software sobre arquitecturas 
+      específicas e programação de sistemas a baixo nível de abstracção. Entre 
+      as designações profissionais aplicáveis a engenheiros com esta área de 
+      especialização encontram-se as seguintes: projectista de sistemas, 
+      engenheiro de sistemas e arquitecto de sistemas computacionais. As 
+      empresas que são naturais empregadores para engenheiros informáticos com 
+      formação nesta área são da área do desenvolvimento de sistemas 
+      electrónicos e sistemas embarcados, tais como a Siemens, Alcatel, 
+      ChipIdea, Octal, Tape, etc, . São também empregadores naturais todas as 
+      empresas da área de telecomunicações, que desejem contratar engenheiros 
+      com conhecimentos profundos dos sistemas electrónicos que suportam os 
+      complexos sistemas de comunicações actuais. Esta área científica fornece 
+      competências específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Programação de baixo nível e alto desempenho em plataformas móveis. 
+&lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Projecto de sistemas embarcados. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Co-projecto de sistemas de hardware/software. &lt;/P&gt;
+      &lt;P&gt;&lt;B&gt;4. AEP: Inteligência Artificial&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;O objectivo desta área é formar especialistas em sistemas inteligentes. 
+      Assim, a área de especialização centra-se no projecto e análise de 
+      sistemas inteligentes que poderão ser componentes de software ou mesmo 
+      máquinas que actuam num ambiente externo. O objectivo desta especialização 
+      é dotar aos alunos da LEIC da capacidade de determinar soluções para 
+      problemas que são difíceis de resolver utilizando métodos tradicionais. O 
+      uso de heurísticas de procura, de algoritmos específicos de aprendizagem, 
+      de sistemas multi-agentes permitie aos alunos a elaboração de soluções 
+      para problemas cada vez mais complexos no seio da informática. A formação 
+      ministrada por esta área de especialização permite que os seus alunos 
+      tenham a sua actividade profissional na área designada de forma genérica 
+      por engenharia de software. Os empregadores para engenheiros informáticos 
+      com esta área de especialização actuarão, tipicamente, em empresas de 
+      desenvolvimento de software e de consultadoria e serviços nas áreas de 
+      comércio electrónico, sistemas de apoio á decisão, CRM e gestão de 
+      conhecimento. Entre as designações profissionais aplicáveis a engenheiros 
+      com esta área de especialização encontram-se as seguintes: engenheiro de 
+      sistemas e engenheiro do conhecimento. Esta área científica fornece 
+      competências específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Técnicas avançadas de resolução de problemas. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Projecto de sistemas adaptáveis, para resolução de problemas complexos. 
+      &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Projecto de sistemas que interajam com seres humanos usando interfaces 
+      naturais. &lt;/P&gt;
+      &lt;P&gt;&lt;B&gt;5. AEP: Robótica e Sistemas&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;A área de especialização em Robótica e Sistemas dá aos alunos uma 
+      formação que os torna capazes de lidar com a crescente complexidade e 
+      diversidade dos problemas e sistemas com que se deparam na vida real. Esta 
+      capacidade é conseguida através do ensino de ferramentas teóricas e 
+      práticas adequadas, de modo a conceber e implementar soluções informáticas 
+      que resolvam os problemas por sistemas complexos. Por outro lado, é cada 
+      vez mais frequente que a visão monolítica de sistema esteja a ser 
+      substituída por uma perspectiva distribuída de sistema, integrando 
+      diversos sub-sistemas inter-actuantes, com funcionalidades próprias e com 
+      variados graus de autonomia. As designações profissionais que se aplicarão 
+      naturalmente aos licenciados com este perfil são: engenheiro de software; 
+      engenheiro de sistemas; engenheiro de sistemas e automação. Esta área, 
+      sendo uma das áreas mais interdicisplinares da LEIC, corresponderá 
+      previsivelmente a um perfil de licenciados com significante procura no 
+      mercado nacional e internacional. Empregadores típicos indústrias, assim 
+      como empresas que desenvolvam a sua actividade em áreas com grande 
+      interdisciplinaridade. Esta área confere aos alunos competências 
+      profissionais específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Controlo e robótica. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Modelação e controlo de sistemas industriais. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Técnicas genéricas de optimização. &lt;/P&gt;
+      &lt;P&gt;&lt;B&gt;6. AEC: Teoria da Computação&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;O objectivo desta área de especialização complementar é fornecer aos 
+      alunos interessados numa carreira de investigação as bases teóricas da 
+      Engenharia Informática, incluindo competências específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Teoria da computabilidade e da complexidade &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Teoria das linguagens e seus processadores &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Fundamentos lógicos e algébricos da Engenharia da Programação &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Fundamentos lógicos e algébricos de Inteligência Artificial &lt;/P&gt;
+      &lt;P&gt;&lt;B&gt;7. AEC: Codificação, Comunicação e Optimização&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;O objectivo desta área de especialização é fornecer preparação 
+      complementar em tópicos relevantes para a concepção e gestão de redes e 
+      sistemas, incluindo competências específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Combinatória, teoria de códigos e da informação &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Métodos numéricos e de optimização &lt;/P&gt;' ACK_OPT_LOCK='1'/>
+  <EVALUATION ID_INTERNAL='4526' CLASS_NAME='Dominio.Exam' DAY='2004-02-12' BEGINNING='11:00:00' END='12:00:00' SEASON='1' ACK_OPT_LOCK='2'/>
+  <EVALUATION ID_INTERNAL='4527' CLASS_NAME='Dominio.Exam' DAY='2004-02-10' BEGINNING='11:30:00' END='12:30:00' SEASON='2' ACK_OPT_LOCK='1'/>
+  <EVALUATION ID_INTERNAL='4528' CLASS_NAME='Dominio.Exam' DAY='2004-02-03' BEGINNING='11:30:00' END='12:30:00' SEASON='1' ACK_OPT_LOCK='1'/>
+  <EVALUATION ID_INTERNAL='4529' CLASS_NAME='Dominio.Exam' DAY='2004-02-11' BEGINNING='10:00:00' END='13:00:00' SEASON='2' ACK_OPT_LOCK='1'/>  
+  <EXAM_EXECUTION_COURSE ID_INTERNAL='3916' KEY_EVALUATION='4526' KEY_EXECUTION_COURSE='36723'/>
+  <EXAM_EXECUTION_COURSE ID_INTERNAL='3917' KEY_EVALUATION='4527' KEY_EXECUTION_COURSE='36721'/>
+  <EXAM_EXECUTION_COURSE ID_INTERNAL='3918' KEY_EVALUATION='4528' KEY_EXECUTION_COURSE='36422'/>
+  <EXAM_EXECUTION_COURSE ID_INTERNAL='3919' KEY_EVALUATION='4529' KEY_EXECUTION_COURSE='36422'/>
+  <EXAM_EXECUTION_COURSE ID_INTERNAL='3920' KEY_EVALUATION='4526' KEY_EXECUTION_COURSE='36721'/>
+  <EXECUTION_COURSE ID_INTERNAL='36422' NAME='Aprendizagem' CODE='APR' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' SEMESTER='2' KEY_EXECUTION_PERIOD='80' COMMENT=' ' ACK_OPT_LOCK='2'/>
+  <EXECUTION_COURSE ID_INTERNAL='36721' NAME='Robótica' CODE='R-1' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='1.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='2.0' SEMESTER='2' KEY_EXECUTION_PERIOD='80' COMMENT=' ' ACK_OPT_LOCK='1'/>
+  <EXECUTION_COURSE ID_INTERNAL='36723' NAME='Representação do Conhecimento' CODE='RC' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='2.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='2.0' SEMESTER='2' KEY_EXECUTION_PERIOD='80' COMMENT=' ' ACK_OPT_LOCK='2'/>
+  <EXECUTION_PERIOD ID_INTERNAL='80' NAME='2 Semestre' KEY_EXECUTION_YEAR='2' STATE='C' SEMESTER='2' BEGIN_DATE='2004-03-01' END_DATE='2004-06-12' ACK_OPT_LOCK='3'/>
+  <EXECUTION_YEAR ID_INTERNAL='2' YEAR='2003/2004' STATE='C' BEGIN_DATE='2003-08-01' END_DATE='2004-07-31' ACK_OPT_LOCK='1'/>
+  <PERIOD ID_INTERNAL='1' ACK_OPT_LOCK='2' START_DATE='2004-02-12' END_DATE='2004-02-12'/>
+  <ROOM ID_INTERNAL='232' NAME='C9' BUILDING='Pavilhão Central' FLOOR='0' TYPE='3' NORMAL_CAPACITY='80' EXAM_CAPACITY='40' ACK_OPT_LOCK='1'/>
+  <ROOM ID_INTERNAL='360' NAME='SN' BUILDING='Pavilhão Central' FLOOR='1' TYPE='3' NORMAL_CAPACITY='250' EXAM_CAPACITY='250' ACK_OPT_LOCK='1'/>
+  <ROOM ID_INTERNAL='835' NAME='A1' BUILDING='TagusPark - Bloco A - Nascente' FLOOR='1' TYPE='1' NORMAL_CAPACITY='252' EXAM_CAPACITY='50' ACK_OPT_LOCK='1'/>
+  <ROOM ID_INTERNAL='836' NAME='A2' BUILDING='TagusPark - Bloco A - Poente' FLOOR='1' TYPE='1' NORMAL_CAPACITY='252' EXAM_CAPACITY='50' ACK_OPT_LOCK='1'/>
+  <ROOM_OCCUPATION ID_INTERNAL='2' ACK_OPT_LOCK='1' START_TIME='11:00:00' END_TIME='12:00:00' WEEKDAY='5' KEY_ROOM='232' KEY_PERIOD='1'/>
+  <ROOM_OCCUPATION ID_INTERNAL='3' ACK_OPT_LOCK='1' START_TIME='11:00:00' END_TIME='12:00:00' WEEKDAY='5' KEY_ROOM='360' KEY_PERIOD='1'/>
+  <SCIENTIFIC_AREA ID_INTERNAL='4' NAME='Decisão e Controlo' ACK_OPT_LOCK='1'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='15' KEY_WRITTEN_EVALUATION='4526' KEY_CURRICULAR_COURSE_SCOPE='681'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='16' KEY_WRITTEN_EVALUATION='4526' KEY_CURRICULAR_COURSE_SCOPE='682'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='17' KEY_WRITTEN_EVALUATION='4526' KEY_CURRICULAR_COURSE_SCOPE='17190'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='18' KEY_WRITTEN_EVALUATION='4526' KEY_CURRICULAR_COURSE_SCOPE='17191'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='19' KEY_WRITTEN_EVALUATION='4526' KEY_CURRICULAR_COURSE_SCOPE='17192'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='20' KEY_WRITTEN_EVALUATION='4526' KEY_CURRICULAR_COURSE_SCOPE='17574'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='21' KEY_WRITTEN_EVALUATION='4526' KEY_CURRICULAR_COURSE_SCOPE='3004'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='22' KEY_WRITTEN_EVALUATION='4526' KEY_CURRICULAR_COURSE_SCOPE='17537'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='23' KEY_WRITTEN_EVALUATION='4526' KEY_CURRICULAR_COURSE_SCOPE='17850'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='24' KEY_WRITTEN_EVALUATION='4526' KEY_CURRICULAR_COURSE_SCOPE='17851'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='25' KEY_WRITTEN_EVALUATION='4527' KEY_CURRICULAR_COURSE_SCOPE='18276'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='30' KEY_WRITTEN_EVALUATION='4526' KEY_CURRICULAR_COURSE_SCOPE='17335'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='26' KEY_WRITTEN_EVALUATION='4528' KEY_CURRICULAR_COURSE_SCOPE='724'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='27' KEY_WRITTEN_EVALUATION='4528' KEY_CURRICULAR_COURSE_SCOPE='731'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='28' KEY_WRITTEN_EVALUATION='4529' KEY_CURRICULAR_COURSE_SCOPE='724'/>
+  <WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE ID_INTERNAL='29' KEY_WRITTEN_EVALUATION='4529' KEY_CURRICULAR_COURSE_SCOPE='731'/>
+  <WRITTEN_EVALUATION_ROOM_OCCUPATION ID_INTERNAL='2' KEY_WRITTEN_EVALUATION='4526' KEY_ROOM_OCCUPATION='2'/>
+  <WRITTEN_EVALUATION_ROOM_OCCUPATION ID_INTERNAL='3' KEY_WRITTEN_EVALUATION='4526' KEY_ROOM_OCCUPATION='3'/>
+</dataset>

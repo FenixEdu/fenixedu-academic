@@ -73,6 +73,7 @@
 				&nbsp;<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
 					<bean:message key="link.teacher.showList"/>
 				</html:link>
+				
 			</td>
 		</tr>
 		<tr>

@@ -111,7 +111,6 @@
         <form-property name="page" type="java.lang.Integer"/>
      </form-bean>
      
-     
      <form-bean name="teachersBodyForm"
                 type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">

@@ -3,13 +3,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
-
 <span class="error"><html:errors/></span>
-
 <bean:write name="executionPeriodName"/>
-
 <html:form action="/editExecutionCourseChooseExDegree">
 	<input type="hidden" name="method" value="prepareEditExecutionCourse"/>
+	<html:hidden property="executionPeriodName" value="<%= pageContext.findAttribute("executionPeriodName").toString() %>" />
+	<html:hidden property="executionPeriodId" value="<%= pageContext.findAttribute("executionPeriodId").toString() %>" />
 	<html:hidden property="executionPeriod"/>
 	<html:hidden property="page" value="2" />
 	
@@ -19,10 +18,11 @@
 	<table>
 		<tr>
 			<td style="text-align:right">
-				<bean:message key="property.context.degree"/>:
+				<bean:message key="property.context.degree"/>
+				:
 			</td>
 			<td>
-				<html:select property="executionDegree" size="1">
+				<html:select property="executionDegreeId" size="1">
 					<html:options collection="<%=SessionConstants.DEGREES%>" property="value" labelProperty="label"/>
 				</html:select>
 				<br />
@@ -30,7 +30,8 @@
 		</tr>
 		<tr>
 			<td style="text-align:right">
-				<bean:message key="property.context.curricular.year"/>:
+				<bean:message key="property.context.curricular.year"/>
+				:
 			</td>
 			<td>
 				<html:select property="curYear" size="1">

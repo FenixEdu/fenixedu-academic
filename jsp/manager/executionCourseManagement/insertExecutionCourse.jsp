@@ -6,7 +6,7 @@
 <h2><bean:message key="label.manager.executionCourseManagement.insert.executionCourse"/></h2>
 <span class="error"><html:errors/></span>
 <logic:present name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
-	<html:form action="/insertExecutionCourse" focus="name">  
+	<html:form action="/insertExecutionCourse">  
 		<html:hidden property="page" value="1"/>
 		<html:hidden property="method" value="insertExecutionCourse"/>
 		<table>

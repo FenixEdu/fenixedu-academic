@@ -14,55 +14,20 @@
 			</td>
 		</tr>
 	</table>
+	
 	<br />
-	<table>
-		<tr>
-			<td>
-				<bean:message key="label.gep.degree" bundle="GEP_RESOURCES"/>:
-			</td>
-			<td>
-				<html:select property="executionDegreeId">
-					<html:option key="label.selectAll" bundle="GEP_RESOURCES" value="all"/>
-					<html:options collection="infoExecutionDegrees" labelProperty="infoDegreeCurricularPlan.infoDegree.nome" property="idInternal"/>
-				</html:select>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<br />
-				<bean:message key="message.gep.choose.scientificArea" bundle="GEP_RESOURCES"/>:
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message key="label.gep.basic" bundle="GEP_RESOURCES"/>
-			</td>
-			<td>
-				<html:radio property="basic" value="true"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message key="label.gep.non.basic" bundle="GEP_RESOURCES"/>
-			</td>
-			<td>
-				<html:radio property="basic" value="false"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message key="label.selectAll" bundle="GEP_RESOURCES"/>
-			</td>
-			<td>
-				<html:radio property="basic" value=""/>
-			</td>
-		</tr>
-	</table>
 	<br />
+	<bean:message key="label.gep.degree" bundle="GEP_RESOURCES"/>:
+	<html:select property="executionDegreeId">
+		<html:option key="label.selectAll" bundle="GEP_RESOURCES" value="all"/>
+		<html:options collection="infoExecutionDegrees" labelProperty="infoDegreeCurricularPlan.infoDegree.nome" property="idInternal"/>
+	</html:select>
+	<br />
+	<bean:message key="label.gep.basic" bundle="GEP_RESOURCES"/>:
+	<html:checkbox property="basic" value="true"/>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.show"
 					  bundle="GEP_RESOURCES"/>
 	</html:submit>
-
 	<html:hidden property="method" value="doSearch"/>
 </html:form>

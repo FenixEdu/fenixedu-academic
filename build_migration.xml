@@ -170,7 +170,7 @@
 		</exec>
 	</target>
 
-	<target name="migrate-all-past-curriculums" depends="compile-proj">
+	<target name="migrate-all-past-curriculums" depends="compile-proj, load-data-from-old-system">
 		<exec executable="${sql}/middleware/commands/migrateAllPastCurriculums.sh" os="Linux, Unix">
 			<arg value="stop"/>
 		</exec>

@@ -141,6 +141,4 @@
 
 <logic:notPresent name="infoCurriculum" >
 	<p><span class="error"><bean:message key="error.impossibleCurricularCourseInfo" /></span></p>
-	
-	aqui
 </logic:notPresent>

@@ -17,7 +17,7 @@ insert into DEPARTMENT_COURSE values (1, 'Disciplina Departamento', 'DD', 1);
 -- (ID_INTERNAL, BRANCH_CODE, BRANCH_NAME)
 -- -----------------------------
 delete from BRANCH;
-insert into BRANCH values (1, '', '', 1,'');
+insert into BRANCH values (1, '', '', 1,'', 0, 0);
 
 -- -----------------------------
 -- Data for table 'DEGREE'
