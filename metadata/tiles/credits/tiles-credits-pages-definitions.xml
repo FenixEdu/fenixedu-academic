@@ -1,0 +1,15 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="df.index" extends="definition.credits.two-column">
+		<put name="navLocal" value=""/>
+		<put name="body" value="/credits/searchTeacher.jsp" />
+	</definition>
+	<definition name="df.page.management.credits" extends="definition.credits.teacher.management">
+		<put name="body" value="/credits/creditsManagement.jsp" />
+	</definition>	
+	<definition name="shift.percentage.form" extends="definition.credits.teacher.management">
+		<put name="body" value="/credits/shiftPercentageForm.jsp" />
+	</definition>	
+</tiles-definitions>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="definition.credits.two-column" extends="df.layout.two-column">
+	  <put name="serviceName" value="Portal Docente" />
+	  <put name="institutionName" value="Instituto Superior Técnico" />
+	  <put name="navGeral" value="/commons/homeLogoutGeneralNavigationBar.jsp" />
+	</definition>
+	<definition name="definition.credits.teacher.management" extends="definition.credits.two-column">
+		<put name="body-context" value="/credits/creditsTeacherContext.jsp"/>	
+	</definition>
+	
+	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" 
+				controllerClass="ServidorApresentacao.tiles.controller.MyProfessorships">
+		<put name="title" value=""/>
+	    <put name="link" value=""/>
+   	    <put name="professorshipList" />
+	</definition>
+</tiles-definitions>
