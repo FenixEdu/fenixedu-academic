@@ -13,6 +13,7 @@ import java.util.ListIterator;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.apache.commons.lang.StringUtils;
 
 import DataBeans.InfoWebSiteItem;
 import DataBeans.InfoWebSiteSection;
@@ -119,19 +120,19 @@ public class SendWebSiteSectionFileToServer implements IServico {
 			// build file
 			File excerpts;
 			try {
-				excerpts = buildFile(excerptsFile, infoWebSiteSection.getName() + "-excerpts.html");
+				excerpts = buildFile(excerptsFile, infoWebSiteSection.getName() + "-excerpts.shtml");
 			} catch (Exception e) {
 				e.printStackTrace();
 				return Boolean.FALSE;
 			}
 
-			// send file to server by ftp
-			Ftp.enviarFicheiro(
-				"/IstFtpServerConfig.properties",
-				infoWebSiteSection.getName() + "-excerpts.html",
-				infoWebSiteSection.getName() + "_principal/");
-			// delete created file
-			excerpts.delete();
+//			// send file to server by ftp
+//			Ftp.enviarFicheiro(
+//				"/IstFtpServerConfig.properties",
+//				infoWebSiteSection.getName() + "-excerpts.shtml",
+//				infoWebSiteSection.getName() + "_principal/");
+//			// delete created file
+//			excerpts.delete();
 
 			//************************* create file of items month corresponding to item created ****************
 			List items = new ArrayList();
@@ -205,8 +206,7 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				itemsFile = itemsFile.concat("<tr>\n\t<td>\n\t\t");
 				itemsFile = itemsFile.concat("<span class='greytxt'>");
 				itemsFile =
-					itemsFile.concat(
-						"Eventuais incoerências nesta página deverão ser comunicadas afim de se efectuar a respectiva correcção.");
+					itemsFile.concat("Eventuais incoerências nesta página deverão ser comunicadas afim de se efectuar a respectiva correcção.");
 				itemsFile = itemsFile.concat("</span>");
 				itemsFile = itemsFile.concat("\n\t</td>\n</tr>\n");
 
@@ -223,7 +223,7 @@ public class SendWebSiteSectionFileToServer implements IServico {
 									+ infoWebSiteSection.getName()
 									+ "-"
 									+ monthLinkString.toString()
-									+ ".html'>"
+									+ ".shtml'>"
 									+ monthLinkString.toString()
 									+ "</a>");
 						itemsFile = itemsFile.concat("\n\t</td>\n</tr>\n");
@@ -234,18 +234,17 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				// prepare file for transfer
 				File itemsFileToTransfer;
 				try {
-					itemsFileToTransfer =
-						buildFile(itemsFile, infoWebSiteSection.getName() + "-" + thisMonthString.toString() + ".html");
+					itemsFileToTransfer = buildFile(itemsFile, infoWebSiteSection.getName() + "-" + thisMonthString.toString() + ".shtml");
 				} catch (Exception e) {
 					e.printStackTrace();
 					return Boolean.FALSE;
 				}
-				Ftp.enviarFicheiro(
-					"/IstFtpServerConfig.properties",
-				infoWebSiteSection.getName() + "-" + thisMonthString.toString() + ".html",
-					infoWebSiteSection.getName() + "_principal/");
-				// delete created file
-				itemsFileToTransfer.delete();
+//				Ftp.enviarFicheiro(
+//					"/IstFtpServerConfig.properties",
+//					infoWebSiteSection.getName() + "-" + thisMonthString.toString() + ".shtml",
+//					infoWebSiteSection.getName() + "_principal/");
+//				// delete created file
+//				itemsFileToTransfer.delete();
 			}
 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
@@ -258,8 +257,8 @@ public class SendWebSiteSectionFileToServer implements IServico {
 		File excerpts = null;
 		BufferedWriter escritor = null;
 		try {
-			
-			excerpts = new File(System.getProperty("java.io.tmpdir")+ File.separator + fileName);
+
+			excerpts = new File(System.getProperty("java.io.tmpdir") + File.separator + fileName);
 			escritor = new BufferedWriter(new FileWriter(excerpts));
 			escritor.write(fileContent);
 			escritor.close();
@@ -298,18 +297,18 @@ public class SendWebSiteSectionFileToServer implements IServico {
 					+ "<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />\n"
 					+ "<meta name='keywords' content='ensino,  ensino superior, universidade, instituto, ciência, instituto superior técnico, investigação e desenvolvimento' />\n"
 					+ "<meta name='description' content='O Instituto Superior Técnico é a maior escola de engenharia, ciência e tecnologia em Portugal.' />\n"
-					+ "<link href='../css/iststyle.css' rel='stylesheet' type='text/css' />\n"
-					+ "<script type='text/javascript' src='../scripts/cssbox_scriptjs'></script>\n"
+					+ "<link href='../../css/iststyle.css' rel='stylesheet' type='text/css' />\n"
+					+ "<script type='text/javascript' src='../../scripts/cssbox_scriptjs'></script>\n"
 					+ "</head>\n"
 					+ "<body>\n"
 					+ "<div id='header'>\n"
-					+ "\t  <div id='logoist'><img alt='Logo: Instituto Superior T&eacute;cnico' height='49' src='../img/logo_ist_alt.gif' width='90' /></div>\n"
-					+ "\t  <div id='login_dotist'><a href='https://fenix.ist.utl.pt/loginPage.jsp'><img alt='Icon: Login - dotist' border='0' src='../img/login_dotist.gif' /></a></div>\n"
-					+ "\t  <div id='logoutl'><a href='http://www.utl.pt/'><img src='../img/utl_logo_40.gif' alt='Universidade T&eacute;cnica de Lisboa' border='0' title='UTL' /></a></div>\n"
+					+ "\t  <div id='logoist'><img alt='Logo: Instituto Superior T&eacute;cnico' height='49' src='../../img/logo_ist_alt.gif' width='90' /></div>\n"
+					+ "\t  <div id='login_dotist'><a href='https://fenix.ist.utl.pt/loginPage.jsp'><img alt='Icon: Login - dotist' border='0' src='../../img/login_dotist.gif' /></a></div>\n"
+					+ "\t  <div id='logoutl'><a href='http://www.utl.pt/'><img src='../../img/utl_logo_40.gif' alt='Universidade T&eacute;cnica de Lisboa' border='0' title='UTL' /></a></div>\n"
 					+ "</div>\n"
 					+ "<div id='nav'>"
 					+ "\t  <ul id='perfnav'>\n"
-					+ "\t\t    <li><a href='../index.html'>Instituto</a></li>\n"
+					+ "\t\t    <li><a href='../../index.html'>Instituto</a></li>\n"
 					+ "\t\t    <li><a href='aluno.html'>Aluno</a></li>\n"
 					+ "\t\t    <li><a href='docente.html'>Docente</a></li>\n"
 					+ "\t\t    <li><a href='funcionario.html'>Funcion&aacute;rio</a></li>\n"
@@ -353,19 +352,16 @@ public class SendWebSiteSectionFileToServer implements IServico {
 	}
 
 	private String putItem(String itemFile, InfoWebSiteItem infoWebSiteItem) {
+		String authorName =
+			StringUtils.substringBefore(infoWebSiteItem.getInfoEditor().getNome(), " ").concat(" ").concat(
+				StringUtils.substringAfterLast(infoWebSiteItem.getInfoEditor().getNome(), " "));
 		// item's main entry
 		itemFile = itemFile.concat("<p>");
 		itemFile = itemFile.concat(infoWebSiteItem.getMainEntryText());
 		itemFile = itemFile.concat("<br/><br/>\n");
-//		itemFile = itemFile.concat(infoWebSiteItem.getInfoEditor().getNome());
-//		itemFile = itemFile.concat("<br/>\n");
-//		itemFile =
-//			itemFile.concat(
-//				"<a href='mailto:"
-//					+ infoWebSiteItem.getInfoEditor().getEmail()
-//					+ "'>"
-//					+ infoWebSiteItem.getInfoEditor().getEmail()
-//					+ "</a>");
+		//		itemFile = itemFile.concat(infoWebSiteItem.getInfoEditor().getNome());
+		//		itemFile = itemFile.concat("<br/>\n");
+		itemFile = itemFile.concat("<a href='mailto:" + infoWebSiteItem.getInfoEditor().getEmail() + "'>" + authorName + "</a>");
 		itemFile = itemFile.concat("</p>\n");
 		itemFile = itemFile.concat("\t</td>\n</tr>\n");
 
@@ -421,7 +417,7 @@ public class SendWebSiteSectionFileToServer implements IServico {
 					+ infoWebSiteSection.getName()
 					+ "-"
 					+ new Mes(calendar.get(Calendar.MONTH) + 1)
-					+ ".html'>"
+					+ ".shtml'>"
 					+ "mais"
 					+ "</a>"
 					+ ")");

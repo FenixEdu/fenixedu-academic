@@ -221,7 +221,8 @@ public class UpdateStudent {
 		// Get the Actual Degree Curricular Plan for this Degree
 
 		
-		String degreeName = StringUtils.prechomp(mwBranch.getDescription(), "DE ");
+		String degreeName = StringUtils.substringAfter(mwBranch.getDescription(), "DE ");
+//		String degreeName = StringUtils.prechomp(mwBranch.getDescription(), "DE ");
 
 		
 		if (degreeName.indexOf("TAGUS") != -1) {

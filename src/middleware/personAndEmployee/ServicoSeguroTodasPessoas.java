@@ -10,7 +10,7 @@ import middleware.dataClean.personFilter.LimpaNaturalidades;
 import middleware.dataClean.personFilter.LimpaOutput;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
@@ -144,13 +144,17 @@ public class ServicoSeguroTodasPessoas {
 					pessoa.getConcelhoNaturalidade(),
 					pessoa.getFreguesiaNaturalidade());
 			if (limpaOutput.getNomeDistrito() != null) {
-				pessoa.setDistritoNaturalidade(StringUtils.capitaliseAllWords(limpaOutput.getNomeDistrito()));
+				pessoa.setDistritoNaturalidade(WordUtils.capitalize(limpaOutput.getNomeDistrito()));
+				//				StringUtils.capitaliseAllWords(limpaOutput.getNomeDistrito()));
 			}
 			if (limpaOutput.getNomeConcelho() != null) {
-				pessoa.setConcelhoNaturalidade(StringUtils.capitaliseAllWords(limpaOutput.getNomeConcelho()));
+				pessoa.setConcelhoNaturalidade(WordUtils.capitalize(limpaOutput.getNomeConcelho()));
+				//				StringUtils.capitaliseAllWords(limpaOutput.getNomeConcelho()));
 			}
 			if (limpaOutput.getNomeFreguesia() != null) {
-				pessoa.setFreguesiaNaturalidade(StringUtils.capitaliseAllWords(limpaOutput.getNomeFreguesia()));
+				pessoa.setFreguesiaNaturalidade(
+				WordUtils.capitalize(limpaOutput.getNomeFreguesia()));
+//				StringUtils.capitaliseAllWords(limpaOutput.getNomeFreguesia()));
 			}
 
 			//locais da Morada
@@ -162,13 +166,19 @@ public class ServicoSeguroTodasPessoas {
 					pessoa.getConcelhoMorada(),
 					pessoa.getFreguesiaMorada());
 			if (limpaOutput.getNomeDistrito() != null) {
-				pessoa.setDistritoMorada(StringUtils.capitaliseAllWords(limpaOutput.getNomeDistrito()));
+				pessoa.setDistritoMorada(
+				WordUtils.capitalize(limpaOutput.getNomeDistrito()));
+//				StringUtils.capitaliseAllWords(limpaOutput.getNomeDistrito()));
 			}
 			if (limpaOutput.getNomeConcelho() != null) {
-				pessoa.setConcelhoMorada(StringUtils.capitaliseAllWords(limpaOutput.getNomeConcelho()));
+				pessoa.setConcelhoMorada(
+				WordUtils.capitalize(limpaOutput.getNomeConcelho()));
+//				StringUtils.capitaliseAllWords(limpaOutput.getNomeConcelho()));
 			}
 			if (limpaOutput.getNomeFreguesia() != null) {
-				pessoa.setFreguesiaMorada(StringUtils.capitaliseAllWords(limpaOutput.getNomeFreguesia()));
+				pessoa.setFreguesiaMorada(
+				WordUtils.capitalize(limpaOutput.getNomeFreguesia()));
+//				StringUtils.capitaliseAllWords(limpaOutput.getNomeFreguesia()));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
