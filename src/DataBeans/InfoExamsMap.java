@@ -4,6 +4,7 @@
  */
 package DataBeans;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @author Luis Cruz & Sara Ribeiro
  *
  */
-public class InfoExamsMap extends InfoObject {
+public class InfoExamsMap extends InfoObject implements Serializable  {
 
 	List executionCourses;
 	List curricularYears;

@@ -119,44 +119,53 @@ public class PrintGuideDispatchAction extends DispatchAction {
             Integer year = new Integer(request.getParameter("year"));
             Integer version = new Integer(request.getParameter("version"));
             session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
-
+			Integer numberRequester = null;
             if (request.getParameter(SessionConstants.REQUESTER_NUMBER) != null) {
-                Integer numberRequester = new Integer(request
+                numberRequester = new Integer(request
                         .getParameter(SessionConstants.REQUESTER_NUMBER));
                 request.setAttribute(SessionConstants.REQUESTER_NUMBER,
                         numberRequester);
             }
 
+           
             InfoGuide infoGuide = null;
             try {
                 Object args[] = { number, year, version};
+                
                 infoGuide = (InfoGuide) ServiceManagerServiceFactory
                         .executeService(userView, "ChooseGuide", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException();
             }
-
-            InfoStudent infoStudent = null;
-            List infoStudents = null;
-
-            Object args2[] = { infoGuide.getInfoPerson()};
-
-            try {
-                infoStudents = (List) ServiceUtils.executeService(userView,
-                        "ReadStudentsByPerson", args2);
-
-                Iterator it = infoStudents.iterator();
-                while (it.hasNext()) {
-                    infoStudent = (InfoStudent) it.next();
-                    if (infoStudent.getDegreeType().equals(
-                            TipoCurso.MESTRADO_OBJ)) break;
-                }
-                request.setAttribute(SessionConstants.STUDENT, infoStudent
-                        .getNumber());
-            } catch (FenixServiceException e) {
+           
+			if (infoGuide.getGuideRequester().equals(
+							   GuideRequester.STUDENT_TYPE)) 
+			{
+           
+	            InfoStudent infoStudent = null;
+	            List infoStudents = null;
+	
+	            Object args2[] = { infoGuide.getInfoPerson()};
+	
+	            try {
+	                infoStudents = (List) ServiceUtils.executeService(userView,
+	                        "ReadStudentsByPerson", args2);
+	
+	                Iterator it = infoStudents.iterator();
+	                while (it.hasNext()) {
+	                    infoStudent = (InfoStudent) it.next();
+	                    if (infoStudent.getDegreeType().equals(
+	                            TipoCurso.MESTRADO_OBJ)) break;
+	                }
+	                request.setAttribute(SessionConstants.STUDENT, infoStudent
+	                        .getNumber());
+	            } catch (FenixServiceException e) {
                 throw new FenixActionException();
             }
 
+			}else {
+				request.setAttribute(SessionConstants.STUDENT,numberRequester );
+			}
             Locale locale = new Locale("pt", "PT");
             String formatedDate = "Lisboa, "
                     + DateFormat.getDateInstance(DateFormat.LONG, locale)

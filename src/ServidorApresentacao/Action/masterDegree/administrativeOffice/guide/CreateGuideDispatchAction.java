@@ -425,12 +425,13 @@ public class CreateGuideDispatchAction extends DispatchAction {
                     newInfoGuide.getInfoPerson().setPassword(password);
 
                     // Write the Person
+                   
                     try {
                         Object args[] = {
                                 newInfoGuide.getInfoPerson().getIdInternal(),
                                 password};
                         ServiceManagerServiceFactory.executeService(userView,
-                                "CreateCandidateSituation", args);
+                                "ChangePersonPassword", args);
                     } catch (FenixServiceException e) {
                         throw new FenixActionException();
                     }

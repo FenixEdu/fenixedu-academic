@@ -22,59 +22,49 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  */
 public class ViewClassesAction extends FenixContextAction {
 
-	/**
-	 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	 */
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		try {
-			super.execute(mapping, form, request, response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    /**
+     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
+     *      org.apache.struts.action.ActionForm,
+     *      javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse)
+     */
+    public ActionForward execute(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException {
+        try {
+            super.execute(mapping, form, request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD);
-				
-		String degreeInitials = (String) request.getAttribute("degreeInitials");
-		String nameDegreeCurricularPlan =
-			(String) request.getAttribute("nameDegreeCurricularPlan");
-		Integer curricularYear = (Integer) request.getAttribute("curYear");
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-		ISiteComponent component = new InfoSiteClasses();
-		SiteView siteView = null;
-		Object[] args =
-			{
-				component,
-				infoExecutionPeriod.getInfoExecutionYear().getYear(),
-				infoExecutionPeriod.getName(),
-				degreeInitials,
-				nameDegreeCurricularPlan,
-				null,
-				curricularYear,null };
+        String degreeInitials = (String) request.getAttribute("degreeInitials");
+        String nameDegreeCurricularPlan = (String) request
+                .getAttribute("nameDegreeCurricularPlan");
+        Integer curricularYear = (Integer) request.getAttribute("curYear");
 
-		try {
-			siteView =
-				(SiteView) ServiceUtils.executeService(
-					null,
-					"ClassSiteComponentService",
-					args);
-		} catch (FenixServiceException e1) {
-			throw new FenixActionException(e1);
-		}
+        ISiteComponent component = new InfoSiteClasses();
+        SiteView siteView = null;
+        Object[] args = { component,
+                infoExecutionPeriod.getInfoExecutionYear().getYear(),
+                infoExecutionPeriod.getName(), degreeInitials,
+                nameDegreeCurricularPlan, null, curricularYear, null};
 
-		request.setAttribute("siteView", siteView);
-		request.setAttribute("degreeInitials", degreeInitials);
-		request.setAttribute(
-			"nameDegreeCurricularPlan",
-			nameDegreeCurricularPlan);
-		return mapping.findForward("Sucess");
+        try {
+            siteView = (SiteView) ServiceUtils.executeService(null,
+                    "ClassSiteComponentService", args);
+        } catch (FenixServiceException e1) {
+            throw new FenixActionException(e1);
+        }
 
-	}
+        request.setAttribute("siteView", siteView);
+        request.setAttribute("degreeInitials", degreeInitials);
+        request.setAttribute("nameDegreeCurricularPlan",
+                nameDegreeCurricularPlan);
+        return mapping.findForward("Sucess");
+
+    }
 
 }
