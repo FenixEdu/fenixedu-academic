@@ -76,13 +76,15 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 		}
 	}
 
+
+  //reads imediatly inferior sections of a section
 	public List readBySiteAndSection(ISite site,ISection superiorSection)
 		throws ExcepcaoPersistencia {
 	try {
 			
 		Section section = (Section) superiorSection;
 		String oqlQuery = "select all from " + Section.class.getName();
-		oqlQuery +=	" and site.executionCourse.sigla = $1";
+		oqlQuery +=	" where site.executionCourse.sigla = $1";
 		oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
 		oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
 		if (section == null) {
@@ -119,44 +121,12 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 	}
 
 
-
-	public List getImediatlyInferiorSections(ISection section) throws ExcepcaoPersistencia {
-
-      try{
-      
-		
-		String oqlQuery = "select all from " + Section.class.getName();
-		oqlQuery
-		+= " where superiorSection.nome = $1 and section.site.disciplinaExecucao.sigla = $2 "
-		+ "and  section.site.disciplinaExecucao.executionPeriod.name = $3  "
-		+ "and  section.disciplinaExecucao.executionPeriod.executionYear.year = $4  ";
-		query.create(oqlQuery);
-		query.bind(section.getName());
-			
-		query.bind(section.getSite().getExecutionCourse().getSigla());
-		query.bind(
-		section.getSite().getExecutionCourse().getExecutionPeriod().getName());
-		query.bind(
-		section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
-						
-		
-		List result = (List) query.execute();
-		lockRead(result);
-		return result;
-		
-      } catch (QueryException ex) {
-	  throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		
-	 }
-    }
-
-
 	public void delete(ISection section) throws ExcepcaoPersistencia {
 					
 		ISection inferiorSection = section;
 		SectionOJB inferiorSectionOJB = new SectionOJB();			
 				
-		List imediatlyInferiorSections = getImediatlyInferiorSections(section);
+		List imediatlyInferiorSections = readBySiteAndSection(section.getSite(),  section);
 		Iterator iterator = imediatlyInferiorSections.iterator();
 			
 		while(iterator.hasNext()){
