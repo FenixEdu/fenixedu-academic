@@ -66,6 +66,7 @@ import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoStudentGroup;
 import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoStudentKind;
+import DataBeans.InfoStudentTestQuestion;
 import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
 import DataBeans.InfoTest;
@@ -2743,5 +2744,22 @@ public abstract class Cloner {
 		infoDistributedTest.setInfoTest(infoTest);
 		return infoDistributedTest;
 	}
-
+	
+	public static InfoStudentTestQuestion copyIStudentTestQuestion2InfoStudentTestQuestion(IStudentTestQuestion studentTestQuestion){
+		InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
+		//copyObjectProperties(infoStudentTestQuestion, studentTestQuestion);
+		infoStudentTestQuestion.setIdInternal(studentTestQuestion.getIdInternal());
+		infoStudentTestQuestion.setOptionShuffle(studentTestQuestion.getOptionShuffle());
+		infoStudentTestQuestion.setResponse(studentTestQuestion.getResponse());
+		infoStudentTestQuestion.setTestQuestionOrder(studentTestQuestion.getTestQuestionOrder());
+		infoStudentTestQuestion.setTestQuestionValue(studentTestQuestion.getTestQuestionValue());
+		//	
+		InfoDistributedTest infoDistributedTest = copyIDistributedTest2InfoDistributedTest(studentTestQuestion.getDistributedTest());
+		InfoStudent infoStudent = copyIStudent2InfoStudent(studentTestQuestion.getStudent());
+		InfoQuestion infoQuestion = copyIQuestion2InfoQuestion(studentTestQuestion.getQuestion());
+		infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
+		infoStudentTestQuestion.setStudent(infoStudent);
+		infoStudentTestQuestion.setQuestion(infoQuestion);
+		return infoStudentTestQuestion;
+	}
 }
