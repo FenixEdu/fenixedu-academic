@@ -18,9 +18,9 @@
 				<logic:iterate name="<%= SessionConstants.INFO_DEGREES_LIST %>" id="degree" >
 			<tr>
 				<%--<bean:define id="curso"  name="curso" property="codInt"/>--%>
-				<td class="listClasses"><html:link page="/viewDegree.do" indexId="index" indexed="true"><bean:write name="degree" property="sigla"/></html:link>
+				<td class="listClasses"><html:link page="/readDegree.do" indexId="index" indexed="true"><bean:write name="degree" property="sigla"/></html:link>
 				</td>			
-				<td class="listClasses"><html:link page="/viewDegree.do" indexId="index" indexed="true"><bean:write name="degree" property="nome"/></html:link>
+				<td class="listClasses"><html:link page="/readDegree.do" indexId="index" indexed="true"><bean:write name="degree" property="nome"/></html:link>
 				</td>
 			</tr>
 	 			<% index++; %>	

@@ -59,7 +59,12 @@
       	      type="ServidorApresentacao.Action.manager.ReadDegreesAction">
       	  <forward name="readDegrees" path="/readDegrees.jsp"/>      	      
       </action>
-	
+	 <!-- Action for reading a degree -->
+      <action path="/readDegree"
+             input="readDegrees_bd.jsp"
+      	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">
+      	  <forward name="viewDegree" path="/readDegree.jsp"/>      	      
+      </action>
 
 	</action-mappings>
 

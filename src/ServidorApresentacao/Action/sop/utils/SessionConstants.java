@@ -39,6 +39,8 @@ public abstract class SessionConstants {
 	 //    GesDis Constants - For Manager
 	 // -------------------------------------------------------------------------------
 	public static final String INFO_DEGREES_LIST = "Lista de licenciaturas";
+	public static final String DEGREE = "degree";
+	public static final String INFO_DEGREE = "info_degree";
 	
 	
 	// -------------------------------------------------------------------------------
