@@ -28,7 +28,7 @@
 <table width="100%"  height="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
      <td  align="left" valign="top" bgcolor="#B5BED6"  class="barraist">
-     <div id="header"><img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="" border="0" /></div>
+     <div id="header"><a href="http://www.ist.utl.pt"><img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="" border="0" /></a></div>
 	</td>
     <td id="principal" bgcolor="#FFFFFF">
       <div id="header"><img src="<%= request.getContextPath() %>/images/ist_header.gif" width="324 height="42" ""alt="Instituto Superior T&eacute;cnico"></div>
