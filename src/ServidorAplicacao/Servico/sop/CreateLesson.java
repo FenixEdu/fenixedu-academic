@@ -286,9 +286,14 @@ public class CreateLesson implements IServico {
 		double duration = 0;
 		for (int i = 0; i < lessonsOfShiftType.size(); i++) {
 			lesson = ((ITurnoAula) lessonsOfShiftType.get(i)).getAula();
-			System.out.println("Sub 3");
-			duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
-			System.out.println("Sub 4");
+			try {
+				lesson.getIdInternal();
+				duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);	
+			} catch (Exception ex)
+			{
+				// all is ok
+				// the lesson contained a proxy to null.
+			}
 		}
 		return duration;
 	}
