@@ -132,25 +132,19 @@ public class EditExam implements IServico {
 
 		ISuportePersistente sp;
 		try {
-			System.out.println("IN hasVAlidRooms");
 			sp = SuportePersistenteOJB.getInstance();
 			ISalaPersistente persistentRoom = sp.getISalaPersistente();
 			IExam examQuery = new Exam(examDate, examTime, null, null);
 			examQuery.setIdInternal(exam.getIdInternal());
 			List availableRooms = persistentRoom.readAvailableRooms(examQuery);
 
-			System.out.println("## Available Rooms.size() = "+availableRooms.size());
-			System.out.println("## exam.getAssociatedRooms().size() = "+exam.getAssociatedRooms().size());
-
 			if (availableRooms.containsAll(exam.getAssociatedRooms())) {
-				System.out.println("OUT hasVAlidRooms true");
 				return true;
 			}
 
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e.getMessage());
 		}
-		System.out.println("OUT hasVAlidRooms false");
 		return false;
 	}
 
