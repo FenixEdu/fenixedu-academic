@@ -11,27 +11,27 @@ public class Plano_curricular_2003final extends DomainObject {
 	
 
 	private String ano_curricular;
-	private float ano_lectivo;
+	private Integer ano_lectivo;
 	private String codigo_disc;
-	private float codigo_lic;
+	private Integer codigo_lic;
 	private String codigo_ramo;
-	private byte[] crit_av;
-	private byte[] ingles_crit_av;
+	private String crit_av;
+	private String ingles_crit_av;
 	private String ingles_nome_disc;
-	private byte[] ingles_objectivos;
-	private byte[] ingles_progr_res;
+	private String ingles_objectivos;
+	private String ingles_progr_res;
 	private java.sql.Timestamp ingles_data_act;
-	private byte[] ingles_relatorio;
+	private String ingles_relatorio;
 	private String nome_disc;
-	private byte[] objectivos;
-	private byte[] progr_res;
+	private String objectivos;
+	private String progr_res;
 	private String semestre;
-	private byte[] bib_princ_1;
-	private byte[] bib_princ_2;
-	private byte[] bib_princ_3;
-	private byte[] bib_sec_1;
-	private byte[] bib_sec_2;
-	private byte[] bib_sec_3;
+	private String bib_princ_1;
+	private String bib_princ_2;
+	private String bib_princ_3;
+	private String bib_sec_1;
+	private String bib_sec_2;
+	private String bib_sec_3;
 	private String ciencia_base;
 	private String data_act;
 	private String ender_web;
@@ -43,10 +43,10 @@ public class Plano_curricular_2003final extends DomainObject {
 		this.ano_curricular = param;
 	}
 
-	public float getAno_lectivo() {
+	public Integer getAno_lectivo() {
 		return this.ano_lectivo;
 	}
-	public void setAno_lectivo(float param) {
+	public void setAno_lectivo(Integer param) {
 		this.ano_lectivo = param;
 	}
 
@@ -57,10 +57,10 @@ public class Plano_curricular_2003final extends DomainObject {
 		this.codigo_disc = param;
 	}
 
-	public float getCodigo_lic() {
+	public Integer getCodigo_lic() {
 		return this.codigo_lic;
 	}
-	public void setCodigo_lic(float param) {
+	public void setCodigo_lic(Integer param) {
 		this.codigo_lic = param;
 	}
 
@@ -71,17 +71,17 @@ public class Plano_curricular_2003final extends DomainObject {
 		this.codigo_ramo = param;
 	}
 
-	public byte[] getCrit_av() {
+	public String getCrit_av() {
 		return this.crit_av;
 	}
-	public void setCrit_av(byte[] param) {
+	public void setCrit_av(String param) {
 		this.crit_av = param;
 	}
 
-	public byte[] getIngles_crit_av() {
+	public String getIngles_crit_av() {
 		return this.ingles_crit_av;
 	}
-	public void setIngles_crit_av(byte[] param) {
+	public void setIngles_crit_av(String param) {
 		this.ingles_crit_av = param;
 	}
 
@@ -92,17 +92,17 @@ public class Plano_curricular_2003final extends DomainObject {
 		this.ingles_nome_disc = param;
 	}
 
-	public byte[] getIngles_objectivos() {
+	public String getIngles_objectivos() {
 		return this.ingles_objectivos;
 	}
-	public void setIngles_objectivos(byte[] param) {
+	public void setIngles_objectivos(String param) {
 		this.ingles_objectivos = param;
 	}
 
-	public byte[] getIngles_progr_res() {
+	public String getIngles_progr_res() {
 		return this.ingles_progr_res;
 	}
-	public void setIngles_progr_res(byte[] param) {
+	public void setIngles_progr_res(String param) {
 		this.ingles_progr_res = param;
 	}
 
@@ -113,10 +113,10 @@ public class Plano_curricular_2003final extends DomainObject {
 		this.ingles_data_act = param;
 	}
 
-	public byte[] getIngles_relatorio() {
+	public String getIngles_relatorio() {
 		return this.ingles_relatorio;
 	}
-	public void setIngles_relatorio(byte[] param) {
+	public void setIngles_relatorio(String param) {
 		this.ingles_relatorio = param;
 	}
 
@@ -127,17 +127,17 @@ public class Plano_curricular_2003final extends DomainObject {
 		this.nome_disc = param;
 	}
 
-	public byte[] getObjectivos() {
+	public String getObjectivos() {
 		return this.objectivos;
 	}
-	public void setObjectivos(byte[] param) {
+	public void setObjectivos(String param) {
 		this.objectivos = param;
 	}
 
-	public byte[] getProgr_res() {
+	public String getProgr_res() {
 		return this.progr_res;
 	}
-	public void setProgr_res(byte[] param) {
+	public void setProgr_res(String param) {
 		this.progr_res = param;
 	}
 
@@ -148,45 +148,45 @@ public class Plano_curricular_2003final extends DomainObject {
 		this.semestre = param;
 	}
 
-	public byte[] getBib_princ_1() {
+	public String getBib_princ_1() {
 		return this.bib_princ_1;
 	}
-	public void setBib_princ_1(byte[] param) {
+	public void setBib_princ_1(String param) {
 		this.bib_princ_1 = param;
 	}
 
-	public byte[] getBib_princ_2() {
+	public String getBib_princ_2() {
 		return this.bib_princ_2;
 	}
-	public void setBib_princ_2(byte[] param) {
+	public void setBib_princ_2(String param) {
 		this.bib_princ_2 = param;
 	}
 
-	public byte[] getBib_princ_3() {
+	public String getBib_princ_3() {
 		return this.bib_princ_3;
 	}
-	public void setBib_princ_3(byte[] param) {
+	public void setBib_princ_3(String param) {
 		this.bib_princ_3 = param;
 	}
 
-	public byte[] getBib_sec_1() {
+	public String getBib_sec_1() {
 		return this.bib_sec_1;
 	}
-	public void setBib_sec_1(byte[] param) {
+	public void setBib_sec_1(String param) {
 		this.bib_sec_1 = param;
 	}
 
-	public byte[] getBib_sec_2() {
+	public String getBib_sec_2() {
 		return this.bib_sec_2;
 	}
-	public void setBib_sec_2(byte[] param) {
+	public void setBib_sec_2(String param) {
 		this.bib_sec_2 = param;
 	}
 
-	public byte[] getBib_sec_3() {
+	public String getBib_sec_3() {
 		return this.bib_sec_3;
 	}
-	public void setBib_sec_3(byte[] param) {
+	public void setBib_sec_3(String param) {
 		this.bib_sec_3 = param;
 	}
 
