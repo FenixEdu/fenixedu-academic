@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -42,7 +43,6 @@ public class ConfirmMarksAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		Integer scopeCode = getScopeCodeFromRequestAndSetOther(request);
-		String useCase = getFromRequest("useCase", request);
 
 		// Get students final evaluation			
 		Object args[] = { scopeCode };
@@ -71,18 +71,27 @@ public class ConfirmMarksAction extends DispatchAction {
 
 		request.setAttribute("infoSiteEnrolmentEvaluation", infoSiteEnrolmentEvaluation);
 
-		String forward = findForward(useCase);
+		String forward = findForward(request, infoSiteEnrolmentEvaluation);
 		return mapping.findForward(forward);
 
 	}
 
-	private String findForward(String useCase) {
+	private String findForward(HttpServletRequest request, InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation) {
+		String useCase = (String) getFromRequest("useCase", request);
 		String forward = new String("MarksConfirmationMenu");
-				if (useCase != null && useCase.equals("confirm")) {
-					forward = "MarksConfirmation";
-				} else if (useCase != null && useCase.equals("print")) {
-					forward = "MarksPrint";
-				}
+		if (useCase != null && useCase.equals("confirm")) {
+			forward = "MarksConfirmation";
+		} else if (useCase != null && useCase.equals("print")) {
+			String degreeName =
+				((InfoEnrolmentEvaluation) (infoSiteEnrolmentEvaluation.getEnrolmentEvaluations().get(0)))
+					.getInfoEnrolment()
+					.getInfoStudentCurricularPlan()
+					.getInfoDegreeCurricularPlan()
+					.getInfoDegree()
+					.getNome();
+			request.setAttribute("degreeName", degreeName);
+			forward = "MarksPrint";
+		}
 		return forward;
 	}
 
@@ -93,10 +102,10 @@ public class ConfirmMarksAction extends DispatchAction {
 	}
 
 	private Integer getScopeCodeFromRequestAndSetOther(HttpServletRequest request) {
-		String executionYear = getFromRequest("executionYear", request);
-		String degree = getFromRequest("degree", request);
-		String curricularCourse = getFromRequest("curricularCourse", request);
-		Integer scopeCode = new Integer(getFromRequest("scopeCode", request));
+		String executionYear = (String) getFromRequest("executionYear", request);
+		String degree = (String) getFromRequest("degree", request);
+		String curricularCourse = (String) getFromRequest("curricularCourse", request);
+		Integer scopeCode = new Integer((String) getFromRequest("scopeCode", request));
 
 		request.setAttribute("executionYear", executionYear);
 		request.setAttribute("degree", degree);
@@ -116,7 +125,7 @@ public class ConfirmMarksAction extends DispatchAction {
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[] = { scopeCode, userView };
 		GestorServicos serviceManager = GestorServicos.manager();
-		Boolean result = Boolean.FALSE;
+		Boolean result = null;
 		try {
 			result = (Boolean) serviceManager.executar(userView, "ConfirmStudentsFinalEvaluation", args);
 		} catch (NonExistingServiceException e) {
@@ -127,10 +136,10 @@ public class ConfirmMarksAction extends DispatchAction {
 		return mapping.findForward("ShowMarksManagementMenu");
 	}
 
-	private String getFromRequest(String parameter, HttpServletRequest request) {
-		String parameterString = request.getParameter(parameter);
+	private Object getFromRequest(String parameter, HttpServletRequest request) {
+		Object parameterString = request.getParameter(parameter);
 		if (parameterString == null) {
-			parameterString = (String) request.getAttribute(parameter);
+			parameterString = (Object) request.getAttribute(parameter);
 		}
 		return parameterString;
 	}

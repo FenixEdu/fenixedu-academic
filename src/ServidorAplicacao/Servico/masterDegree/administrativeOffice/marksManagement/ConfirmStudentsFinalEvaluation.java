@@ -5,39 +5,30 @@ import java.util.List;
 import java.util.ListIterator;
 
 import DataBeans.InfoCurricularCourseScope;
-import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourseScope;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.Funcionario;
 import Dominio.ICurricularCourseScope;
-import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IPessoa;
-import Dominio.IStudent;
-import Dominio.IStudentCurricularPlan;
-import Dominio.Student;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
-import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
-import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
-import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentState;
+import Util.MarkType;
 
 /**
  * @author Fernanda Quitério
@@ -95,17 +86,15 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 
 			IEnrolment enrolment = new Enrolment();
 			enrolment.setCurricularCourseScope(curricularCourseScopeForCriteria);
-			IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-			enrolmentEvaluation.setEnrolment(enrolment);
-			List enrolmentEvaluations = persistentEnrolmentEvaluation.readByCriteria(enrolmentEvaluation);
+			IEnrolmentEvaluation enrolmentEvaluationForCriteria = new EnrolmentEvaluation();
+			enrolmentEvaluationForCriteria.setEnrolment(enrolment);
+			List enrolmentEvaluations = persistentEnrolmentEvaluation.readByCriteria(enrolmentEvaluationForCriteria);
 
 			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
-
 				ListIterator iterEnrolmentEvaluations = enrolmentEvaluations.listIterator();
 				while (iterEnrolmentEvaluations.hasNext()) {
 					IEnrolmentEvaluation enrolmentEvaluationElem = (IEnrolmentEvaluation) iterEnrolmentEvaluations.next();
-
-					persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluationElem);
+					persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluationElem);
 
 					enrolmentEvaluationElem.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
 					Calendar calendar = Calendar.getInstance();
@@ -113,14 +102,14 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 					enrolmentEvaluationElem.setEmployee(employee);
 //					TODO: checksum
 					enrolmentEvaluationElem.setCheckSum("");
-
+					
 					// update state of enrolment: aproved or notAproved
-					IEnrolment enrolmentToEdit = enrolmentEvaluation.getEnrolment();
+					IEnrolment enrolmentToEdit = enrolmentEvaluationElem.getEnrolment();
 					persistentEnrolment.simpleLockWrite(enrolmentToEdit);
 					
 					EnrolmentState newEnrolmentState = EnrolmentState.APROVED;
 					try{
-						Integer grade = new Integer(enrolmentEvaluation.getGrade()); 
+						Integer grade = new Integer(enrolmentEvaluationElem.getGrade()); 
 					} catch(NumberFormatException e){
 						newEnrolmentState = EnrolmentState.NOT_APROVED;
 					}
@@ -159,55 +148,6 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 			e.printStackTrace();
 		} finally {
 			return employee;
-		}
-	}
-
-	private InfoEnrolmentEvaluation completeEnrolmentEvaluation(InfoEnrolmentEvaluation infoEnrolmentEvaluation)
-		throws FenixServiceException {
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-
-			//			Student
-			IStudent student = new Student();
-			student.setIdInternal(
-				infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getIdInternal());
-			student = (IStudent) persistentStudent.readByOId(student, false);
-
-			infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().setInfoStudent(
-				Cloner.copyIStudent2InfoStudent(student));
-
-			return infoEnrolmentEvaluation;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
-
-	private boolean isValidEvaluation(InfoEnrolmentEvaluation infoEnrolmentEvaluation) {
-		IStudentCurricularPlan studentCurricularPlan = null;
-
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IStudentCurricularPlanPersistente curricularPlanPersistente = sp.getIStudentCurricularPlanPersistente();
-
-			studentCurricularPlan =
-				curricularPlanPersistente.readActiveStudentCurricularPlan(
-					infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getNumber(),
-					infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getDegreeType());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-
-		// test marks by execution course: strategy 
-		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
-		IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy =
-			degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(degreeCurricularPlan);
-		if (infoEnrolmentEvaluation.getGrade() == null || infoEnrolmentEvaluation.getGrade().length() == 0) {
-			return false;
-		} else {
-			return degreeCurricularPlanStrategy.checkMark(infoEnrolmentEvaluation.getGrade());
 		}
 	}
 }

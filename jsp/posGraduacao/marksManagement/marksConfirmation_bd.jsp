@@ -70,7 +70,7 @@
 		<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />
 		<html:hidden property="scopeCode" value="<%= pageContext.findAttribute("scopeCode").toString() %>" />
 	 	<html:submit styleClass="inputbutton">
-			<bean:message key="button.save"/>
+			<bean:message key="button.confirm"/>
 	  	</html:submit>
 	</html:form>
 </logic:present>   

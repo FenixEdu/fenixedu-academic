@@ -91,24 +91,14 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IServico {
 			List enrolmentEvaluations = persistentEnrolmentEvaluation.readByCriteria(enrolmentEvaluation);
 
 			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
-				//			evaluations can only be confirmated if they are not already confirmated
-				if (((IEnrolmentEvaluation) enrolmentEvaluations.get(0))
-					.getEnrolmentEvaluationState()
-					.equals(EnrolmentEvaluationState.FINAL_OBJ)) {
+				
+				try {
+					
+					checkForInvalidSituations(enrolmentEvaluations);
+					
+				} catch (ExistingServiceException e) {
 					throw new ExistingServiceException();
-				}
-
-				//				and if all students have final evaluation
-				List enrolmentEvaluationsWithoutGrade = (List) CollectionUtils.select(enrolmentEvaluations, new Predicate() {
-					public boolean evaluate(Object input) {
-						//						see if there are evaluations without grade
-						IEnrolmentEvaluation enrolmentEvaluationInput = (IEnrolmentEvaluation) input;
-						if (enrolmentEvaluationInput.getGrade() == null || enrolmentEvaluationInput.getGrade().length() == 0)
-							return true;
-						return false;
-					}
-				});
-				if(enrolmentEvaluationsWithoutGrade.size() > 0){
+				} catch (InvalidSituationServiceException e) {
 					throw new InvalidSituationServiceException();
 				}
 
@@ -145,5 +135,29 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IServico {
 		infoSiteEnrolmentEvaluation.setLastEvaluationDate(evaluationDate);
 
 		return infoSiteEnrolmentEvaluation;
+	}
+
+	private void checkForInvalidSituations(List enrolmentEvaluations)
+		throws ExistingServiceException, InvalidSituationServiceException {
+		//			evaluations can only be confirmated if they are not already confirmated
+		if (((IEnrolmentEvaluation) enrolmentEvaluations.get(0))
+			.getEnrolmentEvaluationState()
+			.equals(EnrolmentEvaluationState.FINAL_OBJ)) {
+			throw new ExistingServiceException();
+		}
+
+		//				and if all students have final evaluation
+		List enrolmentEvaluationsWithoutGrade = (List) CollectionUtils.select(enrolmentEvaluations, new Predicate() {
+			public boolean evaluate(Object input) {
+					//						see if there are evaluations without grade
+	IEnrolmentEvaluation enrolmentEvaluationInput = (IEnrolmentEvaluation) input;
+				if (enrolmentEvaluationInput.getGrade() == null || enrolmentEvaluationInput.getGrade().length() == 0)
+					return true;
+				return false;
+			}
+		});
+		if (enrolmentEvaluationsWithoutGrade.size() > 0) {
+			throw new InvalidSituationServiceException();
+		}
 	}
 }

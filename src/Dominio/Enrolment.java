@@ -72,7 +72,7 @@ public class Enrolment extends DomainObject implements IEnrolment {
 
 		if (obj instanceof IEnrolment) {
 			IEnrolment enrolment = (IEnrolment) obj;
-
+			
 			resultado =
 				this.getStudentCurricularPlan().equals(enrolment.getStudentCurricularPlan())
 					&& this.getCurricularCourseScope().equals(enrolment.getCurricularCourseScope())
