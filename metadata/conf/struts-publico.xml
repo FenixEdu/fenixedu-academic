@@ -83,6 +83,7 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
 	    <!-- page fronting actions -->
     	<action path="/index" forward="/index.jsp"/>
+    	<action path="/viewExecutionCourseShifts" forward="/viewExecutionCourseShifts.jsp"/>
 
       <action parameter="method"
               path="/consultTimeTables"
@@ -177,11 +178,9 @@
           <forward name="Sucess" path="/chooseSemester.jsp"/>
       </action>
 
-      <action 
-              input="/viewClasses.jsp"
-             
+      <action input="/viewClasses.jsp"
       		  path="/viewClassTimeTable"
-             type="ServidorApresentacao.Action.publico.ViewClassTimeTableAction"
+              type="ServidorApresentacao.Action.publico.ViewClassTimeTableAction"
               >
           <forward name="Sucess" path="/viewClassTimeTable.jsp"/>
       </action>
