@@ -20,9 +20,9 @@ import ServidorPersistente.IPersistentPrecedence;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class InsertNewPrecedence implements IService {
+public class ReadPrecedencesFromDegreeCurricularPlan implements IService {
 
-    public InsertNewPrecedence() {
+    public ReadPrecedencesFromDegreeCurricularPlan() {
     }
 
     public Map run(Integer degreeCurricularPlanID) throws FenixServiceException {
