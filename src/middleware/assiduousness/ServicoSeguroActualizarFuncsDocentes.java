@@ -110,7 +110,7 @@ public class ServicoSeguroActualizarFuncsDocentes {
 			}
 			
 			Pessoa person = (Pessoa) resultPerson.get(0);
-			
+			person.setUsername("D" + numeroMecanografico);
 			
 			// Check if Teacher Exists
 
