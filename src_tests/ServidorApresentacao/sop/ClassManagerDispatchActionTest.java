@@ -388,17 +388,30 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 		//sets needed objects to session/request
 		addRequestParameter("method", "deleteClass");
 
-		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("ApagarTurma");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
+		//create execution period
+		InfoExecutionYear infoExecutionYear =  new InfoExecutionYear("2002/2003");
+		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+		getSession().setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+
+		//create execution degree
+		InfoDegree infoDegree = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores");
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan("plano1", infoDegree);
+		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree(infoDegreeCurricularPlan, infoExecutionYear);
+		getSession().setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
+				
+		//privileges
+		HashSet privileges = new HashSet();
+		privileges.add("LerTurma");		
+		privileges.add("ApagarTurma");
+		IUserView userView = new UserView("user", privileges);
+		getSession().setAttribute(SessionConstants.U_VIEW, userView);
 
 		//fills the form
 		addRequestParameter("className", "10501");
 
 		//action perform
 		actionPerform();
+		
 		//verify that there are errors
 		verifyNoActionErrors();
 		//		verify correct Forward

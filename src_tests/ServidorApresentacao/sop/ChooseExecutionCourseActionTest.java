@@ -72,8 +72,6 @@ public class ChooseExecutionCourseActionTest extends TestCasePresentation {
 		privileges.add("LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular");		
 		IUserView userView = new UserView("user", privileges);
 		getSession().setAttribute(SessionConstants.U_VIEW, userView);
-		
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
 				
 		//list of EXECUTION_COURSE_LIST_KEY
 		try {
@@ -128,8 +126,6 @@ public class ChooseExecutionCourseActionTest extends TestCasePresentation {
 		HashSet privileges = new HashSet();
 		privileges.add("LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular");		
 		IUserView userView = new UserView("user", privileges);
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
-		
 		getSession().setAttribute(SessionConstants.U_VIEW, userView);
 				
 		//list of EXECUTION_COURSE_LIST_KEY
