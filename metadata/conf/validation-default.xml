@@ -6,29 +6,14 @@
 <form-validation>
   <formset>
     <!-- Validacao para o formulario de autenticacao -->
-    <form name="autenticacaoForm">
-      <field property="utilizador" depends="required">
-        <arg0 key="Utilizador" resource="false"/>
+    <form name="authenticationForm">
+      <field property="username" depends="required">
+        <arg0 key="label.username"/>
       </field>
 
       <field property="password" depends="required">
-        <arg0 key="Password" resource="false"/>
+        <arg0 key="label.password"/>
       </field>
     </form>
-    
-    <!-- Validacao para o parametro nomeSitio -->
-    <form name="obterSitioForm">
-      <field property="nomeSitio" depends="required">
-        <arg0 key="Nome do sitio" resource="false"/>
-      </field>
-	</form>
-
-    <!-- Validacao para o parametro nomeSitio -->
-    <form name="obterSeccaoForm">
-      <field property="nomeSeccao" depends="optional">
-        <arg0 key="Nome da Seccao" resource="false"/>
-      </field>
-    </form>
-	
   </formset>
 </form-validation>

@@ -10,8 +10,9 @@ import Util.RoleType;
  * @author jpvl
  */
 public class InfoRole{
-	private String portalAction;
-	private String portalActionNameProperty;
+	private String portalSubApplication;
+	private String page;
+	private String pageNameProperty;
 	private RoleType roleType;
 
 	public InfoRole(){
@@ -19,15 +20,22 @@ public class InfoRole{
 	/**
 	 * @return String
 	 */
-	public String getPortalAction() {
-		return portalAction;
+	public String getPage() {
+		return page;
 	}
 
 	/**
 	 * @return String
 	 */
-	public String getPortalActionNameProperty() {
-		return portalActionNameProperty;
+	public String getPageNameProperty() {
+		return pageNameProperty;
+	}
+
+	/**
+	 * @return String
+	 */
+	public String getPortalSubApplication() {
+		return portalSubApplication;
 	}
 
 	/**
@@ -38,19 +46,27 @@ public class InfoRole{
 	}
 
 	/**
-	 * Sets the portalAction.
-	 * @param portalAction The portalAction to set
+	 * Sets the page.
+	 * @param page The page to set
 	 */
-	public void setPortalAction(String portalAction) {
-		this.portalAction = portalAction;
+	public void setPage(String page) {
+		this.page = page;
 	}
 
 	/**
-	 * Sets the portalActionNameProperty.
-	 * @param portalActionNameProperty The portalActionNameProperty to set
+	 * Sets the pageNameProperty.
+	 * @param pageNameProperty The pageNameProperty to set
 	 */
-	public void setPortalActionNameProperty(String portalActionNameProperty) {
-		this.portalActionNameProperty = portalActionNameProperty;
+	public void setPageNameProperty(String pageNameProperty) {
+		this.pageNameProperty = pageNameProperty;
+	}
+
+	/**
+	 * Sets the portalSubApplication.
+	 * @param portalSubApplication The portalSubApplication to set
+	 */
+	public void setPortalSubApplication(String portalSubApplication) {
+		this.portalSubApplication = portalSubApplication;
 	}
 
 	/**

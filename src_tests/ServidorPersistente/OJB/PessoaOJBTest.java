@@ -19,6 +19,7 @@ import org.odmg.QueryException;
 
 import Dominio.IPessoa;
 import Dominio.Pessoa;
+import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -101,7 +102,7 @@ public class PessoaOJBTest extends TestCaseOJB {
     pessoa.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
     	         TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
     pessoa.setUsername("jorge");
-    pessoa.setPassword("pass");
+    pessoa.setPassword(PasswordEncryptor.encryptPassword("pass"));
     pessoa.setPrivilegios(null);
     try {
       persistentSupport.iniciarTransaccao();
@@ -125,7 +126,7 @@ public class PessoaOJBTest extends TestCaseOJB {
     pessoa.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
     			 TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
     pessoa.setUsername("ars");
-    pessoa.setPassword("pass2");
+    pessoa.setPassword(PasswordEncryptor.encryptPassword("pass2"));
     pessoa.setPrivilegios(null);
     try {
       persistentSupport.iniciarTransaccao();
@@ -158,7 +159,7 @@ public class PessoaOJBTest extends TestCaseOJB {
       persistentSupport.iniciarTransaccao();
       //persistentPerson.lockWrite(_pessoa1);
       IPessoa pessoa = persistentPerson.lerPessoaPorUsername("jorge");
-      pessoa.setPassword("xxxxxxxx");
+      pessoa.setPassword(PasswordEncryptor.encryptPassword("xxxxxxxx"));
       persistentPerson.escreverPessoa(pessoa);
       persistentSupport.confirmarTransaccao();
 
@@ -168,7 +169,7 @@ public class PessoaOJBTest extends TestCaseOJB {
       //IPessoa pessoa = persistentPerson.readByUtilizador(_pessoa1.getUtilizador());
       pessoa = persistentPerson.lerPessoaPorUsername("jorge");
       persistentSupport.confirmarTransaccao();
-      assertTrue(pessoa.getPassword().equals("xxxxxxxx"));
+      assertTrue(PasswordEncryptor.areEquals(pessoa.getPassword(),"xxxxxxxx"));
     } catch (ExcepcaoPersistencia ex) {
       fail("testWriteExistingChangedObject");
     }

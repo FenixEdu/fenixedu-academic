@@ -27,6 +27,7 @@ import Dominio.IStudent;
 import Dominio.Pessoa;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
+import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
@@ -206,7 +207,7 @@ public class StudentOJBTest extends TestCaseOJB {
     /** Test of lockWrite method, of class ServidorPersistente.OJB.StudentOJB. */
  
    public void testCreateExistingAluno() {
-    IPessoa person = new Pessoa("10000679", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "Lisboa", new Date(), new Date(), "Ricardo Nortadas", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.DIVORCIADO), new Date(), "Pai", "Mae", "Portugues", "Portugal", "Portugal", "Portugal", "Rua", "LindaAVelha", "2780", "Oeiras", "LindaAVelha", "Oeiras", "Lisboa", "214192888", "936344277", "rfan@mega.ist.utl.pt", "URL", "123231232132", "estudante", "rfan", "eu", null, "123123213123123123");
+    IPessoa person = new Pessoa("10000679", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "Lisboa", new Date(), new Date(), "Ricardo Nortadas", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.DIVORCIADO), new Date(), "Pai", "Mae", "Portugues", "Portugal", "Portugal", "Portugal", "Rua", "LindaAVelha", "2780", "Oeiras", "LindaAVelha", "Oeiras", "Lisboa", "214192888", "936344277", "rfan@mega.ist.utl.pt", "URL", "123231232132", "estudante", "rfan", PasswordEncryptor.encryptPassword("eu"), null, "123123213123123123");
     try{
         persistentSupport.iniciarTransaccao();
         persistentPerson.escreverPessoa(person);
@@ -235,7 +236,7 @@ public class StudentOJBTest extends TestCaseOJB {
   }
  
     public void testCreateNonExistingAluno() {      
-        IPessoa person = new Pessoa("10000677", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "Lisboa", new Date(), new Date(), "Ricardo Nortadas", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.DIVORCIADO), new Date(), "Pai", "Mae", "Portugues", "Portugal", "Portugal", "Portugal", "Rua", "LindaAVelha", "2780", "Oeiras", "LindaAVelha", "Oeiras", "Lisboa", "214192888", "936344277", "rfan@mega.ist.utl.pt", "URL", "123231232132", "estudante", "rfan", "eu", null, "123123213123123123");
+        IPessoa person = new Pessoa("10000677", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "Lisboa", new Date(), new Date(), "Ricardo Nortadas", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.DIVORCIADO), new Date(), "Pai", "Mae", "Portugues", "Portugal", "Portugal", "Portugal", "Rua", "LindaAVelha", "2780", "Oeiras", "LindaAVelha", "Oeiras", "Lisboa", "214192888", "936344277", "rfan@mega.ist.utl.pt", "URL", "123231232132", "estudante", "rfan", PasswordEncryptor.encryptPassword("eu"), null, "123123213123123123");
         try{
         persistentSupport.iniciarTransaccao();
         persistentPerson.escreverPessoa(person);

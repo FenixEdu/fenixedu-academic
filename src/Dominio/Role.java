@@ -11,9 +11,8 @@ import Util.RoleType;
 /**
  * @author jpvl
  */
-public class Role extends DomainObject implements IRole{
-	private String portalAction;
-	private String portalActionNameProperty;
+public class Role extends DomainObject implements IRole {
+	private String portalSubApplication, page, pageNameProperty;
 	private Collection rolePersons;
 	private RoleType roleType;
 
@@ -29,27 +28,34 @@ public class Role extends DomainObject implements IRole{
 				&& (((Role) obj).getRoleType().equals(getRoleType())));
 	}
 
+
 	/**
 	 * @return String
 	 */
-	public String getPortalAction() {
-		return portalAction;
+	public String getPage() {
+		return page;
 	}
 
 	/**
 	 * @return String
 	 */
-	public String getPortalActionNameProperty() {
-		return portalActionNameProperty;
+	public String getPageNameProperty() {
+		return pageNameProperty;
 	}
 
-	/* (non-Javadoc)
-	 * @see Dominio.IRole#getRolePersons()
+	/**
+	 * @return String
+	 */
+	public String getPortalSubApplication() {
+		return portalSubApplication;
+	}
+
+	/**
+	 * @return Collection
 	 */
 	public Collection getRolePersons() {
-		return this.rolePersons;
+		return rolePersons;
 	}
-
 
 	/**
 	 * @return RoleType
@@ -58,37 +64,44 @@ public class Role extends DomainObject implements IRole{
 		return roleType;
 	}
 
-
 	/**
-	 * Sets the portalAction.
-	 * @param portalAction The portalAction to set
+	 * Sets the page.
+	 * @param page The page to set
 	 */
-	public void setPortalAction(String portalAction) {
-		this.portalAction = portalAction;
+	public void setPage(String page) {
+		this.page = page;
 	}
 
 	/**
-	 * Sets the portalActionNameProperty.
-	 * @param portalActionNameProperty The portalActionNameProperty to set
+	 * Sets the pageNameProperty.
+	 * @param pageNameProperty The pageNameProperty to set
 	 */
-	public void setPortalActionNameProperty(String portalActionNameProperty) {
-		this.portalActionNameProperty = portalActionNameProperty;
+	public void setPageNameProperty(String pageNameProperty) {
+		this.pageNameProperty = pageNameProperty;
 	}
 
-	/* (non-Javadoc)
-	 * @see Dominio.IRole#setRolePersons(java.util.List)
+	/**
+	 * Sets the portalSubApplication.
+	 * @param portalSubApplication The portalSubApplication to set
+	 */
+	public void setPortalSubApplication(String portalSubApplication) {
+		this.portalSubApplication = portalSubApplication;
+	}
+
+	/**
+	 * Sets the rolePersons.
+	 * @param rolePersons The rolePersons to set
 	 */
 	public void setRolePersons(Collection rolePersons) {
 		this.rolePersons = rolePersons;
-		
 	}
 
 	/**
 	 * Sets the roleType.
 	 * @param roleType The roleType to set
 	 */
-	public void setRoleType(RoleType roleName) {
-		this.roleType = roleName;
+	public void setRoleType(RoleType roleType) {
+		this.roleType = roleType;
 	}
 
 }

@@ -16,6 +16,7 @@ import Dominio.Pessoa;
 import Dominio.PlanoCurricularCurso;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
+import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
@@ -60,7 +61,7 @@ public class LoadStudents extends DataFileLoader {
 			// Criar o utilizador do SOP.
 			Pessoa pessoa = new Pessoa();
 			pessoa.setUsername("sop");
-			pessoa.setPassword("sop123sop");
+			pessoa.setPassword(PasswordEncryptor.encryptPassword("sop123sop"));
 			pessoa.setNumeroDocumentoIdentificacao("sop111111");
 			pessoa.setTipoDocumentoIdentificacao(
 				new TipoDocumentoIdentificacao(
@@ -214,7 +215,7 @@ public class LoadStudents extends DataFileLoader {
 		p.setEmail(email);
 		p.setUsername(numero);
 		p.setNome(nome);
-		p.setPassword(numero);
+		p.setPassword(PasswordEncryptor.encryptPassword(numero));
 		return p;
 	}
 }

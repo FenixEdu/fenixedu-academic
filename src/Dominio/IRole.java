@@ -7,12 +7,14 @@ import Util.RoleType;
  *   @author     jpvl
  */
 public interface IRole {
-	String getPortalAction();
-	String getPortalActionNameProperty();
+	String getPortalSubApplication();
+	String getPageNameProperty();
+	String getPage();
 	Collection getRolePersons();
 	RoleType getRoleType();
-	void setPortalAction(String portalAction);
-	void setPortalActionNameProperty(String portalNameProperty);
+	void setPortalSubApplication(String portalSubApplication);
+	void setPageNameProperty(String pageNameProperty);
+	void setPage(String page);	
 	void setRolePersons(Collection rolePersons);
 	void setRoleType(RoleType roleName);
 }

@@ -203,6 +203,8 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
+      <action path="/paginaPrincipal" forward="/paginaPrincipal.jsp"/>
+      
       <action path="/index" forward="/autenticacaoSOP.jsp"/>
       <action path="/autenticacaoSOP" forward="/autenticacaoSOP.jsp"/>
       <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
@@ -215,6 +217,10 @@
       <action path="/criarTurno" forward="/criarTurno.jsp"/>
       <action path="/escolherDisciplinaETipo" forward="/escolherDisciplinaETipo.jsp"/>
       <action path="/manipularTurnos" forward="/manipularTurnos.jsp"/>
+      
+    <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
+
+     <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
      
 <!--      <action path="/editarTurno" forward="/editarTurno.jsp"/>-->
 
@@ -377,13 +383,12 @@
               type="ServidorApresentacao.Action.sop.SearchEmptyRoomsDispatchAction"
               validate="true"
               >
-              <forward name="showSearchResult" path="/showEmptyRooms.jsp"/>
-              <forward name="searchPage" path="/searchEmptyRooms.jsp"/>              
          <exception type="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
          	   key="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                />
-
+              <forward name="showSearchResult" path="/showEmptyRooms.jsp"/>
+              <forward name="searchPage" path="/searchEmptyRooms.jsp"/>              
       </action>
 
       <action attribute="roomForm"
@@ -394,7 +399,6 @@
               type="ServidorApresentacao.Action.publico.SelectRoomsFormAction"
               validate="false">
         <forward name="Sucess" path="/manipularSalas.jsp" />
-<!--        <forward name="Voltar" path="/principalSalas.do"/> -->
       </action>
 
       <action input="/manipularSalas.jsp"

@@ -80,7 +80,6 @@ public class Pessoa implements IPessoa {
 		this.numContribuinte = "";
 		this.profissao = "";
 		this.username = "";
-		this.password = "";
 		this.pais = null;
 		this.codigoFiscal = "";
 		this.privilegios = null;
@@ -116,7 +115,6 @@ public class Pessoa implements IPessoa {
 		this.numContribuinte = "";
 		this.profissao = "";
 		this.username = userName;
-		this.password = "";
 		this.pais = null;
 		this.codigoFiscal = "";
 		this.privilegios = null;
@@ -418,7 +416,7 @@ public class Pessoa implements IPessoa {
 	 * @return Value of property password.
 	 *
 	 */
-	public java.lang.String getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
@@ -716,7 +714,7 @@ public class Pessoa implements IPessoa {
 	 * @param password New value of property password.
 	 *
 	 */
-	public void setPassword(java.lang.String password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
