@@ -109,19 +109,19 @@ public class ItemsManagementAction extends FenixDispatchAction {
 	private void fillInfoWebSiteItem(ActionForm form, InfoWebSiteItem infoWebSiteItem) {
 		DynaActionForm itemForm = (DynaActionForm) form;
 		infoWebSiteItem.setExcerpt((String) itemForm.get("excerpt"));
-
-		String itemBeginDayString = (String) itemForm.get("itemBeginDay");
-		Date date = convertStringDate(itemBeginDayString);
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		infoWebSiteItem.setItemBeginDayCalendar(calendar);
-		System.out.println(infoWebSiteItem.getItemBeginDayCalendar().getTime());
-
+		String itemBeginDayString = (String) itemForm.get("itemBeginDay");
+		if (itemBeginDayString != null && itemBeginDayString.length() > 0) {
+			Date date = convertStringDate(itemBeginDayString);
+			calendar.setTime(date);
+			infoWebSiteItem.setItemBeginDayCalendar(calendar);
+		}
 		String itemEndDayString = (String) itemForm.get("itemEndDay");
-		calendar = Calendar.getInstance();
-		calendar.setTime(convertStringDate(itemEndDayString));
-		infoWebSiteItem.setItemEndDayCalendar(calendar);
-		System.out.println(infoWebSiteItem.getItemEndDayCalendar().getTime());
+		if (itemEndDayString != null && itemEndDayString.length() > 0) {
+			calendar = Calendar.getInstance();
+			calendar.setTime(convertStringDate(itemEndDayString));
+			infoWebSiteItem.setItemEndDayCalendar(calendar);
+		}
 
 		infoWebSiteItem.setKeywords((String) itemForm.get("keywords"));
 		infoWebSiteItem.setMainEntryText((String) itemForm.get("mainEntryText"));

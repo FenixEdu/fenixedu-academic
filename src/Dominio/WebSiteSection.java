@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * @author Fernanda Quitério
  * 23/09/2003
@@ -29,8 +31,6 @@ public class WebSiteSection extends DomainObject implements IWebSiteSection {
 		this.whatToSort = whatToSort;
 	}
 
-	//	private List itemsList;
-
 	public WebSiteSection() {
 	}
 
@@ -38,19 +38,6 @@ public class WebSiteSection extends DomainObject implements IWebSiteSection {
 		setIdInternal(idInternal);
 	}
 
-	/**
-	 * @return
-	 */
-	//	public List getItemsList() {
-	//		return itemsList;
-	//	}
-
-	/**
-	 * @param itemsList
-	 */
-	//	public void setItemsList(List itemsList) {
-	//		this.itemsList = itemsList;
-	//	}
 	/**
 	 * @return
 	 */
@@ -133,7 +120,12 @@ public class WebSiteSection extends DomainObject implements IWebSiteSection {
 	 * @param name The name to set
 	 */
 	public void setName(String name) {
-		this.name = name;
+		try {
+			this.name =
+				new String(name.getBytes("ISO-8859-1"), "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			this.name = name;
+		}
 	}
 
 	/**

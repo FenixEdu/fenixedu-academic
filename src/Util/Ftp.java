@@ -32,7 +32,7 @@ public class Ftp {
 		return;
 	}
 
-	public static void enviarFicheiro(String nomeFicheiroConfig, String nomeFicheiro) {
+	public static void enviarFicheiro(String nomeFicheiroConfig, String nomeFicheiro, String caminho) {
 		carregaPropriedades(nomeFicheiroConfig);
 
 		FTPClient ftp = new FTPClient();
@@ -56,7 +56,9 @@ public class Ftp {
 			ftp.login(_userName, _password);
 			InputStream inputStream = new FileInputStream(nomeFicheiro);
 
-			ftp.storeFile(nomeFicheiro, inputStream);
+			ftp.storeFile(caminho + nomeFicheiro, inputStream);
+			inputStream.close();
+			System.out.println("vou desligar");
 			ftp.disconnect();
 
 		} catch (IOException e) {

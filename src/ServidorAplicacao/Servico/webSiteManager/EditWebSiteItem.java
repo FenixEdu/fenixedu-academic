@@ -86,8 +86,10 @@ public class EditWebSiteItem implements IServico {
 			webSiteItem.setEditor(person);
 
 			webSiteItem.setExcerpt(infoWebSiteItem.getExcerpt());
-			webSiteItem.setItemBeginDay(infoWebSiteItem.getItemBeginDayCalendar().getTime());
-			webSiteItem.setItemEndDay(infoWebSiteItem.getItemEndDayCalendar().getTime());
+			if (infoWebSiteItem.getItemBeginDayCalendar() != null) {
+				webSiteItem.setItemBeginDay(infoWebSiteItem.getItemBeginDayCalendar().getTime());
+				webSiteItem.setItemEndDay(infoWebSiteItem.getItemEndDayCalendar().getTime());
+			}
 			webSiteItem.setKeyEditor(person.getIdInternal());
 			webSiteItem.setKeyWebSiteSection(webSiteSection.getIdInternal());
 			webSiteItem.setKeywords(infoWebSiteItem.getKeywords());
