@@ -50,7 +50,7 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 		IExecutionPeriod executionPeriod = null;
 		
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
 			
@@ -67,7 +67,7 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 			assertNull(executionPeriod);
 
 			
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 	   } catch (ExcepcaoPersistencia ex) {
 			fail("testReadExecutionPeriodByNameAndExecutionYear:fail read existing item");
   	   }
@@ -78,7 +78,7 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 		IExecutionPeriod executionPeriod = null;
 		
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
 			
@@ -96,7 +96,7 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 			
 			assertTrue(persistentExecutionPeriod.delete(executionPeriod));
 
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 	   } catch (ExcepcaoPersistencia ex) {
 			fail("testReadExecutionPeriodByNameAndExecutionYear:fail read existing item");
 	   }
@@ -104,13 +104,13 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 	
 	public void testReadAllExecutionPeriod(){
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 
 			List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
 			assertEquals(executionPeriods.isEmpty(), false);
 			assertEquals(executionPeriods.size(), 2);
 
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 	   } catch (ExcepcaoPersistencia ex) {
 			fail("testReadExecutionPeriodByNameAndExecutionYear:fail read existing item");
 	   }
@@ -122,7 +122,7 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 		IExecutionPeriod executionPeriod = null;
 	
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
 		
@@ -131,28 +131,28 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 
 			// Write Changed Object
 			executionPeriod.setName("new");			
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			// Read Changed
 			executionPeriod = null;
 			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("new", executionYear);
 			assertNotNull(executionPeriod);
 			assertEquals(executionPeriod.getName(), "new");
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 			
 			
 			// Write new Object
 			
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			executionPeriod = new ExecutionPeriod("2º Semestre", executionYear);
 			persistentExecutionPeriod.writeExecutionPeriod(executionPeriod);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
 			assertEquals(executionPeriods.size(), 3);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 
 
 			
@@ -164,11 +164,11 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 	
 	public void testDeleteAll(){
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			persistentExecutionPeriod.deleteAll();
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 			
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 
 
 			List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
@@ -178,7 +178,7 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 			// courses associated, and so it cannot be deleted
 			assertEquals(executionPeriods.size(), 1);
 
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 			
 			
 	   } catch (ExcepcaoPersistencia ex) {

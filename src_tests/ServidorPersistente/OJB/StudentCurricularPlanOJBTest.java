@@ -71,9 +71,9 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
         IStudentCurricularPlan studentCurricularPlanTemp = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
-            studentCurricularPlanTemp = studentCurricularPlanPersistente.readActiveStudentCurricularPlan(600);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.iniciarTransaccao();
+            studentCurricularPlanTemp = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(600);
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Failed Reading Existing");
         }
@@ -90,9 +90,9 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
         IStudentCurricularPlan studentCurricularPlanTemp = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
-            studentCurricularPlanTemp = studentCurricularPlanPersistente.readActiveStudentCurricularPlan(999999);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.iniciarTransaccao();
+            studentCurricularPlanTemp = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(999999);
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Failed Reading Non Existing");
@@ -112,20 +112,20 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
         data.set(2002, Calendar.NOVEMBER, 17);
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             studentTemp = persistentStudent.readByNumero(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
             assertNotNull(studentTemp);
             
-            degree = cursoPersistente.readBySigla("LEIC");
+            degree = persistentDegree.readBySigla("LEIC");
             assertNotNull(degree);
-            degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+            degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 			assertNotNull(degreeCurricularPlan);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
 
 			studentCurricularPlan = new StudentCurricularPlan(studentTemp, degreeCurricularPlan, data.getTime(), new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE));
-            _suportePersistente.iniciarTransaccao();
-            studentCurricularPlanPersistente.lockWrite(studentCurricularPlan);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.iniciarTransaccao();
+            persistentStudentCurricularPlan.lockWrite(studentCurricularPlan);
+            persistentSupport.confirmarTransaccao();
             fail("    -> Espected Error");            
         } catch (ExcepcaoPersistencia ex) {
 			// All is OK
@@ -143,20 +143,20 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 		data.set(2002, Calendar.NOVEMBER, 17);
         
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			studentTemp = persistentStudent.readByNumero(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 			assertNotNull(studentTemp);
             
-			degree = cursoPersistente.readBySigla("LEEC");
+			degree = persistentDegree.readBySigla("LEEC");
 			assertNotNull(degree);
-			degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano2", degree);
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano2", degree);
 			assertNotNull(degreeCurricularPlan);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 
 			studentCurricularPlan = new StudentCurricularPlan(studentTemp, degreeCurricularPlan, data.getTime(), new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE));
-			_suportePersistente.iniciarTransaccao();
-			studentCurricularPlanPersistente.lockWrite(studentCurricularPlan);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			persistentStudentCurricularPlan.lockWrite(studentCurricularPlan);
+			persistentSupport.confirmarTransaccao();
 
 		} catch (ExcepcaoPersistencia ex) {
 			fail(" Fail");            		}
@@ -167,20 +167,20 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
         IStudentCurricularPlan studentCurricularPlan = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
-            studentCurricularPlan = studentCurricularPlanPersistente.readActiveStudentCurricularPlan(600);
+            persistentSupport.iniciarTransaccao();
+            studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(600);
             assertNotNull(studentCurricularPlan);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
          
-            _suportePersistente.iniciarTransaccao();
-            studentCurricularPlanPersistente.delete(studentCurricularPlan);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.iniciarTransaccao();
+            persistentStudentCurricularPlan.delete(studentCurricularPlan);
+            persistentSupport.confirmarTransaccao();
             
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			studentCurricularPlan = null;
-			studentCurricularPlan = studentCurricularPlanPersistente.readActiveStudentCurricularPlan(600);
+			studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(600);
 			assertNull(studentCurricularPlan);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Failed Reading Existing");
         }
@@ -197,20 +197,20 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 		data.set(2002, Calendar.NOVEMBER, 17);
         
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			studentTemp = persistentStudent.readByNumero(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 			assertNotNull(studentTemp);
             
-			degree = cursoPersistente.readBySigla("LEEC");
+			degree = persistentDegree.readBySigla("LEEC");
 			assertNotNull(degree);
-			degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano2", degree);
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano2", degree);
 			assertNotNull(degreeCurricularPlan);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 
 			studentCurricularPlan = new StudentCurricularPlan(studentTemp, degreeCurricularPlan, data.getTime(), new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE));
-			_suportePersistente.iniciarTransaccao();
-			studentCurricularPlanPersistente.delete(studentCurricularPlan);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			persistentStudentCurricularPlan.delete(studentCurricularPlan);
+			persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Failed Deleting Non Existing");
         }
@@ -221,21 +221,21 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
         IStudentCurricularPlan studentCurricularPlan = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
-            studentCurricularPlan = studentCurricularPlanPersistente.readActiveStudentCurricularPlan(600);
+            persistentSupport.iniciarTransaccao();
+            studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(600);
             assertNotNull(studentCurricularPlan);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
          
          	assertNotNull(studentCurricularPlan);
          
-            _suportePersistente.iniciarTransaccao();
-            studentCurricularPlanPersistente.deleteAll();
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.iniciarTransaccao();
+            persistentStudentCurricularPlan.deleteAll();
+            persistentSupport.confirmarTransaccao();
             
-            _suportePersistente.iniciarTransaccao();
-            studentCurricularPlan = studentCurricularPlanPersistente.readActiveStudentCurricularPlan(600);
+            persistentSupport.iniciarTransaccao();
+            studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(600);
 			assertNull(studentCurricularPlan);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
          
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Failed Reading Existing");
@@ -247,9 +247,9 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
         List studentCurricularPlans = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
-            studentCurricularPlans = studentCurricularPlanPersistente.readAllFromStudent(600);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.iniciarTransaccao();
+            studentCurricularPlans = persistentStudentCurricularPlan.readAllFromStudent(600);
+            persistentSupport.confirmarTransaccao();
          
          	assertNotNull(studentCurricularPlans);
          	assertTrue(studentCurricularPlans.size() == 2);
@@ -265,9 +265,9 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
         List curricularTemp = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
-            curricularTemp = studentCurricularPlanPersistente.readAllFromStudent(99999);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.iniciarTransaccao();
+            curricularTemp = persistentStudentCurricularPlan.readAllFromStudent(99999);
+            persistentSupport.confirmarTransaccao();
          
          	assertNotNull(curricularTemp);
          	assertTrue(curricularTemp.size() == 0);

@@ -51,9 +51,9 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //    ICurricularCourse curricularCourse = null;
 //    
 //    try {
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //	  curricularCourse = persistantCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso I", "TFCI");
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //    } catch (ExcepcaoPersistencia ex) {
 //      fail("testReadByPlanoCurricularAlunoAndDisciplinaCurricular:fail read existing inscricao");
 //    }
@@ -61,7 +61,7 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //	assertNotNull(curricularCourse);
 //    
 //    try {
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //            
 //      IEnrolment enrolmentCriteria = new Enrolment();
 //      
@@ -81,9 +81,9 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //      
 //      enrolmentCriteria.setStudentCurricularPlan(studentCurricularPlan);
 //      
-//      enrolment = (IEnrolment) _inscricaoPersistente.readDomainObjectByCriteria(enrolmentCriteria);
+//      enrolment = (IEnrolment) persistentEnrollment.readDomainObjectByCriteria(enrolmentCriteria);
 //	  assertNotNull("no enrolment read", enrolment);
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //
 //	  assertTrue(enrolment.getCurricularCourse().getCode().equals("TFCI"));
 //	  assertTrue(enrolment.getCurricularCourse().getName().equals("Trabalho Final de Curso I"));
@@ -101,9 +101,9 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 // 	curricularCourse = null;
 //
 //    try {
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //	  curricularCourse = persistantCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso II", "TFCII");
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //    } catch (ExcepcaoPersistencia ex) {
 //      fail("testReadByPlanoCurricularAlunoAndDisciplinaCurricular:fail read existing inscricao");
 //    }
@@ -112,7 +112,7 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //        
 //    // read unexisting Inscricao
 //    try {
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //	  IEnrolment enrolmentCriteria = new Enrolment();
 //	  CurricularCourse curricularCourse2 = new CurricularCourse();
 //	  curricularCourse2.setCode(curricularCourse.getCode());
@@ -126,8 +126,8 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //	  studentCurricularPlan.setCurrentState(new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE));
 //	  enrolmentCriteria.setStudentCurricularPlan(studentCurricularPlan);
 //       
-//	  enrolment = (IEnrolment) _inscricaoPersistente.readDomainObjectByCriteria(enrolmentCriteria);
-//      _suportePersistente.confirmarTransaccao();
+//	  enrolment = (IEnrolment) persistentEnrollment.readDomainObjectByCriteria(enrolmentCriteria);
+//      persistentSupport.confirmarTransaccao();
 //      assertNull(enrolment);
 //    } catch (ExcepcaoPersistencia ex) {
 //      fail("testReadByPlanoCurricularAlunoAndDisciplinaCurricular 2:fail read unexisting inscricao");
@@ -138,16 +138,16 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //  public void testCreateExistingInscricao() {
 //    IInscricao inscricao = new Inscricao();
 //    try {
-//    	_suportePersistente.iniciarTransaccao();
+//    	persistentSupport.iniciarTransaccao();
 //    	ICurricularCourse dc = persistantCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso I", "TFCI");
-//    	_suportePersistente.confirmarTransaccao();
+//    	persistentSupport.confirmarTransaccao();
 //
 //    	//inscricao.setPlanoCurricularAluno(_planoCurricular1);
 //    	inscricao.setDisciplinaCurricular(dc);
 //
-//      _suportePersistente.iniciarTransaccao();
-//      _inscricaoPersistente.lockWrite(inscricao);
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.iniciarTransaccao();
+//      persistentEnrollment.lockWrite(inscricao);
+//      persistentSupport.confirmarTransaccao();
 //      fail("testCreateExistingInscricao");
 //    } catch (ExcepcaoPersistencia ex) {
 //      //all is ok
@@ -161,9 +161,9 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //	ICurricularCourse curricularCourse = null;
 //
 //    try {
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //	  curricularCourse = persistantCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso II", "TFCII");
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //    } catch (ExcepcaoPersistencia ex) {
 //      fail("testReadByPlanoCurricularAlunoAndDisciplinaCurricular:fail read existing inscricao");
 //    }
@@ -172,9 +172,9 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //	
 //    inscricao.setDisciplinaCurricular(curricularCourse);
 //    try {
-//      _suportePersistente.iniciarTransaccao();
-//      _inscricaoPersistente.lockWrite(inscricao);
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.iniciarTransaccao();
+//      persistentEnrollment.lockWrite(inscricao);
+//      persistentSupport.confirmarTransaccao();
 //    } catch (ExcepcaoPersistencia ex) {
 //      fail("testCreateNonExistingInscricao");
 //    }
@@ -188,18 +188,18 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //    ICurricularCourse curricularCourse = null;
 //    
 //    try {
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //	  curricularCourse = persistantCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso I", "TFCI");
-//      inscricao = _inscricaoPersistente.readByPlanoCurricularAlunoAndDisciplinaCurricular(/*_aluno1, */ curricularCourse);
-//      _suportePersistente.confirmarTransaccao();
+//      inscricao = persistentEnrollment.readByPlanoCurricularAlunoAndDisciplinaCurricular(/*_aluno1, */ curricularCourse);
+//      persistentSupport.confirmarTransaccao();
 //    } catch (ExcepcaoPersistencia ex) {
 //      fail("testReadByPlanoCurricularAlunoAndDisciplinaCurricular:fail read existing inscricao");
 //    }
 //
 //    try {
-//      _suportePersistente.iniciarTransaccao();
-//      _inscricaoPersistente.lockWrite(inscricao);
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.iniciarTransaccao();
+//      persistentEnrollment.lockWrite(inscricao);
+//      persistentSupport.confirmarTransaccao();
 //    } catch (ExcepcaoPersistencia ex) {
 //      fail("testWriteExistingUnchangedObject");
 //    }
@@ -212,19 +212,19 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //      
 //    // write inscricao already mapped into memory
 //    try {
-//    	_suportePersistente.iniciarTransaccao();
+//    	persistentSupport.iniciarTransaccao();
 //    	ICurricularCourse cc1 = persistantCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso I", "TFCI");
 //    	ICurricularCourse cc2 = persistantCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso II", "TFCII");
-//    	_suportePersistente.confirmarTransaccao();
+//    	persistentSupport.confirmarTransaccao();
 //
-//        _suportePersistente.iniciarTransaccao();
-//        inscricao1 = _inscricaoPersistente.readByPlanoCurricularAlunoAndDisciplinaCurricular(/*_aluno1, */ cc1);
+//        persistentSupport.iniciarTransaccao();
+//        inscricao1 = persistentEnrollment.readByPlanoCurricularAlunoAndDisciplinaCurricular(/*_aluno1, */ cc1);
 //        inscricao1.setDisciplinaCurricular(cc2);
-//        _suportePersistente.confirmarTransaccao();
+//        persistentSupport.confirmarTransaccao();
 // 
-//       _suportePersistente.iniciarTransaccao();
-//       inscricao2 = _inscricaoPersistente.readByPlanoCurricularAlunoAndDisciplinaCurricular(/*_aluno1, */ cc2);
-//       _suportePersistente.confirmarTransaccao();      
+//       persistentSupport.iniciarTransaccao();
+//       inscricao2 = persistentEnrollment.readByPlanoCurricularAlunoAndDisciplinaCurricular(/*_aluno1, */ cc2);
+//       persistentSupport.confirmarTransaccao();      
 //
 //       assertEquals(inscricao2.getDisciplinaCurricular().getCode(), cc2.getCode());
 //    } catch (ExcepcaoPersistencia ex) {
@@ -238,9 +238,9 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //	ICurricularCourse curricularCourse = null;
 //
 //    try {
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //	  curricularCourse = persistantCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso I", "TFCI");
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //    } catch (ExcepcaoPersistencia ex) {
 //      fail("testReadByPlanoCurricularAlunoAndDisciplinaCurricular:fail read existing inscricao");
 //    }
@@ -248,17 +248,17 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //	assertNotNull(curricularCourse);
 //
 //    try {
-//    	_suportePersistente.iniciarTransaccao();
-//    	IInscricao inscricao1 = _inscricaoPersistente.readByPlanoCurricularAlunoAndDisciplinaCurricular(/*_aluno1, */ curricularCourse);
-//    	_suportePersistente.confirmarTransaccao();
+//    	persistentSupport.iniciarTransaccao();
+//    	IInscricao inscricao1 = persistentEnrollment.readByPlanoCurricularAlunoAndDisciplinaCurricular(/*_aluno1, */ curricularCourse);
+//    	persistentSupport.confirmarTransaccao();
 //
-//      _suportePersistente.iniciarTransaccao();
-//      _inscricaoPersistente.delete(inscricao1);
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.iniciarTransaccao();
+//      persistentEnrollment.delete(inscricao1);
+//      persistentSupport.confirmarTransaccao();
 //
-//      _suportePersistente.iniciarTransaccao();
-//      IInscricao inscricao = _inscricaoPersistente.readByPlanoCurricularAlunoAndDisciplinaCurricular(/*_aluno1, */ curricularCourse);
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.iniciarTransaccao();
+//      IInscricao inscricao = persistentEnrollment.readByPlanoCurricularAlunoAndDisciplinaCurricular(/*_aluno1, */ curricularCourse);
+//      persistentSupport.confirmarTransaccao();
 //
 //      assertEquals(inscricao, null);
 //    } catch (ExcepcaoPersistencia ex) {
@@ -269,11 +269,11 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //  /** Test of deleteAll method, of class ServidorPersistente.OJB.EnrolmentOJB. */
 //  public void testDeleteAll() {
 //    try {
-//      _suportePersistente.iniciarTransaccao();
-//      _inscricaoPersistente.deleteAll();
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.iniciarTransaccao();
+//      persistentEnrollment.deleteAll();
+//      persistentSupport.confirmarTransaccao();
 //
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //
 //      List result = null;
 //      try {
@@ -285,7 +285,7 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //      } catch (QueryException ex) {
 //        throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 //      }
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //      assertNotNull(result);
 //      assertTrue(result.isEmpty());
 //    } catch (ExcepcaoPersistencia ex) {

@@ -45,9 +45,9 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
         
         IDepartamento depTemp = null;
         try {
-        	_suportePersistente.iniciarTransaccao();
-        	depTemp = departamentoPersistente.lerDepartamentoPorSigla("d1");
-        	_suportePersistente.iniciarTransaccao();
+        	persistentSupport.iniciarTransaccao();
+        	depTemp = persistentDepartment.lerDepartamentoPorSigla("d1");
+        	persistentSupport.iniciarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testEscreverDisciplina: lerDepartamento");
         }
@@ -58,7 +58,7 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
         IDisciplinaDepartamento disciplina = new DisciplinaDepartamento("Engenharia da Programacao", "ep", depTemp);
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testEscreverDisciplina: iniciarTransaccao_1");
         }
@@ -68,18 +68,18 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
         // Assim o verdadeiro teste a' escrita e' controlado na chamada ao metodo
         // 'confirmarTransaccao'.
         try {
-            disciplinaDepartamentoPersistente.escreverDisciplinaDepartamento(disciplina);
+            persistentDepartmentCourse.escreverDisciplinaDepartamento(disciplina);
         } catch(ExcepcaoPersistencia ex1) {
             fail("testEscreverDisciplina: escreverDisciplina_1");
         }
         try {
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             // Neste teste especifico o 'confirmarTransaccao' tem que dar errado
             // porque estamos a tentar escrever na BD um objecto que ja' existe.
             // Por isso, se passar o 'confirmarTransaccao' sem problemas, algo de
             // muito errado aconteceu.
             try {
-                _suportePersistente.cancelarTransaccao();
+                persistentSupport.cancelarTransaccao();
             } catch(ExcepcaoPersistencia ex3) {
                 fail("testEscreverDisciplina: cancelarTransaccao_1");
             }
@@ -92,22 +92,22 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
         disciplina = new DisciplinaDepartamento("Prog por Obj", "PO", depTemp);
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testEscreverDisciplina: iniciarTransaccao_2");
         }
         
         try {
-            disciplinaDepartamentoPersistente.escreverDisciplinaDepartamento(disciplina);
+            persistentDepartmentCourse.escreverDisciplinaDepartamento(disciplina);
         } catch(ExcepcaoPersistencia ex1) {
             fail("testEscreverDisciplina: escreverDisciplina_2");
         }
         try {
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             assertTrue("testEscreverDisciplina: Objecto inexistente", true);
         } catch(ExcepcaoPersistencia ex2) {
             try {
-                _suportePersistente.cancelarTransaccao();
+                persistentSupport.cancelarTransaccao();
             } catch(ExcepcaoPersistencia ex3) {
                 fail("testEscreverDisciplina: cancelarTransaccao_2");
             }
@@ -116,23 +116,23 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
         
         // Agora faz-se uma tentativa de ler a disciplina que se acabou de escrever.
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testEscreverDisciplina: iniciarTransaccao_3");
         }
         
         IDisciplinaDepartamento disciplinaDepartamento2 = null;
         try {
-            disciplinaDepartamento2 = disciplinaDepartamentoPersistente.lerDisciplinaDepartamentoPorNomeESigla(disciplina.getNome(), disciplina.getSigla());
+            disciplinaDepartamento2 = persistentDepartmentCourse.lerDisciplinaDepartamentoPorNomeESigla(disciplina.getNome(), disciplina.getSigla());
         } catch(ExcepcaoPersistencia ex) {
             fail("testEscreverDisciplina: lerDisciplinaPorNomeESigla");
         }
         
         try {
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             try {
-                _suportePersistente.cancelarTransaccao();
+                persistentSupport.cancelarTransaccao();
             } catch(ExcepcaoPersistencia ex3) {
                 fail("testEscreverDisciplina: cancelarTransaccao_3");
             }
@@ -151,22 +151,22 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
     public void testApagarTodasAsDisciplinas() {
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testApagarTodasAsDisciplinas: iniciarTransaccao_1");
         }
         
         try {
-            disciplinaDepartamentoPersistente.apagarTodasAsDisciplinasDepartamento();
+            persistentDepartmentCourse.apagarTodasAsDisciplinasDepartamento();
         } catch(ExcepcaoPersistencia ex1) {
             fail("testApagarTodasAsDisciplinas: apagarTodasAsDisciplinas");
         }
         try {
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             assertTrue("testApagarTodasAsDisciplinas: Disciplinas apagadas", true);
         } catch(ExcepcaoPersistencia ex2) {
             try {
-                _suportePersistente.cancelarTransaccao();
+                persistentSupport.cancelarTransaccao();
             } catch(ExcepcaoPersistencia ex3) {
                 fail("testApagarTodasAsDisciplinas: cancelarTransaccao_1");
             }
@@ -175,23 +175,23 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
         
         // Agora faz-se uma tentativa de ler a disciplina que se acabou de escrever.
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testApagarTodasAsDisciplinas: iniciarTransaccao_2");
         }
         
         ArrayList result = null;
         try {
-            result = disciplinaDepartamentoPersistente.lerTodasAsDisciplinasDepartamento();
+            result = persistentDepartmentCourse.lerTodasAsDisciplinasDepartamento();
         } catch(ExcepcaoPersistencia ex1) {
             fail("testApagarTodasAsDisciplinas: lerTodasAsDisciplinas");
         }
         
         try {
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             try {
-                _suportePersistente.cancelarTransaccao();
+                persistentSupport.cancelarTransaccao();
             } catch(ExcepcaoPersistencia ex3) {
                 fail("testApagarTodasAsDisciplinas: cancelarTransaccao_2");
             }
@@ -207,23 +207,23 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
         
         // Tentativa de leitura da BD de um objecto existente.
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testLerDisciplina: iniciarTransaccao_1");
         }
         
         IDisciplinaDepartamento disciplina = null;
         try {
-            disciplina = disciplinaDepartamentoPersistente.lerDisciplinaDepartamentoPorNomeESigla("Engenharia da Programacao", "ep");
+            disciplina = persistentDepartmentCourse.lerDisciplinaDepartamentoPorNomeESigla("Engenharia da Programacao", "ep");
         } catch(ExcepcaoPersistencia ex) {
             fail("testLerDisciplina: lerDisciplinaPorNomeESigla");
         }
         
         try {
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex2) {
             try {
-                _suportePersistente.cancelarTransaccao();
+                persistentSupport.cancelarTransaccao();
             } catch(ExcepcaoPersistencia ex3) {
                 fail("testLerDisciplina: cancelarTransaccao_1");
             }
@@ -236,22 +236,22 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
         // Tentativa de leitura da BD de um objecto inexistente.
         disciplina = null;
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testLerDisciplina: iniciarTransaccao_2");
         }
         
         try {
-            disciplina = disciplinaDepartamentoPersistente.lerDisciplinaDepartamentoPorNomeESigla("nao existe", "ne");
+            disciplina = persistentDepartmentCourse.lerDisciplinaDepartamentoPorNomeESigla("nao existe", "ne");
         } catch(ExcepcaoPersistencia ex) {
             fail("testLerDisciplina: lerDisciplinaPorNomeESigla");
         }
         
         try {
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex2) {
             try {
-                _suportePersistente.cancelarTransaccao();
+                persistentSupport.cancelarTransaccao();
             } catch(ExcepcaoPersistencia ex3) {
                 fail("testLerDisciplina: cancelarTransaccao_2");
             }
@@ -264,21 +264,21 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
 
         // Tentativa de apagar da BD um objecto existente.
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testApagarDisciplina: iniciarTransaccao_1");
         }
  
         try {
-            disciplinaDepartamentoPersistente.apagarDisciplinaDepartamentoPorNomeESigla("Engenharia da Programacao", "ep");
+            persistentDepartmentCourse.apagarDisciplinaDepartamentoPorNomeESigla("Engenharia da Programacao", "ep");
         } catch(ExcepcaoPersistencia ex1) {
             fail("testApagarDisciplina: apagarDisciplinaPorNomeESigla_1");
         }
         try {
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex3) {
             try {
-                _suportePersistente.cancelarTransaccao();
+                persistentSupport.cancelarTransaccao();
             } catch(ExcepcaoPersistencia ex4) {
                 fail("testApagarDisciplina: cancelarTransaccao_1");
             }
@@ -286,12 +286,12 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
         }
         IDisciplinaDepartamento disciplina = null;
         try {
-            _suportePersistente.iniciarTransaccao();
-            disciplina = disciplinaDepartamentoPersistente.lerDisciplinaDepartamentoPorNomeESigla("Engenharia da Programacao", "ep");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.iniciarTransaccao();
+            disciplina = persistentDepartmentCourse.lerDisciplinaDepartamentoPorNomeESigla("Engenharia da Programacao", "ep");
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             try {
-                _suportePersistente.cancelarTransaccao();
+                persistentSupport.cancelarTransaccao();
             } catch(ExcepcaoPersistencia ex4) {
                 fail("testApagarDisciplina: cancelarTransaccao para lerDisciplinaPorNomeESigla");
             }
@@ -301,22 +301,22 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
 
         // Tentativa de apagar da BD um objecto inexistente.
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testApagarDisciplina: iniciarTransaccao_2");
         }
  
         try {
-            disciplinaDepartamentoPersistente.apagarDisciplinaDepartamento(new DisciplinaDepartamento());
+            persistentDepartmentCourse.apagarDisciplinaDepartamento(new DisciplinaDepartamento());
         } catch(ExcepcaoPersistencia ex1) {
             fail("testApagarDisciplina: apagarDisciplina_2");
         }
         try {
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             assertTrue("testApagarDisciplina: Disciplina apagada", true);
         } catch(ExcepcaoPersistencia ex2) {
             try {
-                _suportePersistente.cancelarTransaccao();
+                persistentSupport.cancelarTransaccao();
             } catch(ExcepcaoPersistencia ex3) {
                 fail("testApagarDisciplina: cancelarTransaccao_2");
             }
@@ -327,23 +327,23 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
     public void testLerTodasAsDisciplinas() {
 
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testLerTodasDisciplinas: iniciarTransaccao_1");
         }
  
         ArrayList listap = null;
         try {
-            listap = disciplinaDepartamentoPersistente.lerTodasAsDisciplinasDepartamento();
+            listap = persistentDepartmentCourse.lerTodasAsDisciplinasDepartamento();
         } catch(ExcepcaoPersistencia ex) {
             fail("testLerTodasDisciplinas: lerTodasAsDisciplinas");
         }
  
         try {
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex2) {
             try {
-                _suportePersistente.cancelarTransaccao();
+                persistentSupport.cancelarTransaccao();
             } catch(ExcepcaoPersistencia ex3) {
                 fail("testLerTodasDisciplinas: cancelarTransaccao_1");
             }

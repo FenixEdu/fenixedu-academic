@@ -49,9 +49,9 @@ public class ItemOJBTest extends TestCaseOJB {
 //    IItem item = null;
 //    // read existing Item
 //    try {
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //      item = _itemPersistente.readBySeccaoAndNome(_seccaoSitio1Topo1,"1");
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //    } catch (ExcepcaoPersistencia ex) {
 //      fail("testReadBySeccaoAndNome:fail read existing item");
 //    }
@@ -59,10 +59,10 @@ public class ItemOJBTest extends TestCaseOJB {
 //        
 //    // read unexisting Item
 //    try {
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //      item = _itemPersistente.readBySeccaoAndNome(_seccaoSitio1Topo1,"6");
 //      assertNull(item);
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //    } catch (ExcepcaoPersistencia ex) {
 //      fail("testReadBySeccaoAndNome:fail read unexisting item");
 //    }
@@ -72,9 +72,9 @@ public class ItemOJBTest extends TestCaseOJB {
 //  public void testCreateExistingItem() {
 //    IItem item = new Item("2",_seccaoSitio1Topo1,1,"sou a segunda",false);
 //    try {
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //      _itemPersistente.lockWrite(item);
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //      fail("testCreateExistingItem");
 //    } catch (ExcepcaoPersistencia ex) {
 //      //all is ok
@@ -84,19 +84,19 @@ public class ItemOJBTest extends TestCaseOJB {
 //  // write new non-existing item
 //  public void testCreateNonExistingItem() {
 //    try {
-//    	_suportePersistente.iniciarTransaccao();
+//    	persistentSupport.iniciarTransaccao();
 //		ISeccao s =
 //			_seccaoPersistente.readBySitioAndSeccaoAndNome(
 //				_seccaoSitio1Topo1.getSitio(),
 //				_seccaoSitio1Topo1.getSeccaoSuperior(),
 //				_seccaoSitio1Topo1.getNome());
-//    	_suportePersistente.confirmarTransaccao();
+//    	persistentSupport.confirmarTransaccao();
 //
 //    	IItem item = new Item("3", s, 2, "sou a terceira", false);
 //
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //      _itemPersistente.lockWrite(item);
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //      //      assertTrue(((Item)item).getCodigoInterno() != 0);
 //    } catch (ExcepcaoPersistencia ex) {
 //      fail("testCreateNonExistingItem"); 
@@ -107,13 +107,13 @@ public class ItemOJBTest extends TestCaseOJB {
 //  public void testWriteExistingUnchangedObject() {
 //    // write item already mapped into memory
 //    try {
-//    	_suportePersistente.iniciarTransaccao();
+//    	persistentSupport.iniciarTransaccao();
 //    	IItem item = _itemPersistente.readBySeccaoAndNome(_seccaoSitio1Topo1,"1");
-//    	_suportePersistente.confirmarTransaccao();
+//    	persistentSupport.confirmarTransaccao();
 //
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //      _itemPersistente.lockWrite(item);
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //    } catch (ExcepcaoPersistencia ex) {
 //      fail("testWriteExistingUnchangedObject");
 //    }
@@ -123,15 +123,15 @@ public class ItemOJBTest extends TestCaseOJB {
 //  public void testWriteExistingChangedObject() {
 //    // write item already mapped into memory
 //    try {
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //      IItem item = _itemPersistente.readBySeccaoAndNome(_item2Sitio1Topo1.getSeccao(),"2");
 //      item.setOrdem(5);
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //      item = _itemPersistente.readBySeccaoAndNome(_item2Sitio1Topo1.getSeccao(),
 //                                                  _item2Sitio1Topo1.getNome());
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //      assertTrue(item.getOrdem() == 5);
 //    } catch (ExcepcaoPersistencia ex) {
 //      fail("testWriteExistingChangedObject");
@@ -141,18 +141,18 @@ public class ItemOJBTest extends TestCaseOJB {
 //  /** Test of delete method, of class ServidorPersistente.OJB.ItemOJB. */
 //  public void testDeleteItem() {
 //    try {
-//    	_suportePersistente.iniciarTransaccao();
+//    	persistentSupport.iniciarTransaccao();
 //    	IItem item = _itemPersistente.readBySeccaoAndNome(_seccaoSitio1Topo1,"2");
-//    	_suportePersistente.confirmarTransaccao();
+//    	persistentSupport.confirmarTransaccao();
 //
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //      _itemPersistente.delete(item);
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //      item = _itemPersistente.readBySeccaoAndNome(_item2Sitio1Topo1.getSeccao(),
 //                                                        _item2Sitio1Topo1.getNome());
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //
 //      assertEquals(item, null);
 //    } catch (ExcepcaoPersistencia ex) {
@@ -163,11 +163,11 @@ public class ItemOJBTest extends TestCaseOJB {
 //  /** Test of deleteAll method, of class ServidorPersistente.OJB.ItemOJB. */
 //  public void testDeleteAll() {
 //    try {
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //      _itemPersistente.deleteAll();
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //
 //      List result = null;
 //      try {
@@ -179,7 +179,7 @@ public class ItemOJBTest extends TestCaseOJB {
 //      } catch (QueryException ex) {
 //        throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 //      }
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //      assertNotNull(result);
 //      assertTrue(result.isEmpty());
 //    } catch (ExcepcaoPersistencia ex) {

@@ -51,10 +51,10 @@ public class PessoaOJBTest extends TestCaseOJB {
     IPessoa pessoa = null;
     // read existing Pessoa
     try {
-      _suportePersistente.iniciarTransaccao();
-      //pessoa = _pessoaPersistente.readByUtilizador("jorge");
-      pessoa = _pessoaPersistente.lerPessoaPorUsername("jorge");
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.iniciarTransaccao();
+      //pessoa = persistentPerson.readByUtilizador("jorge");
+      pessoa = persistentPerson.lerPessoaPorUsername("jorge");
+      persistentSupport.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByUtilizador:fail read existing pessoa");
     }
@@ -64,11 +64,11 @@ public class PessoaOJBTest extends TestCaseOJB {
         
     // read unexisting Pessoa
     try {
-      _suportePersistente.iniciarTransaccao();
-      //pessoa = _pessoaPersistente.readByUtilizador("ars");
-      pessoa = _pessoaPersistente.lerPessoaPorUsername("ars");
+      persistentSupport.iniciarTransaccao();
+      //pessoa = persistentPerson.readByUtilizador("ars");
+      pessoa = persistentPerson.lerPessoaPorUsername("ars");
       assertNull(pessoa);
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByUtilizador:fail read unexisting pessoa");
     }
@@ -86,10 +86,10 @@ public class PessoaOJBTest extends TestCaseOJB {
     pessoa.setPassword("pass");
     pessoa.setPrivilegios(null);
     try {
-      _suportePersistente.iniciarTransaccao();
-      //_pessoaPersistente.lockWrite(pessoa);
-      _pessoaPersistente.escreverPessoa(pessoa);
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.iniciarTransaccao();
+      //persistentPerson.lockWrite(pessoa);
+      persistentPerson.escreverPessoa(pessoa);
+      persistentSupport.confirmarTransaccao();
       fail("testCreateExistingPessoa");
     } catch (ExcepcaoPersistencia ex) {
       //all is ok
@@ -108,10 +108,10 @@ public class PessoaOJBTest extends TestCaseOJB {
     pessoa.setPassword("pass2");
     pessoa.setPrivilegios(null);
     try {
-      _suportePersistente.iniciarTransaccao();
-      //_pessoaPersistente.lockWrite(pessoa);
-      _pessoaPersistente.escreverPessoa(pessoa);
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.iniciarTransaccao();
+      //persistentPerson.lockWrite(pessoa);
+      persistentPerson.escreverPessoa(pessoa);
+      persistentSupport.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testCreateNonExistingPessoa"); 
     }
@@ -122,10 +122,10 @@ public class PessoaOJBTest extends TestCaseOJB {
     // write pessoa already mapped into memory
     IPessoa pessoa = null;
     try {
-      _suportePersistente.iniciarTransaccao();
-	  pessoa = _pessoaPersistente.lerPessoaPorUsername("jorge");
-      _pessoaPersistente.escreverPessoa(pessoa);
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.iniciarTransaccao();
+	  pessoa = persistentPerson.lerPessoaPorUsername("jorge");
+      persistentPerson.escreverPessoa(pessoa);
+      persistentSupport.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testWriteExistingUnchangedObject");
     }
@@ -135,19 +135,19 @@ public class PessoaOJBTest extends TestCaseOJB {
   public void testWriteExistingChangedObject() {
     // write pessoa already mapped into memory
     try {
-      _suportePersistente.iniciarTransaccao();
-      //_pessoaPersistente.lockWrite(_pessoa1);
-      IPessoa pessoa = _pessoaPersistente.lerPessoaPorUsername("jorge");
+      persistentSupport.iniciarTransaccao();
+      //persistentPerson.lockWrite(_pessoa1);
+      IPessoa pessoa = persistentPerson.lerPessoaPorUsername("jorge");
       pessoa.setPassword("xxxxxxxx");
-      _pessoaPersistente.escreverPessoa(pessoa);
-      _suportePersistente.confirmarTransaccao();
+      persistentPerson.escreverPessoa(pessoa);
+      persistentSupport.confirmarTransaccao();
 
 	  pessoa = null;
 
-      _suportePersistente.iniciarTransaccao();
-      //IPessoa pessoa = _pessoaPersistente.readByUtilizador(_pessoa1.getUtilizador());
-      pessoa = _pessoaPersistente.lerPessoaPorUsername("jorge");
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.iniciarTransaccao();
+      //IPessoa pessoa = persistentPerson.readByUtilizador(_pessoa1.getUtilizador());
+      pessoa = persistentPerson.lerPessoaPorUsername("jorge");
+      persistentSupport.confirmarTransaccao();
       assertTrue(pessoa.getPassword().equals("xxxxxxxx"));
     } catch (ExcepcaoPersistencia ex) {
       fail("testWriteExistingChangedObject");
@@ -157,15 +157,15 @@ public class PessoaOJBTest extends TestCaseOJB {
   /** Test of delete method, of class ServidorPersistente.OJB.PessoaOJB. */
   public void testDeletePessoa() {
     try {
-      _suportePersistente.iniciarTransaccao();
-      IPessoa pessoa = _pessoaPersistente.lerPessoaPorUsername("jorge");
+      persistentSupport.iniciarTransaccao();
+      IPessoa pessoa = persistentPerson.lerPessoaPorUsername("jorge");
 	  assertNotNull(pessoa);
-      _pessoaPersistente.apagarPessoa(pessoa);
-      _suportePersistente.confirmarTransaccao();
+      persistentPerson.apagarPessoa(pessoa);
+      persistentSupport.confirmarTransaccao();
 
-      _suportePersistente.iniciarTransaccao();
-      pessoa = _pessoaPersistente.lerPessoaPorUsername("jorge");
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.iniciarTransaccao();
+      pessoa = persistentPerson.lerPessoaPorUsername("jorge");
+      persistentSupport.confirmarTransaccao();
 
       assertEquals(pessoa, null);
     } catch (ExcepcaoPersistencia ex) {
@@ -176,12 +176,12 @@ public class PessoaOJBTest extends TestCaseOJB {
   /** Test of deleteAll method, of class ServidorPersistente.OJB.PessoaOJB. */
   public void testDeleteAll() {
     try {
-      _suportePersistente.iniciarTransaccao();
-      //_pessoaPersistente.deleteAll();
-      _pessoaPersistente.apagarTodasAsPessoas();
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.iniciarTransaccao();
+      //persistentPerson.deleteAll();
+      persistentPerson.apagarTodasAsPessoas();
+      persistentSupport.confirmarTransaccao();
 
-      _suportePersistente.iniciarTransaccao();
+      persistentSupport.iniciarTransaccao();
       List result = null;
       try {
         Implementation odmg = OJB.getInstance();
@@ -192,7 +192,7 @@ public class PessoaOJBTest extends TestCaseOJB {
       } catch (QueryException ex) {
         throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
       }
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.confirmarTransaccao();
       assertNotNull(result);
       assertTrue(result.isEmpty());
     } catch (ExcepcaoPersistencia ex) {

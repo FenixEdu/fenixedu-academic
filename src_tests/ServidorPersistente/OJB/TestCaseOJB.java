@@ -9,7 +9,6 @@ import ServidorPersistente.IDepartamentoPersistente;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
-import ServidorPersistente.IItemPersistente;
 import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -21,8 +20,6 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IPlanoCurricularCursoPersistente;
 import ServidorPersistente.ISalaPersistente;
-import ServidorPersistente.ISeccaoPersistente;
-import ServidorPersistente.ISitioPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
@@ -33,34 +30,31 @@ import ServidorPersistente.ITurnoPersistente;
 import Tools.dbaccess;
 
 public class TestCaseOJB extends TestCase {
-  protected ISuportePersistente _suportePersistente = null;
-  protected ISitioPersistente _sitioPersistente = null;
-  protected ISeccaoPersistente _seccaoPersistente = null;
-  protected IItemPersistente _itemPersistente = null;
-  protected IPessoaPersistente _pessoaPersistente = null;
+  protected ISuportePersistente persistentSupport = null;
+  protected IPessoaPersistente persistentPerson = null;
 
-  protected ICursoExecucaoPersistente cursoExecucaoPersistente = null;
-  protected ICursoPersistente cursoPersistente = null;
+  protected ICursoExecucaoPersistente persistentExecutionDegree = null;
+  protected ICursoPersistente persistentDegree = null;
 
-  protected IDisciplinaExecucaoPersistente _disciplinaExecucaoPersistente = null;
+  protected IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 
-  protected IAulaPersistente _aulaPersistente = null;
-  protected ISalaPersistente _salaPersistente = null;
-  protected ITurmaPersistente _turmaPersistente = null;
-  protected ITurnoPersistente _turnoPersistente = null;
-  protected IFrequentaPersistente _frequentaPersistente = null;
-  protected IPersistentEnrolment _inscricaoPersistente = null;  
-  protected ITurmaTurnoPersistente _turmaTurnoPersistente = null;
-  protected ITurnoAlunoPersistente _turnoAlunoPersistente = null;  
-  protected ITurnoAulaPersistente _turnoAulaPersistente = null;
+  protected IAulaPersistente persistentLesson = null;
+  protected ISalaPersistente persistentRoom = null;
+  protected ITurmaPersistente persistentClass = null;
+  protected ITurnoPersistente persistentShift = null;
+  protected IFrequentaPersistente persistentAttend = null;
+  protected IPersistentEnrolment persistentEnrollment = null;  
+  protected ITurmaTurnoPersistente persistentClassShift = null;
+  protected ITurnoAlunoPersistente persistentStudentShift = null;  
+  protected ITurnoAulaPersistente persistentShiftLesson = null;
 
   protected IPersistentStudent persistentStudent = null;
 
-  protected IDepartamentoPersistente departamentoPersistente = null;
-  protected IDisciplinaDepartamentoPersistente disciplinaDepartamentoPersistente = null;
+  protected IDepartamentoPersistente persistentDepartment = null;
+  protected IDisciplinaDepartamentoPersistente persistentDepartmentCourse = null;
 
-  protected IPlanoCurricularCursoPersistente planoCurricularCursoPersistente = null;
-  protected IStudentCurricularPlanPersistente studentCurricularPlanPersistente = null; 
+  protected IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+  protected IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null; 
   protected IPersistentCountry persistentCountry = null;
   protected IPersistentCurricularCourse persistantCurricularCourse = null;
 
@@ -69,7 +63,7 @@ public class TestCaseOJB extends TestCase {
   protected IPersistentExecutionYear persistentExecutionYear = null;
   protected IPersistentExecutionPeriod persistentExecutionPeriod = null;
 
-  private dbaccess _dbAcessPoint = null;
+  private dbaccess dbAcessPoint = null;
     
   public TestCaseOJB(String testName) {
     super(testName);
@@ -90,11 +84,11 @@ public class TestCaseOJB extends TestCase {
   	// and loads the database with the data set required to run
   	// the test cases.
   	try {
-  		_dbAcessPoint = new dbaccess();
-  		_dbAcessPoint.openConnection();
-  		_dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
-  		_dbAcessPoint.loadDataBase("etc/testDataSet.xml");
-  		_dbAcessPoint.closeConnection();
+  		dbAcessPoint = new dbaccess();
+  		dbAcessPoint.openConnection();
+  		dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
+  		dbAcessPoint.loadDataBase("etc/testDataSet.xml");
+  		dbAcessPoint.closeConnection();
   	} catch (Exception ex) {
   		System.out.println("Setup failed: " + ex);
   	}
@@ -104,10 +98,10 @@ public class TestCaseOJB extends TestCase {
 
   protected void tearDown() {
   	try {
-  		_dbAcessPoint.openConnection();
-  		_dbAcessPoint.loadDataBase("etc/testBackup.xml");
-  		//_dbAcessPoint.loadDataBase("etc/testDataSet.xml");
-  		_dbAcessPoint.closeConnection();
+  		dbAcessPoint.openConnection();
+  		dbAcessPoint.loadDataBase("etc/testBackup.xml");
+  		//dbAcessPoint.loadDataBase("etc/testDataSet.xml");
+  		dbAcessPoint.closeConnection();
   	} catch (Exception ex) {
   		System.out.println("Tear down failed: " +ex);
   	}
@@ -115,43 +109,40 @@ public class TestCaseOJB extends TestCase {
             
   protected void ligarSuportePersistente() {
     try {
-      _suportePersistente = SuportePersistenteOJB.getInstance();
+      persistentSupport = SuportePersistenteOJB.getInstance();
     } catch (ExcepcaoPersistencia excepcao) {
       fail("Exception when opening database");
     }
-    _sitioPersistente = _suportePersistente.getISitioPersistente();
-    _seccaoPersistente = _suportePersistente.getISeccaoPersistente();
-    _itemPersistente = _suportePersistente.getIItemPersistente();
-    _pessoaPersistente = _suportePersistente.getIPessoaPersistente();
+    persistentPerson = persistentSupport.getIPessoaPersistente();
 
-    _aulaPersistente = _suportePersistente.getIAulaPersistente();
-    _salaPersistente = _suportePersistente.getISalaPersistente();
-    _turmaPersistente = _suportePersistente.getITurmaPersistente();
-    _turnoPersistente = _suportePersistente.getITurnoPersistente();
+    persistentLesson = persistentSupport.getIAulaPersistente();
+    persistentRoom = persistentSupport.getISalaPersistente();
+    persistentClass = persistentSupport.getITurmaPersistente();
+    persistentShift = persistentSupport.getITurnoPersistente();
     
-    _frequentaPersistente = _suportePersistente.getIFrequentaPersistente();
-    _inscricaoPersistente = _suportePersistente.getIInscricaoPersistente();    
-    _turmaTurnoPersistente = _suportePersistente.getITurmaTurnoPersistente();
-    _turnoAlunoPersistente = _suportePersistente.getITurnoAlunoPersistente();    
-    _turnoAulaPersistente = _suportePersistente.getITurnoAulaPersistente();        
+    persistentAttend = persistentSupport.getIFrequentaPersistente();
+    persistentEnrollment = persistentSupport.getIInscricaoPersistente();    
+    persistentClassShift = persistentSupport.getITurmaTurnoPersistente();
+    persistentStudentShift = persistentSupport.getITurnoAlunoPersistente();    
+    persistentShiftLesson = persistentSupport.getITurnoAulaPersistente();        
 
-    cursoExecucaoPersistente = _suportePersistente.getICursoExecucaoPersistente();
-    cursoPersistente = _suportePersistente.getICursoPersistente();
+    persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
+    persistentDegree = persistentSupport.getICursoPersistente();
 
-    _disciplinaExecucaoPersistente = _suportePersistente.getIDisciplinaExecucaoPersistente();
+    persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
     
-    persistentStudent = _suportePersistente.getIPersistentStudent();
+    persistentStudent = persistentSupport.getIPersistentStudent();
     
-    departamentoPersistente = _suportePersistente.getIDepartamentoPersistente();
-    disciplinaDepartamentoPersistente = _suportePersistente.getIDisciplinaDepartamentoPersistente();
-    planoCurricularCursoPersistente = _suportePersistente.getIPlanoCurricularCursoPersistente();
-    studentCurricularPlanPersistente = _suportePersistente.getIStudentCurricularPlanPersistente();
-    persistentCountry = _suportePersistente.getIPersistentCountry();
-    persistantCurricularCourse = _suportePersistente.getIPersistentCurricularCourse();
-    persistentMasterDegreeCandidate = _suportePersistente.getIPersistentMasterDegreeCandidate();
-    persistentCandidateSituation = _suportePersistente.getIPersistentCandidateSituation();
-	persistentExecutionYear = _suportePersistente.getIPersistentExecutionYear();
-	persistentExecutionPeriod = _suportePersistente.getIPersistentExecutionPeriod();
+    persistentDepartment = persistentSupport.getIDepartamentoPersistente();
+    persistentDepartmentCourse = persistentSupport.getIDisciplinaDepartamentoPersistente();
+    persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
+    persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
+    persistentCountry = persistentSupport.getIPersistentCountry();
+    persistantCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
+    persistentMasterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate();
+    persistentCandidateSituation = persistentSupport.getIPersistentCandidateSituation();
+	persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+	persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
  
   }
     

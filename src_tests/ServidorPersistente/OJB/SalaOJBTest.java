@@ -48,9 +48,9 @@ public class SalaOJBTest extends TestCaseOJB {
     ISala room = null;
     // read existing room
     try {
-      _suportePersistente.iniciarTransaccao();
-      room = _salaPersistente.readByName("Ga1");
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.iniciarTransaccao();
+      room = persistentRoom.readByName("Ga1");
+      persistentSupport.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByNome:fail read existing sala");
     }
@@ -58,10 +58,10 @@ public class SalaOJBTest extends TestCaseOJB {
         
     // read unexisting room
     try {
-      _suportePersistente.iniciarTransaccao();
-      room = _salaPersistente.readByName("Ga6");
+      persistentSupport.iniciarTransaccao();
+      room = persistentRoom.readByName("Ga6");
       assertNull(room);
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByNome:fail read unexisting sala");
     }
@@ -71,9 +71,9 @@ public class SalaOJBTest extends TestCaseOJB {
   public void testCreateExistingSala() {
     ISala room = new Sala("Ga1", "Pavilhão Central", new Integer(1), new TipoSala(TipoSala.LABORATORIO), new Integer(100), new Integer(50));
     try {
-      _suportePersistente.iniciarTransaccao();
-      _salaPersistente.lockWrite(room);
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.iniciarTransaccao();
+      persistentRoom.lockWrite(room);
+      persistentSupport.confirmarTransaccao();
       fail("testCreateExistingSala");
     } catch (ExcepcaoPersistencia ex) {
       //all is ok
@@ -84,16 +84,16 @@ public class SalaOJBTest extends TestCaseOJB {
   public void testCreateNonExistingSala() {
   	ISala room = new Sala("GaXPTO", "Pavilhão Central", new Integer(1), new TipoSala(TipoSala.LABORATORIO), new Integer(100), new Integer(50));
     try {
-      _suportePersistente.iniciarTransaccao();
-      _salaPersistente.lockWrite(room);
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.iniciarTransaccao();
+      persistentRoom.lockWrite(room);
+      persistentSupport.confirmarTransaccao();
       
-	  _suportePersistente.iniciarTransaccao();
+	  persistentSupport.iniciarTransaccao();
 	  room = null;
-	  room = _salaPersistente.readByName("GaXPTO");
+	  room = persistentRoom.readByName("GaXPTO");
 	  assertNotNull(room); 
 	  assertEquals(room.getNome(), "GaXPTO");
-	  _suportePersistente.confirmarTransaccao();
+	  persistentSupport.confirmarTransaccao();
       
     } catch (ExcepcaoPersistencia ex) {
       fail("testCreateNonExistingSala"); 
@@ -104,13 +104,13 @@ public class SalaOJBTest extends TestCaseOJB {
   public void testWriteExistingUnchangedObject() {
     // write sala already mapped into memory
     try {
-    	_suportePersistente.iniciarTransaccao();
-    	ISala room = _salaPersistente.readByName("Ga1");
-    	_suportePersistente.confirmarTransaccao();
+    	persistentSupport.iniciarTransaccao();
+    	ISala room = persistentRoom.readByName("Ga1");
+    	persistentSupport.confirmarTransaccao();
     	
-    	_suportePersistente.iniciarTransaccao();
-    	_salaPersistente.lockWrite(room);
-    	_suportePersistente.confirmarTransaccao();
+    	persistentSupport.iniciarTransaccao();
+    	persistentRoom.lockWrite(room);
+    	persistentSupport.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
     	fail("testWriteExistingUnchangedObject");
     }
@@ -120,16 +120,16 @@ public class SalaOJBTest extends TestCaseOJB {
   public void testWriteExistingChangedObject() {
     // write room already mapped into memory
     try {
-      _suportePersistente.iniciarTransaccao();
-      ISala room = _salaPersistente.readByName("Ga1");
+      persistentSupport.iniciarTransaccao();
+      ISala room = persistentRoom.readByName("Ga1");
       assertNotNull(room);
       room.setTipo(new TipoSala(TipoSala.PLANA));
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.confirmarTransaccao();
 
-      _suportePersistente.iniciarTransaccao();
-      room = _salaPersistente.readByName("Ga1");
+      persistentSupport.iniciarTransaccao();
+      room = persistentRoom.readByName("Ga1");
 	  assertNotNull(room);
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.confirmarTransaccao();
       
       assertTrue(room.getTipo().equals( new TipoSala(TipoSala.PLANA) ));
     } catch (ExcepcaoPersistencia ex) {
@@ -140,15 +140,15 @@ public class SalaOJBTest extends TestCaseOJB {
   /** Test of delete method, of class ServidorPersistente.OJB.SalaOJB. */
   public void testDeleteSalaWithLessons() {
     try {
-    	_suportePersistente.iniciarTransaccao();
-    	ISala room = _salaPersistente.readByName("Ga1");
+    	persistentSupport.iniciarTransaccao();
+    	ISala room = persistentRoom.readByName("Ga1");
     	assertNotNull(room);
-    	_suportePersistente.confirmarTransaccao();
+    	persistentSupport.confirmarTransaccao();
 
-    	_suportePersistente.iniciarTransaccao();
-    	_salaPersistente.delete(room);
+    	persistentSupport.iniciarTransaccao();
+    	persistentRoom.delete(room);
 		fail("testDeleteSala");
-    	_suportePersistente.confirmarTransaccao();
+    	persistentSupport.confirmarTransaccao();
 
     } catch (ExcepcaoPersistencia ex) {
     	// All is OK
@@ -159,19 +159,19 @@ public class SalaOJBTest extends TestCaseOJB {
 	try {
 		
 	  ISala room = new Sala("GaXPTO", "Pavilhão Central", new Integer(1), new TipoSala(TipoSala.LABORATORIO), new Integer(100), new Integer(50));
-	  _suportePersistente.iniciarTransaccao();
-	  _salaPersistente.lockWrite(room);
-	  _suportePersistente.confirmarTransaccao();
+	  persistentSupport.iniciarTransaccao();
+	  persistentRoom.lockWrite(room);
+	  persistentSupport.confirmarTransaccao();
   
-	  _suportePersistente.iniciarTransaccao();
-	  _salaPersistente.delete(room);
-	  _suportePersistente.confirmarTransaccao();
+	  persistentSupport.iniciarTransaccao();
+	  persistentRoom.delete(room);
+	  persistentSupport.confirmarTransaccao();
 
-	  _suportePersistente.iniciarTransaccao();
+	  persistentSupport.iniciarTransaccao();
 	  room = null;
-	  room = _salaPersistente.readByName("GaXPTO");
+	  room = persistentRoom.readByName("GaXPTO");
 	  assertNull(room);
-	  _suportePersistente.confirmarTransaccao();
+	  persistentSupport.confirmarTransaccao();
 
 	} catch (ExcepcaoPersistencia ex) {
 		fail("testDeleteSala");
@@ -185,11 +185,11 @@ public class SalaOJBTest extends TestCaseOJB {
 
 
 //    try {
-//      _suportePersistente.iniciarTransaccao();
-//      _salaPersistente.deleteAll();
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.iniciarTransaccao();
+//      persistentRoom.deleteAll();
+//      persistentSupport.confirmarTransaccao();
 //
-//      _suportePersistente.iniciarTransaccao();
+//      persistentSupport.iniciarTransaccao();
 //      List result = null;
 //      try {
 //        Implementation odmg = OJB.getInstance();
@@ -200,7 +200,7 @@ public class SalaOJBTest extends TestCaseOJB {
 //      } catch (QueryException ex) {
 //        throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 //      }
-//      _suportePersistente.confirmarTransaccao();
+//      persistentSupport.confirmarTransaccao();
 //      assertNotNull(result);
 //      assertTrue(result.isEmpty());
 //    } catch (ExcepcaoPersistencia ex) {
@@ -213,9 +213,9 @@ public class SalaOJBTest extends TestCaseOJB {
   public void testReadAllExisting() {
     try {
       List salas = null;
-      _suportePersistente.iniciarTransaccao();
-      salas = _salaPersistente.readAll();
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.iniciarTransaccao();
+      salas = persistentRoom.readAll();
+      persistentSupport.confirmarTransaccao();
       assertEquals(salas.size(), 3);
 	} catch (ExcepcaoPersistencia ex) {
 		fail("testDeleteSala");

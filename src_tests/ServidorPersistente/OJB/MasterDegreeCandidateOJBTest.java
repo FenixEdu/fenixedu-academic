@@ -73,9 +73,9 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         IMasterDegreeCandidate masterDegreeCandidateTemp = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand1");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -129,10 +129,10 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         IMasterDegreeCandidate masterDegreeCandidateTemp = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand_Inex");
             assertNull(masterDegreeCandidateTemp);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -149,10 +149,10 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         ICurso masterDegreeTemp = null;
 		ICountry countryTemp = null;
         try {
-            _suportePersistente.iniciarTransaccao();
-	        masterDegreeTemp = cursoPersistente.readBySigla("MEIC");
+            persistentSupport.iniciarTransaccao();
+	        masterDegreeTemp = persistentDegree.readBySigla("MEIC");
 	        countryTemp = persistentCountry.readCountryByName("Portugal");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
@@ -160,9 +160,9 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 
         IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("1", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "1", data.getTime(), "Nome", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "Cand1", "Pass1", new Integer(1), new Integer(2002), new Specialization(Specialization.MESTRADO), "1", new Integer(1), new Double(1.0), masterDegreeTemp, countryTemp);
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentMasterDegreeCandidate.writeMasterDegreeCandidate(candidateTemp);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             fail("testWriteExistingMasterDegreeCandidate");
         } catch (ExcepcaoPersistencia ex) {
             // All is OK
@@ -180,10 +180,10 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         ICurso masterDegreeTemp = null;
 		ICountry countryTemp = null;
         try {
-            _suportePersistente.iniciarTransaccao();
-	        masterDegreeTemp = cursoPersistente.readBySigla("MIC");
+            persistentSupport.iniciarTransaccao();
+	        masterDegreeTemp = persistentDegree.readBySigla("MIC");
 	        countryTemp = persistentCountry.readCountryByName("Inglaterra");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
@@ -193,9 +193,9 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("3", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "2", data.getTime(), "Nome2", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "Cand3", "Pass12", new Integer(12), new Integer(2002), new Specialization(Specialization.MESTRADO), "12", new Integer(12), new Double(2.0), masterDegreeTemp, countryTemp);
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentMasterDegreeCandidate.writeMasterDegreeCandidate(candidateTemp);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -204,9 +204,9 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         candidateTemp = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             candidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand3");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -256,10 +256,10 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         System.out.println("- Test 5 : Delete Existing Master Degree Candidate");
         IMasterDegreeCandidate masterDegreeCandidateTemp = null;
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
 			masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand1");
             persistentMasterDegreeCandidate.delete(masterDegreeCandidateTemp);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -269,10 +269,10 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         
         // test if it was really deleted
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand1");
             assertNull(masterDegreeCandidateTemp);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -284,9 +284,9 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 
         IMasterDegreeCandidate masterDegreeCandidateTemp = null;
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
 			masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand1");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
@@ -294,17 +294,17 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 
         // Clean all
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentMasterDegreeCandidate.deleteAll();
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentMasterDegreeCandidate.delete(masterDegreeCandidateTemp);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
@@ -315,9 +315,9 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         System.out.println("- Test 7 : Delete All Master Degree Candidates");
         IMasterDegreeCandidate masterDegreeCandidateTemp = null;
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentMasterDegreeCandidate.deleteAll();
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -325,10 +325,10 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         
         // Test if it was really deleted
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand1");
             assertNull(masterDegreeCandidateTemp);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -349,10 +349,10 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         ICurso masterDegreeTemp1 = null;
         ICountry countryTemp = null;
         try {
-            _suportePersistente.iniciarTransaccao();
-	        masterDegreeTemp1 = cursoPersistente.readBySigla("MEIC");
+            persistentSupport.iniciarTransaccao();
+	        masterDegreeTemp1 = persistentDegree.readBySigla("MEIC");
 			countryTemp = persistentCountry.readCountryByName("Portugal");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
@@ -511,9 +511,9 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         IMasterDegreeCandidate masterDegreeCandidateTemp = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(new Integer(1), new Integer(2002), "MIC");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
@@ -566,10 +566,10 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         IMasterDegreeCandidate masterDegreeCandidateTemp = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(new Integer(999), new Integer(95486), "555");
             assertNull(masterDegreeCandidateTemp);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");

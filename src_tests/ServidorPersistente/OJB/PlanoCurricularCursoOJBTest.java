@@ -55,11 +55,11 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 		IPlanoCurricularCurso degreeCurricularPlan = null;
 		ICurso degree = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
-			degree = cursoPersistente.readBySigla("LEIC");
+			persistentSupport.iniciarTransaccao();
+			degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
-			degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
-			_suportePersistente.confirmarTransaccao();
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex2) {
 			fail("testLerPlanoCurricular: confirmarTransaccao_1");
 		}
@@ -71,10 +71,10 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 		// Read non existing
 		degreeCurricularPlan = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			
-			degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("nao existe", degree);
-			_suportePersistente.confirmarTransaccao();
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("nao existe", degree);
+			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex2) {
 			fail("testLerPlanoCurricular: confirmarTransaccao_2");
 		}
@@ -89,10 +89,10 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
         // Write existing
 		ICurso degree = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
-			degree = cursoPersistente.readBySigla("LEIC");
+			persistentSupport.iniciarTransaccao();
+			degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex2) {
 			fail("testEscreverPlanoCurricular: confirmarTransaccao_1");
 		}
@@ -100,9 +100,9 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
         IPlanoCurricularCurso degreeCurricularPlan = new PlanoCurricularCurso("plano1", degree);
         
         try {
-            _suportePersistente.iniciarTransaccao();
-            planoCurricularCursoPersistente.escreverPlanoCurricular(degreeCurricularPlan);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.iniciarTransaccao();
+            persistentDegreeCurricularPlan.escreverPlanoCurricular(degreeCurricularPlan);
+            persistentSupport.confirmarTransaccao();
             fail("testEscreverPlanoCurricular: confirmarTransaccao_1");
         } catch(ExcepcaoPersistencia ex2) {
 			// All Is Ok
@@ -111,9 +111,9 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
         // Write non Existing
 		ICurso degreeTemp = null;
 		try {
-            _suportePersistente.iniciarTransaccao();
-            degreeTemp = cursoPersistente.readBySigla("LEIC");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.iniciarTransaccao();
+            degreeTemp = persistentDegree.readBySigla("LEIC");
+            persistentSupport.confirmarTransaccao();
 			
         } catch(ExcepcaoPersistencia ex2) {
             fail("testEscreverPlanoCurricular: confirmarTransaccao_2");
@@ -122,9 +122,9 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 		degreeCurricularPlan = null;
         degreeCurricularPlan = new PlanoCurricularCurso("planoDesc", degreeTemp);
         try {
-            _suportePersistente.iniciarTransaccao();
-            planoCurricularCursoPersistente.escreverPlanoCurricular(degreeCurricularPlan);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.iniciarTransaccao();
+            persistentDegreeCurricularPlan.escreverPlanoCurricular(degreeCurricularPlan);
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex2) {
             fail("testEscreverPlanoCurricular: confirmarTransaccao_2");
         }
@@ -133,10 +133,10 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
         IPlanoCurricularCurso degreeCurricularTemp2 = null;
 
         try {
-            _suportePersistente.iniciarTransaccao();
-            degreeCurricularTemp2 = planoCurricularCursoPersistente.readByNameAndDegree(degreeCurricularPlan.getName(), degreeTemp);
+            persistentSupport.iniciarTransaccao();
+            degreeCurricularTemp2 = persistentDegreeCurricularPlan.readByNameAndDegree(degreeCurricularPlan.getName(), degreeTemp);
 			assertNotNull(degreeCurricularTemp2);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testEscreverPlanoCurricular: confirmarTransaccao_3");
         }
@@ -153,11 +153,11 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 		IPlanoCurricularCurso degreeCurricularPlan = null;
 		ICurso degree = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
-			degree = cursoPersistente.readBySigla("LEIC");
+			persistentSupport.iniciarTransaccao();
+			degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
-			degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
-			_suportePersistente.confirmarTransaccao();
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex2) {
 			fail("testLerPlanoCurricular: confirmarTransaccao_1");
 		}
@@ -169,7 +169,7 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 		List result = null;
 
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 
 			try {
 	
@@ -201,7 +201,7 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 			} catch (QueryException ex) {
 			  throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex2) {
 			fail("testLerPlanoCurricular: confirmarTransaccao_1");
 		}
@@ -209,15 +209,15 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 		// Delete
 		
 		try {
-			_suportePersistente.iniciarTransaccao();
-			planoCurricularCursoPersistente.apagarPlanoCurricular(degreeCurricularPlan);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			persistentDegreeCurricularPlan.apagarPlanoCurricular(degreeCurricularPlan);
+			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex3) {
 			fail("testApagarPlanoCurricular: confirmarTransaccao_1");
 		}
 		
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 
 			try {
 	
@@ -249,7 +249,7 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 			} catch (QueryException ex) {
 			  throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex2) {
 			fail("testLerPlanoCurricular: confirmarTransaccao_1");
 		}
@@ -271,10 +271,10 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 
 
 		try {
-			_suportePersistente.iniciarTransaccao();
-			degree = cursoPersistente.readBySigla("LEIC");
+			persistentSupport.iniciarTransaccao();
+			degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex2) {
 			fail("testLerPlanoCurricular: confirmarTransaccao_1");
 		}
@@ -282,7 +282,7 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 		degreeCurricularPlan = new PlanoCurricularCurso("inex", degree);
 
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 
 			try {
 	
@@ -306,7 +306,7 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 			} catch (QueryException ex) {
 			  throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex2) {
 			fail("testLerPlanoCurricular: confirmarTransaccao_1");
 		}
@@ -314,15 +314,15 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 		// Delete
 
 		try {
-			_suportePersistente.iniciarTransaccao();
-			planoCurricularCursoPersistente.apagarPlanoCurricular(degreeCurricularPlan);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			persistentDegreeCurricularPlan.apagarPlanoCurricular(degreeCurricularPlan);
+			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex2) {
 			fail("testLerPlanoCurricular: confirmarTransaccao_1");
 		}
 		
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 
 			try {
 	
@@ -346,7 +346,7 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 			} catch (QueryException ex) {
 			  throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex2) {
 			fail("testLerPlanoCurricular: confirmarTransaccao_1");
 		}
@@ -363,31 +363,31 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 	
 		// Check Database		
 		try { 
-			_suportePersistente.iniciarTransaccao();
-			degreeCurricularPlanList = planoCurricularCursoPersistente.lerTodosOsPlanosCurriculares();
+			persistentSupport.iniciarTransaccao();
+			degreeCurricularPlanList = persistentDegreeCurricularPlan.lerTodosOsPlanosCurriculares();
 			assertNotNull(degreeCurricularPlanList);
 			assertEquals(degreeCurricularPlanList.isEmpty(), false);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex2) {
 			fail("testApagarTodosOsPlanosCurriculares: confirmarTransaccao_1");
 		}
 
         try { 
-            _suportePersistente.iniciarTransaccao();
-            planoCurricularCursoPersistente.apagarTodosOsPlanosCurriculares();
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.iniciarTransaccao();
+            persistentDegreeCurricularPlan.apagarTodosOsPlanosCurriculares();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex2) {
             fail("testApagarTodosOsPlanosCurriculares: confirmarTransaccao_1");
         }
 		
 		// Check Database Again
 		try { 
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			degreeCurricularPlanList = null;
-			degreeCurricularPlanList = planoCurricularCursoPersistente.lerTodosOsPlanosCurriculares();
+			degreeCurricularPlanList = persistentDegreeCurricularPlan.lerTodosOsPlanosCurriculares();
 			assertNotNull(degreeCurricularPlanList);
 			assertEquals(degreeCurricularPlanList.isEmpty(), true);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex2) {
 			fail("testApagarTodosOsPlanosCurriculares: confirmarTransaccao_1");
 		}
@@ -400,9 +400,9 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 		ArrayList listap = null;
 
         try {
-            _suportePersistente.iniciarTransaccao();
-            listap = planoCurricularCursoPersistente.lerTodosOsPlanosCurriculares();
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.iniciarTransaccao();
+            listap = persistentDegreeCurricularPlan.lerTodosOsPlanosCurriculares();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex2) {
             fail("testLerTodosOsPlanosCurriculares: confirmarTransaccao_1");
         }

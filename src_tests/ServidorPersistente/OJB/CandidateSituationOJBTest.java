@@ -66,9 +66,9 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         ICandidateSituation candidateSituationTemp = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             candidateSituationTemp = persistentCandidateSituation.readCandidateSituation(new Integer(1), "MIC", new Integer(2002));
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -86,10 +86,10 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         ICandidateSituation candidateSituationTemp = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             candidateSituationTemp = persistentCandidateSituation.readCandidateSituation(new Integer(3), "2", new Integer(2003));
             assertNull(candidateSituationTemp);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -105,9 +105,9 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
 
 		IMasterDegreeCandidate candidateTemp = null;        
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
 	        candidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand1");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
@@ -116,9 +116,9 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
 		ICandidateSituation candidateSituation = new CandidateSituation(data.getTime(), "Nenhuma", new CandidateSituationValidation(CandidateSituationValidation.ACTIVE), candidateTemp, new SituationName(SituationName.EXTRAORDINARIO));
 
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentCandidateSituation.writeCandidateSituation(candidateSituation);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
@@ -133,9 +133,9 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
 
 		IMasterDegreeCandidate candidateTemp = null;        
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
 	        candidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand1");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
@@ -143,9 +143,9 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
 		ICandidateSituation candidateSituation1 = new CandidateSituation(data.getTime(), "Nenhuma", new CandidateSituationValidation(CandidateSituationValidation.ACTIVE), candidateTemp, new SituationName(SituationName.PENDENTE));        
 
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentCandidateSituation.writeCandidateSituation(candidateSituation1);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             fail("Expected error");
         } catch (ExcepcaoPersistencia ex) {
 			// All is OK
@@ -157,10 +157,10 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
 
         ICandidateSituation candidateSituationTemp = null;
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             candidateSituationTemp = persistentCandidateSituation.readCandidateSituation(new Integer(1), "MIC", new Integer(2002));
             persistentCandidateSituation.delete(candidateSituationTemp);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -168,11 +168,11 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         
          //Test if it was really deleted
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             candidateSituationTemp = persistentCandidateSituation.readCandidateSituation(new Integer(1), "MIC", new Integer(2002));
             
             assertNull(candidateSituationTemp);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -188,27 +188,27 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
 		ICandidateSituation candidateSituationTemp = null;
 
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
 	        candidateSituationTemp = persistentCandidateSituation.readCandidateSituation(new Integer(1), "MIC", new Integer(2002));
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
 
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentCandidateSituation.deleteAll();
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
 
 
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentCandidateSituation.delete(candidateSituationTemp);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
@@ -218,9 +218,9 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         System.out.println("- Test 7 : Delete All Candidate Situations");
         ICandidateSituation candidateSituationTemp = null;
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentCandidateSituation.deleteAll();
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -228,10 +228,10 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         
          //Test if it was really deleted
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             candidateSituationTemp = persistentCandidateSituation.readCandidateSituation(new Integer(1), "MIC", new Integer(200));
             assertNull(candidateSituationTemp);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -249,9 +249,9 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         
 		IMasterDegreeCandidate candidateTemp = null;        
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
 	        candidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand1");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }

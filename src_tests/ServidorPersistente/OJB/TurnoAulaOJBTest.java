@@ -82,14 +82,14 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 
 		
 			try {
-				_suportePersistente.iniciarTransaccao();
+				persistentSupport.iniciarTransaccao();
 				shift =
-					_suportePersistente
+					persistentSupport
 						.getITurnoPersistente()
 						.readByNameAndExecutionCourse(
 						"turno_apr_teorico1",
 						executionCourse);
-				_suportePersistente.confirmarTransaccao();
+				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia e) {
 				fail("Read existing shift : turno_apr_teorico1");
 			}
@@ -100,15 +100,15 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			
 			
 			try {
-				_suportePersistente.iniciarTransaccao();
+				persistentSupport.iniciarTransaccao();
 				List lessonRoomList =
-					_suportePersistente
+					persistentSupport
 						.getIAulaPersistente()
 						.readByRoomAndExecutionPeriod(
 						room,
 						executionPeriod);
 				lesson = (IAula) lessonRoomList.get(0);
-				_suportePersistente.confirmarTransaccao();
+				persistentSupport.confirmarTransaccao();
 			} catch (Exception e) {
 				fail("Reading lesson");
 			}
@@ -146,14 +146,14 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 
 		
 			try {
-				_suportePersistente.iniciarTransaccao();
+				persistentSupport.iniciarTransaccao();
 				shift =
-					_suportePersistente
+					persistentSupport
 						.getITurnoPersistente()
 						.readByNameAndExecutionCourse(
 						"turno_apr_teorico1",
 						executionCourse);
-				_suportePersistente.confirmarTransaccao();
+				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia e) {
 				fail("Read existing shift : turno_apr_teorico1");
 			}
@@ -164,15 +164,15 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			
 			
 			try {
-				_suportePersistente.iniciarTransaccao();
+				persistentSupport.iniciarTransaccao();
 				List lessonRoomList =
-					_suportePersistente
+					persistentSupport
 						.getIAulaPersistente()
 						.readByRoomAndExecutionPeriod(
 						room,
 						executionPeriod);
 				lesson = (IAula) lessonRoomList.get(0);
-				_suportePersistente.confirmarTransaccao();
+				persistentSupport.confirmarTransaccao();
 			} catch (Exception e) {
 				fail("Reading lesson");
 			}
@@ -180,14 +180,14 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			assertNotNull("Missing shift",shift);
 			assertNotNull("Missing lesson", lesson);
 			
-			_suportePersistente.iniciarTransaccao();
-			_turnoAulaPersistente.delete(new TurnoAula(shift, lesson));
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			persistentShiftLesson.delete(new TurnoAula(shift, lesson));
+			persistentSupport.confirmarTransaccao();
 
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			ITurnoAula turnoAula =
-				_turnoAulaPersistente.readByShiftAndLesson(shift, lesson);
-			_suportePersistente.confirmarTransaccao();
+				persistentShiftLesson.readByShiftAndLesson(shift, lesson);
+			persistentSupport.confirmarTransaccao();
 			assertEquals(turnoAula, null);
 			
 		} catch (ExcepcaoPersistencia ex) {
@@ -198,11 +198,11 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 	/** Test of deleteAll method, of class ServidorPersistente.OJB.TurnoAulaOJB. */
 	public void testDeleteAll() {
 		try {
-			_suportePersistente.iniciarTransaccao();
-			_turnoAulaPersistente.deleteAll();
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			persistentShiftLesson.deleteAll();
+			persistentSupport.confirmarTransaccao();
 
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			List result = null;
 			try {
 				Implementation odmg = OJB.getInstance();
@@ -215,7 +215,7 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			} catch (QueryException ex) {
 				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertTrue(result.isEmpty());
 		} catch (ExcepcaoPersistencia ex) {
@@ -228,15 +228,15 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 		try {
 			List aulas = null;
       
-			_suportePersistente.iniciarTransaccao();
-			IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+			persistentSupport.iniciarTransaccao();
+			IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 			assertNotNull(executionCourse);
 
 			/* Testa metodo qdo ha mais do q uma aula de um turno na BD */
 			aulas =
-				_turnoAulaPersistente.readByShift(
+				persistentShiftLesson.readByShift(
 					new Turno("turno4", null, null, executionCourse));
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 			
 			assertEquals(
 				"testReadAulasDeTurno: qdo ha 2 aulas da turma na BD",
@@ -244,15 +244,15 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 				1);
 
 			/* Testa metodo qdo nao ha nenhuma aula do turno */
-			_suportePersistente.iniciarTransaccao();
-			_turnoAulaPersistente.deleteAll();
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			persistentShiftLesson.deleteAll();
+			persistentSupport.confirmarTransaccao();
 
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			aulas =
-				_turnoAulaPersistente.readByShift(
+				persistentShiftLesson.readByShift(
 					new Turno("turno1", null, null, executionCourse));
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 			assertEquals(
 				"testReadAulasDeTurno: qdo nao nenhuma aula do turno na BD",
 				aulas.size(),
@@ -276,27 +276,27 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 		endTime.set(Calendar.SECOND, 00);
 
 	    try {
-	      _suportePersistente.iniciarTransaccao();
-		  IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+	      persistentSupport.iniciarTransaccao();
+		  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
 		  assertNotNull(executionCourse);
   
-		  ITurno shift = _turnoPersistente.readByNameAndExecutionCourse("turno3", executionCourse);
+		  ITurno shift = persistentShift.readByNameAndExecutionCourse("turno3", executionCourse);
 		  assertNotNull(shift);
 
-		  ISala room = _salaPersistente.readByName("Ga1");
+		  ISala room = persistentRoom.readByName("Ga1");
 		  assertNotNull(room);
 		  DiaSemana weekDay = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
 		  	      
-	      _turnoAulaPersistente.delete(shift, weekDay, startTime, endTime, room);
-	      _suportePersistente.confirmarTransaccao();
+	      persistentShiftLesson.delete(shift, weekDay, startTime, endTime, room);
+	      persistentSupport.confirmarTransaccao();
 	
 	
-	      _suportePersistente.iniciarTransaccao();
-	      IAula lesson = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(weekDay, startTime, endTime, room);
-	      ITurnoAula turnoAula = _turnoAulaPersistente.readByShiftAndLesson(shift, lesson);
+	      persistentSupport.iniciarTransaccao();
+	      IAula lesson = persistentLesson.readByDiaSemanaAndInicioAndFimAndSala(weekDay, startTime, endTime, room);
+	      ITurnoAula turnoAula = persistentShiftLesson.readByShiftAndLesson(shift, lesson);
 		  assertNull(turnoAula);
 	
-	      _suportePersistente.confirmarTransaccao();
+	      persistentSupport.confirmarTransaccao();
 	
 	    } catch (ExcepcaoPersistencia ex) {
 			fail("testDeleteTurnoAula");
@@ -308,9 +308,9 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 		try {
 			List lessons = null;
 
-			_suportePersistente.iniciarTransaccao();
-			lessons = _turnoAulaPersistente.readLessonsByStudent("45498");
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			lessons = persistentShiftLesson.readLessonsByStudent("45498");
+			persistentSupport.confirmarTransaccao();
 			assertNotNull("testReadLessonsByStudent", lessons);
 			assertEquals("testReadLessonsByStudent", lessons.size(), 1);
 
@@ -326,21 +326,21 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 	private void updateWithModifications(ITurnoAula shiftLesson) {
 		try {
 			/** get with keys */
-			_suportePersistente.iniciarTransaccao();
-			 shiftLesson = _turnoAulaPersistente.readByShiftAndLesson(shiftLesson.getTurno(), shiftLesson.getAula());
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			 shiftLesson = persistentShiftLesson.readByShiftAndLesson(shiftLesson.getTurno(), shiftLesson.getAula());
+			persistentSupport.confirmarTransaccao();
 				
-			_suportePersistente.iniciarTransaccao();
-			List lessonList = (List) _aulaPersistente.readByExecutionCourse(shiftLesson.getTurno().getDisciplinaExecucao());
+			persistentSupport.iniciarTransaccao();
+			List lessonList = (List) persistentLesson.readByExecutionCourse(shiftLesson.getTurno().getDisciplinaExecucao());
 			
 			IAula lesson = (IAula) lessonList.get(1);
-			_suportePersistente.confirmarTransaccao();		
+			persistentSupport.confirmarTransaccao();		
 
 			shiftLesson.setAula(lesson);
 			
-			_suportePersistente.iniciarTransaccao();
-			_turnoAulaPersistente.lockWrite(shiftLesson);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			persistentShiftLesson.lockWrite(shiftLesson);
+			persistentSupport.confirmarTransaccao();
 						
 		} catch (Exception e) {
 			/* to lockWrite shift and lesson must be mapped */
@@ -357,14 +357,14 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 	private void update(ITurnoAula shiftLesson) {
 		try {
 			/** get with keys */
-			_suportePersistente.iniciarTransaccao();
-			shiftLesson = _turnoAulaPersistente.readByShiftAndLesson(shiftLesson.getTurno(), shiftLesson.getAula());
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			shiftLesson = persistentShiftLesson.readByShiftAndLesson(shiftLesson.getTurno(), shiftLesson.getAula());
+			persistentSupport.confirmarTransaccao();
 				
 		
-			_suportePersistente.iniciarTransaccao();
-			_turnoAulaPersistente.lockWrite(shiftLesson);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			persistentShiftLesson.lockWrite(shiftLesson);
+			persistentSupport.confirmarTransaccao();
 						
 		} catch (Exception e) {
 			/* to lockWrite shift and lesson must be mapped */
@@ -378,19 +378,19 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			ITurnoAula createdShiftLesson = null;
 			try {
 				createdShiftLesson = new TurnoAula(shift, lesson);
-				_suportePersistente.iniciarTransaccao();
-				_turnoAulaPersistente.lockWrite(createdShiftLesson);
-				_suportePersistente.confirmarTransaccao();
+				persistentSupport.iniciarTransaccao();
+				persistentShiftLesson.lockWrite(createdShiftLesson);
+				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia ex) {
 				fail("Creating new shiftLesson");
 			}
 
 			ITurnoAula shiftLesson = null;
 			try {
-				_suportePersistente.iniciarTransaccao();
+				persistentSupport.iniciarTransaccao();
 				shiftLesson =
-					_turnoAulaPersistente.readByShiftAndLesson(shift, lesson);
-				_suportePersistente.confirmarTransaccao();
+					persistentShiftLesson.readByShiftAndLesson(shift, lesson);
+				persistentSupport.confirmarTransaccao();
 				assertNotNull(
 					"ShiftLesson readed after creation must be not null",
 					shiftLesson);
@@ -407,9 +407,9 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 		ITurnoAula turnoAula = new TurnoAula(shift, lesson);
 		
 		try {
-			_suportePersistente.iniciarTransaccao();
-			_turnoAulaPersistente.lockWrite(turnoAula);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			persistentShiftLesson.lockWrite(turnoAula);
+			persistentSupport.confirmarTransaccao();
 			fail("testCreateExistingTurnoAula");
 		} catch (ExcepcaoPersistencia ex) {
 			//all is ok

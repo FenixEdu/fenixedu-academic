@@ -55,12 +55,12 @@ public class TurnoOJBTest extends TestCaseOJB {
     ITurno shift = null;
     IDisciplinaExecucao executionCourse = null;
     try {
-    	_suportePersistente.iniciarTransaccao();
-    	executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+    	persistentSupport.iniciarTransaccao();
+    	executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
     	assertNotNull(executionCourse);
     	
         // Read Existing
-        shift = _turnoPersistente.readByNameAndExecutionCourse("turno1", executionCourse);
+        shift = persistentShift.readByNameAndExecutionCourse("turno1", executionCourse);
         assertNotNull(shift);
 		assertEquals(shift.getNome(), "turno1");
 		assertEquals(shift.getDisciplinaExecucao(), executionCourse);
@@ -68,10 +68,10 @@ public class TurnoOJBTest extends TestCaseOJB {
 
 		// Read non Existing
         shift = null;
-		shift = _turnoPersistente.readByNameAndExecutionCourse("turno10", executionCourse);
+		shift = persistentShift.readByNameAndExecutionCourse("turno10", executionCourse);
 		assertNull(shift);
         
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByNome:fail read existing turno");
     }
@@ -84,15 +84,15 @@ public class TurnoOJBTest extends TestCaseOJB {
 	// Write existing
 
 	try {
-	   _suportePersistente.iniciarTransaccao();
+	   persistentSupport.iniciarTransaccao();
 
-	   executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+	   executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 	   assertNotNull(executionCourse);
 
 	   ITurno shift = new Turno("turno1", new TipoAula(TipoAula.TEORICA), new Integer(100), executionCourse);
 	   
-	   _turnoPersistente.lockWrite(shift);
-	   _suportePersistente.confirmarTransaccao();
+	   persistentShift.lockWrite(shift);
+	   persistentSupport.confirmarTransaccao();
 	   fail("testCreateExistingTurno");
 	 } catch (ExcepcaoPersistencia ex) {
 	   //all is ok
@@ -101,21 +101,21 @@ public class TurnoOJBTest extends TestCaseOJB {
 	// Write non existing
 	 
 	try {
-	   _suportePersistente.iniciarTransaccao();
+	   persistentSupport.iniciarTransaccao();
 
 	   ITurno shift = new Turno("turno10", new TipoAula(TipoAula.TEORICA), new Integer(100), executionCourse);
 	   
-	   _turnoPersistente.lockWrite(shift);
-	   _suportePersistente.confirmarTransaccao();
+	   persistentShift.lockWrite(shift);
+	   persistentSupport.confirmarTransaccao();
 
 	   // Check Insert
 	   
-	   _suportePersistente.iniciarTransaccao();
-	   shift = _turnoPersistente.readByNameAndExecutionCourse("turno10", executionCourse);
+	   persistentSupport.iniciarTransaccao();
+	   shift = persistentShift.readByNameAndExecutionCourse("turno10", executionCourse);
 	   assertNotNull(shift);
 	   assertEquals(shift.getNome(), "turno10");
 	   assertEquals(shift.getDisciplinaExecucao(), executionCourse);
-	   _suportePersistente.confirmarTransaccao();
+	   persistentSupport.confirmarTransaccao();
 
 	 } catch (ExcepcaoPersistencia ex) {
 		fail("testCreateExistingTurno");
@@ -130,29 +130,29 @@ public class TurnoOJBTest extends TestCaseOJB {
 	ITurno shift = null;
 	IDisciplinaExecucao executionCourse = null;
 	try {
-		_suportePersistente.iniciarTransaccao();
-		executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		persistentSupport.iniciarTransaccao();
+		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 		assertNotNull(executionCourse);
     	
 		// Read Existing
-		shift = _turnoPersistente.readByNameAndExecutionCourse("turno1", executionCourse);
+		shift = persistentShift.readByNameAndExecutionCourse("turno1", executionCourse);
 		assertNotNull(shift);
 
 		assertEquals(shift.getLotacao(), new Integer(100));
 		shift.setLotacao(new Integer(50));
-		_suportePersistente.confirmarTransaccao();
+		persistentSupport.confirmarTransaccao();
 		
 		
-		_suportePersistente.iniciarTransaccao();
+		persistentSupport.iniciarTransaccao();
 		shift = null;
-		shift = _turnoPersistente.readByNameAndExecutionCourse("turno1", executionCourse);
+		shift = persistentShift.readByNameAndExecutionCourse("turno1", executionCourse);
 		assertNotNull(shift);
 		
 		assertEquals(shift.getNome(), "turno1");
 		assertEquals(shift.getDisciplinaExecucao(), executionCourse);
 		assertEquals(shift.getLotacao(), new Integer(50));
 
-	  _suportePersistente.confirmarTransaccao();
+	  persistentSupport.confirmarTransaccao();
 	} catch (ExcepcaoPersistencia ex) {
 	  fail("testReadByNome:fail read existing turno");
 	}
@@ -163,25 +163,25 @@ public class TurnoOJBTest extends TestCaseOJB {
 	ITurno shift = null;
 	IDisciplinaExecucao executionCourse = null;
 	try {
-		_suportePersistente.iniciarTransaccao();
-		executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		persistentSupport.iniciarTransaccao();
+		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 		assertNotNull(executionCourse);
     	
 		// Read Existing
-		shift = _turnoPersistente.readByNameAndExecutionCourse("turno454", executionCourse);
+		shift = persistentShift.readByNameAndExecutionCourse("turno454", executionCourse);
 		assertNotNull(shift);
 		
 		// Check Lessons
 		List lessons = SuportePersistenteOJB.getInstance().getITurnoAulaPersistente().readByShift(shift);
 		assertEquals(lessons.size(), 2);
-		_turnoPersistente.delete(shift);
-		_suportePersistente.confirmarTransaccao();
+		persistentShift.delete(shift);
+		persistentSupport.confirmarTransaccao();
 		
 		
 		// Check Delete
-		_suportePersistente.iniciarTransaccao();
+		persistentSupport.iniciarTransaccao();
 		ITurno shift2 = null;
-		shift2 = _turnoPersistente.readByNameAndExecutionCourse("turno454", executionCourse);
+		shift2 = persistentShift.readByNameAndExecutionCourse("turno454", executionCourse);
 		assertNull(shift2);
 		
 		// Check deletion of classes
@@ -190,7 +190,7 @@ public class TurnoOJBTest extends TestCaseOJB {
 		assertTrue(lessons.isEmpty());
 		
 		
-		_suportePersistente.confirmarTransaccao();
+		persistentSupport.confirmarTransaccao();
 	} catch (ExcepcaoPersistencia ex) {
 	  fail("testReadByNome:fail read existing turno");
 	}
@@ -199,11 +199,11 @@ public class TurnoOJBTest extends TestCaseOJB {
   /** Test of deleteAll method, of class ServidorPersistente.OJB.TurnoOJB. */
   public void testDeleteAll() {
     try {
-      _suportePersistente.iniciarTransaccao();
-      _turnoPersistente.deleteAll();
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.iniciarTransaccao();
+      persistentShift.deleteAll();
+      persistentSupport.confirmarTransaccao();
 
-      _suportePersistente.iniciarTransaccao();
+      persistentSupport.iniciarTransaccao();
       List result = null;
       try {
         Implementation odmg = OJB.getInstance();
@@ -214,7 +214,7 @@ public class TurnoOJBTest extends TestCaseOJB {
       } catch (QueryException ex) {
         throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
       }
-      _suportePersistente.confirmarTransaccao();
+      persistentSupport.confirmarTransaccao();
       assertTrue(result.isEmpty());
     } catch (ExcepcaoPersistencia ex) {
       fail("testDeleteTurno");
@@ -229,24 +229,24 @@ public class TurnoOJBTest extends TestCaseOJB {
 	ITurno shift = null;
 	IDisciplinaExecucao executionCourse = null;
 	try {
-		_suportePersistente.iniciarTransaccao();
-		executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		persistentSupport.iniciarTransaccao();
+		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 		assertNotNull(executionCourse);
     	
 		// Read Existing
-		shift = _turnoPersistente.readByNameAndExecutionCourse("turno1", executionCourse);
+		shift = persistentShift.readByNameAndExecutionCourse("turno1", executionCourse);
 		assertNotNull(shift);
 
-		assertEquals(_turnoPersistente.countAllShiftsOfAllClassesAssociatedWithShift(shift), new Integer(0));
+		assertEquals(persistentShift.countAllShiftsOfAllClassesAssociatedWithShift(shift), new Integer(0));
 
 		shift = null;
-		shift = _turnoPersistente.readByNameAndExecutionCourse("turno453", executionCourse);
+		shift = persistentShift.readByNameAndExecutionCourse("turno453", executionCourse);
 		assertNotNull(shift);
 
-		assertEquals(_turnoPersistente.countAllShiftsOfAllClassesAssociatedWithShift(shift), new Integer(3));
+		assertEquals(persistentShift.countAllShiftsOfAllClassesAssociatedWithShift(shift), new Integer(3));
 
 
-	  _suportePersistente.confirmarTransaccao();
+	  persistentSupport.confirmarTransaccao();
 	} catch (ExcepcaoPersistencia ex) {
 	  fail("testReadByNome:fail read existing turno");
 	}
@@ -259,25 +259,25 @@ public class TurnoOJBTest extends TestCaseOJB {
     
     // read existing disciplinaExecucao
     try {
-      _suportePersistente.iniciarTransaccao();
+      persistentSupport.iniciarTransaccao();
 	
 	  // Read Existing      
-      executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+      executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
       assertNotNull(executionCourse);
       
-      shifts = _turnoPersistente.readByExecutionCourseAndType(executionCourse, new Integer(TipoAula.TEORICA));
+      shifts = persistentShift.readByExecutionCourseAndType(executionCourse, new Integer(TipoAula.TEORICA));
       assertEquals("testReadByDisciplinaExecucaoAndType: Existing", shifts.size(), 5);
 
 	  // Read non Existing
 	  executionCourse = null;
-	  executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("APR", "2002/2003", "LEIC");
+	  executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("APR", "2002/2003", "LEIC");
 	  assertNotNull(executionCourse);
       
       shifts = null;
-	  shifts = _turnoPersistente.readByExecutionCourseAndType(executionCourse, new Integer(TipoAula.RESERVA));
+	  shifts = persistentShift.readByExecutionCourseAndType(executionCourse, new Integer(TipoAula.RESERVA));
 	  assertTrue("testReadByDisciplinaExecucaoAndType: Existing", shifts.isEmpty());
 
-	  _suportePersistente.confirmarTransaccao();
+	  persistentSupport.confirmarTransaccao();
 
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByDisciplinaExecucaoAndType:fail read existing disciplinaExecucao");
@@ -290,25 +290,25 @@ public class TurnoOJBTest extends TestCaseOJB {
     
 	// read existing disciplinaExecucao
 	try {
-	  _suportePersistente.iniciarTransaccao();
+	  persistentSupport.iniciarTransaccao();
 	
 	  // Read Existing      
-	  executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+	  executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 	  assertNotNull(executionCourse);
       
-	  shifts = _turnoPersistente.readByExecutionCourse(executionCourse);
+	  shifts = persistentShift.readByExecutionCourse(executionCourse);
 	  assertEquals("testReadByDisciplinaExecucaoAndType: Existing", shifts.size(), 10);
 
 	  // Read non Existing
 	  executionCourse = null;
-	  executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("RCII", "2002/2003", "LEEC");
+	  executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("RCII", "2002/2003", "LEEC");
 	  assertNotNull(executionCourse);
       
 	  shifts = null;
-	  shifts = _turnoPersistente.readByExecutionCourse(executionCourse);
+	  shifts = persistentShift.readByExecutionCourse(executionCourse);
 	  assertTrue("testReadByDisciplinaExecucaoAndType: Existing", shifts.isEmpty());
 
-	  _suportePersistente.confirmarTransaccao();
+	  persistentSupport.confirmarTransaccao();
 
 	} catch (ExcepcaoPersistencia ex) {
 	  fail("testReadByDisciplinaExecucaoAndType:fail read existing disciplinaExecucao");

@@ -47,7 +47,7 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 	public void testreadExecutionYearByName(){
 		IExecutionYear executionYear = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 	
 			// Read Existing
 			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
@@ -59,7 +59,7 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 			executionYear = persistentExecutionYear.readExecutionYearByName("unkn");
 			assertNull(executionYear);
 
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 	   } catch (ExcepcaoPersistencia ex) {
 			fail("testreadExecutionYearByName:fail read existing item");
 	   }
@@ -68,19 +68,19 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 	public void testWriteExecutionYear(){
 		IExecutionYear executionYear = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			executionYear = new ExecutionYear("2000");
 			persistentExecutionYear.writeExecutionYear(executionYear);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 			
 			
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			executionYear = null;
 			// Check Insert	
 			executionYear = persistentExecutionYear.readExecutionYearByName("2000");
 			assertNotNull(executionYear);
 			assertEquals(executionYear.getYear(), "2000");
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 
 		} catch (ExcepcaoPersistencia ex) {
 			 fail("testReadExecutionPeriodByNameAndExecutionYear:fail read existing item");
@@ -88,10 +88,10 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 
 		try {
 			// Write Existing
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			executionYear = new ExecutionYear("2002/2003");
 			persistentExecutionYear.writeExecutionYear(executionYear);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 			fail("Espected Error");
 	   } catch (ExcepcaoPersistencia ex) {
 			// All is ok
@@ -102,7 +102,7 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 		IExecutionYear executionYear = null;
 		
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			// Read non deletable
 			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
@@ -112,15 +112,15 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 			// Create and write deletable
 			executionYear = new ExecutionYear("2000");
 			persistentExecutionYear.writeExecutionYear(executionYear);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 			
 			// Read deletable
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			executionYear = null;
 			executionYear = persistentExecutionYear.readExecutionYearByName("2000");
 			assertNotNull(executionYear);
 			assertTrue(persistentExecutionYear.delete(executionYear));
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 	   } catch (ExcepcaoPersistencia ex) {
 			fail("testReadExecutionPeriodByNameAndExecutionYear:fail read existing item");
 	   }
@@ -128,13 +128,13 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 	
 	public void testReadAllExecutionYears(){
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 
 			List executionYears = persistentExecutionYear.readAllExecutionYear();
 			assertEquals(executionYears .isEmpty(), false);
 			assertEquals(executionYears .size(), 2);
 
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 	   } catch (ExcepcaoPersistencia ex) {
 			fail("testReadExecutionPeriodByNameAndExecutionYear:fail read existing item");
 	   }
@@ -143,19 +143,19 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 	
 	public void testDeleteAll(){
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			IExecutionYear executionYear = new ExecutionYear("2000");
 			persistentExecutionYear.writeExecutionYear(executionYear);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 			
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			List executionYears = persistentExecutionYear.readAllExecutionYear();
 			assertEquals(executionYears.size(), 3);
 			persistentExecutionYear.deleteAll();
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 
 			
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			executionYears = persistentExecutionYear.readAllExecutionYear();
 			assertEquals(executionYears.isEmpty(), false);
 			
@@ -163,7 +163,7 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 			// and classes associated
 			assertEquals(executionYears.size(), 2);
 
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 			
 			
 	   } catch (ExcepcaoPersistencia ex) {

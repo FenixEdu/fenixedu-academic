@@ -63,7 +63,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		IExecutionYear executionYear = null;
 		ICurso degree = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			
 			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
@@ -71,20 +71,20 @@ public class TurmaOJBTest extends TestCaseOJB {
 			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
 			assertNotNull(executionPeriod);
 			
-			degree = cursoPersistente.readBySigla("LEIC");
+			degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
 
-			degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 			assertNotNull(degreeCurricularPlan);
 			
-			executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 			assertNotNull(executionDegree);
 
-			classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
+			classTemp = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
 			assertNotNull(classTemp);
 
 			
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testReadByNome:fail read existing turma");
 		}
@@ -92,10 +92,10 @@ public class TurmaOJBTest extends TestCaseOJB {
 
 		// read unexisting Turma
 		try {
-			_suportePersistente.iniciarTransaccao();
-			classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("desc", executionDegree, executionPeriod);
+			persistentSupport.iniciarTransaccao();
+			classTemp = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod("desc", executionDegree, executionPeriod);
 			assertNull(classTemp);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testReadByNome:fail read unexisting turma");
 		}
@@ -110,7 +110,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		IExecutionYear executionYear = null;
 		ICurso degree = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			
 			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
@@ -118,19 +118,19 @@ public class TurmaOJBTest extends TestCaseOJB {
 			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
 			assertNotNull(executionPeriod);
 			
-			degree = cursoPersistente.readBySigla("LEIC");
+			degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
 
-			degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 			assertNotNull(degreeCurricularPlan);
 			
-			executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 			assertNotNull(executionDegree);
 
 			classTemp = new Turma("10501", new Integer(1), executionDegree, executionPeriod);
 
-			_turmaPersistente.lockWrite(classTemp);
-			_suportePersistente.confirmarTransaccao();
+			persistentClass.lockWrite(classTemp);
+			persistentSupport.confirmarTransaccao();
 			fail("testCreateExistingTurma");
 		} catch (ExcepcaoPersistencia ex) {
 			//all is ok
@@ -146,7 +146,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		IExecutionYear executionYear = null;
 		ICurso degree = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			
 			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
@@ -154,31 +154,31 @@ public class TurmaOJBTest extends TestCaseOJB {
 			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
 			assertNotNull(executionPeriod);
 			
-			degree = cursoPersistente.readBySigla("LEIC");
+			degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
 
-			degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 			assertNotNull(degreeCurricularPlan);
 			
-			executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 			assertNotNull(executionDegree);
 
 			classTemp = null;
-			classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10510", executionDegree, executionPeriod);
+			classTemp = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod("10510", executionDegree, executionPeriod);
 			assertNull(classTemp);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 
 			classTemp = new Turma("10510", new Integer(1), executionDegree, executionPeriod);
 
-			_suportePersistente.iniciarTransaccao();
-			_turmaPersistente.lockWrite(classTemp);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			persistentClass.lockWrite(classTemp);
+			persistentSupport.confirmarTransaccao();
 			
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			classTemp = null;
-			classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10510", executionDegree, executionPeriod);
+			classTemp = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod("10510", executionDegree, executionPeriod);
 			assertNotNull(classTemp);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 
 			
 		} catch (ExcepcaoPersistencia ex) {
@@ -195,7 +195,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		IExecutionYear executionYear = null;
 		ICurso degree = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			
 			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
@@ -203,35 +203,35 @@ public class TurmaOJBTest extends TestCaseOJB {
 			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
 			assertNotNull(executionPeriod);
 			
-			degree = cursoPersistente.readBySigla("LEIC");
+			degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
 
-			degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 			assertNotNull(degreeCurricularPlan);
 			
-			executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 			assertNotNull(executionDegree);
 
-			classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
+			classTemp = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
 			assertNotNull(classTemp);
 
 			classTemp.setNome("10510");
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 
 
 
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 
 			classTemp = null;
-			classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
+			classTemp = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
 			assertNull(classTemp);
 
 			classTemp = null;
-			classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10510", executionDegree, executionPeriod);
+			classTemp = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod("10510", executionDegree, executionPeriod);
 			assertNotNull(classTemp);
 			assertEquals(classTemp.getNome(), "10510");
 
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 
 
 		} catch (ExcepcaoPersistencia ex) {
@@ -254,7 +254,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		List result = null;
 		TurmaTurnoOJB turmaTurnoOJB = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			
 			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
@@ -262,16 +262,16 @@ public class TurmaOJBTest extends TestCaseOJB {
 			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
 			assertNotNull(executionPeriod);
 			
-			degree = cursoPersistente.readBySigla("LEIC");
+			degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
 
-			degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 			assertNotNull(degreeCurricularPlan);
 			
-			executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 			assertNotNull(executionDegree);
 
-			classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
+			classTemp = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
 			assertNotNull(classTemp);
 			
 			
@@ -304,13 +304,13 @@ public class TurmaOJBTest extends TestCaseOJB {
 	
 			
 			// Delete
-			_turmaPersistente.delete(classTemp);
-			_suportePersistente.confirmarTransaccao();
+			persistentClass.delete(classTemp);
+			persistentSupport.confirmarTransaccao();
 			
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 
 			ITurma classTemp2 = null;
-			classTemp2 = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
+			classTemp2 = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
 			assertNull(classTemp2);
 
 			
@@ -337,7 +337,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 				  throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
 	
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 			
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testReadByNome:fail read existing turma");
@@ -347,11 +347,11 @@ public class TurmaOJBTest extends TestCaseOJB {
 	/** Test of deleteAll method, of class ServidorPersistente.OJB.TurnoOJB. */
 	public void testDeleteAll() {
 		try {
-			_suportePersistente.iniciarTransaccao();
-			_turmaPersistente.deleteAll();
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			persistentClass.deleteAll();
+			persistentSupport.confirmarTransaccao();
 
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			List result = null;
 			try {
 				Implementation odmg = OJB.getInstance();
@@ -363,7 +363,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 			} catch (QueryException ex) {
 				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertTrue(result.isEmpty());
 		} catch (ExcepcaoPersistencia ex) {
@@ -376,19 +376,19 @@ public class TurmaOJBTest extends TestCaseOJB {
 		try {
 			List classes = null;
 			
-			_suportePersistente.iniciarTransaccao();
-			classes = _turmaPersistente.readAll();
+			persistentSupport.iniciarTransaccao();
+			classes = persistentClass.readAll();
 			assertEquals(classes.size(), 6);
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 
-			_suportePersistente.iniciarTransaccao();
-			_turmaPersistente.deleteAll();
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			persistentClass.deleteAll();
+			persistentSupport.confirmarTransaccao();
 			
-			_suportePersistente.iniciarTransaccao();
-			classes = _turmaPersistente.readAll();
+			persistentSupport.iniciarTransaccao();
+			classes = persistentClass.readAll();
 			assertTrue(classes.isEmpty());
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testReadAll");
 		}
@@ -403,7 +403,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		IExecutionYear executionYear = null;
 		ICurso degree = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			
 			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
@@ -411,24 +411,24 @@ public class TurmaOJBTest extends TestCaseOJB {
 			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
 			assertNotNull(executionPeriod);
 			
-			degree = cursoPersistente.readBySigla("LEIC");
+			degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
 
-			degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 			assertNotNull(degreeCurricularPlan);
 			
-			executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 			assertNotNull(executionDegree);
 
-			classesList = _turmaPersistente.readByExecutionPeriodAndCurricularYearAndExecutionDegree(executionPeriod, new Integer(1), executionDegree);
+			classesList = persistentClass.readByExecutionPeriodAndCurricularYearAndExecutionDegree(executionPeriod, new Integer(1), executionDegree);
 			assertEquals(classesList.size(), 4);
 
 			classesList = null;
-			classesList = _turmaPersistente.readByExecutionPeriodAndCurricularYearAndExecutionDegree(executionPeriod, new Integer(10), executionDegree);
+			classesList = persistentClass.readByExecutionPeriodAndCurricularYearAndExecutionDegree(executionPeriod, new Integer(10), executionDegree);
 			assertEquals(classesList.size(), 0);
 
 			
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testReadByNome:fail read existing turma");
 		}
@@ -439,7 +439,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		IExecutionPeriod executionPeriod = null;
 		IExecutionYear executionYear = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			
 			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
@@ -447,7 +447,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
 			assertNotNull(executionPeriod);
 			
-			classesList = _turmaPersistente.readByExecutionPeriod(executionPeriod);
+			classesList = persistentClass.readByExecutionPeriod(executionPeriod);
 			assertEquals(classesList.size(), 6);
 
 			executionPeriod = null;
@@ -455,10 +455,10 @@ public class TurmaOJBTest extends TestCaseOJB {
 			assertNotNull(executionPeriod);
 			
 			classesList = null;
-			classesList = _turmaPersistente.readByExecutionPeriod(executionPeriod);
+			classesList = persistentClass.readByExecutionPeriod(executionPeriod);
 			assertEquals(classesList.size(), 0);
 
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testReadByNome:fail read existing turma");
 		}
@@ -468,18 +468,18 @@ public class TurmaOJBTest extends TestCaseOJB {
 		ICurso degree = null;
 		List classesList = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			
-			degree = cursoPersistente.readBySigla("LEIC");
+			degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
 
-			classesList = _turmaPersistente.readByDegreeNameAndDegreeCode(degree.getNome(), degree.getSigla());
+			classesList = persistentClass.readByDegreeNameAndDegreeCode(degree.getNome(), degree.getSigla());
 			assertEquals(classesList.size(), 4);
 
-			classesList = _turmaPersistente.readByDegreeNameAndDegreeCode("desc", "desc");
+			classesList = persistentClass.readByDegreeNameAndDegreeCode("desc", "desc");
 			assertEquals(classesList.size(), 0);
 			
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testReadByNome:fail read existing turma");
 		}
@@ -493,7 +493,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		IExecutionYear executionYear = null;
 		ICurso degree = null;
 		try {
-			_suportePersistente.iniciarTransaccao();
+			persistentSupport.iniciarTransaccao();
 			
 			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
@@ -501,19 +501,19 @@ public class TurmaOJBTest extends TestCaseOJB {
 			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
 			assertNotNull(executionPeriod);
 			
-			degree = cursoPersistente.readBySigla("LEIC");
+			degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
 
-			degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 			assertNotNull(degreeCurricularPlan);
 			
-			executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 			assertNotNull(executionDegree);
 			
-			classesList = _turmaPersistente.readByExecutionDegree(executionDegree);
+			classesList = persistentClass.readByExecutionDegree(executionDegree);
 			assertEquals(classesList.size(), 4);
 			
-			_suportePersistente.confirmarTransaccao();
+			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testReadByNome:fail read existing turma");
 		}

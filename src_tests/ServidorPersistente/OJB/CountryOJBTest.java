@@ -52,9 +52,9 @@ public class CountryOJBTest extends TestCaseOJB {
         ICountry country = new Country("Portugal", "Portuguesa", "PT");
 
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentCountry.writeCountry(country);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             fail("testEscreverPais: confirmarTransaccao_1");
         } catch(ExcepcaoPersistencia ex2) {
 			// All is OK
@@ -64,9 +64,9 @@ public class CountryOJBTest extends TestCaseOJB {
         country = new Country("Polonia", "Polaco", "PC");
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentCountry.writeCountry(country);
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex2) {
 		    fail("testEscreverPais: write non Existing");	
         }
@@ -74,9 +74,9 @@ public class CountryOJBTest extends TestCaseOJB {
         ICountry country2 = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             country2 = persistentCountry.readCountryByName(country.getName());
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testEscreverPais: confirmarTransaccao_3");
         }
@@ -91,9 +91,9 @@ public class CountryOJBTest extends TestCaseOJB {
     public void testDeleteAllCountrys() {
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentCountry.deleteAllCountrys();
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             assertTrue("testApagarTodosOsPaises: Paises apagados", true);
         } catch(ExcepcaoPersistencia ex2) {
             fail("testApagarTodosOsPaises: confirmarTransaccao_1");
@@ -102,9 +102,9 @@ public class CountryOJBTest extends TestCaseOJB {
         ArrayList result = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             result = persistentCountry.readAllCountrys();
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testApagarTodosOsPaises: confirmarTransaccao_2");
         }
@@ -117,9 +117,9 @@ public class CountryOJBTest extends TestCaseOJB {
 
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             country = persistentCountry.readCountryByName("Portugal");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex2) {
             fail("testLerPais: confirmarTransaccao_1");
         }
@@ -131,9 +131,9 @@ public class CountryOJBTest extends TestCaseOJB {
 
         country = null;
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             country = persistentCountry.readCountryByName("Chipre");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex2) {
             fail("testLerPais: confirmarTransaccao_2");
         }
@@ -144,27 +144,27 @@ public class CountryOJBTest extends TestCaseOJB {
 
 
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
 			persistentCountry.deleteCountryByName("Portugal");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex3) {
             fail("testApagarPais: confirmarTransaccao_1");
         }
         ICountry country = null;
         
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             country = persistentCountry.readCountryByName("Portugal");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testApagarPais: lerPaisPorNome");
         }
         assertNull(country);
 
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             persistentCountry.deleteCountryByName("Chipre");
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
             assertTrue("testApagarPais: Pais apagado", true);
         } catch(ExcepcaoPersistencia ex2) {
             fail("testApagarPais: confirmarTransaccao_2");
@@ -176,9 +176,9 @@ public class CountryOJBTest extends TestCaseOJB {
 
 
         try {
-            _suportePersistente.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             list = persistentCountry.readAllCountrys();
-            _suportePersistente.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex2) {
             fail("testLerTodosOsPaises: confirmarTransaccao_1");
         }
