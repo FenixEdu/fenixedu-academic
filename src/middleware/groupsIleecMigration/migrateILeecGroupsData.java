@@ -1,3 +1,11 @@
+
+/*
+ * Created on 3/Dez/2003
+ *
+ */
+ 
+package middleware.groupsIleecMigration;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,10 +40,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.AreaType;
 import Util.DegreeCurricularPlanState;
 
-/*
- * Created on 3/Dez/2003
- *
- */
 
 /**
  * @author Nuno Correia
