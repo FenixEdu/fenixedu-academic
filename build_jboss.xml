@@ -472,6 +472,10 @@
 		    property="app.name"/>
 
 		<replacefilter 
+		    token="@app.context@"
+		    property="app.context"/>
+
+		<replacefilter 
 		    token="@index.html.link@" 
 		    property="index.html.link"/>
 

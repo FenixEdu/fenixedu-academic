@@ -62,7 +62,7 @@
 		</init-param>
 		<init-param>
 			<param-name>app</param-name>
-			<param-value>/@app.name@/</param-value>
+			<param-value>/@app.context@/</param-value>
 		</init-param>
 	</filter>
 	<filter>
@@ -82,7 +82,7 @@
 		</init-param>
 		<init-param>
 			<param-name>app</param-name>
-			<param-value>/@app.name@/</param-value>
+			<param-value>/@app.context@/</param-value>
 		</init-param>
 	</filter>
 	<filter>
@@ -98,7 +98,7 @@
 		</init-param>
 		<init-param>
 			<param-name>app</param-name>
-			<param-value>/@app.name@/</param-value>
+			<param-value>/@app.context@/</param-value>
 		</init-param>
 	</filter>
 	<filter>
@@ -118,7 +118,7 @@
 		</init-param>
 		<init-param>
 			<param-name>app</param-name>
-			<param-value>/@app.name@/</param-value>
+			<param-value>/@app.context@/</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

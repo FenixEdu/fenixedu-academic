@@ -12,6 +12,7 @@
 htttp.host=localhost
 http.port=8080
 app.name=ciapl
+app.context=ciapl
 application=extranet
 
 index.html.link=publico/index.html

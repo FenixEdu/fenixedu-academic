@@ -64,9 +64,21 @@ public class ExamsForwardFilter implements Filter{
         String context = request.getContextPath();
         String newURI = uri.replaceFirst(app, "");
         String[] tokens = newURI.split("/");
+        if (tokens.length > 0 && tokens[0].length() == 0) {
+            String[] tokensTemp = new String[tokens.length - 1];
+            for (int i = 1; i < tokens.length; i++) {
+                tokensTemp[i - 1] = tokens[i];
+            }
+            tokens = tokensTemp;
+        }
         
         StringBuffer forwardURI = new StringBuffer(context);
         
+        System.out.println("tokens.size= " + tokens.length);
+        for (int i = 0; i < tokens.length; i++) {
+            System.out.println("   tokens[" + i + "]: " + tokens[i]);
+        }
+
         if(tokens.length >= 2 && !(tokens[1].equalsIgnoreCase("exames"))){
         	forwardURI.append(notFoundURI);
         }
