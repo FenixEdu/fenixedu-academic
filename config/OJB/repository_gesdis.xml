@@ -356,6 +356,24 @@
         column="PROGRAM"
         jdbc-type="LONGVARCHAR"
 	/>
+	<field-descriptor id="6"
+        name="generalObjectivesEn"
+        column="GENERAL_OBJECTIVES_EN"
+        jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+	/>
+	<field-descriptor id="7"
+        name="operacionalObjectivesEn"
+        column="OPERACIONAL_OBJECTIVES_EN"
+        jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+	/>
+	<field-descriptor id="8"
+        name="programEn"
+        column="PROGRAM_EN"
+        jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+	/>
     <reference-descriptor
          name="executionCourse"
          class-ref="Dominio.DisciplinaExecucao"
