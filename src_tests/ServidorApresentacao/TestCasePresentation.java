@@ -1,9 +1,19 @@
-package ServidorAplicacao.Servicos;
+/*
+ * Created on 18/Fev/2003
+ *
+ * To change this generated comment go to 
+ * Window>Preferences>Java>Code Generation>Code Template
+ */
+package ServidorApresentacao;
+
+/**
+ * @author jmota
+ */
 
 import java.util.Calendar;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import servletunit.struts.MockStrutsTestCase;
 import Dominio.IAula;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
@@ -46,9 +56,8 @@ import Tools.dbaccess;
 import Util.DiaSemana;
 import Util.TipoAula;
 import Util.TipoSala;
+public class TestCasePresentation extends MockStrutsTestCase {
 
-
-public class TestCaseServicos extends TestCase {
 	protected ISuportePersistente _suportePersistente = null;
 	protected IPessoaPersistente _pessoaPersistente = null;
 	protected IAulaPersistente _aulaPersistente = null;
@@ -58,18 +67,23 @@ public class TestCaseServicos extends TestCase {
 	protected ITurnoAlunoPersistente _turnoAlunoPersistente = null;
 	protected ITurnoAulaPersistente _turnoAulaPersistente = null;
 	protected ITurmaTurnoPersistente _turmaTurnoPersistente = null;
-	protected IPersistentCurricularCourse _disciplinaCurricularPersistente = null;
-	protected IDisciplinaExecucaoPersistente _disciplinaExecucaoPersistente = null;
+	protected IPersistentCurricularCourse _disciplinaCurricularPersistente =
+		null;
+	protected IDisciplinaExecucaoPersistente _disciplinaExecucaoPersistente =
+		null;
 	protected ICursoExecucaoPersistente _cursoExecucaoPersistente = null;
 	protected ICursoPersistente _cursoPersistente = null;
 	protected IPersistentStudent _alunoPersistente = null;
 	protected IFrequentaPersistente _frequentaPersistente;
-	protected IPlanoCurricularCursoPersistente _persistentDegreeCurricularPlan =	null;
-	protected IStudentCurricularPlanPersistente _persistentStudentCurricularPlan = null;
-	protected IDisciplinaDepartamentoPersistente _persistentDepartmentCourse = null;
+	protected IPlanoCurricularCursoPersistente _persistentDegreeCurricularPlan =
+		null;
+	protected IStudentCurricularPlanPersistente _persistentStudentCurricularPlan =
+		null;
+	protected IDisciplinaDepartamentoPersistente _persistentDepartmentCourse =
+		null;
 	protected IDepartamentoPersistente _persistentDepartment = null;
-	protected IPersistentExecutionPeriod persistentExecutionPeriod=null;
-	protected IPersistentExecutionYear persistentExecutionYear=null;
+	protected IPersistentExecutionPeriod persistentExecutionPeriod = null;
+	protected IPersistentExecutionYear persistentExecutionYear = null;
 	protected GestorServicos _gestor = null;
 	protected IUserView _userView = null;
 	protected IUserView _userView2 = null;
@@ -87,15 +101,15 @@ public class TestCaseServicos extends TestCase {
 	protected ITurno _turno4 = null;
 	protected ITurno _turno3 = null;
 	protected IAula _aula1 = null;
-	protected IAula _aula2 = null;	
+	protected IAula _aula2 = null;
 	protected IAula _aula3 = null;
 	protected IAula _aula4 = null;
 	protected DiaSemana _diaSemana1 = null;
 	protected DiaSemana _diaSemana2 = null;
-	protected DiaSemana _diaSemana3 = null;	
+	protected DiaSemana _diaSemana3 = null;
 	protected Calendar _inicio = null;
 	protected Calendar _fim = null;
-	protected Calendar _fim2 = null;	
+	protected Calendar _fim2 = null;
 	protected TipoAula _tipoAula = null;
 	protected ITurnoAula _turnoAula1 = null;
 	protected ITurnoAluno _turnoAluno1 = null;
@@ -109,36 +123,33 @@ public class TestCaseServicos extends TestCase {
 	protected ICursoExecucao _cursoExecucao1 = null;
 	protected ICursoExecucao _cursoExecucao2 = null;
 	protected IStudent _aluno1 = null;
+	private dbaccess _dbAcessPoint = null;
 
-	private dbaccess dbAcessPoint = null;
-
-
-	public TestCaseServicos(String testName) {
+	public TestCasePresentation(String testName) {
 		super(testName);
 	}
-	
-	protected void setUp() {
-		ligarSuportePersistente();
-//		cleanData();
-		
+
+	public void setUp() throws Exception {
+		super.setUp();
+		//ligarSuportePersistente();
+		//cleanData();
+		//		The following code backs up the contents of the database
+		// and loads the database with the data set required to run
+		// the test cases.
 		try {
-			dbAcessPoint = new dbaccess();
-			dbAcessPoint.openConnection();
-			dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
-			dbAcessPoint.loadDataBase("etc/testDataSet.xml");
-			dbAcessPoint.closeConnection();
+			_dbAcessPoint = new dbaccess();
+			_dbAcessPoint.openConnection();
+			_dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
+			_dbAcessPoint.loadDataBase("etc/testDataSet.xml");
+			_dbAcessPoint.closeConnection();
 		} catch (Exception ex) {
 			System.out.println("Setup failed: " + ex);
 		}
 
-//		
-//		
-//		// None of the variables defined here will be written to the database
-//		// To remove later because of the DBUnit
-//		
-////		try {
-////			_suportePersistente.iniciarTransaccao();
-//			
+//		try {
+//
+//			_suportePersistente.iniciarTransaccao();
+//
 //			_pessoa1 = new Pessoa();
 //			_pessoa1.setNumeroDocumentoIdentificacao("0123456789");
 //			_pessoa1.setCodigoFiscal("9876543210");
@@ -205,7 +216,9 @@ public class TestCaseServicos extends TestCase {
 //					_pessoa1,
 //					new String("LerLicenciaturaExecucaoDeLicenciatura")));
 //			_privilegios.add(
-//				new Privilegio(_pessoa1, new String("ReadExecutionDegreesByExecutionYear")));
+//				new Privilegio(
+//					_pessoa1,
+//					new String("ReadExecutionDegreesByExecutionYear")));
 //			_privilegios.add(new Privilegio(_pessoa1, new String("LerTurmas")));
 //			_privilegios.add(
 //				new Privilegio(_pessoa1, new String("LerTurnosDeTurma")));
@@ -237,11 +250,14 @@ public class TestCaseServicos extends TestCase {
 //				new Privilegio(
 //					_pessoa1,
 //					new String("LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular")));
-//			_privilegios.add(new Privilegio(_pessoa1, new String("ReadOtherCoursesWithShifts")));
+//			_privilegios.add(
+//				new Privilegio(
+//					_pessoa1,
+//					new String("ReadOtherCoursesWithShifts")));
 //
 //			_pessoa1.setPrivilegios(_privilegios);
 //			//_pessoaPersistente.lockWrite(_pessoa1);
-//			//_pessoaPersistente.escreverPessoa(_pessoa1);
+//			_pessoaPersistente.escreverPessoa(_pessoa1);
 //			//_pessoa2 = new Pessoa("nome2", "pass2", null);
 //			_pessoa2 = new Pessoa();
 //			_pessoa2.setNumeroDocumentoIdentificacao("0321654987");
@@ -252,51 +268,53 @@ public class TestCaseServicos extends TestCase {
 //			_pessoa2.setUsername("nome2");
 //			_pessoa2.setPassword("pass2");
 //			_pessoa2.setPrivilegios(null);
-//			
-//			//_pessoaPersistente.escreverPessoa(_pessoa2);
+//
+//			_pessoaPersistente.escreverPessoa(_pessoa2);
 //
 //			IExecutionYear executionYear = new ExecutionYear("2002/03");
-//			//persistentExecutionYear.lockWrite(executionYear);
-//			
-//			IExecutionPeriod executionPeriod = new ExecutionPeriod("2º Semestre",executionYear);
-//			//persistentExecutionPeriod.lockWrite(executionPeriod);
+//			persistentExecutionYear.lockWrite(executionYear);
+//
+//			IExecutionPeriod executionPeriod =
+//				new ExecutionPeriod("2º Semestre", executionYear);
+//			persistentExecutionPeriod.lockWrite(executionPeriod);
 //
 //			_curso1 =
 //				new Curso(
 //					"LEIC",
 //					"Informatica",
 //					new TipoCurso(TipoCurso.LICENCIATURA));
-//			//_cursoPersistente.lockWrite(_curso1);
+//			_cursoPersistente.lockWrite(_curso1);
 //			_curso2 =
 //				new Curso(
 //					"LEGI",
 //					"Gestao",
 //					new TipoCurso(TipoCurso.LICENCIATURA));
-//					
-//			IPlanoCurricularCurso curricularPlan1 = new PlanoCurricularCurso("plano1",_curso1);
-//			IPlanoCurricularCurso curricularPlan2 = new PlanoCurricularCurso("plano2",_curso2);
-//					
+//
+//			IPlanoCurricularCurso curricularPlan1 =
+//				new PlanoCurricularCurso("plano1", _curso1);
+//			IPlanoCurricularCurso curricularPlan2 =
+//				new PlanoCurricularCurso("plano2", _curso2);
+//
 //			_cursoExecucao1 = new CursoExecucao(executionYear, curricularPlan1);
-////			_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
+//			_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
 //			_cursoExecucao2 = new CursoExecucao(executionYear, curricularPlan2);
-////			_suportePersistente.confirmarTransaccao();
+//			_suportePersistente.confirmarTransaccao();
 //
 //			IDisciplinaDepartamento departmentCourse = null;
 //			IPlanoCurricularCurso degreeCurricularPlan = null;
 //
-////			_suportePersistente.iniciarTransaccao();
+//			_suportePersistente.iniciarTransaccao();
 //			IDepartamento department = new Departamento("nome", "sigle");
 //			departmentCourse =
 //				new DisciplinaDepartamento("nome", "sigla", department);
-////			_persistentDepartmentCourse.escreverDisciplinaDepartamento(
-////				departmentCourse);
-//			degreeCurricularPlan =
-//				new PlanoCurricularCurso("nome",  _curso1);
-////			_persistentDegreeCurricularPlan.escreverPlanoCurricular(
-////				degreeCurricularPlan);
-////			_suportePersistente.confirmarTransaccao();
+//			_persistentDepartmentCourse.escreverDisciplinaDepartamento(
+//				departmentCourse);
+//			degreeCurricularPlan = new PlanoCurricularCurso("nome", _curso1);
+//			_persistentDegreeCurricularPlan.escreverPlanoCurricular(
+//				degreeCurricularPlan);
+//			_suportePersistente.confirmarTransaccao();
 //
-////			_suportePersistente.iniciarTransaccao();
+//			_suportePersistente.iniciarTransaccao();
 //			_disciplinaCurricular1 =
 //				new CurricularCourse(
 //					new Double(4.0),
@@ -323,42 +341,44 @@ public class TestCaseServicos extends TestCase {
 //					"TFC2",
 //					departmentCourse,
 //					degreeCurricularPlan);
-////			_disciplinaCurricularPersistente.writeCurricularCourse(
-////				_disciplinaCurricular1);
-////			_disciplinaCurricularPersistente.writeCurricularCourse(
-////				_disciplinaCurricular2);
+//			_disciplinaCurricularPersistente.writeCurricularCourse(
+//				_disciplinaCurricular1);
+//			_disciplinaCurricularPersistente.writeCurricularCourse(
+//				_disciplinaCurricular2);
 //
 //			_disciplinaExecucao1 =
-//			new DisciplinaExecucao(
-//				"Trabalho Final Curso",
-//				"TFC",
-//				"programa1",
-//				new Double(2.0),
-//				new Double(1.0),
-//				new Double(1.0),
-//				new Double(1.0),executionPeriod);
+//				new DisciplinaExecucao(
+//					"Trabalho Final Curso",
+//					"TFC",
+//					"programa1",
+//					new Double(2.0),
+//					new Double(1.0),
+//					new Double(1.0),
+//					new Double(1.0),
+//					executionPeriod);
 //			List aCC1 = new ArrayList();
 //			aCC1.add(_disciplinaCurricular1);
 //			_disciplinaExecucao1.setAssociatedCurricularCourses(aCC1);
 //			_disciplinaExecucao2 =
-//			new DisciplinaExecucao(
-//				"Trabalho Final Curso2",
-//				"TFC2",
-//				"programa10",
-//				new Double(1.0),
-//				new Double(1.0),
-//				new Double(1.0),
-//				new Double(1.0),executionPeriod);
+//				new DisciplinaExecucao(
+//					"Trabalho Final Curso2",
+//					"TFC2",
+//					"programa10",
+//					new Double(1.0),
+//					new Double(1.0),
+//					new Double(1.0),
+//					new Double(1.0),
+//					executionPeriod);
 //			List aCC2 = new ArrayList();
 //			aCC2.add(_disciplinaCurricular1);
 //			_disciplinaExecucao1.setAssociatedCurricularCourses(aCC2);
-////			_disciplinaExecucaoPersistente.escreverDisciplinaExecucao(
-////				_disciplinaExecucao1);
-////			_disciplinaExecucaoPersistente.escreverDisciplinaExecucao(
-////				_disciplinaExecucao2);
+//			_disciplinaExecucaoPersistente.escreverDisciplinaExecucao(
+//				_disciplinaExecucao1);
+//			_disciplinaExecucaoPersistente.escreverDisciplinaExecucao(
+//				_disciplinaExecucao2);
 //
-////			_suportePersistente.confirmarTransaccao();
-////			_suportePersistente.iniciarTransaccao();
+//			_suportePersistente.confirmarTransaccao();
+//			_suportePersistente.iniciarTransaccao();
 //			_tipoSala = new TipoSala(TipoSala.ANFITEATRO);
 //			_sala1 =
 //				new Sala(
@@ -368,14 +388,26 @@ public class TestCaseServicos extends TestCase {
 //					_tipoSala,
 //					new Integer(100),
 //					new Integer(50));
-////			_salaPersistente.lockWrite(_sala1);
+//			_salaPersistente.lockWrite(_sala1);
 //			_turma1 =
-//				new Turma("turma1",  new Integer(1), _cursoExecucao1,executionPeriod);
-////			_turmaPersistente.lockWrite(_turma1);
+//				new Turma(
+//					"turma1",
+//					new Integer(1),
+//					_cursoExecucao1,
+//					executionPeriod);
+//			_turmaPersistente.lockWrite(_turma1);
 //			_turma2 =
-//				new Turma("turma2", new Integer(1), _cursoExecucao1,executionPeriod);
+//				new Turma(
+//					"turma2",
+//					new Integer(1),
+//					_cursoExecucao1,
+//					executionPeriod);
 //			_turma3 =
-//				new Turma("turma3",  new Integer(2), _cursoExecucao1,executionPeriod);
+//				new Turma(
+//					"turma3",
+//					new Integer(2),
+//					_cursoExecucao1,
+//					executionPeriod);
 //
 //			_turno1 =
 //				new Turno(
@@ -383,7 +415,7 @@ public class TestCaseServicos extends TestCase {
 //					new TipoAula(TipoAula.TEORICA),
 //					new Integer(100),
 //					_disciplinaExecucao1);
-////			_turnoPersistente.lockWrite(_turno1);
+//			_turnoPersistente.lockWrite(_turno1);
 //
 //			_turno2 =
 //				new Turno(
@@ -392,12 +424,12 @@ public class TestCaseServicos extends TestCase {
 //					new Integer(100),
 //					_disciplinaExecucao1);
 //			_turno3 =
-//							new Turno(
-//								"turno3",
-//								new TipoAula(TipoAula.TEORICA),
-//								new Integer(100),
-//								_disciplinaExecucao2);		
-////			_turnoPersistente.lockWrite(_turno2);
+//				new Turno(
+//					"turno3",
+//					new TipoAula(TipoAula.TEORICA),
+//					new Integer(100),
+//					_disciplinaExecucao2);
+//			_turnoPersistente.lockWrite(_turno2);
 //			_diaSemana1 = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
 //			_inicio = Calendar.getInstance();
 //			_inicio.set(Calendar.HOUR, 8);
@@ -414,8 +446,8 @@ public class TestCaseServicos extends TestCase {
 //					_tipoAula,
 //					_sala1,
 //					_disciplinaExecucao1);
-////			_aulaPersistente.lockWrite(_aula1);
-//			_diaSemana2 = new DiaSemana(DiaSemana.TERCA_FEIRA);			
+//			_aulaPersistente.lockWrite(_aula1);
+//			_diaSemana2 = new DiaSemana(DiaSemana.TERCA_FEIRA);
 //			_aula2 =
 //				new Aula(
 //					_diaSemana2,
@@ -436,8 +468,8 @@ public class TestCaseServicos extends TestCase {
 //					_tipoAula,
 //					_sala1,
 //					_disciplinaExecucao2);
-////			_aulaPersistente.lockWrite(_aula2);
-////			_aulaPersistente.lockWrite(_aula3);			
+//			_aulaPersistente.lockWrite(_aula2);
+//			_aulaPersistente.lockWrite(_aula3);
 //			_aluno1 =
 //				new Student(
 //					new Integer(600),
@@ -445,11 +477,11 @@ public class TestCaseServicos extends TestCase {
 //					_pessoa1,
 //					new TipoCurso(TipoCurso.LICENCIATURA));
 //			_turnoAluno1 = new TurnoAluno(_turno1, _aluno1);
-////			_turnoAlunoPersistente.lockWrite(_turnoAluno1);
+//			_turnoAlunoPersistente.lockWrite(_turnoAluno1);
 //			_turnoAula1 = new TurnoAula(_turno1, _aula1);
-////			_turnoAulaPersistente.lockWrite(_turnoAula1);
+//			_turnoAulaPersistente.lockWrite(_turnoAula1);
 //			_turmaTurno1 = new TurmaTurno(_turma1, _turno1);
-////			_turmaTurnoPersistente.lockWrite(_turmaTurno1);
+//			_turmaTurnoPersistente.lockWrite(_turmaTurno1);
 //			_sala2 =
 //				new Sala(
 //					new String("Ga2"),
@@ -458,13 +490,13 @@ public class TestCaseServicos extends TestCase {
 //					_tipoSala,
 //					new Integer(100),
 //					new Integer(50));
-////			_suportePersistente.confirmarTransaccao();
-////		} catch (ExcepcaoPersistencia excepcao) {
-////			fail("Exception when setUp");
-////		}
+//			_suportePersistente.confirmarTransaccao();
+//		} catch (ExcepcaoPersistencia excepcao) {
+//			fail("Exception when setUp");
+//		}
 //		_gestor = GestorServicos.manager();
-//		String argsAutenticacao[] = { "user", "pass" };
-//		String argsAutenticacao2[] = { "4", "a" };
+//		String argsAutenticacao[] = { "nome", "pass" };
+//		String argsAutenticacao2[] = { "nome2", "pass2" };
 //		try {
 //			/* user View from _pessoa1 */
 //			_userView =
@@ -482,19 +514,13 @@ public class TestCaseServicos extends TestCase {
 //					"Autenticacao",
 //					argsAutenticacao2);
 //		} catch (Exception ex) {
-//			System.out.println("Servio no executado: " + ex);
+//			System.out.println("Servico no executado: " + ex);
 //		}
 	}
-	protected void tearDown() {
-		try {
-			dbAcessPoint.openConnection();
-			dbAcessPoint.loadDataBase("etc/testBackup.xml");
-			//dbAcessPoint.loadDataBase("etc/testDataSet.xml");
-			dbAcessPoint.closeConnection();
-		} catch (Exception ex) {
-			System.out.println("Tear down failed: " +ex);
-		}
-	}
+	
+//	protected void tearDown() {
+//		//cleanData();
+//	}
 	protected void ligarSuportePersistente() {
 		try {
 			_suportePersistente = SuportePersistenteOJB.getInstance();
@@ -503,21 +529,34 @@ public class TestCaseServicos extends TestCase {
 			_salaPersistente = _suportePersistente.getISalaPersistente();
 			_turmaPersistente = _suportePersistente.getITurmaPersistente();
 			_turnoPersistente = _suportePersistente.getITurnoPersistente();
-			_turnoAlunoPersistente = _suportePersistente.getITurnoAlunoPersistente();
-			_turnoAulaPersistente =	_suportePersistente.getITurnoAulaPersistente();
-			_turmaTurnoPersistente = _suportePersistente.getITurmaTurnoPersistente();
-			_cursoExecucaoPersistente =	_suportePersistente.getICursoExecucaoPersistente();
+			_turnoAlunoPersistente =
+				_suportePersistente.getITurnoAlunoPersistente();
+			_turnoAulaPersistente =
+				_suportePersistente.getITurnoAulaPersistente();
+			_turmaTurnoPersistente =
+				_suportePersistente.getITurmaTurnoPersistente();
+			_cursoExecucaoPersistente =
+				_suportePersistente.getICursoExecucaoPersistente();
 			_cursoPersistente = _suportePersistente.getICursoPersistente();
-			_disciplinaCurricularPersistente = _suportePersistente.getIPersistentCurricularCourse();
-			_disciplinaExecucaoPersistente = _suportePersistente.getIDisciplinaExecucaoPersistente();
+			_disciplinaCurricularPersistente =
+				_suportePersistente.getIPersistentCurricularCourse();
+			_disciplinaExecucaoPersistente =
+				_suportePersistente.getIDisciplinaExecucaoPersistente();
 			_alunoPersistente = _suportePersistente.getIPersistentStudent();
-			_frequentaPersistente =	_suportePersistente.getIFrequentaPersistente();
-			_persistentDepartmentCourse = _suportePersistente.getIDisciplinaDepartamentoPersistente();
-			_persistentDegreeCurricularPlan = _suportePersistente.getIPlanoCurricularCursoPersistente();
-			_persistentDepartment = _suportePersistente.getIDepartamentoPersistente();
-			_persistentStudentCurricularPlan = _suportePersistente.getIStudentCurricularPlanPersistente();
-			persistentExecutionPeriod = _suportePersistente.getIPersistentExecutionPeriod();
-			persistentExecutionYear = _suportePersistente.getIPersistentExecutionYear();
+			_frequentaPersistente =
+				_suportePersistente.getIFrequentaPersistente();
+			_persistentDepartmentCourse =
+				_suportePersistente.getIDisciplinaDepartamentoPersistente();
+			_persistentDegreeCurricularPlan =
+				_suportePersistente.getIPlanoCurricularCursoPersistente();
+			_persistentDepartment =
+				_suportePersistente.getIDepartamentoPersistente();
+			_persistentStudentCurricularPlan =
+				_suportePersistente.getIStudentCurricularPlanPersistente();
+			persistentExecutionPeriod =
+				_suportePersistente.getIPersistentExecutionPeriod();
+			persistentExecutionYear =
+				_suportePersistente.getIPersistentExecutionYear();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Exception when opening database");
 		}
@@ -550,4 +589,5 @@ public class TestCaseServicos extends TestCase {
 			fail("Exception when cleaning data");
 		}
 	}
+
 }
