@@ -1,8 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page import="DataBeans.InfoDepartmentCourse" %>
-<%@ page language="java" %>
 
 <h2><bean:message key="label.manager.insert.curricularCourse" /></h2>
 
@@ -106,7 +103,7 @@
 			<td>
 				<html:select property="departmentCourse">
 					<html:options collection="departmentCoursesList" property="value" labelProperty="label"/>
-				</html:select>
+				</html:select>				
 			</td>
 		</tr>
 		<tr>

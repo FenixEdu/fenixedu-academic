@@ -56,6 +56,17 @@
 				<form-property name="basic" type="java.lang.String" />
 				<form-property name="departmentCourse" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="executionDegreeForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">
+                <form-property name="degreeId" type="java.lang.Integer" />
+                <form-property name="degreeCurricularPlanId" type="java.lang.Integer" />
+				<form-property name="executionYear" type="java.lang.String" />
+				<form-property name="coordinatorId" type="java.lang.String" />
+				<form-property name="tempExamMap" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>    
 
 	  <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
@@ -176,7 +187,7 @@
       
        <!-- Action for reading a degreeCurricularPlan -->
       <action path="/readDegreeCurricularPlan"
-      	      name="curricularCourseForm"
+      	      name="executionDegreeForm"
               input="/readDegreeInput.do"
               scope="request"
       	      type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlanAction">
@@ -242,6 +253,18 @@
 		type="ServidorApresentacao.Action.manager.InsertCurricularCourseDispatchAction"
         validate="true">  
        <forward name="insertCurricularCourse" path="df.page.insert-curricular-course"/>
+       <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
+	</action>
+	
+	<!-- Action for inserting an execution degree  -->
+	<action
+		path="/insertExecutionDegree"
+		name="executionDegreeForm"
+		input="/insertExecutionDegree.do?method=prepareInsert&amp;page=0"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.InsertExecutionDegreeDispatchAction">  
+       <forward name="insertExecutionDegree" path="df.page.insert-execution-degree"/>
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
 	</action>
     

@@ -34,6 +34,10 @@
 		<put name="body" value="/manager/insertCurricularCourse_bd.jsp" />
 		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
 	</definition>
+	<definition name="df.page.insert-execution-degree" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/insertExecutionDegree_bd.jsp" />
+		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
+	</definition>
 	<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 	<definition name="df.page.manage-execution-periods" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageExecutionPeriods_bd.jsp" />

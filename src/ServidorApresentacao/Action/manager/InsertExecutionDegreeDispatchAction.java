@@ -1,5 +1,5 @@
 /*
- * Created on 8/Ago/2003
+ * Created on 14/Ago/2003
  */
 package ServidorApresentacao.Action.manager;
 
@@ -20,7 +20,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import DataBeans.InfoDepartmentCourse;
+import DataBeans.InfoExecutionYear;
+import DataBeans.InfoTeacher;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -32,7 +33,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author lmac1
  */
 
-public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
+public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 
 
 	public ActionForward prepareInsert(
@@ -49,32 +50,53 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 				Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 				
 				GestorServicos manager = GestorServicos.manager();
+				String label, value;
 				List result = null;
+				
+		/*   Needed service and creation of bean of InfoTeachers for use in jsp   */    
 				try {
-						result = (List) manager.executar(userView, "ReadDepartmentCoursesService", null);
+						result = (List) manager.executar(userView, "ReadTeachersService", null);
 				} catch (FenixServiceException e) {
 					throw new FenixActionException(e);
 				}
-				
-//			creation of bean of InfoDepartmentCourses for use in jsp
-				ArrayList departmentCoursesList = new ArrayList();
+							
+				ArrayList infoTeachersList = new ArrayList();
 				if(result != null) {
-					departmentCoursesList.add(new LabelValueBean("", ""));
-					InfoDepartmentCourse infoDepartmentCourse;
+					InfoTeacher infoTeacher;
 					Iterator iter = result.iterator();
-					String label, value;
 					while(iter.hasNext()) {
-						infoDepartmentCourse = (InfoDepartmentCourse) iter.next();
-						value = infoDepartmentCourse.getCode() + "-" + infoDepartmentCourse.getName();
-						label = infoDepartmentCourse.getCode() + " - " + infoDepartmentCourse.getName();
-						departmentCoursesList.add(new LabelValueBean(label, value));
+						infoTeacher = (InfoTeacher) iter.next();
+						value = infoTeacher.getIdInternal().toString();
+						label = infoTeacher.getTeacherNumber() + " - " + infoTeacher.getInfoPerson().getNome();
+						infoTeachersList.add(new LabelValueBean(label, value));
 					}
-					request.setAttribute("departmentCoursesList", departmentCoursesList);
+					request.setAttribute("infoTeachersList", infoTeachersList);
+				}
+				
+		/*   Needed service and creation of bean of InfoExecutionYears for use in jsp   */
+				result = null;
+				try {
+						result = (List) manager.executar(userView, "ReadExecutionYearsService", null);
+				} catch (FenixServiceException e) {
+					throw new FenixActionException(e);
+				}
+							
+				ArrayList infoExecutionYearsList = new ArrayList();
+				if(result != null) {
+					InfoExecutionYear infoExecutionYear;
+					Iterator iter = result.iterator();
+					while(iter.hasNext()) {
+						infoExecutionYear = (InfoExecutionYear) iter.next();
+						value = infoExecutionYear.getYear();
+						label = infoExecutionYear.getYear();
+						infoExecutionYearsList.add(new LabelValueBean(label, value));
+					}
+					request.setAttribute("infoExecutionYearsList", infoExecutionYearsList);
 				}
 				
 				request.setAttribute("degreeId", degreeId);
 				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
-				return mapping.findForward("insertCurricularCourse");
+				return mapping.findForward("insertExecutionDegree");
 	}
 
 
@@ -92,30 +114,26 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
     	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
-//		A universidade ainda não está bem pois não existe universityOJB. implica + tard alterar o jsp...
 		
-		Object args[] = { (String) dynaForm.get("name"), (String) dynaForm.get("code"),
-			            	(String) dynaForm.get("credits"), (String) dynaForm.get("theoreticalHours"),
-							(String) dynaForm.get("praticalHours"), (String) dynaForm.get("theoPratHours"),
-							(String) dynaForm.get("labHours"), (String) dynaForm.get("type"),
-							(String) dynaForm.get("mandatory"), (String) dynaForm.get("basic"),
-							(String) dynaForm.get("departmentCourse"), degreeCurricularPlanId };
-							
+		Object args[] = { (String) dynaForm.get("executionYear"), (String) dynaForm.get("coordinatorId"),
+							(String) dynaForm.get("tempExamMap"), degreeCurricularPlanId };
+		
 		GestorServicos manager = GestorServicos.manager();
-		List serviceResult = null;
+		String serviceResult = null;
 		
 		try {
-				serviceResult = (List) manager.executar(userView, "InsertCurricularCourseService", args);
+				serviceResult = (String) manager.executar(userView, "InsertExecutionDegreeService", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 		
 		if(serviceResult != null) {
 			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = new ActionError("message.existingCurricularCourse", serviceResult.get(0), serviceResult.get(1));
-			actionErrors.add("message.existingCurricularCourse", error);			
+			ActionError error = new ActionError("message.existingExecutionDegree", serviceResult);
+			actionErrors.add("message.existingExecutionDegree", error);			
 			saveErrors(request, actionErrors);
 		}
+		
 		return mapping.findForward("readDegreeCurricularPlan");
 	}			
 }

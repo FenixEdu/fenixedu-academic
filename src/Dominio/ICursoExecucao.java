@@ -18,9 +18,11 @@ public interface ICursoExecucao extends Serializable, IDomainObject {
   IExecutionYear getExecutionYear();
   IDegreeCurricularPlan getCurricularPlan();
   ITeacher getCoordinator();
+  Boolean getTemporaryExamMap();
   
   void setCurricularPlan (IDegreeCurricularPlan curricularPlan);
   void setExecutionYear(IExecutionYear newExecutionYear);
   void setCoordinator(ITeacher coordinator);
+  void setTemporaryExamMap(Boolean bool);
   
 }

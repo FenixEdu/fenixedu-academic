@@ -115,9 +115,9 @@
 					<bean:define id="tempExamMap" name="executionDegree" property="temporaryExamMap"/>
 					<% String printing;
 					   if(tempExamMap.toString() == "true")
-					   		printing="Sim";
+					   		printing = "Sim";
 					   else
-					    	printing="Não"; %>
+					    	printing = "Não"; %>
 					<td class="listClasses"><%= printing %>
 					</td>
 	 			</tr>

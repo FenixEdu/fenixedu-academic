@@ -1,0 +1,58 @@
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+
+<h2><bean:message key="label.manager.insert.executionDegree" /></h2>
+
+<br>
+
+<html:form action="/insertExecutionDegree" method ="get">
+	    
+	<html:hidden property="page" value="1"/>
+	<html:hidden property="method" value="insert"/>
+	<html:hidden property="degreeId"/>
+	<html:hidden property="degreeCurricularPlanId"/>
+	
+	<table>
+		<tr>
+			<td>
+				<bean:message key="label.manager.executionDegree.coordinator"/>
+			</td>
+			<td>
+				<html:select property="coordinatorId">
+					<html:options collection="infoTeachersList" property="value" labelProperty="label"/>
+				</html:select>				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="label.manager.executionDegree.executionYear"/>
+			</td>
+			<td>
+				<html:select property="executionYear">
+					<html:options collection="infoExecutionYearsList" property="value" labelProperty="label"/>
+				</html:select>				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="label.manager.executionDegree.temporaryExamMap"/>
+			</td>
+			<td>
+				<html:select property="tempExamMap">
+				<html:option value=""/>
+				<html:option key="option.manager.true" value="true"/>
+    			<html:option key="option.manager.false" value="false"/>
+    			</html:select>
+			</td>
+		</tr>
+	</table>
+	
+	<br>
+	
+	<html:submit styleClass="inputbutton">
+		<bean:message key="button.save"/>
+	</html:submit>
+	<html:reset  styleClass="inputbutton">
+		<bean:message key="label.clear"/>
+	</html:reset>
+</html:form>
