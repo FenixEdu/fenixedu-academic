@@ -33,13 +33,14 @@ import Util.TipoCurso;
  */
 public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 {
+
+	
 	public ReadEnrollmentsWithStateEnrolledByStudent()
 	{
 	}
 
 	public Object run(InfoStudent infoStudent, TipoCurso degreeType) throws FenixServiceException
 	{
-		System.out.println("ReadEnrollmentsWithStateEnrolledByStudent");
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
 		try
 		{
@@ -67,11 +68,12 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 					EnrolmentState.ENROLED);
 
 			infoStudentEnrolmentContext = buildResult(studentCurricularPlan, enrollments);
-			
-			if(infoStudentEnrolmentContext == null){
+
+			if (infoStudentEnrolmentContext == null)
+			{
 				throw new FenixServiceException("");
 			}
-			
+
 		}
 		catch (ExcepcaoPersistencia e)
 		{
@@ -103,11 +105,11 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 			}
 		});
 		Collections.sort(infoEnrollments, new BeanComparator(("infoCurricularCourse.name")));
-		
+
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
 		infoStudentEnrolmentContext.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 		infoStudentEnrolmentContext.setStudentInfoEnrollmentsWithStateEnrolled(infoEnrollments);
-		
+
 		return infoStudentEnrolmentContext;
 	}
 }

@@ -6,7 +6,7 @@
 
 <span class="error"><html:errors/></span>
 <html:form action="/courseEnrolmentWithoutRulesManagerDA" focus="studentNumber">
-	<html:hidden property="method" value="readExecutionCourseEnrollments"/>
+	<html:hidden property="method" value="readEnrollments"/>
 	<html:hidden property="page" value="1"/>
 	<logic:present name="degreeType">
 		<html:hidden property="degreeType" value="<%=pageContext.findAttribute("degreeType").toString()%>"/>

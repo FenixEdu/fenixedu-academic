@@ -50,7 +50,7 @@ public class WriteEnrolment implements IService
 		Integer executionDegreeId, 
 		Integer studentCurricularPlanID,
 		Integer curricularCourseID,
-		Integer executionPerriodID)
+		Integer executionPeriodID)
 		throws FenixServiceException
 	{
 		try
@@ -74,7 +74,7 @@ public class WriteEnrolment implements IService
 					curricularCourseID);
 
 			IExecutionPeriod executionPeriod = null;
-			if (executionPerriodID == null)
+			if (executionPeriodID == null)
 			{
 				executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 			}
@@ -83,7 +83,7 @@ public class WriteEnrolment implements IService
 				executionPeriod =
 					(IExecutionPeriod) executionPeriodDAO.readByOID(
 						ExecutionPeriod.class,
-						executionPerriodID);
+						executionPeriodID);
 			}
 
 			IEnrolment enrolment =

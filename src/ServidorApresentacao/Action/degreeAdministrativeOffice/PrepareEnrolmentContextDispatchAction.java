@@ -118,7 +118,7 @@ public class PrepareEnrolmentContextDispatchAction extends DispatchAction
         return infoExecutionDegreesList;
     }
 
-    private Integer getChosenInfoExecutionDegreeIndex(ActionForm form) throws FenixActionException
+    private Integer getChosenInfoExecutionDegreeIndex(ActionForm form)
     {
         DynaActionForm getDegreeAndCurricularSemesterAndCurricularYearForm = (DynaActionForm) form;
         Integer infoChosenExecutionDegreeIndex =
@@ -181,7 +181,7 @@ public class PrepareEnrolmentContextDispatchAction extends DispatchAction
 		return result;
 	}
 
-    private Integer getStudentOID(ActionForm form) throws FenixActionException
+    private Integer getStudentOID(ActionForm form)
     {
         DynaActionForm getDegreeAndCurricularSemesterAndCurricularYearForm = (DynaActionForm) form;
         Integer studentOID =
@@ -189,7 +189,7 @@ public class PrepareEnrolmentContextDispatchAction extends DispatchAction
         return studentOID;
     }
 
-    private Integer getExecutionPeriodOID(ActionForm form) throws FenixActionException
+    private Integer getExecutionPeriodOID(ActionForm form)
     {
         DynaActionForm getDegreeAndCurricularSemesterAndCurricularYearForm = (DynaActionForm) form;
         Integer executionPeriodOID =

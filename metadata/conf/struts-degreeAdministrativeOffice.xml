@@ -62,9 +62,14 @@
 		
 		<!-- ******************* Enrollment Without Rule**************** -->
 		<form-bean name="curricularCoursesEnrollmentWithoutRuleForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="studentNumber" type="java.lang.String"/>			
 			<form-property name="executionYear" type="java.lang.String"/>
 			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="executionDegree" type="java.lang.String"/>
+			<form-property name="curricularYears" type="java.lang.Integer[]"/>
+			<form-property name="curricularSemesters" type="java.lang.Integer[]"/>
+			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
+			<form-property name="unenrollments" type="java.lang.Integer[]"/>			
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -299,7 +304,10 @@
 			scope="request"
 			parameter="method">
 			<forward name="curricularCourseEnrollmentList" path="df.page.curricularCourseEnrollmentList"/>
-		</action>	
+			<forward name="readCurricularCourseEnrollmentList" path="/courseEnrolmentWithoutRulesManagerDA.do?method=readEnrollments" />
+			<forward name="choosesForEnrollment" path="df.page.choosesForEnrollment" />
+			<forward name="showCurricularCourseToEnroll" path="df.page.showCurricularCourseToEnroll" />
+		</action>		
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
