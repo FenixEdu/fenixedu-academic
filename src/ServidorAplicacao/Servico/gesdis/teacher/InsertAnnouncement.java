@@ -12,9 +12,7 @@ import java.util.Date;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import DataBeans.gesdis.InfoAnnouncement;
 import DataBeans.gesdis.InfoSite;
-import DataBeans.util.Cloner;
 import Dominio.Announcement;
 import Dominio.IAnnouncement;
 import Dominio.IDisciplinaExecucao;
@@ -78,7 +76,7 @@ public class InsertAnnouncement implements IServico {
     /**
      * Executes the service.
      */
-    public InfoAnnouncement run (InfoSite infoSite, String newAnnouncementTitle, String newAnnouncementInformation) throws FenixServiceException {
+    public boolean run (InfoSite infoSite, String newAnnouncementTitle, String newAnnouncementInformation) throws FenixServiceException {
 		ISite site = null;
 
 		//retrieve current date
@@ -130,6 +128,6 @@ public class InsertAnnouncement implements IServico {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
         
-		return Cloner.copyIAnnouncement2InfoAnnouncement(newAnnouncement);
+		return true;
     }
 }
