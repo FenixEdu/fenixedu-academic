@@ -53,7 +53,7 @@ public class EditGrantQualificationAction extends DispatchAction
 		DynaValidatorForm grantQualificationForm = (DynaValidatorForm) form;
 		IUserView userView = SessionUtils.getUserView(request);
 
-		if (idQualification != null) //Edit
+		if (idQualification != null && request.getParameter("load") != null) //Edit
 		{
 			try
 			{
@@ -71,12 +71,7 @@ public class EditGrantQualificationAction extends DispatchAction
 			}
 			catch (FenixServiceException e)
 			{
-				return setError(
-					request,
-					mapping,
-					"errors.grant.qualification.read",
-					"manage-grant-qualification",
-					null);
+				return setError(request,mapping,"errors.grant.qualification.read","manage-grant-qualification",null);
 			}
 		}
 		else //New
@@ -205,8 +200,7 @@ public class EditGrantQualificationAction extends DispatchAction
 		form.set("school", infoGrantQualification.getSchool());
 		form.set("title", infoGrantQualification.getTitle());
 		form.set("degree", infoGrantQualification.getDegree());
-		if (infoGrantQualification.getDate() != null)
-			form.set("qualificationDate", sdf.format(infoGrantQualification.getDate()));
+		form.set("qualificationDate", sdf.format(infoGrantQualification.getDate()));
 		form.set("branch", infoGrantQualification.getBranch());
 		form.set("specializationArea", infoGrantQualification.getSpecializationArea());
 		form.set("degreeRecognition", infoGrantQualification.getDegreeRecognition());
@@ -226,18 +220,16 @@ public class EditGrantQualificationAction extends DispatchAction
 		InfoQualification infoQualification = new InfoQualification();
 		InfoPerson infoPerson = new InfoPerson();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		if (editGrantQualificationForm.get("qualificationDate") != null
-			&& !editGrantQualificationForm.get("qualificationDate").equals(""))
-		{
-			infoQualification.setDate(
-				sdf.parse((String) editGrantQualificationForm.get("qualificationDate")));
-		}
-		if (editGrantQualificationForm.get("equivalenceDate") != null
+
+        if (editGrantQualificationForm.get("equivalenceDate") != null
 			&& !editGrantQualificationForm.get("equivalenceDate").equals(""))
 		{
 			infoQualification.setEquivalenceDate(
 				sdf.parse((String) editGrantQualificationForm.get("equivalenceDate")));
-		} 
+		}
+		infoQualification.setDate(
+			sdf.parse((String) editGrantQualificationForm.get("qualificationDate")));
+
 		if (editGrantQualificationForm.get("idQualification") != null
 			&& !editGrantQualificationForm.get("idQualification").equals(""))
 			infoQualification.setIdInternal((Integer) editGrantQualificationForm.get("idQualification"));

@@ -101,7 +101,7 @@
             <field property="school" depends="required" page="1">
 				<arg0 key="label.grant.qualification.school" resource="true"/>
             </field>			
-            <field property="date" depends="required, mask, date" page="1">
+            <field property="qualificationDate" depends="required, mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 				<msg name="mask" key="errors.invalid.date"/>
 				<arg0 key="label.grant.qualification.qualificationDate" resource="true"/>

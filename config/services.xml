@@ -2279,8 +2279,17 @@
         </filterChains>
     </service>
     <service>
-        <name>CreateGrantType</name>
-        <implementationClass> ServidorAplicacao.Servico.grant.contract.CreateGrantType</implementationClass>
+        <name>EditGrantType</name>
+        <implementationClass> ServidorAplicacao.Servico.grant.contract.EditGrantType</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadGrantType</name>
+        <implementationClass> ServidorAplicacao.Servico.grant.contract.ReadGrantType</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5362,6 +5371,16 @@
         <name>EditGrantSubsidy</name>
         <implementationClass>
             ServidorAplicacao.Servico.grant.contract.EditGrantSubsidy</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadActualGrantSubsidyByGrantContract</name>
+        <implementationClass>
+            ServidorAplicacao.Servico.grant.contract.ReadActualGrantSubsidyByGrantContract</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>

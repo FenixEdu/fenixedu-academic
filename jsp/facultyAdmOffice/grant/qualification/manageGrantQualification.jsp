@@ -52,18 +52,18 @@
                 <bean:write name="infoGrantQualification" property="school"/>
             </td>
             <td class="listClasses">
-                <logic:present name="infoGrantQualification" property="qualificationDate">
+                <logic:present name="infoGrantQualification" property="date">
                     <dt:format pattern="dd-MM-yyyy">
-                        <bean:write name="infoGrantQualification" property="qualificationDate.time"/>
+                        <bean:write name="infoGrantQualification" property="date.time"/>
                     </dt:format>
                 </logic:present>
-                <logic:notPresent name="infoGrantQualification" property="qualificationDate">
+                <logic:notPresent name="infoGrantQualification" property="date">
                     ---
                 </logic:notPresent>
             </td>
             <td class="listClasses">
                 <bean:define id="idQualification" name="infoGrantQualification" property="idInternal"/>
-                <html:link page='<%= "/editGrantQualification.do?method=prepareEditGrantQualificationForm&amp;idQualification=" + idQualification + "&amp;idInternal=" + request.getAttribute("idInternal").toString() %>' > 
+                <html:link page='<%= "/editGrantQualification.do?method=prepareEditGrantQualificationForm&amp;idQualification=" + idQualification + "&amp;idInternal=" + request.getAttribute("idInternal").toString()+ "&amp;load=" + 1 %>' > 
                     <bean:message key="link.grant.qualification.edit" />
                 </html:link>
             </td>

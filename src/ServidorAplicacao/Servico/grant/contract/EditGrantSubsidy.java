@@ -58,7 +58,6 @@ public class EditGrantSubsidy extends EditDomainObjectService
 		IDomainObject domainObjectLocked,
 		InfoObject infoObject,
 		ISuportePersistente sp)
-		throws FenixServiceException
 	{
         IGrantSubsidy grantSubsidy = (IGrantSubsidy) domainObjectLocked;
         InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) infoObject;

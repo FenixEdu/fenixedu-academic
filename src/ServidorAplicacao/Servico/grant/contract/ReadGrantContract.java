@@ -43,7 +43,7 @@ public class ReadGrantContract extends ReadDomainObjectService implements IServi
 	 * 
 	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
 	 */
-	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
+	protected IPersistentObject getIPersistentObject(ISuportePersistente sp)   
 	{
 		return sp.getIPersistentGrantContract();
 	}

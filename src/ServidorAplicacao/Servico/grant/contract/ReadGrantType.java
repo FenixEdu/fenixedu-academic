@@ -11,7 +11,6 @@ import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantType;
 import Dominio.grant.contract.IGrantType;
 import ServidorAplicacao.Servico.framework.ReadDomainObjectService;
-import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 
@@ -34,7 +33,7 @@ public class ReadGrantType extends ReadDomainObjectService implements IService
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
     {
         return sp.getIPersistentGrantType();
     }
