@@ -17,7 +17,7 @@
 <br/>
 <bean:message key="message.weekdays"/>
 <br/>
-<html:form action="/criarAulaForm">
+<html:form action="/criarAulaForm" focus="diaSemana">
 <table cellspacing="0">
 	<tr>
       	<td nowrap class="formTD"><bean:message key="property.aula.weekDay"/>: </td>
@@ -28,16 +28,16 @@
    	<tr>
     	<td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.begining"/>: </td>
         <td nowrap="nowrap">
-          	<html:text property="horaInicio"  size="1"/> :
-            <html:text property="minutosInicio" size="1"/>
+          	<html:text property="horaInicio"  size="2"/> :
+            <html:text property="minutosInicio" size="2"/>
      	</td>
    	</tr>
     <tr>
         <td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.end"/>: </td>
         <td nowrap="nowrap">
-         	<html:text property="horaFim"  size="1"/>
+         	<html:text property="horaFim"  size="2"/>
             	:
-            <html:text property="minutosFim"  size="1"/>
+            <html:text property="minutosFim"  size="2"/>
         </td> 
  	</tr> 
     <tr>

@@ -47,11 +47,12 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 		if (studentCurricularPlan.getGivenCredits() != null) {
 			studentCredits += studentCurricularPlan.getGivenCredits().floatValue();
 		}
-		
+
 		while(iterator.hasNext()){
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))&&
 				(!(enrolment instanceof IEnrolmentInExtraCurricularCourse))){
+
 				studentCredits += enrolment.getCurricularCourseScope().getCurricularCourse().getCredits().floatValue(); 
 			}
 		}
@@ -123,25 +124,34 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 //	public static void main(String[] args) throws ExcepcaoPersistencia{
 //		
 //		SuportePersistenteOJB.getInstance().iniciarTransaccao();
-//		ICurso degree = SuportePersistenteOJB.getInstance().getICursoPersistente().readBySigla("MC");
+//		ICurso degree = SuportePersistenteOJB.getInstance().getICursoPersistente().readBySigla("MMA");
 //		
 //		IDegreeCurricularPlan degreeCurricularPlan = SuportePersistenteOJB.getInstance().getIPersistentDegreeCurricularPlan().readByNameAndDegree(
-//			"MC02/03", degree);
+//			"MMA02/03", degree);
 //			
 //			
-//			
-//		System.out.println();
 //			
 //		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
 //		IMasterDegreeCurricularPlanStrategy degreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(degreeCurricularPlan);
 //		
 //		
 //		IStudentCurricularPlan studentCurricularPlan = SuportePersistenteOJB.getInstance().getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
-//				new Integer(5124), TipoCurso.MESTRADO_OBJ);
+//				new Integer(5145), TipoCurso.MESTRADO_OBJ);
 //		
 //		
 //		System.out.println(Data.format2DayMonthYear(degreeCurricularPlanStrategy.dateOfEndOfScholarship(studentCurricularPlan)));
-//				
+//		System.out.println(degreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan));
+//		System.out.println(degreeCurricularPlanStrategy.calculateStudentRegularAverage(studentCurricularPlan));
+//		System.out.println(degreeCurricularPlanStrategy.calculateStudentWeightedAverage(studentCurricularPlan));
+//		
+//		InfoFinalResult infoFinalResult = new InfoFinalResult();
+//		infoFinalResult.setAverageSimple("4.5");
+//		
+//		degreeCurricularPlanStrategy.calculateStudentAverage(studentCurricularPlan, infoFinalResult);
+//		
+//		System.out.println(infoFinalResult.getFinalAverage());
+//		
+//		
 //		SuportePersistenteOJB.getInstance().confirmarTransaccao();
 //		
 //	}

@@ -158,7 +158,8 @@
 			element-class-ref="Dominio.Aula"
 			indirection-table="SHIFT_LESSON"
 			proxy="true"
-			auto-retrieve="true">
+			auto-retrieve="true"
+			refresh="true">
 		<fk-pointing-to-this-class column="KEY_SHIFT"/>
 		<fk-pointing-to-element-class column="KEY_LESSON"/>
 	</collection-descriptor>

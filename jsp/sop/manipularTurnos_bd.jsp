@@ -29,7 +29,7 @@
             	<td class="listClasses-header">&nbsp;</td>
             	<td class="listClasses-header"><bean:message key="property.shift.name"/></td>
 		        <td class="listClasses-header"><bean:message key="property.shift.type"/></td>
-	            <td class="listClasses-header"><bean:message key="property.shift"/></td> 
+				<td class="listClasses-header"><bean:message key="property.lessons"/></td>
 	          	<td class="listClasses-header"><bean:message key="property.shift.capacity"/></td>
             	<td class="listClasses-header"><bean:message key="label.link.shift.classes"/></td>
             </tr>

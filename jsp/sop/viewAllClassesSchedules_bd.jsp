@@ -28,7 +28,7 @@
 		<h2><bean:message key="title.class.timetable" /><bean:write name="viewClassSchedule" property="infoClass.nome" /></h2>
 	   	<br/>
 	   	<bean:define id="lessons" name="viewClassSchedule" property="classLessons"/>
-		<div align="center"><app:gerarHorario name="lessons" type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"/></div>
+		<div align="center"><app:gerarHorario name="lessons" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/></div>
 		<br style="page-break-before:always;" />
 	</logic:iterate>
 </logic:present>

@@ -83,7 +83,8 @@
     </table>   
 <br/>
 <br/> 
-	<html:link href="<%= "mailto:" + mailingList %>"><bean:message key="message.emailStudents"/></html:link>
+<%-- TODO: See if works in IE --%>
+<%--	<html:link href="<%= "mailto:" + mailingList %>"><bean:message key="message.emailStudents"/></html:link> --%>
 </logic:notEqual>
     
 </logic:present>

@@ -245,7 +245,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		InfoSiteEvaluation component,
 		ISite site) {
 		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
-		List evaluations = executionCourse.getAssociatedExams();
+		List evaluations = executionCourse.getAssociatedEvaluations();
 		List infoEvaluations = new ArrayList();
 		Iterator iter = evaluations.iterator();
 		while (iter.hasNext()) {

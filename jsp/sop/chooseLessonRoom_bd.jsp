@@ -14,7 +14,7 @@
 <h2><bean:message key="title.criarAula"/></h2>
 <span class="error"><html:errors/></span>
 <bean:message key="message.createLesson"/>
-	<html:form action="/criarAulaForm">
+	<html:form action="/criarAulaForm" focus="nomeSala" >
 	<html:hidden property="page" value="2"/>
 <table cellspacing="0">
 	<tr>
