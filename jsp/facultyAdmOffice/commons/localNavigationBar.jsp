@@ -5,7 +5,7 @@
 <logic:present role="grantOwnerManager">
 	<%-- GRANT OWNER MANAGEMENT APPLICATIONS  --%>
 	
-	<strong>&raquo; <bean:message key="link.group.grantsManagement.title"/></strong>
+	<%--<strong>&raquo; <bean:message key="link.group.grantsManagement.title"/></strong>
 	<ul>
 		<li>
 			<html:link page="/searchGrantOwner.do?method=searchForm">
@@ -31,7 +31,7 @@
 		</li>
 	</ul>
 	
-	<br/>
+	<br/> --%>
 	
 </logic:present>
 
