@@ -21,24 +21,28 @@
 
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 
-<h2><bean:message key="property.executionCourse.associatedCurricularCourses"/></h2>
+	<h2><bean:message key="property.executionCourse.associatedCurricularCourses"/></h2>
 	<logic:present name="publico.infoCurricularCourses" scope="session">
-			<table align="center" cellspacing="0" cellpadding="0" >
-					<tr class="timeTable_line" align="center">
-						<td class="horariosHoras_first">
-							<bean:message key="property.curricularCourse.name"/>
-						</td>
-						<td class="horariosHoras_first">
-							<bean:message key="property.degree.initials"/>
-						</td>
-						<td class="horariosHoras_first">
-							<bean:message key="property.curricularCourse.curricularYear"/>
-						</td>
-						<td class="horariosHoras_first">
-							<bean:message key="property.curricularCourse.semester"/>
-						</td>
-					</tr>			
-				<logic:iterate id="curricularCourse" name="publico.infoCurricularCourses" scope="session">
+		<table align="center" cellspacing="0" cellpadding="5" >
+			<tr class="timeTable_line" align="center">
+				<td class="horariosHoras_first">
+					<bean:message key="property.curricularCourse.name"/>
+				</td>
+				<td class="horariosHoras_first">
+					<bean:message key="property.degree.initials"/>
+				</td>
+				<td class="horariosHoras_first">
+					<bean:message key="property.curricularCourse.branch"/>
+				</td>
+				<td class="horariosHoras_first">
+					<bean:message key="property.curricularCourse.curricularYear"/>
+				</td>
+				<td class="horariosHoras_first">
+					<bean:message key="property.curricularCourse.semester"/>
+				</td>
+			</tr>
+			<logic:iterate id="curricularCourse" name="publico.infoCurricularCourses" scope="session">
+				<logic:iterate id="infoCurricularCourseScope" name="curricularCourse" property="infoScopes">
 					<tr class="timeTable_line" align="center">
 						<td class="horariosHoras_first">
 							<bean:write name="curricularCourse" property="name"/>
@@ -47,18 +51,18 @@
 							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>
 						</td>
 						<td class="horariosHoras_first">
-							<logic:iterate id="infoCurricularCourseScope" name="curricularCourse" property="infoScopes">
-								<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>&nbsp;
-							</logic:iterate>
+							<bean:write name="infoCurricularCourseScope" property="infoBranch.name"/>&nbsp;
 						</td>
 						<td class="horariosHoras_first">
-							<logic:iterate id="infoCurricularCourseScope" name="curricularCourse" property="infoScopes">
-								<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>&nbsp;
-							</logic:iterate>
+							<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>&nbsp;
+						</td>
+						<td class="horariosHoras_first">
+							<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>&nbsp;
 						</td>
 					</tr>
 				</logic:iterate>
-			</table>			
+			</logic:iterate>
+		</table>
 	</logic:present>
 	
 <logic:notPresent name="publico.infoCurricularCourses" scope="session">
