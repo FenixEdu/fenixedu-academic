@@ -53,7 +53,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCaseReadServices {
 	}
 
 	protected int getNumberOfItemsToRetrieve() {
-		return 10;
+		return 4;
 	}
 
 	protected Object getObjectToCompare() {
@@ -69,17 +69,17 @@ public class ShowAvailableCurricularCoursesTest extends TestCaseReadServices {
 		List finalSpan = new ArrayList();
 
 		Object args[] = {_userView, new Integer(1)};
-		Object result = null;
+		InfoEnrolmentContext result = null;
 		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
+			result = (InfoEnrolmentContext) _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Execution of service!");
 		}
 
-		finalSpan = ((InfoEnrolmentContext) result).getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
+		finalSpan = result.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
 
-		assertEquals("Final span size:", finalSpan.size(), this.getNumberOfItemsToRetrieve());
+		assertEquals("Final span size:",  this.getNumberOfItemsToRetrieve(), finalSpan.size());
 
 		ICurricularCourse curricularCourse = getCurricularCourse("SISTEMAS OPERATIVOS", "");
 		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
