@@ -152,19 +152,17 @@
                            
         <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=initializeEnrolment"/>
               
-        <forward name="selectClass" path="/showClassesForShiftEnrolment.jsp"/>
-        <forward name="showAvailableShifts" path="/showAvailableShifts.jsp"/>
-        <forward name="validateAndConfirmShiftEnrolment" path="/validateAndConfirmShiftEnrolment.jsp"/>
+        <forward name="selectClass" path="show-classes-for-shift-enrolment"/>
+        <forward name="showAvailableShifts" path="show-available-shifts"/>
+        <forward name="validateAndConfirmShiftEnrolment" path="validate-confirm-shift-enrolment"/>
       </action>
       
       <action 
         type="ServidorApresentacao.Action.commons.VoidAction"
         path="/studentShiftEnrolmentOptions"
         scope="request">
-        <forward name="Success" path="/showShiftEnrolmentOptions.jsp"/>
+        <forward name="Success" path="shift-enrolment-options"/>
       </action>
-      
-
       
       <action type="ServidorApresentacao.Action.student.ShiftEnrolmentAction"
               path="/shiftEnrolment"
