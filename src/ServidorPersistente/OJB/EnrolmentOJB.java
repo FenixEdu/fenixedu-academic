@@ -21,8 +21,10 @@ import Util.EnrolmentState;
  * 24/Mar/2003
  */
 
-public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment {
-    
+public class EnrolmentOJB
+	extends ObjectFenixOJB
+	implements IPersistentEnrolment {
+
 	public void deleteAll() throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select all from " + Enrolment.class.getName();
@@ -32,7 +34,8 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 		}
 	}
 
-	public void lockWrite(IEnrolment enrolmentToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
+	public void lockWrite(IEnrolment enrolmentToWrite)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
 
 		IEnrolment enrolmentFromDB = null;
 
@@ -42,13 +45,19 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 		}
 
 		// Read Enrolment from database.
-		enrolmentFromDB = this.readEnrolmentByStudentCurricularPlanAndCurricularCourse(enrolmentToWrite.getStudentCurricularPlan(), enrolmentToWrite.getCurricularCourse());
+		enrolmentFromDB =
+			this.readEnrolmentByStudentCurricularPlanAndCurricularCourse(
+				enrolmentToWrite.getStudentCurricularPlan(),
+				enrolmentToWrite.getCurricularCourse());
 
 		// If Enrolment is not in database, then write it.
 		if (enrolmentFromDB == null) {
 			super.lockWrite(enrolmentToWrite);
-		// else If the Enrolment is mapped to the database, then write any existing changes.
-		} else if ((enrolmentToWrite instanceof Enrolment) && ((Enrolment) enrolmentFromDB).getInternalID().equals(((Enrolment) enrolmentToWrite).getInternalID())) {
+			// else If the Enrolment is mapped to the database, then write any existing changes.
+		} else if (
+			(enrolmentToWrite instanceof Enrolment)
+				&& ((Enrolment) enrolmentFromDB).getInternalID().equals(
+					((Enrolment) enrolmentToWrite).getInternalID())) {
 			super.lockWrite(enrolmentToWrite);
 			// else Throw an already existing exception
 		} else
@@ -63,7 +72,10 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 		}
 	}
 
-	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
+	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(
+		IStudentCurricularPlan studentCurricularPlan,
+		ICurricularCourse curricularCourse)
+		throws ExcepcaoPersistencia {
 
 		try {
 			IEnrolment enrolment = null;
@@ -74,8 +86,10 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 			oqlQuery += " and curricularCourse.name = $4";
 			oqlQuery += " and curricularCourse.code = $5";
 			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $6";
-			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.nome = $7";
-			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.sigla = $8";
+			oqlQuery
+				+= " and curricularCourse.degreeCurricularPlan.degree.nome = $7";
+			oqlQuery
+				+= " and curricularCourse.degreeCurricularPlan.degree.sigla = $8";
 
 			query.create(oqlQuery);
 
@@ -85,8 +99,16 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 			query.bind(curricularCourse.getName());
 			query.bind(curricularCourse.getCode());
 			query.bind(curricularCourse.getDegreeCurricularPlan().getName());
-			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getNome());
-			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
+			query.bind(
+				curricularCourse
+					.getDegreeCurricularPlan()
+					.getDegree()
+					.getNome());
+			query.bind(
+				curricularCourse
+					.getDegreeCurricularPlan()
+					.getDegree()
+					.getSigla());
 
 			List result = (List) query.execute();
 			try {
@@ -95,7 +117,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 				throw ex;
 			}
 
-			if( (result != null) && (result.size() != 0) ) {
+			if ((result != null) && (result.size() != 0)) {
 				enrolment = (IEnrolment) result.get(0);
 			}
 			return enrolment;
@@ -105,7 +127,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 		}
 	}
 
-	public ArrayList readAll() throws ExcepcaoPersistencia {
+	public List readAll() throws ExcepcaoPersistencia {
 
 		try {
 			ArrayList list = new ArrayList();
@@ -119,7 +141,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 				throw ex;
 			}
 
-			if( (result != null) && (result.size() != 0) ) {
+			if ((result != null) && (result.size() != 0)) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
 					list.add((IEnrolment) iterator.next());
@@ -130,7 +152,10 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 		}
 	}
 
-	public ArrayList readEnrolmentsByStudentCurricularPlanAndEnrolmentState(IStudentCurricularPlan studentCurricularPlan, EnrolmentState enrolmentState) throws ExcepcaoPersistencia {
+	public List readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
+		IStudentCurricularPlan studentCurricularPlan,
+		EnrolmentState enrolmentState)
+		throws ExcepcaoPersistencia {
 
 		try {
 			ArrayList list = new ArrayList();
@@ -155,7 +180,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 				throw ex;
 			}
 
-			if( (result != null) && (result.size() != 0) ) {
+			if ((result != null) && (result.size() != 0)) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
 					list.add((IEnrolment) iterator.next());
@@ -164,6 +189,36 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentEnrolment#readAllByStudentCurricularPlan(Dominio.IStudentCurricularPlan)
+	 */
+	public List readAllByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
+		throws ExcepcaoPersistencia {
+		List enrolments = new ArrayList();
+		try {
+			String oqlQuery =
+				"select all from "
+					+ Enrolment.class.getName()
+					+ " where studentCurricularPlan.student.number = $1"
+					+ " and studentCurricularPlan.student.degreeType = $2"
+					+ " and studentCurricularPlan.currentState = $3";
+
+			query.create(oqlQuery);
+
+			query.bind(studentCurricularPlan.getStudent().getNumber());
+			query.bind(studentCurricularPlan.getStudent().getDegreeType());
+			query.bind(studentCurricularPlan.getCurrentState());
+
+			enrolments = (List) query.execute();
+
+			lockRead(enrolments);
+		} catch (QueryException e) {
+			e.printStackTrace();
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
+		}
+		return enrolments;
 	}
 
 }
