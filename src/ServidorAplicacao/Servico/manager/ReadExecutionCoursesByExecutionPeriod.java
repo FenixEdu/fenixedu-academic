@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.util.Cloner;
 import Dominio.ExecutionPeriod;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -85,8 +84,10 @@ public class ReadExecutionCoursesByExecutionPeriod implements IServico {
                         .next();
                 Boolean hasSite = persistentExecutionCourse
                         .readSite(executionCourse.getIdInternal());
-                infoExecutionCourse = (InfoExecutionCourse) Cloner
-                        .get(executionCourse);
+                //CLONER
+                //infoExecutionCourse = (InfoExecutionCourse) Cloner
+                        //.get(executionCourse);
+                infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
                 infoExecutionCourse.setHasSite(hasSite);
                 allExecutionCourses.add(infoExecutionCourse);
             }
