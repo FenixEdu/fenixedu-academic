@@ -4090,6 +4090,17 @@
             <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
         </filterChains>
     </service>
+	<service>
+		<name>ReadStudentsWithAttendsByExecutionCourse</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.teacher.ReadStudentsWithAttendsByExecutionCourse
+		</implementationClass>	
+		<description/>
+		<isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
+        </filterChains>
+	</service>
     <service>
         <name>ReadStudentsAndMarksByEvaluation</name>
         <implementationClass> 

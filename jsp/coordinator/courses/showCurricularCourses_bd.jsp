@@ -122,7 +122,7 @@
 						<%= ap_av %>
 					</td>
 					<td class="listClasses">
-						<html:link page="/studentsByCurricularCourse.do?method=readStudents" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+						<html:link page="/studentsByCurricularCourse.do?method=prepare" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 							<bean:message key ="link.students.see" />
 						</html:link>
 					</td>

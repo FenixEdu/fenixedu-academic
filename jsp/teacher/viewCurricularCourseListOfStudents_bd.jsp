@@ -18,7 +18,7 @@
     			<h2><bean:write name="curricularCourse" property="name" /><p></p></h2>
 				<tr>
 		    		<td>
-						<html:link page="<%= "/studentsByCurricularCourse.do?method=readStudents&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">   				
+						<html:link page="<%= "/studentsByCurricularCourse.do?method=prepare&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">   				
 							<bean:message key="label.allStudents" />
 						</html:link>
 			   		</td>
@@ -33,7 +33,7 @@
 						<bean:define id="ano" name="scope" property="infoCurricularSemester.infoCurricularYear.year" />
 						<bean:define id="semestre" name="scope" property="infoCurricularSemester.semester" />
 						
-						<html:link page="<%= "/studentsByCurricularCourse.do?method=readStudents&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;scopeCode=" + scopeCode %>">   				
+						<html:link page="<%= "/studentsByCurricularCourse.do?method=prepare&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;scopeCode=" + scopeCode %>">   				
 							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>
 							<logic:notEqual name="scope" property="infoBranch.name" value="">
 								<bean:message key="property.curricularCourse.branch" />

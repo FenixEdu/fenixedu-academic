@@ -198,21 +198,10 @@ public class CurriculumDispatchAction extends DispatchAction
 		{
 		    InfoStudentCurricularPlan infoSCP = (InfoStudentCurricularPlan)it.next();
 		    String label = "";
-		    
-		    /*
-		     * (<bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" />)  
-                <bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.nome" /> - 
-				<logic:present name="studentCP" property="specialization" >
-        			<bean:write name="studentCP" property="specialization" /> - 
-				</logic:present>
-    			<bean:write name="studentCP" property="startDate" />
-		     * 
-		     * */
-		    
+		    		    
 		    label += infoSCP.getInfoDegreeCurricularPlan().getInfoDegree().getNome()+" ";
 		    label += "("+infoSCP.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()+")";
 		    
-		    //TODO perguntar disto
 		    if (infoSCP.getSpecialization() != null)
 		        label += " - "+infoSCP.getSpecialization();
 		    

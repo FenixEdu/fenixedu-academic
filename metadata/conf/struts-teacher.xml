@@ -439,13 +439,16 @@
             <form-property name="themeID" type="java.lang.Integer" />
             <form-property name="approved" type="java.lang.String" />
         </form-bean>
-        <form-bean name="studentsByCurricularCourseForm" 
+	   <form-bean name="studentsByCurricularCourseForm" 
             type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="shiftCode" type="java.lang.Integer" />
+			<form-property name="coursesIDs" type="java.lang.Integer[]" />
+			<form-property name="hasEnrollment" type="java.lang.Boolean" />
             <form-property name="objectCode" type="java.lang.Integer" />
             <form-property name="method" type="java.lang.String" />
 			<form-property name="viewPhoto" type="java.lang.String" />
         </form-bean>
+		
         <form-bean name="selectCandidaciesForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
             <form-property name="seminaryID" type="java.lang.Integer" />
@@ -1185,9 +1188,10 @@
             type="ServidorApresentacao.Action.teacher.ReadCurricularCourseListAction">
             <forward name="success" path="/viewCurricularCourseListOfStudents.jsp" />
         </action>
-        <action path="/studentsByCurricularCourse" input="/teacherAdministrationViewerError.jsp" 
+
+		<action path="/studentsByCurricularCourse" input="/teacherAdministrationViewerError.jsp" 
             name="studentsByCurricularCourseForm" scope="request" parameter="method" 
-            type="ServidorApresentacao.Action.teacher.StudentsByCurricularCourseListAction">
+            type="ServidorApresentacao.Action.teacher.StudentsWithAttendsByCurricularCourseListAction">
             <forward name="success" path="/viewStudents.jsp" />
         </action>
         <!-- End Students list -->
@@ -1533,7 +1537,7 @@
         <action type="ServidorApresentacao.Action.teacher.SendMailToAllStudents" 
             path="/sendMailToAllStudents" name="sendMailForm" parameter="method" scope="request">
             <forward name="showEmailForm" path="showEmailForm"/>
-            <forward name="mailSent" path="/studentsByCurricularCourse.do?method=readStudents"/>
+            <forward name="mailSent" path="/studentsByCurricularCourse.do?method=prepare"/>
             <forward name="mailCandidaciesSent" path="/showCandidacies.do"/>
         </action>
         <!--- by gedl, 25-9-2003 -->

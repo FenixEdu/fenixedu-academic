@@ -19,8 +19,6 @@
 <bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>
 <bean:define id="infosGroups" name="infosGroups" type="java.util.List"/>
 <bean:define id="projects" name="projects" type="java.util.List"/>
-
-
     <span class="error"><html:errors/></span>
 	<bean:size id="studentsListSize" name="studentsComponent" property="students"/>
 
