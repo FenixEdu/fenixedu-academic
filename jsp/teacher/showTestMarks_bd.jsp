@@ -9,6 +9,7 @@
 	<bean:define id="component" name="siteView" property="component"/>
 	<bean:define id="distributedTest" name="component" property="infoDistributedTest" type="DataBeans.InfoDistributedTest"/>
 	<bean:define id="infoStudentTestQuestionList" name="component" property="infoStudentTestQuestionList"/>
+	<bean:define id="maximumMark" name="component" property="maximumMark"/>
 	
 	<center>
 	<logic:empty name="infoStudentTestQuestionList">
@@ -54,6 +55,9 @@
 							out.write(new String("<td class='listClasses-header'><b>P"+i+"</b></td>"));
 						} %>
 						<td class="listClasses-header"><bean:message key="label.mark"/></td>
+						<logic:greaterThan name="maximumMark" value="0">
+							<td class="listClasses-header"><bean:message key="label.mark"/><bean:message key="label.percentage"/></td>
+						</logic:greaterThan>
 					</tr>
 			</logic:equal>
 			<% if (new Integer(studentIndex).equals(new Integer(0))) {%>
@@ -75,6 +79,17 @@
 				<logic:greaterThan name="finalMarkValue" value="0">
 					<td class="listClasses"><bean:write name="finalMarkValue"/></td>
 				</logic:greaterThan>
+				
+				<logic:greaterThan name="maximumMark" value="0">
+					<bean:define id="finalMarkPercentage" value="<%= (new java.text.DecimalFormat("#%").format(Double.parseDouble(finalMark.toString())*java.lang.Math.pow(Double.parseDouble(maximumMark.toString()), -1)).toString()) %>"/>
+					<logic:lessEqual name="finalMarkPercentage" value="0%">
+						<td class="listClasses">0%</td>
+					</logic:lessEqual>
+					<logic:greaterThan name="finalMarkPercentage" value="0%">
+						<td class="listClasses"><bean:write name="finalMarkPercentage"/></td>
+					</logic:greaterThan>
+				</logic:greaterThan>
+				
 				<td><html:link page="<%= "/studentTestManagement.do?method=showStudentTest&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.showStudentTest"/></html:link></td>
 				<td><html:link page="<%= "/testsManagement.do?method=showStudentTestLog&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.showLog"/></html:link></td>
 				<bean:define id="markIndex" value="0"/>

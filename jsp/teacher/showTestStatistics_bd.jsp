@@ -82,7 +82,7 @@
 				</td>
 			</tr><tr>
 				<td>
-					<bean:define id="cardinality" name="question" property="cardinalityType.type"/>
+					<bean:define id="cardinality" name="question" property="questionType.cardinalityType.type"/>
 			<table><td>
 				<bean:define id="optionOrder" value="<%= (new Integer(Integer.parseInt(questionOrder.toString()) -1)).toString() %>"/>
 				<bean:define id="indexOption" value="0"/>

@@ -1,6 +1,6 @@
 /*
  * Created on Oct 24, 2003
- *
+ *  
  */
 package DataBeans;
 
@@ -8,46 +8,52 @@ import java.util.List;
 
 /**
  * @author Susana Fernandes
- *
+ *  
  */
-public class InfoSiteStudentsTestMarks extends DataTranferObject implements ISiteComponent
-{
-	private List infoStudentTestQuestionList;
-	private InfoDistributedTest infoDistributedTest;
-	private InfoExecutionCourse executionCourse;
+public class InfoSiteStudentsTestMarks extends DataTranferObject implements
+        ISiteComponent {
 
-	public InfoSiteStudentsTestMarks()
-	{
-	}
+    private List infoStudentTestQuestionList;
 
-	public InfoExecutionCourse getExecutionCourse()
-	{
-		return executionCourse;
-	}
+    private Double maximumMark;
 
-	public InfoDistributedTest getInfoDistributedTest()
-	{
-		return infoDistributedTest;
-	}
+    private InfoDistributedTest infoDistributedTest;
 
-	public List getInfoStudentTestQuestionList()
-	{
-		return infoStudentTestQuestionList;
-	}
+    private InfoExecutionCourse executionCourse;
 
-	public void setExecutionCourse(InfoExecutionCourse course)
-	{
-		executionCourse = course;
-	}
+    public InfoSiteStudentsTestMarks() {
+    }
 
-	public void setInfoDistributedTest(InfoDistributedTest test)
-	{
-		infoDistributedTest = test;
-	}
+    public InfoExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	public void setInfoStudentTestQuestionList(List list)
-	{
-		infoStudentTestQuestionList = list;
-	}
+    public InfoDistributedTest getInfoDistributedTest() {
+        return infoDistributedTest;
+    }
+
+    public List getInfoStudentTestQuestionList() {
+        return infoStudentTestQuestionList;
+    }
+
+    public Double getMaximumMark() {
+        return maximumMark;
+    }
+
+    public void setMaximumMark(Double maximumMark) {
+        this.maximumMark = maximumMark;
+    }
+
+    public void setExecutionCourse(InfoExecutionCourse course) {
+        executionCourse = course;
+    }
+
+    public void setInfoDistributedTest(InfoDistributedTest test) {
+        infoDistributedTest = test;
+    }
+
+    public void setInfoStudentTestQuestionList(List list) {
+        infoStudentTestQuestionList = list;
+    }
 
 }

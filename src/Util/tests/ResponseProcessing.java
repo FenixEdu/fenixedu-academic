@@ -122,6 +122,19 @@ public class ResponseProcessing extends FenixUtil {
         return null;
     }
 
+    private String getActionString(Integer actionCode) {
+        if (actionCode.intValue() == SET)
+            return SET_STRING;
+        else if (actionCode.intValue() == ADD)
+            return ADD_STRING;
+        else if (actionCode.intValue() == SUBTRACT)
+            return SUBTRACT_STRING;
+        else if (actionCode.intValue() == MULTIPLY)
+            return MULTIPLY_STRING;
+        else if (actionCode.intValue() == DIVIDE) return DIVIDE_STRING;
+        return null;
+    }
+
     public boolean isAllCorrect(String[] studentResponse) {
         Iterator it = getResponseConditions().iterator();
         boolean match = false;
@@ -166,4 +179,66 @@ public class ResponseProcessing extends FenixUtil {
         return true;
     }
 
+    public boolean isThisConditionListInResponseProcessingList(List rpList,
+            boolean lidQuestion) {
+        for (int i = 0; i < rpList.size(); i++) {
+            if (lidQuestion) {
+                if (!hasEqualVAREQUALConditionList(((ResponseProcessing) rpList
+                        .get(i)).getResponseConditions())) return false;
+            } else if (!hasEqualConditionList(((ResponseProcessing) rpList
+                    .get(i)).getResponseConditions())) return false;
+        }
+        return true;
+    }
+
+    public boolean hasEqualConditionList(List rcList) {
+        for (int i = 0; i < rcList.size(); i++) {
+            ResponseCondition rc = (ResponseCondition) rcList.get(i);
+            if (!hasThisCondition(responseConditions, rc)) return false;
+        }
+        for (int i = 0; i < responseConditions.size(); i++) {
+            ResponseCondition rc = (ResponseCondition) responseConditions
+                    .get(i);
+            if (!hasThisCondition(rcList, rc)) return false;
+        }
+        return true;
+    }
+
+    public boolean hasEqualVAREQUALConditionList(List rcList) {
+        for (int i = 0; i < rcList.size(); i++) {
+            ResponseCondition rc = (ResponseCondition) rcList.get(i);
+            if (rc.getCondition().intValue() == ResponseCondition.VAREQUAL)
+                    if (!hasThisCondition(responseConditions, rc))
+                            return false;
+        }
+        for (int i = 0; i < responseConditions.size(); i++) {
+            ResponseCondition rc = (ResponseCondition) responseConditions
+                    .get(i);
+            if (rc.getCondition().intValue() == ResponseCondition.VAREQUAL)
+                    if (!hasThisCondition(rcList, rc)) return false;
+        }
+        return true;
+    }
+
+    public boolean hasThisCondition(List rcList, ResponseCondition rc) {
+        for (int i = 0; i < rcList.size(); i++) {
+            ResponseCondition thisRc = (ResponseCondition) rcList.get(i);
+            if (thisRc.equals(rc)) return true;
+        }
+        return false;
+    }
+
+    public String toXML(String feedback) {
+        String result = new String("<respcondition>\n<conditionvar>\n");
+        for (int i = 0; i < responseConditions.size(); i++)
+            result = result.concat(((ResponseCondition) responseConditions
+                    .get(i)).toXML());
+        result = result.concat("\n</conditionvar>\n<setvar action=\""
+                + getActionString(action) + "\">" + responseValue
+                + "\n</setvar>\n");
+        if (feedback != null) result = result.concat(feedback);
+        result = result.concat("</respcondition>\n");
+
+        return result;
+    }
 }

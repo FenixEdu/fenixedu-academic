@@ -31,6 +31,7 @@ import DataBeans.InfoQuestion;
 import DataBeans.InfoStudentTestQuestion;
 import Util.tests.CardinalityType;
 import Util.tests.QuestionType;
+import Util.tests.RenderChoise;
 import Util.tests.RenderFIB;
 import Util.tests.Response;
 import Util.tests.ResponseCondition;
@@ -216,8 +217,9 @@ public class ParseQuestion extends DefaultHandler {
             current.setValue(text.trim());
         }
         current = null;
-        if (qName.equals("response_lid") || qName.equals("response_str")
-                || qName.equals("response_num")) {
+
+        if (qName.equals("response_lid")) {
+            //  || qName.equals("response_str") || qName.equals("response_num"))
             option = false;
             question = true;
         } else if (qName.equals("not") || qName.equals("and")
@@ -246,6 +248,7 @@ public class ParseQuestion extends DefaultHandler {
         if (infoQuestion.getQuestionType().getType().intValue() == QuestionType.LID)
                 infoQuestion = getRidOfEmptyResponseConditions(infoQuestion);
         infoQuestion = setFenixCorrectResponse(infoQuestion);
+        infoQuestion = removeRepeatedConditions(infoQuestion);
         return infoQuestion;
     }
 
@@ -305,9 +308,13 @@ public class ParseQuestion extends DefaultHandler {
                     if (atts.getIndex("maxchars") != -1)
                             renderFIB.setMaxchars(new Integer(atts
                                     .getValue("maxchars")));
-                    infoQuestion.setRender(renderFIB);
-                } else if (!tag.equals("render_choice"))
-                        throw new ParseQuestionException(tag, true);
+                    infoQuestion.getQuestionType().setRender(renderFIB);
+                } else if (tag.equals("render_choice")) {
+                    RenderChoise renderChoise = new RenderChoise();
+                    renderChoise.setShuffle(atts.getValue("shuffle"));
+                    infoQuestion.getQuestionType().setRender(renderChoise);
+                } else
+                    throw new ParseQuestionException(tag, true);
             } else if ((tag.startsWith("mat") && !tag.equals("material"))
                     || tag.startsWith("response_")) {
                 if ((tag.equals("response_lid"))
@@ -325,8 +332,9 @@ public class ParseQuestion extends DefaultHandler {
                         if (atts.getValue("rcardinality").equals("Ordered"))
                                 throw new ParseQuestionException(tag,
                                         "rcardinality=Ordered");
-                        infoQuestion.setCardinalityType(new CardinalityType(
-                                atts.getValue("rcardinality")));
+                        infoQuestion.getQuestionType().setCardinalityType(
+                                new CardinalityType(atts
+                                        .getValue("rcardinality")));
                     }
                 } else if (tag.equals("response_label")) {
                     auxList.add(new LabelValueBean("response_label", atts
@@ -423,6 +431,15 @@ public class ParseQuestion extends DefaultHandler {
                             if (atts.getValue("case").equals("Nocase"))
                                     tagName = tagName.concat("ignorecase");
                         }
+                        if (infoQuestion.getQuestionType().getType().intValue() == QuestionType.LID
+                                && infoQuestion.getQuestionType()
+                                        .getCardinalityType().getType()
+                                        .intValue() == CardinalityType.SINGLE)
+                                if (getNumberOfVarEquals(responseProcessing
+                                        .getResponseConditions()) > 0)
+                                        throw new ParseQuestionException(
+                                                "Uma das soluções indicadas no ficheiro tem mais do que uma resposta, e uma pergunta de escolha simples apenas admite uma resposta.");
+
                         responseProcessing.getResponseConditions()
                                 .add(
                                         new ResponseCondition(tagName, element
@@ -676,18 +693,25 @@ public class ParseQuestion extends DefaultHandler {
                     .getResponseProcessingInstructions().iterator();
             int fenixCorrectResponseIndex = -1;
             double maxValue = 0;
+            int previewsAction = 0;
             for (int i = 0; itResponseProcessing.hasNext(); i++) {
                 ResponseProcessing responseProcessing = (ResponseProcessing) itResponseProcessing
                         .next();
                 if (responseProcessing.getResponseValue() != null
                         && responseProcessing.getAction() != null) {
+
                     if ((responseProcessing.getResponseValue().doubleValue() > maxValue)
                             || (responseProcessing.getResponseValue()
-                                    .doubleValue() == maxValue && responseProcessing
+                                    .doubleValue() == maxValue && previewsAction == 0)
+                            || (responseProcessing.getResponseValue()
+                                    .doubleValue() == maxValue
+                                    && previewsAction != ResponseProcessing.SET && responseProcessing
                                     .getAction().intValue() == ResponseProcessing.SET)) {
                         maxValue = responseProcessing.getResponseValue()
                                 .doubleValue();
                         fenixCorrectResponseIndex = i;
+                        previewsAction = responseProcessing.getAction()
+                                .intValue();
                     }
                 }
             }
@@ -698,6 +722,36 @@ public class ParseQuestion extends DefaultHandler {
                             .setFenixCorrectResponse(true);
         }
         return infoQuestion;
+    }
+
+    public InfoQuestion removeRepeatedConditions(InfoQuestion infoQuestion) {
+        List newRpList = new ArrayList();
+        boolean isLID = false;
+        if (infoQuestion.getQuestionType().getType().intValue() == QuestionType.LID)
+                isLID = true;
+        if (infoQuestion.getResponseProcessingInstructions().size() > 1) {
+            newRpList.add(infoQuestion.getResponseProcessingInstructions().get(
+                    0));
+            for (int i = 1; i < infoQuestion
+                    .getResponseProcessingInstructions().size(); i++) {
+                ResponseProcessing responseProcessing = (ResponseProcessing) infoQuestion
+                        .getResponseProcessingInstructions().get(i);
+                if (!responseProcessing
+                        .isThisConditionListInResponseProcessingList(newRpList,
+                                isLID)) newRpList.add(responseProcessing);
+            }
+            infoQuestion.setResponseProcessingInstructions(newRpList);
+        }
+        return infoQuestion;
+    }
+
+    private int getNumberOfVarEquals(List rcList) {
+        Iterator rcIt = rcList.iterator();
+        int result = 0;
+        for (int i = 0; rcIt.hasNext(); i++)
+            if (((ResponseCondition) rcIt.next()).getCondition().intValue() == ResponseCondition.VAREQUAL)
+                    result++;
+        return result;
     }
 
     public InfoQuestion getRidOfEmptyResponseConditions(
@@ -714,10 +768,8 @@ public class ParseQuestion extends DefaultHandler {
                 ResponseCondition rc = (ResponseCondition) rcIt.next();
                 if (rc.getCondition().intValue() != ResponseCondition.NOTVAREQUAL)
                         empty = false;
-
             }
             if (!empty) newResponseProcessingInstructions.add(rp);
-
         }
         infoQuestion
                 .setResponseProcessingInstructions(newResponseProcessingInstructions);

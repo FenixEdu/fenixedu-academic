@@ -47,6 +47,12 @@ public interface IPersistentStudentTestQuestion extends IPersistentObject {
     public abstract List readStudentTestQuestionsByDistributedTest(
             IDistributedTest distributedTest) throws ExcepcaoPersistencia;
 
+    public Double getMaximumDistributedTestMark(IDistributedTest distributedTest)
+            throws ExcepcaoPersistencia;
+
+    public Double getMaximumDistributedTestMark(Integer distributedTestId)
+            throws ExcepcaoPersistencia;
+
     public Double readStudentTestFinalMark(Integer distributedTestId,
             Integer studentId) throws ExcepcaoPersistencia;
 

@@ -253,7 +253,7 @@ public class InsertStudentTestResponses implements IService {
                 .intValue() == CorrectionFormula.IMS) {
             if ((infoStudentTestQuestion.getQuestion().getQuestionType()
                     .getType().intValue() == QuestionType.LID)
-                    && (infoStudentTestQuestion.getQuestion()
+                    && (infoStudentTestQuestion.getQuestion().getQuestionType()
                             .getCardinalityType().getType().intValue() == CardinalityType.MULTIPLE)) {
                 List questionCorrectionList = infoStudentTestQuestion
                         .getQuestion().getResponseProcessingInstructions();
@@ -277,7 +277,7 @@ public class InsertStudentTestResponses implements IService {
                 }
             } else if (infoStudentTestQuestion.getQuestion().getQuestionType()
                     .getType().intValue() == QuestionType.LID
-                    && infoStudentTestQuestion.getQuestion()
+                    && infoStudentTestQuestion.getQuestion().getQuestionType()
                             .getCardinalityType().getType().intValue() == CardinalityType.SINGLE) {
                 List questionCorrectionList = infoStudentTestQuestion
                         .getQuestion().getResponseProcessingInstructions();
@@ -303,8 +303,8 @@ public class InsertStudentTestResponses implements IService {
                     .getType().intValue() == QuestionType.STR)
                     || (infoStudentTestQuestion.getQuestion().getQuestionType()
                             .getType().intValue() == QuestionType.LID && (infoStudentTestQuestion
-                            .getQuestion().getCardinalityType().getType()
-                            .intValue() == CardinalityType.SINGLE))) {
+                            .getQuestion().getQuestionType()
+                            .getCardinalityType().getType().intValue() == CardinalityType.SINGLE))) {
                 List questionCorrectionList = infoStudentTestQuestion
                         .getQuestion().getResponseProcessingInstructions();
                 Iterator questionCorrectionIt = questionCorrectionList
@@ -363,8 +363,8 @@ public class InsertStudentTestResponses implements IService {
                         infoStudentTestQuestion.getQuestion()
                                 .getResponseProcessingInstructions(),
                         fenixCorrectResponseIndex);
-                if (infoStudentTestQuestion.getQuestion().getCardinalityType()
-                        .getType().intValue() == CardinalityType.MULTIPLE) {
+                if (infoStudentTestQuestion.getQuestion().getQuestionType()
+                        .getCardinalityType().getType().intValue() == CardinalityType.MULTIPLE) {
                     //2*(correctOptionsChosen+wrongOptionNotChosen)/allOptionNumber-1
 
                     int allOptionNumber = infoStudentTestQuestion.getQuestion()
@@ -425,7 +425,8 @@ public class InsertStudentTestResponses implements IService {
                     return infoStudentTestQuestion;
 
                 } else if (infoStudentTestQuestion.getQuestion()
-                        .getCardinalityType().getType().intValue() == CardinalityType.SINGLE) {
+                        .getQuestionType().getCardinalityType().getType()
+                        .intValue() == CardinalityType.SINGLE) {
                     //(1/num_op)-1
                     if (isCorrect(correctResponseList, new String(
                             ((ResponseLID) infoStudentTestQuestion
@@ -520,9 +521,9 @@ public class InsertStudentTestResponses implements IService {
 
     private String validResponse(InfoStudentTestQuestion infoStudentTestQuestion) {
 
-        if (infoStudentTestQuestion.getQuestion().getRender() instanceof RenderFIB) {
+        if (infoStudentTestQuestion.getQuestion().getQuestionType().getRender() instanceof RenderFIB) {
             RenderFIB renderFIB = (RenderFIB) infoStudentTestQuestion
-                    .getQuestion().getRender();
+                    .getQuestion().getQuestionType().getRender();
             try {
                 if (renderFIB.getFibtype().intValue() == RenderFIB.INTEGER_CODE)
                     new Integer(((ResponseNUM) infoStudentTestQuestion

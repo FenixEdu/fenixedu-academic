@@ -16,6 +16,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.odmg.HasBroker;
 
+import Dominio.DistributedTest;
 import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
@@ -152,6 +153,27 @@ public class StudentTestQuestionOJB extends ObjectFenixOJB implements
                 .intValue());
 
         return (List) pb.getCollectionByQuery(queryCriteria);
+    }
+
+    public Double getMaximumDistributedTestMark(IDistributedTest distributedTest)
+            throws ExcepcaoPersistencia {
+        double result = 0;
+        List studentTestQuestionList = readStudentTestQuestionsByDistributedTest(distributedTest);
+        for (int i = 0; i < studentTestQuestionList.size(); i++)
+            result = result
+                    + ((IStudentTestQuestion) studentTestQuestionList.get(i))
+                            .getTestQuestionValue().doubleValue();
+        return new Double(result);
+    }
+
+    public Double getMaximumDistributedTestMark(Integer distributedTestId)
+            throws ExcepcaoPersistencia {
+
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("idInternal", distributedTestId);
+        IDistributedTest distributedTest = (IDistributedTest)queryObject(DistributedTest.class,
+                criteria);
+        return getMaximumDistributedTestMark(distributedTest);
     }
 
     public Double readStudentTestFinalMark(Integer distributedTestId,

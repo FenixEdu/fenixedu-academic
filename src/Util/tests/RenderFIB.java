@@ -12,11 +12,11 @@ public class RenderFIB extends Render {
 
     // public static final int BOOLEAN_CODE = 5;
 
-    private final String STRING = "String";
+    public static final String STRING = "String";
 
-    private final String INTEGER = "Integer";
+    public static final String INTEGER = "Integer";
 
-    private final String DECIMAL = "Decimal";
+    public static final String DECIMAL = "Decimal";
 
     private Integer rows;
 
@@ -71,4 +71,25 @@ public class RenderFIB extends Render {
             return new Integer(STRING_CODE);
     }
 
+    private String getFibTypeString() {
+        if (fibtype.intValue() == INTEGER_CODE)
+            return INTEGER;
+        else if (fibtype.intValue() == DECIMAL_CODE)
+            return DECIMAL;
+        else
+            return STRING;
+    }
+
+    public String toXML(String inside) {
+        String result = new String("<render_fib");
+        if (fibtype != null)
+                result = result.concat(" fibtype=\"" + getFibTypeString()
+                        + "\"");
+        if (rows != null) result = result.concat(" rows=\"" + rows + "\"");
+        if (columns != null)
+                result = result.concat(" columns=\"" + columns + "\"");
+        if (maxchars != null)
+                result = result.concat(" maxchars=\"" + maxchars + "\"");
+        return result.concat(">"+inside + "</render_fib>\n");
+    }
 }

@@ -66,7 +66,7 @@
 			</td></tr></table>
 		</logic:equal>
 		
-		<bean:define id="cardinality" name="question" property="cardinalityType.type"/>
+		<bean:define id="cardinality" name="question" property="questionType.cardinalityType.type"/>
 		<bean:define id="optionOrder" value="<%= (new Integer(Integer.parseInt(questionOrder.toString()) -1)).toString() %>"/>
 		<bean:define id="indexOption" value="0"/>
 		<bean:define id="correct" value="false"/>
@@ -186,27 +186,37 @@
 					
 					
 				<%}else{%> <%--QuestionType.STR or QuestionType.NUM --%>
-					<logic:notEmpty name="question" property="render.maxchars">
-						<bean:define id="maxchars" name="question" property="render.maxchars"/>
-						<html:text maxlength="<%=maxchars.toString()%>" size="<%=maxchars.toString()%>" property='<%="question["+ optionOrder+"].response"%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+					<logic:notEmpty name="question" property="questionType.render.maxchars">
+						<bean:define id="maxchars" name="question" property="questionType.render.maxchars"/>
+						<logic:notEmpty name="question" property="questionType.render.columns">
+							<bean:define id="cols" name="question" property="questionType.render.columns"/>
+							<html:text maxlength="<%=maxchars.toString()%>" size="<%=cols.toString()%>" property='<%="question["+ optionOrder+"].response"%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+						</logic:notEmpty>
+						<logic:empty name="question" property="questionType.render.columns">
+							<bean:define id="textBoxSize" value="<%=maxchars.toString()%>"/>
+							<logic:greaterThan name="textBoxSize" value="100" >
+								<bean:define id="textBoxSize" value="100"/>
+							</logic:greaterThan>
+							<html:text maxlength="<%=maxchars.toString()%>" size="<%=textBoxSize%>" property='<%="question["+ optionOrder+"].response"%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+						</logic:empty>	
 					</logic:notEmpty>	
-					<logic:empty name="question" property="render.maxchars">
-						<logic:notEmpty name="question" property="render.rows">
-							<bean:define id="rows" name="question" property="render.rows"/>
-							<logic:notEmpty name="question" property="render.columns">
-								<bean:define id="cols" name="question" property="render.columns"/>
+					<logic:empty name="question" property="questionType.render.maxchars">
+						<logic:notEmpty name="question" property="questionType.render.rows">
+							<bean:define id="rows" name="question" property="questionType.render.rows"/>
+							<logic:notEmpty name="question" property="questionType.render.columns">
+								<bean:define id="cols" name="question" property="questionType.render.columns"/>
 								<html:textarea rows="<%=rows.toString()%>" cols="<%=cols.toString()%>" property='<%="question["+ optionOrder+"].response"%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:notEmpty>
-							<logic:empty name="question" property="render.columns">
+							<logic:empty name="question" property="questionType.render.columns">
 								<html:textarea rows="<%=rows.toString()%>" property='<%="question["+ optionOrder+"].response"%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:empty>
 						</logic:notEmpty>
-						<logic:empty name="question" property="render.rows">
-							<logic:notEmpty name="question" property="render.columns">
-								<bean:define id="cols" name="question" property="render.columns"/>
+						<logic:empty name="question" property="questionType.render.rows">
+							<logic:notEmpty name="question" property="questionType.render.columns">
+								<bean:define id="cols" name="question" property="questionType.render.columns"/>
 								<html:textarea cols="<%=cols.toString()%>" property='<%="question["+ optionOrder+"].response"%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:notEmpty>
-							<logic:empty name="question" property="render.columns">
+							<logic:empty name="question" property="questionType.render.columns">
 								<html:text property='<%="question["+ optionOrder+"].response"%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:empty>
 						</logic:empty>

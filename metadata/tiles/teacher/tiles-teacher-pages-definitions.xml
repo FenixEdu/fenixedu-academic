@@ -285,6 +285,23 @@
 	<definition name="prepare-Delete-Distributed-Test" extends="definition.teacher.testsPage">
 		<put name="body" value="/teacher/prepareDeleteDistributedTest.jsp"></put>		
 	</definition>
+	<definition name="choose-Exercise-Type" extends="definition.teacher.testsPage">
+		<put name="body" value="/teacher/chooseExerciseType.jsp"></put>		
+	</definition>
+	<definition name="prepare-Create-Exercise" extends="definition.teacher.testsPage">
+		<put name="body" value="/teacher/prepareCreateExercise.jsp"></put>		
+	</definition>
+	<definition name="preview-Exercise" extends="definition.teacher.testsPage">
+		<put name="body" value="/teacher/previewExercise.jsp"></put>		
+	</definition>
+	<definition name="add-Exercise-Variation" extends="definition.teacher.testsPage">
+		<put name="body" value="/teacher/addExerciseVariation.jsp"></put>		
+	</definition>
+	<definition name="choose-New-Exercise" extends="definition.teacher.testsPage">
+		<put name="body" value="/teacher/chooseNewExercise.jsp"></put>		
+	</definition>
+	
+	
 	<!-- END TESTS DEFINITIONS -->	
 	<definition name="showSummaries" extends="definition.teacher.summaryPage">
 		<put name="body" value="/teacher/showSummaries.jsp"></put>		

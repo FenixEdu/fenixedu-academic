@@ -5,9 +5,7 @@ package DataBeans;
 
 import java.util.List;
 
-import Util.tests.CardinalityType;
 import Util.tests.QuestionType;
-import Util.tests.Render;
 
 /**
  * @author Susana Fernandes
@@ -26,8 +24,6 @@ public class InfoQuestion extends InfoObject {
 
     private List options;
 
-    private Render render;
-
     //This is the list with all of the instructions for the response
     // processing.
     private List responseProcessingInstructions;
@@ -41,8 +37,6 @@ public class InfoQuestion extends InfoObject {
     private Integer optionNumber;
 
     private QuestionType questionType;
-
-    private CardinalityType cardinalityType;
 
     public InfoQuestion() {
     }
@@ -116,14 +110,6 @@ public class InfoQuestion extends InfoObject {
         visibility = boolean1;
     }
 
-    public CardinalityType getCardinalityType() {
-        return cardinalityType;
-    }
-
-    public void setCardinalityType(CardinalityType cardinalityType) {
-        this.cardinalityType = cardinalityType;
-    }
-
     public QuestionType getQuestionType() {
         return questionType;
     }
@@ -139,14 +125,6 @@ public class InfoQuestion extends InfoObject {
     public void setResponseProcessingInstructions(
             List responseProcessingInstructions) {
         this.responseProcessingInstructions = responseProcessingInstructions;
-    }
-
-    public Render getRender() {
-        return render;
-    }
-
-    public void setRender(Render render) {
-        this.render = render;
     }
 
     public boolean equals(Object obj) {
@@ -178,10 +156,7 @@ public class InfoQuestion extends InfoObject {
                             && (getOptionNumber().equals(infoQuestion
                                     .getOptionNumber()))
                             && (getVisibility().equals(infoQuestion
-                                    .getVisibility()))
-                            && (getCardinalityType().getType()
-                                    .equals(infoQuestion.getCardinalityType()
-                                            .getType())) && (getQuestionType()
+                                    .getVisibility())) && (getQuestionType()
                             .getType().equals(infoQuestion.getQuestionType()
                             .getType())));
         }

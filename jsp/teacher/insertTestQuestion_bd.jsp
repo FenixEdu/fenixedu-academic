@@ -80,8 +80,8 @@
 		</tr>
 	</logic:notEqual>
 	<tr>
-	<td><b><bean:message key="message.tests.questionCardinality"/></b></td>
-	<td><bean:write name="iquestion" property="cardinalityType.typeString"/></td>		
+	<td><b><bean:message key="message.tests.questionCardinality"/>:</b></td>
+	<td><bean:write name="iquestion" property="questionType.cardinalityType.typeString"/></td>		
 	</tr>
 </table>
 <br/>

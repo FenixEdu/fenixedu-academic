@@ -30,9 +30,9 @@
                <form-bean name="studentTestForm" type="ServidorApresentacao.formbeans.tests.TestForm" dynamic="true">
        </form-bean>
         <form-bean name="exerciseForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-
             <form-property name="metadataFile" type="org.apache.struts.upload.FormFile"/>
             <form-property name="xmlZipFile" type="org.apache.struts.upload.FormFile"/>
+            <form-property name="exerciseCode" type="java.lang.String"/>
             <form-property name="objectCode" type="java.lang.String"/>
             <form-property name="order" type="java.lang.String"/>
             <form-property name="asc" type="java.lang.String"/>
@@ -113,6 +113,41 @@
      	  	<form-property name="distributedTestCodes" type="java.lang.String"/>
         	<form-property name="objectCode" type="java.lang.String"/>
         	<form-property name="page" type="java.lang.Integer" initial="0"/>
+        </form-bean>
+        <form-bean name="exerciseCreationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+       		<form-property name="objectCode" type="java.lang.String"/>
+       		<form-property name="exerciseCode" type="java.lang.String"/>
+       		<form-property name="evaluationQuestion" type="java.lang.Boolean" initial="true"/>
+        	<form-property name="author" type="java.lang.String"/>
+        	<form-property name="description" type="java.lang.String"/>
+        	<form-property name="difficulty" type="java.lang.Integer"/>
+        	<form-property name="mainSubject" type="java.lang.String"/>
+            <form-property name="secondarySubject" type="java.lang.String"/>
+            <form-property name="learningHour" type="java.lang.String"/>
+        	<form-property name="learningMinute" type="java.lang.String"/>
+			<form-property name="level" type="java.lang.String"/>
+            <form-property name="questionType" type="java.lang.Integer" initial="1"/>
+            <form-property name="cardinalityType" type="java.lang.Integer" initial="1"/>
+            <form-property name="optionNumber" type="java.lang.Integer"/>
+            <form-property name="questionValue" type="java.lang.String"/>
+            <form-property name="questionText" type="java.lang.String"/>
+            <form-property name="secondQuestionText" type="java.lang.String"/>
+            <form-property name="breakLineBeforeResponseBox" type="java.lang.Boolean"/>
+            <form-property name="breakLineAfterResponseBox" type="java.lang.Boolean"/>
+            <form-property name="correctFeedbackText" type="java.lang.String"/>
+            <form-property name="wrongFeedbackText" type="java.lang.String"/>
+            <form-property name="options" type="java.lang.String[]"/>
+            <form-property name="correctOptions" type="java.lang.String[]"/>
+            <form-property name="shuffle" type="java.lang.String[]"/>
+            <form-property name="signal" type="java.lang.Integer[]"/>
+            <form-property name="cols" type="java.lang.String"/>
+            <form-property name="rows" type="java.lang.String"/>
+            <form-property name="maxChar" type="java.lang.String"/>
+            <form-property name="caseSensitive" type="java.lang.Boolean"/>
+            <form-property name="integerType" type="java.lang.Boolean" initial="true"/>
+	   		<form-property name="conditionId" type="java.lang.Integer"/>
+	   		<form-property name="response" type="java.lang.String[]"/>
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
         <!-- summary form -->
         <form-bean name="showSummaryForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -878,22 +913,24 @@
         </action>
         <action path="/exercisesManagement" name="exerciseForm"
             input="/exercisesManagement.do?method=insertNewExercise&amp;page=0" scope="request" 
-            parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
+            parameter="method" type="ServidorApresentacao.Action.teacher.ExercisesManagementAction" 
             validate="true">
-             <forward name="testsFirstPage" path="tests-First-Page"/>
+            <forward name="chooseExerciseType" path="choose-Exercise-Type"/>
+            <forward name="testsFirstPage" path="tests-First-Page"/>
             <forward name="exercisesFirstPage" path="exercises-First-Page"/>
             <forward name="prepareRemoveExercise" path="prepare-Remove-Exercise"/>
             <forward name="insertNewExercise" path="insert-New-Exercise"/>
+            <forward name="chooseNewExercise" path="choose-New-Exercise"/>
+            <forward name="addExerciseVariation" path="add-Exercise-Variation"/>
             <forward name="editExercise" path="edit-Exercise"/>
         </action>
        <action path="/exercisesEdition" name="exerciseEditionForm"
             input="/exercisesManagement.do?method=prepareEditExercise&amp;page=0" scope="request" 
-            parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
+            parameter="method" type="ServidorApresentacao.Action.teacher.ExercisesManagementAction" 
             validate="true">
             <forward name="editExercise" path="edit-Exercise"/>
             <forward name="exercisesFirstPage" path="exercises-First-Page"/>
         </action>
-       
         <action path="/questionsManagementWithValue" name="questionForm" 
             input="/questionsManagement.do?method=prepareInsertTestQuestion&amp;page=0" scope="request"
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
@@ -926,7 +963,7 @@
             input="/testDistribution.do?method=prepareDistributeTest&amp;page=0" scope="request" 
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
-                      <forward name="distributeTest" path="distribute-Test"/>
+            <forward name="distributeTest" path="distribute-Test"/>
             <forward name="showDistributedTests" path="show-Distributed-Tests"/>
             <forward name="distributeTestByShifts" path="distribute-Test-By-Shifts"/>
             <forward name="distributeTestByStudents" path="distribute-Test-By-Students"/>
@@ -934,8 +971,7 @@
             <forward name="showTestMarksStatistics" path="show-Test-Marks-Statistics"/>
             <forward name="showTestStatistics" path="show-Test-Statistics"/>
             <forward name="prepareDeleteDistributedTest" path="prepare-Delete-Distributed-Test"/>
-            <forward name="showTests" path="show-Tests"/>    
-
+            <forward name="showTests" path="show-Tests"/>
 		</action>
         <action path="/testDistributionByShifts" name="distributedTestForm" 
             input="/testDistribution.do?method=chooseShifts&amp;page=1" scope="request" parameter="method" 
@@ -963,7 +999,23 @@
             validate="true">
             <forward name="showDistributedTests" path="show-Distributed-Tests"/>
         </action>
+        <action path="/exerciseType" name="exerciseCreationForm"
+            input="/exercisesManagement.do?method=prepareChooseExerciseType&amp;page=0" scope="request" 
+            parameter="method" type="ServidorApresentacao.Action.teacher.ExercisesManagementAction" 
+            validate="true">
+            <forward name="prepareCreateExercise" path="prepare-Create-Exercise"/>
+            <forward name="chooseExerciseType" path="choose-Exercise-Type"/>
+        </action>
+        <action path="/exerciseCreation" name="exerciseCreationForm"
+            input="/exerciseType.do?method=chooseQuestionType&amp;page=1" scope="request" 
+            parameter="method" type="ServidorApresentacao.Action.teacher.ExercisesManagementAction" 
+            validate="true">
+            <forward name="prepareCreateExercise" path="prepare-Create-Exercise"/>
+            <forward name="exercisesFirstPage" path="exercises-First-Page"/>
+            <forward name="previewExercise" path="preview-Exercise"/>
+        </action>
         <!-- End Action for Tests Administration Site -->
+        
         <!-- Students list -->
         <action path="/readCurricularCourseList" input="/teacherAdministrationViewerError.jsp" 
             scope="request" parameter="method" 

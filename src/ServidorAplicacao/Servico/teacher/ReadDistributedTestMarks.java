@@ -3,12 +3,14 @@
  *  
  */
 package ServidorAplicacao.Servico.teacher;
+
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteStudentsTestMarks;
@@ -17,7 +19,6 @@ import DataBeans.util.Cloner;
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IStudentTestQuestion;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -29,78 +30,65 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Susana Fernandes
  *  
  */
-public class ReadDistributedTestMarks implements IServico
-{
+public class ReadDistributedTestMarks implements IService {
 
-	private static ReadDistributedTestMarks service = new ReadDistributedTestMarks();
+    public ReadDistributedTestMarks() {
+    }
 
-	public static ReadDistributedTestMarks getService()
-	{
-		return service;
-	}
+    public SiteView run(Integer executionCourseId, Integer distributedTestId)
+            throws FenixServiceException {
 
-	public String getNome()
-	{
-		return "ReadDistributedTestMarks";
-	}
+        ISuportePersistente persistentSuport;
+        InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
+        try {
+            persistentSuport = SuportePersistenteOJB.getInstance();
+            IDistributedTest distributedTest = new DistributedTest(
+                    distributedTestId);
+            distributedTest = (IDistributedTest) persistentSuport
+                    .getIPersistentDistributedTest().readByOId(distributedTest,
+                            false);
+            if (distributedTest == null) { throw new InvalidArgumentsServiceException(); }
 
-	public SiteView run(Integer executionCourseId, Integer distributedTestId)
-		throws FenixServiceException
-	{
+            IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
+                    .getIPersistentStudentTestQuestion();
+            List studentTestQuestionList = persistentStudentTestQuestion
+                    .readByDistributedTest(distributedTest);
+            Iterator it = studentTestQuestionList.iterator();
+            List infoStudentTestQuestionList = null;
 
-		ISuportePersistente persistentSuport;
-		InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
-		try
-		{
-			persistentSuport = SuportePersistenteOJB.getInstance();
-			IDistributedTest distributedTest = new DistributedTest(distributedTestId);
-			distributedTest =
-				(IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(
-					distributedTest,
-					false);
-			if (distributedTest == null)
-			{
-				throw new InvalidArgumentsServiceException();
-			}
+            infoStudentTestQuestionList = (List) CollectionUtils.collect(
+                    studentTestQuestionList, new Transformer() {
 
-			IPersistentStudentTestQuestion persistentStudentTestQuestion =
-				persistentSuport.getIPersistentStudentTestQuestion();
-			List studentTestQuestionList =
-				persistentStudentTestQuestion.readByDistributedTest(distributedTest);
-			Iterator it = studentTestQuestionList.iterator();
-			List infoStudentTestQuestionList = null;
-			//			Calendar start = Calendar.getInstance();
-			infoStudentTestQuestionList =
-				(List) CollectionUtils.collect(studentTestQuestionList, new Transformer()
-			{
-				public Object transform(Object arg0)
-				{
-					IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) arg0;
-					return Cloner.copyIStudentTestQuestion2InfoStudentTestQuestionMark(
-						studentTestQuestion);
-				}
+                        public Object transform(Object arg0) {
+                            IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) arg0;
+                            return Cloner
+                                    .copyIStudentTestQuestion2InfoStudentTestQuestionMark(studentTestQuestion);
+                        }
 
-			});
-			//			System.out.println(
-			//				"ReadDistributedTestMarks while took ["
-			//					+ (Calendar.getInstance().getTimeInMillis() - start.getTimeInMillis())
-			//					+ "] ms");
-			infoSiteStudentsTestMarks.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
-			infoSiteStudentsTestMarks.setExecutionCourse(
-				(InfoExecutionCourse) Cloner.get(distributedTest.getTestScope().getDomainObject()));
-			infoSiteStudentsTestMarks.setExecutionCourse(
-				(InfoExecutionCourse) Cloner.get(distributedTest.getTestScope().getDomainObject()));
-			infoSiteStudentsTestMarks.setInfoDistributedTest(
-				Cloner.copyIDistributedTest2InfoDistributedTest(distributedTest));
+                    });
 
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
-		SiteView siteView =
-			new ExecutionCourseSiteView(infoSiteStudentsTestMarks, infoSiteStudentsTestMarks);
-		return siteView;
-	}
+            infoSiteStudentsTestMarks
+                    .setMaximumMark(persistentStudentTestQuestion
+                            .getMaximumDistributedTestMark(distributedTest));
+            infoSiteStudentsTestMarks
+                    .setInfoStudentTestQuestionList(infoStudentTestQuestionList);
+            infoSiteStudentsTestMarks
+                    .setExecutionCourse((InfoExecutionCourse) Cloner
+                            .get(distributedTest.getTestScope()
+                                    .getDomainObject()));
+            infoSiteStudentsTestMarks
+                    .setExecutionCourse((InfoExecutionCourse) Cloner
+                            .get(distributedTest.getTestScope()
+                                    .getDomainObject()));
+            infoSiteStudentsTestMarks.setInfoDistributedTest(Cloner
+                    .copyIDistributedTest2InfoDistributedTest(distributedTest));
+
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        SiteView siteView = new ExecutionCourseSiteView(
+                infoSiteStudentsTestMarks, infoSiteStudentsTestMarks);
+        return siteView;
+    }
 
 }

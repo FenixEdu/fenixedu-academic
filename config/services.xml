@@ -4240,6 +4240,26 @@
         </filterChains>
     </service>
     <service>
+        <name>CreateExercise</name>
+        <implementationClass>
+            ServidorAplicacao.Servico.teacher.CreateExercise</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>InsertExerciseVariation</name>
+        <implementationClass>
+            ServidorAplicacao.Servico.teacher.InsertExerciseVariation</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>Seminaries.GetAllSeminaries</name>
         <implementationClass>ServidorAplicacao.Servico.Seminaries.GetAllSeminaries</implementationClass>
         <description/>

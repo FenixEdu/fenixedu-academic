@@ -42,16 +42,18 @@
 </logic:equal>
 
 <bean:define id="indexOption" value="0"/>
-<bean:define id="cardinality" name="iquestion" property="cardinalityType.type"/>
+<bean:define id="cardinality" name="iquestion" property="questionType.cardinalityType.type"/>
 <bean:define id="questionType" name="iquestion" property="questionType.type"/>
 <bean:define id="imageLabel" value="false"/>
 <bean:define id="firstOptionImage" value="<%=index.toString()%>"/>
 
 <bean:define id="showOptions" value="true"/>
 <logic:equal name="showResponses" value="true">
+	<%	if(((Integer)questionType).intValue()==1 ){ %> <%-- QuestionType.LID--%>
 	<logic:notEmpty name="iquestion" property="responseProcessingInstructions">
 		<bean:define id="showOptions" value="false"/>
 	</logic:notEmpty>
+	<%}%>
 </logic:equal>
 
 <logic:equal name="showOptions" value="true">
@@ -85,27 +87,37 @@
 				
 			<%}%>
 		<%}else{ %><%-- QuestionType.STR or QuestionType.NUM--%>
-			<logic:notEmpty name="iquestion" property="render.maxchars">
-				<bean:define id="maxchars" name="iquestion" property="render.maxchars"/>
-				<html:text maxlength="<%=maxchars.toString()%>" size="<%=maxchars.toString()%>" property="option" value="" disabled="true"/>
+			<logic:notEmpty name="iquestion" property="questionType.render.maxchars">
+				<bean:define id="maxchars" name="iquestion" property="questionType.render.maxchars"/>
+				<logic:notEmpty name="iquestion" property="questionType.render.columns">
+					<bean:define id="cols" name="iquestion" property="questionType.render.columns"/>
+					<html:text maxlength="<%=maxchars.toString()%>" size="<%=cols.toString()%>" property="option" value="" disabled="true"/>
+				</logic:notEmpty>
+				<logic:empty name="iquestion" property="questionType.render.columns">
+					<bean:define id="textBoxSize" value="<%=maxchars.toString()%>"/>
+					<logic:greaterThan name="textBoxSize" value="100" >
+						<bean:define id="textBoxSize" value="100"/>
+					</logic:greaterThan>
+					<html:text maxlength="<%=maxchars.toString()%>" size="<%=textBoxSize%>" property="option" value="" disabled="true"/>
+				</logic:empty>
 			</logic:notEmpty>	
-			<logic:empty name="iquestion" property="render.maxchars">
-				<logic:notEmpty name="iquestion" property="render.rows">
-					<bean:define id="rows" name="iquestion" property="render.rows"/>
-					<logic:notEmpty name="iquestion" property="render.columns">
-						<bean:define id="cols" name="iquestion" property="render.columns"/>
+			<logic:empty name="iquestion" property="questionType.render.maxchars">
+				<logic:notEmpty name="iquestion" property="questionType.render.rows">
+					<bean:define id="rows" name="iquestion" property="questionType.render.rows"/>
+					<logic:notEmpty name="iquestion" property="questionType.render.columns">
+						<bean:define id="cols" name="iquestion" property="questionType.render.columns"/>
 						<html:textarea rows="<%=rows.toString()%>" cols="<%=cols.toString()%>" property="option" disabled="true"/>
 					</logic:notEmpty>
-					<logic:empty name="iquestion" property="render.columns">
+					<logic:empty name="iquestion" property="questionType.render.columns">
 						<html:textarea rows="<%=rows.toString()%>" property="option" disabled="true"/>
 					</logic:empty>
 				</logic:notEmpty>
-				<logic:empty name="iquestion" property="render.rows">
-					<logic:notEmpty name="iquestion" property="render.columns">
-						<bean:define id="cols" name="iquestion" property="render.columns"/>
+				<logic:empty name="iquestion" property="questionType.render.rows">
+					<logic:notEmpty name="iquestion" property="questionType.render.columns">
+						<bean:define id="cols" name="iquestion" property="questionType.render.columns"/>
 						<html:textarea cols="<%=cols.toString()%>" property="option" disabled="true"/>
 					</logic:notEmpty>
-					<logic:empty name="iquestion" property="render.columns">
+					<logic:empty name="iquestion" property="questionType.render.columns">
 						<html:text property="option" value="" disabled="true"/>
 					</logic:empty>
 				</logic:empty>
