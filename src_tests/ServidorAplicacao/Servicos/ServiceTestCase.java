@@ -171,8 +171,7 @@ public abstract class ServiceTestCase extends TestCase {
 
 	/**
 	 * Compares two datasets and uses expected dataset table columns. <br/>
-	 * <b>IMPORTANT: </b> Uses only the tables specified in filterTables.properties 
-	 * 			for the service beeing tested and does not use default. <br/>
+	 * <b>IMPORTANT: </b> DOES NOT USE filterTables.properties ANYMORE
 	 * Expected dataset cannot refer to .dtd, otherwise the method will not use expected dataset
 	 * table columns, but the initial dataset columns.
 	 *  
@@ -180,8 +179,9 @@ public abstract class ServiceTestCase extends TestCase {
 	 */
 
 	protected void compareDataSetUsingExceptedDataSetTableColumns(String expectedFileName) {
-
-		try {
+		compareDataSetUsingExceptedDataSetTablesAndColumns(expectedFileName);
+		
+		/*try {
 
 			FileReader fileReader = new FileReader(new File(expectedFileName));
 			IDataSet expectedDataSet = new FlatXmlDataSet(fileReader);
@@ -211,7 +211,7 @@ public abstract class ServiceTestCase extends TestCase {
 
 		} catch (Exception ex) {
 			fail("compareDataSet failed to read data set files" + ex);
-		}
+		} */
 	}
 
 	/**
@@ -240,6 +240,39 @@ public abstract class ServiceTestCase extends TestCase {
 			listTableNamesToFilter.add(st.nextElement());
 
 		return listTableNamesToFilter;
+	}
+	
+	/**
+	 * Compares two datasets using expected dataset tables and columns
+	 * @param expectedFileName
+	 */
+	protected void compareDataSetUsingExceptedDataSetTablesAndColumns(String expectedFileName) {
+		try {
+
+			FileReader fileReader = new FileReader(new File(expectedFileName));
+			IDataSet expectedDataSet = new FlatXmlDataSet(fileReader);
+
+			IDataSet currentDataSet = getConnection().createDataSet();
+
+			
+			String[] tableNames = expectedDataSet.getTableNames();
+						
+			IDataSet filteredDateSet = new FilteredDataSet(tableNames, currentDataSet);
+			int totalTables = tableNames.length;
+		
+			for (int i = 0; i < totalTables; i++) {
+				ITable expectedTable = expectedDataSet.getTable(tableNames[i]);
+				ITable actualTable = filteredDateSet.getTable(tableNames[i]);
+				SortedTable sortedExpectedTable = new SortedTable(expectedTable);
+				SortedTable sortedActualTable = new SortedTable(actualTable, expectedTable.getTableMetaData());
+				Assertion.assertEquals(
+					sortedExpectedTable,
+					new CompositeTable(expectedTable.getTableMetaData(), sortedActualTable));
+			}
+
+		} catch (Exception ex) {
+			fail("compareDataSet failed to read data set files" + ex);
+		}
 	}
 
 	protected abstract String getDataSetFilePath();
