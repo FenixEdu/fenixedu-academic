@@ -239,12 +239,6 @@ public class UpdateStudentEnrolments
 				curricularCourse = (ICurricularCourse) curricularCourses.get(0);
 			}
 
-			if (!hasExecutionInGivenPeriod(curricularCourse, executionPeriod, mwEnrolment, sp))
-			{
-				ReportEnrolment.addExecutionCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
-				continue;
-			}
-
 			// If we get to this point of the code we did find a CurricularCourse.
 			// Now we will try to get the CurricularCourseScope by the CurricularCourse previously found and the semester an year from MWEnrolment.
 			ICurricularCourseScope curricularCourseScope = getCurricularCourseScopeToEnrollIn(studentCurricularPlan, mwEnrolment, curricularCourse, branch, sp);
@@ -257,6 +251,12 @@ public class UpdateStudentEnrolments
 					mwEnrolment.getCurricularcourseyear().toString(),
 					mwEnrolment.getCurricularcoursesemester().toString(),
 					mwEnrolment.getBranchcode().toString());
+				continue;
+			}
+
+			if (!hasExecutionInGivenPeriod(curricularCourse, executionPeriod, mwEnrolment, sp))
+			{
+				ReportEnrolment.addExecutionCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
 				continue;
 			}
 
