@@ -7,14 +7,14 @@
 
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.insertExemption" /></h2>
 
-<html:form action="/readStudent" focus="studentNumber" method="post">
+<html:form action="/readStudent" focus="studentNumber">
 	<html:hidden property="method" value="readStudent"/>
 	<html:hidden property="page" value="1"/>
 	
 	<table>
 		<tr>
 			<td><bean:message key="label.student.number" />:&nbsp;</td>
-			<td><html:text property="studentNumber" size="4"/></td>
+			<td><html:text property="studentNumber" size="10"/></td>
 		</tr>
 		<tr>
 			<td><bean:message key="label.executionYear" />:&nbsp;</td>

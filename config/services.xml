@@ -5381,7 +5381,7 @@
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
-        <service>
+    <service>
         <name>EditGrantContract</name>
         <implementationClass>ServidorAplicacao.Servico.grant.contract.EditGrantContract</implementationClass>
         <description/>
@@ -5399,6 +5399,26 @@
             <chain name="GrantOwnerManagerAuthorization"/>
         </filterChains>
     </service>
+    <service>
+        <name>ReadStudentCurricularPlansByNumberAndDegreeTypeInMasterDegree</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlansByNumberAndDegreeType</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadStudentCurricularPlanInMasterDegree</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlan</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>    
     <service>
     	<name>ReadGratuitySituationByStudentCurricularPlan</name>
     	<description>Retrieves gratuity situation associated with this student</description>
@@ -5437,6 +5457,17 @@
     	<description>Retrieves gratuity values associated with this execution degree</description>
     	<implementationClass>
     		ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByExecutionDegree
+    	</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+    	<name>ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear</name>
+    	<description>Retrieves gratuity values associated with this execution degree</description>
+    	<implementationClass>
+    		ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear
     	</implementationClass>
     	<isTransactional>True</isTransactional>
         <filterChains>

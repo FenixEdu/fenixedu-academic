@@ -1267,7 +1267,7 @@
 <!-- Definitions for class GratuityValues -->
 <class-descriptor
 		class="Dominio.GratuityValues"
-		table="GRATUITY"
+		table="GRATUITY_VALUES"
 	>
 	<field-descriptor 
     	name="idInternal"    
@@ -1402,7 +1402,7 @@
    		jdbc-type="VARCHAR"   		
    	/>
    	<field-descriptor
-   		name="keyGratuity"
+   		name="keyGratuityValues"
    		column="KEY_GRATUITY"
    		jdbc-type="INTEGER"   		
    	/>
@@ -1418,12 +1418,12 @@
       	locking="true"
     />    
     <reference-descriptor
-      	name="gratuity"
+      	name="gratuityValues"
        	class-ref="Dominio.GratuityValues"
        	proxy="false"
 		refresh="true"
     >
-        <foreignkey field-ref="keyGratuity"/>
+        <foreignkey field-ref="keyGratuityValues"/>
     </reference-descriptor>
     <reference-descriptor
       	name="studentCurricularPlan"
@@ -1485,7 +1485,7 @@
    		jdbc-type="VARCHAR"   		
    	/>
    	<field-descriptor
-   		name="keyGratuity"
+   		name="keyGratuityValues"
    		column="KEY_GRATUITY"
    		jdbc-type="INTEGER"   		
    	/>
@@ -1496,12 +1496,12 @@
       	locking="true"
     />      	    
     <reference-descriptor
-      	name="gratuity"
+      	name="gratuityValues"
        	class-ref="Dominio.GratuityValues"
        	proxy="false"
 		refresh="true"
     >   	
-        <foreignkey field-ref="keyGratuity"/>
+        <foreignkey field-ref="keyGratuityValues"/>
     </reference-descriptor>
 </class-descriptor>
 <!-- End of definitions for class PaymentPhase -->

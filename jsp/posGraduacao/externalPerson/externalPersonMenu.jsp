@@ -6,7 +6,7 @@
 	<li><html:link page="/guideSection.do"><bean:message key="link.masterDegree.administrativeOffice.guide" /></html:link></li>
 	<li><html:link page="/studentSection.do"><bean:message key="label.coordinator.student" /></html:link></li>
 	<li><html:link page="/thesisSection.do"><bean:message key="link.masterDegree.administrativeOffice.thesis.title" /></html:link></li>
-	<!--<li><html:link page="/gratuitySection.do"><bean:message key="link.masterDegree.administrativeOffice.gratuity" /></html:link></li>-->
+	<li><html:link page="/gratuitySection.do"><bean:message key="link.masterDegree.administrativeOffice.gratuity" /></html:link></li>
 </ul>
     <p><b><bean:message key="link.masterDegree.administrativeOffice.externalPersons.title" /></b></p>
 <ul>

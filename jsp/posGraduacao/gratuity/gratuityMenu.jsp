@@ -10,9 +10,9 @@
     <p><b><bean:message key="link.masterDegree.administrativeOffice.gratuity" /></b></p>
 <ul>
 	<blockquote>
-	    <li><html:link page="/chooseStudent.do?method=chooseStudent"><bean:message key="link.masterDegree.administrativeOffice.gratuity.insertExemption" /></html:link></li>
-	    <li><html:link page="/insertWorkLocation.do?method=prepare&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.gratuity.insertGratuity"/></html:link></li>
-	    <li><html:link page="/editWorkLocation.do?method=prepare&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></html:link></li>
+	    <li><html:link page="/readStudent.do?method=prepareReadStudent&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.gratuity.insertExemption" /></html:link></li>
+	    <%--<li><html:link page="/insertWorkLocation.do?method=prepare&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.gratuity.insertGratuity"/></html:link></li>
+	    <li><html:link page="/editWorkLocation.do?method=prepare&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></html:link></li> --%>
 	</blockquote>
 </ul>
 <ul>
