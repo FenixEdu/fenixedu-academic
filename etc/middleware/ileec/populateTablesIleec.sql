@@ -9,3 +9,4 @@ LOAD DATA INFILE '@load.data.infile.rootIleec@precedenciasDisciplinaDisciplinaIl
 LOAD DATA INFILE '@load.data.infile.rootIleec@precedenciasXCadeirasIleecTAB.txt' into table mw_PRECEDENCIAS_NUMERO_DISCIPLINAS_ILEEC IGNORE 2 LINES;
 LOAD DATA INFILE '@load.data.infile.rootIleec@TiposEquivalenciaTAB.txt' into table mw_TIPOS_EQUIVALENCIA_ILEEC IGNORE 2 LINES;
 LOAD DATA INFILE '@load.data.infile.rootIleec@tiposPrecedenciaIleecTAB.txt' into table mw_TIPOS_PRECENDENCIA_ILEEC IGNORE 2 LINES;
+

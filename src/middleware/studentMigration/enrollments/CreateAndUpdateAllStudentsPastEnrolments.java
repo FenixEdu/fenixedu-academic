@@ -847,7 +847,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param enrolment
 	 * @return
 	 */
-	private static String getEnrollmentKey(IEnrolment enrolment)
+	protected static String getEnrollmentKey(IEnrolment enrolment)
 	{
 		return CreateAndUpdateAllStudentsPastEnrolments.getStudentCurricularPlanKey(enrolment.getStudentCurricularPlan()) +
 			CreateAndUpdateAllStudentsPastEnrolments.getCurricularCourseScopeKey(enrolment.getCurricularCourseScope()) +
@@ -858,7 +858,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param enrolmentEvaluation
 	 * @return
 	 */
-	private static String getEnrollmentEvaluationKey(IEnrolmentEvaluation enrolmentEvaluation)
+	protected static String getEnrollmentEvaluationKey(IEnrolmentEvaluation enrolmentEvaluation)
 	{
 		Calendar calendar = Calendar.getInstance();
 		calendar.clear();

@@ -2,7 +2,7 @@ package middleware.persistentMiddlewareSupport;
 
 import java.util.List;
 
-import middleware.middlewareDomain.MWDisciplinaIleec;
+import middleware.middlewareDomain.MWTipoEquivalenciaIleec;
 import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
@@ -10,10 +10,10 @@ import ServidorPersistente.ExcepcaoPersistencia;
  * 3/Dez/2003
  */
 
-public interface IPersistentMWDisciplinasIleec
+public interface IPersistentMWTipoEquivalenciaIleec
 {
 	public List readAll() throws ExcepcaoPersistencia;
-	public MWDisciplinaIleec readByCodigoDisciplina(String codigoDisciplina) throws ExcepcaoPersistencia;
+	public MWTipoEquivalenciaIleec readByTipoEquivalencia(Integer tipoEquivalencia) throws ExcepcaoPersistencia;
 	public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
 	public Integer countAll();
 }

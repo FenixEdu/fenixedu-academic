@@ -1004,8 +1004,21 @@
 	</target>
 
 
-	<!-- ***************** ADDED BY DAVID SANTOS ***************** -->
+	<!-- ***************** ADDED BY TANIA POUSAO ***************** -->
+	<target name="migrate-evaluation-elements">
+		<java classname="middleware.curriculum.migrationEvaluationElements" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>	
+	
+	<!-- ********************************************************* -->
 
+	<!-- ***************** ADDED BY DAVID SANTOS ***************** -->
     <target name="create-MWCurricularCourseOutsideStudentDegree-table">
         <sql driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/${db.name}"
@@ -1169,19 +1182,20 @@
 		</sql>
 	</target>
 
-	<!-- ********************************************************* -->
-
-	<!-- ***************** ADDED BY TANIA POUSAO ***************** -->
-	<target name="migrate-evaluation-elements">
-		<java classname="middleware.curriculum.migrationEvaluationElements" fork="yes" failonerror="false" maxmemory="512m">
+	<target name="make-equivalences-for-ileec-students" depends="compile-proj, load-ileec-data" description="Cria na BD do Fénix as equivalências do ILEEC">
+		<java classname="middleware.studentMigration.enrollments.MakeEquivalencesForILEECStudents" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
 				<fileset dir="${webapp.lib}">
 					<include name="**/*.jar"/>
 				</fileset>
 			</classpath>
 		</java>
-	</target>	
-	
+	</target>
+
 	<!-- ********************************************************* -->
+
 </project>

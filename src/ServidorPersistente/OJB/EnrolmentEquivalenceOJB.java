@@ -8,6 +8,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.EnrolmentEquivalence;
+import Dominio.IEnrolment;
 import Dominio.IEnrolmentEquivalence;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolmentEquivalence;
@@ -117,4 +118,10 @@ public class EnrolmentEquivalenceOJB extends ObjectFenixOJB implements IPersiste
         }
     }
 
+	public IEnrolmentEquivalence readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("enrolmentKey", enrolment.getIdInternal());
+		return (IEnrolmentEquivalence) queryObject(EnrolmentEquivalence.class, criteria);
+	}
 }

@@ -26,4 +26,5 @@ public interface IPersistentMiddlewareSupport {
 	public IPersistentMWUniversity getIPersistentMWUniversity();
 	public IPersistentMWEquivalenciasIleec getIPersistentMWEquivalenciasIleec();
 	public IPersistentMWDisciplinasIleec getIPersistentMWDisciplinasIleec();
+	public IPersistentMWTipoEquivalenciaIleec getIPersistentMWTipoEquivalenciaIleec();
 }

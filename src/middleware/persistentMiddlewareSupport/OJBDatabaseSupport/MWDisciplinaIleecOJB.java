@@ -25,10 +25,10 @@ public class MWDisciplinaIleecOJB extends ObjectFenixOJB implements IPersistentM
 		return queryList(MWDisciplinaIleec.class, criteria);
 	}
 
-	public List readByCodigoDisciplina(String codigoDisciplina) throws ExcepcaoPersistencia {
+	public MWDisciplinaIleec readByCodigoDisciplina(String codigoDisciplina) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("codigoDisciplina", codigoDisciplina);
-		return queryList(MWDisciplinaIleec.class, criteria);
+		return (MWDisciplinaIleec) queryObject(MWDisciplinaIleec.class, criteria);
 	}
 
 	public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia
