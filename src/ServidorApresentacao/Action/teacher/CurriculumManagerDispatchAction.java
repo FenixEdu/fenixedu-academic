@@ -2,13 +2,11 @@ package ServidorApresentacao.Action.teacher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-
 import DataBeans.gesdis.InfoCurriculum;
 import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
@@ -99,16 +97,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		}
 		return mapping.findForward("viewObjectives");
 	}
-	public ActionForward prepareEditObjectives(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
-
-		return mapping.findForward("editObjectives");
-	}
+	
 	public ActionForward acessProgram(
 		ActionMapping mapping,
 		ActionForm form,
