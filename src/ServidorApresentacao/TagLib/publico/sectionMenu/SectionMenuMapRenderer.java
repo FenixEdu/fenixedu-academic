@@ -94,7 +94,7 @@ public class SectionMenuMapRenderer {
 		StringBuffer strBuffer = new StringBuffer("");
 		
 		//section management
-		if (renderer.equals("sectionChooser")){
+		if (renderer!=null && renderer.equals("sectionChooser")){
 		}
 		//main menu
 		else {		
