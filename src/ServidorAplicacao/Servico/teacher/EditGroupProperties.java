@@ -18,9 +18,6 @@ import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
-import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
-import ServidorAplicacao.Servico.exceptions.NonValidChangeServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentGroupProperties;
@@ -80,12 +77,13 @@ public class EditGroupProperties implements IServico {
 		return true;
 	}
 
-	private boolean checkIfIsPossibleToEdit(InfoGroupProperties infoGroupProperties, IGroupProperties groupProperties)
+	private List checkIfIsPossibleToEdit(InfoGroupProperties infoGroupProperties, IGroupProperties groupProperties)
 		throws FenixServiceException {
 
 		IPersistentStudentGroup persistentStudentGroup = null;
 		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
 		IGroupProperties existingGroupProperties = null;
+		List errors = new ArrayList();
 		try {
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 			IPersistentGroupProperties persistentGroupProperties = ps.getIPersistentGroupProperties();
@@ -117,7 +115,8 @@ public class EditGroupProperties implements IServico {
 					shift = (ITurno) iterator2.next();
 					studentGroupsList = persistentStudentGroup.readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
 					if (studentGroupsList.size() > groupMaximumNumber.intValue()) {
-						throw new NonValidChangeServiceException();
+						if (!errors.contains(new Integer(-1)))
+							errors.add(new Integer(-1));
 					}
 
 				}
@@ -125,7 +124,7 @@ public class EditGroupProperties implements IServico {
 			}
 
 			if (maximumCapacity == null && minimumCapacity == null) {
-				return true;
+				return errors;
 			}
 
 			Iterator iterGroups = allStudentsGroup.iterator();
@@ -137,26 +136,28 @@ public class EditGroupProperties implements IServico {
 				IStudentGroup studentGroup = (IStudentGroup) iterGroups.next();
 				allStudents = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
 				size = new Integer(allStudents.size());
-				if(size.compareTo(maximumCapacity)>0)
-					throw new InvalidArgumentsServiceException();
-				else
-					if(size.compareTo(minimumCapacity)<0)
-						throw new InvalidSituationServiceException();
+				if (size.compareTo(maximumCapacity) > 0) {
+					if (!errors.contains(new Integer(-2)))
+						errors.add(new Integer(-2));
+				} else if (size.compareTo(minimumCapacity) < 0) {
+					if (!errors.contains(new Integer(-3)))
+						errors.add(new Integer(-3));
+				}
 			}
 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
-		return true;
+		return errors;
 	}
 
 	/**
 	 * Executes the service.
 	 */
 
-	public boolean run(Integer objectCode, InfoGroupProperties infoGroupProperties) throws FenixServiceException {
+	public List run(Integer objectCode, InfoGroupProperties infoGroupProperties) throws FenixServiceException {
 
-		boolean result = false;
+		List result = new ArrayList();
 		try {
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 
@@ -166,8 +167,9 @@ public class EditGroupProperties implements IServico {
 			IGroupProperties groupProperties = new GroupProperties(infoGroupProperties.getIdInternal());
 			groupProperties = (IGroupProperties) persistentGroupProperties.readByOId(groupProperties, false);
 
-			if (checkIfAlreadyExists(infoGroupProperties, groupProperties))
-				if (checkIfIsPossibleToEdit(infoGroupProperties, groupProperties)) {
+			if (checkIfAlreadyExists(infoGroupProperties, groupProperties)) {
+				result = checkIfIsPossibleToEdit(infoGroupProperties, groupProperties); 
+				//if (result.size() = 0) {
 					IDisciplinaExecucao executionCourse =
 						(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(objectCode), false);
 
@@ -185,12 +187,13 @@ public class EditGroupProperties implements IServico {
 					groupProperties.setProjectDescription(infoGroupProperties.getProjectDescription());
 					groupProperties.setShiftType(infoGroupProperties.getShiftType());
 					persistentGroupProperties.lockWrite(groupProperties);
-				}
+				//}
 
+			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
-		return true;
+		return result;
 
 	}
 }

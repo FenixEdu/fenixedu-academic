@@ -65,7 +65,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorAplicacao.Servico.exceptions.NonValidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
@@ -1630,31 +1629,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		Integer objectCode = getObjectCode(request);
 		Object args[] = { objectCode, infoGroupProperties };
 		GestorServicos gestor = GestorServicos.manager();
+		List errors = new ArrayList();
 		try {
-			gestor.executar(userView, "EditGroupProperties", args);
-		} catch (NonValidChangeServiceException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			error = new ActionError("error.exception.nrOfGroups.editGroupProperties");
-			actionErrors.add("error.exception.nrOfGroups.editGroupProperties", error);
-			saveErrors(request, actionErrors);
-			return prepareEditGroupProperties(mapping, form, request, response);
-		} catch (InvalidArgumentsServiceException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			error = new ActionError("error.exception.maximumCapacity.editGroupProperties");
-			actionErrors.add("error.exception.maximumCapacity.editGroupProperties", error);
-			saveErrors(request, actionErrors);
-			return prepareEditGroupProperties(mapping, form, request, response);
-
-		} catch (InvalidSituationServiceException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			error = new ActionError("error.exception.minimumCapacity.editGroupProperties");
-			actionErrors.add("error.exception.minimumCapacity.editGroupProperties", error);
-			saveErrors(request, actionErrors);
-			return prepareEditGroupProperties(mapping, form, request, response);
-
+			errors = (List) gestor.executar(userView, "EditGroupProperties", args);
 		} catch (ExistingServiceException e) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
@@ -1665,6 +1642,36 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+		if (errors.size() != 0) {
+			ActionErrors actionErrors = new ActionErrors();
+
+			Iterator iterErrors = errors.iterator();
+			ActionError errorInt = null;
+			errorInt = new ActionError("error.exception.editGroupProperties");
+			actionErrors.add("error.exception.editGroupProperties", errorInt);
+			while (iterErrors.hasNext()) {
+				Integer intError = (Integer) iterErrors.next();
+
+				if (intError.equals(new Integer(-1))) {
+					ActionError error = null;
+					error = new ActionError("error.exception.nrOfGroups.editGroupProperties");
+					actionErrors.add("error.exception.nrOfGroups.editGroupProperties", error);
+				}
+				if (intError.equals(new Integer(-2))) {
+					ActionError error = null;
+					error = new ActionError("error.exception.maximumCapacity.editGroupProperties");
+					actionErrors.add("error.exception.maximumCapacity.editGroupProperties", error);
+				}
+				if (intError.equals(new Integer(-3))) {
+					ActionError error = null;
+					error = new ActionError("error.exception.minimumCapacity.editGroupProperties");
+					actionErrors.add("error.exception.minimumCapacity.editGroupProperties", error);
+				}
+			}
+			saveErrors(request, actionErrors);
+
+		}
+
 		return viewShiftsAndGroups(mapping, form, request, response);
 	}
 	public ActionForward deleteStudentGroup(
@@ -1744,7 +1751,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		
+
 		request.setAttribute("infoSiteStudentGroup", infoSiteStudentGroup);
 		readSiteView(request, null, null, null, null);
 		return mapping.findForward("insertStudentGroup");
