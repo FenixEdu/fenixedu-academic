@@ -34,8 +34,8 @@
 	</tr>
              <tr>
                 <td>
-                    <html:link page="/listAllSeminaries.do" > <bean:message key="link.seminaries.enrolment"/> </html:link> 
-					<a href=<bean:message key="link.seminaries.rules"/>> <bean:message key="label.seminairies.seeRules"/> </a>
+                    <html:link page="/listAllSeminaries.do"> <bean:message key="link.seminaries.enrolment"/> </html:link> 
+					<a href=<bean:message key="link.seminaries.rules" />target="_blank"> <bean:message key="label.seminairies.seeRules"/> </a>
                 </td>
             </tr>
 </table>

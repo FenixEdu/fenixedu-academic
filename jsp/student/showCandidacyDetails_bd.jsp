@@ -6,7 +6,6 @@
 <bean:define id="cases" type="java.util.List" name="cases"/>
 <bean:define id="student" type="DataBeans.InfoStudent"  name="student"/>
 <bean:define id="curricularCourse" type="DataBeans.InfoCurricularCourse"  name="curricularCourse"/>
-<bean:define id="theme" type="DataBeans.Seminaries.InfoTheme"  name="theme"/>
 <bean:define id="motivation" type="java.lang.String"  name="motivation"/>
 <bean:define id="seminary" type="DataBeans.Seminaries.InfoSeminary"  name="seminary"/>
 <bean:define id="modality" type="DataBeans.Seminaries.InfoModality"  name="modality"/>

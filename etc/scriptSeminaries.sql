@@ -3,14 +3,15 @@
 -- -----------------------------
 delete from SEMINARY;
 insert into SEMINARY values (1, 'Desenvolvimento Sustentavel','Ano lectivo de 2003 / 2004',1);
-insert into SEMINARY values (2, 'Clonagem humana a altas temperaturas','Ano 2042, orador: Gonçalo Mengel Luiz',3);
-insert into SEMINARY values (3, 'Pontes e Túneis','Ano 1940, orador: Hintze Ribeiro',2);
 
 -- -----------------------------
 -- Data for table 'SEMINARY_MODALITY'
 -- -----------------------------
 delete from SEMINARY_MODALITY;
 insert into SEMINARY_MODALITY values (1, 'Completa','O aluno frequenta os três Seminários com cerca de 50 horas lectivas e elabora um trabalho de grupo de estudo dum caso, que será discutido e avaliado. Esta modalidade poderá ser oferecida como conteúdo possível para uma disciplina de licenciatura ou de programa de pós-graduação, desde que tal tenha as autorizações devidas no respectivo âmbito. Para todos os efeitos formais tudo se passará como se o aluno tivesse frequentado a disciplina original.');
+insert into SEMINARY_MODALITY values (2, 'Seminário com Trabalho','O aluno frequenta um seminário com cerca de 15 a 17 horas lectivas e elabora um trabalho de grupo de estudo dum caso, que será discutido e avaliado. Esta modalidade poderá ser oferecida como conteúdo possível de um Seminário de pós-graduação ou de parte de uma disciplina de licenciatura ou programa de pós-graduação, desde que tal tenha as autorizações devidas no respectivo âmbito. De novo, tudo se passará formalmente como no contexto da disciplina ou Seminário originais.');
+insert into SEMINARY_MODALITY values (3, 'Seminário','O aluno frequentará a parte lectiva de um seminário, como alternativa a um dos Seminários de Humanidades de Engenharia Civil, contando para o portfolio de Engenharia Informática, ou para efeitos semelhantes noutros eventuais cursos.');
+
 -- -----------------------------
 -- Data for table 'SEMINARY_THEME'
 -- -----------------------------
@@ -50,23 +51,76 @@ insert into SEMINARY_CASESTUDY values (9, 'Caso 3 Tema 3',NULL,'T.3',3);
 -- Data for table 'SEMINARY_CURRICULARCOURSE'
 -- -----------------------------
 delete from SEMINARY_CURRICULARCOURSE;
-insert into SEMINARY_CURRICULARCOURSE values (1,1,666,1);
-insert into SEMINARY_CURRICULARCOURSE values (2,1,666,2);
-insert into SEMINARY_CURRICULARCOURSE values (3,1,666,3);
-insert into SEMINARY_CURRICULARCOURSE values (4,1,701,1);
-insert into SEMINARY_CURRICULARCOURSE values (5,1,701,2);
+insert into SEMINARY_CURRICULARCOURSE values (1,1,3842,2); 
+insert into SEMINARY_CURRICULARCOURSE values (2,1,3841,2);
+insert into SEMINARY_CURRICULARCOURSE values (3,1,3815,2);
+insert into SEMINARY_CURRICULARCOURSE values (4,1,3769,2);
+insert into SEMINARY_CURRICULARCOURSE values (5,1,3528,2);
+insert into SEMINARY_CURRICULARCOURSE values (6,1,3418,2);
+insert into SEMINARY_CURRICULARCOURSE values (8,1,2939,1);
+insert into SEMINARY_CURRICULARCOURSE values (9,1,2859,1);
+insert into SEMINARY_CURRICULARCOURSE values (11,1,3078,1);
+insert into SEMINARY_CURRICULARCOURSE values (15,1,3631,3);
+insert into SEMINARY_CURRICULARCOURSE values (16,1,3080,2);
+insert into SEMINARY_CURRICULARCOURSE values (17,1,2673,1);
+insert into SEMINARY_CURRICULARCOURSE values (18,1,3476,1);
+insert into SEMINARY_CURRICULARCOURSE values (20,1,3376,1);
+insert into SEMINARY_CURRICULARCOURSE values (22,1,4464,2);
+insert into SEMINARY_CURRICULARCOURSE values (23,1,4489,1);
+insert into SEMINARY_CURRICULARCOURSE values (24,1,4489,1);
+insert into SEMINARY_CURRICULARCOURSE values (25,1,4749,2);
+insert into SEMINARY_CURRICULARCOURSE values (29,1,4672,1);
 
 -- -----------------------------
 -- Data for table 'EQUIVALENCY_THEME'
 -- -----------------------------
 delete from EQUIVALENCY_THEME;
 insert into EQUIVALENCY_THEME values (1,1);
-insert into EQUIVALENCY_THEME values (1,2);
-insert into EQUIVALENCY_THEME values (1,3);
 insert into EQUIVALENCY_THEME values (2,1);
+insert into EQUIVALENCY_THEME values (3,1);
+insert into EQUIVALENCY_THEME values (1,2);
 insert into EQUIVALENCY_THEME values (2,2);
+insert into EQUIVALENCY_THEME values (3,2);
+insert into EQUIVALENCY_THEME values (1,3);
 insert into EQUIVALENCY_THEME values (2,3);
+insert into EQUIVALENCY_THEME values (3,3);
 insert into EQUIVALENCY_THEME values (2,4);
 insert into EQUIVALENCY_THEME values (2,5);
-insert into EQUIVALENCY_THEME values (3,1);
-insert into EQUIVALENCY_THEME values (3,3);
+insert into EQUIVALENCY_THEME values (1,6);
+insert into EQUIVALENCY_THEME values (2,6);
+insert into EQUIVALENCY_THEME values (3,6);
+insert into EQUIVALENCY_THEME values (1,8);
+insert into EQUIVALENCY_THEME values (2,8);
+insert into EQUIVALENCY_THEME values (3,8);
+insert into EQUIVALENCY_THEME values (1,9);
+insert into EQUIVALENCY_THEME values (2,9);
+insert into EQUIVALENCY_THEME values (3,9);
+insert into EQUIVALENCY_THEME values (1,11);
+insert into EQUIVALENCY_THEME values (2,11);
+insert into EQUIVALENCY_THEME values (3,11);
+insert into EQUIVALENCY_THEME values (1,15);
+insert into EQUIVALENCY_THEME values (2,15);
+insert into EQUIVALENCY_THEME values (3,15);
+insert into EQUIVALENCY_THEME values (1,16);
+insert into EQUIVALENCY_THEME values (2,16);
+insert into EQUIVALENCY_THEME values (3,16);
+insert into EQUIVALENCY_THEME values (1,17);
+insert into EQUIVALENCY_THEME values (2,17);
+insert into EQUIVALENCY_THEME values (3,17);
+insert into EQUIVALENCY_THEME values (1,18);
+insert into EQUIVALENCY_THEME values (2,18);
+insert into EQUIVALENCY_THEME values (3,18);
+insert into EQUIVALENCY_THEME values (1,20);
+insert into EQUIVALENCY_THEME values (2,20);
+insert into EQUIVALENCY_THEME values (3,20);
+insert into EQUIVALENCY_THEME values (1,25);
+insert into EQUIVALENCY_THEME values (3,25);
+insert into EQUIVALENCY_THEME values (1,29);
+insert into EQUIVALENCY_THEME values (2,29);
+insert into EQUIVALENCY_THEME values (3,29);
+
+
+#47676 - ambiente
+#47629 - aero
+
+

@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import DataBeans.Seminaries.InfoEquivalency;
 import DataBeans.util.Cloner;
 import Dominio.Seminaries.ICaseStudy;
 import ServidorAplicacao.IServico;

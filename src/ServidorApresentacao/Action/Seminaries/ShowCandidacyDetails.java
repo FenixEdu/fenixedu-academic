@@ -102,18 +102,9 @@ public class ShowCandidacyDetails extends FenixAction
 					InfoCaseStudyChoice choice= (InfoCaseStudyChoice) iterator.next();
                     Object[] argsReadCaseStudy= { choice.getCaseStudyIdInternal() };
                     InfoCaseStudy infoCaseStudy = (InfoCaseStudy) gestor.executar(userView, "Seminaries.GetCaseStudyById", argsReadCaseStudy);
-                    System.out.println("Vou espetar isto " + infoCaseStudy);
                     cases.add(infoCaseStudy);                    
 				}
-                //
-                System.out.println ("Os casos sao " + cases);
-                System.out.println("O estudante e " + student);
-                System.out.println("A disciplina e " + curricularCourse);
-                System.out.println ("O tema e " + theme);
-                System.out.println ("A motivacao e " + motivation);
-                System.out.println ("A modalidade e " + modality);
-                System.out.println ("O seminario e " + seminary);
-                System.out.println ("As escolhas dos casos sao " + casesChoices);                
+                //              
                  
              }
              catch (Exception e)

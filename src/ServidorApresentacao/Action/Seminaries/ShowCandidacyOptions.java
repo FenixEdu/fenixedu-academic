@@ -4,6 +4,8 @@
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorApresentacao.Action.Seminaries;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +16,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoStudent;
+import DataBeans.Seminaries.InfoEquivalency;
 import DataBeans.Seminaries.InfoSeminary;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -68,6 +72,22 @@ public class ShowCandidacyOptions extends FenixAction
 					userView,
 					"student.ReadCurricularCoursesByUsername",
 					ReadCurricularCoursesByUsername);
+            List avaliableEquivalencies = new LinkedList();
+            for (Iterator iterator= disciplines.iterator(); iterator.hasNext();)
+			{
+				InfoCurricularCourse curricularCourse= (InfoCurricularCourse) iterator.next();
+                for (Iterator equivalencyIterator= seminary.getEquivalencies().iterator(); equivalencyIterator.hasNext();)
+				{
+					InfoEquivalency equivalency= (InfoEquivalency) equivalencyIterator.next();
+                    if (equivalency.getCurricularCourseIdInternal().equals(curricularCourse.getIdInternal()))
+                    {
+					   avaliableEquivalencies.add(equivalency);
+                       break;
+                    }
+				}                        
+			}
+            System.out.println("E no final temos " + avaliableEquivalencies);
+            seminary.setEquivalencies(avaliableEquivalencies);
             Object[] argsReadCandidacies= { student.getIdInternal() };                    
             List candidacies = (List) gestor.executar(userView, "Seminaries.GetCandidaciesByStudentID", argsReadCandidacies);
             if (candidacies.size() >= seminary.getAllowedCandidaciesPerStudent().intValue())

@@ -157,7 +157,7 @@
 		  <replacefilter 
 		    token="@db.assiduousness.validationQuery@" 
 		    property="db.assiduousness.validationQuery"/>
-		  		    
+		  		    		  		    
 		  <replacefilter 
 		    token="@db.personFilter.user@" 
 		    property="db.personFilter.user"/>
@@ -199,7 +199,7 @@
 		    token="@application@" 
 		    property="application"/>
 		</replace>
-		<antcall target="validate-xml"/>
+<!--		<antcall target="validate-xml"/>-->
     </target>
     
     <target name="compile-tests"
@@ -426,7 +426,7 @@
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
              	<!--      <include name="**/*Test.java"/> -->
-				<include name="**/SummaryOJBTest.java"/> 
+				<include name="**/EvaluationOJBTest.java"/> 
 					<!-- Theese tests where already failling, no need for me to worry about them for now -->
                <!-- <exclude name="**/TeacherOJBTest.java"/>
                     <exclude name="**/BibliographicReferenceOJBTest.java"/>
@@ -460,7 +460,7 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/InsertSummaryTest.java"/>
+                    <include name="**/ReadStudentsAndMarksByExamTest.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
                    	<exclude name="**/StudentShiftEnrolmentTest.java"/>

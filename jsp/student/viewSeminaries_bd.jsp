@@ -10,7 +10,6 @@
 		<h2><bean:message key="message.no.seminaries.to.enroll"/></h2>
 </logic:empty>
 
-
 <logic:notEmpty name="listSeminaries" >
 	<h2><bean:message key="label.seminariesToEnroll"/></h2>
 	<table width="90%" align="center">
