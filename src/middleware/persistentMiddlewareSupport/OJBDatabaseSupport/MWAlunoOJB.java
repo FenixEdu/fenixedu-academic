@@ -37,5 +37,23 @@ public class MWAlunoOJB extends ObjectFenixOJB implements IPersistentMWAluno {
 		
 		return (MWAluno) queryObject(MWAluno.class, criteria);
 	}
+
+	/* (non-Javadoc)
+	 * @see middleware.persistentMiddlewareSupport.IPersistentMWAluno#readAllBySpan(java.lang.Integer, java.lang.Integer)
+	 */
+	public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		return readSpan(MWAluno.class, criteria, numberOfElementsInSpan, spanNumber);
+	}
+	
+	/* (non-Javadoc)
+	 * @see middleware.persistentMiddlewareSupport.IPersistentMWAluno#countAll()
+	 */
+	public Integer countAll() throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+	{
+		return new Integer(count(MWAluno.class, new Criteria()));
+	}
+
     
 }

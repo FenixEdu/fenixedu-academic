@@ -26,8 +26,8 @@ public interface IPersistentMWAluno  {
      * @throws PersistentMiddlewareSupportException
      */
     public List readAll() throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
-    
-    
+    public List readAllBySpan(Integer spanNumber, Integer numberSpanOfElements) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
+	public Integer countAll() throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
     /**
      * 
      * @param Student Number
