@@ -6,6 +6,7 @@ package ServidorApresentacao.Action.student;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -116,6 +118,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 				throw new FenixActionException(e);
 			}
 			if (studentsNotEnroled != null) {
+				Collections.sort(studentsNotEnroled, new BeanComparator("number"));
 				request.setAttribute("infoStudents", studentsNotEnroled);
 			}
 			request.setAttribute("groupPropertiesCode", groupPropertiesCode);

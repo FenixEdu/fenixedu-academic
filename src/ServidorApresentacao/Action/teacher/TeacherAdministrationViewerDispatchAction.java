@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -73,10 +74,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
 import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao
-	.Action
-	.exceptions
-	.notAuthorizedActionDeleteException;
+import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.mapping.SiteManagementActionMapping;
@@ -1660,7 +1658,6 @@ public class TeacherAdministrationViewerDispatchAction
 
 			request.setAttribute("noShifts", new Boolean(true));
 		}
-
 		return mapping.findForward("viewProjectShifts");
 
 	}
@@ -2102,7 +2099,7 @@ public class TeacherAdministrationViewerDispatchAction
 			(TeacherAdministrationSiteView) readSiteView(request,
 				viewShifts,
 				null,
-				objectCode,
+				groupPropertiesCode,
 				null);
 		List shifts =
 			(List) ((InfoSiteShifts) shiftsView.getComponent()).getShifts();
@@ -2226,15 +2223,19 @@ public class TeacherAdministrationViewerDispatchAction
 		String studentGroupCodeString =
 			(String) request.getParameter("studentGroupCode");
 		String shiftCodeString = (String) request.getParameter("shiftCode");
+		String groupPropertiesCodeString = (String) request.getParameter("groupPropertiesCode");
+		
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
+		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 		Integer shiftCode = new Integer(shiftCodeString);
 		Integer objectCode = getObjectCode(request);
+		
 		ISiteComponent viewShifts = new InfoSiteShifts();
 		TeacherAdministrationSiteView shiftsView =
 			(TeacherAdministrationSiteView) readSiteView(request,
 				viewShifts,
 				null,
-				objectCode,
+				groupPropertiesCode,
 				studentGroupCode);
 		List shifts =
 			(List) ((InfoSiteShifts) shiftsView.getComponent()).getShifts();
@@ -2370,6 +2371,7 @@ public class TeacherAdministrationViewerDispatchAction
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+		Collections.sort(infoStudentList, new BeanComparator("number"));
 		request.setAttribute("infoStudentList", infoStudentList);
 		return mapping.findForward("editStudentGroupMembers");
 	}

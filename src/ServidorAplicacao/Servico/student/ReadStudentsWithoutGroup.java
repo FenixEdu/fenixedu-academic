@@ -5,11 +5,8 @@
 package ServidorAplicacao.Servico.student;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 import DataBeans.util.Cloner;
 import Dominio.GroupProperties;
@@ -119,7 +116,7 @@ public class ReadStudentsWithoutGroup implements IServico {
 				throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		  	}
 		
-		Collections.sort(infoStudentList, new BeanComparator("number"));
+		
 				
 		return infoStudentList;
 	}

@@ -778,14 +778,14 @@ public class TeacherAdministrationSiteComponentBuilder {
 		Iterator iter = itemsList.iterator();
 		IFileSuport fileSuport = FileSuport.getInstance();
 		while (iter.hasNext()) {
-			IItem item =(IItem) iter.next();
+			IItem item = (IItem) iter.next();
 			InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
 			try {
 				List files = fileSuport.getDirectoryFiles(item.getSlideName());
-				if (files!=null && !files.isEmpty()) {
+				if (files != null && !files.isEmpty()) {
 					List links = new ArrayList();
 					Iterator iterFiles = files.iterator();
-					while(iterFiles.hasNext()) {
+					while (iterFiles.hasNext()) {
 						FileSuportObject file = (FileSuportObject) iterFiles.next();
 						InfoLink infoLink = new InfoLink();
 						infoLink.setLink(file.getFileName());
@@ -1085,7 +1085,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 			e.printStackTrace();
 			throw new FenixServiceException("error.impossibleReadProjectShifts");
 		}
-
 		return infoSiteShifts;
 	}
 
@@ -1151,7 +1150,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 				}
 				Collections.sort(infoStudentGroupList, new BeanComparator("infoStudentGroup.groupNumber"));
-				
+
 				component.setInfoSiteStudentGroupsList(infoStudentGroupList);
 
 			}
@@ -1192,7 +1191,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 				return null;
 
 			studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
-			
 
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
@@ -1263,17 +1261,18 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @param site
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Integer objectCode, Integer studentGroupCode)
+	private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Integer groupPropertiesCode, Integer studentGroupCode)
 		throws FenixServiceException {
 		List infoShifts = new ArrayList();
-		IDisciplinaExecucao executionCourse = null;
+		IGroupProperties groupProperties = null;
+		IDisciplinaExecucao executionCourse=null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IStudentGroup studentGroup = null;
 
 			if (studentGroupCode != null) {
 
-				IStudentGroup studentGroup =
-					(IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
+				studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
 
 				if (studentGroup == null) {
 					component.setShifts(null);
@@ -1281,44 +1280,49 @@ public class TeacherAdministrationSiteComponentBuilder {
 				}
 			}
 
-			executionCourse =
-				(IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(objectCode), false);
-
+			groupProperties =
+				(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
+			executionCourse = groupProperties.getExecutionCourse();
 			List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
 
 			if (shifts == null || shifts.isEmpty()) {
 
 			} else {
+				IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+				IGroupEnrolmentStrategy strategy =
+					enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
 
 				for (int i = 0; i < shifts.size(); i++) {
 					ITurno shift = (ITurno) shifts.get(i);
-					InfoShift infoShift =
-						new InfoShift(
-							shift.getNome(),
-							shift.getTipo(),
-							shift.getLotacao(),
-							Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+					if (strategy.checkShiftType(groupProperties, shift)) {
 
-					List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
-					List infoLessons = new ArrayList();
-					List classesShifts = sp.getITurmaTurnoPersistente().readClassesWithShift(shift);
-					List infoClasses = new ArrayList();
+						InfoShift infoShift =
+							new InfoShift(
+								shift.getNome(),
+								shift.getTipo(),
+								shift.getLotacao(),
+								Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 
-					for (int j = 0; j < lessons.size(); j++)
-						infoLessons.add(Cloner.copyILesson2InfoLesson((IAula) lessons.get(j)));
+						List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
+						List infoLessons = new ArrayList();
+						List classesShifts = sp.getITurmaTurnoPersistente().readClassesWithShift(shift);
+						List infoClasses = new ArrayList();
 
-					infoShift.setInfoLessons(infoLessons);
+						for (int j = 0; j < lessons.size(); j++)
+							infoLessons.add(Cloner.copyILesson2InfoLesson((IAula) lessons.get(j)));
 
-					for (int j = 0; j < classesShifts.size(); j++)
-						infoClasses.add(Cloner.copyClass2InfoClass(((ITurmaTurno) classesShifts.get(j)).getTurma()));
+						infoShift.setInfoLessons(infoLessons);
 
-					infoShift.setInfoClasses(infoClasses);
-					infoShift.setIdInternal(shift.getIdInternal());
+						for (int j = 0; j < classesShifts.size(); j++)
+							infoClasses.add(Cloner.copyClass2InfoClass(((ITurmaTurno) classesShifts.get(j)).getTurma()));
 
-					infoShifts.add(infoShift);
+						infoShift.setInfoClasses(infoClasses);
+						infoShift.setIdInternal(shift.getIdInternal());
+
+						infoShifts.add(infoShift);
+					}
 				}
 			}
-
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

@@ -7,10 +7,11 @@
   <li><html:link page="/studentShiftEnrolmentManager.do?method=enrollCourses&amp;firstTime=yes"><bean:message key="link.shift.enrolment"/></html:link></li>
   <li><html:link page="/listAllSeminaries.do"> <bean:message key="link.seminaries.enrolment"/></html:link> <a href='<bean:message key="link.seminaries.rules" />' target="_blank"><bean:message key="label.seminairies.seeRules"/></a></li>
   <li><html:link page="/examEnrollmentManager.do?method=viewExamsToEnroll" ><bean:message key="link.exams.enrolment"/></html:link></li>
+  <li><html:link page="/viewEnroledExecutionCourses.do" ><bean:message key="link.groupEnrolment" /></html:link></li>
 </ul>
 <ul>
 	<li><html:link page="/studentTimeTable.do" target="_blank" >O Meu Horário</html:link></li>
   	<li><html:link page="/viewCurriculum.do?method=getStudentCP" ><bean:message key="link.student.curriculum"/></html:link></li>
   	<%--<li><html:link page="/studentExecutionCourse.do?method=viewStudentExecutionCourses" ><bean:message key="link.myExecutionCourses"/></html:link></li>--%>
-  	<%--<li><html:link page="/viewEnroledExecutionCourses.do" ><bean:message key="link.groups" /></html:link></li>--%>
+  	
 </ul>
