@@ -126,6 +126,7 @@ import Dominio.teacher.IProfessionalCareer;
 import Dominio.teacher.ITeachingCareer;
 import Dominio.teacher.ProfessionalCareer;
 import Dominio.teacher.TeachingCareer;
+import Dominio.teacher.professorship.*;
 import Dominio.teacher.professorship.IShiftProfessorship;
 import Util.EvaluationType;
 import Util.State;
