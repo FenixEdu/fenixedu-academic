@@ -44,9 +44,9 @@ ftp.IST.server.user=ciist
 ftp.IST.server.pass=desenvolvimento
 ftp.IST.server.address=saladd2.ist.utl.pt
 
-ftp.almeida.server.user=user
-ftp.almeida.server.pass=pass
-ftp.almeida.server.address=address
+ftp.degree.grades.server.user=user
+ftp.degree.grades.server.pass=pass
+ftp.degree.grades.server.address=address
 
 login.page=https://fenix.ist.utl.pt/privado
 application=extranet
