@@ -15,6 +15,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoPerson;
 import DataBeans.comparators.CalendarDateComparator;
 import DataBeans.projectsManagement.InfoProjectAccess;
 import ServidorAplicacao.IUserView;
@@ -65,6 +66,11 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
                     final List personAccessesList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadProjectAccesses", new Object[] {
                             userView, username });
                     request.setAttribute("personAccessesList", personAccessesList);
+                    if (personAccessesList == null || personAccessesList.size() == 0) {
+                        final InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername",
+                                new Object[] { username });
+                        request.setAttribute("infoPerson", infoPerson);
+                    }
 
                     final List projectList = (List) ServiceUtils.executeService(userView, "ReadProjectWithoutPersonAccess", new Object[] { userView,
                             username });
@@ -123,8 +129,16 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
         final Integer projectCode = getCodeFromRequest(request, "projectCode");
         final String personUsername = request.getParameter("username");
         ServiceManagerServiceFactory.executeService(userView, "RemoveProjectAccess", new Object[] { userView, personUsername, projectCode });
+        return showProjectsAccesses(mapping, form, request, response);
+    }
+
+    public ActionForward removePersonAccess(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixServiceException, FenixFilterException {
+        final IUserView userView = SessionUtils.getUserView(request);
+        final Integer projectCode = getCodeFromRequest(request, "projectCode");
+        final String personUsername = request.getParameter("username");
+        ServiceManagerServiceFactory.executeService(userView, "RemoveProjectAccess", new Object[] { userView, personUsername, projectCode });
         return showPersonAccesses(mapping, form, request, response);
-        // return showProjectAccesses(mapping, form, request, response);
     }
 
     public ActionForward prepareEditProjectAccess(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -170,7 +184,6 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
             ServiceManagerServiceFactory.executeService(userView, "EditProjectAccess", new Object[] { userView, personCode, projectCode, beginDate,
                     endDate });
         return showPersonAccesses(mapping, form, request, response);
-        // return showProjectAccesses(mapping, form, request, response);
     }
 
     private Integer getCodeFromRequest(HttpServletRequest request, String codeString) {

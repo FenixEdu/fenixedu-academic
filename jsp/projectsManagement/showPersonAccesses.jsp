@@ -41,6 +41,18 @@ function getIndex(input){
 </script>
 <br />
 <logic:present name="personAccessesList" scope="request">
+	<logic:present name="infoPerson" scope="request">
+		<table>
+			<tr>
+				<td><strong><bean:message key="label.username" />:</strong></td>
+				<td><bean:write name="infoPerson" property="username" /></td>
+			</tr>
+			<tr>				
+				<td><strong><bean:message key="label.name" />:</strong></td>
+				<td><bean:write name="infoPerson" property="nome" /></td>
+			</tr>
+		</table>
+	</logic:present>
 	<h3><bean:message key="message.personProjectAccess" /></h3>
 	<logic:notEmpty name="personAccessesList" scope="request">
 		<table>
@@ -66,7 +78,7 @@ function getIndex(input){
 					<td td class="listClasses"><bean:write name="projectAccess" property="beginDateFormatted" /></td>
 					<td td class="listClasses"><bean:write name="projectAccess" property="endDateFormatted" /></td>
 					<td><html:link page="<%="/projectAccessEdition.do?method=prepareEditProjectAccess&amp;projectCode="+projectCode+"&amp;personCode="+personCode%>">Editar</html:link></td>
-					<td><html:link page="<%="/projectAccess.do?method=removeProjectAccess&amp;projectCode="+projectCode+"&amp;username="+username%>">Remover</html:link></td>
+					<td><html:link page="<%="/projectAccess.do?method=removePersonAccess&amp;projectCode="+projectCode+"&amp;username="+username%>">Remover</html:link></td>
 				</tr>
 			</logic:iterate>
 		</table>
