@@ -14,4 +14,8 @@
 	  <put name="body" value="/student/main_bd.jsp" />
 	  <put name="footer" value="/student/commonFooterStudent.jsp" />
 	</definition>
+	<definition name="definition.student.curricular.courses.enrolment" extends="definition.student.masterPage">
+	  <put name="body" value="/student/showAvailableCurricularCourses_bd.jsp" />
+	</definition>
+	
 </tiles-definitions>

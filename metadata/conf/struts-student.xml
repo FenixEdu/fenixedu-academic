@@ -10,11 +10,11 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
 	  <!-- Dynamic-FormBean para EscolherCertidao -->
-      <form-bean name="escolherCertidaoForm"
+<!--      <form-bean name="escolherCertidaoForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="certidao" type="java.lang.String"/>
-      </form-bean>
+      </form-bean> -->
 
 	  <form-bean name="shiftEnrolmentForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -22,6 +22,10 @@
         <form-property name="shiftName" type="java.lang.String" />
       </form-bean>
       
+	  <form-bean name="curricularCourseEnrolmentForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+      </form-bean>
       
 
 	  <form-bean name="selectShiftEnrolmentForm"
@@ -62,50 +66,45 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
       <action path="/index" forward="/main.jsp"/>
-      <action path="/authenticationStudent" forward="/authenticationStudent.jsp"/>
 
       <!-- SHIFT ENROLMENT -->
-      <action 
-              type="ServidorApresentacao.Action.student.ViewEnrolmentAction"
-              path="/viewEnrolment"
-              >
-        <forward name="sucess"
-                 path="/viewEnrolment.jsp"/>
+      <action type="ServidorApresentacao.Action.student.ViewEnrolmentAction" path="/viewEnrolment">
+        <forward name="sucess" path="/viewEnrolment.jsp"/>
       </action>
 
       <action name="selectShiftEnrolmentForm"
               type="ServidorApresentacao.Action.student.ShowShiftListAction"
               path="/viewShiftsList"
               input="/viewEnrolment.jsp"
-              validate="true"
-             >
-        <forward name="viewShiftsList"
-                 path="/viewShiftsList.jsp"
-                 />
+              validate="true">
+        <forward name="viewShiftsList" path="/viewShiftsList.jsp"/>
       </action>
 
-      <action
-              type="ServidorApresentacao.Action.student.ShiftEnrolmentAction"
+      <action name="curricularCourseForm"
+              type="ServidorApresentacao.Action.student.CurricularCourseEnrolmentManagerDispatchAction"
+              path="/curricularCourseEnrolmentManager"
+              input="/viewEnrolment.jsp"
+              parameter="method"
+              validate="false">
+        <forward name="showAvailableCurricularCourses" path="/showAvailableCurricularCourses.jsp"/>
+      </action>
+
+      <action type="ServidorApresentacao.Action.student.ShiftEnrolmentAction"
               path="/shiftEnrolment"
               input="/viewShiftsList.do"
               scope="request"
               name="shiftEnrolmentForm"
-              validate="true"
-             >
-        <forward name="sucess"
-                 path="/viewEnrolment.do"/>
+              validate="true">
+        <forward name="sucess" path="/viewEnrolment.do"/>
       </action>
 
-      <action 
-              type="ServidorApresentacao.Action.student.ChooseOtherCourseAction"
-              path="/chooseOtherCourse"
-              >
-        <forward name="sucess"
-                 path="/chooseOtherCourse.jsp"/>
+      <action type="ServidorApresentacao.Action.student.ChooseOtherCourseAction"
+              path="/chooseOtherCourse">
+        <forward name="sucess" path="/chooseOtherCourse.jsp"/>
       </action>
 
       <!-- VIEW SCHEDULE -->
-      <action 
+<!--      <action 
               type="ServidorApresentacao.Action.student.ViewScheduleAction"
               path="/viewSchedule"
               >
@@ -166,7 +165,7 @@
                  redirect="true"/>
       </action>
       
-      <!-- VIEW DISCIPLINE -->
+     
     	<action 
               type="ServidorApresentacao.Action.student.ShowDisciplineListAction"
               path="/obtainCertificateTipo5"
@@ -188,7 +187,7 @@
         <forward name="sucesso"
                  path="/chooseObtainCertificate.jsp"
 				 />
-      </action>
+      </action> 
       
       
       
@@ -204,15 +203,15 @@
         <forward name="Tipo5" path="/obtainCertificateTipo5.do"/>
         <forward name="Inexistente" path="/naoExecutado.do"/>
       </action>
- 	
+ 	-->
      </action-mappings>     
 
     
     <!-- ========== Controller Configuration ================================ -->
-<!--	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/> -->
+	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorForStudentPortal"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
-    <message-resources parameter="ServidorApresentacao.ApplicationResources" />
+    <message-resources parameter="ServidorApresentacao.StudentResources" />
     
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
