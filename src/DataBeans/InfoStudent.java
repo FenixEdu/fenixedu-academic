@@ -19,6 +19,7 @@ public class InfoStudent {
 	protected StudentState state = new StudentState(1);
 	private InfoPerson infoPerson;
 	protected TipoCurso degreeType;
+	private InfoStudentGroupInfo infoStudentGroupInfo;
 	
 	public InfoStudent() {}
 
@@ -83,4 +84,12 @@ public class InfoStudent {
     return result;
   }
   
+	public InfoStudentGroupInfo getInfoStudentGroupInfo() {
+		return infoStudentGroupInfo;
+	}
+
+	public void setInfoStudentGroupInfo(InfoStudentGroupInfo info) {
+		infoStudentGroupInfo = info;
+	}
+
 }

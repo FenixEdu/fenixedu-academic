@@ -724,7 +724,7 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="Dominio.StudentGroupInfo" table="STUDENT_GROUP_INFO">
 	<field-descriptor
-		name="internalID"
+		name="idInternal"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"

@@ -10,7 +10,7 @@ public class EnrolmentValidationResult {
 	public static final String MINIMUM_CURRICULAR_COURSES_TO_ENROLL = "message.minimum.number.curricular.courses.to.enroll";
 	public static final String MAXIMUM_CURRICULAR_COURSES_TO_ENROLL = "message.maximum.number.curricular.courses.to.enroll";
 	public static final String MUST_ENROLL_IN_EARLIER_CURRICULAR_COURSES="message.enrolment.earlier.curricular.courses";
-	public static final String SUCCESS_ENROLMENT = "message.enrolment.success";
+	public static final String SUCCESS_ENROLMENT = "message.successful.enrolment";
 	
 	private Map message;
 	private boolean sucess;

@@ -18,8 +18,8 @@ import Util.CurricularCourseType;
 public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 
 	// FIXME : David-Ricardo: Todas estas constantes sao para parametrizar
-	private static final int MAXCOURSES = 7;
-	private static final int MAXNAC = 10;
+//	private static final int MAXCOURSES = 7;
+//	private static final int MAXNAC = 10;
 //	private static final int YEAR = 5;
 	private static final int MAX_INCREMENT_NAC = 2;
 	private static final int MIN_INCREMENT_NAC = 1;
@@ -27,6 +27,8 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 
 		int degreeDuration = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getDegreeCurricularPlanEnrolmentInfo().getDegreeDuration().intValue();
+		int maxCourses = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMaxCoursesToEnrol().intValue();
+		int maxNAC = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMaxNACToEnrol().intValue();
 		
 		List possibleScopesSpan = new ArrayList();
 		List possibleScopesEnroled = new ArrayList();
@@ -34,7 +36,7 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 		int possibleND = 0;
 		int year = 1;
 
-		while ((possibleND < MAXCOURSES) && (possibleNAC < MAXNAC) && (year <= degreeDuration)) {
+		while ((possibleND < maxCourses) && (possibleNAC < maxNAC) && (year <= degreeDuration)) {
 
 			Iterator iteratorEnroled = enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().iterator();
 			while (iteratorEnroled.hasNext()) {

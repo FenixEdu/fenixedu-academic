@@ -7,6 +7,7 @@ import Dominio.IEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentValidationResult;
 import Util.CurricularCourseType;
+import Util.StudentType;
 
 /**
  * @author dcs-rjao
@@ -17,15 +18,18 @@ import Util.CurricularCourseType;
 public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 
 	// FIXME : David-Ricardo: Todas estas constantes sao para parametrizar
-	private static final int MINCOURSES = 3;
-	private static final int MAXCOURSES = 7;
-	private static final int MAXNAC = 10;
+//	private static final int MINCOURSES = 3;
+//	private static final int MAXCOURSES = 7;
+//	private static final int MAXNAC = 10;
 	private static final int MAX_INCREMENT_NAC = 2;
 	private static final int MIN_INCREMENT_NAC = 1;
 	
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 		 
 		int NAC = 0;
+		int maxCourses = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMaxCoursesToEnrol().intValue();
+		int maxNAC = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMaxNACToEnrol().intValue();
+		int minCourses = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMinCoursesToEnrol().intValue();
 
 		Iterator iterator = enrolmentContext.getActualEnrolment().iterator();
 		while (iterator.hasNext()) {
@@ -54,14 +58,15 @@ public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 
 
 		// FIXME: David-Ricardo: A regra dos MINCOURSES nao se aplica aos trabalhadores estudantes
-		if ((enrolmentContext.getActualEnrolment().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) < MINCOURSES) {
-			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MINIMUM_CURRICULAR_COURSES_TO_ENROLL, String.valueOf(MINCOURSES));
+		if (((enrolmentContext.getActualEnrolment().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) < minCourses) &&
+			(!enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getStudentType().equals(new StudentType(StudentType.TRABALHADOR_ESTUDANTE))) ) {
+			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MINIMUM_CURRICULAR_COURSES_TO_ENROLL, String.valueOf(minCourses));
 		}
-		if ((enrolmentContext.getActualEnrolment().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) > MAXCOURSES) {
-			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MAXIMUM_CURRICULAR_COURSES_TO_ENROLL, String.valueOf(MAXCOURSES));
+		if ((enrolmentContext.getActualEnrolment().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) > maxCourses) {
+			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MAXIMUM_CURRICULAR_COURSES_TO_ENROLL, String.valueOf(maxCourses));
 		}
-		if (NAC > MAXNAC) {
-			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.ACUMULATED_CURRICULAR_COURSES, String.valueOf(MAXNAC));
+		if (NAC > maxNAC) {
+			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.ACUMULATED_CURRICULAR_COURSES, String.valueOf(maxNAC));
 		}
 		return enrolmentContext;
 	}

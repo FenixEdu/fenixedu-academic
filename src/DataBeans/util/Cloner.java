@@ -44,6 +44,7 @@ import DataBeans.InfoShift;
 import DataBeans.InfoSite;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
+import DataBeans.InfoStudentGroupInfo;
 import DataBeans.InfoTeacher;
 import Dominio.Announcement;
 import Dominio.Aula;
@@ -108,6 +109,7 @@ import Dominio.ISection;
 import Dominio.ISite;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import Dominio.IStudentGroupInfo;
 import Dominio.ITeacher;
 import Dominio.ITurma;
 import Dominio.ITurno;
@@ -119,6 +121,7 @@ import Dominio.Section;
 import Dominio.Site;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
+import Dominio.StudentGroupInfo;
 import Dominio.Teacher;
 import Dominio.Turma;
 import Dominio.Turno;
@@ -470,9 +473,10 @@ public abstract class Cloner {
 	public static IStudent copyInfoStudent2IStudent(InfoStudent infoStudent) {
 		IStudent student = new Student();
 		IPessoa person = Cloner.copyInfoPerson2IPerson(infoStudent.getInfoPerson());
+		IStudentGroupInfo studentGroupInfo = Cloner.copyInfoStudentGroupInfo2IStudentGroupInfo(infoStudent.getInfoStudentGroupInfo());
 		copyObjectProperties(student, infoStudent);
 		student.setPerson(person);
-
+		student.setStudentGroupInfo(studentGroupInfo);
 		return student;
 	}
 
@@ -485,6 +489,7 @@ public abstract class Cloner {
 		InfoStudent infoStudent = new InfoStudent();
 		copyObjectProperties(infoStudent, student);
 		infoStudent.setInfoPerson(Cloner.copyIPerson2InfoPerson(student.getPerson()));
+		infoStudent.setInfoStudentGroupInfo(Cloner.copyIStudentGroupInfo2InfoStudentGroupInfo(student.getStudentGroupInfo()));
 		return infoStudent;
 	}
 
@@ -1615,6 +1620,28 @@ public abstract class Cloner {
 		//infoDegreeCurricularPlanEnrolmentInfo.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
 		return degreeCurricularPlanEnrolmentInfo;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param IStudentGroupInfo
+	 * @return InfoStudentGroupInfo
+	 */
+	public static InfoStudentGroupInfo copyIStudentGroupInfo2InfoStudentGroupInfo(IStudentGroupInfo studentGroupInfo){
+		InfoStudentGroupInfo infoStudentGroupInfo = new InfoStudentGroupInfo();
+		copyObjectProperties(infoStudentGroupInfo, studentGroupInfo);
+		return infoStudentGroupInfo;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param IStudentGroupInfo
+	 * @return InfoStudentGroupInfo
+	 */
+	public static IStudentGroupInfo copyInfoStudentGroupInfo2IStudentGroupInfo(InfoStudentGroupInfo infoStudentGroupInfo){
+		IStudentGroupInfo studentGroupInfo = new StudentGroupInfo();
+		copyObjectProperties(studentGroupInfo, infoStudentGroupInfo);
+		return studentGroupInfo;
 	}
 
 //	---------------------------------------------- DCS-RJAO -----------------------------------------------
