@@ -29,7 +29,7 @@
 <logic:notEmpty name="component" property="infoSiteGroupsByShiftList">
 		
 <table align="center" width="95%" cellspacing='1' cellpadding='1'>
-	<h2><bean:message key="title.ProjectsShifts"/></h2>
+	<h2><bean:message key="title.ShiftsAndGroups"/></h2>
 	<br/>
 	<tbody>	
 			

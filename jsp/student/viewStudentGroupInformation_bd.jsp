@@ -31,9 +31,7 @@
 	
 	
 	 <span class="error"><html:errors/></span> 	
-	 <br/>
-	<br/>
-	
+
 <html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;executionCourseCode=" + executionCourseCode.toString()+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
     	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
 	<br/>

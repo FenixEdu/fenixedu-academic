@@ -14,23 +14,37 @@
 <%@ page import="java.util.Calendar" %>
 
 <logic:present name="infoSiteShiftsAndGroups">
+
 	
-<br>
+	<logic:empty name="infoSiteShiftsAndGroups" property="infoSiteGroupsByShiftList">
+		
+		
+		<html:link page="<%="/viewExecutionCourseProjects.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode")%>">
+				<bean:message key="link.backToProjects"/>
+		</html:link>
 
-<table width="95%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td class="infoop">
-			<bean:message key="label.student.viewShiftsAndGroups.description" />
-		</td>
-	</tr>
-</table>
+		<br/>
+	
+		<h2><bean:message key="message.shifts.not.available" /></h2>
+	</logic:empty>
+	
 
-<br>
 
+	<logic:notEmpty name="infoSiteShiftsAndGroups" property="infoSiteGroupsByShiftList">
+	<h2><bean:message key="title.ShiftsAndGroups"/></h2>
+	<br>
+
+	<table width="95%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="infoop">
+				<bean:message key="label.student.viewShiftsAndGroups.description" />
+			</td>
+		</tr>
+	</table>
+
+	<br>	
      <span class="error"><html:errors/></span> 	
-<br/>		
-<br/>
-	
+
 	<html:link page="<%="/viewExecutionCourseProjects.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode")%>">
 				<bean:message key="link.backToProjects"/>
 	</html:link>
@@ -38,14 +52,6 @@
 	<br/>
 	<br/>
 	
-	<logic:empty name="infoSiteShiftsAndGroups" property="infoSiteGroupsByShiftList">
-		<h2><bean:message key="message.shifts.not.available" /></h2>
-	</logic:empty>
-	
-
-
-	<logic:notEmpty name="infoSiteShiftsAndGroups" property="infoSiteGroupsByShiftList">
-		
 	<table width="95%" border="0" style="text-align: left;">
 	<tbody>
 		<tr>

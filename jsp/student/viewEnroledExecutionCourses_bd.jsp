@@ -7,23 +7,19 @@
 <logic:present name="infoExecutionCourses"> 
 <html:form action="/viewExecutionCourseProjects" method="get">
 
-<br>
-<table width="100%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td class="infoop">
-			<bean:message key="label.student.viewEnroledExecutionCourses.description" />
-		</td>
-	</tr>
-</table>
-
-
 
 	<logic:empty name="infoExecutionCourses">
 		<h2><bean:message key="message.executionCourses.not.available"/></h2>
 	</logic:empty>
 
 	<logic:notEmpty name="infoExecutionCourses">
-	
+		<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="infoop">
+				<bean:message key="label.student.viewEnroledExecutionCourses.description" />
+			</td>
+		</tr>
+		</table>
 		<br>
 		<br>
  		<h2><bean:message key="title.ChooseExecutionCourse"/></h2>

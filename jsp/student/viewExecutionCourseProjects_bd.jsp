@@ -6,6 +6,9 @@
 <%@ page import="DataBeans.InfoGroupProperties"%>
 
 <logic:present name="infoGroupPropertiesList">
+
+<h2><bean:message key="title.ExecutionCourseProjects"/></h2>
+<br>
 	
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>

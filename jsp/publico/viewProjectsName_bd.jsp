@@ -15,10 +15,12 @@
 	<logic:notEmpty name="component" property="infoGroupPropertiesList">
 	
 	
+	
 <table align="center" width="95%" cellspacing='1' cellpadding='1'>
         
         <tbody>
-        
+        <h2><bean:message key="title.ExecutionCourseProjects"/></h2>
+		<br/>
         <tr>
 			<td class="listClasses-header"><bean:message key="label.projectName" />
 			</td>

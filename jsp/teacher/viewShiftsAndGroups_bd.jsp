@@ -16,7 +16,9 @@
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
 
+<h2><bean:message key="title.ShiftsAndGroups"/></h2>
 <br>
+
 
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
