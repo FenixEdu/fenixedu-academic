@@ -6,9 +6,17 @@
 package ServidorApresentacao.TagLib.sop.examsMap;
 
 import java.util.Calendar;
+import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
+import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoRoom;
 import ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer;
+import Util.Season;
+
 
 /*
  * @author Luis Cruz & Sara Ribeiro
@@ -60,7 +68,6 @@ public class ExamsMapRenderer {
 
 			// Generate Exam Map
 			strBuffer.append("<td width='100%'>");
-			strBuffer.append("Mapa de Exames para o ");
 			if (year2 == null) {
 				strBuffer.append("<strong>" + year1 + "º<strong> ano");
 			} else {
@@ -186,11 +193,67 @@ public class ExamsMapRenderer {
 						strBuffer.append("</a>");
 					}
 				}
-
 				strBuffer.append("<br/>");
+
+				// Get 1st season exam
+				InfoExam season1Exam =
+					(
+						InfoExam) CollectionUtils
+							.find(
+								infoExecutionCourse.getAssociatedInfoExams(),
+								new Predicate() {
+					public boolean evaluate(Object obj) {
+						InfoExam infoExam = (InfoExam) obj;
+						return infoExam.getSeason().equals(
+							new Season(Season.SEASON1));
+					}
+				});
+				// Get 2nd season exam				
+				InfoExam season2Exam =
+					(
+						InfoExam) CollectionUtils
+							.find(
+								infoExecutionCourse.getAssociatedInfoExams(),
+								new Predicate() {
+					public boolean evaluate(Object obj) {
+						InfoExam infoExam = (InfoExam) obj;
+						return infoExam.getSeason().equals(
+							new Season(Season.SEASON2));
+					}
+				});
+
+				// Print rooms for 1st season exam
+				if (season1Exam != null) {
+					List infoRooms = season1Exam.getAssociatedRooms();
+					if (infoRooms != null && infoRooms.size() > 0) {
+						strBuffer.append("&nbsp;&nbsp;&nbsp;Salas - 1ª Época: ");
+						for (int r = 0; r < infoRooms.size(); r++) {
+							InfoRoom infoRoom = (InfoRoom) infoRooms.get(r);
+							strBuffer.append(infoRoom.getNome() + ";");
+						}
+					}
+				}
+				// Print rooms for 2nd season exam
+				if (season2Exam != null) {
+					List infoRooms = season2Exam.getAssociatedRooms();					
+					if (infoRooms != null && infoRooms.size() > 0) {
+						if (season1Exam != null) { 
+							strBuffer.append("<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 2ª Época:");
+						}							
+						else {
+							strBuffer.append("&nbsp;&nbsp;&nbsp;Salas - 2ª Época: ");							
+						}
+						for (int r = 0; r < infoRooms.size(); r++) {
+							InfoRoom infoRoom = (InfoRoom) infoRooms.get(r);
+							strBuffer.append(infoRoom.getNome() + ";");
+						}
+						strBuffer.append("<br>");
+					}
+				}
+				strBuffer.append("<br>");
 			}
 		}
-
+		strBuffer.append("<br>");
 	}
 
 	private void renderExamsMapForFilteredYears(
