@@ -442,7 +442,7 @@
 	</target>
 
     <target name="war"
-	    	depends="compile"
+	    	depends="compile, includeJ2EEjar"
             description="Generates a web archive of the application.">
     	<mkdir dir="${deploy.home}"/>
 		<war destfile="${deploy.home}/${app.name}.war" webxml="${build.home.webinf}/web.xml">
