@@ -4,10 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoExternalPerson;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * 
@@ -18,7 +15,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public class SearchExternalPersonsByNameTest extends ServiceTestCase {
 
 	private String dataSetFilePath;
-	private IUserView userView = null;
+	//private IUserView userView = null;
 
 	/**
 	 * @param testName
@@ -30,13 +27,10 @@ public class SearchExternalPersonsByNameTest extends ServiceTestCase {
 
 	protected void setUp() {
 		super.setUp();
-		userView = this.authenticateUser(getAuthenticatedUser());
+	//	userView = this.authenticateUser(getAuthenticatedUser());
 	}
 
-	/**
-	 * @param strings
-	 * @return
-	 */
+	/*
 	private IUserView authenticateUser(String[] args) {
 		SuportePersistenteOJB.resetInstance();
 
@@ -55,7 +49,7 @@ public class SearchExternalPersonsByNameTest extends ServiceTestCase {
 
 	protected String getApplication() {
 		return Autenticacao.INTRANET;
-	}
+	}*/
 
 	protected String getDataSetFilePath() {
 		return this.dataSetFilePath;
@@ -70,7 +64,7 @@ public class SearchExternalPersonsByNameTest extends ServiceTestCase {
 			String name = "externo";
 			Object[] argsSearchExternalPersons = { name };
 
-			List infoExternalPersons = (List) gestor.executar(userView, getNameOfServiceToBeTested(), argsSearchExternalPersons);
+			List infoExternalPersons = (List) gestor.executar(null, getNameOfServiceToBeTested(), argsSearchExternalPersons);
 			assertNotNull(infoExternalPersons);
 			assertEquals(infoExternalPersons.size(), 1);
 			for (Iterator iter = infoExternalPersons.iterator(); iter.hasNext();) {
@@ -90,7 +84,7 @@ public class SearchExternalPersonsByNameTest extends ServiceTestCase {
 			String name = "Partial name to find";
 			Object[] argsSearchExternalPersons = { name };
 
-			List infoExternalPersons = (List) gestor.executar(userView, getNameOfServiceToBeTested(), argsSearchExternalPersons);
+			List infoExternalPersons = (List) gestor.executar(null, getNameOfServiceToBeTested(), argsSearchExternalPersons);
 			assertNotNull(infoExternalPersons);
 			assertTrue(infoExternalPersons.isEmpty());
 
