@@ -23,7 +23,7 @@ public class CursoExecucao implements ICursoExecucao {
 	
 	private Integer academicYear;
 	
-	private IPlanoCurricularCurso curricularPlan;
+	private IPlanoCurricularCurso degreeCurricularPlan;
 	private Integer keyCurricularPlan;
 
 	/** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
@@ -127,7 +127,7 @@ public class CursoExecucao implements ICursoExecucao {
 	 * @return IPlanoCurricularCurso
 	 */
 	public IPlanoCurricularCurso getCurricularPlan() {
-		return curricularPlan;
+		return degreeCurricularPlan;
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class CursoExecucao implements ICursoExecucao {
 	 * @param curricularPlan The curricularPlan to set
 	 */
 	public void setCurricularPlan(IPlanoCurricularCurso curricularPlan) {
-		this.curricularPlan = curricularPlan;
+		this.degreeCurricularPlan = curricularPlan;
 	}
 
 	/**

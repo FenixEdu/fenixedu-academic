@@ -18,6 +18,7 @@ import junit.framework.TestSuite;
 import servletunit.struts.MockStrutsTestCase;
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
 import Dominio.Curso;
@@ -121,27 +122,35 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 				"LEEC",
 				"Curso de Engenharia Electrotecnica e de Computadores",
 				new TipoCurso(TipoCurso.LICENCIATURA));
-				
+
 		IExecutionYear executionYear = new ExecutionYear("2002/03");
 		_suportePersistente.iniciarTransaccao();
 		persistentExecutionYear.lockWrite(executionYear);
 		_suportePersistente.confirmarTransaccao();
-		IPlanoCurricularCurso curricularPlan = new PlanoCurricularCurso("plano1", curso1);	
-		IPlanoCurricularCurso curricularPlan2 = new PlanoCurricularCurso("plano2", curso2);
+		IPlanoCurricularCurso curricularPlan =
+			new PlanoCurricularCurso("plano1", curso1);
+		IPlanoCurricularCurso curricularPlan2 =
+			new PlanoCurricularCurso("plano2", curso2);
 		_suportePersistente.iniciarTransaccao();
-				persistentCurricularPlan.lockWrite(curricularPlan);
-				_suportePersistente.confirmarTransaccao();
+		persistentCurricularPlan.lockWrite(curricularPlan);
+		_suportePersistente.confirmarTransaccao();
 		_suportePersistente.iniciarTransaccao();
 		persistentCurricularPlan.lockWrite(curricularPlan2);
-				_suportePersistente.confirmarTransaccao();
+		_suportePersistente.confirmarTransaccao();
 		_suportePersistente.iniciarTransaccao();
 		_cursoPersistente.lockWrite(curso1);
 		_suportePersistente.confirmarTransaccao();
-		_cursoExecucao1 = new CursoExecucao("2002/03", curso1,executionYear, curricularPlan);
+		_cursoExecucao1 =
+			new CursoExecucao("2002/03", curso1, executionYear, curricularPlan);
 		_suportePersistente.iniciarTransaccao();
 		_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
 		_suportePersistente.confirmarTransaccao();
-		_cursoExecucao2 = new CursoExecucao("2002/03", curso2,executionYear, curricularPlan2);
+		_cursoExecucao2 =
+			new CursoExecucao(
+				"2002/03",
+				curso2,
+				executionYear,
+				curricularPlan2);
 		_suportePersistente.iniciarTransaccao();
 		_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
 		_suportePersistente.confirmarTransaccao();
@@ -170,7 +179,10 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 
 		// Coloca contexto em sessão
 		InfoDegree iL = new InfoDegree("LEIC", "Informatica");
-		InfoExecutionDegree iLE = new InfoExecutionDegree("2002/03", iL, new InfoExecutionYear("2002/03"));
+		InfoDegreeCurricularPlan infoPlan =
+			new InfoDegreeCurricularPlan("plano1", iL);
+		InfoExecutionDegree iLE =
+			new InfoExecutionDegree(infoPlan, new InfoExecutionYear("2002/03"));
 		CurricularYearAndSemesterAndInfoExecutionDegree aCSiLE =
 			new CurricularYearAndSemesterAndInfoExecutionDegree(
 				new Integer(5),
@@ -201,7 +213,10 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 
 		// Coloca contexto em sessão
 		InfoDegree iL = new InfoDegree("LEIC", "Informatica");
-		InfoExecutionDegree iLE = new InfoExecutionDegree("2002/03", iL, new InfoExecutionYear("2002/03"));
+		InfoDegreeCurricularPlan infoPlan =
+			new InfoDegreeCurricularPlan("plano1", iL);
+		InfoExecutionDegree iLE =
+			new InfoExecutionDegree(infoPlan, new InfoExecutionYear("2002/03"));
 		CurricularYearAndSemesterAndInfoExecutionDegree aCSiLE =
 			new CurricularYearAndSemesterAndInfoExecutionDegree(
 				new Integer(5),
@@ -225,13 +240,14 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 					SessionUtils.getUserView(getRequest()),
 					"LerTurmas",
 					argsLerTurmas);
-			if  (classesList != null && !classesList.isEmpty()) {
-				assertEquals(classesList,getRequest().getAttribute("CLASS_LIST_KEY"));
+			if (classesList != null && !classesList.isEmpty()) {
+				assertEquals(
+					classesList,
+					getRequest().getAttribute("CLASS_LIST_KEY"));
 			}
 		} catch (Exception e) {
 		}
-		
-		
+
 	}
 
 	/**
@@ -280,8 +296,11 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 			_cursoPersistente = _suportePersistente.getICursoPersistente();
 			_pessoaPersistente = _suportePersistente.getIPessoaPersistente();
 			_turmaPersistente = _suportePersistente.getITurmaPersistente();
-			persistentExecutionYear = _suportePersistente.getIPersistentExecutionYear();
-			persistentCurricularPlan = _suportePersistente.getIPlanoCurricularCursoPersistente();
+			persistentExecutionYear =
+				_suportePersistente.getIPersistentExecutionYear();
+			persistentCurricularPlan =
+				_suportePersistente.getIPlanoCurricularCursoPersistente();
+				System.out.println("*******correu tudo bem no startPersistentLayer");
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Exception when opening database");
 		}
@@ -290,6 +309,7 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 
 	protected void cleanData() {
 		try {
+			
 			_suportePersistente.iniciarTransaccao();
 			_cursoExecucaoPersistente.deleteAll();
 			_suportePersistente.confirmarTransaccao();
@@ -302,8 +322,10 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 			_suportePersistente.iniciarTransaccao();
 			_turmaPersistente.deleteAll();
 			_suportePersistente.confirmarTransaccao();
+			_suportePersistente.iniciarTransaccao();
 			persistentCurricularPlan.apagarTodosOsPlanosCurriculares();
 			_suportePersistente.confirmarTransaccao();
+			_suportePersistente.iniciarTransaccao();
 			persistentExecutionYear.deleteAll();
 			_suportePersistente.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcao) {

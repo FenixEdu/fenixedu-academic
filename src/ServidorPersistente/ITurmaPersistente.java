@@ -10,6 +10,7 @@ package ServidorPersistente;
  *
  * @author  tfc130
  */
+import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.ICursoExecucao;
@@ -21,6 +22,14 @@ public interface ITurmaPersistente extends IPersistentObject {
 	public void delete(ITurma turma) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
+	/**
+	 * @deprecated
+	 * @param semestre
+	 * @param anoCurricular
+	 * @param siglaLicenciatura
+	 * @return List
+	 * @throws ExcepcaoPersistencia
+	 */
 	public List readBySemestreAndAnoCurricularAndSiglaLicenciatura(
 		Integer semestre,
 		Integer anoCurricular,
@@ -32,6 +41,14 @@ public interface ITurmaPersistente extends IPersistentObject {
 		Integer curricularYear,
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param executionPeriod
+	 * @return ArrayList
+	 * @throws ExcepcaoPersistencia
+	 */
+	public ArrayList readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 	/**
 	 * Method readByNameAndExecutionDegreeAndExecutionPeriod.
 	 * @param className

@@ -10,6 +10,7 @@ package ServidorPersistente.OJB;
  *
  * @author  tfc130
  */
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,9 +38,19 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			TurmaTurnoOJB turmaTurnoOJB = new TurmaTurnoOJB();
 			String oqlQuery = "select all from " + TurmaTurno.class.getName();
 			oqlQuery += " where turma.nome = $1 ";
+			oqlQuery += " where turma.executionPeriod.name = $2 ";
+			oqlQuery += " where turma.executionPeriod.executionYear.year = $3 ";
+			oqlQuery += " where turma.cursoExecucao.executionYear.year = $4 ";
+			oqlQuery += " where turma.cursoExecucao.degreeCurricularPlan.nome = $5 ";
+			oqlQuery += " where turma.cursoExecucao.degreeCurricularPlan.curso.sigla = $6 ";
 
 			query.create(oqlQuery);
 			query.bind(turma.getNome());
+			query.bind(turma.getExecutionPeriod().getName());
+			query.bind(turma.getExecutionPeriod().getExecutionYear().getYear());
+			query.bind(turma.getExecutionDegree().getExecutionYear().getYear());
+			query.bind(turma.getExecutionDegree().getCurricularPlan().getName());
+			query.bind(turma.getExecutionDegree().getCurricularPlan().getCurso().getSigla());
 			List result = (List) query.execute();
 			lockRead(result);
 			Iterator iterador = result.iterator();
@@ -55,8 +66,21 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
-		String oqlQuery = "select all from " + Turma.class.getName();
-		super.deleteAll(oqlQuery);
+		try {
+			String oqlQuery = "select all from " + Turma.class.getName();
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			Iterator iter = result.iterator();
+			while(iter.hasNext()){
+				delete((ITurma) iter.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ExcepcaoPersistencia();
+		} 
+		
+		
+		
 	}
 
 	public List readAll() throws ExcepcaoPersistencia {
@@ -70,7 +94,10 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-
+/**
+ * @deprecated
+ * @see ServidorPersistente.ITurmaPersistente#readBySemestreAndAnoCurricularAndSiglaLicenciatura(Integer, Integer, String)
+ */
 	public List readBySemestreAndAnoCurricularAndSiglaLicenciatura(
 		Integer semestre,
 		Integer anoCurricular,
@@ -172,4 +199,24 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			}
 	}
 
+	public ArrayList readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+				try {
+					String oqlQuery = "select turmas from " + Turma.class.getName();
+					oqlQuery += " where executionPeriod.executionYear.year = $1"
+						+ " and executionPeriod.name = $2";
+
+			
+					query.create(oqlQuery);
+
+					query.bind(executionPeriod.getExecutionYear().getYear());
+					query.bind(executionPeriod.getName());
+
+					ArrayList result = (ArrayList) query.execute();
+					lockRead(result);
+					
+					return result;
+				} catch (QueryException ex) {
+					throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+				}
+		}
 }

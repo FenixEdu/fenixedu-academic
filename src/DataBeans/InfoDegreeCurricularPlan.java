@@ -20,6 +20,11 @@ public class InfoDegreeCurricularPlan{
         
     public InfoDegreeCurricularPlan() { }
     
+	public InfoDegreeCurricularPlan(String name, InfoDegree infoDegree) {
+		setName(name);
+		setInfoDegree(infoDegree);
+		 }
+    
 
     public boolean equals(Object obj) {
         boolean result = false;

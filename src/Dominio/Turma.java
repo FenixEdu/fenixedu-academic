@@ -13,11 +13,17 @@ package Dominio;
 
 public class Turma implements ITurma {
 	protected String _nome;
+	/**
+	 * @deprecated
+	 */
 	protected Integer _semestre;
 	protected Integer _anoCurricular;
+	/**
+	 * @deprecated
+	 */
 	protected ICurso _licenciatura;
 
-	// codigos internos da base de dados
+	// c�digos internos da base de dados
 	private Integer _codigoInterno;
 	private Integer _chaveLicenciatura;
 
@@ -27,17 +33,17 @@ public class Turma implements ITurma {
 	private IExecutionPeriod executionPeriod;
 	private Integer keyExecutionPeriod;
 
-	/** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
+	/** Construtor sem argumentos p�blico requerido pela moldura de objectos OJB */
 	public Turma() {
 	}
 
-	/**
-	 * @deprecated
-	 * @param nome
-	 * @param semestre
-	 * @param anoCurricular
-	 * @param licenciatura
-	 */
+/**
+ * @deprecated
+ * @param nome
+ * @param semestre
+ * @param anoCurricular
+ * @param licenciatura
+ */
 	public Turma(
 		String nome,
 		Integer semestre,
@@ -49,14 +55,16 @@ public class Turma implements ITurma {
 		setLicenciatura(licenciatura);
 	}
 	
-	public Turma(String nome, IExecutionPeriod executionPeriod, ICursoExecucao executionDegree, Integer curricularYear){
+	public Turma(
+			String nome,
+			Integer anoCurricular,
+			ICursoExecucao executionDegree,
+			IExecutionPeriod executionPeriod) {
 			setNome(nome);
-			setExecutionPeriod(executionPeriod);
+			setAnoCurricular(anoCurricular);
 			setExecutionDegree(executionDegree);
-			setAnoCurricular(curricularYear);
+			setExecutionPeriod(executionPeriod);
 		}
-	
-	
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
@@ -74,8 +82,8 @@ public class Turma implements ITurma {
 		String result = "[TURMA";
 		result += ", codigoInterno=" + _codigoInterno;
 		result += ", nome=" + _nome;
-		result += ", semestre=" + _semestre;
-		result += ", chaveLicenciatura=" + _chaveLicenciatura;
+		result += ", executionPeriod=" + executionPeriod;
+		result += ", executionDegree=" + executionDegree;
 		result += "]";
 		return result;
 	}

@@ -126,7 +126,7 @@ public class PlanoCurricularCursoOJB extends ObjectFenixOJB implements IPlanoCur
        			CursoExecucaoOJB executionDegreeOJB = new CursoExecucaoOJB();
 				 String oqlQuery = "select all from " + CursoExecucao.class.getName();
 			    oqlQuery += " where degreeCurricularPlan.name = $1 ";
-			    oqlQuery += " and degreeCurricularPlan.degree.code = $2 ";
+			    oqlQuery += " and degreeCurricularPlan.curso.sigla = $2 ";
 			    query.create(oqlQuery);
 			    query.bind(planoCurricularCurso.getName());
 			    query.bind(planoCurricularCurso.getCurso().getSigla());
