@@ -1,45 +1,64 @@
-<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<br/>
+<%@ page import="Util.TipoCurso" %>
 
-<table width="80%" align="center">
-	<tr>
-		<td class="infoselected"><p><bean:message key="title.selected.degree"/></p>
-			<strong>
-				<bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE%>" />
-				<logic:present name="executionDegree"  >
-					<bean:define id="infoDegree" name="executionDegree" property="infoDegreeCurricularPlan.infoDegree" />
-					<jsp:getProperty name="infoDegree" property="tipoCurso" /> em 
-					<jsp:getProperty name="infoDegree" property="nome" />
-					<br/>
-					<bean:write name="<%= SessionConstants.EXECUTION_PERIOD%>" property="name" scope="request"/>
-				</logic:present>						
-			</strong>
-         </td>
-    </tr>
-</table>
+<br/>
+<logic:present name="infoDegreeCurricularPlan" >
+<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
+<div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > 
+		<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />	
+		<logic:equal name="degreeType" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
+			 <html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >Ensino Mestrados</html:link>
+		</logic:equal>
+		<logic:equal name="degreeType" value="<%= TipoCurso.LICENCIATURA_OBJ.toString() %>">
+			<html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >Ensino Licenciaturas</html:link>		
+		</logic:equal>
+		&gt;&nbsp;
+		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") + "&amp;index=" + request.getAttribute("index") %>">
+			<bean:write name="infoDegreeCurricularPlan" property="infoDegree.sigla" />
+		</html:link>&gt;&nbsp;
+		<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  +  "&amp;index=" + request.getAttribute("index") %>" >
+		<bean:message key="label.curricularPlan"/>
+		</html:link>&gt;&nbsp; 
+		<bean:message key="label.exams"/> 
+</div>	
+
+<!-- PÁGINA EM INGLÊS -->
+	<div class="version">
+		<span class="px10">
+			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;inEnglish=true&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") + "&amp;index=" + request.getAttribute("index") %>" >english version</html:link> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
+	</span>	
+	</div>
+	<div class="clear"></div> 
+<h1><bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />&nbsp;<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" /></h1>
+
+<h2>
+<span class="greytxt">
+	<bean:message key="label.curricularPlan"/>
+	<bean:message key="label.the" />
+	<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
+	<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
+	<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">
+		<bean:define id="endDate" name="infoDegreeCurricularPlan" property="endDate" />	
+		-<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>
+	</logic:notEmpty>
+</span>
+</h2>
+<br />
 <br />
 <center>
 <font color="red" size="3">Atenção aos comentários em baixo!</font>
-<center/>
+</center>
 <br />
 <font color="red" size="3">Aviso:</font>
 As horas apresentadas em cada exame referem-se ao periodo de reserva da sala e não à duração do exame.
 <br/>
 O início do exame coincide com o início da reserva.
 <br/>
-<%-- <bean:define id="infoExecutionDegree" name="component" property="infoExecutionDegree" />
-<logic:equal name="infoExecutionDegree" property="temporaryExamMap" value="true">
-	<center>
-	<font color="red" size="12"><bean:message key="label.temporary.exam.map"/><font>
-	<center/>
-</logic:equal>
-<bean:define id="infoExamsMap" name="component" property="infoExamsMap"/>
-<br/>
-<app:generateNewExamsMap name="infoExamsMap" user="public" mapType=" "/> --%>
-
+<div>
 <app:generateNewExamsMap name="<%= SessionConstants.INFO_EXAMS_MAP %>" user="public" mapType=" "/>
+</div>
+</logic:present>

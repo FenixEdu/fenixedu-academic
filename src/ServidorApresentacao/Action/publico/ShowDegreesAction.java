@@ -51,7 +51,7 @@ public class ShowDegreesAction extends FenixContextDispatchAction
         List executionDegreesList = null;
         try
         {
-            //ReadExecutionDegreesByExecutionYear
+            //ReadExecutionDegreesByExecutionYear 
             executionDegreesList =
                 (List) ServiceManagerServiceFactory.executeService(null, "ReadNonMasterExecutionDegreesByExecutionYear", args);
         } catch (FenixServiceException e)
@@ -64,6 +64,7 @@ public class ShowDegreesAction extends FenixContextDispatchAction
         List degreesList = buildDegreesList(executionDegreesList);
 
         //put both list in request
+       
         request.setAttribute("degreesList", degreesList);
  
         return mapping.findForward("showDegrees");
@@ -127,7 +128,8 @@ public class ShowDegreesAction extends FenixContextDispatchAction
             if (!degreesList
                 .contains(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()))
             {
-                degreesList.add(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree());
+				
+               degreesList.add(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree());
             }
         }
 

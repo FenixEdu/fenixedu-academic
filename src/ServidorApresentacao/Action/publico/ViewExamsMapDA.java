@@ -18,6 +18,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -45,68 +46,44 @@ public class ViewExamsMapDA extends FenixContextDispatchAction
     {
         HttpSession session = request.getSession(true);
 
-        /*		if (session != null) {
-        			List curricularYears =
-        				(List) request.getAttribute("curricularYearList");
-        
-        			InfoExecutionPeriod infoExecutionPeriod =
-        				(InfoExecutionPeriod) request.getAttribute(
-        					SessionConstants.EXECUTION_PERIOD);
-        
-        			String degreeInitials =
-        				(String) request.getAttribute("degreeInitials");
-        			String nameDegreeCurricularPlan =
-        				(String) request.getAttribute("nameDegreeCurricularPlan");
-        
-        			if (degreeInitials == null) {
-        				degreeInitials = request.getParameter("degreeInitials");
-        			}
-        			if (nameDegreeCurricularPlan == null) {
-        				nameDegreeCurricularPlan =
-        					request.getParameter("nameDegreeCurricularPlan");
-        			}
-        			SiteView siteView = null;
-        			ISiteComponent bodyComponent = new InfoSiteExamMap();
-        			Object[] args =
-        				{
-        					bodyComponent,
-        					infoExecutionPeriod.getInfoExecutionYear().getYear(),
-        					infoExecutionPeriod.getName(),
-        					degreeInitials,
-        					nameDegreeCurricularPlan,
-        					curricularYears };
-        
-        			try {
-        				siteView =
-        					(SiteView) ServiceManagerServiceFactory.executeService(
-        						null,
-        						"ExamSiteComponentService",
-        						args);
-        			} catch (FenixServiceException e1) {
-        				throw new FenixActionException(e1);
-        			}
-        
-        			request.setAttribute("siteView", siteView);
-        		} else {
-        			throw new FenixActionException();
-        		}
-        
-        		return mapping.findForward("viewExamsMap");
-        */
+      
         if (session != null)
         {
 			IUserView userView =
 				(IUserView) request.getSession().getAttribute(
 					SessionConstants.U_VIEW);
-					
+			Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+			Integer degreeId = getFromRequest("degreeID", request);
+			request.setAttribute("degreeID", degreeId);
+
+			Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+			request.setAttribute("executionDegreeID", executionDegreeId);
+			
+			Integer index =  getFromRequest("index",request);
+			request.setAttribute("index",index);
+			
+			Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+			request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+
+			Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+			request.setAttribute("inEnglish", inEnglish);
             List curricularYears = (List) request.getAttribute("curricularYearList");
 
             InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
-                
+			request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+			request.setAttribute(
+							SessionConstants.EXECUTION_PERIOD_OID,
+							infoExecutionPeriod.getIdInternal().toString());
+							
+							
 			InfoExecutionDegree infoExecutionDegree =
 						(InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
-
+			request.setAttribute("infoDegreeCurricularPlan",(InfoDegreeCurricularPlan)infoExecutionDegree.getInfoDegreeCurricularPlan());
+			
+			request.setAttribute(
+						SessionConstants.EXECUTION_DEGREE,
+						infoExecutionDegree);
 
 			Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
 			
@@ -123,11 +100,54 @@ public class ViewExamsMapDA extends FenixContextDispatchAction
 			{
 				throw new FenixActionException(e);
 			}
-			
-			request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);			
+			request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);	
+				
         }
 
         return mapping.findForward("viewExamsMap");
     }
+	private Integer getFromRequest(String parameter, HttpServletRequest request)
+	{
+		Integer parameterCode = null;
+		String parameterCodeString = request.getParameter(parameter);
+		if (parameterCodeString == null)
+		{
+			parameterCodeString = (String) request.getAttribute(parameter);
+		}
+		if (parameterCodeString != null)
+		{
+			try
+			{
+				parameterCode = new Integer(parameterCodeString);
+			}
+			catch (Exception exception)
+			{
+				return null;
+			}
+		}
+		return parameterCode;
+	}
+	private Boolean getFromRequestBoolean(String parameter, HttpServletRequest request)
+	{
+		Boolean parameterBoolean = null;
+
+		String parameterCodeString = request.getParameter(parameter);
+		if (parameterCodeString == null)
+		{
+			parameterCodeString = (String) request.getAttribute(parameter);
+		}
+		if (parameterCodeString != null)
+		{
+			try
+			{
+				parameterBoolean = new Boolean(parameterCodeString);
+			}
+			catch (Exception exception)
+			{
+				return null;
+			}
+		}
+		return parameterBoolean;
+	}
 
 }

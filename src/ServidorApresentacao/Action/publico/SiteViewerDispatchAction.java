@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -12,6 +13,8 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluationMethod;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
@@ -37,6 +40,7 @@ import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class SiteViewerDispatchAction extends FenixContextDispatchAction
 {
@@ -48,15 +52,35 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
         HttpServletResponse response)
         throws FenixActionException
     {
-
         ISiteComponent firstPageComponent = new InfoSiteFirstPage();
+		HttpSession session = request.getSession(true);
         String objectCodeString = request.getParameter("objectCode");
         if (objectCodeString == null)
         {
             objectCodeString = (String) request.getAttribute("objectCode");
         }
         Integer infoExecutionCourseCode = new Integer(objectCodeString);
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
+		InfoExecutionDegree infoExecutionDegree =
+					(InfoExecutionDegree) request.getAttribute(
+						SessionConstants.EXECUTION_DEGREE);
 
+		
+		Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+
+		Integer degreeId = getFromRequest("degreeID", request);
+
+		request.setAttribute("degreeID", degreeId);
+		Integer index =  getFromRequest("index",request);
+		request.setAttribute("index",index);
+		
+
+		Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+		request.setAttribute("executionDegreeID", executionDegreeId);
+		Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
         readSiteView(request, firstPageComponent, infoExecutionCourseCode, null, null);
         return mapping.findForward("sucess");
     }
@@ -364,7 +388,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
                     null,
                     "ExecutionCourseSiteComponentService",
                     args);
-                    
+                  
             if(siteView != null) {      
             if (infoExecutionCourseCode != null)
             {
@@ -379,12 +403,14 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
             request.setAttribute(
                 "executionCourseCode",
                 ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+            request.setAttribute("sigla", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getSigla());
             request.setAttribute(
                 "executionPeriodCode",
                 ((InfoSiteCommon) siteView.getCommonComponent())
                     .getExecutionCourse()
                     .getInfoExecutionPeriod()
                     .getIdInternal());
+                    
             if (siteView.getComponent() instanceof InfoSiteSection)
             {
                 request.setAttribute(
@@ -524,5 +550,26 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
         }
         return siteView;
     }
+	private Integer getFromRequest(String parameter, HttpServletRequest request)
+	{
+		Integer parameterCode = null;
+		String parameterCodeString = request.getParameter(parameter);
+		if (parameterCodeString == null)
+		{
+			parameterCodeString = (String) request.getAttribute(parameter);
+		}
+		if (parameterCodeString != null)
+		{
+			try
+			{
+				parameterCode = new Integer(parameterCodeString);
+			}
+			catch (Exception exception)
+			{
+				return null;
+			}
+		}
+		return parameterCode;
+	}
 
 }

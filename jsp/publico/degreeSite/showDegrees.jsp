@@ -37,7 +37,7 @@
 								<logic:iterate id="infoDegree" name="degreesList" indexId="index">		
 									<bean:define id="degreeID" name="infoDegree" property="idInternal" />
 									<li>
-										<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + pageContext.findAttribute("degreeID").toString() %>">
+										<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + pageContext.findAttribute("degreeID").toString()+ "&amp;index=" + pageContext.findAttribute("index").toString() %>">
 											<bean:write name="infoDegree" property="nome" />&nbsp;(<bean:write name="infoDegree" property="sigla"/>)
 										</html:link>
 									</li>

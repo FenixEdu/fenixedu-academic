@@ -17,6 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -24,14 +28,17 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -50,6 +57,22 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 			InfoExecutionPeriod infoExecutionPeriod =
 				(InfoExecutionPeriod) request.getAttribute(
 					SessionConstants.EXECUTION_PERIOD);
+					
+			Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+
+			Integer degreeId = getFromRequest("degreeID", request);
+			request.setAttribute("degreeID", degreeId);
+
+			Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+			request.setAttribute("executionDegreeID", executionDegreeId);
+
+			Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+			request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+
+			Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+			request.setAttribute("inEnglish", inEnglish);		
+					
+			
 
 			/* Criar o bean de semestres */
 			ArrayList semestres = new ArrayList();
@@ -81,6 +104,9 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 				new ComparatorByNameForInfoExecutionDegree());
 
 			ArrayList licenciaturas = new ArrayList();
+
+			
+
 
 			licenciaturas.add(new LabelValueBean("escolher", ""));
 
@@ -120,6 +146,7 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 			}
 
 			request.setAttribute("degreeList", licenciaturas);
+		
 
 			return mapping.findForward("chooseExamsMapContext");
 		} 
@@ -142,6 +169,7 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 			SessionConstants.CONTEXT_PREFIX);
 
 		if (session != null) {
+			ActionErrors errors = new ActionErrors();
 			
 			InfoExecutionPeriod infoExecutionPeriod =
 				(InfoExecutionPeriod) request.getAttribute(
@@ -167,9 +195,20 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 				curricularYears.add(new Integer(selectedCurricularYears[i]));
 
 			request.setAttribute("curricularYearList", curricularYears);
+			Integer indexValue =  getFromRequest("index",request);
+		//	int index = indexValue.intValue();
+			request.setAttribute("index",indexValue);
+			
+			Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+			request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+			
+			Integer degreeId = getFromRequest("degreeID", request);
+			request.setAttribute("degreeID", degreeId);
 
-			int index =
+ 
+			/*int index =
 				Integer.parseInt((String) chooseExamContextoForm.get("index"));
+				request.setAttribute("index", chooseExamContextoForm.get("index"));*/
 
 			Object argsLerLicenciaturas[] =
 				{ infoExecutionPeriod.getInfoExecutionYear()};
@@ -183,9 +222,74 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 			Collections.sort(
 				infoExecutionDegreeList,
 				new ComparatorByNameForInfoExecutionDegree());
+				
+			    InfoExecutionDegree infoExecutionDegree1 = new InfoExecutionDegree();
+				Iterator iterator = infoExecutionDegreeList.iterator();
+				while (iterator.hasNext())
+				{
+					 infoExecutionDegree1=
+						(InfoExecutionDegree) iterator.next();
+					if (infoExecutionDegree1.getInfoDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanId))
+					{
+				//		request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree1);
+						break;
+					}
+				}
+				
+				
+	/*		InfoExecutionDegree infoExecutionDegree =
+							(InfoExecutionDegree) infoExecutionDegreeList.get(index);*/
+			InfoExecutionDegree infoExecutionDegree = infoExecutionDegree1;
+				
+		
+		//**************************************/
+		
+			Object[] args = { degreeId };
 
-			InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) infoExecutionDegreeList.get(index);
+			List infoDegreeCurricularPlanList = null;
+			try
+			{
+				infoDegreeCurricularPlanList =
+					(List) ServiceManagerServiceFactory.executeService(
+						null,
+						"ReadPublicDegreeCurricularPlansByDegree",
+						args);
+			}
+			catch (FenixServiceException e)
+			{
+				errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+				saveErrors(request, errors);
+				return (new ActionForward(mapping.getInput()));
+			}
+			//order the list by state and next by begin date
+			ComparatorChain comparatorChain = new ComparatorChain();
+			comparatorChain.addComparator(new BeanComparator("state.degreeState"));
+			comparatorChain.addComparator(new BeanComparator("initialDate"), true);
+
+			Collections.sort(infoDegreeCurricularPlanList, comparatorChain);
+
+		
+			if (degreeCurricularPlanId != null)
+			{
+				Iterator iterator1 = infoDegreeCurricularPlanList.iterator();
+				while (iterator1.hasNext())
+				{
+					InfoDegreeCurricularPlan infoDegreeCurricularPlanElem =
+						(InfoDegreeCurricularPlan) iterator1.next();
+					if (infoDegreeCurricularPlanElem.getIdInternal().equals(degreeCurricularPlanId))
+					{
+						request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlanElem);
+						break;
+					}
+				}
+			}
+	
+				
+        //***************************************/
+			request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+			request.setAttribute(
+				SessionConstants.EXECUTION_PERIOD_OID,
+				infoExecutionPeriod.getIdInternal().toString());
 
 			if (infoExecutionDegree != null) {
 
@@ -194,11 +298,16 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 						SessionConstants.EXECUTION_DEGREE,
 						infoExecutionDegree);
 				//-----------------
-
+				request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal().toString() );
 				RequestUtils.setExecutionDegreeToRequest(
 					request,
 					infoExecutionDegree);
+			/*	request.setAttribute(
+				"infoDegreeCurricularPlan",
+										 (InfoDegreeCurricularPlan)infoExecutionDegree.getInfoDegreeCurricularPlan());*/
+	
 			} else {
+				
 				return mapping.findForward("Licenciatura execucao inexistente");
 			}
 
@@ -236,5 +345,49 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 
 		}
 		return false;
+	}
+	
+	private Integer getFromRequest(String parameter, HttpServletRequest request)
+	{
+		Integer parameterCode = null;
+		String parameterCodeString = request.getParameter(parameter);
+		if (parameterCodeString == null)
+		{
+			parameterCodeString = (String) request.getAttribute(parameter);
+		}
+		if (parameterCodeString != null)
+		{
+			try
+			{
+				parameterCode = new Integer(parameterCodeString);
+			}
+			catch (Exception exception)
+			{
+				return null;
+			}
+		}
+		return parameterCode;
+	}
+	private Boolean getFromRequestBoolean(String parameter, HttpServletRequest request)
+	{
+		Boolean parameterBoolean = null;
+
+		String parameterCodeString = request.getParameter(parameter);
+		if (parameterCodeString == null)
+		{
+			parameterCodeString = (String) request.getAttribute(parameter);
+		}
+		if (parameterCodeString != null)
+		{
+			try
+			{
+				parameterBoolean = new Boolean(parameterCodeString);
+			}
+			catch (Exception exception)
+			{
+				return null;
+			}
+		}
+		return parameterBoolean;
 	}
 }

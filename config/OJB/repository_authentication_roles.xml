@@ -244,7 +244,12 @@
     	<query-customizer
 	    	class="ServidorPersistente.customQueries.AdvisoryFilter">
 	    </query-customizer>
-      </collection-descriptor>
+      </collection-descriptor>    
+      
+	<attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
+      
 </class-descriptor>
 <!-- ***********************************
      Definitions for Dominio.Role 

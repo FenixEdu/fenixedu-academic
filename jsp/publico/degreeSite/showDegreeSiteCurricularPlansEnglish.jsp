@@ -62,6 +62,38 @@
 				</p>
 			</td>
 		</tr>
+		
+		
+		<!-- Meu -->
+	<tr>
+		<td class="box_header"><strong><bean:message key="label.exams.en" /></strong></td>
+	</tr>
+	<tr>
+		<td class="box_cell">
+			<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
+			<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
+			<p><html:link page="<%= "/chooseExamsMapContextDA.do?executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;page=1&amp;method=choose&amp;index=18&amp;selectAllCurricularYears=on" %>"><bean:message key="link.exams.en" /></html:link>
+		<!--	<bean:message key="text.curricularPlan" /> -->
+			In this area it will find the information relative the dates of evaluation (1ª and 2ª time).
+
+			
+			<br /><br />
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="box_header"><strong><bean:message key="label.turmas.en" /></strong></td>
+	</tr>
+	<tr>
+		<td class="box_cell">
+			<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
+			<p><html:link page="<%= "/showDegreeCurricularPlan.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>" ><bean:message key="link.turmas.en" /></html:link>
+			<!-- <bean:message key="text.curricularPlan" /> -->
+			<br /><br />
+			</p>
+		</td>
+	</tr>
+<!-- FimMeu -->
 	
 		<logic:present name="infoDegreeCurricularPlanList">
 		<logic:notEmpty name="infoDegreeCurricularPlanList">

@@ -294,7 +294,7 @@
 		parameter="method"
 		validate="true"
         type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">    
-     <forward name="sucess" path="/executionCourseSite.jsp"/>   
+     <forward name="sucess" path="executionCourseSite"/>   
    	</action>
    	
 	<!-- Site viewer -->
@@ -357,13 +357,13 @@
     		>
     	<forward name="Sucess" path="/viewExamsByDegreeAndCurricularYear.jsp"/>
 	</action>
-
+	
     <action input="/chooseExamsMapContextDA.do?method=prepare&amp;page=0"
             name="chooseExamsMapContextForm"
             parameter="method"
             path="/chooseExamsMapContextDA"
             scope="request"
-            validate="true"
+            validate="false"
             type="ServidorApresentacao.Action.publico.ChooseExamsMapContextDA"
             >
         <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
@@ -376,7 +376,7 @@
             name="examForm"
             validate="false"
             >
-        <forward name="viewExamsMap" path="/viewExamsMap.jsp"/>
+        <forward name="viewExamsMap" path="viewExamsMap"/>
         <forward name="viewExecutionCourseByCode" path="/siteViewer.do?method=executionCourseViewer"/>
     </action>
 

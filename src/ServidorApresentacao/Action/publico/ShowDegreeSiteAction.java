@@ -47,11 +47,14 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 		Integer degreeId = getFromRequest("degreeID", request);
 		request.setAttribute("degreeID", degreeId);
 
-		Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-		request.setAttribute("executionDegreeID", executionDegreeId);
 
 		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
 		request.setAttribute("inEnglish", inEnglish);
+		
+		Integer index =  getFromRequest("index",request);
+		request.setAttribute("index",index);
+		Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+		request.setAttribute("executionDegreeID", executionDegreeId);
 
 		//If degreeId is null then this was call by coordinator
 		//Don't have a degreeId but a executionDegreeId
@@ -89,6 +92,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 
 			degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
 			request.setAttribute("degreeID", degreeId);
+			request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal() );
 
 			//Read execution period
 			InfoExecutionYear infoExecutionYear = infoExecutionDegree.getInfoExecutionYear();
@@ -248,15 +252,16 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 		Integer degreeId = getFromRequest("degreeID", request);
 		request.setAttribute("degreeID", degreeId);
 
-		Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-		request.setAttribute("executionDegreeID", executionDegreeId);
 
 		Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
 		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
 		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
 		request.setAttribute("inEnglish", inEnglish);
-
+		Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+		request.setAttribute("executionDegreeID", executionDegreeId);
+		Integer index =  getFromRequest("index",request);
+		request.setAttribute("index",index);
 		//if came in the request a executionDegreeId that it is necessary
 		//find the correpond degree curricular plan
 		if (executionDegreeId != null)

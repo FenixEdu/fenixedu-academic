@@ -2,6 +2,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
+
+
+
+
 <logic:notPresent name="siteView">
 	<tiles:insert definition="definition.public.mainPageIST" flush="true">
 		<tiles:put name="body" value="/publico/degreeSite/errorExecutionCourseSite.jsp"/>
