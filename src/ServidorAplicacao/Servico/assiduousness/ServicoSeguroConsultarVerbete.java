@@ -66,7 +66,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro
     private long _saldoDS = 0;
 
     private Timestamp _dataConsulta = null;
-    private Calendar _calendarioConsulta = null;
+    Calendar _calendarioConsulta = null;
     private Timestamp _dataInicio = null;
     private Timestamp _dataFim = null;
 

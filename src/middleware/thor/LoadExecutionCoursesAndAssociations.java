@@ -483,9 +483,9 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 
 	private class CourseDegreesPair {
 		private Disciplinas course;
-		private List names;
+		List names;
 		private List codes;
-		private List degrees;
+		List degrees;
 
 		public int hashCode() {
 			return 2003;
