@@ -6,7 +6,6 @@
  */
 package ServidorAplicacao.Servicos.gesdis;
 
-import DataBeans.InfoCurriculum;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;

@@ -6,18 +6,14 @@
 package ServidorAplicacao.Servico.sop;
 
 import DataBeans.InfoClass;
-import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.ITurma;
-import Dominio.ITurno;
 import Dominio.Turma;
-import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
-import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**

@@ -11,7 +11,6 @@ import java.util.HashMap;
 import DataBeans.InfoCurriculum;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;

@@ -16,7 +16,6 @@ import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurriculum;
-import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
 import DataBeans.InfoSection;
