@@ -17,7 +17,7 @@ import java.util.List;
 import DataBeans.InfoLesson;
 import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
-import Dominio.IAula;
+import Dominio.ITurnoAula;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -54,11 +54,12 @@ public class ReadStudentLessons implements IServico {
 				sp.getITurnoAulaPersistente().readLessonsByStudent(
 					infoStudent.getInfoPerson().getUsername());
 
-			for (int i = 0; i < lessons.size(); i++) {
-				IAula lesson = (IAula) lessons.get(i);
-				InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
-				infoLessons.add(infoLesson);
-			}
+			if (lessons != null)
+				for (int i = 0; i < lessons.size(); i++) {
+					ITurnoAula lesson = (ITurnoAula) lessons.get(i);
+					InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson.getAula());
+					infoLessons.add(infoLesson);
+				}
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
 		}
