@@ -62,6 +62,7 @@ create table DEGREE_CURRICULAR_PLAN (
    MINIMAL_YEAR_FOR_OPTIONAL_COURSES int(11) not null,
    NEEDED_CREDITS float (11,2),
    MARK_TYPE integer (11),
+   NUMERUS_CLAUSUS INT(11) unsigned default null,
    primary key (ID_INTERNAL),
    unique U1 (NAME, KEY_DEGREE)
 )type=InnoDB;
