@@ -16,6 +16,8 @@
 				</td>
 				<td class="listClasses-header"><bean:message key="label.professorships.name" />
 				</td>
+				<td class="listClasses-header"><bean:message key="label.semester" />
+				</td>
 			</tr>
 			<bean:define id="link">
 				<tiles:getAsString name="link"/>
@@ -34,6 +36,11 @@
 							<bean:write name="infoExecutionCourse" property="nome"/>
 						</html:link>
 					</td>
+					<td class="listClasses">
+						<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>&nbsp;-&nbsp;
+						<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>
+					</td>
+					
 				</tr>
 			</logic:iterate>
 	 	</table>
