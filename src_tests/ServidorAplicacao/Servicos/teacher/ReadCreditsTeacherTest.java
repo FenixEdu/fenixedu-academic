@@ -56,7 +56,10 @@ public class ReadCreditsTeacherTest extends TestCaseServices {
 			teacher.setIdInternal(new Integer(1));
 
 			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+			
+			sp.iniciarTransaccao();
 			teacher = (ITeacher) teacherDAO.readByOId(teacher);
+			sp.confirmarTransaccao();
 
 			InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
