@@ -14,4 +14,5 @@
   	<li><html:link page="/viewCurriculum.do?method=getStudentCP" ><bean:message key="link.student.curriculum"/></html:link></li>
   	<%--<li><html:link page="/studentExecutionCourse.do?method=viewStudentExecutionCourses" ><bean:message key="link.myExecutionCourses"/></html:link></li>--%>
   	<li><html:link page="/studentTests.do?method=testsFirstPage&amp;objectCode=34882"><bean:message key="link.tests"/></html:link></li>
+  	<li><html:link page="/studentGaugingTestResults.do">Resultados da Prova de Aferição de Física</html:link></li>
 </ul>
