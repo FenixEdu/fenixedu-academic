@@ -15,14 +15,18 @@
 		<td class="listClasses-header" ><bean:message key="label.day"/></td>
 		<td class="listClasses-header" ><bean:message key="label.beginning"/></td>	
 		<td class="listClasses-header"><bean:message key="label.number.students.enrolled"/></td>
-		<td class="listClasses-header"><bean:message key="label.student.room.distribution"/></td>		
+		<logic:notEqual name="component" property="size" value="0">
+			<td class="listClasses-header"><bean:message key="label.student.room.distribution"/></td>		
+		</logic:notEqual>
 	</tr>
 	<tr>
 		<td class="listClasses"><bean:write name="exam" property="season"/></td>
 		<td class="listClasses"><bean:write name="exam" property="date"/></td>
 		<td class="listClasses"><bean:write name="exam" property="beginningHour"/></td>
 		<td class="listClasses"><bean:write name="component" property="size"/></td>
-		<td class="listClasses"><html:link page="/"><bean:message key="link.student.room.distribution"/></html:link></td>		
+		<logic:notEqual name="component" property="size" value="0">		
+			<td class="listClasses"><html:link page="/"><bean:message key="link.student.room.distribution"/></html:link></td>		
+		</logic:notEqual>		
 	</tr>
 </table>
 <br/>
