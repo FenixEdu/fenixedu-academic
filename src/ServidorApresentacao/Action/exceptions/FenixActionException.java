@@ -7,6 +7,7 @@
 package ServidorApresentacao.Action.exceptions;
 
 import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionForward;
 
 /**
  *
@@ -19,15 +20,26 @@ import org.apache.struts.action.ActionError;
 
 public class FenixActionException extends Exception {
 
+	/**
+	 * @param actionForward to forward to when error handling.
+	 */
+	public FenixActionException(ActionForward actionForward) {
+		this.actionForward = actionForward;
+	}
+
+
 	protected String property = "error.default";
 	protected ActionError error = null;
+	private ActionForward actionForward;
 
 	// --- End of Variable Declarations ----------------------------------
 
 	public FenixActionException() {
 		super("error.default");
-		error = new ActionError("error.default");}
+		error = new ActionError("error.default");
+	}
 
+	
 	public FenixActionException(String key) {
 		super(key);
 		error = new ActionError(key);
@@ -118,7 +130,7 @@ public class FenixActionException extends Exception {
 
 	// --- End of Constructores ------------------------------------------
 	public String toString() {
-		String result = "[FenixActionException\n";
+		String result = "["+this.getClass().getName()+"\n";
 		result += "property" +this.getProperty()+ "\n";
 		result += "error" +this.getError()+ "\n";
 		result += "cause" +this.getCause()+ "\n";
@@ -127,7 +139,7 @@ public class FenixActionException extends Exception {
 	}
 
 	public String getProperty() {
-		return (property != null) ? property : error.getKey();
+		return (property != null) ? property : getError().getKey();
 	}
 
 	public void setProperty(String property) {
@@ -136,6 +148,13 @@ public class FenixActionException extends Exception {
 
 	public ActionError getError() {
 		return error;
+	}
+
+	/**
+	 * @return actionForward to forward to.
+	 */
+	public ActionForward getActionForward() {
+		return actionForward;
 	}
 
 }
