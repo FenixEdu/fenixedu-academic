@@ -52,7 +52,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         getExecutionDegree(request);
         Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
+        if(request.getParameter("degreeCurricularPlanID") != null && !request.getParameter("degreeCurricularPlanID").equals("")){
             degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
