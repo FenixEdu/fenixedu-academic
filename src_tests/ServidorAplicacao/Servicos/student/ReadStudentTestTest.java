@@ -28,154 +28,142 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentTestTest extends TestCaseReadServices
-{
+public class ReadStudentTestTest extends TestCaseReadServices {
 
-	public ReadStudentTestTest(java.lang.String testName)
-	{
-		super(testName);
-	}
+    public ReadStudentTestTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static void main(java.lang.String[] args)
-	{
-		junit.textui.TestRunner.run(suite());
-	}
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	public static Test suite()
-	{
-		TestSuite suite = new TestSuite(ReadStudentTestTest.class);
+    public static Test suite() {
+        TestSuite suite = new TestSuite(ReadStudentTestTest.class);
 
-		return suite;
-	}
+        return suite;
+    }
 
-	protected void setUp()
-	{
-		super.setUp();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	protected void tearDown()
-	{
-		super.tearDown();
-	}
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "ReadStudentTest";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadStudentTest";
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	{
-		return null;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        return null;
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-	{
-		String userName = new String("L48283");
-		Integer distributedTestId = new Integer(2);
-		String path = new String("e:\\eclipse\\workspace\\fenix-exams2\\build\\standalone\\");
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        String userName = new String("L48283");
+        Integer distributedTestId = new Integer(2);
+        String path = new String(
+                "e:\\eclipse\\workspace\\fenix-exams2\\build\\standalone\\");
 
-		Object[] args = { userName, distributedTestId, new Boolean(true), path };
-		return args;
+        Object[] args = { userName, distributedTestId, new Boolean(true), path };
+        return args;
 
-	}
+    }
 
-	protected int getNumberOfItemsToRetrieve()
-	{
-		return 6;
-	}
+    protected int getNumberOfItemsToRetrieve() {
+        return 6;
+    }
 
-	protected Object getObjectToCompare()
-	{
-		Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();
-		List infoStudentTestQuestionList = new ArrayList();
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			List distributedTestList = new ArrayList();
-			sp.iniciarTransaccao();
-			IStudent student = sp.getIPersistentStudent().readByUsername((String) args[0]);
-			assertNotNull("student is null", student);
+    protected Object getObjectToCompare() {
+        Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();
+        List infoStudentTestQuestionList = new ArrayList();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            List distributedTestList = new ArrayList();
+            sp.iniciarTransaccao();
+            IStudent student = sp.getIPersistentStudent().readByUsername(
+                    (String) args[0]);
+            assertNotNull("student is null", student);
 
-			IDistributedTest distributedTest =
-				(IDistributedTest) sp.getIPersistentDistributedTest().readByOId(
-					new DistributedTest((Integer) args[1]),
-					false);
+            IDistributedTest distributedTest = (IDistributedTest) sp
+                    .getIPersistentDistributedTest().readByOID(
+                            DistributedTest.class, (Integer) args[1]);
 
-			assertNotNull("DistributedTest is null", distributedTest);
-			List studentTestQuestionList =
-				sp.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
-					student,
-					distributedTest);
-			sp.confirmarTransaccao();
+            assertNotNull("DistributedTest is null", distributedTest);
+            List studentTestQuestionList = sp
+                    .getIPersistentStudentTestQuestion()
+                    .readByStudentAndDistributedTest(student, distributedTest);
+            sp.confirmarTransaccao();
 
-			Iterator it = studentTestQuestionList.iterator();
+            Iterator it = studentTestQuestionList.iterator();
 
-			while (it.hasNext())
-			{
-				infoStudentTestQuestionList.add(
-					copyIStudentTestQuestion2InfoStudentTestQuestion((IStudentTestQuestion) it.next()));
-			}
+            while (it.hasNext()) {
+                infoStudentTestQuestionList
+                        .add(copyIStudentTestQuestion2InfoStudentTestQuestion((IStudentTestQuestion) it
+                                .next()));
+            }
 
-		}
-		catch (Exception ex)
-		{
-			fail("ReadStudentTestTest " + ex);
-		}
-		return infoStudentTestQuestionList;
-	}
+        } catch (Exception ex) {
+            fail("ReadStudentTestTest " + ex);
+        }
+        return infoStudentTestQuestionList;
+    }
 
-	protected boolean needsAuthorization()
-	{
-		return true;
-	}
-	protected String[] getArgsForAuthorizedUser()
-	{
-		String argsAutenticacao3[] = { "l48283", "pass", getApplication()};
-		return argsAutenticacao3;
-	}
+    protected boolean needsAuthorization() {
+        return true;
+    }
 
-	protected String[] getArgsForNotAuthorizedUser()
-	{
-		String argsAutenticacao4[] = { "d2543", "pass", getApplication()};
-		return argsAutenticacao4;
-	}
+    protected String[] getArgsForAuthorizedUser() {
+        String argsAutenticacao3[] = { "l48283", "pass", getApplication() };
+        return argsAutenticacao3;
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/student/testReadStudentTestsToDoDataSet.xml";
-	}
+    protected String[] getArgsForNotAuthorizedUser() {
+        String argsAutenticacao4[] = { "d2543", "pass", getApplication() };
+        return argsAutenticacao4;
+    }
 
-	public String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/student/testReadStudentTestsToDoDataSet.xml";
+    }
 
-	public static InfoStudentTestQuestion copyIStudentTestQuestion2InfoStudentTestQuestion(IStudentTestQuestion studentTestQuestion)
-	{
-		InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
-		infoStudentTestQuestion.setIdInternal(studentTestQuestion.getIdInternal());
-		infoStudentTestQuestion.setOptionShuffle(studentTestQuestion.getOptionShuffle());
-		infoStudentTestQuestion.setOldResponse(studentTestQuestion.getOldResponse());
-		infoStudentTestQuestion.setTestQuestionOrder(studentTestQuestion.getTestQuestionOrder());
-		infoStudentTestQuestion.setTestQuestionValue(studentTestQuestion.getTestQuestionValue());
-		infoStudentTestQuestion.setTestQuestionMark(studentTestQuestion.getTestQuestionMark());
-		InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
-		try
-		{
-			CopyUtils.copyProperties(infoDistributedTest, studentTestQuestion.getDistributedTest());
-		}
-		catch (Exception e)
-		{
-			fail("ReadStudentTestTest " + "cloner");
-		}
+    public String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-		InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(studentTestQuestion.getStudent());
-		InfoQuestion infoQuestion = Cloner.copyIQuestion2InfoQuestion(studentTestQuestion.getQuestion());
-		infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
-		infoStudentTestQuestion.setStudent(infoStudent);
-		infoStudentTestQuestion.setQuestion(infoQuestion);
-		return infoStudentTestQuestion;
-	}
+    public static InfoStudentTestQuestion copyIStudentTestQuestion2InfoStudentTestQuestion(
+            IStudentTestQuestion studentTestQuestion) {
+        InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
+        infoStudentTestQuestion.setIdInternal(studentTestQuestion
+                .getIdInternal());
+        infoStudentTestQuestion.setOptionShuffle(studentTestQuestion
+                .getOptionShuffle());
+        infoStudentTestQuestion.setOldResponse(studentTestQuestion
+                .getOldResponse());
+        infoStudentTestQuestion.setTestQuestionOrder(studentTestQuestion
+                .getTestQuestionOrder());
+        infoStudentTestQuestion.setTestQuestionValue(studentTestQuestion
+                .getTestQuestionValue());
+        infoStudentTestQuestion.setTestQuestionMark(studentTestQuestion
+                .getTestQuestionMark());
+        InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
+        try {
+            CopyUtils.copyProperties(infoDistributedTest, studentTestQuestion
+                    .getDistributedTest());
+        } catch (Exception e) {
+            fail("ReadStudentTestTest " + "cloner");
+        }
+
+        InfoStudent infoStudent = Cloner
+                .copyIStudent2InfoStudent(studentTestQuestion.getStudent());
+        InfoQuestion infoQuestion = Cloner
+                .copyIQuestion2InfoQuestion(studentTestQuestion.getQuestion());
+        infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
+        infoStudentTestQuestion.setStudent(infoStudent);
+        infoStudentTestQuestion.setQuestion(infoQuestion);
+        return infoStudentTestQuestion;
+    }
 
 }
 
@@ -222,7 +210,8 @@ public class ReadStudentTestTest extends TestCaseReadServices
 //	{
 //		String userName = new String("L48283");
 //		Integer distributedTestId = new Integer(2);
-//		String path = new String("e:\\eclipse\\workspace\\fenix-exams2\\build\\standalone\\");
+//		String path = new
+// String("e:\\eclipse\\workspace\\fenix-exams2\\build\\standalone\\");
 //
 //		Object[] args = { userName, distributedTestId, new Boolean(true), path };
 //		return args;
@@ -246,7 +235,8 @@ public class ReadStudentTestTest extends TestCaseReadServices
 //					getNameOfServiceToBeTested(),
 //					args);
 //
-//			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+//			PersistenceBroker broker =
+// PersistenceBrokerFactory.defaultPersistenceBroker();
 //
 //			Criteria criteria = new Criteria();
 //			criteria.addEqualTo("person.username", args[0]);
@@ -258,10 +248,12 @@ public class ReadStudentTestTest extends TestCaseReadServices
 //			criteria.addEqualTo("keyStudent", student.getIdInternal());
 //			criteria.addOrderBy("testQuestionOrder", true);
 //			queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria);
-//			List studentTestQuestionList = (List) broker.getCollectionByQuery(queryCriteria);
+//			List studentTestQuestionList = (List)
+// broker.getCollectionByQuery(queryCriteria);
 //			broker.close();
 //
-//			assertEquals(studentTestQuestionList.size(), serviceStudentTestQuestionList.size());
+//			assertEquals(studentTestQuestionList.size(),
+// serviceStudentTestQuestionList.size());
 //			int i = 0;
 //			Iterator it = serviceStudentTestQuestionList.iterator();
 //			while (it.hasNext())
@@ -286,9 +278,12 @@ public class ReadStudentTestTest extends TestCaseReadServices
 //		}
 //	}
 //
-//	public static InfoStudentTestQuestion copyIStudentTestQuestion2InfoStudentTestQuestion(IStudentTestQuestion studentTestQuestion)
+//	public static InfoStudentTestQuestion
+// copyIStudentTestQuestion2InfoStudentTestQuestion(IStudentTestQuestion
+// studentTestQuestion)
 //	{
-//		InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
+//		InfoStudentTestQuestion infoStudentTestQuestion = new
+// InfoStudentTestQuestion();
 //		infoStudentTestQuestion.setIdInternal(studentTestQuestion.getIdInternal());
 //		infoStudentTestQuestion.setOptionShuffle(studentTestQuestion.getOptionShuffle());
 //		infoStudentTestQuestion.setResponse(studentTestQuestion.getResponse());
@@ -298,15 +293,18 @@ public class ReadStudentTestTest extends TestCaseReadServices
 //		InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
 //		try
 //		{
-//			CopyUtils.copyProperties(infoDistributedTest, studentTestQuestion.getDistributedTest());
+//			CopyUtils.copyProperties(infoDistributedTest,
+// studentTestQuestion.getDistributedTest());
 //		}
 //		catch (Exception e)
 //		{
 //			fail("ReadStudentDistributedTestTest " + "cloner");
 //		}
 //
-//		InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(studentTestQuestion.getStudent());
-//		InfoQuestion infoQuestion = Cloner.copyIQuestion2InfoQuestion(studentTestQuestion.getQuestion());
+//		InfoStudent infoStudent =
+// Cloner.copyIStudent2InfoStudent(studentTestQuestion.getStudent());
+//		InfoQuestion infoQuestion =
+// Cloner.copyIQuestion2InfoQuestion(studentTestQuestion.getQuestion());
 //		infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
 //		infoStudentTestQuestion.setStudent(infoStudent);
 //		infoStudentTestQuestion.setQuestion(infoQuestion);

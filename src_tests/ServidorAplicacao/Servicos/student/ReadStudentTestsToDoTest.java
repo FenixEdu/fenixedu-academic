@@ -84,9 +84,9 @@ public class ReadStudentTestsToDoTest extends TestCaseReadServices
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 			IDistributedTest distributedTest =
-				(IDistributedTest) sp.getIPersistentDistributedTest().readByOId(
-					new DistributedTest(new Integer(2)),
-					false);
+				(IDistributedTest) sp.getIPersistentDistributedTest().readByOID(
+					DistributedTest.class,new Integer(2)
+					);
 			sp.confirmarTransaccao();
 			if (distributedTest == null)
 				fail("ReadStudentTestsToDoTest " + "no distributedTest");
