@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<span class="error"><html:errors property="invalid.delete"/></span>
+
 <html:form action="/manipularSalas">
   <center> <b> <bean:message key="manipularSalas.titleSuccess"/> </b> </center>
   <br/>
