@@ -1,5 +1,3 @@
-
-
 package Dominio;
 
 import Util.DocumentType;
@@ -11,7 +9,7 @@ import Util.GraduationType;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class Price implements IPrice {
+public class Price extends DomainObject implements IPrice {
   protected Integer internalCode;
   
   

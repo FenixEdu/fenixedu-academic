@@ -9,7 +9,7 @@ import Util.GraduationType;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public interface IPrice {
+public interface IPrice extends IDomainObject{
  
   public GraduationType getGraduationType();
   public Double getPrice();
