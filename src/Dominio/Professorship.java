@@ -240,16 +240,16 @@ public class Professorship extends DomainObject implements IProfessorship, Persi
 
             IExecutionPeriod executionPeriod = this.getExecutionCourse().getExecutionPeriod();
             ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
-            if (credits == null) {
-                credits = new Credits();
-            }
+            //            if (credits == null) {
+            //                credits = new Credits();
+            //            }
             //            creditsDAO.simpleLockWrite(credits);
             credits.setTeacher(teacher);
             credits.setExecutionPeriod(executionPeriod);
             Double masterDegreeCredits = credits.getMasterDegreeCredits();
             double masterDegreeCreditsValue = masterDegreeCredits != null ? masterDegreeCredits
                     .doubleValue() : 0;
-            double newValue = masterDegreeCreditsValue + (this.getHours() != null ? this.getHours().doubleValue() : 0);
+            double newValue = masterDegreeCreditsValue + this.getHours().doubleValue();
             credits.setMasterDegreeCredits(new Double(newValue));
 
             // JPVL: used pb.store because I couldn't figure out how to put
