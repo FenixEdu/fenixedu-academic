@@ -32,6 +32,7 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		setState(null);
 		setInitialDate(null);
 		setEndDate(null);
+		setEnrolmentInfo(null);
 	}
 
 	public DegreeCurricularPlan(
@@ -40,6 +41,7 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		DegreeCurricularPlanState state,
 		Date initialDate,
 		Date endDate) {
+		this();
 		setName(nome);
 		setDegree(degree);
 		setState(state);

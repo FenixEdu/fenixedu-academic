@@ -27,14 +27,13 @@ public class InfoDegreeCurricularPlan implements Serializable {
 		setState(null);
 		setInitialDate(null);
 		setEndDate(null);
+		setInfoEnrolmentInfo(null);
 	}
 
 	public InfoDegreeCurricularPlan(String name, InfoDegree infoDegree) {
+		this();
 		setName(name);
 		setInfoDegree(infoDegree);
-		setState(null);
-		setInitialDate(null);
-		setEndDate(null);
 	}
 
 	public InfoDegreeCurricularPlan(String nome, InfoDegree infoDegree, DegreeCurricularPlanState state, Date initialDate, Date endDate) {
@@ -139,20 +138,13 @@ public class InfoDegreeCurricularPlan implements Serializable {
 		this.state = state;
 	}
 
-	/**
-	 * @return
-	 */
 	public List getInfoEnrolmentInfo() {
 		return infoEnrolmentInfo;
 	}
 
-	/**
-	 * @param list
-	 */
 	public void setInfoEnrolmentInfo(List list) {
 		infoEnrolmentInfo = list;
 	}
-
 	public InfoDegreeCurricularPlanEnrolmentInfo getInfoDegreeCurricularPlanEnrolmentInfo(){
 		if(infoEnrolmentInfo.isEmpty()){
 			return null;
@@ -161,7 +153,7 @@ public class InfoDegreeCurricularPlan implements Serializable {
 		}
 	}
 
-	public void setDegreeCurricularPlanEnrolmentInfo(InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo) {
+	public void setInfoDegreeCurricularPlanEnrolmentInfo(InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo) {
 		infoEnrolmentInfo.set(0, infoDegreeCurricularPlanEnrolmentInfo);
 	}
 
