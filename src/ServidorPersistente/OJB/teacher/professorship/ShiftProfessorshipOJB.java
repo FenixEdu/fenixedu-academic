@@ -186,15 +186,15 @@ public class ShiftProfessorshipOJB extends ObjectFenixOJB implements IPersistent
         return queryList(ShiftProfessorship.class, criteria, true);
     }
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.IPersistentShiftProfessorship#readByProfessorship(Dominio.IProfessorship)
-     */
-    public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
-    {
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("professorship.teacher.idInternal", teacher.getIdInternal());		
-        return queryList(ShiftProfessorship.class, criteria);
-    }
+//    /* (non-Javadoc)
+//     * @see ServidorPersistente.IPersistentShiftProfessorship#readByProfessorship(Dominio.IProfessorship)
+//     */
+//    public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
+//    {
+//		Criteria criteria = new Criteria();
+//		criteria.addEqualTo("professorship.teacher.idInternal", teacher.getIdInternal());		
+//        return queryList(ShiftProfessorship.class, criteria);
+//    }
     
     /* (non-Javadoc)
      * @see ServidorPersistente.IPersistentShiftProfessorship#readByProfessorship(Dominio.IProfessorship)
@@ -219,11 +219,23 @@ public class ShiftProfessorshipOJB extends ObjectFenixOJB implements IPersistent
     /* (non-Javadoc)
      * @see ServidorPersistente.IPersistentShiftProfessorship#readByProfessorshipWithDifferentIds(Dominio.IProfessorship, java.util.List)
      */
-    public List readByTeacherWithDifferentIds(ITeacher teacher, List shiftProfessorShipsIds) throws ExcepcaoPersistencia
+    public List readByTeacherAndExecutionPeriodWithDifferentIds(ITeacher teacher, IExecutionPeriod period, List shiftProfessorShipsIds) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addNotIn("idInternal", shiftProfessorShipsIds);
+        criteria.addEqualTo("professorship.teacher.idInternal", teacher.getIdInternal());
+        criteria.addEqualTo("professorship.executionCourse.executionPeriod.idInternal", period.getIdInternal());
+        return queryList(ShiftProfessorship.class, criteria);
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentShiftProfessorship#readByTeacherAndExecutionPeriod(Dominio.ITeacher, Dominio.IExecutionPeriod)
+     */
+    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod period) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
         criteria.addEqualTo("professorship.teacher.idInternal", teacher.getIdInternal());		
+        criteria.addEqualTo("professorship.executionCourse.executionPeriod.idInternal", period.getIdInternal());        
         return queryList(ShiftProfessorship.class, criteria);
     }
 }

@@ -7,7 +7,9 @@
 
 <bean:define id="infoTeacher" name="teacherCreditsSheet" property="infoTeacher"/>
 <bean:define id="infoExecutionPeriod" name="teacherCreditsSheet" property="infoExecutionPeriod"/>
-<bean:define id="infoCredits" name="teacherCreditsSheet" property="infoCredits"/>
+<logic:present name="teacherCreditsSheet" property="infoCredits">
+	<bean:define id="infoCredits" name="teacherCreditsSheet" property="infoCredits"/>
+</logic:present>
 
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
