@@ -5257,4 +5257,12 @@
 		    <chain id="13"/>
 		 </filterChains>
 	</service>
+	<service>
+		<idInternal>455921</idInternal>
+		<name>CourseOfTheExpectedDegree</name>
+		<description>This service verify if the execution course belongs to one definitive degree</description>
+		<implementationClass>ServidorAplicacao.Servico.teacher.CourseOfTheExpectedDegree</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains></filterChains>
+	</service>
 </serviceDefinitions>

@@ -348,7 +348,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		}
 	
 		//Filter if the course is of the AERO degree
-		Object args[] = { curricularCourseCode };
+		Object args[] = { curricularCourseCode, "LEA" };
 		Boolean isExpectedDegree = null;
 		try
 		{
@@ -465,7 +465,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         
 		//Filter if the course is of the AERO degree
-		Object args[] = { curricularCourseCode };
+		Object args[] = { curricularCourseCode, "LEA" };
 		Boolean isExpectedDegree = null;
 		try
 		{

@@ -31,14 +31,14 @@ public class CourseOfTheExpectedDegree implements IServico
         return "CourseOfTheExpectedDegree";
     }
 
-    public Boolean run(Integer curricularCourseCode) throws FenixServiceException
+    public Boolean run(Integer curricularCourseCode, String degreeCode) throws FenixServiceException
     {
         boolean result = false;
         
         try
         {
             result =
-                CurricularCourseAeroDegree(curricularCourseCode)
+                CurricularCourseDegree(curricularCourseCode, degreeCode)
                     && CurricularCourseNotBasic(curricularCourseCode);            
 
         } catch (Exception e)
@@ -54,7 +54,7 @@ public class CourseOfTheExpectedDegree implements IServico
 	 * @param argumentos
 	 * @return
 	 */
-    private boolean CurricularCourseAeroDegree(Integer curricularCourseCode) throws FenixServiceException
+    private boolean CurricularCourseDegree(Integer curricularCourseCode, String degreeCode) throws FenixServiceException
     {
         boolean result = false;
 
@@ -75,7 +75,7 @@ public class CourseOfTheExpectedDegree implements IServico
 
             degree = curricularCourse.getDegreeCurricularPlan().getDegree();
 
-            result = degree.getSigla().equals("LEA");
+            result = degree.getSigla().equals(degreeCode);
         } catch (Exception e)
         {
 			throw new FenixServiceException(e);
