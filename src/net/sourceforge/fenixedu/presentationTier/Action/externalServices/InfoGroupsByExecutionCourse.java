@@ -48,7 +48,8 @@ public class InfoGroupsByExecutionCourse extends FenixAction
         try
         {
 
-            IUserView userView = authenticate(this.studentUsername, this.studentPassword);
+			final String requestURL = request.getRequestURL().toString();
+            IUserView userView = authenticate(this.studentUsername, this.studentPassword, requestURL);
             for (int i = 0; i < this.executionCourseIds.length; i++)
             {
                 buffer.append(this.buildInfo(this.executionCourseIds[i], userView));
@@ -117,10 +118,10 @@ public class InfoGroupsByExecutionCourse extends FenixAction
         this.executionCourseIds = buildIdsArray(idsString);
     }
 
-    private IUserView authenticate(String username, String password) throws FenixServiceException,
+    private IUserView authenticate(String username, String password, String requestURL) throws FenixServiceException,
             FenixFilterException
     {
-        Object argsAutenticacao[] = { username, password, "" };
+        Object argsAutenticacao[] = { username, password, "", requestURL };
         IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
                 "Autenticacao", argsAutenticacao); //$NON-NLS-1$
 

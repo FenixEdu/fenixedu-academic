@@ -45,7 +45,8 @@ public class StudentInfoByUsername extends FenixAction
         String result = new String();
         try
         {
-            authenticate(this.studentUsername, this.studentPassword);
+			final String requestURL = request.getRequestURL().toString();
+            authenticate(this.studentUsername, this.studentPassword, requestURL);
             Collection students = this.readInformation(this.studentUsername);
             result = this.buildInfo(students);
             if (result.equals(""))
@@ -100,10 +101,10 @@ public class StudentInfoByUsername extends FenixAction
     }
 
 
-    private IUserView authenticate(String username, String password) throws FenixServiceException,
+    private IUserView authenticate(String username, String password, String requestURL) throws FenixServiceException,
             FenixFilterException
     {
-        Object argsAutenticacao[] = { username, password, "" };
+        Object argsAutenticacao[] = { username, password, "", requestURL };
         IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
                 "Autenticacao", argsAutenticacao); //$NON-NLS-1$
 
