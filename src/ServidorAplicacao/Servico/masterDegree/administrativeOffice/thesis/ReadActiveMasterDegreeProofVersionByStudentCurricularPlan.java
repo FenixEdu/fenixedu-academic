@@ -23,7 +23,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  *
  */
-public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan implements IServico {
+public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan implements IServico
+{
 
 	private static ReadActiveMasterDegreeProofVersionByStudentCurricularPlan servico =
 		new ReadActiveMasterDegreeProofVersionByStudentCurricularPlan();
@@ -31,46 +32,60 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan implement
 	/**
 	 * The singleton access method of this class.
 	 **/
-	public static ReadActiveMasterDegreeProofVersionByStudentCurricularPlan getService() {
+	public static ReadActiveMasterDegreeProofVersionByStudentCurricularPlan getService()
+	{
 		return servico;
 	}
 
 	/**
 	 * The actor of this class.
 	 **/
-	private ReadActiveMasterDegreeProofVersionByStudentCurricularPlan() {
+	private ReadActiveMasterDegreeProofVersionByStudentCurricularPlan()
+	{
 	}
 
 	/**
 	 * Returns The Service Name */
-	public final String getNome() {
+	public final String getNome()
+	{
 		return "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan";
 	}
 
-	public InfoMasterDegreeProofVersion run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException {
+	public InfoMasterDegreeProofVersion run(InfoStudentCurricularPlan infoStudentCurricularPlan)
+		throws FenixServiceException
+	{
 		InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
 
-		try {
+		try
+		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
+			IStudentCurricularPlan studentCurricularPlan =
+				Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
 
-			IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
+			IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =
+				DegreeCurricularPlanStrategyFactory.getInstance();
 			IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy =
-				(IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(
+				(
+					IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
+						.getDegreeCurricularPlanStrategy(
 					studentCurricularPlan.getDegreeCurricularPlan());
 
 			if (!masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan))
 				throw new ScholarshipNotFinishedServiceException("error.exception.masterDegree.scholarshipNotFinished");
 
 			IMasterDegreeProofVersion masterDegreeProofVersion =
-				sp.getIPersistentMasterDegreeProofVersion().readActiveByStudentCurricularPlan(studentCurricularPlan);
+				sp.getIPersistentMasterDegreeProofVersion().readActiveByStudentCurricularPlan(
+					studentCurricularPlan);
 
 			if (masterDegreeProofVersion == null)
 				throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeProofVersion");
 
-			infoMasterDegreeProofVersion = Cloner.copyIMasterDegreeProofVersion2InfoMasterDegreeProofVersion(masterDegreeProofVersion);
+			infoMasterDegreeProofVersion =
+				Cloner.copyIMasterDegreeProofVersion2InfoMasterDegreeProofVersion(
+					masterDegreeProofVersion);
 
-		} catch (ExcepcaoPersistencia ex) {
+		} catch (ExcepcaoPersistencia ex)
+		{
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;
