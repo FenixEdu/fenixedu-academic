@@ -163,11 +163,8 @@ public class CreateStudentGroup implements IService {
                     .getIPersistentStudentGroup();
             IAttendsSet attendsSet = groupProperties.getAttendsSet();
             IStudentGroup newStudentGroup = null;
-            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
-            if(strategy.checkHasShift(groupProperties)){
+            
+            if(shiftCode != null){
             	persistentShift = persistentSupport.getITurnoPersistente();
                 ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
                         shiftCode);
