@@ -38,110 +38,126 @@ import Util.RoleType;
 public class LoadDBForCurricularCourseEnrollmentTest {
 
     private static final String FILE = "D:/Fenix/Files/others/dataSet.xml";
+    private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_ALIAS = "jdbc:mysql://localhost/";
+    private static final String DEFAULT_DB_NAME = "ciapl";
+    private static final String DEFAULT_DB_PASSWORD = "";
+    private static final String DEFAULT_DB_USERNAME = "root";
+
+    private static final boolean CALL_CLEAN_DB = false;
 
     private static final Integer PERSON_ID = new Integer(18000);
     private static final Integer STUDENT_ID = new Integer(13000);
     private static final Integer STUDENT_CURRICULAR_PLAN_ID = new Integer(23000);
 
-    private IDatabaseConnection connection = null;
+    private IDatabaseConnection connection;
     private String dbName;
     private String username;
     private String password;
+    private DatabaseOperation insertDatabaseOperation;
 
     public LoadDBForCurricularCourseEnrollmentTest() {
+        this.connection = null;
+        this.dbName = null;
+        this.username = null;
+        this.password = null;
+        this.insertDatabaseOperation = DatabaseOperation.CLEAN_INSERT;
     }
 
     public static void main(String[] args) throws Throwable {
 
-        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
-        persistenceDAO.iniciarTransaccao();
-        cleanDB(persistenceDAO);
-        persistenceDAO.confirmarTransaccao();
+        cleanDB();
         loadDB();
-        persistenceDAO.iniciarTransaccao();
-        clearCache(persistenceDAO);
-        persistenceDAO.confirmarTransaccao();
+        clearCache();
     }
 
-    private static void cleanDB(ISuportePersistente persistenceDAO) throws ExcepcaoPersistencia {
+    private static void cleanDB() throws ExcepcaoPersistencia {
 
-        // -------------------------------------------------------------------------------------------------------
+        if (CALL_CLEAN_DB) {
+            ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+            persistenceDAO.iniciarTransaccao();
 
-        IPessoa person = (IPessoa) persistenceDAO.getIPessoaPersistente().readByOID(Pessoa.class, PERSON_ID);
-        
-        IRole role = new Role();
+            // -------------------------------------------------------------------------------------------------------
+            IPessoa person = (IPessoa) persistenceDAO.getIPessoaPersistente().readByOID(Pessoa.class, PERSON_ID);
 
-        role.setRoleType(RoleType.PERSON);
-        IPersonRole personRole1 = persistenceDAO.getIPersistentPersonRole().readByPersonAndRole(person, role);
+            IRole role = new Role();
 
-        role.setRoleType(RoleType.STUDENT);
-        IPersonRole personRole2 = persistenceDAO.getIPersistentPersonRole().readByPersonAndRole(person, role);
+            role.setRoleType(RoleType.PERSON);
+            IPersonRole personRole1 = persistenceDAO.getIPersistentPersonRole().readByPersonAndRole(person, role);
 
-        IStudent student = (IStudent) persistenceDAO.getIPersistentStudent().readByOID(Student.class, STUDENT_ID);
-        
-        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistenceDAO
-                .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class, STUDENT_CURRICULAR_PLAN_ID);
-        
-        if (studentCurricularPlan != null) {
+            role.setRoleType(RoleType.STUDENT);
+            IPersonRole personRole2 = persistenceDAO.getIPersistentPersonRole().readByPersonAndRole(person, role);
 
-            // ---------------------------------------------------------------------------------------------------
-            int size = studentCurricularPlan.getEnrolments().size();
-            for (int i = 0; i < size; i++) {
-                IEnrollment enrollment = (IEnrollment) studentCurricularPlan.getEnrolments().get(i);
+            IStudent student = (IStudent) persistenceDAO.getIPersistentStudent().readByOID(Student.class, STUDENT_ID);
 
-                int size2 = enrollment.getEvaluations().size();
-                for (int j = 0; j < size2; j++) {
-                    IEnrolmentEvaluation enrollmentEvaluation = (IEnrolmentEvaluation) enrollment.getEvaluations().get(j);
-                    persistenceDAO.getIPersistentEnrolmentEvaluation().deleteByOID(EnrolmentEvaluation.class,
-                            enrollmentEvaluation.getIdInternal());
+            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistenceDAO
+                    .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class, STUDENT_CURRICULAR_PLAN_ID);
+
+            if (studentCurricularPlan != null) {
+
+                // ---------------------------------------------------------------------------------------------------
+                int size = studentCurricularPlan.getEnrolments().size();
+                for (int i = 0; i < size; i++) {
+                    IEnrollment enrollment = (IEnrollment) studentCurricularPlan.getEnrolments().get(i);
+
+                    int size2 = enrollment.getEvaluations().size();
+                    for (int j = 0; j < size2; j++) {
+                        IEnrolmentEvaluation enrollmentEvaluation = (IEnrolmentEvaluation) enrollment.getEvaluations().get(j);
+                        persistenceDAO.getIPersistentEnrolmentEvaluation().deleteByOID(EnrolmentEvaluation.class,
+                                enrollmentEvaluation.getIdInternal());
+                    }
+
+                    persistenceDAO.getIPersistentEnrolment().deleteByOID(Enrolment.class, enrollment.getIdInternal());
                 }
 
-                persistenceDAO.getIPersistentEnrolment().deleteByOID(Enrolment.class, enrollment.getIdInternal());
+                // ---------------------------------------------------------------------------------------------------
+                List creditsInAnySecundaryAreaList = persistenceDAO.getIPersistentCreditsInAnySecundaryArea()
+                        .readAllByStudentCurricularPlan(studentCurricularPlan);
+
+                size = creditsInAnySecundaryAreaList.size();
+                for (int i = 0; i < size; i++) {
+                    ICreditsInAnySecundaryArea creditsInAnySecundaryArea = (ICreditsInAnySecundaryArea) creditsInAnySecundaryAreaList
+                            .get(i);
+                    persistenceDAO.getIPersistentCreditsInAnySecundaryArea().deleteByOID(CreditsInAnySecundaryArea.class,
+                            creditsInAnySecundaryArea.getIdInternal());
+                }
+
+                // ---------------------------------------------------------------------------------------------------
+                List creditsInScientificAreaList = persistenceDAO.getIPersistentCreditsInSpecificScientificArea()
+                        .readAllByStudentCurricularPlan(studentCurricularPlan);
+
+                size = creditsInScientificAreaList.size();
+                for (int i = 0; i < size; i++) {
+                    ICreditsInScientificArea creditsInScientificArea = (ICreditsInScientificArea) creditsInScientificAreaList
+                            .get(i);
+                    persistenceDAO.getIPersistentCreditsInSpecificScientificArea().deleteByOID(CreditsInScientificArea.class,
+                            creditsInScientificArea.getIdInternal());
+                }
+
+                // ---------------------------------------------------------------------------------------------------
+                persistenceDAO.getIStudentCurricularPlanPersistente().deleteByOID(StudentCurricularPlan.class,
+                        studentCurricularPlan.getIdInternal());
             }
 
-            // ---------------------------------------------------------------------------------------------------
-            List creditsInAnySecundaryAreaList = persistenceDAO.getIPersistentCreditsInAnySecundaryArea()
-                    .readAllByStudentCurricularPlan(studentCurricularPlan);
-
-            size = creditsInAnySecundaryAreaList.size();
-            for (int i = 0; i < size; i++) {
-                ICreditsInAnySecundaryArea creditsInAnySecundaryArea = (ICreditsInAnySecundaryArea) creditsInAnySecundaryAreaList
-                        .get(i);
-                persistenceDAO.getIPersistentCreditsInAnySecundaryArea().deleteByOID(CreditsInAnySecundaryArea.class,
-                        creditsInAnySecundaryArea.getIdInternal());
+            // -------------------------------------------------------------------------------------------------------
+            if (person != null) {
+                persistenceDAO.getIPessoaPersistente().deleteByOID(Pessoa.class, person.getIdInternal());
             }
 
-            // ---------------------------------------------------------------------------------------------------
-            List creditsInScientificAreaList = persistenceDAO.getIPersistentCreditsInSpecificScientificArea()
-                    .readAllByStudentCurricularPlan(studentCurricularPlan);
-
-            size = creditsInScientificAreaList.size();
-            for (int i = 0; i < size; i++) {
-                ICreditsInScientificArea creditsInScientificArea = (ICreditsInScientificArea) creditsInScientificAreaList.get(i);
-                persistenceDAO.getIPersistentCreditsInSpecificScientificArea().deleteByOID(CreditsInScientificArea.class,
-                        creditsInScientificArea.getIdInternal());
+            if (student != null) {
+                persistenceDAO.getIPersistentStudent().deleteByOID(Student.class, student.getIdInternal());
             }
 
-            // ---------------------------------------------------------------------------------------------------
-            persistenceDAO.getIStudentCurricularPlanPersistente().deleteByOID(StudentCurricularPlan.class,
-                    studentCurricularPlan.getIdInternal());
-        }
+            if (personRole1 != null) {
+                persistenceDAO.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole1.getIdInternal());
+            }
 
-        // -------------------------------------------------------------------------------------------------------
-        if (person != null) {
-            persistenceDAO.getIPessoaPersistente().deleteByOID(Pessoa.class, person.getIdInternal());
-        }
+            if (personRole2 != null) {
+                persistenceDAO.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole2.getIdInternal());
+            }
 
-        if (student != null) {
-            persistenceDAO.getIPersistentStudent().deleteByOID(Student.class, student.getIdInternal());
-        }
-
-        if (personRole1 != null) {
-            persistenceDAO.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole1.getIdInternal());
-        }
-
-        if (personRole2 != null) {
-            persistenceDAO.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole2.getIdInternal());
+            // -------------------------------------------------------------------------------------------------------
+            persistenceDAO.confirmarTransaccao();
         }
     }
 
@@ -152,13 +168,16 @@ public class LoadDBForCurricularCourseEnrollmentTest {
         obj.closeConnection();
     }
 
-    private static void clearCache(ISuportePersistente persistenceDAO) {
+    private static void clearCache() throws ExcepcaoPersistencia {
+        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+        persistenceDAO.iniciarTransaccao();
         persistenceDAO.clearCache();
+        persistenceDAO.confirmarTransaccao();
     }
 
     public void openConnection() throws Exception {
         if (this.connection == null) {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DB_DRIVER);
             Connection jdbcConnection = DriverManager.getConnection(this.getDbName(), this.getUsername(), this.getPassword());
             this.connection = new DatabaseConnection(jdbcConnection);
         }
@@ -172,7 +191,7 @@ public class LoadDBForCurricularCourseEnrollmentTest {
     public void loadDataBase(String filename) throws Exception {
         FileReader fileReader = new FileReader(new File(filename));
         IDataSet dataSet = new FlatXmlDataSet(fileReader);
-        DatabaseOperation.INSERT.execute(this.connection, dataSet);
+        this.insertDatabaseOperation.execute(this.connection, dataSet);
     }
 
     public IDatabaseConnection getConnection() {
@@ -181,9 +200,9 @@ public class LoadDBForCurricularCourseEnrollmentTest {
 
     public String getDbName() {
         if (this.dbName == null) {
-            return "jdbc:mysql://localhost/ciapl";
+            return DB_ALIAS + DEFAULT_DB_NAME;
         } else {
-            return "jdbc:mysql://localhost/" + this.dbName;
+            return DB_ALIAS + this.dbName;
         }
     }
 
@@ -193,7 +212,7 @@ public class LoadDBForCurricularCourseEnrollmentTest {
 
     public String getPassword() {
         if (this.password == null) {
-            return "";
+            return DEFAULT_DB_PASSWORD;
         } else {
             return this.password;
         }
@@ -205,7 +224,7 @@ public class LoadDBForCurricularCourseEnrollmentTest {
 
     public String getUsername() {
         if (this.username == null) {
-            return "root";
+            return DEFAULT_DB_USERNAME;
         } else {
             return this.username;
         }
