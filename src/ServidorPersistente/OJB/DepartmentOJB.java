@@ -64,21 +64,24 @@ public class DepartmentOJB extends PersistentObjectOJB implements IPersistentDep
         ICostCenter workingCC = employeeHistoric.getWorkingPlaceCostCenter();
 
         List departmentList = null;
+        IDepartment department = null;
 
-        String code = workingCC.getCode();
+        if (workingCC != null) {
+            String code = workingCC.getCode();
 
-        if (code != null && !(code.equals(""))) {
-            Criteria workingCCCriteria = new Criteria();
-            workingCCCriteria.addLike("code", code.substring(0, 2) + "%");
-            departmentList = queryList(Department.class, workingCCCriteria);
-        }
-        IDepartment department;
-        if (departmentList.size() != 1) {
-            Criteria criteria = new Criteria();
-            criteria.addEqualTo("code", code);
-            department = (IDepartment) queryObject(Department.class, criteria);
-        } else {
-            department = (IDepartment) departmentList.get(0);
+            if (code != null && !(code.equals(""))) {
+                Criteria workingCCCriteria = new Criteria();
+                workingCCCriteria.addLike("code", code.substring(0, 2) + "%");
+                departmentList = queryList(Department.class, workingCCCriteria);
+            }
+
+            if (departmentList.size() != 1) {
+                Criteria criteria = new Criteria();
+                criteria.addEqualTo("code", code);
+                department = (IDepartment) queryObject(Department.class, criteria);
+            } else {
+                department = (IDepartment) departmentList.get(0);
+            }
         }
         return department;
     }
@@ -94,15 +97,16 @@ public class DepartmentOJB extends PersistentObjectOJB implements IPersistentDep
 
         ICostCenter workingCC = null;
         Date date = null;
-        
+
         for (Iterator iter = employeeHistoricList.iterator(); iter.hasNext();) {
             IEmployeeHistoric element = (IEmployeeHistoric) iter.next();
-            if(element.getWorkingPlaceCostCenter() != null && (date == null || element.getBeginDate().after(date))) {
+            if (element.getWorkingPlaceCostCenter() != null
+                    && (date == null || element.getBeginDate().after(date))) {
                 workingCC = element.getWorkingPlaceCostCenter();
                 date = element.getBeginDate();
             }
         }
-        
+
         List departmentList = null;
 
         String code = workingCC.getCode();
