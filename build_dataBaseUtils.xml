@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project basedir="." default="get-dump" name="DBUtils">
+
+	<taskdef name="scp"
+             classname="org.apache.tools.ant.taskdefs.optional.ssh.Scp"
+             />
+
+    <taskdef name="sshexec"
+             classname="org.apache.tools.ant.taskdefs.optional.ssh.SSHExec"
+             />
+
+    <!-- ########## PROPERTIES ########## -->
+
+    <property environment="env"/>
+	<property name="encoding" value="ISO-8859-15"/>
+
+	<property file="build.properties"/>
+
+    <!-- ########## TARGETS ########## -->
+
+    <target name="get-fenix-dump"
+            description="Deploys application to test server"
+            >
+		<property name="server.hostname"
+				  value="fenix.ist.utl.pt"
+				  />
+		<property name="server.dumpScript"
+				  value="/root/configs/getDBDump"
+				  />
+		<property name="server.dumpFilename"
+				  value="fenix.dump.sql"
+				  />
+
+		<property name="destination.hostname"
+				  value="fenix-tests.ist.utl.pt"
+				  />
+
+		<!-- Prompt for username & password -->
+		<input message="Enter username for ${server.hostname}:"
+			   addproperty="server.username"
+			   />
+		<input message="Enter password for ${server.hostname}:"
+			   addproperty="server.password"
+			   />
+		<input message="Enter username for ${destination.hostname}:"
+			   addproperty="destination.username"
+			   />
+		<input message="Enter password for ${destination.hostname}:"
+			   addproperty="destination.password"
+			   />
+
+		<!-- Obtail DB Dump -->
+		<antcall target="publish-dump"/>
+
+    </target>
+
+    <target name="publish-dump"
+            description="Obtails a dump of the database"
+            >
+
+		<!-- Run Dump Script on Server -->
+        <sshexec host="${server.hostname}"
+        		 username="${server.username}"
+        		 password="${server.password}"
+        		 command="${server.dumpScript}; zip ${server.dumpFilename}.zip ${server.dumpFilename}; rm ${server.dumpFilename}"
+        		 />
+
+		<!-- Transfer DB Dump File to Destination -->
+        <scp file="${server.username}:${server.password}@${server.hostname}:/root/${server.dumpFilename}.zip"
+        	 todir="${basedir}"
+        	 />
+        <scp file="${server.dumpFilename}.zip"
+        	 todir="${destination.username}:${destination.password}@${destination.hostname}:~"
+        	 />
+
+		<!-- Remove DB Dump File from Server -->
+        <sshexec host="${server.hostname}"
+        		 username="${server.username}"
+        		 password="${server.password}"
+        		 command="rm ${server.dumpFilename}.zip"
+        		 />
+
+		<!-- Remove temporary local copy of DB Dump File -->
+		<delete file="${server.dumpFilename}.zip"/>
+
+		<!-- Load the Destination Servers DB -->
+        <sshexec host="${destination.hostname}"
+        		 username="${destination.username}"
+        		 password="${destination.password}"
+        		 command="loadFenixImage"
+        		 />
+
+    </target>
+
+    <target name="get-dump"
+            description="Deploys application to test server"
+            >
+		<property name="server.hostname"
+				  value="fenix-tests.ist.utl.pt"
+				  />
+		<property name="server.dumpScript"
+				  value="/root/configs/getDBDump"
+				  />
+		<property name="server.dumpFilename"
+				  value="fenix.dump.sql"
+				  />
+
+		<!-- Prompt for username & password -->
+		<input message="Enter username for ${server.hostname}:"
+			   addproperty="server.username"
+			   />
+		<input message="Enter password for ${server.hostname}:"
+			   addproperty="server.password"
+			   />
+
+		<!-- Run Dump Script on Server -->
+        <sshexec host="${server.hostname}"
+        		 username="${server.username}"
+        		 password="${server.password}"
+        		 command="${server.dumpScript}; zip ${server.dumpFilename}.zip ${server.dumpFilename}; rm ${server.dumpFilename}"
+        		 />
+
+		<!-- Transfer DB Dump File -->
+        <scp file="${server.username}:${server.password}@${server.hostname}:/root/${server.dumpFilename}.zip"
+        	 todir="${basedir}"
+        	 />
+
+		<!-- Remove DB Dump File from Server -->
+        <sshexec host="${server.hostname}"
+        		 username="${server.username}"
+        		 password="${server.password}"
+        		 command="rm ${server.dumpFilename}.zip"
+        		 />
+
+		<unzip file="${server.dumpFilename}.zip" dest="${basedir}">
+		<delete file="${server.dumpFilename}.zip"/>		
+
+    </target>
+
+</project>
