@@ -7,22 +7,22 @@ package Util;
  * 19/Mar/2003
  */
 
-public class EquivalenceType {
+public class EnrolmentEquivalenceType {
 
 	public static final int EQUIVALENT_COURSE = 1;
 	
-	public static final EquivalenceType EQUIVALENT_COURSE_OBJ = new EquivalenceType(EquivalenceType.EQUIVALENT_COURSE);
+	public static final EnrolmentEquivalenceType EQUIVALENT_COURSE_OBJ = new EnrolmentEquivalenceType(EnrolmentEquivalenceType.EQUIVALENT_COURSE);
 
 	private Integer type;
 
-	public EquivalenceType() {
+	public EnrolmentEquivalenceType() {
 	}
 
-	public EquivalenceType(int type) {
+	public EnrolmentEquivalenceType(int type) {
 		this.type = new Integer(type);
 	}
 
-	public EquivalenceType(Integer type) {
+	public EnrolmentEquivalenceType(Integer type) {
 		this.type = type;
 	}
 
@@ -36,8 +36,8 @@ public class EquivalenceType {
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
-		if (obj instanceof EquivalenceType) {
-			EquivalenceType ds = (EquivalenceType) obj;
+		if (obj instanceof EnrolmentEquivalenceType) {
+			EnrolmentEquivalenceType ds = (EnrolmentEquivalenceType) obj;
 			resultado = this.getEquivalenceType().equals(ds.getEquivalenceType());
 		}
 		return resultado;

@@ -31,26 +31,26 @@ public class EquivalenceOJB extends ObjectFenixOJB implements IPersistentEnrolme
 	}
 
 	public void lockWrite(IEnrolmentEquivalence equivalenceToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
-
-		IEnrolmentEquivalence equivalenceFromDB = null;
-
-		// If there is nothing to write, simply return.
-		if (equivalenceToWrite == null) {
-			return;
-		}
-
-		// Read EnrolmentEquivalence from database.
-		equivalenceFromDB = this.readEquivalenceByEnrolmentAndEquivalentEnrolment(equivalenceToWrite.getEnrolment(), equivalenceToWrite.getEquivalentEnrolment());
-
-		// If EnrolmentEquivalence is not in database, then write it.
-		if (equivalenceFromDB == null) {
-			super.lockWrite(equivalenceToWrite);
-			// else If the EnrolmentEquivalence is mapped to the database, then write any existing changes.
-		} else if ((equivalenceToWrite instanceof EnrolmentEquivalence) && ((EnrolmentEquivalence) equivalenceFromDB).getInternalID().equals(((EnrolmentEquivalence) equivalenceToWrite).getInternalID())) {
-			super.lockWrite(equivalenceToWrite);
-			// else Throw an already existing exception
-		} else
-			throw new ExistingPersistentException();
+//
+//		IEnrolmentEquivalence equivalenceFromDB = null;
+//
+//		// If there is nothing to write, simply return.
+//		if (equivalenceToWrite == null) {
+//			return;
+//		}
+//
+//		// Read EnrolmentEquivalence from database.
+//		equivalenceFromDB = this.readEquivalenceByEnrolmentAndEquivalentEnrolment(equivalenceToWrite.getEnrolment(), equivalenceToWrite.getEquivalentEnrolment());
+//
+//		// If EnrolmentEquivalence is not in database, then write it.
+//		if (equivalenceFromDB == null) {
+//			super.lockWrite(equivalenceToWrite);
+//			// else If the EnrolmentEquivalence is mapped to the database, then write any existing changes.
+//		} else if ((equivalenceToWrite instanceof EnrolmentEquivalence) && ((EnrolmentEquivalence) equivalenceFromDB).getIdInternal().equals(((EnrolmentEquivalence) equivalenceToWrite).getIdInternal())) {
+//			super.lockWrite(equivalenceToWrite);
+//			// else Throw an already existing exception
+//		} else
+//			throw new ExistingPersistentException();
 	}
 
 	public void delete(IEnrolmentEquivalence enrolment) throws ExcepcaoPersistencia {

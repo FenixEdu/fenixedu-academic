@@ -114,7 +114,7 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //		enrolment.setCurricularCourse(curricularCourse);
 //		enrolment.setEnrolmentState(EnrolmentState.APROVED_OBJ);
 //		enrolment.setExecutionPeriod(executionPeriod);
-//		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+//		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.FINAL_OBJ);
 
 		IEnrolment enrolment = getExistingEnrolment();
 		try {
@@ -152,7 +152,7 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 //		enrolment.setCurricularCourse(curricularCourse);
 //		enrolment.setEnrolmentState(EnrolmentState.APROVED_OBJ);
 //		enrolment.setExecutionPeriod(executionPeriod);
-//		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+//		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.FINAL_OBJ);
 
 		enrolment = getNonExistingEnrolment();
 

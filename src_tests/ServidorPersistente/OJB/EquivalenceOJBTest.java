@@ -29,7 +29,7 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
-import Util.EquivalenceType;
+import Util.EnrolmentEquivalenceType;
 import Util.TipoCurso;
 
 /**
@@ -112,7 +112,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 		// EnrolmentEquivalence ja existente
 		this.loadEnrolments(true);
 		
-		IEnrolmentEquivalence equivalence = new EnrolmentEquivalence(this.enrolment, this.equivalentEnrolment, new EquivalenceType(EquivalenceType.EQUIVALENT_COURSE));
+		EnrolmentEquivalence equivalence = new EnrolmentEquivalence();
 
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -133,7 +133,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 
 		// EnrolmentEquivalence inexistente
 		this.loadEnrolments(false);
-		equivalence = new EnrolmentEquivalence(this.enrolment, this.equivalentEnrolment, new EquivalenceType(EquivalenceType.EQUIVALENT_COURSE));
+		equivalence = new EnrolmentEquivalence();
 
 		System.out.println("\n- Test 1.2 : Write Non Existing EnrolmentEquivalence\n");
 		try {
@@ -156,8 +156,6 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 
 		assertNotNull(equivalence2);
 		assertTrue(equivalence2.getEnrolment().equals(this.enrolment));
-		assertTrue(equivalence2.getEquivalentEnrolment().equals(this.equivalentEnrolment));
-		assertTrue(equivalence2.getEquivalenceType().equals(new EquivalenceType(EquivalenceType.EQUIVALENT_COURSE)));
 	}
 
 	// -------------------------------------------------------------------------------------------------------------------------
@@ -206,8 +204,6 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 		}
 		assertNotNull(equivalence);
 		assertTrue(equivalence.getEnrolment().equals(this.enrolment));
-		assertTrue(equivalence.getEquivalentEnrolment().equals(this.equivalentEnrolment));
-		assertTrue(equivalence.getEquivalenceType().equals(new EquivalenceType(EquivalenceType.EQUIVALENT_COURSE)));
 
 		// EnrolmentEquivalence inexistente
 		System.out.println("\n- Test 3.2 : Read Non Existing EnrolmentEquivalence");
@@ -374,7 +370,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 
 				this.enrolment = new Enrolment(studentCurricularPlan, curricularCourseScope, EnrolmentState.APROVED_OBJ);
 				this.enrolment.setExecutionPeriod(executionPeriod);
-				this.enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+				this.enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.CLOSED_OBJ);
 
 				ICurricularCourse curricularCourseCriteria2 = new CurricularCourse();
 				curricularCourseCriteria.setName("Cadeira Equivalente");
@@ -389,7 +385,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 
 				this.equivalentEnrolment = new Enrolment(studentCurricularPlan, curricularCourseScope, EnrolmentState.APROVED_OBJ);
 				this.equivalentEnrolment.setExecutionPeriod(executionPeriod);
-				this.enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+				this.enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.CLOSED_OBJ);
 
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia ex) {

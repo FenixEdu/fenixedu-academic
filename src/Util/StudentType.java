@@ -56,7 +56,7 @@ public class StudentType {
 
 		switch (value) {
 			case NORMAL :
-				valueS = "NORMAL";
+				valueS = "FIRST_SEASON";
 				break;
 			case WORKING_STUDENT :
 				valueS = "WORKING_STUDENT";

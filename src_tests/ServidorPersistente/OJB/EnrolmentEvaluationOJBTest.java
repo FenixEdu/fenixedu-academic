@@ -394,9 +394,9 @@ public class EnrolmentEvaluationOJBTest extends TestCaseOJB {
 //			IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolment,evaluationType,"14");
 			IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 			enrolmentEvaluation.setGrade("14");
-			enrolmentEvaluation.setEnrolmentEvaluationType(new EnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL));
+			enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 			enrolmentEvaluation.setEnrolment(enrolment);
-			enrolmentEvaluation.setEnrolmentEvaluationState(new EnrolmentEvaluationState(EnrolmentEvaluationState.NORMAL));
+			enrolmentEvaluation.setEnrolmentEvaluationState(new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL));
 	
 			return enrolmentEvaluation;
 		} catch (ExcepcaoPersistencia ex) {
@@ -429,7 +429,7 @@ public class EnrolmentEvaluationOJBTest extends TestCaseOJB {
 			assertNotNull(curricularSemester);
 			assertNotNull(curricularCourseScope);
 			assertNotNull(enrolment);
-		    EnrolmentEvaluationType evaluationType = new EnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
+		    EnrolmentEvaluationType evaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
 			IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolment,evaluationType,"14");
 			assertNotNull(enrolmentEvaluation);
 

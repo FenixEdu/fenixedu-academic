@@ -2,7 +2,7 @@ package ServidorPersistente.Conversores;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-import Util.EquivalenceType;
+import Util.EnrolmentEquivalenceType;
 
 /**
  * @author dcs-rjao
@@ -13,8 +13,8 @@ import Util.EquivalenceType;
 public class JavaEquivalenceType2SqlEquivalenceTypeFieldConversion implements FieldConversion {
 
 	public Object javaToSql(Object source) {
-		if (source instanceof EquivalenceType) {
-			EquivalenceType src = (EquivalenceType) source;
+		if (source instanceof EnrolmentEquivalenceType) {
+			EnrolmentEquivalenceType src = (EnrolmentEquivalenceType) source;
 			return src.getEquivalenceType();
 		} else {
 			return source;
@@ -24,7 +24,7 @@ public class JavaEquivalenceType2SqlEquivalenceTypeFieldConversion implements Fi
 	public Object sqlToJava(Object source) {
 		if (source instanceof Integer) {
 			Integer src = (Integer) source;
-			return new EquivalenceType(src);
+			return new EnrolmentEquivalenceType(src);
 		} else {
 			return source;
 		}

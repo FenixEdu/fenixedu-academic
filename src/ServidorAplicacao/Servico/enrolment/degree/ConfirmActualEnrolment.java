@@ -135,7 +135,6 @@ public class ConfirmActualEnrolment implements IServico {
 					enrolmentToWrite.setExecutionPeriod(executionPeriod);
 					enrolmentToWrite.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
 					enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
-					// FIXME DAVID-RICARDO: Nao ha informação sobre o University Code por isso criei esta class temporária
 					temporarilyEnrolmentsToWrite.add(enrolmentToWrite);
 				}
 			}
@@ -184,7 +183,6 @@ public class ConfirmActualEnrolment implements IServico {
 					enrolmentInOptionalCurricularCourse.setStudentCurricularPlan(studentCurricularPlan);
 					enrolmentInOptionalCurricularCourse.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 					enrolmentInOptionalCurricularCourse.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
-					// FIXME DAVID-RICARDO: Nao ha informação sobre o University Code por isso criei esta class temporária
 					persistentEnrolment.lockWrite(enrolmentInOptionalCurricularCourse);
 				} else {
 					enrolment.setCurricularCourseForOption(curricularCourseForOption);

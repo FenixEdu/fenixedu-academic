@@ -64,6 +64,42 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 		}
 	}
 
+//	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
+//
+//		try {
+//			IEnrolment enrolment = null;
+//			String oqlQuery = "select all from " + Enrolment.class.getName();
+//			oqlQuery += " where studentCurricularPlan.student.number = $1";
+//			oqlQuery += " and studentCurricularPlan.student.degreeType = $2";
+//			oqlQuery += " and studentCurricularPlan.currentState = $3";
+//			oqlQuery += " and curricularCourse.name = $4";
+//			oqlQuery += " and curricularCourse.code = $5";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $6";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.nome = $7";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.sigla = $8";
+//
+//			query.create(oqlQuery);
+//
+//			query.bind(studentCurricularPlan.getStudent().getNumber());
+//			query.bind(studentCurricularPlan.getStudent().getDegreeType());
+//			query.bind(studentCurricularPlan.getCurrentState());
+//			query.bind(curricularCourse.getName());
+//			query.bind(curricularCourse.getCode());
+//			query.bind(curricularCourse.getDegreeCurricularPlan().getName());
+//			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getNome());
+//			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
+//
+//			List result = (List) query.execute();
+//			lockRead(result);
+//
+//			if ((result != null) && (result.size() != 0)) {
+//				enrolment = (IEnrolment) result.get(0);
+//			}
+//			return enrolment;
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
+//	}
 
 	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia {
 
@@ -233,7 +269,55 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 		return enrolments;
 	}
 
-
+//	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+//		IStudentCurricularPlan studentCurricularPlan,
+//		ICurricularCourse curricularCourse,
+//		IExecutionPeriod executionPeriod)
+//		throws ExcepcaoPersistencia {
+//		try {
+//			IEnrolment enrolment = null;
+//			String oqlQuery = "select all from " + Enrolment.class.getName();
+//			oqlQuery += " where studentCurricularPlan.student.number = $1";
+//			oqlQuery += " and studentCurricularPlan.student.degreeType = $2";
+//			oqlQuery += " and studentCurricularPlan.currentState = $3";
+//			oqlQuery += " and curricularCourse.name = $4";
+//			oqlQuery += " and curricularCourse.code = $5";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $6";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.nome = $7";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.sigla = $8";
+//			oqlQuery += " and executionPeriod.name = $9";
+//			oqlQuery += " and executionPeriod.executionYear.year = $10";
+//
+//			query.create(oqlQuery);
+//
+//			query.bind(studentCurricularPlan.getStudent().getNumber());
+//			query.bind(studentCurricularPlan.getStudent().getDegreeType());
+//			query.bind(studentCurricularPlan.getCurrentState());
+//			query.bind(curricularCourse.getName());
+//			query.bind(curricularCourse.getCode());
+//			query.bind(curricularCourse.getDegreeCurricularPlan().getName());
+//			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree()
+//					.getNome());
+//			query.bind(
+//				curricularCourse
+//					.getDegreeCurricularPlan()
+//					.getDegree()
+//					.getSigla());
+//
+//			query.bind(executionPeriod.getName());
+//			query.bind(executionPeriod.getExecutionYear().getYear());
+//
+//			List result = (List) query.execute();
+//			lockRead(result);
+//
+//			if ((result != null) && (result.size() != 0)) {
+//				enrolment = (IEnrolment) result.get(0);
+//			}
+//			return enrolment;
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
+//	}
 
 	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(
 		IStudentCurricularPlan studentCurricularPlan,

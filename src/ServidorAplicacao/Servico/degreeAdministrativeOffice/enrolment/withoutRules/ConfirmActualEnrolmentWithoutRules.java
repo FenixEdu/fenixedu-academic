@@ -135,7 +135,6 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 					enrolmentToWrite.setExecutionPeriod(executionPeriod);
 					enrolmentToWrite.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
 					enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
-					// FIXME DAVID-RICARDO: Nao ha informação sobre o University Code por isso criei esta class temporária
 					enrolmentsToWrite.add(enrolmentToWrite);
 				}
 			}
