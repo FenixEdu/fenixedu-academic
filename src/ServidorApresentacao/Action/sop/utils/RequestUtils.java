@@ -214,7 +214,7 @@ public abstract class RequestUtils {
 		return infoExecutionDegree;
 	}
 
-	public static final void setSiteToRequest(
+	public static final void setSiteFirstPageToRequest(
 		HttpServletRequest request,
 		InfoSite infoSite) {
 		if (infoSite != null) {

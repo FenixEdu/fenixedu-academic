@@ -86,7 +86,7 @@ public class ViewExecutionCourseTimeTableAction extends FenixAction {
 		request.setAttribute("exeCourse.lab", infoExecCourse.getLabHours());
 
 		RequestUtils.setExecutionCourseToRequest(request, infoExecCourse);
-		RequestUtils.setSiteToRequest(request, infoSite);
+		RequestUtils.setSiteFirstPageToRequest(request, infoSite);
 		RequestUtils.setSectionsToRequest(request, infoSite);
 		RequestUtils.setSectionToRequest(request);
 

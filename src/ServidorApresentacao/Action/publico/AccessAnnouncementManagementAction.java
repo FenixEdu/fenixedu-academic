@@ -61,7 +61,7 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 		RequestUtils.setExecutionCourseToRequest(
 			request,
 			infoSite.getInfoExecutionCourse());
-		RequestUtils.setSiteToRequest(request, infoSite);
+		RequestUtils.setSiteFirstPageToRequest(request, infoSite);
 		RequestUtils.setSectionsToRequest(request, infoSite);
 		RequestUtils.setSectionToRequest(request);
 		return mapping.findForward("Sucess");

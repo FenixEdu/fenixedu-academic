@@ -83,7 +83,7 @@ public class ViewExecutionCourseShifts extends FenixAction {
 		}
 
 		RequestUtils.setExecutionCourseToRequest(request, infoExecCourse);
-		RequestUtils.setSiteToRequest(request, infoSite);
+		RequestUtils.setSiteFirstPageToRequest(request, infoSite);
 		RequestUtils.setSectionsToRequest(request, infoSite);
 		RequestUtils.setSectionToRequest(request);
 		return mapping.findForward("Sucess");

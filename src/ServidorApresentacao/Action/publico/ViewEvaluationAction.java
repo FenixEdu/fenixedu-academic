@@ -86,7 +86,7 @@ public class ViewEvaluationAction extends FenixAction {
 				infoEvaluation.getEvaluationElements());
 		}
 		InfoSite infoSite = RequestUtils.getSiteFromRequest(request);
-		RequestUtils.setSiteToRequest(request, infoSite);
+		RequestUtils.setSiteFirstPageToRequest(request, infoSite);
 		RequestUtils.setExecutionCourseToRequest(request, infoExecutionCourse);
 		RequestUtils.setSectionsToRequest(request, infoSite);
 		RequestUtils.setSectionToRequest(request);
