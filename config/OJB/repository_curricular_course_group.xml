@@ -1,7 +1,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CurricularCourseGroup -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.CurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
+<class-descriptor class="Dominio.CurricularCourseGroup">
     <extent-class class-ref="Dominio.AreaCurricularCourseGroup"/>
     <extent-class class-ref="Dominio.OptionalCurricularCourseGroup"/>
 </class-descriptor>

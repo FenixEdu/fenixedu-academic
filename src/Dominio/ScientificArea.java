@@ -17,7 +17,7 @@ import java.util.List;
 public class ScientificArea extends DomainObject implements IScientificArea
 {
     private String name;
-    private List curricularCourseGroups;
+    private List areaCurricularCourseGroups;
 
 	public ScientificArea()
 	{
@@ -42,17 +42,17 @@ public class ScientificArea extends DomainObject implements IScientificArea
 	/**
 	 * @return Returns the curricularCourseGroups.
 	 */
-	public List getCurricularCourseGroups()
+	public List getAreaCurricularCourseGroups()
 	{
-		return curricularCourseGroups;
+		return areaCurricularCourseGroups;
 	}
 
 	/**
 	 * @param curricularCourseGroups The curricularCourseGroups to set.
 	 */
-	public void setCurricularCourseGroups(List curricularCourseGroups)
+	public void setAreaCurricularCourseGroups(List curricularCourseGroups)
 	{
-		this.curricularCourseGroups = curricularCourseGroups;
+		this.areaCurricularCourseGroups = curricularCourseGroups;
 	}
 
 	public String toString()

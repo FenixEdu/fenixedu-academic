@@ -2,12 +2,12 @@ package Dominio;
 
 import Util.AreaType;
 
-
 /**
  * @author David Santos on Jul 26, 2004
  */
 
-public class OptionalCurricularCourseGroup extends CurricularCourseGroup implements ICurricularCourseGroup {
+public class OptionalCurricularCourseGroup extends CurricularCourseGroup implements
+        ICurricularCourseGroup {
 
     public OptionalCurricularCourseGroup() {
     }

@@ -31,8 +31,8 @@ public class Branch extends DomainObject implements IBranch
 	private Integer specializationCredits;
 	private Integer secondaryCredits;
 	private BranchType branchType;
-	private List curricularCourseGroups;
-
+	private List areaCurricularCourseGroups;
+	private List optionalCurricularCourseGroups;
     
 	public Branch()
 	{
@@ -202,25 +202,37 @@ public class Branch extends DomainObject implements IBranch
 	/**
      * @return Returns the curricularCourseGroups.
      */
-    public List getCurricularCourseGroups() {
-        return curricularCourseGroups;
+    public List getAreaCurricularCourseGroups() {
+        return areaCurricularCourseGroups;
     }
     /**
      * @param curricularCourseGroups The curricularCourseGroups to set.
      */
-    public void setCurricularCourseGroups(List curricularCourseGroups) {
-        this.curricularCourseGroups = curricularCourseGroups;
+    public void setAreaCurricularCourseGroups(List curricularCourseGroups) {
+        this.areaCurricularCourseGroups = curricularCourseGroups;
     }
     /* (non-Javadoc)
      * @see Dominio.IBranch#getCurricularCourseGroups(Util.AreaType)
      */
-    public List getCurricularCourseGroups(final AreaType areaType) {
+    public List getAreaCurricularCourseGroups(final AreaType areaType) {
         
-        return (List) CollectionUtils.select(getCurricularCourseGroups(),new Predicate(){
+        return (List) CollectionUtils.select(getAreaCurricularCourseGroups(),new Predicate(){
 
             public boolean evaluate(Object arg0) {
                ICurricularCourseGroup curricularCourseGroup=(ICurricularCourseGroup) arg0;
                 return curricularCourseGroup.getAreaType().equals(areaType);
             }});
+    }
+    /**
+     * @return Returns the optionCurricularCourseGroups.
+     */
+    public List getOptionalCurricularCourseGroups() {
+        return optionalCurricularCourseGroups;
+    }
+    /**
+     * @param optionCurricularCourseGroups The optionCurricularCourseGroups to set.
+     */
+    public void setOptionalCurricularCourseGroups(List optionCurricularCourseGroups) {
+        this.optionalCurricularCourseGroups = optionCurricularCourseGroups;
     }
 }

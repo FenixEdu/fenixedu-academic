@@ -13,8 +13,8 @@ import java.util.List;
 public interface IScientificArea extends IDomainObject
 {
     public String getName();
-    public List getCurricularCourseGroups();
+    public List getAreaCurricularCourseGroups();
 
-    public void setCurricularCourseGroups(List curricularCourseGroups);
+    public void setAreaCurricularCourseGroups(List curricularCourseGroups);
     public void setName(String name);
 }

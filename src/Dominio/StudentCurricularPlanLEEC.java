@@ -111,7 +111,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements
         Iterator iterator = areas.iterator();
         while (iterator.hasNext()) {
             IBranch area = (IBranch) iterator.next();
-            List groups = area.getCurricularCourseGroups(areaType);
+            List groups = area.getAreaCurricularCourseGroups(areaType);
             Iterator iterator2 = groups.iterator();
             while (iterator2.hasNext()) {
                 ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator2
@@ -141,7 +141,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements
         List curricularCoursesFromNewSecundaryArea = new ArrayList();
 
         List groups = specializationArea
-                .getCurricularCourseGroups(AreaType.SPECIALIZATION_OBJ);
+                .getAreaCurricularCourseGroups(AreaType.SPECIALIZATION_OBJ);
 
         Iterator iterator = groups.iterator();
         while (iterator.hasNext()) {
@@ -152,7 +152,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements
         }
 
         groups = secundaryArea
-                .getCurricularCourseGroups(AreaType.SECONDARY_OBJ);
+                .getAreaCurricularCourseGroups(AreaType.SECONDARY_OBJ);
         iterator = groups.iterator();
         while (iterator.hasNext()) {
             ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator

@@ -34,7 +34,7 @@ public class ScientificAreaOJB extends ObjectFenixOJB implements IPersistentScie
     public List readAllByBranch(IBranch branch) throws ExcepcaoPersistencia
     {
     	Criteria criteria = new Criteria();
-    	criteria.addEqualTo("curricularCourseGroups.branch.idInternal", branch.getIdInternal());
+    	criteria.addEqualTo("areaCurricularCourseGroups.branch.idInternal", branch.getIdInternal());
     	return queryList(ScientificArea.class, criteria);
     }
 }

@@ -65,8 +65,14 @@
 		<inverse-foreignkey field-ref="branchKey"/>
 	</collection-descriptor>    
 	<collection-descriptor
-			name="curricularCourseGroups"
-			element-class-ref="Dominio.CurricularCourseGroup"
+			name="areaCurricularCourseGroups"
+			element-class-ref="Dominio.AreaCurricularCourseGroup"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyBranch"/>
+	</collection-descriptor>   
+    <collection-descriptor
+			name="optionalCurricularCourseGroups"
+			element-class-ref="Dominio.OptionalCurricularCourseGroup"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyBranch"/>
 	</collection-descriptor>    
