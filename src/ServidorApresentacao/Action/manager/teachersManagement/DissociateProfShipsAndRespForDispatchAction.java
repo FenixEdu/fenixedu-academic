@@ -94,7 +94,6 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
         Integer professorshipsListSize = (Integer) teacherForm.get("professorshipsListSize");
         Integer responsibleForListSize = (Integer) teacherForm.get("responsibleForListSize");
 
-        teacherForm.set("teacherNumber", null);
         List professorshipsToDelete = getInformationToDissociate(request, professorshipsListSize,
                 "professorship", "idInternal", "toDelete");
         List responsibleForsToDelete = getInformationToDissociate(request, responsibleForListSize,
@@ -146,6 +145,8 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 
             return prepareDissociateECShowProfShipsAndRespFor(mapping, form, request, response);
         }
+        // must only set this to null when we're certain of not returning to the previous form
+        teacherForm.set("teacherNumber", null);
 
         return prepareDissociateEC(mapping, form, request, response);
     }
