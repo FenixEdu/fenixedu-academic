@@ -30,14 +30,14 @@ public class Teacher extends DomainObject implements ITeacher {
 		setPerson(person);
 		setTeacherNumber(teacherNumber);
 	}
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof ITeacher) {
-			resultado =
-				getTeacherNumber().equals(((ITeacher) obj).getTeacherNumber());
-		}
-		return resultado;
-	}
+//	public boolean equals(Object obj) {
+//		boolean resultado = false;
+//		if (obj instanceof ITeacher) {
+//			resultado =
+//				getTeacherNumber().equals(((ITeacher) obj).getTeacherNumber());
+//		}
+//		return resultado;
+//	}
 	/**
 	 * @return Integer
 	 */

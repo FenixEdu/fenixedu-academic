@@ -1,8 +1,6 @@
 /*
  * Created on Jun 11, 2004
  * 
- * To change the template for this generated file go to Window - Preferences -
- * Java - Code Generation - Code and Comments
  */
 package ServidorAplicacao.Servico.publication;
 
@@ -13,6 +11,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoTeacher;
 import DataBeans.SiteView;
 import DataBeans.publication.InfoPublication;
@@ -21,8 +20,6 @@ import DataBeans.util.Cloner;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import Dominio.publication.IPublication;
-import Dominio.publication.Publication;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -35,26 +32,10 @@ import constants.publication.PublicationConstants;
 /**
  * @author TJBF & PFON
  * 
- * To change the template for this generated type comment go to Window - Preferences - Java - Code
- * Generation - Code and Comments
  */
-public class DeletePublicationInTeacherList implements IServico {
+public class DeletePublicationInTeacherList implements IService {
 
-	/**
-	 *  
-	 */
 	public DeletePublicationInTeacherList() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		// TODO Auto-generated method stub
-		return "DeletePublicationInTeacherList";
 	}
 
 	public SiteView run(Integer teacherId, Integer publicationId) throws FenixServiceException {
@@ -99,18 +80,31 @@ public class DeletePublicationInTeacherList implements IServico {
 
 		IPublication publicationToRemove = null;
 		Iterator iterator = publications.iterator();
+		int i = 0;
+		int iToRemove = -1;
 		while (iterator.hasNext()) {
 			IPublication publicationTeacher2 = (IPublication) iterator.next();
 			if (publicationTeacher2.getIdInternal().intValue() == publicationId.intValue()) {
 				contains = Boolean.TRUE;
-				publicationToRemove = (IPublication) publicationTeacher2;
+				publicationToRemove = publicationTeacher2;
+				iToRemove = i;
 			}
+			i++;
 		}
 
 		if (!contains.booleanValue()) {
 			throw new NotExistingServiceException();
 		}
 
+		int kToRemove = -1;
+		for (int k = 0; k < publicationToRemove.getPublicationTeachers().size(); k++) {
+			ITeacher teacher2 = (ITeacher) publicationToRemove.getPublicationTeachers().get(k);
+			if (teacher.getIdInternal().equals(teacher2.getIdInternal())) {
+				kToRemove = k;
+				System.out.println("k= " + k);
+			} 
+		}
+		
 //		IPublication publicationToRemove = null;
 //		iterator = publications.iterator();
 //		while (iterator.hasNext()) {
@@ -123,20 +117,28 @@ public class DeletePublicationInTeacherList implements IServico {
 //		}
 
 			//teacher.setTeacherPublications(newPublications);
-			persistentTeacher.simpleLockWrite(teacher);
+
 			persistentPublication.simpleLockWrite(publicationToRemove);
 			
 			
-			publicationToRemove.getPublicationTeachers().remove(teacher);
-			teacher.getTeacherPublications().remove(publicationToRemove);
+			System.out.println("before teacher.getTeacherPublications().size()= " + teacher.getTeacherPublications().size());
+			System.out.println("before publicationToRemove.getTeachers.size()= " + publicationToRemove.getPublicationTeachers().size());
+			publicationToRemove.getPublicationTeachers().remove(kToRemove);
+
+			
+			System.out.println("after publicationToRemove.getTeachers.size()= " + publicationToRemove.getPublicationTeachers().size());
+			
+			persistentTeacher.simpleLockWrite(teacher);
+			teacher.getTeacherPublications().remove(iToRemove);
+			System.out.println("after teacher.getTeacherPublications().size()= " + teacher.getTeacherPublications().size());
 			
 			List newPublicationsEdited = teacher.getTeacherPublications();
 			infoPublications = (List) CollectionUtils.collect(newPublicationsEdited, new Transformer() {
 				public Object transform(Object object) {
 					IPublication publication = (IPublication) object;
-					IPublication publication2 = publication;
-					publication2.setPublicationString(publication.toString());
-					return Cloner.copyIPublication2InfoPublication(publication2);
+					//IPublication publication2 = publication;
+					//publication2.setPublicationString(publication.toString());
+					return Cloner.copyIPublication2InfoPublication(publication);
 				}
 			});
 
