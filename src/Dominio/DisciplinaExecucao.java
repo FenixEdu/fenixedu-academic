@@ -75,7 +75,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
                         (getTheoreticalHours().equals(de.getTheoreticalHours())) &&
                         (getPraticalHours().equals(de.getPraticalHours())) &&
                         (getTheoPratHours().equals(de.getTheoPratHours())) &&            
-                        (getLabHours().equals(de.getLabHours())) &&
+                        (getLabHours().equals(de.getLabHours()))&&
                         (getExecutionPeriod().equals(de.getExecutionPeriod()));
         }
         return resultado;
@@ -92,7 +92,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 	  result += ", praticalHours=" + praticalHours;
 	  result += ", theoPratHours=" + theoPratHours;
 	  result += ", labHours=" + labHours;
-	  result += ", executionPeriod=" + executionPeriod;
+	  result += ", executionPeriod=" + getExecutionPeriod();
 	  result += "]";
 	  return result;
 	}    
