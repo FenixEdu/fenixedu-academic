@@ -33,13 +33,14 @@ public abstract class EditDomainObjectService implements IServico
             if (canCreate(oldDomainObject, sp))
             {
                 /**
-                 * FIXME: Edit an existing object problems. It seems that we can't upgrade lock.
-                 * @see ServidorAplicacao.Servicos.teacher.EditWeeklyOcupationTest#testEditExistingWeeklyOcupation()
-                 * Without this two lines the test above doesn't run.
-                 */
+				 * FIXME: Edit an existing object problems. It seems that we can't upgrade lock.
+				 * 
+				 * @see ServidorAplicacao.Servicos.teacher.EditWeeklyOcupationTest#testEditExistingWeeklyOcupation()
+				 *           Without this two lines the test above doesn't run.
+				 */
                 sp.confirmarTransaccao();
                 sp.iniciarTransaccao();
-                /************************************************************************************************/
+                /** ********************************************************************************************* */
                 
                 IDomainObject newDomainObject = (IDomainObject) oldDomainObject.getClass().newInstance();
                 newDomainObject.setIdInternal(oldDomainObject.getIdInternal());
@@ -73,7 +74,7 @@ public abstract class EditDomainObjectService implements IServico
 	 * @param sp
 	 * @return
 	 */
-    protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp);
+    protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia;
 
     /**
 	 * This method invokes the Cloner to convert from InfoObject to IDomainObject

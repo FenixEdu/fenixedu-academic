@@ -22,55 +22,55 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public abstract class ReadDomainObjectService implements IServico
 {
-    public SiteView run(Integer objectId) throws FenixServiceException
-    {
-        try
-        {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentObject persistentObject = getIPersistentObject(sp);
+	public SiteView run(Integer objectId) throws FenixServiceException
+	{
+		try
+		{
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentObject persistentObject = getIPersistentObject(sp);
 
-            IDomainObject domainObject =
-                persistentObject.readByOID(getDomainObjectClass(), objectId);
+			IDomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
 
-            InfoObject infoObject = clone2InfoObject(domainObject);
-            ISiteComponent bodyComponent = getISiteComponent(infoObject);
+			InfoObject infoObject = clone2InfoObject(domainObject);
+			ISiteComponent bodyComponent = getISiteComponent(infoObject);
 
-            return new SiteView(bodyComponent);
-        } catch (ExcepcaoPersistencia e)
-        {
-            throw new FenixServiceException(e);
-        } catch (Exception e)
-        {
-            throw new FenixServiceException(e);
-        }
-    }
+			return new SiteView(bodyComponent);
+		} catch (ExcepcaoPersistencia e)
+		{
+			throw new FenixServiceException(e);
+		} catch (Exception e)
+		{
+			throw new FenixServiceException(e);
+		}
+	}
 
-    /**
+	/**
 	 * This is the class in witch the broker will read and delete the DomainObject
 	 * 
 	 * @return
 	 */
-    protected abstract Class getDomainObjectClass();
+	protected abstract Class getDomainObjectClass();
 
-    /**
+	/**
 	 * @param sp
 	 * @return
 	 */
-    protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp);
+	protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
+		throws ExcepcaoPersistencia;
 
-    /**
+	/**
 	 * This method invokes the Cloner to convert from IDomainObject to InfoObject
 	 * 
 	 * @param infoObject
 	 * @return
 	 */
-    protected abstract InfoObject clone2InfoObject(IDomainObject domainObject);
+	protected abstract InfoObject clone2InfoObject(IDomainObject domainObject);
 
-    /**
+	/**
 	 * This method gets the siteComponent created from the infoObject read
 	 * 
 	 * @param infoObject
 	 * @return
 	 */
-    protected abstract ISiteComponent getISiteComponent(InfoObject infoObject);
+	protected abstract ISiteComponent getISiteComponent(InfoObject infoObject);
 }
