@@ -31,7 +31,6 @@ import ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActi
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.CurricularCourseType;
-import Util.TipoCurso;
 
 /**
  * @author David Santos
@@ -40,33 +39,29 @@ import Util.TipoCurso;
 
 public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends DispatchAction {
 
-	private final String[] forwards = { "chooseStudentAndTypeDegree", "showAvailableCurricularCourses", "verifyEnrolment", "acceptEnrolment" };
-
-	public ActionForward preStart(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List degreeTypeList = TipoCurso.toArrayList();
-		request.setAttribute(SessionConstants.DEGREE_TYPE, degreeTypeList);
-		return mapping.findForward(forwards[0]);
-	}
+	private final String[] forwards = { "showAvailableCurricularCourses", "verifyEnrolment", "acceptEnrolment" };
 
 	public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		createToken(request);
 
 		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Object args[] = { userView };
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView actor = (IUserView) session.getAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
+		Object args[] = { actor };
 
 		InfoEnrolmentContext infoEnrolmentContext = null;
 		try {
-			infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCourses", args);
+			infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCoursesWithRules", args);
 		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
 			throw new OutOfCurricularEnrolmentPeriodActionException(e.getMessageKey(), e.getStartDate(), e.getEndDate(), mapping.findForward("globalOutOfPeriod"));
 		}
 
+		session.removeAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 		initializeForm(infoEnrolmentContext, (DynaActionForm) form);
-		return mapping.findForward(forwards[1]);
+		return mapping.findForward(forwards[0]);
 	}
 
 	public ActionForward verifyEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -81,7 +76,7 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 
 		Object args[] = { infoEnrolmentContext };
 
-		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ValidateActualEnrolment", args);
+		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ValidateActualEnrolmentWithRules", args);
 		ActionForward nextForward = null;
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 		if (!infoEnrolmentContext.getEnrolmentValidationResult().isSucess()) {
@@ -107,7 +102,7 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 
 		Object args[] = { infoEnrolmentContext };
 
-		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ConfirmActualEnrolment", args);
+		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ConfirmActualEnrolmentWithRules", args);
 		if (infoEnrolmentContext.getEnrolmentValidationResult().isSucess()) {
 			return getNextForward(request, mapping);
 		} else {
@@ -142,7 +137,7 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 
 		Object args[] = { infoEnrolmentContext };
 
-		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableDegreesForOption", args);
+		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableDegreesForOptionWithRules", args);
 
 		List infoDegreeList = infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses();
 		ActionForward forward = null;
@@ -151,7 +146,7 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 
 			args[0] = infoEnrolmentContext;
 
-			infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCoursesForOption", args);
+			infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCoursesForOptionWithRules", args);
 			session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 			forward = mapping.findForward("concreteOptionalList");
 		} else {
@@ -188,7 +183,7 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 
 		System.out.println("Escolhida:" + infoCurricularCourseOptional.toString());
 
-		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "SelectOptionalCurricularCourse", args);
+		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "SelectOptionalCurricularCourseWithRules", args);
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 
 		return mapping.findForward(forwards[0]);

@@ -7,16 +7,21 @@
 
 	<!-- ========== Form Bean Definitions =================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
+		<form-bean name="setStartModeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+		</form-bean>
+
+		<form-bean name="getStudentByNumberAndDegreeTypeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+		</form-bean>
+
 		<form-bean name="curricularCourseEnrolmentWithRulesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
-			<form-property name="degreeType" type="java.lang.String"/>
-			<form-property name="studentNumber" type="java.lang.Integer"/>
-<!--
 			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
 			<form-property name="optionalCourseIndex" type="java.lang.Integer"/>
 			<form-property name="optionalCurricularCourse" type="java.lang.Integer"/>
--->
 		</form-bean>
 	</form-beans>
 
@@ -63,21 +68,39 @@
 			<forward name="Success" path="df.page.main"/>
 		</action>
 
+		<action	name="setStartModeForm"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.SetStartModeDispatchAction"
+				path="/setStartMode"
+				input="/setStartMode.do"
+				parameter="method"
+				scope="session"
+				validate="false">
+			<forward name="chooseStudentAndTypeDegree" path="df.page.chooseStudentAndTypeDegree"/>
+		</action>
+
+		<action	name="getStudentByNumberAndDegreeTypeForm"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.GetStudentByNumberAndDegreeTypeAction"
+				path="/getStudentByNumberAndDegreeType"
+				input="/getStudentByNumberAndDegreeType.do"
+				scope="session"
+				validate="true">
+			<forward name="startCurricularCourseEnrolmentWithRules" path="/curricularCourseEnrolmentWithRulesManager.do?method=start"/>
+			<!--<forward name="startCurricularCourseEnrolmentWithoutRules" path="/curricularCourseEnrolmentWithoutRulesManager.do?method=start"/>-->
+		</action>
+
 		<action	name="curricularCourseEnrolmentWithRulesForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCourseEnrolmentWithRulesManagerDispatchAction"
 				path="/curricularCourseEnrolmentWithRulesManager"
-				input="/curricularCourseEnrolmentWithRulesManager.do?method=preStart"
+				input="/curricularCourseEnrolmentWithRulesManager.do?method=start"
 				parameter="method"
 				scope="session"
-				validate="true">
+				validate="false">
 			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
 						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
 						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
 			<exception	type="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
 						key="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-
-			<forward name="chooseStudentAndTypeDegree" path="df.page.chooseStudentAndTypeDegree"/>
 
 			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCourses"/>
 			<forward name="verifyEnrolment" path="df.page.verifyEnrolment"/>
@@ -91,8 +114,9 @@
 	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions =========================== -->
+	<message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources"/>
+	<message-resources parameter="ServidorApresentacao.StudentResources"/>
 	<message-resources parameter="ServidorApresentacao.ApplicationResources"/>
-	<message-resources parameter="ServidorApresentacao.DegreeAdministrativeOffice"/>
 	<message-resources parameter="ServidorApresentacao.PortalResources" key="PORTAL_RESOURCES" null="false"/>
 
 	<!-- ========== Plug Ins Configuration ================================== -->

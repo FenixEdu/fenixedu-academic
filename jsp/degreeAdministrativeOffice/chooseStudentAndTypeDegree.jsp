@@ -6,8 +6,8 @@
 <bean:define id="degreeTypeList" name="<%= SessionConstants.DEGREE_TYPE %>"/>
 
 <center>
-<bean:message key="title.student.enrolment.with.rules"/>
-<html:form action="/curricularCourseEnrolmentWithRulesManager">
+<h2><bean:message key="title.student.enrolment.with.rules"/></h2>
+<html:form action="/getStudentByNumberAndDegreeType">
 	<%--<html:hidden property="page" value="1"/>--%>
 	<html:hidden property="method" value="start"/>
 	<table border="0">

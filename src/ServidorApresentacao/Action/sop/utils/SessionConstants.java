@@ -15,6 +15,12 @@ package ServidorApresentacao.Action.sop.utils;
  */
 public abstract class SessionConstants {
 
+	// -------------------------------------------------------------------------------
+	//    Degree Administrative Office Constants
+	// -------------------------------------------------------------------------------
+	public static final String ENROLMENT_MODE_KEY = "mode";
+	public static final String ENROLMENT_ACTOR_KEY = "actor";
+
 	//
 	// Constants for Student Enrolment...
 	//

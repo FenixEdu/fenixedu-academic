@@ -3,13 +3,13 @@
 
 <form-validation>
 	<formset>
-		<!-- Validation for curricularCourseEnrolmentWithRulesForm -->
-		<form name="curricularCourseEnrolmentWithRulesForm">
-			<field property="degreeType" depends="required" page="1">
+		<!-- Validation for getStudentByNumberAndDegreeTypeForm -->
+		<form name="getStudentByNumberAndDegreeTypeForm">
+			<field property="degreeType" depends="required,integer">
 				<arg0 key="label.choose.degree.type" resource="true"/>
 			</field>
 
-			<field property="studentNumber" depends="required,integer" page="1">
+			<field property="studentNumber" depends="required,integer">
 				<arg0 key="label.choose.student" resource="true"/>
 			</field>
 		</form>
