@@ -65,16 +65,16 @@ public abstract class ServiceTestCase extends TestCase {
 		try {
 			super.setUp();
 
-			IDatabaseConnection connection = getConnection();
-			IDataSet dataSet = getDataSet();
-
-			backUpDataBaseContents();
-
-			DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
+			//IDatabaseConnection connection = getConnection();
+//			IDataSet dataSet = getDataSet();
+//
+//			backUpDataBaseContents();
+//
+//			DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
 
 			gestor = GestorServicos.manager();
 
-			connection.close();
+			//connection.close();
 		}
 		catch (Exception ex) {
 			fail("Setup failed loading database with test data set: " + ex);
@@ -103,7 +103,7 @@ public abstract class ServiceTestCase extends TestCase {
 			Assertion.assertEquals(expectedDataSet, currentDataSet);
 		}
 		catch (Exception ex) {
-			fail("compareDataSet failed to read data set files");
+			fail("compareDataSet failed to read data set files" + ex);
 		}
 	}
 
