@@ -394,22 +394,25 @@
 	</html:submit> 
 </html:form>
 
-<hr/>
+<br/>
 
 <%-- Gerir contractos --%>
-<strong><bean:message key="label.grant.contract.manage"/>:&nbsp;</strong>
+<strong><p align='center'><bean:message key="label.grant.contract.manage"/></p></strong>
+<bean:message key="message.grant.contract.manage" />:&nbsp;
 <bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
 <html:link page='<%= "/manageGrantContract.do?method=prepareManageGrantContractForm&amp;idInternal=" +  idGrantOwner.toString() %>' > 
-	<bean:message key="label.grant.contract.edit" />
+	<bean:message key="link.manage.grant.contract" />
 </html:link>		
 	
-<hr/>
+<br/><br/>
+
 <%-- Gerir qualificações --%>
-<strong><bean:message key="label.grant.qualification.manage"/>:&nbsp;</strong>
+<strong><p align='center'><bean:message key="label.grant.qualification.manage"/></p></strong>
+<bean:message key="message.grant.qualification.manage" />:&nbsp;
 <bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
 <bean:define id="idPerson" name="infoGrantOwner" property="personInfo.idInternal"/>
 <html:link page='<%= "/manageGrantQualification.do?method=prepareManageGrantQualificationForm&amp;idInternal=" +  idGrantOwner.toString() + "&amp;idInternalPerson=" + idPerson.toString() %>' > 
-	<bean:message key="button.edit" />
+	<bean:message key="link.manage.grant.qualification" />
 </html:link>		
 
 
