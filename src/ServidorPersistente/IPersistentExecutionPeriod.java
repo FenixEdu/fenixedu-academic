@@ -1,6 +1,6 @@
 package ServidorPersistente;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -12,23 +12,13 @@ import Dominio.IExecutionYear;
  * 
  */
 public interface IPersistentExecutionPeriod extends IPersistentObject {
-	/**
-	 * 
-	 * @param name
-	 * @param executionYear
-	 * @return IExecutionPeriod
-	 * @throws ExcepcaoPersistencia
-	 */
-	public IExecutionPeriod readExecutionPeriodByNameAndExecutionYear(
-		String name,
-		IExecutionYear executionYear)
-		throws ExcepcaoPersistencia;
+
 	/**
 	 * 
 	 * @return ArrayList
 	 * @throws ExcepcaoPersistencia
 	 */
-	public ArrayList readAllExecutionPeriod() throws ExcepcaoPersistencia;
+	public List readAllExecutionPeriod() throws ExcepcaoPersistencia;
 
 	/**
 	 * 

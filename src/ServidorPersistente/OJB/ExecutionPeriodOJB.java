@@ -7,10 +7,8 @@ import java.util.List;
 import org.odmg.QueryException;
 
 import Dominio.ExecutionPeriod;
-import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.ITurma;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 
@@ -30,35 +28,11 @@ public class ExecutionPeriodOJB
 	public ExecutionPeriodOJB() {
 		super();
 	}
-	/**
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#readExecutionPeriodByNameAndExecutionYear(java.lang.String, Dominio.IExecutionYear)
-	 */
-	public IExecutionPeriod readExecutionPeriodByNameAndExecutionYear(
-		String name,
-		IExecutionYear executionYear)
-		throws ExcepcaoPersistencia {
-		try {
 
-			IExecutionPeriod executionPeriod = null;
-			String oqlQuery =
-				"select all from " + ExecutionPeriod.class.getName();
-			oqlQuery += " where name = $1 and executionYear.year= $2 ";
-			query.create(oqlQuery);
-			query.bind(name);
-			query.bind(executionYear.getYear());
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0)
-				executionPeriod = (IExecutionPeriod) result.get(0);
-			return executionPeriod;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
 	/**
 	 * @see ServidorPersistente.IPersistentExecutionPeriod#readAllExecutionPeriod()
 	 */
-	public ArrayList readAllExecutionPeriod() throws ExcepcaoPersistencia {
+	public List readAllExecutionPeriod() throws ExcepcaoPersistencia {
 		try {
 
 			IExecutionPeriod executionPeriod = null;
@@ -70,7 +44,7 @@ public class ExecutionPeriodOJB
 			List result = (List) query.execute();
 			lockRead(result);
 
-			return (ArrayList) executionPeriod;
+			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
@@ -90,52 +64,19 @@ public class ExecutionPeriodOJB
 	 * @see ServidorPersistente.IPersistentExecutionPeriod#delete(Dominio.IExecutionPeriod)
 	 */
 	public boolean delete(IExecutionPeriod executionPeriod) {
-		// Read all Execution Courses and delete them 
-		List result = new ArrayList();
+		List executionCourses = new ArrayList();
+		List classes = new ArrayList();
 		try {
-			result =
-				SuportePersistenteOJB
-					.getInstance()
-					.getIDisciplinaExecucaoPersistente()
-					.readByExecutionPeriod(executionPeriod);
-			Iterator iterator = result.iterator();
-			while (iterator.hasNext()) {
-				SuportePersistenteOJB
-					.getInstance()
-					.getIDisciplinaExecucaoPersistente()
-					.deleteExecutionCourse(
-						(IDisciplinaExecucao) iterator.next());
-			}
+			executionCourses = SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().readByExecutionPeriod(executionPeriod);
+			classes = SuportePersistenteOJB.getInstance().getITurmaPersistente().readByExecutionPeriod(executionPeriod);
+
+			if(classes.isEmpty() && executionCourses.isEmpty())
+				super.delete(executionPeriod);
+			else return false;
+				
 		} catch (ExcepcaoPersistencia e) {
 			return false;
 		}
-
-		// Read all Classes and delete them
-
-		result = new ArrayList();
-		try {
-			result =
-				SuportePersistenteOJB
-					.getInstance()
-					.getITurmaPersistente()
-					.readByExecutionPeriod(executionPeriod);
-			Iterator iterator = result.iterator();
-			while (iterator.hasNext()) {
-				SuportePersistenteOJB
-					.getInstance()
-					.getITurmaPersistente()
-					.delete(
-					(ITurma) iterator.next());
-			}
-		} catch (ExcepcaoPersistencia e) {
-			return false;
-		}
-		try {
-			super.delete(executionPeriod);
-		} catch (ExcepcaoPersistencia e) {
-			return false;
-		}
-
 		return true;
 	}
 	/**

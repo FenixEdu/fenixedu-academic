@@ -10,7 +10,6 @@ package Dominio;
  *
  * @author  tfc130
  */
-import java.util.Calendar;
 
 public class TurnoAula implements ITurnoAula {
   protected ITurno _turno;
