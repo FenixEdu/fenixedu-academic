@@ -53,6 +53,7 @@ public class ReadExamsByDayAndBeginning implements IServico {
       List exams = sp.getIPersistentExam().readBy(day, beginning);
 	  IExam exam = null;
 	  for (int i = 0; i < exams.size(); i++) {
+	  	System.out.println("for i = " + i);
 		exam = (IExam)exams.get(i);
 		infoExams.add(Cloner.copyIExam2InfoExam(exam));
 	}

@@ -713,13 +713,20 @@
 			name="chooseDayAndShiftForm"
             type="ServidorApresentacao.Action.sop.ChooseExamDayAndShiftDispatchAction"
             parameter="method"
-            scope="session"
+            scope="request"
             validate="true"
             >
          <forward name="Show Choose Form" path="/chooseDayAndShift.jsp"/>
-         <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
+         <forward name="View Exams" path="/viewExamsDayAndShiftForm.do?method=view"/>
 	 </action>
 	
+	<action path="/viewExamsDayAndShiftForm"
+			input="/viewExamsDayAndShift.jsp"
+            type="ServidorApresentacao.Action.sop.ViewExamsByDayAndShiftDispatchAction"
+            parameter="method"
+            >
+         <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
+	 </action>
 	
       
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->

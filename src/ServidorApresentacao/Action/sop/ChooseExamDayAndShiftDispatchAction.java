@@ -9,6 +9,7 @@
 package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +42,7 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
-		ArrayList horas = Util.getHours();
+		ArrayList horas = Util.getExamShifts();
 		session.setAttribute("horas", horas);
 
 		ArrayList daysOfMonth = Util.getDaysOfMonth();
@@ -75,6 +76,17 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		Integer month = new Integer((String) chooseDayAndShiftForm.get("month"));
 		Integer year = new Integer((String) chooseDayAndShiftForm.get("year"));
 		Integer beginning = new Integer((String) chooseDayAndShiftForm.get("beginning"));
+
+		Calendar examDateAndTime = Calendar.getInstance();
+		examDateAndTime.set(Calendar.YEAR, year.intValue());
+		examDateAndTime.set(Calendar.MONTH, month.intValue());
+		examDateAndTime.set(Calendar.DAY_OF_MONTH, day.intValue());
+		examDateAndTime.set(Calendar.HOUR_OF_DAY, beginning.intValue());
+		examDateAndTime.set(Calendar.MINUTE, 0);
+		examDateAndTime.set(Calendar.SECOND, 0);
+
+		session.removeAttribute("examDateAndTime");
+		session.setAttribute("examDateAndTime", examDateAndTime);
 
 		return mapping.findForward("View Exams");
 	}

@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.sop.utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.struts.util.LabelValueBean;
@@ -210,18 +211,19 @@ public class Util {
 	public static ArrayList getMonthsOfYear() {
 		ArrayList monthsOfYearList = new ArrayList();
 
-		monthsOfYearList.add("1");
-		monthsOfYearList.add("2");
-		monthsOfYearList.add("3");
-		monthsOfYearList.add("4");
-		monthsOfYearList.add("5");
-		monthsOfYearList.add("6");
-		monthsOfYearList.add("7");
-		monthsOfYearList.add("8");
-		monthsOfYearList.add("9");
-		monthsOfYearList.add("10");
-		monthsOfYearList.add("11");
-		monthsOfYearList.add("12");
+		monthsOfYearList.add("" + Calendar.JANUARY);
+		monthsOfYearList.add("" + Calendar.FEBRUARY);
+		monthsOfYearList.add("" + Calendar.MARCH);
+		monthsOfYearList.add("" + Calendar.APRIL);
+		monthsOfYearList.add("" + Calendar.MAY);
+		monthsOfYearList.add("" + Calendar.JUNE);
+		monthsOfYearList.add("" + Calendar.JULY);
+		monthsOfYearList.add("" + Calendar.AUGUST);
+		monthsOfYearList.add("" + Calendar.OCTOBER);
+		monthsOfYearList.add("" + Calendar.SEPTEMBER);		
+		monthsOfYearList.add("" + Calendar.NOVEMBER);
+		monthsOfYearList.add("" + Calendar.DECEMBER);
+
 		return monthsOfYearList;
 	}
 
@@ -239,6 +241,19 @@ public class Util {
 		yearsList.add("2003");
 		yearsList.add("2004");
 		return yearsList;
+	}
+
+
+	/**
+	 * Method getHoras.
+	 * @return ArrayList
+	 */
+	public static ArrayList getExamShifts() {
+		ArrayList hoursList = new ArrayList();
+		hoursList.add("9");
+		hoursList.add("13");
+		hoursList.add("17");
+		return hoursList;
 	}
 
 
