@@ -45,10 +45,11 @@ public class MyProfessorships extends ControllerSupport
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        Object[] args = { userView };
+        
         List professorShipList = new ArrayList();
         try
         {
+			Object[] args = { userView };    
             professorShipList = (List) ServiceUtils.executeService(userView, "ReadProfessorships", args);
         }
         catch (FenixServiceException e)
