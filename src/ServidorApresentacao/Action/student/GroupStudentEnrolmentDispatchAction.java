@@ -49,7 +49,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
-		Object[] args1 = { null,null, studentGroupCode, userView.getUtilizador(), new Integer(1)};
+		Object[] args1 = { null, null, studentGroupCode, userView.getUtilizador(), new Integer(1)};
 		try {
 			ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
 
@@ -134,6 +134,15 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 			saveErrors(request, actionErrors);
 			return mapping.findForward("viewStudentGroupInformation");
 
+		} catch (InvalidArgumentsServiceException e) {
+			ActionErrors actionErrors1 = new ActionErrors();
+			ActionError error1 = null;
+			// Create an ACTION_ERROR 
+			error1 = new ActionError("errors.invalid.insert.groupStudentEnrolment");
+			actionErrors1.add("errors.invalid.insert.groupStudentEnrolment", error1);
+			saveErrors(request, actionErrors1);
+			return mapping.findForward("viewShiftsAndGroups");
+			
 		} catch (FenixServiceException e) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
@@ -141,8 +150,8 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 			actionErrors.add("error.noGroup", error);
 			saveErrors(request, actionErrors);
 			return mapping.findForward("viewShiftsAndGroups");
-		}
 
+		}
 		return mapping.findForward("viewStudentGroupInformation");
 
 	}

@@ -136,12 +136,23 @@ public class EditGroupProperties implements IServico {
 				IStudentGroup studentGroup = (IStudentGroup) iterGroups.next();
 				allStudents = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
 				size = new Integer(allStudents.size());
-				if (size.compareTo(maximumCapacity) > 0) {
-					if (!errors.contains(new Integer(-2)))
-						errors.add(new Integer(-2));
-				} else if (size.compareTo(minimumCapacity) < 0) {
-					if (!errors.contains(new Integer(-3)))
-						errors.add(new Integer(-3));
+				if (maximumCapacity != null) 
+				{
+
+					if (size.compareTo(maximumCapacity) > 0) 
+					{
+						if (!errors.contains(new Integer(-2)))
+							errors.add(new Integer(-2));
+					}
+				} 
+				
+				if (minimumCapacity != null) 
+				{
+					if (size.compareTo(minimumCapacity) < 0) 
+					{
+						if (!errors.contains(new Integer(-3)))
+							errors.add(new Integer(-3));
+					}
 				}
 			}
 
