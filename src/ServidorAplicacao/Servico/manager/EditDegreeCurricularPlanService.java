@@ -65,10 +65,9 @@ public class EditDegreeCurricularPlanService implements IServico {
 				errors.add(null);
 				errors.add(null);
 				
-				if(newName.compareToIgnoreCase(oldDegreeCP.getName())==0)
-					errors = null;
-				else
-				{			
+//				if(newName.compareToIgnoreCase(oldDegreeCP.getName())==0)
+//					errors = null;
+//				else
 					int modified = 0; 
 				
 					Iterator iter = degreeCurricularPlans.iterator();
@@ -84,12 +83,10 @@ public class EditDegreeCurricularPlanService implements IServico {
 					if(modified == 0) {
 						errors = null; 
 					
-						persistentDegree.simpleLockWrite(oldDegreeCP);
+					
 
-						oldDegreeCP.setName(newName);
-					
+					oldDegreeCP.setName(newName);
 					oldDegreeCP.setDegree(degree);
-					
 					oldDegreeCP.setState(newInfoDegreeCP.getState());
 					oldDegreeCP.setInitialDate(newInfoDegreeCP.getInitialDate());
 					oldDegreeCP.setEndDate(newInfoDegreeCP.getEndDate());
@@ -98,11 +95,12 @@ public class EditDegreeCurricularPlanService implements IServico {
 					oldDegreeCP.setNeededCredits(newInfoDegreeCP.getNeededCredits());
 					oldDegreeCP.setMarkType(newInfoDegreeCP.getMarkType());
 					oldDegreeCP.setNumerusClausus(newInfoDegreeCP.getNumerusClausus());
-					System.out.println("TA NO SERVICO INSERT DEGREE CURRICULAR PLAN!!!DEPOIS DOS SETS");
-	
+					
 					persistentDegreeCurricularPlan.simpleLockWrite(oldDegreeCP);
+					System.out.println("TA NO SERVICO INSERT DEGREE CURRICULAR PLAN!!!DEPOIS DOS SETS");
+
 				}
-							}
+							
 				return errors;
 			
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {

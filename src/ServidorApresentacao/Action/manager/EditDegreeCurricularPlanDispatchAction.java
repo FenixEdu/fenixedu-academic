@@ -190,7 +190,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 		}
 
 //		Calendar endDate = null;
-		if(initialDateString.compareTo("") != 0){
+		if(endDateString.compareTo("") != 0){
 				String[] endDateTokens = endDateString.split("/");
 
 						Calendar endDate = Calendar.getInstance();
