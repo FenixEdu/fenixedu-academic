@@ -29,54 +29,62 @@ public class testUpdateStudents
 	{
 
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		persistentSuport.iniciarTransaccao();
+		
 		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
 
-		IDistributedTest distributedTest = new DistributedTest(new Integer(1));
-		distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(distributedTest, false);
-		if (distributedTest == null)
-			throw new InvalidArgumentsServiceException();
-		System.out.println("Reading test questions...");
-		List studentsTestQuestionList = (List) persistentStudentTestQuestion.readByDistributedTest(distributedTest);
-		System.out.println("I've got que test questions...");
-		Iterator studentsTestQuestionIt = studentsTestQuestionList.iterator();
-
-		ParseQuestion parse = new ParseQuestion();
-		System.out.println(studentsTestQuestionList.size() + " questions...");
-		persistentSuport.confirmarTransaccao();
-		while (studentsTestQuestionIt.hasNext())
+		Integer[] tests = { new Integer(2), new Integer(3), new Integer(23), new Integer(24), new Integer(25), new Integer(26), new Integer(27)};
+		for (int i = 0; i < tests.length; i++)
 		{
-
-			IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) studentsTestQuestionIt.next();
-			InfoStudentTestQuestion infoStudentTestQuestion = Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
-			try
-			{
-				infoStudentTestQuestion.setQuestion(
-					parse.parseQuestion(infoStudentTestQuestion.getQuestion().getXmlFile(), infoStudentTestQuestion.getQuestion()));
-				infoStudentTestQuestion = parse.getOptionsShuffle(infoStudentTestQuestion);
-			} catch (Exception e)
-			{
-				throw new FenixServiceException(e);
-			}
-
-			if (infoStudentTestQuestion.getResponse().intValue() != 0)
-			{
-				persistentSuport.iniciarTransaccao();
-				persistentStudentTestQuestion.lockWrite(studentTestQuestion);
-				if (infoStudentTestQuestion.getQuestion().getCorrectResponse().contains(studentTestQuestion.getResponse()))
-				{
-					studentTestQuestion.setTestQuestionMark(new Double(studentTestQuestion.getTestQuestionValue().doubleValue()));
-				} else
-				{
-					studentTestQuestion.setTestQuestionMark(
-						new Double(
-							- (
-								infoStudentTestQuestion.getTestQuestionValue().intValue()
-									* (java.lang.Math.pow(infoStudentTestQuestion.getQuestion().getOptionNumber().intValue() - 1, -1)))));
-				}
-				persistentSuport.confirmarTransaccao();
-			}
 			
+			persistentSuport.iniciarTransaccao();
+			Integer test = tests[i];
+			System.out.println("Test "+ test + "...");
+			IDistributedTest distributedTest = new DistributedTest(test);
+			distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(distributedTest, false);
+			if (distributedTest == null)
+				throw new InvalidArgumentsServiceException();
+			System.out.println("Reading test questions...");
+			List studentsTestQuestionList = (List) persistentStudentTestQuestion.readByDistributedTest(distributedTest);
+			System.out.println("I've got que test questions...");
+			Iterator studentsTestQuestionIt = studentsTestQuestionList.iterator();
+
+			ParseQuestion parse = new ParseQuestion();
+			System.out.println(studentsTestQuestionList.size() + " questions...");
+			persistentSuport.confirmarTransaccao();
+			while (studentsTestQuestionIt.hasNext())
+			{
+
+				IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) studentsTestQuestionIt.next();
+				InfoStudentTestQuestion infoStudentTestQuestion = Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
+				try
+				{
+					infoStudentTestQuestion.setQuestion(
+						parse.parseQuestion(infoStudentTestQuestion.getQuestion().getXmlFile(), infoStudentTestQuestion.getQuestion()));
+					infoStudentTestQuestion = parse.getOptionsShuffle(infoStudentTestQuestion);
+				} catch (Exception e)
+				{
+					throw new FenixServiceException(e);
+				}
+
+				if (infoStudentTestQuestion.getResponse().intValue() != 0)
+				{
+					persistentSuport.iniciarTransaccao();
+					persistentStudentTestQuestion.lockWrite(studentTestQuestion);
+					if (infoStudentTestQuestion.getQuestion().getCorrectResponse().contains(studentTestQuestion.getResponse()))
+					{
+						studentTestQuestion.setTestQuestionMark(new Double(studentTestQuestion.getTestQuestionValue().doubleValue()));
+					} else
+					{
+						studentTestQuestion.setTestQuestionMark(
+							new Double(
+								- (
+									infoStudentTestQuestion.getTestQuestionValue().intValue()
+										* (java.lang.Math.pow(infoStudentTestQuestion.getQuestion().getOptionNumber().intValue() - 1, -1)))));
+					}
+					persistentSuport.confirmarTransaccao();
+				}
+
+			}
 		}
 
 	}
