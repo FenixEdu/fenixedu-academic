@@ -10,7 +10,7 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
 		<form-bean name="itemForm"
-			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="title" type="java.lang.String"/>
 			<form-property name="mainEntryText" type="java.lang.String"/>
 			<form-property name="excerpt" type="java.lang.String"/>
