@@ -8,7 +8,6 @@
 <%@ page import="DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
 <%@ page import="DataBeans.InfoLesson"%>
 <%@ page import="java.util.Calendar" %>
-
 <logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 <table align="center"  cellpadding='0' cellspacing='0'>
 			<tr align="center">
@@ -18,10 +17,9 @@
 			</tr>
 		</table>
 </logic:notPresent>
-
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 	<logic:present name="publico.infoCurricularCourses" scope="session">
-			<table  cellpadding="2" width="90%">
+			<table align="center" cellpadding="2" width="90%">
 			<logic:iterate id="curricularCourse" name="publico.infoCurricularCourses" scope="session">
 				<tr class="timeTable_line" >
 					<td class="degreetablestd">
@@ -33,10 +31,9 @@
 			</table>	
 			<br/>	
 			<br/>		
-	</logic:present>
-			
+	</logic:present>	
  	<logic:present name="<%= SessionConstants.INFO_SITE %>" property="initialStatement">
-	<table cellspacing="0" width="90%">
+	<table align="center" cellspacing="0" width="90%">
         <tr>
           <td class="citation">
             <p>&quot;<bean:write name="<%= SessionConstants.INFO_SITE %>" property="initialStatement" />&quot;</p>
@@ -46,47 +43,36 @@
       <br/>
       <br/>
 	</logic:present>	
-		
  <logic:present name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" scope="session">		
         <table id="anuncios" align="center" cellspacing="0" width="90%">
-          <tr>
-            <td  class="ultAnuncioAviso"> 
-            <img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_warning.gif"  />
-            	<bean:message key="message.lastWeekAnnouncements"/> 
-             </td>
-             <td  class="ultAnuncioAviso">
-             </td>
-            
-           
-           </tr>
-          
-           <tr>
-           	<td >
-           		<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_anuncio.gif"  />
-           		<html:link  page="/accessAnnouncements.do">
-            <bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="title"/>
-            	</html:link>	
-           	</td>
-           	<td align="center">	
-           		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="information"/>
-           </td>
+          	<tr>
+            	<td  class="ultAnuncioAviso"> 
+            		<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_warning.gif"  />
+            		<bean:message key="message.lastWeekAnnouncements"/> 
+             	</td>      
            </tr>
            <tr>
-          
-           	<td align="right"><bean:message key="message.createdOn"/>
-           		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="creationDate"/>
-           		<br/>		
-           		<bean:message key="message.modifiedOn"/>
-           		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="lastModifiedDate"/></td>
-                </tr>
-                     
+           		<td class="ultAnuncio">
+           			<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_anuncio.gif"  />
+           			<html:link  page="/accessAnnouncements.do">
+            		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="title"/>
+            		</html:link>	
+           		</td>
+           </tr>
+           <tr>
+           		<td class="ultAnuncio-date"><bean:message key="message.createdOn"/>
+           			<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="creationDate"/>
+           			<br/>		
+           			<bean:message key="message.modifiedOn"/>
+           			<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="lastModifiedDate"/></td>
+           </tr>           
         </table>
-        <br/>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-    </logic:present>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+  </logic:present>
      <logic:present name="<%=SessionConstants.INFO_SITE%>" property="alternativeSite">	
      	<h2><bean:message key="message.siteAddress" /></h2>
 	<bean:define id="alternativeSite" name="<%=SessionConstants.INFO_SITE%>" property="alternativeSite"/>
@@ -99,9 +85,7 @@
      <logic:present name="<%= SessionConstants.INFO_SITE %>" property="introduction">
 	<h2><bean:message key="message.introduction" /></h2>
       <p><bean:write name="<%= SessionConstants.INFO_SITE %>" property="introduction" filter="false" /></p>
-        	
       <br/>
       <br/>
 	</logic:present>	
-
 </logic:present>		
