@@ -27,30 +27,34 @@ public class DeleteSection implements IServico {
 	private DeleteSection() {
 	}
 	public final String getNome() {
-		return "gesdis.teacher.DeleteSection";
+		return "DeleteSection";
 	}
 
 public Boolean run(InfoSection infoSection) throws FenixServiceException {
 
 		try {
-			
-			
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
-			ISection superiorSection = Cloner.copyInfoSection2ISection(infoSection.getSuperiorInfoSection());
+
+			/* we may only delete non-initial sections */
+			ISite completeSite = sp.getIPersistentSite().readByExecutionCourse(site.getExecutionCourse());
+			InfoSection initialSection = Cloner.copyISection2InfoSection(completeSite.getInitialSection());
+			if (initialSection.equals(infoSection)){
+				throw new FenixServiceException("Initial Section");
+			}
+			
+			ISection superiorSection = null;
+			if (infoSection.getSuperiorInfoSection()!=null) {
+				superiorSection = Cloner.copyInfoSection2ISection(infoSection.getSuperiorInfoSection());
+			}
 			String name = infoSection.getName();
 			
 			IPersistentSection persistentSection = sp.getIPersistentSection();
 			
-			ISection deletedSection =
-				persistentSection.readBySiteAndSectionAndName(
-				  site,
-				  superiorSection,
-				  name);
+			ISection deletedSection = persistentSection.readBySiteAndSectionAndName(site, superiorSection, name);
 			
 			Integer deletedSectionOrder = deletedSection.getSectionOrder();
-			
 			
 			if (deletedSection == null) throw new FenixServiceException("non existing section");
 			

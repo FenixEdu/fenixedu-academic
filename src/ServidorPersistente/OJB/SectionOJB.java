@@ -144,10 +144,10 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 			IItem item = null;
 			ItemOJB itemOJB = new ItemOJB();
 			String oqlQuery = "select all from " + Item.class.getName();
-			oqlQuery
-			+= " where section.nome = $1 and section.site.disciplinaExecucao.sigla = $2 "
-			+ "and  section.site.disciplinaExecucao.executionPeriod.name = $3  "
-			+ "and  section.disciplinaExecucao.executionPeriod.executionYear.year = $4  ";
+			oqlQuery += " where section.name = $1 and section.site.executionCourse.sigla = $2 "
+				+ "and  section.site.executionCourse.executionPeriod.name = $3  "
+				+ "and  section.site.executionCourse.executionPeriod.executionYear.year = $4  ";
+
 			query.create(oqlQuery);
 			query.bind(section.getName());
 			query.bind(section.getSite().getExecutionCourse().getSigla());
