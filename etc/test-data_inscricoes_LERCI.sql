@@ -1,27 +1,50 @@
--- ------------------------------------------------------------------------------------------------------------------
--- DADOS ESPECIFICOS LERCI:
--- ------------------------------------------------------------------------------------------------------------------
+-- -----------------------------
+-- Data for table 'CURRICULAR_YEAR'
+-- (ID_INTERNAL, YEAR)
+-- -----------------------------
+delete from CURRICULAR_YEAR;
+insert into CURRICULAR_YEAR values (1, 1);
+insert into CURRICULAR_YEAR values (2, 2);
+insert into CURRICULAR_YEAR values (3, 3);
+insert into CURRICULAR_YEAR values (4, 4);
+insert into CURRICULAR_YEAR values (5, 5);
+
+-- -----------------------------
+-- Data for table 'CURRICULAR_SEMESTER'
+-- (ID_INTERNAL, KEY_CURRICULAR_YEAR, SEMESTER)
+-- -----------------------------
+delete from CURRICULAR_SEMESTER;
+insert into CURRICULAR_SEMESTER values (1, 1, 1);
+insert into CURRICULAR_SEMESTER values (2, 1, 2);
+insert into CURRICULAR_SEMESTER values (3, 2, 1);
+insert into CURRICULAR_SEMESTER values (4, 2, 2);
+insert into CURRICULAR_SEMESTER values (5, 3, 1);
+insert into CURRICULAR_SEMESTER values (6, 3, 2);
+insert into CURRICULAR_SEMESTER values (7, 4, 1);
+insert into CURRICULAR_SEMESTER values (8, 4, 2);
+insert into CURRICULAR_SEMESTER values (9, 5, 1);
+insert into CURRICULAR_SEMESTER values (10, 5, 2);
 
 -- -----------------------------
 -- Data for table 'DEPARTMENT'
--- -----------------------------
 -- (ID_INTERNAL, NAME, CODE)
+-- -----------------------------
 delete from DEPARTMENT;
 insert into DEPARTMENT values (1, 'Departamento de Engenharia Informática', 'DEI');
 
 -- -----------------------------
 -- Data for table 'DEPARTMENT_COURSE'
--- -----------------------------
 -- NOTAS:
 -- FALTA COLOCAR A INFORMAÇÃO DAS DISCIPLINAS DEPARTAMENTAIS CORESPONDENTES ÁS DISCIPLINAS CURRICULARES ABAIXO.
 -- (ID_INTERNAL, CODE, NAME, KEY_DEPARTMENT)
+-- -----------------------------
 delete from DEPARTMENT_COURSE;
 insert into DEPARTMENT_COURSE values (1, 'Disciplina Departamento', 'DD', 1);
 
 -- -----------------------------
 -- Data for table 'BRANCH'
--- -----------------------------
 -- (ID_INTERNAL, BRANCH_CODE, BRANCH_NAME)
+-- -----------------------------
 delete from BRANCH;
 insert into BRANCH values (1, '', '');
 insert into BRANCH values (2, 'AAGR', 'ÁREA DE ARQUITECTURA E GESTÃO DE REDES');
@@ -29,42 +52,37 @@ insert into BRANCH values (3, 'AAS', 'ÁREA DE APLICAÇÕES E SERVIÇOS');
 
 -- -----------------------------
 -- Data for table 'DEGREE'
--- -----------------------------
 -- (ID_INTERNAL, CODE, NAME, TYPE_DEGREE)
+-- -----------------------------
 delete from DEGREE;
 insert into DEGREE values (1, 'LERCI', 'Licenciatura em Engenharia de Redes de Comunicação e de Informação', 1);
-insert into DEGREE values (1, 'LARQ', 'Licenciatura em Arquitectura', 1);
-insert into DEGREE values (2, 'LERCI', 'Licenciatura em Engenharia de Redes de Comunicação e de Informação', 1);
 
 -- -----------------------------
 -- Data for table 'DEGREE_CURRICULAR_PLAN'
--- -----------------------------
 -- NOTAS:
 -- VERIFICAR OS VALORES DAS DATAS PARA OS CAMPOS 'INITIAL_YEAR' E 'END_YEAR'.
 -- (ID_INTERNAL, NAME, KEY_DEGREE, STATE, INITIAL_DATE, END_DATE)
+-- -----------------------------
 delete from DEGREE_CURRICULAR_PLAN;
 insert into DEGREE_CURRICULAR_PLAN values (1, 'LERCI-2003', 1, 1, '0000-00-00', '0000-00-00');
-insert into DEGREE_CURRICULAR_PLAN values (2, 'LARQ-2003', 2, 1, '0000-00-00', '0000-00-00');
-insert into DEGREE_CURRICULAR_PLAN values (3, 'LEQ-2003', 3, 1, '0000-00-00', '0000-00-00');
 
 -- -----------------------------
 -- Data for table 'STUDENT_CURRICULAR_PLAN'
--- -----------------------------
 -- NOTAS:
 -- VERIFICAR O VALOR DA DATA PARA O CAMPO 'START_DATE'.
 -- VERIFICAR O VALOR DA CHAVE PARA ALUNO.
 -- (ID_INTERNAL, KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE, START_DATE, KEY_BRANCH)
+-- -----------------------------
 delete from STUDENT_CURRICULAR_PLAN;
 insert into STUDENT_CURRICULAR_PLAN values (1, 6, 1, 1, '0000-00-00', 2);
 
-
 -- -----------------------------
 -- Data for table 'CURRICULAR_COURSE'
--- -----------------------------
 -- NOTAS:
 -- VERIFICAR O VALOR DA CHAVE PARA DICIPLINA DEPARTAMENTO.
 -- VERIFICAR O VALOR DOS CAMPOS 'CREDITS' E 'CODE' PARA AS DISCIPLINAS DO SEGUNDO ANO PARA A FRENTE.
 -- (ID_INTERNAL, KEY_DEPARTMENT_COURSE, KEY_DEGREE_CURRICULAR_PLAN, CREDITS, THEORETICAL_HOURS, PRATICAL_HOURS, THEO_PRAT_HOURS, LAB_HOURS, NAME, CODE, TYPE)
+-- -----------------------------
 
 -- PRIMEIRO ANO, PRIMEIRO SEMESTRE:
 delete from CURRICULAR_COURSE;
@@ -136,8 +154,8 @@ insert into CURRICULAR_COURSE values (55, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO 
 
 -- -----------------------------
 -- Data for table 'CURRICULAR_COURSE_SCOPE'
--- -----------------------------
 -- (ID_INTERNAL, KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH)
+-- -----------------------------
 delete from CURRICULAR_COURSE_SCOPE;
 insert into CURRICULAR_COURSE_SCOPE  values (1, 1, 1, 1, 0.0, 0.0, 0.0, 0.0, 0);
 insert into CURRICULAR_COURSE_SCOPE  values (2, 1, 2, 1, 0.0, 0.0, 0.0, 0.0, 2);
@@ -218,8 +236,8 @@ insert into CURRICULAR_COURSE_SCOPE  values (74, 10, 53, 1, 0.0, 0.0, 0.0, 0.0, 
 
 -- -----------------------------
 -- Data for table 'ENROLMENT'
--- -----------------------------
 -- (ID_INTERNAL, KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD, STATE)
+-- -----------------------------
 delete from ENROLMENT;
 insert into ENROLMENT values (1, 1, 1, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (2, 1, 2, 1, 1, 'Dominio.Enrolment', null);
@@ -273,56 +291,55 @@ insert into ENROLMENT values (37, 1, 45, 1, 1, 'Dominio.Enrolment', null);
 -- insert into ENROLMENT values (41, 1, 54, 1, 1, 'Dominio.Enrolment', null);
 -- insert into ENROLMENT values (42, 1, 55, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 39);
 
-
 -- -----------------------------
 -- Data for table 'PRECEDENCE'
--- -----------------------------
 -- (ID_INTERNAL, KEY_CURRICULAR_COURSE, ENROLMENT_STEP)
+-- -----------------------------
 delete from PRECEDENCE;
-insert into PRECEDENCE values (1, 29, 'SP');
-insert into PRECEDENCE values (2, 8, 'SP');
-insert into PRECEDENCE values (3, 11, 'SP');
-insert into PRECEDENCE values (4, 16, 'SP');
-insert into PRECEDENCE values (5, 17, 'SP');
-insert into PRECEDENCE values (6, 21, 'SP');
-insert into PRECEDENCE values (7, 27, 'SP');
-insert into PRECEDENCE values (8, 19, 'SP');
-insert into PRECEDENCE values (9, 22, 'SP');
-insert into PRECEDENCE values (10, 38, 'SP');
-insert into PRECEDENCE values (11, 44, 'SP');
-insert into PRECEDENCE values (12, 35, 'SP');
-insert into PRECEDENCE values (13, 45, 'SP');
-insert into PRECEDENCE values (14, 15, 'SP');
-insert into PRECEDENCE values (15, 24, 'SP');
-insert into PRECEDENCE values (16, 30, 'SP');
-insert into PRECEDENCE values (17, 42, 'SP');
-insert into PRECEDENCE values (18, 43, 'SP');
-insert into PRECEDENCE values (19, 7, 'SP');
-insert into PRECEDENCE values (20, 13, 'SP');
-insert into PRECEDENCE values (21, 28, 'SP');
-insert into PRECEDENCE values (22, 23, 'SP');
-insert into PRECEDENCE values (23, 37, 'SP');
-insert into PRECEDENCE values (24, 20, 'SP');
-insert into PRECEDENCE values (25, 26, 'SP');
-insert into PRECEDENCE values (26, 6, 'SP');
-insert into PRECEDENCE values (27, 14, 'SP');
-insert into PRECEDENCE values (28, 18, 'SP');
-insert into PRECEDENCE values (29, 25, 'SP');
-insert into PRECEDENCE values (30, 34, 'SP');
-insert into PRECEDENCE values (31, 32, 'SP');
-insert into PRECEDENCE values (32, 31, 'SP');
-insert into PRECEDENCE values (33, 33, 'SP');
-insert into PRECEDENCE values (34, 39, 'SP');
-insert into PRECEDENCE values (35, 40, 'SP');
-insert into PRECEDENCE values (36, 41, 'SP');
-insert into PRECEDENCE values (37, 48, 'SP');
-insert into PRECEDENCE values (38, 46, 'SP');
-insert into PRECEDENCE values (39, 47, 'SP');
+insert into PRECEDENCE values (1, 29, 'offline');
+insert into PRECEDENCE values (2, 8, 'offline');
+insert into PRECEDENCE values (3, 11, 'offline');
+insert into PRECEDENCE values (4, 16, 'offline');
+insert into PRECEDENCE values (5, 17, 'offline');
+insert into PRECEDENCE values (6, 21, 'offline');
+insert into PRECEDENCE values (7, 27, 'offline');
+insert into PRECEDENCE values (8, 19, 'offline');
+insert into PRECEDENCE values (9, 22, 'offline');
+insert into PRECEDENCE values (10, 38, 'offline');
+insert into PRECEDENCE values (11, 44, 'offline');
+insert into PRECEDENCE values (12, 35, 'offline');
+insert into PRECEDENCE values (13, 45, 'offline');
+insert into PRECEDENCE values (14, 15, 'offline');
+insert into PRECEDENCE values (15, 24, 'offline');
+insert into PRECEDENCE values (16, 30, 'offline');
+insert into PRECEDENCE values (17, 42, 'offline');
+insert into PRECEDENCE values (18, 43, 'offline');
+insert into PRECEDENCE values (19, 7, 'offline');
+insert into PRECEDENCE values (20, 13, 'offline');
+insert into PRECEDENCE values (21, 28, 'offline');
+insert into PRECEDENCE values (22, 23, 'offline');
+insert into PRECEDENCE values (23, 37, 'offline');
+insert into PRECEDENCE values (24, 20, 'offline');
+insert into PRECEDENCE values (25, 26, 'offline');
+insert into PRECEDENCE values (26, 6, 'offline');
+insert into PRECEDENCE values (27, 14, 'offline');
+insert into PRECEDENCE values (28, 18, 'offline');
+insert into PRECEDENCE values (29, 25, 'offline');
+insert into PRECEDENCE values (30, 34, 'offline');
+insert into PRECEDENCE values (31, 32, 'offline');
+insert into PRECEDENCE values (32, 31, 'offline');
+insert into PRECEDENCE values (33, 33, 'offline');
+insert into PRECEDENCE values (34, 39, 'offline');
+insert into PRECEDENCE values (35, 40, 'offline');
+insert into PRECEDENCE values (36, 41, 'offline');
+insert into PRECEDENCE values (37, 48, 'offline');
+insert into PRECEDENCE values (38, 46, 'offline');
+insert into PRECEDENCE values (39, 47, 'offline');
 
 -- -----------------------------
 -- Data for table 'RESTRICTION'
--- -----------------------------
 -- (ID_INTERNAL, CLASS_NAME, KEY_PRECEDENCE, KEY_CURRICULAR_COURSE, NUMBER_OF_CURRICULAR_COURSE_DONE)
+-- -----------------------------
 delete from RESTRICTION;
 insert into RESTRICTION values (1, 'Dominio.CurricularCourseDoneRestriction', 1, 12, 0);
 insert into RESTRICTION values (2, 'Dominio.CurricularCourseDoneRestriction', 1, 11, 0);
@@ -378,55 +395,26 @@ insert into RESTRICTION values (51, 'Dominio.CurricularCourseDoneRestriction', 3
 
 -- -----------------------------
 -- Data for table 'DEGREE_ENROLMENT_INFO'
--- -----------------------------
 -- (ID_INTERNAL, KEY_DEGREE_CURRICULAR_PLAN, DEGREE_DURATION, MINIMAL_YEAR_FOR_OPTIONAL_COURSES) 
+-- -----------------------------
 delete from DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO;
 insert into DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO values (1, 1, 5, 3);
 
 -- -----------------------------
 -- Data for table 'STUDENT_GROUP_INFO'
--- -----------------------------
 -- (ID_INTERNAL, STUDENT_TYPE, MIN_COURSES_TO_ENROL, MAX_COURSES_TO_ENROL, MAX_NAC_TO_ENROL) 
+-- -----------------------------
 delete from STUDENT_GROUP_INFO;
 insert into STUDENT_GROUP_INFO values (1, 1, 3, 7, 10);
-insert into STUDENT_GROUP_INFO values (2, 2, 0, 7, 10);
 
 -- -----------------------------
 -- Data for table 'ENROLMENT_PERIOD'
--- -----------------------------
 -- (ID_INTERNAL, KEY_DEGREE_CURRICULAR_PLAN, KEY_EXECUTION_PERIOD, START_DATE, END_DATE) 
+-- -----------------------------
 delete from ENROLMENT_PERIOD;
 insert into ENROLMENT_PERIOD values (1, 1, 1, SYSDATE(), '2010-01-10');
 
-
 -- Isto e para sair
--- -----------------------------
--- Data for table 'CURRICULAR_YEAR'
--- -----------------------------
--- (ID_INTERNAL, YEAR)
-delete from CURRICULAR_YEAR;
-insert into CURRICULAR_YEAR values (1, 1);
-insert into CURRICULAR_YEAR values (2, 2);
-insert into CURRICULAR_YEAR values (3, 3);
-insert into CURRICULAR_YEAR values (4, 4);
-insert into CURRICULAR_YEAR values (5, 5);
-
--- -----------------------------
--- Data for table 'CURRICULAR_SEMESTER'
--- -----------------------------
--- (ID_INTERNAL, KEY_CURRICULAR_YEAR, SEMESTER)
-delete from CURRICULAR_SEMESTER;
-insert into CURRICULAR_SEMESTER values (1, 1, 1);
-insert into CURRICULAR_SEMESTER values (2, 1, 2);
-insert into CURRICULAR_SEMESTER values (3, 2, 1);
-insert into CURRICULAR_SEMESTER values (4, 2, 2);
-insert into CURRICULAR_SEMESTER values (5, 3, 1);
-insert into CURRICULAR_SEMESTER values (6, 3, 2);
-insert into CURRICULAR_SEMESTER values (7, 4, 1);
-insert into CURRICULAR_SEMESTER values (8, 4, 2);
-insert into CURRICULAR_SEMESTER values (9, 5, 1);
-insert into CURRICULAR_SEMESTER values (10, 5, 2);
-
 delete from EXECUTION_PERIOD;
 insert into EXECUTION_PERIOD values (1, '1º Semestre', 1, 'A', 1);
 insert into EXECUTION_PERIOD values (2, '2º Semestre', 1, 'NO', 2);

@@ -32,7 +32,7 @@ public class InscTeste {
 	}
 
 	private static void autentication() {
-		String argsAutenticacao[] = { "stdnt", "pass", Autenticacao.EXTRANET};
+		String argsAutenticacao[] = {"stdnt", "pass", Autenticacao.EXTRANET};
 		try {
 			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
 		} catch (Exception ex) {
