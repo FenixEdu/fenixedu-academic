@@ -1,5 +1,6 @@
 package middleware.studentMigration;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -83,7 +84,7 @@ public class UpdateStudentEnrolments {
 			try {
 
 				sp.iniciarTransaccao();
-				sp.clearCache();
+//				sp.clearCache();
 				// Read The middleware Enrolments
 				oldStudent.setEnrolments(persistentEnrolment.readByStudentNumber(oldStudent.getNumber()));
 				UpdateStudentEnrolments.updateStudentEnrolment(oldStudent, sp);
@@ -102,7 +103,7 @@ public class UpdateStudentEnrolments {
 		System.out.println("Attends Not Found : " + attendsNotFound);
 		System.out.println("Attends Updated : " + attendsUpdated);
 		
-
+		ReportEnrolment.report(new PrintWriter(System.out));
 	}
 
 	public static void updateStudentEnrolment(MWAluno oldStudent, SuportePersistenteOJB sp) throws Exception {
@@ -206,8 +207,9 @@ public class UpdateStudentEnrolments {
 						curricularCourse = (ICurricularCourse) curricularCourses.get(0);
 					} else if (curricularCourses.size() > 1){
 						if (hasDiferentDegrees(curricularCourses)) {
-							System.out.println("Curricular Courses found outside degree curricular plan [" + mwEnrolment.getCoursecode() + "] : " + curricularCourses.size());
-							System.out.println("Enrolment Degree [" + mwEnrolment.getDegreecode() + "]");
+							ReportEnrolment.addNotFoundCurricularCourse(mwEnrolment.getCoursecode(), String.valueOf(mwEnrolment.getDegreecode().intValue()), new ArrayList());
+//							System.out.println("Curricular Courses found outside degree curricular plan [" + mwEnrolment.getCoursecode() + "] : " + curricularCourses.size());
+//							System.out.println("Enrolment Degree [" + mwEnrolment.getDegreecode() + "]");
 							curricularCoursesNotFound++;
 							enrolmentNotWritten++;
 

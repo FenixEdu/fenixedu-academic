@@ -38,8 +38,9 @@ create table mw_PESSOA(
   municipalityOfBirth varchar(250),
   districtOfBirth varchar(250),
   address varchar(250),
-  areaCode varchar(250),
+  addressAreaCode varchar(250),
   zipCode varchar(250),
+  zipAreaCode varchar(250),
   parishOfAddress varchar(250),
   municipalityOfAddress varchar(250),
   districtOfAddress varchar(250),
@@ -48,6 +49,7 @@ create table mw_PESSOA(
   email varchar(250),
   homePage varchar(250),
   contributorNumber integer(11),
+  job varchar(250),
   username varchar(250),
   password varchar(250),
   fiscalCode varchar(250),
@@ -73,12 +75,12 @@ create table mw_BRANCH(
 drop table if exists mw_AVERAGE;
 create table mw_AVERAGE(
  number integer(10) not null,
- numberOfCoursesEnrolled integer(10),
+ numberOfCoursesEnrolled integer(10) not null,
  numberOfCoursesApproved integer(10),
  sum integer(10),
- average float(10),
- primary key (number)
+ average float(10)
 )type= InnoDB;
+-- primary key (number, numberOfCoursesEnrolled)
 
 
 drop table if exists mw_ENROLMENT_temp;

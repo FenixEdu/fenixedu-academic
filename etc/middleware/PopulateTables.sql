@@ -13,7 +13,7 @@ insert into mw_DEGREE_TRANSLATION values (01,1),(02,2),(03,3),(05,5),(06,6)
 ,(07,7),(08,8),(09,9),(10,10),(19,19),(11,11),(12,12),(13,13),(14,14)
 ,(15,15),(16,16),(17,17),(18,18),(20,20),(21,21),(22,22),(23,23),(24,51);
 
--- Temporary Delete's (Student's that changed degree but the BRanch wasn't updated)
+-- Temporary Delete's (Student's that changed degree but the Branch wasn't updated)
 delete from mw_ALUNO_temp where number = 42980;
 delete from mw_ALUNO_temp where number = 51335;
 delete from mw_ALUNO_temp where number = 46896;
