@@ -97,7 +97,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 			Iterator iter = result.iterator();
 			while (iter.hasNext()) {
 				infoExecutionYear = (InfoExecutionYear) iter.next();
-				value = infoExecutionYear.getYear();
+				value = infoExecutionYear.getIdInternal().toString();
 				label = infoExecutionYear.getYear();
 				infoExecutionYearsList.add(new LabelValueBean(label, value));
 			}
@@ -130,7 +130,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 
-		InfoExecutionYear infoExecutionYear = new InfoExecutionYear(executionYearString);
+		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+		infoExecutionYear.setIdInternal(new Integer(executionYearString));
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 		
 		InfoTeacher infoTeacher = new InfoTeacher();

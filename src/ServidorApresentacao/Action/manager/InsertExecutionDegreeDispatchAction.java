@@ -88,7 +88,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 					Iterator iter = result.iterator();
 					while(iter.hasNext()) {
 						infoExecutionYear = (InfoExecutionYear) iter.next();
-						value = infoExecutionYear.getYear();
+						value = infoExecutionYear.getIdInternal().toString();
 						label = infoExecutionYear.getYear();
 						infoExecutionYearsList.add(new LabelValueBean(label, value));
 					}
@@ -114,7 +114,8 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
     	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		
-		InfoExecutionYear infoExecutionYear = new InfoExecutionYear((String) dynaForm.get("executionYear"));
+		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+		infoExecutionYear.setIdInternal(new Integer((String) dynaForm.get("executionYear")));
 		InfoTeacher infoTeacher = new InfoTeacher();
 		infoTeacher.setIdInternal(new Integer((String) dynaForm.get("coordinatorId")));
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();

@@ -8,7 +8,7 @@ import Util.PeriodState;
 /**
  * @author Nuno & Joana
  */
-public class InfoExecutionYear implements Serializable{
+public class InfoExecutionYear extends InfoObject implements Serializable{
 	private String year;
 	private PeriodState state;
 	

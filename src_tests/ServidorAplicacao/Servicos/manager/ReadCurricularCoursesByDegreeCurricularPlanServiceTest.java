@@ -27,6 +27,6 @@ public class ReadCurricularCoursesByDegreeCurricularPlanServiceTest extends Test
 	}
 		
 	protected int getNumberOfItemsToRetrieve() {
-		return 12;
+		return 13;
 	}
 }

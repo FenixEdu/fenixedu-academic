@@ -6,6 +6,7 @@ package ServidorAplicacao.Servico.manager;
 import DataBeans.InfoExecutionDegree;
 import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
+import Dominio.ExecutionYear;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
@@ -45,6 +46,8 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico {
 
 	public void run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException {
 	
+		IExecutionYear executionYear = null;
+	
 		try {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				
@@ -52,7 +55,9 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico {
 				IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal()), false);
 				
 				IPersistentExecutionYear persistentExecutionYear = persistentSuport.getIPersistentExecutionYear();
-				IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(infoExecutionDegree.getInfoExecutionYear().getYear());
+				IExecutionYear execYear = new ExecutionYear();
+				execYear.setIdInternal(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
+				executionYear = (IExecutionYear) persistentExecutionYear.readByOId(execYear, false);
 				
 				ICursoExecucaoPersistente persistentExecutionDegree = persistentSuport.getICursoExecucaoPersistente();
 				
@@ -67,7 +72,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico {
 				persistentExecutionDegree.lockWrite(executionDegree);
 	
 		} catch(ExistingPersistentException existingException) {
-			throw new ExistingServiceException("O curso em execução referente ao ano lectivo em execução " + infoExecutionDegree.getInfoExecutionYear().getYear(), existingException); 
+			throw new ExistingServiceException("O curso em execução referente ao ano lectivo em execução " + executionYear.getYear(), existingException); 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

@@ -4,9 +4,9 @@
 package ServidorAplicacao.Servico.manager;
 
 import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionYear;
 import DataBeans.InfoTeacher;
 import Dominio.CursoExecucao;
+import Dominio.ExecutionYear;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
@@ -45,7 +45,7 @@ public class EditExecutionDegree implements IServico {
 	public void run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException {
 
 		ICursoExecucaoPersistente persistentExecutionDegree = null;
-		String executionYearString = "";
+		IExecutionYear executionYear = null;
 		
 		try {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
@@ -55,11 +55,11 @@ public class EditExecutionDegree implements IServico {
 				ICursoExecucao oldExecutionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(execDegree, false);
 		
 				if(oldExecutionDegree != null) {
-					InfoExecutionYear infoExecutionYear = infoExecutionDegree.getInfoExecutionYear();
-					executionYearString = infoExecutionYear.getYear();
 
 					IPersistentExecutionYear persistentExecutionYear = persistentSuport.getIPersistentExecutionYear();
-					IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearString);
+					IExecutionYear execYear = new ExecutionYear();
+					execYear.setIdInternal(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
+					executionYear = (IExecutionYear) persistentExecutionYear.readByOId(execYear, false);
 
 					oldExecutionDegree.setExecutionYear(executionYear);
 
@@ -81,7 +81,7 @@ public class EditExecutionDegree implements IServico {
 					throw new NonExistingServiceException();
 						
 		} catch (ExistingPersistentException ex) {
-			throw new ExistingServiceException("O curso execução relativo ao ano " + executionYearString, ex);
+			throw new ExistingServiceException("O curso execução relativo ao ano " + executionYear.getYear(), ex);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		} 
