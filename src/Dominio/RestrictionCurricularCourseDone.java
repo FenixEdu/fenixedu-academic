@@ -9,7 +9,7 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 /**
  * @author jpvl
  */
-public class CurricularCourseDoneRestriction
+public class RestrictionCurricularCourseDone
 	extends Restriction
 	implements ICurricularCourseDoneRestriction {
 	private Integer keyPrecedentCurricularCourse;
@@ -17,7 +17,7 @@ public class CurricularCourseDoneRestriction
 	/**
 	 * 
 	 */
-	public CurricularCourseDoneRestriction() {
+	public RestrictionCurricularCourseDone() {
 		super();
 	}
 

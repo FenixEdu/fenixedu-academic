@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.CurricularCourse;
-import Dominio.CurricularCourseDoneRestriction;
+import Dominio.RestrictionCurricularCourseDone;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseDoneRestriction;
 import Dominio.IPrecedence;
@@ -95,7 +95,7 @@ public class PrecedenceOJBTest extends TestCaseOJB {
 		expectedPrecedence.setCurricularCourse(curricularCourse);
 		
 		
-		ICurricularCourseDoneRestriction curricularCourseDoneRestriction = new CurricularCourseDoneRestriction();
+		ICurricularCourseDoneRestriction curricularCourseDoneRestriction = new RestrictionCurricularCourseDone();
 		curricularCourseDoneRestriction.setPrecedentCurricularCourse(curricularCoursePrecedent);
 		curricularCourseDoneRestriction.setPrecedence(expectedPrecedence);
 

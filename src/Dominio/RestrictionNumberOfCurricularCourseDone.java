@@ -11,13 +11,13 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 /**
  * @author jpvl
  */
-public class NumberOfCurricularCourseDoneRestriction extends Restriction implements INumberOfCurricularCourseDoneRestriction {
+public class RestrictionNumberOfCurricularCourseDone extends Restriction implements INumberOfCurricularCourseDoneRestriction {
 	private Integer numberOfCurricularCourseDone;
 
 	/**
 	 * 
 	 */
-	public NumberOfCurricularCourseDoneRestriction() {
+	public RestrictionNumberOfCurricularCourseDone() {
 		super();
 	}
 

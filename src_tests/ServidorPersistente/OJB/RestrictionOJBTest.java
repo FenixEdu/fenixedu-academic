@@ -13,13 +13,13 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import Dominio.CurricularCourseDoneRestriction;
+import Dominio.RestrictionCurricularCourseDone;
 import Dominio.ICurricularCourse;
 import Dominio.IPrecedence;
 import Dominio.IRestriction;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
-import Dominio.NumberOfCurricularCourseDoneRestriction;
+import Dominio.RestrictionNumberOfCurricularCourseDone;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
@@ -128,7 +128,7 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 		assertEquals(1, precedence.getRestrictions().size());
 		
 		IRestriction restriction = (IRestriction) precedence.getRestrictions().get(0);
-		assertEquals(CurricularCourseDoneRestriction.class, restriction.getClass());
+		assertEquals(RestrictionCurricularCourseDone.class, restriction.getClass());
 		assertEquals("Evaluating AMII precedence!",true,restriction.evaluate(getEnrolmentContext()));
 	}
 
@@ -161,7 +161,7 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 		assertEquals(1, precedence.getRestrictions().size());
 		
 		IRestriction restriction = (IRestriction) precedence.getRestrictions().get(0);
-		assertEquals(NumberOfCurricularCourseDoneRestriction.class, restriction.getClass());
+		assertEquals(RestrictionNumberOfCurricularCourseDone.class, restriction.getClass());
 		assertEquals(false,restriction.evaluate(getEnrolmentContext()));
 	}
 	
