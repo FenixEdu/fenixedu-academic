@@ -6,13 +6,16 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
+
 <h2><bean:message key="title.chooseRoom"/></h2>
 <br/>
 	<logic:present name="publico.infoRooms" scope="session">
-	<bean:define id="exePeriod" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" property="name"/>
-	<bean:define id="exeYear" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" property="infoExecutionYear"/>	
-	<bean:define id="exeYearName" name="exeYear" property="year"/>		
+	
+			
 		<html:form action="/viewRoom.do">
+		<bean:define id="exePeriodName" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" property="name" type="java.lang.String" />
+		<bean:define id="exeYear" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" property="infoExecutionYear"/>		
+		<bean:define id="exeYearName" name="exeYear" property="year"/>			
 		<table border='0' cellpadding='10' cellspacing='0'>		
 			<logic:iterate id="infoRoom" name="publico.infoRooms" indexId="i_index">
 			<bean:define id="i" value="i_index" />
@@ -27,8 +30,8 @@
 			</logic:iterate>
 		</table>
 		<br/>
-	<%--	<html:hidden name="exePeriod" property="ePName" />
-		<html:hidden name="exeYearName" property="eYName" /> --%>
+		<html:hidden  property="ePName" value="<%= pageContext.findAttribute("exePeriodName").toString() %>" />
+		<html:hidden  property="eYName" value="<%= pageContext.findAttribute("exeYearName").toString() %>" /> 
 		<html:submit styleClass="inputbutton">
 			<bean:message key="label.choose"/>
 		</html:submit>

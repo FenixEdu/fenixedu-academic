@@ -31,8 +31,9 @@
 
 		<br/>
 		<center>
-	<%--	<html:hidden name="exePeriod" property="ePName"/>	
-		<html:hidden name="exeYearName" property="eYName"/>	--%>
+	<html:hidden  property="ePName" value="<%= pageContext.findAttribute("exePeriod").toString() %>" />
+	<html:hidden  property="eYName" value="<%= pageContext.findAttribute("exeYearName").toString() %>" /> 
+		
 		<html:submit>
 			<bean:message key="label.choose"/>
 		</html:submit>

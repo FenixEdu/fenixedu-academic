@@ -19,20 +19,20 @@
    <h3>Navega&ccedil;&atilde;o Local</h3>	
 <ul>	
 <li>
-	<html:link page="<%= "/accessAnnouncements.do" + "?executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionYear=" + pageContext.findAttribute("executionYearYear") %>">
+	<html:link page="<%= "/accessAnnouncements.do" + "?executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;ePName=" + pageContext.findAttribute("executionPeriodName") + "&amp;eYName=" + pageContext.findAttribute("executionYearYear") %>">
 		<bean:message key="link.announcements"/>
 	</html:link>
 </li>
 <li> <a href="/" onclick="houdini('seccao');return false;">Informa&ccedil;&atilde;o Curricular</a></li>
 </ul>
  <dl id="seccao" style="display: none;">
-            <dd><html:link page="<%= "/accessObjectives.do?method=acessObjectives" + "&amp;executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionYear=" + pageContext.findAttribute("executionYearYear") %>">
+            <dd><html:link page="<%= "/accessObjectives.do?method=acessObjectives" + "&amp;executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;ePName=" + pageContext.findAttribute("executionPeriodName") + "&amp;eYName=" + pageContext.findAttribute("executionYearYear") %>">
 				<bean:message key="link.objectives"/>
 				</html:link></dd>
-            <dd><html:link page="<%= "/accessProgram.do?method=acessProgram" + "&amp;executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionYear=" + pageContext.findAttribute("executionYearYear") %>">
+            <dd><html:link page="<%= "/accessProgram.do?method=acessProgram" + "&amp;executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;ePName=" + pageContext.findAttribute("executionPeriodName") + "&amp;eYName=" + pageContext.findAttribute("executionYearYear") %>">
 				<bean:message key="link.program"/>
 				</html:link></dd>
-            <dd><html:link page="<%= "/accessBibliographicReferences.do?method=viewBibliographicReference" + "&amp;executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionYear=" + pageContext.findAttribute("executionYearYear") %>">
+            <dd><html:link page="<%= "/accessBibliographicReferences.do?method=viewBibliographicReference" + "&amp;executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;ePName=" + pageContext.findAttribute("executionPeriodName") + "&amp;eYName=" + pageContext.findAttribute("executionYearYear") %>">
 				<bean:message key="link.bibliography"/>
 				</html:link></dd>
 			<dd><html:link page="/curricularCourses.do">
