@@ -1,12 +1,21 @@
 package ServidorAplicacao.Servicos.teacher;
 
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
 /**
- * @author Fernanda Quitério
+ * @author Nuno Correia
+ * @author Ricardo Rodrigues
  * 
  */
-public class EditBibliographicReferenceTest extends TestCaseDeleteAndEditServices {
+public class EditBibliographicReferenceTest extends BibliographicReferenceBelongsExecutionCourse {
+
+	String author = "Shari Pfleeger";
+	String title = "Software Engineering: Theory and Practice";
+	String reference = "Recomended bibliografy";
+	String year = "2002";
+	Boolean optional = new Boolean(false);
 
 	/**
 	 * @param testName
@@ -22,33 +31,139 @@ public class EditBibliographicReferenceTest extends TestCaseDeleteAndEditService
 		return "EditBibliographicReference";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
+	protected String getDataSetFilePath() {
+		return "etc/datasets/testEditBibliographicReferenceDataSet.xml";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args =
-			{
-				new Integer(24),
-				new Integer(1),
-				new String("title"),
-				new String("authors"),
-				new String("reference"),
-				new String("year"),
-				new Boolean(true)};
+	protected String getRecomendedExpectedDataSetFilePath() {
+		return "etc/datasets/testExpectedEditRecomendedBibliographicReferenceDataSet.xml";
+	}
+
+	protected String getOptionalExpectedDataSetFilePath() {
+		return "etc/datasets/testExpectedEditOptionalBibliographicReferenceDataSet.xml";
+	}
+
+	protected String getExpectedNewCurriculumDataSetFilePath() {
+		return "etc/datasets/testExpectedNewCurriculumBibliographicReferenceDataSet.xml";
+	}
+
+	protected String[] getAuthorizedUser() {
+
+		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	/**
-	 * This method must return 'true' if the service needs authorization to be runned and 'false' otherwise.
-	 */
-	protected boolean needsAuthorization() {
-		return true;
+	protected String[] getUnauthorizedUser() {
+
+		String[] args = { "julia", "pass", getApplication()};
+		return args;
 	}
+
+	protected String[] getNonTeacherUser() {
+
+		String[] args = { "fiado", "pass", getApplication()};
+		return args;
+	}
+
+	protected Object[] getAuthorizeArguments() {
+
+		Integer executionCourseCode = new Integer(24);
+		Integer bibliographicReferenceCode = new Integer(1);
+
+		Object[] args =
+			{
+				executionCourseCode,
+				bibliographicReferenceCode,
+				title,
+				author,
+				reference,
+				year,
+				optional };
+
+		return args;
+	}
+
+	protected Object[] getTestBibliographicReferenceSuccessfullArguments() {
+
+		Integer executionCourseCode = new Integer(24);
+		Integer bibliographicReferenceCode = new Integer(1);
+
+		Object[] args =
+			{
+				executionCourseCode,
+				bibliographicReferenceCode,
+				title,
+				author,
+				reference,
+				year,
+				optional };
+
+		return args;
+	}
+
+	protected Object[] getTestBibliographicReferenceUnsuccessfullArguments() {
+
+		Integer executionCourseCode = new Integer(24);
+		Integer bibliographicReferenceCode = new Integer(123);
+
+		Object[] args =
+			{
+				executionCourseCode,
+				bibliographicReferenceCode,
+				title,
+				author,
+				reference,
+				year,
+				optional };
+
+		return args;
+	}
+
+	protected String getApplication() {
+		return Autenticacao.EXTRANET;
+	}
+
+	public void testSuccessfullEditRecomendedBibliographicReference() {
+
+		try {
+
+			String[] args = getAuthorizedUser();
+			IUserView userView = authenticateUser(args);
+
+			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+
+			// verificar as alteracoes da bd
+			compareDataSet(getRecomendedExpectedDataSetFilePath());
+
+		} catch (FenixServiceException ex) {
+			fail("testSuccessfullEditRecomendedBibliographicReference" + ex);
+		} catch (Exception ex) {
+			fail(
+				"testSuccessfullEditRecomendedBibliographicReference error on compareDataSet" + ex);
+		}
+	}
+
+	//	public void testSuccessfullEditOptionalBibliographicReference() {
+	//
+	//		try {
+	//			author = "Shari Pfleeger";
+	//			title = "Software Engineering: Theory and Practice";
+	//			reference = "Optional bibliografy";
+	//			year = "2002";
+	//			optional = new Boolean(true);
+	//			String[] args = getAuthorizedUser();
+	//			IUserView userView = authenticateUser(args);
+	//
+	//			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+	//
+	//			// verificar as alteracoes da bd
+	//			compareDataSet(getOptionalExpectedDataSetFilePath());
+	//
+	//		} catch (FenixServiceException ex) {
+	//			fail("testSuccessfullEditOptionalBibliographicReference" + ex);
+	//		} catch (Exception ex) {
+	//			fail("testSuccessfullEditOptionalBibliographicReference error on compareDataSet" + ex);
+	//		}
+	//	}
+
 }

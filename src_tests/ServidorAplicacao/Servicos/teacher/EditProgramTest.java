@@ -1,21 +1,16 @@
 package ServidorAplicacao.Servicos.teacher;
 
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoSiteProgram;
-import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import DataBeans.InfoCurriculum;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
 /**
- * @author Fernanda Quitério
+ * @author Nuno Correia 
+ * @author Ricardo Rodrigues
  * 
  */
-public class EditProgramTest extends TestCaseDeleteAndEditServices {
+public class EditProgramTest extends ProgramBelongsExecutionCourse {
 
 	/**
 	 * @param testName
@@ -31,46 +26,153 @@ public class EditProgramTest extends TestCaseDeleteAndEditServices {
 		return "EditProgram";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
+	protected String getDataSetFilePath() {
+		return "etc/datasets/testEditProgramDataSet.xml";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		ISuportePersistente sp = null;
-		InfoExecutionCourse infoExecutionCourse = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
+	protected String getExpectedDataSetFilePath() {
+		return "etc/datasets/testExpectedEditProgramDataSet.xml";
+	}
 
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+	protected String getExpectedNewCurriculumDataSetFilePath() {
+		return "etc/datasets/testExpectedNewCurriculumProgramDataSet.xml";
+	}
 
-			sp.iniciarTransaccao();
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(new Integer(26)), false);
-			sp.confirmarTransaccao();
+	protected String[] getAuthorizedUser() {
 
-			infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("failed setting up the test data");
-			e.printStackTrace();
-		}
-		InfoSiteProgram infoSiteProgram = new InfoSiteProgram();
-		
-
-		Object[] args = { infoExecutionCourse.getIdInternal(), infoSiteProgram };
+		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	/**
-	 * This method must return 'true' if the service needs authorization to be runned and 'false' otherwise.
-	 */
-	protected boolean needsAuthorization() {
-		return true;
+	protected String[] getUnauthorizedUser() {
+
+		String[] args = { "julia", "pass", getApplication()};
+		return args;
 	}
+
+	protected String[] getNonTeacherUser() {
+
+		String[] args = { "fiado", "pass", getApplication()};
+		return args;
+	}
+
+	protected Object[] getAuthorizeArguments() {
+
+		Integer executionCourseCode = new Integer(24);
+		Integer curricularCourseCode = new Integer(14);
+
+		String programPT = "Program in Portuguese";
+		String programEN = "Program in English";
+
+		InfoCurriculum infoCurriculum = new InfoCurriculum();
+
+		infoCurriculum.setIdInternal(curricularCourseCode);
+		infoCurriculum.setProgram(programPT);
+		infoCurriculum.setProgramEn(programEN);
+
+		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
+
+		return args;
+	}
+
+	protected Object[] getTestProgramSuccessfullArguments() {
+
+		Integer executionCourseCode = new Integer(24);
+		Integer curricularCourseCode = new Integer(14);
+
+		String programPT = "Program in Portuguese";
+		String programEN = "Program in English";
+
+		InfoCurriculum infoCurriculum = new InfoCurriculum();
+
+		infoCurriculum.setIdInternal(curricularCourseCode);
+		infoCurriculum.setProgram(programPT);
+		infoCurriculum.setProgramEn(programEN);
+
+		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
+
+		return args;
+	}
+
+	protected Object[] getTestProgramUnsuccessfullArguments() {
+
+		Integer executionCourseCode = new Integer(24);
+		Integer curricularCourseCode = new Integer(123);
+
+		String programPT = "Program in Portuguese";
+		String programEN = "Program in English";
+
+		InfoCurriculum infoCurriculum = new InfoCurriculum();
+
+		infoCurriculum.setIdInternal(curricularCourseCode);
+		infoCurriculum.setProgram(programPT);
+		infoCurriculum.setProgramEn(programEN);
+
+		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
+		return args;
+	}
+
+	protected Object[] getTestProgramCurricularCourseWithNoCurriculumArguments() {
+
+		Integer executionCourseCode = new Integer(26);
+		Integer curricularCourseCode = new Integer(16);
+
+		String programPT = "Program in Portuguese";
+		String programEN = "Program in English";
+
+		InfoCurriculum infoCurriculum = new InfoCurriculum();
+
+		infoCurriculum.setIdInternal(curricularCourseCode);
+		infoCurriculum.setProgram(programPT);
+		infoCurriculum.setProgramEn(programEN);
+
+		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
+		return args;
+	}
+
+	protected String getApplication() {
+		return Autenticacao.EXTRANET;
+	}
+
+	public void testSuccessfullEditProgram() {
+
+		try {
+			String[] args = getAuthorizedUser();
+			IUserView userView = authenticateUser(args);
+
+			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+
+			// verificar as alteracoes da bd
+			compareDataSet(getExpectedDataSetFilePath());
+
+		} catch (FenixServiceException ex) {
+			fail("testSuccessfullEditProgram" + ex);
+		} catch (Exception ex) {
+			fail("testSuccessfullEditProgram error on compareDataSet" + ex);
+		}
+	}
+	
+//	public void testSuccessfullEditProgramWithNoCurriculum() {
+//
+//		System.out.println("Starting: testSuccessfullEditProgramWithNoCurriculum");
+//		try {
+//			String[] args = getAuthorizedUser();
+//			IUserView userView = authenticateUser(args);
+//
+//			gestor.executar(
+//				userView,
+//				getNameOfServiceToBeTested(),
+//				getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments());
+//
+//			// verificar as alteracoes da bd
+//			compareDataSet(getExpectedNewCurriculumDataSetFilePath());
+//
+//			System.out.println("Finished: testSuccessfullEditProgramWithNoCurriculum");
+//		} catch (FenixServiceException ex) {
+//			fail("EditProgramTest" + ex);
+//		} catch (Exception ex) {
+//			fail("EditProgramTest error on compareDataSet" + ex);
+//		}
+//	}
+
 }

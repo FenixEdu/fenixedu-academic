@@ -1,5 +1,5 @@
 /*
- * Created on 10/Out/2003
+ * Created on 15/Out/2003
  *
  */
 package ServidorAplicacao.Servicos.teacher;
@@ -8,59 +8,54 @@ import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
- * @author Nuno Correia
  * @author Ricardo Rodrigues
+ * @author Nuno Correia
  *
  */
-public abstract class EvaluationMethodBelongsExecutionCourse
-	extends ServiceNeedsAuthenticationTestCase {
+public abstract class ProgramBelongsExecutionCourse extends ServiceNeedsAuthenticationTestCase {
 
 	/**
 	 * @param name
 	 */
-	public EvaluationMethodBelongsExecutionCourse(String name) {
+	public ProgramBelongsExecutionCourse(String name) {
 		super(name);
 	}
 
-	public void testEvaluationMethodBelongsExecutionCourse() {
+	public void testProgramExecutionCourse() {
 
-		Object serviceArguments[] = getTestEvaluationMethodSuccessfullArguments();
+		Object serviceArguments[] = getTestProgramSuccessfullArguments();
 
 		Object result = null;
 
 		try {
 			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
-				"testEvaluationMethodBelongsExecutionCourse was SUCCESSFULY runned by service: "
+				"testProgramBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 
 		} catch (NotAuthorizedException ex) {
-			fail(getNameOfServiceToBeTested() + "fail testEvaluationMethodBelongsExecutionCourse");
+			fail(getNameOfServiceToBeTested() + "fail testProgramBelongsExecutionCourse");
 		} catch (Exception ex) {
-			fail(getNameOfServiceToBeTested() + "fail testEvaluationMethodBelongsExecutionCourse");
+			fail(getNameOfServiceToBeTested() + "fail testProgramBelongsExecutionCourse");
 		}
 	}
 
-	public void testEvaluationMethodNotBelongsExecutionCourse() {
+	public void testProgramNotBelongsExecutionCourse() {
 
-		Object serviceArguments[] = getTestEvaluationMethodUnsuccessfullArguments();
+		Object serviceArguments[] = getTestProgramUnsuccessfullArguments();
 
 		Object result = null;
 
 		try {
 			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
-			fail(
-				getNameOfServiceToBeTested()
-					+ "fail testEvaluationMethodNotBelongsExecutionCourse");
+			fail(getNameOfServiceToBeTested() + "fail testProgramNotBelongsExecutionCourse");
 		} catch (NotAuthorizedException ex) {
 
 			System.out.println(
-				"testEvaluationMethodNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
+				"testProgramNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 		} catch (Exception ex) {
-			fail(
-				getNameOfServiceToBeTested()
-					+ "fail testEvaluationMethodNotBelongsExecutionCourse");
+			fail(getNameOfServiceToBeTested() + "fail testProgramNotBelongsExecutionCourse");
 		}
 	}
 
@@ -99,6 +94,7 @@ public abstract class EvaluationMethodBelongsExecutionCourse
 	 */
 	protected abstract String getApplication();
 
-	protected abstract Object[] getTestEvaluationMethodSuccessfullArguments();
-	protected abstract Object[] getTestEvaluationMethodUnsuccessfullArguments();
+	protected abstract Object[] getTestProgramSuccessfullArguments();
+	protected abstract Object[] getTestProgramUnsuccessfullArguments();
+
 }
