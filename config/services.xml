@@ -5772,4 +5772,13 @@
             <chain name="StudentAuthorization"/>
         </filterChains>
     </service>
+    <service>
+    	<name>EnrollStudentInShifts</name>
+    	<description>Enrolls a student in a List of shifts</description>
+    	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.EnrollStudentInShifts</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>
