@@ -1,5 +1,5 @@
 /*
- * CriarAula.java
+ * CreateExam.java
  *
  * Created on 2003/03/28
  */
@@ -7,7 +7,6 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
- * Serviï¿½o CriarAula.
  *
  * @author Luis Cruz & Sara Ribeiro
  **/
@@ -82,10 +81,8 @@ public class EditExam implements IServico {
 			for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
 				IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
 				if (exam.getSeason().equals(infoViewOldExam.getInfoExam().getSeason())) {
-					System.out.println("Exontrámos o exam de época: " + season + ".");
 					examFromDBToBeEdited = exam;
 				} else if (exam.getSeason().equals(season)) {
-					System.out.println("Exam de época: " + season + " já existe...");
 					newSeasonAlreadyScheduled = true;
 				}
 			}
