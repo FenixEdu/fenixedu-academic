@@ -275,7 +275,11 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 		{
 			for (int i = 0; i < args.length; i++)
 			{
-				hashKey += args[i].getClass().getName();
+				if (args[i] != null) {
+					hashKey += args[i].getClass().getName();
+				} else {
+					hashKey += "null";
+				}
 				if (i + 1 < args.length)
 				{
 					hashKey += ", ";
