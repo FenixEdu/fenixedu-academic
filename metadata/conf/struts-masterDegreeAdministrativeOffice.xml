@@ -1452,18 +1452,13 @@
 <!--
 		<action	name="curricularCourseEnrolmentWithoutRulesForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCourseEnrolmentWithoutRulesManagerDispatchAction"
-				path="/curricularCourseEnrolmentWithoutRulesManager"
+				path="/seeStudentCurricularPlans"
 				parameter="method"
-				scope="session"
-				validate="false">
-			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
-						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
-			<forward name="beginTransaction" path="/curricularCourseEnrolmentWithoutRulesManager.do?method=error"/>
+				scope="request"
+				validate="true">
 			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCoursesWithoutRules"/>
 			<forward name="verifyEnrolment" path="df.page.verifyEnrolmentWithoutRules"/>
 			<forward name="acceptEnrolment" path="df.page.acceptEnrolmentWithoutRules"/>
-			<forward name="error" path="/prepareStudentDataForEnrolmentWithoutRules.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules&amp;page=0"/>
 		</action>
 -->
     </action-mappings>

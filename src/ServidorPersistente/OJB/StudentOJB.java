@@ -378,7 +378,7 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
 		Criteria criteria = new Criteria();
 
 		if(studentName != null) {
-			criteria.addEqualTo("person.nome", studentName);
+			criteria.addLike("person.nome", studentName);
 		}
 
 		if(idNumber != null) {

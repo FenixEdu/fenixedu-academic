@@ -62,7 +62,7 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumberTest extends TestCa
 		SuportePersistenteOJB.resetInstance();
 		this.serviceManager = GestorServicos.manager();
 
-		String args[] = {"f3667", "1" , this.getApplication()};
+		String args[] = {"f3667", "pass" , this.getApplication()};
 
 		try {
 			this.userView = (IUserView) this.serviceManager.executar(null, "Autenticacao", args);
