@@ -74,18 +74,11 @@ public abstract class AuthorizationByManyRolesFilter extends Filtro
 	throws Exception
 	{
 		IUserView id = (IUserView) request.getRequester();
-		System.out.println("-->AuthorizationByManyRolesFilter:execute");
-		System.out.println("-->AuthorizationByManyRolesFilter:" + (id != null && id.getRoles() != null && !containsRole(id.getRoles())));
-		System.out.println("-->AuthorizationByManyRolesFilter:" + (id != null && id.getRoles() != null && !hasProvilege(id, request.getArguments())));
-		System.out.println("-->AuthorizationByManyRolesFilter:" + (id == null));
-		System.out.println("-->AuthorizationByManyRolesFilter:" + (id.getRoles() == null));
-		
 		if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
 				|| (id != null && id.getRoles() != null && !hasProvilege(id, request.getArguments()))
 				|| (id == null)
 				|| (id.getRoles() == null))
 		{
-			System.out.println("throw new NotAuthorizedException();");
 			throw new NotAuthorizedException();
 		}
 

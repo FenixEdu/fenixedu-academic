@@ -65,7 +65,6 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 	{
 		try
 		{
-			System.out.println("-->hasProvilege");
 			List roles = getRoleList((List) id.getRoles());
 
 			ISuportePersistente sp = null;
@@ -77,13 +76,11 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 				IStudent student = readStudent(id, sp);
 				if (student == null)
 				{
-					System.out.println("-->student false");
 					return false;
 				}
 
 				if (!verifyStudentLEEC(arguments, sp) || verifyStudentWithTutor(student, sp))
 				{
-					System.out.println("-->student nao é da leec");
 					return false;
 					
 				}
@@ -98,19 +95,16 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 				}
 
 				//verify if the coodinator is of the LEEC degree
-				if (roles.contains(RoleType.COORDINATOR))
+				if (roles.contains(RoleType.COORDINATOR) && arguments[0] != null)
 				{
-					System.out.println("-->RoleType.COORDINATOR");
 					ITeacher teacher = readTeacher(id, sp);
 					if (teacher == null)
 					{
-						System.out.println("-->RoleType.COORDINATOR: false teacher");
 						return false;
 					}
 
 					if (!verifyCoordinatorLEEC(teacher, arguments, sp))
 					{
-						System.out.println("-->RoleType.COORDINATOR: false coordinator LEEC");
 						return false;
 					}
 				}
@@ -122,7 +116,7 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 						return false;
 					}
 
-					IStudent student = readStudent((Integer) arguments[1], sp);
+					IStudent student = readStudent(arguments, sp);
 					if (student == null)
 					{
 						return false;
@@ -151,7 +145,6 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 			exception.printStackTrace();
 			return false;
 		}
-		System.out.println("-->tem autorizacao");
 		return true;
 	}
 
@@ -162,14 +155,27 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 		return persistentStudent.readByUsername(id.getUtilizador());
 	}
 
-	private IStudent readStudent(Integer studentCurricularPlanId, ISuportePersistente sp)
+	private IStudent readStudent(Object[] arguments, ISuportePersistente sp) throws ExcepcaoPersistencia
 	{
 		IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
 			sp.getIStudentCurricularPlanPersistente();
 
 		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-		studentCurricularPlan.setIdInternal(studentCurricularPlanId);
-		persistentStudentCurricularPlan.readByOId(studentCurricularPlan, false);
+		if (arguments[1] != null)
+		{
+			studentCurricularPlan.setIdInternal((Integer) arguments[1]);
+			studentCurricularPlan =
+			(IStudentCurricularPlan) persistentStudentCurricularPlan.readByOId(
+					studentCurricularPlan,
+					false);
+		}
+		else
+		{
+			studentCurricularPlan =
+			persistentStudentCurricularPlan.readActiveByStudentNumberAndDegreeType(
+					(Integer) arguments[2],
+					TipoCurso.LICENCIATURA_OBJ);
+		}
 		if (studentCurricularPlan == null)
 		{
 			return null;
@@ -227,7 +233,6 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 
 		List tutors = persistentTutor.readTeachersByStudent(student);
 
-		System.out.println("-->aluno com tutor? " + (tutors != null && tutors.size() > 0));
 		return (tutors != null && tutors.size() > 0);
 	}
 
@@ -242,7 +247,6 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 		throws ExcepcaoPersistencia
 	{
 
-		System.out.println("-->verifyCoordinatorLEEC: args= " + arguments[0]);
 		IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
 		ICoordinator coordinator =
 			persistentCoordinator.readCoordinatorByTeacherAndExecutionDegreeId(
@@ -250,7 +254,6 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 				(Integer) arguments[0]);
 		if (coordinator == null)
 		{
-			System.out.println("-->verifyCoordinatorLEEC: false coordinator");
 			return false;
 		}
 
@@ -262,8 +265,6 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 			degreeCode = coordinator.getExecutionDegree().getCurricularPlan().getDegree().getSigla();
 		}
 
-		System.out.println("-->verifyCoordinatorLEEC: degreeCode= " + degreeCode);
-		System.out.println("-->verifyCoordinatorLEEC: " + DEGREE_LEEC_CODE.equals(degreeCode));
 		return DEGREE_LEEC_CODE.equals(degreeCode);
 	}
 
