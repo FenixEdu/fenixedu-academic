@@ -916,9 +916,10 @@
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
 
-	   				
+                	<include name="ServidorAplicacao/Servicos/grant/contract/EditGrantContractTest.java"/>
+                	
                 	<!-- Test in doubt
-					<include name="ServidorAplicacao/Servicos/grant/owner/EditGrantOwnerTest.java"/>                	
+					<include name="ServidorAplicacao/Servicos/grant/owner/EditGrantOwnerTest.java"/>
                 	-->
 
                 	<!-- Tests Sucessfull 
@@ -926,16 +927,30 @@
                 	<include name="ServidorAplicacao/Servicos/grant/owner/ReadGrantOwnerByPersonTest.java"/>
                 	<include name="ServidorAplicacao/Servicos/grant/owner/ReadGrantOwnerTest.java"/>
 
+                	<include name="ServidorAplicacao/Servicos/grant/contract/DeleteGrantPartTest.java"/>
+					<include name="ServidorAplicacao/Servicos/grant/contract/DeleteGrantContractTest.java"/>
+
                 	<include name="ServidorAplicacao/Servicos/grant/contract/EditGrantTypeTest.java"/>
-					<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantTypeTest.java"/>
+					<include name="ServidorAplicacao/Servicos/grant/contract/EditGrantPartTest.java"/>
+                	<include name="ServidorAplicacao/Servicos/grant/contract/EditGrantContractRegimeTest.java"/>
+                	<include name="ServidorAplicacao/Servicos/grant/contract/EditGrantPaymentEntityTest.java"/>
+                	<include name="ServidorAplicacao/Servicos/grant/contract/EditGrantSubsidyTest.java"/>
+
+                	<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantTypeTest.java"/>
                 	<include name="ServidorAplicacao/Servicos/grant/contract/ReadAllGrantTypesTest.java"/>
 	               	<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantPaymentEntityTest.java"/>
 	               	<include name="ServidorAplicacao/Servicos/grant/contract/ReadAllGrantPaymentEntitiesByClassNameTest.java"/>
-                	<include name="ServidorAplicacao/Servicos/grant/contract/ReadPaymentEntityByNumberAndClassTest.java"/>				
+                	<include name="ServidorAplicacao/Servicos/grant/contract/ReadPaymentEntityByNumberAndClassTest.java"/>
 	               	<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantPartTest.java"/>
-                	<include name="ServidorAplicacao/Servicos/grant/contract/DeleteGrantPartTest.java"/>
                 	<include name="ServidorAplicacao/Servicos/grant/contract/ReadAllGrantPartsByGrantSubsidyTest.java"/>
-                	<include name="ServidorAplicacao/Servicos/grant/contract/EditGrantPaymentEntityTest.java"/>                	
+					<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantContractRegimeTest.java"/>
+					<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantSubsidyTest.java"/>
+					<include name="ServidorAplicacao/Servicos/grant/contract/ReadLastGrantContractCreatedByGrantOwnerTest.java"/>
+					<include name="ServidorAplicacao/Servicos/grant/contract/ReadAllGrantSubsidiesByGrantContractTest.java"/>
+					<include name="ServidorAplicacao/Servicos/grant/contract/ReadAllGrantSubsidiesByGrantContractAndStateTest.java"/>
+					<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantContractTest.java"/>
+					<include name="ServidorAplicacao/Servicos/grant/contract/ReadAllContractsByGrantOwnerTest.java"/>
+                	<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantContractRegimeByContractAndStateTest.java"/>					
 					-->
                 	
                     </fileset>
