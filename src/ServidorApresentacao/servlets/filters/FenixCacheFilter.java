@@ -28,7 +28,7 @@ import com.opensymphony.oscache.web.filter.ResponseContent;
  * @author Luis Cruz
  *  
  */
-public class FenixCacheFilter extends RequestWrapperFilter implements Filter {
+public class FenixCacheFilter implements Filter {
 
     ServletContext servletContext;
     FilterConfig filterConfig;
@@ -36,6 +36,15 @@ public class FenixCacheFilter extends RequestWrapperFilter implements Filter {
     public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         this.servletContext = filterConfig.getServletContext();
+
+        int time = 300;
+        try {
+        	time = Integer.parseInt(filterConfig.getInitParameter("time"));
+        } catch (Exception e) {
+        	System.out.println("Could not get init paramter 'time', defaulting to 5min.");
+          }
+
+        ResponseCacheOSCacheImpl.getInstance().setRefreshTimeout(time);
     }
 
     public void destroy() {
@@ -48,12 +57,7 @@ public class FenixCacheFilter extends RequestWrapperFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        // check if was a resource that shouldn't be cached.
         String uri = request.getRequestURI();
-        if ((uri == null) || (uri.indexOf("/publico/") == -1)) {
-        	super.doFilter(request, response, chain);
-            return;
-        }
 
         // customize to match parameters
         String queryString = constructQueryString(request);
@@ -79,14 +83,14 @@ public class FenixCacheFilter extends RequestWrapperFilter implements Filter {
         	respContent.writeTo(response);
         } else {
             CacheHttpServletResponseWrapper cacheResponse = new CacheHttpServletResponseWrapper(response);
-            super.doFilter(request, cacheResponse, chain);
+            chain.doFilter(request, cacheResponse);
             cacheResponse.flushBuffer();
 
             // Only cache if the response was 200
             if (cacheResponse.getStatus() == HttpServletResponse.SC_OK) {
                 //Store as the cache content the result of the response
             	ResponseCacheOSCacheImpl.getInstance().cache(id.toString(), cacheResponse.getContent());
-            }        	
+            }
         }
     }
 

@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.opensymphony.oscache.general.GeneralCacheAdministrator;
 import com.opensymphony.oscache.web.filter.ResponseContent;
 
@@ -41,11 +39,7 @@ public class ResponseCacheOSCacheImpl
 				properties.load(inputStream);
 				admin = new GeneralCacheAdministrator(properties);
 			} catch (IOException e) {
-				throw new RuntimeException("Failled to load properties file " + propertiesFileName, e);
-			}
-			String defaultRefreshTimeOut = properties.getProperty("cache.default.refresh.timeout");
-			if (defaultRefreshTimeOut != null && StringUtils.isNumeric(defaultRefreshTimeOut)) {
-				refreshTimeout = (new Integer(defaultRefreshTimeOut)).intValue();
+				throw new RuntimeException("Failled to load properties for response cache.", e);
 			}
         }
 	}

@@ -5,8 +5,7 @@
 <web-app>
 	<filter>
 	    <filter-name>indexFilter</filter-name>
-	    <!--<filter-class>ServidorApresentacao.servlets.filters.RequestWrapperFilter</filter-class>-->
-		<filter-class>ServidorApresentacao.servlets.filters.FenixCacheFilter</filter-class>
+	    <filter-class>ServidorApresentacao.servlets.filters.RequestWrapperFilter</filter-class>
 		<!--<filter-class>ServidorApresentacao.servlets.filters.RequestWrapperCaptureFilter</filter-class>-->
 	</filter>
 	<filter>
@@ -25,6 +24,14 @@
 	 		<param-value>true</param-value>
 		</init-param>
 	</filter>
+	<filter>
+		<filter-name>CacheFilter</filter-name>
+		<filter-class>ServidorApresentacao.servlets.filters.FenixCacheFilter</filter-class>
+		<init-param>
+			<param-name>time</param-name>
+			<param-value>600</param-value>
+		</init-param>
+	</filter>
 	<filter-mapping>
 	    <filter-name>indexFilter</filter-name>
 	    <url-pattern>/*</url-pattern>
@@ -36,6 +43,10 @@
 	<filter-mapping>
  		 <filter-name>profiling</filter-name>
  		 <url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CacheFilter</filter-name>
+		<url-pattern>/publico/*</url-pattern>
 	</filter-mapping>
     <servlet>
         <servlet-name>StartupServlet</servlet-name>
