@@ -10,13 +10,13 @@ LOAD DATA INFILE '@load.data.infile.rootIleec@precedenciasXCadeirasIleecTAB.txt'
 LOAD DATA INFILE '@load.data.infile.rootIleec@TiposEquivalenciaTAB.txt' into table mw_TIPOS_EQUIVALENCIA_ILEEC IGNORE 2 LINES;
 LOAD DATA INFILE '@load.data.infile.rootIleec@tiposPrecedenciaIleecTAB.txt' into table mw_TIPOS_PRECENDENCIA_ILEEC IGNORE 2 LINES;
 
-alter table mw_AREAS_CIENTIFICAS_ILEEC add ACKOPTLOCK int(11) default 1;
-alter table mw_PRECEDENCIAS_NUMERO_DISCIPLINAS_ILEEC add ACKOPTLOCK int(11) default 1;
-alter table mw_AREAS_SECUNDARIAS_ILEEC add ACKOPTLOCK int(11) default 1;
-alter table mw_DISCIPLINA_GRUPO_ILEEC add ACKOPTLOCK int(11) default 1;
-alter table mw_EQUIVALENCIAS_ILEEC add ACKOPTLOCK int(11) default 1;
-alter table mw_GRUPOS_ILEEC add ACKOPTLOCK int(11) default 1;
-alter table mw_DISCIPLINAS_ILEEC add ACKOPTLOCK int(11) default 1;
-alter table mw_PRECEDENCIAS_DISCIPLINA_DISCIPLINA_ILEEC add ACKOPTLOCK int(11) default 1;
-alter table mw_TIPOS_EQUIVALENCIA_ILEEC add ACKOPTLOCK int(11) default 1;
-alter table mw_AREAS_ESPECIALIZACAO_ILEEC add ACKOPTLOCK int(11) default 1;
+alter table mw_AREAS_CIENTIFICAS_ILEEC add ACK_OPT_LOCK int(11) not null default '1';
+alter table mw_PRECEDENCIAS_NUMERO_DISCIPLINAS_ILEEC add ACK_OPT_LOCK int(11) not null default '1';
+alter table mw_AREAS_SECUNDARIAS_ILEEC add ACK_OPT_LOCK int(11) not null default '1';
+alter table mw_DISCIPLINA_GRUPO_ILEEC add ACK_OPT_LOCK int(11) not null default '1';
+alter table mw_EQUIVALENCIAS_ILEEC add ACK_OPT_LOCK int(11) not null default '1';
+alter table mw_GRUPOS_ILEEC add ACK_OPT_LOCK int(11) not null default '1';
+alter table mw_DISCIPLINAS_ILEEC add ACK_OPT_LOCK int(11) not null default '1';
+alter table mw_PRECEDENCIAS_DISCIPLINA_DISCIPLINA_ILEEC add ACK_OPT_LOCK int(11) not null default '1';
+alter table mw_TIPOS_EQUIVALENCIA_ILEEC add ACK_OPT_LOCK int(11) not null default '1';
+alter table mw_AREAS_ESPECIALIZACAO_ILEEC add ACK_OPT_LOCK int(11) not null default '1';

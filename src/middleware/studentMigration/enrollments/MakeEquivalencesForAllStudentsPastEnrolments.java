@@ -41,7 +41,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 	
 	private static int totalEnrollmentsCreated = 0;
 	private static int totalEnrollmentEvaluationsCreated = 0;
-    
+
 	public static void main(String args[])
 	{
 		IStudent student = null;
@@ -53,7 +53,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 			fenixPersistentSuport.iniciarTransaccao();
 	
 			Integer numberOfStudents = persistentStudent.countAll();
-	
+			
 			fenixPersistentSuport.confirmarTransaccao();
 	
 			System.out.println("[INFO] Total number of student curriculums to update [" + numberOfStudents + "].");
@@ -160,6 +160,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 		List pastEnrolments = MakeEquivalencesForILEECStudents.keepOnlyImprovments(realPastEnrolments, fenixPersistentSuport);
 		Iterator iterator = pastEnrolments.iterator();
 		while (iterator.hasNext()) {
+
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 
 			if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
@@ -177,7 +178,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 				ICurricularCourseScope curricularCourseScope = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseScope(enrolment, curricularCourseFromCurrentDegreeCurricularPlan);
 				if (curricularCourseScope == null)
 				{
-					System.out.println("[ERROR 304] Cannot find Fenix CurricularCourseScope for CurricularCourse with code [" + curricularCourse.getCode() + "] and name [" + curricularCourse.getName() + "] in period [year: " + enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear().toString() + " semester: " + enrolment.getCurricularCourseScope().getCurricularSemester().getSemester().toString() + "]!");
+					System.out.println("[ERROR 304] Cannot find Fenix CurricularCourseScope for CurricularCourse with code [" + curricularCourse.getCode() + "] and name [" + curricularCourse.getName() + "] in period [year: " + enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear().toString() + " semester: " + enrolment.getCurricularCourseScope().getCurricularSemester().getSemester().toString() + "] in Degree: [" + currentDegreeCurricularPlan.getDegree().getNome() + "] for student: [" + student.getNumber().toString() + "]!");
 					continue;
 				}
 
@@ -225,7 +226,6 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 				}
 			} else
 			{
-//				System.out.println("[ERROR 307] Cannot find Fenix CurricularCourse with code [" + curricularCourse.getCode() + "] and name [" + curricularCourse.getName() + "] for Degree [" + currentDegreeCurricularPlan.getDegree().getNome() + "]!");
 				return null;
 			}
 		}
@@ -285,23 +285,6 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 		return enrolmentToWrite;
 	}
 
-//	/**
-//	 * @param oldEnrolment
-//	 * @param newEnrolment
-//	 * @param fenixPersistentSuport
-//	 * @throws Throwable
-//	 */
-//	private static void writeEnrollmentEvaluations(IEnrolment oldEnrolment, IEnrolment newEnrolment, ISuportePersistente fenixPersistentSuport) throws Throwable
-//	{
-//		List enrolmentEvaluationsList = oldEnrolment.getEvaluations();
-//		Iterator iterator = enrolmentEvaluationsList.iterator();
-//		while (iterator.hasNext())
-//		{
-//			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-//			MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollmentEvaluation(enrolmentEvaluation, newEnrolment, fenixPersistentSuport);
-//		}
-//	}
-
 	/**
 	 * @param enrolment
 	 * @param fenixPersistentSuport
@@ -317,7 +300,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 			if (scopes.size() == 1)
 			{
 				return (ICurricularCourseScope) scopes.get(0);
-			} else
+			} else if (!scopes.isEmpty())
 			{
 				Iterator iterator = scopes.iterator();
 				while (iterator.hasNext())
@@ -333,7 +316,9 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 				comparatorChain.addComparator(new BeanComparator("curricularSemester.idInternal"));
 				Collections.sort(scopes, comparatorChain);
 				return (ICurricularCourseScope) scopes.get(0);
-//				return null;
+			} else
+			{
+				return null;
 			}
 		} else
 		{

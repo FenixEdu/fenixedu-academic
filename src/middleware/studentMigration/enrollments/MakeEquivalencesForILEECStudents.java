@@ -73,7 +73,7 @@ public class MakeEquivalencesForILEECStudents
 	private static HashMap noEquivalences = new HashMap();
 	private static HashMap schools = new HashMap();
 	private static HashMap years = new HashMap();
-	
+
 	public static void main(String args[])
 	{
 		IStudent student = null;
@@ -907,17 +907,22 @@ public class MakeEquivalencesForILEECStudents
 		while (enrollmentIterator.hasNext())
 		{
 			IEnrolment enrolment = (IEnrolment) enrollmentIterator.next();
+			
 			IEnrolmentEvaluation enrolmentEvaluation = MakeEquivalencesForILEECStudents.getLatestEvaluation(enrolment);
+
 			if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
 			{
 				List enrolmentsInSameCourse = enrolmentDAO.readAprovedEnrolmentsFromOtherExecutionPeriodByStudentCurricularPlanAndCurricularCourse(enrolment.getStudentCurricularPlan(), enrolment.getCurricularCourseScope().getCurricularCourse(), enrolment.getExecutionPeriod());
+
 				if(enrolmentsInSameCourse != null || !enrolmentsInSameCourse.isEmpty())
 				{
 					Iterator iterator = enrolmentsInSameCourse.iterator();
 					while (iterator.hasNext())
 					{
 						IEnrolment enrolmentInSameCourse = (IEnrolment) iterator.next();
+
 						IEnrolmentEvaluation evaluationInSameCourse = MakeEquivalencesForILEECStudents.getLatestEvaluation(enrolmentInSameCourse);
+						
 						try
 						{
 							Integer improvmentGrade = new Integer(enrolmentEvaluation.getGrade());
