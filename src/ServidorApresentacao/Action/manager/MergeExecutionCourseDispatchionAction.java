@@ -4,12 +4,15 @@
  */
 package ServidorApresentacao.Action.manager;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -24,7 +27,8 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a> 3/Dez/2003
- *  
+ * @author Fernanda Quitério 17/Dez/2003 
+ * 
  */
 public class MergeExecutionCourseDispatchionAction extends DispatchAction
 {
@@ -86,6 +90,13 @@ public class MergeExecutionCourseDispatchionAction extends DispatchAction
             List executionPeriods =
                 (List) ServiceUtils.executeService(userView, "ReadAllExecutionPeriods", args);
 
+            ComparatorChain comparator = new ComparatorChain();
+            comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
+            comparator.addComparator(new BeanComparator("name"), true);
+            Collections.sort(executionPeriods, comparator);
+            
+            Collections.sort(degrees, new BeanComparator("sigla"));
+            
             request.setAttribute("sourceDegrees", degrees);
             request.setAttribute("destinationDegrees", degrees);
             request.setAttribute("executionPeriods", executionPeriods);

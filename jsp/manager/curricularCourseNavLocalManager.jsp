@@ -35,6 +35,19 @@
 </strong></p>
 
 <p><strong>&raquo; 
+	<html:link page="/executionCourseManagement.do?method=firstPage">
+		<bean:message key="label.manager.executionCourseManagement" />
+	</html:link>
+</strong></p>
+
+<p><strong>&raquo; 
+	<html:link page="/teachersManagement.do?method=firstPage">
+		<bean:message key="link.manager.teachersManagement" />
+	</html:link>
+</strong></p>
+
+<%--
+<p><strong>&raquo; 
 	<html:link page="/readExecutionPeriods.do">
 		<bean:message key="label.manager.insert.executionCourse" />
 	</html:link>
@@ -45,7 +58,7 @@
 		Juntar Disciplinas Execução
 	</html:link>
 </strong></p>
-
+--%>
 <p><strong>&raquo; 
 	<html:link page="/manageCache.do?method=prepare">
 		Gest&atilde;o da Cache

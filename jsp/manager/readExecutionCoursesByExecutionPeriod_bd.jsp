@@ -13,6 +13,7 @@
 		</td>
 	</table>
 </logic:present>
+<logic:present name="executionPeriodNameAndYear" scope="request">
 <table>
 	<td>
 		<h3><bean:message key="label.manager.executionPeriod"/></h3>
@@ -21,12 +22,13 @@
 		<h2><bean:write name="executionPeriodNameAndYear"/></h2>
 	</td>
 </table>
-
+</logic:present>
+<%--
 <logic:notPresent name="name" scope="request">
 	<html:link page="<%= "/insertExecutionCourse.do?method=prepareInsert&executionPeriodId=" + request.getParameter("executionPeriodId") %>"><bean:message key="label.manager.insert.execution.course"/></html:link>
 	<br>
 	<br>
-</logic:notPresent>
+</logic:notPresent>--%>
 
 <span class="error"><html:errors/></span>
 
@@ -62,7 +64,7 @@
 						<td class="listClasses">
 							<html:radio property="executionCourseId" idName="infoExecutionCourse" value="idInternal" />	
 						</td>			
-						<td class="listClasses"><bean:write name="infoExecutionCourse" property="nome"/>
+						<td class="listClasses" style="text-align:left"><bean:write name="infoExecutionCourse" property="nome"/>
 						</td>
 						<td class="listClasses"><bean:write name="infoExecutionCourse" property="sigla"/>
 						</td>
@@ -116,7 +118,7 @@
 							<bean:write name="infoExecutionCourse" property="idInternal"/>
 						</html:multibox>
 					</td>	
-					<td class="listClasses"><bean:write name="infoExecutionCourse" property="nome"/>
+					<td class="listClasses" style="text-align:left"><bean:write name="infoExecutionCourse" property="nome"/>
 					</td>
 					<td class="listClasses"><bean:write name="infoExecutionCourse" property="sigla"/>
 					</td>

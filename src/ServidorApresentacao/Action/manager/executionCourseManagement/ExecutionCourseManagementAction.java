@@ -1,4 +1,4 @@
-package ServidorApresentacao.Action.manager.teachersManagement;
+package ServidorApresentacao.Action.manager.executionCourseManagement;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,10 +11,10 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 
 /**
- * @author Fernanda Quitério 4/Dez/2003
+ * @author Fernanda Quitério 16/Dez/2003
  *  
  */
-public class TeachersManagementAction extends FenixDispatchAction
+public class ExecutionCourseManagementAction extends FenixDispatchAction
 {
 	public ActionForward firstPage(
 		ActionMapping mapping,
@@ -25,7 +25,6 @@ public class TeachersManagementAction extends FenixDispatchAction
 	{
 		return mapping.findForward("firstPage");
 	}
-
 	public ActionForward mainPage(
 			ActionMapping mapping,
 			ActionForm form,
@@ -34,5 +33,5 @@ public class TeachersManagementAction extends FenixDispatchAction
 	throws FenixActionException
 	{
 		return mapping.findForward("mainPage");
-	}	
+	}
 }

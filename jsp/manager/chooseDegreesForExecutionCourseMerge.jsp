@@ -40,7 +40,7 @@
 			<td class="listClasses">
 			<bean:write name="degree" property="sigla"/>
 			</td>
-			<td class="listClasses">
+			<td class="listClasses" style="text-align:left">
 			<bean:write name="degree" property="nome"/>
 			</td>
 		</tr>
@@ -61,7 +61,7 @@
 			<td class="listClasses">
 			<bean:write name="degree" property="sigla"/>
 			</td>
-			<td class="listClasses">
+			<td class="listClasses" style="text-align:left">
 			<bean:write name="degree" property="nome"/>
 			</td>
 		</tr>

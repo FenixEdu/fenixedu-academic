@@ -131,12 +131,13 @@ public class DissociateProfessorShipsAndResponsibleFor implements IServico
 					List supportLessons = persistentSupportLesson.readByProfessorship(professorship);
 					List shiftProfessorships =
 						persistentShiftProfessorship.readByProfessorship(professorship);
-					
+
 					if ((shiftProfessorships == null || shiftProfessorships.size() == 0)
 						&& (supportLessons == null || supportLessons.size() == 0))
 					{
 						persistentProfessorship.delete(professorship);
-					} else
+					}
+					else
 					{
 						if (supportLessons.size() > 0)
 						{
@@ -160,13 +161,16 @@ public class DissociateProfessorShipsAndResponsibleFor implements IServico
 					persistentResponsibleFor.delete(responsibleFor);
 				}
 			}
-		} catch (ExcepcaoPersistencia ex)
+		}
+		catch (ExcepcaoPersistencia ex)
 		{
 			throw new RuntimeException(ex);
 		}
-		
-		professorshipsNotRemoved.put(new String("supportLessons"), professorshipsWithSupportLessons);
-		professorshipsNotRemoved.put(new String("shifts"), professorshipsWithShifts);
+		if (professorshipsWithSupportLessons.size() > 0 || professorshipsWithShifts.size() > 0)
+		{
+			professorshipsNotRemoved.put(new String("supportLessons"), professorshipsWithSupportLessons);
+			professorshipsNotRemoved.put(new String("shifts"), professorshipsWithShifts);
+		}
 		
 		return professorshipsNotRemoved;
 	}

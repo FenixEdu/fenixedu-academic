@@ -1,9 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="DataBeans.InfoStudent" %>
-
-  
 <ul>
     <li><html:link page="/candidateSection.do"><bean:message key="link.masterDegree.administrativeOffice.candidate" /></html:link></li>
     <li><html:link page="/contributorSection.do"><bean:message key="link.masterDegree.administrativeOffice.contributor" /></html:link></li>

@@ -3,7 +3,6 @@
 <center>
 	<img alt=""  src="<%= request.getContextPath() %>/images/logo-fenix.gif" width="100" height="100"/>
 </center>
-
 <p><strong>&raquo; 
 		<html:link page="/readDegrees.do">
 			<bean:message key="label.manager.readDegrees" />
@@ -17,15 +16,8 @@
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/readExecutionPeriods.do">
-		<bean:message key="label.manager.insert.executionCourse" />
-	</html:link>
-</strong></p>
-
-<p><strong>&raquo; 
-
-	<html:link page="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod">
-		Juntar Disciplinas Execução
+	<html:link page="/executionCourseManagement.do?method=firstPage">
+		<bean:message key="label.manager.executionCourseManagement" />
 	</html:link>
 </strong></p>
 
@@ -60,4 +52,3 @@
 		<bean:message key="link.operator.newPassword" />
 	</html:link>
 </strong></p>
-

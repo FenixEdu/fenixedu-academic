@@ -11,12 +11,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.comparators.ExecutionPeriodComparator;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -63,6 +64,8 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 
+//        exclude executionPeriods of containing execution courses to assure 
+//        that there is only one execution course per execution period
         List unavailableExecutionPeriodsIds = new ArrayList();
         Iterator iter = executionCoursesList.iterator();
         while (iter.hasNext())
@@ -82,8 +85,12 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
             if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty())
             {
 
-                Collections.sort(infoExecutionPeriods, new ExecutionPeriodComparator());
-
+                //Collections.sort(infoExecutionPeriods, new ExecutionPeriodComparator());
+            	ComparatorChain comparator = new ComparatorChain();
+            	comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
+            	comparator.addComparator(new BeanComparator("name"), true);
+            	Collections.sort(infoExecutionPeriods, comparator);
+            	
                 if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty())
                 {
                     request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);

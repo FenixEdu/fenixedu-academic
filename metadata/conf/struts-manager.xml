@@ -147,6 +147,7 @@
 				<form-property name="labHours" type="java.lang.String" />
 				<form-property name="semester" type="java.lang.String" />
 				<form-property name="comment" type="java.lang.String" />
+				<form-property name="executionPeriodId" type="java.lang.String" />
 				<form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
@@ -790,7 +791,7 @@
         validate="true">
        <forward name="readExecutionCourses" path="df.page.read-execution-courses-to-choose"/>      	      
 	</action>
-    
+    <!--
     <action
 		path="/insertExecutionCourse"
 		name="executionCourseForm"
@@ -809,7 +810,7 @@
        <forward name="readExecutionCourses" path="/readExecutionCourses.do"/> 
          <forward name="readExecutionPeriods" path="/readExecutionPeriods.do"/>    	      
 	</action>
-    
+    -->
     <action
 		path="/createSite"
 		input="/readCurricularCourse.do"
@@ -935,7 +936,7 @@
 		</action>
 		
 		
-		<!-- ================== Begin of Teachers Management ======================-->
+		<!-- ================== TEACHERS MANAGEMENT ======================-->
 		<action path="/teachersManagement"
 				type="ServidorApresentacao.Action.manager.teachersManagement.TeachersManagementAction"
 				parameter="method"
@@ -945,14 +946,21 @@
 				input="/teachersManagement.do?method=prepareDissociateEC&amp;page=0">
 
 			<forward name="firstPage" path="df.page.firstPage"/>
+			<forward name="mainPage" path="df.page.main-page"/>
+		</action>
+		
+		<action path="/dissociateProfShipsAndRespFor"
+				type="ServidorApresentacao.Action.manager.teachersManagement.DissociateProfShipsAndRespForDispatchAction"
+				parameter="method"
+				name="teacherManagementForm"
+				scope="request"
+				validate="true"
+				input="/dissociateProfShipsAndRespFor.do?method=prepareDissociateEC&amp;page=0">
+
 			<forward name="prepareDissociateEC" path="df.page.prepareDissociateEC"/>
 			<forward name="prepareDissociateECShowProfShipsAndRespFor" path="df.page.prepareDissociateECShowProfShipsAndRespFor"/>
 		</action>
 		
-		
-		<!-- ================== End of Teachers Management ======================-->
-		
-
 		<!-- ========== Merge Execution Courses ========== -->	
 	<action	name="chooseDegreesForExecutionCourseMerge"
 				type="ServidorApresentacao.Action.manager.MergeExecutionCourseDispatchionAction"
@@ -984,6 +992,32 @@
 		<forward name="insertCoordinator" path="insertCoordinator" />
 	</action>
 	
+	
+	<!-- ========== EXECUTION COURSE MANAGEMENT ========== -->
+	<action path="/executionCourseManagement"
+			type="ServidorApresentacao.Action.manager.executionCourseManagement.ExecutionCourseManagementAction"
+			parameter="method">
+
+		<forward name="firstPage" path="df.executionCourseManagement.page.firstPage"/>
+		<forward name="mainPage" path="df.page.main-page"/>
+	</action>
+	
+	<action path="/insertExecutionCourse"
+			type="ServidorApresentacao.Action.manager.executionCourseManagement.InsertExecutionCourseDispatchAction"
+			parameter="method"
+			name="executionCourseForm"
+			scope="request"
+			input="/insertExecutionCourse.do?method=prepareInsertExecutionCourse&amp;page=0">
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+
+		<forward name="insertExecutionCourse" path="df.executionCourseManagement.page.insertExecutionCourse"/>
+		<forward name="firstPage" path="/executionCourseManagement.do?method=firstPage"/>
+	</action>
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

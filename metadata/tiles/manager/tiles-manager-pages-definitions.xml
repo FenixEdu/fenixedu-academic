@@ -117,12 +117,15 @@
 	</definition>
 	<definition name="df.page.insert-execution-course" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/insertExecutionCourse_bd.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.read-execution-periods-to-choose" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readExecutionPeriods_bd.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.read-execution-courses-to-choose" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readExecutionCoursesByExecutionPeriod_bd.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>
 
 	<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
@@ -158,13 +161,17 @@
 	<definition name="df.page.manage-roles" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageRoles_bd.jsp" />
 	</definition>
+
 	<!-- ========== EXECUTION COURSE MERGE ========== -->
 	<definition name="df.page.chooseDegreesForExecutionCourseMerge" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/chooseDegreesForExecutionCourseMerge.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.chooseExecutionCoursesForExecutionCourseMerge" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/chooseExecutionCoursesForExecutionCourseMerge.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
+
 	<!-- ========== Manage Coordinators ============= -->
 	<definition name="manageCoordinators" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/manageCoordinators.jsp" />
@@ -174,5 +181,15 @@
 		<put name="body" value="/manager/insertCoordinator.jsp" />
 		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
 	</definition>
+
+	<!-- ========== EXECUTION COURSE MANAGEMENT ========== -->
+	<definition name="df.executionCourseManagement.page.firstPage" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/executionCourseManagement/welcomeScreen.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
+	</definition>
+	<definition name="df.executionCourseManagement.page.insertExecutionCourse" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/executionCourseManagement/insertExecutionCourse.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
+	</definition>	
 	
 </tiles-definitions>

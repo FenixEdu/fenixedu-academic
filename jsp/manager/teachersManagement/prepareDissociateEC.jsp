@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <h2><bean:message key="link.manager.teachersManagement.removeECAssociation" /></h2>
 <span class="error"><html:errors /></span>
-<html:form action="/teachersManagement">
+<html:form action="/dissociateProfShipsAndRespFor">
 	<input type="hidden" name="method" value="prepareDissociateECShowProfShipsAndRespFor"/>
 	<input type="hidden" name="page" value="1"/>
 	<p class="infoop">
