@@ -50,8 +50,8 @@ public class EscolherAulasFormAction extends FenixAction {
         sessao.setAttribute("tiposAula", tiposAula);
 
         ArrayList horas = new ArrayList();
-        horas.add("08");
-        horas.add("09");
+        horas.add("8");
+        horas.add("9");
         horas.add("10");
         horas.add("11");
         horas.add("12");

@@ -131,8 +131,8 @@ public class Util {
 	public static ArrayList getHours() {
 		ArrayList hoursList = new ArrayList();
 
-		hoursList.add("08");
-		hoursList.add("09");
+		hoursList.add("8");
+		hoursList.add("9");
 		hoursList.add("10");
 		hoursList.add("11");
 		hoursList.add("12");
