@@ -3,6 +3,7 @@ package ServidorAplicacao.strategy.enrolment.degree.rules;
 import java.util.Iterator;
 
 import Dominio.ICurricularCourseScope;
+import Dominio.IEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentValidationResult;
 import Util.CurricularCourseType;
@@ -41,11 +42,22 @@ public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 		}
 
 		
+		Iterator iterator2 = enrolmentContext.getOptionalCurricularCoursesEnrolments().iterator();
+		while (iterator2.hasNext()) {
+			IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator2.next();
+			if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(enrolmentInOptionalCurricularCourse.getCurricularCourse()).intValue() > 0) {
+				NAC = NAC + MAX_INCREMENT_NAC;
+			} else {
+				NAC = NAC + MIN_INCREMENT_NAC;
+			}
+		}
+
+
 		// FIXME: David-Ricardo: A regra dos MINCOURSES nao se aplica aos trabalhadores estudantes
-		if (enrolmentContext.getActualEnrolment().size() < MINCOURSES) {
+		if ((enrolmentContext.getActualEnrolment().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) < MINCOURSES) {
 			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MINIMUM_CURRICULAR_COURSES_TO_ENROLL, String.valueOf(MINCOURSES));
 		}
-		if (enrolmentContext.getActualEnrolment().size() > MAXCOURSES) {
+		if ((enrolmentContext.getActualEnrolment().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) > MAXCOURSES) {
 			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MAXIMUM_CURRICULAR_COURSES_TO_ENROLL, String.valueOf(MAXCOURSES));
 		}
 		if (NAC > MAXNAC) {

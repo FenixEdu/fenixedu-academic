@@ -10,6 +10,7 @@ import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
+import Util.CurricularCourseType;
 
 /**
  * @author David Santos
@@ -43,7 +44,7 @@ public abstract class InscTesteIO {
 
 	public static void showAvailableDegreesForOption(InfoEnrolmentContext infoEnrolmentContext) {
 		System.out.println();
-		System.out.println("AVAILABLE DEGREES FOR OPTION:");
+		System.out.println("AVAILABLE DEGREES FOR OPTION: [" + infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse().getName() + "]");
 		Iterator iterator = infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().iterator();
 		int i = 0;
 		while (iterator.hasNext()) {
@@ -55,7 +56,7 @@ public abstract class InscTesteIO {
 
 	public static void showAvailableCurricularCoursesForOption(InfoEnrolmentContext infoEnrolmentContext) {
 		System.out.println();
-		System.out.println("AVAILABLE COURSES FOR OPTION:");
+		System.out.println("AVAILABLE COURSES FOR OPTION: [" + infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse().getName() + "]");
 		Iterator iterator = infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().iterator();
 		int i = 0;
 		while (iterator.hasNext()) {
@@ -71,7 +72,7 @@ public abstract class InscTesteIO {
 		Iterator iterator = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().iterator();
 		while (iterator.hasNext()) {
 			InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) iterator.next();
-			System.out.println("OPTIONAL CURRICULAR COURSE NAME: " + infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourse().getName() + "; CHOSEN CURRICULAR COURSE : " + infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseForOption().getName());
+			System.out.println("OPTIONAL CURRICULAR COURSE NAME: " + infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourse().getName() + "; CHOSEN CURRICULAR COURSE: " + infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseForOption().getName());
 		}
 	}
 
@@ -99,64 +100,97 @@ public abstract class InscTesteIO {
 		}
 	}
 
-	public static void selectNormalCurricularCoursesToEnroll(InfoEnrolmentContext infoEnrolmentContext) {
-		try {
-			List indexes = new ArrayList();
-			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-			String str = new String(" ");
-			String endStr = new String("");
-			while(!str.equals(endStr)) {
-				System.out.print("> ");
+	public static void selectNormalCurricularCoursesToEnroll(InfoEnrolmentContext infoEnrolmentContext, boolean remove) {
+		List indexes = new ArrayList();
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		String str = new String(" ");
+		String endStr = new String("");
+
+		while(!str.equals(endStr)) {
+			System.out.print("> ");
+			try {
 				str = in.readLine();
 				if(!str.equals(endStr)) {
 					Integer i = new Integer(str);
 					indexes.add(i);
 				}
+			} catch (NumberFormatException e) {
+				continue;
+			} catch (Exception e) {
+				e.printStackTrace(System.out);
 			}
+		}
 
-			Iterator iterator = indexes.iterator();
-			while(iterator.hasNext()) {
-				int i = ((Integer) iterator.next()).intValue();
-				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
-				infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+		Iterator iterator = indexes.iterator();
+		while(iterator.hasNext()) {
+			int i = ((Integer) iterator.next()).intValue();
+			InfoCurricularCourseScope infoCurricularCourseScope;
+			try {
+				infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
+				if(remove && !infoCurricularCourseScope.getInfoCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE))) {
+					if(infoEnrolmentContext.getActualEnrolment().contains(infoCurricularCourseScope)) {
+						infoEnrolmentContext.getActualEnrolment().remove(infoCurricularCourseScope);
+					}
+				} else {
+					if(!infoEnrolmentContext.getActualEnrolment().contains(infoCurricularCourseScope)) {
+						infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+					}
+				}
+			} catch (IndexOutOfBoundsException e) {
+				continue;
 			}
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
 		}
 	}
 
 	public static void selectDegreeForOptionalCurricularCourseToEnroll(InfoEnrolmentContext infoEnrolmentContext) {
-		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-			String str = new String(" ");
-			String endStr = new String("");
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		String str = new String(" ");
+		String endStr = new String("");
+		boolean flag = true;
+
+		while(flag) {
 			System.out.print("> ");
-			str = in.readLine();
-			if(!str.equals(endStr)) {
-				Integer i = new Integer(str);
-				infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(i.intValue()));
+			try {
+				str = in.readLine();
+				if(!str.equals(endStr)) {
+					Integer i = new Integer(str);
+					infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(i.intValue()));
+					flag = false;
+				}
+			} catch (NumberFormatException e) {
+				continue;
+			} catch (IndexOutOfBoundsException e) {
+				continue;
+			} catch (Exception e) {
+				e.printStackTrace(System.out);
 			}
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
 		}
 	}
 
 	public static InfoCurricularCourse selectOptionalCurricularCourseToEnroll(InfoEnrolmentContext infoEnrolmentContext) {
-		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-			String str = new String(" ");
-			String endStr = new String("");
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		String str = new String(" ");
+		String endStr = new String("");
+		boolean flag = true;
+		InfoCurricularCourse infoCurricularCourse = null;
+
+		while(flag) {
 			System.out.print("> ");
-			str = in.readLine();
-			if(!str.equals(endStr)) {
-				Integer i = new Integer(str);
-				return (InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(i.intValue());
+			try {
+				str = in.readLine();
+				if(!str.equals(endStr)) {
+					Integer i = new Integer(str);
+					infoCurricularCourse = (InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(i.intValue());
+					flag = false;
+				}
+			} catch (NumberFormatException e) {
+				continue;
+			} catch (IndexOutOfBoundsException e) {
+				continue;
+			} catch (Exception e) {
+				e.printStackTrace(System.out);
 			}
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
 		}
-		return null;
+		return infoCurricularCourse;
 	}
-
-
 }
