@@ -59,11 +59,12 @@ insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_ACTION, PORTAL_ACTION_NAME_PROP
 insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_ACTION, PORTAL_ACTION_NAME_PROPERTY) values (4,4,'timeTableManagerPortal','portal.timeTableManager.name');
 
 #-----------------------------
-# Data for table 'ROLE'
+# Data for table 'PERSON_ROLE'
 #-----------------------------
 delete from PERSON_ROLE;
 insert into PERSON_ROLE (ID_INTERNAL, KEY_ROLE, KEY_PERSON) values (1,1,1);
 insert into PERSON_ROLE (ID_INTERNAL, KEY_ROLE, KEY_PERSON) values (2,4,1);
+insert into PERSON_ROLE (ID_INTERNAL, KEY_ROLE, KEY_PERSON) values (3,3,1);
 
 #
 # Data for table 'PRIVILEGIO'
