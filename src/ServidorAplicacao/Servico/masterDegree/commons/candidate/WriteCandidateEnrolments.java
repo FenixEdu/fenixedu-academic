@@ -56,6 +56,7 @@ public class WriteCandidateEnrolments implements IServico
     {
         try
         {
+
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
