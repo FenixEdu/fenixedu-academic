@@ -391,11 +391,10 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	// BEGIN: Only for enrollment purposes
 	// -------------------------------------------------------------
 
-	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, IDegreeCurricularPlan degreeCurricularPlan,
-		EnrollmentRuleType enrollmentRuleType)
+	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType)
 	{
 		List setOfCurricularCoursesToEnroll = this.getCommonBranchAndStudentBranchesCourses(executionPeriod.getSemester());
-		List enrollmentRules = this.getListOfEnrollmentRules(enrollmentRuleType);
+		List enrollmentRules = this.getListOfEnrollmentRules(executionPeriod, enrollmentRuleType);
 		
 		for (int i = 0; i < enrollmentRules.size(); i++)
 		{
@@ -616,9 +615,9 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		this.acumulatedEnrollments = acumulatedEnrollments;
 	}
 
-    protected List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType)
+    protected List getListOfEnrollmentRules(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType)
 	{
-		return this.getDegreeCurricularPlan().getListOfEnrollmentRules(enrollmentRuleType);
+		return this.getDegreeCurricularPlan().getListOfEnrollmentRules(this, executionPeriod, enrollmentRuleType);
 	}
 	
     protected List getStudentNotNeedToEnrollCourses()

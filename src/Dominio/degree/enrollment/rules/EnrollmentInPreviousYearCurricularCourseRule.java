@@ -76,7 +76,7 @@ public class EnrollmentInPreviousYearCurricularCourseRule implements IEnrollment
         int actualCurricularYear = 0;
 
         if (studentBranch != null) {
-            maxCurricularYear = curricularCourse.getCurricularYearByBranch(studentBranch).getYear().intValue();
+//            maxCurricularYear = curricularCourse.getCurricularYearByBranch(studentBranch).getYear().intValue();
         } else {
             List curricularCourseScopes = curricularCourse.getScopes();
 

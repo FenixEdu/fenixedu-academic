@@ -8,6 +8,8 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseGroup;
 import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IExecutionPeriod;
+import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseGroup;
 import ServidorPersistente.IPersistentCurricularCourseScope;
@@ -46,17 +48,18 @@ public class EnrollmentRulesFactory
 		}
 	}
 
-	public List getListOfEnrollmentRules(IDegreeCurricularPlan degreeCurricularPlan, EnrollmentRuleType enrollmentRuleType)
+	public List getListOfEnrollmentRules(IDegreeCurricularPlan degreeCurricularPlan,
+		IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType)
 	{
 		if (enrollmentRuleType.equals(EnrollmentRuleType.PARTIAL))
 		{
-			return getListOfPartialEnrollmentRules(degreeCurricularPlan);
+			return getListOfPartialEnrollmentRules(degreeCurricularPlan, studentCurricularPlan, executionPeriod);
 		} else if (enrollmentRuleType.equals(EnrollmentRuleType.TOTAL))
 		{
-			return getListOfTotalEnrollmentRules(degreeCurricularPlan);
+			return getListOfTotalEnrollmentRules(degreeCurricularPlan, studentCurricularPlan, executionPeriod);
 		} else if (enrollmentRuleType.equals(EnrollmentRuleType.EMPTY))
 		{
-			return getListOfEmptyEnrollmentRules(degreeCurricularPlan);
+			return getListOfEmptyEnrollmentRules(degreeCurricularPlan, studentCurricularPlan, executionPeriod);
 		} else
 		{
 			return null;
@@ -90,19 +93,22 @@ public class EnrollmentRulesFactory
 	
 	
 	
-	private List getListOfPartialEnrollmentRules(IDegreeCurricularPlan degreeCurricularPlan)
+	private List getListOfPartialEnrollmentRules(IDegreeCurricularPlan degreeCurricularPlan,
+		IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod)
 	{
 		// TODO [DAVID]: Add code here.
 		return null;
 	}
 
-	private List getListOfTotalEnrollmentRules(IDegreeCurricularPlan degreeCurricularPlan)
+	private List getListOfTotalEnrollmentRules(IDegreeCurricularPlan degreeCurricularPlan,
+		IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod)
 	{
 		// TODO [DAVID]: Add code here.
 		return null;
 	}
 
-	private List getListOfEmptyEnrollmentRules(IDegreeCurricularPlan degreeCurricularPlan)
+	private List getListOfEmptyEnrollmentRules(IDegreeCurricularPlan degreeCurricularPlan,
+		IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod)
 	{
 		return new ArrayList();
 	}

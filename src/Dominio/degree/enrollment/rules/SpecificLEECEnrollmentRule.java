@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 import Dominio.CreditsInAnySecundaryArea;
 import Dominio.CreditsInScientificArea;
@@ -14,9 +15,6 @@ import Dominio.CurricularCourseGroup;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseGroup;
-import Dominio.ICurricularCourseScope;
-import Dominio.IEnrolment;
-import Dominio.IExecutionPeriod;
 import Dominio.IScientificArea;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ScientificArea;
@@ -31,28 +29,43 @@ import Util.AreaType;
 
 public class SpecificLEECEnrollmentRule implements IEnrollmentRule
 {
+	private IStudentCurricularPlan studentCurricularPlan;
+	private Integer creditsInSecundaryArea;
+	private Integer creditsInSpecializationArea;
+
 	public SpecificLEECEnrollmentRule(IStudentCurricularPlan studentCurricularPlan)
 	{
+		this.studentCurricularPlan = studentCurricularPlan;
 	}
 
 	public List apply(List curricularCoursesToBeEnrolledIn)
 	{
+		if ((studentCurricularPlan.getBranch() != null) && (studentCurricularPlan.getSecundaryBranch() != null))
+		{
+			try
+			{
+				return specificAlgorithm(this.studentCurricularPlan, curricularCoursesToBeEnrolledIn);
+			} catch (ExcepcaoPersistencia e)
+			{
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
+		}
+
 		return curricularCoursesToBeEnrolledIn;
 	}
 
-	/**
-	 * @param studentCurricularPlan
-	 * @param studentApprovedEnrollments
-	 * @param studentCurrentSemesterEnrollments
-	 * @param executionPeriod
-	 * @return finalListOfCurricularCourses
-	 * @throws ExcepcaoPersistencia
-	 */
-	private List leecAlgorithm(
-		IStudentCurricularPlan studentCurricularPlan,
-		List studentApprovedEnrollments,
-		List studentCurrentSemesterEnrollments,
-		IExecutionPeriod executionPeriod)
+	public Integer getCreditsInSecundaryArea()
+	{
+		return creditsInSecundaryArea;
+	}
+
+	public Integer getCreditsInSpecializationArea()
+	{
+		return creditsInSpecializationArea;
+	}
+
+	private List specificAlgorithm(IStudentCurricularPlan studentCurricularPlan, List curricularCoursesToBeEnrolledIn)
 		throws ExcepcaoPersistencia
 	{
 		HashMap creditsInScientificAreas = new HashMap();
@@ -64,761 +77,61 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule
 
 		creditsInAnySecundaryArea = getGivenCreditsInAnySecundaryArea(studentCurricularPlan);
 
-		List specializationAreaCurricularCourses =
-			selectAllCurricularCoursesFromGivenArea(studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION_OBJ);
-		List secundaryAreaCurricularCourses =
-			selectAllCurricularCoursesFromGivenArea(studentCurricularPlan.getSecundaryBranch(), AreaType.SECONDARY_OBJ);
+		List specializationAreaCurricularCourses = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCoursesFromArea(
+			studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION_OBJ);
+		List secundaryAreaCurricularCourses = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCoursesFromArea(
+			studentCurricularPlan.getSecundaryBranch(), AreaType.SECONDARY_OBJ);
+
 		List allCurricularCourses = new ArrayList();
 		allCurricularCourses.addAll(specializationAreaCurricularCourses);
 		allCurricularCourses.addAll(secundaryAreaCurricularCourses);
 
-		List studentApprovedEnrollmentsFromSpecializationAndSecundaryAreas =
-			selectEnrollmentsInSpecializationAndSecundaryAreasCurricularCourses(studentApprovedEnrollments, allCurricularCourses);
+		List specializationAndSecundaryAreaCurricularCoursesToCountForCredits =
+			getSpecializationAndSecundaryAreaCurricularCoursesToCountForCredits(allCurricularCourses);
 
-		List studentCurrentSemesterEnrollmentsFromSpecializationAndSecundaryAreas =
-			selectEnrollmentsInSpecializationAndSecundaryAreasCurricularCourses(
-				studentCurrentSemesterEnrollments,
-				allCurricularCourses);
-		
-		calculateGroupsCreditsFromEnrollments(
-			studentCurricularPlan,
-			studentApprovedEnrollmentsFromSpecializationAndSecundaryAreas,
-			studentCurrentSemesterEnrollmentsFromSpecializationAndSecundaryAreas,
-			creditsInScientificAreas,
-			creditsInSpecializationAreaGroups,
-			creditsInSecundaryAreaGroups);
+		calculateGroupsCreditsFromEnrollments(studentCurricularPlan,
+			specializationAndSecundaryAreaCurricularCoursesToCountForCredits, creditsInScientificAreas,
+			creditsInSpecializationAreaGroups, creditsInSecundaryAreaGroups);
 
-		calculateGroupsCreditsFromScientificAreas(
-			studentCurricularPlan,
-			creditsInScientificAreas,
-			creditsInSpecializationAreaGroups,
-			creditsInSecundaryAreaGroups,
-			creditsInAnySecundaryArea);
+		calculateGroupsCreditsFromScientificAreas(studentCurricularPlan, creditsInScientificAreas,
+			creditsInSpecializationAreaGroups, creditsInSecundaryAreaGroups, creditsInAnySecundaryArea);
 
-		Integer creditsInSecundaryArea =
+		this.creditsInSecundaryArea =
 			calculateCreditsInSecundaryArea(studentCurricularPlan, creditsInSecundaryAreaGroups, creditsInAnySecundaryArea);
-		Integer creditsInSpecializationArea =
+		this.creditsInSpecializationArea =
 			calculateCreditsInSpecializationArea(studentCurricularPlan, creditsInSpecializationAreaGroups);
 		
-//		this.studentEnrolmentContext.setCreditsInSecundaryArea(creditsInSecundaryArea);
-//		this.studentEnrolmentContext.setCreditsInSpecializationArea(creditsInSpecializationArea);
-		
-		return selectCurricularCourses(
-			studentCurricularPlan,
-			creditsInSpecializationAreaGroups,
-			creditsInSecundaryAreaGroups,
-			creditsInAnySecundaryArea,
-			studentApprovedEnrollmentsFromSpecializationAndSecundaryAreas,
-			studentCurrentSemesterEnrollmentsFromSpecializationAndSecundaryAreas,
-			executionPeriod.getSemester());
+		return selectCurricularCourses(studentCurricularPlan, creditsInSpecializationAreaGroups, creditsInSecundaryAreaGroups,
+			creditsInAnySecundaryArea, specializationAndSecundaryAreaCurricularCoursesToCountForCredits,
+			curricularCoursesToBeEnrolledIn);
 	}
 
-	/**
-	 * @param studentCurricularPlan
-	 * @param creditsInSpecializationAreaGroups
-	 * @param creditsInSecundaryAreaGroups
-	 * @param creditsInAnySecundaryArea
-	 * @param enrollmentsWithAprovedState
-	 * @param enrollmentsWithEnrolledState
-	 * @param semester
-	 * @return finalListOfCurricularCourses
-	 * @throws ExcepcaoPersistencia
-	 */
-	private List selectCurricularCourses(
-		IStudentCurricularPlan studentCurricularPlan,
-		HashMap creditsInSpecializationAreaGroups,
-		HashMap creditsInSecundaryAreaGroups,
-		int creditsInAnySecundaryArea,
-		List enrollmentsWithAprovedState,
-		List enrollmentsWithEnrolledState,
-		Integer semester)
-		throws ExcepcaoPersistencia
-	{
-		boolean isSpecializationAreaDone = isSpecializationAreaDone(studentCurricularPlan, creditsInSpecializationAreaGroups);
-		boolean isSecundaryAreaDone =
-			isSecundaryAreaDone(studentCurricularPlan, creditsInSecundaryAreaGroups, creditsInAnySecundaryArea);
-		
-		List finalListOfCurricularCourses = null;
-
-		if (isSpecializationAreaDone && isSecundaryAreaDone)
-		{
-			finalListOfCurricularCourses = new ArrayList();
-		} else if (!isSpecializationAreaDone && isSecundaryAreaDone)
-		{
-			finalListOfCurricularCourses =
-				selectSpecializationAreaCurricularCoursesFromGroupsNotFull(studentCurricularPlan, creditsInSpecializationAreaGroups);
-		} else if (isSpecializationAreaDone && !isSecundaryAreaDone)
-		{
-			finalListOfCurricularCourses =
-				selectSecundaryAreaCurricularCoursesFromGroupsNotFull(
-					studentCurricularPlan,
-					creditsInSecundaryAreaGroups,
-					creditsInAnySecundaryArea);
-		} else
-		{
-			List specializationAreaCurricularCourses =
-				selectSpecializationAreaCurricularCoursesFromGroupsNotFull(
-					studentCurricularPlan,
-					creditsInSpecializationAreaGroups);
-
-			List secundaryAreaCurricularCourses =
-				selectSecundaryAreaCurricularCoursesFromGroupsNotFull(
-					studentCurricularPlan,
-					creditsInSecundaryAreaGroups,
-					creditsInAnySecundaryArea);
-			
-			List disjunction =
-				(List) CollectionUtils.disjunction(specializationAreaCurricularCourses, secundaryAreaCurricularCourses);
-			List intersection =
-				(List) CollectionUtils.intersection(specializationAreaCurricularCourses, secundaryAreaCurricularCourses);
-			
-			finalListOfCurricularCourses = new ArrayList();
-			finalListOfCurricularCourses.addAll(disjunction);
-			finalListOfCurricularCourses.addAll(intersection);
-		}
-		
-		selectDesiredCurricularCourses(enrollmentsWithAprovedState, finalListOfCurricularCourses);
-		selectDesiredCurricularCourses(enrollmentsWithEnrolledState, finalListOfCurricularCourses);
-		selectDesiredCurricularCourses(finalListOfCurricularCourses, semester);
-		return finalListOfCurricularCourses;
-	}
-
-	/**
-	 * @param studentCurricularPlan
-	 * @param creditsInSecundaryAreaGroups
-	 * @param creditsInAnySecundaryArea
-	 * @return secundaryAreaCurricularCoursesFromGroupsNotFull
-	 * @throws ExcepcaoPersistencia
-	 */
-	private List selectSecundaryAreaCurricularCoursesFromGroupsNotFull(
-		IStudentCurricularPlan studentCurricularPlan,
-		HashMap creditsInSecundaryAreaGroups,
-		int creditsInAnySecundaryArea)
+	private void getGivenCreditsInScientificArea(IStudentCurricularPlan studentCurricularPlan, HashMap creditsInScientificAreas)
 		throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
-		
-		List secundaryAreaCurricularCourses = new ArrayList();
+		IPersistentCreditsInSpecificScientificArea creditsInScientificAreaDAO = persistentSuport
+			.getIPersistentCreditsInSpecificScientificArea();
 
-		List groups =
-			curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan.getSecundaryBranch(), AreaType.SECONDARY_OBJ);
+		List givenCreditsInScientificAreas = creditsInScientificAreaDAO.readAllByStudentCurricularPlan(studentCurricularPlan);
 
-		Iterator iterator = groups.iterator();
-		while (iterator.hasNext())
+		if (givenCreditsInScientificAreas != null && !givenCreditsInScientificAreas.isEmpty())
 		{
-			ICurricularCourseGroup group = (ICurricularCourseGroup) iterator.next();
-
-			if (!isSecundaryGroupDone(studentCurricularPlan, group, creditsInSecundaryAreaGroups, creditsInAnySecundaryArea))
-			{
-				secundaryAreaCurricularCourses.addAll(group.getCurricularCourses());
-			}
-		}
-		return secundaryAreaCurricularCourses;
-	}
-
-	/**
-	 * @param studentCurricularPlan
-	 * @param creditsInSpecializationAreaGroups
-	 * @return specializationAreaCurricularCoursesFromGroupsNotFull
-	 * @throws ExcepcaoPersistencia
-	 */
-	private List selectSpecializationAreaCurricularCoursesFromGroupsNotFull(
-		IStudentCurricularPlan studentCurricularPlan,
-		HashMap creditsInSpecializationAreaGroups)
-		throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
-		
-		List specializationAreaCurricularCourses = new ArrayList();
-
-		List groups =
-			curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION_OBJ);
-
-		Iterator iterator = groups.iterator();
-		while (iterator.hasNext())
-		{
-			ICurricularCourseGroup group = (ICurricularCourseGroup) iterator.next();
-			
-			if (!isSpecializationGroupDone(studentCurricularPlan, group, creditsInSpecializationAreaGroups))
-			{
-				specializationAreaCurricularCourses.addAll(group.getCurricularCourses());
-			}
-		}
-
-		return specializationAreaCurricularCourses;
-	}
-
-	/**
-	 * @param enrollmentsInCurricularCourseToRemove
-	 * @param curricularCoursesToRemoveFrom
-	 */
-	private void selectDesiredCurricularCourses(List enrollmentsInCurricularCourseToRemove, List curricularCoursesToRemoveFrom)
-	{
-		List curricularCoursesToRemove = new ArrayList();
-		Iterator iterator = enrollmentsInCurricularCourseToRemove.iterator();
-		while(iterator.hasNext())
-		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
-			if (curricularCoursesToRemoveFrom.contains(enrolment.getCurricularCourse()))
-			{
-				curricularCoursesToRemove.add(enrolment.getCurricularCourse());
-			}
-		}
-		curricularCoursesToRemoveFrom.removeAll(curricularCoursesToRemove);
-	}
-
-	/**
-	 * @param curricularCoursesToRemoveFrom
-	 * @param semester
-	 */
-	private void selectDesiredCurricularCourses(List curricularCoursesToRemoveFrom, Integer semester)
-	{
-		List curricularCoursesToRemove = new ArrayList();
-		Iterator iterator = curricularCoursesToRemoveFrom.iterator();
-		while(iterator.hasNext())
-		{
-			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-			List scopes = curricularCourse.getScopes();
-			boolean courseIsToMantain = false;
-			Iterator iteratorScopes = scopes.iterator();
-			while(iteratorScopes.hasNext())
-			{
-				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopes.next();
-				if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
-					&& curricularCourseScope.getEndDate() == null)
-				{
-					courseIsToMantain = true;
-				}
-			}
-			if (!courseIsToMantain)
-			{
-				curricularCoursesToRemove.add(curricularCourse);
-			}
-		}
-		curricularCoursesToRemoveFrom.removeAll(curricularCoursesToRemove);
-	}
-	
-	/**
-	 * @param studentCurricularPlan
-	 * @param studentApprovedEnrollments
-	 * @param studentCurrentSemesterEnrollments
-	 * @param creditsInScientificAreas
-	 * @param creditsInSpecializationAreaGroups
-	 * @param creditsInSecundaryAreaGroups
-	 * @throws ExcepcaoPersistencia
-	 */
-	private void calculateGroupsCreditsFromEnrollments(
-		IStudentCurricularPlan studentCurricularPlan,
-		List studentApprovedEnrollments,
-		List studentCurrentSemesterEnrollments,
-		HashMap creditsInScientificAreas,
-		HashMap creditsInSpecializationAreaGroups,
-		HashMap creditsInSecundaryAreaGroups)
-		throws ExcepcaoPersistencia
-	{
-		List enrollments = new ArrayList();
-		enrollments.addAll(studentApprovedEnrollments);
-		enrollments.addAll(studentCurrentSemesterEnrollments);
-
-		Iterator iterator = enrollments.iterator();
-		while (iterator.hasNext())
-		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
-			ICurricularCourse curricularCourse = enrolment.getCurricularCourse();
-
-			if (curricularCourseBelongsToAScientificAreaPresentInMoreThanOneBranch(curricularCourse, studentCurricularPlan))
-			{
-				sumCreditsInScientificArea(curricularCourse, creditsInScientificAreas);
-			} else
-			{
-				sumCreditsInAreasGroups(
-					curricularCourse,
-					studentCurricularPlan,
-					creditsInSecundaryAreaGroups,
-					creditsInSpecializationAreaGroups);
-			}
-		}
-	}
-
-	/**
-	 * @param studentCurricularPlan
-	 * @param creditsInScientificAreas
-	 * @param creditsInSpecializationAreaGroups
-	 * @param creditsInSecundaryAreaGroups
-	 * @param creditsInAnySecundaryArea
-	 * @throws ExcepcaoPersistencia
-	 */
-	private void calculateGroupsCreditsFromScientificAreas(
-		IStudentCurricularPlan studentCurricularPlan,
-		HashMap creditsInScientificAreas,
-		HashMap creditsInSpecializationAreaGroups,
-		HashMap creditsInSecundaryAreaGroups,
-		int creditsInAnySecundaryArea)
-		throws ExcepcaoPersistencia
-	{
-		HashMap clashingGroups = new HashMap();
-
-		calculateNonClashingScientificAreas(
-			studentCurricularPlan,
-			creditsInScientificAreas,
-			creditsInSpecializationAreaGroups,
-			creditsInSecundaryAreaGroups,
-			clashingGroups);
-
-		calculateClashingScientificAreas(
-			creditsInScientificAreas,
-			creditsInSpecializationAreaGroups,
-			creditsInSecundaryAreaGroups,
-			creditsInAnySecundaryArea,
-			clashingGroups);
-	}
-
-	/**
-	 * @param creditsInScientificAreas
-	 * @param creditsInSpecializationAreaGroups
-	 * @param creditsInSecundaryAreaGroups
-	 * @param creditsInAnySecundaryArea
-	 * @param clashingGroups
-	 */
-	private void calculateClashingScientificAreas(
-		HashMap creditsInScientificAreas,
-		HashMap creditsInSpecializationAreaGroups,
-		HashMap creditsInSecundaryAreaGroups,
-		int creditsInAnySecundaryArea,
-		HashMap clashingGroups)
-	{
-		if (!clashingGroups.entrySet().isEmpty())
-		{
-			Iterator iterator = clashingGroups.entrySet().iterator();
+			Iterator iterator = givenCreditsInScientificAreas.iterator();
 			while (iterator.hasNext())
 			{
-				Map.Entry mapEntry = (Map.Entry) iterator.next();
-				List objects = (List) mapEntry.getValue();
-				Integer scientificAreaID = (Integer) mapEntry.getKey();
-
-				ICurricularCourseGroup specializationGroup = (ICurricularCourseGroup) objects.get(0);
-				ICurricularCourseGroup secundaryGroup = (ICurricularCourseGroup) objects.get(1);
-
-//				Integer creditsInSpecializationGroup =
-//					(Integer) creditsInSpecializationAreaGroups.get(specializationGroup.getIdInternal());
-//				Integer creditsInSecundaryGroup = (Integer) creditsInSecundaryAreaGroups.get(secundaryGroup.getIdInternal());
-//				Integer creditsInScientificArea = (Integer) creditsInScientificAreas.get(scientificAreaID);
-//				
-//				if (creditsInSpecializationGroup == null)
-//				{
-//					creditsInSpecializationGroup = new Integer(0);
-//				}
-//
-//				if (creditsInSecundaryGroup == null)
-//				{
-//					creditsInSecundaryGroup = new Integer(0);
-//				}
-//
-//				if (creditsInScientificArea == null)
-//				{
-//					creditsInScientificArea = new Integer(0);
-//				}
-//
-//				int sumOfGroupsCredits =
-//					creditsInSpecializationGroup.intValue()
-//						+ creditsInSecundaryGroup.intValue()
-//						+ creditsInScientificArea.intValue();
-//
-//				int sumOfMinimumGroupsCredits =
-//					specializationGroup.getMinimumCredits().intValue() + secundaryGroup.getMinimumCredits().intValue();
-//
-//				if (sumOfGroupsCredits < sumOfMinimumGroupsCredits)
-//				{
-//					distributeCreditsInScientificAreaByTheTwoGroups(
-//						creditsInSpecializationAreaGroups,
-//						creditsInSecundaryAreaGroups,
-//						creditsInScientificAreas,
-//						creditsInAnySecundaryArea,
-//						specializationGroup,
-//						secundaryGroup,
-//						scientificAreaID,
-//						specializationGroup.getMinimumCredits(),
-//						secundaryGroup.getMinimumCredits());
-//				} else // if (sumOfGroupsCredits < sumOfMaximumGroupsCredits) AND if (sumOfGroupsCredits >=
-//					   // sumOfMaximumGroupsCredits)
-//				{
-//					distributeCreditsInScientificAreaByTheTwoGroups(
-//						creditsInSpecializationAreaGroups,
-//						creditsInSecundaryAreaGroups,
-//						creditsInScientificAreas,
-//						creditsInAnySecundaryArea,
-//						specializationGroup,
-//						secundaryGroup,
-//						scientificAreaID,
-//						specializationGroup.getMaximumCredits(),
-//						secundaryGroup.getMaximumCredits());
-//				}
-
-
-
-				distributeCreditsInScientificAreaByTheTwoGroups(
-					creditsInSpecializationAreaGroups,
-					creditsInSecundaryAreaGroups,
-					creditsInScientificAreas,
-					creditsInAnySecundaryArea,
-					specializationGroup,
-					secundaryGroup,
-					scientificAreaID);
+				CreditsInScientificArea creditsInScientificArea = (CreditsInScientificArea) iterator.next();
+				sumInHashMap(creditsInScientificAreas, creditsInScientificArea.getScientificArea().getIdInternal(),
+					creditsInScientificArea.getGivenCredits());
 			}
 		}
 	}
 
-	/**
-	 * @param creditsInSpecializationAreaGroups
-	 * @param creditsInSecundaryAreaGroups
-	 * @param creditsInScientificAreas
-	 * @param creditsInAnySecundaryArea
-	 * @param specializationGroup
-	 * @param secundaryGroup
-	 * @param scientificAreaID
-	 */
-	private void distributeCreditsInScientificAreaByTheTwoGroups(
-			HashMap creditsInSpecializationAreaGroups,
-			HashMap creditsInSecundaryAreaGroups,
-			HashMap creditsInScientificAreas,
-			int creditsInAnySecundaryArea,
-			ICurricularCourseGroup specializationGroup,
-			ICurricularCourseGroup secundaryGroup,
-			Integer scientificAreaID)
-	{
-		Integer aux = (Integer) creditsInSpecializationAreaGroups.get(specializationGroup.getIdInternal());
-		Integer bux = (Integer) creditsInSecundaryAreaGroups.get(secundaryGroup.getIdInternal());
-		Integer cux = (Integer) creditsInScientificAreas.get(scientificAreaID);
-
-		if (aux == null)
-		{
-			aux = new Integer(0);
-		}
-
-		if (bux == null)
-		{
-			bux = new Integer(0);
-		}
-		
-		if (cux == null)
-		{
-			cux = new Integer(0);
-		}
-		
-		int creditsInSpecializationGroup = aux.intValue();
-		int creditsInSecundaryGroup = bux.intValue() + creditsInAnySecundaryArea;
-		int creditsInScientificArea = cux.intValue();
-		int maxCreditsInSpecializationGroup = specializationGroup.getMaximumCredits().intValue();
-		int minCreditsInSpecializationGroup = specializationGroup.getMinimumCredits().intValue();
-		int maxCreditsInSecundaryGroup = secundaryGroup.getMaximumCredits().intValue();
-		int minCreditsInSecundaryGroup = secundaryGroup.getMinimumCredits().intValue();
-
-		while (creditsInScientificArea > 0)
-		{
-			if (creditsInSpecializationGroup < (minCreditsInSpecializationGroup - 1))
-			{
-				creditsInSpecializationGroup++;
-				creditsInScientificArea--;
-			} else if (creditsInSecundaryGroup < (minCreditsInSecundaryGroup - 1))
-			{
-				creditsInSecundaryGroup++;
-				creditsInScientificArea--;
-			} else if ((creditsInSpecializationGroup == (minCreditsInSpecializationGroup - 1))
-				&& (maxCreditsInSpecializationGroup != minCreditsInSpecializationGroup))
-			{
-				creditsInSpecializationGroup++;
-				creditsInScientificArea--;
-			} else if ((creditsInSecundaryGroup == (minCreditsInSpecializationGroup - 1))
-					&& (maxCreditsInSecundaryGroup != minCreditsInSecundaryGroup))
-			{
-				creditsInSecundaryGroup++;
-				creditsInScientificArea--;
-			} else if (creditsInSpecializationGroup < (maxCreditsInSpecializationGroup - 1))
-			{
-				creditsInSpecializationGroup++;
-				creditsInScientificArea--;
-			} else if (creditsInSecundaryGroup < (maxCreditsInSecundaryGroup - 1))
-			{
-				creditsInSecundaryGroup++;
-				creditsInScientificArea--;
-			} else if (creditsInSpecializationGroup == (maxCreditsInSpecializationGroup - 1))
-			{
-				creditsInSpecializationGroup++;
-				creditsInScientificArea--;
-			} else if (creditsInSecundaryGroup == (maxCreditsInSecundaryGroup - 1))
-			{
-				creditsInSecundaryGroup++;
-				creditsInScientificArea--;
-			} else
-			{
-				creditsInSpecializationGroup += creditsInScientificArea;
-			}
-		}
-		
-		sumInHashMap(
-			creditsInSpecializationAreaGroups,
-			specializationGroup.getIdInternal(),
-			new Integer(String.valueOf(creditsInSpecializationGroup - aux.intValue())));
-		
-		sumInHashMap(
-			creditsInSecundaryAreaGroups,
-			secundaryGroup.getIdInternal(),
-			new Integer(String.valueOf(creditsInSecundaryGroup - creditsInAnySecundaryArea - bux.intValue())));
-	}
-
-	/**
-	 * @param studentCurricularPlan
-	 * @param group
-	 * @param creditsInSpecializationAreaGroups
-	 * @return true/false
-	 * @throws ExcepcaoPersistencia
-	 */
-	private boolean isSpecializationGroupDone(
-		IStudentCurricularPlan studentCurricularPlan,
-		ICurricularCourseGroup group,
-		HashMap creditsInSpecializationAreaGroups)
-		throws ExcepcaoPersistencia
-	{
-		Integer credits = (Integer) creditsInSpecializationAreaGroups.get(group.getIdInternal());
-
-		if (credits != null)
-		{
-			if (credits.intValue() >= group.getMaximumCredits().intValue())
-			{
-				return true;
-			}
-
-			if (credits.intValue() < group.getMinimumCredits().intValue())
-			{
-				return false;
-			}
-
-			return isSpecializationAreaDone(studentCurricularPlan, creditsInSpecializationAreaGroups);
-		} else
-		{
-			return false;
-		}
-	}
-
-	/**
-	 * @param studentCurricularPlan
-	 * @param group
-	 * @param creditsInSecundaryAreaGroups
-	 * @param creditsInAnySecundaryArea
-	 * @return true/false
-	 * @throws ExcepcaoPersistencia
-	 */
-	private boolean isSecundaryGroupDone(
-		IStudentCurricularPlan studentCurricularPlan,
-		ICurricularCourseGroup group,
-		HashMap creditsInSecundaryAreaGroups,
-		int creditsInAnySecundaryArea)
-		throws ExcepcaoPersistencia
-	{
-		Integer credits = (Integer) creditsInSecundaryAreaGroups.get(group.getIdInternal());
-
-		if (credits != null)
-		{
-			if (credits.intValue() >= group.getMaximumCredits().intValue())
-			{
-				return true;
-			}
-
-			if (credits.intValue() < group.getMinimumCredits().intValue())
-			{
-				return false;
-			}
-
-			return isSecundaryAreaDone(studentCurricularPlan, creditsInSecundaryAreaGroups, creditsInAnySecundaryArea);
-		} else
-		{
-			return false;
-		}
-}
-
-	/**
-	 * @param studentCurricularPlan
-	 * @param group
-	 * @param creditsInSpecializationAreaGroups
-	 * @return true/false
-	 * @throws ExcepcaoPersistencia
-	 */
-	private boolean isSpecializationAreaDone(
-		IStudentCurricularPlan studentCurricularPlan,
-		HashMap creditsInSpecializationAreaGroups)
-		throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
-
-		if (!creditsInSpecializationAreaGroups.entrySet().isEmpty())
-		{
-			int areaCredits = 0;
-
-			Iterator iterator = creditsInSpecializationAreaGroups.entrySet().iterator();
-			while (iterator.hasNext())
-			{
-				Map.Entry mapEntry = (Map.Entry) iterator.next();
-				Integer otherCredits = (Integer) mapEntry.getValue();
-				Integer groupID = (Integer) mapEntry.getKey();
-
-				ICurricularCourseGroup otherGroup =
-					(ICurricularCourseGroup) curricularCourseGroupDAO.readByOID(CurricularCourseGroup.class, groupID);
-
-				if (otherCredits.intValue() < otherGroup.getMinimumCredits().intValue())
-				{
-					return false;
-				} else
-				{
-					areaCredits += otherCredits.intValue();
-				}
-			}
-
-			if (areaCredits >= studentCurricularPlan.getBranch().getSpecializationCredits().intValue())
-			{
-				return true;
-			} else
-			{
-				return false;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * @param studentCurricularPlan
-	 * @param creditsInSecundaryAreaGroups
-	 * @param creditsInAnySecundaryArea
-	 * @return true/false
-	 * @throws ExcepcaoPersistencia
-	 */
-	private boolean isSecundaryAreaDone(
-		IStudentCurricularPlan studentCurricularPlan,
-		HashMap creditsInSecundaryAreaGroups,
-		int creditsInAnySecundaryArea)
-		throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
-
-		if (!creditsInSecundaryAreaGroups.entrySet().isEmpty())
-		{
-			int areaCredits = 0;
-
-			Iterator iterator = creditsInSecundaryAreaGroups.entrySet().iterator();
-			while (iterator.hasNext())
-			{
-				Map.Entry mapEntry = (Map.Entry) iterator.next();
-				Integer otherCredits = (Integer) mapEntry.getValue();
-				Integer groupID = (Integer) mapEntry.getKey();
-
-				ICurricularCourseGroup otherGroup =
-					(ICurricularCourseGroup) curricularCourseGroupDAO.readByOID(CurricularCourseGroup.class, groupID);
-
-				if (otherCredits.intValue() >= otherGroup.getMaximumCredits().intValue())
-				{
-					return true;
-				} else
-				{
-					areaCredits += otherCredits.intValue();
-				}
-			}
-
-			areaCredits += creditsInAnySecundaryArea;
-
-			if (areaCredits >= studentCurricularPlan.getSecundaryBranch().getSecondaryCredits().intValue())
-			{
-				return true;
-			} else
-			{
-				return false;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * @param studentCurricularPlan
-	 * @param creditsInScientificAreas
-	 * @param creditsInSpecializationAreaGroups
-	 * @param creditsInSecundaryAreaGroups
-	 * @param clashingGroups
-	 * @throws ExcepcaoPersistencia
-	 */
-	private void calculateNonClashingScientificAreas(
-		IStudentCurricularPlan studentCurricularPlan,
-		HashMap creditsInScientificAreas,
-		HashMap creditsInSpecializationAreaGroups,
-		HashMap creditsInSecundaryAreaGroups,
-		HashMap clashingGroups)
-		throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentScientificArea scientificAreaDAO = persistentSuport.getIPersistentScientificArea();
-		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
-		
-		if (!creditsInScientificAreas.entrySet().isEmpty())
-		{
-			List entriesInHashMapToRemove = new ArrayList();
-
-			Iterator iterator = creditsInScientificAreas.entrySet().iterator();
-			while (iterator.hasNext())
-			{
-				Map.Entry mapEntry = (Map.Entry) iterator.next();
-				Integer credits = (Integer) mapEntry.getValue();
-				Integer scientificAreaID = (Integer) mapEntry.getKey();
-
-				IScientificArea scientificArea =
-					(IScientificArea) scientificAreaDAO.readByOID(ScientificArea.class, scientificAreaID);
-
-				ICurricularCourseGroup specializationGroup =
-					curricularCourseGroupDAO.readByBranchAndScientificAreaAndAreaType(
-						studentCurricularPlan.getBranch(),
-						scientificArea,
-						AreaType.SPECIALIZATION_OBJ);
-
-				ICurricularCourseGroup secundaryGroup =
-					curricularCourseGroupDAO.readByBranchAndScientificAreaAndAreaType(
-						studentCurricularPlan.getSecundaryBranch(),
-						scientificArea,
-						AreaType.SECONDARY_OBJ);
-
-				if ((specializationGroup != null) && (secundaryGroup != null))
-				{
-					List groups = new ArrayList();
-					groups.add(0, specializationGroup);
-					groups.add(1, secundaryGroup);
-					groups.add(2, scientificArea);
-					clashingGroups.put(scientificArea.getIdInternal(), groups);
-				} else if (specializationGroup != null)
-				{
-					sumInHashMap(creditsInSpecializationAreaGroups, specializationGroup.getIdInternal(), credits);
-					entriesInHashMapToRemove.add(scientificAreaID);
-				} else if (secundaryGroup != null)
-				{
-					sumInHashMap(creditsInSecundaryAreaGroups, secundaryGroup.getIdInternal(), credits);
-					entriesInHashMapToRemove.add(scientificAreaID);
-				}
-			}
-			
-			cleanHashMap(creditsInScientificAreas, entriesInHashMapToRemove);
-		}
-	}
-
-	/**
-	 * @param studentCurricularPlan
-	 * @return creditsInAnySecundaryAreas
-	 * @throws ExcepcaoPersistencia
-	 */
 	private int getGivenCreditsInAnySecundaryArea(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentCreditsInAnySecundaryArea creditsInAnySecundaryAreaDAO =
-			persistentSuport.getIPersistentCreditsInAnySecundaryArea();
+		IPersistentCreditsInAnySecundaryArea creditsInAnySecundaryAreaDAO = persistentSuport
+			.getIPersistentCreditsInAnySecundaryArea();
 		int creditsInAnySecundaryAreas = 0;
 
 		List givenCreditsInAnySecundaryAreas = creditsInAnySecundaryAreaDAO.readAllByStudentCurricularPlan(studentCurricularPlan);
@@ -836,47 +149,79 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule
 		return creditsInAnySecundaryAreas;
 	}
 
-	/**
-	 * @param studentCurricularPlan
-	 * @param creditsInScientificAreas
-	 * @throws ExcepcaoPersistencia
-	 */
-	private void getGivenCreditsInScientificArea(IStudentCurricularPlan studentCurricularPlan, HashMap creditsInScientificAreas)
-		throws ExcepcaoPersistencia
+	private void sumInHashMap(HashMap map, Integer key, Integer value)
 	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentCreditsInSpecificScientificArea creditsInScientificAreaDAO =
-			persistentSuport.getIPersistentCreditsInSpecificScientificArea();
-
-		List givenCreditsInScientificAreas = creditsInScientificAreaDAO.readAllByStudentCurricularPlan(studentCurricularPlan);
-
-		if (givenCreditsInScientificAreas != null && !givenCreditsInScientificAreas.isEmpty())
+		if (!map.containsKey(key))
 		{
-			Iterator iterator = givenCreditsInScientificAreas.iterator();
-			while (iterator.hasNext())
+			map.put(key, value);
+		} else
+		{
+			Integer oldValue = (Integer) map.get(key);
+			int result = oldValue.intValue() + value.intValue();
+			map.put(key, new Integer(result));
+		}
+	}
+
+	private void cleanHashMap(HashMap map, List keysOfItemsToRemove)
+	{
+		Iterator iterator = keysOfItemsToRemove.iterator();
+		while (iterator.hasNext())
+		{
+			Integer key = (Integer) iterator.next();
+			map.remove(key);
+		}
+	}
+
+	private List getSpecializationAndSecundaryAreaCurricularCoursesToCountForCredits(List allCurricularCourses)
+	{
+		return (List) CollectionUtils.select(allCurricularCourses, new Predicate()
+		{
+			public boolean evaluate(Object obj)
 			{
-				CreditsInScientificArea creditsInScientificArea = (CreditsInScientificArea) iterator.next();
-				sumInHashMap(
-					creditsInScientificAreas,
-					creditsInScientificArea.getScientificArea().getIdInternal(),
-					creditsInScientificArea.getGivenCredits());
+				ICurricularCourse curricularCourse = (ICurricularCourse) obj;
+				return (studentCurricularPlan.isCurricularCourseApproved(curricularCourse) || studentCurricularPlan
+					.isCurricularCourseEnrolled(curricularCourse));
+			}
+		});
+	}
+
+	private void calculateGroupsCreditsFromEnrollments(IStudentCurricularPlan studentCurricularPlan,
+		List specializationAndSecundaryAreaCurricularCoursesToCountForCredits, HashMap creditsInScientificAreas,
+		HashMap creditsInSpecializationAreaGroups, HashMap creditsInSecundaryAreaGroups) throws ExcepcaoPersistencia
+	{
+		Iterator iterator = specializationAndSecundaryAreaCurricularCoursesToCountForCredits.iterator();
+		while (iterator.hasNext())
+		{
+			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+
+			if (curricularCourseBelongsToAScientificAreaPresentInMoreThanOneBranch(curricularCourse, studentCurricularPlan))
+			{
+				sumCreditsInScientificArea(curricularCourse, creditsInScientificAreas);
+			} else
+			{
+				sumCreditsInAreasGroups(curricularCourse, studentCurricularPlan, creditsInSecundaryAreaGroups,
+					creditsInSpecializationAreaGroups);
 			}
 		}
 	}
 
-	/**
-	 * @param curricularCourse
-	 * @param studentCurricularPlan
-	 * @param creditsInSecundaryAreaGroups
-	 * @param creditsInSpecializationAreaGroups
-	 * @throws ExcepcaoPersistencia
-	 */
-	private void sumCreditsInAreasGroups(
-		ICurricularCourse curricularCourse,
-		IStudentCurricularPlan studentCurricularPlan,
-		HashMap creditsInSecundaryAreaGroups,
-		HashMap creditsInSpecializationAreaGroups)
-		throws ExcepcaoPersistencia
+	private boolean curricularCourseBelongsToAScientificAreaPresentInMoreThanOneBranch(ICurricularCourse curricularCourse,
+		IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia
+	{
+		return (curricularCourseBelongsToSpecializationArea(curricularCourse, studentCurricularPlan) &&
+			curricularCourseBelongsToSecundaryArea(curricularCourse, studentCurricularPlan));
+	}
+
+	private void sumCreditsInScientificArea(ICurricularCourse curricularCourse, HashMap creditsInScientificAreas)
+	{
+		IScientificArea scientificArea = curricularCourse.getScientificArea();
+		Integer curricularCourseCredits = new Integer(curricularCourse.getCredits().intValue());
+
+		sumInHashMap(creditsInScientificAreas, scientificArea.getIdInternal(), curricularCourseCredits);
+	}
+
+	private void sumCreditsInAreasGroups(ICurricularCourse curricularCourse, IStudentCurricularPlan studentCurricularPlan,
+		HashMap creditsInSecundaryAreaGroups, HashMap creditsInSpecializationAreaGroups) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
@@ -903,179 +248,240 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule
 
 		if (creditsInAreaGroups != null && branch != null && areaType != null)
 		{
-			ICurricularCourseGroup curricularCourseGroup =
-			curricularCourseGroupDAO.readByBranchAndCurricularCourseAndAreaType(branch, curricularCourse, areaType);
+			ICurricularCourseGroup curricularCourseGroup = curricularCourseGroupDAO.readByBranchAndCurricularCourseAndAreaType(
+				branch, curricularCourse, areaType);
 
 			sumInHashMap(creditsInAreaGroups, curricularCourseGroup.getIdInternal(), curricularCourseCredits);
 		}
 	}
 
-	/**
-	 * @param curricularCourse
-	 * @param creditsInSpecificScientificArea
-	 * @throws ExcepcaoPersistencia
-	 */
-	private void sumCreditsInScientificArea(
-		ICurricularCourse curricularCourse,
-		HashMap creditsInScientificAreas)
-	{
-		IScientificArea scientificArea = curricularCourse.getScientificArea();
-		Integer curricularCourseCredits = new Integer(curricularCourse.getCredits().intValue());
-
-		sumInHashMap(creditsInScientificAreas, scientificArea.getIdInternal(), curricularCourseCredits);
-	}
-
-	/**
-	 * @param curricularCourse
-	 * @param studentCurricularPlan
-	 * @return true/false
-	 * @throws ExcepcaoPersistencia
-	 */
-	private boolean curricularCourseBelongsToAScientificAreaPresentInMoreThanOneBranch(
-		ICurricularCourse curricularCourse,
-		IStudentCurricularPlan studentCurricularPlan)
-		throws ExcepcaoPersistencia
-	{
-		return (
-			curricularCourseBelongsToSpecializationArea(curricularCourse, studentCurricularPlan)
-				&& curricularCourseBelongsToSecundaryArea(curricularCourse, studentCurricularPlan));
-	}
-
-	/**
-	 * @param curricularCourse
-	 * @param studentCurricularPlan
-	 * @return true/false
-	 * @throws ExcepcaoPersistencia
-	 */
-	private boolean curricularCourseBelongsToSpecializationArea(
-		ICurricularCourse curricularCourse,
-		IStudentCurricularPlan studentCurricularPlan)
-		throws ExcepcaoPersistencia
+	private boolean curricularCourseBelongsToSpecializationArea(ICurricularCourse curricularCourse,
+		IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
 
-		ICurricularCourseGroup curricularCourseGroup =
-			curricularCourseGroupDAO.readByBranchAndCurricularCourseAndAreaType(
-				studentCurricularPlan.getBranch(),
-				curricularCourse,
-				AreaType.SPECIALIZATION_OBJ);
-		
+		ICurricularCourseGroup curricularCourseGroup = curricularCourseGroupDAO.readByBranchAndCurricularCourseAndAreaType(
+			studentCurricularPlan.getBranch(), curricularCourse, AreaType.SPECIALIZATION_OBJ);
+
 		return curricularCourseGroup != null;
 	}
 
-	/**
-	 * @param curricularCourse
-	 * @param studentCurricularPlan
-	 * @return true/false
-	 * @throws ExcepcaoPersistencia
-	 */
-	private boolean curricularCourseBelongsToSecundaryArea(
-		ICurricularCourse curricularCourse,
-		IStudentCurricularPlan studentCurricularPlan)
-		throws ExcepcaoPersistencia
+	private boolean curricularCourseBelongsToSecundaryArea(ICurricularCourse curricularCourse,
+		IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
 
-		ICurricularCourseGroup curricularCourseGroup =
-		curricularCourseGroupDAO.readByBranchAndCurricularCourseAndAreaType(
-				studentCurricularPlan.getSecundaryBranch(),
-				curricularCourse,
-				AreaType.SECONDARY_OBJ);
-		
+		ICurricularCourseGroup curricularCourseGroup = curricularCourseGroupDAO.readByBranchAndCurricularCourseAndAreaType(
+			studentCurricularPlan.getSecundaryBranch(), curricularCourse, AreaType.SECONDARY_OBJ);
+
 		return curricularCourseGroup != null;
 	}
 
-	/**
-	 * @param map
-	 * @param key
-	 * @param value
-	 */
-	private void sumInHashMap(HashMap map, Integer key, Integer value)
+	private void calculateGroupsCreditsFromScientificAreas(IStudentCurricularPlan studentCurricularPlan,
+		HashMap creditsInScientificAreas, HashMap creditsInSpecializationAreaGroups, HashMap creditsInSecundaryAreaGroups,
+		int creditsInAnySecundaryArea) throws ExcepcaoPersistencia
 	{
-		if (!map.containsKey(key))
-		{
-			map.put(key, value);
-		} else
-		{
-			Integer oldValue = (Integer) map.get(key);
-			int result = oldValue.intValue() + value.intValue();
-			map.put(key, new Integer(result));
-		}
+		HashMap clashingGroups = new HashMap();
+
+		calculateNonClashingScientificAreas(studentCurricularPlan, creditsInScientificAreas, creditsInSpecializationAreaGroups,
+			creditsInSecundaryAreaGroups, clashingGroups);
+
+		calculateClashingScientificAreas(creditsInScientificAreas, creditsInSpecializationAreaGroups,
+			creditsInSecundaryAreaGroups, creditsInAnySecundaryArea, clashingGroups);
 	}
 
-	/**
-	 * @param map
-	 * @param keysOfItemsToRemove
-	 */
-	private void cleanHashMap(HashMap map, List keysOfItemsToRemove)
+	private void calculateNonClashingScientificAreas(IStudentCurricularPlan studentCurricularPlan,
+		HashMap creditsInScientificAreas, HashMap creditsInSpecializationAreaGroups, HashMap creditsInSecundaryAreaGroups,
+		HashMap clashingGroups) throws ExcepcaoPersistencia
 	{
-		Iterator iterator = keysOfItemsToRemove.iterator();
-		while(iterator.hasNext())
-		{
-			Integer key = (Integer) iterator.next();
-			map.remove(key);
-		}
-	}
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentScientificArea scientificAreaDAO = persistentSuport.getIPersistentScientificArea();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
 
-	/**
-	 * @param enrollments
-	 * @param curricularCourses
-	 * @return enrollments
-	 */
-	private List selectEnrollmentsInSpecializationAndSecundaryAreasCurricularCourses(
-		List enrollments,
-		List curricularCourses)
-	{
-		List enrollmentsToKeep = new ArrayList();
-		Iterator iterator = enrollments.iterator();
-		while(iterator.hasNext())
+		if (!creditsInScientificAreas.entrySet().isEmpty())
 		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
-			if (curricularCourses.contains(enrolment.getCurricularCourse()))
+			List entriesInHashMapToRemove = new ArrayList();
+
+			Iterator iterator = creditsInScientificAreas.entrySet().iterator();
+			while (iterator.hasNext())
 			{
-				if (!enrollmentsToKeep.contains(enrolment))
+				Map.Entry mapEntry = (Map.Entry) iterator.next();
+				Integer credits = (Integer) mapEntry.getValue();
+				Integer scientificAreaID = (Integer) mapEntry.getKey();
+
+				IScientificArea scientificArea = (IScientificArea) scientificAreaDAO.readByOID(ScientificArea.class,
+					scientificAreaID);
+
+				ICurricularCourseGroup specializationGroup = curricularCourseGroupDAO.readByBranchAndScientificAreaAndAreaType(
+					studentCurricularPlan.getBranch(), scientificArea, AreaType.SPECIALIZATION_OBJ);
+
+				ICurricularCourseGroup secundaryGroup = curricularCourseGroupDAO.readByBranchAndScientificAreaAndAreaType(
+					studentCurricularPlan.getSecundaryBranch(), scientificArea, AreaType.SECONDARY_OBJ);
+
+				if ((specializationGroup != null) && (secundaryGroup != null))
 				{
-					enrollmentsToKeep.add(enrolment);
+					List groups = new ArrayList();
+					groups.add(0, specializationGroup);
+					groups.add(1, secundaryGroup);
+					groups.add(2, scientificArea);
+					clashingGroups.put(scientificArea.getIdInternal(), groups);
+				} else if (specializationGroup != null)
+				{
+					sumInHashMap(creditsInSpecializationAreaGroups, specializationGroup.getIdInternal(), credits);
+					entriesInHashMapToRemove.add(scientificAreaID);
+				} else if (secundaryGroup != null)
+				{
+					sumInHashMap(creditsInSecundaryAreaGroups, secundaryGroup.getIdInternal(), credits);
+					entriesInHashMapToRemove.add(scientificAreaID);
+				}
+			}
+
+			cleanHashMap(creditsInScientificAreas, entriesInHashMapToRemove);
+		}
+	}
+
+	private void calculateClashingScientificAreas(HashMap creditsInScientificAreas, HashMap creditsInSpecializationAreaGroups,
+		HashMap creditsInSecundaryAreaGroups, int creditsInAnySecundaryArea, HashMap clashingGroups)
+	{
+		if (!clashingGroups.entrySet().isEmpty())
+		{
+			Iterator iterator = clashingGroups.entrySet().iterator();
+			while (iterator.hasNext())
+			{
+				Map.Entry mapEntry = (Map.Entry) iterator.next();
+				List objects = (List) mapEntry.getValue();
+				Integer scientificAreaID = (Integer) mapEntry.getKey();
+
+				ICurricularCourseGroup specializationGroup = (ICurricularCourseGroup) objects.get(0);
+				ICurricularCourseGroup secundaryGroup = (ICurricularCourseGroup) objects.get(1);
+
+				distributeCreditsInScientificAreaByTheTwoGroups(creditsInSpecializationAreaGroups, creditsInSecundaryAreaGroups,
+					creditsInScientificAreas, creditsInAnySecundaryArea, specializationGroup, secundaryGroup, scientificAreaID);
+			}
+		}
+	}
+
+	private void distributeCreditsInScientificAreaByTheTwoGroups(HashMap creditsInSpecializationAreaGroups,
+		HashMap creditsInSecundaryAreaGroups, HashMap creditsInScientificAreas, int creditsInAnySecundaryArea,
+		ICurricularCourseGroup specializationGroup, ICurricularCourseGroup secundaryGroup, Integer scientificAreaID)
+	{
+		Integer aux = (Integer) creditsInSpecializationAreaGroups.get(specializationGroup.getIdInternal());
+		Integer bux = (Integer) creditsInSecundaryAreaGroups.get(secundaryGroup.getIdInternal());
+		Integer cux = (Integer) creditsInScientificAreas.get(scientificAreaID);
+
+		if (aux == null)
+		{
+			aux = new Integer(0);
+		}
+
+		if (bux == null)
+		{
+			bux = new Integer(0);
+		}
+
+		if (cux == null)
+		{
+			cux = new Integer(0);
+		}
+
+		int creditsInSpecializationGroup = aux.intValue();
+		int creditsInSecundaryGroup = bux.intValue() + creditsInAnySecundaryArea;
+		int creditsInScientificArea = cux.intValue();
+		int maxCreditsInSpecializationGroup = specializationGroup.getMaximumCredits().intValue();
+		int minCreditsInSpecializationGroup = specializationGroup.getMinimumCredits().intValue();
+		int maxCreditsInSecundaryGroup = secundaryGroup.getMaximumCredits().intValue();
+		int minCreditsInSecundaryGroup = secundaryGroup.getMinimumCredits().intValue();
+
+		while (creditsInScientificArea > 0)
+		{
+			if (creditsInSpecializationGroup < (minCreditsInSpecializationGroup - 1))
+			{
+				creditsInSpecializationGroup++;
+				creditsInScientificArea--;
+			} else if (creditsInSecundaryGroup < (minCreditsInSecundaryGroup - 1))
+			{
+				creditsInSecundaryGroup++;
+				creditsInScientificArea--;
+			} else if ((creditsInSpecializationGroup == (minCreditsInSpecializationGroup - 1))
+				&& (maxCreditsInSpecializationGroup != minCreditsInSpecializationGroup))
+			{
+				creditsInSpecializationGroup++;
+				creditsInScientificArea--;
+			} else if ((creditsInSecundaryGroup == (minCreditsInSpecializationGroup - 1))
+				&& (maxCreditsInSecundaryGroup != minCreditsInSecundaryGroup))
+			{
+				creditsInSecundaryGroup++;
+				creditsInScientificArea--;
+			} else if (creditsInSpecializationGroup < (maxCreditsInSpecializationGroup - 1))
+			{
+				creditsInSpecializationGroup++;
+				creditsInScientificArea--;
+			} else if (creditsInSecundaryGroup < (maxCreditsInSecundaryGroup - 1))
+			{
+				creditsInSecundaryGroup++;
+				creditsInScientificArea--;
+			} else if (creditsInSpecializationGroup == (maxCreditsInSpecializationGroup - 1))
+			{
+				creditsInSpecializationGroup++;
+				creditsInScientificArea--;
+			} else if (creditsInSecundaryGroup == (maxCreditsInSecundaryGroup - 1))
+			{
+				creditsInSecundaryGroup++;
+				creditsInScientificArea--;
+			} else
+			{
+				creditsInSpecializationGroup += creditsInScientificArea;
+			}
+		}
+
+		sumInHashMap(creditsInSpecializationAreaGroups, specializationGroup.getIdInternal(), new Integer(String
+			.valueOf(creditsInSpecializationGroup - aux.intValue())));
+
+		sumInHashMap(creditsInSecundaryAreaGroups, secundaryGroup.getIdInternal(), new Integer(String
+			.valueOf(creditsInSecundaryGroup - creditsInAnySecundaryArea - bux.intValue())));
+	}
+
+	private Integer calculateCreditsInSecundaryArea(IStudentCurricularPlan studentCurricularPlan,
+		HashMap creditsInSecundaryAreaGroups, int creditsInAnySecundaryArea) throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
+		int areaCredits = 0;
+
+		if (!creditsInSecundaryAreaGroups.entrySet().isEmpty())
+		{
+			Iterator iterator = creditsInSecundaryAreaGroups.entrySet().iterator();
+			while (iterator.hasNext())
+			{
+				Map.Entry mapEntry = (Map.Entry) iterator.next();
+				Integer credits = (Integer) mapEntry.getValue();
+				Integer groupID = (Integer) mapEntry.getKey();
+
+				ICurricularCourseGroup group = (ICurricularCourseGroup) curricularCourseGroupDAO.readByOID(
+					CurricularCourseGroup.class, groupID);
+
+				if (credits.intValue() > group.getMaximumCredits().intValue())
+				{
+					areaCredits += group.getMaximumCredits().intValue();
+				} else
+				{
+					areaCredits += credits.intValue();
 				}
 			}
 		}
-		
-		return enrollmentsToKeep;
-	}
 
-	/**
-	 * @param area
-	 * @param areaType
-	 * @return curricularCourses
-	 * @throws ExcepcaoPersistencia
-	 */
-	private List selectAllCurricularCoursesFromGivenArea(
-		IBranch area,
-		AreaType areaType)
-		throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
-		List groups = curricularCourseGroupDAO.readByBranchAndAreaType(area, areaType);
-		List curricularCourses = new ArrayList();
-		Iterator iterator = groups.iterator();
-		while (iterator.hasNext())
+		areaCredits += creditsInAnySecundaryArea;
+		if (areaCredits >= studentCurricularPlan.getSecundaryBranch().getSecondaryCredits().intValue())
 		{
-			ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator.next();
-			curricularCourses.addAll(curricularCourseGroup.getCurricularCourses());
+			areaCredits = studentCurricularPlan.getSecundaryBranch().getSecondaryCredits().intValue();
 		}
-		return curricularCourses;
+
+		return new Integer(areaCredits);
 	}
 
-	/**
-	 * @param studentCurricularPlan
-	 * @param creditsInSpecializationAreaGroups
-	 * @return Integer
-	 */
-	private Integer calculateCreditsInSpecializationArea(
-		IStudentCurricularPlan studentCurricularPlan,
+	private Integer calculateCreditsInSpecializationArea(IStudentCurricularPlan studentCurricularPlan,
 		HashMap creditsInSpecializationAreaGroups) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
@@ -1091,8 +497,8 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule
 				Integer credits = (Integer) mapEntry.getValue();
 				Integer groupID = (Integer) mapEntry.getKey();
 
-				ICurricularCourseGroup group =
-					(ICurricularCourseGroup) curricularCourseGroupDAO.readByOID(CurricularCourseGroup.class, groupID);
+				ICurricularCourseGroup group = (ICurricularCourseGroup) curricularCourseGroupDAO.readByOID(
+					CurricularCourseGroup.class, groupID);
 
 				if (credits.intValue() > group.getMaximumCredits().intValue())
 				{
@@ -1112,50 +518,230 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule
 		return new Integer(areaCredits);
 	}
 
-	/**
-	 * @param studentCurricularPlan
-	 * @param creditsInSecundaryAreaGroups
-	 * @param creditsInAnySecundaryArea
-	 * @return Integer
-	 */
-	private Integer calculateCreditsInSecundaryArea(
-		IStudentCurricularPlan studentCurricularPlan,
-		HashMap creditsInSecundaryAreaGroups,
+	private List selectCurricularCourses(IStudentCurricularPlan studentCurricularPlan, HashMap creditsInSpecializationAreaGroups,
+		HashMap creditsInSecundaryAreaGroups, int creditsInAnySecundaryArea,
+		List specializationAndSecundaryAreaCurricularCoursesToCountForCredits, List curricularCoursesToBeEnrolledIn)
+		throws ExcepcaoPersistencia
+	{
+		boolean isSpecializationAreaDone = isSpecializationAreaDone(studentCurricularPlan, creditsInSpecializationAreaGroups);
+		boolean isSecundaryAreaDone = isSecundaryAreaDone(studentCurricularPlan, creditsInSecundaryAreaGroups,
+			creditsInAnySecundaryArea);
+
+		List finalListOfCurricularCourses = null;
+
+		if (isSpecializationAreaDone && isSecundaryAreaDone)
+		{
+			finalListOfCurricularCourses = new ArrayList();
+		} else if (!isSpecializationAreaDone && isSecundaryAreaDone)
+		{
+			finalListOfCurricularCourses = selectSpecializationAreaCurricularCoursesFromGroupsNotFull(studentCurricularPlan,
+				creditsInSpecializationAreaGroups);
+		} else if (isSpecializationAreaDone && !isSecundaryAreaDone)
+		{
+			finalListOfCurricularCourses = selectSecundaryAreaCurricularCoursesFromGroupsNotFull(studentCurricularPlan,
+				creditsInSecundaryAreaGroups, creditsInAnySecundaryArea);
+		} else
+		{
+			List specializationAreaCurricularCourses = selectSpecializationAreaCurricularCoursesFromGroupsNotFull(
+				studentCurricularPlan, creditsInSpecializationAreaGroups);
+
+			List secundaryAreaCurricularCourses = selectSecundaryAreaCurricularCoursesFromGroupsNotFull(studentCurricularPlan,
+				creditsInSecundaryAreaGroups, creditsInAnySecundaryArea);
+
+			List disjunction = (List) CollectionUtils.disjunction(specializationAreaCurricularCourses,
+				secundaryAreaCurricularCourses);
+			List intersection = (List) CollectionUtils.intersection(specializationAreaCurricularCourses,
+				secundaryAreaCurricularCourses);
+
+			finalListOfCurricularCourses = new ArrayList();
+			finalListOfCurricularCourses.addAll(disjunction);
+			finalListOfCurricularCourses.addAll(intersection);
+		}
+
+		finalListOfCurricularCourses.removeAll(specializationAndSecundaryAreaCurricularCoursesToCountForCredits);
+		
+		return (List) CollectionUtils.intersection(finalListOfCurricularCourses, curricularCoursesToBeEnrolledIn);
+	}
+
+	private boolean isSpecializationAreaDone(IStudentCurricularPlan studentCurricularPlan,
+		HashMap creditsInSpecializationAreaGroups) throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
+
+		if (!creditsInSpecializationAreaGroups.entrySet().isEmpty())
+		{
+			int areaCredits = 0;
+
+			Iterator iterator = creditsInSpecializationAreaGroups.entrySet().iterator();
+			while (iterator.hasNext())
+			{
+				Map.Entry mapEntry = (Map.Entry) iterator.next();
+				Integer otherCredits = (Integer) mapEntry.getValue();
+				Integer groupID = (Integer) mapEntry.getKey();
+
+				ICurricularCourseGroup otherGroup = (ICurricularCourseGroup) curricularCourseGroupDAO.readByOID(
+					CurricularCourseGroup.class, groupID);
+
+				if (otherCredits.intValue() < otherGroup.getMinimumCredits().intValue())
+				{
+					return false;
+				} else
+				{
+					areaCredits += otherCredits.intValue();
+				}
+			}
+
+			if (areaCredits >= studentCurricularPlan.getBranch().getSpecializationCredits().intValue())
+			{
+				return true;
+			} else
+			{
+				return false;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean isSecundaryAreaDone(IStudentCurricularPlan studentCurricularPlan, HashMap creditsInSecundaryAreaGroups,
 		int creditsInAnySecundaryArea) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
-		int areaCredits = 0;
 
 		if (!creditsInSecundaryAreaGroups.entrySet().isEmpty())
 		{
+			int areaCredits = 0;
+
 			Iterator iterator = creditsInSecundaryAreaGroups.entrySet().iterator();
 			while (iterator.hasNext())
 			{
 				Map.Entry mapEntry = (Map.Entry) iterator.next();
-				Integer credits = (Integer) mapEntry.getValue();
+				Integer otherCredits = (Integer) mapEntry.getValue();
 				Integer groupID = (Integer) mapEntry.getKey();
 
-				ICurricularCourseGroup group =
-					(ICurricularCourseGroup) curricularCourseGroupDAO.readByOID(CurricularCourseGroup.class, groupID);
+				ICurricularCourseGroup otherGroup = (ICurricularCourseGroup) curricularCourseGroupDAO.readByOID(
+					CurricularCourseGroup.class, groupID);
 
-				if (credits.intValue() > group.getMaximumCredits().intValue())
+				if (otherCredits.intValue() >= otherGroup.getMaximumCredits().intValue())
 				{
-					areaCredits += group.getMaximumCredits().intValue();
+					return true;
 				} else
 				{
-					areaCredits += credits.intValue();
+					areaCredits += otherCredits.intValue();
 				}
+			}
+
+			areaCredits += creditsInAnySecundaryArea;
+
+			if (areaCredits >= studentCurricularPlan.getSecundaryBranch().getSecondaryCredits().intValue())
+			{
+				return true;
+			} else
+			{
+				return false;
 			}
 		}
 
-		areaCredits += creditsInAnySecundaryArea;
-		if (areaCredits >= studentCurricularPlan.getSecundaryBranch().getSecondaryCredits().intValue())
+		return false;
+	}
+
+	private List selectSecundaryAreaCurricularCoursesFromGroupsNotFull(IStudentCurricularPlan studentCurricularPlan,
+		HashMap creditsInSecundaryAreaGroups, int creditsInAnySecundaryArea) throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
+
+		List secundaryAreaCurricularCourses = new ArrayList();
+
+		List groups = curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan.getSecundaryBranch(),
+			AreaType.SECONDARY_OBJ);
+
+		Iterator iterator = groups.iterator();
+		while (iterator.hasNext())
 		{
-			areaCredits = studentCurricularPlan.getSecundaryBranch().getSecondaryCredits().intValue();
+			ICurricularCourseGroup group = (ICurricularCourseGroup) iterator.next();
+
+			if (!isSecundaryGroupDone(studentCurricularPlan, group, creditsInSecundaryAreaGroups, creditsInAnySecundaryArea))
+			{
+				secundaryAreaCurricularCourses.addAll(group.getCurricularCourses());
+			}
 		}
-		
-		return new Integer(areaCredits);
+		return secundaryAreaCurricularCourses;
+	}
+
+	private List selectSpecializationAreaCurricularCoursesFromGroupsNotFull(IStudentCurricularPlan studentCurricularPlan,
+		HashMap creditsInSpecializationAreaGroups) throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
+
+		List specializationAreaCurricularCourses = new ArrayList();
+
+		List groups = curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan.getBranch(),
+			AreaType.SPECIALIZATION_OBJ);
+
+		Iterator iterator = groups.iterator();
+		while (iterator.hasNext())
+		{
+			ICurricularCourseGroup group = (ICurricularCourseGroup) iterator.next();
+
+			if (!isSpecializationGroupDone(studentCurricularPlan, group, creditsInSpecializationAreaGroups))
+			{
+				specializationAreaCurricularCourses.addAll(group.getCurricularCourses());
+			}
+		}
+
+		return specializationAreaCurricularCourses;
+	}
+
+	private boolean isSpecializationGroupDone(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseGroup group,
+		HashMap creditsInSpecializationAreaGroups) throws ExcepcaoPersistencia
+	{
+		Integer credits = (Integer) creditsInSpecializationAreaGroups.get(group.getIdInternal());
+
+		if (credits != null)
+		{
+			if (credits.intValue() >= group.getMaximumCredits().intValue())
+			{
+				return true;
+			}
+
+			if (credits.intValue() < group.getMinimumCredits().intValue())
+			{
+				return false;
+			}
+
+			return isSpecializationAreaDone(studentCurricularPlan, creditsInSpecializationAreaGroups);
+		} else
+		{
+			return false;
+		}
+	}
+
+	private boolean isSecundaryGroupDone(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseGroup group,
+		HashMap creditsInSecundaryAreaGroups, int creditsInAnySecundaryArea) throws ExcepcaoPersistencia
+	{
+		Integer credits = (Integer) creditsInSecundaryAreaGroups.get(group.getIdInternal());
+
+		if (credits != null)
+		{
+			if (credits.intValue() >= group.getMaximumCredits().intValue())
+			{
+				return true;
+			}
+
+			if (credits.intValue() < group.getMinimumCredits().intValue())
+			{
+				return false;
+			}
+
+			return isSecundaryAreaDone(studentCurricularPlan, creditsInSecundaryAreaGroups, creditsInAnySecundaryArea);
+		} else
+		{
+			return false;
+		}
 	}
 
 }

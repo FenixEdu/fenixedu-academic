@@ -317,9 +317,11 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 	// BEGIN: Only for enrollment purposes
 	// -------------------------------------------------------------
 
-	public List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType)
+	public List getListOfEnrollmentRules(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod,
+		EnrollmentRuleType enrollmentRuleType)
 	{
-		return EnrollmentRulesFactory.getInstance().getListOfEnrollmentRules(this, enrollmentRuleType);
+		return EnrollmentRulesFactory.getInstance().getListOfEnrollmentRules(this, studentCurricularPlan, executionPeriod,
+			enrollmentRuleType);
 	}
 
 	public List getCurricularCoursesFromArea(IBranch area, AreaType areaType)

@@ -22,6 +22,8 @@ public abstract class PrecedencesEnrollmentRule implements IEnrollmentRule
 
 	public List apply(List curricularCoursesWhereToApply)
 	{
+		precedenceContext.setCurricularCoursesWhereStudentCanBeEnrolled(curricularCoursesWhereToApply);
+
 		List curricularCoursesToKeep = new ArrayList();
 
 		for (int i = 0; i < curricularCoursesWhereToApply.size(); i++)
