@@ -31,8 +31,8 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.CurricularCourseEnrollmentType;
 import Util.TipoCurso;
+import Util.enrollment.CurricularCourseEnrollmentType;
 import Util.enrollment.EnrollmentRuleType;
 
 /**
