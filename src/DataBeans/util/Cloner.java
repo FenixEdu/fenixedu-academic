@@ -18,6 +18,7 @@ import DataBeans.InfoCurricularYear;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoEnrolment;
+import DataBeans.InfoEquivalence;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
@@ -58,6 +59,7 @@ import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
 import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
+import Dominio.Equivalence;
 import Dominio.Exam;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
@@ -81,6 +83,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
+import Dominio.IEquivalence;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -1489,6 +1492,46 @@ public abstract class Cloner {
 		enrolment.setStudentCurricularPlan(studentCurricularPlan);
 
 		return enrolment;
+	}
+
+	/**
+		* @author dcs-rjao
+		* @param copyIEquivalence2InfoEquivalence
+		* @return InfoEquivalence
+		*/
+	public static InfoEquivalence copyIEquivalence2InfoEquivalence(IEquivalence equivalence) {
+
+		InfoEquivalence infoEquivalence = new InfoEquivalence();
+
+		InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(equivalence.getEnrolment());
+		InfoEnrolment infoEquivalentEnrolment = Cloner.copyIEnrolment2InfoEnrolment(equivalence.getEquivalentEnrolment());
+
+		copyObjectProperties(infoEquivalence, equivalence);
+
+		infoEquivalence.setInfoEnrolment(infoEnrolment);
+		infoEquivalence.setInfoEquivalentEnrolment(infoEquivalentEnrolment);
+
+		return infoEquivalence;
+	}
+
+	/**
+		* @author dcs-rjao
+		* @param copyInfoEquivalence2IEquivalence
+		* @return IEquivalence
+		*/
+	public static IEquivalence copyInfoEquivalence2IEquivalence(InfoEquivalence infoEquivalence) {
+
+		IEquivalence equivalence = new Equivalence();
+
+		IEnrolment enrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEquivalence.getInfoEnrolment());
+		IEnrolment equivalentEnrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEquivalence.getInfoEquivalentEnrolment());
+
+		copyObjectProperties(equivalence, infoEquivalence);
+
+		equivalence.setEnrolment(enrolment);
+		equivalence.setEquivalentEnrolment(equivalentEnrolment);
+
+		return equivalence;
 	}
 
 	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
