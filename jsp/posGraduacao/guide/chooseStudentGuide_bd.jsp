@@ -13,7 +13,7 @@
    
    <table>
     <html:form action="/studentGuideDispatchAction?method=createReady">
-
+    <html:hidden property="page" value="1"/>
     <bean:define id="certificateList" name="<%= SessionConstants.CERTIFICATE_LIST %>" scope="session" />
     
     <logic:iterate id="price" name="certificateList" >
@@ -39,14 +39,14 @@
     	</tr>               
 	</logic:iterate>
 	
-	<%--
-		<tr>
-			<td><bean:message key="label.masterDegree.administrativeOffice.others" /></td>
-			<td><html:textarea property="othersRemarks"/></td>
-			<td><html:text property="othersQuantity"/></td>
-			<td><html:text property="othersPrice"/> <bean:message key="label.currencySymbol" /></td>
-		</tr>
-	--%>
+	<tr>
+		<td><bean:message key="label.specializationGratuity" /></td>
+		<td><html:text property="specializationGratuityQuantity" size='2'/></td>
+         <td>
+  	        ----------------
+        </td>
+		<td><html:text property="specializationGratuityAmount" size='2'/> <bean:message key="label.currencySymbol" /></td>
+	</tr>
    
    
    </table>
