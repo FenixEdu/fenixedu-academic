@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 
-import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
@@ -85,23 +84,7 @@ public class ExamsForwardFilter implements Filter{
 		        	forwardURI.append(forwardExamsList);
 		        	forwardURI.append("&degreeID=");
 		        	forwardURI.append(degreeId);
-		        	InfoExecutionDegree infoExecutionDegree;
-                    try {
-                        infoExecutionDegree = getExecutionDegree(degreeId);
-                    } catch (FenixServiceException e1) {
-                        throw new ServletException(e1);
-                    }
-                    if(infoExecutionDegree != null){
-                        forwardURI.append("&degreeCurricularPlanID=");
-		        		forwardURI.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
-		        		forwardURI.append("&executionDegreeID=");
-                        forwardURI.append(infoExecutionDegree.getIdInternal());
-                        
-		        	} else {
-		        		forwardURI.delete(0, forwardURI.length()-1);
-		        		forwardURI.append(context);
-		        		forwardURI.append(notFoundURI);
-		        	}
+
 		        } else {
 		        	forwardURI.append(notFoundURI);
 		        }
@@ -113,23 +96,6 @@ public class ExamsForwardFilter implements Filter{
         response.sendRedirect(forwardURI.toString());
 	}
 
-	
-
-    /**
-	 * @param degreeId
-	 * @return
-	 * @throws IOException
-	 * @throws FenixServiceException
-	 */
-	private InfoExecutionDegree getExecutionDegree(Integer degreeId) throws FenixServiceException {
-		Object args[] = { degreeId };
-        
-        Integer degreeCurricularPlanId = new Integer(0);
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(null,
-	            "ReadExecutionDegreeRecentByDegreeId", args);
-	    
-		return infoExecutionDegree;
-	}
 
 	/**
 	 * @param degreeCode

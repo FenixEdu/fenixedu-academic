@@ -94,7 +94,7 @@
 		</init-param>
 		<init-param>			
 			<param-name>forwardExamsList</param-name>
-			<param-value>/publico/viewExamsMapNew.do?method=view</param-value>
+			<param-value>/publico/chooseExamsMapContextDA.do?method=choose</param-value>
 		</init-param>
 		<init-param>
 			<param-name>app</param-name>
