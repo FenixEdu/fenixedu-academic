@@ -3,9 +3,11 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.thesis;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoStudentCurricularPlan;
+import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.IEmployee;
 import Dominio.IMasterDegreeThesis;
@@ -18,6 +20,8 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.GuiderAlreadyChosenServiceException;
+import ServidorAplicacao.Servico.exceptions.RequiredGuidersServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -63,14 +67,30 @@ public class CreateMasterDegreeThesis implements IServico {
 		throws FenixServiceException {
 
 		try {
+
+			if (infoTeacherGuiders.size() < 1)
+				throw new RequiredGuidersServiceException("error.exception.masterDegree.noGuidersSelected");
+
+			for (Iterator iter = infoTeacherGuiders.iterator(); iter.hasNext();) {
+				InfoTeacher guider = (InfoTeacher) iter.next();
+				
+				for (Iterator iterator = infoTeacherAssistentGuiders.iterator(); iterator.hasNext();) {
+					InfoTeacher assistentGuider = (InfoTeacher) iterator.next();
+					if (assistentGuider.getIdInternal().equals(guider.getIdInternal())) {
+						throw new GuiderAlreadyChosenServiceException("error.exception.masterDegree.GuiderAlreadyChosen");
+					}
+				}
+			}
+
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
-			
+
 			IMasterDegreeThesis storedMasterDegreeThesis = sp.getIPersistentMasterDegreeThesis().readByStudentCurricularPlan(studentCurricularPlan);
 			if (storedMasterDegreeThesis != null)
 				throw new ExistingServiceException("error.exception.masterDegree.existingMasterDegreeThesis");
-			
-			IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = sp.getIPersistentMasterDegreeThesisDataVersion().readActiveByDissertationTitle(dissertationTitle);
+
+			IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion =
+				sp.getIPersistentMasterDegreeThesisDataVersion().readActiveByDissertationTitle(dissertationTitle);
 			if (storedMasterDegreeThesisDataVersion != null)
 				if (!storedMasterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan().equals(studentCurricularPlan))
 					throw new ExistingServiceException("error.exception.masterDegree.dissertationTitleAlreadyChosen");
@@ -96,11 +116,6 @@ public class CreateMasterDegreeThesis implements IServico {
 			masterDegreeThesisDataVersion.setAssistentGuiders(assistentGuiders);
 			masterDegreeThesisDataVersion.setExternalAssistentGuiders(externalAssistentGuiders);
 			sp.getIPersistentMasterDegreeThesisDataVersion().simpleLockWrite(masterDegreeThesisDataVersion);
-
-			//Timestamp actualTimestamp = new Timestamp(new Date().getTime());
-			//IMasterDegreeProofVersion masterDegreeProofVersion = new MasterDegreeProofVersion(masterDegreeThesis, employee,
-			//		actualTimestamp,actualTimestamp,actualTimestamp, MasterDegreeClassification.NOT_APPROVED, new Integer(5), new State(State.ACTIVE));
-			//sp.getIPersistentMasterDegreeProofVersion().simpleLockWrite(masterDegreeProofVersion);
 
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
