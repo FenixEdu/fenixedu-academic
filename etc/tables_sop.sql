@@ -17,7 +17,6 @@ create table ROOM (
 #----------------------------
 # Table structure for class
 #----------------------------
-
 DROP TABLE IF EXISTS CLASS;
 CREATE TABLE CLASS (
   ID_INTERNAL int(11) NOT NULL default '0',

@@ -12,10 +12,9 @@ create table DEGREE (
    unique U2 (NAME))
    type=InnoDB;
 
-#------------------------------------------
+#----------------------------------
 # Table structure for degree_curricular_plan
-#------------------------------------------
-
+#----------------------------------
 DROP TABLE IF EXISTS DEGREE_CURRICULAR_PLAN;
 CREATE TABLE DEGREE_CURRICULAR_PLAN (
   ID_INTERNAL int(11) NOT NULL auto_increment,
