@@ -92,7 +92,9 @@ public class ReadCurricularCourseListByExecutionCourseCode implements IServico {
 							.getInfoCurricularSemester()
 							.getSemester()
 							.equals(executionCourse.getExecutionPeriod().getSemester())) {
-							infoCurricularCourseList.add(infoCurricularCourse);
+							if (!infoCurricularCourseList.contains(infoCurricularCourse)) {
+								infoCurricularCourseList.add(infoCurricularCourse);
+							}
 						}
 					}
 				}
