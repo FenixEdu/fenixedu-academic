@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndDegree;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -76,7 +76,7 @@ public class ReadStudentCurricularPlansForSeminaries implements IService
             //CLONER
             //result.add(
             //          Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
-            result.add(InfoStudentCurricularPlanWithInfoStudentAndDegree.newInfoFromDomain(studentCurricularPlan));
+            result.add(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree.newInfoFromDomain(studentCurricularPlan));
         }
 
         if ((result.size() == 0))

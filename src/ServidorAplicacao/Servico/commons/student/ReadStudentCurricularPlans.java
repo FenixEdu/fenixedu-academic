@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.util.Cloner;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndDegree;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -87,11 +87,13 @@ public class ReadStudentCurricularPlans implements IServico
         {
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
 
-            result.add(
-                Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+            //CLONER
+            result.add(InfoStudentCurricularPlanWithInfoStudentAndDegree.newInfoFromDomain(studentCurricularPlan));
+            //result.add(
+            //    Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
         }
 
-        if ((result.size() == 0))
+        if (result.size() == 0)
         {
             throw new NonExistingServiceException();
         }

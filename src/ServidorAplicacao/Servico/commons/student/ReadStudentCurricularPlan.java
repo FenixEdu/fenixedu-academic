@@ -10,7 +10,7 @@
 package ServidorAplicacao.Servico.commons.student;
 
 import DataBeans.InfoStudentCurricularPlan;
-import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndDegree;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IServico;
@@ -72,6 +72,6 @@ public class ReadStudentCurricularPlan implements IServico {
 		}
 		
 		//return Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);		
-		return InfoStudentCurricularPlanWithInfoStudentAndDegree.newInfoFromDomain(studentCurricularPlan);
+		return InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree.newInfoFromDomain(studentCurricularPlan);
     }
 }

@@ -1,26 +1,30 @@
+/*
+ * Created on 23/Jun/2004
+ *
+ */
 package DataBeans;
 
 import Dominio.IStudentCurricularPlan;
 
 /**
- * @author Fernanda Quitério
- * 23/Jul/2004
+ * @author Tânia Pousão
+ * 23/Jun/2004
  */
-public class InfoStudentCurricularPlanWithInfoStudentAndDegree
+public class InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
 		extends
 			InfoStudentCurricularPlan {
 	public void copyFromDomain(IStudentCurricularPlan studentCurricularPlan) {
 		super.copyFromDomain(studentCurricularPlan);
 		if(studentCurricularPlan != null) {
 			setInfoDegreeCurricularPlan(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(studentCurricularPlan.getDegreeCurricularPlan()));
-			setInfoStudent(InfoStudent.newInfoFromDomain(studentCurricularPlan.getStudent()));
+			setInfoStudent(InfoStudentWithInfoPerson.newInfoFromDomain(studentCurricularPlan.getStudent()));
 		}
 	}
 	
 	public static InfoStudentCurricularPlan newInfoFromDomain (IStudentCurricularPlan studentCurricularPlan) {
-	    InfoStudentCurricularPlanWithInfoStudentAndDegree infoStudentCurricularPlan = null;
+		InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree infoStudentCurricularPlan = null;
 		if(studentCurricularPlan != null) {
-			infoStudentCurricularPlan = new InfoStudentCurricularPlanWithInfoStudentAndDegree();
+			infoStudentCurricularPlan = new InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree();
 			infoStudentCurricularPlan.copyFromDomain(studentCurricularPlan);
 		}		
 		return infoStudentCurricularPlan;

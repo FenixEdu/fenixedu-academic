@@ -11,7 +11,7 @@ public class InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod extends Inf
 	public void copyFromDomain(IEnrollment enrolment) {
 		super.copyFromDomain(enrolment);
 		if(enrolment != null) {
-		    setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree
+		    setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
                     .newInfoFromDomain(enrolment.getStudentCurricularPlan()));
 		}
 	}

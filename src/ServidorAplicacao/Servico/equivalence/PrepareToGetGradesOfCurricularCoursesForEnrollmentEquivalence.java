@@ -6,7 +6,7 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoEnrolmentWithInfoCurricularCourse;
-import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndDegree;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import DataBeans.equivalence.InfoCurricularCourseGrade;
 import DataBeans.equivalence.InfoEnrollmentGrade;
 import DataBeans.equivalence.InfoEquivalenceContext;
@@ -108,7 +108,7 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
 		//infoEquivalenceContext.setInfoStudentCurricularPlan(Cloner
 		//	.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
 		infoEquivalenceContext
-                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree
+                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
                         .newInfoFromDomain(studentCurricularPlan));
 				
 		return infoEquivalenceContext;

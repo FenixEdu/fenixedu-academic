@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndDegree;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import DataBeans.equivalence.InfoEquivalenceContext;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEquivalence;
@@ -73,7 +73,7 @@ public class ReadListsOfEnrollmentsWithEquivalences extends EnrollmentEquivalenc
 		//infoEquivalenceContext.setInfoStudentCurricularPlan(Cloner
 		//	.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
 		infoEquivalenceContext
-                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree
+                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
                         .newInfoFromDomain(studentCurricularPlan));
 
 		return infoEquivalenceContext;
