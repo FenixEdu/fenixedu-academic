@@ -79,23 +79,24 @@ public class CriarTurno implements IServico {
 					executionCourse);
 			// TODO : this is requierd to write shifts.
 			//        I'm not sure of the significance, nor do I know if it is to
-			//        be attributed by SOP users. So for now just set it to 0. 
-			turno.setAvailabilityFinal(new Integer(0));
+			//        be attributed by SOP users. So for now just set it to 0.
+			Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * turno.getLotacao().doubleValue())).intValue()); 
+			turno.setAvailabilityFinal(availabilityFinal);
 			turno.setAssociatedLessons(new ArrayList());
 			turno.setAssociatedClasses(new ArrayList());
 			turno.setAssociatedTeacherProfessorShipPercentage(new ArrayList());
-			
+						
 			try {
 				sp.getITurnoPersistente().lockWrite(turno);
 			} catch (ExistingPersistentException ex) {
 				throw new ExistingServiceException(ex);
 			}
-
+			
 			result = Cloner.copyIShift2InfoShift(turno);
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
 		}
-
+	
 		return result;
 	}
 
