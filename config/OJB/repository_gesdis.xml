@@ -201,7 +201,48 @@
          <foreignkey field-id-ref="6"/>
       </reference-descriptor>
    </class-descriptor>
-
+   
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.Curriculum -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.Curriculum"
+                  table="CURRICULUM">
+    <field-descriptor id="1"
+        name="INTERNAL_CODE"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor id="2"
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<field-descriptor id="3"
+        name="generalObjectives"
+        column="GENERAL_OBJECTIVES"
+        jdbc-type="VARCHAR"
+	/>
+	<field-descriptor id="4"
+        name="operacionalObjectives"
+        column="OPERACIONAL_OBJECTIVES"
+        jdbc-type="VARCHAR"
+	/>
+	<field-descriptor id="5"
+        name="program"
+        column="PROGRAM"
+        jdbc-type="VARCHAR"
+	/>
+    <reference-descriptor
+         name="executionCourse"
+         class-ref="Dominio.DisciplinaExecucao"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="2"/>
+    </reference-descriptor>
+    
+</class-descriptor>
 <!-- ********************************* -->
 <!-- **********   TEACHER   ********** -->
 <!-- ********************************* --> 
@@ -254,5 +295,4 @@
       </collection-descriptor>
   
    </class-descriptor>
-
 <!-- Mapping of User defined classes ends here -->
