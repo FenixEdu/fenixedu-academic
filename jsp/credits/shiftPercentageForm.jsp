@@ -15,7 +15,7 @@
 	<html:hidden property="objectCode"/>
 	<html:hidden property="teacherOID"/>
 	
-	<table width="100%">
+	<table width="100%" cellspacing="1" cellpadding="5">
 		<tr>
 			<td rowspan="2" class="listClasses-header"><bean:message key="label.shift"/></td>
 			<td rowspan="2" class="listClasses-header"><bean:message key="label.shift.type"/></td>
