@@ -124,6 +124,7 @@
 				 propertyFile="build.properties">
 			<include name="**/**/*.xml"/>
 	    	<include name="**/**/slide.properties"/>
+			<include name="**/serialization_verifier.properties"/>
 	    	<include name="**/ServidorPersistenteConfig.properties"/>
 	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
 	    	<include name="**/**/IstFtpServerConfig.properties"/>
@@ -215,6 +216,9 @@
 		    			   property="db.slide.pass"/>
 		    <replacefilter token="@slide.config@" 
 		    			   property="slide.config"/>
+
+			<replacefilter token="@verify_serializable@" 
+		    			   property="verify_serializable"/>
 		</replace>
 	</target>
 
