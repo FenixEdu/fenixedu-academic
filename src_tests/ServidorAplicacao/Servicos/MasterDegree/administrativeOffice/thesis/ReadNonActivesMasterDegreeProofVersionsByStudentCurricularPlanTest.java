@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import DataBeans.InfoExternalPerson;
 import DataBeans.InfoMasterDegreeProofVersion;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoTeacher;
@@ -102,6 +103,10 @@ public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlanTest
             assertEquals(
                 ((InfoTeacher) infoMasterDegreeProofVersion.getInfoJuries().get(0)).getIdInternal(),
                 new Integer(954));
+            assertEquals(
+                ((InfoExternalPerson) infoMasterDegreeProofVersion.getInfoExternalJuries().get(0))
+                    .getIdInternal(),
+                new Integer(1));
 
             //ok
 

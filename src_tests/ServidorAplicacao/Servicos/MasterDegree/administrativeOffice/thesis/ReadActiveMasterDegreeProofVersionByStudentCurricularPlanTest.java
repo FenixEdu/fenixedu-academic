@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import DataBeans.InfoExternalPerson;
 import DataBeans.InfoMasterDegreeProofVersion;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoTeacher;
@@ -16,8 +17,8 @@ import Util.State;
 import Util.TipoCurso;
 
 /**
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
- *               (naat@mega.ist.utl.pt)
+ * @author Shezad Anavarali (sana@mega.ist.utl.pt)
+ * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
 public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest
     extends AdministrativeOfficeBaseTest
@@ -97,10 +98,14 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest
             assertEquals(
                 ((InfoTeacher) infoMasterDegreeProofVersion.getInfoJuries().get(0)).getIdInternal(),
                 new Integer(954));
+            assertEquals(
+                ((InfoExternalPerson) infoMasterDegreeProofVersion.getInfoExternalJuries().get(0)).getIdInternal(),
+                new Integer(1));
 
             //ok
 
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             ex.printStackTrace();
             fail("testSuccessReadActiveMasterDegreeProofVersion " + ex.getMessage());
@@ -129,11 +134,13 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest
 
             fail("testReadWithScholarShipNotFinished did not throw ScholarShipNotFinishedServiceException");
 
-        } catch (ScholarshipNotFinishedServiceException ex)
+        }
+        catch (ScholarshipNotFinishedServiceException ex)
         {
             //ok
 
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             ex.printStackTrace();
             fail("testReadWithScholarShipNotFinished " + ex.getMessage());
@@ -162,11 +169,13 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest
 
             fail("testReadNonExistentMasterDegreeProofVersion did not throw NonExistingServiceException");
 
-        } catch (NonExistingServiceException ex)
+        }
+        catch (NonExistingServiceException ex)
         {
             //ok
 
-        } catch (FenixServiceException e)
+        }
+        catch (FenixServiceException e)
         {
             e.printStackTrace();
             fail("testReadNonExistentMasterDegreeProofVersion " + e.getMessage());
