@@ -18,7 +18,6 @@ import junit.framework.TestSuite;
 import DataBeans.InfoClass;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoDegreeCurricularPlanEnrolmentInfo;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -73,10 +72,8 @@ public class LerAulasDeTurmaServicosTest extends TestCaseReadServices {
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 			new InfoDegreeCurricularPlan("plano1", infoDegree);
 		
-		InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo = new InfoDegreeCurricularPlanEnrolmentInfo();
-		infoDegreeCurricularPlanEnrolmentInfo.setDegreeDuration(new Integer(15));
-		infoDegreeCurricularPlanEnrolmentInfo.setMinimalYearForOptionalCourses(new Integer(15));
-		infoDegreeCurricularPlan.setInfoDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfo);
+		infoDegreeCurricularPlan.setDegreeDuration(new Integer(15));
+		infoDegreeCurricularPlan.setMinimalYearForOptionalCourses(new Integer(15));
 
 		InfoClass infoClass =
 			new InfoClass(
@@ -105,11 +102,9 @@ public class LerAulasDeTurmaServicosTest extends TestCaseReadServices {
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 			new InfoDegreeCurricularPlan("plano1", infoDegree);
 
-		InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo = new InfoDegreeCurricularPlanEnrolmentInfo();
-		infoDegreeCurricularPlanEnrolmentInfo.setDegreeDuration(new Integer(5));
-		infoDegreeCurricularPlanEnrolmentInfo.setMinimalYearForOptionalCourses(new Integer(3));
-		infoDegreeCurricularPlan.setInfoDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfo);
-		
+		infoDegreeCurricularPlan.setDegreeDuration(new Integer(5));
+		infoDegreeCurricularPlan.setMinimalYearForOptionalCourses(new Integer(3));
+
 		InfoClass infoClass =
 			new InfoClass(
 				"10501",

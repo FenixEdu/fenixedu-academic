@@ -1,5 +1,6 @@
 package Dominio;
 
+import java.util.Iterator;
 import java.util.List;
 
 import Util.CurricularCourseExecutionScope;
@@ -15,7 +16,6 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 
 	private Integer departmentCourseKey;
 	private Integer degreeCurricularPlanKey;
-	private Integer curricularCourseEnrolmentInfoKey;
 	
 	private Double credits;
 	private Double theoreticalHours;
@@ -29,7 +29,6 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 	private CurricularCourseType type;
 	private CurricularCourseExecutionScope curricularCourseExecutionScope;
 	private Boolean mandatory;
-	private ICurricularCourseEnrolmentInfo curricularCourseEnrolmentInfo;
 
 	private List associatedExecutionCourses;
 	private List scopes;
@@ -49,8 +48,6 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 		setTheoreticalHours(null);
 		setAssociatedExecutionCourses(null);
 		setScopes(null);
-		setCurricularCourseEnrolmentInfo(null);
-		setCurricularCourseEnrolmentInfoKey(null);
 	}
 
 	/**
@@ -393,32 +390,17 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 	public void setMandatory(Boolean boolean1) {
 		mandatory = boolean1;
 	}
-	/**
-	 * @return
-	 */
-	public ICurricularCourseEnrolmentInfo getCurricularCourseEnrolmentInfo() {
-		return curricularCourseEnrolmentInfo;
-	}
 
-	/**
-	 * @return
-	 */
-	public Integer getCurricularCourseEnrolmentInfoKey() {
-		return curricularCourseEnrolmentInfoKey;
+	public ICurricularCourseScope getCurricularCourseScope(IBranch branch, Integer curricularSemester) {
+		ICurricularCourseScope curricularCourseScope = null;
+		Iterator iterator = this.getScopes().iterator();
+		while (iterator.hasNext()) {
+			ICurricularCourseScope curricularCourseScope2 = (ICurricularCourseScope) iterator.next();
+			if (curricularCourseScope2.getBranch().equals(branch) && curricularCourseScope2.getCurricularSemester().getSemester().equals(curricularSemester)) {
+				curricularCourseScope = curricularCourseScope2;
+				break;
+			}
+		}
+		return curricularCourseScope;
 	}
-
-	/**
-	 * @param info
-	 */
-	public void setCurricularCourseEnrolmentInfo(ICurricularCourseEnrolmentInfo info) {
-		curricularCourseEnrolmentInfo = info;
-	}
-
-	/**
-	 * @param integer
-	 */
-	public void setCurricularCourseEnrolmentInfoKey(Integer integer) {
-		curricularCourseEnrolmentInfoKey = integer;
-	}
-
 }

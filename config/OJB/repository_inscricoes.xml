@@ -140,8 +140,13 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="degreeCurricularPlanEnrolmentInfoKey"
-		column="KEY_DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO"
+		name="degreeDuration"
+		column="DEGREE_DURATION"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="minimalYearForOptionalCourses"
+		column="MINIMAL_YEAR_FOR_OPTIONAL_COURSES"
 		jdbc-type="INTEGER"
 	/>
 	<reference-descriptor
@@ -149,12 +154,6 @@
 			class-ref="Dominio.Curso"
 			proxy="false">
 		<foreignkey field-ref="degreeKey"/>
-	</reference-descriptor>
-	<reference-descriptor
-			name="degreeCurricularPlanEnrolmentInfo"
-			class-ref="Dominio.DegreeCurricularPlanEnrolmentInfo"
-			proxy="true">
-		<foreignkey field-ref="degreeCurricularPlanEnrolmentInfoKey"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="curricularCourses"
@@ -288,17 +287,6 @@
 		column="MANDATORY"
 		jdbc-type="BIT"
 	/>
-	<field-descriptor
-		name="curricularCourseEnrolmentInfoKey"
-		column="KEY_CURRICULAR_COURSE_ENROLMENT_INFO"
-		jdbc-type="INTEGER"
-	/>
-	<reference-descriptor
-			name="curricularCourseEnrolmentInfo"
-			class-ref="Dominio.CurricularCourseEnrolmentInfo"
-			proxy="true">
-		<foreignkey field-ref="curricularCourseEnrolmentInfoKey"/> 
-	</reference-descriptor>
 	<reference-descriptor
 			name="departmentCourse"
 			class-ref="Dominio.DisciplinaDepartamento"
@@ -666,6 +654,7 @@
 		<inverse-foreignkey field-ref="curricularSemesterKey"/>
 	</collection-descriptor>    
 
+
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -788,6 +777,21 @@
 		column="KEY_BRANCH"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="maxIncrementNac"
+		column="MAX_INCREMENT_NAC"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="minIncrementNac"
+		column="MIN_INCREMENT_NAC"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="weigth"
+		column="WEIGTH"
+		jdbc-type="INTEGER"
+	/>
 	<reference-descriptor
 			name="curricularCourse"
 			class-ref="Dominio.CurricularCourse"
@@ -809,60 +813,9 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.DegreeCurricularPlanEnrolmentInfo -->
+<!-- Definitions for Dominio.StudentKind -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.DegreeCurricularPlanEnrolmentInfo" table="DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO">
-	<field-descriptor
-		name="internalID"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="degreeDuration"
-		column="DEGREE_DURATION"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="minimalYearForOptionalCourses"
-		column="MINIMAL_YEAR_FOR_OPTIONAL_COURSES"
-		jdbc-type="INTEGER"
-	/>
-</class-descriptor>
-
-<!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.CurricularCourseEnrolmentInfo -->
-<!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.CurricularCourseEnrolmentInfo" table="CURRICULAR_COURSE_ENROLMENT_INFO">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="maxIncrementNac"
-		column="MAX_INCREMENT_NAC"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="minIncrementNac"
-		column="MIN_INCREMENT_NAC"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="weigth"
-		column="WEIGTH"
-		jdbc-type="INTEGER"
-	/>
-</class-descriptor>
-
-<!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.StudentGroupInfo -->
-<!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.StudentGroupInfo" table="STUDENT_GROUP_INFO">
+<class-descriptor class="Dominio.StudentKind" table="STUDENT_KIND">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -874,7 +827,7 @@
 		name="studentType"
 		column="STUDENT_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaStudentGroupInfo2SqlStudentGroupInfoFieldConversion"
+		conversion="ServidorPersistente.Conversores.JavaStudentKind2SqlStudentKindFieldConversion"
 	/>
 	<field-descriptor
 		name="minCoursesToEnrol"

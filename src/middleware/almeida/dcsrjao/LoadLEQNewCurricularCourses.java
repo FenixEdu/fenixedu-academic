@@ -1,12 +1,16 @@
-package middleware.almeida;
+package middleware.almeida.dcsrjao;
 
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import middleware.almeida.LoadDataFile;
 import Dominio.CurricularCourse;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
+import Util.CurricularCourseExecutionScope;
+import Util.CurricularCourseType;
 import Util.DegreeCurricularPlanState;
 
 /**
@@ -23,7 +27,7 @@ public class LoadLEQNewCurricularCourses extends LoadDataFile {
 	protected static IDegreeCurricularPlan degreeCurricularPlanNew = null;
 	protected static List LEQNewCurricularCourseList = null;
 
-	private LoadLEQNewCurricularCourses() {
+	public LoadLEQNewCurricularCourses() {
 		super.setupDAO();
 		degreeCurricularPlanActual = super.persistentObjectOJB.readDegreeCurricularPlanByName("LEQ");
 		degreeCurricularPlanNew = processDegreeCurricularPlan();
@@ -31,11 +35,24 @@ public class LoadLEQNewCurricularCourses extends LoadDataFile {
 		super.shutdownDAO();
 	}
 
-	public void main(String[] args) {
-		loader = new LoadLEQNewCurricularCourses();
-
-		processRegistry();
+	public static void main(String[] args) {
+		if(loader == null){
+			loader = new LoadLEQNewCurricularCourses();
+		}
+		loader.run();
+	}
+	
+	public void run(){
+		if(loader == null){
+			loader = new LoadLEQNewCurricularCourses();
+		}
+		loader.startTime = Calendar.getInstance();
+		super.setupDAO();
+		loader.processRegistry();
+		super.shutdownDAO();
 		loader.writeToFile(logString);
+		loader.endTime = Calendar.getInstance();
+		loader.report();	
 	}
 
 	protected void processRegistry() {
@@ -44,23 +61,39 @@ public class LoadLEQNewCurricularCourses extends LoadDataFile {
 		while (iterator.hasNext()) {
 			Leq_new_curricular_course leq_new_curricular_course = (Leq_new_curricular_course) iterator.next();
 
-			String code = leq_new_curricular_course.getCode();
-			String name = leq_new_curricular_course.getName();
+			ICurricularCourse curricularCourseAux = persistentObjectOJB.readCurricularCourseByNameAndDegreeCurricularPlan(leq_new_curricular_course.getName(), degreeCurricularPlanActual);
 
-			ICurricularCourse curricularCourse = persistentObjectOJB.readCurricularCourseByCodeAndNameAndDegreeCurricularPlan(code, name, degreeCurricularPlanActual);
+			if (curricularCourseAux == null) {
+				logString += "Nova\t" + leq_new_curricular_course.getName() + "\n";
+			} else {
+				logString += "Antiga\t" + leq_new_curricular_course.getName() + "\n";
+			}
 
-			if (curricularCourse == null) {
-				curricularCourse = new CurricularCourse();
+			curricularCourseAux = persistentObjectOJB.readCurricularCourseByCodeAndNameAndDegreeCurricularPlan(leq_new_curricular_course.getCode(), leq_new_curricular_course.getName(), degreeCurricularPlanNew);
+			if (curricularCourseAux == null) {
+
+				ICurricularCourse curricularCourse = new CurricularCourse();
 				curricularCourse.setDegreeCurricularPlan(degreeCurricularPlanNew);
 				curricularCourse.setName(leq_new_curricular_course.getName());
 				curricularCourse.setCode(leq_new_curricular_course.getCode());
-				// TODO: David-Ricardo: Por o CCEnrolmentInfo
+
+				int type = new Integer("" + leq_new_curricular_course.getType()).intValue();
+				curricularCourse.setType(new CurricularCourseType(type));
+				int executionScope = new Integer("" + leq_new_curricular_course.getExecution_scope()).intValue();
+				curricularCourse.setCurricularCourseExecutionScope(new CurricularCourseExecutionScope(executionScope));
+
+				if (leq_new_curricular_course.getMandatory() == 0) {
+					curricularCourse.setMandatory(new Boolean(false));
+				} else {
+					curricularCourse.setMandatory(new Boolean(true));
+				}
+
 				writeElement(curricularCourse);
-				logString += "A disciplina: " + leq_new_curricular_course.getName() + " foi acrescentada no Plano Curricular Novo\n";
+				//logString += "A disciplina: " + leq_new_curricular_course.getName() + " foi acrescentada no Plano Curricular Novo\n";
 			} else {
-				logString += "A disciplina: " + leq_new_curricular_course.getName() + " já existe no Plano Curricular Actual\n";
-				loader.numberUntreatableElements++;
+				logString += "Já existe no plano novo\t" + leq_new_curricular_course.getName() + "\n";
 			}
+			numberLinesProcessed++;
 		}
 	}
 
@@ -71,7 +104,6 @@ public class LoadLEQNewCurricularCourses extends LoadDataFile {
 			degreeCurricularPlan.setName("LEQ-2004");
 			degreeCurricularPlan.setDegree(persistentObjectOJB.readDegreeByCode("LEQ"));
 			degreeCurricularPlan.setState(DegreeCurricularPlanState.NOT_ACTIVE_OBJ);
-//			TODO: David-Ricardo: Por o DCPEnrolmentInfo
 			writeElement(degreeCurricularPlan);
 			logString += "O plano curricular: " + degreeCurricularPlan.getName() + " foi acrescentado \n";
 		}
@@ -79,7 +111,7 @@ public class LoadLEQNewCurricularCourses extends LoadDataFile {
 	}
 
 	protected String getFilename() {
-		return "";
+		return null;
 	}
 
 	protected String getFieldSeparator() {
@@ -87,7 +119,7 @@ public class LoadLEQNewCurricularCourses extends LoadDataFile {
 	}
 
 	protected String getFilenameOutput() {
-		return "etc/migration/LEQNewCurricularCoursesMigrationLog.txt";
+		return "etc/migration/dcs-rjao/logs/LEQNewCurricularCoursesMigrationLog.txt";
 	}
 
 	protected void processLine(String line) {

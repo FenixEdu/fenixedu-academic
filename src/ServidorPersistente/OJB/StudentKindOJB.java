@@ -6,10 +6,10 @@ import java.util.List;
 
 import org.odmg.QueryException;
 
-import Dominio.IStudentGroupInfo;
-import Dominio.StudentGroupInfo;
+import Dominio.IStudentKind;
+import Dominio.StudentKind;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentStudentGroupInfo;
+import ServidorPersistente.IPersistentStudentKind;
 import Util.StudentType;
 
 
@@ -19,12 +19,12 @@ import Util.StudentType;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class StudentGroupInfoOJB extends ObjectFenixOJB implements IPersistentStudentGroupInfo {
+public class StudentKindOJB extends ObjectFenixOJB implements IPersistentStudentKind {
     
-    public StudentGroupInfoOJB() {}
+    public StudentKindOJB() {}
     
-	public IStudentGroupInfo readByStudentType(StudentType studentType) throws ExcepcaoPersistencia{
-		String oqlQuery = "select all from "+ StudentGroupInfo.class.getName()
+	public IStudentKind readByStudentType(StudentType studentType) throws ExcepcaoPersistencia{
+		String oqlQuery = "select all from "+ StudentKind.class.getName()
 						+ " where studentType = $1 ";
 	 	try {
 			query.create(oqlQuery);
@@ -33,7 +33,7 @@ public class StudentGroupInfoOJB extends ObjectFenixOJB implements IPersistentSt
 			List result = (List) query.execute();
 			super.lockRead(result);
 			if (result.size() != 0)
-				return (IStudentGroupInfo) result.get(0);
+				return (IStudentKind) result.get(0);
 			return null;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);

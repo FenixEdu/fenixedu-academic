@@ -8,9 +8,16 @@ package middleware.almeida;
 
 import java.util.List;
 
+import middleware.almeida.dcsrjao.Almeida_curricular_course;
+import middleware.almeida.dcsrjao.Leq_cc_scope;
+import middleware.almeida.dcsrjao.Leq_new_curricular_course;
+
 import org.apache.ojb.broker.query.Criteria;
 
+import Dominio.Branch;
 import Dominio.CurricularCourse;
+import Dominio.CurricularSemester;
+import Dominio.CurricularYear;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.DisciplinaExecucao;
@@ -18,7 +25,10 @@ import Dominio.Enrolment;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.Frequenta;
+import Dominio.IBranch;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularSemester;
+import Dominio.ICurricularYear;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
@@ -111,18 +121,17 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return null;
 	}
 
-	public ICurricularCourse readCurricularCourse(
-		String name,
-		Integer degreeID,
-		String code) {
+	public ICurricularCourse readCurricularCourse(String name, Integer degreeID, String code) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("name", name);
 		criteria.addEqualTo("degreeCurricularPlan", degreeID);
+		criteria.addEqualTo("code", code);
 		List result = query(CurricularCourse.class, criteria);
 		if (result.size() == 1) {
 			return (ICurricularCourse) result.get(0);
 		} else {
-			return readCurricularCourse(code, degreeID);
+//			return readCurricularCourse(code, degreeID);
+			return null;
 		}
 	}
 
@@ -307,4 +316,69 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return result;
 	}	
 
+	public ICurricularCourse readCurricularCourseByNameAndDegreeCurricularPlan(
+		String name, 
+		IDegreeCurricularPlan degreeCurricularPlan) {
+		
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("name", name);
+		criteria.addEqualTo("degreeCurricularPlan.idInternal", ((DegreeCurricularPlan) degreeCurricularPlan).getIdInternal());
+
+		List result = query(CurricularCourse.class, criteria);
+		if (result.size() == 1) {
+			return (ICurricularCourse) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("name: " + name + " result.size = " + result.size());
+		}
+		return null;
+	}
+	
+	public List readAllLEQScopes(){
+		List result = query(Leq_cc_scope.class, null);
+		return result;
+	}	
+
+	public ICurricularYear readCurricularYear(Integer key) {
+		
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("internalID", key);
+
+		List result = query(CurricularYear.class, criteria);
+		if (result.size() == 1) {
+			return (ICurricularYear) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("key: " + key + " result.size = " + result.size());
+		}
+		return null;
+	}
+
+	public ICurricularSemester readCurricularSemester(Integer semester, ICurricularYear curricularYear) {
+		
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("semester", semester);
+		criteria.addEqualTo("curricularYear.internalID", curricularYear.getInternalID());
+
+		List result = query(CurricularSemester.class, criteria);
+		if (result.size() == 1) {
+			return (ICurricularSemester) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("semester: " + semester + " result.size = " + result.size());
+		}
+		return null;
+	}
+	
+	public IBranch readBranch(Integer key) {
+		
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("internalID", key);
+
+		List result = query(Branch.class, criteria);
+		if (result.size() == 1) {
+			return (IBranch) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("key: " + key + " result.size = " + result.size());
+		}
+		return null;
+	}
+	
 }

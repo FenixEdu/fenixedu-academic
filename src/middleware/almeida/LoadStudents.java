@@ -15,12 +15,12 @@ import Dominio.Funcionario;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IStudent;
-import Dominio.IStudentGroupInfo;
+import Dominio.IStudentKind;
 import Dominio.PersonRole;
 import Dominio.Pessoa;
 import Dominio.Role;
 import Dominio.Student;
-import Dominio.StudentGroupInfo;
+import Dominio.StudentKind;
 import ServidorAplicacao.security.PasswordEncryptor;
 import Util.RoleType;
 import Util.Sexo;
@@ -113,20 +113,20 @@ public class LoadStudents extends LoadDataFile {
 		List result = null;
 
 		// Cria informacao sobre um grupo de alunos
-		IStudentGroupInfo studentGroupInfo = new StudentGroupInfo();
+		IStudentKind studentGroupInfo = new StudentKind();
 		studentGroupInfo.setStudentType(new StudentType (StudentType.NORMAL));
 		result = query(studentGroupInfo);
 			
 		if (result.size() == 0){
 			
-			studentGroupInfo = new StudentGroupInfo();			
+			studentGroupInfo = new StudentKind();			
 			studentGroupInfo.setMaxCoursesToEnrol(new Integer(7));
 			studentGroupInfo.setMaxNACToEnrol(new Integer(10));
 			studentGroupInfo.setMinCoursesToEnrol(new Integer(3));
 			studentGroupInfo.setStudentType(new StudentType (StudentType.NORMAL));
 			writeElement(studentGroupInfo);
 		} else {
-			studentGroupInfo = (IStudentGroupInfo) result.get(0);
+			studentGroupInfo = (IStudentKind) result.get(0);
 		}
 		
 		Criteria criteria = new Criteria();
@@ -221,12 +221,12 @@ public class LoadStudents extends LoadDataFile {
 			student2Write.setDegreeType(new TipoCurso(TipoCurso.LICENCIATURA));
 			student2Write.setPerson(person2Write);
 			student2Write.setState(new StudentState(StudentState.INSCRITO));
-			student2Write.setStudentGroupInfo(studentGroupInfo);
+			student2Write.setStudentKind(studentGroupInfo);
 				
 			giveStudentRole(student2Write);
 		} else {
 			student2Write = (IStudent) result.get(0);
-			student2Write.setStudentGroupInfo(studentGroupInfo);
+			student2Write.setStudentKind(studentGroupInfo);
 			//System.out.println("O Aluno " + almeida_aluno.getNumero() + " já existe.");
 		}
 		writeElement(student2Write);

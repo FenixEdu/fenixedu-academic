@@ -14,11 +14,11 @@ public class Student implements IStudent {
 	protected Integer number;
 	protected StudentState state;
 	protected TipoCurso degreeType;
-	private IStudentGroupInfo studentGroupInfo;
+	private IStudentKind studentKind;
 
 	private Integer internalCode;
 	private Integer personKey;
-	private Integer studentGroupInfoKey;
+	private Integer studentKindKey;
 	private IPessoa person;
 
 	public Student() {
@@ -28,8 +28,8 @@ public class Student implements IStudent {
 		setDegreeType(null);
 		setInternalCode(null);
 		setPersonKey(null);
-		setStudentGroupInfo(null);
-		setStudentGroupInfoKey(null);
+		setStudentKind(null);
+		setStudentKindKey(null);
 	}
 
 	public Student(Integer number, StudentState state, IPessoa person, TipoCurso degreeType) {
@@ -62,7 +62,7 @@ public class Student implements IStudent {
 		result += "number = " + this.number + "; ";
 		result += "state = " + this.state + "; ";
 		result += "degreeType = " + this.degreeType + "; ";
-		result += "studentGroupInfo = " + this.studentGroupInfo + "; ";
+		result += "studentKind = " + this.studentKind + "; ";
 		result += "person = " + this.person + "]";
 		return result;
 	}
@@ -165,29 +165,29 @@ public class Student implements IStudent {
 	/**
 	 * @return
 	 */
-	public IStudentGroupInfo getStudentGroupInfo() {
-		return studentGroupInfo;
+	public IStudentKind getStudentKind() {
+		return studentKind;
 	}
 
 	/**
 	 * @return
 	 */
-	public Integer getStudentGroupInfoKey() {
-		return studentGroupInfoKey;
+	public Integer getStudentKindKey() {
+		return studentKindKey;
 	}
 
 	/**
 	 * @param type
 	 */
-	public void setStudentGroupInfo(IStudentGroupInfo studentGroupInfo) {
-		this.studentGroupInfo = studentGroupInfo;
+	public void setStudentKind(IStudentKind studentKind) {
+		this.studentKind = studentKind;
 	}
 
 	/**
 	 * @param integer
 	 */
-	public void setStudentGroupInfoKey(Integer studentGroupInfoKey) {
-		this.studentGroupInfoKey = studentGroupInfoKey;
+	public void setStudentKindKey(Integer studentKindKey) {
+		this.studentKindKey = studentKindKey;
 	}
 
 }

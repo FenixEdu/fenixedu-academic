@@ -14,7 +14,7 @@ import Util.StudentType;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public interface IStudentGroupInfo {
+public interface IStudentKind {
 	public abstract StudentType getStudentType();
 	public abstract void setStudentType(StudentType studentType);
 	public abstract Integer getMaxCoursesToEnrol();

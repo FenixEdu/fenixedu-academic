@@ -15,7 +15,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoDegreeCurricularPlanEnrolmentInfo;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
@@ -70,11 +69,8 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosT
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 			new InfoDegreeCurricularPlan("plano1", infoDegree);
 
-		InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo = new InfoDegreeCurricularPlanEnrolmentInfo();
-		infoDegreeCurricularPlanEnrolmentInfo.setDegreeDuration(new Integer(15));
-		infoDegreeCurricularPlanEnrolmentInfo.setMinimalYearForOptionalCourses(new Integer(15));
-		infoDegreeCurricularPlan.setInfoDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfo);
-
+		infoDegreeCurricularPlan.setDegreeDuration(new Integer(15));
+		infoDegreeCurricularPlan.setMinimalYearForOptionalCourses(new Integer(15));
 
 		InfoExecutionDegree infoExecutionDegree =
 			new InfoExecutionDegree(
@@ -103,10 +99,8 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosT
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 			new InfoDegreeCurricularPlan("plano1", infoDegree);
 
-		InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo = new InfoDegreeCurricularPlanEnrolmentInfo();
-		infoDegreeCurricularPlanEnrolmentInfo.setDegreeDuration(new Integer(15));
-		infoDegreeCurricularPlanEnrolmentInfo.setMinimalYearForOptionalCourses(new Integer(15));
-		infoDegreeCurricularPlan.setInfoDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfo);
+		infoDegreeCurricularPlan.setDegreeDuration(new Integer(15));
+		infoDegreeCurricularPlan.setMinimalYearForOptionalCourses(new Integer(15));
 
 		InfoExecutionDegree infoExecutionDegree =
 			new InfoExecutionDegree(

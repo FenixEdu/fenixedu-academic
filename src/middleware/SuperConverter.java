@@ -29,23 +29,21 @@ import org.odmg.QueryException;
 import Dominio.Branch;
 import Dominio.Country;
 import Dominio.CurricularCourse;
-import Dominio.CurricularCourseEnrolmentInfo;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.Funcionario;
 import Dominio.IBranch;
 import Dominio.ICountry;
 import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseEnrolmentInfo;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IStudent;
-import Dominio.IStudentGroupInfo;
+import Dominio.IStudentKind;
 import Dominio.PersonRole;
 import Dominio.Pessoa;
 import Dominio.Role;
 import Dominio.Student;
-import Dominio.StudentGroupInfo;
+import Dominio.StudentKind;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
@@ -252,21 +250,21 @@ public static void main(String args[]) throws Exception{
 					continue;
 				}
 				
-				// Get the Curricular Course Enrolment Info
-				criteria = new Criteria();
-				
-				// Values By Default
-				criteria.addEqualTo("maxIncrementNac", new Integer(2));
-				criteria.addEqualTo("minIncrementNac", new Integer(1));
-				criteria.addEqualTo("weigth", new Integer(1));
-				query = new QueryByCriteria(CurricularCourseEnrolmentInfo.class,criteria);
-				result = (List) broker.getCollectionByQuery(query);		
-				
-				if (result.size() == 0) {
-					throw new Exception("Cannot Read Curricular Course Enrolment Info");
-				}
-				
-				ICurricularCourseEnrolmentInfo curricularCourseEnrolmentInfo = (ICurricularCourseEnrolmentInfo) result.get(0);
+//				// Get the Curricular Course Enrolment Info
+//				criteria = new Criteria();
+//				
+//				// Values By Default
+//				criteria.addEqualTo("maxIncrementNac", new Integer(2));
+//				criteria.addEqualTo("minIncrementNac", new Integer(1));
+//				criteria.addEqualTo("weigth", new Integer(1));
+//				query = new QueryByCriteria(CurricularCourseEnrolmentInfo.class,criteria);
+//				result = (List) broker.getCollectionByQuery(query);		
+//				
+//				if (result.size() == 0) {
+//					throw new Exception("Cannot Read Curricular Course Enrolment Info");
+//				}
+//				
+//				ICurricularCourseEnrolmentInfo curricularCourseEnrolmentInfo = (ICurricularCourseEnrolmentInfo) result.get(0);
 				
 				curricularCourse2Write = new CurricularCourse();
 				
@@ -279,7 +277,6 @@ public static void main(String args[]) throws Exception{
 
 				curricularCourse2Write.setCredits(new Double(0.0));
 				
-				curricularCourse2Write.setCurricularCourseEnrolmentInfo(curricularCourseEnrolmentInfo);
 				curricularCourse2Write.setCurricularCourseExecutionScope(CurricularCourseExecutionScope.SEMESTRIAL_OBJ);
 				curricularCourse2Write.setDegreeCurricularPlan(degreeCurricularPlan);
 				curricularCourse2Write.setDepartmentCourse(null);
@@ -400,7 +397,7 @@ public static void main(String args[]) throws Exception{
 			System.out.println("A Converter " + studentsPG.size() + " alunos de Pos-Graduacao para o Fenix ...");
 
 			// Cria informacao sobre um grupo de alunos
-			IStudentGroupInfo studentGroupInfo = new StudentGroupInfo();
+			IStudentKind studentGroupInfo = new StudentKind();
 			
 			studentGroupInfo.setStudentType(new StudentType (StudentType.NORMAL));
 			queryByCriteria = new QueryByCriteria(studentGroupInfo);
@@ -409,14 +406,14 @@ public static void main(String args[]) throws Exception{
 			
 			if (result.size() == 0){
 			
-				studentGroupInfo = new StudentGroupInfo();			
+				studentGroupInfo = new StudentKind();			
 				studentGroupInfo.setMaxCoursesToEnrol(new Integer(7));
 				studentGroupInfo.setMaxNACToEnrol(new Integer(10));
 				studentGroupInfo.setMinCoursesToEnrol(new Integer(3));
 				studentGroupInfo.setStudentType(new StudentType (StudentType.NORMAL));
 				broker.store(studentGroupInfo);
 			} else {
-				studentGroupInfo = (IStudentGroupInfo) result.get(0);
+				studentGroupInfo = (IStudentKind) result.get(0);
 			}
 
 			Iterator iterator = studentsPG.iterator();
@@ -472,7 +469,7 @@ public static void main(String args[]) throws Exception{
 					student2Write.setDegreeType(new TipoCurso(TipoCurso.MESTRADO));
 					student2Write.setPerson(person);
 					student2Write.setState(new StudentState(StudentState.INSCRITO));
-					student2Write.setStudentGroupInfo(studentGroupInfo);
+					student2Write.setStudentKind(studentGroupInfo);
 					broker.store(student2Write);
 					
 					// Give the Student Role (This student may not exist but the person may already be a 
@@ -684,7 +681,7 @@ public static void main(String args[]) throws Exception{
 			System.out.println("A Converter " + alunosG.size() + " alunos de Licenciatura para o Fenix ...");
 
 			// Cria informacao sobre um grupo de alunos
-			IStudentGroupInfo studentGroupInfo = new StudentGroupInfo();
+			IStudentKind studentGroupInfo = new StudentKind();
 			
 			studentGroupInfo.setStudentType(new StudentType (StudentType.NORMAL));
 			queryByCriteria = new QueryByCriteria(studentGroupInfo);
@@ -693,14 +690,14 @@ public static void main(String args[]) throws Exception{
 			
 			if (result.size() == 0){
 			
-				studentGroupInfo = new StudentGroupInfo();			
+				studentGroupInfo = new StudentKind();			
 				studentGroupInfo.setMaxCoursesToEnrol(new Integer(7));
 				studentGroupInfo.setMaxNACToEnrol(new Integer(10));
 				studentGroupInfo.setMinCoursesToEnrol(new Integer(3));
 				studentGroupInfo.setStudentType(new StudentType (StudentType.NORMAL));
 				broker.store(studentGroupInfo);
 			} else {
-				studentGroupInfo = (IStudentGroupInfo) result.get(0);
+				studentGroupInfo = (IStudentKind) result.get(0);
 			}
 
 			Iterator iterator = alunosG.iterator();
@@ -784,7 +781,7 @@ public static void main(String args[]) throws Exception{
 					student2Write.setDegreeType(new TipoCurso(TipoCurso.LICENCIATURA));
 					student2Write.setPerson(person2Write);
 					student2Write.setState(new StudentState(StudentState.INSCRITO));
-					student2Write.setStudentGroupInfo(studentGroupInfo);
+					student2Write.setStudentKind(studentGroupInfo);
 				
 					IPersonRole personRole = readPersonRole((Pessoa) person2Write, RoleType.STUDENT);
 					if (personRole == null){
@@ -793,7 +790,7 @@ public static void main(String args[]) throws Exception{
 					
 				} else {
 					student2Write = (IStudent) result.get(0);
-					student2Write.setStudentGroupInfo(studentGroupInfo);
+					student2Write.setStudentKind(studentGroupInfo);
 					System.out.println("O Aluno " + student2Convert.getNumero() + " já existe.");
 				}
 				broker.store(student2Write);

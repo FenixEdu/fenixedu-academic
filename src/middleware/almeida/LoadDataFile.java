@@ -35,8 +35,8 @@ public abstract class LoadDataFile {
 	protected int numberLinesProcessed = 0;
 	protected int numberElementsWritten = 0;
 	protected int numberUntreatableElements = 0;
-	private Calendar startTime = null;
-	private Calendar endTime = null;
+	protected Calendar startTime = null;
+	protected Calendar endTime = null;
 
 	protected PersistentObjectOJBReader persistentObjectOJB = null;
 
@@ -125,7 +125,7 @@ public abstract class LoadDataFile {
 		}
 	}
 
-	private void report() {
+	protected void report() {
 		long duration =
 			(endTime.getTimeInMillis() - startTime.getTimeInMillis()) / 1000;
 		long durationHour = duration / 3600;

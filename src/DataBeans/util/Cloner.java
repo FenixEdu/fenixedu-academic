@@ -14,14 +14,12 @@ import DataBeans.InfoClass;
 import DataBeans.InfoContributor;
 import DataBeans.InfoCountry;
 import DataBeans.InfoCurricularCourse;
-import DataBeans.InfoCurricularCourseEnrolmentInfo;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurricularSemester;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoCurriculum;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoDegreeCurricularPlanEnrolmentInfo;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
@@ -47,7 +45,7 @@ import DataBeans.InfoShift;
 import DataBeans.InfoSite;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
-import DataBeans.InfoStudentGroupInfo;
+import DataBeans.InfoStudentKind;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
 import Dominio.Announcement;
@@ -58,7 +56,6 @@ import Dominio.CandidateSituation;
 import Dominio.Contributor;
 import Dominio.Country;
 import Dominio.CurricularCourse;
-import Dominio.CurricularCourseEnrolmentInfo;
 import Dominio.CurricularCourseScope;
 import Dominio.CurricularSemester;
 import Dominio.CurricularYear;
@@ -66,7 +63,6 @@ import Dominio.Curriculum;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
-import Dominio.DegreeCurricularPlanEnrolmentInfo;
 import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
@@ -87,7 +83,6 @@ import Dominio.ICandidateSituation;
 import Dominio.IContributor;
 import Dominio.ICountry;
 import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseEnrolmentInfo;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
 import Dominio.ICurricularYear;
@@ -95,7 +90,6 @@ import Dominio.ICurriculum;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDegreeCurricularPlanEnrolmentInfo;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
@@ -118,7 +112,7 @@ import Dominio.ISection;
 import Dominio.ISite;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
-import Dominio.IStudentGroupInfo;
+import Dominio.IStudentKind;
 import Dominio.ITeacher;
 import Dominio.ITeacherShiftPercentage;
 import Dominio.ITurma;
@@ -132,7 +126,7 @@ import Dominio.Section;
 import Dominio.Site;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
-import Dominio.StudentGroupInfo;
+import Dominio.StudentKind;
 import Dominio.Teacher;
 import Dominio.TeacherShiftPercentage;
 import Dominio.Turma;
@@ -524,12 +518,12 @@ public abstract class Cloner {
 		IStudent student = new Student();
 		IPessoa person =
 			Cloner.copyInfoPerson2IPerson(infoStudent.getInfoPerson());
-		IStudentGroupInfo studentGroupInfo =
-			Cloner.copyInfoStudentGroupInfo2IStudentGroupInfo(
-				infoStudent.getInfoStudentGroupInfo());
+		IStudentKind studentGroupInfo =
+			Cloner.copyInfoStudentKind2IStudentKind(
+				infoStudent.getInfoStudentKind());
 		copyObjectProperties(student, infoStudent);
 		student.setPerson(person);
-		student.setStudentGroupInfo(studentGroupInfo);
+		student.setStudentKind(studentGroupInfo);
 		return student;
 	}
 
@@ -543,9 +537,9 @@ public abstract class Cloner {
 		copyObjectProperties(infoStudent, student);
 		infoStudent.setInfoPerson(
 			Cloner.copyIPerson2InfoPerson(student.getPerson()));
-		infoStudent.setInfoStudentGroupInfo(
-			Cloner.copyIStudentGroupInfo2InfoStudentGroupInfo(
-				student.getStudentGroupInfo()));
+		infoStudent.setInfoStudentKind(
+			Cloner.copyIStudentKind2InfoStudentKind(
+				student.getStudentKind()));
 		return infoStudent;
 	}
 
@@ -1314,12 +1308,9 @@ public abstract class Cloner {
 
 		ICurso degree =	Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
 		
-		IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo = Cloner.copyInfoDegreeCurricularPlanEnrolmentInfo2IDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlan.getInfoDegreeCurricularPlanEnrolmentInfo());
-		
 		copyObjectProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
 
 		degreeCurricularPlan.setDegree(degree);
-		degreeCurricularPlan.setDegreeCurricularPlanEnrolmentInfo(degreeCurricularPlanEnrolmentInfo);
 		
 		return degreeCurricularPlan;
 	}
@@ -1337,12 +1328,9 @@ public abstract class Cloner {
 		InfoDegree infoDegree =
 			Cloner.copyIDegree2InfoDegree(degreeCurricularPlan.getDegree());
 
-		InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo = Cloner.copyIDegreeCurricularPlanEnrolmentInfo2InfoDegreeCurricularPlanEnrolmentInfo(degreeCurricularPlan.getDegreeCurricularPlanEnrolmentInfo());
-
 		copyObjectProperties(infoDegreeCurricularPlan, degreeCurricularPlan);
 
 		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-		infoDegreeCurricularPlan.setInfoDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfo);
 
 		return infoDegreeCurricularPlan;
 	}
@@ -1383,12 +1371,9 @@ public abstract class Cloner {
 		IDegreeCurricularPlan planoCurricularCurso = copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
 				infoCurricularCourse.getInfoDegreeCurricularPlan());
 		
-		ICurricularCourseEnrolmentInfo curricularCourseEnrolmentInfo = Cloner.copyInfoCurricularCourseEnrolmentInfo2ICurricularCourseEnrolmentInfo(infoCurricularCourse.getInfoCurricularCourseEnrolmentInfo());
-
 		copyObjectProperties(curricularCourse, infoCurricularCourse);
 
 		curricularCourse.setDegreeCurricularPlan(planoCurricularCurso);
-		curricularCourse.setCurricularCourseEnrolmentInfo(curricularCourseEnrolmentInfo);
 
 		return curricularCourse;
 	}
@@ -1407,12 +1392,9 @@ public abstract class Cloner {
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =	copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
 				curricularCourse.getDegreeCurricularPlan());
 
-		InfoCurricularCourseEnrolmentInfo infoCurricularCourseEnrolmentInfo = Cloner.copyICurricularCourseEnrolmentInfo2InfoCurricularCourseEnrolmentInfo(curricularCourse.getCurricularCourseEnrolmentInfo());
-		
 		copyObjectProperties(infoCurricularCourse, curricularCourse);
 
 		infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-		infoCurricularCourse.setInfoCurricularCourseEnrolmentInfo(infoCurricularCourseEnrolmentInfo);
 
 		return infoCurricularCourse;
 	}
@@ -1776,78 +1758,27 @@ public abstract class Cloner {
 		return equivalence;
 	}
 
-	/**
-		* @author dcs-rjao
-		* @param IDegreeCurricularPlanEnrolmentInfo
-		* @return InfoDegreeCurricularPlanEnrolmentInfo
-		*/
-	public static InfoDegreeCurricularPlanEnrolmentInfo copyIDegreeCurricularPlanEnrolmentInfo2InfoDegreeCurricularPlanEnrolmentInfo(IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo) {
-
-		InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo =
-			new InfoDegreeCurricularPlanEnrolmentInfo();
-
-		copyObjectProperties(infoDegreeCurricularPlanEnrolmentInfo, degreeCurricularPlanEnrolmentInfo);
-
-		return infoDegreeCurricularPlanEnrolmentInfo;
-	}
 
 	/**
-		* @author dcs-rjao
-		* @param IDegreeCurricularPlanEnrolmentInfo
-		* @return InfoDegreeCurricularPlanEnrolmentInfo
-		*/
-	public static IDegreeCurricularPlanEnrolmentInfo copyInfoDegreeCurricularPlanEnrolmentInfo2IDegreeCurricularPlanEnrolmentInfo(InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo) {
-
-		IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo =
-			new DegreeCurricularPlanEnrolmentInfo();
-
-		copyObjectProperties(degreeCurricularPlanEnrolmentInfo,infoDegreeCurricularPlanEnrolmentInfo);
-
-		return degreeCurricularPlanEnrolmentInfo;
+	 * @author dcs-rjao
+	 * @param IStudentKind
+	 * @return InfoStudentKind
+	 */
+	public static InfoStudentKind copyIStudentKind2InfoStudentKind(IStudentKind studentGroupInfo) {
+		InfoStudentKind infoStudentKind = new InfoStudentKind();
+		copyObjectProperties(infoStudentKind, studentGroupInfo);
+		return infoStudentKind;
 	}
 
 	/**
 	 * @author dcs-rjao
-	 * @param IStudentGroupInfo
-	 * @return InfoStudentGroupInfo
+	 * @param IStudentKind
+	 * @return InfoStudentKind
 	 */
-	public static InfoStudentGroupInfo copyIStudentGroupInfo2InfoStudentGroupInfo(IStudentGroupInfo studentGroupInfo) {
-		InfoStudentGroupInfo infoStudentGroupInfo = new InfoStudentGroupInfo();
-		copyObjectProperties(infoStudentGroupInfo, studentGroupInfo);
-		return infoStudentGroupInfo;
-	}
-
-	/**
-	 * @author dcs-rjao
-	 * @param IStudentGroupInfo
-	 * @return InfoStudentGroupInfo
-	 */
-	public static IStudentGroupInfo copyInfoStudentGroupInfo2IStudentGroupInfo(InfoStudentGroupInfo infoStudentGroupInfo) {
-		IStudentGroupInfo studentGroupInfo = new StudentGroupInfo();
-		copyObjectProperties(studentGroupInfo, infoStudentGroupInfo);
-		return studentGroupInfo;
-	}
-
-	/**
-	 * @author dcs-rjao
-	 * @param ICurricularCourseEnrolmentInfo
-	 * @return InfoCurricularCourseEnrolmentInfo
-	 */
-	public static InfoCurricularCourseEnrolmentInfo copyICurricularCourseEnrolmentInfo2InfoCurricularCourseEnrolmentInfo(ICurricularCourseEnrolmentInfo curricularCourseEnrolmentInfo) {
-		InfoCurricularCourseEnrolmentInfo infoCurricularCourseEnrolmentInfo = new InfoCurricularCourseEnrolmentInfo();
-		copyObjectProperties(infoCurricularCourseEnrolmentInfo, curricularCourseEnrolmentInfo);
-		return infoCurricularCourseEnrolmentInfo;
-	}
-
-	/**
-	 * @author dcs-rjao
-	 * @param ICurricularCourseEnrolmentInfo
-	 * @return InfoCurricularCourseEnrolmentInfo
-	 */
-	public static ICurricularCourseEnrolmentInfo copyInfoCurricularCourseEnrolmentInfo2ICurricularCourseEnrolmentInfo(InfoCurricularCourseEnrolmentInfo infoCurricularCourseEnrolmentInfo) {
-		ICurricularCourseEnrolmentInfo curricularCourseEnrolmentInfo = new CurricularCourseEnrolmentInfo();
-		copyObjectProperties(curricularCourseEnrolmentInfo, infoCurricularCourseEnrolmentInfo);
-		return curricularCourseEnrolmentInfo;
+	public static IStudentKind copyInfoStudentKind2IStudentKind(InfoStudentKind infoStudentGroupInfo) {
+		IStudentKind studentKind = new StudentKind();
+		copyObjectProperties(studentKind, infoStudentGroupInfo);
+		return studentKind;
 	}
 
 	/**

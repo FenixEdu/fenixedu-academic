@@ -3,21 +3,21 @@ package ServidorPersistente.OJB;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import Dominio.IStudentGroupInfo;
+import Dominio.IStudentKind;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentStudentGroupInfo;
+import ServidorPersistente.IPersistentStudentKind;
 import Util.StudentType;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class StudentGroupInfoOJBTest extends TestCaseOJB {
+public class StudentKindOJBTest extends TestCaseOJB {
 	
 	SuportePersistenteOJB persistentSupport = null; 
-	IPersistentStudentGroupInfo persistentStudentGroupInfo = null;
+	IPersistentStudentKind persistentStudentGroupInfo = null;
 	
-	public StudentGroupInfoOJBTest(java.lang.String testName) {
+	public StudentKindOJBTest(java.lang.String testName) {
 		super(testName);
 	}
     
@@ -26,7 +26,7 @@ public class StudentGroupInfoOJBTest extends TestCaseOJB {
 	}
     
 	public static Test suite() {
-		TestSuite suite = new TestSuite(StudentGroupInfoOJBTest.class);
+		TestSuite suite = new TestSuite(StudentKindOJBTest.class);
         
 		return suite;
 	}
@@ -39,7 +39,7 @@ public class StudentGroupInfoOJBTest extends TestCaseOJB {
 			e.printStackTrace();
 			fail("Error");
 		}
-		persistentStudentGroupInfo = persistentSupport.getIPersistentStudentGroupInfo();
+		persistentStudentGroupInfo = persistentSupport.getIPersistentStudentKind();
 	}
     
 	protected void tearDown() {
@@ -47,7 +47,7 @@ public class StudentGroupInfoOJBTest extends TestCaseOJB {
 	}
 	public void testReadContributor() {
 		System.out.println("Test 1 - Read Student Group Info");        
-		IStudentGroupInfo studentGroupInfo = null;
+		IStudentKind studentGroupInfo = null;
 
 		try {
 			persistentSupport.iniciarTransaccao();

@@ -18,7 +18,8 @@ public class InfoDegreeCurricularPlan implements Serializable {
 	private DegreeCurricularPlanState state;
 	private Date initialDate;
 	private Date endDate;
-	private InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo;
+	private Integer degreeDuration;
+	private Integer minimalYearForOptionalCourses;
 
 	public InfoDegreeCurricularPlan() {
 		setName(null);
@@ -26,7 +27,6 @@ public class InfoDegreeCurricularPlan implements Serializable {
 		setState(null);
 		setInitialDate(null);
 		setEndDate(null);
-		setInfoDegreeCurricularPlanEnrolmentInfo(null);
 	}
 
 	public InfoDegreeCurricularPlan(String name, InfoDegree infoDegree) {
@@ -35,13 +35,12 @@ public class InfoDegreeCurricularPlan implements Serializable {
 		setInfoDegree(infoDegree);
 	}
 
-	public InfoDegreeCurricularPlan(String nome, InfoDegree infoDegree, DegreeCurricularPlanState state, Date initialDate, Date endDate, InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo) {
+	public InfoDegreeCurricularPlan(String nome, InfoDegree infoDegree, DegreeCurricularPlanState state, Date initialDate, Date endDate) {
 		setName(nome);
 		setInfoDegree(infoDegree);
 		setState(state);
 		setInitialDate(initialDate);
 		setEndDate(endDate);
-		setInfoDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfo);
 	}
 
 	public boolean equals(Object obj) {
@@ -137,18 +136,21 @@ public class InfoDegreeCurricularPlan implements Serializable {
 	public void setState(DegreeCurricularPlanState state) {
 		this.state = state;
 	}
-	/**
-	 * @return
-	 */
-	public InfoDegreeCurricularPlanEnrolmentInfo getInfoDegreeCurricularPlanEnrolmentInfo() {
-		return infoDegreeCurricularPlanEnrolmentInfo;
+
+	public Integer getDegreeDuration() {
+		return degreeDuration;
 	}
 
-	/**
-	 * @param info
-	 */
-	public void setInfoDegreeCurricularPlanEnrolmentInfo(InfoDegreeCurricularPlanEnrolmentInfo info) {
-		infoDegreeCurricularPlanEnrolmentInfo = info;
+	public Integer getMinimalYearForOptionalCourses() {
+		return minimalYearForOptionalCourses;
+	}
+
+	public void setDegreeDuration(Integer integer) {
+		degreeDuration = integer;
+	}
+
+	public void setMinimalYearForOptionalCourses(Integer integer) {
+		minimalYearForOptionalCourses = integer;
 	}
 
 }

@@ -18,12 +18,12 @@ public interface IStudent {
 	public Integer getNumber();
 	public StudentState getState();
 	public IPessoa getPerson();
-	public IStudentGroupInfo getStudentGroupInfo();
+	public IStudentKind getStudentKind();
 	public TipoCurso getDegreeType();
 	
 	public void setNumber(Integer number);
 	public void setState(StudentState state);
 	public void setPerson(IPessoa person);
 	public void setDegreeType(TipoCurso degreeType);	
-	public void setStudentGroupInfo(IStudentGroupInfo studentGroupInfo);
+	public void setStudentKind(IStudentKind studentKind);
 }

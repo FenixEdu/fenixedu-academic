@@ -1,4 +1,4 @@
-package DataBeans;
+package Dominio;
 
 import Util.StudentType;
 
@@ -9,24 +9,20 @@ import Util.StudentType;
  * 24/Mar/2003
  */
 
-public class InfoStudentGroupInfo extends InfoObject {
+public class StudentKind extends DomainObject implements IStudentKind {
 
 	private StudentType studentType;
 	private Integer minCoursesToEnrol;
 	private Integer maxCoursesToEnrol;
 	private Integer maxNACToEnrol;
 	
-	public InfoStudentGroupInfo() {
-		setStudentType(null);
-		setMinCoursesToEnrol(null);
-		setMaxCoursesToEnrol(null);
-		setMaxNACToEnrol(null);
+	public StudentKind() {
 	}
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
-		if (obj instanceof InfoStudentGroupInfo) {
-			InfoStudentGroupInfo studentType = (InfoStudentGroupInfo) obj;
+		if (obj instanceof IStudentKind) {
+			IStudentKind studentType = (IStudentKind) obj;
 			resultado = ( this.getStudentType().equals(studentType.getStudentType()));
 		}
 		return resultado;
@@ -34,6 +30,7 @@ public class InfoStudentGroupInfo extends InfoObject {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
+		result += "idInternal = " + this.getIdInternal() + "; ";
 		result += "studentType = " + this.studentType + "; ";
 		result += "minCoursesToEnrol = " + this.minCoursesToEnrol + "; ";
 		result += "maxNACToEnrol = " + this.maxNACToEnrol + "; ";

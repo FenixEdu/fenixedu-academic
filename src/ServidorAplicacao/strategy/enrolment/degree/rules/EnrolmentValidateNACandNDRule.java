@@ -18,32 +18,33 @@ public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 		 
 		int NAC = 0;
-		int maxCourses = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMaxCoursesToEnrol().intValue();
-		int maxNAC = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMaxNACToEnrol().intValue();
-		int minCourses = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMinCoursesToEnrol().intValue();
+		int maxCourses = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentKind().getMaxCoursesToEnrol().intValue();
+		int maxNAC = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentKind().getMaxNACToEnrol().intValue();
+		int minCourses = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentKind().getMinCoursesToEnrol().intValue();
 		int number_of_enrolments = 0;
  		
 		Iterator iterator = enrolmentContext.getActualEnrolments().iterator();
 		while (iterator.hasNext()) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 			if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseScope.getCurricularCourse()).intValue() > 0) {
-				NAC = NAC + curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMaxIncrementNac().intValue();
+				NAC = NAC + curricularCourseScope.getMaxIncrementNac().intValue();
 			} else {
-				NAC = NAC + curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMinIncrementNac().intValue();
+				NAC = NAC + curricularCourseScope.getMinIncrementNac().intValue();
 			}
-			number_of_enrolments += curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getWeigth().intValue();
+			number_of_enrolments += curricularCourseScope.getWeigth().intValue();
 		}
 
 		Iterator iterator2 = enrolmentContext.getOptionalCurricularCoursesEnrolments().iterator();
 		while (iterator2.hasNext()) {
 			IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator2.next();
 			if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(enrolmentInOptionalCurricularCourse.getCurricularCourse()).intValue() > 0) {
-				NAC = NAC + enrolmentInOptionalCurricularCourse.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMaxIncrementNac().intValue();
+				// FIXME DAVID-RICARDO: Isto é para alterar caso se venha a ligar o Enrolment ao CurricularCourseScope.
+				NAC = NAC + enrolmentInOptionalCurricularCourse.getCurricularCourse().getCurricularCourseScope(enrolmentContext.getStudentActiveCurricularPlan().getBranch(), enrolmentContext.getSemester()).getMaxIncrementNac().intValue();		
 			} else {
-				NAC = NAC + enrolmentInOptionalCurricularCourse.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMinIncrementNac().intValue();
+				NAC = NAC + enrolmentInOptionalCurricularCourse.getCurricularCourse().getCurricularCourseScope(enrolmentContext.getStudentActiveCurricularPlan().getBranch(), enrolmentContext.getSemester()).getMinIncrementNac().intValue();
 			}
 			
-			number_of_enrolments += enrolmentInOptionalCurricularCourse.getCurricularCourse().getCurricularCourseEnrolmentInfo().getWeigth().intValue();
+			number_of_enrolments += enrolmentInOptionalCurricularCourse.getCurricularCourse().getCurricularCourseScope(enrolmentContext.getStudentActiveCurricularPlan().getBranch(), enrolmentContext.getSemester()).getWeigth().intValue();
 		}
 		
 		if ((number_of_enrolments) < minCourses) {

@@ -17,6 +17,9 @@ public class InfoCurricularCourseScope implements Serializable {
 	private InfoCurricularSemester infoCurricularSemester;
 	private InfoBranch infoBranch;
 
+	private Integer maxIncrementNac;
+	private Integer minIncrementNac;
+	private Integer weigth;
 
 	public InfoCurricularCourseScope() {}
 
@@ -83,5 +86,29 @@ public class InfoCurricularCourseScope implements Serializable {
 	 */
 	public void setInfoCurricularSemester(InfoCurricularSemester infoCurricularSemester) {
 		this.infoCurricularSemester = infoCurricularSemester;
+	}
+
+	public Integer getMaxIncrementNac() {
+		return maxIncrementNac;
+	}
+
+	public Integer getMinIncrementNac() {
+		return minIncrementNac;
+	}
+
+	public Integer getWeigth() {
+		return weigth;
+	}
+
+	public void setMaxIncrementNac(Integer integer) {
+		maxIncrementNac = integer;
+	}
+
+	public void setMinIncrementNac(Integer integer) {
+		minIncrementNac = integer;
+	}
+
+	public void setWeigth(Integer integer) {
+		weigth = integer;
 	}
 }

@@ -18,9 +18,9 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 
-		int degreeDuration = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getDegreeCurricularPlanEnrolmentInfo().getDegreeDuration().intValue();
-		int maxCourses = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMaxCoursesToEnrol().intValue();
-		int maxNAC = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMaxNACToEnrol().intValue();
+		int degreeDuration = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getDegreeDuration().intValue();
+		int maxCourses = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentKind().getMaxCoursesToEnrol().intValue();
+		int maxNAC = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentKind().getMaxNACToEnrol().intValue();
 
 		List possibleScopesSpan = new ArrayList();
 		List possibleScopesEnroled = new ArrayList();
@@ -36,12 +36,12 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 				if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(new Integer(year))) {
 					possibleScopesEnroled.add(curricularCourseScope);
 
-					possibleND += curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getWeigth().intValue();
+					possibleND += curricularCourseScope.getWeigth().intValue();
 
 					if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseScope.getCurricularCourse()).intValue() > 0) {
-						possibleNAC = possibleNAC + curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMaxIncrementNac().intValue();
+						possibleNAC = possibleNAC + curricularCourseScope.getMaxIncrementNac().intValue();
 					} else {
-						possibleNAC = possibleNAC + curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMinIncrementNac().intValue();
+						possibleNAC = possibleNAC + curricularCourseScope.getMinIncrementNac().intValue();
 					}
 				}
 			}
@@ -52,12 +52,12 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 				if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(new Integer(year))) {
 					possibleScopesSpan.add(curricularCourseScope);
 					
-					possibleND += curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getWeigth().intValue();
+					possibleND += curricularCourseScope.getWeigth().intValue();
 					
 					if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseScope.getCurricularCourse()).intValue() > 0) {
-						possibleNAC = possibleNAC + curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMaxIncrementNac().intValue();
+						possibleNAC = possibleNAC + curricularCourseScope.getMaxIncrementNac().intValue();
 					} else {
-						possibleNAC = possibleNAC + curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMinIncrementNac().intValue();
+						possibleNAC = possibleNAC + curricularCourseScope.getMinIncrementNac().intValue();
 					}
 				}
 			}

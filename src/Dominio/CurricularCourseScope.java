@@ -19,6 +19,10 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 	private ICurricularSemester curricularSemester;
 	private IBranch branch;
 	
+	private Integer maxIncrementNac;
+	private Integer minIncrementNac;
+	private Integer weigth;
+
 	public CurricularCourseScope() {
 		setInternalID(null);
 
@@ -168,4 +172,29 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 	public void setInternalID(Integer internalID) {
 		this.internalID = internalID;
 	}
+
+	public Integer getMaxIncrementNac() {
+		return maxIncrementNac;
+	}
+
+	public Integer getMinIncrementNac() {
+		return minIncrementNac;
+	}
+
+	public Integer getWeigth() {
+		return weigth;
+	}
+
+	public void setMaxIncrementNac(Integer integer) {
+		maxIncrementNac = integer;
+	}
+
+	public void setMinIncrementNac(Integer integer) {
+		minIncrementNac = integer;
+	}
+
+	public void setWeigth(Integer integer) {
+		weigth = integer;
+	}
+
 }

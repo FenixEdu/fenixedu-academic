@@ -14,19 +14,22 @@ import Util.DegreeCurricularPlanState;
 public interface IDegreeCurricularPlan {
 
 	public String getName();
+	public Integer getIdInternal();
 	public ICurso getDegree();
 	public DegreeCurricularPlanState getState();
 	public Date getEndDate();
 	public Date getInitialDate();
-	public IDegreeCurricularPlanEnrolmentInfo getDegreeCurricularPlanEnrolmentInfo();
 	List getCurricularCourses();
-	
+	public Integer getDegreeDuration();
+	public Integer getMinimalYearForOptionalCourses();
+
+	public void setDegreeDuration(Integer integer);
+	public void setMinimalYearForOptionalCourses(Integer integer);
 	public void setName(String name);
 	public void setDegree(ICurso curso);
 	public void setState(DegreeCurricularPlanState state);
 	public void setEndDate(Date endDate);
 	public void setInitialDate(Date initialDate);
-	public void setDegreeCurricularPlanEnrolmentInfo(IDegreeCurricularPlanEnrolmentInfo info);
 	void setCurricularCourses(List curricularCourses);	
 
 }

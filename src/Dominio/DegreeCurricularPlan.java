@@ -15,14 +15,14 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 
 	private Integer idInternal;
 	private Integer degreeKey;
-	private Integer degreeCurricularPlanEnrolmentInfoKey;
 	
-	private IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo;
 	private ICurso degree;
 	private String name;
 	private DegreeCurricularPlanState state;
 	private Date initialDate;
 	private Date endDate;
+	private Integer degreeDuration;
+	private Integer minimalYearForOptionalCourses;
 	
 	private List curricularCourses;
 	
@@ -35,7 +35,6 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		setState(null);
 		setInitialDate(null);
 		setEndDate(null);
-		setDegreeCurricularPlanEnrolmentInfo(null);
 	}
 
 	public DegreeCurricularPlan(
@@ -43,15 +42,13 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		ICurso degree,
 		DegreeCurricularPlanState state,
 		Date initialDate,
-		Date endDate,
-		IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo) {
+		Date endDate) {
 		this();
 		setName(nome);
 		setDegree(degree);
 		setState(state);
 		setInitialDate(initialDate);
 		setEndDate(endDate);
-		setDegreeCurricularPlanEnrolmentInfo(degreeCurricularPlanEnrolmentInfo);
 	}
 
 	public boolean equals(Object obj) {
@@ -198,32 +195,21 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	public void setCurricularCourses(List curricularCourses) {
 		this.curricularCourses = curricularCourses;		
 	}
-	/**
-	 * @return
-	 */
-	public IDegreeCurricularPlanEnrolmentInfo getDegreeCurricularPlanEnrolmentInfo() {
-		return degreeCurricularPlanEnrolmentInfo;
+
+	public Integer getDegreeDuration() {
+		return degreeDuration;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getDegreeCurricularPlanEnrolmentInfoKey() {
-		return degreeCurricularPlanEnrolmentInfoKey;
+	public Integer getMinimalYearForOptionalCourses() {
+		return minimalYearForOptionalCourses;
 	}
 
-	/**
-	 * @param info
-	 */
-	public void setDegreeCurricularPlanEnrolmentInfo(IDegreeCurricularPlanEnrolmentInfo info) {
-		degreeCurricularPlanEnrolmentInfo = info;
+	public void setDegreeDuration(Integer integer) {
+		degreeDuration = integer;
 	}
 
-	/**
-	 * @param integer
-	 */
-	public void setDegreeCurricularPlanEnrolmentInfoKey(Integer integer) {
-		degreeCurricularPlanEnrolmentInfoKey = integer;
+	public void setMinimalYearForOptionalCourses(Integer integer) {
+		minimalYearForOptionalCourses = integer;
 	}
 
 }

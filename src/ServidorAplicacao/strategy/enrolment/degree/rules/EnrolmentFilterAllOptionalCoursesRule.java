@@ -29,7 +29,7 @@ public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 	
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 	
-		int min_year_of_optional_courses = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getDegreeCurricularPlanEnrolmentInfo().getMinimalYearForOptionalCourses().intValue();
+		int min_year_of_optional_courses = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getMinimalYearForOptionalCourses().intValue();
 		
 		List degreeCurricularPlanList = enrolmentContext.getChosenOptionalDegree().getDegreeCurricularPlans();
 		

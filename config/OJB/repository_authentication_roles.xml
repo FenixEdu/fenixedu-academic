@@ -336,8 +336,8 @@
          conversion="ServidorPersistente.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"         
       />
       <field-descriptor id="6"
-         name="studentGroupInfoKey"
-         column="KEY_STUDENT_GROUP_INFO"
+         name="studentKindKey"
+         column="KEY_STUDENT_KIND"
          jdbc-type="INTEGER"
       />
       <reference-descriptor
@@ -348,10 +348,10 @@
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>
 	<reference-descriptor
-			name="studentGroupInfo"
-			class-ref="Dominio.StudentGroupInfo"
-			proxy="true">
-		<foreignkey field-ref="studentGroupInfoKey"/>
+			name="studentKind"
+			class-ref="Dominio.StudentKind"
+			proxy="false">
+		<foreignkey field-ref="studentKindKey"/>
 	</reference-descriptor>
       
    </class-descriptor>
