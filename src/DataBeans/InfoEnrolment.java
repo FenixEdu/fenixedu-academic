@@ -1,7 +1,9 @@
 package DataBeans;
 
 import java.io.Serializable;
+import java.util.List;
 
+import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 
 
@@ -15,7 +17,10 @@ public class InfoEnrolment implements Serializable {
 	private InfoCurricularCourse infoCurricularCourse;
 	private InfoExecutionPeriod infoExecutionPeriod;
 	private EnrolmentState state;
-
+	private EnrolmentEvaluationType evaluationType;
+	private String universityCode;
+	
+	private List infoEvaluations;
 
 	public InfoEnrolment() {
 	}
@@ -111,4 +116,28 @@ public class InfoEnrolment implements Serializable {
 		this.state = state;
 	}
 
+	public EnrolmentEvaluationType getEvaluationType() {
+		return this.evaluationType;
 	}
+
+	public String getUniversityCode() {
+		return this.universityCode;
+	}
+
+	public void setEvaluationType(EnrolmentEvaluationType type) {
+		this.evaluationType = type;
+	}
+
+	public void setUniversityCode(String universityCode) {
+		this.universityCode = universityCode;
+	}
+
+	public List getInfoEvaluations() {
+		return infoEvaluations;
+	}
+
+	public void setInfoEvaluations(List list) {
+		infoEvaluations = list;
+	}
+
+}

@@ -12,6 +12,7 @@ import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IStudent;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
@@ -101,7 +102,7 @@ public class ShowAvailableCurricularCourses implements IServico {
 		
 		final List temporarilyEnrolments = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
 				enrolmentContext.getStudentActiveCurricularPlan(),
-				new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED));
+				EnrolmentState.TEMPORARILY_ENROLED_OBJ);
 
 		final List enrolmentsInOptionalCurricularCourses = (List) CollectionUtils.select(temporarilyEnrolments, new Predicate() {
 			public boolean evaluate(Object obj) {

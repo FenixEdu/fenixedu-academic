@@ -1,5 +1,8 @@
 package Dominio;
 
+import java.util.List;
+
+import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 
 /**
@@ -14,11 +17,15 @@ public class Enrolment implements IEnrolment {
 	private ICurricularCourse curricularCourse;
 	private IExecutionPeriod executionPeriod;
 	private EnrolmentState state;
+	private EnrolmentEvaluationType evaluationType;
+	private String universityCode;
 
 	private Integer internalID;
 	private Integer studentCurricularPlanKey;
 	private Integer curricularCourseKey;
 	private Integer keyExecutionPeriod;
+	
+	private List evaluations;
 
 	private String ojbConcreteClass;
 
@@ -43,6 +50,16 @@ public class Enrolment implements IEnrolment {
 		setStudentCurricularPlan(studentCurricularPlan);
 		setState(state);
 		setExecutionPeriod(executionPeriod);
+	}
+
+	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, EnrolmentState state, IExecutionPeriod executionPeriod, EnrolmentEvaluationType enrolmentEvaluationType, String universityCode) {
+		this();
+		setCurricularCourse(curricularCourse);
+		setStudentCurricularPlan(studentCurricularPlan);
+		setState(state);
+		setExecutionPeriod(executionPeriod);
+		setEvaluationType(evaluationType);
+		setUniversityCode(universityCode);
 	}
 
 	public boolean equals(Object obj) {
@@ -212,4 +229,28 @@ public class Enrolment implements IEnrolment {
 	public ICurricularCourse getRealCurricularCourse() {
 		return this.getCurricularCourse();	
 	}
+	public EnrolmentEvaluationType getEvaluationType() {
+		return this.evaluationType;
+	}
+
+	public String getUniversityCode() {
+		return this.universityCode;
+	}
+
+	public void setEvaluationType(EnrolmentEvaluationType type) {
+		this.evaluationType = type;
+	}
+
+	public void setUniversityCode(String universityCode) {
+		this.universityCode = universityCode;
+	}
+
+	public List getEvaluations() {
+		return evaluations;
+	}
+
+	public void setEvaluations(List list) {
+		evaluations = list;
+	}
+
 }

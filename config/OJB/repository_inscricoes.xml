@@ -422,6 +422,17 @@
 		jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaEnrolmentState2SqlEnrolmentStateFieldConversion"
 	/>
+	<field-descriptor
+		name="evaluationType"
+		column="EVALUATION_TYPE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
+	/>
+	<field-descriptor
+		name="universityCode"
+		column="UNIVERSITY_CODE"
+		jdbc-type="VARCHAR"
+	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
@@ -438,7 +449,11 @@
 		class-ref="Dominio.ExecutionPeriod" proxy="false">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
-
+	<collection-descriptor
+			name="evaluations"
+			element-class-ref="Dominio.EnrolmentEvaluation">
+		<inverse-foreignkey field-ref="enrolmentKey"/>
+	</collection-descriptor>    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 	<extent-class class-ref="Dominio.EnrolmentInOptionalCurricularCourse"/>
 </class-descriptor>
@@ -828,6 +843,70 @@
 			class-ref="Dominio.CurricularCourse"
 			proxy="false">
 		<foreignkey field-ref="optionalCurricularCourseKey"/>
+	</reference-descriptor>
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.EnrolmentEvaluation -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.EnrolmentEvaluation" table="ENROLMENT_EVALUATION">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="grade"
+		column="GRADE"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="evaluationType"
+		column="EVALUATION_TYPE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
+	/>
+	<field-descriptor
+		name="examDate"
+		column="EXAM_DATE"
+		jdbc-type="DATE"
+		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+	/>
+	<field-descriptor
+		name="gradeAvailableDate"
+		column="GRADE_AVAILABLE_DATE"
+		jdbc-type="DATE"
+		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+	/>
+	<field-descriptor
+		name="responsibleTeacherKey"
+		column="RESPONSIBLE_TEACHER"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="state"
+		column="STATE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConversion"
+	/>
+	<field-descriptor
+		name="enrolmentKey"
+		column="KEY_ENROLMENT"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+			name="responsibleTeacher"
+			class-ref="Dominio.Teacher"
+			proxy="false">
+		<foreignkey field-ref="responsibleTeacherKey"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="enrolment"
+			class-ref="Dominio.Enrolment"
+			proxy="false">
+		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>
 </class-descriptor>
 

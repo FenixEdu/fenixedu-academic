@@ -13,6 +13,7 @@ import Dominio.IEnrolmentPeriod;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -109,7 +110,7 @@ public class SetEnrolmentState {
 			
 //			IEnrolment enrolmentCriteria = new Enrolment();
 //			enrolmentCriteria.setExecutionPeriod(enrolmentPeriod.getExecutionPeriod());
-//			enrolmentCriteria.setState(new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED));
+//			enrolmentCriteria.setState(EnrolmentState.TEMPORARILY_ENROLED_OJB);
 //			enrolmentCriteria.setStudentCurricularPlan(studentActiveCurricularPlan);
 //			
 //			enrolmentList = persistentEnrolment.readByCriteria(enrolmentCriteria);
@@ -117,7 +118,7 @@ public class SetEnrolmentState {
 			if(chooseExecutionPeriodsMode) {
 				enrolmentList = readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(persistentEnrolment, studentActiveCurricularPlan);
 			} else {
-				enrolmentList = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentActiveCurricularPlan, new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED));
+				enrolmentList = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentActiveCurricularPlan, EnrolmentState.TEMPORARILY_ENROLED_OBJ);
 			}
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace(System.out);

@@ -6,6 +6,7 @@ import java.util.List;
 import Dominio.IEnrolment;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
@@ -63,12 +64,12 @@ public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 
 			IStudent student = studentDAO.readByUsername(((UserView) userView).getUtilizador());
 			IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(),student.getDegreeType());
-			List TemporarilyEnrolemts = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentActiveCurricularPlan, new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED));
+			List TemporarilyEnrolemts = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentActiveCurricularPlan, EnrolmentState.TEMPORARILY_ENROLED_OBJ);
 			
 			Iterator iterator = TemporarilyEnrolemts.iterator();
 			while (iterator.hasNext()) {
 				IEnrolment enrolment = (IEnrolment)iterator.next();
-				enrolment.setState(new EnrolmentState(EnrolmentState.ENROLED));
+				enrolment.setState(EnrolmentState.ENROLED_OBJ);
 				persistentEnrolment.lockWrite(enrolment);
 			}
 		} catch (ExcepcaoPersistencia ex) {

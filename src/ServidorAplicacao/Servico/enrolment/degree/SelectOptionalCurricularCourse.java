@@ -7,6 +7,7 @@ import org.apache.commons.collections.Predicate;
 
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
@@ -57,7 +58,7 @@ public class SelectOptionalCurricularCourse implements IServico {
 			infoEnrolment.setInfoCurricularCourse(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse());
 			infoEnrolment.setInfoExecutionPeriod(infoEnrolmentContext.getInfoExecutionPeriod());
 			infoEnrolment.setInfoStudentCurricularPlan(infoEnrolmentContext.getInfoStudentActiveCurricularPlan());
-			infoEnrolment.setState(new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED));
+			infoEnrolment.setState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
 			infoEnrolment.setInfoCurricularCourseForOption(infoCurricularCourseForOption);
 
 			// For one optional curricular course chosen there can be only one coresponding curricular course.

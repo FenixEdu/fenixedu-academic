@@ -70,7 +70,7 @@ public abstract class EnrolmentContextManager {
 		final List studentEnrolmentsWithStateApproved = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return enrolment.getState().equals(new EnrolmentState(EnrolmentState.APROVED));
+				return enrolment.getState().equals(EnrolmentState.APROVED_OBJ);
 			}
 		});
 
@@ -84,7 +84,7 @@ public abstract class EnrolmentContextManager {
 		final List studentEnrolmentsWithStateEnroled = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return enrolment.getState().equals(new EnrolmentState(EnrolmentState.ENROLED));
+				return enrolment.getState().equals(EnrolmentState.ENROLED_OBJ);
 			}
 		});
 
@@ -106,7 +106,7 @@ public abstract class EnrolmentContextManager {
 				IEnrolment enrolment = (IEnrolment) obj;
 				ICurricularCourse curricularCourse = enrolment.getCurricularCourse();
 				return !studentDoneCurricularCourses.contains(curricularCourse)
-					&& enrolment.getState().equals(new EnrolmentState(EnrolmentState.NOT_APROVED));
+					&& enrolment.getState().equals(EnrolmentState.NOT_APROVED_OBJ);
 			}
 		});
 

@@ -130,10 +130,29 @@ create table ENROLMENT (
    KEY_CURRICULAR_COURSE int(11) not null,
    KEY_EXECUTION_PERIOD int(11) not null,
    STATE int(11) not null,
-   CLASS_NAME varchar(250) not null,
+   CLASS_NAME varchar(255) not null,
    KEY_CURRICULAR_COURSE_FOR_OPTION int (11),
+   EVALUATION_TYPE int(11) not null,
+   UNIVERSITY_CODE varchar(255) not null,
    primary key (ID_INTERNAL),
    unique U1 (KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD)
+)type=InnoDB;
+
+-- ----------------------------
+--  Table structure for EVALUATION
+-- ----------------------------
+drop table if exists ENROLMENT_EVALUATION;
+create table ENROLMENT_EVALUATION (
+   ID_INTERNAL int(11) not null auto_increment,
+   GRADE varchar(11),
+   EVALUATION_TYPE int(11) not null,
+   EXAM_DATE date,
+   GRADE_AVAILABLE_DATE date,
+   RESPONSIBLE_TEACHER int(11) not null,
+   STATE int(11) not null,
+   KEY_ENROLMENT int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_ENROLMENT, EVALUATION_TYPE)
 )type=InnoDB;
 
 -- ==================================================================================

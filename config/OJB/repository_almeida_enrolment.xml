@@ -17,7 +17,7 @@
   <field-descriptor id="1"
     name="code"
     column="CODE"
-    jdbc-type="INTEGER"
+    jdbc-type="VARCHAR"
   />
   <field-descriptor id="2"
     name="name"

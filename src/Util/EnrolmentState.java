@@ -11,6 +11,13 @@ public class EnrolmentState {
 	public static final int NOT_APROVED = 2;
 	public static final int ENROLED = 3;
 	public static final int TEMPORARILY_ENROLED = 4;
+	public static final int ANNULED = 5;
+
+	public static final EnrolmentState APROVED_OBJ = new EnrolmentState(EnrolmentState.APROVED);
+	public static final EnrolmentState NOT_APROVED_OBJ = new EnrolmentState(EnrolmentState.NOT_APROVED);
+	public static final EnrolmentState ENROLED_OBJ = new EnrolmentState(EnrolmentState.ENROLED);
+	public static final EnrolmentState TEMPORARILY_ENROLED_OBJ = new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED);
+	public static final EnrolmentState ANNULED_OBJ = new EnrolmentState(EnrolmentState.ANNULED);
 
 	private Integer state;
 
@@ -68,6 +75,8 @@ public class EnrolmentState {
 			case TEMPORARILY_ENROLED :
 				valueS = "TEMPORARILY_ENROLED";
 				break;
+			case ANNULED :
+				valueS = "ANNULED";
 			default:
 				break;
 		}

@@ -1,7 +1,7 @@
 drop table if exists ALMEIDA_CURRICULAR_COURSE;
 create table ALMEIDA_CURRICULAR_COURSE (
    ID_INTERNAL int(11) not null auto_increment,
-   CODE int(11) not null,
+   CODE varchar(11) not null,
    NAME varchar(255) not null,
    primary key (ID_INTERNAL)
 ) type=InnoDB;

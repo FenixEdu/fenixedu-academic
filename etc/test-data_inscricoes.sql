@@ -68,12 +68,12 @@ INSERT INTO STUDENT_CURRICULAR_PLAN VALUES (6, 8, 2, 1, '2002-10-21',1, 2);
 #-----------------------------
 ;
 DELETE FROM ENROLMENT;
-INSERT INTO ENROLMENT VALUES (1, 3, 14, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 15);
-INSERT INTO ENROLMENT VALUES (2, 2, 14, 1, 1, 'Dominio.Enrolment', null);
-INSERT INTO ENROLMENT VALUES (3, 1, 1, 2, 2, 'Dominio.EnrolmentInOptionalCurricularCourse', 15);
-INSERT INTO ENROLMENT VALUES (4, 1, 2, 2, 2, 'Dominio.Enrolment', null);
-INSERT INTO ENROLMENT VALUES (5, 1, 2, 3, 2, 'Dominio.Enrolment', null);
-INSERT INTO ENROLMENT VALUES (6, 1, 14, 1, 2, 'Dominio.Enrolment', null);
+INSERT INTO ENROLMENT VALUES (1, 3, 14, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 15, 1, "IST");
+INSERT INTO ENROLMENT VALUES (2, 2, 14, 1, 1, 'Dominio.Enrolment', null, 1, "IST");
+INSERT INTO ENROLMENT VALUES (3, 1, 1, 2, 2, 'Dominio.EnrolmentInOptionalCurricularCourse', 15, 1, "IST");
+INSERT INTO ENROLMENT VALUES (4, 1, 2, 2, 2, 'Dominio.Enrolment', null, 1, "IST");
+INSERT INTO ENROLMENT VALUES (5, 1, 2, 3, 2, 'Dominio.Enrolment', null, 1, "IST");
+INSERT INTO ENROLMENT VALUES (6, 1, 14, 1, 2, 'Dominio.Enrolment', null, 1, "IST");
 
 #-----------------------------
 # Data for table 'DEPARTMENT'

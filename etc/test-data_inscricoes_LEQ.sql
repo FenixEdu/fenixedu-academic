@@ -329,66 +329,68 @@ insert into RESTRICTION values (37, 'Dominio.RestrictionCurricularCourseNotDone'
 
 -- -----------------------------
 -- Data for table 'ENROLMENT'
--- (ID_INTERNAL, KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD, STATE)
+-- (ID_INTERNAL, KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD, STATE, CLASS_NAME, KEY_CURRICULAR_COURSE_FOR_OPTION
+-- EVALUATION_TYPE, UNIVERSITY_CODE)
+
 -- -----------------------------
 delete from ENROLMENT;
-insert into ENROLMENT values (1, 1, 1, 1, 4, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (2, 1, 2, 1, 4, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (3, 1, 3, 1, 4, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (4, 1, 4, 1, 4, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (5, 1, 5, 1, 4, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (6, 1, 6, 1, 4, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (1, 1, 1, 1, 4, 'Dominio.Enrolment', null, 1, "IST");
+insert into ENROLMENT values (2, 1, 2, 1, 4, 'Dominio.Enrolment', null, 1, "IST");
+insert into ENROLMENT values (3, 1, 3, 1, 4, 'Dominio.Enrolment', null, 1, "IST");
+insert into ENROLMENT values (4, 1, 4, 1, 4, 'Dominio.Enrolment', null, 1, "IST");
+insert into ENROLMENT values (5, 1, 5, 1, 4, 'Dominio.Enrolment', null, 1, "IST");
+insert into ENROLMENT values (6, 1, 6, 1, 4, 'Dominio.Enrolment', null, 1, "IST");
 
--- insert into ENROLMENT values (7, 1, 7, 2, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (8, 1, 8, 2, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (9, 1, 9, 2, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (10, 1, 10, 2, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (11, 1, 11, 2, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (12, 1, 12, 2, 1, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (7, 1, 7, 2, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (8, 1, 8, 2, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (9, 1, 9, 2, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (10, 1, 10, 2, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (11, 1, 11, 2, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (12, 1, 12, 2, 1, 'Dominio.Enrolment', null, 1, "IST");
 
--- insert into ENROLMENT values (13, 1, 13, 3, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (14, 1, 14, 3, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (15, 1, 15, 3, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (16, 1, 16, 3, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (17, 1, 17, 3, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (18, 1, 18, 3, 1, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (13, 1, 13, 3, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (14, 1, 14, 3, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (15, 1, 15, 3, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (16, 1, 16, 3, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (17, 1, 17, 3, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (18, 1, 18, 3, 1, 'Dominio.Enrolment', null, 1, "IST");
 
--- insert into ENROLMENT values (19, 1, 19, 4, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (20, 1, 20, 4, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (21, 1, 21, 4, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (22, 1, 22, 4, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (23, 1, 23, 4, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (24, 1, 24, 4, 1, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (19, 1, 19, 4, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (20, 1, 20, 4, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (21, 1, 21, 4, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (22, 1, 22, 4, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (23, 1, 23, 4, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (24, 1, 24, 4, 1, 'Dominio.Enrolment', null, 1, "IST");
 
--- insert into ENROLMENT values (25, 1, 25, 5, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (26, 1, 26, 5, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (27, 1, 27, 5, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (28, 1, 28, 5, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (29, 1, 29, 5, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (30, 1, 30, 5, 1, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (25, 1, 25, 5, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (26, 1, 26, 5, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (27, 1, 27, 5, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (28, 1, 28, 5, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (29, 1, 29, 5, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (30, 1, 30, 5, 1, 'Dominio.Enrolment', null, 1, "IST");
 
--- insert into ENROLMENT values (31, 1, 31, 6, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (32, 1, 32, 6, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (33, 1, 33, 6, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (34, 1, 34, 6, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (35, 1, 35, 6, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (36, 1, 36, 6, 1, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (31, 1, 31, 6, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (32, 1, 32, 6, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (33, 1, 33, 6, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (34, 1, 34, 6, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (35, 1, 35, 6, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (36, 1, 36, 6, 1, 'Dominio.Enrolment', null, 1, "IST");
 
--- insert into ENROLMENT values (37, 1, 37, 7, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (38, 1, 38, 7, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (39, 1, 39, 7, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (40, 1, 40, 7, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (41, 1, 41, 7, 1, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (37, 1, 37, 7, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (38, 1, 38, 7, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (39, 1, 39, 7, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (40, 1, 40, 7, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (41, 1, 41, 7, 1, 'Dominio.Enrolment', null, 1, "IST");
 -- insert into ENROLMENT values (42, 1, 42, 7, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 56);
 
--- insert into ENROLMENT values (43, 1, 43, 8, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (44, 1, 44, 8, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (45, 1, 45, 8, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (46, 1, 46, 8, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (47, 1, 47, 8, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (48, 1, 48, 8, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', null);
+-- insert into ENROLMENT values (43, 1, 43, 8, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (44, 1, 44, 8, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (45, 1, 45, 8, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (46, 1, 46, 8, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (47, 1, 47, 8, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (48, 1, 48, 8, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', null, 1, "IST");
 
--- insert into ENROLMENT values (49, 1, 49, 9, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (50, 1, 50, 9, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (51, 1, 51, 9, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 70);
+-- insert into ENROLMENT values (49, 1, 49, 9, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (50, 1, 50, 9, 1, 'Dominio.Enrolment', null, 1, "IST");
+-- insert into ENROLMENT values (51, 1, 51, 9, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 70, 1, "IST");
 

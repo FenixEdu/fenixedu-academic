@@ -23,6 +23,7 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeCurricularPlanEnrolmentInfo;
 import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import DataBeans.InfoEquivalence;
 import DataBeans.InfoEvaluation;
@@ -68,6 +69,7 @@ import Dominio.DegreeCurricularPlan;
 import Dominio.DegreeCurricularPlanEnrolmentInfo;
 import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
+import Dominio.EnrolmentEvaluation;
 import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.Equivalence;
 import Dominio.Evaluation;
@@ -96,6 +98,7 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IDegreeCurricularPlanEnrolmentInfo;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
+import Dominio.IEnrolmentEvaluation;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IEquivalence;
 import Dominio.IEvaluation;
@@ -1635,27 +1638,25 @@ public abstract class Cloner {
 		InfoEnrolment infoEnrolment = null;
 		InfoCurricularCourse infoCurricularCourseOption = null;
 
-		InfoStudentCurricularPlan infoStudentCurricularPlan =
-			Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(
-				enrolment.getStudentCurricularPlan());
-		InfoCurricularCourse infoCurricularCourse =
-			Cloner.copyCurricularCourse2InfoCurricularCourse(
-				enrolment.getCurricularCourse());
-		InfoExecutionPeriod infoExecutionPeriod =
-			Cloner.copyIExecutionPeriod2InfoExecutionPeriod(
-				enrolment.getExecutionPeriod());
+		InfoStudentCurricularPlan infoStudentCurricularPlan =Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(enrolment.getStudentCurricularPlan());
+		InfoCurricularCourse infoCurricularCourse =	Cloner.copyCurricularCourse2InfoCurricularCourse(enrolment.getCurricularCourse());
+		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(enrolment.getExecutionPeriod());
 
+		List infoEnrolmentEvaluationsList = new ArrayList();
+		List enrolmentEvaluationsList = enrolment.getEvaluations();
+		if (enrolmentEvaluationsList != null && !enrolmentEvaluationsList.isEmpty()) {
+			Iterator iterator = enrolmentEvaluationsList.iterator();
+			while (iterator.hasNext()) {
+				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+				InfoEnrolmentEvaluation infoEnrolmentEvaluation = copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
+				infoEnrolmentEvaluationsList.add(infoEnrolmentEvaluation);
+			}
+		}
+				
 		if (enrolment instanceof IEnrolmentInOptionalCurricularCourse) {
 			infoEnrolment = new InfoEnrolmentInOptionalCurricularCourse();
-			infoCurricularCourseOption =
-				Cloner.copyCurricularCourse2InfoCurricularCourse(
-					((IEnrolmentInOptionalCurricularCourse) enrolment)
-						.getCurricularCourseForOption());
-			(
-				(
-					InfoEnrolmentInOptionalCurricularCourse) infoEnrolment)
-						.setInfoCurricularCourseForOption(
-				infoCurricularCourseOption);
+			infoCurricularCourseOption = Cloner.copyCurricularCourse2InfoCurricularCourse(((IEnrolmentInOptionalCurricularCourse) enrolment).getCurricularCourseForOption());
+			((InfoEnrolmentInOptionalCurricularCourse) infoEnrolment).setInfoCurricularCourseForOption(infoCurricularCourseOption);
 		} else {
 			infoEnrolment = new InfoEnrolment();
 		}
@@ -1665,6 +1666,7 @@ public abstract class Cloner {
 		infoEnrolment.setInfoCurricularCourse(infoCurricularCourse);
 		infoEnrolment.setInfoExecutionPeriod(infoExecutionPeriod);
 		infoEnrolment.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+		infoEnrolment.setInfoEvaluations(infoEnrolmentEvaluationsList);
 
 		return infoEnrolment;
 	}
@@ -1704,11 +1706,23 @@ public abstract class Cloner {
 			enrolment = new Enrolment();
 		}
 
+		List enrolmentEvaluationsList = new ArrayList();
+		List infoEnrolmentEvaluationsList = infoEnrolment.getInfoEvaluations();
+		if (infoEnrolmentEvaluationsList != null && !infoEnrolmentEvaluationsList.isEmpty()) {
+			Iterator iterator = infoEnrolmentEvaluationsList.iterator();
+			while (iterator.hasNext()) {
+				InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) iterator.next();
+				IEnrolmentEvaluation enrolmentEvaluation = copyInfoEnrolmentEvaluation2IEnrolmentEvaluation(infoEnrolmentEvaluation);
+				enrolmentEvaluationsList.add(enrolmentEvaluation);
+			}
+		}
+				
 		copyObjectProperties(enrolment, infoEnrolment);
 
 		enrolment.setCurricularCourse(curricularCourse);
 		enrolment.setExecutionPeriod(executionPeriod);
 		enrolment.setStudentCurricularPlan(studentCurricularPlan);
+		enrolment.setEvaluations(enrolmentEvaluationsList);
 
 		return enrolment;
 	}
@@ -1833,6 +1847,33 @@ public abstract class Cloner {
 		copyObjectProperties(curricularCourseEnrolmentInfo, infoCurricularCourseEnrolmentInfo);
 		return curricularCourseEnrolmentInfo;
 	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param IEnrolmentEvaluation
+	 * @return InfoEnrolmentEvaluation
+	 */
+	public static InfoEnrolmentEvaluation copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(IEnrolmentEvaluation enrolmentEvaluation) {
+		InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
+		InfoTeacher infoTeacher = copyITeacher2InfoTeacher(enrolmentEvaluation.getResponsibleTeacher());
+		copyObjectProperties(infoEnrolmentEvaluation, enrolmentEvaluation);
+		infoEnrolmentEvaluation.setResponsibleInfoTeacher(infoTeacher);
+		return infoEnrolmentEvaluation;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param IEnrolmentEvaluation
+	 * @return InfoEnrolmentEvaluation
+	 */
+	public static IEnrolmentEvaluation copyInfoEnrolmentEvaluation2IEnrolmentEvaluation(InfoEnrolmentEvaluation infoEnrolmentEvaluation) {
+		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
+		ITeacher teacher = copyInfoTeacher2Teacher(infoEnrolmentEvaluation.getResponsibleInfoTeacher());
+		copyObjectProperties(enrolmentEvaluation, infoEnrolmentEvaluation);
+		enrolmentEvaluation.setResponsibleTeacher(teacher);
+		return enrolmentEvaluation;
+	}
+
 
 	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
 	public static IEvaluation copyInfoEvaluation2IEvaluation(InfoEvaluation infoEvaluation) {

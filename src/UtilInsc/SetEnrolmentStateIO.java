@@ -9,6 +9,7 @@ import java.util.List;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IExecutionPeriod;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -71,6 +72,9 @@ public abstract class SetEnrolmentStateIO {
 			case EnrolmentState.TEMPORARILY_ENROLED :
 				valueS = "TEMPORARILY_ENROLED";
 				break;
+			case EnrolmentState.ANNULED :
+				valueS = "ANNULED";
+				break;
 			default:
 				break;
 		}
@@ -93,7 +97,7 @@ public abstract class SetEnrolmentStateIO {
 				System.out.println("SELECT NEW STATE FOR ENROLMENT IN CURRICULAR COURSE [" + enrolment.getCurricularCourse().getName() + "]:");
 			}
 			if(chooseExecutionPeriodsMode) {
-				System.out.println("(APROVED = 1; NOT_APROVED = 2; ENROLED = 3; TEMPORARILY_ENROLED = 4)");
+				System.out.println("(APROVED = 1; NOT_APROVED = 2; ENROLED = 3; TEMPORARILY_ENROLED = 4; ANNULED = 5)");
 			} else {
 				System.out.println("(APROVED = 1; NOT_APROVED = 2)");
 			}
@@ -103,7 +107,7 @@ public abstract class SetEnrolmentStateIO {
 					str = in.readLine();
 					if(!str.equals(endStr)) {
 						int i = (new Integer(str)).intValue();
-						if( (i < 5) && (i > 0) ) {
+						if( (i < 6) && (i > 0) ) {
 							enrolment.setState(new EnrolmentState(i));
 							break;
 						}

@@ -14,6 +14,7 @@ import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
@@ -28,7 +29,9 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
+import Util.UniversityCode;
 
 /**
  * @author dcs-rjao
@@ -101,10 +104,12 @@ public class ConfirmActualEnrolment implements IServico {
 			// lista de todos os enrolments temporarios				
 			final List temporarilyEnrolmentsRead = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
 					enrolmentContext.getStudentActiveCurricularPlan(),
-					new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED));
+					EnrolmentState.TEMPORARILY_ENROLED_OBJ);
 			
 			// enrolments in (anual) curricular courses that the student is doing.
-			final List doingEnrolmentsRead = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(enrolmentContext.getStudentActiveCurricularPlan(), new EnrolmentState(EnrolmentState.ENROLED));
+			final List doingEnrolmentsRead = 
+				persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
+				enrolmentContext.getStudentActiveCurricularPlan(), EnrolmentState.ENROLED_OBJ);
 			List doingCurricularCoursesRead = (List) CollectionUtils.collect(doingEnrolmentsRead, new Transformer() {
 				public Object transform(Object obj) {
 					IEnrolment enrolment = (IEnrolment) obj;
@@ -116,11 +121,20 @@ public class ConfirmActualEnrolment implements IServico {
 			// lista de todos os enrolments a escrever
 			List temporarilyEnrolmentsToWrite = new ArrayList();
 			Iterator iterator = enrolmentContext.getActualEnrolments().iterator();
+			IEnrolment enrolmentToWrite = null;
 			while (iterator.hasNext()) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseScope.getCurricularCourse());
 				if(!doingCurricularCoursesRead.contains(curricularCourse)) {
-					temporarilyEnrolmentsToWrite.add(new Enrolment(studentCurricularPlan, curricularCourse, new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED), executionPeriod));
+					enrolmentToWrite = new Enrolment();
+					enrolmentToWrite.setCurricularCourse(curricularCourse);
+					enrolmentToWrite.setEvaluationType(EnrolmentEvaluationType.NORMAL_OJB);
+					enrolmentToWrite.setExecutionPeriod(executionPeriod);
+					enrolmentToWrite.setState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
+					enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
+					// FIXME: David-Ricardo: Nao ha informação sobre o University Code por isso criei esta class temporária
+					enrolmentToWrite.setUniversityCode(UniversityCode.IST);					
+					temporarilyEnrolmentsToWrite.add(enrolmentToWrite);
 				}
 			}
 
@@ -164,6 +178,10 @@ public class ConfirmActualEnrolment implements IServico {
 					enrolmentInOptionalCurricularCourse.setCurricularCourseForOption(curricularCourseForOption);
 					enrolmentInOptionalCurricularCourse.setExecutionPeriod(executionPeriod);
 					enrolmentInOptionalCurricularCourse.setStudentCurricularPlan(studentCurricularPlan);
+					
+					enrolmentInOptionalCurricularCourse.setEvaluationType(EnrolmentEvaluationType.NORMAL_OJB);
+					enrolmentInOptionalCurricularCourse.setUniversityCode(new String("IST"));
+					
 					persistentEnrolment.lockWrite(enrolmentInOptionalCurricularCourse);
 				} else {
 					enrolment.setCurricularCourseForOption(curricularCourseForOption);

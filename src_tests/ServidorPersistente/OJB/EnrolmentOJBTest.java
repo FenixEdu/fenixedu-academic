@@ -16,8 +16,10 @@ import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 import Util.TipoCurso;
+import Util.UniversityCode;
 
 /**
  * @author dcs-rjao
@@ -107,8 +109,10 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 		IEnrolment enrolment = new Enrolment();
 		enrolment.setStudentCurricularPlan(studentCurricularPlan);
 		enrolment.setCurricularCourse(curricularCourse);
-		enrolment.setState(new EnrolmentState(EnrolmentState.APROVED));
+		enrolment.setState(EnrolmentState.APROVED_OBJ);
 		enrolment.setExecutionPeriod(executionPeriod);
+		enrolment.setEvaluationType(EnrolmentEvaluationType.NORMAL_OJB);
+		enrolment.setUniversityCode(UniversityCode.IST);
 
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -150,8 +154,11 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 		enrolment = new Enrolment();
 		enrolment.setStudentCurricularPlan(studentCurricularPlan);
 		enrolment.setCurricularCourse(curricularCourse);
-		enrolment.setState(new EnrolmentState(EnrolmentState.APROVED));
+		enrolment.setState(EnrolmentState.APROVED_OBJ);
 		enrolment.setExecutionPeriod(executionPeriod);
+		enrolment.setEvaluationType(EnrolmentEvaluationType.NORMAL_OJB);
+		enrolment.setUniversityCode(UniversityCode.IST);
+
 
 		System.out.println("\n- Test 1.2 : Write Non Existing Enrolment\n");
 		try {
@@ -417,7 +424,7 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 				persistentEnrolment
 					.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
 					studentCurricularPlan,
-					new EnrolmentState(EnrolmentState.APROVED));
+					EnrolmentState.APROVED_OBJ);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Existing Enrolment");
