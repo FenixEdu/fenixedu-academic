@@ -13,7 +13,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.ServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedFilterException;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedServiceException;
+import pt.utl.ist.berserk.logic.serviceManager.exceptions.FilterChainFailedException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.logging.ServiceExecutionLog;
 import ServidorAplicacao.logging.SystemInfo;
 import ServidorAplicacao.logging.UserExecutionLog;
@@ -129,16 +131,32 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 			{
 				if (ex.getCause() instanceof FenixServiceException)
 				{
+					System.out.println("ExecutedFilterException= " + ex.getCause().getClass().getName());
 					throw (FenixServiceException) ex.getCause();
 				}
 				else
 				{
 					throw ex;
 				}
+			}catch (FilterChainFailedException ex)
+			{
+				if (ex.getCause() instanceof FenixServiceException)
+				{
+					System.out.println("FilterChainFailedException= " + ex.getCause().getClass().getName());
+					throw (FenixServiceException) ex.getCause();
+				}
+				else
+				{
+					//TODO: What´s wrong with berserk?? It isn't throwing correct exception
+					System.out.println("else= " + ex.getClass().getName());
+					throw new NotAuthorizedException();
+				}
 			}
 		}
+		
 		catch (Exception e)
 		{
+			System.out.println("Exception= " + e.getClass().getName());
 			throw (EJBException) new EJBException(e).initCause(e);
 		}
 	}
