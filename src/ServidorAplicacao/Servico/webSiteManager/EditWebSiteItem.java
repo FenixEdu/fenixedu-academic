@@ -88,7 +88,6 @@ public class EditWebSiteItem implements IServico {
 
 			// treat author of item
 			IPessoa authorPerson = null;
-			System.out.println("username no servico: " + infoWebSiteItem.getInfoAuthor().getUsername());
 			if(infoWebSiteItem.getInfoAuthor().getUsername() != null) {
 				authorPerson = persistentPerson.lerPessoaPorUsername(infoWebSiteItem.getInfoAuthor().getUsername());
 				if(authorPerson == null) {

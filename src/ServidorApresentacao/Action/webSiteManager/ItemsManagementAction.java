@@ -133,7 +133,6 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		InfoPerson infoAuthor = new InfoPerson();
 		infoAuthor.setUsername((String) itemForm.get("author"));
 		infoWebSiteItem.setInfoAuthor(infoAuthor);
-		System.out.println("username no action: " + infoWebSiteItem.getInfoAuthor().getUsername());
 
 		String onlineBeginDayString = (String) itemForm.get("onlineBeginDay");
 		infoWebSiteItem.setOnlineBeginDay(convertStringDate(onlineBeginDayString));

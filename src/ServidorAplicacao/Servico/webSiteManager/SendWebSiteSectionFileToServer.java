@@ -82,13 +82,12 @@ public class SendWebSiteSectionFileToServer implements IServico {
 
 			// beginning of file 
 			String excerptsFile = new String();
-			excerptsFile = putBegginingOfFile(excerptsFile);
 
 			if (excerptsList.size() == 0) {
 				// build no items file
-				excerptsFile = excerptsFile.concat("<tr>\n\t<td align='left'>\n\t\t");
+				excerptsFile = excerptsFile.concat("<p>\n\t\t");
 				excerptsFile = excerptsFile.concat("Não existem " + infoWebSiteSection.getName() + "\n");
-				excerptsFile = excerptsFile.concat("\n\t</td>\n</tr>\n");
+				excerptsFile = excerptsFile.concat("</p>\n");
 
 			} else {
 				BeanComparator beanComparator = getBeanComparator(infoWebSiteSection);
@@ -115,12 +114,11 @@ public class SendWebSiteSectionFileToServer implements IServico {
 					excerptsFile = putExcerpt(infoWebSiteSection, excerptsFile, infoWebSiteItem);
 				}
 			}
-			excerptsFile = excerptsFile.concat("</table>\n</body>\n</html>");
 
 			// build file
 			File excerpts;
 			try {
-				excerpts = buildFile(excerptsFile, infoWebSiteSection.getName() + "-excerpts.shtml");
+				excerpts = buildFile(excerptsFile, infoWebSiteSection.getName() + "-excerpts.html");
 			} catch (Exception e) {
 				e.printStackTrace();
 				return Boolean.FALSE;
@@ -195,7 +193,9 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				}
 				// build body for items
 				String itemsFile = new String();
-				itemsFile = putBegginingOfItemFile(itemsFile);
+				itemsFile = putBegginingOfItemFile(itemsFile, infoWebSiteSection);
+				itemsFile = itemsFile.concat("<h1>" + infoWebSiteSection.getName() + "</h1>");
+				itemsFile = itemsFile.concat("\n<br />\n");
 
 				Iterator iterItemsForFile = thisMonthList.iterator();
 				while (iterItemsForFile.hasNext()) {
@@ -203,12 +203,12 @@ public class SendWebSiteSectionFileToServer implements IServico {
 					itemsFile = putBegginingOfItem(itemsFile, infoWebSiteItem);
 					itemsFile = putItem(itemsFile, infoWebSiteItem);
 				}
-				itemsFile = itemsFile.concat("<tr>\n\t<td>\n\t\t");
-				itemsFile = itemsFile.concat("<span class='greytxt'>");
+				itemsFile = itemsFile.concat("<p>\n\t");
+				itemsFile = itemsFile.concat("<span class=\"greytxt\">");
 				itemsFile =
 					itemsFile.concat("Eventuais incoerências nesta página deverão ser comunicadas afim de se efectuar a respectiva correcção.");
 				itemsFile = itemsFile.concat("</span>");
-				itemsFile = itemsFile.concat("\n\t</td>\n</tr>\n");
+				itemsFile = itemsFile.concat("\n</p>\n");
 
 				Iterator iterMonths = allMonthLinks.iterator();
 				while (iterMonths.hasNext()) {
@@ -216,17 +216,16 @@ public class SendWebSiteSectionFileToServer implements IServico {
 
 					if (monthLink.intValue() != monthElem.intValue()) {
 						Mes monthLinkString = new Mes(monthElem.intValue() + 1);
-						itemsFile = itemsFile.concat("<tr>\n\t<td>\n\t\t");
 						itemsFile =
 							itemsFile.concat(
-								"<a href='"
+								"<a href=\""
 									+ infoWebSiteSection.getName()
 									+ "-"
 									+ monthLinkString.toString()
-									+ ".shtml'>"
+									+ ".shtml\">"
 									+ monthLinkString.toString()
 									+ "</a>");
-						itemsFile = itemsFile.concat("\n\t</td>\n</tr>\n");
+						itemsFile = itemsFile.concat("<br />\n");
 					}
 				}
 				itemsFile = putEndOfItemFile(itemsFile);
@@ -272,82 +271,73 @@ public class SendWebSiteSectionFileToServer implements IServico {
 	private String putEndOfItemFile(String stringFile) {
 		stringFile =
 			stringFile.concat(
-				"</table>\n"
-					+ "\t\t</td>\n"
+					"\t\t</td>\n"
 					+ "\t  </tr>\n"
 					+ "</table>\n"
-					+ "<div id='footer'>\n"
-					+ "\t  <div id='foot_links'> <a href='http://www.ist.utl.pt/contactos/index-pt.shtml'>contactos</a> | <a href='mailto:ja@ist.utl.pt'>webmaster</a> | <a href='http://www.ist.utl.pt/pt/'>mapa\n"
-					+ "\t      do site</a> | <a href='html/internacional.html'> ingl&ecirc;s</a> </div>\n"
-					+ "\t  <div id='foot_copy'>&copy;2003, Instituto Superior Técnico. Todos os direitos reservados.</div>\n"
-					+ "\t  <div class='clear'></div>\n"
+					+ "<div id=\"footer\">\n"
+					+ "\t  <div id=\"foot_links\"> <a href=\"http://www.ist.utl.pt/contactos/index-pt.shtml\">contactos</a> | <a href=\"mailto:ja@ist.utl.pt\">webmaster</a> | <a href=\"http://www.ist.utl.pt/pt/\">mapa\n"
+					+ "\t      do site</a> | <a href=\"html/internacional.html\"> ingl&ecirc;s</a> </div>\n"
+					+ "\t  <div id=\"foot_copy\">&copy;2003, Instituto Superior Técnico. Todos os direitos reservados.</div>\n"
+					+ "\t  <div class=\"clear\"></div>\n"
 					+ "</div>\n"
 					+ "</body>\n"
 					+ "</html>\n");
 		return stringFile;
 	}
 
-	private String putBegginingOfItemFile(String stringFile) {
+	private String putBegginingOfItemFile(String stringFile, InfoWebSiteSection infoWebSiteSection ) {
 		stringFile =
 			stringFile.concat(
-				"<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>\n"
-					+ "<html xmlns='http://www.w3.org/1999/xhtml'>\n"
+				"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
+					+ "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
 					+ "<head>\n"
-					+ "<title>www.ist.utl.pt -Notícias</title>\n"
-					+ "<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />\n"
-					+ "<meta name='keywords' content='ensino,  ensino superior, universidade, instituto, ciência, instituto superior técnico, investigação e desenvolvimento' />\n"
-					+ "<meta name='description' content='O Instituto Superior Técnico é a maior escola de engenharia, ciência e tecnologia em Portugal.' />\n"
-					+ "<link rel='stylesheet' type='text/css' media='screen' href='../css/iststyle.css' />\n"
-					+ "<link rel='stylesheet' type='text/css' media='print' href='../css/print.css' />\n"
-					+ "<script type='text/javascript' src='../../scripts/cssbox_scriptjs'></script>\n"
+					+ "<title>www.ist.utl.pt -"+ infoWebSiteSection.getName() +"</title>\n"
+					+ "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />\n"
+					+ "<meta name=\"keywords\" content=\"ensino,  ensino superior, universidade, instituto, ciência, instituto superior técnico, investigação e desenvolvimento\" />\n"
+					+ "<meta name=\"description\" content=\"O Instituto Superior Técnico é a maior escola de engenharia, ciência e tecnologia em Portugal.\" />\n"
+					+ "<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"../css/iststyle.css\" />\n"
+					+ "<link rel=\"stylesheet\" type=\"text/css\" media=\"print\" href=\"../css/print.css\" />\n"
+					+ "<script type=\"text/javascript\" src=\"../../scripts/cssbox_scriptjs\"></script>\n"
 					+ "</head>\n"
 					+ "<body>\n"
-					+ "<div id='header'>\n"
-					+ "\t  <div id='logoist'><img alt='Logo: Instituto Superior T&eacute;cnico' height='49' src='../../img/logo_ist_alt.gif' width='90' /></div>\n"
-					+ "\t  <div id='login_dotist'><a href='https://fenix.ist.utl.pt/loginPage.jsp'><img alt='Icon: Login - dotist' border='0' src='../../img/login_dotist.gif' /></a></div>\n"
-					+ "\t  <div id='logoutl'><a href='http://www.utl.pt/'><img src='../../img/utl_logo_40.gif' alt='Universidade T&eacute;cnica de Lisboa' border='0' title='UTL' /></a></div>\n"
+					+ "<div id=\"header\">\n"
+					+ "\t  <div id=\"logoist\"><img alt=\"Logo: Instituto Superior T&eacute;cnico\" height=\"49\" src=\"../../img/logo_ist_alt.gif\" width=\"90\" /></div>\n"
+					+ "\t  <div id=\"login_dotist\"><a href=\"https://fenix.ist.utl.pt/loginPage.jsp\"><img alt=\"Icon: Login - dotist\" border=\"0\" src=\"../../img/login_dotist.gif\" /></a></div>\n"
+					+ "\t  <div id=\"logoutl\"><a href=\"http://www.utl.pt/\"><img src=\"../../img/utl_logo_40.gif\" alt=\"Universidade T&eacute;cnica de Lisboa\" border=\"0\" title=\"UTL\" /></a></div>\n"
 					+ "</div>\n"
-					+ "<div id='nav'>"
-					+ "\t  <ul id='perfnav'>\n"
-					+ "\t\t    <li><a href='../../index.html'>Instituto</a></li>\n"
-					+ "\t\t    <li><a href='aluno.html'>Aluno</a></li>\n"
-					+ "\t\t    <li><a href='docente.html'>Docente</a></li>\n"
-					+ "\t\t    <li><a href='funcionario.html'>Funcion&aacute;rio</a></li>\n"
-					+ "\t\t    <li><a href='international.html'>International</a></li>\n"
+					+ "<div id=\"nav\">"
+					+ "\t  <ul id=\"perfnav\">\n"
+					+ "\t\t    <li><a href=\"../../index.html\">Instituto</a></li>\n"
+					+ "\t\t    <li><a href=\"aluno.html\">Aluno</a></li>\n"
+					+ "\t\t    <li><a href=\"docente.html\">Docente</a></li>\n"
+					+ "\t\t    <li><a href=\"funcionario.html\">Funcion&aacute;rio</a></li>\n"
+					+ "\t\t    <li><a href=\"international.html\">International</a></li>\n"
 					+ "\t  </ul>\n"
 					+ "</div>\n"
-					+ "<table id='bigtable' width='100%' border='0' cellpadding='0' cellspacing='0'>\n"
+					+ "<table id=\"bigtable\" width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n"
 					+ "\t  <tr>\n"
-					+ "\t\t    <td id='latnav_container' width='155px' nowrap='nowrap'>\n"
-					+ "\t\t\t      <div id='latnav'>\n"
+					+ "\t\t    <td id=\"latnav_container\" width=\"155px\" nowrap=\"nowrap\">\n"
+					+ "\t\t\t      <div id=\"latnav\">\n"
 					+ "\t\t\t        <ul>\n"
-					+ "\t\t\t\t          <li><a href='http://www.ist.utl.pt/pt/informacoes/'>Informação</a></li>\n"
-					+ "\t\t\t\t          <li><a href='http://www.ist.utl.pt/pt/estrutura_interna/'>Estrutura</a></li>\n"
-					+ "\t\t\t\t          <li><a href='http://www.ist.utl.pt/pt/servicos/'>Serviços</a></li>\n"
-					+ "\t\t\t\t          <li><a href='http://www.ist.utl.pt/pt/ensino/'>Ensino</a></li>\n"
-					+ "\t\t\t\t          <li><a href='http://www.ist.utl.pt/pt/investigacao/'>I &amp; D</a></li>\n"
+					+ "\t\t\t\t          <li><a href=\"http://www.ist.utl.pt/pt/informacoes/\">Informação</a></li>\n"
+					+ "\t\t\t\t          <li><a href=\"http://www.ist.utl.pt/pt/estrutura_interna/\">Estrutura</a></li>\n"
+					+ "\t\t\t\t          <li><a href=\"http://www.ist.utl.pt/pt/servicos/\">Serviços</a></li>\n"
+					+ "\t\t\t\t          <li><a href=\"http://www.ist.utl.pt/pt/ensino/\">Ensino</a></li>\n"
+					+ "\t\t\t\t          <li><a href=\"http://www.ist.utl.pt/pt/investigacao/\">I &amp; D</a></li>\n"
 					+ "\t\t\t        </ul>\n"
 					+ "\t\t\t        <ul>\n"
-					+ "\t\t\t\t          <li><a href='http://gape.ist.utl.pt/acesso/'>Ingressos</a></li>\n"
-					+ "\t\t\t\t          <li><a href='http://alumni.ist.utl.pt/'>Saídas</a></li>\n"
+					+ "\t\t\t\t          <li><a href=\"http://gape.ist.utl.pt/acesso/\">Ingressos</a></li>\n"
+					+ "\t\t\t\t          <li><a href=\"http://alumni.ist.utl.pt/\">Saídas</a></li>\n"
 					+ "\t\t\t        </ul>\n"
 					+ "\t\t\t        <ul>\n"
-					+ "\t\t\t\t          <li><a href='http://istpress.ist.utl.pt/'>IST Press</a></li>\n"
-					+ "\t\t\t\t          <li><a href='http://www.ist.utl.pt/pt/ligacao_sociedade/'>Sociedade &amp; IST</a></li>\n"
-					+ "\t\t\t\t          <li><a href='http://www.ist.utl.pt/pt/viver_ist/'>Viver no IST</a></li>\n"
-					+ "\t\t\t\t          <li><a href='http://www.utl.pt/'>Universidade</a></li>\n"
+					+ "\t\t\t\t          <li><a href=\"http://istpress.ist.utl.pt/\">IST Press</a></li>\n"
+					+ "\t\t\t\t          <li><a href=\"http://www.ist.utl.pt/pt/ligacao_sociedade/\">Sociedade &amp; IST</a></li>\n"
+					+ "\t\t\t\t          <li><a href=\"http://www.ist.utl.pt/pt/viver_ist/\">Viver no IST</a></li>\n"
+					+ "\t\t\t\t          <li><a href=\"http://www.utl.pt/\">Universidade</a></li>\n"
 					+ "\t\t\t        </ul>\n"
 					+ "\t\t\t      </div>\n"
 					+ "\t\t    </td>\n"
-					+ "\t\t    <td width='100%' colspan='3' id='main'>\n"
-					+ "<table>\n");
-
-		return stringFile;
-	}
-
-	private String putBegginingOfFile(String stringFile) {
-		stringFile = stringFile.concat("<html>\n<head>\n<title></title>\n</head>\n<body>\n");
-		stringFile = stringFile.concat("<table>\n");
+					+ "\t\t    <td width=\"100%\" colspan=\"3\" id=\"main\">\n");
 
 		return stringFile;
 	}
@@ -356,29 +346,29 @@ public class SendWebSiteSectionFileToServer implements IServico {
 		String authorName =
 			StringUtils.substringBefore(infoWebSiteItem.getInfoAuthor().getNome(), " ").concat(" ").concat(
 				StringUtils.substringAfterLast(infoWebSiteItem.getInfoAuthor().getNome(), " "));
-		// item's main entry
+		// item\"s main entry
 		itemFile = itemFile.concat("<p>");
 		itemFile = itemFile.concat(infoWebSiteItem.getMainEntryText());
-		itemFile = itemFile.concat("<br/><br/>\n");
-		//		itemFile = itemFile.concat(infoWebSiteItem.getInfoEditor().getNome());
-		//		itemFile = itemFile.concat("<br/>\n");
-		itemFile = itemFile.concat("<a href='mailto:" + infoWebSiteItem.getInfoAuthor().getEmail() + "'>" + authorName + "</a>");
+		itemFile = itemFile.concat("\n<br /><br />\n");
+		itemFile = itemFile.concat("<span class=\"greytxt\">");
+		itemFile = itemFile.concat("<a href=\"mailto:" + infoWebSiteItem.getInfoAuthor().getEmail() + "\">" + authorName + "</a>");
+		itemFile = itemFile.concat("</span>\n");
 		itemFile = itemFile.concat("</p>\n");
-		itemFile = itemFile.concat("\t</td>\n</tr>\n");
+		itemFile = itemFile.concat("<br />\n");		
 
 		return itemFile;
 	}
 
 	private String putBegginingOfItem(String stringFile, InfoWebSiteItem infoWebSiteItem) {
-		// item's title
-		stringFile = stringFile.concat("<tr>\n\t<td class='info_cell_holder' width='30%'>\n\t\t");
+		// item\"s title
+//		stringFile = stringFile.concat("<tr>\n\t<td class=\"info_cell_holder\" width=\"30%\">\n\t\t");
 		stringFile = stringFile.concat("<h3><strong>");
 		stringFile = stringFile.concat(infoWebSiteItem.getTitle());
 
-		// item's dates
+		// item\"s dates
 		if (infoWebSiteItem.getItemBeginDayCalendar() != null) {
-			stringFile = stringFile.concat("<br/>");
-			stringFile = stringFile.concat("<span class='greytxt'>");
+			stringFile = stringFile.concat("<br />");
+			stringFile = stringFile.concat("<span class=\"greytxt\">");
 
 			stringFile = stringFile.concat("De " + infoWebSiteItem.getItemBeginDayCalendar().get(Calendar.DAY_OF_MONTH) + " ");
 
@@ -408,22 +398,21 @@ public class SendWebSiteSectionFileToServer implements IServico {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(infoWebSiteItem.getOnlineBeginDay());
 
-		// item's excerpt
+		// item\"s excerpt
 		excerptsFile = excerptsFile.concat("<p>");
 		excerptsFile = excerptsFile.concat(infoWebSiteItem.getExcerpt());
 		excerptsFile =
 			excerptsFile.concat(
 				" ("
-					+ "<a href='"
+					+ "<a href=\""
 					+ infoWebSiteSection.getName()
 					+ "-"
 					+ new Mes(calendar.get(Calendar.MONTH) + 1)
-					+ ".shtml'>"
+					+ ".shtml\">"
 					+ "mais"
 					+ "</a>"
 					+ ")");
 		excerptsFile = excerptsFile.concat("</p>\n");
-		excerptsFile = excerptsFile.concat("\t</td>\n</tr>\n");
 		return excerptsFile;
 	}
 

@@ -99,8 +99,7 @@ public class AddItem implements IServico {
 			
 			// treat author of item
 			IPessoa authorPerson = null;
-			System.out.println("username no servico: " + infoWebSiteItem.getInfoAuthor().getUsername());
-			if(infoWebSiteItem.getInfoAuthor().getUsername() != null) {
+			if(infoWebSiteItem.getInfoAuthor().getUsername() != null && infoWebSiteItem.getInfoAuthor().getUsername().length() > 0) {
 				authorPerson = persistentPerson.lerPessoaPorUsername(infoWebSiteItem.getInfoAuthor().getUsername());
 				if(authorPerson == null) {
 					throw new NonExistingServiceException();
