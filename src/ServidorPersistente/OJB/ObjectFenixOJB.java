@@ -40,6 +40,7 @@ import org.apache.ojb.odmg.HasBroker;
 import org.apache.ojb.odmg.OJB;
 import org.apache.ojb.odmg.TransactionImpl;
 import org.apache.ojb.odmg.TxManagerFactory;
+import org.apache.ojb.odmg.collections.DListImpl;
 import org.odmg.Database;
 import org.odmg.Implementation;
 import org.odmg.ODMGException;
@@ -561,37 +562,41 @@ public abstract class ObjectFenixOJB implements IPersistentObject
 	 * 
 	 * @see ServidorPersistente.IPersistentObject#getDeletedObjects()
 	 */
-    public void removeFromCacheDeletedObjects()
-    {
-
-        //		////////////////////////////////////////////////////////////////////////////////////
-        //		 Do this just to get the broker...
-        //		 There must be a simpler way!
-        //		////////////////////////////////////////////////////////////////////////////////////
-
-        //obtain current ODMG transaction
-        Transaction tx = OJB.getInstance().currentTransaction();
-        //TxManagerFactory.instance().getCurrentTransaction();
-
-        // we allow queries even if no ODMG transaction is running.
-        // thus we have to provide a pseudo tx if necessary
-        /*
-		 * boolean needsCommit = false; if (tx == null) { System.out.println("Transaction Null!");
-		 * //throw new org.odmg.QueryException("Transaction Null!"); //tx =
-		 * OJBFactory.getInstance().newTransaction(); } // we allow to work with unopened transactions. //
-		 * we assume that such a tx is to be closed after performing the query if (!tx.isOpen()) {
-		 * tx.begin(); needsCommit = true; }
-		 */ // obtain a broker instance from the current transaction
-        PersistenceBroker broker = ((HasBroker) tx).getBroker();
-        //		/////////////////////////////////////////////////////////////////////////////////////////
-        //		/////////////////////////////////////////////////////////////////////////////////////////
-        /*
-		 * Iterator iterator = deletedObject.iterator(); while (iterator.hasNext()) {
-		 * System.out.println("AQQIWUEWQOIEOQWUIEOIQUWEOI????????????????????????"); Object element =
-		 * (Object) iterator.next(); broker.removeFromCache(element);
-		 */
-        broker.clearCache();
-    }
+//    public void removeFromCacheDeletedObjects()
+//    {
+//
+//        //		////////////////////////////////////////////////////////////////////////////////////
+//        //		 Do this just to get the broker...
+//        //		 There must be a simpler way!
+//        //		////////////////////////////////////////////////////////////////////////////////////
+//
+//        //obtain current ODMG transaction
+//        Transaction tx = OJB.getInstance().currentTransaction();
+//        //TxManagerFactory.instance().getCurrentTransaction();
+//
+//        // we allow queries even if no ODMG transaction is running.
+//        // thus we have to provide a pseudo tx if necessary
+//        /*
+//		 * boolean needsCommit = false; if (tx == null) {
+//		 * System.out.println("Transaction Null!"); //throw new
+//		 * org.odmg.QueryException("Transaction Null!"); //tx =
+//		 * OJBFactory.getInstance().newTransaction(); } // we allow to work
+//		 * with unopened transactions. // we assume that such a tx is to be
+//		 * closed after performing the query if (!tx.isOpen()) { tx.begin();
+//		 * needsCommit = true; }
+//		 */ // obtain a broker instance from the current transaction
+//        PersistenceBroker broker = ((HasBroker) tx).getBroker();
+//        //		/////////////////////////////////////////////////////////////////////////////////////////
+//        //		/////////////////////////////////////////////////////////////////////////////////////////
+//        /*
+//		 * Iterator iterator = deletedObject.iterator(); while
+//		 * (iterator.hasNext()) {
+//		 * System.out.println("AQQIWUEWQOIEOQWUIEOIQUWEOI????????????????????????");
+//		 * Object element = (Object) iterator.next();
+//		 * broker.removeFromCache(element);
+//		 */
+//        broker.clearCache();
+//    }
 
     protected List queryList(Class classToQuery, Criteria criteria) throws ExcepcaoPersistencia
     {
@@ -607,9 +612,64 @@ public abstract class ObjectFenixOJB implements IPersistentObject
         List list = (List) pb.getCollectionByQuery(queryCriteria);
         if (list != null)
         {
+            if (!list.isEmpty()
+                && (list.get(0) instanceof Metadata
+                    || list.get(0) instanceof Question
+                    || list.get(0) instanceof Test
+                    || list.get(0) instanceof TestQuestion
+                    || list.get(0) instanceof DistributedTest
+                    || list.get(0) instanceof StudentTestQuestion
+                    || list.get(0) instanceof StudentTestLog
+                    || list.get(0) instanceof MasterDegreeCandidate
+                    || list.get(0) instanceof CandidateSituation
+                    || list.get(0) instanceof Summary
+                    || list.get(0) instanceof Pessoa
+                    || list.get(0) instanceof Advisory))
+            {
+                lockReadWithReplacement(list, pb);
+
+            }
             lockRead(list);
         }
         return list;
+    }
+
+    /**
+	 * @param list
+	 */
+    private void lockReadWithReplacement(List list, PersistenceBroker pb) throws ExcepcaoPersistencia
+    {
+        try
+        {
+
+            tx = odmg.currentTransaction();
+
+            if (tx == null)
+                throw new ExcepcaoPersistencia("No current transaction!");
+            if (list != null)
+            {
+                for (int i = 0; i < list.size(); i++)
+                {
+                    Object obj = list.get(i);
+                    Object newObject =
+                        ((TransactionImpl) odmg.currentTransaction()).getObjectByIdentity(
+                            new Identity(obj, pb));
+                    if (newObject != null)
+                    {
+                        obj = newObject;
+                        list.add(i, obj);
+                        list.remove(i + 1);
+                    }
+
+                    lockRead(obj);
+                }
+            }
+        }
+        catch (ODMGRuntimeException ex)
+        {
+            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.READ_LOCK, ex);
+        }
+
     }
 
     protected Object queryObject(Class classToQuery, Criteria criteria) throws ExcepcaoPersistencia
@@ -655,8 +715,8 @@ public abstract class ObjectFenixOJB implements IPersistentObject
     }
 
     /**
-	 * Use this method to return numberOfElementsInSpan elements starting at index spanNumber *
-	 * numberOfElementsInSpan
+	 * Use this method to return numberOfElementsInSpan elements starting at
+	 * index spanNumber * numberOfElementsInSpan
 	 * 
 	 * @param classToQuery
 	 *            class that is to be queried
