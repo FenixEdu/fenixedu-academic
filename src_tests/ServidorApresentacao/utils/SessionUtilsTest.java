@@ -203,7 +203,7 @@ public class SessionUtilsTest extends TestCase {
 		try {
 			executionCourseList2 = SessionUtils.getExecutionCourses(request);
 		} catch (Exception e) {
-			fail("Exception running getExecutionCourses");
+			fail("Exception running getExecutionCourses "+e);
 		}
 
 		assertNotNull(

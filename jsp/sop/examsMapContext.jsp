@@ -10,5 +10,6 @@
    	<bean:define id="infoExecutionPeriod" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" scope="session"/>
 	<jsp:getProperty name="infoDegree" property="nome" />
 	<br/>
-	<jsp:getProperty name="infoExecutionPeriod" property="name"/>
+	<jsp:getProperty name="infoExecutionPeriod" property="name"/> -
+	<bean:write name="infoExecutionPeriod" property="infoExecutionYear.year"/>
 </logic:present>

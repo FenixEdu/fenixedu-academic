@@ -48,7 +48,10 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular
 		return "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular";
 	}
 
-	public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod, Integer curricularYear) {
+	public List run(
+		InfoExecutionDegree infoExecutionDegree,
+		InfoExecutionPeriod infoExecutionPeriod,
+		Integer curricularYear) {
 
 		List listDCDE = null;
 		List listInfoDE = null;
@@ -58,17 +61,20 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular
 			IDisciplinaExecucaoPersistente executionCourseDAO =
 				sp.getIDisciplinaExecucaoPersistente();
 
-	
-			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-				
+			IExecutionPeriod executionPeriod =
+				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
+					infoExecutionPeriod);
 
-			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+			ICursoExecucao executionDegree =
+				Cloner.copyInfoExecutionDegree2ExecutionDegree(
+					infoExecutionDegree);
 
 			listDCDE =
 				executionCourseDAO
 					.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
 					curricularYear,
-					executionPeriod, executionDegree);
+					executionPeriod,
+					executionDegree);
 
 			Iterator iterator = listDCDE.iterator();
 			listInfoDE = new ArrayList();
@@ -76,7 +82,8 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular
 				IDisciplinaExecucao elem =
 					(IDisciplinaExecucao) iterator.next();
 
-				listInfoDE.add(Cloner.copyIExecutionCourse2InfoExecutionCourse(elem));
+				listInfoDE.add(
+					Cloner.copyIExecutionCourse2InfoExecutionCourse(elem));
 
 			}
 		} catch (ExcepcaoPersistencia ex) {

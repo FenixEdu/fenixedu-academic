@@ -21,7 +21,7 @@
 			<table align="center"  cellpadding='0' cellspacing='0'>
 				<tr align="center">
 					<td>
-						<font color='red'> <bean:message key="message.exams.none.for.executionDegree.CurricularYear"/> </font>
+						<font color='red'> <bean:message key="message.exams.none.for.executionDegree.CurricularYear.ExecutionPeriod"/> </font>
 					</td>
 				</tr>
 			</table>

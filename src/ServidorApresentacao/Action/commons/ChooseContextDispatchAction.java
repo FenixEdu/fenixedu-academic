@@ -66,9 +66,10 @@ public class ChooseContextDispatchAction extends DispatchAction {
 				session.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
 
 			IUserView userView = SessionUtils.getUserView(request);
-			
+
 			InfoExecutionPeriod infoExecutionPeriod =
 				setExecutionContext(request);
+
 			//TODO: this semester and  curricular year list needs to be refactored in order to incorporate masters
 			/* Criar o bean de semestres */
 			ArrayList semestres = new ArrayList();
@@ -251,10 +252,10 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			SessionConstants.CONTEXT_PREFIX);
 
 		if (session != null) {
-			/* :FIXME: get semestre with executionPeriod */
-			Integer semestre = new Integer(2);
-
-			//(Integer) escolherContextoForm.get("semestre");
+			Integer semestre =
+				((InfoExecutionPeriod) session
+					.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY))
+					.getSemester();
 			Integer anoCurricular =
 				(Integer) escolherContextoForm.get("curricularYear");
 
@@ -317,10 +318,10 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			SessionConstants.CONTEXT_PREFIX);
 
 		if (session != null) {
-			/* :FIXME: get semestre with executionPeriod */
-			Integer semestre = new Integer(2);
-
-			//(Integer) escolherContextoForm.get("semestre");
+			Integer semestre =
+				((InfoExecutionPeriod) session
+					.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY))
+					.getSemester();
 			Integer anoCurricular =
 				(Integer) escolherContextoForm.get("curYear");
 
@@ -351,11 +352,11 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			Collections.sort(
 				infoExecutionDegreeList,
 				new ComparatorByNameForInfoExecutionDegree());
-			
+
 			InfoExecutionDegree infoExecutionDegree =
 				(InfoExecutionDegree) infoExecutionDegreeList.get(
 					index.intValue());
-			
+
 			if (infoExecutionDegree == null) {
 				return mapping.findForward("Licenciatura execucao inexistente");
 			}
@@ -492,18 +493,23 @@ public class ChooseContextDispatchAction extends DispatchAction {
 	 */
 	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
 		throws Exception {
-		IUserView userView = SessionUtils.getUserView(request);
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) ServiceUtils.executeService(
-				userView,
-				"ReadActualExecutionPeriod",
-				new Object[0]);
-		HttpSession session = request.getSession(false);
 
-		session.setAttribute(
-			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-			infoExecutionPeriod);
+		HttpSession session = request.getSession(false);
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		if (infoExecutionPeriod == null) {
+			IUserView userView = SessionUtils.getUserView(request);
+			infoExecutionPeriod =
+				(InfoExecutionPeriod) ServiceUtils.executeService(
+					userView,
+					"ReadActualExecutionPeriod",
+					new Object[0]);
+
+			session.setAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+				infoExecutionPeriod);
+		}
 		return infoExecutionPeriod;
 	}
-
 }

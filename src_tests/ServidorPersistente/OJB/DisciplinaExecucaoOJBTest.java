@@ -158,7 +158,9 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 		
 		executionCourseList = null;
 		persistentSupport.iniciarTransaccao();
-		executionCourseList = persistentExecutionCourse.readByCurricularYearAndExecutionPeriodAndExecutionDegree(new Integer(6), executionPeriod, executionDegree);
+		executionPeriod.setSemester(new Integer(3));
+		executionPeriod.setName("3º Semestre");
+		executionCourseList = persistentExecutionCourse.readByCurricularYearAndExecutionPeriodAndExecutionDegree(new Integer(1), executionPeriod, executionDegree);
 		assertTrue(executionCourseList.isEmpty());
 		persistentSupport.confirmarTransaccao();
 
@@ -169,7 +171,7 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 
 
   public void testReadByExecutionCourseInitialsAndExecutionPeriod() {
-	
+
 	// Not tested ... suposed to disappear
 	
   }
@@ -319,77 +321,77 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 		}
 
 	} catch (ExcepcaoPersistencia ex) {
-		fail("Write Existing: unexpected exception");
-	}
-  }
-  
-  
-  public void testDeleteExecutionCourse () {
-	IDisciplinaExecucao executionCourse = null;
-
-	try{
-		persistentSupport.iniciarTransaccao();
-		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI","2002/2003","LEIC");
-		assertNotNull(executionCourse);
-		persistentSupport.confirmarTransaccao();
-	
-		persistentSupport.iniciarTransaccao();
-		List attendsList = persistentAttend.readByExecutionCourse(executionCourse);
-		assertEquals(attendsList.isEmpty(), false);
-		
-		List shiftsList = persistentShift.readByExecutionCourse(executionCourse);
-		assertEquals(shiftsList.isEmpty(), false);
-		persistentSupport.confirmarTransaccao();
-		
-		// Delete Execution Course
-		persistentSupport.iniciarTransaccao();
-		persistentExecutionCourse.deleteExecutionCourse(executionCourse);
-		persistentSupport.confirmarTransaccao();
-
-		// Checks the consistency
-		attendsList = null;
-		shiftsList = null;
-		
-		persistentSupport.iniciarTransaccao();
-		
-		attendsList = persistentAttend.readByExecutionCourse(executionCourse);
-		assertEquals(attendsList.isEmpty(), true);
-		
-		shiftsList = persistentShift.readByExecutionCourse(executionCourse);
-		assertEquals(shiftsList.isEmpty(), true);
-		persistentSupport.confirmarTransaccao();
-	
-		executionCourse = null;
-		persistentSupport.iniciarTransaccao();
-		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI","2002/2003","LEIC");
-		assertNull(executionCourse);
-		persistentSupport.confirmarTransaccao();
-		
-	} catch (ExcepcaoPersistencia ex) {
-		fail("    -> Failed Reading Existing");
-	}
-  }
-
-
-  public void testApagarTodasAsDisciplinasExecucao() {
-	IDisciplinaExecucao executionCourse = null;
-
-	try{
-		persistentSupport.iniciarTransaccao();
-		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI","2002/2003","LEIC");
-		assertNotNull(executionCourse);
-		persistentSupport.confirmarTransaccao();
-	
-		persistentSupport.iniciarTransaccao();
-		persistentExecutionCourse.apagarTodasAsDisciplinasExecucao();
-		persistentSupport.confirmarTransaccao();
-	
-		persistentSupport.iniciarTransaccao();
-		try {
-		  Implementation odmg = OJB.getInstance();
-
-		  ///////////////////////////////////////////////////////////////////
-		  // Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+ 		fail("Write Existing: unexpected exception");
+ 	}
+   }
+   
+   
+   public void testDeleteExecutionCourse () {
+ 	IDisciplinaExecucao executionCourse = null;
+ 
+ 	try{
+ 		persistentSupport.iniciarTransaccao();
+ 		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI","2002/2003","LEIC");
+ 		assertNotNull(executionCourse);
+ 		persistentSupport.confirmarTransaccao();
+ 	
+ 		persistentSupport.iniciarTransaccao();
+ 		List attendsList = persistentAttend.readByExecutionCourse(executionCourse);
+ 		assertEquals(attendsList.isEmpty(), false);
+ 		
+ 		List shiftsList = persistentShift.readByExecutionCourse(executionCourse);
+ 		assertEquals(shiftsList.isEmpty(), false);
+ 		persistentSupport.confirmarTransaccao();
+ 		
+ 		// Delete Execution Course
+ 		persistentSupport.iniciarTransaccao();
+ 		persistentExecutionCourse.deleteExecutionCourse(executionCourse);
+ 		persistentSupport.confirmarTransaccao();
+ 
+ 		// Checks the consistency
+ 		attendsList = null;
+ 		shiftsList = null;
+ 		
+ 		persistentSupport.iniciarTransaccao();
+ 		
+ 		attendsList = persistentAttend.readByExecutionCourse(executionCourse);
+ 		assertEquals(attendsList.isEmpty(), true);
+ 		
+ 		shiftsList = persistentShift.readByExecutionCourse(executionCourse);
+ 		assertEquals(shiftsList.isEmpty(), true);
+ 		persistentSupport.confirmarTransaccao();
+ 	
+ 		executionCourse = null;
+ 		persistentSupport.iniciarTransaccao();
+ 		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI","2002/2003","LEIC");
+ 		assertNull(executionCourse);
+ 		persistentSupport.confirmarTransaccao();
+ 		
+ 	} catch (ExcepcaoPersistencia ex) {
+ 		fail("    -> Failed Reading Existing");
+ 	}
+   }
+ 
+ 
+   public void testApagarTodasAsDisciplinasExecucao() {
+ 	IDisciplinaExecucao executionCourse = null;
+ 
+ 	try{
+ 		persistentSupport.iniciarTransaccao();
+ 		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI","2002/2003","LEIC");
+ 		assertNotNull(executionCourse);
+ 		persistentSupport.confirmarTransaccao();
+ 	
+ 		persistentSupport.iniciarTransaccao();
+ 		persistentExecutionCourse.apagarTodasAsDisciplinasExecucao();
+ 		persistentSupport.confirmarTransaccao();
+ 	
+ 		persistentSupport.iniciarTransaccao();
+ 		try {
+ 		  Implementation odmg = OJB.getInstance();
+ 
+ 		  ///////////////////////////////////////////////////////////////////
+ 		  // Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
 		  ///////////////////////////////////////////////////////////////////
 		  Database db = odmg.newDatabase();
 
