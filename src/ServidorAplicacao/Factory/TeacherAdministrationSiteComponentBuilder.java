@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.slide.common.SlideException;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoAnnouncement;
@@ -20,6 +21,7 @@ import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
+import DataBeans.InfoLink;
 import DataBeans.InfoSection;
 import DataBeans.InfoShift;
 import DataBeans.InfoSite;
@@ -102,6 +104,9 @@ import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import fileSuport.FileSuport;
+import fileSuport.FileSuportObject;
+import fileSuport.IFileSuport;
 
 /**
  * @author Fernanda Quitério
@@ -772,27 +777,27 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		List infoItemsList = new ArrayList(itemsList.size());
 		Iterator iter = itemsList.iterator();
-		//IFileSuport fileSuport = FileSuport.getInstance();
+		IFileSuport fileSuport = FileSuport.getInstance();
 		while (iter.hasNext()) {
 			IItem item = (IItem) iter.next();
 			InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
-			//			try {
-			//				List files = fileSuport.getDirectoryFiles(item.getSlideName());
-			//				if (files != null && !files.isEmpty()) {
-			//					List links = new ArrayList();
-			//					Iterator iterFiles = files.iterator();
-			//					while (iterFiles.hasNext()) {
-			//						FileSuportObject file = (FileSuportObject) iterFiles.next();
-			//						InfoLink infoLink = new InfoLink();
-			//						infoLink.setLink(file.getFileName());
-			//						infoLink.setLinkName(file.getLinkName());
-			//						links.add(infoLink);
-			//					}
-			//					infoItem.setLinks(links);
-			//				}
-			//			} catch (SlideException e1) {
-			//				//the item does not have a folder associated
-			//			}
+			try {
+				List files = fileSuport.getDirectoryFiles(item.getSlideName());
+				if (files != null && !files.isEmpty()) {
+					List links = new ArrayList();
+					Iterator iterFiles = files.iterator();
+					while (iterFiles.hasNext()) {
+						FileSuportObject file = (FileSuportObject) iterFiles.next();
+						InfoLink infoLink = new InfoLink();
+						infoLink.setLink(file.getFileName());
+						infoLink.setLinkName(file.getLinkName());
+						links.add(infoLink);
+					}
+					infoItem.setLinks(links);
+				}
+			} catch (SlideException e1) {
+				//the item does not have a folder associated
+			}
 			infoItemsList.add(infoItem);
 		}
 		component.setSection(Cloner.copyISection2InfoSection(iSection));

@@ -62,6 +62,8 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.FileAlreadyExistsServiceException;
+import ServidorAplicacao.Servico.exceptions.FileNameTooLongServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -913,7 +915,20 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		ActionErrors actionErrors = new ActionErrors();
 		try {
 			serviceResult = (Boolean) ServiceUtils.executeService(userView, "StoreItemFile", args);
-		} catch (FenixServiceException e1) {
+		}
+		catch (FileAlreadyExistsServiceException e1) {
+					actionErrors.add("fileAlreadyExists", new ActionError("errors.fileAlreadyExists", file.getFileName()));
+					saveErrors(request, actionErrors);
+					return prepareFileUpload(mapping, form, request, response);
+
+				}	
+		catch (FileNameTooLongServiceException e1) {
+				actionErrors.add("fileNameTooLong", new ActionError("errors.fileNameTooLong", file.getFileName()));
+				saveErrors(request, actionErrors);
+				return prepareFileUpload(mapping, form, request, response);
+
+							}			
+		 catch (FenixServiceException e1) {
 			actionErrors.add("unableToStoreFile", new ActionError("errors.unableToStoreFile", file.getFileName()));
 			saveErrors(request, actionErrors);
 			return prepareFileUpload(mapping, form, request, response);

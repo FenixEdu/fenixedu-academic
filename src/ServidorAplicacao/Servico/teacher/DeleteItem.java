@@ -43,13 +43,13 @@ public class DeleteItem implements IServico {
 			if (deletedItem == null) {
 				return new Boolean(true);
 			}
-//			IFileSuport fileSuport = FileSuport.getInstance();
-//			
-//			long size=	fileSuport.getDirectorySize(deletedItem.getSlideName());
-//			
-//			if (size>0) {
-//				throw new notAuthorizedServiceDeleteException();
-//			}
+			IFileSuport fileSuport = FileSuport.getInstance();
+			
+			long size=	fileSuport.getDirectorySize(deletedItem.getSlideName());
+			
+			if (size>0) {
+				throw new notAuthorizedServiceDeleteException();
+			}
 			Integer orderOfDeletedItem = deletedItem.getItemOrder();
 			persistentItem.delete(deletedItem);
 

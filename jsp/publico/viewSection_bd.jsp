@@ -18,16 +18,19 @@
   	<logic:present name="item" property="links">
   		<br/>
   		<br/>
-  		<table>
-  			
+  		
+  			<table>
 		<logic:iterate id="infoLink" name="item" property="links">
 		<bean:define id="itemCode" name="item" property="idInternal"/>
-		<tr><td>
-			<html:link page="<%= "/fileDownload.do?itemCode=" + itemCode %>" paramId="fileName" paramName="infoLink" paramProperty="link" ><bean:write name="infoLink" property="linkName"/></html:link>
-		</td>
-		</tr>
+			<tr>
+				<td><img src="<%= request.getContextPath() %>/images/list-bullet.gif" alt="" />
+				</td>
+				<td>
+				<html:link page="<%= "/fileDownload.do?itemCode=" + itemCode %>" paramId="fileName" paramName="infoLink" paramProperty="link" ><bean:write name="infoLink" property="linkName"/></html:link>
+				</td>
+			</tr>	
 		</logic:iterate>
-		</table>
+			</table>
   	</logic:present>
 </logic:iterate>
 </logic:notEmpty>

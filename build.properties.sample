@@ -42,7 +42,7 @@ db.personFilter.errorFile=FicheiroErros.txt
 db.personFilter.log=true
 
 db.slide.driver=com.mysql.jdbc.Driver
-db.slide.alias=mysql://localhost:3306/myDB
+db.slide.alias=mysql://localhost:3306/slide
 db.slide.user=root
 db.slide.pass=
 slide.config=D:\\\\eclipse-M3\\\\workspace\\\\fenix-head\\\\build\\\\app\\\\WEB-INF\\\\classes\\\\Domain.xml

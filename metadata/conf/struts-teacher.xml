@@ -1269,7 +1269,7 @@
 	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
-	<message-resources parameter="ServidorApresentacao.ApplicationResources" />
+	<message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>
 <!--	<message-resources parameter="ServidorApresentacao.TeacherResources" /> -->
 
 	<!-- ========== Plug Ins Configuration ================================= -->

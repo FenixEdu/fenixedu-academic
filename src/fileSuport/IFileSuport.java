@@ -19,6 +19,8 @@ import org.apache.slide.common.SlideException;
  */
 public interface IFileSuport {
 
+	public boolean isFileNameValid(FileSuportObject file);
+
 	public void deleteFolder(String path) throws SlideException;
 
 	public FileSuportObject retrieveFile(String path) throws SlideException;
@@ -37,7 +39,7 @@ public interface IFileSuport {
 	 * @param fileName
 	 * @param fileData
 	 */
-		public abstract void storeFile(
+		public abstract boolean storeFile(
 			FileSuportObject file)
 			throws SlideException;
 	

@@ -22,6 +22,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.Status;
+import javax.transaction.SystemException;
+
 import org.apache.slide.authenticate.CredentialsToken;
 import org.apache.slide.authenticate.SecurityToken;
 import org.apache.slide.common.Domain;
@@ -56,7 +63,9 @@ public class FileSuport implements IFileSuport {
 		if (instance == null) {
 			instance = new FileSuport();
 		}
-		return instance;
+		
+			return instance;
+		
 	}
 
 	/** Creates a new instance of FileSuport */
@@ -114,6 +123,18 @@ public class FileSuport implements IFileSuport {
 		}
 		return maxStorageSize;
 	}
+	
+	
+	public boolean isFileNameValid(FileSuportObject file) {
+		String uri = "/files"+file.getUri()+"/"+file.getFileName();
+		System.out.println("fileNameSize->"+uri.length());
+		if (uri.length()>255) {
+			return false;
+		}
+			return true;
+	}
+	
+	
 	public boolean isStorageAllowed(FileSuportObject file) {
 		boolean result = isFileSizeAllowed(file);
 		long sizeInByte = getDirectorySize("/files" + file.getRootUri());
@@ -170,8 +191,7 @@ public class FileSuport implements IFileSuport {
 		String linkName)
 		throws SlideException {
 		try {
-
-			token.begin();
+			beginTransaction();
 			SubjectNode rootuser =
 				(SubjectNode) structure.retrieve(slideToken, "/users/root");
 			structure.create(slideToken, rootuser, path);
@@ -192,13 +212,58 @@ public class FileSuport implements IFileSuport {
 				path,
 				currentRevisionDescriptor,
 				currentRevisionContent);
-			token.commit();
+			commitTransaction();
 		} catch (SlideException e) {
+			try {
+				abortTransaction();
+			} catch (IllegalStateException e1) {
+			
+			} catch (SecurityException e1) {
+			
+			} catch (SystemException e1) {
+				
+			}
 			throw e;
 		} catch (Exception e) {
+			try {
+				abortTransaction();
+			} catch (IllegalStateException e1) {
+				
+			} catch (SecurityException e1) {
+				
+			} catch (SystemException e1) {
+				
+			}
 			throw new SlideException("runtime exception");
 		}
 	}
+	
+	private void beginTransaction()throws SlideException, NotSupportedException, SystemException{
+		System.out.println("beforeBegintransactionStatus->"+token.getStatus());	
+		
+			token.begin();	
+		
+		System.out.println("afterBegintransactionStatus->"+token.getStatus());	
+	}
+
+	private void commitTransaction() throws SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException {
+			System.out.println("beforeCommittransactionStatus->"+token.getStatus());
+		if (token.getStatus()!=Status.STATUS_NO_TRANSACTION) {
+			token.commit();	
+		}		
+				
+		System.out.println("afterCommittransactionStatus->"+token.getStatus());	
+		}
+	
+	private void abortTransaction() throws IllegalStateException, SecurityException, SystemException{
+			System.out.println("beforeAborttransactionStatus->"+token.getStatus());		
+			if (token.getStatus()!=Status.STATUS_NO_TRANSACTION) {
+				token.rollback();
+			}
+					
+			System.out.println("afterAborttransactionStatus->"+token.getStatus());	
+			
+		}	
 	/**
 		* create Folder
 		* @param folder folder path
@@ -609,33 +674,46 @@ public class FileSuport implements IFileSuport {
 	/* (non-Javadoc)
 	 * @see fileSuport.IFileSuport#retrieveFile(java.lang.String)
 	 */
-	public FileSuportObject retrieveFile(String path) throws SlideException {
+	public FileSuportObject retrieveFile(String path) {
 		if (!path.startsWith("/files")) {
 			path="/files"+path;
 		}
-		FileSuportObject file = new FileSuportObject();
-		NodeRevisionContent nodeRevisionContent = getRevContentData(path);
-		file.setContent(nodeRevisionContent.getContentBytes());
-		NodeRevisionDescriptor nodeRevisionDescriptor =
-			getRevisionDescriptor(path);
+		FileSuportObject file=null;
+		try {
+			
+			NodeRevisionContent nodeRevisionContent = getRevContentData(path);
+			file = new FileSuportObject();
+			file.setContent(nodeRevisionContent.getContentBytes());
+			NodeRevisionDescriptor nodeRevisionDescriptor =
+				getRevisionDescriptor(path);
 
-		file.setContentType(nodeRevisionDescriptor.getContentType());
-		file.setFileName(path.split("/")[path.split("/").length - 1]);
-		file.setLinkName(
-			(String) nodeRevisionDescriptor.getProperty("linkName").getValue());
+			file.setContentType(nodeRevisionDescriptor.getContentType());
+			file.setFileName(path.split("/")[path.split("/").length - 1]);
+			file.setLinkName(
+				(String) nodeRevisionDescriptor.getProperty("linkName").getValue());
+		} catch (SlideException e) {
+			file=null;
+		}
 		return file;
 	}
 
 	/* (non-Javadoc)
 	 * @see fileSuport.IFileSuport#storeFile(fileSuport.FileSuportObject)
 	 */
-	public void storeFile(FileSuportObject file) throws SlideException {
-		storeFile(
-			file.getFileName(),
-			file.getUri(),
-			file.getContent(),
-			file.getContentType(),
-			file.getLinkName());
+	public boolean storeFile(FileSuportObject file) throws SlideException {
+		boolean result = false;
+		FileSuportObject fileInDb = retrieveFile(file.getUri()+"/"+file.getFileName());
+		if (fileInDb==null) {
+			storeFile(
+						file.getFileName(),
+						file.getUri(),
+						file.getContent(),
+						file.getContentType(),
+						file.getLinkName());
+			result=true;			
+		}
+		
+		return result;	
 
 	}
 

@@ -10,6 +10,8 @@ import Dominio.IItem;
 import Dominio.Item;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.FileAlreadyExistsServiceException;
+import ServidorAplicacao.Servico.exceptions.FileNameTooLongServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.ISuportePersistente;
@@ -54,8 +56,14 @@ public class StoreItemFile implements IServico {
 			file.setUri(item.getSlideName());
 			file.setRootUri(item.getSection().getSite().getExecutionCourse().getSlideName());
 			IFileSuport fileSuport = FileSuport.getInstance();
+			if (!fileSuport.isFileNameValid(file)) {
+				throw new FileNameTooLongServiceException();
+			}
 			if (fileSuport.isStorageAllowed(file)) {
-				fileSuport.storeFile(file);
+				boolean result=fileSuport.storeFile(file);
+				if (!result) {
+					throw new FileAlreadyExistsServiceException();
+				}
 				return new Boolean(true);
 			}else {
 				return new Boolean(false);

@@ -198,7 +198,7 @@
 		  <replacefilter 
 		    token="@application@" 
 		    property="application"/>
-<!--		    <replacefilter 
+		    <replacefilter 
 		    token="@db.slide.driver@" 
 		    property="db.slide.driver"/>
 		    <replacefilter 
@@ -212,7 +212,7 @@
 		    property="db.slide.pass"/>
 		    <replacefilter 
 		    token="@slide.config@" 
-		    property="slide.config"/> -->
+		    property="slide.config"/>
 		</replace>
 		
 <!--		<antcall target="validate-xml"/>-->
@@ -522,6 +522,8 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 	        <fileset dir="${sql}">
 			 <include name="tables_*.sql" />
 			 <exclude name="tables_AssiduousnessASSMARCAS.sql" />
+			 <exclude name="tables_inscricoes_backup.sql" />
+			 <exclude name="tables_slide.sql" />
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">
