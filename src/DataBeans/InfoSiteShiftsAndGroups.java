@@ -15,6 +15,7 @@ public class InfoSiteShiftsAndGroups extends DataTranferObject implements ISiteC
 
 	private List infoSiteGroupsByShiftList;
 	private InfoAttendsSet infoAttendsSet;
+	private InfoGroupProperties infoGroupProperties;
 	
 	/**
 	* @return
@@ -80,4 +81,11 @@ public class InfoSiteShiftsAndGroups extends DataTranferObject implements ISiteC
 			}
 			return result;
 		}
+
+    public void setInfoGroupProperties(InfoGroupProperties infoGroupProperties) {
+        this.infoGroupProperties = infoGroupProperties;
+    }
+    public InfoGroupProperties getInfoGroupProperties() {
+        return infoGroupProperties;
+    }
 }
