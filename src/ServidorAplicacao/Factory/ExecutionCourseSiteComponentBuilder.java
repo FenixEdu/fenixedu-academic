@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.slide.common.SlideException;
+
 import DataBeans.ISiteComponent;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
@@ -17,7 +19,9 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurriculum;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoItem;
 import DataBeans.InfoLesson;
+import DataBeans.InfoLink;
 import DataBeans.InfoSection;
 import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.InfoSiteAnnouncement;
@@ -70,6 +74,9 @@ import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentSummary;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import fileSuport.FileSuport;
+import fileSuport.FileSuportObject;
+import fileSuport.IFileSuport;
 
 /**
  * @author João Mota
@@ -316,8 +323,29 @@ public class ExecutionCourseSiteComponentBuilder {
 		List infoItemsList = new ArrayList(itemsList.size());
 		Iterator iter = itemsList.iterator();
 
-		while (iter.hasNext())
-			infoItemsList.add(Cloner.copyIItem2InfoItem((IItem) iter.next()));
+		IFileSuport fileSuport = FileSuport.getInstance();
+			while (iter.hasNext()) {
+				IItem item =(IItem) iter.next();
+				InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
+				try {
+					List files = fileSuport.getDirectoryFiles(item.getSlideName());
+					if (files!=null && !files.isEmpty()) {
+						List links = new ArrayList();
+						Iterator iterFiles = files.iterator();
+						while(iterFiles.hasNext()) {
+							FileSuportObject file = (FileSuportObject) iterFiles.next();
+							InfoLink infoLink = new InfoLink();
+							infoLink.setLink(file.getFileName());
+							infoLink.setLinkName(file.getLinkName());
+							links.add(infoLink);
+						}
+						infoItem.setLinks(links);
+					}
+				} catch (SlideException e1) {
+					//the item does not have a folder associated
+				}
+				infoItemsList.add(infoItem);
+			}
 
 		Collections.sort(infoItemsList);
 		component.setItems(infoItemsList);
