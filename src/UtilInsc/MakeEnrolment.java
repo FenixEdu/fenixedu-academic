@@ -35,7 +35,7 @@ public class MakeEnrolment {
 	}
 
 	private static void autentication() {
-		String argsAutenticacao[] = {"stdnt", "pass", Autenticacao.EXTRANET};
+		String argsAutenticacao[] = {"44406", "1", Autenticacao.EXTRANET};
 		try {
 			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
 		} catch (Exception ex) {

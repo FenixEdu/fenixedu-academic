@@ -263,7 +263,7 @@ public class GenerateExtraData {
 			curricularCourseToWrite.setMandatory(curricularCourse.getMandatory());
 			curricularCourseToWrite.setName(curricularCourse.getName() + i);
 			curricularCourseToWrite.setType(curricularCourse.getType());
-			curricularCourseToWrite.setUniversityCode(curricularCourse.getUniversityCode());
+			curricularCourseToWrite.setUniversity(curricularCourse.getUniversity());
 
 			persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 			try {

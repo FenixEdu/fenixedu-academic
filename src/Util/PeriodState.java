@@ -17,7 +17,7 @@ public class PeriodState {
 	
 	public static final String CLOSED_CODE = "CL";
 	public static final String CURRENT_CODE = "C";
-	public static final String  OPEN_CODE = "O";
+	public static final String OPEN_CODE = "O";
 	public static final String NOT_OPEN_CODE = "NO";
 	
 	private PeriodState(final String stateCode){
