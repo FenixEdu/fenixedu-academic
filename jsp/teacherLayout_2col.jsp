@@ -4,7 +4,7 @@
 <html:html xhtml="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link href="<%= request.getContextPath() %>/CSS/dotist.css" rel="stylesheet" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/dotist_gesdis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/script/gesdis-scripting.js"></script>
 </head>
 <body>
@@ -33,7 +33,7 @@
     <td width="25%" align="left" valign="top" nowrap="nowrap" class="navlateral"><tiles:insert attribute="navLocal" ignore="true"/>
     </td>
    
-      <td width="100%" align="left" valign="top" bgcolor="#FFFFFF" class="bodycontent">
+      <td width="100%" align="left" valign="top" class="bodycontent">
       	 <tiles:insert attribute="executionCourseName"  ignore="true"/>
       		<tiles:insert attribute="body" />
 	</td>
