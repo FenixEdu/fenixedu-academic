@@ -16,3 +16,4 @@ cvsImage
 .autoProcess
 unitTestReports
 *.log*
+report
