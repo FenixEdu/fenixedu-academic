@@ -71,7 +71,7 @@ public class EnrolmentFilterAutomaticEnrolmentRule implements IEnrolmentRule {
 		List alternativeSemesterScopes = (List) CollectionUtils.select(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled(), new Predicate() {
 			public boolean evaluate(Object obj) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
-				return( (curricularCourseScope.getCurricularCourse().getMandatory().booleanValue()) &&
+				return( (curricularCourseScope.getCurricularCourse().curricularCourseIsMandatory()) &&
 						(curricularCourseScope.getCurricularSemester().getSemester().equals(semester)));
 			}
 		});
