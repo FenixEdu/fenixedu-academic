@@ -16,6 +16,7 @@ package DataBeans;
 public final class InfoLessonServiceResult {
 	public static final int SUCESS = 0;
 	public static final int INVALID_TIME_INTERVAL = 1;
+//	public static final int INTERCEPTING_LESSON = 2;
 	
 	private int _messageType;
 	
