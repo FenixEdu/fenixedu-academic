@@ -62,7 +62,7 @@ public class UtilRelacional {
 		pb.close();
 	}
 
-	public static synchronized PreparedStatement prepararComando(String statement) {
+	public static PreparedStatement prepararComando(String statement) {
 		Connection conn;
 		PersistenceBroker pb = (PersistenceBroker) pbMap.get(Thread.currentThread());	
 		if (pb == null) {
