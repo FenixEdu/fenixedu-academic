@@ -837,6 +837,7 @@
         		   />
     	<forward name="showCreateForm" path="/createExam.jsp"/>
     	<forward name="Sucess" path="/mainExams.jsp"/>
+    	<forward name="viewExamsMap" path="/viewExamsMap.do?method=view"/>
 	</action>
 
 	<action path="/editExam"
@@ -860,13 +861,16 @@
             type="ServidorApresentacao.Action.sop.ChooseExamsMapContextDA"
             >
         <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
-        <forward name="showExamsMap" path="/viewExamsMap.do"/>
+        <forward name="showExamsMap" path="/viewExamsMap.do?method=view"/>
     </action>
 
     <action path="/viewExamsMap"
-            type="ServidorApresentacao.Action.sop.ViewExamsMap"
+            type="ServidorApresentacao.Action.sop.ViewExamsMapDA"
+            parameter="method"
             >
         <forward name="viewExamsMap" path="/viewExamsMap.jsp"/>
+        <forward name="createExam" path="/createExam.do?method=prepare&amp;page=0&amp;nextPage=viewExamsMap"/>
+        <forward name="editExam" path="/viewExamsMap.jsp"/>
     </action>
 
       

@@ -35,7 +35,10 @@ public class CreateExamActionDA extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-			HttpSession session = request.getSession(false);			
+			HttpSession session = request.getSession(false);
+			
+			String nextPage = request.getParameter("nextPage");
+			session.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
 			
 			ArrayList horas = Util.getExamShifts();
 			session.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
@@ -101,7 +104,13 @@ public class CreateExamActionDA extends DispatchAction {
 				throw new ExistingActionException("O exame", ex);
 			}
 
-			return mapping.findForward("Sucess");
+			String nextPage = (String) session.getAttribute(SessionConstants.NEXT_PAGE);
+
+			if (nextPage != null) {
+				return mapping.findForward(nextPage);
+			} else {
+				return mapping.findForward("Sucess");
+			}
 	}
 
 }
