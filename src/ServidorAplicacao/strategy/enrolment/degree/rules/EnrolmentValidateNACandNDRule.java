@@ -33,16 +33,15 @@ public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 
 		// FIXME: David-Ricardo: Parametrizar possibleND, possibleNAC e year
 		// FIXME: David-Ricardo: Aqui as strings devem ser keys do aplication resource.
-
 		// FIXME: David-Ricardo: A regra dos 3 nao se aplica aos trabalhadores estudantes
 		if (enrolmentContext.getActualEnrolment().size() < 3) {
-			enrolmentContext.getEnrolmentValidationResult().setMessage("Deve inscrever-se a pelo menos 3 disciplinas");
+			enrolmentContext.getEnrolmentValidationResult().setErrorMessage("Deve inscrever-se a pelo menos 3 disciplinas");
 		}
 		if (enrolmentContext.getActualEnrolment().size() > 7) {
-			enrolmentContext.getEnrolmentValidationResult().setMessage("Não se pode inscrever a mais de 7 disciplinas");
+			enrolmentContext.getEnrolmentValidationResult().setErrorMessage("Não se pode inscrever a mais de 7 disciplinas");
 		}
 		if (NAC > 10) {
-			enrolmentContext.getEnrolmentValidationResult().setMessage("Não se pode inscrever a mais de 10 disciplinas acumuladas");
+			enrolmentContext.getEnrolmentValidationResult().setErrorMessage("Não se pode inscrever a mais de 10 disciplinas acumuladas");
 		}
 		return enrolmentContext;
 	}

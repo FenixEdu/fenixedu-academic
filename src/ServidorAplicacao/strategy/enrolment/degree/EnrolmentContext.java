@@ -10,7 +10,6 @@ import java.util.Map;
 
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
-import ServidorAplicacao.strategy.enrolment.degree.exceptions.EnrolmentValidationResult;
 
 /**
  * @author jpvl
@@ -25,7 +24,7 @@ public final class EnrolmentContext {
 	private IStudentCurricularPlan studentActiveCurricularPlan;
 
 	private List actualEnrolment;
-	//	private List curricularCoursesFromStudentCurricularPlan;
+	private List curricularCoursesFromStudentCurricularPlan;
 
 	/**
 	 * defines the list that student can be enrolled
@@ -138,21 +137,20 @@ public final class EnrolmentContext {
 		studentActiveCurricularPlan = plan;
 	}
 
-	//	/**
-	//	 * @return List
-	//	 */
-	//	public List getCurricularCoursesFromStudentCurricularPlan() {
-	//		return curricularCoursesFromStudentCurricularPlan;
-	//	}
-	//
-	//	/**
-	//	 * Sets the curricularCoursesFromStudentCurricularPlan.
-	//	 * @param curricularCoursesFromStudentCurricularPlan The curricularCoursesFromStudentCurricularPlan to set
-	//	 */
-	//	public void setCurricularCoursesFromStudentCurricularPlan(List curricularCoursesFromStudentCurricularPlan) {
-	//		this.curricularCoursesFromStudentCurricularPlan = curricularCoursesFromStudentCurricularPlan;
-	//	}
-	//
+	/**
+	 * @return List
+	 */
+	public List getCurricularCoursesFromStudentCurricularPlan() {
+		return curricularCoursesFromStudentCurricularPlan;
+	}
+
+	/**
+	 * Sets the curricularCoursesFromStudentCurricularPlan.
+	 * @param curricularCoursesFromStudentCurricularPlan The curricularCoursesFromStudentCurricularPlan to set
+	 */
+	public void setCurricularCoursesFromStudentCurricularPlan(List curricularCoursesFromStudentCurricularPlan) {
+		this.curricularCoursesFromStudentCurricularPlan = curricularCoursesFromStudentCurricularPlan;
+	}
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";

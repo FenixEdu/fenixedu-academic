@@ -3,23 +3,24 @@ package Util;
 /**
  * @author dcs-rjao
  *
- * 2/Abr/2003
+ * 25/Mar/2003
  */
-public class EnrolmentState {
+public class HasAlternativeSemester {
 
-	public static final int APROVED = 1;
-	public static final int NOT_APROVED = 2;
-
+	public static final int FALSE = 0;
+	public static final int TRUE = 1;
+	
 	private Integer state;
 
-	public EnrolmentState() {
+	/** Creates a new instance of HasAlternativeSemester */
+	public HasAlternativeSemester() {
 	}
 
-	public EnrolmentState(int state) {
+	public HasAlternativeSemester(int state) {
 		this.state = new Integer(state);
 	}
 
-	public EnrolmentState(Integer state) {
+	public HasAlternativeSemester(Integer state) {
 		this.state = state;
 	}
 
@@ -40,8 +41,8 @@ public class EnrolmentState {
 	}
 
 	public boolean equals(Object o) {
-		if (o instanceof EnrolmentState) {
-			EnrolmentState aux = (EnrolmentState) o;
+		if (o instanceof HasAlternativeSemester) {
+			HasAlternativeSemester aux = (HasAlternativeSemester) o;
 			return this.state.equals(aux.getState());
 		} else {
 			return false;
@@ -54,11 +55,11 @@ public class EnrolmentState {
 		String valueS = null;
 
 		switch (value) {
-			case NOT_APROVED :
-				valueS = "NOT_APROVED";
+			case FALSE :
+				valueS = "FALSE";
 				break;
-			case APROVED :
-				valueS = "APROVED";
+			case TRUE :
+				valueS = "TRUE";
 				break;
 			default:
 				break;

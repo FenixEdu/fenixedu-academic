@@ -55,11 +55,16 @@ public class StudentCurricularPlanState {
 		String valueS = null;
 		switch (value) {
 			case ACTIVE :
-			valueS = "ACTIVE";
+				valueS = "ACTIVE";
+				break;
 			case CONCLUDED :
-			valueS = "CONCLUDED";
+				valueS = "CONCLUDED";
+				break;
 			case INCOMPLETE :
-			valueS = "INCOMPLETE";
+				valueS = "INCOMPLETE";
+				break;
+			default:
+				break;
 		}
 		return valueS;
 	}

@@ -22,7 +22,6 @@ import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
-import ServidorAplicacao.strategy.enrolment.degree.exceptions.EnrolmentValidationResult;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -36,6 +35,7 @@ import Util.EnrolmentState;
 public abstract class EnrolmentContextManager {
 
 	public static EnrolmentContext initialEnrolmentContext(IStudent student, Integer semester) throws ExcepcaoPersistencia {
+
 		EnrolmentContext enrolmentContext = new EnrolmentContext();
 
 		ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
@@ -44,15 +44,13 @@ public abstract class EnrolmentContextManager {
 
 		IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-		IStudentCurricularPlan studentActiveCurricularPlan =
-			persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
+		final IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 
-		List studentCurricularPlanCurricularCourses = studentActiveCurricularPlan.getDegreeCurricularPlan().getCurricularCourses();
+		List degreeCurricularPlanCurricularCourses = studentActiveCurricularPlan.getDegreeCurricularPlan().getCurricularCourses();
 
 		final List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentActiveCurricularPlan);
 
 		final List studentEnrolmentsWithStateApproved = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
-
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
 				return enrolment.getState().equals(new EnrolmentState(EnrolmentState.APROVED));
@@ -67,14 +65,12 @@ public abstract class EnrolmentContextManager {
 		});
 
 		List enrolmentsWithStateNotApproved = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
-
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
 				ICurricularCourse curricularCourse = enrolment.getCurricularCourse();
 				return !studentDoneCurricularCourses.contains(curricularCourse)
 					&& enrolment.getState().equals(new EnrolmentState(EnrolmentState.NOT_APROVED));
 			}
-
 		});
 
 		List curricularCoursesEnrolled = (List) CollectionUtils.collect(enrolmentsWithStateNotApproved, new Transformer() {
@@ -84,10 +80,17 @@ public abstract class EnrolmentContextManager {
 			}
 		});
 
-//		enrolmentContext.setCurricularCoursesFromStudentCurricularPlan(computeScopesOfCurricularCourses(studentCurricularPlanCurricularCourses));
+		List studentCurricularPlanCurricularCourses = (List) CollectionUtils.select(computeScopesOfCurricularCourses(degreeCurricularPlanCurricularCourses), new Predicate() {
+			public boolean evaluate(Object obj) {
+				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
+				return (curricularCourseScope.getBranch().equals(studentActiveCurricularPlan.getBranch())) || (curricularCourseScope.getBranch().getName().equals(""));
+			}
+		});
+
+		enrolmentContext.setCurricularCoursesFromStudentCurricularPlan(studentCurricularPlanCurricularCourses);
 		enrolmentContext.setStudent(student);
 		enrolmentContext.setSemester(semester);
-		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(computeCurricularCoursesScopesNotYetDoneByStudent(studentCurricularPlanCurricularCourses, studentDoneCurricularCourses));
+		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(computeCurricularCoursesScopesNotYetDoneByStudent(degreeCurricularPlanCurricularCourses, studentDoneCurricularCourses));
 		enrolmentContext.setCurricularCoursesDoneByStudent(studentDoneCurricularCourses);
 		enrolmentContext.setAcumulatedEnrolments(CollectionUtils.getCardinalityMap(curricularCoursesEnrolled));
 		enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
@@ -121,10 +124,7 @@ public abstract class EnrolmentContextManager {
 		return computeScopesOfCurricularCourses(coursesNotDone);
 	}
 
-	/**
-	 * @param studentCurricularPlanCurricularCourses
-	 * @return List
-	 */
+
 	private static List computeScopesOfCurricularCourses(List curricularCourses) {
 
 		List scopes = new ArrayList();

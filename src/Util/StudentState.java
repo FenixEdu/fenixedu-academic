@@ -61,16 +61,24 @@ public class StudentState {
 		switch (value) {
 			case BASE :
 				valueS = "BASE";
+				break;
 			case INSCRITO :
 				valueS = "INSCRITO";
+				break;
 			case PRESCRITO :
 				valueS = "PRESCRITO";
+				break;
 			case INTERRUPCAO :
 				valueS = "INTERRUPCAO";
+				break;
 			case AUSENTE :
 				valueS = "AUSENTE";
+				break;
 			case LICENCIADO :
 				valueS = "LICENCIADO";
+				break;
+			default:
+				break;
 		}
 
 		return "[" + this.getClass().getName() + ": " + valueS + "]";

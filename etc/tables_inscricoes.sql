@@ -77,6 +77,7 @@ create table CURRICULAR_COURSE (
    LAB_HOURS double,
    NAME varchar(100) not null,
    CODE varchar(50) not null,
+   TYPE int(11),
    PRIMARY KEY  (ID_INTERNAL),
    UNIQUE KEY U1 (CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
@@ -165,11 +166,12 @@ create table CURRICULAR_COURSE_SCOPE (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_CURRICULAR_SEMESTER int(11) not null,
    KEY_CURRICULAR_COURSE int(11) not null,
-   KEY_BRANCH int(11) not null, 
+   KEY_BRANCH int(11) not null,
    THEORETICAL_HOURS double default '0',
    PRATICAL_HOURS double default '0',
    THEO_PRAT_HOURS double default '0',
    LAB_HOURS double default '0',
+   HAS_ALTERNATIVE_SEMESTER int(11) not null,
    primary key (ID_INTERNAL),
    unique U1 (KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH)
 )type=InnoDB;
@@ -187,3 +189,16 @@ create table EQUIVALENCE (
    primary key (ID_INTERNAL),
    unique U1 (KEY_EQUIVALENT_ENROLMENT, KEY_ENROLMENT)
 )type=InnoDB;
+
+#----------------------------
+# Table structure for CURRICULAR_COURSE_OPTION_CURRICULAR_COURSE
+#----------------------------
+drop table if exists CURRICULAR_COURSE_OPTION_CURRICULAR_COURSE;
+create table CURRICULAR_COURSE_OPTION_CURRICULAR_COURSE (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_CURRICULAR_COURSE int(11) not null,
+   KEY_CURRICULAR_COURSE_OPTION int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_CURRICULAR_COURSE, KEY_CURRICULAR_COURSE_OPTION)
+)type=InnoDB;
+

@@ -2,8 +2,10 @@ package ServidorAplicacao.strategy.enrolment.degree.strategys;
 
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterBranchRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterFinalistRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterNACandNDRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterSemesterRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentValidateCurricularYearPrecedenceRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentValidateNACandNDRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
 
@@ -23,6 +25,9 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		IEnrolmentRule enrolmentRule = null;
 
 		enrolmentRule = new EnrolmentFilterBranchRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+		
+		enrolmentRule = new EnrolmentFilterFinalistRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 		
 		enrolmentRule = new EnrolmentFilterSemesterRule();
@@ -53,6 +58,9 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		IEnrolmentRule validateRule = null;
 
 		validateRule = new EnrolmentValidateNACandNDRule();
+		this.enrolmentContext = validateRule.apply(this.enrolmentContext);
+		
+		validateRule = new EnrolmentValidateCurricularYearPrecedenceRule();
 		this.enrolmentContext = validateRule.apply(this.enrolmentContext);
 		
 		if (this.enrolmentContext.getEnrolmentValidationResult().isSucess()) {

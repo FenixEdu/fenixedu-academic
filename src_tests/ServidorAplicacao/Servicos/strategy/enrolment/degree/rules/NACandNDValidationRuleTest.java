@@ -51,8 +51,10 @@ public class NACandNDValidationRuleTest extends BaseEnrolmentRuleTest {
 		}
 		doApplyRule(new EnrolmentValidateNACandNDRule(), enrolmentContext);
 		assertEquals(enrolmentContext.getEnrolmentValidationResult().isSucess(), true);
+		enrolmentContext.getEnrolmentValidationResult().setSucess(true);
 
 		// menos que 3
+		enrolmentContext.getActualEnrolment().clear();
 		for (int i = 0; i < 2; i++) {
 			ICurricularCourseScope curricularCourseScope =
 				(ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
@@ -60,6 +62,7 @@ public class NACandNDValidationRuleTest extends BaseEnrolmentRuleTest {
 		}
 		doApplyRule(new EnrolmentValidateNACandNDRule(), enrolmentContext);
 		assertEquals(enrolmentContext.getEnrolmentValidationResult().isSucess(), false);
+		enrolmentContext.getEnrolmentValidationResult().setSucess(true);
 
 		// mais que 7
 		enrolmentContext.getActualEnrolment().clear();
@@ -70,6 +73,7 @@ public class NACandNDValidationRuleTest extends BaseEnrolmentRuleTest {
 		}
 		doApplyRule(new EnrolmentValidateNACandNDRule(), enrolmentContext);
 		assertEquals(enrolmentContext.getEnrolmentValidationResult().isSucess(), false);
+		enrolmentContext.getEnrolmentValidationResult().setSucess(true);
 
 		// mais que 10 acumuladas
 		enrolmentContext.getActualEnrolment().clear();
@@ -80,6 +84,7 @@ public class NACandNDValidationRuleTest extends BaseEnrolmentRuleTest {
 		}
 		doApplyRule(new EnrolmentValidateNACandNDRule(), enrolmentContext);
 		assertEquals(enrolmentContext.getEnrolmentValidationResult().isSucess(), false);
+		enrolmentContext.getEnrolmentValidationResult().setSucess(true);
 	}
 
 	public void doApplyRule(IEnrolmentRule enrolmentRule, EnrolmentContext enrolmentContext) {

@@ -58,6 +58,8 @@ public class DegreeCurricularPlanState {
 			case CONCLUDED :
 				valueS = "CONCLUDED";
 				break;
+			default:
+				break;
 		}
 
 		return "[" + this.getClass().getName() + ": " + valueS + "]";

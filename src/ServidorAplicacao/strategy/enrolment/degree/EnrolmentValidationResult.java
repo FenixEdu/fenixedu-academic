@@ -1,4 +1,4 @@
-package ServidorAplicacao.strategy.enrolment.degree.exceptions;
+package ServidorAplicacao.strategy.enrolment.degree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,19 +25,19 @@ public class EnrolmentValidationResult {
 		this.sucess = true;
 	}
 
-	public void setMessage(String key) {
+	public void setErrorMessage(String key) {
 		message.put(key, new ArrayList());
 		this.sucess = false;
 	}
 
-	public void setMessage(String key, Object value) {
+	public void setErrorMessage(String key, Object value) {
 		List valueList = new ArrayList(4);
 		valueList.add(0, value);
 		message.put(key, valueList);
 		this.sucess = false;
 	}
 
-	public void setMessage(String key, Object value0, Object value1) {
+	public void setErrorMessage(String key, Object value0, Object value1) {
 		List valueList = new ArrayList(4);
 		valueList.add(0, value0);
 		valueList.add(1, value1);
@@ -45,7 +45,7 @@ public class EnrolmentValidationResult {
 		this.sucess = false;
 	}
 
-	public void setMessage(String key, Object value0, Object value1, Object value2) {
+	public void setErrorMessage(String key, Object value0, Object value1, Object value2) {
 		List valueList = new ArrayList(4);
 		valueList.add(0, value0);
 		valueList.add(1, value1);
@@ -54,7 +54,7 @@ public class EnrolmentValidationResult {
 		this.sucess = false;
 	}
 
-	public void setMessage(String key, Object value0, Object value1, Object value2, Object value3) {
+	public void setErrorMessage(String key, Object value0, Object value1, Object value2, Object value3) {
 		List valueList = new ArrayList(4);
 		valueList.add(0, value0);
 		valueList.add(1, value1);
@@ -64,7 +64,7 @@ public class EnrolmentValidationResult {
 		this.sucess = false;
 	}
 
-	public void setMessage(String key, Object[] values) {
+	public void setErrorMessage(String key, Object[] values) {
 		message.put(key, values);
 		this.sucess = false;
 	}
@@ -73,7 +73,7 @@ public class EnrolmentValidationResult {
 	 * Sets the message.
 	 * @param message The message to set
 	 */
-	public void setMessage(Map errorMessage) {
+	public void setErrorMessage(Map errorMessage) {
 		this.message = errorMessage;
 		this.sucess = false;
 	}

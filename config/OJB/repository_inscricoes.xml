@@ -204,6 +204,12 @@
 		column="CODE"
 		jdbc-type="VARCHAR"
 	/>
+	<field-descriptor
+		name="type"
+		column="TYPE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaCurricularCourseType2SqlCurricularCourseTypeFieldConversion"
+	/>
 	<reference-descriptor
 			name="departmentCourse"
 			class-ref="Dominio.DisciplinaDepartamento"
@@ -528,6 +534,13 @@
 		column="KEY_BRANCH"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="hasAlternativeSemester"
+		column="HAS_ALTERNATIVE_SEMESTER"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaHasAlternativeSemester2SqlHasAlternativeSemesterFieldConversion"
+	/>
+	
 	<reference-descriptor
 			name="curricularCourse"
 			class-ref="Dominio.CurricularCourse"

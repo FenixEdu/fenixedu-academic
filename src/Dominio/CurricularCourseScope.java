@@ -1,5 +1,7 @@
 package Dominio;
 
+import Util.HasAlternativeSemester;
+
 
 /**
  * @author dcs-rjao
@@ -17,7 +19,8 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 	private ICurricularCourse curricularCourse;
 	private ICurricularSemester curricularSemester;
 	private IBranch branch;
-
+	HasAlternativeSemester hasAlternativeSemester;
+	
 	public CurricularCourseScope() {
 		setInternalID(null);
 
@@ -28,6 +31,7 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 		setBranchKey(null);
 		setCurricularCourseKey(null);
 		setCurricularSemesterKey(null);
+		setHasAlternativeSemester(null);
 	}
 
 	public CurricularCourseScope(ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch) {
@@ -35,6 +39,14 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 		setCurricularCourse(curricularCourse);
 		setCurricularSemester(curricularSemester);
 		setBranch(branch);
+	}
+
+	public CurricularCourseScope(ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch, HasAlternativeSemester hasAlternativeSemester) {
+		this();
+		setCurricularCourse(curricularCourse);
+		setCurricularSemester(curricularSemester);
+		setBranch(branch);
+		setHasAlternativeSemester(hasAlternativeSemester);
 	}
 
 	public boolean equals(Object obj) {
@@ -57,6 +69,7 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 		result += "idInternal = " + this.internalID + "; ";
 		result += "curricularCourse = " + this.curricularCourse + "; ";
 		result += "curricularSemester = " + this.curricularSemester + "; ";
+		result += "hasAlternativeSemester = " + this.hasAlternativeSemester + "; ";
 		result += "branch = " + this.branch + "]\n";
 
 		return result;
@@ -168,4 +181,26 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 		this.internalID = internalID;
 	}
 
+	/**
+	 * @return HasAlternativeSemester
+	 */
+	public HasAlternativeSemester getHasAlternativeSemester() {
+		return hasAlternativeSemester;
+	}
+
+	/**
+	 * Sets the hasAlternativeSemester.
+	 * @param hasAlternativeSemester The hasAlternativeSemester to set
+	 */
+	public void setHasAlternativeSemester(HasAlternativeSemester hasAlternativeSemester) {
+		this.hasAlternativeSemester = hasAlternativeSemester;
+	}
+	
+	public boolean hasAlternativeSemester() {
+		if(this.hasAlternativeSemester.getState().intValue() == HasAlternativeSemester.FALSE){
+			return false;
+		}else{
+			return true;
+		}
+	}
 }

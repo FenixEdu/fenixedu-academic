@@ -9,6 +9,8 @@ package DataBeans;
 import java.io.Serializable;
 import java.util.List;
 
+import Util.CurricularCourseType;
+
 /**
  *
  * @author  tfc130
@@ -24,6 +26,7 @@ public class InfoCurricularCourse implements Serializable {
 	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 	//	private List associatedInfoCurricularSemesters;
 	private List infoScopes;
+	private CurricularCourseType type;
 
 	public InfoCurricularCourse() {
 	}
@@ -39,8 +42,9 @@ public class InfoCurricularCourse implements Serializable {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
-		result += ", nome=" + name;
-		result += ", sigla=" + code;
+		result += ", nome =" + name;
+		result += ", sigla =" + code;
+		result += ", type =" + this.type;
 		result += "]";
 		return result;
 	}
@@ -237,6 +241,21 @@ public class InfoCurricularCourse implements Serializable {
 	 */
 	public void setInfoScopes(List infoScopes) {
 		this.infoScopes = infoScopes;
+	}
+
+	/**
+	 * @return CurricularCourseType
+	 */
+	public CurricularCourseType getType() {
+		return type;
+	}
+
+	/**
+	 * Sets the type.
+	 * @param type The type to set
+	 */
+	public void setType(CurricularCourseType type) {
+		this.type = type;
 	}
 
 }

@@ -2,6 +2,8 @@ package Dominio;
 
 import java.util.List;
 
+import Util.CurricularCourseType;
+
 /**
  * @author dcs-rjao
  *
@@ -22,6 +24,7 @@ public class CurricularCourse implements ICurricularCourse {
 	private String code;
 	private IDisciplinaDepartamento departmentCourse;
 	private IDegreeCurricularPlan degreeCurricularPlan;
+	private CurricularCourseType type;
 
 	private List associatedExecutionCourses;
 	private List scopes;
@@ -97,6 +100,31 @@ public class CurricularCourse implements ICurricularCourse {
 		setTheoreticalHours(theoreticalHours);
 	}
 
+	public CurricularCourse(
+		Double credits,
+		Double theoreticalHours,
+		Double praticalHours,
+		Double theoPratHours,
+		Double labHours,
+		String name,
+		String code,
+		IDisciplinaDepartamento departmentCourse,
+		IDegreeCurricularPlan degreeCurricularPlan,
+		CurricularCourseType type) {
+
+		this();
+		setCode(code);
+		setCredits(credits);
+		setDegreeCurricularPlan(degreeCurricularPlan);
+		setDepartmentCourse(departmentCourse);
+		setLabHours(labHours);
+		setName(name);
+		setPraticalHours(praticalHours);
+		setTheoPratHours(theoPratHours);
+		setTheoreticalHours(theoreticalHours);
+		setType(type);
+	}
+
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof ICurricularCourse) {
@@ -116,7 +144,7 @@ public class CurricularCourse implements ICurricularCourse {
 			.append(this.getClass())
 			.append(":")
 			.append("idInternal = ")
-			.append(this.internalCode).append(";name = ").append(this.name).append(";code = ").append(this.code).append("\n degreeCurricularPlan = ").append(this.getDegreeCurricularPlan());
+			.append(this.internalCode).append(";name = ").append(this.name).append(";code = ").append(this.code).append("\n degreeCurricularPlan = ").append(this.getDegreeCurricularPlan()).append(";type = ").append(this.type);
 		return stringBuffer.toString();
 	}
 
@@ -342,4 +370,27 @@ public class CurricularCourse implements ICurricularCourse {
 	public void setScopes(List scopes) {
 		this.scopes = scopes;
 	}
+
+//	/* (non-Javadoc)
+//	 * @see java.lang.Object#hashCode()
+//	 */
+//	public int hashCode() {
+//		return name.hashCode() + code.hashCode();
+//	}
+
+	/**
+	 * @return CurricularCourseType
+	 */
+	public CurricularCourseType getType() {
+		return type;
+	}
+
+	/**
+	 * Sets the type.
+	 * @param type The type to set
+	 */
+	public void setType(CurricularCourseType type) {
+		this.type = type;
+	}
+
 }

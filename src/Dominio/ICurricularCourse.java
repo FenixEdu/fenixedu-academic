@@ -2,6 +2,8 @@ package Dominio;
 
 import java.util.List;
 
+import Util.CurricularCourseType;
+
 /**
  * @author dcs-rjao
  *
@@ -23,6 +25,7 @@ public interface ICurricularCourse {
 //	public void setAssociatedBranches(List associatedBranches);
 //	public void setAssociatedCurricularSemesters(List associatedCurricularSemesters);
 	public void setScopes(List scopes);
+	public void setType(CurricularCourseType type);
 
 	public Double getCredits();
 	public Double getTheoreticalHours();
@@ -37,5 +40,6 @@ public interface ICurricularCourse {
 //	public List getAssociatedBranches();
 //	public List getAssociatedCurricularSemesters();
 	public List getScopes();
+	public CurricularCourseType getType();
 
 }

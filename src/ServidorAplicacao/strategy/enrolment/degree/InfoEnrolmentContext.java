@@ -5,7 +5,6 @@ import java.util.Map;
 
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.strategy.enrolment.degree.exceptions.EnrolmentValidationResult;
 
 
 /**

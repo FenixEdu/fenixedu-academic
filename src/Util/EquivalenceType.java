@@ -50,8 +50,12 @@ public class EquivalenceType {
 		switch (value) {
 			case EQUIVALENT_COURSE :
 				valueS = "EQUIVALENT_COURSE";
+				break;
 			case OPTIONAL_COURSE :
 				valueS = "OPTIONAL_COURSE";
+				break;
+			default:
+				break;
 		}
 
 		return "[" + this.getClass().getName() + ": " + valueS + "]";
