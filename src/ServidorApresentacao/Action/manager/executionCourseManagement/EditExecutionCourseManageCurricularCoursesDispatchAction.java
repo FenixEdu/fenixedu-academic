@@ -47,6 +47,10 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         Integer executionCourseId = new Integer(getAndSetStringToRequest(request, "executionCourseId"));
         Integer curricularCourseId =
             new Integer(getAndSetStringToRequest(request, "curricularCourseId"));
+		String executionPeriodId = getAndSetStringToRequest(request, "executionPeriodId");
+		String executionPeriodName = getAndSetStringToRequest(request, "executionPeriodName");
+		String executionDegreeName = getAndSetStringToRequest(request, "executionDegreeName");
+
         Object[] args = { executionCourseId, curricularCourseId };
         try
         {
@@ -80,6 +84,10 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
     {
         IUserView userView = SessionUtils.getUserView(request);
 
+		String executionPeriodName = getAndSetStringToRequest(request, "executionPeriodName");
+		String executionCourseName = getAndSetStringToRequest(request, "executionCourseName");
+		String executionDegreeName = getAndSetStringToRequest(request, "executionDegreeName");
+		String executionCourseId = getAndSetStringToRequest(request, "executionCourseId");
         String executionPeriodId = getAndSetStringToRequest(request, "executionPeriodId");
 
         Object args[] = { Integer.valueOf(executionPeriodId)};
@@ -165,6 +173,14 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
     {
         IUserView userView = SessionUtils.getUserView(request);
 
+		DynaActionForm executionCourseForm = (DynaValidatorForm) form;
+		Integer executionPeriodId =
+			Integer.valueOf(getAndSetStringToRequest(request, "executionPeriodId"));
+		String executionPeriodName = getAndSetStringToRequest(request, "executionPeriodName");
+		String executionCourseName = getAndSetStringToRequest(request, "executionCourseName");
+		String executionDegreeName = getAndSetStringToRequest(request, "executionDegreeName");
+		String executionCourseId = getAndSetStringToRequest(request, "executionCourseId");
+
         Integer degreeCurricularPlanId =
             separateLabel(
                 form,
@@ -215,6 +231,9 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm executionCourseForm = (DynaValidatorForm) form;
+		Integer executionPeriodId =
+			Integer.valueOf(getAndSetStringToRequest(request, "executionPeriodId"));
+		String executionPeriodName = getAndSetStringToRequest(request, "executionPeriodName");
         String executionCourseId = getAndSetStringToRequest(request, "executionCourseId");
 
         Integer curricularCoursesListSize =
