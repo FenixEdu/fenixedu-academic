@@ -1316,7 +1316,7 @@
 		<forward name="insertRestrictionByNumber" path="df.page.manage.precedences.insertRestrictionByNumber"/>
 		<forward name="insertRestrictionByCurricularCourse" path="df.page.manage.precedences.insertRestrictionByCurricularCourse"/>
 		<forward name="insertRestrictionByPeriodToApply" path="df.page.manage.precedences.insertRestrictionByPeriodToApply"/>
-		<forward name="isucess" path="/managePrecedences.do" />
+		<forward name="sucess" path="/managePrecedences.do" />
 	</action>	
 
 	<!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->	
