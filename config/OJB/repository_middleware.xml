@@ -481,7 +481,7 @@
 
 
 <class-descriptor class="middleware.middlewareDomain.MWDegreeTranslation"  table="mw_DEGREE_TRANSLATION">
-	<field-descriptor name="degreecode" column="DEGREE_CODE" jdbc-type="INTEGER"/>
+	<field-descriptor name="degreeCode" column="DEGREE_CODE" jdbc-type="INTEGER"/>
 	<field-descriptor name="keyDegree" column="KEY_DEGREE" jdbc-type="INTEGER"/>
 	<reference-descriptor name="degree"class-ref="Dominio.Curso" proxy="false">
 		<foreignkey field-ref="keyDegree"/>
