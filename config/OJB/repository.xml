@@ -4,7 +4,7 @@
 
 <!-- defining entities for include-files -->
 <!DOCTYPE descriptor-repository SYSTEM "repository.dtd" [
-<!ENTITY database SYSTEM "repository_database.xml">
+<!ENTITY database SYSTEM "repository_database_insc.xml">
 <!ENTITY internal SYSTEM "repository_internal.xml">
 <!ENTITY secretaria SYSTEM "repository_secretaria.xml">
 <!ENTITY enrolment SYSTEM "repository_inscricoes.xml">
@@ -53,6 +53,5 @@
     &sigla;
     &thor;
     &almeida_coddis;
-
 	
 </descriptor-repository>
