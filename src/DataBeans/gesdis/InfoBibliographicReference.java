@@ -4,6 +4,9 @@
  * Created on 6 de Janeiro de 2003, 20:28
  */
 package DataBeans.gesdis;
+
+import DataBeans.InfoExecutionCourse;
+
 /**
  *
  * @author  EP 15
@@ -14,7 +17,9 @@ public class InfoBibliographicReference {
 	protected String reference;
 	protected Integer year;
 	protected Boolean optional;
-	/** Creates a new instance of ReferenciaBibliograficaView */
+	protected InfoExecutionCourse infoExecutionCourse;
+
+	/** Creates a new instance of InfoBilbiographicReference*/
 	public InfoBibliographicReference(
 		String title,
 		String authors,
@@ -108,4 +113,12 @@ public class InfoBibliographicReference {
 	public void setYear(Integer year) {
 		this.year = year;
 	}
+	
+	public InfoExecutionCourse getInfoExecutionCourse() {
+		return infoExecutionCourse;
+	}
+	
+	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
+		this.infoExecutionCourse = infoExecutionCourse;	
+	}			
 }
