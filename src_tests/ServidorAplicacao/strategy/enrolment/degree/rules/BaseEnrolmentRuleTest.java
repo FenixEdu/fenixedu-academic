@@ -2,7 +2,7 @@
  * Created on 8/Abr/2003 by jpvl
  *
  */
-package ServidorAplicacao.Servicos.strategy.enrolment.degree.rules;
+package ServidorAplicacao.strategy.enrolment.degree.rules;
 
 import junit.framework.TestCase;
 import Dominio.ICurricularCourse;

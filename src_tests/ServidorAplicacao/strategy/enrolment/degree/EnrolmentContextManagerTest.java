@@ -2,7 +2,7 @@
  * Created on 4/Abr/2003 by jpvl
  *
  */
-package ServidorAplicacao.Servicos.strategy.enrolment.degree;
+package ServidorAplicacao.strategy.enrolment.degree;
 
 import java.util.List;
 

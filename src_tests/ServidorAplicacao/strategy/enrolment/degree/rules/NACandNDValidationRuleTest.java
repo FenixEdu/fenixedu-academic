@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servicos.strategy.enrolment.degree.rules;
+package ServidorAplicacao.strategy.enrolment.degree.rules;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
