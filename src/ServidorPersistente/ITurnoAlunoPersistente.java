@@ -24,8 +24,9 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
     public void lockWrite(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia;
     public void delete(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
-    public List readByTurno(String nomeTurno) throws ExcepcaoPersistencia;
-	public List readByShift(ITurno shift) throws ExcepcaoPersistencia;    
+	public List readByShift(ITurno shift) throws ExcepcaoPersistencia;   
+	
+	// FIXME : Method is all messed up !! Query, name and parameters 
 	public ITurno readByStudentIdAndShiftType(Integer id, TipoAula shiftType, String nameExecutionCourse)
 				throws ExcepcaoPersistencia;
 }

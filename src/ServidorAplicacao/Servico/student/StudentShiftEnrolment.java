@@ -141,7 +141,7 @@ public class StudentShiftEnrolment implements IServico {
 				InfoEnrolmentServiceResult.NON_EXISTING_SHIFT);
 		}
 		int shiftOcupation =
-			sp.getITurnoAlunoPersistente().readByTurno(shift.getNome()).size();
+			sp.getITurnoAlunoPersistente().readByShift(shift).size();
 		if (shiftOcupation == shift.getLotacao().intValue()) {
 			throw new MessageException(InfoEnrolmentServiceResult.SHIFT_FULL);
 		} else {

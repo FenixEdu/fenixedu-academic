@@ -19,7 +19,7 @@ public class TurnoAluno implements ITurnoAluno {
   private Integer _chaveTurno;
   private Integer _chaveAluno;
   
-  /** Construtor sem argumentos p�blico requerido pela moldura de objectos OJB */
+  /** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
   public TurnoAluno() { }
     
   public TurnoAluno(ITurno turno, IStudent aluno) {

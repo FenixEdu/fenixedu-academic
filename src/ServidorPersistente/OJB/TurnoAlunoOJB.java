@@ -33,21 +33,21 @@ public class TurnoAlunoOJB
 		throws ExcepcaoPersistencia {
 		try {
 			ITurnoAluno turnoAluno = null;
-			String oqlQuery =
-				"select turnoaluno from " + TurnoAluno.class.getName();
-			oqlQuery += " where turno.nome = $1";
-			oqlQuery += " and turno.disciplinaExecucao.sigla = $2";
-			oqlQuery
-				+= " and turno.disciplinaExecucao.licenciaturaExecucao.anoLectivo = $3"
-				+ " and turno.disciplinaExecucao.licenciaturaExecucao.curso.sigla = $4"
-				+ " and aluno.number = $5";
+			String oqlQuery = "select turnoaluno from " + TurnoAluno.class.getName()
+							+ " where aluno.number = $1"
+							+ " and aluno.degreeType = $2"
+							+ " and turno.nome = $3"
+							+ " and turno.disciplinaExecucao.sigla = $4"
+							+ " and turno.disciplinaExecucao.executionPeriod.name = $5"
+							+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $6";
 			
 			query.create(oqlQuery);
+			query.bind(aluno.getNumber());
+			query.bind(aluno.getDegreeType());
 			query.bind(turno.getNome());
 			query.bind(turno.getDisciplinaExecucao().getSigla());
-			query.bind(turno.getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo());
-			query.bind(turno.getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla());
-			query.bind(aluno.getNumber());
+			query.bind(turno.getDisciplinaExecucao().getExecutionPeriod().getName());
+			query.bind(turno.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
 			
 			List result = (List) query.execute();
 			lockRead(result);
@@ -70,30 +70,6 @@ public class TurnoAlunoOJB
 	public void deleteAll() throws ExcepcaoPersistencia {
 		String oqlQuery = "select all from " + TurnoAluno.class.getName();
 		super.deleteAll(oqlQuery);
-	}
-
-	/*
-	 * 
-	 * @deprecated
- 	 */
-	public List readByTurno(String nomeTurno) throws ExcepcaoPersistencia {
-		try {
-			List alunos = new ArrayList();
-			String oqlQuery =
-				"select alunos from " + TurnoAluno.class.getName();
-			oqlQuery += " where turno.nome = $1";
-			query.create(oqlQuery);
-			query.bind(nomeTurno);
-			List result = (List) query.execute();
-			lockRead(result);
-			for (int i = 0; i != result.size(); i++) {
-				//                alunos.add("Student" + i);
-				alunos.add(((ITurnoAluno) (result.get(i))).getAluno());
-			}
-			return alunos;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
 	}
 
 	public ITurno readByStudentIdAndShiftType(
@@ -125,12 +101,11 @@ public class TurnoAlunoOJB
 	 */
 	public List readByShift(ITurno shift) throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select turno from " + TurnoAluno.class.getName();
-			oqlQuery += " where turno.nome = $1";
-			oqlQuery += " and turno.disciplinaExecucao.sigla = $2";
-			oqlQuery
-				+= " and turno.disciplinaExecucao.executionPeriod.name = $3"
-				+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $4";
+			String oqlQuery = "select turno from " + TurnoAluno.class.getName()
+							+ " where turno.nome = $1"
+							+ " and turno.disciplinaExecucao.sigla = $2"
+							+ " and turno.disciplinaExecucao.executionPeriod.name = $3"
+							+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $4";
 			query.create(oqlQuery);
 			query.bind(shift.getNome());
 			
