@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
+import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.RequestProcessor;
@@ -41,7 +41,7 @@ public class FenixRequestProcessor extends RequestProcessor {
 				errors.add(
 					"error.invalid.session",
 					new ActionError("error.invalid.session"));
-				request.setAttribute(Action.ERROR_KEY, errors);
+				request.setAttribute(Globals.ERROR_KEY, errors);
 
 				String uri2Forward = "/loginPage.jsp";
 				String applicationPrefix = "";
@@ -50,7 +50,7 @@ public class FenixRequestProcessor extends RequestProcessor {
 					uri2Forward = "/publico/index.jsp";
 				}
 
-				RequestUtils.selectApplication(
+				RequestUtils.selectModule(
 					applicationPrefix,
 					request,
 					this.getServletContext());
