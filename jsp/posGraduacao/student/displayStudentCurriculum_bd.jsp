@@ -55,6 +55,7 @@
 	  	</tr>
 	  
 	  	<logic:iterate id="enrolment" name="curriculum">
+	  		<logic:notEqual name="enrolment" property="enrolmentState" value="<%= EnrolmentState.ANNULED.toString() %>">
 	  		<tr>
 			  <td class="listClasses">
 			    <bean:write name="enrolment" property="infoExecutionPeriod.infoExecutionYear.year"/>
@@ -65,17 +66,17 @@
 			  <td class="listClasses">
 			    <bean:write name="enrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
 			  </td>
-			  <td class="listClasses">
-				<logic:notEqual name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
-					<bean:message name="enrolment" property="enrolmentState.name" bundle="ENUMERATION_RESOURCES" />
-				</logic:notEqual>
-				
+			  <td class="listClasses">	    
+					<logic:notEqual name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
+						<bean:message name="enrolment" property="enrolmentState.name" bundle="ENUMERATION_RESOURCES" />
+					</logic:notEqual>	
 				<logic:equal name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
 					<bean:write name="enrolment" property="infoEnrolmentEvaluation.grade"/>
 				</logic:equal>
 	
 			  </td>
 	  		</tr>
+	  		</logic:notEqual>
 	    </logic:iterate>
 	  </table>    	
   </logic:notEqual>

@@ -57,28 +57,30 @@
     			
     		</tr>
      	<logic:iterate id="enrolment" name="enrolmentList">
+     	<logic:notEqual name="enrolment" property="enrolmentState" value="<%= EnrolmentState.ANNULED.toString() %>">
         	<bean:define id="studentLink">
         		<bean:write name="link"/><bean:write name="enrolment" property="infoStudentCurricularPlan.idInternal"/>
         	</bean:define>
-        <tr>
-        	<td class="listClasses">
-        	<html:link page='<%= pageContext.findAttribute("studentLink").toString() %>'>
-    			<bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.number"/>
-    		</html:link>
-            </td>
-            <td class="listClasses">
-    	        <bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
-    	    </td>
-            <td class="listClasses">
-    	       	<logic:notEqual name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
-					<bean:message name="enrolment" property="enrolmentState.name" bundle="ENUMERATION_RESOURCES" />
-				</logic:notEqual>
-				
-				<logic:equal name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
-					<bean:write name="enrolment" property="infoEnrolmentEvaluation.grade"/>
-				</logic:equal>
-    	    </td>
-    	</tr>
+	        <tr>
+	        	<td class="listClasses">
+	        	<html:link page='<%= pageContext.findAttribute("studentLink").toString() %>'>
+	    			<bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.number"/>
+	    		</html:link>
+	            </td>
+	            <td class="listClasses">
+	    	        <bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
+	    	    </td>
+	            <td class="listClasses">
+	    	       	<logic:notEqual name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
+						<bean:message name="enrolment" property="enrolmentState.name" bundle="ENUMERATION_RESOURCES" />
+					</logic:notEqual>
+					
+					<logic:equal name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
+						<bean:write name="enrolment" property="infoEnrolmentEvaluation.grade"/>
+					</logic:equal>
+	    	    </td>
+	    	</tr>
+    	</logic:notEqual>
         </logic:iterate>
       	</table>    	
    	<% } %>  
