@@ -98,7 +98,6 @@ public class SelectCandidacies extends FenixDispatchAction
                         userView,
                         "student.ReadStudentById",
                         argsReadStudent);
-                Object[] argsReadCurricularPlan = { student.getNumber(), student.getDegreeType()};
                 //
                 //
                 //
