@@ -1,0 +1,11 @@
+#This file contains the name of the Curricular Courses in wich the student is enrolled
+#It must contain the following syntax:
+#<CURRICULAR_COURSE_NAME><TAB><STATE>
+#The name of the curricular courses must be written in capital letters
+#The must contain ONLY the names and their states, it can not contain anything else, like this comments for example
+#Example:
+
+PROGRAMAÇÃO POR OBJECTOS	approved
+ELECTRÓNICA RÁPIDA	approved
+ELECTRÓNICA DE POTÊNCIA	approved
+SISTEMAS OPERATIVOS	approved
