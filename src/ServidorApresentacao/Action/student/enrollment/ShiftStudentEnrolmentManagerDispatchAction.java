@@ -17,11 +17,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoStudent;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import DataBeans.enrollment.shift.InfoShiftEnrollment;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.ExecutionDegreesFormat;
 import framework.factory.ServiceManagerServiceFactory;
@@ -37,6 +39,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
+		throws Exception
 	{
 		super.createToken(request);
 
@@ -48,6 +51,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
+		throws Exception
 	{
 		ActionErrors errors = new ActionErrors();
 		IUserView userView = SessionUtils.getUserView(request);
@@ -66,8 +70,10 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		DynaActionForm enrolmentForm = (DynaActionForm) form;
 		Integer executionDegreeIdChosen = (Integer) enrolmentForm.get("degree");
 
+		String studentNumber = obtainStudentNumber(request, userView);
+
 		InfoShiftEnrollment infoShiftEnrollment = null;
-		Object[] args = { userView.getUtilizador(), executionDegreeIdChosen };
+		Object[] args = { Integer.valueOf(studentNumber), executionDegreeIdChosen };
 		try
 		{
 			infoShiftEnrollment =
@@ -89,11 +95,11 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		enrolmentForm.set("studentId", infoShiftEnrollment.getInfoStudent().getIdInternal());
 
 		request.setAttribute("infoShiftEnrollment", infoShiftEnrollment);
-		
+
 		if (infoShiftEnrollment.getInfoShiftEnrollment() != null
 			&& infoShiftEnrollment.getInfoShiftEnrollment().size() > 0)
 		{
-			return mapping.findForward("showShiftsEnrollment");			
+			return mapping.findForward("showShiftsEnrollment");
 		}
 		else
 		{
@@ -111,6 +117,40 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 
 			return mapping.findForward("selectCourses");
 		}
+	}
+
+	private String obtainStudentNumber(HttpServletRequest request, IUserView userView) throws FenixActionException
+	{
+		String studentNumber = getStudent(request);
+		if (studentNumber == null)
+		{
+			InfoStudent infoStudent = null;
+			try
+			{
+				Object args[] = { userView.getUtilizador()};
+				infoStudent =
+					(InfoStudent) ServiceManagerServiceFactory.executeService(
+						userView,
+						"ReadStudentByUsername",
+						args);
+			}
+			catch (FenixServiceException e)
+			{
+				throw new FenixActionException(e);
+			}
+			studentNumber = infoStudent.getNumber().toString();
+		}
+		return studentNumber;
+	}
+
+	private String getStudent(HttpServletRequest request)
+	{
+		String studentNumber = request.getParameter("studentNumber");
+		if (studentNumber == null)
+		{
+			studentNumber = (String) request.getAttribute("studentNumber");
+		}
+		return studentNumber;
 	}
 
 }

@@ -49,14 +49,14 @@ import Util.TipoCurso;
  * This class read and prepare all information usefull for shift enrollment use case
  *  
  */
-public class PrepareInfoShiftEnrollmentByUsername implements IService
+public class PrepareInfoShiftEnrollmentByStudentNumber implements IService
 {
-	public PrepareInfoShiftEnrollmentByUsername()
+	public PrepareInfoShiftEnrollmentByStudentNumber()
 	{
 
 	}
 
-	public Object run(String usernameStudent, Integer executionDegreeIdChosen)
+	public Object run(Integer studentNumber, Integer executionDegreeIdChosen)
 		throws FenixServiceException
 	{
 		InfoShiftEnrollment infoShiftEnrollment = new InfoShiftEnrollment();
@@ -66,9 +66,12 @@ public class PrepareInfoShiftEnrollmentByUsername implements IService
 		{
 			sp = SuportePersistenteOJB.getInstance();
 
-			//read student logged to enroll
+			//read student to enroll
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-			IStudent student = persistentStudent.readByUsername(usernameStudent);
+			IStudent student =
+				persistentStudent.readStudentByNumberAndDegreeType(
+					studentNumber,
+					TipoCurso.LICENCIATURA_OBJ);
 			if (student == null)
 			{
 				throw new FenixServiceException("errors.impossible.operation");

@@ -5727,7 +5727,7 @@
     <service>
     	<name>PrepareInfoShiftEnrollmentByUsername</name>
     	<description>Read all information needed for shift enrollment</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.PrepareInfoShiftEnrollmentByUsername</implementationClass>
+    	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.PrepareInfoShiftEnrollmentByStudentNumber</implementationClass>
     	<isTransactional>True</isTransactional>
         <filterChains>
             <chain name="StudentAuthorization"/>

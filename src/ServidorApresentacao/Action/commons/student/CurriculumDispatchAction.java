@@ -99,10 +99,7 @@ public class CurriculumDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession();
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		
-		String studentNumber = request.getParameter("studentNumber");
-		if(studentNumber == null) {
-			studentNumber = (String) request.getAttribute("studentNumber");
-		}
+		String studentNumber = getStudent(request);
 		if(studentNumber == null) {
 			InfoStudent infoStudent = null;
 			try {
@@ -129,6 +126,15 @@ public class CurriculumDispatchAction extends DispatchAction {
 		return mapping.findForward("ShowStudentCurricularPlans");
 	}
 	
+	private String getStudent(HttpServletRequest request)
+	{
+		String studentNumber = request.getParameter("studentNumber");
+		if(studentNumber == null) {
+			studentNumber = (String) request.getAttribute("studentNumber");
+		}
+		return studentNumber;
+	}
+
 	private Integer getExecutionDegree(HttpServletRequest request)
 	{
 		Integer executionDegreeId = null;
