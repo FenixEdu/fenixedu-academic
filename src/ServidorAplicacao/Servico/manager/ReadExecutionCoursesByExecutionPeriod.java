@@ -16,6 +16,8 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentExecutionCourse;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -56,41 +58,40 @@ public class ReadExecutionCoursesByExecutionPeriod implements IServico
 	 */
 	public List run(Integer executionPeriodId) throws FenixServiceException
 	{
-		ISuportePersistente sp;
 		List allExecutionCoursesFromExecutionPeriod = null;
 		List allExecutionCourses = null;
 		try
 		{
-			sp = SuportePersistenteOJB.getInstance();
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+			final IPersistentExecutionCourse persistentExecutionCourse =
+				sp.getIPersistentExecutionCourse();
+
 			IExecutionPeriod executionPeriodToRead = new ExecutionPeriod();
 			executionPeriodToRead.setIdInternal(executionPeriodId);
 
 			IExecutionPeriod executionPeriod =
-				(IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOId(
-					executionPeriodToRead,
-					false);
+				(IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriodToRead, false);
 
 			if (executionPeriod == null)
 			{
 				throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
 			}
 			allExecutionCoursesFromExecutionPeriod =
-				sp.getIPersistentExecutionCourse().readByExecutionPeriod(executionPeriod);
+				persistentExecutionCourse.readByExecutionPeriod(executionPeriod);
 
 			if (allExecutionCoursesFromExecutionPeriod == null
 				|| allExecutionCoursesFromExecutionPeriod.isEmpty())
 			{
 				return allExecutionCoursesFromExecutionPeriod;
 			}
-
 			InfoExecutionCourse infoExecutionCourse = null;
 			allExecutionCourses = new ArrayList(allExecutionCoursesFromExecutionPeriod.size());
 			Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
 			while (iter.hasNext())
 			{
 				IExecutionCourse executionCourse = (IExecutionCourse) iter.next();
-				Integer executionCourseId = executionCourse.getIdInternal();
-				Boolean hasSite = sp.getIPersistentExecutionCourse().readSite(executionCourseId);
+				Boolean hasSite = persistentExecutionCourse.readSite(executionCourse.getIdInternal());
 				infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
 				infoExecutionCourse.setHasSite(hasSite);
 				allExecutionCourses.add(infoExecutionCourse);
