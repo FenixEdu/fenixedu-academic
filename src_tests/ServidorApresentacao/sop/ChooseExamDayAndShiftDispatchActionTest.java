@@ -110,6 +110,7 @@ public class ChooseExamDayAndShiftDispatchActionTest
 	public void testChoose() {
 		// indicate method to be called
 		addRequestParameter("method", "choose");
+		addRequestParameter(SessionConstants.NEXT_PAGE, "viewExams");
 
 		// Fill out form
 		addRequestParameter("day", "26");

@@ -57,6 +57,7 @@ public class DeleteExam implements IServico {
 						infoViewExam.getInfoExam()), false);
 
 			sp.getIPersistentExam().delete(examToDelete);
+			result = true;
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException("Errer deleteing exam");
 		}
