@@ -44,7 +44,7 @@ public class TeacherLoginAction extends FenixAction {
 		HttpSession session = getSession(request);
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-
+		
 		InfoTeacher teacher = null;
 		try {
 			Object args[] = { userView.getUtilizador()};
@@ -54,13 +54,16 @@ public class TeacherLoginAction extends FenixAction {
 					userView,
 					"ReadTeacherByUsername",
 					args);
+			
 			if (teacher==null) {throw new InvalidSessionActionException();		
 			}
 			List sites = null;
+			Object args1[]={teacher};
 			sites = (List) serviceManager.executar(
 			userView,
 			"ReadProfessorships",
-			args);
+			args1);
+			System.out.println("sites"+sites);	
 			session.setAttribute(SessionConstants.INFO_TEACHER,teacher);
 			session.setAttribute(SessionConstants.INFO_SITES_LIST,sites);
 		} catch (FenixServiceException e) {

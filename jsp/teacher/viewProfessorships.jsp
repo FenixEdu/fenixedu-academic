@@ -10,16 +10,17 @@
 	
 		<table cellpadding="0" border="0">
 	 	<tr>   		
-	 		<bean:message key="label.professorShips" />	
+	 		<bean:message key="label.professorships" />	
 		 </tr>
-	<logic:iterate name="<%= SessionConstants.INFO_SITES_LIST %>" id="site" indexID="index">
+	<logic:iterate name="<%= SessionConstants.INFO_SITES_LIST %>" id="site" indexId="index">
 		<tr>
 		<bean:define id="executionCourse" name="site" property="infoExecutionCourse"/>
-		<html:link forward="/viewSite.do" >			
-			<bean:write name="executionCourse" property="code"/>
+		<html:link href="logoff.do" >			
+			<bean:write name="executionCourse" property="sigla"/>
 		</html:link>	
 		</tr>
 	</logic:iterate>
+	 </table>
 	
 	
 </logic:present>
