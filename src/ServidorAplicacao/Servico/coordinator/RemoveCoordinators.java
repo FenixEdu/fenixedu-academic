@@ -44,7 +44,7 @@ public class RemoveCoordinators implements IServico {
 		return "RemoveCoordinators";
 	}
 
-	public Boolean run(List coordinatorsIds) throws FenixServiceException {
+	public Boolean run(Integer executionDegreeId,List coordinatorsIds) throws FenixServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();

@@ -114,7 +114,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 		String infoExecutionDegreeIdString = (String) request.getParameter("infoExecutionDegreeId");
 		Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
 		request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
-		Object[] args = { teacherNumber, infoExecutionDegreeId };
+		Object[] args = { infoExecutionDegreeId ,teacherNumber };
 		try {
 			ServiceUtils.executeService(userView, "AddCoordinator", args);
 		} catch (NonExistingServiceException e) {
@@ -150,7 +150,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 		String infoExecutionDegreeIdString = (String) request.getParameter("infoExecutionDegreeId");
 		Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
 		request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
-		Object[] args = { coordinators };
+		Object[] args = {infoExecutionDegreeId, coordinators };
 		try {
 			ServiceUtils.executeService(userView, "RemoveCoordinators", args);
 

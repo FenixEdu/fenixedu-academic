@@ -49,7 +49,7 @@ public class AddCoordinator implements IServico {
 		return "AddCoordinator";
 	}
 
-	public Boolean run(Integer teacherNumber, Integer executionDegreeId)
+	public Boolean run(Integer executionDegreeId,Integer teacherNumber)
 		throws FenixServiceException {
 
 		try {
