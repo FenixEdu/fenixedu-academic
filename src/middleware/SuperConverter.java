@@ -71,7 +71,7 @@ public static void main(String args[]) throws Exception{
 	
 	
 	// Converter Alunos de Licenciatura em Persons e em Students
-//	superConverter.migrateAluno2Fenix();
+	superConverter.migrateAluno2Fenix();
 		
 	
 	// Converter Pessoas de Pos Graduacao em Persons
@@ -99,6 +99,7 @@ public static void main(String args[]) throws Exception{
 
 	public void migratePosgradPessoa2Fenix() throws Exception{
 		IPessoa person2Write = null;
+		Posgrad_pessoa person2Convert = null;
 		List result = null;
 		Query query = null;
 		Criteria criteria = null;
@@ -111,8 +112,12 @@ public static void main(String args[]) throws Exception{
 
 			Iterator iterator = pessoasPG.iterator();
 			while(iterator.hasNext()){
-				Posgrad_pessoa person2Convert = (Posgrad_pessoa) iterator.next();
+				person2Convert = (Posgrad_pessoa) iterator.next();
+				person2Write = new Pessoa();
+				// Remoe the PosGrad User
 				
+				if ((person2Convert.getUsername().equalsIgnoreCase("posgrad2002")) && (person2Convert.getPassword().equalsIgnoreCase("aplica2002")))
+					continue;
 
 				// Verificar o Tipo de Documento
 				TipoDocumentoIdentificacao identificationDocumentType = null;
@@ -130,7 +135,7 @@ public static void main(String args[]) throws Exception{
 				result = (List) broker.getCollectionByQuery(query);
 
 				if (result.size() == 0){
-					person2Write = copyPessoaPG2Person(person2Convert, identificationDocumentType);
+					copyPessoaPG2Person(person2Write, person2Convert, identificationDocumentType);
 					broker.store(person2Write);
 					givePersonRole(person2Write);
 
@@ -150,86 +155,85 @@ public static void main(String args[]) throws Exception{
 					
 					if (result.size() == 0){
 						// A pessoa nao e um funcionario. Entao vamos fazer update dos campos todos
-						person2Write = copyPessoaPG2Person(person2Convert, identificationDocumentType);
+						copyPessoaPG2Person(person2Write, person2Convert, identificationDocumentType);
 						broker.store(person2Write);
-						
-					} else {
-						// A Pessoa e um funcionario
-						
 					}
-					
-					
-				}
-				
+				}				
 			}
-		
+			System.out.println("   Success !");
 		} catch(Exception e) {
-//			System.out.println("Erro na Pessoa de Pos-Graduacao : " + person2Convert.getNome());
+			System.out.println("Erro na Pessoa de Pos-Graduacao : " + person2Convert.getNome());
 			throw new Exception(e);
 		}	
 					
 	}
 	
-	private IPessoa copyPessoaPG2Person(Posgrad_pessoa person2Convert, TipoDocumentoIdentificacao identificationDocumentType){
-		IPessoa person2Write = new Pessoa();
-		person2Write.setNumeroDocumentoIdentificacao(person2Convert.getNumerodocumentoidentificacao());
-		person2Write.setTipoDocumentoIdentificacao(identificationDocumentType);
-		person2Write.setLocalEmissaoDocumentoIdentificacao(person2Convert.getLocalemissaodocumentoidentificacao());
-		person2Write.setDataEmissaoDocumentoIdentificacao(person2Convert.getDataemissaodocumentoidentificacao());
-		person2Write.setNome(person2Convert.getNome());
-		person2Write.setNomePai(person2Convert.getNomepai());
-		person2Write.setNomeMae(person2Convert.getNomemae());
-					
-		// Verificar o Sexo
-					
-		if (person2Convert.getSexo().equalsIgnoreCase("masculino"))
-			person2Write.setSexo(new Sexo(Sexo.MASCULINO));
-		else if (person2Convert.getSexo().equalsIgnoreCase("feminino"))
-			person2Write.setSexo(new Sexo(Sexo.FEMININO));
-		else {
-			System.out.println();
-			System.out.println("Erro a converter Pessoa  " + person2Convert.getNome() + ". Erro no SEXO.");
-		} 
-					
-		// Verificar o Estado Civil
+	private void copyPessoaPG2Person(IPessoa person2Write, Posgrad_pessoa person2Convert, TipoDocumentoIdentificacao identificationDocumentType) throws Exception{
 
-		if (person2Convert.getEstadocivil().equalsIgnoreCase("solteiro")){
-			person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.SOLTEIRO));
-		} else if (person2Convert.getEstadocivil().equalsIgnoreCase("casado")){
-			person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.CASADO));
-		} else if (person2Convert.getEstadocivil().equalsIgnoreCase("divorciado")){
-			person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.DIVORCIADO));
-		} else if (person2Convert.getEstadocivil().equalsIgnoreCase("viúvo")){
-			person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.VIUVO));
-		} else if (person2Convert.getEstadocivil().equalsIgnoreCase("separado")){
-			person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.SEPARADO));
-		} else if (person2Convert.getEstadocivil().equalsIgnoreCase("união de facto")){
-			person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.UNIAO_DE_FACTO));
-		} else {
-			System.out.println("Erro a converter Pessoa  " + person2Convert.getNome() + ". Erro no ESTADO CIVIL.");
-		} 
-					
-		person2Write.setNascimento(person2Convert.getNascimento());
-		person2Write.setNacionalidade(person2Convert.getNacionalidade());
-		person2Write.setFreguesiaNaturalidade(person2Convert.getFreguesianaturalidade());
-		person2Write.setConcelhoNaturalidade(person2Convert.getConcelhonaturalidade());
-		person2Write.setDistritoNaturalidade(person2Convert.getDistritonaturalidade());
-		person2Write.setMorada(person2Convert.getMorada());
-		person2Write.setLocalidade(person2Convert.getLocalidade());
-		person2Write.setCodigoPostal(person2Convert.getCodigopostal());
-		person2Write.setFreguesiaMorada(person2Convert.getFreguesiamorada());
-		person2Write.setConcelhoMorada(person2Convert.getConcelhomorada());
-		person2Write.setDistritoMorada(person2Convert.getDistritomorada());
-		person2Write.setTelefone(person2Convert.getTelefone());
-		person2Write.setTelemovel(person2Convert.getTelemovel());
-		person2Write.setEmail(person2Convert.getEmail());
-		person2Write.setEnderecoWeb(person2Convert.getEnderecoweb());
-		person2Write.setNumContribuinte(person2Convert.getNumcontribuinte());
-		person2Write.setProfissao(person2Convert.getProfissao());
-		person2Write.setUsername(person2Convert.getUsername());
-		person2Write.setPassword(PasswordEncryptor.encryptPassword(person2Convert.getPassword()));
+		try{
+			person2Write.setNumeroDocumentoIdentificacao(person2Convert.getNumerodocumentoidentificacao());
+			person2Write.setTipoDocumentoIdentificacao(identificationDocumentType);
+			person2Write.setLocalEmissaoDocumentoIdentificacao(person2Convert.getLocalemissaodocumentoidentificacao());
+			person2Write.setDataEmissaoDocumentoIdentificacao(person2Convert.getDataemissaodocumentoidentificacao());
+			person2Write.setNome(person2Convert.getNome());
+			person2Write.setNomePai(person2Convert.getNomepai());
+			person2Write.setNomeMae(person2Convert.getNomemae());
+						
+			// Verificar o Sexo
+			
+			if (person2Convert.getSexo() != null){			
+				if (person2Convert.getSexo().equalsIgnoreCase("masculino"))
+					person2Write.setSexo(new Sexo(Sexo.MASCULINO));
+				else if (person2Convert.getSexo().equalsIgnoreCase("feminino"))
+					person2Write.setSexo(new Sexo(Sexo.FEMININO));
+				else {
+					System.out.println();
+					System.out.println("Erro a converter Pessoa  " + person2Convert.getNome() + ". Erro no SEXO. (Encontrado: " + person2Convert.getSexo() + ")");
+				} 
+			}						
+			// Verificar o Estado Civil
+			if (person2Convert.getEstadocivil() != null) {
+				if (person2Convert.getEstadocivil().equalsIgnoreCase("solteiro")){
+					person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.SOLTEIRO));
+				} else if (person2Convert.getEstadocivil().equalsIgnoreCase("casado")){
+					person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.CASADO));
+				} else if (person2Convert.getEstadocivil().equalsIgnoreCase("divorciado")){
+					person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.DIVORCIADO));
+				} else if (person2Convert.getEstadocivil().equalsIgnoreCase("viúvo")){
+					person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.VIUVO));
+				} else if (person2Convert.getEstadocivil().equalsIgnoreCase("separado")){
+					person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.SEPARADO));
+				} else if (person2Convert.getEstadocivil().equalsIgnoreCase("união de facto")){
+					person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.UNIAO_DE_FACTO));
+				} else {
+					System.out.println("Erro a converter Pessoa  " + person2Convert.getNome() + ". Erro no ESTADO CIVIL. (encontrado: " + person2Convert.getEstadocivil() + ")");
+				} 
+			}
+			
+			person2Write.setNascimento(person2Convert.getNascimento());
+			person2Write.setNacionalidade(person2Convert.getNacionalidade());
+			person2Write.setFreguesiaNaturalidade(person2Convert.getFreguesianaturalidade());
+			person2Write.setConcelhoNaturalidade(person2Convert.getConcelhonaturalidade());
+			person2Write.setDistritoNaturalidade(person2Convert.getDistritonaturalidade());
+			person2Write.setMorada(person2Convert.getMorada());
+			person2Write.setLocalidade(person2Convert.getLocalidade());
+			person2Write.setCodigoPostal(person2Convert.getCodigopostal());
+			person2Write.setFreguesiaMorada(person2Convert.getFreguesiamorada());
+			person2Write.setConcelhoMorada(person2Convert.getConcelhomorada());
+			person2Write.setDistritoMorada(person2Convert.getDistritomorada());
+			person2Write.setTelefone(person2Convert.getTelefone());
+			person2Write.setTelemovel(person2Convert.getTelemovel());
+			person2Write.setEmail(person2Convert.getEmail());
+			person2Write.setEnderecoWeb(person2Convert.getEnderecoweb());
+			person2Write.setNumContribuinte(person2Convert.getNumcontribuinte());
+			person2Write.setProfissao(person2Convert.getProfissao());
+			person2Write.setUsername(person2Convert.getUsername());
+			person2Write.setPassword(PasswordEncryptor.encryptPassword(person2Convert.getPassword()));
 		
-		return person2Write;		
+		} catch(Exception e){
+			System.out.println("Erro a converter a Pessoa " + person2Convert.getNome());
+			throw new Exception(e);
+		}
 	}
 
 
