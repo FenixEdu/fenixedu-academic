@@ -346,13 +346,31 @@
       <field property="grade" depends="required" page="1">
         <arg0 key="label.mark" />
       </field>
-      <field property="examDate" depends="required" page="1">
-        <arg0 key="label.examDate" />
-      </field>
-      <field property="gradeAvailableDate" depends="required" page="1">
-        <arg0 key="label.gradeAvailableDate" />
-      </field>
-     
+      
+       <field property="examDateYear"
+               depends="validateDate" page="1">
+                  <arg0 key="label.person.birth" />
+                  <var>
+                     <var-name>month</var-name>
+                     <var-value>examDateMonth</var-value>
+                  </var>
+                  <var>
+                     <var-name>day</var-name>
+                     <var-value>examDateDay</var-value>
+                  </var>
+        </field>
+        <field property="gradeAvailableDateYear"
+               depends="validateDate" page="1">
+                  <arg0 key="label.person.birth" />
+                  <var>
+                     <var-name>month</var-name>
+                     <var-value>gradeAvailableDateMonth</var-value>
+                  </var>
+                  <var>
+                     <var-name>day</var-name>
+                     <var-value>gradeAvailableDateDay</var-value>
+                  </var>
+        </field>
     </form>
     	<!-- validation for the Choose Certificate Info Form -->
     <form name="choosePersonForm">  
