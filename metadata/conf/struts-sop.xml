@@ -1157,6 +1157,7 @@
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />
     	<forward name="EditShift" path="/manageShift.jsp"/>
+    	<forward name="ViewStudentsEnroled" path="/viewStudentsEnroledInShift.jsp"/>
 	</action>
 
 	<action path="/manageLesson"

@@ -1,11 +1,13 @@
 package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -16,6 +18,7 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
+import DataBeans.ShiftKey;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftExecutionCourse;
@@ -161,7 +164,8 @@ public class ManageShiftDA
 		throws Exception {
 
 		DynaActionForm removeClassesForm = (DynaActionForm) form;
-		String[] selectedClasses = (String[]) removeClassesForm.get("selectedItems");
+		String[] selectedClasses =
+			(String[]) removeClassesForm.get("selectedItems");
 
 		List classOIDs = new ArrayList();
 		for (int i = 0; i < selectedClasses.length; i++) {
@@ -188,7 +192,8 @@ public class ManageShiftDA
 		throws Exception {
 
 		DynaActionForm deleteLessonsForm = (DynaActionForm) form;
-		String[] selectedLessons = (String[]) deleteLessonsForm.get("selectedItems");
+		String[] selectedLessons =
+			(String[]) deleteLessonsForm.get("selectedItems");
 
 		List lessonOIDs = new ArrayList();
 		for (int i = 0; i < selectedLessons.length; i++) {
@@ -202,6 +207,36 @@ public class ManageShiftDA
 			args);
 
 		return mapping.findForward("EditShift");
+	}
+
+	public ActionForward viewStudentsEnroled(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		InfoShift infoShift =
+			(InfoShift) request.getAttribute(SessionConstants.SHIFT);
+
+		ShiftKey shiftKey =
+			new ShiftKey(
+				infoShift.getNome(),
+				infoShift.getInfoDisciplinaExecucao());
+
+		Object args[] = { shiftKey };
+		List students = (List) ServiceUtils.executeService(
+			SessionUtils.getUserView(request),
+			"LerAlunosDeTurno",
+			args);
+
+		Collections.sort(students, new BeanComparator("number"));
+		
+		if (students != null && !students.isEmpty()) {
+			request.setAttribute(SessionConstants.STUDENT_LIST, students);
+		}
+
+		return mapping.findForward("ViewStudentsEnroled");
 	}
 
 }
