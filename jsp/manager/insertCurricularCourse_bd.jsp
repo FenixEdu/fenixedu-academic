@@ -7,7 +7,7 @@
 
 <span class="error"><html:errors/></span>
 
-<html:form action="/insertExecutionCourse" method ="get">  
+<html:form action="/insertCurricularCourse" method ="get">  
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="insert"/>
 	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
@@ -35,17 +35,17 @@
 			</td>
 			<td>
 				<html:select property="type">
-				<html:option key="option.curricularCourse.normal" value="1"/>
-    			<html:option key="option.curricularCourse.optional" value="2"/>
-    			<html:option key="option.curricularCourse.project" value="3"/>
-    			<html:option key="option.curricularCourse.tfc" value="4"/>
-    			<html:option key="option.curricularCourse.training" value="5"/>
-    			<html:option key="option.curricularCourse.laboratory" value="6"/>
-    			<html:option key="option.curricularCourse.mType" value="7"/>
-    			<html:option key="option.curricularCourse.pType" value="8"/>
-    			<html:option key="option.curricularCourse.dmType" value="9"/>
-    			<html:option key="option.curricularCourse.aType" value="10"/>
-    			<html:option key="option.curricularCourse.mlType" value="11"/>
+					<html:option key="option.curricularCourse.normal" value="1"/>
+	    			<html:option key="option.curricularCourse.optional" value="2"/>
+	    			<html:option key="option.curricularCourse.project" value="3"/>
+	    			<html:option key="option.curricularCourse.tfc" value="4"/>
+	    			<html:option key="option.curricularCourse.training" value="5"/>
+	    			<html:option key="option.curricularCourse.laboratory" value="6"/>
+	    			<html:option key="option.curricularCourse.mType" value="7"/>
+	    			<html:option key="option.curricularCourse.pType" value="8"/>
+	    			<html:option key="option.curricularCourse.dmType" value="9"/>
+	    			<html:option key="option.curricularCourse.aType" value="10"/>
+	    			<html:option key="option.curricularCourse.mlType" value="11"/>
     			</html:select>
 			</td>
 		</tr>
