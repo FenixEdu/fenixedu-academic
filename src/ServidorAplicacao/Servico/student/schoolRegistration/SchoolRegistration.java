@@ -6,16 +6,27 @@ package ServidorAplicacao.Servico.student.schoolRegistration;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import Dominio.ICurricularCourse;
+import Dominio.IDegreeCurricularPlan;
+import Dominio.IStudentCurricularPlan;
 import Dominio.student.ISchoolRegistrationInquiryAnswer;
 import Dominio.student.SchoolRegistrationInquiryAnswer;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.enrollment.WriteEnrollment;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentEnrollment;
+import ServidorPersistente.IPersistentEnrolmentEvaluation;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentSchoolRegistrationInquiryAnswer;
+import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TipoCurso;
+import Util.enrollment.CurricularCourseEnrollmentType;
 
 /**
  * @author Nuno Correia
@@ -41,15 +52,22 @@ public class SchoolRegistration implements IService {
     private void enrollStudent1stTime1stYear(ISuportePersistente sp, Integer studentNumber) throws ExcepcaoPersistencia,
     		FenixServiceException {
         
-        //IStudentCurricularPlanPersistente scpPersistent = sp.getIStudentCurricularPlanPersistente();       
+        IStudentCurricularPlanPersistente scpPersistent = sp.getIStudentCurricularPlanPersistente();
+        IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
+        IPersistentExecutionPeriod persistentEP = sp.getIPersistentExecutionPeriod();
+        IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
         
-        //IStudentCurricularPlan scp = scpPersistent.readActiveStudentCurricularPlan(studentNumber,TipoCurso.LICENCIATURA_OBJ);        
-     /*   IDegreeCurricularPlan dcp = scp.getDegreeCurricularPlan();
+        IStudentCurricularPlan scp = scpPersistent.readActiveStudentCurricularPlan(studentNumber,TipoCurso.LICENCIATURA_OBJ);        
+        IDegreeCurricularPlan dcp = scp.getDegreeCurricularPlan();
         List curricularCourses = dcp.getCurricularCoursesByYearAndSemesterAndBranch(1,new Integer(1),scp.getBranch());
-        
+
+        WriteEnrollment we = new WriteEnrollment();
         for(int iter=0; iter<curricularCourses.size(); iter++)
-            System.out.println(curricularCourses.get(iter));
-*/
+        {         
+            ICurricularCourse cc = (ICurricularCourse) curricularCourses.get(iter);
+            Integer executionPeriodId = persistentEP.readActualExecutionPeriod().getIdInternal();
+            we.run(null,scp.getIdInternal(),cc.getIdInternal(),executionPeriodId,CurricularCourseEnrollmentType.DEFINITIVE);
+        }
     }
 
     private void writeInquiryAnswers(ISuportePersistente sp, Integer studentNumber, HashMap answers) throws ExcepcaoPersistencia,
@@ -60,17 +78,15 @@ public class SchoolRegistration implements IService {
 
         if (schoolRegistrationInquiryAnswer == null)
         {
-            schoolRegistrationInquiryAnswer = new SchoolRegistrationInquiryAnswer();
-            
+            schoolRegistrationInquiryAnswer = new SchoolRegistrationInquiryAnswer();            
         }
-        persistentSRIA.lockWrite(schoolRegistrationInquiryAnswer);
+        persistentSRIA.simpleLockWrite(schoolRegistrationInquiryAnswer);
         schoolRegistrationInquiryAnswer.setKeyStudent(studentNumber);
-        
-        
+                
         Iterator iterator = answers.keySet().iterator();
-        while (iterator.hasNext()) {
+        while (iterator.hasNext()) {         
             String key = (String) iterator.next();            
             schoolRegistrationInquiryAnswer.setAnswer(new Integer(key), new Boolean((String) answers.get(key)));
-        }
+        }     
     }
 }
