@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoPerson;
 import DataBeans.InfoWebSite;
 import DataBeans.InfoWebSiteItem;
 import DataBeans.InfoWebSiteSection;
@@ -85,6 +86,9 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		} catch (InvalidArgumentsServiceException e) {
 			errors.add("notFilled", new ActionError("error.notFilled"));
 			saveErrors(request, errors);
+		} catch (NonExistingServiceException e) {
+			errors.add("nonexistingAuthor", new ActionError("error.noAuthor", infoWebSiteItem.getInfoAuthor().getUsername()));
+			saveErrors(request, errors);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -125,6 +129,11 @@ public class ItemsManagementAction extends FenixDispatchAction {
 
 		infoWebSiteItem.setKeywords((String) itemForm.get("keywords"));
 		infoWebSiteItem.setMainEntryText((String) itemForm.get("mainEntryText"));
+
+		InfoPerson infoAuthor = new InfoPerson();
+		infoAuthor.setUsername((String) itemForm.get("author"));
+		infoWebSiteItem.setInfoAuthor(infoAuthor);
+		System.out.println("username no action: " + infoWebSiteItem.getInfoAuthor().getUsername());
 
 		String onlineBeginDayString = (String) itemForm.get("onlineBeginDay");
 		infoWebSiteItem.setOnlineBeginDay(convertStringDate(onlineBeginDayString));
@@ -254,6 +263,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		itemForm.set("mainEntryText", infoWebSiteItem.getMainEntryText());
 		itemForm.set("excerpt", infoWebSiteItem.getExcerpt());
 		itemForm.set("keywords", infoWebSiteItem.getKeywords());
+		itemForm.set("author", infoWebSiteItem.getInfoAuthor().getUsername());
 		if (infoWebSiteItem.getItemBeginDayCalendar() != null) {
 			itemForm.set("itemBeginDay", getDateFormatted(infoWebSiteItem.getItemBeginDayCalendar().getTime()));
 		}
@@ -308,6 +318,9 @@ public class ItemsManagementAction extends FenixDispatchAction {
 			saveErrors(request, errors);
 		} catch (InvalidArgumentsServiceException e) {
 			errors.add("notFilled", new ActionError("error.notFilled"));
+			saveErrors(request, errors);
+		} catch (NonExistingServiceException e) {
+			errors.add("nonexistingAuthor", new ActionError("error.noAuthor", infoWebSiteItem.getInfoAuthor().getUsername()));
 			saveErrors(request, errors);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);

@@ -22,10 +22,12 @@ public class WebSiteItem extends DomainObject implements IWebSiteItem {
 
 	private IWebSiteSection webSiteSection;
 	private IPessoa editor;
+	private IPessoa author;
 
 	private Integer keyWebSiteSection;
 	private Integer keyEditor;
-	
+	private Integer keyAuthor;
+
 	/** 
 	 * Construtor 
 	 */
@@ -47,6 +49,7 @@ public class WebSiteItem extends DomainObject implements IWebSiteItem {
 			if (elementsAreEqual(webSiteItem.getTitle(), this.getTitle())
 				&& elementsAreEqual(webSiteItem.getCreationDate(), this.getCreationDate())
 				&& elementsAreEqual(webSiteItem.getEditor(), this.getEditor())
+				&& elementsAreEqual(webSiteItem.getAuthor(), this.getAuthor())
 				&& elementsAreEqual(webSiteItem.getExcerpt(), this.getExcerpt())
 				&& elementsAreEqual(webSiteItem.getItemBeginDay(), this.getItemBeginDay())
 				&& elementsAreEqual(webSiteItem.getItemEndDay(), this.getItemEndDay())
@@ -85,149 +88,178 @@ public class WebSiteItem extends DomainObject implements IWebSiteItem {
 		result += ", itemEndDay=" + this.getItemEndDay();
 		result += ", webSiteSection=" + this.getWebSiteSection();
 		result += ", editor=" + this.getEditor();
+		result += ", author=" + this.getAuthor();
 		result += "]";
 		return result;
-	} 
-	
+	}
+
 	/**
 						 * @return
 						 */
 	public Timestamp getCreationDate() {
 		return creationDate;
 	} /**
-						 * @param creationDate
-						 */
+							 * @param creationDate
+							 */
 	public void setCreationDate(Timestamp creationDate) {
 		this.creationDate = creationDate;
 	} /**
-						 * @return
-						 */
+							 * @return
+							 */
 	public IPessoa getEditor() {
 		return editor;
 	} /**
-						 * @param editor
-						 */
+							 * @param editor
+							 */
 	public void setEditor(IPessoa editor) {
 		this.editor = editor;
 	} /**
-						 * @return
-						 */
+							 * @return
+							 */
 	public String getExcerpt() {
 		return excerpt;
 	} /**
-						 * @param excerpt
-						 */
+							 * @param excerpt
+							 */
 	public void setExcerpt(String excerpt) {
 		this.excerpt = excerpt;
 	} /**
-						 * @return
-						 */
+							 * @return
+							 */
 	public Date getItemBeginDay() {
 		return itemBeginDay;
 	} /**
-						 * @param itemBeginDay
-						 */
+							 * @param itemBeginDay
+							 */
 	public void setItemBeginDay(Date itemBeginDay) {
 		this.itemBeginDay = itemBeginDay;
 	} /**
-						 * @return
-						 */
+							 * @return
+							 */
 	public Date getItemEndDay() {
 		return itemEndDay;
 	} /**
-						 * @param itemEndDay
-						 */
+							 * @param itemEndDay
+							 */
 	public void setItemEndDay(Date itemEndDay) {
 		this.itemEndDay = itemEndDay;
 	} /**
-						 * @return
-						 */
+							 * @return
+							 */
 	public Integer getKeyEditor() {
 		return keyEditor;
 	} /**
-						 * @param keyEditor
-						 */
+							 * @param keyEditor
+							 */
 	public void setKeyEditor(Integer keyEditor) {
 		this.keyEditor = keyEditor;
 	} /**
-						 * @return
-						 */
+							 * @return
+							 */
 	public Integer getKeyWebSiteSection() {
 		return keyWebSiteSection;
 	} /**
-						 * @param keyWebSiteSection
-						 */
+							 * @param keyWebSiteSection
+							 */
 	public void setKeyWebSiteSection(Integer keyWebSiteSection) {
 		this.keyWebSiteSection = keyWebSiteSection;
 	} /**
-						 * @return
-						 */
+							 * @return
+							 */
 	public String getKeywords() {
 		return keywords;
 	} /**
-						 * @param keywords
-						 */
+							 * @param keywords
+							 */
 	public void setKeywords(String keywords) {
 		this.keywords = keywords;
 	} /**
-						 * @return
-						 */
+							 * @return
+							 */
 	public String getMainEntryText() {
 		return mainEntryText;
 	} /**
-						 * @param mainEntryText
-						 */
+							 * @param mainEntryText
+							 */
 	public void setMainEntryText(String mainEntryText) {
 		this.mainEntryText = mainEntryText;
 	} /**
-						 * @return
-						 */
+							 * @return
+							 */
 	public Date getOnlineBeginDay() {
 		return onlineBeginDay;
 	} /**
-						 * @param onlineBeginDay
-						 */
+							 * @param onlineBeginDay
+							 */
 	public void setOnlineBeginDay(Date onlineBeginDay) {
 		this.onlineBeginDay = onlineBeginDay;
 	} /**
-						 * @return
-						 */
+							 * @return
+							 */
 	public Date getOnlineEndDay() {
 		return onlineEndDay;
 	} /**
-						 * @param online ndDay
-						 */
+							 * @param online ndDay
+							 */
 	public void setOnlineEndDay(Date onlineEndDay) {
 		this.onlineEndDay = onlineEndDay;
 	} /**
-						 * @return
-						 */
+							 * @return
+							 */
 	public Boolean getPublished() {
 		return published;
 	} /**
-						 * @param published
-						 */
+							 * @param published
+							 */
 	public void setPublished(Boolean published) {
 		this.published = published;
 	} /**
-						 * @return
-						 */
+							 * @return
+							 */
 	public String getTitle() {
 		return title;
 	} /**
-						 * @param title
-						 */
+							 * @param title
+							 */
 	public void setTitle(String title) {
 		this.title = title;
 	} /**
-						 * @return
-						 */
+							 * @return
+							 */
 	public IWebSiteSection getWebSiteSection() {
 		return webSiteSection;
 	} /**
-						 * @param webSiteSection
-						 */
+							 * @param webSiteSection
+							 */
 	public void setWebSiteSection(IWebSiteSection webSiteSection) {
 		this.webSiteSection = webSiteSection;
 	}
+	/**
+	 * @return
+	 */
+	public IPessoa getAuthor() {
+		return author;
+	}
+
+	/**
+	 * @param author
+	 */
+	public void setAuthor(IPessoa author) {
+		this.author = author;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getKeyAuthor() {
+		return keyAuthor;
+	}
+
+	/**
+	 * @param keyAuthor
+	 */
+	public void setKeyAuthor(Integer keyAuthor) {
+		this.keyAuthor = keyAuthor;
+	}
+
 }

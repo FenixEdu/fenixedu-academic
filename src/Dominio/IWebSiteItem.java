@@ -15,6 +15,8 @@ public interface IWebSiteItem extends IDomainObject {
 	public void setCreationDate(Timestamp creationDate);
 	public IPessoa getEditor();
 	public void setEditor(IPessoa editor);
+	public IPessoa getAuthor();
+	public void setAuthor(IPessoa author);
 	public String getExcerpt();
 	public void setExcerpt(String excerpt);
 	public Date getItemBeginDay();
@@ -23,6 +25,8 @@ public interface IWebSiteItem extends IDomainObject {
 	public void setItemEndDay(Date itemEndDay);
 	public Integer getKeyEditor();
 	public void setKeyEditor(Integer keyEditor);
+	public Integer getKeyAuthor();
+	public void setKeyAuthor(Integer keyAuthor);
 	public Integer getKeyWebSiteSection();
 	public void setKeyWebSiteSection(Integer keyWebSiteSection);
 	public String getKeywords(); 

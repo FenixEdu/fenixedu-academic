@@ -23,6 +23,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentWebSiteItem;
 import ServidorPersistente.IPersistentWebSiteSection;
@@ -95,6 +96,22 @@ public class AddItem implements IServico {
 					throw new InvalidSituationServiceException();
 				}
 			}
+			
+			// treat author of item
+			IPessoa authorPerson = null;
+			System.out.println("username no servico: " + infoWebSiteItem.getInfoAuthor().getUsername());
+			if(infoWebSiteItem.getInfoAuthor().getUsername() != null) {
+				authorPerson = persistentPerson.lerPessoaPorUsername(infoWebSiteItem.getInfoAuthor().getUsername());
+				if(authorPerson == null) {
+					throw new NonExistingServiceException();
+				}
+			} else {
+				// in case author was not filled editor becomes the author
+				authorPerson = person;
+			}
+			webSiteItem.setAuthor(authorPerson);
+			webSiteItem.setKeyAuthor(authorPerson.getIdInternal());
+						
 			webSiteItem.setExcerpt(infoWebSiteItem.getExcerpt());
 
 			if (infoWebSiteItem.getItemBeginDayCalendar() != null) {

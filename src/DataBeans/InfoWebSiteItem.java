@@ -24,6 +24,7 @@ public class InfoWebSiteItem extends InfoObject {
 
 	private InfoWebSiteSection infoWebSiteSection;
 	private InfoPerson infoEditor;
+	private InfoPerson infoAuthor;
 
 	/**
 	 * @return
@@ -50,7 +51,7 @@ public class InfoWebSiteItem extends InfoObject {
 	 * @param creationDate
 	 */
 	public void setCreationDate(Timestamp creationDate) {
-		
+
 		this.creationDate = creationDate;
 	}
 
@@ -223,6 +224,7 @@ public class InfoWebSiteItem extends InfoObject {
 			if (elementsAreEqual(webSiteItem.getTitle(), this.getTitle())
 				&& elementsAreEqual(webSiteItem.getCreationDate(), this.getCreationDate())
 				&& elementsAreEqual(webSiteItem.getInfoEditor(), this.getInfoEditor())
+				&& elementsAreEqual(webSiteItem.getInfoAuthor(), this.getInfoAuthor())
 				&& elementsAreEqual(webSiteItem.getExcerpt(), this.getExcerpt())
 				&& elementsAreEqual(webSiteItem.getItemBeginDayCalendar(), this.getItemBeginDayCalendar())
 				&& elementsAreEqual(webSiteItem.getItemEndDayCalendar(), this.getItemEndDayCalendar())
@@ -260,8 +262,23 @@ public class InfoWebSiteItem extends InfoObject {
 		result += ", itemEndDay=" + this.getItemEndDayCalendar();
 		result += ", webSiteSection=" + this.getInfoWebSiteSection();
 		result += ", editor=" + this.getInfoEditor();
+		result += ", author=" + this.getInfoAuthor();
 		result += "]";
 		return result;
-	} 
+	}
+
+	/**
+	 * @return
+	 */
+	public InfoPerson getInfoAuthor() {
+		return infoAuthor;
+	}
+
+	/**
+	 * @param infoAuthor
+	 */
+	public void setInfoAuthor(InfoPerson infoAuthor) {
+		this.infoAuthor = infoAuthor;
+	}
 
 }

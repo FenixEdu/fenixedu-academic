@@ -126,13 +126,13 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				return Boolean.FALSE;
 			}
 
-//			// send file to server by ftp
-//			Ftp.enviarFicheiro(
-//				"/IstFtpServerConfig.properties",
-//				infoWebSiteSection.getName() + "-excerpts.shtml",
-//				infoWebSiteSection.getName() + "_principal/");
-//			// delete created file
-//			excerpts.delete();
+			// send file to server by ftp
+			Ftp.enviarFicheiro(
+				"/IstFtpServerConfig.properties",
+				infoWebSiteSection.getName() + "-excerpts.shtml",
+				infoWebSiteSection.getName() + "_principal/");
+			// delete created file
+			excerpts.delete();
 
 			//************************* create file of items month corresponding to item created ****************
 			List items = new ArrayList();
@@ -239,12 +239,12 @@ public class SendWebSiteSectionFileToServer implements IServico {
 					e.printStackTrace();
 					return Boolean.FALSE;
 				}
-//				Ftp.enviarFicheiro(
-//					"/IstFtpServerConfig.properties",
-//					infoWebSiteSection.getName() + "-" + thisMonthString.toString() + ".shtml",
-//					infoWebSiteSection.getName() + "_principal/");
-//				// delete created file
-//				itemsFileToTransfer.delete();
+				Ftp.enviarFicheiro(
+					"/IstFtpServerConfig.properties",
+					infoWebSiteSection.getName() + "-" + thisMonthString.toString() + ".shtml",
+					infoWebSiteSection.getName() + "_principal/");
+				// delete created file
+				itemsFileToTransfer.delete();
 			}
 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
@@ -353,15 +353,15 @@ public class SendWebSiteSectionFileToServer implements IServico {
 
 	private String putItem(String itemFile, InfoWebSiteItem infoWebSiteItem) {
 		String authorName =
-			StringUtils.substringBefore(infoWebSiteItem.getInfoEditor().getNome(), " ").concat(" ").concat(
-				StringUtils.substringAfterLast(infoWebSiteItem.getInfoEditor().getNome(), " "));
+			StringUtils.substringBefore(infoWebSiteItem.getInfoAuthor().getNome(), " ").concat(" ").concat(
+				StringUtils.substringAfterLast(infoWebSiteItem.getInfoAuthor().getNome(), " "));
 		// item's main entry
 		itemFile = itemFile.concat("<p>");
 		itemFile = itemFile.concat(infoWebSiteItem.getMainEntryText());
 		itemFile = itemFile.concat("<br/><br/>\n");
 		//		itemFile = itemFile.concat(infoWebSiteItem.getInfoEditor().getNome());
 		//		itemFile = itemFile.concat("<br/>\n");
-		itemFile = itemFile.concat("<a href='mailto:" + infoWebSiteItem.getInfoEditor().getEmail() + "'>" + authorName + "</a>");
+		itemFile = itemFile.concat("<a href='mailto:" + infoWebSiteItem.getInfoAuthor().getEmail() + "'>" + authorName + "</a>");
 		itemFile = itemFile.concat("</p>\n");
 		itemFile = itemFile.concat("\t</td>\n</tr>\n");
 

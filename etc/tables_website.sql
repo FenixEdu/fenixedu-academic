@@ -39,6 +39,7 @@ create table WEBSITE_ITEM (
    PUBLISHED int(11) not null ,
    CREATION_DATE datetime not null,
    KEY_EDITOR int(11) not null,
+   KEY_AUTHOR int(11) not null,
    KEYWORDS text not null,
    ONLINE_BEGIN_DAY date not null,
    ONLINE_END_DAY date not null,

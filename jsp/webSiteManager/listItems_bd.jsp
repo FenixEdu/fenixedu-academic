@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
 <%@ page import="DataBeans.InfoWebSiteItem, java.sql.Timestamp" %>
 <span class="error"><html:errors/></span>
 
@@ -53,7 +54,14 @@
 										<bean:write name="item" property="title"/>
 									</html:link>
 								</td>
-								<td class="listClasses"><bean:write name="item" property="infoEditor.nome"/></td>
+								<td class="listClasses">
+									<str:getPrechomp delimiter=" ">
+										<bean:write name="item" property="infoAuthor.nome"/>
+									</str:getPrechomp> 
+									<str:getChomp delimiter=" ">
+										<bean:write name="item" property="infoAuthor.nome"/>
+									</str:getChomp>
+								</td>
 								<logic:equal name="item" property="published" value="true">
 									<td class="listClasses"><bean:message key="message.published"/></td>
 								</logic:equal>
@@ -61,8 +69,8 @@
 									<td class="listClasses"><bean:message key="message.notPublished"/></td>
 								</logic:equal>
 								<td class="listClasses">
-								<bean:define id="creationDate" name="item" property="creationDate" type="java.sql.Timestamp"/>
-								<%=creationDate.toString().substring(0, creationDate.toString().indexOf("."))%>
+									<bean:define id="creationDate" name="item" property="creationDate" type="java.sql.Timestamp"/>
+									<%=creationDate.toString().substring(0, creationDate.toString().indexOf("."))%>
 								</td>
 							</tr>
 						</logic:iterate>
