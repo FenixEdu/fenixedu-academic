@@ -41,6 +41,29 @@ public class ViewWebSiteSectionAction extends FenixContextDispatchAction {
 		}
 
 		request.setAttribute("infoWebSiteSection", infoWebSiteSection);
+		return mapping.findForward("viewLimitedWebSiteSection");
+	}
+	public ActionForward viewAllPublishedItemsFromSection(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws FenixActionException {
+
+		Integer sectionCode=Integer.valueOf(request.getParameter("objectCode2"));
+		Integer itemCode=Integer.valueOf(request.getParameter("objectCode"));
+
+		System.out.println("section code: " + sectionCode);
+		Object[] args = { sectionCode };
+		GestorServicos gestorServicos = GestorServicos.manager();
+		InfoWebSiteSection infoWebSiteSection = null;
+		try {
+			infoWebSiteSection = (InfoWebSiteSection) gestorServicos.executar(null, "ReadWebSiteSectionByCode", args);
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("message.nonExisting");
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			throw new FenixActionException(e.getMessage());
+		}
+		
+		request.setAttribute("objectCode" , itemCode);
+		request.setAttribute("infoWebSiteSection", infoWebSiteSection);
 		return mapping.findForward("viewWebSiteSection");
 	}
 }

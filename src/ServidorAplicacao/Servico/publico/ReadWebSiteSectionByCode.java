@@ -1,10 +1,8 @@
 package ServidorAplicacao.Servico.publico;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -16,6 +14,7 @@ import DataBeans.InfoWebSiteSection;
 import DataBeans.util.Cloner;
 import Dominio.IWebSiteItem;
 import Dominio.IWebSiteSection;
+import Dominio.WebSiteSection;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -28,16 +27,16 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Fernanda Quitério
- * 02/10/2003
+ * 03/10/2003
  *
  */
-public class ReadLimitedWebSiteSectionByName implements IServico {
-	private static ReadLimitedWebSiteSectionByName _servico = new ReadLimitedWebSiteSectionByName();
+public class ReadWebSiteSectionByCode implements IServico {
+	private static ReadWebSiteSectionByCode _servico = new ReadWebSiteSectionByCode();
 
 	/**
 		* The actor of this class.
 		**/
-	private ReadLimitedWebSiteSectionByName() {
+	private ReadWebSiteSectionByCode() {
 
 	}
 
@@ -45,27 +44,27 @@ public class ReadLimitedWebSiteSectionByName implements IServico {
 	 * Returns Service Name
 	 */
 	public String getNome() {
-		return "ReadLimitedWebSiteSectionByName";
+		return "ReadWebSiteSectionByCode";
 	}
 
 	/**
 	 * Returns the _servico.
-	 * @return ReadLimitedWebSiteSectionByName
+	 * @return ReadWebSiteSectionByCode
 	 */
-	public static ReadLimitedWebSiteSectionByName getService() {
+	public static ReadWebSiteSectionByCode getService() {
 		return _servico;
 	}
 
-	public Object run(String sectionName) throws ExcepcaoInexistente, FenixServiceException {
+	public Object run(Integer sectionCode) throws ExcepcaoInexistente, FenixServiceException {
 
-		IWebSiteSection webSiteSection = null;
+		IWebSiteSection webSiteSection =null;
 		InfoWebSiteSection infoWebSiteSection = new InfoWebSiteSection();
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
 			IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
 
-			webSiteSection = persistentWebSiteSection.readByName(sectionName);
+			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOId(new WebSiteSection(sectionCode), false);
 
 			if (webSiteSection == null) {
 				throw new NonExistingServiceException();
@@ -81,7 +80,8 @@ public class ReadLimitedWebSiteSectionByName implements IServico {
 			CollectionUtils.filter(webSiteItems, new Predicate() {
 				public boolean evaluate(Object arg0) {
 					IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
-					if(!webSiteItem.getOnlineBeginDay().after(Calendar.getInstance().getTime()) && !webSiteItem.getOnlineEndDay().before(Calendar.getInstance().getTime())){
+					if (!webSiteItem.getOnlineBeginDay().after(Calendar.getInstance().getTime())
+						&& !webSiteItem.getOnlineEndDay().before(Calendar.getInstance().getTime())) {
 						return true;
 					}
 
@@ -96,7 +96,6 @@ public class ReadLimitedWebSiteSectionByName implements IServico {
 				public Object transform(Object arg0) {
 					IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
 					InfoWebSiteItem infoWebSiteItem = Cloner.copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
-					System.out.println("data de item " + webSiteItem.getItemBeginDay());
 
 					return infoWebSiteItem;
 				}
@@ -107,18 +106,7 @@ public class ReadLimitedWebSiteSectionByName implements IServico {
 				Collections.reverse(infoWebSiteItems);
 			}
 
-			// limits number of items to mandatory section size in website
-			if (infoWebSiteItems.size() > webSiteSection.getSize().intValue()) {
-				List limitedList = new ArrayList();
-				ListIterator iterItems = infoWebSiteItems.listIterator();
-				while (iterItems.previousIndex() <= webSiteSection.getSize().intValue()) {
-					InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterItems.next();
-					limitedList.add(infoWebSiteItem);
-				}
-				infoWebSiteSection.setInfoItemsList(limitedList);
-			} else {
-				infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
-			}
+			infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
 
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();

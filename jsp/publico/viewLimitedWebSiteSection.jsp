@@ -2,11 +2,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="java.util.Calendar, Util.Mes, DataBeans.InfoWebSiteItem" %>
+<%@ page import="java.util.Calendar, Util.Mes" %>
 <span class="error"><html:errors/></span>
 <logic:present name="infoWebSiteSection">
 	<table width="100%" align="center">
-		<logic:iterate id="item" name="infoWebSiteSection" property="infoItemsList" type="DataBeans.InfoWebSiteItem">
+		<logic:iterate id="item" name="infoWebSiteSection" property="infoItemsList">
 			<tr>
 				<td align="left">
 					<bean:write name="item" property="title"/>
@@ -39,10 +39,11 @@
 			<tr>
 				<td align="left">
 					<bean:define id="objectCode" name="item" property="idInternal"/>
-					<bean:write name="item" property="mainEntryText"/><br/>
-					<bean:message key="label.author"/>:&nbsp;<bean:write name="item" property="infoEditor.nome"/><br/>
-					<bean:message key="label.contact"/>:&nbsp;<bean:write name="item" property="infoEditor.email"/><br/>
-					<bean:message key="message.comunicateErrors"/>					
+					<bean:define id="objectCode2" name="infoWebSiteSection" property="idInternal"/>
+					<bean:write name="item" property="excerpt"/>
+					(<html:link page="<%="/viewWebSiteSection.do?method=viewAllPublishedItemsFromSection&amp;objectCode=" + objectCode + "&amp;objectCode2=" + objectCode2 %>">
+						<bean:message key="link.more"/>
+					</html:link>)
 					<br/><br/>
 				</td>	   
 			</tr> 	

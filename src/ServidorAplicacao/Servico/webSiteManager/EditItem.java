@@ -103,9 +103,13 @@ public class EditItem implements IServico {
 					StringTokenizer stringTokenizer = new StringTokenizer(infoWebSiteItem.getMainEntryText(), " ");
 					String excerpt = new String();
 					for (int size = webSiteSection.getExcerptSize().intValue(); size != 0; size--) {
-						excerpt = excerpt.concat(stringTokenizer.nextToken().trim());
-						if (size != 1) {
-							excerpt = excerpt.concat(" ");
+						if (stringTokenizer.hasMoreTokens()) {
+							excerpt = excerpt.concat(stringTokenizer.nextToken().trim());
+							if (size != 1) {
+								excerpt = excerpt.concat(" ");
+							}
+						} else{
+							break;
 						}
 					}
 					webSiteItem.setExcerpt(excerpt);

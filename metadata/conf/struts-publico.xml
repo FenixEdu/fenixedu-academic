@@ -401,6 +401,7 @@
       		  <forward  name="xpto1" path="/xpto1.jsp"/>  		  
      </action>	 
      
+     <!-- website page -->
      <action path="/viewWebSiteSection" 
      	type="ServidorApresentacao.Action.publico.ViewWebSiteSectionAction" 
      	parameter="method" 
@@ -410,6 +411,7 @@
          	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
      	
+		<forward name="viewLimitedWebSiteSection" path="/viewLimitedWebSiteSection.jsp"/>     	
 		<forward name="viewWebSiteSection" path="/viewWebSiteSection.jsp"/>     	
      </action>	 
     
