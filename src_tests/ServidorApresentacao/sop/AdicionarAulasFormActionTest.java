@@ -2,7 +2,6 @@ package ServidorApresentacao.sop;
   
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import junit.framework.Test;
@@ -43,27 +42,18 @@ public class AdicionarAulasFormActionTest extends TestCaseActionExecution {
 		super(testName);
 	}
 
-	public void testSuccessfulExecution() {
-
-		// coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("VerTurno");
-		privilegios.add("LerAlunosDeTurno");
-		privilegios.add("LerTurnosDeDisciplinaExecucao");
-
-		// Necessario para colocar form manipularTurnosForm em sessao
+	private void prepareRequest() {
+		//required to put form manipularTurnosForm in request
 		setRequestPathInfo("/sop", "/manipularTurnosForm");
 		addRequestParameter("indexTurno", new Integer(0).toString());
-		actionPerform();
-
-		doTest(null, getItemsToPutInSession(), getSuccessfulForward(), null, null, null);
-
+		actionPerform();		
 	}
-
-	/** :FIXME dummy method to prevent super.testSuccessfulExecutionOfAction() 
-	 * from executing 
-	 */
+	
 	public void testSuccessfulExecutionOfAction() {
+
+		prepareRequest();
+		doTest(null, getItemsToPutInSessionForActionToBeTestedSuccessfuly(), getSuccessfulForward(), null, null, null);
+
 	}
 
 	/** :FIXME dummy method to prevent super.testUnsuccessfulExecutionOfAction() 
@@ -71,8 +61,8 @@ public class AdicionarAulasFormActionTest extends TestCaseActionExecution {
 	 */
 	public void testUnsuccessfulExecutionOfAction() {
 	}
-	
-	protected Map getItemsToPutInSession() {
+
+	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
 
 		Map items = new HashMap();
 
