@@ -1,8 +1,3 @@
-/*
- * Situacao.java
- *
- * Created on 19 de Novembro de 2002, 17:14
- */
 
 /**
  *
@@ -15,6 +10,7 @@
 package Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -33,6 +29,13 @@ public class SituationName {
 	public static final int PENDENT_COM_DADOS = 11;
 	public static final int PENDENT_CONFIRMADO = 12;
 	public static final int ANNULLED = 13;
+	public static final int ADMITED_CONDICIONAL_CURRICULAR = 14;
+	public static final int ADMITED_CONDICIONAL_FINALIST = 15;
+	public static final int ADMITED_CONDICIONAL_OTHER = 16;
+	public static final int SUBSTITUTE_CONDICIONAL_CURRICULAR= 17;
+	public static final int SUBSTITUTE_CONDICIONAL_FINALIST= 18;
+	public static final int SUBSTITUTE_CONDICIONAL_OTHER= 19;
+	
     
     public static final String PENDENTE_STRING = "Pendente";
     public static final String ADMITIDO_STRING = "Admitido";
@@ -48,6 +51,14 @@ public class SituationName {
 	public static final String PENDENTE_COM_DADOS_STRING = "Pendente com dados preenchidos";
 	public static final String PENDENTE_CONFIRMADO_STRING = "Pendente com dados confirmados";
 	public static final String ANNULLED_STRING = "Anulada";
+	public static final String ADMITED_CONDICIONAL_CURRICULAR_STRING = "Admitido Condicional - Apreciação Curricular";
+	public static final String ADMITED_CONDICIONAL_FINALIST_STRING = "Admitido Condicional - Finalista";
+	public static final String ADMITED_CONDICIONAL_OTHER_STRING = "Admitido Condicional - Outro";
+	public static final String SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING = "Suplente Condicional - Apreciação Curricular";
+	public static final String SUBSTITUTE_CONDICIONAL_FINALIST_STRING = "Suplente Condicional - Finalista";
+	public static final String SUBSTITUTE_CONDICIONAL_OTHER_STRING = "Suplente Condicional - Outro";
+
+    
     
     private Integer situationName;
 
@@ -74,6 +85,18 @@ public class SituationName {
         }
     }
     
+	
+	public static boolean checkIfSubstitute(String situationName) {
+		List substituteList = new ArrayList();
+		substituteList.add(SituationName.SUPLENTE_STRING);
+		substituteList.add(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING);
+		substituteList.add(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING);
+		substituteList.add(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING);
+		
+		return substituteList.contains(situationName);
+	}
+    
+    
     public SituationName(String nomeSituacao) {
     	if (nomeSituacao.equals(SituationName.PENDENTE_STRING)) this.situationName = new Integer(SituationName.PENDENTE);
     	if (nomeSituacao.equals(SituationName.ADMITIDO_STRING)) this.situationName = new Integer(SituationName.ADMITIDO);
@@ -88,6 +111,13 @@ public class SituationName {
 		if (nomeSituacao.equals(SituationName.PENDENTE_COM_DADOS_STRING)) this.situationName = new Integer(SituationName.PENDENT_COM_DADOS);
 		if (nomeSituacao.equals(SituationName.PENDENTE_CONFIRMADO_STRING)) this.situationName = new Integer(SituationName.PENDENT_CONFIRMADO);
 		if (nomeSituacao.equals(SituationName.ANNULLED_STRING)) this.situationName = new Integer(SituationName.ANNULLED);
+		if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING)) this.situationName = new Integer(SituationName.ADMITED_CONDICIONAL_CURRICULAR);
+		if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING)) this.situationName = new Integer(SituationName.ADMITED_CONDICIONAL_FINALIST);
+		if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING)) this.situationName = new Integer(SituationName.ADMITED_CONDICIONAL_OTHER);
+		if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING)) this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR);
+		if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING)) this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST);
+		if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)) this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_OTHER);
+
     }
     
     public String toString() {
@@ -104,6 +134,12 @@ public class SituationName {
 		if (situationName.intValue()== SituationName.PENDENT_COM_DADOS) return SituationName.PENDENTE_COM_DADOS_STRING;
 		if (situationName.intValue()== SituationName.PENDENT_CONFIRMADO) return SituationName.PENDENTE_CONFIRMADO_STRING;
 		if (situationName.intValue()== SituationName.ANNULLED) return SituationName.ANNULLED_STRING;
+		if (situationName.intValue()== SituationName.ADMITED_CONDICIONAL_CURRICULAR) return SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING;
+		if (situationName.intValue()== SituationName.ADMITED_CONDICIONAL_FINALIST) return SituationName.ADMITED_CONDICIONAL_OTHER_STRING;
+		if (situationName.intValue()== SituationName.ADMITED_CONDICIONAL_OTHER) return SituationName.ADMITED_CONDICIONAL_OTHER_STRING;
+		if (situationName.intValue()== SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR) return SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING;
+		if (situationName.intValue()== SituationName.SUBSTITUTE_CONDICIONAL_FINALIST) return SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING;
+		if (situationName.intValue()== SituationName.SUBSTITUTE_CONDICIONAL_OTHER) return SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING;
 	    return "ERRO!"; // Nunca e atingido
     }
     
@@ -112,7 +148,13 @@ public class SituationName {
 		result.add(new LabelValueBean(SituationName.DEFAULT, null));
 	    result.add(new LabelValueBean(SituationName.PENDENTE_STRING , SituationName.PENDENTE_STRING));
 		result.add(new LabelValueBean(SituationName.ADMITIDO_STRING , SituationName.ADMITIDO_STRING));
+		result.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING, SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING));
+		result.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING, SituationName.ADMITED_CONDICIONAL_FINALIST_STRING));
+		result.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_OTHER_STRING, SituationName.ADMITED_CONDICIONAL_OTHER_STRING));
 		result.add(new LabelValueBean(SituationName.SUPLENTE_STRING , SituationName.SUPLENTE_STRING));
+		result.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING , SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING));
+		result.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING , SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING));
+		result.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING , SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING));
 		result.add(new LabelValueBean(SituationName.NAO_ACEITE_STRING , SituationName.NAO_ACEITE_STRING));
 		result.add(new LabelValueBean(SituationName.DESISTIU_STRING , SituationName.DESISTIU_STRING));
 		result.add(new LabelValueBean(SituationName.SUPRA_NUMERARIO_STRING , SituationName.SUPRA_NUMERARIO_STRING));

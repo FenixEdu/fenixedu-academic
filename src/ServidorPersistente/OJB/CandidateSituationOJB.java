@@ -14,15 +14,22 @@
 
 package ServidorPersistente.OJB;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.CandidateSituation;
 import Dominio.ICandidateSituation;
+import Dominio.ICursoExecucao;
 import Dominio.IMasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCandidateSituation;
+import Util.SituationName;
 import Util.State;
 
 public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistentCandidateSituation{
@@ -81,6 +88,31 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+    
+	public List readActiveSituationsBySituationList(ICursoExecucao executionDegree, List situations) throws ExcepcaoPersistencia {
+		 	
+		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+
+		Criteria criteria = new Criteria();
+		Criteria criteriaSituations = new Criteria();
+		criteria.addEqualTo("validation", new State(State.ACTIVE));
+		criteria.addEqualTo("masterDegreeCandidate.executionDegree.idInternal", executionDegree.getIdInternal());
+		
+		if ((situations != null) && (situations.size() != 0)){
+			List situationsInteger = new ArrayList();
+			Iterator iterator = situations.iterator();
+			while(iterator.hasNext()){
+				situationsInteger.add(((SituationName) iterator.next()).getSituationName());
+
+			}
+			criteriaSituations.addIn("situation", situationsInteger);		
+			criteria.addAndCriteria(criteriaSituations);
+		}
+				
+		List result =  queryList(CandidateSituation.class,criteria);
+		return result;
+	}
+    
     
     public void writeCandidateSituation(ICandidateSituation candidateSituationToWrite) throws ExcepcaoPersistencia {
 		super.lockWrite(candidateSituationToWrite);

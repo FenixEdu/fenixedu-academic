@@ -51,7 +51,6 @@ public class StudentListingByDegreeDispatchAction extends DispatchAction {
 			GestorServicos serviceManager = GestorServicos.manager();
 			ArrayList studentList = null;
 			try {
-//				studentList = (ArrayList) serviceManager.executar(userView, "ReadCurricularCoursesByDegree", args);
 				studentList = (ArrayList) serviceManager.executar(userView, "ReadStudentsByExecutionDegreeAndExecutionYear", args);
 			} catch (NonExistingServiceException e) {
 				ActionErrors errors = new ActionErrors();

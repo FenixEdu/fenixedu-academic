@@ -148,6 +148,7 @@ public class ChangeCandidate implements IServico {
 		if (!masterDegreeCandidate.getActiveCandidateSituation().getSituation().equals(new SituationName(newCandidate.getInfoCandidateSituation().getSituation()))){
 
 			candidateSituation = new CandidateSituation();
+			sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
 			
 			// Change the Active Situation
 			Iterator iterator = masterDegreeCandidate.getSituations().iterator();
@@ -159,7 +160,9 @@ public class ChangeCandidate implements IServico {
 				}
 				situations.add(candidateSituationTemp);
 			}
-			
+//sp.getIPersistentCandidateSituation().writeCandidateSituation(masterDegreeCandidate.getActiveCandidateSituation());			
+//masterDegreeCandidate.getActiveCandidateSituation().setValidation(new State(State.INACTIVE));
+
 			Calendar calendar = Calendar.getInstance();
 			candidateSituation.setDate(calendar.getTime());
 			candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
@@ -184,10 +187,6 @@ public class ChangeCandidate implements IServico {
 		List situationsList = new ArrayList();
 		Iterator iterator = situations.iterator();
 		while(iterator.hasNext()){
-			System.out.println();
-			
-			
-			
 			InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) iterator.next()); 
 			situationsList.add(infoCandidateSituation);
 

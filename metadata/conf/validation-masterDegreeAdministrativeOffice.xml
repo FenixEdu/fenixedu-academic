@@ -105,15 +105,10 @@
     
     <!-- validation for the Change Application Info Form-->
     <form name="changeCandidateForm">
-      
-      
       <field property="situation" depends="required" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.newSituation" />
       </field>
-      
-      
-      
-      <field property="name" depends="required" page="1">
+        <field property="name" depends="required" page="1">
         <arg0 key="label.person.name" />
       </field>
       
@@ -383,6 +378,14 @@
       </field>
     </form>
 
+
+	<!-- validation on Choose the Situation for the Candidate Form -->
+   <form name="chooseCandidateSituationForm">
+      <field property="situationList" depends="required" page="1">
+        <arg0 key="label.masterDegree.administrativeOffice.candidateSituation" />
+      </field>
+	</form>
+  
   </formset>
 
 </form-validation>

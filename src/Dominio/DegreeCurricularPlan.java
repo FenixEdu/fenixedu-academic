@@ -25,6 +25,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 	private Integer minimalYearForOptionalCourses;
 	private Double neededCredits;
 	private MarkType markType;
+	private Integer numerusClausus;
 	
 	private List curricularCourses;
 	
@@ -74,6 +75,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 		result += "needed Credits = " + this.neededCredits + "; ";
 		result += "Mark Type = " + this.markType+ "; ";
 		result += "degree = " + this.degree + "]\n";
+		result += "NumerusClausus = " + this.numerusClausus + "]\n";
 		
 		return result;
 	}
@@ -231,6 +233,20 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 
 	public void setMinimalYearForOptionalCourses(Integer integer) {
 		minimalYearForOptionalCourses = integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getNumerusClausus() {
+		return numerusClausus;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setNumerusClausus(Integer integer) {
+		numerusClausus = integer;
 	}
 
 }

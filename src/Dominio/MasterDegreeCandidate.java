@@ -32,6 +32,7 @@ public class MasterDegreeCandidate extends DomainObject implements IMasterDegree
     private Integer majorDegreeYear = null;
     private Double average = null;
     private String specializationArea;
+    private Integer substituteOrder;
     
     
     // Instance from class Degree
@@ -90,14 +91,16 @@ public class MasterDegreeCandidate extends DomainObject implements IMasterDegree
         
 		boolean result = false;
 		if (o instanceof IMasterDegreeCandidate) {
-			result =		
-					((this.person.equals(((MasterDegreeCandidate)o).getPerson())) &&
-					 (this.specialization.equals(((MasterDegreeCandidate)o).getSpecialization())) &&
-					 (this.executionDegree.equals(((MasterDegreeCandidate)o).executionDegree))) ||
-				 
-					((this.executionDegree.equals(((MasterDegreeCandidate)o).executionDegree)) &&
-					 (this.candidateNumber.equals(((MasterDegreeCandidate)o).getCandidateNumber())) &&
-					 (this.specialization.equals(((MasterDegreeCandidate)o).getSpecialization())));
+
+result = getIdInternal().equals(((IMasterDegreeCandidate) o).getIdInternal());
+//			result =		
+//					((this.person.equals(((MasterDegreeCandidate)o).getPerson())) &&
+//					 (this.specialization.equals(((MasterDegreeCandidate)o).getSpecialization())) &&
+//					 (this.executionDegree.equals(((MasterDegreeCandidate)o).executionDegree))) ||
+//				 
+//					((this.executionDegree.equals(((MasterDegreeCandidate)o).executionDegree)) &&
+//					 (this.candidateNumber.equals(((MasterDegreeCandidate)o).getCandidateNumber())) &&
+//					 (this.specialization.equals(((MasterDegreeCandidate)o).getSpecialization())));
 		}
 		return result;
     }
@@ -114,6 +117,7 @@ public class MasterDegreeCandidate extends DomainObject implements IMasterDegree
         result += "\n  - Major Degree Average : " + average;
 		result += "\n  - Master Degree : " + executionDegree;
 		result += "\n  - Specialization Area : " + specializationArea;
+		result += "\n  - Substitute Order : " + substituteOrder;
 
         return result;
     }  
@@ -290,6 +294,20 @@ public class MasterDegreeCandidate extends DomainObject implements IMasterDegree
 	 */
 	public void setSpecialization(Specialization specialization) {
 		this.specialization = specialization;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getSubstituteOrder() {
+		return substituteOrder;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setSubstituteOrder(Integer integer) {
+		substituteOrder = integer;
 	}
 
 } // End of class definition

@@ -46,7 +46,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 	public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception {
 
 		if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-			|| (id != null && id.getRoles() != null && !hasProvilege(id, argumentos))
+			|| (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
 			|| (id == null)
 			|| (id.getRoles() == null)) {
 			throw new NotAuthorizedException();
@@ -93,7 +93,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 	 * @param argumentos
 	 * @return  
 	 */
-	private boolean hasProvilege(IUserView id, Object[] arguments) {
+	private boolean hasPrivilege(IUserView id, Object[] arguments) {
 	
 		List roles = getRoleList((List) id.getRoles());
 		CollectionUtils.intersection(roles, getNeededRoles());

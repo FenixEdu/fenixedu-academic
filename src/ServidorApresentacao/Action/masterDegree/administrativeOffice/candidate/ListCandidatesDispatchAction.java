@@ -106,8 +106,9 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			session.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
 						
 			// Create the Candidate Situation List
-			session.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());  
 			
+			session.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());  
+
 			return mapping.findForward("PrepareReady");
 		  } else
 			throw new Exception();   

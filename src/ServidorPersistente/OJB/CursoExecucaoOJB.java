@@ -61,10 +61,10 @@ public class CursoExecucaoOJB
 		else if (
 			(cursoExecucaoToWrite instanceof CursoExecucao)
 				&& ((CursoExecucao) cursoExecucaoFromDB)
-					.getCodigoInterno()
+					.getIdInternal()
 					.equals(
 					((CursoExecucao) cursoExecucaoToWrite)
-						.getCodigoInterno())) {
+						.getIdInternal())) {
 			super.lockWrite(cursoExecucaoToWrite);
 			// else Throw an already existing exception
 		} else

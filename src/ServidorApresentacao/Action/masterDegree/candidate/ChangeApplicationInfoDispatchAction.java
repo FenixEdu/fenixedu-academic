@@ -60,6 +60,13 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			GestorServicos gestor = GestorServicos.manager();
 
+			if (!isTokenValid(request)){
+				return mapping.findForward("BackError");
+			} else {
+				generateToken(request);
+				saveToken(request);
+			}
+
 			InfoMasterDegreeCandidate newMasterDegreeCandidate =
 				(InfoMasterDegreeCandidate) session.getAttribute(
 					SessionConstants.MASTER_DEGREE_CANDIDATE);
@@ -327,7 +334,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 
 			boolean validationError = request.getParameter("error") != null;
 			if (!validationError)
-				populateForm(changeApplicationInfoForm, infoPerson);
+				populateForm(changeApplicationInfoForm, infoPerson, infoMasterDegreeCandidate);
 
 			// Get List of available Countries
 			ArrayList country = null;
@@ -379,6 +386,9 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 			request.setAttribute(
 				SessionConstants.PERSONAL_INFO_KEY,
 				infoPerson);
+				
+				generateToken(request);
+				saveToken(request);
 
 			return mapping.findForward("prepareReady");
 		} else
@@ -387,7 +397,8 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 
 	private void populateForm(
 		DynaActionForm changeApplicationInfoForm,
-		InfoPerson infoPerson) {
+		InfoPerson infoPerson,
+		InfoMasterDegreeCandidate infoMasterDegreeCandidate) {
 		changeApplicationInfoForm.set(
 			"identificationDocumentNumber",
 			infoPerson.getNumeroDocumentoIdentificacao());
@@ -518,11 +529,11 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 			"areaOfAreaCode",
 			infoPerson.getLocalidadeCodigoPostal());
 
-		changeApplicationInfoForm.set("majorDegree", null);
-		changeApplicationInfoForm.set("majorDegreeSchool", null);
-		changeApplicationInfoForm.set("majorDegreeYear", null);
-		changeApplicationInfoForm.set("specializationArea", null);
-		changeApplicationInfoForm.set("average", null);
+		changeApplicationInfoForm.set("majorDegree", infoMasterDegreeCandidate.getMajorDegree());
+		changeApplicationInfoForm.set("majorDegreeSchool", infoMasterDegreeCandidate.getMajorDegreeSchool());
+		changeApplicationInfoForm.set("majorDegreeYear", infoMasterDegreeCandidate.getMajorDegreeYear());
+		changeApplicationInfoForm.set("specializationArea", infoMasterDegreeCandidate.getSpecializationArea());
+		changeApplicationInfoForm.set("average", infoMasterDegreeCandidate.getAverage().toString());
 
 		if (infoPerson.getSexo() != null)
 			changeApplicationInfoForm.set(

@@ -9,28 +9,25 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 
 import DataBeans.InfoRole;
-import Dominio.CurricularCourseScope;
-import Dominio.ICurricularCourseScope;
-import Dominio.ICursoExecucao;
+import Dominio.IMasterDegreeCandidate;
 import Dominio.ITeacher;
+import Dominio.MasterDegreeCandidate;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorPersistente.ICursoExecucaoPersistente;
-import ServidorPersistente.IPersistentCurricularCourseScope;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
-import Util.TipoCurso;
 
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtro {
+public class CandidateApprovalAuthorizationFilter extends Filtro {
 
-	public final static StudentListByCurricularCourseScopeAuthorizationFilter instance =
-		new StudentListByCurricularCourseScopeAuthorizationFilter();
+	public final static CandidateApprovalAuthorizationFilter instance =
+		new CandidateApprovalAuthorizationFilter();
 
 	/**
 	 * The singleton access method of this class.
@@ -93,40 +90,19 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
 	 * @param argumentos
 	 * @return  
 	 */
-	private boolean hasPrivilege(IUserView id, Object[] arguments) {
+	private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
 	
 		List roles = getRoleList((List) id.getRoles());
 		CollectionUtils.intersection(roles, getNeededRoles());
 
-		IUserView userView = (IUserView) arguments[0];
-		Integer curricularCourseScopeID = (Integer) arguments[1];
+		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+
+		IUserView userView = (IUserView) id;
 		
-
-		ICurricularCourseScope curricularCourseScope = null;
-
-		// Read The DegreeCurricularPlan
-		try {
-			IPersistentCurricularCourseScope persistentCurricularCourseScope = SuportePersistenteOJB.getInstance().getIPersistentCurricularCourseScope();
-			ICurricularCourseScope curricularCourseScopeTemp = new CurricularCourseScope();
-			curricularCourseScopeTemp.setIdInternal(curricularCourseScopeID);
-			
-			curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScopeTemp, false);
-		} catch (Exception e) {
-			return false;
-		}
-
-		if (curricularCourseScope == null){
-			return false;
-		}
-
 		List roleTemp = new ArrayList();
 		roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
 		if (CollectionUtils.containsAny(roles, roleTemp)) {
-			if (curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)){
-				return true;
-			} else {
-				return false;
-			}
+			return true;
 		} 
 		
 		roleTemp = new ArrayList();
@@ -136,29 +112,30 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
 			 ITeacher teacher = null;
 			// Read The ExecutionDegree
 			try {
-				ICursoExecucaoPersistente persistentExecutionDegree = SuportePersistenteOJB.getInstance().getICursoExecucaoPersistente();
-			
-				List executionDegrees = (List) persistentExecutionDegree.readByDegreeCurricularPlan(curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan());
-				if (executionDegrees == null){
-					return false;
-				}
-				// IMPORTANT: It's assumed that the coordinator for a Degree is ALWAYS the same	
-				teacher = ((ICursoExecucao) executionDegrees.get(0)).getCoordinator();
+								
+				String situations[] = (String[]) arguments[0];
+				String ids[] = (String[]) arguments[1];
+				String remarks[] = (String[]) arguments[2];
+				String substitutes[] = (String[]) arguments[3];
+
 				
-				if (teacher == null){
-					return false;
-				}
-				
-				if (id.getUtilizador().equals(teacher.getPerson().getUsername())){
-					return true;
-				} else {
-					return false;
+				teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+	
+				for (int i = 0; i < ids.length; i++){
+					IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
+					mdcTemp.setIdInternal(new Integer(ids[i]));
+					
+					IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, false);
+					
+					if (!masterDegreeCandidate.getExecutionDegree().getCoordinator().equals(teacher)){
+						return false;
+					}
 				}
 			} catch (Exception e) {
 				return false;
 			}
 		} 
-		return false;		
+		return true;		
 	}
 	
 	private List getRoleList(List roles){

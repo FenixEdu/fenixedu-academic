@@ -11,10 +11,9 @@ package Dominio;
  * @author  rpfi
  */
 
-public class CursoExecucao implements ICursoExecucao {
+public class CursoExecucao extends DomainObject implements ICursoExecucao {
 	
 	
-	private Integer codigoInterno;
 	private Integer keyCurricularPlan;
 	private Integer keyCoordinator;
 
@@ -37,12 +36,6 @@ public class CursoExecucao implements ICursoExecucao {
 		setExecutionYear(executionYear);
 		setCurricularPlan(curricularPlan);
 	}
-	public Integer getCodigoInterno() {
-		return codigoInterno;
-	}
-	public void setCodigoInterno(Integer codInt) {
-		this.codigoInterno = codInt;
-	}
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
@@ -57,7 +50,7 @@ public class CursoExecucao implements ICursoExecucao {
 
 	public String toString() {
 		String result = "[CURSO_EXECUCAO";
-		result += ", codInt=" + codigoInterno;
+		result += ", codInt=" + getIdInternal();
 		result += ", executionYear=" + executionYear;
 		result += ", keyExecutionYear=" + academicYear;
 		result += ", planoCurricularCurso=" + degreeCurricularPlan;

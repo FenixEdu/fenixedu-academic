@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author  rpfi
  */
-public interface ICursoExecucao extends Serializable{
+public interface ICursoExecucao extends Serializable, IDomainObject {
  
   
   IExecutionYear getExecutionYear();

@@ -598,14 +598,19 @@ public abstract class Cloner {
 	 * @return InfoMasterDegreeCandidate 
 	 */
 	public static InfoMasterDegreeCandidate copyIMasterDegreeCandidate2InfoMasterDegreCandidate(IMasterDegreeCandidate masterDegreeCandidate) {
+		if (masterDegreeCandidate == null)
+			throw new IllegalArgumentException("ERRO -----------------------------");
+		
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate();
-		copyObjectProperties(infoMasterDegreeCandidate, masterDegreeCandidate);
+		
 		InfoExecutionDegree infoExecutionDegree =
 			Cloner.copyIExecutionDegree2InfoExecutionDegree(masterDegreeCandidate.getExecutionDegree());
 		infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 
 		InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(masterDegreeCandidate.getPerson());
 		infoMasterDegreeCandidate.setInfoPerson(infoPerson);
+		
+		copyObjectProperties(infoMasterDegreeCandidate, masterDegreeCandidate);
 		return infoMasterDegreeCandidate;
 	}
 

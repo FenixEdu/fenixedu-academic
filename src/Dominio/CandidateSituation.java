@@ -62,7 +62,9 @@ public class CandidateSituation implements ICandidateSituation {
         return result;
     }
     
-
+	public boolean equals(Object o) {
+		return this.getInternalCode().equals(((CandidateSituation) o).getInternalCode());	
+	}
 
 	/**
 	 * Returns the candidateKey.

@@ -25,6 +25,7 @@ public interface IDegreeCurricularPlan extends IDomainObject {
 	public Integer getMinimalYearForOptionalCourses();
 	public Double getNeededCredits();
 	public MarkType getMarkType();
+	public Integer getNumerusClausus();
 
 	public void setDegreeDuration(Integer integer);
 	public void setMinimalYearForOptionalCourses(Integer integer);
@@ -36,5 +37,5 @@ public interface IDegreeCurricularPlan extends IDomainObject {
 	void setCurricularCourses(List curricularCourses);	
 	public void setNeededCredits(Double neededCredits);
 	public void setMarkType(MarkType markType);
-	
+	public void setNumerusClausus(Integer numerusClausus);
 }
