@@ -30,7 +30,7 @@ public class RenderChoise extends Render {
     public static String getShuffleString(boolean shuffle) {
         if (shuffle == YES)
             return YES_STRING;
-        else if (shuffle = NO) return NO_STRING;
+        else if (shuffle == NO) return NO_STRING;
         return NO_STRING;
     }
 
