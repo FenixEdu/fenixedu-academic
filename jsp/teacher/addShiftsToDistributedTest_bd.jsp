@@ -72,7 +72,20 @@ function cleanSelect() {
 		<td class="listClasses-header"><bean:message key="label.curricularCourseType"/></td>
 		<td class="listClasses-header"></td>
 	</tr>
-	<logic:iterate id="shiftList" name="shifts">
+	<logic:iterate id="shiftList" name="shifts" indexId="index">
+		<logic:equal name="index" value="0">
+			<bean:define id="tipoBefore" name="shiftList" property="tipo.fullNameTipoAula"/>
+		</logic:equal>
+		<logic:notEqual name="index" value="0">
+			<logic:notEqual name="shiftList" property="tipo.fullNameTipoAula" value="<%tipoBefore%>">
+				<tr height=20><td></td></tr>
+				<tr><td></td>
+					<td class="listClasses-header"><bean:message key="link.executionCourse.shifts"/></td>
+					<td class="listClasses-header"><bean:message key="label.curricularCourseType"/></td>
+					<td class="listClasses-header"></td>
+				</tr>		
+			</logic:notEqual>
+		</logic:notEqual>
 		<tr><td></td>
 			<td class="listClasses"><bean:write name="shiftList" property="nome"/></td>
 			<td class="listClasses"><bean:write name="shiftList" property="tipo.fullNameTipoAula"/></td>
@@ -82,6 +95,7 @@ function cleanSelect() {
 				</html:multibox> 
 			</td>
 		</tr>
+		<bean:define id="tipoBefore" name="shiftList" property="tipo.fullNameTipoAula"/>
 	</logic:iterate>
 </table>
 <html:submit styleClass="inputbutton"><bean:message key="link.student.room.distribution"/></html:submit>

@@ -1,8 +1,7 @@
 /*
- * Created on 23/Jul/2003
+ * Created on Oct 22, 2003
  *
  */
-
 package ServidorAplicacao.Servico.teacher;
 
 import java.util.ArrayList;
@@ -16,40 +15,41 @@ import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 
 import Dominio.DisciplinaExecucao;
+import Dominio.DistributedTest;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IDistributedTest;
 import Dominio.IMetadata;
-import Dominio.ITest;
-import Dominio.ITestQuestion;
-import Dominio.Test;
-import Dominio.TestQuestion;
+import Dominio.IStudentTestQuestion;
+import Dominio.StudentTestQuestion;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentDistributedTest;
 import ServidorPersistente.IPersistentMetadata;
-import ServidorPersistente.IPersistentTest;
-import ServidorPersistente.IPersistentTestQuestion;
+import ServidorPersistente.IPersistentStudentTestQuestion;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import UtilTests.ParseMetadata;
 
 /**
  * @author Susana Fernandes
+ *
  */
+public class ReadMetadatasByDistributedTest implements IServico {
 
-public class ReadMetadatasByTest implements IServico {
+	private static ReadMetadatasByDistributedTest service =
+		new ReadMetadatasByDistributedTest();
 
-	private static ReadMetadatasByTest service = new ReadMetadatasByTest();
-
-	public static ReadMetadatasByTest getService() {
+	public static ReadMetadatasByDistributedTest getService() {
 		return service;
 	}
 
 	public String getNome() {
-		return "ReadMetadatasByTest";
+		return "ReadMetadatasByDistributedTest";
 	}
-	public SiteView run(Integer executionCourseId, Integer testId)
+	public SiteView run(Integer executionCourseId, Integer distributedTestId)
 		throws FenixServiceException {
 
 		try {
@@ -71,22 +71,28 @@ public class ReadMetadatasByTest implements IServico {
 			List metadatas =
 				persistentMetadata.readByExecutionCourse(executionCourse);
 			List result = new ArrayList();
-			IPersistentTest persistentTest =
-				persistentSuport.getIPersistentTest();
+			IPersistentDistributedTest persistentDistributedTest =
+				persistentSuport.getIPersistentDistributedTest();
 
 			List questions = new ArrayList();
-			if (testId != null) {
-				ITest test = new Test(testId);
-				test = (ITest) persistentTest.readByOId(test, false);
 
-				if (test == null) {
-					throw new InvalidArgumentsServiceException();
-				}
+			IDistributedTest distributedTest =
+				new DistributedTest(distributedTestId);
+			distributedTest =
+				(IDistributedTest) persistentDistributedTest.readByOId(
+					distributedTest,
+					false);
 
-				IPersistentTestQuestion persistentTestQuestion =
-					persistentSuport.getIPersistentTestQuestion();
-				questions = persistentTestQuestion.readByTest(test);
+			if (distributedTest == null) {
+				throw new InvalidArgumentsServiceException();
 			}
+
+			IPersistentStudentTestQuestion persistentStudentTestQuestion =
+				persistentSuport.getIPersistentStudentTestQuestion();
+			List studentTestQuestionList =
+				persistentStudentTestQuestion
+					.readStudentTestQuestionsByDistributedTest(
+					distributedTest);
 
 			Iterator iter = metadatas.iterator();
 			while (iter.hasNext()) {
@@ -95,11 +101,12 @@ public class ReadMetadatasByTest implements IServico {
 
 					boolean contains = false;
 
-					Iterator iterQuestion = questions.iterator();
-					while (iterQuestion.hasNext()) {
-						ITestQuestion testQuestion =
-							(TestQuestion) iterQuestion.next();
-						if (testQuestion
+					Iterator studentTestQuestionIt =
+						studentTestQuestionList.iterator();
+					while (studentTestQuestionIt.hasNext()) {
+						IStudentTestQuestion studentTestQuestion =
+							(StudentTestQuestion) studentTestQuestionIt.next();
+						if (studentTestQuestion
 							.getQuestion()
 							.getKeyMetadata()
 							.equals(metadata.getIdInternal())) {

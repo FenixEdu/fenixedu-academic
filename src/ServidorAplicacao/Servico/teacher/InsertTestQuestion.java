@@ -8,7 +8,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoMetadata;
+import DataBeans.InfoQuestion;
 import DataBeans.util.Cloner;
+
 import Dominio.IMetadata;
 import Dominio.IQuestion;
 import Dominio.ITest;
@@ -26,6 +28,7 @@ import ServidorPersistente.IPersistentTestQuestion;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import UtilTests.ParseMetadata;
+import UtilTests.ParseQuestion;
 
 /**
  * @author Susana Fernandes
@@ -90,7 +93,8 @@ public class InsertTestQuestion implements IServico {
 				persistentSuport.getIPersistentTestQuestion();
 			List testQuestionList = persistentTestQuestion.readByTest(test);
 			if (testQuestionList != null) {
-				if (questionOrder.equals(new Integer(-1))) {
+				if (questionOrder == null
+					|| questionOrder.equals(new Integer(-1))) {
 					questionOrder = new Integer(testQuestionList.size() + 1);
 				} else
 					questionOrder = new Integer(questionOrder.intValue() + 1);
@@ -107,6 +111,21 @@ public class InsertTestQuestion implements IServico {
 							new Integer(iterQuestionOrder.intValue() + 1));
 					}
 				}
+			}
+			if (questionValue == null) {
+				InfoQuestion infoQuestion =
+					Cloner.copyIQuestion2InfoQuestion(question);
+				infoQuestion.setInfoMetadata(infoMetadata);
+				ParseQuestion parseQuestion = new ParseQuestion();
+				try {
+					infoQuestion =
+						parseQuestion.parseQuestion(
+							infoQuestion.getXmlFile(),
+							infoQuestion);
+				} catch (Exception e) {
+					throw new FenixServiceException(e);
+				}
+				questionValue = infoQuestion.getQuestionValue();
 			}
 			ITestQuestion testQuestion = new TestQuestion();
 			test.setNumberOfQuestions(

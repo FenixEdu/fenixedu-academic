@@ -189,8 +189,104 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 			fail("exception: ExcepcaoPersistencia");
 		}
 	}
+
+	public void testReadByQuestionAndDistributedTest() {
+		System.out.println("5-> Test ReadByQuestionAndDistributedTest");
+		try {
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+			persistentSuport.iniciarTransaccao();
+			IDistributedTest distributedTest =
+				new DistributedTest(new Integer(3));
+			distributedTest =
+				(IDistributedTest) persistentSuport
+					.getIPersistentDistributedTest()
+					.readByOId(
+					distributedTest,
+					false);
+			assertNotNull(
+				"there is no distributedTest with id=3",
+				distributedTest);
+			IQuestion question = new Question(new Integer("10"));
+			question =
+				(IQuestion) persistentSuport
+					.getIPersistentQuestion()
+					.readByOId(
+					question,
+					false);
+			assertNotNull("there is no question with id=10", question);
+
+			List studentTestQuestions =
+				persistentSuport
+					.getIPersistentStudentTestQuestion()
+					.readByQuestionAndDistributedTest(question, distributedTest);
+
+			assertNotNull(
+				"there is no studentTestQuestions whith this question",
+				studentTestQuestions);
+			assertEquals(
+				"wrong number of student test questions",
+				3,
+				studentTestQuestions.size());
+			persistentSuport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			fail("exception: ExcepcaoPersistencia");
+		}
+	}
+
+	public void testReadByQuestionAndStudentAndDistributedTest() {
+		System.out.println(
+			"6-> Test ReadByQuestionAndStudentAndDistributedTest");
+		try {
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+			persistentSuport.iniciarTransaccao();
+			IStudent student = new Student(new Integer(9));
+			student =
+				(IStudent) persistentSuport.getIPersistentStudent().readByOId(
+					student,
+					false);
+			assertNotNull("there is no student with id=9", student);
+			IDistributedTest distributedTest =
+				new DistributedTest(new Integer(3));
+			distributedTest =
+				(IDistributedTest) persistentSuport
+					.getIPersistentDistributedTest()
+					.readByOId(
+					distributedTest,
+					false);
+			assertNotNull(
+				"there is no distributedTest with id=3",
+				distributedTest);
+			IQuestion question = new Question(new Integer("10"));
+			question =
+				(IQuestion) persistentSuport
+					.getIPersistentQuestion()
+					.readByOId(
+					question,
+					false);
+			assertNotNull("there is no question with id=10", question);
+
+			IStudentTestQuestion studentTestQuestion =
+				persistentSuport
+					.getIPersistentStudentTestQuestion()
+					.readByQuestionAndStudentAndDistributedTest(
+						question,
+						student,
+						distributedTest);
+
+			assertNotNull(
+				"there is no studentTestQuestion for this student, question and distributedTest",
+				studentTestQuestion);
+
+			persistentSuport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			fail("exception: ExcepcaoPersistencia");
+		}
+	}
+
 	public void testReadStudentsByDistributedTest() {
-		System.out.println("5-> Test ReadStudentsByDistributedTest");
+		System.out.println("7-> Test ReadStudentsByDistributedTest");
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -225,7 +321,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 
 	public void testReadStudentTestQuestionsByDistributedTest() {
 		System.out.println(
-			"6-> Test ReadStudentTestQuestionsByDistributedTest");
+			"8-> Test ReadStudentTestQuestionsByDistributedTest");
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -261,7 +357,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 	}
 
 	public void testDeleteByDistributedTest() {
-		System.out.println("7-> Test DeleteByDistributedTest");
+		System.out.println("9-> Test DeleteByDistributedTest");
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -306,7 +402,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 	}
 
 	public void testDelete() {
-		System.out.println("8-> Test Delete");
+		System.out.println("10-> Test Delete");
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();

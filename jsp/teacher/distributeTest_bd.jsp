@@ -93,14 +93,14 @@
 <table align="center">
 	<tr>
 		<td><html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>
-		</html:form>
 		</td>
+		</html:form>
 		<td><html:form action="/testsManagement">
 			<html:hidden property="page" value="0"/>
 			<html:hidden property="method" value="showTests"/>
 			<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 				<html:submit styleClass="inputbutton" property="action"><bean:message key="label.back"/></html:submit>
-			</html:form>
 		</td>
+		</html:form>
 	</tr>
 </table>

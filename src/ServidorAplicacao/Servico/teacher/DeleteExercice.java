@@ -8,10 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -21,16 +19,17 @@ import javax.xml.transform.stream.StreamSource;
 
 import Dominio.IMetadata;
 import Dominio.IQuestion;
-import Dominio.IStudentTestQuestion;
+import Dominio.ITest;
+import Dominio.ITestQuestion;
 import Dominio.Metadata;
-import Dominio.Question;
-import Dominio.StudentTestQuestion;
+import Dominio.Test;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentMetadata;
 import ServidorPersistente.IPersistentQuestion;
-import ServidorPersistente.IPersistentStudentTestQuestion;
+import ServidorPersistente.IPersistentTestQuestion;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -54,7 +53,7 @@ public class DeleteExercice implements IServico {
 
 	public boolean run(
 		Integer executionCourseId,
-		Integer oldQuestionId,
+		Integer metadataId,
 		String path)
 		throws FenixServiceException {
 		this.path = path.replace('\\', '/');
@@ -62,102 +61,101 @@ public class DeleteExercice implements IServico {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
 
-			IQuestion oldQuestion = new Question(oldQuestionId);
+			IPersistentMetadata persistentMetadata =
+				persistentSuport.getIPersistentMetadata();
+			IMetadata metadata = new Metadata(metadataId);
+			metadata = (IMetadata) persistentMetadata.readByOId(metadata, true);
+			if (metadata == null)
+				throw new InvalidArgumentsServiceException();
+
+			List questionList =
+				persistentSuport.getIPersistentQuestion().readByMetadata(
+					metadata);
+			boolean delete = true;
+			Iterator questionIt = questionList.iterator();
 			IPersistentQuestion persistentQuestion =
 				persistentSuport.getIPersistentQuestion();
-			oldQuestion =
-				(IQuestion) persistentQuestion.readByOId(oldQuestion, true);
-			if (oldQuestion == null)
-				throw new FenixServiceException();
-			IMetadata newMetadata =
-				removeExercice(persistentSuport, oldQuestion);
-			List studentTestQuestionList =
-				persistentSuport
-					.getIPersistentStudentTestQuestion()
-					.readByQuestion(
-					oldQuestion);
+			while (questionIt.hasNext()) {
+				IQuestion question = (IQuestion) questionIt.next();
 
-			if (studentTestQuestionList.size() != 0) {
+				List testQuestionList =
+					persistentSuport
+						.getIPersistentTestQuestion()
+						.readByQuestion(
+						question);
+				Iterator testQuestionIt = testQuestionList.iterator();
+				while (testQuestionIt.hasNext())
+					removeTestQuestionFromTest(
+						persistentSuport,
+						(ITestQuestion) testQuestionIt.next());
 
-				IQuestion newQuestion = null;
-
-				newQuestion =
-					getNewQuestion(
-						persistentQuestion,
-						newMetadata,
-						oldQuestion);
-				if (newQuestion == null)
-					throw new FenixServiceException();
-
-				Iterator it = studentTestQuestionList.iterator();
-				IPersistentStudentTestQuestion persistentStudentTestQuestion =
-					persistentSuport.getIPersistentStudentTestQuestion();
-				while (it.hasNext()) {
-					IStudentTestQuestion studentTestQuestion =
-						(StudentTestQuestion) it.next();
-
-					if (!newQuestion.equals(oldQuestion)) {
-
-						studentTestQuestion.setQuestion(newQuestion);
-						studentTestQuestion.setResponse(new Integer(0));
-						persistentStudentTestQuestion.simpleLockWrite(
-							studentTestQuestion);
-					}
+				List studentTestQuestionList =
+					persistentSuport
+						.getIPersistentStudentTestQuestion()
+						.readByQuestion(
+						question);
+				if (studentTestQuestionList == null
+					|| studentTestQuestionList.size() == 0) {
+					persistentQuestion.delete(question);
+					metadata.setMetadataFile(
+						removeLocation(
+							metadata.getMetadataFile(),
+							question.getXmlFileName()));
+					persistentMetadata.simpleLockWrite(metadata);
+				} else {
+					question.setVisibility(new Boolean("false"));
+					persistentQuestion.lockWrite(question);
+					delete = false;
 				}
 
-				if (!newQuestion.equals(oldQuestion))
-					persistentQuestion.delete(oldQuestion);
-
 			}
-			return true;
+
+			if (delete) {
+				persistentQuestion.deleteByMetadata(metadata);
+				persistentMetadata.delete(metadata);
+			} else
+				metadata.setVisibility(new Boolean("false"));
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
+		return true;
 	}
 
-	private IMetadata removeExercice(
+	private void removeTestQuestionFromTest(
 		ISuportePersistente persistentSuport,
-		IQuestion oldQuestion)
-		throws ExcepcaoPersistencia, FenixServiceException {
-		IMetadata metadata = new Metadata(oldQuestion.getKeyMetadata());
-		IPersistentMetadata persistentMetadata =
-			persistentSuport.getIPersistentMetadata();
-		metadata = (IMetadata) persistentMetadata.readByOId(metadata, true);
-		if(getMembersNumber(persistentSuport.getIPersistentQuestion(), metadata)!=1){
-			metadata.setMetadataFile(removeLocation(metadata.getMetadataFile(),	oldQuestion.getXmlFileName()));
-			persistentMetadata.simpleLockWrite(metadata);
-		}
-		return metadata;
-	}
-
-	private IQuestion getNewQuestion(
-		IPersistentQuestion persistentQuestion,
-		IMetadata metadata,
-		IQuestion oldQuestion)
+		ITestQuestion testQuestion)
 		throws ExcepcaoPersistencia {
-		List questions = new ArrayList();
-		IQuestion question = null;
-		questions = persistentQuestion.readByMetadata(metadata);
 
-		if (questions.size() != 0) {
-			if (questions.size() == 1)
-				return oldQuestion;
+		IPersistentTestQuestion persistentTestQuestion =
+			persistentSuport.getIPersistentTestQuestion();
 
-			do {
-				Random r = new Random();
-				int questionIndex = r.nextInt(questions.size());
-				question = (IQuestion) questions.get(questionIndex);
-			} while (question.equals(oldQuestion));
+		ITest test = new Test(testQuestion.getKeyTest());
+		test =
+			(ITest) persistentSuport.getIPersistentTest().readByOId(test, true);
+		if (test == null)
+			throw new ExcepcaoPersistencia();
+
+		List testQuestionList = persistentTestQuestion.readByTest(test);
+		Integer questionOrder = testQuestion.getTestQuestionOrder();
+
+		if (testQuestionList != null) {
+			Iterator it = testQuestionList.iterator();
+			while (it.hasNext()) {
+				ITestQuestion iterTestQuestion = (ITestQuestion) it.next();
+				Integer iterQuestionOrder =
+					iterTestQuestion.getTestQuestionOrder();
+
+				if (questionOrder.compareTo(iterQuestionOrder) <= 0) {
+					persistentTestQuestion.simpleLockWrite(iterTestQuestion);
+					iterTestQuestion.setTestQuestionOrder(
+						new Integer(iterQuestionOrder.intValue() - 1));
+				}
+			}
 		}
-		return question;
-	}
-
-	private int getMembersNumber(
-		IPersistentQuestion persistentQuestion,
-		IMetadata metadata)
-		throws ExcepcaoPersistencia {
-		List questions = persistentQuestion.readByMetadata(metadata);
-		return questions.size();
+		persistentTestQuestion.delete(testQuestion);
+		test.setNumberOfQuestions(
+			new Integer(test.getNumberOfQuestions().intValue() - 1));
+		test.setLastModifiedDate(null);
 	}
 
 	private String removeLocation(String metadataFile, String xmlName)

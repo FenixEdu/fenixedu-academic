@@ -19,6 +19,7 @@ public class InfoQuestion extends InfoObject {
 	private Integer questionValue;
 	private String questionCardinality;
 	private Integer optionNumber;
+	private Boolean visibility;
 
 	public InfoQuestion() {
 	}
@@ -86,7 +87,7 @@ public class InfoQuestion extends InfoObject {
 	public void setCorrectResponse(List list) {
 		correctResponse = list;
 	}
-	
+
 	public Integer getOptionNumber() {
 		return optionNumber;
 	}
@@ -94,7 +95,15 @@ public class InfoQuestion extends InfoObject {
 	public void setOptionNumber(Integer integer) {
 		optionNumber = integer;
 	}
-	
+
+	public Boolean getVisibility() {
+		return visibility;
+	}
+
+	public void setVisibility(Boolean boolean1) {
+		visibility = boolean1;
+	}
+
 	public boolean equals(Object obj) {
 		boolean result = false;
 		if (obj instanceof InfoQuestion) {
@@ -120,8 +129,9 @@ public class InfoQuestion extends InfoObject {
 						&& (infoQuestion
 							.getCorrectResponse()
 							.containsAll(getCorrectResponse()))
-						&& (getOptionNumber().equals(infoQuestion.getOptionNumber()))
-						);
+						&& (getOptionNumber()
+							.equals(infoQuestion.getOptionNumber()))
+						&& (getVisibility().equals(infoQuestion.getVisibility())));
 		}
 		return result;
 	}

@@ -13,6 +13,7 @@ import java.util.List;
 public class InfoMetadata extends InfoObject {
 	private String metadataFile;
 	private InfoExecutionCourse infoExecutionCourse;
+	private Boolean visibility;
 
 	private String difficulty;
 	private String level;
@@ -30,6 +31,14 @@ public class InfoMetadata extends InfoObject {
 
 	public String getMetadataFile() {
 		return metadataFile;
+	}
+
+	public Boolean getVisibility() {
+		return visibility;
+	}
+
+	public void setVisibility(Boolean boolean1) {
+		visibility = boolean1;
 	}
 
 	public void setInfoExecutionCourse(InfoExecutionCourse course) {
@@ -111,10 +120,10 @@ public class InfoMetadata extends InfoObject {
 						&& (getAuthor().containsAll(infoMetadata.getAuthor()))
 						&& (infoMetadata.getAuthor().containsAll(getAuthor()))
 						&& (getMembers().containsAll(infoMetadata.getMembers()))
-						&& (infoMetadata
-							.getMembers()
-							.containsAll(getMembers())));
-			}
+						&& (infoMetadata.getMembers().containsAll(getMembers()))
+						&& (getVisibility().equals(infoMetadata.getVisibility())));
+		}
 		return result;
 	}
+
 }

@@ -65,6 +65,34 @@ public class StudentTestQuestionOJB
 		return queryList(StudentTestQuestion.class, criteria);
 	}
 
+	public List readByQuestionAndDistributedTest(
+		IQuestion question,
+		IDistributedTest distributedTest)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyQuestion", question.getIdInternal());
+		criteria.addEqualTo(
+			"keyDistributedTest",
+			distributedTest.getIdInternal());
+		return queryList(StudentTestQuestion.class, criteria);
+	}
+
+	public StudentTestQuestion readByQuestionAndStudentAndDistributedTest(
+		IQuestion question,
+		IStudent student,
+		IDistributedTest distributedTest)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyQuestion", question.getIdInternal());
+		criteria.addEqualTo("keyStudent", student.getIdInternal());
+		criteria.addEqualTo(
+			"keyDistributedTest",
+			distributedTest.getIdInternal());
+		return (StudentTestQuestion) queryObject(
+			StudentTestQuestion.class,
+			criteria);
+	}
+
 	public List readStudentsByDistributedTest(IDistributedTest distributedTest)
 		throws ExcepcaoPersistencia {
 

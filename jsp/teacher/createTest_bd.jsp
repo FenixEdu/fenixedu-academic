@@ -40,7 +40,7 @@
 </table>
 <br/>
 <br/>
-<html:submit styleClass="inputbutton"><bean:message key="button.confirm"/></html:submit> 
+<html:submit styleClass="inputbutton"><bean:message key="button.continue"/></html:submit> 
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>
 </html:form>
 </logic:notEqual>

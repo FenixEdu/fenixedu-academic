@@ -7,6 +7,7 @@ CREATE TABLE METADATA (
   ID_INTERNAL int(11) unsigned not null auto_increment,
   KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
   METADATA_FILE blob not null,
+  VISIBILITY bit not null default '1',
   PRIMARY KEY  (ID_INTERNAL)
 ) TYPE=InnoDB;
 
@@ -20,6 +21,7 @@ CREATE TABLE XML_DOCUMENTS (
   XML_FILE mediumblob not null,
   XML_FILE_NAME varchar(100) not null default '',
   KEY_METADATA int(11) unsigned not null default '0',
+  VISIBILITY bit not null default '1',
   PRIMARY KEY  (ID_INTERNAL),
   unique U1 (KEY_METADATA, XML_FILE_NAME)
 ) TYPE=InnoDB;

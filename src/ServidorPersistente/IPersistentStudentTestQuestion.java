@@ -10,6 +10,7 @@ import Dominio.IDistributedTest;
 import Dominio.IQuestion;
 import Dominio.IStudent;
 import Dominio.IStudentTestQuestion;
+import Dominio.StudentTestQuestion;
 
 /**
  * @author Susana Fernandes
@@ -23,7 +24,17 @@ public interface IPersistentStudentTestQuestion extends IPersistentObject {
 		throws ExcepcaoPersistencia;
 	public abstract List readByStudent(IStudent student)
 		throws ExcepcaoPersistencia;
-	public abstract List readByQuestion(IQuestion question) throws ExcepcaoPersistencia;
+	public abstract List readByQuestion(IQuestion question)
+		throws ExcepcaoPersistencia;
+	public abstract List readByQuestionAndDistributedTest(
+		IQuestion question,
+		IDistributedTest distributedTest)
+		throws ExcepcaoPersistencia;
+	public abstract StudentTestQuestion readByQuestionAndStudentAndDistributedTest(
+		IQuestion question,
+		IStudent student,
+		IDistributedTest distributedTest)
+		throws ExcepcaoPersistencia;
 	public abstract List readStudentsByDistributedTest(IDistributedTest distributedTest)
 		throws ExcepcaoPersistencia;
 	public abstract List readStudentTestQuestionsByDistributedTest(IDistributedTest distributedTest)

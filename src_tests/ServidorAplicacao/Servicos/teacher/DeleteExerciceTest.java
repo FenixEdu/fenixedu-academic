@@ -37,7 +37,7 @@ public class DeleteExerciceTest extends TestCaseDeleteAndEditServices {
 			{
 				new Integer(26),
 				new Integer(1),
-				new String("e:\\eclipse-SDK-2.1-win32\\eclipse\\workspace\\fenix\\build\\app\\")};
+				new String("file:///Users/susana/Documents/software/eclipse/workspace/fenix/build/app/")};
 		return args;
 	}
 

@@ -32,13 +32,8 @@ public class InsertTestQuestionTest extends TestCaseDeleteAndEditServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args =
-			{
-				new Integer(26),
-				new Integer(1),
-				new Integer(1),
-				new Integer(4),
-				new Integer(5)};
+//		Object[] args ={ new Integer(26), new Integer(1), new Integer(1), new Integer(4), new Integer(5)};
+		Object[] args ={ new Integer(26), new Integer(1), new Integer(1), null, null};
 		return args;
 	}
 

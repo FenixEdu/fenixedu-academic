@@ -37,20 +37,24 @@
 		<html:option value="-1"><bean:message key="label.end"/></html:option>
 		</html:select>
 		</td>
-		<td>
-		<html:submit styleClass="inputbutton"> <bean:message key="button.insert"/></html:submit>
-		</td>
 	</tr>
 </table>
 <br/>
 <br/>
-<div class="gen-button">
-<html:link page="<%= "/testEdition.do?method=editTest&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
-<bean:message key="link.goBack" />
-</html:link></div>
+<table><tr>
+	<td><html:submit styleClass="inputbutton"> <bean:message key="label.change"/></html:submit></html:form></td>
+	<td>
+		<html:form action="/testEdition">
+		<html:hidden property="page" value="0"/>
+		<html:hidden property="method" value="editTest"/>
+		<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+		<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
+			<html:submit styleClass="inputbutton"><bean:message key="link.goBack"/></html:submit>
+	</td>
+</tr></table>
 <br/>
 <br/>
-<h2><bean:message key="title.insertTestQuestionExercice"/></h2>
+<h2><bean:message key="title.example"/></h2>
 <bean:define id="questionCode" name="infoQuestion" property="idInternal"/>
 <bean:define id="index" value="0"/>
 <bean:define id="imageLabel" value="false"/>

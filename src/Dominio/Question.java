@@ -12,6 +12,7 @@ public class Question extends DomainObject implements IQuestion {
 	private String xmlFileName;
 	private IMetadata metadata;
 	private Integer keyMetadata;
+	private Boolean visibility;
 
 	public Question() {
 	}
@@ -49,4 +50,13 @@ public class Question extends DomainObject implements IQuestion {
 	public void setXmlFileName(String string) {
 		xmlFileName = string;
 	}
+
+	public Boolean getVisibility() {
+		return visibility;
+	}
+
+	public void setVisibility(Boolean boolean1) {
+		visibility = boolean1;
+	}
+
 }

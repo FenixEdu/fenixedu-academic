@@ -8,17 +8,19 @@ public class Metadata extends DomainObject implements IMetadata {
 	private String MetadataFile;
 	private IDisciplinaExecucao executionCourse;
 	private Integer keyExecutionCourse;
-	
+	private Boolean visibility;
+
 	public Metadata() {
 	}
-	
-	public Metadata(Integer metadataId){
-		setIdInternal(metadataId);	
+
+	public Metadata(Integer metadataId) {
+		setIdInternal(metadataId);
 	}
 
 	public IDisciplinaExecucao getExecutionCourse() {
 		return executionCourse;
 	}
+	
 	public Integer getKeyExecutionCourse() {
 		return keyExecutionCourse;
 	}
@@ -37,6 +39,14 @@ public class Metadata extends DomainObject implements IMetadata {
 
 	public void setMetadataFile(String string) {
 		MetadataFile = string;
+	}
+
+	public Boolean getVisibility() {
+		return visibility;
+	}
+
+	public void setVisibility(Boolean boolean1) {
+		visibility = boolean1;
 	}
 
 }

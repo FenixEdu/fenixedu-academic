@@ -26,18 +26,14 @@
 	<tr>
 		<bean:define id="distributedTestCode" name="distributedTest" property="idInternal" />
 		<td class="listClasses">
-			<html:link page="<%= "/testDistribution.do?method=showDistributedTestStudents&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
+<%--			<html:link page="<%= "/testDistribution.do?method=showDistributedTestStudents&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
+--%>
+		<html:link page="<%= "/distributedTestEdition.do?method=prepareEditDistributedTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
 				<bean:write name="distributedTest" property="title"/>
 			</html:link>
 		</td>
 		<td class="listClasses"><bean:write name="distributedTest" property="beginDateTimeFormatted"/></td>
 		<td class="listClasses"><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
-		<td>
-		<div class="gen-button">
-		<html:link page="<%= "/distributedTestEdition.do?method=prepareEditDistributedTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
-		<bean:message key="label.edit" />
-		</html:link></div>
-		</td>
 		<td>
 		<div class="gen-button">
 		<html:link page="<%= "/testDistribution.do?method=showTestMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">

@@ -14,9 +14,12 @@ import Dominio.ITestQuestion;
  * @author Susana Fernandes
  */
 public interface IPersistentTestQuestion extends IPersistentObject {
-	public abstract List readByTest(ITest test)
+	public abstract List readByTest(ITest test) throws ExcepcaoPersistencia;
+	public abstract ITestQuestion readByTestAndQuestion(
+		ITest test,
+		IQuestion question)
 		throws ExcepcaoPersistencia;
-	public abstract ITestQuestion readByTestAndQuestion(ITest test, IQuestion question)
+	public abstract List readByQuestion(IQuestion question)
 		throws ExcepcaoPersistencia;
 	public abstract void deleteByTest(ITest test) throws ExcepcaoPersistencia;
 	public abstract void delete(ITestQuestion testQuestion)

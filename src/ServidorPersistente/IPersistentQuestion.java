@@ -20,7 +20,12 @@ public interface IPersistentQuestion extends IPersistentObject {
 		throws ExcepcaoPersistencia;
 	public abstract Question readExampleQuestionByMetadata(IMetadata metadata)
 		throws ExcepcaoPersistencia;
-	public List readByMetadata(IMetadata metadata) throws ExcepcaoPersistencia;
+	public abstract List readByMetadata(IMetadata metadata)
+		throws ExcepcaoPersistencia;
+	public abstract List readByMetadataAndVisibility(IMetadata metadata)
+		throws ExcepcaoPersistencia;
+	public abstract void deleteByMetadata(IMetadata metadata)
+		throws ExcepcaoPersistencia;
 	public abstract void delete(IQuestion question)
 		throws ExcepcaoPersistencia;
 }

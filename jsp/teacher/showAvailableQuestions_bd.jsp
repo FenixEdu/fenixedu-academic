@@ -48,9 +48,15 @@
 		<td>
 			<div class="gen-button">
 			<html:link page="<%= "/questionsManagement.do?method=prepareInsertTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") + "&amp;metadataCode=" + metadataCode%>">
-			<bean:message key="title.insertTestQuestionExercice" />
+			<bean:message key="link.see" />
 			</html:link></div>
-		</td>	
+		</td>
+		<td>
+			<div class="gen-button">
+			<html:link page="<%= "/questionsManagement.do?method=insertTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") + "&amp;metadataCode=" + metadataCode%>">
+			<bean:message key="button.insert" />
+			</html:link></div>
+		</td>
 	</tr>
 	</logic:iterate>
 	</table>
@@ -59,18 +65,22 @@
 <br/>
 	<table>
 	<tr><td>
-		<div class="gen-button">
-			<html:link page="<%= "/testEdition.do?method=editTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") %>">
-				<bean:message key="link.editTest" />
-			</html:link>
-		</div>
+		<html:form action="/testEdition">
+		<html:hidden property="page" value="0"/>
+		<html:hidden property="method" value="editTest"/>
+		<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+		<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
+			<html:submit styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>
+		</html:form>
 	</td>
 	<td>
-		<div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=deleteTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") %>">
-				<bean:message key="link.removeTest" />
-			</html:link>
-		</div>
+	<html:form action="/testsManagement">
+		<html:hidden property="page" value="0"/>
+		<html:hidden property="method" value="deleteTest"/>
+		<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+		<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
+			<html:submit styleClass="inputbutton"><bean:message key="link.removeTest"/></html:submit>
+		</html:form>
 	</td></tr>
 	</table>
 </logic:present>

@@ -25,6 +25,10 @@
 			<form-property name="information" type="java.lang.String"/>
 			<form-property name="option" type="java.lang.String[]"/>
 			<form-property name="objectCode" type="java.lang.String"/>
+			<form-property name="changesType" type="java.lang.String"/>
+			<form-property name="studentsType" type="java.lang.String"/>
+			<form-property name="metadataCode" type="java.lang.String"/>
+			<form-property name="deleteVariation" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		<form-bean name="exerciceForm"
@@ -51,6 +55,14 @@
 			<form-property name="testQuestionOrder" type="java.lang.String"/>
 			<form-property name="option" type="java.lang.String"/>
 			<form-property name="objectCode" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		<form-bean name="testQuestionChangesForm"
+			type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="changesType" type="java.lang.String"/>
+			<form-property name="allStudents" type="java.lang.String"/>
+			<form-property name="delete" type="java.lang.String"/>
+			<form-property name="option" type="java.lang.String[]"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		<form-bean name="distributedTestForm"
@@ -849,11 +861,13 @@
 				<forward name="createTest" path="/createTest.jsp"/>
 				<forward name="showAvailableQuestions" path="/showAvailableQuestions.jsp"/>
 				<forward name="showTests" path="/showTests.jsp"/>
+				<forward name="prepareDeleteTest" path="/prepareDeleteTest.jsp"/>
 				<forward name="chooseDeleteTestAction" path="/chooseDeleteTestAction.jsp"/>
 				<forward name="showStudentTest" path="/showStudentTest.jsp"/>
-				<forward name="showDistributedTestStudents" path="/showDistributedTestStudents.jsp"/>
 				<forward name="showStudentTestLog" path="/showStudentTestLog.jsp"/>
-				<forward name="removeExercice" path="/removeExercice.jsp"/>
+				<forward name="changeStudentTestQuestion" path="/changeStudentTestQuestion.jsp"/>
+				<forward name="chooseAnotherExercice" path="/chooseAnotherExercice.jsp"/>
+				<forward name="showTestMarks" path="/showTestMarks.jsp"/>
 		</action>
 		<action path="/exercicesManagement"
 				name="exerciceForm"
@@ -866,6 +880,7 @@
 				<forward name="exercicesFirstPage" path="/exercicesFirstPage.jsp"/>
 				<forward name="insertNewExercice" path="/insertNewExercice.jsp"/>
 				<forward name="insertXmlPaths" path="/insertXmlPaths.jsp"/>
+				<forward name="prepareRemoveExercice" path="/prepareRemoveExercice.jsp"/>
 		</action>
 		<action path="/questionsManagement"
 				name="questionForm"

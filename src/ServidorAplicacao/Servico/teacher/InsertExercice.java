@@ -81,15 +81,13 @@ public class InsertExercice implements IServico {
 			if (executionCourse == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-
 			ParseMetadata parseMetadata = new ParseMetadata();
 			String metadataString = null;
 			List xmls = null;
 			try {
-				//new String(metadataFile.getFileData()
 				metadataString =
 					changeDocumentType(
-						new String(metadataFile.getFileData(),"ISO-8859-1"),
+						new String(metadataFile.getFileData(), "ISO-8859-1"),
 						true);
 				xmls = parseMetadata.parseMetadata(metadataString);
 			} catch (Exception e) {
@@ -100,6 +98,7 @@ public class InsertExercice implements IServico {
 			IMetadata metadata = new Metadata();
 			metadata.setExecutionCourse(executionCourse);
 			metadata.setMetadataFile(metadataString);
+			metadata.setVisibility(new Boolean("true"));
 			persistentMetadata.simpleLockWrite(metadata);
 
 			ZipInputStream zipFile = null;
@@ -112,7 +111,6 @@ public class InsertExercice implements IServico {
 						break;
 					byte[] b = new byte[1000];
 					int readed = 0;
-
 					while ((readed = zipFile.read(b)) > -1)
 						xmlString = xmlString.concat(new String(b, 0, readed));
 					xmlString = changeDocumentType(xmlString, false);
@@ -120,13 +118,12 @@ public class InsertExercice implements IServico {
 					IPersistentQuestion persistentQuestion =
 						persistentSuport.getIPersistentQuestion();
 					try {
-
 						parseQuestion.parseFile(xmlString);
-
 						IQuestion question = new Question();
 						question.setMetadata(metadata);
 						question.setXmlFile(xmlString);
 						question.setXmlFileName(entry.getName());
+						question.setVisibility(new Boolean("true"));
 						persistentQuestion.simpleLockWrite(question);
 					} catch (Exception e) {
 						zipFile.closeEntry();
@@ -206,7 +203,4 @@ public class InsertExercice implements IServico {
 		result = result.concat(file.substring(index3, file.length()));
 		return result;
 	}
-	//<?xml version="1.0" encoding="Latin1"?>
-	//ISO-8859-1
-	
 }

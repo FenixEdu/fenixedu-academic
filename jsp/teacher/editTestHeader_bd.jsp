@@ -36,6 +36,6 @@
 		<td><html:textarea rows="7" cols="45" name="infoTest" property="information"/></td>
 	<tr/>
 </table>
-<html:submit styleClass="inputbutton"><bean:message key="button.save"/></html:submit>
+<html:submit styleClass="inputbutton"><bean:message key="label.change"/></html:submit>
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>
 </html:form>

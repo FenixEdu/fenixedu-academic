@@ -40,6 +40,13 @@ public class TestQuestionOJB
 		return (ITestQuestion) queryObject(TestQuestion.class, criteria);
 	}
 
+	public List readByQuestion(IQuestion question)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyQuestion", question.getIdInternal());
+		return queryList(TestQuestion.class, criteria);
+	}
+
 	public void deleteByTest(ITest test) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyTest", test.getIdInternal());

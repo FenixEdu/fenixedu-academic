@@ -14,6 +14,7 @@ import DataBeans.InfoMetadata;
 import DataBeans.InfoSiteMetadatas;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
+
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IMetadata;
@@ -63,8 +64,7 @@ public class ReadMetadatas implements IServico {
 			IPersistentMetadata persistentMetadata =
 				(IPersistentMetadata) persistentSuport.getIPersistentMetadata();
 
-			List metadatas =
-				persistentMetadata.readByExecutionCourse(executionCourse);
+			List metadatas =persistentMetadata.readByExecutionCourseAndVisibility(executionCourse);
 			List result = new ArrayList();
 			Iterator iter = metadatas.iterator();
 			while (iter.hasNext()) {

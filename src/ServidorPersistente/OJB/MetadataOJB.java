@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IDisciplinaExecucao;
+import Dominio.IMetadata;
 import Dominio.Metadata;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentMetadata;
@@ -31,5 +32,19 @@ public class MetadataOJB
 			"keyExecutionCourse",
 			executionCourse.getIdInternal());
 		return queryList(Metadata.class, criteria);
+	}
+
+	public List readByExecutionCourseAndVisibility(IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"keyExecutionCourse",
+			executionCourse.getIdInternal());
+		criteria.addEqualTo("visibility", new Boolean("true"));
+		return queryList(Metadata.class, criteria);
+	}
+
+	public void delete(IMetadata metadata) throws ExcepcaoPersistencia {
+		super.delete(metadata);
 	}
 }

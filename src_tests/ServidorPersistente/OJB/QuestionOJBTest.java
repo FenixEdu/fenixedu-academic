@@ -121,8 +121,59 @@ public class QuestionOJBTest extends TestCaseOJB {
 		}
 	}
 
+	public void testReadByMetadataAndVisibility() {
+		System.out.println("4-> Test ReadByMetadataAndVisibility");
+		try {
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+			persistentSuport.iniciarTransaccao();
+			IPersistentMetadata persistentMetadata =
+				persistentSuport.getIPersistentMetadata();
+			IMetadata metadata = new Metadata(new Integer(1));
+			metadata =
+				(IMetadata) persistentMetadata.readByOId(metadata, false);
+			assertNotNull("there is no metadata with id=1", metadata);
+			IPersistentQuestion persistentQuestion =
+				persistentSuport.getIPersistentQuestion();
+			List questions =
+				persistentQuestion.readByMetadataAndVisibility(metadata);
+			assertEquals("wrong number of questions", 1, questions.size());
+			persistentSuport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			fail("exception: ExcepcaoPersistencia");
+		}
+
+	}
+
+	public void testDeleteByMetadata() {
+		System.out.println("5-> Test DeleteByMetadata");
+		try {
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+			persistentSuport.iniciarTransaccao();
+			IPersistentMetadata persistentMetadata =
+				persistentSuport.getIPersistentMetadata();
+			IMetadata metadata = new Metadata(new Integer(1));
+			metadata =
+				(IMetadata) persistentMetadata.readByOId(metadata, false);
+			assertNotNull("there is no metadata with id=1", metadata);
+			IPersistentQuestion persistentQuestion =
+				persistentSuport.getIPersistentQuestion();
+			persistentQuestion.deleteByMetadata(metadata);
+			persistentSuport.confirmarTransaccao();
+			persistentSuport.iniciarTransaccao();
+
+			List questions = persistentQuestion.readByMetadata(metadata);
+			assertEquals("wrong number of questions", 0, questions.size());
+
+			persistentSuport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			fail("exception: ExcepcaoPersistencia");
+		}
+	}
+
 	public void testDelete() {
-		System.out.println("4-> Test Delete");
+		System.out.println("6-> Test Delete");
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();

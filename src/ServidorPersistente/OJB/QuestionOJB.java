@@ -4,6 +4,7 @@
  */
 package ServidorPersistente.OJB;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -55,7 +56,27 @@ public class QuestionOJB
 		return queryList(Question.class, criteria);
 	}
 
+	public List readByMetadataAndVisibility(IMetadata metadata)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
+		criteria.addEqualTo("visibility", new Boolean("true"));
+		return queryList(Question.class, criteria);
+	}
+
+	public void deleteByMetadata(IMetadata metadata)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
+		List questions = queryList(Question.class, criteria);
+		Iterator it = questions.iterator();
+		while (it.hasNext()) {
+			delete((IQuestion) it.next());
+		}
+	}
+
 	public void delete(IQuestion question) throws ExcepcaoPersistencia {
 		super.delete(question);
 	}
+
 }

@@ -8,6 +8,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IDisciplinaExecucao;
+import Dominio.IMetadata;
 
 /**
  * @author Susana Fernandes
@@ -16,4 +17,7 @@ import Dominio.IDisciplinaExecucao;
 public interface IPersistentMetadata extends IPersistentObject {
 	public abstract List readByExecutionCourse(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia;
+	public abstract List readByExecutionCourseAndVisibility(IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia;
+	public void delete(IMetadata metadata) throws ExcepcaoPersistencia;
 }

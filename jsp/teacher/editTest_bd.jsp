@@ -38,7 +38,7 @@
 		</html:link>&nbsp;&nbsp;&nbsp;</div></td>
 		<td><div class="gen-button">
 		<html:link page="<%= "/testsManagement.do?method=showTests&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
-		<bean:message key="link.showTests"/>
+		<bean:message key="label.finish"/>
 		</html:link></div></td>
 	</tr>
 </table>
@@ -144,7 +144,7 @@
 			</html:link>&nbsp;&nbsp;&nbsp;</div></td>
 			<td><div class="gen-button">
 			<html:link page="<%= "/testsManagement.do?method=showTests&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
-			<bean:message key="link.showTests" />
+			<bean:message key="label.finish" />
 			</html:link></div></td>
 		</tr>
 	</table>

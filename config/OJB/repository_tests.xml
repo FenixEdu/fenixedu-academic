@@ -20,6 +20,11 @@
          column="METADATA_FILE"
     	 jdbc-type="CLOB"
          conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+    <field-descriptor id="4"
+        name="visibility"
+        column="VISIBILITY"
+        jdbc-type="BIT"
+	/>
     <reference-descriptor
          name="executionCourse"
          class-ref="Dominio.DisciplinaExecucao"
@@ -55,6 +60,11 @@
         name="keyMetadata"
         column="KEY_METADATA"
         jdbc-type="INTEGER"
+	/>
+	<field-descriptor id="5"
+        name="visibility"
+        column="VISIBILITY"
+        jdbc-type="BIT"
 	/>
 	<reference-descriptor
          name="metadata"

@@ -16,6 +16,7 @@ public class InfoStudentTestQuestion extends InfoObject implements Comparable {
 	private Integer testQuestionValue;
 	private Integer response;
 	private String optionShuffle;
+	private Double mark;
 
 	public InfoStudentTestQuestion() {
 	}
@@ -48,6 +49,10 @@ public class InfoStudentTestQuestion extends InfoObject implements Comparable {
 		return testQuestionValue;
 	}
 
+	public Double getMark() {
+		return mark;
+	}
+
 	public void setDistributedTest(InfoDistributedTest test) {
 		distributedTest = test;
 	}
@@ -76,6 +81,10 @@ public class InfoStudentTestQuestion extends InfoObject implements Comparable {
 		testQuestionValue = integer;
 	}
 
+	public void setMark(Double double1) {
+		mark = double1;
+	}
+
 	public boolean equals(Object obj) {
 		boolean result = false;
 		if (obj instanceof InfoStudentTestQuestion) {
@@ -97,7 +106,8 @@ public class InfoStudentTestQuestion extends InfoObject implements Comparable {
 					&& (getResponse()
 						.equals(infoStudentTestQuestion.getResponse()))
 					&& (getOptionShuffle()
-						.equals(infoStudentTestQuestion.getOptionShuffle()));
+						.equals(infoStudentTestQuestion.getOptionShuffle()))
+					&& (getMark().equals(infoStudentTestQuestion.getMark()));
 		}
 		return result;
 	}
@@ -108,4 +118,5 @@ public class InfoStudentTestQuestion extends InfoObject implements Comparable {
 		return getTestQuestionOrder().compareTo(
 			infoStudentTestQuestion.getTestQuestionOrder());
 	}
+
 }

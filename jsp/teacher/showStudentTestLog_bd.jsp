@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <logic:present name="infoStudentTestLogList">
 <html:form action="/testsManagement">
-<html:hidden property="method" value="showDistributedTestStudents"/>
+<html:hidden property="method" value="showTestMarks"/>
 <html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 <html:hidden property="distributedTestCode" value="<%=(pageContext.findAttribute("distributedTestCode")).toString()%>"/>
 

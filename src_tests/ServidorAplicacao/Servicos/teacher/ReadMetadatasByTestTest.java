@@ -13,6 +13,7 @@ import DataBeans.InfoMetadata;
 import DataBeans.InfoSiteMetadatas;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
+
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IMetadata;
@@ -47,7 +48,7 @@ public class ReadMetadatasByTestTest extends TestCaseReadServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(25), new Integer(7)};
+		Object[] args = { new Integer(26), new Integer(3)};
 		return args;
 	}
 
@@ -57,10 +58,7 @@ public class ReadMetadatasByTestTest extends TestCaseReadServices {
 
 	protected Object getObjectToCompare() {
 		InfoSiteMetadatas bodyComponent = new InfoSiteMetadatas();
-
 		InfoExecutionCourse infoExecutionCourse = null;
-		InfoMetadata infoMetadata = null;
-
 		List infoMetadatas = new ArrayList();
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -70,35 +68,66 @@ public class ReadMetadatasByTestTest extends TestCaseReadServices {
 			IPersistentMetadata persistentMetadata =
 				sp.getIPersistentMetadata();
 			IDisciplinaExecucao executionCourse =
-				new DisciplinaExecucao(new Integer(25));
+				new DisciplinaExecucao(new Integer(26));
 
-			IMetadata metadata = new Metadata(new Integer(1));
 			executionCourse =
 				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
 					executionCourse,
 					false);
 			assertNotNull("executionCourse null", executionCourse);
-			metadata =
-				(IMetadata) persistentMetadata.readByOId(metadata, false);
-			assertNotNull("metadata null", metadata);
+
+			IMetadata metadata2 = new Metadata(new Integer(2));
+			metadata2 =
+				(IMetadata) persistentMetadata.readByOId(metadata2, false);
+			assertNotNull("metadata null", metadata2);
+			IMetadata metadata3 = new Metadata(new Integer(3));
+			metadata3 =
+				(IMetadata) persistentMetadata.readByOId(metadata3, false);
+			assertNotNull("metadata null", metadata3);
+			IMetadata metadata4 = new Metadata(new Integer(4));
+			metadata4 =
+				(IMetadata) persistentMetadata.readByOId(metadata4, false);
+			assertNotNull("metadata null", metadata4);
+			IMetadata metadata6 = new Metadata(new Integer(6));
+			metadata6 =
+				(IMetadata) persistentMetadata.readByOId(metadata6, false);
+			assertNotNull("metadata null", metadata6);
+
 			sp.confirmarTransaccao();
 			infoExecutionCourse =
 				Cloner.copyIExecutionCourse2InfoExecutionCourse(
 					executionCourse);
-			infoMetadata = Cloner.copyIMetadata2InfoMetadata(metadata);
+			InfoMetadata infoMetadata2 =
+				Cloner.copyIMetadata2InfoMetadata(metadata2);
+			InfoMetadata infoMetadata3 =
+				Cloner.copyIMetadata2InfoMetadata(metadata3);
+			InfoMetadata infoMetadata4 =
+				Cloner.copyIMetadata2InfoMetadata(metadata4);
+			InfoMetadata infoMetadata6 =
+				Cloner.copyIMetadata2InfoMetadata(metadata6);
+
 			ParseMetadata p = new ParseMetadata();
 			try {
-				infoMetadata =
-					p.parseMetadata(metadata.getMetadataFile(), infoMetadata);
+				infoMetadata2 =
+					p.parseMetadata(metadata2.getMetadataFile(), infoMetadata2);
+				infoMetadata3 =
+					p.parseMetadata(metadata3.getMetadataFile(), infoMetadata3);
+				infoMetadata4 =
+					p.parseMetadata(metadata4.getMetadataFile(), infoMetadata4);
+				infoMetadata6 =
+					p.parseMetadata(metadata6.getMetadataFile(), infoMetadata6);
 			} catch (Exception e) {
 				fail("exception: ExcepcaoPersistencia ");
 			}
+			infoMetadatas.add(infoMetadata2);
+			infoMetadatas.add(infoMetadata3);
+			infoMetadatas.add(infoMetadata4);
+			infoMetadatas.add(infoMetadata6);
 		} catch (ExcepcaoPersistencia e) {
 			fail("exception: ExcepcaoPersistencia ");
 		}
 
 		bodyComponent.setExecutionCourse(infoExecutionCourse);
-		infoMetadatas.add(infoMetadata);
 		bodyComponent.setInfoMetadatas(infoMetadatas);
 		SiteView siteView =
 			new ExecutionCourseSiteView(bodyComponent, bodyComponent);

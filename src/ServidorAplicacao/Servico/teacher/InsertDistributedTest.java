@@ -209,7 +209,7 @@ public class InsertDistributedTest implements IServico {
 		throws ExcepcaoPersistencia {
 		List questions = new ArrayList();
 		IQuestion question = null;
-		questions = persistentQuestion.readByMetadata(metadata);
+		questions = persistentQuestion.readByMetadataAndVisibility(metadata);
 		if (questions.size() != 0) {
 			Random r = new Random();
 			int questionIndex = r.nextInt(questions.size());

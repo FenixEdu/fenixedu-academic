@@ -23,7 +23,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
-import org.apache.xerces.impl.dv.util.Base64;
+import org.apache.util.Base64;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteCommon;
@@ -36,6 +36,7 @@ import DataBeans.InfoStudentTestQuestion;
 import DataBeans.SiteView;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.comparators.InfoShiftComparatorByLessonType;
+
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -45,6 +46,8 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.CorrectionAvailability;
+import Util.TestQuestionChangesType;
+import Util.TestQuestionStudentsChangesType;
 import Util.TestType;
 
 /**
@@ -76,11 +79,11 @@ public class TestsManagementAction extends FenixDispatchAction {
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		SiteView siteView = null;
 		try {
-			Object[] args = { executionCourseId };
+			Object[] args = { executionCourseId, null };
 			siteView =
 				(SiteView) ServiceUtils.executeService(
 					userView,
-					"ReadMetadatas",
+					"ReadMetadatasByTest",
 					args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
@@ -128,7 +131,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		
+
 		Integer testCode = getCodeFromRequest(request, "testCode");
 
 		Object[] args = { executionCourseId, testCode };
@@ -424,6 +427,40 @@ public class TestsManagementAction extends FenixDispatchAction {
 		return mapping.findForward("showTests");
 	}
 
+	public ActionForward prepareDeleteTest(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		HttpSession session = request.getSession(false);
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
+		request.setAttribute("objectCode", objectCode);
+		request.setAttribute("testCode", testCode);
+
+		SiteView siteView = null;
+		try {
+			siteView =
+				(SiteView) ServiceUtils.executeService(
+					userView,
+					"ReadTest",
+					new Object[] { objectCode, testCode });
+
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute(
+			"title",
+			((InfoSiteTest) siteView.getComponent()).getInfoTest().getTitle());
+		request.setAttribute("siteView", readSiteView(request));
+		return mapping.findForward("prepareDeleteTest");
+	}
+
 	public ActionForward deleteTest(
 		ActionMapping mapping,
 		ActionForm form,
@@ -488,14 +525,15 @@ public class TestsManagementAction extends FenixDispatchAction {
 			}
 		}
 		byte[] imageData = Base64.decode(img.getBytes());
-		
+
 		try {
 			response.reset();
 			response.setContentType(imgTypeString);
 			response.setContentLength(imageData.length);
 			response.setBufferSize(imageData.length);
-			
-			DataOutputStream dataOut = new DataOutputStream(response.getOutputStream());
+
+			DataOutputStream dataOut =
+				new DataOutputStream(response.getOutputStream());
 			dataOut.write(imageData);
 			response.flushBuffer();
 		} catch (java.io.IOException e) {
@@ -615,7 +653,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		request.setAttribute("objectCode", objectCode);
 
 		((DynaActionForm) form).set("testType", "1");
-		((DynaActionForm) form).set("availableCorrection", "1");
+		((DynaActionForm) form).set("availableCorrection", "3");
 		((DynaActionForm) form).set("studentFeedback", "true");
 
 		return mapping.findForward("distributeTest");
@@ -920,7 +958,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		request.setAttribute("objectCode", objectCode);
 		return mapping.findForward("addStudentsToDistributedTest");
 	}
-	
+
 	public ActionForward editDistributedTest(
 		ActionMapping mapping,
 		ActionForm form,
@@ -1101,38 +1139,37 @@ public class TestsManagementAction extends FenixDispatchAction {
 		request.setAttribute("distributedTestCode", distributedTestCode);
 		return mapping.findForward("showStudentTestLog");
 	}
-	
-	
-	public ActionForward showTestMarks(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
 
-			HttpSession session = getSession(request);
-			UserView userView =
-				(UserView) session.getAttribute(SessionConstants.U_VIEW);
-			Integer objectCode = getCodeFromRequest(request, "objectCode");
-			Integer distributedTestCode =
-				getCodeFromRequest(request, "distributedTestCode");
-			Object[] args = { objectCode, distributedTestCode };
-			List infoStudentsTestQuestionsList = null;
-			try {
-				infoStudentsTestQuestionsList =
-					(List) ServiceUtils.executeService(
-						userView,
-						"ReadDistributedTestMarks",
-						args);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			request.setAttribute("objectCode", objectCode);
-			request.setAttribute("infoStudentsTestQuestionsList", infoStudentsTestQuestionsList);
-			readSiteView(request);
-			return mapping.findForward("showTestMarks");
+	public ActionForward showTestMarks(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		HttpSession session = getSession(request);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer distributedTestCode =
+			getCodeFromRequest(request, "distributedTestCode");
+		Object[] args = { objectCode, distributedTestCode };
+		//List infoStudentsTestQuestionsList = null;
+		SiteView siteView = null;
+		try {
+			siteView =
+				(SiteView) ServiceUtils.executeService(
+					userView,
+					"ReadDistributedTestMarks",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
 		}
-	
+		request.setAttribute("objectCode", objectCode);
+		request.setAttribute("distributedTestCode", distributedTestCode);
+		request.setAttribute("siteView", siteView);
+		return mapping.findForward("showTestMarks");
+	}
 
 	public ActionForward exercicesFirstPage(
 		ActionMapping mapping,
@@ -1197,18 +1234,19 @@ public class TestsManagementAction extends FenixDispatchAction {
 			error(request, "error.badMetadataFile");
 			return mapping.findForward("insertNewExercice");
 		}
-		
-		//&& !(xmlZipFile.getContentType().equals("application/x-gzip"))
+
 		if (!(xmlZipFile
 			.getContentType()
-			.equals("application/x-zip-compressed")) && !(xmlZipFile.getContentType().equals("application/zip")) ) {
+			.equals("application/x-zip-compressed"))
+			&& !(xmlZipFile.getContentType().equals("application/zip"))) {
 			error(request, "error.badXmlZipFile");
 			return mapping.findForward("insertNewExercice");
 		}
 		String path = getServlet().getServletContext().getRealPath("/");
 		List badXmls = null;
 		try {
-			Object[] args = { executionCourseId, metadataFile, xmlZipFile, path};
+			Object[] args =
+				{ executionCourseId, metadataFile, xmlZipFile, path };
 			badXmls =
 				(List) ServiceUtils.executeService(
 					userView,
@@ -1222,6 +1260,23 @@ public class TestsManagementAction extends FenixDispatchAction {
 		return exercicesFirstPage(mapping, form, request, response);
 	}
 
+	public ActionForward prepareRemoveExercice(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		request.setAttribute(
+			"objectCode",
+			getCodeFromRequest(request, "objectCode"));
+		request.setAttribute(
+			"exerciceCode",
+			getCodeFromRequest(request, "exerciceCode"));
+		request.setAttribute("siteView", readSiteView(request));
+		return mapping.findForward("prepareRemoveExercice");
+	}
+
 	public ActionForward removeExercice(
 		ActionMapping mapping,
 		ActionForm form,
@@ -1233,21 +1288,161 @@ public class TestsManagementAction extends FenixDispatchAction {
 			(IUserView) request.getSession(false).getAttribute(
 				SessionConstants.U_VIEW);
 		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-		Integer questionCode = getCodeFromRequest(request, "questionCode");
-		Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
-		Integer studentCode = getCodeFromRequest(request, "studentCode");
-		
-		request.setAttribute("objectCode", executionCourseId);
-		request.setAttribute("questionCode", questionCode);
-		request.setAttribute("testCode", distributedTestCode);
-		request.setAttribute("studentCode", studentCode);
-		request.setAttribute("siteView", readSiteView(request));
+		Integer metadataId = getCodeFromRequest(request, "exerciceCode");
 		String path = getServlet().getServletContext().getRealPath("/");
 		try {
-			Object[] args = { executionCourseId, questionCode, path};
+			Object[] args = { executionCourseId, metadataId, path };
 			ServiceUtils.executeService(userView, "DeleteExercice", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
+		}
+		request.setAttribute("successfulDeletion", "true");
+		return exercicesFirstPage(mapping, form, request, response);
+	}
+
+	public ActionForward prepareChangeStudentTestQuestion(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		request.setAttribute(
+			"objectCode",
+			getCodeFromRequest(request, "objectCode"));
+		request.setAttribute(
+			"questionCode",
+			getCodeFromRequest(request, "questionCode"));
+		request.setAttribute(
+			"distributedTestCode",
+			getCodeFromRequest(request, "distributedTestCode"));
+		request.setAttribute(
+			"studentCode",
+			getCodeFromRequest(request, "studentCode"));
+
+		request.setAttribute("siteView", readSiteView(request));
+
+		List changesTypeList = (new TestQuestionChangesType()).getAllTypes();
+		request.setAttribute("changesTypeList", changesTypeList);
+		List studentsTypeList =
+			(new TestQuestionStudentsChangesType()).getAllTypes();
+		request.setAttribute("studentsTypeList", studentsTypeList);
+
+		((DynaActionForm) form).set("changesType", "1");
+		((DynaActionForm) form).set("deleteVariation", "true");
+		((DynaActionForm) form).set("studentsType", "3");
+
+		return mapping.findForward("changeStudentTestQuestion");
+	}
+
+	public ActionForward chooseAnotherExercice(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		IUserView userView =
+			(IUserView) request.getSession(false).getAttribute(
+				SessionConstants.U_VIEW);
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+		Integer distributedTestId =
+			getCodeFromRequest(request, "distributedTestCode");
+		SiteView siteView = null;
+
+		try {
+			Object[] args = { executionCourseId, distributedTestId };
+			siteView =
+				(SiteView) ServiceUtils.executeService(
+					userView,
+					"ReadMetadatasByDistributedTest",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("objectCode", executionCourseId);
+		request.setAttribute(
+			"questionCode",
+			getCodeFromRequest(request, "questionCode"));
+		request.setAttribute("distributedTestCode", distributedTestId);
+		request.setAttribute(
+			"studentCode",
+			getCodeFromRequest(request, "studentCode"));
+		request.setAttribute("changed", request.getAttribute("changed"));
+		request.setAttribute(
+			"studentsType",
+			request.getAttribute("studentsType"));
+		request.setAttribute(
+			"deleteVariation",
+			request.getAttribute("deleteVariation"));
+		request.setAttribute("siteView", siteView);
+		return mapping.findForward("chooseAnotherExercice");
+	}
+
+	public ActionForward changeStudentTestQuestion(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		IUserView userView =
+			(IUserView) request.getSession(false).getAttribute(
+				SessionConstants.U_VIEW);
+
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+		Integer questionId = getCodeFromRequest(request, "questionCode");
+		Integer distributedTestId =
+			getCodeFromRequest(request, "distributedTestCode");
+		Integer studentId = getCodeFromRequest(request, "studentCode");
+		Integer metadataId = getCodeFromRequest(request, "metadataCode");
+		String changesType = request.getParameter("changesType");
+		String delete = request.getParameter("deleteVariation");
+		String studentsType = request.getParameter("studentsType");
+		request.setAttribute("siteView", readSiteView(request));
+		request.setAttribute("studentCode", studentId);
+		request.setAttribute("distributedTestCode", distributedTestId);
+		request.setAttribute("objectCode", executionCourseId);
+
+		if (((new TestQuestionChangesType(new Integer(changesType)))
+			.getType()
+			.intValue()
+			== 2)
+			&& (metadataId == null)) {
+			request.setAttribute("deleteVariation", delete);
+			request.setAttribute("studentsType", studentsType);
+			request.setAttribute("changesType", changesType);
+			return chooseAnotherExercice(mapping, form, request, response);
+		}
+		String path = getServlet().getServletContext().getRealPath("/");
+		Boolean result;
+		try {
+			Object[] args =
+				{
+					executionCourseId,
+					distributedTestId,
+					questionId,
+					metadataId,
+					studentId,
+					new TestQuestionChangesType(new Integer(changesType)),
+					new Boolean(delete),
+					new TestQuestionStudentsChangesType(
+						new Integer(studentsType)),
+					path };
+			result =
+				(Boolean) ServiceUtils.executeService(
+					userView,
+					"ChangeStudentTestQuestion",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		request.setAttribute("changed", result);
+		if (!result.booleanValue()) {
+			request.setAttribute("deleteVariation", delete);
+			request.setAttribute("studentsType", studentsType);
+			request.setAttribute("changesType", changesType);
+			return chooseAnotherExercice(mapping, form, request, response);
 		}
 
 		return showStudentTest(mapping, form, request, response);
@@ -1258,7 +1453,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		actionErrors.add("FileNotExist", new ActionError(error));
 		saveErrors(request, actionErrors);
 	}
-	
+
 	private SiteView readSiteView(HttpServletRequest request)
 		throws FenixActionException {
 
