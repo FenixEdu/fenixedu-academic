@@ -389,4 +389,15 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
 		criteria.addEqualTo("executionPeriod.keyExecutionYear", executionYear.getIdInternal());
         return queryList(ExecutionCourse.class, criteria);
     }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentExecutionCourse#readByExecutionDegreeAndExecutionPeriod(Dominio.ICursoExecucao, Dominio.IExecutionPeriod)
+     */
+    public List readByExecutionDegreeAndExecutionPeriod(ICursoExecucao executionDegree, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.idInternal", executionDegree.getCurricularPlan().getIdInternal());
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
+        return queryList(ExecutionCourse.class, criteria, true);
+    }
 }
