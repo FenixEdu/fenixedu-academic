@@ -6,7 +6,7 @@ DELETE FROM BRANCH;
 # O BRANCH COM O CODIGO INTERNO = 1 SERVE PARA REFERENCIAR UMA DISCIPLINA CURRICULAR QUE NAO PERTENCE A NENHUM RAMO, 
 # 									NA TABELA 'CURRICULAR_COURSE_SCOPE'
 #-------------------------------
-;
+
 INSERT INTO BRANCH values (1, '', '', 1);
 INSERT INTO BRANCH values (2, 'IA', 'Inteligencia Artificial', 1);
 INSERT INTO BRANCH values (3, 'II', 'Informatica Industrial', 1);
