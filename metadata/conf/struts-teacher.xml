@@ -389,7 +389,13 @@
             <form-property name="shift" type="java.lang.String" />
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
-        <form-bean name="enrollStudentGroupForm" type="org.apache.struts.validator.DynaValidatorForm" 
+		<form-bean name="editStudentGroupsShiftForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+            <form-property name="studentGroupsCodes" type="java.lang.Integer[]" />
+            <form-property name="shift" type="java.lang.String" />
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
+        </form-bean>
+		<form-bean name="enrollStudentGroupForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
             <form-property name="groupNumber" type="java.lang.String" />
             <form-property name="studentCodes" type="java.lang.Integer[]" />
@@ -1432,7 +1438,25 @@
             <forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
             <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
         </action>
-        <action path="/insertStudentGroupMembers" name="editStudentGroupForm" parameter="method" 
+		<action path="/editStudentGroupsShift" name="editStudentGroupsShiftForm" parameter="method" 
+            scope="request" 
+            input="/editStudentGroupsShift.do?method=prepareEditStudentGroupsShift&amp;page=0" 
+			validate="true"
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
+            <forward name="editStudentGroupsShift" path="/editStudentGroupsShift.jsp"/>
+			<forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>
+		<action path="/executeEditStudentGroupsShift" name="editStudentGroupsShiftForm" parameter="method" 
+            scope="request" 
+            input="/executeEditStudentGroupsShift.do?method=editStudentGroupsShift&amp;page=0" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+			<forward name="editStudentGroupsShift" path="/editStudentGroupsShift.jsp"/>
+			<forward name="viewStudentsAndGroupsByShift" path="/viewStudentsAndGroupsByShift.jsp"/>
+		</action>
+		<action path="/insertStudentGroupMembers" name="editStudentGroupForm" parameter="method" 
             scope="request" 
             type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
             <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException" 

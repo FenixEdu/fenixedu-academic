@@ -25,35 +25,52 @@
 
 	<logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
 		
+	<logic:equal name="type" value="true">
 	<table width="100%" cellpadding="0" cellspacing="0">
 			<tr>
 				<td class="infoop">
-					<bean:message key="label.teacher.viewStudentsAndGroupsByShift.description" />
+					<bean:message key="label.teacher.viewStudentsAndGroupsByShift.WithLink.description" />
 				</td>
 			</tr>
 	</table>
 	<br />
+	</logic:equal>
 	
-	
+	<logic:equal name="type" value="false">
+	<table width="100%" cellpadding="0" cellspacing="0">
+			<tr>
+				<td class="infoop">
+					<bean:message key="label.teacher.viewStudentsAndGroupsByShift.WithoutLink.description" />
+				</td>
+			</tr>
+	</table>
+	<br />
+	</logic:equal>
 	</logic:empty>	
 	
 	<logic:notEmpty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
 	
+	<logic:equal name="type" value="true">
 	<table width="100%" cellpadding="0" cellspacing="0">
 			<tr>
 				<td class="infoop">
-					<bean:message key="label.teacher.viewStudentsAndGroupsByShift.description" />
+					<bean:message key="label.teacher.viewStudentsAndGroupsByShift.WithLink.description" />
 				</td>
 			</tr>
 	</table>
-	
+	</logic:equal>
+
+	<logic:equal name="type" value="false">
+	<table width="100%" cellpadding="0" cellspacing="0">
+			<tr>
+				<td class="infoop">
+					<bean:message key="label.teacher.viewStudentsAndGroupsByShift.WithoutLink.description" />
+				</td>
+			</tr>
+	</table>
+	<br />
+	</logic:equal>
 	</logic:notEmpty>		
-	
-<br/>
-<span class="error"><html:errors/></span>
-<br/>
-<br/>
-	
 	
 </td>
 </tr>
@@ -156,7 +173,12 @@
 
 <logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
 <html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-    	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
+    	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/><br/>
+	
+	<logic:equal name="type" value="true">
+		<html:link page="<%="/editStudentGroupsShift.do?method=prepareEditStudentGroupsShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")%>">
+    		<bean:message key="link.editStudentGroupsShift"/></html:link><br/>
+	</logic:equal>
 
 	<br/>
 		
@@ -168,8 +190,12 @@
 	
 	<logic:notEmpty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
 	<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-    	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
-	
+    	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/><br/>
+    	
+	<logic:equal name="type" value="true">
+		<html:link page="<%="/editStudentGroupsShift.do?method=prepareEditStudentGroupsShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")%>">
+    		<bean:message key="link.editStudentGroupsShift"/></html:link><br/>
+	</logic:equal>
 
 	<br/>
 				 			 		

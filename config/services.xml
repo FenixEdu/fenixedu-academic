@@ -3156,6 +3156,16 @@
             <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
         </filterChains>
     </service>
+	<service>
+        <name>EditStudentGroupsShift</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.EditStudentGroupsShift</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
     <service>
         <name>EditGroupProperties</name>
         <implementationClass>ServidorAplicacao.Servico.teacher.EditGroupProperties</implementationClass>
@@ -3653,7 +3663,17 @@
         	<chain name="ExecutionCourseLecturingTeacherAuthorization"/>
         </filterChains>
     </service>
-    <service>
+	<service>
+        <name>VerifyIfCanEnrollStudentGroupsInShift</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.VerifyIfCanEnrollStudentGroupsInShift</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        	<chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+	<service>
         <name>PrepareEditStudentGroupMembers</name>
         <implementationClass> 
             ServidorAplicacao.Servico.teacher.PrepareEditStudentGroupMembers</implementationClass>

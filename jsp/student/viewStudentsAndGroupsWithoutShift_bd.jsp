@@ -25,7 +25,7 @@
 	<table width="100%" cellpadding="0" cellspacing="0">
 			<tr>
 				<td class="infoop">
-					<bean:message key="label.teacher.viewStudentsAndGroupsWithoutShift.description" />
+					<bean:message key="label.student.viewStudentsAndGroupsWithoutShift.description" />
 				</td>
 			</tr>
 	</table>
@@ -39,7 +39,7 @@
 	<table width="100%" cellpadding="0" cellspacing="0">
 			<tr>
 				<td class="infoop">
-					<bean:message key="label.teacher.viewStudentsAndGroupsWithoutShift.description" />
+					<bean:message key="label.student.viewStudentsAndGroupsWithoutShift.description" />
 				</td>
 			</tr>
 	</table>
@@ -87,7 +87,7 @@
 	
 	<br/>
  	<bean:size id="count" name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList"/>
-	<bean:message key="label.teacher.NumberOfStudentsWithoutShift" /><%= count %>
+	<bean:message key="label.student.NumberOfStudentsWithoutShift" /><%= count %>
 	<br/>	
 	<br/>
 	
