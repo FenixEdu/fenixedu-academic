@@ -99,7 +99,7 @@
 
       <field-descriptor name="percentage" column="PERCENTAGE" jdbc-type="DOUBLE"/>
       
-      <field-descriptor name="keyExecutionYear" column="KEY_EXECUTION_YEAR" jdbc-type="INTEGER"/>
+      <field-descriptor name="keyExecutionPeriod" column="KEY_EXECUTION_PERIOD" jdbc-type="INTEGER"/>
 
       <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 
@@ -111,8 +111,8 @@
       	locking="true"
       />
 
-      <reference-descriptor name="executionYear" class-ref="Dominio.ExecutionYear">
-         <foreignkey field-ref="keyExecutionYear"/>
+      <reference-descriptor name="executionPeriod" class-ref="Dominio.ExecutionPeriod">
+         <foreignkey field-ref="keyExecutionPeriod"/>
       </reference-descriptor> 
 
       <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
