@@ -12,11 +12,7 @@ package ServidorPersistente.OJB;
  */
 import java.util.List;
 
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
-import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
 import Dominio.Frequenta;
