@@ -11,7 +11,7 @@
  	<put name="degrees" value="/publico/associatedDegrees.jsp" />
  	<put name="body" value=""/>
   	<put name="navbarGeral" value="/publico/commonNavLocalPub.jsp" />
-  	<put name="navbar" value="/publico/gesdisNavbarInitial.jsp"/>
+  	<put name="navbar" value="/publico/gesdisNavbar.jsp"/>
   	<put name="footer" value="/publico/commonFooterPub.jsp" />
 
 	</definition>
