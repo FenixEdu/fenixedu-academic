@@ -423,7 +423,9 @@ function cleanSelect(checkboxes) {
 					
 					if (infoStudentGroup != null){
 						studentGroupId = infoStudentGroup.getIdInternal();
-						shiftId = infoStudentGroup.getInfoShift().getIdInternal();
+						if(infoStudentGroup.getInfoShift() != null){//temporary correction, verify if this makes sence in data
+							shiftId = infoStudentGroup.getInfoShift().getIdInternal();
+						}
 						groupNumber = infoStudentGroup.getGroupNumber();
 					}
 
