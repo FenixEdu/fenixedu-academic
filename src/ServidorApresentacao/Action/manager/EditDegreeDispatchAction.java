@@ -68,13 +68,12 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 			readDegreeForm.set("degreeId",degreeId);
 			
 
-			System.out.println("antes editDEGREEIDaaaaaaaaaaaaaaaaaaaAA"+degreeId);
-//			request.setAttribute("infoDegree",oldInfoDegree);
 			request.setAttribute("degreeId",degreeId);
 			return mapping.findForward("editDegree");
 		}
 
-
+//	COMO +ONHO O ID EM SESSAO E DEFINO NUM BEAN DO JSP DEVIA IR BUSCÁ-LO AO REQUEST DO EDIT E 
+//  TIRÁLO TB DO SET DO PREPARE
 
 	public ActionForward edit(
 		ActionMapping mapping,
@@ -107,8 +106,6 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 		Object args[] = { oldDegreeId, newInfoDegree };
 		GestorServicos manager = GestorServicos.manager();
 		List serviceResult = null;
-		System.out.println("AQUI33333333333333333333333333"+oldDegreeId);
-		System.out.println("AQUI44444444444444444444444444"+newInfoDegree);
 		try {
 				serviceResult = (List) manager.executar(userView, "EditDegreeService", args);
 		} catch (FenixServiceException e) {

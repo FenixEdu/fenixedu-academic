@@ -53,7 +53,7 @@
 		<bean:write name="degreeCurricularPlan" property="idInternal"/>
 		</html:multibox>
 		</td>				
-		<td class="listClasses"><html:link page="/readDegreeCurricularPlan.do" paramId="degreeId" paramName="degreeCurricularPlan" paramProperty="idInternal"><bean:write name="degreeCurricularPlan" property="name"/></html:link>
+		<td class="listClasses"><html:link page="/readDegreeCurricularPlan.do" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlan" paramProperty="idInternal"><bean:write name="degreeCurricularPlan" property="name"/></html:link>
 		</td>
 	 </tr>	
 </logic:iterate>				

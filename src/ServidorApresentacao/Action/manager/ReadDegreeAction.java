@@ -45,7 +45,7 @@ public class ReadDegreeAction extends FenixAction  {
 						
 				UserView userView =
 					(UserView) session.getAttribute(SessionConstants.U_VIEW);
-				Integer degreeId = (Integer) readDegreeForm.get("idInternal");
+				Integer degreeId = (Integer) readDegreeForm.get("degreeId");
 				Object args[] = { degreeId };
 				
 				GestorServicos manager = GestorServicos.manager();

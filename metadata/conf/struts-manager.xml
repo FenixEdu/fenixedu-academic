@@ -75,7 +75,7 @@
       
 	 <!-- Action for reading a degree -->
       <action path="/readDegree"
-      	      name="readForm"
+      	      name="degreeForm"
               input="/readDegreesInput.do"
               scope="request"
       	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">

@@ -28,9 +28,9 @@
 		<bean:write name="degree" property="idInternal"/>
 		</html:multibox>
 		</td>	
-		<td class="listClasses"><html:link page="/readDegree.do" paramId="idInternal" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="sigla"/></html:link>
+		<td class="listClasses"><html:link page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="sigla"/></html:link>
 		</td>			
-		<td class="listClasses"><html:link page="/readDegree.do" paramId="idInternal" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="nome"/></html:link>
+		<td class="listClasses"><html:link page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="nome"/></html:link>
 		</td>
 	 </tr>	
 </logic:iterate>				

@@ -60,10 +60,6 @@ public class EditDegreeService implements IServico {
 				persistentSuport = SuportePersistenteOJB.getInstance();
 				persistentDegree = persistentSuport.getICursoPersistente();
 				oldDegree = persistentDegree.readByIdInternal(oldDegreeId);
-				
-			System.out.println("AQUI0000000000000000000000000000000"+oldDegreeId);	
-			System.out.println("AQUI11111111111111111111111111111"+oldDegree);
-			
 			
 				List degrees = persistentDegree.readAll();
 				degrees.remove((ICurso)oldDegree);
@@ -72,9 +68,10 @@ public class EditDegreeService implements IServico {
 				newCode = newInfoDegree.getSigla();
 				newName = newInfoDegree.getNome();
 				newType = newInfoDegree.getTipoCurso();
-				List errors = new ArrayList(2);
+				List errors = new ArrayList(3);
 				errors.add(null);
 			    errors.add(null);
+			errors.add(null);
 //				if(newCode.compareToIgnoreCase(oldDegree.getSigla())==0 ||(newName.compareToIgnoreCase(oldDegree.getNome())==0 && newType.equals((TipoCurso) oldDegree.getTipoCurso())))
 //					errors = null;
 //				else
@@ -90,11 +87,10 @@ public class EditDegreeService implements IServico {
 				 		}
 						if(newName.compareToIgnoreCase(degreeIter.getNome())==0 && newType.equals((TipoCurso) degreeIter.getTipoCurso())) {
 						modified++;
-						errors.set(1, newName);
+						errors.set(2, newName);
+						errors.set(1, newType.toString());
 						}
 					}
-
-System.out.println("AQUI11111111111111111111111111111"+oldDegree);
 
 					oldDegree.setNome(newName);
 					oldDegree.setSigla(newCode);
