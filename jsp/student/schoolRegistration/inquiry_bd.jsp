@@ -41,7 +41,18 @@
 	<td><html:radio property="<%= answersKey %>" value="true" /></td>
 	<td><html:radio property="<%= answersKey %>" value="false" /></td>
 </tr>
-
+<tr>
+	<td>Pergunta6</td>
+	<bean:define id="answersKey"> answersMap(6) </bean:define> 
+	<td><html:radio property="<%= answersKey %>" value="true" /></td>
+	<td><html:radio property="<%= answersKey %>" value="false" /></td>
+</tr>
+<tr>
+	<td>Pergunta7</td>
+	<bean:define id="answersKey"> answersMap(7) </bean:define> 
+	<td><html:radio property="<%= answersKey %>" value="true" /></td>
+	<td><html:radio property="<%= answersKey %>" value="false" /></td>
+</tr>
 
 <tr>
 	<td><html:submit styleClass="inputbutton">Continuar</html:submit><td>
