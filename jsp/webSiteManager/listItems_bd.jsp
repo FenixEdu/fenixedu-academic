@@ -55,12 +55,7 @@
 									</html:link>
 								</td>
 								<td class="listClasses">
-<%--									<str:getPrechomp delimiter=" ">--%>
-										<bean:write name="item" property="authorName"/>
-<%--									</str:getPrechomp> 
-									<str:getChomp delimiter=" ">
-										<bean:write name="item" property="authorName"/>
-									</str:getChomp>--%>
+									<bean:write name="item" property="authorName"/>
 								</td>
 								<logic:equal name="item" property="published" value="true">
 									<td class="listClasses"><bean:message key="message.published"/></td>

@@ -1,12 +1,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-
 <h2><bean:message key="label.manager.insert.curricularCourseScope" /></h2>
-
-<br>
-
+<br />
 <span class="error"><html:errors/></span>
-
 <html:form action="/insertCurricularCourseScope" method="get">
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="insert"/>
@@ -85,6 +81,14 @@
 		</tr>
 		<tr>
 			<td>
+				<bean:message key="message.manager.curricular.course.scope.ectsCredits"/>
+			</td>
+			<td>
+				<html:text size="5" property="ectsCredits" />
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<bean:message key="message.manager.curricular.course.scope.maxIncrementNac"/>
 			</td>
 			<td>
@@ -107,10 +111,18 @@
 				<html:text size="5" property="weight" />
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<bean:message key="label.manager.curricularCourseScope.beginDate"/>
+			</td>
+			<td>
+				<html:select property="beginDate">
+					<html:options collection="executionPeriodsLabels" property="value" labelProperty="label"/>
+				</html:select>				
+			</td>
+		</tr>
 	</table>
-	
-	<br>
-	
+	<br />
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.save"/>
 	</html:submit>

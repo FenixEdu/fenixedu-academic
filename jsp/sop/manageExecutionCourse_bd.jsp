@@ -17,7 +17,7 @@
 <br />
 <span class="error"><html:errors /></span>
 <br />
-Aviso: A alteração das cargas horárias pode tornar os dados incoeirentes.
+Aviso: A alteração das cargas horárias pode tornar os dados incoerentes.
 Sempre que se altere as cargas é necessário confirmar que os turnos da disciplina
 obdecem à nova carga definida.
 <br />

@@ -2,28 +2,17 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>			
-
-
 <h2><bean:message key="label.manager.insert.curricularCourseScope" /></h2>
-
-<br>
-
+<br />
 <span class="error"><html:errors/></span>
-
-
-	<html:form action="/insertCurricularCourseScopeFromAnother" method="get">
+<html:form action="/insertCurricularCourseScopeFromAnother" method="get">
 	<html:hidden property="method" value="insert"/>
-
 	<html:hidden property="page" value="1"/>
-
-	
 	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
 	<html:hidden property="curricularCourseScopeId" value="<%= request.getParameter("curricularCourseScopeId") %>"/>
-				
 	<table>
-		
 		<tr>
 			<td>
 				<bean:message key="message.manager.curricular.course.scope.YearAndSemester"/>
@@ -43,7 +32,6 @@
     			</html:select>
 			</td>
 		</tr>
-
 		<tr>
 			<td>
 				<bean:message key="message.manager.curricular.course.scope.branchCode"/>
@@ -54,82 +42,58 @@
 				</html:select>				
 			</td>
 		</tr>
-
 		<tr>
-			<td>
-				<bean:message key="message.manager.curricular.course.scope.theoreticalHours"/>
-			</td>
-			<td>
-				<html:text size="5" property="theoreticalHours" />
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<bean:message key="message.manager.curricular.course.scope.praticalHours"/>
-			</td>
-			<td>
-				<html:text size="5" property="praticalHours" />
-			</td>
+			<td><bean:message key="message.manager.theoreticalHours"/></td>
+			<td><html:text size="5" property="theoreticalHours" /></td>
 		</tr>
 		<tr>
-			<td>
-				<bean:message key="message.manager.curricular.course.scope.theoPratHours"/>
-			</td>
-			<td>
-				<html:text size="5" property="theoPratHours" />
-			</td>
+			<td><bean:message key="message.manager.praticalHours"/></td>
+			<td><html:text size="5" property="praticalHours" /></td>
 		</tr>
 		<tr>
-			<td>
-				<bean:message key="message.manager.curricular.course.scope.labHours"/>
-			</td>
-			<td>
-				<html:text size="5" property="labHours" />
-			</td>
+			<td><bean:message key="message.manager.theoPratHours"/></td>
+			<td><html:text size="5" property="theoPratHours" /></td>
 		</tr>
 		<tr>
-			<td>
-				<bean:message key="message.manager.curricular.course.scope.credits"/>
-			</td>
-			<td>
-				<html:text size="5" property="credits" />
-			</td>
+			<td><bean:message key="message.manager.labHours"/></td>
+			<td><html:text size="5" property="labHours" /></td>
+		</tr>
+		<tr>
+			<td><bean:message key="message.manager.curricular.course.scope.credits"/></td>
+			<td><html:text size="5" property="credits" /></td>
+		</tr>
+		<tr>
+			<td><bean:message key="message.manager.curricular.course.scope.ectsCredits"/></td>
+			<td><html:text size="5" property="ectsCredits" /></td>
+		</tr>
+		<tr>
+			<td><bean:message key="message.manager.curricular.course.scope.maxIncrementNac"/></td>
+			<td><html:text size="5" property="maxIncrementNac" /></td>
+		</tr>
+		<tr>
+			<td><bean:message key="message.manager.curricular.course.scope.minIncrementNac"/></td>
+			<td><html:text size="5" property="minIncrementNac" /></td>
+		</tr>
+		<tr>
+			<td><bean:message key="message.manager.curricular.course.scope.weight"/></td>
+			<td><html:text size="5" property="weight" /></td>
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.scope.maxIncrementNac"/>
+				<bean:message key="label.manager.curricularCourseScope.beginDate"/>
 			</td>
 			<td>
-				<html:text size="5" property="maxIncrementNac" />
+				<html:select property="beginDate">
+					<html:options collection="executionPeriodsLabels" property="value" labelProperty="label"/>
+				</html:select>				
 			</td>
 		</tr>
-		<tr>
-			<td>
-				<bean:message key="message.manager.curricular.course.scope.minIncrementNac"/>
-			</td>
-			<td>
-				<html:text size="5" property="minIncrementNac" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message key="message.manager.curricular.course.scope.weight"/>
-			</td>
-			<td>
-				<html:text size="5" property="weight" />
-			</td>
-		</tr>
-		
 	</table>
-
-	
-
-<br>
-
-<html:submit styleClass="inputbutton">
-<bean:message key="button.save"/>
-</html:submit>
-<html:reset  styleClass="inputbutton">
-<bean:message key="label.clear"/>
-</html:reset></html:form>	
+	<br />
+	<html:submit styleClass="inputbutton">
+		<bean:message key="button.save"/>
+	</html:submit>
+	<html:reset  styleClass="inputbutton">
+		<bean:message key="label.clear"/>
+	</html:reset>
+</html:form>	

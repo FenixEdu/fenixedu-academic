@@ -72,7 +72,7 @@ public class SearchExecutionCourses implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 
-			IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
+			final IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 			ICursoExecucao executionDegree = null;
 
 			if (infoExecutionDegree != null) {
@@ -97,7 +97,7 @@ public class SearchExecutionCourses implements IServico {
 
 						// Check if the curricular Loads are all the same
 						
-						checkEqualLoads(arg0, infoExecutionCourse);
+						checkEqualLoads(arg0, infoExecutionCourse, executionPeriod);
 						
 					} catch (ExcepcaoPersistencia e) {
 
@@ -109,7 +109,7 @@ System.out.println("EXCEPCAO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 					return infoExecutionCourse;
 				}
 
-				private void checkEqualLoads(Object arg0, InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
+				private void checkEqualLoads(Object arg0, InfoExecutionCourse infoExecutionCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 					IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) arg0; 
 					infoExecutionCourse.setEqualLoad(Boolean.TRUE.toString());
 
@@ -118,7 +118,7 @@ System.out.println("EXCEPCAO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 						ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 
 						// Read All the scopes
-						List scopes = SuportePersistenteOJB.getInstance().getIPersistentCurricularCourseScope().readCurricularCourseScopesByCurricularCourse(curricularCourse);
+						List scopes = SuportePersistenteOJB.getInstance().getIPersistentCurricularCourseScope().readCurricularCourseScopesByCurricularCourseInExecutionPeriod(curricularCourse, executionPeriod);
 						if (scopes.isEmpty()) {
 							infoExecutionCourse.setEqualLoad(Boolean.FALSE.toString());
 							continue;

@@ -57,7 +57,7 @@ public class ReadCurricularCourseScopesByExecutionCourseID implements IServico {
 			while(iterator.hasNext()) {
 				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 				
-				List curricularCourseScopes = sp.getIPersistentCurricularCourseScope().readCurricularCourseScopesByCurricularCourse(curricularCourse);
+				List curricularCourseScopes = sp.getIPersistentCurricularCourseScope().readCurricularCourseScopesByCurricularCourseInExecutionPeriod(curricularCourse, executionCourse.getExecutionPeriod());
 				
 				InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
 				infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);

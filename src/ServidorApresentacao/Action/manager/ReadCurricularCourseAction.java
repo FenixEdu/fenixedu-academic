@@ -31,10 +31,16 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  */
 public class ReadCurricularCourseAction extends FenixAction {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws FenixActionException {
 
 		IUserView userView = SessionUtils.getUserView(request);
 		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
+
+		request.setAttribute("degreeId", request.getParameter("degreeId"));
+		request.setAttribute("degreeCurricularPlanId", request.getParameter("degreeCurricularPlanId"));
+		request.setAttribute("curricularCourseId", curricularCourseId);
+		
 
 		Object args[] = { curricularCourseId };
 
@@ -62,7 +68,7 @@ public class ReadCurricularCourseAction extends FenixAction {
 
 		List curricularCourseScopes = new ArrayList();
 		try {
-			curricularCourseScopes = (List) ServiceUtils.executeService(userView, "ReadCurricularCourseScopes", args);
+			curricularCourseScopes = (List) ServiceUtils.executeService(userView, "ReadActiveCurricularCourseScopes", args);
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
@@ -78,6 +84,7 @@ public class ReadCurricularCourseAction extends FenixAction {
 			request.setAttribute("basic", "");
 			
 		request.setAttribute("executionCoursesList", executionCourses);
+
 		request.setAttribute("infoCurricularCourse", infoCurricularCourse);
 		request.setAttribute("curricularCourseScopesList", curricularCourseScopes);
 		return mapping.findForward("viewCurricularCourse");

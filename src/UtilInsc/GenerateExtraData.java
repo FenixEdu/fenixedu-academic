@@ -1,6 +1,7 @@
 package UtilInsc;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -296,7 +297,9 @@ public class GenerateExtraData {
 				curricularCourseScopeToWrite.setMaxIncrementNac(curricularCourseScope.getMaxIncrementNac());
 				curricularCourseScopeToWrite.setMinIncrementNac(curricularCourseScope.getMinIncrementNac());
 				curricularCourseScopeToWrite.setWeigth(curricularCourseScope.getWeigth());
-
+				curricularCourseScopeToWrite.setBeginDate(Calendar.getInstance());
+				curricularCourseScopeToWrite.setEndDate(null);		
+				curricularCourseScopeToWrite.setEctsCredits(curricularCourseScope.getEctsCredits());
 				try {
 					persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 					ICurricularCourse curricularCourse2 = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseToWrite);

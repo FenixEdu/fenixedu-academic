@@ -643,7 +643,7 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 			newCurricularCourseScope.setTheoPratHours(tempCurricularCourseScope.getTheoPratHours());
 			newCurricularCourseScope.setTheoreticalHours(tempCurricularCourseScope.getTheoreticalHours());
 			newCurricularCourseScope.setWeigth(tempCurricularCourseScope.getWeigth());
-
+//		TODO: add sets for begin and end dates and ectsCredits
 			writeElement(newCurricularCourseScope);
 
 			processedCurricularCourse = newCurricularCourse;

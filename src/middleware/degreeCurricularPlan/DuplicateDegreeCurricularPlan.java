@@ -333,7 +333,7 @@ public class DuplicateDegreeCurricularPlan {
 				newCurricularCourseScope.setTheoPratHours(curricularCourseScopeFromDB.getTheoPratHours());
 				newCurricularCourseScope.setTheoreticalHours(curricularCourseScopeFromDB.getTheoreticalHours());
 				newCurricularCourseScope.setWeigth(curricularCourseScopeFromDB.getWeigth());
-				
+//			TODO: add sets for begin and end dates and ectsCredits
 				broker.store(newCurricularCourseScope);				
 				curricularCourseScopesWritten++;
 			}

@@ -66,9 +66,12 @@
 				<form-property name="theoPratHours" type="java.lang.String" />
 				<form-property name="labHours" type="java.lang.String" />
 	            <form-property name="credits" type="java.lang.String" />			
+	            <form-property name="ectsCredits" type="java.lang.String" />			
 				<form-property name="maxIncrementNac" type="java.lang.String" />
 				<form-property name="minIncrementNac" type="java.lang.String" />
 				<form-property name="weight" type="java.lang.String" />
+	            <form-property name="beginDate" type="java.lang.String" />			
+	            <form-property name="endDate" type="java.lang.String" />			
 				<form-property name="branchId" type="java.lang.String" />
 				<form-property name="curricularSemesterId" type="java.lang.String" />
 				<form-property name="curricularCourseScopeId" type="java.lang.String" />
@@ -501,6 +504,40 @@
        <forward name="readDegree" path="/readDegree.do"/>     	      
 	</action>
 	
+ <!-- Action for ending a curricular course scope  -->
+	<action
+		path="/endCurricularCourseScope"
+		name="curricularCourseScopeForm"
+		input="/endCurricularCourseScope.do?method=prepareEnd&amp;page=0"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.EndCurricularCourseScopeDA"
+        validate="true">  
+          <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+          />
+          <exception type="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+             key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+          />
+          <exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+             key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+          />
+       <forward name="endCurricularCourseScope" path="df.page.end-curricular-course-scope"/>
+       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>
+	</action>
+	
+	<action path="/readAllCurricularCourseScopes"
+		input="/readcurricularCourse.do"
+		type="ServidorApresentacao.Action.manager.ReadAllCurricularCourseScopesAction">
+	 	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+		/> 
+  		<forward name="viewCurricularCourseScopes" path="df.page.read-curricular-course-scopes"/> 	      
+	</action>	
 	
     <!--=====Actions for execution degree==== -->
     

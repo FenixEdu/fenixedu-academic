@@ -249,7 +249,7 @@ public class MigrateDisciplinaArea2FenixScopes {
 					curricularCourseScope.setTheoPratHours(new Double(0));
 					curricularCourseScope.setTheoreticalHours(new Double(0));
 					curricularCourseScope.setLabHours(new Double(0));
-					
+//			TODO: add sets for begin and end dates and ectsCredits
 					scopesWritten++;
 					broker.store(curricularCourseScope);
 //				}

@@ -102,10 +102,10 @@ public class ConfirmActualOptionalEnrolmentWithoutRules implements IServico {
 					ICurricularCourseScope optionalCurricularCourseScopeChosen = enrolmentInOptionalCurricularCourse.getCurricularCourseScope();
 
 					ICurricularCourseScope optionalCurricularCourseScopeToWrite =
-						(ICurricularCourseScope) persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+						(ICurricularCourseScope) persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
 							optionalCurricularCourseScopeChosen.getCurricularCourse(),
 							optionalCurricularCourseScopeChosen.getCurricularSemester(),
-							optionalCurricularCourseScopeChosen.getBranch());
+							optionalCurricularCourseScopeChosen.getBranch(), null);
 
 					enrolmentInOptionalCurricularCourse.setCurricularCourseScope(optionalCurricularCourseScopeToWrite);
 					enrolmentInOptionalCurricularCourse.setCurricularCourseForOption(chosenCurricularCourseForOption);

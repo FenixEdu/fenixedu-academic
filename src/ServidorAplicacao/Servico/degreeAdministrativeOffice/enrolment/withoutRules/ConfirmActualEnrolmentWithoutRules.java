@@ -112,10 +112,10 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 				if(enrolment == null) {
 
 					ICurricularCourseScope curricularCourseScopeToWrite =
-						(ICurricularCourseScope) persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+						(ICurricularCourseScope) persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
 							curricularCourseScope.getCurricularCourse(),
 							curricularCourseScope.getCurricularSemester(),
-							curricularCourseScope.getBranch());
+							curricularCourseScope.getBranch(), null);
 
 					enrolment = new Enrolment();
 					enrolment.setCurricularCourseScope(curricularCourseScopeToWrite);

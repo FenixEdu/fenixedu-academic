@@ -163,7 +163,7 @@ public class CreateAndUpdateScopes {
 			
 			// Check if the Scope Exists
 			
-			ICurricularCourseScope curricularCourseScope = sp.getIPersistentCurricularCourseScope().readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
+			ICurricularCourseScope curricularCourseScope = sp.getIPersistentCurricularCourseScope().readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(curricularCourse, curricularSemester, branch, null);
 			if (curricularCourseScope != null) {
 				return;
 			}
@@ -184,6 +184,7 @@ public class CreateAndUpdateScopes {
 			curricularCourseScope.setMinIncrementNac(new Integer(1));
 			curricularCourseScope.setWeigth(new Integer(mwCurricularCourseScope.getCredits().intValue()));
 
+//			TODO: add sets for begin and end dates and ectsCredits
 			curricularCourseScopesWritten++;
 		} catch(Exception e) {
 			throw new Exception(e);

@@ -139,7 +139,7 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 			curricularCourseScope.setLabHours(new Double(almeida_disc.getLab()));
 			curricularCourseScope.setTheoPratHours(new Double(almeida_disc.getTeopra()));
 			curricularCourseScope.setCredits(new Double(almeida_disc.getCredits()));
-
+//		TODO: add sets for begin and end dates and ectsCredits
 			writeElement(curricularCourseScope);
 			loader.numberElementsWritten--;
 		}

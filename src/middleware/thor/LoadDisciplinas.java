@@ -238,7 +238,7 @@ public class LoadDisciplinas extends LoadDataFile {
 		curricularCourseScope.setPraticalHours(
 			new Double(almeida_disc.getPra()));
 		curricularCourseScope.setLabHours(new Double(almeida_disc.getLab()));
-
+//	TODO: add sets for begin and end dates and ectsCredits
 		// Write this elemente
 		writeElement(curricularCourseScope);
 		numberElementsWritten++;

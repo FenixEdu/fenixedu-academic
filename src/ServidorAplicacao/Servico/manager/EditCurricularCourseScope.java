@@ -21,6 +21,7 @@ import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.Data;
 
 /**
  * @author lmac1
@@ -42,7 +43,6 @@ public class EditCurricularCourseScope implements IServico {
 
 	public void run(InfoCurricularCourseScope newInfoCurricularCourseScope) throws FenixServiceException {
 
-		IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
 		ICurricularCourseScope oldCurricularCourseScope = null;
 		ICurricularSemester newCurricularSemester = null;
 		IBranch newBranch = null;
@@ -51,7 +51,7 @@ public class EditCurricularCourseScope implements IServico {
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 			IPersistentBranch persistentBranch = ps.getIPersistentBranch();
 			IPersistentCurricularSemester persistentCurricularSemester = ps.getIPersistentCurricularSemester();
-			persistentCurricularCourseScope = ps.getIPersistentCurricularCourseScope();
+			IPersistentCurricularCourseScope persistentCurricularCourseScope = ps.getIPersistentCurricularCourseScope();
 			
 			Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getIdInternal();
 			IBranch branch = new Branch();
@@ -71,7 +71,7 @@ public class EditCurricularCourseScope implements IServico {
 				
 			ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
 			curricularCourseScope.setIdInternal(newInfoCurricularCourseScope.getIdInternal());
-			oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
+			oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, true);
 			
 			if(oldCurricularCourseScope == null)
 				throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);
@@ -88,11 +88,18 @@ public class EditCurricularCourseScope implements IServico {
 			oldCurricularCourseScope.setBranch(newBranch);
 			//it already includes the curricular year
 			oldCurricularCourseScope.setCurricularSemester(newCurricularSemester);
-
-			persistentCurricularCourseScope.lockWrite(oldCurricularCourseScope);
+			oldCurricularCourseScope.setEctsCredits(newInfoCurricularCourseScope.getEctsCredits());
+			oldCurricularCourseScope.setBeginDate(newInfoCurricularCourseScope.getBeginDate());
+			oldCurricularCourseScope.setEndDate(null);
 			
 		} catch (ExistingPersistentException ex) {
-			throw new ExistingServiceException(ex);
+			throw new ExistingServiceException("O âmbito com ramo "
+			+ newBranch.getCode()
+			+ ", do "
+			+ newCurricularSemester.getCurricularYear().getYear()
+			+ "º ano, "
+			+ newCurricularSemester.getSemester()
+			+ "º semestre");
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

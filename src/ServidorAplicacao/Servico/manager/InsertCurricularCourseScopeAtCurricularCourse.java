@@ -24,6 +24,7 @@ import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.Data;
 
 /**
  * @author lmac1
@@ -43,59 +44,81 @@ public class InsertCurricularCourseScopeAtCurricularCourse implements IServico {
 	public final String getNome() {
 		return "InsertCurricularCourseScopeAtCurricularCourse";
 	}
-	
 
 	public void run(InfoCurricularCourseScope infoCurricularCourseScope) throws FenixServiceException {
-	
 		IBranch branch = null;
 		ICurricularSemester curricularSemester = null;
-		
+		ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
+
 		try {
-				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			
-				IPersistentCurricularSemester persistentCurricularSemester = persistentSuport.getIPersistentCurricularSemester();
-				ICurricularSemester semester = new CurricularSemester();
-				semester.setIdInternal(infoCurricularCourseScope.getInfoCurricularSemester().getIdInternal());
-				curricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(semester, false);
-			
-				if(curricularSemester == null)
-					throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
-					
-				IPersistentCurricularCourse persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
-				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(infoCurricularCourseScope.getInfoCurricularCourse().getIdInternal()), false);
-				
-				if(curricularCourse == null)
-					throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
-			
-				IPersistentBranch persistentBranch = persistentSuport.getIPersistentBranch();
-				IBranch temporaryBranch = new Branch();
-				temporaryBranch.setIdInternal(infoCurricularCourseScope.getInfoBranch().getIdInternal());
-				branch = (IBranch) persistentBranch.readByOId(temporaryBranch, false);
-				
-				if(branch == null)
-					throw new NonExistingServiceException("message.non.existing.branch", null);
-			
-				IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSuport.getIPersistentCurricularCourseScope();
-				
-				ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
-				curricularCourseScope.setBranch(branch);
-				curricularCourseScope.setCredits(infoCurricularCourseScope.getCredits());
-				curricularCourseScope.setCurricularCourse(curricularCourse);
-				curricularCourseScope.setCurricularSemester(curricularSemester);
-				curricularCourseScope.setLabHours(infoCurricularCourseScope.getLabHours());
-				curricularCourseScope.setMaxIncrementNac(infoCurricularCourseScope.getMaxIncrementNac());
-				curricularCourseScope.setMinIncrementNac(infoCurricularCourseScope.getMinIncrementNac());
-				curricularCourseScope.setPraticalHours(infoCurricularCourseScope.getPraticalHours());
-				curricularCourseScope.setTheoPratHours(infoCurricularCourseScope.getTheoPratHours());
-				curricularCourseScope.setTheoreticalHours(infoCurricularCourseScope.getTheoreticalHours());
-				curricularCourseScope.setWeigth(infoCurricularCourseScope.getWeigth());
-					
-				persistentCurricularCourseScope.lockWrite(curricularCourseScope);
-					
-		} catch (ExistingPersistentException existingException) {
-			throw new ExistingServiceException("O âmbito com ramo " + branch.getCode() + ", do " + curricularSemester.getCurricularYear().getYear() + "º ano, " + curricularSemester.getSemester() + "º semestre", existingException); 
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia);
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSuport.getIPersistentCurricularCourseScope();
+			IPersistentCurricularSemester persistentCurricularSemester = persistentSuport.getIPersistentCurricularSemester();
+			IPersistentCurricularCourse persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
+			IPersistentBranch persistentBranch = persistentSuport.getIPersistentBranch();
+
+			ICurricularSemester semester = new CurricularSemester();
+			semester.setIdInternal(infoCurricularCourseScope.getInfoCurricularSemester().getIdInternal());
+			curricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(semester, false);
+
+			if (curricularSemester == null)
+				throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
+
+			ICurricularCourse curricularCourse =
+				(ICurricularCourse) persistentCurricularCourse.readByOId(
+					new CurricularCourse(infoCurricularCourseScope.getInfoCurricularCourse().getIdInternal()),
+					false);
+
+			if (curricularCourse == null)
+				throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+
+			IBranch temporaryBranch = new Branch();
+			temporaryBranch.setIdInternal(infoCurricularCourseScope.getInfoBranch().getIdInternal());
+			branch = (IBranch) persistentBranch.readByOId(temporaryBranch, false);
+
+			if (branch == null)
+				throw new NonExistingServiceException("message.non.existing.branch", null);
+
+			// check that there isn't another scope active with the same curricular course, branch and semester
+			ICurricularCourseScope curricularCourseScopeFromDB = null;
+			curricularCourseScopeFromDB =
+				persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
+					curricularCourse,
+					curricularSemester,
+					branch,
+					null);
+			if (curricularCourseScopeFromDB != null) {
+				throw new ExistingPersistentException();
+			}
+			persistentCurricularCourseScope.simpleLockWrite(curricularCourseScope);
+
+			curricularCourseScope.setBranch(branch);
+			curricularCourseScope.setCredits(infoCurricularCourseScope.getCredits());
+			curricularCourseScope.setEctsCredits(infoCurricularCourseScope.getEctsCredits());
+			curricularCourseScope.setCurricularCourse(curricularCourse);
+			curricularCourseScope.setCurricularSemester(curricularSemester);
+			curricularCourseScope.setLabHours(infoCurricularCourseScope.getLabHours());
+			curricularCourseScope.setMaxIncrementNac(infoCurricularCourseScope.getMaxIncrementNac());
+			curricularCourseScope.setMinIncrementNac(infoCurricularCourseScope.getMinIncrementNac());
+			curricularCourseScope.setPraticalHours(infoCurricularCourseScope.getPraticalHours());
+			curricularCourseScope.setTheoPratHours(infoCurricularCourseScope.getTheoPratHours());
+			curricularCourseScope.setTheoreticalHours(infoCurricularCourseScope.getTheoreticalHours());
+			curricularCourseScope.setWeigth(infoCurricularCourseScope.getWeigth());
+
+			curricularCourseScope.setBeginDate(infoCurricularCourseScope.getBeginDate());
+			curricularCourseScope.setEndDate(null);
+
+		} catch (ExistingPersistentException e) {
+			throw new ExistingServiceException(
+				"O âmbito com ramo "
+					+ branch.getCode()
+					+ ", do "
+					+ curricularSemester.getCurricularYear().getYear()
+					+ "º ano, "
+					+ curricularSemester.getSemester()
+					+ "º semestre");
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
 		}
 	}
 }

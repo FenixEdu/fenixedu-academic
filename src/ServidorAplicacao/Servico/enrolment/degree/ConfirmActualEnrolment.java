@@ -144,10 +144,10 @@ public class ConfirmActualEnrolment implements IServico {
 
 				//				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseScope.getCurricularCourse());
 				ICurricularCourseScope curricularCourseScopeToWrite =
-					(ICurricularCourseScope) persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+					(ICurricularCourseScope) persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
 						curricularCourseScopeChosen.getCurricularCourse(),
 						curricularCourseScopeChosen.getCurricularSemester(),
-						curricularCourseScopeChosen.getBranch());
+						curricularCourseScopeChosen.getBranch(), null);
 				//				ICurricularCourseScope curricularCourseScopeToWrite =
 				//					(ICurricularCourseScope) persistentCurricularCourseScope.readDomainObjectByCriteria(curricularCourseScopeForCriteria);
 				if (!doingCurricularCoursesRead.contains(curricularCourseScopeToWrite.getCurricularCourse())) {
@@ -207,10 +207,10 @@ public class ConfirmActualEnrolment implements IServico {
 					ICurricularCourseScope optionalCurricularCourseScopeChosen = enrolmentInOptionalCurricularCourse.getCurricularCourseScope();
 
 					ICurricularCourseScope optionalCurricularCourseScopeToWrite =
-						(ICurricularCourseScope) persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+						(ICurricularCourseScope) persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
 							optionalCurricularCourseScopeChosen.getCurricularCourse(),
 							optionalCurricularCourseScopeChosen.getCurricularSemester(),
-							optionalCurricularCourseScopeChosen.getBranch());
+							optionalCurricularCourseScopeChosen.getBranch(), null);
 
 					enrolmentInOptionalCurricularCourse.setCurricularCourseScope(optionalCurricularCourseScopeToWrite);
 					enrolmentInOptionalCurricularCourse.setCurricularCourseForOption(curricularCourseForOption);

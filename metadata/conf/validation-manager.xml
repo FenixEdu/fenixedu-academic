@@ -190,6 +190,35 @@
       <field property="credits" depends="double" page="1">
         <arg0 key="message.manager.curricular.course.scope.credits" resource="true" />
       </field>
+      <field property="ectsCredits" depends="double" page="1">
+        <arg0 key="message.manager.curricular.course.scope.ectsCredits" resource="true" />
+      </field>
+      <field property="beginDate" depends="required, date, mask" page="1">
+      	<msg name="date" key="errors.invalid.date"/>
+      	<msg name="mask" key="errors.invalid.date"/>
+        <arg0 key="message.manager.curricular.course.scope.beginDate" resource="true" />
+     	<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/....)$</var-value>
+        </var>
+      </field>
+      <field property="endDate" depends="required, date, mask" page="3">
+      	<msg name="date" key="errors.invalid.date"/>
+      	<msg name="mask" key="errors.invalid.date"/>
+        <arg0 key="message.manager.curricular.course.scope.endDate" resource="true" />
+     	<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/....)$</var-value>
+        </var>
+      </field>
     </form>
 
 
