@@ -408,7 +408,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
     private void orderCandidateEnrolments(List candidateEnrolments)
     {
         BeanComparator nameCourse =
-            new BeanComparator("infoCurricularCourseScope.infoCurricularCourse.name");
+            new BeanComparator("infoCurricularCourse.name");
         Collections.sort(candidateEnrolments, nameCourse);
     }
 
