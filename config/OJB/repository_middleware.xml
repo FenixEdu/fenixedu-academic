@@ -508,3 +508,34 @@
 	<field-descriptor name="className" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 	<field-descriptor name="average" column="AVERAGE" jdbc-type="FLOAT"/>
 </class-descriptor>
+
+<class-descriptor class="middleware.middlewareDomain.MWCurricularCourseOutsideStudentDegree" table="MW_CURRICULAR_COURSE_OUTSIDE_STUDENT_DEGREE">
+  <field-descriptor
+    name="idInternal"
+    column="idInternal"
+    jdbc-type="INTEGER"
+	primarykey="true"
+	autoincrement="true"
+  />
+  <field-descriptor
+    name="courseCode"
+    column="courseCode"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="degreeCode"
+    column="degreeCode"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyCurricularCourse"
+    column="keyCurricularCourse"
+    jdbc-type="INTEGER"
+  />
+  <reference-descriptor
+	name="curricularCourse"
+	class-ref="Dominio.CurricularCourse"
+	proxy="false">
+	<foreignkey field-ref="keyCurricularCourse"/>
+  </reference-descriptor>
+</class-descriptor>
