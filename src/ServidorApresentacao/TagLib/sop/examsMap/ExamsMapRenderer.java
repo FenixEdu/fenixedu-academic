@@ -113,16 +113,16 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=1"; 
 			}
 			if (curricularYears.get(i).equals(new Integer(2))) {
-				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=2"; 
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_2 + "=2"; 
 			}
 			if (curricularYears.get(i).equals(new Integer(3))) {
-				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=3"; 
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_3 + "=3"; 
 			}
 			if (curricularYears.get(i).equals(new Integer(4))) {
-				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=4"; 
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_4 + "=4"; 
 			}
 			if (curricularYears.get(i).equals(new Integer(5))) {
-				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=5"; 
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_5 + "=5"; 
 			}
 		}
 		return result;
@@ -189,6 +189,11 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							"&amp;comment=" + infoExecutionCourse.getComment());
 						strBuffer.append("&amp;method=prepare");
 						strBuffer.append("&amp;indexExecutionCourse=" + i);
+						strBuffer.append("&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "="
+						+ infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()
+						+ "&amp;" + SessionConstants.EXECUTION_DEGREE_OID + "="
+						+ examsMap.getInfoExecutionDegree().getIdInternal()
+						+ getCurricularYearsArgs());
 						strBuffer.append("'>");
 					}
 
@@ -217,6 +222,11 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 									.getYear());
 						strBuffer.append("&amp;method=prepare");
 						strBuffer.append("&amp;indexExecutionCourse=" + i);
+						strBuffer.append("&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "="
+						+ infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()
+						+ "&amp;" + SessionConstants.EXECUTION_DEGREE_OID + "="
+						+ examsMap.getInfoExecutionDegree().getIdInternal()
+						+ getCurricularYearsArgs());
 						strBuffer.append("'>");
 						strBuffer.append("Definir comentário");
 						strBuffer.append("</a>");

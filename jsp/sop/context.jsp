@@ -7,6 +7,7 @@
 	
 <logic:present name="executionDegree">
 	<html:form action="/chooseContext">
+
 		<html:hidden property="page" value="1"/>
 		<html:hidden property="method" value="choose"/>
 		<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
@@ -35,6 +36,7 @@
 		       						  labelProperty="label"/>
 			       	</html:select> Ano
 				</td>
+
 	</html:form>
 	<html:form action="/chooseExecutionPeriod">
 				<td>
@@ -53,7 +55,7 @@
 			</tr>
 		</table>
 </logic:present>
-		
+<%--
 <logic:present name="<%= SessionConstants.CLASS_VIEW %>"  >
 	<bean:define id="infoTurma" name="<%= SessionConstants.CLASS_VIEW %>" scope="request"/>
 	<br />
@@ -71,3 +73,4 @@
 	<bean:message key="property.shift"/>: <bean:write name="shift" property="nome"/>
 	<br />
 </logic:present>
+--%>

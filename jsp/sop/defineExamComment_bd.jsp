@@ -42,6 +42,44 @@
 			    <html:hidden property="executionPeriodName" value='<%= request.getParameter("executionPeriodName")%>'/>
         		<html:hidden property="executionYear" value='<%= request.getParameter("executionYear")%>'/>
         		<html:hidden property="method" value='define'/>
+
+		<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+					 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+		<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+					 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+		<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+					 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+		<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+					 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+
+	<logic:iterate id="year" name="<%= SessionConstants.CURRICULAR_YEARS_LIST %>" scope="request">
+		<logic:equal name="year" value="1">
+			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_1 %>"
+						 value="1"/>
+			<bean:write name="year"/>
+		</logic:equal>
+		<logic:equal name="year" value="2">
+			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_2 %>"
+						 value="2"/>
+			<bean:write name="year"/>
+		</logic:equal>
+		<logic:equal name="year" value="3">
+			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_3 %>"
+						 value="3"/>
+			<bean:write name="year"/>
+		</logic:equal>
+		<logic:equal name="year" value="4">
+			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_4 %>"
+						 value="4"/>
+			<bean:write name="year"/>
+		</logic:equal>
+		<logic:equal name="year" value="5">
+			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_5 %>"
+						 value="5"/>
+			<bean:write name="year"/>
+		</logic:equal>
+	</logic:iterate>
+
             	<html:submit styleClass="inputbutton">
               		<bean:message key="label.create"/>
              	</html:submit>

@@ -7,5 +7,8 @@
   <tiles:put name="body-context" value=""/>  
   <tiles:put name="body" value="/sop/createExam_bd.jsp" />
   <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
+<%--
   <tiles:put name="context" value="/commons/contextExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
+--%>
+  <tiles:put name="context" value="/commons/contextCurricularYearsExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
 </tiles:insert>

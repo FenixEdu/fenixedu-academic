@@ -224,7 +224,6 @@ public class ViewExamsMapDA
 		request.setAttribute(
 			SessionConstants.INFO_EXAMS_KEY,
 			infoViewExamByDayAndShift);
-			infoViewExamByDayAndShift.getInfoExam().getSeason().getseason();
 
 		InfoExecutionDegree infoExecutionDegree =
 			(InfoExecutionDegree) request.getAttribute(
@@ -265,6 +264,7 @@ public class ViewExamsMapDA
 		InfoExamsMap infoExamsMap =
 			(InfoExamsMap) request.getAttribute(
 				SessionConstants.INFO_EXAMS_MAP);
+		System.out.println("infoExamsMap= " + infoExamsMap);
 
 		Integer indexExecutionCourse =
 			new Integer(request.getParameter("indexExecutionCourse"));
