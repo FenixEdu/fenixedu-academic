@@ -77,7 +77,7 @@ public class SearchGrantOwner implements IServico {
 			//Search by name IF search by ID has failed
 			if (person == null) {
 				if (name != null)
-					personList = persistentPerson.lerPessoaPorNome(name);
+					personList = persistentPerson.readPersonByName(name);
 			} else
 				personList.add(person);
 
