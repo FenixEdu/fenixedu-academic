@@ -22,8 +22,10 @@ import java.util.ListIterator;
 import java.util.Vector;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.ManageableCollection;
 import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.CollectionDescriptor;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
@@ -200,6 +202,15 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 			throw new org.odmg.QueryException(t.getMessage());
 		}
 
+	}
+	
+	
+	public Object readByOId(Object obj) throws ExcepcaoPersistencia {
+		
+		Identity identity = new Identity(obj,PersistenceBrokerFactory.defaultPersistenceBroker());
+		Object result = PersistenceBrokerFactory.defaultPersistenceBroker().getObjectByIdentity(identity);
+		return result;
+		
 	}
 
 	public Object readDomainObjectByCriteria(Object obj)
