@@ -18,7 +18,6 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author tfc130
  */
@@ -28,7 +27,7 @@ public class PrepararEscolherDisciplinaETipoFormAction extends Action {
                                 HttpServletRequest request,
                                 HttpServletResponse response)
       throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
         IUserView userView = (IUserView) sessao.getAttribute("UserView");

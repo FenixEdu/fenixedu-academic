@@ -19,7 +19,6 @@ import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author jmota
  */
@@ -31,8 +30,8 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 		try {
-			SessionUtils.validSessionVerification(request, mapping);
-			HttpSession session = getSession(request);
+			
+			HttpSession session = request.getSession(false);
 			session.removeAttribute(SessionConstants.INFO_SECTION);
 			UserView userView =
 				(UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -51,9 +50,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 			return mapping.findForward("viewObjectives");
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
-		} catch (FenixActionException e) {
-			throw e;
-		}
+		} 
 	}
 	public ActionForward prepareEditObjectives(
 		ActionMapping mapping,
@@ -61,7 +58,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		return mapping.findForward("editObjectives");
 	}
 	public ActionForward editObjectives(
@@ -71,8 +68,8 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 		try {
-			SessionUtils.validSessionVerification(request, mapping);
-			HttpSession session = request.getSession();
+			
+			HttpSession session = request.getSession(false);
 			session.removeAttribute(SessionConstants.INFO_SECTION);
 			DynaActionForm objectivesForm = (DynaActionForm) form;
 			InfoCurriculum oldCurriculum =
@@ -119,8 +116,8 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 		try {
-			SessionUtils.validSessionVerification(request, mapping);
-			HttpSession session = getSession(request);
+			
+			HttpSession session = request.getSession(false);
 			session.removeAttribute(SessionConstants.INFO_SECTION);
 			UserView userView =
 				(UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -150,8 +147,8 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 		try {
-			SessionUtils.validSessionVerification(request, mapping);
-			HttpSession session = request.getSession();
+			
+			HttpSession session = request.getSession(false);
 			session.removeAttribute(SessionConstants.INFO_SECTION);
 			DynaActionForm objectivesForm = (DynaActionForm) form;
 			InfoCurriculum oldCurriculum =
@@ -194,7 +191,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		return mapping.findForward("editProgram");
 	}
 	public ActionForward insertCurriculum(
@@ -204,7 +201,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 			
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession();
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		DynaActionForm curriculumForm = (DynaActionForm) form;

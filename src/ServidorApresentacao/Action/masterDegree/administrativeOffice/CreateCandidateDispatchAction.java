@@ -25,7 +25,6 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.Specialization;
 import Util.TipoDocumentoIdentificacao;
 
@@ -45,7 +44,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
@@ -78,7 +77,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
@@ -100,7 +99,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
@@ -142,7 +141,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {

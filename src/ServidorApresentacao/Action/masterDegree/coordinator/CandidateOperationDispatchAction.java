@@ -19,7 +19,6 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class CandidateOperationDispatchAction extends DispatchAction {
 
@@ -29,7 +28,7 @@ public class CandidateOperationDispatchAction extends DispatchAction {
 	  throws Exception {
 
 
-	SessionUtils.validSessionVerification(request, mapping);
+	
 	HttpSession session = request.getSession(false);
 	
 	if (session != null) {
@@ -62,7 +61,7 @@ public class CandidateOperationDispatchAction extends DispatchAction {
 									   HttpServletResponse response)
 	  throws Exception {
 
-	  SessionUtils.validSessionVerification(request, mapping);
+	  
 	  HttpSession session = request.getSession(false);
 
 	  if (session != null) {

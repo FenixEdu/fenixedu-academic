@@ -8,6 +8,7 @@ package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,7 +27,6 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -46,7 +46,7 @@ public class BibliographicReferenceManagerDispatchAction
 		throws FenixActionException {
 	
 	
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		DynaActionForm insertBibliographicReferenceForm = (DynaActionForm) form;
@@ -108,7 +108,7 @@ public class BibliographicReferenceManagerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		DynaActionForm editBibliographicReferenceForm = (DynaActionForm) form;				
@@ -187,7 +187,7 @@ public class BibliographicReferenceManagerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		InfoSite infoSite =
@@ -244,7 +244,7 @@ public class BibliographicReferenceManagerDispatchAction
 		
 		DynaActionForm bibRefForm= (DynaActionForm) form;
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		InfoSite infoSite =

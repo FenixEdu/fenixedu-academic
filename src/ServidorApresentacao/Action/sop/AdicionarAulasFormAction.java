@@ -21,7 +21,6 @@ import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author tfc130
@@ -51,7 +50,7 @@ public class AdicionarAulasFormAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		DynaActionForm adicionarAulasForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);

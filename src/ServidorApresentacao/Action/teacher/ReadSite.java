@@ -26,7 +26,6 @@ import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author jmota
@@ -42,8 +41,8 @@ public class ReadSite extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		SessionUtils.validSessionVerification(request, mapping);
-		HttpSession session = getSession(request);
+		
+		HttpSession session = request.getSession(false);
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);

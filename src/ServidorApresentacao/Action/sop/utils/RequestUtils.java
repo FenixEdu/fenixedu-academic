@@ -132,6 +132,26 @@ public abstract class RequestUtils {
 		return infoSite;
 	}
 	
+	public static final InfoSite getSiteFromAnyScope(HttpServletRequest request)
+			throws FenixActionException {
+			InfoSite infoSite = null;
+			HttpSession session = request.getSession();
+			
+			infoSite = (InfoSite)session.getAttribute(SessionConstants.INFO_SITE);
+			if (infoSite==null) {
+			
+			try {
+				InfoExecutionCourse infoExecutionCourse = getExecutionCourseFromRequest(request);
+				Object[] args= {infoExecutionCourse	};
+				infoSite = (InfoSite) ServiceUtils.executeService(null,"ReadSite",args);
+			
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+			}
+			return infoSite;
+		}
+	
 	public static final List getSectionsFromRequest(HttpServletRequest request) throws FenixActionException {
 		List sections = null;
 		try {
@@ -155,4 +175,14 @@ public abstract class RequestUtils {
 			
 		}
 	}
+	
+	public static final void setExecutionCourseToRequest(HttpServletRequest request,InfoExecutionCourse infoExecutionCourse) {
+			if (infoExecutionCourse!=null) {
+				request.setAttribute("exeCode",infoExecutionCourse.getSigla());
+				request.setAttribute("ePName",infoExecutionCourse.getInfoExecutionPeriod().getName());
+				request.setAttribute("eYName",infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear());
+				
+			
+			}
+		}
 }

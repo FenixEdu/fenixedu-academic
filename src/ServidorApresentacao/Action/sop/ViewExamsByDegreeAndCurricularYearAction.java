@@ -16,7 +16,6 @@ import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author Luis Cruz e Sara Ribeiro
@@ -28,7 +27,7 @@ public class ViewExamsByDegreeAndCurricularYearAction extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
 
 		HttpSession session = request.getSession(false);
 		if (session != null) {

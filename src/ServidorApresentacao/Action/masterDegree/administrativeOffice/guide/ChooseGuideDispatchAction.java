@@ -23,7 +23,6 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * 
@@ -40,7 +39,7 @@ public class ChooseGuideDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 
 
@@ -75,7 +74,7 @@ public class ChooseGuideDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
@@ -120,7 +119,7 @@ public class ChooseGuideDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {

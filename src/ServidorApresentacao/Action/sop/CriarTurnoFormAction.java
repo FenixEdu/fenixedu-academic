@@ -16,7 +16,6 @@ import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoAula;
 /**
  * @author tfc130
@@ -28,7 +27,7 @@ public class CriarTurnoFormAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
+			
 		DynaActionForm criarTurnoForm = (DynaActionForm) form;
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {

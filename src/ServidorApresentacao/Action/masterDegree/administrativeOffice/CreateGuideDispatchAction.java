@@ -37,7 +37,6 @@ import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidSituationActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.GuideRequester;
 import Util.PaymentType;
 import Util.RandomStringGenerator;
@@ -60,7 +59,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
@@ -140,7 +139,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
@@ -229,7 +228,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {

@@ -12,8 +12,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.SwitchAction;
 
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
-
 /**
  * @author jpvl
  */
@@ -29,7 +27,7 @@ public class FenixSwitchAction extends SwitchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		return super.execute(mapping, actionForm, request, response);
 	}
 

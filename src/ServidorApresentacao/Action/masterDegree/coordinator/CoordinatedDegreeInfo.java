@@ -25,7 +25,6 @@ import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class CoordinatedDegreeInfo extends FenixAction {
 
@@ -34,7 +33,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
 								HttpServletRequest request,
 								HttpServletResponse response)
 	  throws Exception {
-	SessionUtils.validSessionVerification(request, mapping);
+	
 
 	HttpSession session = request.getSession(false);
 	if (session != null) {

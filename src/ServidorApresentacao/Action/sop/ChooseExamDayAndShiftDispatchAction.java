@@ -40,7 +40,7 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
@@ -72,7 +72,7 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);

@@ -27,7 +27,6 @@ import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.SituationName;
 
 public class ChangeApplicationInfoDispatchAction extends DispatchAction {
@@ -38,7 +37,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 	  throws Exception {
 
 
-	SessionUtils.validSessionVerification(request, mapping);
+	
 	HttpSession session = request.getSession(false);
 	
 	if (session != null) {
@@ -73,7 +72,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 								HttpServletResponse response)
 	throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 	  	
 		if (session != null) {

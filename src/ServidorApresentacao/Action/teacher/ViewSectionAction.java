@@ -22,7 +22,6 @@ import DataBeans.gesdis.InfoSection;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author lmac2
@@ -43,7 +42,7 @@ public class ViewSectionAction extends FenixAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 
 		HttpSession session = request.getSession(false);
 

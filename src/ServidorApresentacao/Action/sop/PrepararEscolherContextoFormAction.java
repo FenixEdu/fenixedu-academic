@@ -33,7 +33,7 @@ public class PrepararEscolherContextoFormAction extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
+			
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			IUserView userView = SessionUtils.getUserView(request);

@@ -15,7 +15,6 @@ import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
 @author tfc130
 */
@@ -24,7 +23,7 @@ public class PrepararVerAlunosDeTurnoFormAction extends Action {
                                 HttpServletRequest request,
                                 HttpServletResponse response)
       throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
 		DynaActionForm manipularTurnosForm = (DynaActionForm) sessao.getAttribute("manipularTurnosForm");

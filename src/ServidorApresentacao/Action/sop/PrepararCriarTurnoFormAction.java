@@ -24,7 +24,7 @@ public class PrepararCriarTurnoFormAction extends Action {
                                 HttpServletRequest request,
                                 HttpServletResponse response)
       throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
 

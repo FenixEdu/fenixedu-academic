@@ -65,7 +65,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
+			
 		DynaActionForm criarAulaForm = (DynaActionForm) form;
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
@@ -151,7 +151,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
@@ -260,7 +260,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
@@ -353,7 +353,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);

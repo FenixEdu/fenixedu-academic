@@ -12,8 +12,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.ForwardAction;
 
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
-
 /**
  *  
  * @author jpvl
@@ -33,7 +31,7 @@ public class FenixForwardAction extends ForwardAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		return super.execute(mapping, actionForm, request, response);
 	}
 }

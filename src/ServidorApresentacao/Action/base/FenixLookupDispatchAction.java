@@ -18,7 +18,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.LookupDispatchAction;
 
 import ServidorApresentacao.Action.ExcepcaoSessaoInexistente;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author PTRLV
@@ -36,7 +35,7 @@ public abstract class FenixLookupDispatchAction extends LookupDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		return super.execute(mapping, actionForm, request, response);
 	}
 

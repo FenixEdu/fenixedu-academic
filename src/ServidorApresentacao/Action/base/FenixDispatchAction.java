@@ -10,7 +10,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author joao
@@ -30,7 +29,7 @@ public abstract class FenixDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		return super.execute(mapping, actionForm, request, response);
 	}
 

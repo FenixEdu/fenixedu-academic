@@ -30,7 +30,7 @@ public class EscolherContextoFormAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
+			
 		DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
 		HttpSession session = request.getSession(false);

@@ -24,7 +24,6 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class ChooseCandidateAction extends ServidorApresentacao.Action.base.FenixAction {
 
@@ -33,7 +32,7 @@ public class ChooseCandidateAction extends ServidorApresentacao.Action.base.Feni
                                 HttpServletResponse response)
       throws Exception {
 
-	SessionUtils.validSessionVerification(request, mapping);
+	
 
 	HttpSession session = request.getSession(false);
 	if (session != null) {

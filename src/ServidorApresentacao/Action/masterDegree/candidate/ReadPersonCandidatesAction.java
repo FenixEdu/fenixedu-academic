@@ -25,7 +25,6 @@ import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class ReadPersonCandidatesAction extends ServidorApresentacao.Action.base.FenixAction {
 
@@ -34,7 +33,7 @@ public class ReadPersonCandidatesAction extends ServidorApresentacao.Action.base
                                 HttpServletResponse response)
       throws Exception {
 
-	SessionUtils.validSessionVerification(request, mapping);
+	
 
 	HttpSession session = request.getSession(false);
 	if (session != null) {

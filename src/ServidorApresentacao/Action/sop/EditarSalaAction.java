@@ -19,7 +19,6 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoSala;
 
 /**
@@ -35,8 +34,8 @@ public class EditarSalaAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
-		HttpSession session = getSession(request);
+			
+		HttpSession session = request.getSession(false);
 		ArrayList listaSalasBean =
 			(ArrayList) session.getAttribute("publico.infoRooms");
 		DynaActionForm posicaoSalaFormBean =

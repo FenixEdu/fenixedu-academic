@@ -14,7 +14,6 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoLesson;
 import ServidorApresentacao.Action.base.FenixAction;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 
 /**
@@ -26,7 +25,7 @@ public class PrepararEditarAulaFormAction extends FenixAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response)
       throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		
    	DynaActionForm editarAulaForm = (DynaActionForm) form;
     
     HttpSession sessao = request.getSession(false);

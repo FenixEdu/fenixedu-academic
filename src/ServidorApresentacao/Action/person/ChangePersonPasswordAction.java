@@ -17,7 +17,6 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.InvalidPasswordServiceException;
 import ServidorApresentacao.Action.exceptions.InvalidPasswordActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -30,7 +29,7 @@ public class ChangePersonPasswordAction extends ServidorApresentacao.Action.base
 									HttpServletResponse response)
 		  throws Exception {
 
-	    SessionUtils.validSessionVerification(request, mapping);
+	    
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {

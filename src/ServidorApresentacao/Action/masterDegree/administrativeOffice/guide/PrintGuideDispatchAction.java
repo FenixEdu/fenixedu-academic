@@ -22,7 +22,6 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.GuideRequester;
 
 /**
@@ -39,7 +38,7 @@ public class PrintGuideDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {

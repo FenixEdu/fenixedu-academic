@@ -103,7 +103,13 @@ public final class SessionUtils {
 			session.removeAttribute((String) toRemoveAtts.elementAt(i));
 		}
 	}
-
+/**
+ * @deprecated
+ * 
+ * @param request
+ * @param mapping
+ * @throws FenixActionException
+ */
 	public static void validSessionVerification(
 		HttpServletRequest request,
 		ActionMapping mapping)

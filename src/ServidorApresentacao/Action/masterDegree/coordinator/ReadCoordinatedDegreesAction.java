@@ -27,7 +27,6 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class ReadCoordinatedDegreesAction extends ServidorApresentacao.Action.base.FenixAction {
 
@@ -36,7 +35,7 @@ public class ReadCoordinatedDegreesAction extends ServidorApresentacao.Action.ba
                                 HttpServletResponse response)
       throws Exception {
 
-	SessionUtils.validSessionVerification(request, mapping);
+	
 
 	HttpSession session = request.getSession(false);
 	if (session != null) {

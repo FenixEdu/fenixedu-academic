@@ -23,7 +23,6 @@ import ServidorAplicacao.Servico.exceptions.NonValidChangeServiceException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.exceptions.NonValidChangeActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.Data;
 import Util.PaymentType;
 import Util.SituationOfGuide;
@@ -42,7 +41,7 @@ public class EditGuideDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
@@ -86,7 +85,6 @@ public class EditGuideDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {

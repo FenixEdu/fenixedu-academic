@@ -51,7 +51,7 @@ public class ClassManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
+			
 		HttpSession session = request.getSession(false);
 
 		session.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
@@ -120,7 +120,7 @@ public class ClassManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
+			
 		String className = getClassName(form);
 
 		HttpSession session = request.getSession(false);
@@ -195,7 +195,7 @@ public class ClassManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
+			
 		String className = getClassName(form);
 		IUserView userView = SessionUtils.getUserView(request);
 		InfoClass classView =
@@ -216,7 +216,7 @@ public class ClassManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
+			
 		DynaValidatorForm classForm = (DynaValidatorForm) form;
 		HttpSession session = request.getSession(false);
 		String className = getClassName(classForm);

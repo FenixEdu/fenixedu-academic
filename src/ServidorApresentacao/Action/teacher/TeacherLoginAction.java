@@ -24,7 +24,6 @@ import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author jmota
@@ -40,7 +39,7 @@ public class TeacherLoginAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = getSession(request);
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
