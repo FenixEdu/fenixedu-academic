@@ -5,13 +5,22 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 	<html:errors />
-		<logic:present name="<%= ClassShiftManagerDispatchAction.AVAILABLE_LIST %>" scope="request">						
+
+		<logic:present name="<%= SessionConstants.CLASS_INFO_SHIFT_LIST_KEY %>" >
+			<bean:define id="list" name="<%= SessionConstants.CLASS_INFO_SHIFT_LIST_KEY %>" />
+		</logic:present>
+		<logic:present name="<%= SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY %>" >
+			<bean:define id="available" value="true"/>
+			<bean:define id="list" name="<%= SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY %>" />
+		</logic:present>
+
+		<logic:present name="available">						
 			<h4>
 				<bean:message key="title.shifts.available"/>
 			</h4>
 			
 		</logic:present>
-		<logic:notPresent name="<%= ClassShiftManagerDispatchAction.AVAILABLE_LIST %>" scope="request">						
+		<logic:notPresent name="available">						
 			<h4>
 				<bean:message key="title.shifts.inserted"/>
 			</h4>
@@ -25,7 +34,9 @@
 			</ul>
 		</logic:notPresent>
     
-		<logic:present name="<%= ClassShiftManagerDispatchAction.SHIFT_LIST_ATT %>" scope="request">
+
+
+		<logic:present name="list">
 			<table>
 						<tr>
 								<th>
@@ -38,16 +49,16 @@
 									<bean:message key="property.turno.capacity"/>
 								</th>
 								<th>
-								<logic:present name="<%= ClassShiftManagerDispatchAction.AVAILABLE_LIST %>" scope="request">						
+								<logic:present name="available">						
 										<bean:message key="label.add"/>
 								</logic:present>
-								<logic:notPresent name="<%= ClassShiftManagerDispatchAction.AVAILABLE_LIST %>" scope="request">						
+								<logic:notPresent name="available">						
 										<bean:message key="label.delete"/>
 								</logic:notPresent>
 								</th>
 							</tr>
 			
-				<logic:iterate id="shiftView" name="<%= ClassShiftManagerDispatchAction.SHIFT_LIST_ATT %>" scope="request">
+				<logic:iterate id="shiftView" name="list" indexId="shiftIndex">
 							
 							<tr>
 								<td>
@@ -59,16 +70,16 @@
 								<td>
 									<jsp:getProperty name="shiftView" property="lotacao"/>
 								</td>
-								<logic:present name="<%= ClassShiftManagerDispatchAction.AVAILABLE_LIST %>" scope="request">						
+								<logic:present name="available">
 									<td>
-										<html:link paramId="shiftName" paramName="shiftView" paramProperty="nome"  href="ClassShiftManagerDA.do?method=addClassShift">
+										<html:link paramId="shiftIndex" paramName="shiftIndex" href="ClassShiftManagerDA.do?method=addClassShift">
 											<bean:message key="label.add"/>
 										</html:link>
 									</td>
 								</logic:present>
-								<logic:notPresent name="<%= ClassShiftManagerDispatchAction.AVAILABLE_LIST %>" scope="request">						
+								<logic:notPresent name="available">						
 									<td>
-										<html:link paramId="shiftName" paramName="shiftView" paramProperty="nome" href="ClassShiftManagerDA.do?method=removeClassShift">
+										<html:link paramId="shiftIndex" paramName="shiftIndex" href="ClassShiftManagerDA.do?method=removeClassShift">
 											<bean:message key="label.delete"/>
 										</html:link>
 									</td>
@@ -77,15 +88,15 @@
 				</logic:iterate>
 			</table>
 		</logic:present>
-		<logic:notPresent name="<%= ClassShiftManagerDispatchAction.SHIFT_LIST_ATT %>" scope="request">
+		<logic:notPresent name="list">
 			<table>
 				<tr>
 					<td>
 						<font color="red">
-							<logic:present name="<%= ClassShiftManagerDispatchAction.AVAILABLE_LIST %>" scope="request">						
+							<logic:present name="available">						
 								<bean:message key="error.shifts.class.not.available"/>
 							</logic:present>
-							<logic:notPresent name="<%= ClassShiftManagerDispatchAction.AVAILABLE_LIST %>" scope="request">						
+							<logic:notPresent name="available">						
 								<bean:message key="error.shifts.class.not.associated"/>
 							</logic:notPresent>
 						</font>
