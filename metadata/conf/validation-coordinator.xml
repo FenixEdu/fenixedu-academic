@@ -100,7 +100,7 @@
 			</var>
         	<var>
         		<var-name>test</var-name>
-        		<var-value>(studentNumberFirst != null) && (*this* >= studentNumberFirst)</var-value>
+        		<var-value>(studentNumberFirst != null) and (*this* >= studentNumberFirst)</var-value>
         	</var>
         </field>
 	</form>
