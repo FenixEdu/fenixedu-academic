@@ -301,24 +301,36 @@ public class DisciplinaExecucaoOJB
 
   }
   
-////  	returns a list of teachers that teach the course ids
-//		public List readExecutionCourseTeachersInCharge(Integer executionCourseId) throws ExcepcaoPersistencia {
-//			try {
-//			String oqlQuery = "select keyTeacher from " + ResponsibleFor.class.getName();
-//			oqlQuery += " where keyExecutionCourse = $1" ;
-//			query.create(oqlQuery);
-//
-//			query.bind(executionCourseId);
-//		
-//
-//			List result = (List) query.execute();
-//			lockRead(result);
-//		
-//			return result;
-//		} catch (QueryException e) {
-//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
-//		}
-//	}
+  public void lockWrite(IDisciplinaExecucao executionCourseToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
+
+		  IDisciplinaExecucao executionCourseFromDB = null;
+
+		  // If there is nothing to write, simply return.
+		  if (executionCourseToWrite == null) {
+			  return;
+		  }
+	
+		  // Read ExecutionCourse from database.
+	executionCourseFromDB =
+			  this.readByExecutionCourseInitialsAndExecutionPeriod(
+			  	executionCourseToWrite.getSigla(),
+				executionCourseToWrite.getExecutionPeriod());
+
+		  // If ExecutionCourse is not in database, then write it.
+		  if (executionCourseFromDB == null) {
+			  super.lockWrite(executionCourseToWrite);
+			  // else If the ExecutionCourse is mapped to the database, then write any existing changes.
+		  } else if (
+			  (executionCourseToWrite instanceof DisciplinaExecucao)
+				  && ((DisciplinaExecucao) executionCourseFromDB).getIdInternal().equals(
+					  ((DisciplinaExecucao) executionCourseToWrite).getIdInternal())) {
+			  super.lockWrite(executionCourseToWrite);
+			  // else Throw an already existing exception
+		  } else
+	
+			  throw new ExistingPersistentException();
+	  }
+
 
 
 }

@@ -49,7 +49,6 @@ public class InsertExecutionCourseDA extends FenixDispatchAction {
 			InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 						
 			String name = (String) dynaForm.get("name");
-			if(name.compareTo("") != 0)
 			infoExecutionCourse.setNome(name);
 			
 			String code = (String) dynaForm.get("code");

@@ -5,7 +5,7 @@
 <struts-config>
  
 		<!-- ========== Data Source Configuration =============================== -->
-	 
+	
 		<!-- ========== Form Bean Definitions ================================== -->
 		<form-beans type="org.apache.struts.action.ActionFormBean">  
 	
@@ -693,11 +693,11 @@
           input="mainPageInput.do"
               type="ServidorApresentacao.Action.manager.ReadExecutionPeriodsAction"
               scope="request">
-          <forward name="readExecutionPeriods" path="df.page.read-execution-periods"/>
+          <forward name="readExecutionPeriods" path="df.page.read-execution-periods-to-choose"/>
       </action>
     
     <!--insertExecutionCourseAtExecutionPeriod
-    insertExecutionCourse input="/insertExecutionCourse.do?method=prepareInsert&amp;page=0"-->
+    insertExecutionCourse -->
     
     <action
 		path="/readExecutionCourses"
@@ -705,22 +705,22 @@
 		scope="request"
 		type="ServidorApresentacao.Action.manager.ReadExecutionCoursesAction"
         validate="true">
-       <forward name="readExecutionCourses" path="df.page.read-execution-courses"/>      	      
+       <forward name="readExecutionCourses" path="df.page.read-execution-courses-to-choose"/>      	      
 	</action>
     
     <action
 		path="/insertExecutionCourse"
 		name="executionCourseForm"
-		
+		input="/insertExecutionCourse.do?method=prepareInsert&amp;page=0"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.manager.InsertExecutionCourseDA"
         validate="true">
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
-         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
         <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
        <forward name="insertExecutionCourse" path="df.page.insert-execution-course"/>
        <forward name="readExecutionCourses" path="/readExecutionCourses.do"/> 

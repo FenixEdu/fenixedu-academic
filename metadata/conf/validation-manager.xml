@@ -193,6 +193,9 @@
  <!--validation to the form to insert a execution course-->
     <form name="executionCourseForm">
       
+      <field property="name" depends="required" page="1" >
+        <arg0 key="message.manager.execution.course.name" resource="true"/>
+      </field>
       <field property="code" depends="required" page="1" >
         <arg0 key="message.manager.execution.course.code" resource="true"/>
       </field>

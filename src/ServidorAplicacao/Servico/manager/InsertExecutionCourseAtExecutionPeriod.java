@@ -45,13 +45,13 @@ public class InsertExecutionCourseAtExecutionPeriod implements IServico {
 								
 				IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport.getIPersistentExecutionPeriod();
 				IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(new ExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()), false);
-				
+				System.out.println("EEEEEeeee"+executionPeriod);
 				if(executionPeriod == null)
 					throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
 			
 				IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
 				
-				
+			
 			
 			executionCourse.setNome(infoExecutionCourse.getNome());
 			
@@ -64,11 +64,12 @@ public class InsertExecutionCourseAtExecutionPeriod implements IServico {
 			executionCourse.setTheoPratHours(infoExecutionCourse.getTheoPratHours());
 			executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
 			executionCourse.setComment(infoExecutionCourse.getComment());
+
 					
 				persistentExecutionCourse.lockWrite(executionCourse);
 					
 		} catch (ExistingPersistentException existingException) {
-			throw new ExistingServiceException("A disciplina execução:+" + executionCourse.getNome(), existingException); 
+			throw new ExistingServiceException("A disciplina execução com sigla:"+ executionCourse.getSigla(), existingException); 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
