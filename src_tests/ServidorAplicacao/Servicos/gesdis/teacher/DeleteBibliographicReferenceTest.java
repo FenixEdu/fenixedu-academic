@@ -38,7 +38,7 @@ public class DeleteBibliographicReferenceTest
 	}
 
 	protected String getNameOfServiceToBeTested() {
-		return "gesdis.teacher.DeleteBibliographicReference";
+		return "DeleteBibliographicReference";
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
