@@ -240,7 +240,7 @@ public class DownloadCandidaciesTable extends FenixAction
 				List cps =
 					(ArrayList) ServiceManagerServiceFactory.executeService(
 						userView,
-						"ReadStudentCurricularPlans",
+						"ReadStudentCurricularPlansForSeminaries",
 						argsReadStudentCurricularPlans);
 				long startDate = Long.MAX_VALUE;
 				for (Iterator iter = cps.iterator(); iter.hasNext();)
@@ -268,12 +268,16 @@ public class DownloadCandidaciesTable extends FenixAction
 				{
 					InfoEnrolment ie = (InfoEnrolment) iter.next();
 					String stringGrade = ie.getInfoEnrolmentEvaluation().getGrade();
-					if (!stringGrade.equals("RE"))
-					{
-						grade = new Float(stringGrade).floatValue();
-						acc += grade;
-						i++;
-					}
+                    try
+                    {
+                        grade = new Float(stringGrade).floatValue();
+                        acc += grade;
+                        i++;
+                    }
+                    catch (NumberFormatException e1)
+                    {
+                        //ignore
+                    }
 				}
 				if (i != 0)
 				{
