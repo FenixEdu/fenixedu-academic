@@ -136,15 +136,16 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
 	 * @see fileSuport.INode#getSlideName()
 	 */
 	public String getSlideName() {
-		String result = getParentNode().getSlideName()+"/"+getName().trim().replaceAll("/","-").replaceAll("\\","-");
+		String result = getParentNode().getSlideName()+"/"+getName().trim().replaceAll("/","-").replaceAll(" ","");
 		return result;
 	}
 
 	/* (non-Javadoc)
 	 * @see fileSuport.INode#getParentNode()
 	 */
-	public INode getParentNode() {		
-		return getExecutionYear();
+	public INode getParentNode() {	
+		IExecutionYear executionYear = getExecutionYear();	
+		return executionYear;
 	}
 
 }

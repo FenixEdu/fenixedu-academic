@@ -245,7 +245,7 @@ public class Section extends DomainObject implements ISection {
 	 * @see fileSuport.INode#getSlideName()
 	 */
 	public String getSlideName() {
-		String result = getParentNode().getSlideName()+"/"+getName().trim().replaceAll("/","-").replaceAll("\\","-");
+		String result = getParentNode().getSlideName()+"/"+getName().trim().replaceAll("/","-").replaceAll(" ","");
 		return result;
 	}
 
@@ -254,9 +254,12 @@ public class Section extends DomainObject implements ISection {
 	 */
 	public INode getParentNode() {
 		if (getSuperiorSection()==null) {
-			return getSite().getExecutionCourse();
+			ISite site = getSite();
+			IDisciplinaExecucao executionCourse=site.getExecutionCourse();
+			return executionCourse;
 		}else {
-			return getSuperiorSection();
+			ISection section = getSuperiorSection();
+			return section;
 		}
 	}
 }

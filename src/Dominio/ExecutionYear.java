@@ -78,8 +78,8 @@ public class ExecutionYear extends DomainObject implements IExecutionYear {
 	/* (non-Javadoc)
 	 * @see fileSuport.INode#getSlideName()
 	 */
-	public String getSlideName() {
-		String result="/"+getYear().trim().replaceAll("/","-").replaceAll("\\","-");	
+	public String getSlideName() {		
+		String result="/"+getYear().trim().replaceAll("/","-").replaceAll(" ","");
 		return result;
 	}
 	/* (non-Javadoc)

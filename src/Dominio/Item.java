@@ -165,15 +165,16 @@ public class Item extends DomainObject implements IItem {
 	 * @see fileSuport.INode#getSlideName()
 	 */
 	public String getSlideName() {
-		String result=getParentNode().getSlideName()+"/"+getName().trim().replaceAll("/","-").replaceAll("\\","-");
+		String result=getParentNode().getSlideName()+"/"+getName().trim().replaceAll("/","-").replaceAll(" ","");
 		return result;
 	}
 
 	/* (non-Javadoc)
 	 * @see fileSuport.INode#getParentNode()
 	 */
-	public INode getParentNode() {		
-		return getSection();
+	public INode getParentNode() {	
+		ISection section = getSection();	
+		return section;
 	}
 
 }
