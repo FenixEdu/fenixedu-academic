@@ -5,23 +5,17 @@
 
 
 <html:form action="/searchGrantOwner">
+
+	<%-- Presenting Errors--%>
 	<logic:messagesPresent>
 	<p align="center"><span class="error">
 	<html:errors/>
-	</span></p><br>
+	</span></p><br/>
 	</logic:messagesPresent>    
 
 	<html:hidden property="method" value="doSearch"/>
 	<html:hidden property="page" value="1"/>
-	
-	<%--
-	<table class="listClasses" align="center">
-		<tr><td>Para fazer uma procura insira o nome e/ou os dados de documento de identificação da pessoa bolseira a gerir,</td></tr>
-		<tr><td>ou</td></tr>
-		<tr><td>Insira o número do bolseiro</td></tr>
-	</table> --%>
-	
-	<br/>
+
 	<table>
 		<tr>
 			<td align="left"><bean:message key="label.grant.owner.name"/>:&nbsp;</td>
@@ -41,14 +35,15 @@
 		</tr>
 	</table>
 	
-	<p>
-		<html:submit styleClass="inputbutton">
-			<bean:message key="button.search"/>
-		</html:submit>
-	</p>
+	<p><html:submit styleClass="inputbutton">
+		<bean:message key="button.search"/>
+	</html:submit></p>
 </html:form>
-<br><br>
+
+<br/><br/>
+
 <html:form action="/searchGrantOwnerByNumber" style="display:inline">
+
 	<html:hidden property="method" value="searchGrantOwner"/>
 	<html:hidden property="page" value="1"/>
 	
@@ -59,9 +54,7 @@
 		</tr>
 	</table>
 	
-	<p>
-		<html:submit styleClass="inputbutton">
-			<bean:message key="button.search"/>
-		</html:submit>
-	</p>
+	<p><html:submit styleClass="inputbutton">
+		<bean:message key="button.search"/>
+	</html:submit></p>
 </html:form>
