@@ -185,7 +185,8 @@ public class CriarAulaFormActionTest extends TestCasePresentation {
 		verifyForwardPath("/naoExecutado.do");
 
 		verifyActionErrors(
-			new String[] { "ServidorAplicacao.NotExecutedException" });
+			new String[] { "java.lang.Exception" });
+
 	}
 
 }
