@@ -57,8 +57,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
 
         InfoPerson infoPerson = null;
 
-        Object args[] = new Object[1];
-        args[0] = userView;
+        Object args[] = {userView};
 
         infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername", args);
 
@@ -184,7 +183,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
 
         return mapping.findForward("viewEnrollments");
     }
-    
+
     public ActionForward viewStudentEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
     throws Exception {
     
@@ -200,7 +199,6 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         request.setAttribute("infoClass",infoClass);
     	
     	return mapping.findForward("Success");
-    }
-
 }
 
+}
