@@ -34,6 +34,7 @@ import ServidorAplicacao.Servico.exceptions.NoChangeMadeServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NonValidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Servico.student.ReadStudentsWithoutGroup.NewStudentGroupAlreadyExists;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -117,15 +118,18 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 			actionErrors1.add("error.noProject", error1);
 			saveErrors(request, actionErrors1);
 			return mapping.findForward("viewExecutionCourseProjects");
-		}catch (FenixServiceException e) {
+		}catch (NewStudentGroupAlreadyExists e) {
 			ActionErrors actionErrors1 = new ActionErrors();
 			ActionError error1 = null;
 			error1 = new ActionError("error.existingGroup");
 			actionErrors1.add("error.existingGroup", error1);
 			saveErrors(request, actionErrors1);
-			return mapping.findForward("viewExecutionCourseProjects");
-			//return prepareEnrolment(mapping, form, request, response);
+			//return mapping.findForward("viewExecutionCourseProjects");
+			return prepareEnrolment(mapping, form, request, response);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
 		}
+
 
 		List infoStudentList = studentsNotEnroled.getInfoStudentList();
 		if (infoStudentList != null) {

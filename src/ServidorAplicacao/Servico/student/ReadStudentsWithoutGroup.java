@@ -39,6 +39,8 @@ import Util.EnrolmentGroupPolicyType;
  */
 public class ReadStudentsWithoutGroup implements IService {
 
+    public class NewStudentGroupAlreadyExists extends FenixServiceException {}
+
     public ISiteComponent run(Integer groupPropertiesCode, String username)
             throws FenixServiceException, ExcepcaoPersistencia {
 
@@ -76,8 +78,9 @@ public class ReadStudentsWithoutGroup implements IService {
         IStudentGroup newStudentGroup = persistentStudentGroup
                 .readStudentGroupByAttendsSetAndGroupNumber(groupProperties.getAttendsSet(), groupNumber);
 
-        if (newStudentGroup != null)
-            throw new FenixServiceException();
+        if (newStudentGroup != null) {
+            throw new NewStudentGroupAlreadyExists();
+        }
 
         infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
 
