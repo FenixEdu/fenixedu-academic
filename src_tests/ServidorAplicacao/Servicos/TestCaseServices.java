@@ -10,6 +10,7 @@ import junit.framework.TestCase;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Tools.dbaccess;
 
 /**
@@ -40,6 +41,11 @@ public abstract class TestCaseServices extends TestCase {
 		} catch (Exception ex) {
 			fail("Setup failed loading database with test data set: " + ex);
 		}
+		// to clear cache
+		SuportePersistenteOJB.resetInstance();
+		gestor = GestorServicos.manager();
+		setUserViewAuthorized();
+		setUserViewNotAuthorized();
 	}
 
 	/**
