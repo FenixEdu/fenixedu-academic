@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
   <html:select property="courseInitials" size="1">
-  	 <option value=""><bean:message key="label.choose.executionCourse"/></option>
+  	 <option value=""></option>
      <html:options	property="sigla" 
      				labelProperty="nome" 
 					collection="<%= SessionConstants.EXECUTION_COURSE_LIST_KEY %>" />

@@ -23,7 +23,6 @@
             <td nowrap="nowrap" class="formTD"><jsp:include page="selectExecutionCourseList.jsp"/></td>
           </tr>
         </table>
-          <html:submit value="Procurar" styleClass="inputbutton">
-           	  <bean:message key="label.search"/>
-          </html:submit>
-        </html:form>
+<br />
+<html:submit value="Procurar" styleClass="inputbutton"><bean:message key="label.search"/></html:submit>
+</html:form>

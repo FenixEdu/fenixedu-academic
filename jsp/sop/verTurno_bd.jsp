@@ -5,81 +5,43 @@
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="DataBeans.InfoLesson" %>
-   	<table width="100%" border="0" cellpadding="0" cellspacing="0">
-          <tr>
-            <td bgcolor="#FFFFFF" class="infoselected"><p>O curso seleccionado
-              &eacute;:</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+  		<td class="infoselected"><p>O curso seleccionado &eacute;:</p>
 			  <strong><jsp:include page="context.jsp"/></strong>
-            </td>
-          </tr>
-    </table>
-    <br/>
+       	</td>
+   	</tr>
+</table>
+<br />
    	<% ArrayList iA = (ArrayList) session.getAttribute("infoAulasDeTurno"); %>
-    <center>
-        <font color='#034D7A' size='5'>
-            <b>
-                <bean:message key="property.turno"/> <bean:write name="infoTurno" property="nome" scope="session" filter="true"/>
-            </b>
-        </font>
-    </center>
-    <br/>
-    <br/>
-    <center> <b> <bean:message key="listAulas.OfTurno"/> </b> </center>
-    <br/>
+<h2 class="inline"><bean:message key="property.turno"/>: </h2><h3 class="inline"><bean:write name="infoTurno" property="nome" scope="session" filter="true"/></h3>
+<p><b><bean:message key="listAulas.OfTurno"/></b></p>
     <logic:present name="infoAulasDeTurno" scope="session">
-        <table align="center" border=1 cellpadding='5'>
-            <tr align='center'>
-                <th>
-                    <bean:message key="property.aula.weekDay"/>
-                </th>
-                <th>
-                    <bean:message key="property.aula.time.begining"/>
-                </th>
-                <th>
-                    <bean:message key="property.aula.time.end"/>
-                </th>
-                <th>
-                    <bean:message key="property.aula.type"/>
-                </th>
-                <th>
-                    <bean:message key="property.aula.sala"/>
-                </th>
-            </tr>
-
-		            <% int i = 0; %>
-                    <logic:iterate id="elem" name="infoAulasDeTurno">
-                       <% Integer iH = new Integer(((InfoLesson) iA.get(i)).getInicio().get(Calendar.HOUR_OF_DAY)); %>
-                       <% Integer iM = new Integer(((InfoLesson) iA.get(i)).getInicio().get(Calendar.MINUTE)); %>
-                       <% Integer fH = new Integer(((InfoLesson) iA.get(i)).getFim().get(Calendar.HOUR_OF_DAY)); %>
-                       <% Integer fM = new Integer(((InfoLesson) iA.get(i)).getFim().get(Calendar.MINUTE)); %>
-                       <tr align="center">
-                            <td>
-                                <bean:write name="elem" property="diaSemana" />
-                            </td>
-                            <td>
-                            	<%= iH.toString()%> : <%= iM.toString()%>
-                            </td>
-                            <td>
-                            	<%= fH.toString()%> : <%= fM.toString()%>
-                            </td>
-                            <td>
-                            	<%= ((InfoLesson) iA.get(i)).getTipo().toString()%>
-                            </td>
-                            <td>
-                                <bean:write name="elem" property="infoSala.nome"/>
-                            </td>
-                        </tr>
-                        <% i++; %>
-                    </logic:iterate>           
-        </table>
+<table>
+	<tr>
+    	<td class="listClasses-header"><bean:message key="property.aula.weekDay"/></td>
+     	<td class="listClasses-header"><bean:message key="property.aula.time.begining"/></td>
+        <td class="listClasses-header"><bean:message key="property.aula.time.end"/></td>
+        <td class="listClasses-header"><bean:message key="property.aula.type"/></td>
+        <td class="listClasses-header"><bean:message key="property.aula.sala"/></td>
+ 	</tr>
+	<% int i = 0; %>
+    <logic:iterate id="elem" name="infoAulasDeTurno">
+    <% Integer iH = new Integer(((InfoLesson) iA.get(i)).getInicio().get(Calendar.HOUR_OF_DAY)); %>
+    <% Integer iM = new Integer(((InfoLesson) iA.get(i)).getInicio().get(Calendar.MINUTE)); %>
+    <% Integer fH = new Integer(((InfoLesson) iA.get(i)).getFim().get(Calendar.HOUR_OF_DAY)); %>
+    <% Integer fM = new Integer(((InfoLesson) iA.get(i)).getFim().get(Calendar.MINUTE)); %>
+   	<tr>
+      	<td class="listClasses"><bean:write name="elem" property="diaSemana" /></td>
+     	<td class="listClasses"><%= iH.toString()%> : <%= iM.toString()%></td>
+       	<td class="listClasses"><%= fH.toString()%> : <%= fM.toString()%></td>
+        <td class="listClasses"><%= ((InfoLesson) iA.get(i)).getTipo().toString()%></td>
+        <td class="listClasses"><bean:write name="elem" property="infoSala.nome"/></td>
+  	</tr>
+    <% i++; %>
+    </logic:iterate>           
+</table>
     </logic:present>
     <logic:notPresent name="infoAulasDeTurno" scope="session">
-        <table align="center" border='1' cellpadding='15'>
-            <tr align="center">
-                <td>
-                    <font color='red'> <bean:message key="errors.existAulas"/> </font>
-                </td>
-            </tr>
-        </table>
-    </logic:notPresent>
-</body>
+<span class="error"><bean:message key="errors.existAulas"/></span>
+</logic:notPresent>

@@ -5,40 +5,39 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-	<table width="100%" cellpadding="0" cellspacing="0">
-          <tr>
-            <td  class="infoselected"><p>O curso seleccionado &eacute;:</p>
+<table width="100%" cellspacing="0">
+	<tr>
+    	<td class="infoselected"><p>O curso seleccionado &eacute;:</p>
 			  <strong><jsp:include page="context.jsp"/></strong>
-            </td>
-          </tr>
-	</table>
-     <br />
+       	</td>
+    </tr>
+</table>
+<br />
 	<logic:present name="<%= SessionConstants.CLASS_VIEW %>" scope="session">
-   		<table width="100%" cellpadding="0" cellspacing="0" border="0">
-		<tr>   		
-			<td nowrap="nowrap" class="formTD">
-				<%-- Create class form --%>
-				<h2><bean:message key="label.class.edit"/></h2>    		
-					<jsp:include page="classForm.jsp"/>
-				<%-- ***************** --%>
-	   		</td>
-   		</tr>
-		</table>
-		<br/>
-		<h2>Horário da Turma</h2>
-		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_CLASS_TIMETABLE %>"/>		
-		<br />
+<table width="100%" cellspacing="0">
+	<tr>   		
+		<td nowrap="nowrap" class="formTD">
+			<%-- Create class form --%>
+			<h2><bean:message key="label.class.edit"/></h2>    		
+			<jsp:include page="classForm.jsp"/>
+			<%-- ***************** --%>
+		</td>
+   	</tr>
+</table>
+<br />
+<h2>Horário da Turma</h2>
+	<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_CLASS_TIMETABLE %>"/>		
+<br />
 	</logic:present>
 	<logic:notPresent name="<%= SessionConstants.CLASS_VIEW %>" scope="session">
-    	<h2><bean:message key="label.class.create"/></h2>
-   		<table align="left" cellpading="0" cellspacing="0" border="0">
-		<tr>   		
-			<td nowrap="nowrap" class="formTD">
-				<%-- Create class form --%>		
-					<jsp:include page="classForm.jsp"/>
-				<%-- ***************** --%>
-	   		</td>
-   		</tr>
-   		</table>
-	</logic:notPresent>
-
+<h2><bean:message key="label.class.create"/></h2>
+<table cellspacing="0">
+	<tr>   		
+		<td nowrap="nowrap" class="formTD">
+			<%-- Create class form --%>		
+			<jsp:include page="classForm.jsp"/>
+			<%-- ***************** --%>
+	   	</td>
+   	</tr>
+</table>
+</logic:notPresent>

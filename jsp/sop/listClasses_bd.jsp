@@ -21,14 +21,13 @@
 	    	<logic:present name="classesList" scope="request">
 	 	<tr>
 	 <!-- Table headers: Nome e Apagar -->
-			<th>
+			<td class="listClasses-header">
 				<bean:message key="label.name"/>
-			</th>
-			<th>
+			</td>
+			<td class="listClasses-header">
 				<bean:message key="label.delete"/>
-			</th>				
+			</td>				
 		</tr>		
-
 		  <bean:define id="deleteConfirm">
 			return confirm('<bean:message key="message.confirm.delete.class"/>')
 		  </bean:define>
