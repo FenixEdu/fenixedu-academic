@@ -1,16 +1,13 @@
 /*
  * Created on 22/Jul/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
-package ServidorApresentacao.utils;
+package ServidorApresentacao;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import DataBeans.InfoRole;
-import ServidorApresentacao.TestCaseActionExecution;
 import Util.RoleType;
 
 /**
@@ -50,8 +47,7 @@ public abstract class TestCasePresentationManagerPortal extends TestCaseActionEx
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoPathAction()
 	 */
 	protected String getRequestPathInfoPathAction() {
-		return "/manager";
+		return "manager";
 	}
 
 }
-

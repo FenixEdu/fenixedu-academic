@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<logic:present name="<%= SessionConstants.INFO_DEGREES_LIST %>" scope="session">
+<logic:present name="<%= SessionConstants.INFO_DEGREES_LIST %>" scope="request">
 <logic:notEmpty name="<%= SessionConstants.INFO_DEGREES_LIST %>" >
 
 		<h2><bean:message key="label.manager.degrees" /></h2>

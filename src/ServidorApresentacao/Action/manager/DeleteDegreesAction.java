@@ -29,15 +29,16 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  */
 public class DeleteDegreesAction extends FenixAction {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	public ActionForward execute(ActionMapping mapping, 
+	                             ActionForm form,
+	                             HttpServletRequest request, 
+	                             HttpServletResponse response)
 		throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
 		DynaActionForm deleteDegreesForm = (DynaActionForm) form;
 
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		List infoDegrees = (List) session.getAttribute(SessionConstants.INFO_DEGREES_LIST);
-
 		List degreesInternalIds = Arrays.asList((Integer[]) deleteDegreesForm.get("internalIds"));
 
 		Object args[] = { degreesInternalIds };
@@ -77,7 +78,7 @@ public class DeleteDegreesAction extends FenixAction {
 		}
 
 		Collections.sort(allInfoDegrees);
-		session.setAttribute(SessionConstants.INFO_DEGREES_LIST, allInfoDegrees);
+		request.setAttribute(SessionConstants.INFO_DEGREES_LIST, allInfoDegrees);
 
 		return mapping.findForward("readDegrees");
 

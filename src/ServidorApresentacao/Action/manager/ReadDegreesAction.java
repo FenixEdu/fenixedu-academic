@@ -45,7 +45,7 @@ public class ReadDegreesAction extends FenixAction {
 				null);
 		
 				Collections.sort(degrees);
-				session.setAttribute(SessionConstants.INFO_DEGREES_LIST,degrees);
+				request.setAttribute(SessionConstants.INFO_DEGREES_LIST,degrees);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}

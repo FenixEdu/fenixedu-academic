@@ -51,7 +51,7 @@ public class ReadDegreesService implements IServico {
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
 	}
-//SERAH PRECISO?
+
 	if (allDegrees == null || allDegrees.isEmpty()) {return allDegrees;}
 
 	// build the result of this service
