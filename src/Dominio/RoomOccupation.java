@@ -215,17 +215,16 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
                         if (frequency.intValue() == QUINZENAL) {
                             return periodQuinzenalContainsDay(period, week.intValue(), dayOfWeek,
                                     this.period.getStartDate());
-                        } else {
-                            return true;
                         }
+                        return true;
+                        
                     }
                     if (this.frequency.intValue() == SEMANAL) {
                         if (frequency.intValue() == QUINZENAL) {
                             return periodQuinzenalContainsWeekPeriod(period, week.intValue(), dayOfWeek,
                                     this.period);
-                        } else {
-                            return true;
                         }
+                        return true;
                     }
                     if (this.frequency.intValue() == QUINZENAL) {
                         if (frequency.intValue() == QUINZENAL) {
@@ -261,17 +260,16 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
                         if (frequency.intValue() == QUINZENAL) {
                             return periodQuinzenalContainsDay(period, week.intValue(), dayOfWeek,
                                     this.period.getStartDate());
-                        } else {
-                            return true;
                         }
+                        return true;
                     }
                     if (this.frequency.intValue() == SEMANAL) {
                         if (frequency.intValue() == QUINZENAL) {
                             return periodQuinzenalContainsWeekPeriod(period, week.intValue(), dayOfWeek,
                                     this.period);
-                        } else {
-                            return true;
                         }
+                        return true;
+                        
                     }
                     if (this.frequency.intValue() == QUINZENAL) {
                         if (frequency.intValue() == QUINZENAL) {

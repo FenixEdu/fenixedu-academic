@@ -3,21 +3,9 @@
  */
 package ServidorAplicacao.Servico.manager;
 
-import java.util.Calendar;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionPeriod;
-import Dominio.ExecutionPeriod;
-import Dominio.ExecutionYear;
-import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.PeriodState;
 
 /**
  * @author Luis Crus & Sara Ribeiro
