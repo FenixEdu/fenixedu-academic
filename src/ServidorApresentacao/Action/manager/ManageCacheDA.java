@@ -35,9 +35,9 @@ public class ManageCacheDA extends FenixDispatchAction {
         Profiler.report();
         Profiler.resetInstance();
 
-        IUserView userView = SessionUtils.getUserView(request);
+        //IUserView userView = SessionUtils.getUserView(request);
 
-        Integer numberCachedItems = (Integer) ServiceUtils.executeService(userView,
+        Integer numberCachedItems = (Integer) ServiceUtils.executeService(null,
                 "ReadNumberCachedItems", null);
 
         request.setAttribute(SessionConstants.NUMBER_CACHED_ITEMS, numberCachedItems);
@@ -60,9 +60,9 @@ public class ManageCacheDA extends FenixDispatchAction {
     public ActionForward clearCache(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        //IUserView userView = SessionUtils.getUserView(request);
 
-        ServiceUtils.executeService(userView, "ClearCache", null);
+        ServiceUtils.executeService(null, "ClearCache", null);
 
         return mapping.findForward("CacheCleared");
     }

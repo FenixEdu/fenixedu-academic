@@ -16,18 +16,10 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ClearCache implements IService {
 
-    public Boolean run() throws FenixServiceException {
-
-        Boolean result = new Boolean(false);
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            sp.clearCache();
-            result = new Boolean(true);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-
-        return result;
-    }
+	public Boolean run() throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+		sp.clearCache();
+		return new Boolean(true);
+	}
 
 }
