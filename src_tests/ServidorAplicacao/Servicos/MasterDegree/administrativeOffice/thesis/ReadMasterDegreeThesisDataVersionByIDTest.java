@@ -94,8 +94,7 @@ public class ReadMasterDegreeThesisDataVersionByIDTest extends AdministrativeOff
         try
         {
             Object[] argsReadMasterDegreeThesisDataVersion = { new Integer(65456)};
-            InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion =
-                (InfoMasterDegreeThesisDataVersion) serviceManager.executar(
+            serviceManager.executar(
                     userView,
                     getNameOfServiceToBeTested(),
                     argsReadMasterDegreeThesisDataVersion);
