@@ -20,5 +20,6 @@ public interface IPersistentCurricularCourseScope extends IPersistentObject {
 		public void lockWrite(ICurricularCourseScope curricularCourseScopeToWrite) throws ExcepcaoPersistencia, ExistingPersistentException;
 		public void delete(ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;
 		public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch) throws ExcepcaoPersistencia;
+		public ICurricularCourseScope readCurricularCourseScopeByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
 		public ArrayList readAll() throws ExcepcaoPersistencia;
 }

@@ -77,7 +77,7 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 		throws ExcepcaoPersistencia {
 
 		try {
-			ICurricularCourseScope enrolment = null;
+			ICurricularCourseScope curricularCourseScope = null;
 			String oqlQuery = "select all from " + CurricularCourseScope.class.getName();
 			oqlQuery += " where curricularCourse.name = $1";
 			oqlQuery += " and curricularCourse.code = $2";
@@ -109,9 +109,9 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 			}
 
 			if ((result != null) && (result.size() != 0)) {
-				enrolment = (ICurricularCourseScope) result.get(0);
+				curricularCourseScope = (ICurricularCourseScope) result.get(0);
 			}
-			return enrolment;
+			return curricularCourseScope;
 
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
@@ -141,5 +141,44 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentCurricularCourseScope#readCurricularCourseScopeByCurricularCourse(Dominio.ICurricularCourse)
+	 */
+	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
+		try {
+				ICurricularCourseScope curricularCourseScope = null;
+				String oqlQuery = "select all from " + CurricularCourseScope.class.getName();
+				oqlQuery += " where curricularCourse.name = $1";
+				oqlQuery += " and curricularCourse.code = $2";
+				oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $3";
+				oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.nome = $4";
+				oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.sigla = $5";
+
+				query.create(oqlQuery);
+
+				query.bind(curricularCourse.getName());
+				query.bind(curricularCourse.getCode());
+				query.bind(curricularCourse.getDegreeCurricularPlan().getName());
+				query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getNome());
+				query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
+
+				List result = (List) query.execute();
+				try {
+					lockRead(result);
+				} catch (ExcepcaoPersistencia ex) {
+					throw ex;
+				}
+
+				if ((result != null) && (result.size() != 0)) {
+					curricularCourseScope = (ICurricularCourseScope) result.get(0);
+				}
+				return curricularCourseScope;
+
+			} catch (QueryException ex) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+			}
+
 	}
 }

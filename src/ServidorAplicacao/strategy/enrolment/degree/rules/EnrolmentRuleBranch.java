@@ -5,13 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import Dominio.IBranch;
-import Dominio.ICurricularCourse;
-import Dominio.IStudentCurricularPlan;
+import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentBranch;
-import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author dcs-rjao
@@ -22,40 +18,19 @@ public class EnrolmentRuleBranch implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
 
-		SuportePersistenteOJB persistentSupport = null;
-		IPersistentCurricularCourse persistentCurricularCourse = null;
-		IPersistentBranch persistentBranch = null;
+		List curricularCoursesScopesFromBranch = new ArrayList();
 
-		IBranch withBranch = null;
-		List coursesWithBranch = null;
-		IBranch withoutBranch = null;
-		List coursesWithoutBranch = null;
-		IStudentCurricularPlan studentCurricularPlan = null;
+		IBranch studentBranch = enrolmentContext.getStudentActiveCurricularPlan().getBranch();
 
-		List curricularCoursesFromStudentCurricularPlan = new ArrayList();
-
-		persistentSupport = SuportePersistenteOJB.getInstance();
-
-		persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-		persistentBranch = persistentSupport.getIPersistentBranch();
-
-		studentCurricularPlan = enrolmentContext.getStudentActiveCurricularPlan();
-				
-		withBranch = studentCurricularPlan.getBranch();
-		coursesWithBranch = persistentCurricularCourse.readAllCurricularCoursesByBranch(withBranch);
-		withoutBranch = persistentBranch.readBranchByNameAndCode("", "");
-		coursesWithoutBranch = persistentCurricularCourse.readAllCurricularCoursesByBranch(withoutBranch);
-
-		ICurricularCourse curricularCourse = null;
-		Iterator iterator = enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled().iterator();
+		Iterator iterator = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
 		while (iterator.hasNext()) {
-			curricularCourse = (ICurricularCourse) iterator.next();
-			if ((coursesWithBranch.contains(curricularCourse)) || (coursesWithoutBranch.contains(curricularCourse))) {
-				curricularCoursesFromStudentCurricularPlan.add(curricularCourse);
+			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
+			if ((curricularCourseScope.getBranch().equals(studentBranch)) || (curricularCourseScope.getBranch().getName().equals(""))) {
+				curricularCoursesScopesFromBranch.add(curricularCourseScope);
 			}
 		}
 
-		enrolmentContext.setFinalCurricularCoursesSpanToBeEnrolled(curricularCoursesFromStudentCurricularPlan);
+		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(curricularCoursesScopesFromBranch);
 		return enrolmentContext;
 	}
 }

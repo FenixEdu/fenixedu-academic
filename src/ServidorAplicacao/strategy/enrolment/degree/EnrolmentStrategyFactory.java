@@ -9,14 +9,13 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import Dominio.ICurricularCourse;
-import Dominio.IDegreeCurricularPlan;
+import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
-import Dominio.IStudent;
-import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.strategy.enrolment.degree.strategys.EnrolmentStrategyLERCI;
 import ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -36,20 +35,21 @@ public class EnrolmentStrategyFactory {
 	private static SuportePersistenteOJB persistentSupport = null;
 	private static IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
 	private static IPersistentCurricularCourse persistentCurricularCourse = null;
-	
+	private static IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
+
 	private static IPersistentEnrolment persistentEnrolment = null;
 
 	public static synchronized IEnrolmentStrategy getEnrolmentStrategyInstance(int degree, EnrolmentContext enrolmentContext)
 		throws ExcepcaoPersistencia {
 		if (enrolmentContext.getStudent() == null)
 			throw new IllegalArgumentException("Must initialize student in context!");
-			
+
 		if (enrolmentContext.getSemester() == null)
 			throw new IllegalArgumentException("Must initialize semester in context!");
 
 		if (enrolmentContext.getDegree() == null)
 			throw new IllegalArgumentException("Must initialize degree in context!");
-			
+
 		if (strategyInstance == null) {
 			switch (degree) {
 				case LERCI :
@@ -71,99 +71,75 @@ public class EnrolmentStrategyFactory {
 
 	private static EnrolmentContext prepareEnrolmentContext(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
 		persistentSupport = SuportePersistenteOJB.getInstance();
-		persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
-		persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
+		persistentCurricularCourseScope = persistentSupport.getIPersistentCurricularCourseScope();
 		persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-		
-		IStudent student = enrolmentContext.getStudent();
-		
-		// gets actual student curricular plan 
-		IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
-		
-		
-		List studentCurricularPlanCurricularCourses = studentActiveCurricularPlan.getDegreeCurricularPlan().getCurricularCourses(); 
-		
-		
-		final List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentActiveCurricularPlan);
-		
-		final List studentEnrolmentsWithStateApproved = (List) CollectionUtils.select(studentEnrolments, new Predicate (){
+		List studentCurricularPlanCurricularCourses =
+			enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getCurricularCourses();
+
+		final List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(enrolmentContext.getStudentActiveCurricularPlan());
+
+		final List studentEnrolmentsWithStateApproved = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
 				return enrolment.getState().equals(new EnrolmentState(EnrolmentState.APROVED));
 			}
 		});
-		
-		final List studentDoneCurricularCourses = (List) CollectionUtils.collect(studentEnrolmentsWithStateApproved,new Transformer(){
-				public Object transform(Object obj) {
-					IEnrolment enrolment = (IEnrolment) obj;
-					return enrolment.getCurricularCourse();
-				}});
-			
 
-		List enrolmentsWithStateNotApproved = (List) CollectionUtils.select(studentEnrolments, new Predicate(){
+		final List studentDoneCurricularCourses = (List) CollectionUtils.collect(studentEnrolmentsWithStateApproved, new Transformer() {
+			public Object transform(Object obj) {
+				IEnrolment enrolment = (IEnrolment) obj;
+				return enrolment.getCurricularCourse();
+			}
+		});
+
+		List enrolmentsWithStateNotApproved = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
 				ICurricularCourse curricularCourse = enrolment.getCurricularCourse();
-				return !studentDoneCurricularCourses.contains(curricularCourse) && enrolment.getState().equals(new EnrolmentState(EnrolmentState.NOT_APROVED));
+				return !studentDoneCurricularCourses.contains(curricularCourse)
+					&& enrolment.getState().equals(new EnrolmentState(EnrolmentState.NOT_APROVED));
 			}
-		
+
 		});
-		
-		List curricularCoursesEnrolled = (List) CollectionUtils.collect(enrolmentsWithStateNotApproved, new Transformer(){
-		public Object transform(Object obj) {
-			IEnrolment enrolment = (IEnrolment) obj;
-			return enrolment.getCurricularCourse();
-		}}); 
-		
-		enrolmentContext.setFinalCurricularCoursesSpanToBeEnrolled(computeCurricularCoursesNotYetDoneByStudent(studentCurricularPlanCurricularCourses, studentDoneCurricularCourses));
+
+		List curricularCoursesEnrolled = (List) CollectionUtils.collect(enrolmentsWithStateNotApproved, new Transformer() {
+			public Object transform(Object obj) {
+				IEnrolment enrolment = (IEnrolment) obj;
+				return enrolment.getCurricularCourse();
+			}
+		});
+
+		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(
+			computeCurricularCoursesScopesNotYetDoneByStudent(studentCurricularPlanCurricularCourses, studentDoneCurricularCourses));
 		enrolmentContext.setCurricularCoursesDoneByStudent(studentDoneCurricularCourses);
 		enrolmentContext.setAcumulatedEnrolments(CollectionUtils.getCardinalityMap(curricularCoursesEnrolled));
-		enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
 		return enrolmentContext;
 	}
 
-	private static List computeCurricularCoursesFromStudentDegreeCurricularPlan(IStudent student) throws ExcepcaoPersistencia {
+	private static List computeCurricularCoursesScopesNotYetDoneByStudent(
+		List curricularCoursesFromStudentDegreeCurricularPlan,
+		List aprovedCurricularCoursesFromStudent)
+		throws ExcepcaoPersistencia {
 
-		IStudentCurricularPlan studentCurricularPlan = null;
-		IDegreeCurricularPlan degreeCurricularPlan = null;
-		List curricularCoursesList = null;
+		List scopesNotDone = new ArrayList();
 
-		
-		degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-		curricularCoursesList = persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
+		List coursesNotDone = (List) CollectionUtils.subtract(curricularCoursesFromStudentDegreeCurricularPlan, aprovedCurricularCoursesFromStudent);
 
-		return curricularCoursesList;
-	}
-
-	private static List computeAprovedCurricularCoursesFromStudent(IStudent student) throws ExcepcaoPersistencia {
-
-		IStudentCurricularPlan studentCurricularPlan = null;
-		List enrolmentsList = null;
-		List curricularCoursesList = null;
-
-		studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
-		enrolmentsList =
-			persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
-				studentCurricularPlan,
-				new EnrolmentState(EnrolmentState.APROVED));
-
-		Iterator iterator = enrolmentsList.iterator();
-		curricularCoursesList = new ArrayList();
-		while (iterator.hasNext()) {
-			IEnrolment enrolment = (IEnrolment) iterator.next();
-			curricularCoursesList.add(enrolment.getCurricularCourse());
+		Iterator iteratorCourses = coursesNotDone.iterator();
+		while (iteratorCourses.hasNext()) {
+			ICurricularCourse curricularCourse = (ICurricularCourse) iteratorCourses.next();
+			List scopes = curricularCourse.getScopes();
+			Iterator iteratorScopes = scopes.iterator();
+			while (iteratorScopes.hasNext()) {
+				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopes.next();
+				scopesNotDone.add(curricularCourseScope);
+			}
 		}
 
-		return curricularCoursesList;
+		return scopesNotDone;
 	}
 
-	private static List computeCurricularCoursesNotYetDoneByStudent(
-		List curricularCoursesFromStudentDegreeCurricularPlan,
-		List aprovedCurricularCoursesFromStudent) {
-		return (List) CollectionUtils.subtract(curricularCoursesFromStudentDegreeCurricularPlan, aprovedCurricularCoursesFromStudent);
-	}
-	
 }

@@ -136,7 +136,7 @@ public class StrategyFactoryTest extends TestCaseServicos {
 		assertEquals("Curricular courses done!", 0, doneCourses.size());
 
 		List finalSpan =
-			enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled();
+			enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 		assertNotNull("Final span is null!", finalSpan);
 		assertEquals("Final span size!", 8, finalSpan.size());
 		assertEquals("Final span is wrong!",

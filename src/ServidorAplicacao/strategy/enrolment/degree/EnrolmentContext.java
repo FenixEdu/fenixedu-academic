@@ -29,7 +29,7 @@ public final class EnrolmentContext {
 	/**
 	 * defines the list that student can be enrolled
 	 */
-	private List finalCurricularCoursesSpanToBeEnrolled;
+	private List finalCurricularCoursesScopesSpanToBeEnrolled;
 	
 	
 	/**
@@ -99,15 +99,15 @@ public final class EnrolmentContext {
 	/**
 	 * @return
 	 */
-	public List getFinalCurricularCoursesSpanToBeEnrolled() {
-		return finalCurricularCoursesSpanToBeEnrolled;
+	public List getFinalCurricularCoursesScopesSpanToBeEnrolled() {
+		return finalCurricularCoursesScopesSpanToBeEnrolled;
 	}
 
 	/**
 	 * @param list
 	 */
-	public void setFinalCurricularCoursesSpanToBeEnrolled(List list) {
-		finalCurricularCoursesSpanToBeEnrolled = list;
+	public void setFinalCurricularCoursesScopesSpanToBeEnrolled(List list) {
+		finalCurricularCoursesScopesSpanToBeEnrolled = list;
 	}
 
 	/**

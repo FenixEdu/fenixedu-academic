@@ -38,11 +38,11 @@ public class PrecedenceRuleTest extends BaseEnrolmentRuleTest {
 		List initialSpan = null;
 		
 		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(1), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));
-		initialSpan = enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled();		
+		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();		
 		
 		doApplyRule(new PrecedenceRule(), enrolmentContext);
 		
-		finalSpan = enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled();
+		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 		
 		assertEquals("Final span size:",true, initialSpan.size() > finalSpan.size());
 		assertEquals ("Contains assertion!",true,initialSpan.containsAll(finalSpan));
@@ -51,11 +51,11 @@ public class PrecedenceRuleTest extends BaseEnrolmentRuleTest {
 		assertEquals(true, !finalSpan.contains(curricularCourse));
 		
 		enrolmentContext = getEnrolmentContext(new Integer(1), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));		
-		initialSpan = enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled();
+		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 		
 		doApplyRule(new PrecedenceRule(), enrolmentContext);
 		
-		finalSpan = enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled();
+		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 		
 		assertEquals("Final span size:",true, initialSpan.size() == finalSpan.size());
 		assertEquals ("Contains assertion!",true,initialSpan.containsAll(finalSpan));

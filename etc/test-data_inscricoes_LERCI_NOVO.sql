@@ -259,18 +259,17 @@ insert into CURRICULAR_COURSE_SCOPE  values (72, 10, 56, 3);
 #-----------------------------
 # Data for table 'ENROLMENT'
 #-----------------------------
-# (ID_INTERNAL, KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, STATE)
+# (ID_INTERNAL, KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD, STATE)
 ;
 delete from ENROLMENT;
-insert into ENROLMENT VALUES (1, 1, 1, 1, 1);
-insert into ENROLMENT VALUES (2, 1, 2, 1, 1);
-insert into ENROLMENT VALUES (3, 1, 3, 1, 1);
+insert into ENROLMENT VALUES (1, 1, 1, 1, 2);
+insert into ENROLMENT VALUES (2, 1, 2, 1, 2);
+insert into ENROLMENT VALUES (3, 1, 3, 1, 2);
 insert into ENROLMENT VALUES (4, 1, 4, 1, 1);
-insert into ENROLMENT VALUES (5, 1, 5, 1, 2);
-insert into ENROLMENT VALUES (6, 1, 6, 1, 2);
-insert into ENROLMENT VALUES (7, 1, 7, 1, 2);
-insert into ENROLMENT VALUES (8, 1, 8, 1, 2);
-insert into ENROLMENT VALUES (9, 1, 9, 1, 2);
-insert into ENROLMENT VALUES (10, 1, 10, 1, 2);
-
-
+insert into ENROLMENT VALUES (5, 1, 5, 1, 1);
+#insert into ENROLMENT VALUES (6, 1, 6, 1, 1);
+#insert into ENROLMENT VALUES (7, 1, 7, 1, 1);
+#insert into ENROLMENT VALUES (8, 1, 8, 1, 1);
+#insert into ENROLMENT VALUES (9, 1, 9, 1, 1);
+#insert into ENROLMENT VALUES (10, 1, 10, 1, 1);
+insert into ENROLMENT VALUES (11, 1, 3, 2, 2);

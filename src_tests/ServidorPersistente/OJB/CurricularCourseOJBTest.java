@@ -62,7 +62,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 		persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 		persistentBranch = persistentSupport.getIPersistentBranch();
-		persistentCurricularSemester = persistentSupport.getIPersistentCurricularSemester();		
+		persistentCurricularSemester = persistentSupport.getIPersistentCurricularSemester();
 	}
 
 	protected void tearDown() {
@@ -237,7 +237,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Existing CurricularCourse To Delete");
 		}
-		
+
 		try {
 			persistentSupport.iniciarTransaccao();
 			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
@@ -254,7 +254,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			curricularCourseNonExisting.setCode("NOE");
 			curricularCourseNonExisting.setName("Non existing curricular course");
 			persistentSupport.iniciarTransaccao();
-			
+
 			persistentCurricularCourse.delete(curricularCourseNonExisting);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
@@ -347,7 +347,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 
 		System.out.println("- Test 10 : Read All Curricular Courses Scope By Branch\n");
 		IBranch branch = null;
-		
+
 		try {
 			persistentSupport.iniciarTransaccao();
 			branch = persistentBranch.readBranchByNameAndCode("", "");
@@ -381,13 +381,13 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read All Curricular Courses Scope By Semester");
 		}
 		assertNotNull(list);
-		assertEquals(8,list.size());
+		assertEquals(8, list.size());
 	}
 
 	public void testReadAllCurricularCoursesBySemesterAndYear() {
 
 		System.out.println("- Test 12 : Read All Curricular Courses Scope By Semester And Year\n");
-		
+
 		List list = null;
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -399,15 +399,15 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		assertNotNull(list);
 		assertEquals(2, list.size());
 	}
-	
+
 	public void testReadAllCurricularCoursesBySemesterAndYearAndBranch() {
 
 		System.out.println("- Test 13 : Read All Curricular Courses Scope By Semester And Year And Branch\n");
 		IBranch branch = null;
-		
+
 		try {
 			persistentSupport.iniciarTransaccao();
-			branch = persistentBranch.readBranchByNameAndCode("", "");
+			branch = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial", "IA");
 			assertNotNull(branch);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
@@ -417,13 +417,39 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		List list = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			list = persistentCurricularCourse.readCurricularCoursesBySemesterAndYearAndBranch(new Integer(1), new Integer(1), branch);
+			list = persistentCurricularCourse.readCurricularCoursesBySemesterAndYearAndBranch(new Integer(1), new Integer(2), branch);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read All Curricular Courses Scope By Semester And Year And Branch");
 		}
 		assertNotNull(list);
-		assertEquals(2, list.size());
+		assertEquals(1, list.size());
+	}
+
+	public void testReadAllCurricularCoursesBySemesterAndYearAndBranchAndNoBranch() {
+
+		System.out.println("- Test 13 : Read All Curricular Courses Scope By Semester And Year And Branch And No Branch\n");
+		IBranch branch = null;
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			branch = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial", "IA");
+			assertNotNull(branch);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Reading Branch");
+		}
+
+		List list = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			list = persistentCurricularCourse.readCurricularCoursesBySemesterAndYearAndBranchAndNoBranch(new Integer(1), new Integer(2), branch);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Read All Curricular Courses Scope By Semester And Year And Branch No Branch");
+		}
+		assertNotNull(list);
+		assertEquals(3, list.size());
 	}
 
 }

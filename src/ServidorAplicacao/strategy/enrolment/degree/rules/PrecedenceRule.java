@@ -41,7 +41,7 @@ public class PrecedenceRule implements IEnrolmentRule {
 		List curricularCoursesToStay = new ArrayList();
 
 		List finalCurricularCourseSpan =
-			enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled();
+			enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
 		for (int i = 0; i < precedenceList.size(); i++) {
 			IPrecedence precedence = (IPrecedence) precedenceList.get(i);
@@ -55,7 +55,7 @@ public class PrecedenceRule implements IEnrolmentRule {
 			}
 		}
 
-		enrolmentContext.setFinalCurricularCoursesSpanToBeEnrolled(
+		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(
 			curricularCoursesToStay);
 		return enrolmentContext;
 	}

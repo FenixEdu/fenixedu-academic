@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author dcs-rjao
@@ -19,27 +17,17 @@ public class EnrolmentRuleSemester implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
 
-		SuportePersistenteOJB persistentSupport = null;
-		IPersistentCurricularCourse persistentCurricularCourse = null;
-
 		List curricularCoursesFromActualExecutionPeriod = new ArrayList();
-		List curricularCoursesBySemester = null;
 
-		persistentSupport = SuportePersistenteOJB.getInstance();
-		persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-
-		curricularCoursesBySemester = persistentCurricularCourse.readAllCurricularCoursesBySemester(enrolmentContext.getSemester());
-
-		ICurricularCourse curricularCourse = null;
-		Iterator iterator = enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled().iterator();
+		Iterator iterator = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
 		while (iterator.hasNext()) {
-			curricularCourse = (ICurricularCourse) iterator.next();
-			if (curricularCoursesBySemester.contains(curricularCourse)) {
-				curricularCoursesFromActualExecutionPeriod.add(curricularCourse);
+			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
+			if (curricularCourseScope.getCurricularSemester().getSemester().equals(enrolmentContext.getSemester())) {
+				curricularCoursesFromActualExecutionPeriod.add(curricularCourseScope);
 			}
 		}
 
-		enrolmentContext.setFinalCurricularCoursesSpanToBeEnrolled(curricularCoursesFromActualExecutionPeriod);
+		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(curricularCoursesFromActualExecutionPeriod);
 		return enrolmentContext;
 	}
 }

@@ -2,7 +2,7 @@ package ServidorAplicacao.strategy.enrolment.degree.strategys;
 
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentRuleBranch;
-//import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentRuleNAC;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentRuleNACandND;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentRuleSemester;
 import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -25,11 +25,13 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		enrolmentRule = new EnrolmentRuleBranch();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 		
+		
 		enrolmentRule = new EnrolmentRuleSemester();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 		
-	//	enrolmentRule = new EnrolmentRuleNAC();
-	//	this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+
+		enrolmentRule = new EnrolmentRuleNACandND();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
 		return this.enrolmentContext;
 	}
