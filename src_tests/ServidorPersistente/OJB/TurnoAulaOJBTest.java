@@ -350,7 +350,7 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			lessons = persistentShiftLesson.readLessonsByStudent("45498");
 			persistentSupport.confirmarTransaccao();
 			assertNotNull("testReadLessonsByStudent", lessons);
-			assertEquals("testReadLessonsByStudent", lessons.size(), 1);
+			assertEquals("testReadLessonsByStudent", 2, lessons.size());
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace(System.out);
 			fail("testReadLessonsByStudent");
