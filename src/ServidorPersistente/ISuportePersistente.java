@@ -37,6 +37,7 @@ public interface ISuportePersistente {
     public ICursoExecucaoPersistente getICursoExecucaoPersistente();
     
     public IPersistentStudent getIPersistentStudent();
+    public IPersistentBibliographicReference getIPersistentBibliographicReference();
     
     public IDepartamentoPersistente getIDepartamentoPersistente();
     public IDisciplinaDepartamentoPersistente getIDisciplinaDepartamentoPersistente();

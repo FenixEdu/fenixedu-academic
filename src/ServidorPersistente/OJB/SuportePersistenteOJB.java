@@ -27,6 +27,7 @@ import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentAnnouncement;
+import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -214,6 +215,11 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentCandidateSituation getIPersistentCandidateSituation() {
 		return new CandidateSituationOJB();
 	}
+	
+	public IPersistentBibliographicReference getIPersistentBibliographicReference() {
+			return new BibliographicReferenceOJB();
+	}
+	
 	/**
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentExecutionPeriod()
 	 */

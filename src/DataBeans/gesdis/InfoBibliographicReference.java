@@ -15,16 +15,20 @@ public class InfoBibliographicReference {
 	protected String title;
 	protected String authors;
 	protected String reference;
-	protected Integer year;
+	protected String year;
 	protected Boolean optional;
 	protected InfoExecutionCourse infoExecutionCourse;
 
+
+	public InfoBibliographicReference() {
+	}
+	
 	/** Creates a new instance of InfoBilbiographicReference*/
 	public InfoBibliographicReference(
 		String title,
 		String authors,
 		String reference,
-		Integer year,
+		String year,
 		Boolean optional) {
 		this.title = title;
 		this.authors = authors;
@@ -75,7 +79,7 @@ public class InfoBibliographicReference {
 	/**
 	 * @return Integer
 	 */
-	public Integer getYear() {
+	public String getYear() {
 		return year;
 	}
 	/**
@@ -106,14 +110,7 @@ public class InfoBibliographicReference {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	/**
-	 * Sets the year.
-	 * @param year The year to set
-	 */
-	public void setYear(Integer year) {
-		this.year = year;
-	}
-	
+		
 	public InfoExecutionCourse getInfoExecutionCourse() {
 		return infoExecutionCourse;
 	}
@@ -121,4 +118,12 @@ public class InfoBibliographicReference {
 	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
 		this.infoExecutionCourse = infoExecutionCourse;	
 	}			
+	/**
+	 * Sets the year.
+	 * @param year The year to set
+	 */
+	public void setYear(String year) {
+		this.year = year;
+	}
+
 }
