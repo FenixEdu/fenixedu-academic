@@ -72,6 +72,7 @@ public class ChangeGuideSituation implements IServico {
 		if (guide == null)
 			throw new ExcepcaoInexistente("Unknown Guide !!");	
 
+		sp.getIPersistentGuide().write(guide);
 		SituationOfGuide situationOfGuide = new SituationOfGuide(situationOfGuideString);
 		
 		// Get the active Situation 
@@ -96,6 +97,7 @@ public class ChangeGuideSituation implements IServico {
 				guide.setPaymentDate(paymentDate);
 				guide.setPaymentType(new PaymentType(paymentType));
 			}
+			guide.getGuideSituations().add(guideSituation);
 		} else {
 			// Create The New Situation
 			
@@ -123,8 +125,8 @@ public class ChangeGuideSituation implements IServico {
 				FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 				throw newEx; 
 			}
-
 		}
+		
 			
 		
     }

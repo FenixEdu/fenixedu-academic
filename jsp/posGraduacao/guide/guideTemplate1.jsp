@@ -93,7 +93,7 @@
             <td><bean:write name="guide" property="infoContributor.contributorName"/></td>
           </tr>
           <tr> 
-            <td><bean:message key="label.masterDegree.administrativeOffice.contributorAddress"/></td>
+            <td valign="top"><bean:message key="label.masterDegree.administrativeOffice.contributorAddress"/></td>
             <td><bean:write name="guide" property="infoContributor.contributorAddress"/></td>
           </tr>
 	  </table>
@@ -165,13 +165,13 @@
      <table width="100%" border="0">
       <tr>	 
  	  <td>
-	 	<table align="center" width="90%" valign="bottom">
+	 	<table align="center" width="100%" valign="bottom">
 	      <tr>
           <td colspan="2" valign="bottom" >
             <div align="center">
               <font size="2"> Documento processado por computador. Só é válido como recibo após o carimbo de pago e devidamente assinado.</font> 
             </div>
-            <hr size="1" color="#000000" width="90%">
+            <hr size="1" color="#000000" width="100%">
             <div align="center">
               <font size="2"> Av. Rovisco Pais, 1 1049-001 Lisboa Codex Telefone: 218417336 Fax: 218419531 Contribuinte Nº: 501507930</font>
             </div>

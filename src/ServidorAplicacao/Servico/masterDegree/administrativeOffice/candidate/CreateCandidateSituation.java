@@ -66,6 +66,7 @@ public class CreateCandidateSituation implements IServico {
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			
+System.out.println("Estou aqui");
 			
 			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 			IPessoa person = Cloner.copyInfoPerson2IPerson(infoPerson);
@@ -75,6 +76,7 @@ public class CreateCandidateSituation implements IServico {
 			if (masterDegreeCandidate == null)
 				throw new ExcepcaoInexistente("Unknown Master Degree Candidate !!");	
 			
+			sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);
 			Iterator iterator = masterDegreeCandidate.getSituations().iterator();
 			while (iterator.hasNext()){
 				ICandidateSituation candidateSituation = (ICandidateSituation) iterator.next();
@@ -93,6 +95,7 @@ public class CreateCandidateSituation implements IServico {
 			candidateSituation.setValidation(new State(State.ACTIVE));
 			candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
 			sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
+			masterDegreeCandidate.getSituations().add(candidateSituation);
 
 		} catch (ExistingPersistentException ex) {
 			// The situation Already Exists ... Something wrong ?

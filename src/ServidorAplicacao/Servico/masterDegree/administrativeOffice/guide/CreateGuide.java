@@ -165,6 +165,10 @@ public class CreateGuide implements IServico {
 			guideSituation = Cloner.copyInfoGuideSituation2IGuideSituation(infoGuideSituation);
 			guideSituation.setGuide(guide);
 			sp.getIPersistentGuideSituation().write(guideSituation);
+
+			guide.setGuideSituations(new ArrayList());
+
+			guide.getGuideSituations().add(guideSituation);
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();

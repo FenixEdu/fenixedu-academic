@@ -107,6 +107,12 @@
     <form name="changeCandidateForm">
       
       
+      <field property="situation" depends="required" page="1">
+        <arg0 key="label.masterDegree.administrativeOffice.newSituation" />
+      </field>
+      
+      
+      
       <field property="name" depends="required" page="1">
         <arg0 key="label.person.name" />
       </field>

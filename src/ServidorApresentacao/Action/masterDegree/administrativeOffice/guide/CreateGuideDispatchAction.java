@@ -271,6 +271,17 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			// We need to check if the Guide has been payd 
 			if ((requesterType.equals(GuideRequester.CANDIDATE_STRING)) &&
 				(situationOfGuide.equals(SituationOfGuide.PAYED_TYPE))) 
+
+
+				// The Candidate will now have a new Situation
+						
+				try {
+					Object args[] = { newInfoGuide.getInfoExecutionDegree(), newInfoGuide.getInfoPerson()};
+					serviceManager.executar(userView, "CreateCandidateSituation", args);
+				} catch (FenixServiceException e) {
+					throw new FenixActionException();
+				}
+
 				if ((newInfoGuide.getInfoPerson().getPassword() == null) || (newInfoGuide.getInfoPerson().getPassword().length() == 0)){
 					// Generate the password
 					password = RandomStringGenerator.getRandomStringGenerator(8);
@@ -281,15 +292,6 @@ public class CreateGuideDispatchAction extends DispatchAction {
 					try {
 						Object args[] = {newInfoGuide.getInfoPerson() };
 						serviceManager.executar(userView, "ChangePersonPassword", args);
-					} catch (FenixServiceException e) {
-						throw new FenixActionException();
-					}
-					
-					// The Candidate will now have a new Situation
-					
-					try {
-						Object args[] = { newInfoGuide.getInfoExecutionDegree(), newInfoGuide.getInfoPerson()};
-						serviceManager.executar(userView, "CreateCandidateSituation", args);
 					} catch (FenixServiceException e) {
 						throw new FenixActionException();
 					}

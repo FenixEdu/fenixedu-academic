@@ -25,12 +25,10 @@ import Dominio.ICountry;
 import Dominio.IMasterDegreeCandidate;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.SituationName;
 import Util.Specialization;
 import Util.State;
@@ -74,7 +72,7 @@ public class ChangeCandidate implements IServico {
 				oldCandidate.getInfoExecutionDegree().getInfoExecutionYear().getYear(),
 				oldCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getSigla(),
 				new Specialization(oldCandidate.getSpecialization()));
-			
+			sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
@@ -174,17 +172,6 @@ public class ChangeCandidate implements IServico {
 			situations.add(candidateSituation);
 		} else 
 			situations.addAll(masterDegreeCandidate.getSituations());
-		
-		try {
-            sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);
-		} catch(ExistingPersistentException e) {
-			throw new ExistingServiceException(e);
-	    } catch (ExcepcaoPersistencia ex) {
-	      FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-	      newEx.fillInStackTrace();
-	      throw newEx;
-	    }
-	    
 		
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
 		

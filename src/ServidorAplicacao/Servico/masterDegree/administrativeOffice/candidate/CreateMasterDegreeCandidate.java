@@ -78,6 +78,8 @@ public class CreateMasterDegreeCandidate implements IServico {
 			
 			person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(), 
 							 newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
+
+			
 			
 			// Read the Execution of this degree in the current execution Year
 			
@@ -130,7 +132,6 @@ public class CreateMasterDegreeCandidate implements IServico {
 
 				person.setUsername(username);
 				
-				
 				person.setPersonRoles(new ArrayList());
 				// Give the Person Role
 				person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
@@ -149,20 +150,9 @@ public class CreateMasterDegreeCandidate implements IServico {
 			throw newEx;
 		} 
 
-		try {
-			// Give the Master Degree Candidate Role
-			person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE));
+		person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE));
 
-			sp.getIPessoaPersistente().escreverPessoa(person);
 
-		} catch (ExistingPersistentException ex) {
-			// This person is already a Candidate. No need to give the role again
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		} 
-		
 		// Return the new Candidate
 		return Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
 		}
