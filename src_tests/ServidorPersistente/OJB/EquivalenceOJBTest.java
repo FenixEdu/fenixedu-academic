@@ -317,7 +317,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 				assertNotNull(studentCurricularPlan);
 				this.enrolment = new Enrolment(studentCurricularPlan, curricularCourse, EnrolmentState.APROVED_OBJ);
 				this.enrolment.setExecutionPeriod(executionPeriod);
-				enrolment.setEvaluationType(EnrolmentEvaluationType.NORMAL_OJB);
+				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 				enrolment.setUniversityCode(UniversityCode.IST);
 
 
@@ -325,7 +325,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 				assertNotNull(studentCurricularPlan);
 				this.equivalentEnrolment = new Enrolment(studentCurricularPlan, curricularCourse, EnrolmentState.APROVED_OBJ);
 				this.equivalentEnrolment.setExecutionPeriod(executionPeriod);
-				enrolment.setEvaluationType(EnrolmentEvaluationType.NORMAL_OJB);
+				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 				enrolment.setUniversityCode(UniversityCode.IST);
 
 				persistentSupport.confirmarTransaccao();

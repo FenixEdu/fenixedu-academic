@@ -55,7 +55,7 @@ create table DEGREE_CURRICULAR_PLAN (
    ID_INTERNAL int(11) not null auto_increment,
    NAME varchar(50) not null,
    KEY_DEGREE int(11) not null,
-   STATE int(11),
+   STATE int(11) not null,
    INITIAL_DATE date,
    END_DATE date,
    KEY_DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO int(11),

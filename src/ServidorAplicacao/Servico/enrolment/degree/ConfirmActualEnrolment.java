@@ -127,9 +127,9 @@ public class ConfirmActualEnrolment implements IServico {
 				if(!doingCurricularCoursesRead.contains(curricularCourse)) {
 					enrolmentToWrite = new Enrolment();
 					enrolmentToWrite.setCurricularCourse(curricularCourse);
-					enrolmentToWrite.setEvaluationType(EnrolmentEvaluationType.NORMAL_OJB);
+					enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 					enrolmentToWrite.setExecutionPeriod(executionPeriod);
-					enrolmentToWrite.setState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
+					enrolmentToWrite.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
 					enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
 					// FIXME: David-Ricardo: Nao ha informação sobre o University Code por isso criei esta class temporária
 					enrolmentToWrite.setUniversityCode(UniversityCode.IST);					
@@ -177,9 +177,8 @@ public class ConfirmActualEnrolment implements IServico {
 					enrolmentInOptionalCurricularCourse.setCurricularCourseForOption(curricularCourseForOption);
 					enrolmentInOptionalCurricularCourse.setExecutionPeriod(executionPeriod);
 					enrolmentInOptionalCurricularCourse.setStudentCurricularPlan(studentCurricularPlan);
-					
-					enrolmentInOptionalCurricularCourse.setEvaluationType(EnrolmentEvaluationType.NORMAL_OJB);
-					enrolmentInOptionalCurricularCourse.setUniversityCode(new String("IST"));
+					enrolmentInOptionalCurricularCourse.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+					enrolmentInOptionalCurricularCourse.setUniversityCode(UniversityCode.IST);
 					
 					persistentEnrolment.lockWrite(enrolmentInOptionalCurricularCourse);
 				} else {

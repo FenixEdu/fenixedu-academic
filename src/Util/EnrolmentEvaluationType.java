@@ -12,10 +12,10 @@ public class EnrolmentEvaluationType {
 	public static final int SPECIAL = 3;
 	public static final int EXTERNAL = 4;
 
-	public static final EnrolmentEvaluationType NORMAL_OJB = new EnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
-	public static final EnrolmentEvaluationType IMPROVEMENT_OJB = new EnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
-	public static final EnrolmentEvaluationType SPECIAL_OJB = new EnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL);
-	public static final EnrolmentEvaluationType EXTERNAL_OJB = new EnrolmentEvaluationType(EnrolmentEvaluationType.EXTERNAL);
+	public static final EnrolmentEvaluationType NORMAL_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
+	public static final EnrolmentEvaluationType IMPROVEMENT_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
+	public static final EnrolmentEvaluationType SPECIAL_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL);
+	public static final EnrolmentEvaluationType EXTERNAL_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.EXTERNAL);
 
 	private Integer type;
 

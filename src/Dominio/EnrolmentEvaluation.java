@@ -15,10 +15,10 @@ import Util.EnrolmentEvaluationType;
 public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvaluation {
 
 	private String grade;
-	private EnrolmentEvaluationType evaluationType;
+	private EnrolmentEvaluationType enrolmentEvaluationType;
 	private Date examDate;
 	private Date gradeAvailableDate;
-	private EnrolmentEvaluationState state;
+	private EnrolmentEvaluationState enrolmentEvaluationState;
 	private IEnrolment enrolment;
 	private ITeacher responsibleTeacher;
 	
@@ -35,7 +35,7 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
 
 			resultado =	this.getEnrolment().equals(enrolmentEvaluation.getEnrolment())
-					&& this.getEvaluationType().equals(enrolmentEvaluation.getEvaluationType());
+					&& this.getEnrolmentEvaluationType().equals(enrolmentEvaluation.getEnrolmentEvaluationType());
 		}
 		return resultado;
 	}
@@ -43,10 +43,10 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "grade = " + this.grade + "; ";
-		result += "evaluationType = " + this.evaluationType + "; ";
+		result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
 		result += "examDate = " + this.examDate + "; ";
 		result += "responsibleTeacher = " + this.responsibleTeacher + "; ";
-		result += "state = " + this.state + "; ";
+		result += "enrolmentEvaluationState = " + this.enrolmentEvaluationState + "; ";
 		result += "enrolment = " + this.enrolment + "; ";
 		result += "gradeAvailableDate = " + this.gradeAvailableDate + "]\n";
 		return result;
@@ -59,8 +59,8 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 		return enrolmentKey;
 	}
 
-	public EnrolmentEvaluationType getEvaluationType() {
-		return evaluationType;
+	public EnrolmentEvaluationType getEnrolmentEvaluationType() {
+		return enrolmentEvaluationType;
 	}
 
 	public Date getExamDate() {
@@ -75,8 +75,8 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 		return gradeAvailableDate;
 	}
 
-	public EnrolmentEvaluationState getState() {
-		return state;
+	public EnrolmentEvaluationState getEnrolmentEvaluationState() {
+		return enrolmentEvaluationState;
 	}
 
 	public void setEnrolment(IEnrolment enrolment) {
@@ -87,8 +87,8 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 		enrolmentKey = integer;
 	}
 
-	public void setEvaluationType(EnrolmentEvaluationType type) {
-		evaluationType = type;
+	public void setEnrolmentEvaluationType(EnrolmentEvaluationType type) {
+		enrolmentEvaluationType = type;
 	}
 
 	public void setExamDate(Date date) {
@@ -103,8 +103,8 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 		gradeAvailableDate = date;
 	}
 
-	public void setState(EnrolmentEvaluationState state) {
-		this.state = state;
+	public void setEnrolmentEvaluationState(EnrolmentEvaluationState state) {
+		this.enrolmentEvaluationState = state;
 	}
 
 	public ITeacher getResponsibleTeacher() {

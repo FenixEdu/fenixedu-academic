@@ -35,7 +35,7 @@ public class EnrolmentFilterCurricularYearPrecedence implements IEnrolmentRule {
 			final List studentEnrolmentsWithStateDiferentOfTemporarilyEnroled = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 				public boolean evaluate(Object obj) {
 					IEnrolment enrolment = (IEnrolment) obj;
-					return !enrolment.getState().equals(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
+					return !enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
 				}
 			});
 			List correspondingCurricularCourses = (List) CollectionUtils.collect(studentEnrolmentsWithStateDiferentOfTemporarilyEnroled, new Transformer() {

@@ -107,7 +107,7 @@ public abstract class SetEnrolmentStateIO {
 					if(!str.equals(endStr)) {
 						int i = (new Integer(str)).intValue();
 						if( (i < 6) && (i > 0) ) {
-							enrolment.setState(new EnrolmentState(i));
+							enrolment.setEnrolmentState(new EnrolmentState(i));
 							break;
 						}
 					}

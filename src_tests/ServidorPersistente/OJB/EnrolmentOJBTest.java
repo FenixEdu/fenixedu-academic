@@ -109,9 +109,9 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 		IEnrolment enrolment = new Enrolment();
 		enrolment.setStudentCurricularPlan(studentCurricularPlan);
 		enrolment.setCurricularCourse(curricularCourse);
-		enrolment.setState(EnrolmentState.APROVED_OBJ);
+		enrolment.setEnrolmentState(EnrolmentState.APROVED_OBJ);
 		enrolment.setExecutionPeriod(executionPeriod);
-		enrolment.setEvaluationType(EnrolmentEvaluationType.NORMAL_OJB);
+		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 		enrolment.setUniversityCode(UniversityCode.IST);
 
 		try {
@@ -154,9 +154,9 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 		enrolment = new Enrolment();
 		enrolment.setStudentCurricularPlan(studentCurricularPlan);
 		enrolment.setCurricularCourse(curricularCourse);
-		enrolment.setState(EnrolmentState.APROVED_OBJ);
+		enrolment.setEnrolmentState(EnrolmentState.APROVED_OBJ);
 		enrolment.setExecutionPeriod(executionPeriod);
-		enrolment.setEvaluationType(EnrolmentEvaluationType.NORMAL_OJB);
+		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 		enrolment.setUniversityCode(UniversityCode.IST);
 
 

@@ -19,18 +19,18 @@ import Util.EnrolmentEvaluationType;
 public interface IEnrolmentEvaluation {
 
 	public abstract IEnrolment getEnrolment();
-	public abstract EnrolmentEvaluationType getEvaluationType();
+	public abstract EnrolmentEvaluationType getEnrolmentEvaluationType();
 	public abstract Date getExamDate();
 	public abstract String getGrade();
 	public abstract Date getGradeAvailableDate();
-	public abstract EnrolmentEvaluationState getState();
+	public abstract EnrolmentEvaluationState getEnrolmentEvaluationState();
 	public abstract ITeacher getResponsibleTeacher();
 
 	public abstract void setResponsibleTeacher(ITeacher teacher);
 	public abstract void setEnrolment(IEnrolment enrolment);
-	public abstract void setEvaluationType(EnrolmentEvaluationType type);
+	public abstract void setEnrolmentEvaluationType(EnrolmentEvaluationType type);
 	public abstract void setExamDate(Date date);
 	public abstract void setGrade(String string);
 	public abstract void setGradeAvailableDate(Date date);
-	public abstract void setState(EnrolmentEvaluationState state);
+	public abstract void setEnrolmentEvaluationState(EnrolmentEvaluationState state);
 }

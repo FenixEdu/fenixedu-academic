@@ -68,7 +68,7 @@ public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 			Iterator iterator = TemporarilyEnrolemts.iterator();
 			while (iterator.hasNext()) {
 				IEnrolment enrolment = (IEnrolment)iterator.next();
-				enrolment.setState(EnrolmentState.ENROLED_OBJ);
+				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
 				persistentEnrolment.lockWrite(enrolment);
 			}
 		} catch (ExcepcaoPersistencia ex) {

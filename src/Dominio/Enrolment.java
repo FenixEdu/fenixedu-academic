@@ -16,8 +16,8 @@ public class Enrolment implements IEnrolment {
 	private IStudentCurricularPlan studentCurricularPlan;
 	private ICurricularCourse curricularCourse;
 	private IExecutionPeriod executionPeriod;
-	private EnrolmentState state;
-	private EnrolmentEvaluationType evaluationType;
+	private EnrolmentState enrolmentState;
+	private EnrolmentEvaluationType enrolmentEvaluationType;
 	private String universityCode;
 
 	private Integer internalID;
@@ -37,7 +37,7 @@ public class Enrolment implements IEnrolment {
 		this();
 		setCurricularCourse(curricularCourse);
 		setStudentCurricularPlan(studentCurricularPlan);
-		setState(state);
+		setEnrolmentState(state);
 	}
 
 	public Enrolment(
@@ -48,17 +48,18 @@ public class Enrolment implements IEnrolment {
 		this();
 		setCurricularCourse(curricularCourse);
 		setStudentCurricularPlan(studentCurricularPlan);
-		setState(state);
+		setEnrolmentState(state);
 		setExecutionPeriod(executionPeriod);
 	}
 
-	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, EnrolmentState state, IExecutionPeriod executionPeriod, EnrolmentEvaluationType enrolmentEvaluationType, String universityCode) {
+	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, 
+	EnrolmentState state, IExecutionPeriod executionPeriod, EnrolmentEvaluationType enrolmentEvaluationType, String universityCode) {
 		this();
 		setCurricularCourse(curricularCourse);
 		setStudentCurricularPlan(studentCurricularPlan);
-		setState(state);
+		setEnrolmentState(state);
 		setExecutionPeriod(executionPeriod);
-		setEvaluationType(evaluationType);
+		setEnrolmentEvaluationType(enrolmentEvaluationType);
 		setUniversityCode(universityCode);
 	}
 
@@ -79,7 +80,7 @@ public class Enrolment implements IEnrolment {
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "studentCurricularPlan = " + this.studentCurricularPlan + "; ";
-		result += "state = " + this.state + "; ";
+		result += "enrolmentState = " + this.enrolmentState + "; ";
 		result += "execution Period = " + this.executionPeriod + "; ";
 		result += "curricularCourse = " + this.curricularCourse + "]\n";
 		return result;
@@ -168,16 +169,16 @@ public class Enrolment implements IEnrolment {
 	/**
 	 * @return EnrolmentState
 	 */
-	public EnrolmentState getState() {
-		return state;
+	public EnrolmentState getEnrolmentState() {
+		return enrolmentState;
 	}
 
 	/**
-	 * Sets the state.
-	 * @param state The state to set
+	 * Sets the enrolmentState.
+	 * @param enrolmentState The enrolmentState to set
 	 */
-	public void setState(EnrolmentState state) {
-		this.state = state;
+	public void setEnrolmentState(EnrolmentState state) {
+		this.enrolmentState = state;
 	}
 
 	/**
@@ -229,16 +230,16 @@ public class Enrolment implements IEnrolment {
 	public ICurricularCourse getRealCurricularCourse() {
 		return this.getCurricularCourse();	
 	}
-	public EnrolmentEvaluationType getEvaluationType() {
-		return this.evaluationType;
+	public EnrolmentEvaluationType getEnrolmentEvaluationType() {
+		return this.enrolmentEvaluationType;
 	}
 
 	public String getUniversityCode() {
 		return this.universityCode;
 	}
 
-	public void setEvaluationType(EnrolmentEvaluationType type) {
-		this.evaluationType = type;
+	public void setEnrolmentEvaluationType(EnrolmentEvaluationType type) {
+		this.enrolmentEvaluationType = type;
 	}
 
 	public void setUniversityCode(String universityCode) {

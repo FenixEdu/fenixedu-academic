@@ -13,6 +13,9 @@ public class DegreeCurricularPlanState {
 	public static final int NOT_ACTIVE = 2;
 	public static final int CONCLUDED = 3;
 
+	public static final DegreeCurricularPlanState ACTIVE_OBJ = new DegreeCurricularPlanState(DegreeCurricularPlanState.ACTIVE); 
+	public static final DegreeCurricularPlanState NOT_ACTIVE_OBJ = new DegreeCurricularPlanState(DegreeCurricularPlanState.NOT_ACTIVE);
+	public static final DegreeCurricularPlanState CONCLUDED_OBJ = new DegreeCurricularPlanState(DegreeCurricularPlanState.CONCLUDED);
 	private Integer state;
 
 	public DegreeCurricularPlanState() {
