@@ -7,6 +7,6 @@
 	 <br />
 	<bean:define id="classview" name="<%= SessionConstants.CLASS_VIEW %>" scope="session"/>
    		<br/>
-		<h2>Horário da Turma:  <jsp:getProperty name="classview" property="nome"/></h2>
+		<h2>Horario da Turma:  <jsp:getProperty name="classview" property="nome"/></h2>
 		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"/>		
 		<br />
