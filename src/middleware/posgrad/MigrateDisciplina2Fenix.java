@@ -6,6 +6,7 @@
  */
 package middleware.posgrad;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -221,7 +222,14 @@ public class MigrateDisciplina2Fenix {
 				}
 				
 				executionCourse.setExecutionPeriod((IExecutionPeriod) result.get(0));
+				List associatedCurricularCourses = new ArrayList();
+				associatedCurricularCourses.add(curricularCourse2Write);
+				executionCourse.setAssociatedCurricularCourses(associatedCurricularCourses);
+				
 				broker.store(executionCourse);
+				
+				
+				
 				
 				ISite site = new Site();
 				site.setExecutionCourse(executionCourse);
