@@ -66,7 +66,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 				session.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
 
 			IUserView userView = SessionUtils.getUserView(request);
-
+			
 			InfoExecutionPeriod infoExecutionPeriod =
 				setExecutionContext(request);
 			//TODO: this semester and  curricular year list needs to be refactored in order to incorporate masters
