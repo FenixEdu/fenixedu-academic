@@ -23,6 +23,7 @@ import org.apache.struts.util.RequestUtils;
  */
 public class FenixRequestProcessor extends RequestProcessor {
 
+
 	/* (non-Javadoc)
 	 * @see org.apache.struts.action.RequestProcessor#processPreprocess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
@@ -34,12 +35,11 @@ public class FenixRequestProcessor extends RequestProcessor {
 		try {
 			request.setCharacterEncoding("ISO-8859-1");
 		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		if (((uri.indexOf("login.do") == -1)
 			&& (uri.indexOf("/publico/index.do") == -1))) {
-
+			
 			if ((session == null)
 				|| (session.isNew())
 				&& ((session != null)
