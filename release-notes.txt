@@ -68,6 +68,8 @@ BUG FIXES:
 - fixed bug [ #158 ] Manager - number of cached objects
 - fixed bug [ #245 ] Associate rooms to exam: SOP interface for exams managment
 - fixed bug [ #244 ] Execution Course Listing: SOP interface for shift creation
+- fixed bug [ #248 ] masterDegree portal: curricular courses with p type must not appear for declaration and certificate purposes
+- [on 03-06-2004 by Fernanda Quitério] master degree portal: fixed grammar in text for declarations and certificates
 
 KNOWN ISSUES:
 =============

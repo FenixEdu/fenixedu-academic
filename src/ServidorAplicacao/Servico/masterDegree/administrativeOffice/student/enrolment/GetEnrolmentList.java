@@ -18,6 +18,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.CurricularCourseType;
 import Util.EnrolmentState;
 
 /**
@@ -71,8 +72,10 @@ public class GetEnrolmentList implements IServico {
 		Iterator iterator = enrolmentList.iterator();
 
 		while(iterator.hasNext()) {	
-						
-			result.add(Cloner.copyIEnrolment2InfoEnrolment((IEnrolment) iterator.next()));	
+		    IEnrolment enrolment = (IEnrolment) iterator.next();
+		    if(!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ)){
+		        result.add(Cloner.copyIEnrolment2InfoEnrolment(enrolment));	
+		    }
 		}
 		
 		
@@ -102,8 +105,10 @@ public class GetEnrolmentList implements IServico {
 			Iterator iterator = enrolmentList.iterator();
 
 			while(iterator.hasNext()) {	
-						
-				result.add(Cloner.copyIEnrolment2InfoEnrolment((IEnrolment) iterator.next()));	
+			    IEnrolment enrolment = (IEnrolment) iterator.next();
+			    if(!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ)){
+			        result.add(Cloner.copyIEnrolment2InfoEnrolment(enrolment));	
+			    }
 			}
 		
 		

@@ -56,6 +56,6 @@
 </tr>
 <tr>
 	<td align="center">
-    	<H4 class='diploma_posGrad'>O Presidente do Instituto Superior Técnico</H4>
+    	<H4 class='diploma_posGrad'>O(A) Presidente do Instituto Superior Técnico</H4>
 	</td>
 </tr>

@@ -7,6 +7,7 @@ import java.util.List;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoObject;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
@@ -17,7 +18,7 @@ import Dominio.IEnrolment;
  * Jan 27, 2004
  */
 
-public final class InfoStudentEnrolmentContext
+public final class InfoStudentEnrolmentContext extends InfoObject
 {
 	private InfoExecutionPeriod infoExecutionPeriod;
 	private InfoStudentCurricularPlan infoStudentCurricularPlan;

@@ -7,7 +7,7 @@
 <bean:define id="conclusiondate" name="<%= SessionConstants.CONCLUSION_DATE %>" />
 <bean:define id="finalResult" name="<%= SessionConstants.FINAL_RESULT%>" />
 <bean:define id="infoFinalResult" name="<%= SessionConstants.INFO_FINAL_RESULT%>" />
-concluiu o curso de mestrado em 
+concluíu o curso de mestrado em 
 <b><bean:write name="infoMasterDegreeThesisDataVersion"  property="infoMasterDegreeThesis.infoStudentCurricularPlan.infoDegreeCurricularPlan.infoDegree.nome"/></b> em <bean:write name="conclusiondate" />,
  com a defesa da dissertação intitulada "
 <b><bean:write name="infoMasterDegreeThesisDataVersion" property="dissertationTitle" />"</b>.

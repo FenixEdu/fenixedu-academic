@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>" />
 <bean:define id="infoExecutionYear" name="<%= SessionConstants.INFO_EXECUTION_YEAR %>" scope="session" />
@@ -34,7 +35,7 @@
  	<tr>
      	<logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
    	<tr>
-      	<td class="cell-first"><bean:write name="itr" property="infoCurricularCourse.name" /></td>
+      	<td class="cell-first"><str:upperCase><bean:write name="itr" property="infoCurricularCourse.name" /></str:upperCase></td>
      	<td class="cell-middle"><bean:write  name="itr" property="infoEnrolmentEvaluation.grade" /></td>
  		<td class="cell-last"><bean:write name="itr" property="infoCurricularCourse.credits" /></td>  	
      </tr>

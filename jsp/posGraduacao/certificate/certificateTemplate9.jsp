@@ -10,8 +10,8 @@
 	</logic:present>
 	do curso de <bean:write name="infoStudentCurricularPlan" property="specialization"/> em 
     	<bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/> ministrado neste Instituto, 
-    	obteve aproveitamento nas disciplinas abaixo discriminadas, com as quais concluiu o curso especializado conducente à obtenção do grau de mestre 
-    	em <bean:write name="conclusiondate" /> 
+    	obteve aproveitamento nas disciplinas abaixo discriminadas, com as quais concluíu o curso especializado conducente à obtenção do grau de mestre,  
+    	em <bean:write name="conclusiondate" />
     		<logic:present name="<%= SessionConstants.DISCRIMINATED_WITH_AVERAGE%>">
-     			com a média de <bean:write name="infoFinalResult" property="finalAverage"/> valores
-    		</logic:present>.<br />
+     			, com a média de <bean:write name="infoFinalResult" property="finalAverage"/> valores
+			</logic:present>.<br />

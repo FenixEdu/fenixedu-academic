@@ -7,7 +7,7 @@
 <bean:define id="infoFinalResult" name="<%= SessionConstants.INFO_FINAL_RESULT %>" />
 <bean:define id="conclusiondate" name="<%= SessionConstants.CONCLUSION_DATE %>" />
 <p>
-Concluiu o curso especializado conducente à obtenção do grau de mestre em: 
-<bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/> em  
-<bean:write name="conclusiondate" /> com a média de <bean:write name="infoFinalResult" property="finalAverage" /> valores.
+Concluíu o curso especializado conducente à obtenção do grau de mestre em: 
+<bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/>, em  
+<bean:write name="conclusiondate" />, com a média de <bean:write name="infoFinalResult" property="finalAverage" /> valores.
 </p>
