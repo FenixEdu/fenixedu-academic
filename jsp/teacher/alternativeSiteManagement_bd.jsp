@@ -30,7 +30,7 @@
 		<html:text property="siteAddress" size="30"/>
 	</td>
 	<td>
-		<b><html:errors property="siteAddress"/></b>
+		<span class="error" ><html:errors property="siteAddress"/></span>
 	</td>
 </tr>	
 <tr>
@@ -41,7 +41,7 @@
 		<html:text property="mail" size="30"/>
 	</td>
 	<td>
-		<b><html:errors property="mail"/></b>
+		<span class="error" ><html:errors property="mail"/></span>
 	</td>
 </tr>
 
@@ -49,7 +49,7 @@
 <html:hidden property="page" value="1"/>
 <tr align="center">
 	<td>
-	<html:submit property="confirm">
+	<html:submit styleClass="inputbutton" property="confirm">
 		<bean:message key="button.confirm"/>
 	</html:submit>
 	</td>
