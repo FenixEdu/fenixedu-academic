@@ -68,23 +68,7 @@
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       
-      <!-- Dispatch Action to Create the Treasury's Contributor Information -->
-      <action path="/createContributorDispatchAction"
-	     attribute="createContributorForm"
-	          name="createContributorForm"
-	         input="/createContributor.jsp"
-	      validate="true"
-		 parameter="method"
-      	      type="ServidorApresentacao.Action.treasury.CreateContributorDispatchAction">
-      	  <forward name="CreateSuccess" path="/createContributorSuccess.jsp"/>
-      	  <forward name="PrepareReady" path="/createContributor.jsp"/>
-      	  <forward name="CreateGuideReady" path="/createGuideReady.jsp"/>
-   		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
-            key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-      	  
-      </action>
-
+     
 
       <!-- Action For LogOff -->
       <action path="/logoff" forward="/switchAction.do?prefix=&amp;page=/logoff.do"/>

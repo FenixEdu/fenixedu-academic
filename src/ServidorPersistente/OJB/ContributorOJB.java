@@ -68,6 +68,18 @@ public class ContributorOJB extends ObjectFenixOJB implements IPersistentContrib
 			// else Throw an already existing exception
 			} else
 				throw new ExistingPersistentException();
-		
+	
+	}
+	
+	public List readAll() throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + Contributor.class.getName();
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			super.lockRead(result);
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 	}
 }

@@ -69,6 +69,29 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	
+
+	public Integer generateGuideNumber(Integer year)  throws ExcepcaoPersistencia {
+		try {
+			Integer guideNumber = new Integer(0);
+			String oqlQuery = "select all from " + Guide.class.getName()
+			                + " where year = $1"
+			                + " order by number desc";
+			query.create(oqlQuery);
+
+			query.bind(year);
+
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0)
+				guideNumber = ((IGuide) result.get(0)).getNumber();
+			return new Integer(guideNumber.intValue() + 1);
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+		
+		
+		
+	}
+		
 	
 }

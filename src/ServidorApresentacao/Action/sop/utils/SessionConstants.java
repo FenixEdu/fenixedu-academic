@@ -64,6 +64,10 @@ public abstract class SessionConstants {
 	public static final String MASTER_DEGREE_CANDIDATE_LIST = "master_degree_candidate_list";
 	public static final String MASTER_DEGREE_CANDIDATE_QUERY = "master_degree_candidate_query";
 	public static final String MASTER_DEGREE_CANDIDATE_ACTION = "master_degree_candidate_action";
+	public static final String CONTRIBUTOR_LIST = "contributor_list";
+	public static final String CONTRIBUTOR = "contributor";
+	public static final String GUIDE_REQUESTER_LIST = "guide_requester_list";
+	public static final String GUIDE = "guide";
 
 
 	// -------------------------------------------------------------------------------
@@ -101,6 +105,7 @@ public abstract class SessionConstants {
 	public static final String LABLELIST_YEARS        		= "yearsList";
 	public static final String LIST_EXAMSANDINFO      		= "infoExams";
 	public static final String AVAILABLE_ROOM_OCCUPATION	= "availableRoomOccupation";
+
 
 	// -------------------------------------------------------------------------------
 	//    Messy Constants Section - For All Sorts of Purposes

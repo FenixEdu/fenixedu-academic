@@ -9,6 +9,12 @@
     <html:link page="/candidateSection.do"><bean:message key="link.masterDegree.administrativeOffice.candidate" />
     </html:link><br>
     
+    <html:link page="/contributorSection.do"><bean:message key="link.masterDegree.administrativeOffice.contributor" />
+    </html:link><br>
+    
+    <html:link page="/guideSection.do"><bean:message key="link.masterDegree.administrativeOffice.guide" />
+    </html:link><br>
+    
     <html:link page="/logoff.do"><bean:message key="link.logoff" /></html:link><br>
   </body>
 </html>

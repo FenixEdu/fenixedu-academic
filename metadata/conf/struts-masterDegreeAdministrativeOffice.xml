@@ -31,6 +31,34 @@
         <form-property name="candidateSituation" type="java.lang.String" />
         <form-property name="candidateNumber" type="java.lang.String" />
       </form-bean>
+      
+      <!-- Bean for The Creation of a Contributor -->
+      <form-bean name="createContributorForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+        	<form-property name="contributorNumber" type="java.lang.String" />
+        	<form-property name="contributorName" type="java.lang.String" />
+        	<form-property name="contributorAddress" type="java.lang.String" />
+      </form-bean>
+      
+
+		<!-- Bean for The Creation of a Guide -->
+	    <form-bean name="createGuideForm" 
+     			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			    dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+        	<form-property name="degree" type="java.lang.String" />
+        	<form-property name="number" type="java.lang.String" />
+        	<form-property name="requester" type="java.lang.String" />
+        	<form-property name="graduationType" type="java.lang.String" />
+        	<form-property name="contributorNumber" type="java.lang.String" />
+        	<form-property name="contributorName" type="java.lang.String" />
+        	<form-property name="contributorAddress" type="java.lang.String" />
+        	<form-property name="contributorList" type="java.lang.String" />
+      </form-bean>
 
       <form-bean name="errorMailForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -71,6 +99,8 @@
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       <action path="/index" forward="/index.jsp"/>
       <action path="/candidateSection" forward="/candidateIndex.jsp"/>
+      <action path="/contributorSection" forward="/contributor/index.jsp"/>
+      <action path="/guideSection" forward="/guide/indexGuide.jsp"/>
       
       
             
@@ -136,6 +166,43 @@
               type="ServidorApresentacao.Action.ExceptionHandlingAction"     
               >
       </action>
+
+
+
+
+      <!-- Dispatch Action to Create the Contributor Information -->
+      <action path="/createContributorDispatchAction"
+	     attribute="createContributorForm"
+	          name="createContributorForm"
+	         input="/contributor/createContributor.jsp"
+	      validate="true"
+		 parameter="method"
+      	      type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateContributorDispatchAction">
+      	  <forward name="CreateSuccess" path="/contributor/createContributorSuccess.jsp"/>
+      	  <forward name="PrepareReady" path="/contributor/createContributor.jsp"/>
+   		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+      	  
+      </action>
+
+
+
+
+
+      <!-- action to create a guide -->
+      <action attribute="createGuideForm"
+      		  input="/guide/createGuide.jsp"
+      	      name="createGuideForm"
+		      path="/createGuideDispatchAction"
+		      parameter="method"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateGuideDispatchAction"
+              validate="true">
+	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
+	         <forward name="CreateCandidateGuide" path="/guide/createCandidateGuide.jsp"/>  
+      </action>
+
+
 
     </action-mappings>
     

@@ -6,6 +6,8 @@
  */
 package ServidorPersistente;
 
+import java.util.List;
+
 import Dominio.IContributor;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
@@ -14,7 +16,28 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public interface IPersistentContributor extends IPersistentObject {
-    
-		public IContributor readByContributorNumber(Integer contributorNumber) throws ExcepcaoPersistencia; 
+        /**
+         * 
+         * @param contributorNumber
+         * @return IContributor
+         * @throws ExcepcaoPersistencia
+         */
+		public IContributor readByContributorNumber(Integer contributorNumber) throws ExcepcaoPersistencia;
+		
+		/**
+		 * 
+		 * @param contributor
+		 * @throws ExcepcaoPersistencia
+		 * @throws ExistingPersistentException
+		 */ 
 		public void write(IContributor contributor) throws ExcepcaoPersistencia, ExistingPersistentException;
+		
+		/**
+		 * 
+		 * @return List
+		 * @throws ExcepcaoPersistencia
+		 * @throws ExistingPersistentException
+		 */
+		public List readAll() throws ExcepcaoPersistencia, ExistingPersistentException;
+		
 }

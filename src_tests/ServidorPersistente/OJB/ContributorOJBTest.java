@@ -6,6 +6,8 @@
  */
 package ServidorPersistente.OJB;
 
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.Contributor;
@@ -124,5 +126,20 @@ public class ContributorOJBTest extends TestCaseOJB {
 		}
 	}
         
+	public void testReadAll() {
+		System.out.println("Test 4 - Read All Contributors");        
+		
+		try {
+			persistentSupport.iniciarTransaccao();
+			List result = persistentContributor.readAll();
+			assertTrue(!result.isEmpty());
+			assertEquals(result.size(), 2);
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia ex) {
+				fail("testAllContributors: unexpected exception");
+		}
+	}
+ 
+
 
 }

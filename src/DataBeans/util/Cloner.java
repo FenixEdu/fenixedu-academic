@@ -22,6 +22,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
+import DataBeans.InfoGuide;
 import DataBeans.InfoLesson;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
@@ -54,6 +55,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.Exam;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
+import Dominio.Guide;
 import Dominio.IAnnouncement;
 import Dominio.IAula;
 import Dominio.IBibliographicReference;
@@ -72,6 +74,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
+import Dominio.IGuide;
 import Dominio.IItem;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
@@ -1204,13 +1207,40 @@ public abstract class Cloner {
 	/**
 	 * 
 	 * @param contributor
-	 * @return
+	 * @return IContributor
 	 */
 	public static IContributor copyInfoContributor2IContributor(InfoContributor infoContributor) {
 
 		IContributor contributor = new Contributor();
 		copyObjectProperties(contributor, infoContributor);
 		return contributor;
+	}
+
+	/**
+	 * 
+	 * @param infoGuide
+	 * @return IGuide
+	 */
+	public static IGuide copyInfoGuide2IGuide(InfoGuide infoGuide) {
+		IGuide guide = new Guide();
+		copyObjectProperties(guide, infoGuide);
+		guide.setContributor(Cloner.copyInfoContributor2IContributor(infoGuide.getInfoContributor()));
+		guide.setPerson(Cloner.copyInfoPerson2IPerson(infoGuide.getInfoPerson()));
+		return guide;
+	}
+
+	/**
+	 * 
+	 * @param guide
+	 * @return InfoGuide
+	 */
+	public static InfoGuide copyIGuide2InfoGuide(IGuide guide) {
+
+		InfoGuide infoGuide= new InfoGuide();
+		copyObjectProperties(infoGuide, guide);
+		infoGuide.setInfoContributor(Cloner.copyIContributor2InfoContributor(guide.getContributor()));
+		infoGuide.setInfoPerson(Cloner.copyIPerson2InfoPerson(guide.getPerson()));
+		return infoGuide;
 	}
 
 }

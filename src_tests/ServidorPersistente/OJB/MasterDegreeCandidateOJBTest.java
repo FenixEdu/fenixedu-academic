@@ -569,5 +569,83 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		
 	}
 
+	public void testReadByCandidateNumberAndExecutionDegreeAndSpecialization(){
+		System.out.println("- Test 13 : Read By Candidate Number And Execution Degree and Specialization");
+		IMasterDegreeCandidate masterDegreeCandidate = null;
+		ICursoExecucao executionDegree = null;
+		ICurso degree = null;	
+		IExecutionYear executionYear = null;	
+		IDegreeCurricularPlan degreeCurricularPlan = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			
+			persistentSupport.iniciarTransaccao();
+			degree = persistentDegree.readBySigla("LEEC");
+			assertNotNull(degree);
+			executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+			assertNotNull(executionYear);
+	        
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano2", degree);
+			assertNotNull(degreeCurricularPlan);
+	        
+			executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			assertNotNull(executionDegree);
+
+			// Read the Candidate			
+			masterDegreeCandidate = persistentMasterDegreeCandidate.readByNumberAndExecutionDegreeAndSpecialization(new Integer(1), executionDegree, new Specialization(Specialization.MESTRADO));
+			assertNotNull(masterDegreeCandidate);
+
+
+			assertTrue(masterDegreeCandidate.getPerson().getNumeroDocumentoIdentificacao().equals("4444444"));
+			assertEquals(masterDegreeCandidate.getPerson().getTipoDocumentoIdentificacao(), new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
+			assertTrue(masterDegreeCandidate.getPerson().getLocalEmissaoDocumentoIdentificacao().equals("Lisboa"));
+       
+			assertTrue(masterDegreeCandidate.getPerson().getDataEmissaoDocumentoIdentificacao().toString().equals("2002-10-12"));
+			assertTrue(masterDegreeCandidate.getPerson().getDataValidadeDocumentoIdentificacao().toString().equals("2005-11-01"));
+			assertTrue(masterDegreeCandidate.getPerson().getNome().equals("Nuno"));
+			assertEquals(masterDegreeCandidate.getPerson().getSexo(), new Sexo(Sexo.MASCULINO));
+			assertEquals(masterDegreeCandidate.getPerson().getEstadoCivil(), new EstadoCivil(EstadoCivil.SOLTEIRO));
+        
+			assertTrue(masterDegreeCandidate.getPerson().getNascimento().toString().equals("1979-05-12"));
+			assertTrue(masterDegreeCandidate.getPerson().getNomePai().equals("Manuel"));
+			assertTrue(masterDegreeCandidate.getPerson().getNomeMae().equals("Maria"));
+			assertTrue(masterDegreeCandidate.getPerson().getNacionalidade().equals("Portuguesa"));
+			assertTrue(masterDegreeCandidate.getPerson().getLocalidade().equals("localidade Nuno"));
+			assertTrue(masterDegreeCandidate.getPerson().getFreguesiaNaturalidade().equals("Freguesia Nuno"));
+			assertTrue(masterDegreeCandidate.getPerson().getConcelhoNaturalidade().equals("Concelho Nuno"));
+			assertTrue(masterDegreeCandidate.getPerson().getDistritoNaturalidade().equals("Distrito Nuno"));
+			assertTrue(masterDegreeCandidate.getPerson().getMorada().equals("Morada Nuno"));
+			assertTrue(masterDegreeCandidate.getPerson().getCodigoPostal().equals("1700-200"));
+			assertTrue(masterDegreeCandidate.getPerson().getFreguesiaMorada().equals("frequesia morada Nuno"));
+			assertTrue(masterDegreeCandidate.getPerson().getConcelhoMorada().equals("concelho morada Nuno"));
+			assertTrue(masterDegreeCandidate.getPerson().getDistritoMorada().equals("distrito morada Nuno"));
+			assertTrue(masterDegreeCandidate.getPerson().getTelefone().equals("214443523"));
+			assertTrue(masterDegreeCandidate.getPerson().getTelemovel().equals("96546321"));
+			assertTrue(masterDegreeCandidate.getPerson().getEmail().equals("s12@h.c"));
+			assertTrue(masterDegreeCandidate.getPerson().getEnderecoWeb().equals("http123"));
+			assertTrue(masterDegreeCandidate.getPerson().getCodigoFiscal().equals("4444444444"));
+			assertTrue(masterDegreeCandidate.getPerson().getProfissao().equals("Profissao"));
+			assertTrue(masterDegreeCandidate.getMajorDegree().equals("Informatica"));
+			assertTrue(masterDegreeCandidate.getPerson().getUsername().equals("nmsn"));
+
+			assertTrue(masterDegreeCandidate.getPerson().getPassword().equals(PasswordEncryptor.encryptPassword("pass")));
+			assertTrue(masterDegreeCandidate.getCandidateNumber().equals(new Integer(1)));
+			assertEquals(masterDegreeCandidate.getSpecialization(), new Specialization(Specialization.MESTRADO));
+			assertTrue(masterDegreeCandidate.getMajorDegreeSchool().equals("IST"));
+			assertTrue(masterDegreeCandidate.getMajorDegreeYear().equals(new Integer(2000)));
+			assertTrue(masterDegreeCandidate.getAverage().equals(new Double(14.99)));
+  
+			assertEquals(masterDegreeCandidate.getSituations().size(), 2);
+
+		
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("    -> Error on test");
+		}
+		
+		
+		
+	}
+
     
 } // End of test from Class MasterDegreeCandidateOJB

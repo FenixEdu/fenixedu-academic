@@ -281,18 +281,35 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 		}
 	}
   
-//  public static void main(String args[]) {
-//  	
-//  	try {
-//		SuportePersistenteOJB suportePersistenteOJB = SuportePersistenteOJB.getInstance();
-//		suportePersistenteOJB.iniciarTransaccao();
-//		System.out.println(suportePersistenteOJB.getIPersistentMasterDegreeCandidate().readCandidateList(null, null,new SituationName(SituationName.PENDENTE), null, new ExecutionYear("2003/2004")).size());
-//		suportePersistenteOJB.confirmarTransaccao();
-//	} catch (ExcepcaoPersistencia e) {
-//		e.printStackTrace();
-//	}
-//  }
-  
-  
+	public IMasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(Integer number, ICursoExecucao executionDegree, 
+				Specialization specialization) throws ExcepcaoPersistencia{
+		try {
+			IMasterDegreeCandidate candidate = null;
+			String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
+					+ " where candidateNumber = $1"
+					+ " and executionDegree.executionYear.year = $2" 
+					+ " and executionDegree.curricularPlan.name = $3" 
+					+ " and executionDegree.curricularPlan.degree.nome = $4" 
+					+ " and specialization = $5" ;
+	
+			query.create(oqlQuery);
+			query.bind(number);
+			query.bind(executionDegree.getExecutionYear().getYear());
+			query.bind(executionDegree.getCurricularPlan().getName());
+			query.bind(executionDegree.getCurricularPlan().getDegree().getNome());
+			query.bind(specialization.getSpecialization());
+	
+			List result = (List) query.execute();
+	
+			lockRead(result);
+			if (result.size() != 0)
+				candidate = (IMasterDegreeCandidate) result.get(0);
+	
+			return candidate;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+					
     
 } // End of class definition

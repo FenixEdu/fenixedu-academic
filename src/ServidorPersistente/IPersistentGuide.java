@@ -27,5 +27,12 @@ public interface IPersistentGuide extends IPersistentObject {
 	 */
 	public IGuide readByNumberAndYear(Integer number, Integer year) throws ExcepcaoPersistencia;
 
+	/**
+	 * 
+	 * @param year
+	 * @return Guide Number
+	 * @throws ExcepcaoPersistencia
+	 */
+	public Integer generateGuideNumber(Integer year)  throws ExcepcaoPersistencia;
 	
 }

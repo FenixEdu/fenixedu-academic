@@ -111,7 +111,7 @@ public class GuideOJBTest extends TestCaseOJB {
 		} catch(ExistingPersistentException ex) {
 			// All is OK
 		} catch(ExcepcaoPersistencia ex) {
-			fail("testWriteContributor: unexpected exception" + ex);
+			fail("testWriteGuide: unexpected exception" + ex);
 		}
 	}
 
@@ -151,9 +151,26 @@ public class GuideOJBTest extends TestCaseOJB {
 				persistentSupport.confirmarTransaccao();
 				
 			} catch(ExcepcaoPersistencia ex) {
-				fail("testWriteContributor: unexpected exception" + ex);
+				fail("testWriteGuide: unexpected exception" + ex);
 			}
 		}
+
+	public void testGenerateGuideNumber() {
+		System.out.println("Test 4 - Generate Guide Number");        
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			Integer guideNumber = persistentGuide.generateGuideNumber(new Integer(2003));
+			assertEquals(guideNumber, new Integer(3));
+									
+			persistentSupport.confirmarTransaccao();
+		} catch(ExistingPersistentException ex) {
+			// All is OK
+		} catch(ExcepcaoPersistencia ex) {
+			fail("testGenerateGuideNumber: unexpected exception" + ex);
+		}
+	}
+
 
 
 }

@@ -112,4 +112,15 @@ public interface IPersistentMasterDegreeCandidate {
 	 */
 	public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia;
 	
+	/**
+	 * 
+	 * @param number
+	 * @param executionDegree
+	 * @param specialization
+	 * @return IMasterDegreeCandidate
+	 * @throws ExcepcaoPersistencia
+	 */
+	public IMasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(Integer number, ICursoExecucao executionDegree, 
+			Specialization specialization) throws ExcepcaoPersistencia;
+			
 } // End of class definition
