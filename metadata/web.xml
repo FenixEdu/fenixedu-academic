@@ -45,12 +45,20 @@
 	    <filter-name>ExecutionCourseForwardFilter</filter-name>
 	    <filter-class>ServidorApresentacao.servlets.filters.ExecutionCourseForwardFilter</filter-class>
 		<init-param>
-			<param-name>forwardURI</param-name>
+			<param-name>forwardSiteList</param-name>
+			<param-value>/publico/showExecutionCourseSites.do?method=listSites&amp;degreeOID=</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forwardExecutionCourse</param-name>
 			<param-value>/publico/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=</param-value>
 		</init-param>
 		<init-param>
 			<param-name>notFoundURI</param-name>
 			<param-value>/publico/notFound.do</param-value>	
+		</init-param>
+		<init-param>
+			<param-name>app</param-name>
+			<param-value>/@app.name@/</param-value>
 		</init-param>
 	</filter>
 	<filter>
@@ -61,8 +69,52 @@
 			<param-value>/publico/notFound.do</param-value>	
 		</init-param>
 		<init-param>			
-			<param-name>forwardURI</param-name>
-			<param-value>/publico/viewClassTimeTableNew.do</param-value>
+			<param-name>forwardScheduleList</param-name>
+			<param-value>/publico/showClasses.do?method=listClasses&amp;degreeOID=</param-value>
+		</init-param>
+		<init-param>			
+			<param-name>forwardClassSchedule</param-name>
+			<param-value>/publico/viewClassTimeTableNew.do?classId=</param-value>
+		</init-param>
+		<init-param>
+			<param-name>app</param-name>
+			<param-value>/@app.name@/</param-value>
+		</init-param>
+	</filter>
+	<filter>
+		<filter-name>ExamsForwardFilter</filter-name>
+		<filter-class>ServidorApresentacao.servlets.filters.ExamsForwardFilter</filter-class>
+		<init-param>
+			<param-name>notFoundURI</param-name>
+			<param-value>/publico/notFound.do</param-value>	
+		</init-param>
+		<init-param>			
+			<param-name>forwardExamsList</param-name>
+			<param-value>/publico/viewExamsMapNew.do?method=view</param-value>
+		</init-param>
+		<init-param>
+			<param-name>app</param-name>
+			<param-value>/@app.name@/</param-value>
+		</init-param>
+	</filter>
+	<filter>
+		<filter-name>DegreeForwardFilter</filter-name>
+		<filter-class>ServidorApresentacao.servlets.filters.DegreeForwardFilter</filter-class>
+		<init-param>
+			<param-name>notFoundURI</param-name>
+			<param-value>/publico/notFound.do</param-value>	
+		</init-param>
+		<init-param>			
+			<param-name>forwardDegreeDescription</param-name>
+			<param-value>/publico/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=</param-value>
+		</init-param>
+		<init-param>
+			<param-name>invalidURI</param-name>
+			<param-value>/publico/invalidURI.do</param-value>
+		</init-param>
+		<init-param>
+			<param-name>app</param-name>
+			<param-value>/@app.name@/</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -83,11 +135,19 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>ExecutionCourseForwardFilter</filter-name>
-		<url-pattern>/disciplinas/*</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>SchoolClassForwardFilter</filter-name>
-		<url-pattern>/turmas/*</url-pattern>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>ExamsForwardFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>DegreeForwardFilter</filter-name>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
     <!-- Listeners -->
 	<listener>
@@ -240,7 +300,6 @@
 	    <exception-type>java.lang.Exception</exception-type>
 	    <location>/showErrorPage.do</location>
 	</error-page>
-
 
     <taglib>
         <taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>

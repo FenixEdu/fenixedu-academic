@@ -6,6 +6,7 @@ package ServidorAplicacao.Servico.sop.exams;
 
 /**
  * @author Ana & Ricardo
+ * @author Pedro Santos & Rita Carvalho
  *  
  */
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IPeriod;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.ISuportePersistente;
@@ -38,8 +40,13 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ReadFilteredExamsMap implements IService {
 
+    public class ExamsPeriodUndefined extends FenixServiceException {
+        private static final long serialVersionUID = 1L;
+    }
+
     public InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List curricularYears,
-            InfoExecutionPeriod infoExecutionPeriod) {
+            InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
+        
 
         // Object to be returned
         InfoExamsMap infoExamsMap = new InfoExamsMap();
@@ -97,17 +104,22 @@ public class ReadFilteredExamsMap implements IService {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
-
+                        
             ICursoExecucao executionDegree = (ICursoExecucao) sp.getIPersistentExecutionDegree()
                     .readByOID(CursoExecucao.class, infoExecutionDegree.getIdInternal());
 
             IPeriod period = null;
-
+            
             if (infoExecutionPeriod.getSemester().equals(new Integer(1))) {
                 period = executionDegree.getPeriodExamsFirstSemester();
             } else {
                 period = executionDegree.getPeriodExamsSecondSemester();
             }
+
+            if (period == null) {
+                throw new ExamsPeriodUndefined();
+            }
+
             Calendar startSeason1 = period.getStartDate();
             Calendar endSeason2 = period.getEndDateOfComposite();
             // The calendar must start at a monday

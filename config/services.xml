@@ -1043,9 +1043,9 @@
         <implementationClass>ServidorAplicacao.Servico.manager.ReadDegrees</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains>
+<!--        <filterChains>
             <chain name="ManagerOrSeminariesCoordinator"/>
-        </filterChains>
+        </filterChains>-->
     </service>
     <service>
         <name>DeleteDegrees</name>
@@ -1080,9 +1080,9 @@
             ServidorAplicacao.Servico.manager.ReadDegreeCurricularPlansByDegree</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains>
+		<!--<filterChains>
             <chain name="ManagerAuthorization"/>
-        </filterChains>
+        </filterChains>-->
     </service>
     <service>
         <name>DeleteDegreeCurricularPlans</name>
@@ -1140,9 +1140,9 @@
             ServidorAplicacao.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains>
+        <!--<filterChains>
             <chain name="ManagerAuthorization"/>
-        </filterChains>
+        </filterChains>-->
     </service>
     <service>
         <name>DeleteCurricularCoursesOfDegreeCurricularPlan</name>
@@ -1338,9 +1338,9 @@
             ServidorAplicacao.Servico.manager.ReadExecutionCoursesByCurricularCourse</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains>
+        <!--<filterChains>
             <chain name="ManagerAuthorization"/>
-        </filterChains>
+        </filterChains>-->
     </service>
     <service>
         <name>ReadCurricularCourse</name>
@@ -3788,7 +3788,7 @@
         </filterChains>
     </service>
     <service>
-        <name>ReadExecutionPeriod</name>
+        <name>ReadExecutionPeriodByExecutionCourseId</name>
         <implementationClass> 
             ServidorAplicacao.Servico.teacher.ReadExecutionPeriod</implementationClass>
         <description/>
@@ -7595,5 +7595,20 @@
 			<chain name="ReadStudentCurricularPlansAccess"/>
         </filterChains>
     </service>
-
+	<service>
+		<name>ReadDegreeIdInternalByDegreeCode</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.publico.ReadDegreeIdInternalByDegreeCode
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+	</service>
+	<service>
+		<name>ReadExecutionDegreeRecentByDegreeId</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.publico.ReadExecutionDegreeRecentByDegreeId
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+	</service>
 </serviceDefinitions>

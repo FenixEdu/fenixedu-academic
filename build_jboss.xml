@@ -444,6 +444,10 @@
 		  				   property="log.profile.filename"/>
 
 		<replacefilter 
+		    token="@app.name@" 
+		    property="app.name"/>
+
+		<replacefilter 
 		    token="@index.html.link@" 
 		    property="index.html.link"/>
 

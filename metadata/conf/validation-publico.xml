@@ -138,7 +138,7 @@
 
   <!-- Validation for chooseExamsMapContextForm Form -->
     <form name="chooseExamsMapContextForm">
-      <field property="index" depends="required, integer" page="1">
+      <field property="index" depends="integer" page="1">
         <arg0 key="property.context.degree" />
       </field>
      

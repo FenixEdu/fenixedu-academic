@@ -489,7 +489,11 @@
             parameter="method"
             name="examForm"
             validate="false"
+			input="/notFound.do"
             >
+            <exception type="ServidorAplicacao.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
+                key="error.exams.period.undefined" 
+                handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
         <forward name="viewExamsMap" path="viewExamsMap"/>
         <forward name="viewExecutionCourseByCode" path="/siteViewer.do?method=executionCourseViewer"/>
     </action>

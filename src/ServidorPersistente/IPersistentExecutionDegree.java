@@ -22,6 +22,8 @@ import Util.TipoCurso;
 
 public interface IPersistentExecutionDegree extends IPersistentObject {
 
+    public List readAll() throws ExcepcaoPersistencia;
+    
     /**
      * @param cursoExecucao
      * @throws ExcepcaoPersistencia

@@ -16,12 +16,14 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
+
 import DataBeans.dto.SchoolClassDTO;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
 /**
- * @author João Mota
+ * @author Pedro Santos & Rita Carvalho
  *  
  */
 public class SchoolClassForwardFilter implements Filter {
@@ -30,16 +32,19 @@ public class SchoolClassForwardFilter implements Filter {
 
     FilterConfig filterConfig;
 
-    String forwardURI;
-  
+    String forwardScheduleList;
+    String forwardClassSchedule;
     String notFoundURI;
+    String app;
 
     public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         this.servletContext = filterConfig.getServletContext();
         try {
-            forwardURI = filterConfig.getInitParameter("forwardURI");
+            forwardScheduleList = filterConfig.getInitParameter("forwardScheduleList");
+            forwardClassSchedule = filterConfig.getInitParameter("forwardClassSchedule");
             notFoundURI = filterConfig.getInitParameter("notFoundURI");
+            app = filterConfig.getInitParameter("app");
         } catch (Exception e) {
             System.out.println("Could not get init parameter 'forwardURI'.");
         }
@@ -54,46 +59,110 @@ public class SchoolClassForwardFilter implements Filter {
             ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-
+        
         String uri = request.getRequestURI();
+        
+        if(!StringUtils.contains(uri, "/horarios")){
+        	chain.doFilter(request, response);
+        	return;
+        }
+        
         String context = request.getContextPath();
-        String[] tokens = uri.split("/");
-        String schoolClassName = tokens[tokens.length - 1];
-        Object args[] = { schoolClassName };
-        StringBuffer schoolClassURI = new StringBuffer();
-        if (context.length() > 1) {
-            schoolClassURI.append(context);
+        String newURI = uri.replaceFirst(app, "");
+        String[] tokens = newURI.split("/");
+        
+        StringBuffer forwardURI = new StringBuffer(context);
+        
+        if(tokens.length >=2 && !(tokens[1].equalsIgnoreCase("horarios"))){
+        	forwardURI.append(notFoundURI);
         }
-        try {
-            SchoolClassDTO schoolClassDTO = (SchoolClassDTO) ServiceUtils.executeService(null,
-                    "ReadSchoolClassByNameInCurrentExecutionPeriod", args);
-            if (schoolClassDTO != null) {
-                schoolClassURI.append(forwardURI);
-                schoolClassURI.append("?executionPeriodOID=");
-                schoolClassURI.append(schoolClassDTO.getExecutionPeriodId());
-                schoolClassURI.append("&classId=");
-                schoolClassURI.append(schoolClassDTO.getSchoolClassId());
-                schoolClassURI.append("&nameDegreeCurricularPlan=");
-                schoolClassURI.append(schoolClassDTO.getDegreeCurricularPlanName());
-                schoolClassURI.append("&degreeInitials=");
-                schoolClassURI.append(schoolClassDTO.getDegreeInitials());
-                schoolClassURI.append("&degreeID=");
-                schoolClassURI.append(schoolClassDTO.getDegreeId());
-                schoolClassURI.append("&degreeCurricularPlanID=");
-                schoolClassURI.append(schoolClassDTO.getDegreeCurricularPlanId());
-                schoolClassURI.append("&index=0");
-                schoolClassURI.append("&className=");
-                schoolClassURI.append(schoolClassDTO.getSchoolClassName());
-            } else {                
-                schoolClassURI.append(notFoundURI);
-            }
-            response.sendRedirect(schoolClassURI.toString());
-        } catch (FenixServiceException e) {
-            schoolClassURI.append(notFoundURI);
-            response.sendRedirect(schoolClassURI.toString());
-            e.printStackTrace();
+        else{
+	        
+	        if(tokens.length == 2){
+	            /* fenix/curso/horarios */
+	        	String degreeCode = tokens[tokens.length - 2];
+	        	Integer degreeId;
+                try {
+                    degreeId = getDegreeId(degreeCode);
+                } catch (FenixServiceException e) {
+                    throw new ServletException(e);
+                }
+                if(degreeId != null){
+		        	forwardURI.append(forwardScheduleList);
+		        	forwardURI.append(degreeId);
+		        } else {
+		        	forwardURI.append(notFoundURI);
+		        }
+	        }
+	        
+	        else if(tokens.length == 3){
+	            String className = tokens[2];
+	            String degreeCode = tokens[0];
+	        	Integer degreeId;
+                try {
+                    degreeId = getDegreeId(degreeCode);
+                } catch (FenixServiceException e) {
+                    throw new ServletException(e);
+                }
+                if (degreeId != null){
+                    SchoolClassDTO schoolClassDTO;
+                    try {
+                        schoolClassDTO = getClass(className);
+                    } catch (FenixServiceException e) {
+                        throw new ServletException(e);
+                    }
+                    if (schoolClassDTO != null){
+                        forwardURI.append(forwardClassSchedule);
+                        forwardURI.append(schoolClassDTO.getSchoolClassId());
+                        forwardURI.append("&nameDegreeCurricularPlan=");
+                        forwardURI.append(schoolClassDTO.getDegreeCurricularPlanName());
+                        forwardURI.append("&degreeInitials=");
+                        forwardURI.append(schoolClassDTO.getDegreeInitials());
+                        forwardURI.append("&degreeID=");
+                        forwardURI.append(schoolClassDTO.getDegreeId());
+                        forwardURI.append("&degreeCurricularPlanID=");
+                        forwardURI.append(schoolClassDTO.getDegreeCurricularPlanId());
+                        forwardURI.append("&className=");
+                        forwardURI.append(schoolClassDTO.getSchoolClassName());
+                    }
+                }
+	            
+	        } else {
+	        	forwardURI.append(notFoundURI);
+	        }
         }
-
+        response.sendRedirect(forwardURI.toString());
     }
+    
+    /**
+     * @param className
+     * @return
+     * @throws FenixServiceException
+     */
+    private SchoolClassDTO getClass(final String className) throws FenixServiceException {
+        Object args[] = { className };
+        
+        SchoolClassDTO schoolClassDTO = (SchoolClassDTO) ServiceUtils.executeService(null,
+                "ReadSchoolClassByNameInCurrentExecutionPeriod", args);
+        
+        return schoolClassDTO;
+    }
+
+    /**
+	 * @param degreeCode
+	 * @return
+	 * @throws IOException
+     * @throws FenixServiceException
+	 */
+	private Integer getDegreeId(String degreeCode) throws FenixServiceException {
+		
+        Object args[] = { degreeCode };
+        Integer executionCourseOID = new Integer(0);
+       
+        executionCourseOID = (Integer) ServiceUtils.executeService(null,
+                    "ReadDegreeIdInternalByDegreeCode", args);
+        
+		return executionCourseOID;
+	}
 
 }

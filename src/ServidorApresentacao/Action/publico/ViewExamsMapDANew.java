@@ -8,6 +8,7 @@
  */
 package ServidorApresentacao.Action.publico;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ViewExamsMapDANew extends FenixContextDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
         HttpSession session = request.getSession(true);
 
         if (session != null) {
@@ -57,7 +58,16 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
 
             Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
             request.setAttribute("inEnglish", inEnglish);
+            
             List curricularYears = (List) request.getAttribute("curricularYearList");
+            if (curricularYears == null){
+                curricularYears = new ArrayList();
+                curricularYears.add(new Integer(1));
+                curricularYears.add(new Integer(2));
+                curricularYears.add(new Integer(3));
+                curricularYears.add(new Integer(4));
+                curricularYears.add(new Integer(5));
+            }
 
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD);
@@ -67,15 +77,17 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
 
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                     .getAttribute(SessionConstants.EXECUTION_DEGREE);
-
-            if (infoExecutionDegree == null)
-                request.setAttribute("infoDegreeCurricularPlan", "");
-            else {
-                request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree
-                        .getInfoDegreeCurricularPlan());
+            
+            if (infoExecutionDegree == null){
+                Object[] args1 = {executionDegreeId};
+                
+                infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(userView,
+                            "ReadExecutionDegreeByOID", args1);
+                
             }
             request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
-
+            request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree.getInfoDegreeCurricularPlan());
+            
             Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
 
             InfoExamsMap infoExamsMap;
@@ -84,8 +96,6 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
                         "ReadFilteredExamsMap", args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException(e);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
             }
             request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
 

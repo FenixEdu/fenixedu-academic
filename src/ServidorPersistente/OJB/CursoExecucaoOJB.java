@@ -38,6 +38,10 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         super.delete(executionDegree);
 
     }
+    
+    public List readAll() throws ExcepcaoPersistencia{
+        return queryList(CursoExecucao.class, null);
+    }
 
     public void deleteAll() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
