@@ -30,6 +30,9 @@
     <!-- Directory with web-content -->
     <property name="web-content" location="jsp"/>
 
+	<!-- DML definition file -->
+	<property name="dml.definition.file" value="domain_model.dml"/>
+
 	<!-- Compilation options -->
 	<property name="compile.debug"       value="on"/>
   	<property name="compile.deprecation" value="off"/>
@@ -368,9 +371,38 @@
 		</parallel>
 	</target>
 
+	<target name="generate"
+	                description="Generate java code from a DML file">
+		<echo message="Processing ${dml.definition.file} ..."/>
+		<mkdir dir="${src_gen}"/>
+		<java classname="dml.DmlCompiler" fork="true">
+			<arg value="-f"/>
+			<arg value="-d"/>
+			<arg value="${src_gen}"/>
+			<arg value="${config}/${dml.definition.file}"/>
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="dml.jar"/>
+					<include name="antlr.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+		<delete includeEmptyDirs="true">
+			<fileset dir="${src_gen}">
+				<include name="**/*.java"/>
+				<include name="**/Item.java"/>
+				<include name="**/InsuranceValue.java"/>
+				<include name="**/InsuranceTransaction.java"/>
+				<exclude name="**/*_Base.java"/>
+				<exclude name="**/I*.java"/>
+			</fileset>
+	    </delete>
+		<echo level="info" message="Processing of ${dml.definition.file} finished."/>
+	</target>
+
     <target name="compile"
     		description="Compile application"
-    		depends="prepare">
+    		depends="prepare, generate">
 		<javac destdir="${build.home.webinf.classes}"
                extdirs="${lib};${env.JBOSS_HOME}/client"
                debug="${compile.debug}"
@@ -378,7 +410,7 @@
                deprecation="${compile.deprecation}"
                encoding="${encoding}"
 			   nowarn="true">
-			<!-- <src path="${src_gen}"/> -->
+			<src path="${src_gen}"/>
 			<src path="${src}"/>
 		</javac>
 	</target>

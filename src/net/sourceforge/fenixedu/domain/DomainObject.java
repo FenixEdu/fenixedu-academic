@@ -4,7 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -14,81 +16,65 @@ import org.apache.commons.collections.Predicate;
  * @author jpvl
  */
 
-abstract public class DomainObject implements IDomainObject {
+public class DomainObject extends DomainObject_Base {
 
-    private Integer idInternal;
+	public boolean equals(Object obj) {
+		if (obj != null && obj instanceof IDomainObject) {
+			IDomainObject domainObject = (IDomainObject) obj;
+			if (getIdInternal() != null && domainObject.getIdInternal() != null
+					&& getIdInternal().equals(domainObject.getIdInternal())) {
 
-    private Integer ackOptLock;
+				Collection thisInterfaces = getInterfaces(getClass());
+				Collection objInterfaces = getInterfaces(domainObject
+						.getClass());
 
-    public DomainObject() {
-    }
+				thisInterfaces = CollectionUtils.select(thisInterfaces,
+						new IS_NOT_IDOMAIN_PREDICATE());
+				objInterfaces = CollectionUtils.select(objInterfaces,
+						new IS_NOT_IDOMAIN_PREDICATE());
 
-    public DomainObject(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
+				if (!CollectionUtils
+						.intersection(thisInterfaces, objInterfaces).isEmpty()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
-    /**
-     * @return Integer
-     */
-    public Integer getIdInternal() {
-        return idInternal;
-    }
+	private List<Class> getInterfaces(Class thisClass) {
 
-    /**
-     * Sets the idInternal.
-     * 
-     * @param idInternal
-     *            The idInternal to set
-     */
-    public void setIdInternal(Integer idInternal) {
-        this.idInternal = idInternal;
-    }
+		List<Class> result = new ArrayList<Class>();
 
-    public Integer getAckOptLock() {
-        return ackOptLock;
-    }
+		Class innerClass = thisClass;
+		while (!innerClass.equals(DomainObject_Base.class)
+				&& !innerClass.equals(DomainObject.class)) {
+			if (innerClass.getInterfaces().length != 0) {
+				result.addAll(Arrays.asList(innerClass.getInterfaces()));
+			}
+			innerClass = innerClass.getSuperclass();
+		}
 
-    public void setAckOptLock(Integer ackOptLock) {
-        this.ackOptLock = ackOptLock;
-    }
+		return result;
+	}
 
-    public boolean equals(Object obj) {
-        if (obj != null && obj instanceof IDomainObject) {
-            IDomainObject domainObject = (IDomainObject) obj;
-            if (getIdInternal() != null && domainObject.getIdInternal() != null
-                    && getIdInternal().equals(domainObject.getIdInternal())) {
-                List thisInterfaces = Arrays.asList(getClass().getInterfaces());
-                List objInterfaces = Arrays.asList(domainObject.getClass().getInterfaces());
-                thisInterfaces = (List) CollectionUtils.select(thisInterfaces,
-                        new IS_NOT_IDOMAIN_PREDICATE());
-                objInterfaces = (List) CollectionUtils.select(objInterfaces,
-                        new IS_NOT_IDOMAIN_PREDICATE());
-                if (!CollectionUtils.intersection(thisInterfaces, objInterfaces).isEmpty()) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+	public int hashCode() {
+		if (getIdInternal() != null) {
+			return getIdInternal().intValue();
+		}
+		return super.hashCode();
+	}
 
-    public int hashCode() {
-        if (getIdInternal() != null) {
-            return getIdInternal().intValue();
-        }
-        return super.hashCode();
+	public class IS_NOT_IDOMAIN_PREDICATE implements Predicate {
 
-    }
+		public boolean evaluate(Object arg0) {
+			Class class1 = (Class) arg0;
+			if (class1.getName().equals(IDomainObject.class.getName())) {
+				return false;
+			}
+			return true;
 
-    public class IS_NOT_IDOMAIN_PREDICATE implements Predicate {
-
-        public boolean evaluate(Object arg0) {
-            Class class1 = (Class) arg0;
-            if (class1.getName().equals(IDomainObject.class.getName())) {
-                return false;
-            }
-            return true;
-
-        }
-    }
+		}
+	}
 
 }

@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -13,46 +12,16 @@ import net.sourceforge.fenixedu.util.DelegateYearType;
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
- *  
+ * 
  */
-public class Delegate extends DomainObject implements IDelegate {
-    private IStudent student;
-
+public class Delegate extends Delegate_Base {
     private IDegree degree;
 
     private IExecutionYear executionYear;
 
+    private IStudent student;
+
     private DelegateYearType yearType;
-
-    private Integer keyStudent;
-
-    private Integer keyDegree;
-
-    private Integer keyExecutionYear;
-
-    private Boolean type;
-
-    /**
-     *  
-     */
-    public Delegate() {
-        super();
-    }
-
-    /**
-     * @return Returns the type.
-     */
-    public Boolean getType() {
-        return type;
-    }
-
-    /**
-     * @param type
-     *            The type to set.
-     */
-    public void setType(Boolean type) {
-        this.type = type;
-    }
 
     /**
      * @return Returns the degree.
@@ -82,51 +51,6 @@ public class Delegate extends DomainObject implements IDelegate {
      */
     public void setExecutionYear(IExecutionYear executionYear) {
         this.executionYear = executionYear;
-    }
-
-    /**
-     * @return Returns the keyDegree.
-     */
-    public Integer getKeyDegree() {
-        return keyDegree;
-    }
-
-    /**
-     * @param keyDegree
-     *            The keyDegree to set.
-     */
-    public void setKeyDegree(Integer keyDegree) {
-        this.keyDegree = keyDegree;
-    }
-
-    /**
-     * @return Returns the keyExecutionYear.
-     */
-    public Integer getKeyExecutionYear() {
-        return keyExecutionYear;
-    }
-
-    /**
-     * @param keyExecutionYear
-     *            The keyExecutionYear to set.
-     */
-    public void setKeyExecutionYear(Integer keyExecutionYear) {
-        this.keyExecutionYear = keyExecutionYear;
-    }
-
-    /**
-     * @return Returns the keyStudent.
-     */
-    public Integer getKeyStudent() {
-        return keyStudent;
-    }
-
-    /**
-     * @param keyStudent
-     *            The keyStudent to set.
-     */
-    public void setKeyStudent(Integer keyStudent) {
-        this.keyStudent = keyStudent;
     }
 
     /**
