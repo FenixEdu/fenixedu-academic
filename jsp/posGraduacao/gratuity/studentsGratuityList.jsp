@@ -83,7 +83,8 @@
 					<%= String.valueOf(row.intValue() % 2) %>
 				</bean:define>
 				<bean:define id="situationType" name="infoGratuitySituation" property="situationType.name"/>
-						
+				<bean:define id="insurancePayedKey" name="infoGratuitySituation" property="insurancePayed"/>
+							
 				<logic:equal name="isEven" value="0"> <!-- Linhas pares -->
 					<tr>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.number"/></center></td>
@@ -91,12 +92,7 @@
 						<td bgcolor='#C0C0C0'><center><bean:message key="<%= "label.gratuitySituationType." + situationType.toString()%>"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>	
-						<logic:equal name="infoGratuitySituation" property="insurancePayed" value="true">
-							<td bgcolor='#C0C0C0'><center><bean:message key="label.masterDegree.gratuity.payed"/></center></td>						
-						</logic:equal>
-						<logic:equal name="infoGratuitySituation" property="insurancePayed" value="false">
-							<td bgcolor='#C0C0C0'><center><bean:message key="label.masterDegree.gratuity.notPayed"/></center></td>						
-						</logic:equal>					
+						<td bgcolor='#C0C0C0'><center><bean:message key="<%= insurancePayedKey.toString() %>"/></center></td>										
 					</tr>
 				</logic:equal>
 			
@@ -107,12 +103,7 @@
 						<td><center><bean:message key="<%= "label.gratuitySituationType." + situationType.toString()%>"/></center></td>
 						<td><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>
 						<td><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>
-						<logic:equal name="infoGratuitySituation" property="insurancePayed" value="true">
-							<td><center><bean:message key="label.masterDegree.gratuity.payed"/></center></td>						
-						</logic:equal>
-						<logic:equal name="infoGratuitySituation" property="insurancePayed" value="false">
-							<td><center><bean:message key="label.masterDegree.gratuity.notPayed"/></center></td>						
-						</logic:equal>
+						<td><center><bean:message key="<%= insurancePayedKey.toString() %>"/></center></td>										
 					</tr>
 				</logic:equal>
 			</logic:iterate>

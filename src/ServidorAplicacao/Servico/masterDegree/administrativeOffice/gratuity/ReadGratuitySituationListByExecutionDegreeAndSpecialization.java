@@ -134,7 +134,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
 					InfoGratuitySituation infoGratuitySituation =
 						Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
-					//System.out.println(infoGratuitySituation);
+					
 					//find gratuity's payed value
 					calculateGratuityPayedValue(sp, infoGratuitySituation);
 
@@ -233,7 +233,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 					}
 					else if (infoGuideEntry.getDocumentType().equals(DocumentType.INSURANCE_TYPE))
 					{
-						infoGratuitySituation.setInsurancePayed(Boolean.TRUE);
+						infoGratuitySituation.setInsurancePayed(new String("label.masterDegree.gratuity.payed"));
 					}
 				}
 			}
@@ -304,19 +304,18 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 			{
 				infoGratuitySituation.setRemainingValue(new Double(0));
 			}
-
-			//discount exemption
-			if (infoGratuitySituation.getExemptionPercentage() != null
+		}
+		
+		//discount exemption
+		if (infoGratuitySituation.getExemptionPercentage() != null
 				&& infoGratuitySituation.getExemptionPercentage().doubleValue() > 0)
-			{
-				double exemptionDiscount =
-					infoGratuitySituation.getRemainingValue().doubleValue()
-						* (infoGratuitySituation.getExemptionPercentage().doubleValue() / 100.0);
-				double newValue =
-					infoGratuitySituation.getRemainingValue().doubleValue() - exemptionDiscount;
-				infoGratuitySituation.setRemainingValue(new Double(newValue));
-				System.out.println("Isencção");
-			}
+		{
+			double exemptionDiscount =
+			infoGratuitySituation.getRemainingValue().doubleValue()
+			* (infoGratuitySituation.getExemptionPercentage().doubleValue() / 100.0);
+			double newValue =
+			infoGratuitySituation.getRemainingValue().doubleValue() - exemptionDiscount;
+			infoGratuitySituation.setRemainingValue(new Double(newValue));
 		}
 	}
 

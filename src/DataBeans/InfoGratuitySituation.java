@@ -33,12 +33,12 @@ public class InfoGratuitySituation extends InfoObject implements Serializable
 	private Double payedValue;//attributes auxiliaries for calculations
 	private Double remainingValue;//attributes auxiliaries for calculations
 	private GratuitySituationType situationType; //attributes auxiliaries for calculations 
-	private Boolean insurancePayed = Boolean.FALSE; //attributes auxiliaries for calculations
+	private String insurancePayed = new String("label.masterDegree.gratuity.notPayed"); //attributes auxiliaries for calculations
 		
 	/**
 	 * @return Returns the insurancePayed.
 	 */
-	public Boolean getInsurancePayed()
+	public String getInsurancePayed()
 	{
 		return insurancePayed;
 	}
@@ -46,7 +46,7 @@ public class InfoGratuitySituation extends InfoObject implements Serializable
 	/**
 	 * @param insurancePayed The insurancePayed to set.
 	 */
-	public void setInsurancePayed(Boolean insurancePayed)
+	public void setInsurancePayed(String insurancePayed)
 	{
 		this.insurancePayed = insurancePayed;
 	}

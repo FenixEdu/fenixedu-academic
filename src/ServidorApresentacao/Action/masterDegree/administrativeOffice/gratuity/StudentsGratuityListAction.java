@@ -336,17 +336,17 @@ public class StudentsGratuityListAction extends DispatchAction
 		}
 		else if (orderingType.equals(new String("payedValue")))
 		{
-			//order list by student's name
+			//order list by apyed value
 			Collections.sort(infoGratuitySituationList, new BeanComparator("payedValue"));
 		}
 		else if (orderingType.equals(new String("notPayedValue")))
 		{
-			//order list by student's name
+			//order list by total value
 			Collections.sort(infoGratuitySituationList, new BeanComparator("remainingValue"));
-		} else if (orderingType.equals(new String("insurance")))
+		}
+		else if (orderingType.equals(new String("insurance")))
 		{
-			//order list by student's name
-			//Collections.sort(infoGratuitySituationList, new BeanComparator("insurancePayed"));
+			Collections.sort(infoGratuitySituationList, new BeanComparator("insurancePayed"));
 		}
 	}
 
