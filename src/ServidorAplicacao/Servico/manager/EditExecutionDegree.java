@@ -59,13 +59,15 @@ public class EditExecutionDegree implements IServico
             CursoExecucao execDegree = new CursoExecucao();
             execDegree.setIdInternal(infoExecutionDegree.getIdInternal());
 
-            ICursoExecucao oldExecutionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(
-                    execDegree, false);
+            ICursoExecucao oldExecutionDegree =
+                (ICursoExecucao) persistentExecutionDegree.readByOId(execDegree, false);
 
             IPersistentCampus campusDAO = persistentSuport.getIPersistentCampus();
 
-            ICampus campus = (ICampus) campusDAO.readByOId(new Campus(infoExecutionDegree
-                    .getInfoCampus().getIdInternal()), false);
+            ICampus campus =
+                (ICampus) campusDAO.readByOId(
+                    new Campus(infoExecutionDegree.getInfoCampus().getIdInternal()),
+                    false);
             if (campus == null)
             {
                 throw new NonExistingServiceException("message.nonExistingCampus", null);
@@ -74,8 +76,8 @@ public class EditExecutionDegree implements IServico
             if (oldExecutionDegree == null)
                 throw new NonExistingServiceException("message.nonExistingExecutionDegree", null);
 
-            IPersistentExecutionYear persistentExecutionYear = persistentSuport
-                    .getIPersistentExecutionYear();
+            IPersistentExecutionYear persistentExecutionYear =
+                persistentSuport.getIPersistentExecutionYear();
             IExecutionYear execYear = new ExecutionYear();
             execYear.setIdInternal(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
             executionYear = (IExecutionYear) persistentExecutionYear.readByOId(execYear, false);
@@ -88,8 +90,9 @@ public class EditExecutionDegree implements IServico
             oldExecutionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
 
             IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-            ITeacher teacher = (ITeacher) persistentTeacher.readByNumber(infoExecutionDegree
-                    .getInfoCoordinator().getTeacherNumber());
+            ITeacher teacher =
+                persistentTeacher.readByNumber(
+                    infoExecutionDegree.getInfoCoordinator().getTeacherNumber());
 
             if (teacher == null)
                 throw new NonExistingServiceException("message.non.existing.teacher", null);
@@ -98,12 +101,10 @@ public class EditExecutionDegree implements IServico
             oldExecutionDegree.setCampus(campus);
             persistentExecutionDegree.lockWrite(oldExecutionDegree);
 
-        }
-        catch (ExistingPersistentException ex)
+        } catch (ExistingPersistentException ex)
         {
             throw new ExistingServiceException(ex);
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        } catch (ExcepcaoPersistencia excepcaoPersistencia)
         {
             throw new FenixServiceException(excepcaoPersistencia);
         }

@@ -33,7 +33,8 @@ import ServidorPersistente.places.campus.IPersistentCampus;
 public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico
 {
 
-    private static InsertExecutionDegreeAtDegreeCurricularPlan service = new InsertExecutionDegreeAtDegreeCurricularPlan();
+    private static InsertExecutionDegreeAtDegreeCurricularPlan service =
+        new InsertExecutionDegreeAtDegreeCurricularPlan();
 
     public static InsertExecutionDegreeAtDegreeCurricularPlan getService()
     {
@@ -59,25 +60,29 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             IPersistentCampus campusDAO = persistentSuport.getIPersistentCampus();
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
-                    .getIPersistentDegreeCurricularPlan();
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
+                persistentSuport.getIPersistentDegreeCurricularPlan();
 
-            ICampus campus = (ICampus) campusDAO.readByOId(new Campus(infoExecutionDegree
-                    .getInfoCampus().getIdInternal()), false);
+            ICampus campus =
+                (ICampus) campusDAO.readByOId(
+                    new Campus(infoExecutionDegree.getInfoCampus().getIdInternal()),
+                    false);
             if (campus == null)
             {
                 throw new NonExistingServiceException("message.nonExistingCampus", null);
             }
-            
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
-                    .readByOId(new DegreeCurricularPlan(infoExecutionDegree
-                            .getInfoDegreeCurricularPlan().getIdInternal()), false);
+
+            IDegreeCurricularPlan degreeCurricularPlan =
+                (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(
+                    new DegreeCurricularPlan(
+                        infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal()),
+                    false);
 
             if (degreeCurricularPlan == null)
                 throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
 
-            IPersistentExecutionYear persistentExecutionYear = persistentSuport
-                    .getIPersistentExecutionYear();
+            IPersistentExecutionYear persistentExecutionYear =
+                persistentSuport.getIPersistentExecutionYear();
             IExecutionYear execYear = new ExecutionYear();
             execYear.setIdInternal(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
             executionYear = (IExecutionYear) persistentExecutionYear.readByOId(execYear, false);
@@ -85,13 +90,14 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico
             if (executionYear == null)
                 throw new NonExistingServiceException("message.non.existing.execution.year", null);
 
-            ICursoExecucaoPersistente persistentExecutionDegree = persistentSuport
-                    .getICursoExecucaoPersistente();
+            ICursoExecucaoPersistente persistentExecutionDegree =
+                persistentSuport.getICursoExecucaoPersistente();
 
             IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
 
-            ITeacher coordinator = (ITeacher) persistentTeacher.readByNumber(infoExecutionDegree
-                    .getInfoCoordinator().getTeacherNumber());
+            ITeacher coordinator =
+                persistentTeacher.readByNumber(
+                    infoExecutionDegree.getInfoCoordinator().getTeacherNumber());
 
             if (coordinator == null)
                 throw new NonExistingServiceException("message.non.existing.teacher", null);
@@ -104,14 +110,12 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico
             executionDegree.setCampus(campus);
             persistentExecutionDegree.lockWrite(executionDegree);
 
-        }
-        catch (ExistingPersistentException existingException)
+        } catch (ExistingPersistentException existingException)
         {
             throw new ExistingServiceException(
-                    "O curso em execução referente ao ano lectivo em execução "
-                            + executionYear.getYear()                    , existingException);
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
+                "O curso em execução referente ao ano lectivo em execução " + executionYear.getYear(),
+                existingException);
+        } catch (ExcepcaoPersistencia excepcaoPersistencia)
         {
             throw new FenixServiceException(excepcaoPersistencia);
         }

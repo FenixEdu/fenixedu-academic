@@ -314,8 +314,6 @@ public class SiglaDataFixer
 		{
 			CurricularCourseScope curricularCourseScope = (CurricularCourseScope) iterCCS.next();
 
-			Criteria criteriaPlanoCurricular;
-			Query queryCP;
 			List curricularPlans = getCurriculums(broker, loader, curricularCourseScope);
 			if (curricularPlans == null || curricularPlans.isEmpty())
 			{

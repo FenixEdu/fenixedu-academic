@@ -81,9 +81,6 @@ public class LoadStudents extends LoadDataFile {
 		String ramo = stringTokenizer.nextToken();
 		String ano = stringTokenizer.nextToken(); // new
 		String polo = stringTokenizer.nextToken(); // new
-		String trabalhador_estudante;
-		String situacao_propinas;
-		String respostas_ao_inquerito;
 
 		Almeida_aluno almeida_aluno = new Almeida_aluno();
 		almeida_aluno.setNumero((new Integer(numero)).longValue());

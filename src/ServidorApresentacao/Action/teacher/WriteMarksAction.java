@@ -136,7 +136,6 @@ public class WriteMarksAction extends DispatchAction
                 try
                 {
                     studentsNumbers[j] = stringTokenizer.nextToken().trim();
-                    Integer testNumber = new Integer(studentsNumbers[j]);
                 }
 				catch (NumberFormatException e2)
 				{
