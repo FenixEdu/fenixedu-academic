@@ -249,7 +249,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         //order the list by state and next by begin date
         ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("state.degreeState"));
-        comparatorChain.addComparator(new BeanComparator("initialDate"));
+        comparatorChain.addComparator(new BeanComparator("initialDate"), true);
 
         Collections.sort(infoDegreeCurricularPlanList, comparatorChain);
 
