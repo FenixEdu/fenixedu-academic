@@ -10,9 +10,11 @@
 	<definition name="df.page.viewProfessorships" extends="definition.teacher.one-column">
 		<put name="body" value="/teacher/viewProfessorships_bd.jsp" />
 	</definition>
-	<definition name="df.page.management.execution-courses" extends="definition.teacher.one-column">
+	<definition name="df.page.management.execution-courses" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>		
 		<put name="body" value="/teacher/viewProfessorships_bd.jsp" />
 	</definition>
+
 	<definition name="df.teacher.showShiftsPercentageTable" extends="definition.teacher.two-column">
 		<put name="body" value="/teacher/credits/showShiftsPercentageTable_bd.jsp" />
 	</definition>
