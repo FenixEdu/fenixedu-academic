@@ -11,17 +11,24 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
+import java.util.Calendar;
+import java.util.List;
+
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
+import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
+import Dominio.ITurnoAula;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TipoAula;
 
 public class EditarTurno implements IServico {
 
@@ -51,22 +58,36 @@ public class EditarTurno implements IServico {
 
 		InfoShift infoShift = null;
 
-		// TODO : if type and/or execution course change, then verifications must be made
-		//        relative to the validity of the hours of associated lessons for the
-		//        corresponding execution course.
+		try {
+			newShiftIsValid(
+				infoShiftOld,
+				infoShiftNew.getTipo(),
+				infoShiftNew.getInfoDisciplinaExecucao());
+		} catch (InvalidNewShiftExecutionCourse ex) {
+			throw new InvalidNewShiftExecutionCourse();
+		} catch (InvalidNewShiftType ex) {
+			throw new InvalidNewShiftType();
+		}
 
 		try {
 			ISuportePersistente sp;
-				sp = SuportePersistenteOJB.getInstance();
+			sp = SuportePersistenteOJB.getInstance();
 
-			ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class, infoShiftOld.getIdInternal());
+			ITurno shift =
+				(ITurno) sp.getITurnoPersistente().readByOID(
+					Turno.class,
+					infoShiftOld.getIdInternal());
 
 			sp.getITurnoPersistente().lockWrite(shift);
 
 			shift.setNome(infoShiftNew.getNome());
 			shift.setTipo(infoShiftNew.getTipo());
-			IDisciplinaExecucao executionCourse = 
-				(IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOID(DisciplinaExecucao.class, infoShiftOld.getInfoDisciplinaExecucao().getIdInternal());
+			IDisciplinaExecucao executionCourse =
+				(IDisciplinaExecucao) sp
+					.getIDisciplinaExecucaoPersistente()
+					.readByOID(
+					DisciplinaExecucao.class,
+					infoShiftOld.getInfoDisciplinaExecucao().getIdInternal());
 			shift.setDisciplinaExecucao(executionCourse);
 
 			infoShift = Cloner.copyShift2InfoShift(shift);
@@ -76,4 +97,232 @@ public class EditarTurno implements IServico {
 
 		return infoShift;
 	}
+
+	private void newShiftIsValid(
+		InfoShift infoShiftOld,
+		TipoAula newShiftType,
+		InfoExecutionCourse newShiftExecutionCourse)
+		throws FenixServiceException {
+			
+		// 1. Read shift lessons
+		List shiftLessons = null;
+		ITurno shift = null;
+		try {
+			ISuportePersistente sp;
+			sp = SuportePersistenteOJB.getInstance();
+			shift =
+				(ITurno) sp.getITurnoPersistente().readByOID(
+					Turno.class,
+					infoShiftOld.getIdInternal());
+					System.out.println("############ shift: "+shift);
+			shiftLessons =
+				(List) sp.getITurnoAulaPersistente().readLessonsByShift(
+					shift);
+		} catch (ExcepcaoPersistencia ex) {
+			throw new FenixServiceException(ex);
+		}
+
+		// 2. Count shift total duration
+		double shiftDuration = 0;
+		for (int i = 0; i < shiftLessons.size(); i++) {
+			IAula lesson = ((ITurnoAula) shiftLessons.get(i)).getAula();
+			shiftDuration
+				+= (getLessonDurationInMinutes(lesson).doubleValue() / 60);
+		}
+
+		// 3a. If NEW shift type is diferent from CURRENT shift type
+		//     check if shift total duration exceeds new shift type duration 
+		if (!newShiftType.equals(infoShiftOld.getTipo())) {
+			if (!newShiftTypeIsValid(shift, newShiftType, shiftDuration)) {
+				throw new InvalidNewShiftType();
+			}
+		}
+
+		// 3b. If NEW shift executionCourse is diferent from CURRENT shift executionCourse
+		//     check if shift total duration exceeds new executionCourse duration
+		if (!newShiftExecutionCourse
+			.equals(infoShiftOld.getInfoDisciplinaExecucao())) {
+			if (!newShiftExecutionCourseIsValid(shift,
+				newShiftExecutionCourse,
+				shiftDuration)) {
+				throw new InvalidNewShiftExecutionCourse();
+			}
+		}
+	}
+
+	private boolean newShiftTypeIsValid(
+		ITurno shift,
+		TipoAula newShiftType,
+		double shiftDuration) {
+		// Verify if shift total duration exceeds new shift type duration
+		if (newShiftType.equals(new TipoAula(TipoAula.TEORICA))) {
+			if (shiftDuration
+				> shift
+					.getDisciplinaExecucao()
+					.getTheoreticalHours()
+					.doubleValue()) {
+				return false;
+			}
+		}
+		if (newShiftType.equals(new TipoAula(TipoAula.PRATICA))) {
+			if (shiftDuration
+				> shift
+					.getDisciplinaExecucao()
+					.getPraticalHours()
+					.doubleValue()) {
+				return false;
+			}
+		}
+		if (newShiftType.equals(new TipoAula(TipoAula.TEORICO_PRATICA))) {
+			if (shiftDuration
+				> shift
+					.getDisciplinaExecucao()
+					.getTheoPratHours()
+					.doubleValue()) {
+				return false;
+			}
+		}
+		if (shift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL))) {
+			if (shiftDuration
+				> shift.getDisciplinaExecucao().getLabHours().doubleValue()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private boolean newShiftExecutionCourseIsValid(
+		ITurno shift,
+		InfoExecutionCourse newShiftExecutionCourse,
+		double shiftDuration) {
+
+		// Verify if shift total duration exceeds new executionCourse uration
+		if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICA))) {
+			if (shiftDuration
+				> newShiftExecutionCourse.getTheoreticalHours().doubleValue()) {
+				return false;
+			}
+		}
+		if (shift.getTipo().equals(new TipoAula(TipoAula.PRATICA))) {
+			if (shiftDuration
+				> newShiftExecutionCourse.getPraticalHours().doubleValue()) {
+				return false;
+			}
+		}
+		if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA))) {
+			if (shiftDuration
+				> newShiftExecutionCourse.getTheoPratHours().doubleValue()) {
+				return false;
+			}
+		}
+		if (shift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL))) {
+			if (shiftDuration
+				> newShiftExecutionCourse.getLabHours().doubleValue()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private Integer getLessonDurationInMinutes(IAula lesson) {
+		int beginHour = lesson.getInicio().get(Calendar.HOUR_OF_DAY);
+		int beginMinutes = lesson.getInicio().get(Calendar.MINUTE);
+		int endHour = lesson.getFim().get(Calendar.HOUR_OF_DAY);
+		int endMinutes = lesson.getFim().get(Calendar.MINUTE);
+		int duration = 0;
+
+		duration = (endHour - beginHour) * 60 + (endMinutes - beginMinutes);
+		return new Integer(duration);
+	}
+
+	/**
+	 * To change the template for this generated type comment go to
+	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+	 */
+	public class InvalidNewShiftType extends FenixServiceException {
+
+		/**
+		 * 
+		 */
+		private InvalidNewShiftType() {
+			super();
+		}
+
+		/**
+		 * @param errorType
+		 */
+		private InvalidNewShiftType(int errorType) {
+			super(errorType);
+		}
+
+		/**
+		 * @param s
+		 */
+		private InvalidNewShiftType(String s) {
+			super(s);
+		}
+
+		/**
+		 * @param cause
+		 */
+		private InvalidNewShiftType(Throwable cause) {
+			super(cause);
+		}
+
+		/**
+		 * @param message
+		 * @param cause
+		 */
+		private InvalidNewShiftType(String message, Throwable cause) {
+			super(message, cause);
+		}
+
+	}
+
+	/**
+	 * To change the template for this generated type comment go to
+	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+	 */
+	public class InvalidNewShiftExecutionCourse extends FenixServiceException {
+
+		/**
+		 * 
+		 */
+		private InvalidNewShiftExecutionCourse() {
+			super();
+		}
+
+		/**
+		 * @param errorType
+		 */
+		private InvalidNewShiftExecutionCourse(int errorType) {
+			super(errorType);
+		}
+
+		/**
+		 * @param s
+		 */
+		private InvalidNewShiftExecutionCourse(String s) {
+			super(s);
+		}
+
+		/**
+		 * @param cause
+		 */
+		private InvalidNewShiftExecutionCourse(Throwable cause) {
+			super(cause);
+		}
+
+		/**
+		 * @param message
+		 * @param cause
+		 */
+		private InvalidNewShiftExecutionCourse(
+			String message,
+			Throwable cause) {
+			super(message, cause);
+		}
+
+	}
+
 }

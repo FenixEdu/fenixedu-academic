@@ -3,6 +3,8 @@ package ServidorApresentacao.Action.sop;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -12,12 +14,10 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftExecutionCourse;
+import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftType;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -44,15 +44,15 @@ public class ManageShiftDA
 		/* Fill out form to be edited with shifts original values */
 		DynaActionForm editShiftForm = (DynaActionForm) form;
 		//if (editShiftForm.get("courseInitials") == null) {
-			editShiftForm.set(
-				"courseInitials",
-				infoShiftToEdit.getInfoDisciplinaExecucao().getSigla());
+		editShiftForm.set(
+			"courseInitials",
+			infoShiftToEdit.getInfoDisciplinaExecucao().getSigla());
 		//}
 		//if (editShiftForm.get("nome") == null) {
-			editShiftForm.set("nome", infoShiftToEdit.getNome());
+		editShiftForm.set("nome", infoShiftToEdit.getNome());
 		//}
 		//if (editShiftForm.get("tipoAula") == null) {
-			editShiftForm.set("tipoAula", infoShiftToEdit.getTipo().getTipo());
+		editShiftForm.set("tipoAula", infoShiftToEdit.getTipo().getTipo());
 		//}
 
 		/* Place list of execution courses in request */
@@ -101,6 +101,20 @@ public class ManageShiftDA
 					argsCriarTurno);
 		} catch (ExistingServiceException ex) {
 			throw new ExistingActionException("O Turno", ex);
+		} catch (InvalidNewShiftType e1) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+				"errors.exception.invalid.newShiftType",
+				new ActionError("errors.exception.invalid.newShiftType"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();			
+		} catch (InvalidNewShiftExecutionCourse e2) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+				"errors.exception.invalid.newExecutionCourse",
+				new ActionError("errors.exception.invalid.newExecutionCourse"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
 		}
 
 		request.setAttribute(
