@@ -12,10 +12,8 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoRoom;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.sop.CriarSala.ExistingRoomServiceException;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
-import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoSala;
 import framework.factory.ServiceManagerServiceFactory;
@@ -42,10 +40,8 @@ public class CriarSalaFormAction extends Action {
 
             try {
                 ServiceManagerServiceFactory.executeService(userView, "CriarSala", argsCriarSala);
-            } catch (ExistingRoomServiceException e) {
+            } catch (ExistingServiceException e) {
                 throw new ExistingActionException("A Sala", e);
-            } catch (FenixServiceException ex) {
-                throw new FenixActionException("Problemas a criar a sala.", ex);
             }
             return mapping.findForward("Sucesso");
         }

@@ -8,6 +8,7 @@ package ServidorAplicacao.Servico.sop;
  * Serviço EditarTurma.
  * 
  * @author tfc130
+ * @author Pedro Santos e Rita Carvalho e Luis Cruz
  */
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;

@@ -16,12 +16,12 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.ExecutionCourse;
 import Dominio.IAula;
 import Dominio.IDomainObject;
 import Dominio.IExecutionCourse;
 import Dominio.ITurno;
 import Dominio.Turno;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -36,7 +36,8 @@ public class EditarTurno implements IService {
     public EditarTurno() {
     }
 
-    public Object run(InfoShift infoShiftOld, InfoShift infoShiftNew) throws FenixServiceException {
+    public Object run(InfoShift infoShiftOld, InfoShift infoShiftNew) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
         InfoShift infoShift = null;
 
@@ -51,59 +52,62 @@ public class EditarTurno implements IService {
             throw new InvalidNewShiftCapacity();
         }
 
-        try {
-            ISuportePersistente sp;
-            sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,
-                    infoShiftOld.getIdInternal());
+        ITurno shiftToEdit = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,
+                infoShiftOld.getIdInternal());
 
-            int capacityDiference = infoShiftNew.getLotacao().intValue() - shift.getLotacao().intValue();
+        int capacityDiference = infoShiftNew.getLotacao().intValue()
+                - shiftToEdit.getLotacao().intValue();
 
-            if (shift.getAvailabilityFinal().intValue() + capacityDiference < 0) {
-                throw new InvalidFinalAvailabilityException();
-            }
-
-            sp.getITurnoPersistente().simpleLockWrite(shift);
-
-            shift.setNome(infoShiftNew.getNome());
-            shift.setTipo(infoShiftNew.getTipo());
-
-            shift.setLotacao(infoShiftNew.getLotacao());
-            shift.setAvailabilityFinal(new Integer(shift.getAvailabilityFinal().intValue()
-                    + capacityDiference));
-
-            IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
-                    .readByOID(ExecutionCourse.class,
-                            infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
-
-            shift.setDisciplinaExecucao(executionCourse);
-
-            // Also change the type of associated lessons and lessons execution
-            // course
-            if (shift.getAssociatedLessons() != null) {
-                for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
-                    sp.getIAulaPersistente().simpleLockWrite(
-                            (IDomainObject) shift.getAssociatedLessons().get(i));
-                    ((IAula) shift.getAssociatedLessons().get(i)).setTipo(infoShiftNew.getTipo());
-                    ((IAula) shift.getAssociatedLessons().get(i)).setShift(shift);
-                    //((IAula)
-                    // shift.getAssociatedLessons().get(i)).setDisciplinaExecucao(executionCourse);
-                }
-            }
-
-            infoShift = Cloner.copyShift2InfoShift(shift);
-
-        } catch (ExcepcaoPersistencia ex) {
-            throw new ExistingShiftException(ex);
+        if (shiftToEdit.getAvailabilityFinal().intValue() + capacityDiference < 0) {
+            throw new InvalidFinalAvailabilityException();
         }
+
+        final IExecutionCourse executionCourse = Cloner
+                .copyInfoExecutionCourse2ExecutionCourse(infoShiftNew.getInfoDisciplinaExecucao());
+
+        ITurno otherShiftWithSameNewName = sp.getITurnoPersistente().readByNameAndExecutionCourse(
+                infoShiftNew.getNome(), executionCourse);
+
+        if ((otherShiftWithSameNewName != null)
+                && !(otherShiftWithSameNewName.getIdInternal().equals(shiftToEdit.getIdInternal()))) {
+            throw new ExistingServiceException("Duplicate Entry: " + otherShiftWithSameNewName.getNome());
+        }
+
+        sp.getITurnoPersistente().simpleLockWrite(shiftToEdit);
+
+        shiftToEdit.setNome(infoShiftNew.getNome());
+        shiftToEdit.setTipo(infoShiftNew.getTipo());
+
+        shiftToEdit.setLotacao(infoShiftNew.getLotacao());
+        shiftToEdit.setAvailabilityFinal(new Integer(shiftToEdit.getAvailabilityFinal().intValue()
+                + capacityDiference));
+
+
+        shiftToEdit.setDisciplinaExecucao(executionCourse);
+
+        // Also change the type of associated lessons and lessons execution
+        // course
+        if (shiftToEdit.getAssociatedLessons() != null) {
+            for (int i = 0; i < shiftToEdit.getAssociatedLessons().size(); i++) {
+                sp.getIAulaPersistente().simpleLockWrite(
+                        (IDomainObject) shiftToEdit.getAssociatedLessons().get(i));
+                ((IAula) shiftToEdit.getAssociatedLessons().get(i)).setTipo(infoShiftNew.getTipo());
+                ((IAula) shiftToEdit.getAssociatedLessons().get(i)).setShift(shiftToEdit);
+                //((IAula)
+                // shift.getAssociatedLessons().get(i)).setDisciplinaExecucao(executionCourse);
+            }
+        }
+
+        return Cloner.copyShift2InfoShift(shiftToEdit);
+
         // NOTE: changed the lock twice strategy to see if the new turn exists
         //        catch (ExcepcaoPersistencia ex)
         //        {
         //            throw new FenixServiceException(ex);
         //        }
 
-        return infoShift;
     }
 
     private void newShiftIsValid(InfoShift infoShiftOld, TipoAula newShiftType,

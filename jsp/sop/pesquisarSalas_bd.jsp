@@ -6,25 +6,7 @@
 <html:errors/>
         <html:form action="/pesquisarSala">
             <table>
-<!--            	<tr>
-                    <td class="formTD">
-                        <bean:message key="property.room.name"/>
-                    </td>
-                    <td>
-                    	<html:select property="executionPeriodId">
-                    		<logic:iterate id="executionPeriod" name="publico.executionPeriods">
-                    			<bean:define id="idInternal" name="executionPeriod" property="idInternal"/>
-                    			<html:option  value="<%= idInternal.toString() %>">
-                    			<bean:write name="executionPeriod" property="name"/>-<bean:write name="executionPeriod" property="infoExecutionYear.year"/>
-								</html:option>
-                    		</logic:iterate>
-                    		
-                    			                    		
-                    	</html:select>
-                       
-                    </td>
-                </tr>
--->                <tr>
+                <tr>
                     <td class="formTD">
                         <bean:message key="property.room.name"/>
                     </td>

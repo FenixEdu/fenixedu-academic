@@ -10,62 +10,37 @@ package ServidorAplicacao.Servico.sop;
  * Serviço CriarSala.
  * 
  * @author tfc130
+ * @author Pedro Santos e Rita Carvalho
  */
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoRoom;
+import DataBeans.util.Cloner;
 import Dominio.ISala;
-import Dominio.Sala;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CriarSala implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public CriarSala() {
-    }
+    public Object run(InfoRoom infoSala) throws FenixServiceException, ExcepcaoPersistencia {
 
-    public Object run(InfoRoom infoSala) throws FenixServiceException {
+        final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        ISala sala = null;
-        boolean result = false;
+        final ISala room = Cloner.copyInfoRoom2Room(infoSala);
 
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            sala = new Sala(infoSala.getNome(), infoSala.getEdificio(), infoSala.getPiso(), infoSala
-                    .getTipo(), infoSala.getCapacidadeNormal(), infoSala.getCapacidadeExame());
-            try {
-                sp.getISalaPersistente().simpleLockWrite(sala);
-                result = true;
-            } catch (ExistingPersistentException ex) {
-                throw new ExistingRoomServiceException(ex);
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex.getMessage());
+        final ISalaPersistente roomDAO = sp.getISalaPersistente();
+        final ISala existingRoom = roomDAO.readByName(infoSala.getNome());
+
+        if (existingRoom != null) {
+            throw new ExistingServiceException("Duplicate Entry: " + infoSala.getNome());
         }
 
-        return new Boolean(result);
-    }
+        roomDAO.simpleLockWrite(room);
 
-    public class ExistingRoomServiceException extends FenixServiceException {
-
-        /**
-         *  
-         */
-        private ExistingRoomServiceException() {
-            super();
-        }
-
-        /**
-         * @param cause
-         */
-        ExistingRoomServiceException(Throwable cause) {
-            super(cause);
-        }
+        return Cloner.copyRoom2InfoRoom(room);
 
     }
 

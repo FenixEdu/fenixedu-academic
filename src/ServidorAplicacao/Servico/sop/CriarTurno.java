@@ -8,6 +8,7 @@ package ServidorAplicacao.Servico.sop;
  * Servi�o CriarTurno
  * 
  * @author tfc130
+ * @author Pedro Santos e Rita Carvalho
  */
 import java.util.ArrayList;
 
@@ -17,64 +18,50 @@ import DataBeans.util.Cloner;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurno;
-import Dominio.Turno;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CriarTurno implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public CriarTurno() {
-    }
+    public InfoShift run(InfoShift infoTurno) throws FenixServiceException, ExcepcaoPersistencia {
 
-    public InfoShift run(InfoShift infoTurno) throws FenixServiceException {
+        final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        ITurno turno = null;
-        InfoShift result = null;
+        final ITurno newShift = Cloner.copyInfoShift2Shift(infoTurno);
 
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        final ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+        final ITurno existingShift = shiftDAO.readByNameAndExecutionCourse(newShift.getNome(), newShift
+                .getDisciplinaExecucao());
 
-            IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoTurno
-                    .getInfoDisciplinaExecucao().getInfoExecutionPeriod());
-
-            IExecutionCourse executionCourse = executionCourseDAO
-                    .readByExecutionCourseInitialsAndExecutionPeriod(infoTurno
-                            .getInfoDisciplinaExecucao().getSigla(), executionPeriod);
-
-            turno = new Turno(infoTurno.getNome(), infoTurno.getTipo(), infoTurno.getLotacao(),
-                    executionCourse);
-            try {
-                sp.getITurnoPersistente().simpleLockWrite(turno);
-                // TODO : this is required to write shifts.
-                //        I'm not sure of the significance, nor do I know if it is to
-                //        be attributed by SOP users. So for now just set it to 0.
-                Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * turno.getLotacao()
-                        .doubleValue())).intValue());
-                turno.setAvailabilityFinal(availabilityFinal);
-                turno.setAssociatedLessons(new ArrayList());
-                turno.setAssociatedClasses(new ArrayList());
-                turno.setAssociatedShiftProfessorship(new ArrayList());
-
-            } catch (ExistingPersistentException ex) {
-                throw new ExistingServiceException(ex);
-            }
-
-            result = (InfoShift) Cloner.get(turno);
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
+        if (existingShift != null) {
+            throw new ExistingServiceException("Duplicate Entry: " + infoTurno.getNome());
         }
 
-        return result;
+        IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+
+        IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoTurno
+                .getInfoDisciplinaExecucao().getInfoExecutionPeriod());
+
+        IExecutionCourse executionCourse = executionCourseDAO
+                .readByExecutionCourseInitialsAndExecutionPeriod(infoTurno.getInfoDisciplinaExecucao()
+                        .getSigla(), executionPeriod);
+
+        sp.getITurnoPersistente().simpleLockWrite(newShift);
+        Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * newShift.getLotacao()
+                .doubleValue())).intValue());
+        newShift.setAvailabilityFinal(availabilityFinal);
+        newShift.setAssociatedLessons(new ArrayList());
+        newShift.setAssociatedClasses(new ArrayList());
+        newShift.setAssociatedShiftProfessorship(new ArrayList());
+
+        return Cloner.copyShift2InfoShift(newShift);
+
     }
 
 }

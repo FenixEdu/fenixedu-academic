@@ -20,7 +20,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.sop.EditarTurno.ExistingShiftException;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidFinalAvailabilityException;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftCapacity;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftExecutionCourse;
@@ -86,7 +86,7 @@ public class ManageShiftDA extends
         try {
             infoShiftNew = (InfoShift) ServiceUtils.executeService(userView, "EditarTurno",
                     argsCriarTurno);
-        } catch (ExistingShiftException ex) {
+        } catch (ExistingServiceException ex) {
             throw new ExistingActionException("O Turno", ex);
         } catch (InvalidFinalAvailabilityException e0) {
             ActionErrors actionErrors = new ActionErrors();
