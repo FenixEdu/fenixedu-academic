@@ -17,7 +17,7 @@
     		<bean:message key="link.masterDegree.administrativeOffice.marksView" />
     	</html:link>
     </li>
-    <li><html:link page="<%="/marksSubmission.do?method=prepare&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;curricularCourseCode=" + pageContext.findAttribute("curricularCourseCode") %>">
+    <li><html:link page="<%="/marksSubmission.do?method=prepare&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;curricularCourseCode=" + pageContext.findAttribute("curricularCourseCode") %>">
     		<bean:message key="link.masterDegree.administrativeOffice.marksSubmission" />
     	</html:link>
     </li>

@@ -15,7 +15,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.MessageResources;
 
-import Dominio.ICurricularCourse;
+import DataBeans.InfoCurricularCourse;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -127,16 +127,16 @@ public class MarksManagementDispatchAction extends DispatchAction {
 		Object args[] = { curricularCourseCode };
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos serviceManager = GestorServicos.manager();
-		ICurricularCourse curricularCourse = null;
+		InfoCurricularCourse infoCurricularCourse = null;
 		try {
-			curricularCourse = (ICurricularCourse) serviceManager.executar(userView, "ReadCurricularCourseByIdInternal", args);
+			infoCurricularCourse = (InfoCurricularCourse) serviceManager.executar(userView, "ReadCurricularCourseByIdInternal", args);
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e);
 		}
 
 		request.setAttribute("executionYear", executionYear);
 		request.setAttribute("degree", request.getParameter("degree"));
-		request.setAttribute("curricularCourse", curricularCourse.getName());
+		request.setAttribute("curricularCourse", infoCurricularCourse.getName());
 		request.setAttribute("curricularCourseCode", curricularCourseCode);
 
 		return mapping.findForward("ShowMarksManagementMenu");

@@ -1,5 +1,7 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.marksManagement;
 
+import DataBeans.InfoCurricularCourse;
+import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import ServidorAplicacao.IServico;
@@ -38,22 +40,23 @@ public class ReadCurricularCourseByIdInternal implements IServico {
 		return "ReadCurricularCourseByIdInternal";
 	}
 
-	public ICurricularCourse run(Integer curricularCourseCode) throws FenixServiceException {
+	public InfoCurricularCourse run(Integer curricularCourseCode) throws FenixServiceException {
 
-		ICurricularCourse curricularCourse = null;
+		InfoCurricularCourse infoCurricularCourse = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-			curricularCourse = new CurricularCourse();
+			ICurricularCourse curricularCourse = new CurricularCourse();
 			curricularCourse.setIdInternal(curricularCourseCode);
 			curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
 
+			infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;
 		}
-		return curricularCourse;
+		return infoCurricularCourse;
 	}
 }
