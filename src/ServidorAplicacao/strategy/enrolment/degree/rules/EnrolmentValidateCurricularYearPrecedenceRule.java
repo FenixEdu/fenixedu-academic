@@ -25,47 +25,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 
 public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolmentRule {
-/*
-	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
-		
-		int year = 0;
-		int year2 = 0;
-
-		Iterator iterator = enrolmentContext.getActualEnrolment().iterator();
-		while (iterator.hasNext()) {
-			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-			year2 = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue();
-			if (year2 > year) {
-				year = year2;
-			}
-		}
-//		NOTE: DAVID-RICARDO:
-		if(!enrolmentContext.getOptionalCurricularCoursesEnrolments().isEmpty()) {
-			year = ( (ICurricularCourseScope) ((IEnrolmentInOptionalCurricularCourse) enrolmentContext.getOptionalCurricularCoursesEnrolments().get(0)).getCurricularCourse().getScopes().get(0) ).getCurricularSemester().getCurricularYear().getYear().intValue();
-		}
-
-		if(year == 1) {
-			return enrolmentContext;
-		}
-
-		for(int i = (year - 1); i > 0; i--) {
-			final int j = i;
-			List precedentCurricularCourses = (List) CollectionUtils.select(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled(), new Predicate() {
-				public boolean evaluate(Object obj) {
-					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
-					return curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() == j;
-				}
-
-			});
-
-			if(!enrolmentContext.getActualEnrolment().containsAll(precedentCurricularCourses)) {
-				enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MUST_ENROLL_IN_EARLIER_CURRICULAR_COURSES);
-				return enrolmentContext;
-			}
-		}
-		return enrolmentContext;
-	}
-*/
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 		
@@ -96,7 +55,6 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 				}
 			}
 		} catch (ExcepcaoPersistencia e) {
-			// TODO Auto-generated catch block
 			throw new IllegalStateException("Cannot read from database");
 		}
 

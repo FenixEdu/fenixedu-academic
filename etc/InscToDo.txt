@@ -2,17 +2,21 @@ COISAS MESMO PARA FAZER:
 ========================
 
 1. Verificar a aplicação da regra 7.3 do livro azul.
-2. Parametrizar valores para NAC, etc.
+2. Parametrizar valores para MAX_INCREMENT_NAC e MIN_INCREMENT_NAC.
 3. Testar situações em que o aluno muda de plano curricular por: mudar de curso, mudar de escola, erasmus, restruturação do curso, etc...
-1000. Os eternos testes!...
+4. Fazer os testes que faltam.
 
 DÚVIDAS:
 ========
 
-1. O incremento dos NAC pertence ao Curricular Course ou a outra tabela?
+1. Os valores para MAX_INCREMENT_NAC e MIN_INCREMENT_NAC pertencem à tabela CURRICULAR_COURSE ou a outra tabela?
 2. O que fazer quando o curso está terminado?
-3. Existem cadeiras de opção anuais? Ou seja, posso escolher uma cadeira de opção que dura um ano inteiro? Se não houver, temos de acrescentar mais uma condição ao BIG IF da regra "EnrolmentFilterAllOptionalCoursesRule".
-4. Se se chumbar ao TFC, a próxima inscrição conta como duas acumuladas ou apenas como uma? Se contar como duas temos de alterar as regras de filter e validate dos NACs.
+3. Existem cadeiras de opção anuais? Ou seja, posso escolher uma cadeira de opção que dura um ano inteiro?
+	-> Se não houver, temos de acrescentar mais uma condição ao BIG IF da regra "EnrolmentFilterAllOptionalCoursesRule".
+4. Se se chumbar ao TFC, a próxima inscrição conta como duas acumuladas ou apenas como uma?
+	-> Se contar como duas temos de alterar as regras de filter e validate dos NACs.
+5. Se o aluno tiver uma cadeira de um ano X em atraso e, por questões de percedencias, não se pode inscrver a ela num dado semestre, o que é que deve acontecer na regra de filtragem das cadeiras de anos superiores?
+6. O que acontece se o aluno está automaticamente inscrito a uma serie de cadeiras do 2º ano que ultrapassam o max_nac e por isso não se consegue inscrver por causa da regra dos anos anteriores.
 
 COISAS PARA FAZER EVENTUALMENTE:
 ================================
@@ -23,5 +27,7 @@ COISAS PARA FAZER EVENTUALMENTE:
 O QUE ALTERAMOS DE IMPORTANTE:
 ==============================
 
-1. Criamos uma tabela nova -> DEGREE_ENROLMENT_INFO, a tabela DegreeCurricularPlan agora tem um campo com a chave para esta nova tabela
-1. Criamos uma tabela nova -> STUDENT_GROUP_INFO, a tabela Student agora tem um campo com a chave para esta nova tabela
+1. Criamos uma tabela nova -> DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO.
+	-> Agora a Classe DegreeCurricularPlan tem um novo atributo que é uma lista de DEGREE_CURRICULAR_PLAN_ENROLMENT_INFOs mas que conterá sempre apenas um elemento (é uma relação de 1 para 1).
+2. Criamos uma tabela nova -> STUDENT_GROUP_INFO
+	-> Agora a tabela STUDENT tem um campo com a chave para esta nova tabela.

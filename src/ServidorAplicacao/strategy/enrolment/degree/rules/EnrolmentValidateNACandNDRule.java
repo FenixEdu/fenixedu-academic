@@ -17,9 +17,6 @@ import Util.CurricularCourseType;
 public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 
 	// FIXME : David-Ricardo: Todas estas constantes sao para parametrizar
-//	private static final int MINCOURSES = 3;
-//	private static final int MAXCOURSES = 7;
-//	private static final int MAXNAC = 10;
 	private static final int MAX_INCREMENT_NAC = 2;
 	private static final int MIN_INCREMENT_NAC = 1;
 	
