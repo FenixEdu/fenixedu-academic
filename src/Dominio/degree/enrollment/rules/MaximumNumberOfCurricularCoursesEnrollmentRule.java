@@ -28,11 +28,11 @@ public class MaximumNumberOfCurricularCoursesEnrollmentRule implements IEnrollme
 		int numberOfEnrolledCurricularCourses = 0;
 		int availableCurricularCoursesToEnroll = 0;
 
-		int size = this.studentCurricularPlan.getStudentEnrolledEnrollments().size();
+		int size = this.studentCurricularPlan.getAllStudentEnrolledEnrollments().size();
 
 		for(int i = 0; i < size; i++)
         {
-            IEnrollment enrollment = (IEnrollment) this.studentCurricularPlan.getStudentEnrolledEnrollments().get(i);
+            IEnrollment enrollment = (IEnrollment) this.studentCurricularPlan.getAllStudentEnrolledEnrollments().get(i);
             ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
             numberOfEnrolledCurricularCourses += curricularCourse.getEnrollmentWeigth().intValue();
         }

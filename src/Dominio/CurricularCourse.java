@@ -674,23 +674,9 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
     			    if(branch == null && semester == null)
     			        maxCurricularYear = actualCurricularYear;
     			}
-    			    			
-    			/*if(branch != null && curricularCourseScope.getBranch().equals(branch) && scopeSemester.equals(semester))
-    			{
-    			    if (maxCurricularYear.getYear().intValue() < actualCurricularYear.getYear().intValue())
-                        maxCurricularYear = actualCurricularYear;
-    				//return curricularCourseScope.getCurricularSemester().getCurricularYear();
-				} else {
-				    if(branch == null && scopeSemester.equals(semester)) {
-				        if (maxCurricularYear.getYear().intValue() < actualCurricularYear.getYear().intValue())
-				            maxCurricularYear = actualCurricularYear;
-				    }
-				}*/
 			}
     		return maxCurricularYear;
 		}
-    	
-		//return ((ICurricularCourseScope) this.getScopes().get(0)).getCurricularSemester().getCurricularYear();
 	}
 
 	// -------------------------------------------------------------

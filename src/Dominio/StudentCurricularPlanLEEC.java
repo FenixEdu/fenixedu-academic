@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.util.List;
+
 
 /**
  * @author David Santos in Jun 24, 2004
@@ -8,6 +10,7 @@ package Dominio;
 public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements IStudentCurricularPlan
 {
 	protected Integer secundaryBranchKey;
+
 	protected IBranch secundaryBranch;
 
 	public StudentCurricularPlanLEEC()
@@ -35,8 +38,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements 
 		this.secundaryBranchKey = secundaryBranchKey;
 	}
 	
-	public String toString()
-	{
-		return super.toString();
-	}
+	public List getAllEnrollments() {
+        return super.getEnrolments();
+    }
 }

@@ -23,7 +23,7 @@ public class MaximumCurricularCourseEnrollmentRule extends SelectionUponMaximumN
         super.executionPeriod = executionPeriod;
         super.studentBranch = studentCurricularPlan.getBranch();
         this.maxCoursesToBeEnrolled = studentCurricularPlan.getMaximumNumberOfCoursesToEnroll().intValue();
-        this.enrollments = studentCurricularPlan.getStudentEnrolledEnrollments();
+        this.enrollments = studentCurricularPlan.getAllStudentEnrolledEnrollments();
 
     }
 

@@ -26,272 +26,284 @@ import Util.enrollment.EnrollmentRuleType;
  * @author David Santos in Jun 24, 2004
  */
 
-public class StudentCurricularPlan extends DomainObject implements
-		IStudentCurricularPlan {
-	protected Integer studentKey;
+public class StudentCurricularPlan extends DomainObject implements IStudentCurricularPlan {
 
-	protected Integer branchKey;
+    protected Integer studentKey;
 
-	protected Integer degreeCurricularPlanKey;
+    protected Integer branchKey;
 
-	protected Integer employeeKey;
+    protected Integer degreeCurricularPlanKey;
 
-	protected String ojbConcreteClass;
+    protected Integer employeeKey;
 
-	protected IStudent student;
+    protected String ojbConcreteClass;
 
-	protected IBranch branch;
+    protected IStudent student;
 
-	protected IDegreeCurricularPlan degreeCurricularPlan;
+    protected IBranch branch;
 
-	protected IEmployee employee;
+    protected IDegreeCurricularPlan degreeCurricularPlan;
 
-	protected Date startDate;
+    protected IEmployee employee;
 
-	protected StudentCurricularPlanState currentState;
+    protected Date startDate;
 
-	protected List enrolments;
+    protected StudentCurricularPlanState currentState;
 
-	protected Integer completedCourses;
+    protected List enrolments;
 
-	protected Double classification;
+    protected Integer completedCourses;
 
-	protected Integer enrolledCourses;
+    protected Double classification;
 
-	protected String observations;
+    protected Integer enrolledCourses;
 
-	protected Specialization specialization;
+    protected String observations;
 
-	protected Double givenCredits;
+    protected Specialization specialization;
 
-	protected Date when;
+    protected Double givenCredits;
 
-	// For enrollment purposes only
-	protected Map acumulatedEnrollments;
+    protected Date when;
 
-	protected List notNeedToEnrollCurricularCourses;
+    // For enrollment purposes only
+    protected Map acumulatedEnrollments;
 
-	public StudentCurricularPlan() {
-		ojbConcreteClass = getClass().getName();
-	}
+    protected List notNeedToEnrollCurricularCourses;
 
-	public boolean equals(Object obj) {
-		boolean result = false;
+    public StudentCurricularPlan() {
+        ojbConcreteClass = getClass().getName();
+    }
 
-		if (obj instanceof IStudentCurricularPlan) {
-			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
+    public boolean equals(Object obj) {
+        boolean result = false;
 
-			result = getStudent().equals(studentCurricularPlan.getStudent())
-					&& getDegreeCurricularPlan().equals(
-							studentCurricularPlan.getDegreeCurricularPlan())
-					&& getCurrentState().equals(
-							studentCurricularPlan.getCurrentState());
-		}
+        if (obj instanceof IStudentCurricularPlan) {
+            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
 
-		return result;
-	}
+            result = getStudent().equals(studentCurricularPlan.getStudent())
+                    && getDegreeCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan())
+                    && getCurrentState().equals(studentCurricularPlan.getCurrentState());
+        }
 
-	public String toString() {
-		String result = "[" + this.getClass().getName() + "; ";
-		result += "internalCode = " + getIdInternal() + "; ";
-		result += "student = " + this.student + "; ";
-		result += "degreeCurricularPlan = " + this.degreeCurricularPlan + "; ";
-		result += "startDate = " + this.startDate + "; ";
-		result += "specialization = " + this.specialization + "; ";
-		result += "currentState = " + this.currentState + "]\n";
-		result += "when alter = " + this.when + "]\n";
-		if (this.employee != null) {
-			result += "employee = " + this.employee.getPerson().getNome()
-					+ "]\n";
-		}
-		return result;
-	}
+        return result;
+    }
 
-	public IBranch getBranch() {
-		return branch;
-	}
+    public String toString() {
+        String result = "[" + this.getClass().getName() + "; ";
+        result += "internalCode = " + getIdInternal() + "; ";
+        result += "student = " + this.student + "; ";
+        result += "degreeCurricularPlan = " + this.degreeCurricularPlan + "; ";
+        result += "startDate = " + this.startDate + "; ";
+        result += "specialization = " + this.specialization + "; ";
+        result += "currentState = " + this.currentState + "]\n";
+        result += "when alter = " + this.when + "]\n";
+        if (this.employee != null) {
+            result += "employee = " + this.employee.getPerson().getNome() + "]\n";
+        }
+        return result;
+    }
 
-	public Integer getBranchKey() {
-		return branchKey;
-	}
+    public IBranch getBranch() {
+        return branch;
+    }
 
-	public Double getClassification() {
-		return classification;
-	}
+    public Integer getBranchKey() {
+        return branchKey;
+    }
 
-	public Integer getCompletedCourses() {
-		return completedCourses;
-	}
+    public Double getClassification() {
+        return classification;
+    }
 
-	public StudentCurricularPlanState getCurrentState() {
-		return currentState;
-	}
+    public Integer getCompletedCourses() {
+        return completedCourses;
+    }
 
-	public IDegreeCurricularPlan getDegreeCurricularPlan() {
-		return degreeCurricularPlan;
-	}
+    public StudentCurricularPlanState getCurrentState() {
+        return currentState;
+    }
 
-	public Integer getDegreeCurricularPlanKey() {
-		return degreeCurricularPlanKey;
-	}
+    public IDegreeCurricularPlan getDegreeCurricularPlan() {
+        return degreeCurricularPlan;
+    }
+
+    public Integer getDegreeCurricularPlanKey() {
+        return degreeCurricularPlanKey;
+    }
+
+    public IEmployee getEmployee() {
+        return employee;
+    }
+
+    public Integer getEmployeeKey() {
+        return employeeKey;
+    }
+
+    public Integer getEnrolledCourses() {
+        return enrolledCourses;
+    }
+
+    public List getEnrolments() {
+        return enrolments;
+    }
 
-	public IEmployee getEmployee() {
-		return employee;
-	}
+    public Double getGivenCredits() {
+        return givenCredits;
+    }
 
-	public Integer getEmployeeKey() {
-		return employeeKey;
-	}
+    public String getOjbConcreteClass() {
+        return ojbConcreteClass;
+    }
 
-	public Integer getEnrolledCourses() {
-		return enrolledCourses;
-	}
+    public String getObservations() {
+        return observations;
+    }
 
-	public List getEnrolments() {
-		return enrolments;
-	}
+    public IBranch getSecundaryBranch() {
+        return null;
+    }
 
-	public Double getGivenCredits() {
-		return givenCredits;
-	}
+    public Integer getSecundaryBranchKey() {
+        return null;
+    }
 
-	public String getOjbConcreteClass() {
-		return ojbConcreteClass;
-	}
+    public Specialization getSpecialization() {
+        return specialization;
+    }
 
-	public String getObservations() {
-		return observations;
-	}
+    public Date getStartDate() {
+        return startDate;
+    }
 
-	public IBranch getSecundaryBranch() {
-		return null;
-	}
+    public IStudent getStudent() {
+        return student;
+    }
 
-	public Integer getSecundaryBranchKey() {
-		return null;
-	}
+    public Integer getStudentKey() {
+        return studentKey;
+    }
 
-	public Specialization getSpecialization() {
-		return specialization;
-	}
+    public Date getWhen() {
+        return when;
+    }
 
-	public Date getStartDate() {
-		return startDate;
-	}
+    public void setBranch(IBranch branch) {
+        this.branch = branch;
+    }
+
+    public void setBranchKey(Integer branchKey) {
+        this.branchKey = branchKey;
+    }
+
+    public void setClassification(Double classification) {
+        this.classification = classification;
+    }
+
+    public void setCompletedCourses(Integer completedCourses) {
+        this.completedCourses = completedCourses;
+    }
 
-	public IStudent getStudent() {
-		return student;
-	}
+    public void setCurrentState(StudentCurricularPlanState currentState) {
+        this.currentState = currentState;
+    }
 
-	public Integer getStudentKey() {
-		return studentKey;
-	}
+    public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
+        this.degreeCurricularPlan = degreeCurricularPlan;
+    }
 
-	public Date getWhen() {
-		return when;
-	}
+    public void setDegreeCurricularPlanKey(Integer degreeCurricularPlanKey) {
+        this.degreeCurricularPlanKey = degreeCurricularPlanKey;
+    }
 
-	public void setBranch(IBranch branch) {
-		this.branch = branch;
-	}
+    public void setEmployee(IEmployee employee) {
+        this.employee = employee;
+    }
 
-	public void setBranchKey(Integer branchKey) {
-		this.branchKey = branchKey;
-	}
+    public void setEmployeeKey(Integer employeeKey) {
+        this.employeeKey = employeeKey;
+    }
 
-	public void setClassification(Double classification) {
-		this.classification = classification;
-	}
+    public void setEnrolledCourses(Integer enrolledCourses) {
+        this.enrolledCourses = enrolledCourses;
+    }
 
-	public void setCompletedCourses(Integer completedCourses) {
-		this.completedCourses = completedCourses;
-	}
+    public void setEnrolments(List enrolments) {
+        this.enrolments = enrolments;
+    }
 
-	public void setCurrentState(StudentCurricularPlanState currentState) {
-		this.currentState = currentState;
-	}
+    public void setGivenCredits(Double givenCredits) {
+        this.givenCredits = givenCredits;
+    }
 
-	public void setDegreeCurricularPlan(
-			IDegreeCurricularPlan degreeCurricularPlan) {
-		this.degreeCurricularPlan = degreeCurricularPlan;
-	}
+    public void setOjbConcreteClass(String ojbConcreteClass) {
+        this.ojbConcreteClass = ojbConcreteClass;
+    }
 
-	public void setDegreeCurricularPlanKey(Integer degreeCurricularPlanKey) {
-		this.degreeCurricularPlanKey = degreeCurricularPlanKey;
-	}
+    public void setObservations(String observations) {
+        this.observations = observations;
+    }
 
-	public void setEmployee(IEmployee employee) {
-		this.employee = employee;
-	}
+    public void setSecundaryBranch(IBranch secundaryBranch) {
+    }
 
-	public void setEmployeeKey(Integer employeeKey) {
-		this.employeeKey = employeeKey;
-	}
+    public void setSecundaryBranchKey(Integer secundaryBranchKey) {
+    }
 
-	public void setEnrolledCourses(Integer enrolledCourses) {
-		this.enrolledCourses = enrolledCourses;
-	}
+    public void setSpecialization(Specialization specialization) {
+        this.specialization = specialization;
+    }
 
-	public void setEnrolments(List enrolments) {
-		this.enrolments = enrolments;
-	}
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
-	public void setGivenCredits(Double givenCredits) {
-		this.givenCredits = givenCredits;
-	}
+    public void setStudent(IStudent student) {
+        this.student = student;
+    }
 
-	public void setOjbConcreteClass(String ojbConcreteClass) {
-		this.ojbConcreteClass = ojbConcreteClass;
-	}
+    public void setStudentKey(Integer studentKey) {
+        this.studentKey = studentKey;
+    }
 
-	public void setObservations(String observations) {
-		this.observations = observations;
-	}
+    public void setWhen(Date when) {
+        this.when = when;
+    }
 
-	public void setSecundaryBranch(IBranch secundaryBranch) {
-	}
+    // -------------------------------------------------------------
+    // BEGIN: Only for enrollment purposes
+    // -------------------------------------------------------------
 
-	public void setSecundaryBranchKey(Integer secundaryBranchKey) {
-	}
+    public List getNotNeedToEnrollCurricularCourses() {
+        return notNeedToEnrollCurricularCourses;
+    }
 
-	public void setSpecialization(Specialization specialization) {
-		this.specialization = specialization;
-	}
+    public void setNotNeedToEnrollCurricularCourses(List notNeedToEnrollCurricularCourses) {
+        this.notNeedToEnrollCurricularCourses = notNeedToEnrollCurricularCourses;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public List getAllEnrollments() {
 
-	public void setStudent(IStudent student) {
-		this.student = student;
-	}
+        IStudentCurricularPlan pastStudentCurricularPlan = (IStudentCurricularPlan) CollectionUtils.find(getStudent()
+                .getStudentCurricularPlans(), new Predicate() {
+            public boolean evaluate(Object obj) {
+                IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
+                return studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.PAST_OBJ);
+            }
+        });
 
-	public void setStudentKey(Integer studentKey) {
-		this.studentKey = studentKey;
-	}
+        List allEnrollments = new ArrayList();
+        allEnrollments.addAll(pastStudentCurricularPlan.getEnrolments());
+        allEnrollments.addAll(getEnrolments());
+        
+        return allEnrollments;
+    }
 
-	public void setWhen(Date when) {
-		this.when = when;
-	}
+    public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType) {
 
-	// -------------------------------------------------------------
-	// BEGIN: Only for enrollment purposes
-	// -------------------------------------------------------------
-
-	public List getNotNeedToEnrollCurricularCourses() {
-		return notNeedToEnrollCurricularCourses;
-	}
-
-	public void setNotNeedToEnrollCurricularCourses(
-			List notNeedToEnrollCurricularCourses) {
-		this.notNeedToEnrollCurricularCourses = notNeedToEnrollCurricularCourses;
-	}
-
-	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType)
-            throws ExcepcaoPersistencia {
         executionPeriod = getExecutionPeriod(executionPeriod);
-        List setOfCurricularCoursesToEnroll = this.getCommonBranchAndStudentBranchesCourses(executionPeriod.getSemester());
-        List enrollmentRules = this.getListOfEnrollmentRules(executionPeriod, enrollmentRuleType);
+        List setOfCurricularCoursesToEnroll = getCommonBranchAndStudentBranchesCourses(executionPeriod.getSemester());
+        List enrollmentRules = getListOfEnrollmentRules(executionPeriod, enrollmentRuleType);
         int size = enrollmentRules.size();
 
         for (int i = 0; i < size; i++) {
@@ -305,268 +317,285 @@ public class StudentCurricularPlan extends DomainObject implements
         return setOfCurricularCoursesToEnroll;
     }
 
-	public Integer getMinimumNumberOfCoursesToEnroll() {
-		return this.getStudent().getStudentKind().getMinCoursesToEnrol();
-	}
+    public Integer getMinimumNumberOfCoursesToEnroll() {
+        return getStudent().getStudentKind().getMinCoursesToEnrol();
+    }
 
-	public Integer getMaximumNumberOfCoursesToEnroll() {
-		return this.getStudent().getStudentKind().getMaxCoursesToEnrol();
-	}
+    public Integer getMaximumNumberOfCoursesToEnroll() {
+        return getStudent().getStudentKind().getMaxCoursesToEnrol();
+    }
 
-	public Integer getMaximumNumberOfAcumulatedEnrollments() {
-		return this.getStudent().getStudentKind().getMaxNACToEnrol();
-	}
+    public Integer getMaximumNumberOfAcumulatedEnrollments() {
+        return getStudent().getStudentKind().getMaxNACToEnrol();
+    }
 
-	public int getNumberOfApprovedCurricularCourses() {
-		int a = this.getStudentApprovedEnrollments().size();
+    public int getNumberOfApprovedCurricularCourses() {
+        return getAllStudentApprovedEnrollments().size() + getStudentNotNeedToEnrollCourses().size();
+    }
 
-		int b = this.getStudentNotNeedToEnrollCourses().size();
+    public int getNumberOfEnrolledCurricularCourses() {
+        return getAllStudentEnrolledEnrollments().size();
+    }
 
-		// TODO [DAVID]: Still missing to check if the student has any approved
-		// enrollment
-		// in a curricular course with a degree curricular plan equivalence.
+    public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse) {
 
-		return a + b;
-	}
+        List studentApprovedEnrollments = getAllStudentApprovedEnrollments();
 
-	public int getNumberOfEnrolledCurricularCourses() {
-		return this.getStudentEnrolledEnrollments().size();
-	}
+        List result = (List) CollectionUtils.collect(studentApprovedEnrollments, new Transformer() {
+            public Object transform(Object obj) {
+                IEnrollment enrollment = (IEnrollment) obj;
 
-	public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse) {
-		List studentApprovedEnrollments = this.getStudentApprovedEnrollments();
+                if (enrollment instanceof IEnrolmentInOptionalCurricularCourse) {
+                    return (((IEnrolmentInOptionalCurricularCourse) enrollment).getCurricularCourseForOption());
+                } else {
+                    return enrollment.getCurricularCourse();
+                }
+            }
+        });
 
-		List result = (List) CollectionUtils.collect(
-				studentApprovedEnrollments, new Transformer() {
-					public Object transform(Object obj) {
-						IEnrollment enrollment = (IEnrollment) obj;
+        if (result.contains(curricularCourse)) {
+            return true;
+        }
 
-						if (enrollment instanceof IEnrolmentInOptionalCurricularCourse) {
-							return (((IEnrolmentInOptionalCurricularCourse) enrollment)
-									.getCurricularCourseForOption());
-						} else {
-							return enrollment.getCurricularCourse();
-						}
-					}
-				});
+        List studentNotNeedToEnrollCourses = getStudentNotNeedToEnrollCourses();
 
-		if (result.contains(curricularCourse)) {
-			return true;
-		}
+        if (studentNotNeedToEnrollCourses.contains(curricularCourse)) {
+            return true;
+        }
 
-		List studentNotNeedToEnrollCourses = this
-				.getStudentNotNeedToEnrollCourses();
+        return false;
+    }
 
-		if (studentNotNeedToEnrollCourses.contains(curricularCourse)) {
-			return true;
-		}
+    public boolean isCurricularCourseEnrolled(ICurricularCourse curricularCourse) {
 
-		// TODO [DAVID]: Still missing to check if the student has any approved
-		// enrollment
-		// in a curricular course with a degree curricular plan equivalence.
+        List studentEnrolledEnrollments = getAllStudentEnrolledEnrollments();
 
-		return false;
-	}
+        List result = (List) CollectionUtils.collect(studentEnrolledEnrollments, new Transformer() {
+            public Object transform(Object obj) {
+                IEnrollment enrollment = (IEnrollment) obj;
+                return enrollment.getCurricularCourse();
+            }
+        });
 
-	public boolean isCurricularCourseEnrolled(ICurricularCourse curricularCourse) {
-		List studentEnrolledEnrollments = this.getStudentEnrolledEnrollments();
+        return result.contains(curricularCourse);
+    }
 
-		List result = (List) CollectionUtils.collect(
-				studentEnrolledEnrollments, new Transformer() {
-					public Object transform(Object obj) {
-						IEnrollment enrollment = (IEnrollment) obj;
-						return enrollment.getCurricularCourse();
-					}
-				});
+    public void calculateStudentAcumulatedEnrollments() {
 
-		if (result.contains(curricularCourse)) {
-			return true;
-		}
+        List enrollments = getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
 
-		return false;
-	}
+        List curricularCourses = (List) CollectionUtils.collect(enrollments, new Transformer() {
+            public Object transform(Object obj) {
+                ICurricularCourse curricularCourse = ((IEnrollment) obj).getCurricularCourse();
+                return curricularCourse.getCurricularCourseUniqueKeyForEnrollment();
+            }
+        });
 
-	public void calculateStudentAcumulatedEnrollments() {
-		List enrollments = this
-				.getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
+        setAcumulatedEnrollmentsMap(CollectionUtils.getCardinalityMap(curricularCourses));
+    }
 
-		List curricularCourses = (List) CollectionUtils.collect(enrollments,
-				new Transformer() {
-					public Object transform(Object obj) {
-						ICurricularCourse curricularCourse = ((IEnrollment) obj)
-								.getCurricularCourse();
-						return curricularCourse
-								.getCurricularCourseUniqueKeyForEnrollment();
-					}
-				});
+    public Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse) {
+        
+        String key = curricularCourse.getCurricularCourseUniqueKeyForEnrollment();
 
-		setAcumulatedEnrollmentsMap(CollectionUtils
-				.getCardinalityMap(curricularCourses));
-	}
+        Integer curricularCourseAcumulatedEnrolments = (Integer) getAcumulatedEnrollmentsMap().get(key);
 
-	public Integer getCurricularCourseAcumulatedEnrolments(
-			ICurricularCourse curricularCourse) {
-		String key = curricularCourse
-				.getCurricularCourseUniqueKeyForEnrollment();
+        if (curricularCourseAcumulatedEnrolments == null) {
+            curricularCourseAcumulatedEnrolments = new Integer(0);
+        }
 
-		Integer curricularCourseAcumulatedEnrolments = (Integer) this
-				.getAcumulatedEnrollmentsMap().get(key);
+        return curricularCourseAcumulatedEnrolments;
+    }
 
-		if (curricularCourseAcumulatedEnrolments == null) {
-			curricularCourseAcumulatedEnrolments = new Integer(0);
-		}
+    public List getAllStudentEnrolledEnrollments() {
 
-		return curricularCourseAcumulatedEnrolments;
-	}
-
-	public List getStudentApprovedEnrollments() {
-		return (List) CollectionUtils.select(this.getEnrolments(),
-				new Predicate() {
-					public boolean evaluate(Object obj) {
-						IEnrollment enrollment = (IEnrollment) obj;
-						return enrollment.getEnrolmentState().equals(
-								EnrolmentState.APROVED);
-					}
-				});
-	}
-
-	public List getStudentEnrolledEnrollments() {
-		return (List) CollectionUtils.select(this.getEnrolments(),
-				new Predicate() {
-					public boolean evaluate(Object obj) {
-						IEnrollment enrollment = (IEnrollment) obj;
-						return enrollment.getEnrolmentState().equals(
-								EnrolmentState.ENROLED);
-					}
-				});
-	}
-
-    public List getStudentEnrolledEnrollmentsInExecutionPeriod(
-            IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-        final IExecutionPeriod executionPeriod2Compare = getExecutionPeriod(executionPeriod);
-
-        return (List) CollectionUtils.select(this
-                .getStudentEnrolledEnrollments(), new Predicate() {
-
-            public boolean evaluate(Object arg0) {
-
-                return ((IEnrollment) arg0).getExecutionPeriod().equals(
-                        executionPeriod2Compare);
+        return (List) CollectionUtils.select(getEnrolments(), new Predicate() {
+            public boolean evaluate(Object obj) {
+                IEnrollment enrollment = (IEnrollment) obj;
+                return enrollment.getEnrolmentState().equals(EnrolmentState.ENROLED);
             }
         });
     }
 
-	public List getStudentTemporarilyEnrolledEnrollments() {
-		return (List) CollectionUtils.select(this.getEnrolments(),
-				new Predicate() {
-					public boolean evaluate(Object obj) {
-						IEnrollment enrollment = (IEnrollment) obj;
-						return (enrollment.getEnrolmentState().equals(
-								EnrolmentState.APROVED) && enrollment
-								.getCondition().equals(
-										EnrollmentCondition.TEMPORARY));
-					}
-				});
-	}
+    public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod) {
 
-	protected List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment() {
-		List studentEnrolledEnrollments = this.getStudentEnrolledEnrollments();
+        final IExecutionPeriod executionPeriod2Compare = getExecutionPeriod(executionPeriod);
 
-		final List result = (List) CollectionUtils.collect(
-				studentEnrolledEnrollments, new Transformer() {
-					public Object transform(Object obj) {
-						IEnrollment enrollment = (IEnrollment) obj;
-						String key = enrollment.getCurricularCourse()
-								.getCurricularCourseUniqueKeyForEnrollment();
-						return (key);
-					}
-				});
+        return (List) CollectionUtils.select(getAllStudentEnrolledEnrollments(), new Predicate() {
 
-		return (List) CollectionUtils.select(this.getEnrolments(),
-				new Predicate() {
-					public boolean evaluate(Object obj) {
-						IEnrollment enrollment = (IEnrollment) obj;
-						String key = enrollment.getCurricularCourse()
-								.getCurricularCourseUniqueKeyForEnrollment();
-						return result.contains(key);
-					}
-				});
-	}
+            public boolean evaluate(Object arg0) {
 
-	protected Map getAcumulatedEnrollmentsMap() {
-		return acumulatedEnrollments;
-	}
+                return ((IEnrollment) arg0).getExecutionPeriod().equals(executionPeriod2Compare);
+            }
+        });
+    }
 
-	protected void setAcumulatedEnrollmentsMap(Map acumulatedEnrollments) {
-		this.acumulatedEnrollments = acumulatedEnrollments;
-	}
+    public List getStudentTemporarilyEnrolledEnrollments() {
 
-	protected List getListOfEnrollmentRules(IExecutionPeriod executionPeriod,
-			EnrollmentRuleType enrollmentRuleType) {
-		return this.getDegreeCurricularPlan().getListOfEnrollmentRules(this,
-				executionPeriod, enrollmentRuleType);
-	}
+        return (List) CollectionUtils.select(getEnrolments(), new Predicate() {
+            public boolean evaluate(Object obj) {
+                IEnrollment enrollment = (IEnrollment) obj;
+                return (enrollment.getEnrolmentState().equals(EnrolmentState.ENROLED) && enrollment.getCondition().equals(
+                        EnrollmentCondition.TEMPORARY));
+            }
+        });
+    }
 
-	protected List getStudentNotNeedToEnrollCourses() {
-		return (List) CollectionUtils.collect(this
-				.getNotNeedToEnrollCurricularCourses(), new Transformer() {
-			public Object transform(Object obj) {
-				INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (INotNeedToEnrollInCurricularCourse) obj;
-				return notNeedToEnrollInCurricularCourse.getCurricularCourse();
-			}
-		});
-	}
+    protected List getAllStudentApprovedEnrollments() {
 
-	protected List getCommonBranchAndStudentBranchesCourses(
-			final Integer semester) {
-		List curricularCourses = new ArrayList();
+        List allEnrollments = getStudentEnrollmentsWithApprovedState();
+        int enrollmentsSize = allEnrollments.size();
 
-		List commonAreas = this.getDegreeCurricularPlan().getCommonAreas();
+        List curricularCourseEquivalences = getDegreeCurricularPlan().getCurricularCourseEquivalences();
+        int curricularCourseEquivalencesSize = curricularCourseEquivalences.size();
 
-		for (int i = 0; i < commonAreas.size(); i++) {
-			IBranch area = (IBranch) commonAreas.get(i);
-			curricularCourses.addAll(this.getDegreeCurricularPlan()
-					.getCurricularCoursesFromArea(area, AreaType.BASE_OBJ));
-		}
-
-		if (this.getBranch() != null) {
-			curricularCourses.addAll(this.getDegreeCurricularPlan()
-					.getCurricularCoursesFromArea(this.getBranch(),
-							AreaType.SPECIALIZATION_OBJ));
-		}
-
-		if (this.getSecundaryBranch() != null) {
-			curricularCourses.addAll(this.getDegreeCurricularPlan()
-					.getCurricularCoursesFromArea(this.getSecundaryBranch(),
-							AreaType.SECONDARY_OBJ));
-		}
-
-		List curricularCoursesToRemove = (List) CollectionUtils.select(
-				curricularCourses, new Predicate() {
-					public boolean evaluate(Object obj) {
-						ICurricularCourse curricularCourse = (ICurricularCourse) obj;
-						return (isCurricularCourseApproved(curricularCourse)
-								|| isCurricularCourseEnrolled(curricularCourse) || !curricularCourse
-								.hasActiveScopeInGivenSemester(semester));
-					}
-				});
-
-		curricularCourses.removeAll(curricularCoursesToRemove);
-
-		return curricularCourses;
-	}
-
-	protected IExecutionPeriod getExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-        IExecutionPeriod executionPeriod2Return = executionPeriod;
-        if (executionPeriod == null) {
-            ISuportePersistente daoFactory = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod executionPeriodDAO = daoFactory.getIPersistentExecutionPeriod();
-            executionPeriod2Return = executionPeriodDAO.readActualExecutionPeriod();
+        if (curricularCourseEquivalencesSize == 0) {
+            return allEnrollments;
         }
+
+        List result = new ArrayList();
+        result.addAll(allEnrollments);
+
+        for (int i = 0; i < enrollmentsSize; i++) {
+
+            IEnrollment enrollment = (IEnrollment) allEnrollments.get(i);
+
+            for (int j = 0; j < curricularCourseEquivalencesSize; j++) {
+
+                ICurricularCourseEquivalence curricularCourseEquivalence = (ICurricularCourseEquivalence)
+                    curricularCourseEquivalences.get(j);
+
+                ICurricularCourse curricularCourse = null;
+                if (enrollment instanceof IEnrolmentInOptionalCurricularCourse) {
+                    curricularCourse = (((IEnrolmentInOptionalCurricularCourse) enrollment).getCurricularCourseForOption());
+                } else {
+                    curricularCourse = enrollment.getCurricularCourse();
+                }
+
+                if (curricularCourseEquivalence.getOldCurricularCourse().equals(curricularCourse)) {
+                    IEnrollment virtualEnrollment = new Enrolment();
+                    virtualEnrollment.setCurricularCourse(curricularCourseEquivalence.getEquivalentCurricularCourse());
+                    virtualEnrollment.setCreationDate(enrollment.getCreationDate());
+                    virtualEnrollment.setEnrolmentEvaluationType(enrollment.getEnrolmentEvaluationType());
+                    virtualEnrollment.setEnrolmentState(enrollment.getEnrolmentState());
+                    virtualEnrollment.setEvaluations(enrollment.getEvaluations());
+                    virtualEnrollment.setExecutionPeriod(enrollment.getExecutionPeriod());
+                    virtualEnrollment.setStudentCurricularPlan(this);
+                    result.remove(enrollment);
+                    result.add(virtualEnrollment);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    protected List getStudentEnrollmentsWithApprovedState() {
+
+        return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
+            public boolean evaluate(Object obj) {
+                IEnrollment enrollment = (IEnrollment) obj;
+                return enrollment.getEnrolmentState().equals(EnrolmentState.APROVED);
+            }
+        });
+    }
+
+    protected List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment() {
+        
+        List studentEnrolledEnrollments = getAllStudentEnrolledEnrollments();
+
+        final List result = (List) CollectionUtils.collect(studentEnrolledEnrollments, new Transformer() {
+            public Object transform(Object obj) {
+                IEnrollment enrollment = (IEnrollment) obj;
+                String key = enrollment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment();
+                return (key);
+            }
+        });
+
+        return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
+            public boolean evaluate(Object obj) {
+                IEnrollment enrollment = (IEnrollment) obj;
+                String key = enrollment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment();
+                return result.contains(key);
+            }
+        });
+    }
+
+    protected Map getAcumulatedEnrollmentsMap() {
+        return acumulatedEnrollments;
+    }
+
+    protected void setAcumulatedEnrollmentsMap(Map acumulatedEnrollments) {
+        this.acumulatedEnrollments = acumulatedEnrollments;
+    }
+
+    protected List getListOfEnrollmentRules(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType) {
+        return getDegreeCurricularPlan().getListOfEnrollmentRules(this, executionPeriod, enrollmentRuleType);
+    }
+
+    protected List getStudentNotNeedToEnrollCourses() {
+
+        return (List) CollectionUtils.collect(getNotNeedToEnrollCurricularCourses(), new Transformer() {
+            public Object transform(Object obj) {
+                INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (INotNeedToEnrollInCurricularCourse) obj;
+                return notNeedToEnrollInCurricularCourse.getCurricularCourse();
+            }
+        });
+    }
+
+    protected List getCommonBranchAndStudentBranchesCourses(final Integer semester) {
+        
+        List curricularCourses = new ArrayList();
+
+        List commonAreas = getDegreeCurricularPlan().getCommonAreas();
+
+        for (int i = 0; i < commonAreas.size(); i++) {
+            IBranch area = (IBranch) commonAreas.get(i);
+            curricularCourses.addAll(getDegreeCurricularPlan().getCurricularCoursesFromArea(area, AreaType.BASE_OBJ));
+        }
+
+        if (getBranch() != null) {
+            curricularCourses.addAll(getDegreeCurricularPlan().getCurricularCoursesFromArea(getBranch(),
+                    AreaType.SPECIALIZATION_OBJ));
+        }
+
+        if (getSecundaryBranch() != null) {
+            curricularCourses.addAll(getDegreeCurricularPlan().getCurricularCoursesFromArea(getSecundaryBranch(),
+                    AreaType.SECONDARY_OBJ));
+        }
+
+        List curricularCoursesToRemove = (List) CollectionUtils.select(curricularCourses, new Predicate() {
+            public boolean evaluate(Object obj) {
+                ICurricularCourse curricularCourse = (ICurricularCourse) obj;
+                return (isCurricularCourseApproved(curricularCourse) ||
+                        isCurricularCourseEnrolled(curricularCourse) ||
+                        !curricularCourse.hasActiveScopeInGivenSemester(semester));
+            }
+        });
+
+        curricularCourses.removeAll(curricularCoursesToRemove);
+
+        return curricularCourses;
+    }
+
+    protected IExecutionPeriod getExecutionPeriod(IExecutionPeriod executionPeriod) {
+
+        IExecutionPeriod executionPeriod2Return = executionPeriod;
+        
+        if (executionPeriod == null) {
+            try {
+                ISuportePersistente daoFactory = SuportePersistenteOJB.getInstance();
+                IPersistentExecutionPeriod executionPeriodDAO = daoFactory.getIPersistentExecutionPeriod();
+                executionPeriod2Return = executionPeriodDAO.readActualExecutionPeriod();
+            } catch (ExcepcaoPersistencia e) {
+                throw new RuntimeException(e);
+            }
+        }
+        
         return executionPeriod2Return;
     }
 
-	// -------------------------------------------------------------
-	// END: Only for enrollment purposes
-	// -------------------------------------------------------------
+    // -------------------------------------------------------------
+    // END: Only for enrollment purposes
+    // -------------------------------------------------------------
 }

@@ -47,7 +47,7 @@ public class MaxOfAcumulatedEnrollmentsRule extends SelectionUponMaximumNumberEn
         studentCurricularPlan.calculateStudentAcumulatedEnrollments();
 
         this.studentCurricularPlan = studentCurricularPlan;
-        enrolledEnrollments = studentCurricularPlan.getStudentEnrolledEnrollments();
+        enrolledEnrollments = studentCurricularPlan.getAllStudentEnrolledEnrollments();
         maxTotalNAC = studentCurricularPlan.getMaximumNumberOfAcumulatedEnrollments().intValue();
     }
 

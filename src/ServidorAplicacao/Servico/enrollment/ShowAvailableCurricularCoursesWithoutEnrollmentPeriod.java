@@ -107,7 +107,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                         }));
         infoStudentEnrolmentContext
                 .setStudentCurrentSemesterInfoEnrollments(studentCurricularPlan
-                        .getStudentEnrolledEnrollmentsInExecutionPeriod(null));
+                        .getAllStudentEnrolledEnrollmentsInExecutionPeriod(null));
         infoStudentEnrolmentContext
                 .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudent
                         .newInfoFromDomain(studentCurricularPlan));

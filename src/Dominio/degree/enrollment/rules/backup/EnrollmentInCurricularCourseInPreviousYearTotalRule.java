@@ -24,7 +24,7 @@ public class EnrollmentInCurricularCourseInPreviousYearTotalRule implements IEnr
 
     public EnrollmentInCurricularCourseInPreviousYearTotalRule(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod) {
 
-        studentEnrolledEnrollments = studentCurricularPlan.getStudentEnrolledEnrollments();
+        studentEnrolledEnrollments = studentCurricularPlan.getAllStudentEnrolledEnrollments();
         studentBranch = studentCurricularPlan.getBranch();
         this.executionPeriod = executionPeriod;
     }

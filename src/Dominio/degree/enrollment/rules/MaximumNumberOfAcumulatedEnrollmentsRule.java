@@ -27,11 +27,11 @@ public class MaximumNumberOfAcumulatedEnrollmentsRule implements IEnrollmentRule
 
 		int totalNAC = 0;
 
-		int size = this.studentCurricularPlan.getStudentEnrolledEnrollments().size();
+		int size = this.studentCurricularPlan.getAllStudentEnrolledEnrollments().size();
 
 		for(int i = 0; i < size; i++)
         {
-            IEnrollment enrollment = (IEnrollment) this.studentCurricularPlan.getStudentEnrolledEnrollments().get(i);
+            IEnrollment enrollment = (IEnrollment) this.studentCurricularPlan.getAllStudentEnrolledEnrollments().get(i);
             ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
             totalNAC += this.studentCurricularPlan.getCurricularCourseAcumulatedEnrolments(curricularCourse).intValue();
         }
