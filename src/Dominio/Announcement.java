@@ -24,21 +24,6 @@ public class Announcement implements IAnnouncement {
 	public Announcement() {}
 	
 	/** 
-		 * Construtor
-		 */
-		public Announcement(Integer internalCode, String title, Date date, 
-			Date lastModifiedDate, String information, ISite site, Integer keySite) {
-			
-			this.internalCode = internalCode;
-			this.keySite = keySite;
-			this.title = title;
-			this.creationDate = date;
-			this.lastModifiedDate = lastModifiedDate;
-			this.information = information;
-			this.site = site;
-		}
-
-	/** 
 	 * Construtor
 	 */
 	public Announcement(String title, Date date, 
@@ -179,6 +164,22 @@ public class Announcement implements IAnnouncement {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		String result = "[ANNOUNCEMENT";
+		result += ", codInt=" + getInternalCode();
+		result += ", creationDate=" + getCreationDate();
+		result += ", lastModifiedDate=" + getLastModifiedDate();
+		result += ", information=" + getInformation();
+//		result += ", site=" + getSite();
+		result += "]";
+		return result;
 	}
 
 }
