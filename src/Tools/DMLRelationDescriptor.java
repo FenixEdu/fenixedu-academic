@@ -249,10 +249,10 @@ public class DMLRelationDescriptor
             stringBuffer.append(";");
         } else if (collectionDescriptor2 != null) {
             stringBuffer.append(collectionDescriptor2.getAttributeName());
-            stringBuffer.append(" {\n\t\tnmultiplicity *;\n\t}");
+            stringBuffer.append(" {\n\t\tmultiplicity *;\n\t}");
         } else {
             stringBuffer.append("???");
-            stringBuffer.append(" {\n\t\tnmultiplicity ???;\n\t}");
+            stringBuffer.append(" {\n\t\tmultiplicity ???;\n\t}");
         }
 
         stringBuffer.append("\n\t");
@@ -263,10 +263,10 @@ public class DMLRelationDescriptor
             stringBuffer.append(";");
         } else if (collectionDescriptor1 != null) {
             stringBuffer.append(collectionDescriptor1.getAttributeName());
-            stringBuffer.append(" {\n\t\tnmultiplicity *;\n\t}");
+            stringBuffer.append(" {\n\t\tmultiplicity *;\n\t}");
         } else {
             stringBuffer.append("???");
-            stringBuffer.append(" {\n\t\tnmultiplicity ???;\n\t}");
+            stringBuffer.append(" {\n\t\tmultiplicity ???;\n\t}");
         }
 
         stringBuffer.append("\n}");
