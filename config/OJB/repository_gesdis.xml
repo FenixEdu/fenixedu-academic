@@ -29,7 +29,7 @@
          class-ref="Dominio.DisciplinaExecucao"
          proxy="true"
     >
-	<foreignkey field-id-ref="2"/>
+		<foreignkey field-id-ref="2"/>
 	
 	</reference-descriptor>
     <reference-descriptor
@@ -37,14 +37,15 @@
          class-ref="Dominio.Section"
          proxy="true"
       >
-    <foreignkey field-id-ref="3"/>
+    	<foreignkey field-id-ref="3"/>
     </reference-descriptor>
     
     <collection-descriptor
          name="sections"
          element-class-ref="Dominio.Section"
-         orderby="order"
+         orderby="sectionOrder"
          sort="ASC"
+         auto-retrieve="true"
       >
          <inverse-foreignkey field-id-ref="4"/>
       </collection-descriptor>
@@ -54,6 +55,8 @@
          element-class-ref="Dominio.Announcement"
          orderby="creationDate"
          sort="DESC"
+         auto-retrieve="true"
+         
       >
          <inverse-foreignkey field-id-ref="6"/>
       </collection-descriptor>  
@@ -129,7 +132,7 @@
          jdbc-type="VARCHAR"
       />
       <field-descriptor id="3"
-         name="order"
+         name="sectionOrder"
          column="SECTION_ORDER"
          jdbc-type="INTEGER"
       />
@@ -165,7 +168,7 @@
       <collection-descriptor
          name="inferiorSections"
          element-class-ref="Dominio.Section"
-         orderby="order"
+         orderby="sectionOrder"
          sort="ASC"
       >
          <inverse-foreignkey field-id-ref="5"/>
@@ -173,7 +176,7 @@
       <collection-descriptor
          name="items"
          element-class-ref="Dominio.Item"
-         orderby="order"
+         orderby="itemOrder"
          sort="ASC"
       >
          <inverse-foreignkey field-id-ref="6"/>
@@ -202,7 +205,7 @@
          jdbc-type="VARCHAR"
       />
       <field-descriptor id="3"
-         name="order"
+         name="itemOrder"
          column="ITEM_ORDER"
          jdbc-type="INTEGER"
       />

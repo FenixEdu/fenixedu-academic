@@ -80,7 +80,8 @@ create table section (
    KEY_SITE int(10) unsigned not null default '0',
    KEY_SUPERIOR_SECTION int(10) unsigned,
    LAST_MODIFIED_DATE date,
-   primary key (ID_INTERNAL))
+   primary key (ID_INTERNAL),
+   UNIQUE KEY U1(NAME, KEY_SITE, KEY_SUPERIOR_SECTION, SECTION_ORDER))
    type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
 
 #----------------------------
@@ -90,7 +91,7 @@ drop table if exists site;
 create table site (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
-   KEY_INITIAL_SECTION int(11) default '0',
+   KEY_INITIAL_SECTION int(11),
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (ID_INTERNAL, KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
