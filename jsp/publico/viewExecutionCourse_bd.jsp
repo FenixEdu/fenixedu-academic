@@ -12,7 +12,7 @@
 <table align="center"  cellpadding='0' cellspacing='0'>
 			<tr align="center">
 				<td>
-					<span class="error"><bean:message key="message.public.notfound.executionCourse"/> </span>
+					<span class="error"> <bean:message key="message.public.notfound.executionCourse"/> </span>
 				</td>
 			</tr>
 		</table>
@@ -89,3 +89,47 @@
       <br/>
 	</logic:present>	
 </logic:present>		
+
+<logic:notPresent name="<%= SessionConstants.RESPONSIBLE_TEACHERS_LIST %>">
+	<span class="error">
+         <bean:message key="message.teachers.not.available" />
+	</span>
+	<br/>
+	<br/>
+	<html:link href="mailto:suporte@dot.ist.utl.pt">suporte@dot.ist.utl.pt</html:link>
+</logic:notPresent>
+<logic:present name="<%= SessionConstants.RESPONSIBLE_TEACHERS_LIST %>" >
+<table>
+	<tr>
+		<th>
+			<h2><bean:message key="label.responsableProfessor"/></h2>	
+		</th>
+	</tr>	
+
+	<logic:iterate id="infoResponsableTeacher" name="<%= SessionConstants.RESPONSIBLE_TEACHERS_LIST %>">
+		<tr>
+			<td>
+				<bean:write name="infoResponsableTeacher" property="infoPerson.nome" /> 
+			</td>
+		</tr>
+	</logic:iterate>	
+</table>
+</BR>
+</logic:present>
+<logic:present name="<%= SessionConstants.TEACHERS_LIST %>" >
+<table>
+	<tr>
+		<th>
+			<h2><bean:message key="label.professorShips"/></h2>	
+		</th>
+	</tr>	
+
+	<logic:iterate id="infoTeacher" name="<%= SessionConstants.TEACHERS_LIST %>">
+		<tr>
+			<td>
+				<bean:write name="infoTeacher" property="infoPerson.nome" /> 
+			</td>
+		</tr>
+	</logic:iterate>	
+</table>
+</logic:present>

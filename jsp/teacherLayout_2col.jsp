@@ -34,7 +34,7 @@
     </td>
    
       <td width="100%" align="left" valign="top" bgcolor="#FFFFFF" class="bodycontent">
-      	 <tiles:getAsString name="executionCourseName"  ignore="true"/>
+      	 <tiles:insert attribute="executionCourseName"  ignore="true"/>
       		<tiles:insert attribute="body" />
 	</td>
   
