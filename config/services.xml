@@ -5296,6 +5296,34 @@
 		<isTransactional>true</isTransactional>
 		<filterChains></filterChains>
 	</service>
-	
-
+	<service>
+		<idInternal>483191</idInternal>
+		<name>ReadAllWorkLocations</name>
+		<implementationClass>ServidorAplicacao.Servico.commons.workLocation.ReadAllWorkLocations</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain id="483191"/>
+		</filterChains>
+	</service>
+	<service>
+		<idInternal>483192</idInternal>
+		<name>InsertWorkLocation</name>
+		<implementationClass>ServidorAplicacao.Servico.commons.workLocation.InsertWorkLocation</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain id="483191"/>
+		</filterChains>
+	</service>
+	<service>
+		<idInternal>483193</idInternal>
+		<name>EditWorkLocation</name>
+		<implementationClass>ServidorAplicacao.Servico.commons.workLocation.EditWorkLocation</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain id="483191"/>
+		</filterChains>
+	</service>
 </serviceDefinitions>
