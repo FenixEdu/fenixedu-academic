@@ -143,7 +143,22 @@
 			<tr> 
 				<td>&nbsp;</td>
 			</tr>
-		</logic:present>				
+		</logic:present>	
+		
+			
+<%
+	java.util.Hashtable paramsVisuzalize = new java.util.Hashtable();
+	InfoStudent infoStudent = (InfoStudent) student;
+	
+	paramsVisuzalize.put("degreeType", infoStudent.getDegreeType().getTipoCurso());
+	paramsVisuzalize.put("studentNumber", infoStudent.getNumber());
+	paramsVisuzalize.put("method", "getStudentAndMasterDegreeProofVersion");
+	pageContext.setAttribute("parametersVisuzalize", paramsVisuzalize, PageContext.PAGE_SCOPE);
+%>	
+	
+		<tr> 
+			<td  colspan="4"><html:link page="/visualizeMasterDegreeProof.do" name="parametersVisuzalize"><bean:message key="link.masterDegree.administrativeOffice.back" /></html:link></td>
+		</tr>				
 		
 	</table>
 
