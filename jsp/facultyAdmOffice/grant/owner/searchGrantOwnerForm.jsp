@@ -4,6 +4,33 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <html:form action="/searchGrantOwner">
 
+	<table class="infoop">
+	 <tr>
+	 <td rowspan=4>
+    	 <p class="emphasis-box">i</p>
+	 </td>
+	  <td>
+	   Procura de uma pessoa por Nome:
+	  </td>
+	 </tr>
+	 <tr>
+	  <td>
+	   Para obter todas as pessoas cujo primeiro nome seja 'João' deve escrever 'João*'
+	  </td>
+	 </tr>
+	 <tr>
+	  <td>
+	   Para obter todas as pessoas cujo último nome seja 'Silva' deve escrever '*Silva'
+	  </td>
+	 </tr>
+	 <tr>
+	  <td>
+	   Para obter todas as pessoas que contenham o nome 'Pedro' deve escrever '*Pedro*'
+	  </td>
+	 </tr>
+	</table>
+	<br>
+
 	<html:hidden property="method" value="doSearch"/>
 	<html:hidden property="page" value="1"/>
 

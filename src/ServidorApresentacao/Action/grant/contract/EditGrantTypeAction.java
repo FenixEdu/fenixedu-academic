@@ -98,7 +98,12 @@ public class EditGrantTypeAction extends FenixDispatchAction
 	 */
 	private void setFormGrantType(DynaValidatorForm form, InfoGrantType infoGrantType) throws Exception
 	{
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		
 		BeanUtils.copyProperties(form, infoGrantType);
+		
+		if (infoGrantType.getState() != null)
+			form.set("state", sdf.format(infoGrantType.getState()));
 	}
 
 	private InfoGrantType populateInfoFromForm(DynaValidatorForm editGrantTypeForm) throws Exception
