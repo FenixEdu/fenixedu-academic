@@ -42,7 +42,7 @@ public class EscreverPapelPessoa {
 		while (iteradorFuncionario.hasNext()) {
 			pessoa = (Pessoa) iteradorFuncionario.next();
 			
-			System.out.println("ROLE da PERSON: " + pessoa.getCodigoInterno().intValue());
+			//System.out.println("ROLE da PERSON: " + pessoa.getCodigoInterno());
 			
 			// actualizar os papeis desta pessoa
 			ServicoSeguroEscreverPapelPessoa servicoSeguroEscreverPapelPessoa =

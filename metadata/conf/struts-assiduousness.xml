@@ -109,7 +109,7 @@
             name="ConsultarFuncionarioMostrarForm"
             scope="session"
             validate="false"
-            input="/portalAssiduidade.jsp" >
+            input="/index" >
     </action>
     
     <action path="/consultarFuncionarioEscolha"

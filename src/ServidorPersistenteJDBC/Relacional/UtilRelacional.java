@@ -150,7 +150,8 @@ public class UtilRelacional {
 
 	private static void loadDriver() {
 		try {
-			Class.forName("org.gjt.mm.mysql.Driver").newInstance();
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			//Class.forName("org.gjt.mm.mysql.Driver").newInstance();
 		} catch (Exception e) {
 			System.out.println("ServidorPersistente: erro a carregar o driver: " + e.toString());
 		}

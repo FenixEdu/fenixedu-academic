@@ -122,7 +122,8 @@ public class UtilRelacionalOracle {
   private static void loadDriver() {
 	try {
 	  //driver de oracle
-	  Class.forName("org.gjt.mm.mysql.Driver").newInstance();
+	  Class.forName("com.mysql.jdbc.Driver").newInstance();
+	  //Class.forName("org.gjt.mm.mysql.Driver").newInstance();
 	} catch(Exception e) {
 	  System.out.println("UtilRelacionalOracle: erro a carregar o driver: " + e.toString());
 	}

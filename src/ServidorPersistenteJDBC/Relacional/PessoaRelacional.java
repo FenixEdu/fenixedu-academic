@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import Dominio.Pessoa;
 import ServidorPersistenteJDBC.IPessoaPersistente;
@@ -390,7 +391,7 @@ public class PessoaRelacional implements IPessoaPersistente {
 		try {
 			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM PERSON ");
 			ResultSet resultado = sql.executeQuery();
-			
+
 			listaPessoas = new ArrayList();
 			while (resultado.next()) {
 				listaPessoas.add(constroiPessoa(resultado));
@@ -434,18 +435,30 @@ public class PessoaRelacional implements IPessoaPersistente {
 		Pessoa pessoa = null;
 
 		try {
+			Date emissionDate = null;
+			if (resultado.getString("EMISSION_DATE_OF_DOCUMENT_ID") != null) {
+				emissionDate = converteData(java.sql.Date.valueOf(resultado.getString("EMISSION_DATE_OF_DOCUMENT_ID")));
+			}
+			Date experationDate = null;
+			if (resultado.getString("EXPERATION_DATE_OF_DOCUMENT_ID") != null) {
+				experationDate = converteData(java.sql.Date.valueOf(resultado.getString("EXPERATION_DATE_OF_DOCUMENT_ID")));
+			}
+			Date birthDate = null;
+			if (resultado.getString("DATE_OF_BIRTH") != null) {
+				birthDate = converteData(java.sql.Date.valueOf(resultado.getString("DATE_OF_BIRTH")));
+			}
 			pessoa =
 				new Pessoa(
 					new Integer(resultado.getInt("ID_INTERNAL")),
 					resultado.getString("DOCUMENT_ID_NUMBER"),
 					new TipoDocumentoIdentificacao(resultado.getInt("TYPE_ID_DOCUMENT")),
 					resultado.getString("EMISSION_LOCATION_OF_DOCUMENT_ID"),
-					converteData(java.sql.Date.valueOf(resultado.getString("EMISSION_DATE_OF_DOCUMENT_ID"))),
-					converteData(java.sql.Date.valueOf(resultado.getString("EXPERATION_DATE_OF_DOCUMENT_ID"))),
+					emissionDate,
+					experationDate,
 					resultado.getString("NAME"),
 					new Sexo(resultado.getInt("SEX")),
 					new EstadoCivil(resultado.getInt("MARITAL_STATUS")),
-					converteData(java.sql.Date.valueOf(resultado.getString("DATE_OF_BIRTH"))),
+					birthDate,
 					resultado.getString("NAME_OF_FATHER"),
 					resultado.getString("NAME_OF_MOTHER"),
 					resultado.getString("NATIONALITY"),
