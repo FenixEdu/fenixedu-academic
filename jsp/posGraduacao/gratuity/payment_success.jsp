@@ -13,9 +13,15 @@
 	<bean:define id="linkPrintGuide">
 		/printGuide.do?method=print&page=0&year=<bean:write name="guide" property="year" />&number=<bean:write name="guide" property="number" />&version=<bean:write name="guide" property="version" />&copies=2
 	</bean:define>	
+	<bean:define id="linkViewGuide">
+		/chooseGuideDispatchAction.do?method=choose&guideYear=<bean:write name="guide" property="year" />&guideNumber=<bean:write name="guide" property="number" />
+	</bean:define>	
+	
 
 	<p>
 		<html:link page="<%= linkPrintGuide %>" target="_blank"><bean:message key="link.masterDegree.administrativeOffice.printGuide"/></html:link>
+		 | 
+		<html:link page="<%= linkViewGuide %>" ><bean:message key="link.masterDegree.administrativeOffice.viewGuide"/></html:link>
 	</p>
 
 </center>
