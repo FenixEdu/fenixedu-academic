@@ -705,6 +705,18 @@
 		</field>
 	</form>
 	
+	<form name="insertWorkLocationForm">
+		<field property="name" depends="required" page="1">
+			<arg0 key="label.masterDegree.administrativeOffice.workLocationName" />
+		</field>
+	</form>
+	
+	<form name="editWorkLocationForm">
+		<field property="name" depends="required" page="1">
+			<arg0 key="label.masterDegree.administrativeOffice.workLocationName" />
+		</field>
+	</form>
+	
   </formset>
 
 
