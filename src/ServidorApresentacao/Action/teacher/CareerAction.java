@@ -93,9 +93,8 @@ public class CareerAction extends CRUDActionByOID
             DynaActionForm dynaForm = (DynaActionForm) form;
 
             dynaForm.set("careerId", infoCareer.getIdInternal());
-            
-//            dynaForm.set("beginYear", infoCareer.getBeginYear());
-//            dynaForm.set("endYear", infoCareer.getEndYear());
+            dynaForm.set("beginYear", infoCareer.getBeginYear());
+            dynaForm.set("endYear", infoCareer.getEndYear());
             CareerType careerType = infoCareer.getCareerType();
             dynaForm.set("careerType", careerType.getName());
 

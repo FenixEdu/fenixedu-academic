@@ -49,4 +49,22 @@
 	<definition name="view-course-information" extends="course-information">
 		<put name="body" value="/gesdis/viewCourseInformation.jsp"></put>
 	</definition>
+	<definition name="teacher-information-management" extends="definition.teacher.one-column">
+		 <put name="body" value="/teacher/information/teacherInformationManagement.jsp" />
+	</definition>
+	<definition name="view-teacher-information" extends="definition.teacher.one-column">
+		 <put name="body" value="/teacher/information/viewTeacherInformation.jsp"></put>
+	</definition>
+	<definition name="view-teaching-careers" extends="definition.teacher.one-column">
+		<put name="body" value="/teacher/information/teachingCareersManagement.jsp"></put>
+	</definition>
+	<definition name="view-professional-careers" extends="definition.teacher.one-column">
+		<put name="body" value="/teacher/information/professionalCareersManagement.jsp"></put>
+	</definition>
+	<definition name="edit-professional-career" extends="definition.teacher.one-column">
+		<put name="body" value="/teacher/information/editProfessionalCareer.jsp"></put>
+	</definition>
+		<definition name="edit-teaching-career" extends="definition.teacher.one-column">
+		<put name="body" value="/teacher/information/editTeachingCareer.jsp"></put>
+	</definition>
 </tiles-definitions>

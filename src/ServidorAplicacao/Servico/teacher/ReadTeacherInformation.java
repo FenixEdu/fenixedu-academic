@@ -81,7 +81,7 @@ public class ReadTeacherInformation implements IServico
         try
         {
             InfoSiteTeacherInformation infoSiteTeacherInformation = new InfoSiteTeacherInformation();
-            
+
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
@@ -105,9 +105,7 @@ public class ReadTeacherInformation implements IServico
 
             IPersistentCareer persistentCareer = sp.getIPersistentCareer();
             List professionalCareers =
-                persistentCareer.readAllByTeacherAndCareerType(
-                    teacher,
-                    CareerType.PROFESSIONAL);
+                persistentCareer.readAllByTeacherAndCareerType(teacher, CareerType.PROFESSIONAL);
             List infoProfessionalCareers = new ArrayList();
             iter = professionalCareers.iterator();
             while (iter.hasNext())
@@ -120,9 +118,7 @@ public class ReadTeacherInformation implements IServico
             infoSiteTeacherInformation.setInfoProfessionalCareers(infoProfessionalCareers);
 
             List teachingCareers =
-                persistentCareer.readAllByTeacherAndCareerType(
-                    teacher,
-                    CareerType.TEACHING);
+                persistentCareer.readAllByTeacherAndCareerType(teacher, CareerType.TEACHING);
             List infoTeachingCareers = new ArrayList();
             iter = teachingCareers.iterator();
             while (iter.hasNext())
@@ -138,9 +134,17 @@ public class ReadTeacherInformation implements IServico
                 sp.getIPersistentServiceProviderRegime();
             IServiceProviderRegime serviceProviderRegime =
                 persistentServiceProviderRegime.readByTeacher(teacher);
-            InfoServiceProviderRegime infoServiceProviderRegime =
-                Cloner.copyIServiceProviderRegime2InfoServiceProviderRegime(serviceProviderRegime);
-            infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
+            if (serviceProviderRegime == null)
+            {
+                InfoServiceProviderRegime infoServiceProviderRegime = new InfoServiceProviderRegime();
+                infoServiceProviderRegime.setInfoTeacher(infoTeacher);
+                infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
+            } else
+            {
+                InfoServiceProviderRegime infoServiceProviderRegime =
+                    Cloner.copyIServiceProviderRegime2InfoServiceProviderRegime(serviceProviderRegime);
+                infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
+            }
 
             IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
             List externalActivities = persistentExternalActivity.readAllByTeacher(teacher);
@@ -150,7 +154,7 @@ public class ReadTeacherInformation implements IServico
             {
                 IExternalActivity externalActivity = (IExternalActivity) iter.next();
                 InfoExternalActivity infoExternalActivity =
-                    (InfoExternalActivity) Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
+                    Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
                 infoExternalActivities.add(infoExternalActivity);
             }
             infoSiteTeacherInformation.setInfoExternalActivities(infoExternalActivities);
@@ -164,15 +168,24 @@ public class ReadTeacherInformation implements IServico
                 IProfessorship professorShip = (IProfessorship) iter.next();
                 IDisciplinaExecucao executionCourse = professorShip.getExecutionCourse();
                 InfoExecutionCourse infoExecutionCourse =
-                    (InfoExecutionCourse) Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                    Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
                 infoExecutionCourses.add(infoExecutionCourse);
             }
             infoSiteTeacherInformation.setInfoExecutionCourses(infoExecutionCourses);
-            
+
             IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
             IWeeklyOcupation weeklyOcupation = persistentWeeklyOcupation.readByTeacher(teacher);
-            InfoWeeklyOcupation infoWeeklyOcupation = Cloner.copyIWeeklyOcupation2InfoWeeklyOcupation(weeklyOcupation);
-            infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
+            if (weeklyOcupation == null)
+            {
+                InfoWeeklyOcupation infoWeeklyOcupation = new InfoWeeklyOcupation();
+                infoWeeklyOcupation.setInfoTeacher(infoTeacher);
+                infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
+            } else
+            {
+                InfoWeeklyOcupation infoWeeklyOcupation =
+                    Cloner.copyIWeeklyOcupation2InfoWeeklyOcupation(weeklyOcupation);
+                infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
+            }
             // TODO: faltam os estágios, tfc's, mestrados, doutoramentos
             // TODO: faltam os cargos de gestão
             // TODO: faltam as publicacoes

@@ -12,18 +12,21 @@ import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import DataBeans.InfoObject;
+import DataBeans.InfoTeacher;
+import DataBeans.SiteView;
 import DataBeans.teacher.InfoServiceProviderRegime;
+import DataBeans.teacher.InfoSiteTeacherInformation;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.ProviderRegimeType;
 
 /**
- * 
  * @author Leonor Almeida
  * @author Sergio Montelobo
  */
@@ -33,20 +36,18 @@ public class TeacherInformationAction extends DispatchAction
     {
         return "ReadTeacherInformation";
     }
-    
+
     private String getEditService()
     {
         return "EditTeacherInformation";
     }
-    
+
     /**
-     * 
 	 * @param mapping
 	 * @param form
 	 * @param request
 	 * @param response
-	 * @return forward to the action mapping configuration called
-	 *              successfull-edit
+	 * @return forward to the action mapping configuration called successfull-edit
 	 * @throws Exception
 	 */
     public ActionForward edit(
@@ -59,10 +60,7 @@ public class TeacherInformationAction extends DispatchAction
         InfoServiceProviderRegime infoServiceProviderRegime = getInfoServiceProviderRegimeFromForm(form);
         InfoWeeklyOcupation infoWeeklyOcupation = getInfoWeeklyOcupationFromForm(form);
         Object[] args = { infoServiceProviderRegime, infoWeeklyOcupation };
-        ServiceUtils.executeService(
-            SessionUtils.getUserView(request),
-            getEditService(),
-            args);
+        ServiceUtils.executeService(SessionUtils.getUserView(request), getEditService(), args);
         return mapping.findForward("successfull-edit");
     }
 
@@ -74,24 +72,51 @@ public class TeacherInformationAction extends DispatchAction
 	 */
     protected InfoServiceProviderRegime getInfoServiceProviderRegimeFromForm(ActionForm form)
     {
-        return new InfoServiceProviderRegime();
-        
-        // TODO: falta acabar
+        DynaActionForm dynaForm = (DynaActionForm) form;
+        Integer teacherId = (Integer) dynaForm.get("teacherId");
+        Integer serviceProviderRegimeId = (Integer) dynaForm.get("serviceProviderRegimeId");
+        ProviderRegimeType providerRegimeType =
+            ProviderRegimeType.getEnum((String) dynaForm.get("serviceProviderRegimeTypeName"));
+
+        InfoTeacher infoTeacher = new InfoTeacher();
+        infoTeacher.setIdInternal(teacherId);
+
+        InfoServiceProviderRegime infoServiceProviderRegime = new InfoServiceProviderRegime();
+        infoServiceProviderRegime.setIdInternal(serviceProviderRegimeId);
+        infoServiceProviderRegime.setProviderRegimeType(providerRegimeType);
+        infoServiceProviderRegime.setInfoTeacher(infoTeacher);
+
+        return infoServiceProviderRegime;
     }
-    
+
     /**
-     * This method creates an InfoWeeklyOcupation using the form properties.
-     * 
-     * @param form
-     * @return InfoWeeklyOcupation created
-     */
+	 * This method creates an InfoWeeklyOcupation using the form properties.
+	 * 
+	 * @param form
+	 * @return InfoWeeklyOcupation created
+	 */
     protected InfoWeeklyOcupation getInfoWeeklyOcupationFromForm(ActionForm form)
     {
-        return new InfoWeeklyOcupation();
-        
-        // TODO: falta acabar
+        DynaActionForm dynaForm = (DynaActionForm) form;
+        Integer teacherId = (Integer) dynaForm.get("teacherId");
+        Integer weeklyOcupationId = (Integer) dynaForm.get("weeklyOcupationId");
+        Integer management = new Integer((String) dynaForm.get("management"));
+        Integer other = new Integer((String) dynaForm.get("other"));
+        Integer research = new Integer((String) dynaForm.get("research"));
+
+        InfoTeacher infoTeacher = new InfoTeacher();
+        infoTeacher.setIdInternal(teacherId);
+
+        InfoWeeklyOcupation infoWeeklyOcupation = new InfoWeeklyOcupation();
+        infoWeeklyOcupation.setIdInternal(weeklyOcupationId);
+        infoWeeklyOcupation.setManagement(management);
+        infoWeeklyOcupation.setOther(other);
+        infoWeeklyOcupation.setResearch(research);
+        infoWeeklyOcupation.setInfoTeacher(infoTeacher);
+
+        return infoWeeklyOcupation;
     }
-    
+
     /**
 	 * Tests if errors are presented.
 	 * 
@@ -105,29 +130,40 @@ public class TeacherInformationAction extends DispatchAction
     }
 
     /**
-	 * 
 	 * @param mapping
 	 * @param form
 	 * @param request
 	 */
-    protected void populateFormFromInfoObject(
+    protected void populateFormFromInfoWeeklyOcupationAndInfoServiceProviderRegime(
         ActionMapping mapping,
-        InfoObject infoObject,
+        InfoWeeklyOcupation infoWeeklyOcupation,
+        InfoServiceProviderRegime infoServiceProviderRegime,
         ActionForm form,
         HttpServletRequest request)
     {
         try
         {
-            BeanUtils.copyProperties(form, infoObject);
-        }
-        catch (Exception e)
+            BeanUtils.copyProperties(form, infoWeeklyOcupation);
+            BeanUtils.copyProperties(form, infoServiceProviderRegime);
+
+            InfoTeacher infoTeacher = infoWeeklyOcupation.getInfoTeacher();
+
+            DynaActionForm dynaForm = (DynaActionForm) form;
+            dynaForm.set("teacherId", infoTeacher.getIdInternal());
+            dynaForm.set("serviceProviderRegimeId", infoServiceProviderRegime.getIdInternal());
+            ProviderRegimeType providerRegimeType = infoServiceProviderRegime.getProviderRegimeType();
+            dynaForm.set("serviceProviderRegimeTypeName", providerRegimeType == null ? null : providerRegimeType.getName());
+            dynaForm.set("weeklyOcupationId", infoWeeklyOcupation.getIdInternal());
+            dynaForm.set("management", infoWeeklyOcupation.getManagement());
+            dynaForm.set("research", infoWeeklyOcupation.getResearch());
+            dynaForm.set("other", infoWeeklyOcupation.getOther());
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
     }
 
     /**
-     * 
 	 * @param mapping
 	 * @param form
 	 * @param request
@@ -135,79 +171,88 @@ public class TeacherInformationAction extends DispatchAction
 	 * @return forward to the action mapping configuration called show-form
 	 * @throws Exception
 	 */
-//    public ActionForward prepareEdit(
-//        ActionMapping mapping,
-//        ActionForm form,
-//        HttpServletRequest request,
-//        HttpServletResponse response)
-//        throws Exception
-//    {
-//        InfoObject infoObject = readInfoObject(mapping, form, request);
-//        if (!hasErrors(request) && infoObject != null)
-//        {
-//            populateFormFromInfoObject(mapping, infoObject, form, request);
-//        }
-//        setInfoObjectToRequest(request, infoObject, mapping);
-//        return mapping.findForward("show-form");
-//    }
+    public ActionForward prepareEdit(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
+        InfoSiteTeacherInformation infoSiteTeacherInformation =
+            readInfoSiteTeacherInformation(mapping, form, request);
+        if (!hasErrors(request) && infoSiteTeacherInformation != null)
+        {
+            InfoServiceProviderRegime infoServiceProviderRegime =
+                infoSiteTeacherInformation.getInfoServiceProviderRegime();
+            InfoWeeklyOcupation infoWeeklyOcupation =
+                infoSiteTeacherInformation.getInfoWeeklyOcupation();
+            populateFormFromInfoWeeklyOcupationAndInfoServiceProviderRegime(
+                mapping,
+                infoWeeklyOcupation,
+                infoServiceProviderRegime,
+                form,
+                request);
+        }
+        setInfoSiteTeacherInformationToRequest(request, infoSiteTeacherInformation, mapping);
+        request.setAttribute("providerRegimeTypeList", ProviderRegimeType.getEnumList());
+        return mapping.findForward("show-form");
+    }
 
     /**
-	 * Method that invokes a service that extends @link
-	 * ServidorAplicacao.Servico.framework.ReadDomainObjectService called @link
-	 * CRUDMapping#getReadService()
-	 * 
 	 * @param mapping
-	 *                   should be an instance of @link CRUDMapping
 	 * @param form
 	 * @param request
 	 * @param response
-	 * @return forward to the action mapping configuration called
-	 *              successfull-read
+	 * @return forward to the action mapping configuration called successfull-read
 	 * @throws Exception
 	 */
-//    public ActionForward read(
-//        ActionMapping mapping,
-//        ActionForm form,
-//        HttpServletRequest request,
-//        HttpServletResponse response)
-//        throws Exception
-//    {
-//        CRUDMapping crudMapping = (CRUDMapping) mapping;
-//        InfoObject infoObject = readInfoObject(crudMapping, form, request);
-//        setInfoObjectToRequest(request, infoObject, crudMapping);
-//        return crudMapping.findForward("sucessfull-read");
-//    }
+    public ActionForward read(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
+        InfoSiteTeacherInformation infoSiteTeacherInformation =
+            readInfoSiteTeacherInformation(mapping, form, request);
+        setInfoSiteTeacherInformationToRequest(request, infoSiteTeacherInformation, mapping);
+        return mapping.findForward("sucessfull-read");
+    }
 
     /**
 	 * Reads the infoObject using de read service associated to the action
 	 * 
-	 * @param crudMapping
+	 * @param mapping
 	 * @param form
 	 * @return
 	 */
-    private InfoObject readInfoObject(
+    private InfoSiteTeacherInformation readInfoSiteTeacherInformation(
         ActionMapping mapping,
         ActionForm form,
         HttpServletRequest request)
         throws FenixServiceException
     {
         IUserView userView = SessionUtils.getUserView(request);
-        Object[] args = { /*getOIDProperty(crudMapping, form)*/};
-        return (InfoObject) ServiceUtils.executeService(userView, getReadService(), args);
+        Object[] args = { userView.getUtilizador()};
+        SiteView siteView = (SiteView) ServiceUtils.executeService(
+            userView,
+            getReadService(),
+            args);
+        return (InfoSiteTeacherInformation) siteView.getComponent();
     }
 
     /**
 	 * @param request
 	 * @param infoObject
 	 */
-    private void setInfoObjectToRequest(
+    private void setInfoSiteTeacherInformationToRequest(
         HttpServletRequest request,
-        InfoObject infoObject,
-		ActionMapping mapping)
+        InfoSiteTeacherInformation infoSiteTeacherInformation,
+        ActionMapping mapping)
     {
-        if (infoObject != null)
+        if (infoSiteTeacherInformation != null)
         {
-            request.setAttribute("infoObject", infoObject);
+            request.setAttribute("infoSiteTeacherInformation", infoSiteTeacherInformation);
         }
     }
 }

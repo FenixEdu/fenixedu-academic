@@ -35,7 +35,7 @@ public class ReadCareers implements IServico
     /**
 	 *  
 	 */
-    public ReadCareers()
+    private ReadCareers()
     {
 
     }
@@ -66,9 +66,7 @@ public class ReadCareers implements IServico
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
 
             IPersistentCareer persistentCareer = persistentSuport.getIPersistentCareer();
-            List careers;
-
-            careers = persistentCareer.readAllByTeacherAndCareerType(teacher, careerType);
+            List careers = persistentCareer.readAllByTeacherAndCareerType(teacher, careerType);
 
             List result = new ArrayList();
             Iterator iter = careers.iterator();

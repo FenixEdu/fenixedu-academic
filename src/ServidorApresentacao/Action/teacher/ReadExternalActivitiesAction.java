@@ -17,7 +17,6 @@ import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.CareerType;
 
 /**
@@ -25,7 +24,7 @@ import Util.CareerType;
  * @author Sergio Montelobo
  *  
  */
-public class ReadCareersAction extends FenixAction
+public class ReadExternalActivitiesAction extends FenixAction
 {
 
     /*
@@ -44,28 +43,16 @@ public class ReadCareersAction extends FenixAction
     {
         HttpSession session = request.getSession(false);
 
-        String string = request.getParameter("careerType");
-        CareerType careerType = null;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        if ((session != null) && (string != null))
+        if (session != null)
         {
-            careerType = CareerType.getEnum(string);
-
-            Object[] args = { careerType, userView.getUtilizador()};
-            SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadCareers", args);
+            Object[] args = { userView.getUtilizador()};
+            SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadExternalActivities", args);
 
             request.setAttribute("siteView", siteView);
         }
-        ActionForward actionForward = null;
 
-        if (careerType.equals(CareerType.PROFESSIONAL))
-        {
-            actionForward = mapping.findForward("show-professional-form");
-        } else
-        {
-            actionForward = mapping.findForward("show-teaching-form");
-        }
-        return actionForward;
+        return  mapping.findForward("show-form");
     }
 }

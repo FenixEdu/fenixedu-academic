@@ -441,8 +441,9 @@
 		<form-bean name="teacherInformationForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
+			<form-property name="weeklyOcupationId" type="java.lang.Integer" initial="0"/>
 			<form-property name="serviceProviderRegimeId" type="java.lang.Integer" initial="0" />
-			<form-property name="serviceProviderRegimeType" type="java.lang.String" />
+			<form-property name="serviceProviderRegimeTypeName" type="java.lang.String" />
 			<form-property name="teacherId" type="java.lang.Integer" />
 			<form-property name="research" type="java.lang.String" />
 			<form-property name="management" type="java.lang.String" />
@@ -1370,7 +1371,7 @@
 		
 	  </action>
 
-      <!-- Teacher Career -->
+      <!-- Teaching Career -->
       <action type="ServidorApresentacao.Action.teacher.CareerAction"
       		path="/teachingCareer"
       		name="teachingCareerForm"
@@ -1393,7 +1394,8 @@
 	  		path="/readCareers"
 	  		name="readCareersForm"
 	  		scope="request">
-	  	<forward name="show-form" path="..."/>
+	  	<forward name="show-teaching-form" path="view-teaching-careers"/>
+	  	<forward name="show-professional-form" path="view-professional-careers"/>
 	  </action>
 		
 	  <!-- External Activity -->
@@ -1428,9 +1430,9 @@
 	  		parameter="method"
 	  		scope="request"
 	  		input="/teacherInformation.do?page=0&amp;method=prepareEdit">
-	  	<forward name="show-form" path="..."/> 
-		<forward name="successfull-edit" path="..."/> 
-		<forward name="successfull-read" path="..."/>
+	  	<forward name="show-form" path="teacher-information-management"/> 
+		<forward name="successfull-edit" path="view-teacher-information"/> 
+		<forward name="successfull-read" path="view-teacher-information"/>
 	  </action>
 	  
 	</action-mappings>

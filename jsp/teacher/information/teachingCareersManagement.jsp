@@ -5,8 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.teacherInformation"/></h2>
 <logic:present name="siteView"> 
-<html:form action="/teacherInformation">
-<bean:define id="siteTeacherInformation" name="siteView" property="component"/>
+<bean:define id="infoSiteTeachingCareers" name="siteView" property="component"/>
 <br/>
 <h3><bean:message key="message.teachingCareer" /></h3>
 <p class="infoop"><span class="emphasis-box">1</span>
@@ -17,26 +16,46 @@
 <bean:message key="message.teachingCareer.managementSaveExplanation" />
 <bean:message key="message.teachingCareer.managementSeeExplanation" />
 <table border="1">
-<logic:iterate id="" name="" property="">
+<logic:iterate id="infoTeachingCareer" name="infoSiteTeachingCareers" property="infoCareers">
 <tr>
-	<td><bean:write name="" property="" /></td>
-	<td><%-- link editar%--><%--<div class="gen-button">
-	<html:link page="<%= "/summariesManager.do?method=prepareInsertSummary&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
-		<bean:message key="label.edit" />
-	</html:link></div>--%>
+	<td>
+		<bean:write name="infoTeachingCareer" property="begin-Year" />-
+		<bean:write name="infoTeachingCareer" property="end-Year" />
 	</td>
-	<td><%-- link apagar%--><%--<div class="gen-button">
-	<html:link page="<%= "/summariesManager.do?method=prepareInsertSummary&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
-		<bean:message key="label.clear" />
-	</html:link></div>--%>
+	<td>
+		<bean:write name="infoTeachingCareer" property="category.longName" />
+	</td>
+	<td>
+		<bean:write name="infoTeachingCareer" property="courseOrPosition" />
+	</td>
+		<td>
+		<div class="gen-button">
+			<html:link page="/teachingCareer.do?method=prepareEdit&amp;page=0" 
+					   paramId="careerId" 
+					   paramName="infoTeachingCareer" 
+					   paramProperty="idInternal">
+				<bean:message key="label.edit" />
+			</html:link>
+		</div>
+	</td>
+	<td>
+		<div class="gen-button">
+			<html:link page="/teachingCareer.do?method=delete&amp;page=0" 
+					   paramId="careerId" 
+					   paramName="infoTeachingCareer" 
+					   paramProperty="idInternal">
+				<bean:message key="label.delete" />
+			</html:link>
+		</div>
 	</td>
 </tr>
 </logic:iterate>
 </table>
-<%--<div class="gen-button">
-	<html:link page="<%= "/summariesManager.do?method=prepareInsertSummary&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
-		<bean:message key="label.insertCareer" />
-	</html:link></div>--%>
+<div class="gen-button">
+	<html:link page="/teachingCareer.do?method=prepareEdit&amp;page=0">
+		<bean:message key="message.teachingCareer.insert" />
+	</html:link>
+</div>
 <br />
 <h3>
 <table>
@@ -54,5 +73,4 @@
 </tr>
 </table>
 </h3>
-</html:form>
 </logic:present>

@@ -24,13 +24,13 @@ public class ProviderRegimeType extends ValuedEnum
     public static final int EXCLUSIVE_CUMULATIVE_TYPE = 4;
 
     public static final ProviderRegimeType EXCLUSIVE =
-        new ProviderRegimeType("Exclusive", ProviderRegimeType.EXCLUSIVE_TYPE);
+        new ProviderRegimeType("regime.exclusive", ProviderRegimeType.EXCLUSIVE_TYPE);
     public static final ProviderRegimeType CUMULATIVE =
-        new ProviderRegimeType("Cumulative", ProviderRegimeType.CUMULATIVE_TYPE);
+        new ProviderRegimeType("regime.cumulative", ProviderRegimeType.CUMULATIVE_TYPE);
     public static final ProviderRegimeType COMPLEMENT =
-        new ProviderRegimeType("Complement", ProviderRegimeType.COMPLEMENT_TYPE);
+        new ProviderRegimeType("regime.complement", ProviderRegimeType.COMPLEMENT_TYPE);
     public static final ProviderRegimeType EXCLUSIVE_CUMULATIVE =
-        new ProviderRegimeType("ExclusiveCumulative", ProviderRegimeType.EXCLUSIVE_CUMULATIVE_TYPE);
+        new ProviderRegimeType("regime.exclusiveCumulative", ProviderRegimeType.EXCLUSIVE_CUMULATIVE_TYPE);
 
     public ProviderRegimeType(String name, int value)
     {
