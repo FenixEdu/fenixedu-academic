@@ -111,7 +111,6 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 
 		dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal().toString());
 		
-		request.setAttribute("insertFromAnother","");
 		return mapping.findForward("insertCurricularCourseScope");
 	}
 
@@ -149,8 +148,6 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 		InfoBranch infoBranch = new InfoBranch();
 		infoBranch.setIdInternal(branchId);
 		newInfoCurricularCourseScope.setInfoBranch(infoBranch);
-//		newInfoCurricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
-
 		InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
 		infoCurricularCourse.setIdInternal(new Integer(request.getParameter("curricularCourseId")));
 		newInfoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);
