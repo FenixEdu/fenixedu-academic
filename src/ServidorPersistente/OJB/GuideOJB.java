@@ -42,7 +42,9 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 			guideBD.setTotal(guideToWrite.getTotal());
 			guideBD.setRemarks(guideToWrite.getRemarks());
 			guideBD.setContributor(guideToWrite.getContributor());
-
+//			guideBD.setCreationDate(guideToWrite.getCreationDate());
+//			guideBD.setVersion(guideToWrite.getVersion());
+			
 			// No need to re-write it because it is already mapped.
 			//super.lockWrite(lessonToWrite);
 			// else throw an AlreadyExists exception.

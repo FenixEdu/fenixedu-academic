@@ -7,6 +7,7 @@
 package DataBeans;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import Util.GuideRequester;
@@ -28,11 +29,13 @@ public class InfoGuide implements Serializable{
 	private GuideRequester guideRequester; 
 	private InfoExecutionDegree infoExecutionDegree;
 	private PaymentType paymentType;
+	private Date creationDate;
+	private Integer version;
 
 	public InfoGuide() {} 
 		
 	public InfoGuide(Integer number, Integer year, Double total, String remarks, InfoPerson infoPerson, InfoContributor infoContributor, GuideRequester guideRequester,
-			InfoExecutionDegree infoExecutionDegree, PaymentType paymentType){	 		
+			InfoExecutionDegree infoExecutionDegree, PaymentType paymentType, Date creationDate, Integer version){	 		
 		this.number = number;
 		this.year = year;
 		this.total = total;
@@ -42,6 +45,8 @@ public class InfoGuide implements Serializable{
 		this.guideRequester = guideRequester;
 		this.infoExecutionDegree = infoExecutionDegree;
 		this.paymentType = paymentType;
+		this.creationDate = creationDate;
+		this.version = version;
 	}
 	
 	public boolean equals(Object obj) {
@@ -68,6 +73,8 @@ public class InfoGuide implements Serializable{
 	  result += ", guideRequester=" + guideRequester;
 	  result += ", infoExecutionDegree=" + infoExecutionDegree;
 	  result += ", paymentType=" + paymentType;
+	  result += ", creationDate=" + creationDate;
+	  result += ", version=" + version;
 	  result += "]";
 	  return result;
 	}
@@ -213,6 +220,35 @@ public class InfoGuide implements Serializable{
 	 */
 	public void setPaymentType(PaymentType type) {
 		paymentType = type;
+	}
+
+
+	/**
+	 * @return
+	 */
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getVersion() {
+		return version;
+	}
+
+	/**
+	 * @param date
+	 */
+	public void setCreationDate(Date date) {
+		creationDate = date;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setVersion(Integer integer) {
+		version = integer;
 	}
 
 }

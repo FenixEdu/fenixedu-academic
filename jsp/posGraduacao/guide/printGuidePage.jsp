@@ -5,8 +5,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-<html>
-  <body>
+
 	<%-- The Original Guide --%>
 	<jsp:include page="./guideTemplate1.jsp" flush="true" />
 
@@ -19,5 +18,3 @@
     	<jsp:include page="./informationTemplate1.jsp" flush="true" />
 	</logic:present >	
 
-  </body>
-</html>

@@ -1,6 +1,7 @@
 
 package Dominio;
 
+import java.util.Date;
 import java.util.List;
 
 import Util.GuideRequester;
@@ -22,6 +23,8 @@ public interface IGuide {
   public GuideRequester getGuideRequester();
   public ICursoExecucao getExecutionDegree();
   public PaymentType getPaymentType();
+  public Date getCreationDate();
+  public Integer getVersion();
   public List getGuideSituations();
   
 
@@ -35,5 +38,7 @@ public interface IGuide {
   public void setGuideRequester(GuideRequester guideRequester);
   public void setExecutionDegree(ICursoExecucao executionDegree);
   public void setPaymentType(PaymentType paymentType);
+  public void setCreationDate(Date creationDate);
+  public void setVersion(Integer version);
   public void setGuideSituations(List guideSituations);
 }

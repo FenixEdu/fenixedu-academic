@@ -327,43 +327,5 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         }
     } 
     
-    public  void testEqualCandidateSituations() {
-        System.out.println("- Test 8 : Test if two Candidate Situations are equal");
-
-        Calendar data = Calendar.getInstance();
-        data.set(2002, Calendar.NOVEMBER, 17);
-
-		Calendar data2 = Calendar.getInstance();
-        data2.set(2002, 12, 18);
-        
-		IMasterDegreeCandidate candidateTemp = null;        
-        try {
-            persistentSupport.iniciarTransaccao();
-			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("nmsn");
-			candidateTemp = (IMasterDegreeCandidate) result.get(0);
-            persistentSupport.confirmarTransaccao();
-        } catch (ExcepcaoPersistencia ex) {
-            fail("    -> Error on test");
-        }
-
-		ICandidateSituation candidateSituation1 = new CandidateSituation(data.getTime(), "Nenhuma", new State(State.ACTIVE), candidateTemp, new SituationName(SituationName.EXTRAORDINARIO));        
-		ICandidateSituation candidateSituation2 = new CandidateSituation(data.getTime(), "Nenhuma", new State(State.ACTIVE), candidateTemp, new SituationName(SituationName.EXTRAORDINARIO));        
-        
-        
-        assertTrue(candidateSituation1.equals(candidateSituation2));  
-        
-        candidateSituation1.setDate(data2.getTime());
-        assertEquals(candidateSituation1.equals(candidateSituation2), false);  
-        candidateSituation1.setDate(data.getTime());
-        
-        candidateSituation1.setRemarks("Nada");
-        assertEquals(candidateSituation1.equals(candidateSituation2), false);  
-        candidateSituation1.setRemarks("Nenhuma");
-        
-        candidateSituation1.setValidation(new State(State.INACTIVE));
-        assertEquals(candidateSituation1.equals(candidateSituation2), false);  
-        candidateSituation1.setValidation(new State(State.ACTIVE));
-
-    }
     
 } // End of test from Class CandidateSituationOJB

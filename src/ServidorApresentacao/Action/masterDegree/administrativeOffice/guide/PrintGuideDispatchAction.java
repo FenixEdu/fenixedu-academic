@@ -1,6 +1,10 @@
 
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.guide;
 
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -47,8 +51,6 @@ public class PrintGuideDispatchAction extends DispatchAction {
 			Boolean passwordPrint = (Boolean) session.getAttribute(SessionConstants.PRINT_PASSWORD);
 			InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
 
-System.out.println("Numero de linhas da guia : " + infoGuide.getInfoGuideEntries().size());
-			
 			if (infoGuide.getGuideRequester().equals(GuideRequester.CANDIDATE_TYPE)){
 				// Read The Candidate
 				InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
@@ -63,7 +65,13 @@ System.out.println("Numero de linhas da guia : " + infoGuide.getInfoGuideEntries
 			} else if (infoGuide.getGuideRequester().equals(GuideRequester.STUDENT_TYPE)){
 				// TODO: Comming soon :)
 			}
-			
+
+			Locale locale = new Locale("pt", "PT");
+			Date date = new Date();
+//System.out.println("Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date));
+
+			String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
+			session.setAttribute(SessionConstants.DATE, formatedDate);			
 			
 			return mapping.findForward("PrintReady");
 		  } else
@@ -71,6 +79,12 @@ System.out.println("Numero de linhas da guia : " + infoGuide.getInfoGuideEntries
 
 	}
 		
+public static void main(String args[]) {
+	
+	
+	
+}
+
 
 	  
 }

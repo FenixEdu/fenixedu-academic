@@ -1,5 +1,6 @@
 package Dominio;
 
+import java.util.Date;
 import java.util.List;
 
 import Util.GuideRequester;
@@ -10,13 +11,13 @@ import Util.PaymentType;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
+
 public class Guide implements IGuide {
   protected Integer internalCode;
   protected Integer keyPerson;
   protected Integer keyContributor;
   protected Integer keyExecutionDegree;
-  
-  
+    
   protected Integer number;
   protected Integer year;
   protected Double total;
@@ -26,6 +27,8 @@ public class Guide implements IGuide {
   protected IContributor contributor;
   protected ICursoExecucao executionDegree;
   protected PaymentType paymentType;
+  protected Date creationDate;
+  protected Integer version;  
     
   protected GuideRequester guideRequester;
   
@@ -36,7 +39,7 @@ public class Guide implements IGuide {
   public Guide() { }
     
   public Guide(Integer number,Integer year,Double total, String remarks,IPessoa person,IContributor contributor,
-  			 	GuideRequester guideRequester, ICursoExecucao executionDegree, PaymentType paymentType) {
+  			 	GuideRequester guideRequester, ICursoExecucao executionDegree, PaymentType paymentType, Date creationDate, Integer version) {
 	this.contributor = contributor;
 	this.number = number;
 	this.person = person;
@@ -46,6 +49,8 @@ public class Guide implements IGuide {
 	this.guideRequester = guideRequester;
 	this.executionDegree = executionDegree;
 	this.paymentType = paymentType;
+	this.creationDate = creationDate;
+	this.version = version;
   }
   
   public boolean equals(Object obj) {
@@ -70,11 +75,14 @@ public class Guide implements IGuide {
 	result += ", remarks=" + remarks;
 	result += ", guide Requester=" + guideRequester;
 	result += ", execution Degree=" + executionDegree;
+	result += ", payment Type=" + paymentType;
+	result += ", creation Date=" + creationDate;
+	result += ", version=" + version;
     result += "]";
     return result;
   }
 
-	
+		
 	
 	/**
 	 * @return
@@ -284,6 +292,36 @@ public class Guide implements IGuide {
 	 */
 	public void setGuideSituations(List list) {
 		guideSituations = list;
+	}
+	
+	
+	/**
+	 * @return
+	 */
+	public Date getCreationDate() {
+		return creationDate;
+	}
+	
+	
+	/**
+	 * @param date
+	 */
+	public void setCreationDate(Date date) {
+		creationDate = date;
+	}
+	
+	/**
+	 * @return
+	 */
+	public Integer getVersion() {
+		return version;
+	}
+	
+	/**
+	 * @param integer
+	 */
+	public void setVersion(Integer integer) {
+		version = integer;
 	}
 
 }

@@ -12,14 +12,14 @@
     <body>
      <bean:define id="guide" name="<%= SessionConstants.GUIDE %>" scope="session" />
     <table width="100%" height="100%" border="0">
-    <tr><td>
+    <tr height="30"><td>
      <table width="100%" border="0" valign="top">
       <tr> 
         <td height="100" colspan="2">
           <table border="0" width="100%" height="104" align="center" cellpadding="0" cellspacing="0">
             <tr> 
               <td width="50" height="100">
-               <img src="/posgrad/Imagens/istlogo2.gif" width="50" height="104" border="0"/> 
+               <img src="/ciapl/posGraduacao/guide/images/istlogo.gif" width="50" height="104" border="0"/> 
               </td>
               <td>
                 &nbsp;
@@ -48,7 +48,8 @@
 
 	</td>
 	</tr>
-    <tr><td>
+    <tr valign="top" >
+    <td>
 
 	<table width="100%" border="0">
 	 <tr>
@@ -90,6 +91,10 @@
 	  </table>
 	 </td>
 	 </tr>
+	 </table>
+	 </td>
+	 </tr>
+	 
 	 <tr>
 	 <td> 
 	   <table align="right">
@@ -113,9 +118,21 @@
 	   </table>
 	 </td>
 	 </tr>
+	 
 	 <tr>
 	 <td>
-     <table valign="bottom" width="100%">
+	 </td>
+	 </tr>
+	 
+	 <tr valign="bottom">
+	 <td>
+     <table valign="bottom" width="100%" border="0">
+       <tr>
+         <td>
+			<bean:write name="<%= SessionConstants.DATE %>" />			
+         </td>
+       </tr>
+       
        <tr>
         <td>&nbsp;</td>
          <td colspan="2" valign="bottom">
@@ -128,21 +145,16 @@
           <hr align="center" width="300" size="1">
          </td>
        </tr>
+
 	 </table>
 	 </td>
 	 </tr>
-	</table>
-
-	 </td>
-	 </tr>
+	 
      <tr>	 
 	 <td>
-
-
-
-    <table width="100%" border="0">
-     <tr>	 
-	 <td>
+     <table width="100%" border="0">
+      <tr>	 
+ 	  <td>
 	 	<table align="center" width="90%" valign="bottom">
 	      <tr>
           <td colspan="2" valign="bottom" >
