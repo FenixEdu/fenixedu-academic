@@ -139,6 +139,23 @@ create table EVALUATION_METHOD (
    type=InnoDB comment="InnoDB free: 372736 kB";
 
 #----------------------------
+# Table structure for Summary
+#----------------------------
+drop table if exists SUMMARY;
+create table SUMMARY (
+   ID_INTERNAL int(11) unsigned not null auto_increment,   
+   KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
+   TITLE text,
+   SUMMARY_DATE date,
+   SUMMARY_HOUR time,
+   LAST_MODIFICATION_DATE timestamp not null default 'NOW()',
+   SUMMARY_TEXT text,
+   SUMMARY_TYPE int,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_EXECUTION_COURSE, SUMMARY_DATE,SUMMARY_HOUR))
+   type=InnoDB ;
+
+#----------------------------
 # Table structure for StudentGroup
 #----------------------------
 drop table if exists STUDENT_GROUP;
@@ -180,6 +197,3 @@ create table GROUP_PROPERTIES (
    unique ID_INTERNAL (KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
    
-	
-	
-	

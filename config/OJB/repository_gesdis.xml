@@ -469,7 +469,70 @@
     </reference-descriptor>
 </class-descriptor>	
 
-
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.Summary -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.Summary"
+                  table="SUMMARY">
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor id="2"
+        name="title"
+        column="TITLE"
+        jdbc-type="VARCHAR"
+	/>
+    <field-descriptor id="3"
+        name="summaryDate"
+        column="SUMMARY_DATE"
+        jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+	/>
+	  <field-descriptor id="4"
+        name="summaryHour"
+        column="SUMMARY_HOUR"
+        jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+	/>
+    <field-descriptor id="5"
+        name="lastModifiedDate"
+        column="LAST_MODIFICATION_DATE"
+        jdbc-type="TIMESTAMP"
+        conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>
+    <field-descriptor id="6"
+        name="summaryText"
+        column="SUMMARY_TEXT"
+        jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+	/>
+    <field-descriptor id="7"
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<field-descriptor id="8"
+        name="summaryType"
+        column="SUMMARY_TYPE"
+        jdbc-type="INTEGER"
+         conversion="ServidorPersistente.Conversores.TipoAula2EnumTipoAulaFieldConversion"
+	/>	
+    <reference-descriptor
+         name="executionCourse"
+         class-ref="Dominio.DisciplinaExecucao"
+         proxy="true"
+    >
+    
+	<foreignkey field-id-ref="7"/>
+    </reference-descriptor>
+    <attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
+</class-descriptor>
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for Dominio.StudentGroup -->
 <!-- ******************************************************************************************************************************* -->
@@ -628,6 +691,4 @@
 	</reference-descriptor>
 
 </class-descriptor>
-
-
 <!-- Mapping of User defined classes ends here -->
