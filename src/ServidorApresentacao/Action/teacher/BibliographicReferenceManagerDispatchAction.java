@@ -7,9 +7,7 @@
 package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,7 +24,7 @@ import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.Action.base.FenixLookupDispatchAction;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -38,7 +36,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class BibliographicReferenceManagerDispatchAction
-	extends FenixLookupDispatchAction {
+	extends FenixDispatchAction {
 
 	public ActionForward createBibliographicReference(
 		ActionMapping mapping,
@@ -293,6 +291,7 @@ public class BibliographicReferenceManagerDispatchAction
 
 		ArrayList referenceList = null;
 		if (index != null) {
+			session.setAttribute("edit", "Editar");
 			Integer indexInt = new Integer(index);
 			referenceList =
 				(ArrayList) session.getAttribute(
@@ -315,18 +314,18 @@ public class BibliographicReferenceManagerDispatchAction
 				referenceForm.set("optional", "1");
 			else
 				referenceForm.set("optional", "0");
-		} else {			
+		} else {
+			session.removeAttribute("edit");			
 			session.removeAttribute("bibliographicReferenceForm");		
 		}
-		session.setAttribute("edit", method);
-		//referenceForm.set("page",new Integer(1));
+				
 		return mapping.findForward("editBibliographicReference");
 	}
 
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.Action.FenixLookupDispatchAction#getKeyMethodMap()
 	 */
-	protected Map getKeyMethodMap() {
+/*	protected Map getKeyMethodMap() {
 		Map map = new HashMap();
 		map.put("button.insert", "prepareEditBibliographicReference");
 		map.put("button.confirmInsert", "createBibliographicReference");
@@ -335,5 +334,5 @@ public class BibliographicReferenceManagerDispatchAction
 		map.put("button.confirmEdit", "editBibliographicReference");
 		map.put("button.view", "viewBibliographicReference");
 		return map;
-	}
+	}*/
 }

@@ -9,9 +9,9 @@
         <tbody>
             <tr>
                 <td>
-                	<html:submit property="method">			
-                       <bean:message key="button.insert"/>                    		     
-                    </html:submit>                               	                                           				
+                  	<html:link page="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference">			
+                         <bean:message key="button.insert"/>                    		     
+                    </html:link>                               	       
                 </td>
             </tr>
             <tr>
@@ -50,10 +50,10 @@
                     </tr>
                     <tr>
                         <td>                                        	 	                        
-       		  	  			<html:link page="/bibliographicReferenceManager.do?method=Editar" indexId="index" indexed="true">			
+       		  	  			<html:link page="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference" indexId="index" indexed="true">			
                                   <bean:message key="button.edit"/>                    		     
                             </html:link>                               	       
-                  			<html:link page="/bibliographicReferenceManager.do?method=Apagar" indexId="index" indexed="true">			
+                  			<html:link page="/bibliographicReferenceManager.do?method=deleteBibliographicReference" indexId="index" indexed="true">			
                                   <bean:message key="button.delete"/>                    		     
                             </html:link>                               	                       
                         </td>
@@ -100,10 +100,10 @@
                     </tr>
                     <tr>
                         <td>     
-                  			<html:link page="/bibliographicReferenceManager.do?method=Editar" indexId="index" indexed="true">			
+                  			<html:link page="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference" indexId="index" indexed="true">			
                                   <bean:message key="button.edit"/>                    		     
                             </html:link>                               	       
-                  			<html:link page="/bibliographicReferenceManager.do?method=Apagar" indexId="index" indexed="true">			
+                  			<html:link page="/bibliographicReferenceManager.do?method=deleteBibliographicReference" indexId="index" indexed="true">			
                                   <bean:message key="button.delete"/>                    		     
                             </html:link>                               	       
                         </td>

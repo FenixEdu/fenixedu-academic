@@ -16,7 +16,7 @@
 <html:link page="/programManagerDA.do?method=acessProgram">
 	<bean:message key="link.program"/>
 </html:link>
-<html:link page="/bibliographicReferenceManager.do?method=Visualizar">
+<html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference">
 	<bean:message key="link.bibliography"/>
 </html:link>
 <html:link page="/logoff.do">

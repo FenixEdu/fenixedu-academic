@@ -34,17 +34,19 @@
     
     <center>
     
-    <logic:equal name="edit" scope="session" value="Inserir">
-   	 	<html:submit property="method">
+    <logic:notPresent name="edit">
+    	<html:hidden property="method" value="createBibliographicReference"/>
+   	 	<html:submit>
     	   	<bean:message key="button.confirmInsert"/>                    		         	
     	</html:submit>       
-    </logic:equal>
+    </logic:notPresent>
     
-    <logic:equal name="edit" scope="session" value="Editar">
-   	 	<html:submit property="method">
+    <logic:present name="edit">
+       	<html:hidden property="method" value="editBibliographicReference"/>
+   	 	<html:submit>
     	   	<bean:message key="button.confirmEdit"/>                    		         	
     	</html:submit>       
-    </logic:equal>	
+    </logic:present>	
     	
     </center></p>
     </fieldset>

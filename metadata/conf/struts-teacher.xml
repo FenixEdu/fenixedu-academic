@@ -56,6 +56,7 @@
             <form-property name="year" type="java.lang.String" />
             <form-property name="optional" type="java.lang.String" />
             <form-property name="page" type="java.lang.Integer" initial="0" />
+            <form-property name="method" type="java.lang.String"/>
 	</form-bean>    			
 
 	<form-bean name="insertAnnouncementForm"
