@@ -124,10 +124,6 @@ public class CreateGrantOwner
 									persistentPerson,
 									persistentGrantOwner);
 		
-			//next 2 lines are necessary due to a possible OJB lock problem
-			persistentSupport.confirmarTransaccao();
-			persistentSupport.iniciarTransaccao();
-			
 			//create or edit person information
 			person =
 				createPersonBase(
