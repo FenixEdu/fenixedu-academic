@@ -9,14 +9,17 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoShift;
-import DataBeans.util.Cloner;
+import DataBeans.InfoSiteShifts;
 import Dominio.GroupProperties;
 import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
+import Dominio.IStudentGroup;
 import Dominio.ITurno;
-import Dominio.Turno;
+import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
@@ -56,18 +59,33 @@ public class ReadGroupPropertiesShifts implements IServico {
     /**
      * Executes the service.
      */
-    public List run(Integer groupPropertiesCode, Integer shiftCode)
+    public InfoSiteShifts run(Integer groupPropertiesCode, Integer studentGroupCode)
             throws FenixServiceException {
-
+    	
+    	InfoSiteShifts infoSiteShifts = new InfoSiteShifts();
         List infoShifts = new ArrayList();
         IGroupProperties groupProperties = null;
         boolean result = false;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-
+            IStudentGroup studentGroup = null;
             groupProperties = (IGroupProperties) sp
-                    .getIPersistentGroupProperties().readByOID(
-                            GroupProperties.class, groupPropertiesCode);
+			.getIPersistentGroupProperties().readByOID(
+					GroupProperties.class, groupPropertiesCode);
+            if(groupProperties == null){
+            	throw new ExistingServiceException();
+            }
+            if (studentGroupCode != null) {
+
+                studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+                        StudentGroup.class, studentGroupCode);
+
+                if (studentGroup == null) {
+                	throw new InvalidSituationServiceException();
+                }
+                
+                infoSiteShifts.setOldShift(InfoShift.newInfoFromDomain(studentGroup.getShift()));
+            }
             
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
 			.getInstance();
@@ -100,30 +118,20 @@ public class ReadGroupPropertiesShifts implements IServico {
                     ITurno shift = (ITurno) shifts.get(i);
                     result = strategy.checkNumberOfGroups(groupProperties,
                             shift);
-                    System.out.println("portal do estudante: result" + result);
+                    
                     if (result) {
-
-                        InfoShift infoShift = (InfoShift) Cloner.get(shift);
-                        System.out.println("portal do estudante infoShift"+ infoShift.toString());
-                        infoShift.setIdInternal(shift.getIdInternal());
-
-                        infoShifts.add(infoShift);
+                    	infoShifts.add(InfoShift.newInfoFromDomain(shift));
                     }
                 }
-
-                if (shiftCode != null) {
-                    ITurno oldShift = (ITurno) persistentShift
-                            .readByOID(Turno.class, shiftCode);
-                    infoShifts.add(Cloner.get(oldShift));
-                }
-
             }
         	}
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
-
-        return infoShifts;
+        
+        infoSiteShifts.setShifts(infoShifts);
+        return infoSiteShifts;
+        
     }
 
 }

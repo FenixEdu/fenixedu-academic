@@ -29,6 +29,7 @@ import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidStudentNumberServiceException;
 import ServidorAplicacao.Servico.exceptions.NoChangeMadeServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NonValidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -149,8 +150,16 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		try {
 
 			ServiceUtils.executeService(userView, "GroupEnrolment", args);
-
-		} catch (NoChangeMadeServiceException e) {
+		
+		}catch (NonExistingServiceException e) {
+			ActionErrors actionErrors1 = new ActionErrors();
+			ActionError error1 = null;
+			// Create an ACTION_ERROR 
+			error1 = new ActionError("error.noProject");
+			actionErrors1.add("error.noProject", error1);
+			saveErrors(request, actionErrors1);
+			return mapping.findForward("viewStudentGroupInformation");
+		}catch (NoChangeMadeServiceException e) {
 			ActionErrors actionErrors1 = new ActionErrors();
 			ActionError error1 = null;
 			// Create an ACTION_ERROR 
@@ -208,7 +217,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 			actionErrors1.add("errors.existing.groupStudentEnrolment", error1);
 			saveErrors(request, actionErrors1);
 			return mapping.findForward("viewShiftsAndGroups");
-
+			
 		} catch (FenixServiceException e) {
 		   ActionErrors actionErrors1 = new ActionErrors();
 		   ActionError error1 = null;

@@ -26,6 +26,7 @@ import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidStudentNumberServiceException;
 import ServidorAplicacao.Servico.exceptions.NoChangeMadeServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NonValidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
@@ -66,6 +67,10 @@ public class GroupEnrolment implements IService {
                     .getIPersistentGroupProperties().readByOID(
                             GroupProperties.class, groupPropertiesCode);
 
+            if(groupProperties == null){
+            	throw new NonExistingServiceException();
+            }
+            
             IStudent userStudent = sp.getIPersistentStudent().readByUsername(
                     username);
        
@@ -91,7 +96,7 @@ public class GroupEnrolment implements IService {
             ITurno shift = null;
             
             Integer result= null;
-            if(strategy.checkHasShift(groupProperties)){
+            if(shiftCode != null){
            	 shift = (ITurno) sp.getITurnoPersistente().readByOID(
                        Turno.class, shiftCode);
             }

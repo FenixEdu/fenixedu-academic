@@ -95,6 +95,10 @@
 		<put name="body" value="/student/editStudentGroupShift_bd.jsp" />		
 	</definition>
 
+	<definition name="enroll-studentGroup-shift" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollStudentGroupShift_bd.jsp" />		
+	</definition>
+	
 	<definition name="definition.student.test" extends="definition.student.masterPage">
 		<put name="body" value="/student/test_bd.jsp" />		
 	</definition>

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -15,6 +17,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoSiteShiftsAndGroups;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -42,7 +45,15 @@ public class ViewShiftsAndGroupsAction extends FenixContextAction {
             infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ServiceUtils.executeService(userView,
                     "ReadShiftsAndGroups", args);
 
-        } catch (FenixServiceException e) {
+        } catch (InvalidSituationServiceException e)
+        {
+            ActionErrors actionErrors2 = new ActionErrors();
+            ActionError error2 = null;
+            error2 = new ActionError("error.noProject");
+            actionErrors2.add("error.noProject", error2);
+            saveErrors(request, actionErrors2);
+            return mapping.findForward("viewExecutionCourseProjects");
+        }catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 

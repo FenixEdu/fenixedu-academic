@@ -2526,8 +2526,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 			{
 				ActionErrors actionErrors = new ActionErrors();
 				ActionError error = null;
-				error = new ActionError("error.GroupPropertiesShiftTypeChanged");
-				actionErrors.add("error.GroupPropertiesShiftTypeChanged", error);
+				error = new ActionError("error.enrollStudentGroupShift");
+				actionErrors.add("error.enrollStudentGroupShift", error);
 				saveErrors(request, actionErrors);
 				return viewShiftsAndGroups(mapping, form, request, response);
 				

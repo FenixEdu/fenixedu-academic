@@ -1,5 +1,5 @@
 /*
- * Created on 07/Set/2003
+ * Created on 13/Nov/2004
  *
  */
 package ServidorAplicacao.Servico.student;
@@ -15,7 +15,6 @@ import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import Dominio.ITurno;
 import Dominio.StudentGroup;
-import Dominio.Turno;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -30,20 +29,19 @@ import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author asnr and scpo
+ * @author joaosa and rmalo
  *  
  */
 
-public class EditGroupShift implements IService {
+public class UnEnrollGroupShift implements IService {
 
     /**
      * The constructor of this class.
      */
-    public EditGroupShift() {
+    public UnEnrollGroupShift() {
     }
 
     /**
@@ -51,10 +49,9 @@ public class EditGroupShift implements IService {
      */
 
 
-    public boolean run(Integer studentGroupCode, Integer groupPropertiesCode,Integer newShiftCode,
-            String username) throws FenixServiceException {
-
-        ITurnoPersistente persistentShift = null;
+    public boolean run(Integer studentGroupCode, Integer groupPropertiesCode,String username) throws FenixServiceException {
+    	
+       
         IPersistentStudentGroup persistentStudentGroup = null;
         IPersistentGroupProperties persistentGroupProperties = null;
         
@@ -81,14 +78,11 @@ public class EditGroupShift implements IService {
             if (studentGroup == null)
                 throw new InvalidArgumentsServiceException();
             
-            persistentShift = persistentSupport.getITurnoPersistente();
-            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
-                    newShiftCode);
             
-            if(groupProperties.getShiftType() == null || 
-             	   (groupProperties.getShiftType().getTipo().intValue() != shift.getTipo().getTipo().intValue())){
-             	throw new InvalidStudentNumberServiceException();
-             }
+            if(!(studentGroup.getShift() != null && groupProperties.getShiftType() == null) || studentGroup.getShift() == null){
+            	throw new InvalidStudentNumberServiceException();
+            }
+            
             
             IStudent student = persistentSupport.getIPersistentStudent()
             .readByUsername(username);
@@ -102,6 +96,7 @@ public class EditGroupShift implements IService {
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
                     .getGroupEnrolmentStrategyInstance(groupProperties);
             
+            ITurno shift = null;
             boolean result = strategy.checkNumberOfGroups(groupProperties,shift);
             if (!result) {
                 throw new InvalidChangeServiceException();

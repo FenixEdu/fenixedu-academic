@@ -17,7 +17,9 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteStudentGroup;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -38,34 +40,48 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
 
 		String studentGroupCodeString = request.getParameter("studentGroupCode");
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
-		
 		String shiftCodeString = request.getParameter("shiftCode");
-		request.setAttribute("shiftCode", shiftCodeString);
-
+		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+		
 		ISiteComponent viewStudentGroup;
 		Object[] args = { studentGroupCode };
-		Object[] argsAux = {studentGroupCode,userView.getUtilizador()};
+		Object[] argsAux = {studentGroupCode,groupPropertiesCode,shiftCodeString,userView.getUtilizador()};
+		
 		try {
+			
+			Integer type = (Integer) ServiceUtils.executeService(userView, "VerifyGroupPropertiesAndStudentGroupWithoutShift",argsAux);
 			viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService(userView, "ReadStudentGroupInformation", args);
-			Boolean StudentGroupWithoutShift = (Boolean) ServiceUtils.executeService(userView, "VerifyGroupPropertiesAndStudentGroupWithoutShift",argsAux);
-
-			if(StudentGroupWithoutShift.booleanValue()){
-				request.setAttribute("StudentGroupWithoutShift", new Boolean(true));
-			}	
-		} catch (InvalidSituationServiceException e) {
+			request.setAttribute("ShiftType",type);
+		}catch (ExistingServiceException e){
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noProject");
+			actionErrors.add("error.noProject", error);
+			saveErrors(request, actionErrors);
+			return mapping.findForward("viewExecutionCourseProjects");
+		}catch (InvalidSituationServiceException e) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
 			error = new ActionError("error.noGroup");
 			actionErrors.add("error.noGroup", error);
 			saveErrors(request, actionErrors);
 			return mapping.findForward("viewShiftsAndGroups");
-		}
-		catch (FenixServiceException e){
+		}catch (InvalidArgumentsServiceException e){
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.StudentGroupShiftIsChanged");
+			actionErrors.add("error.StudentGroupShiftIsChanged", error);
+			saveErrors(request, actionErrors);
+			return mapping.findForward("viewShiftsAndGroups");
+		}catch (FenixServiceException e){
 			throw new FenixActionException(e);
 		}
 		
-	InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
+		InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
+
 		request.setAttribute("infoSiteStudentGroup", infoSiteStudentGroup);
+
 		return mapping.findForward("sucess");
 	}
 }

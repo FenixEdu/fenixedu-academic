@@ -1,5 +1,5 @@
 /*
- * Created on 27/Ago/2003
+ * Created on 13/Nov/2004
  *
  */
 package ServidorApresentacao.Action.student;
@@ -35,13 +35,13 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * @author asnr and scpo
+ * @author joaosa and rmalo
  * 
  */
-public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
+public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
 {
 
-    public ActionForward prepareEdit(
+    public ActionForward prepareEnrollStudentGroupShift(
         ActionMapping mapping,
         ActionForm form,
         HttpServletRequest request,
@@ -54,9 +54,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         String studentGroupCodeString = request.getParameter("studentGroupCode");
-        String shiftCodeString = request.getParameter("shiftCode");
-        Integer shiftCode = new Integer(shiftCodeString);
-		Integer studentGroupCode = new Integer(studentGroupCodeString);
+        Integer studentGroupCode = new Integer(studentGroupCodeString);
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
         Object[] args1 = { groupPropertiesCode, null, studentGroupCode, userView.getUtilizador(), new Integer(4)};
@@ -75,8 +73,8 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
         {
             ActionErrors actionErrors1 = new ActionErrors();
             ActionError error1 = null;
-            error1 = new ActionError("errors.editStudentGroupShift.notEnroled");
-            actionErrors1.add("errors.editStudentGroupShift.notEnroled", error1);
+            error1 = new ActionError("errors.enrollStudentGroupShift.notEnroled ");
+            actionErrors1.add("errors.enrollStudentGroupShift.notEnroled ", error1);
             saveErrors(request, actionErrors1);
             return mapping.findForward("viewStudentGroupInformation");
 
@@ -122,8 +120,8 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
             ActionErrors actionErrors3 = new ActionErrors();
             ActionError error3 = null;
             // Create an ACTION_ERROR 
-            error3 = new ActionError("errors.editStudentGroupShift.allShiftsFull");
-            actionErrors3.add("errors.editStudentGroupShift.allShiftsFull", error3);
+            error3 = new ActionError("errors.enrollStudentGroupShift.allShiftsFull");
+            actionErrors3.add("errors.enrollStudentGroupShift.allShiftsFull", error3);
             saveErrors(request, actionErrors3);
             request.setAttribute("groupPropertiesCode", groupPropertiesCode);
             return mapping.findForward("viewStudentGroupInformation");
@@ -150,8 +148,8 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
                 {
                     ActionErrors actionErrors4 = new ActionErrors();
                     ActionError error4 = null;
-                    error4 = new ActionError("errors.editStudentGroupShift.allShiftsFull");
-                    actionErrors4.add("errors.editStudentGroupShift.allShiftsFull", error4);
+                    error4 = new ActionError("errors.enrollStudentGroupShift.allShiftsFull");
+                    actionErrors4.add("errors.enrollStudentGroupShift.allShiftsFull", error4);
                     saveErrors(request, actionErrors4);
                     return mapping.findForward("viewStudentGroupInformation");
                 }
@@ -165,7 +163,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
 
     }
 
-    public ActionForward edit(
+    public ActionForward enrollStudentGroupShift(
         ActionMapping mapping,
         ActionForm form,
         HttpServletRequest request,
@@ -175,7 +173,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
 
         HttpSession session = request.getSession(false);
 
-        DynaActionForm editStudentGroupForm = (DynaActionForm) form;
+        DynaActionForm enrollStudentGroupForm = (DynaActionForm) form;
 
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -183,7 +181,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
-        String newShiftString = (String) editStudentGroupForm.get("shift");
+        String newShiftString = (String) enrollStudentGroupForm.get("shift");
 
         if (newShiftString.equals(""))
         {
@@ -192,7 +190,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
             error = new ActionError("errors.invalid.shift.groupEnrolment");
             actionErrors.add("errors.invalid.shift.groupEnrolment", error);
             saveErrors(request, actionErrors);
-            return prepareEdit(mapping, form, request, response);
+            return prepareEnrollStudentGroupShift(mapping, form, request, response);
 
         } 
             Integer newShiftCode = new Integer(newShiftString);
@@ -200,7 +198,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
 
             try
             {
-                ServiceUtils.executeService(userView, "EditGroupShift", args);
+                ServiceUtils.executeService(userView, "EnrollGroupShift", args);
             }catch (ExistingServiceException e){
     			ActionErrors actionErrors = new ActionErrors();
     			ActionError error = null;
@@ -221,8 +219,8 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
             {
                 ActionErrors actionErrors = new ActionErrors();
                 ActionError error = null;
-                error = new ActionError("errors.editStudentGroupShift.notEnroled");
-                actionErrors.add("errors.editStudentGroupShift.notEnroled", error);
+                error = new ActionError("errors.enrollStudentGroupShift.notEnroled");
+                actionErrors.add("errors.enrollStudentGroupShift.notEnroled", error);
                 saveErrors(request, actionErrors);
                 return mapping.findForward("viewStudentGroupInformation");
 
@@ -231,8 +229,8 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
                 ActionErrors actionErrors3 = new ActionErrors();
                 ActionError error3 = null;
                 // Create an ACTION_ERROR 
-                error3 = new ActionError("errors.editStudentGroupShift.shiftFull");
-                actionErrors3.add("errors.editStudentGroupShift.shiftFull", error3);
+                error3 = new ActionError("errors.enrollStudentGroupShift.shiftFull");
+                actionErrors3.add("errors.enrollStudentGroupShift.shiftFull", error3);
                 saveErrors(request, actionErrors3);
                 return mapping.findForward("viewStudentGroupInformation");
 
@@ -240,8 +238,8 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
             {
                 ActionErrors actionErrors3 = new ActionErrors();
                 ActionError error3 = null;
-                error3 = new ActionError("error.GroupPropertiesShiftTypeChanged");
-                actionErrors3.add("error.GroupPropertiesShiftTypeChanged", error3);
+                error3 = new ActionError("error.enrollStudentGroupShift");
+                actionErrors3.add("error.enrollStudentGroupShift", error3);
                 saveErrors(request, actionErrors3);
                 return mapping.findForward("viewShiftsAndGroups");
 

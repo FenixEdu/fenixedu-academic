@@ -444,6 +444,7 @@
               name="enroledExecutionCoursesForm"
               validate="true">
         <forward name="sucess" path="view-Shifts-Groups"/>
+        <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>
       </action>
 
       	<action type="ServidorApresentacao.Action.student.ViewStudentGroupInformationAction"
@@ -452,7 +453,8 @@
               name="enroledExecutionCoursesForm"
               validate="true">
         <forward name="sucess" path="view-StudentGroup-Information"/>
-        <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>        
+        <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>  
+        <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>      
       </action>
       
 
@@ -490,7 +492,7 @@
         <forward name="sucess" path="group-enrolment"/>
         <forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
-        
+        <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
       </action>
       
       	<action type="ServidorApresentacao.Action.student.EditStudentGroupShiftDispatchAction"
@@ -502,9 +504,32 @@
         <forward name="sucess" path="edit-studentGroup-shift"/>
         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
+        <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
+    </action>
+    <action type="ServidorApresentacao.Action.student.EnrollStudentGroupShiftDispatchAction"
+            path="/enrollStudentGroupShift"
+            scope="request"
+            validate="true"
+            parameter="method"
+            name="groupEnrolmentForm">
+        <forward name="sucess" path="enroll-studentGroup-shift"/>
+        <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
+        <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
+        <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
+    </action>
+    <action type="ServidorApresentacao.Action.student.UnEnrollStudentGroupShiftDispatchAction"
+            path="/unEnrollStudentGroupShift"
+            scope="request"
+            validate="true"
+            parameter="method"
+            name="groupEnrolmentForm">
+       <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
+        <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
+        <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
     </action>
    
-      <!-- END OF GROUPS -->
+	
+	  <!-- END OF GROUPS -->
       
           <!-- TESTS -->
       <action path="/studentTests"

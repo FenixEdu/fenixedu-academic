@@ -892,6 +892,24 @@
         </filterChains>
     </service>
     <service>
+        <name>EnrollGroupShift</name>
+        <implementationClass>ServidorAplicacao.Servico.student.EnrollGroupShift</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>UnEnrollGroupShift</name>
+        <implementationClass>ServidorAplicacao.Servico.student.UnEnrollGroupShift</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>ReadShiftsAndGroups</name>
         <implementationClass>ServidorAplicacao.Servico.student.ReadShiftsAndGroups</implementationClass>
         <description/>

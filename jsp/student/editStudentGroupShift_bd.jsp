@@ -29,12 +29,9 @@
 		
 		<tr>
 			<td><bean:message key="label.editStudentGroupShift.oldShift"/></td>
-			 <logic:present name="shift">
+			
 			<td><bean:write name="shift" property="nome"/></td>
-			</logic:present>
-			 <logic:notPresent name="shift">
-			<td><bean:message key="message.NoShift"/></td>
-			</logic:notPresent>
+			
 			<td><span class="error"><html:errors property="shiftType"/></span></td>
 		</tr>
 		
@@ -66,9 +63,7 @@
 
 <html:hidden property="method" value="edit"/>
 <html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
-<logic:present name="shiftCode">
 <html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
-</logic:present>
 <html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
 <html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 
@@ -84,9 +79,7 @@
 		<html:hidden property="method" value="execute"/>
 		<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
 		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>		
-		<logic:present name="shiftCode">
 		<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode")%>"/>
-		</logic:present>
 		<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
 		
 	</html:form>

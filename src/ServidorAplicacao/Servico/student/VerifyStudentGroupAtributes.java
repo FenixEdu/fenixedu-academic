@@ -12,6 +12,7 @@ import Dominio.ITurno;
 import Dominio.StudentGroup;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
@@ -178,21 +179,29 @@ public class VerifyStudentGroupAtributes implements IServico {
         return true;
     }
 
-    private boolean checkEditStudentGroupShift(Integer studentGroupCode,
+    private boolean checkEditStudentGroupShift(Integer studentGroupCode,Integer groupPropertiesCode,
             String username) throws FenixServiceException {
 
         boolean result = false;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
+            
+            IGroupProperties groupProperties = (IGroupProperties) sp
+			.getIPersistentGroupProperties().readByOID(
+					GroupProperties.class, groupPropertiesCode);
+            
+            if(groupProperties == null){
+            	throw new ExistingServiceException();
+            }
+            
             IStudentGroup studentGroup = (IStudentGroup) sp
                     .getIPersistentStudentGroup().readByOID(StudentGroup.class,
                             studentGroupCode);
-            
             if (studentGroup == null) {
                 throw new FenixServiceException();
             }
-            IGroupProperties groupProperties = studentGroup.getAttendsSet().getGroupProperties();
+            
             GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
 			.getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
@@ -235,7 +244,7 @@ public class VerifyStudentGroupAtributes implements IServico {
             return result;
 
         case 4:
-            result = checkEditStudentGroupShift(studentGroupCode, username);
+            result = checkEditStudentGroupShift(studentGroupCode, groupPropertiesCode, username);
             return result;
         }
 

@@ -13,13 +13,12 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import DataBeans.ISiteComponent;
-import DataBeans.InfoShift;
+import DataBeans.InfoShiftWithInfoLessons;
 import DataBeans.InfoSiteGroupsByShift;
 import DataBeans.InfoSiteShift;
 import DataBeans.InfoSiteShiftsAndGroups;
 import DataBeans.InfoSiteStudentGroup;
 import DataBeans.InfoStudentGroup;
-import DataBeans.util.Cloner;
 import Dominio.GroupProperties;
 import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
@@ -27,6 +26,7 @@ import Dominio.IStudentGroup;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
@@ -83,14 +83,15 @@ public class ReadShiftsAndGroups implements IServico {
                     .getIPersistentGroupProperties().readByOID(
                             GroupProperties.class, groupPropertiesCode);
 
-
+            if(groupProperties == null)throw new InvalidSituationServiceException();
+            
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
 			.getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
 			.getGroupEnrolmentStrategyInstance(groupProperties);
             
             if(strategy.checkHasShift(groupProperties)){
-            	infoSiteShiftsAndGroupsList = new ArrayList();
+            infoSiteShiftsAndGroupsList = new ArrayList();
             Iterator iterExecutionCourses = groupProperties.getExecutionCourses().iterator();
             List allShifts = new ArrayList();
             List allShiftsAux = new ArrayList();
@@ -126,9 +127,8 @@ public class ReadShiftsAndGroups implements IServico {
                                     groupProperties.getAttendsSet(), shift);
 
                     infoSiteShift = new InfoSiteShift();
-                    infoSiteShift.setInfoShift((InfoShift) Cloner.get(shift));
-                    
-                    List infoLessons = infoSiteShift.getInfoShift().getInfoLessons();
+					infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+					List infoLessons = infoSiteShift.getInfoShift().getInfoLessons();
                     
                     ComparatorChain chainComparator = new ComparatorChain();
                     chainComparator.addComparator(new BeanComparator(
@@ -147,10 +147,9 @@ public class ReadShiftsAndGroups implements IServico {
                         int vagas = groupProperties.getGroupMaximumNumber()
                                 .intValue()
                                 - allStudentGroups.size();
-                        //if (vagas >= 0)
+                       
                         infoSiteShift.setNrOfGroups(new Integer(vagas));
-                        //else
-                        //	infoSiteShift.setNrOfGroups(new Integer(0));
+                       
                     } else
                         infoSiteShift.setNrOfGroups("Sem limite");
 
@@ -164,14 +163,11 @@ public class ReadShiftsAndGroups implements IServico {
 
                         while (iterGroups.hasNext()) {
                             InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-                            InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
-                            infoStudentGroup = Cloner
-                                    .copyIStudentGroup2InfoStudentGroup((IStudentGroup) iterGroups
-                                            .next());
-                            infoSiteStudentGroup
-                                    .setInfoStudentGroup(infoStudentGroup);
-                            infoSiteStudentGroupsList.add(infoSiteStudentGroup);
-
+							InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+							infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups.next());
+							infoSiteStudentGroup
+							.setInfoStudentGroup(infoStudentGroup);
+							infoSiteStudentGroupsList.add(infoSiteStudentGroup);
                         }
                         Collections.sort(infoSiteStudentGroupsList,
                                 new BeanComparator(
@@ -241,8 +237,86 @@ public class ReadShiftsAndGroups implements IServico {
             }
             else{
             	
-            	 infoSiteShiftsAndGroupsList = new ArrayList();
-                InfoSiteGroupsByShift infoSiteGroupsByShift = null;
+            	infoSiteShiftsAndGroupsList = new ArrayList();
+    			
+    			if(!groupProperties.getAttendsSet().getStudentGroupsWithShift().isEmpty()){
+    				
+    				List allShifts=new ArrayList();
+    				List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();
+    				if (allStudentsGroup.size() != 0) {
+    					Iterator iterator = allStudentsGroup.iterator();
+    					while (iterator.hasNext()) {
+    						ITurno shift = ((IStudentGroup) iterator.next()).getShift();
+    						if (!allShifts.contains(shift)) {
+    							allShifts.add(shift);
+    						}
+    					}
+    				}
+
+    				if (allShifts.size() != 0) {
+    					Iterator iter = allShifts.iterator();
+    					InfoSiteGroupsByShift infoSiteGroupsByShiftAux = null;
+    					InfoSiteShift infoSiteShiftAux = null;
+
+    					while (iter.hasNext()) {
+    						ITurno shift = (ITurno) iter.next();
+    						List allStudentGroupsAux = persistentStudentGroup
+							.readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet(), shift);
+    						infoSiteShiftAux = new InfoSiteShift();
+    						infoSiteShiftAux.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+    						List infoLessons = infoSiteShiftAux.getInfoShift().getInfoLessons();
+    						ComparatorChain chainComparator = new ComparatorChain();
+    						chainComparator.addComparator(new BeanComparator("diaSemana.diaSemana"));
+    						chainComparator.addComparator(new BeanComparator("inicio"));
+    						chainComparator.addComparator(new BeanComparator("fim"));
+    						chainComparator.addComparator(new BeanComparator("infoSala.nome"));
+    						Collections.sort(infoLessons, chainComparator);
+    		          
+    						if (groupProperties.getGroupMaximumNumber() != null) {
+
+    							int vagas = 
+    								groupProperties.getGroupMaximumNumber().intValue()- allStudentGroupsAux.size();
+    							infoSiteShiftAux.setNrOfGroups(new Integer(vagas));
+    						} else
+    							infoSiteShiftAux.setNrOfGroups("Sem limite");
+    						infoSiteGroupsByShiftAux = new InfoSiteGroupsByShift();
+    						infoSiteGroupsByShiftAux.setInfoSiteShift(infoSiteShiftAux);
+    						List infoSiteStudentGroupsListAux = null;
+    						if (allStudentGroupsAux.size() != 0) {
+    							infoSiteStudentGroupsListAux = new ArrayList();
+    							Iterator iterGroups = allStudentGroupsAux.iterator();
+    							while (iterGroups.hasNext()) {
+    								InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+    								InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+    								infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups.next());
+    								infoSiteStudentGroup
+									.setInfoStudentGroup(infoStudentGroup);
+    								infoSiteStudentGroupsListAux.add(infoSiteStudentGroup);
+    							}
+    							Collections.sort(infoSiteStudentGroupsListAux,
+    									new BeanComparator(
+    									"infoStudentGroup.groupNumber"));
+
+    						}
+    						infoSiteGroupsByShiftAux
+							.setInfoSiteStudentGroupsList(infoSiteStudentGroupsListAux);
+
+    						infoSiteShiftsAndGroupsList.add(infoSiteGroupsByShiftAux);
+    					}
+    		    	
+    		        /* Sort the list of shifts */
+
+    					ComparatorChain chainComparator = new ComparatorChain();
+    					chainComparator.addComparator(new BeanComparator(
+    					"infoSiteShift.infoShift.tipo"));
+    					chainComparator.addComparator(new BeanComparator(
+    					"infoSiteShift.infoShift.nome"));
+    					Collections.sort(infoSiteShiftsAndGroupsList, chainComparator);
+    				}
+    			}
+            	
+            	
+            	InfoSiteGroupsByShift infoSiteGroupsByShift = null;
                 InfoSiteShift infoSiteShift = new InfoSiteShift();
 
                 infoSiteGroupsByShift = new InfoSiteGroupsByShift();

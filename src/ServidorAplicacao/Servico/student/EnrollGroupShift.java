@@ -1,5 +1,5 @@
 /*
- * Created on 07/Set/2003
+ * Created on 13/Nov/2004
  *
  */
 package ServidorAplicacao.Servico.student;
@@ -34,16 +34,16 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author asnr and scpo
+ * @author joaosa and rmalo
  *  
  */
 
-public class EditGroupShift implements IService {
+public class EnrollGroupShift implements IService {
 
     /**
      * The constructor of this class.
      */
-    public EditGroupShift() {
+    public EnrollGroupShift() {
     }
 
     /**
@@ -53,7 +53,7 @@ public class EditGroupShift implements IService {
 
     public boolean run(Integer studentGroupCode, Integer groupPropertiesCode,Integer newShiftCode,
             String username) throws FenixServiceException {
-
+    	
         ITurnoPersistente persistentShift = null;
         IPersistentStudentGroup persistentStudentGroup = null;
         IPersistentGroupProperties persistentGroupProperties = null;
@@ -85,10 +85,11 @@ public class EditGroupShift implements IService {
             ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
                     newShiftCode);
             
-            if(groupProperties.getShiftType() == null || 
+            if(groupProperties.getShiftType() == null || studentGroup.getShift()!=null ||
              	   (groupProperties.getShiftType().getTipo().intValue() != shift.getTipo().getTipo().intValue())){
              	throw new InvalidStudentNumberServiceException();
              }
+            
             
             IStudent student = persistentSupport.getIPersistentStudent()
             .readByUsername(username);
