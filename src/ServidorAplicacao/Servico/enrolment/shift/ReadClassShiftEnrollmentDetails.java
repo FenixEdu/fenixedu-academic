@@ -113,8 +113,7 @@ public class ReadClassShiftEnrollmentDetails implements IService
                     klass);
 
             enrollmentDetails = new InfoClassEnrollmentDetails();
-            enrollmentDetails.setInfoStudent(Cloner
-                    .copyIStudent2InfoStudent(student));
+            enrollmentDetails.setInfoStudent(Cloner.copyIStudent2InfoStudent(student));
             //enrollmentDetails.setInfoShiftEnrolledList(studentShifts);
             enrollmentDetails.setInfoShiftEnrolledList(infoShifts);
             enrollmentDetails.setInfoClassList(infoClassList);
@@ -264,8 +263,7 @@ public class ReadClassShiftEnrollmentDetails implements IService
         if (executionCourseShiftEnrollmentDetails == null)
         {
             executionCourseShiftEnrollmentDetails = new ExecutionCourseShiftEnrollmentDetails();
-            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
-                    .get(executionCourse);
+            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
             executionCourseShiftEnrollmentDetails
                     .setInfoExecutionCourse(infoExecutionCourse);
 
