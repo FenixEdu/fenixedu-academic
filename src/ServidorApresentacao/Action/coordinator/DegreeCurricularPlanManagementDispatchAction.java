@@ -30,8 +30,7 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * @author Fernanda Quitério 
- * 06/Nov/2003
+ * @author Fernanda Quitério 06/Nov/2003
  */
 public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchAction {
 	public ActionForward showActiveCurricularCourses(
@@ -54,14 +53,16 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 			infoDegreeCurricularPlan =
 				(InfoDegreeCurricularPlan) ServiceUtils.executeService(userView, "ReadActiveDegreeCurricularPlanByExecutionDegreeCode", args);
 
-		} catch (IllegalArgumentException e) {
-			errors.add("nullCode", new ActionError("error.coordinator.noExecutionDegree"));
-			saveErrors(request, errors);
 		} catch (NonExistingServiceException e) {
 			errors.add("chosenDegree", new ActionError("error.coordinator.chosenDegree"));
 			saveErrors(request, errors);
 		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
+			if (e.getMessage().equals("nullDegree")) {
+				errors.add("nullCode", new ActionError("error.coordinator.noExecutionDegree"));
+				saveErrors(request, errors);
+			} else {
+				throw new FenixActionException(e);
+			}
 		}
 
 		if (infoDegreeCurricularPlan == null) {
@@ -111,14 +112,16 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 			infoDegreeCurricularPlan =
 				(InfoDegreeCurricularPlan) ServiceUtils.executeService(userView, "ReadDegreeCurricularPlanHistoryByExecutionDegreeCode", args);
 
-		} catch (IllegalArgumentException e) {
-			errors.add("nullCode", new ActionError("error.coordinator.noExecutionDegree"));
-			saveErrors(request, errors);
 		} catch (NonExistingServiceException e) {
 			errors.add("chosenDegree", new ActionError("error.coordinator.chosenDegree"));
 			saveErrors(request, errors);
 		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
+			if (e.getMessage().equals("nullDegree")) {
+				errors.add("nullCode", new ActionError("error.coordinator.noExecutionDegree"));
+				saveErrors(request, errors);
+			} else {
+				throw new FenixActionException(e);
+			}
 		}
 
 		if (infoDegreeCurricularPlan == null) {
