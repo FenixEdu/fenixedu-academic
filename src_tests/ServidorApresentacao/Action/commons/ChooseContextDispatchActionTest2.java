@@ -115,7 +115,7 @@ public class ChooseContextDispatchActionTest2 extends TestCaseActionExecution {
 		HashMap list = new HashMap();
 		list.put(new Integer(ScopeConstants.SESSION), list);
 
-		doTest(null, null, "formPage", list, null);
+		doTest(null, null, "formPage",null, list, null);
 
 		assertTrue(
 			"Semester list must be not empty!",
@@ -173,7 +173,7 @@ public class ChooseContextDispatchActionTest2 extends TestCaseActionExecution {
 		HashMap list = new HashMap();
 		list.put(new Integer(ScopeConstants.SESSION), list);
 
-		doTest(attribSession, attribRequest, "nextPage", list, null);
+		doTest(attribSession, attribRequest, "nextPage",null, list, null);
 
 		CurricularYearAndSemesterAndInfoExecutionDegree ctx =
 			SessionUtils.getContext(getRequest());

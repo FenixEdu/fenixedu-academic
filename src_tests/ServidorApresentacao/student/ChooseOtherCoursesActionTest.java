@@ -295,7 +295,7 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 	IPlanoCurricularCurso pCC = new PlanoCurricularCurso();
 	pCC.setName("nome");
 
-	pCC.setCurso(_cursoExecucao1.getCurso());
+	pCC.setCurso(_cursoExecucao1.getCurricularPlan().getCurso());
 
 	IStudentCurricularPlan sCP = new StudentCurricularPlan();
 	sCP.setStudent(student);

@@ -146,7 +146,7 @@ public class ShiftEnrolmentActionTest extends MockStrutsTestCase {
 
 		_executionCourse = new DisciplinaExecucao();
 
-		_executionCourse.setLicenciaturaExecucao(_executionDegree);
+//		_executionCourse.setLicenciaturaExecucao(_executionDegree);
 		_executionCourse.setNome("ec1");
 		_executionCourse.setSigla("ec1");
 		// This has to be done because the domain conections are not yet complete
