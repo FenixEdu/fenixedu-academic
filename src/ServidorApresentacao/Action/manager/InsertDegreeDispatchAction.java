@@ -43,8 +43,6 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 			return mapping.findForward("insertDegree");
 		}
 
-
-
 	public ActionForward insert(
 		ActionMapping mapping,
 		ActionForm form,
@@ -61,26 +59,21 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 		Integer degreeTypeInt = (Integer) dynaForm.get("degreeType");
 				
 		TipoCurso degreeType = new TipoCurso(degreeTypeInt);
-    	InfoDegree infoDegree = new InfoDegree(
-												code,
-												name,
-			       								degreeType);
+    	InfoDegree infoDegree = new InfoDegree(code, name, degreeType);
+    	
 		Object args[] = { infoDegree };
 		GestorServicos manager = GestorServicos.manager();
 		List serviceResult = null;
+		
 		try {
 				serviceResult = (List) manager.executar(userView, "InsertDegreeService", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e.getMessage());
 		}
-		System.out.println("RESULTADO DO INSERT"+serviceResult);
 
 		try {	
 				List degrees = null;
-				degrees = (List) manager.executar(
-													userView,
-													"ReadDegreesService",
-													null);
+				degrees = (List) manager.executar(userView, "ReadDegreesService", null);
 				if (serviceResult != null) {
 					ActionErrors actionErrors = new ActionErrors();
 					ActionError error = null;

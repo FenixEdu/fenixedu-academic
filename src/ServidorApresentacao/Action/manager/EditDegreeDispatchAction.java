@@ -46,35 +46,28 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 			UserView userView =
 				(UserView) session.getAttribute(SessionConstants.U_VIEW);
 				
-			Integer degreeId =new Integer(request.getParameter("degreeId"));
-			
+			Integer degreeId = new Integer(request.getParameter("degreeId"));
 			
 			InfoDegree oldInfoDegree = null;
 
 			Object args[] = { degreeId };
 			GestorServicos manager = GestorServicos.manager();
-			try{
-				oldInfoDegree = (InfoDegree) manager.executar(userView, "ReadDegreeService", args);
-			}catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
+			
+			try {
+					oldInfoDegree = (InfoDegree) manager.executar(userView, "ReadDegreeService", args);
+			} catch (FenixServiceException fenixServiceException) {
+				throw new FenixActionException(fenixServiceException.getMessage());
 			}
 			
-			TipoCurso degreeType =(TipoCurso) oldInfoDegree.getTipoCurso();
+			TipoCurso degreeType = (TipoCurso) oldInfoDegree.getTipoCurso();
 	
-			
-			
-			readDegreeForm.set("name",(String) oldInfoDegree.getNome());
-			readDegreeForm.set("code",(String) oldInfoDegree.getSigla());
-			readDegreeForm.set("degreeType",degreeType.getTipoCurso());
-//			readDegreeForm.set("degreeId",degreeId);
-			
+			readDegreeForm.set("name", (String) oldInfoDegree.getNome());
+			readDegreeForm.set("code", (String) oldInfoDegree.getSigla());
+			readDegreeForm.set("degreeType", degreeType.getTipoCurso());
 
-			request.setAttribute("degreeId",degreeId);
+			request.setAttribute("degreeId", degreeId);
 			return mapping.findForward("editDegree");
 		}
-
-//	COMO +ONHO O ID EM SESSAO E DEFINO NUM BEAN DO JSP DEVIA IR BUSCÁ-LO AO REQUEST DO EDIT E 
-//  TIRÁLO TB DO SET DO PREPARE
 
 	public ActionForward edit(
 		ActionMapping mapping,
@@ -86,8 +79,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		DynaActionForm editDegreeForm = (DynaActionForm) form;
 			
-		UserView userView =
-				(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 				
 //		Integer oldDegreeId = (Integer)request.getAttribute("degreeId");
 //		System.out.println("NO EDIT"+oldDegreeId);
@@ -95,22 +87,19 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 //		ver o get parameter para ir buscar qq coisa que teja no URL
 //		ver pq só funbciona a ir buscar ao form ver s tb da como get parameeter
 		
-		Integer oldDegreeId = (Integer) editDegreeForm.get("degreeId");
-//		System.out.println("DEGREEIDaaaaaaaaaaaaaaaaaaaAA"+oldDegreeId);	
+		Integer oldDegreeId = (Integer) editDegreeForm.get("degreeId");	
 		
 		String code = (String) editDegreeForm.get("code");
 		String name = (String) editDegreeForm.get("name");
 		Integer degreeTypeInt = (Integer) editDegreeForm.get("degreeType");
-		TipoCurso degreeType = new TipoCurso(degreeTypeInt);
 		
-		InfoDegree newInfoDegree = new InfoDegree(
-												code,
-												name,
-												degreeType);
+		TipoCurso degreeType = new TipoCurso(degreeTypeInt);
+		InfoDegree newInfoDegree = new InfoDegree(code, name, degreeType);
 		
 		Object args[] = { oldDegreeId, newInfoDegree };
 		GestorServicos manager = GestorServicos.manager();
 		List serviceResult = null;
+		
 		try {
 				serviceResult = (List) manager.executar(userView, "EditDegreeService", args);
 		} catch (FenixServiceException e) {
@@ -135,7 +124,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 					saveErrors(request, actionErrors);
 				}
 				Collections.sort(degrees);
-				request.setAttribute(SessionConstants.INFO_DEGREES_LIST,degrees);
+				request.setAttribute(SessionConstants.INFO_DEGREES_LIST, degrees);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

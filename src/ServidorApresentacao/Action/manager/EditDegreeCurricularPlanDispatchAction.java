@@ -48,30 +48,29 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 			HttpSession session = request.getSession(false);
 			DynaActionForm dynaForm = (DynaActionForm) form;
 			
-			UserView userView =
-				(UserView) session.getAttribute(SessionConstants.U_VIEW);
-			Integer degreeCurricularPlanId =new Integer(request.getParameter("degreeCurricularPlanId"));
-			Integer degreeId =new Integer(request.getParameter("degreeId"));
-		
-			
+			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+			Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+			Integer degreeId = new Integer(request.getParameter("degreeId"));
+
 			InfoDegreeCurricularPlan oldInfoDegreeCP = null;
 
 			Object args[] = { degreeCurricularPlanId };
 			GestorServicos manager = GestorServicos.manager();
-			try{
-				oldInfoDegreeCP = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlanService", args);
-			}catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
+			
+			try {
+					oldInfoDegreeCP = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlanService", args);
+			} catch (FenixServiceException fenixServiceException) {
+				throw new FenixActionException(fenixServiceException.getMessage());
 			}
 			
 			//TENHO QUE CRIAR OBJECTOS COMO NO EDIT DEGREE PARA O DEGREETYPE
 
 			//como ainda temos Date no DegreeCP Date java->DateSql->Calendar
 			//e ponho no form como string para poder mostrar
-			dynaForm.set("name", (String) oldInfoDegreeCP.getName());
-			dynaForm.set("state", (String) oldInfoDegreeCP.getState().toString());
+			dynaForm.set("name", oldInfoDegreeCP.getName());
+			dynaForm.set("state", oldInfoDegreeCP.getState().getDegreeState().toString());
 			
-			if(oldInfoDegreeCP.getInitialDate()!=null){
+			if(oldInfoDegreeCP.getInitialDate() != null) {
 				
 				JavaDate2SqlDateFieldConversion iJavaDate = new JavaDate2SqlDateFieldConversion();
 				Date iSqlDate = (Date) iJavaDate.javaToSql(oldInfoDegreeCP.getInitialDate());
@@ -79,16 +78,14 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 				Calendar initialCalendar= (Calendar) initialCal.sqlToJava(iSqlDate);
 			
 				String day = (new Integer(initialCalendar.get(Calendar.DAY_OF_MONTH))).toString();
-				String month = (new Integer(initialCalendar.get(Calendar.MONTH))).toString();
+				String month = (new Integer(initialCalendar.get(Calendar.MONTH) + 1)).toString();
 				String year = (new Integer(initialCalendar.get(Calendar.YEAR))).toString();
 				String initialDateString = day+"/"+month+"/"+year;
 			
 				dynaForm.set("initialDate", initialDateString);
 			}		
-			
-			
 						
-			if(oldInfoDegreeCP.getEndDate()!=null){
+			if(oldInfoDegreeCP.getEndDate() != null){
 			
 				JavaDate2SqlDateFieldConversion javaDate = new JavaDate2SqlDateFieldConversion();
 				Date sqlDate = (Date) javaDate.javaToSql(oldInfoDegreeCP.getEndDate());
@@ -96,7 +93,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 				Calendar endCalendar= (Calendar) endCal.sqlToJava(sqlDate);
 			
 				String day = (new Integer(endCalendar.get(Calendar.DAY_OF_MONTH))).toString();
-				String month = (new Integer(endCalendar.get(Calendar.MONTH))).toString();
+				String month = (new Integer(endCalendar.get(Calendar.MONTH) + 1)).toString();
 				String year = (new Integer(endCalendar.get(Calendar.YEAR))).toString();
 				String endDateString = day+"/"+month+"/"+year;
 			
@@ -111,24 +108,16 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 			dynaForm.set("neededCredits", (String) oldInfoDegreeCP.getNeededCredits().toString());
 			
 			if(oldInfoDegreeCP.getMarkType()!=null)
-			dynaForm.set("markType", (String) oldInfoDegreeCP.getMarkType().toString());
+			dynaForm.set("markType", oldInfoDegreeCP.getMarkType().getType().toString());
 			
 			if(oldInfoDegreeCP.getNumerusClausus()!=null)
 			dynaForm.set("numerusClausus", (String) oldInfoDegreeCP.getNumerusClausus().toString());
-						
-						
+
 			request.setAttribute("degreeId",degreeId);
 			request.setAttribute("degreeCurricularPlanId",degreeCurricularPlanId);
 			return mapping.findForward("editDegreeCP");
 		}
-		
-		
-		
-		
-		
-		
-		
-		
+				
 //mm que esteja a editar e importante ter o id do degree
 
 	public ActionForward edit(
@@ -143,16 +132,13 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
     	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		
-		Integer oldDegreeCPId =(Integer) dynaForm.get("degreeCurricularPlanId");
-		Integer degreeId =(Integer) dynaForm.get("degreeId");
-		
+		Integer oldDegreeCPId = (Integer) dynaForm.get("degreeCurricularPlanId");
+		Integer degreeId = (Integer) dynaForm.get("degreeId");
 		
 		InfoDegreeCurricularPlan newInfoDegreeCP = new InfoDegreeCurricularPlan();		
 
-		
 		String name = (String) dynaForm.get("name");
 		Integer stateInt = new Integer((String) dynaForm.get("state"));
-		
 		
 		String initialDateString = (String) dynaForm.get("initialDate");
 		String endDateString = (String) dynaForm.get("endDate");
@@ -164,15 +150,9 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 		
 		String markTypeString = (String) dynaForm.get("markType");
 		String numerusClaususString = (String) dynaForm.get("numerusClausus");
-		
-//System.out.println("initialDate"+initialDateString.compareTo(""));
-
-
 
 		DegreeCurricularPlanState state = new DegreeCurricularPlanState(stateInt);
 
-
-//		Calendar initialDate = null;
 		if(initialDateString.compareTo("") != 0){
 				String[] initialDateTokens = initialDateString.split("/");
 
@@ -189,7 +169,6 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 			newInfoDegreeCP.setInitialDate(initialDate.getTime());
 		}
 
-//		Calendar endDate = null;
 		if(endDateString.compareTo("") != 0){
 				String[] endDateTokens = endDateString.split("/");
 
@@ -206,7 +185,6 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 			newInfoDegreeCP.setEndDate(endDate.getTime());
 		}
 		
-//		 neededCredits = null;
 		if(neededCreditsString.compareTo("") != 0) {
 			Double neededCredits = new Double(neededCreditsString); 
 			newInfoDegreeCP.setNeededCredits(neededCredits);
@@ -242,14 +220,10 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 			throw new FenixActionException(e);
 		}
 		
-		
-
-
-
 		Object args1[] = { degreeId };
 		try {	
 				List degreeCurricularPlans = null;
-			System.out.println("Antes do 2º Serviço");
+			
 				degreeCurricularPlans = (List) manager.executar(
 													userView,
 													"ReadDegreeCurricularPlansService",
@@ -267,10 +241,6 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 				Collections.sort(degreeCurricularPlans);
 				request.setAttribute("lista de planos curriculares",degreeCurricularPlans);
 				request.setAttribute("degreeId",degreeId);
-			System.out.println("depois do 2º Serviço FIM DA ACTION");
-			
-			
-			System.out.println("novo DEGREECP QUE KERO!!!!!!!111"+newInfoDegreeCP);
 			
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
