@@ -10,6 +10,7 @@ import Dominio.ExamEnrollment;
 import Dominio.IExamEnrollment;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExamEnrollment;
 import ServidorPersistente.ISuportePersistente;
@@ -69,7 +70,11 @@ public class EditExamEnrollment implements IServico {
 			oldExamEnrollment.setBeginDate(newBeginDate);
 			oldExamEnrollment.setEndDate(newEndDate);
 
-			
+			if (oldExamEnrollment.getExam().getDay() == null
+				|| oldExamEnrollment.getExam().getDay().getTimeInMillis()
+					< oldExamEnrollment.getEndDate().getTimeInMillis()) {
+				throw new InvalidTimeIntervalServiceException();
+			}
 
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

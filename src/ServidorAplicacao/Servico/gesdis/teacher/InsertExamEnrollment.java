@@ -76,7 +76,7 @@ public class InsertExamEnrollment implements IServico {
 			examEnrollment.setBeginDate(newBeginDate);
 			examEnrollment.setEndDate(newEndDate);
 		
-			if (exam.getDay().getTimeInMillis()<examEnrollment.getEndDate().getTimeInMillis()) {
+			if (exam.getDay()==null ||exam.getDay().getTimeInMillis()<examEnrollment.getEndDate().getTimeInMillis()) {
 				throw new InvalidTimeIntervalServiceException();
 			}
 		
