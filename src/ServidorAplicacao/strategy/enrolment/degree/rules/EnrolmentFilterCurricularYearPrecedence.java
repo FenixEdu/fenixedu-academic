@@ -41,7 +41,7 @@ public class EnrolmentFilterCurricularYearPrecedence implements IEnrolmentRule {
 			List correspondingCurricularCourses = (List) CollectionUtils.collect(studentEnrolmentsWithStateDiferentOfTemporarilyEnroled, new Transformer() {
 				public Object transform(Object obj) {
 					IEnrolment enrolment = (IEnrolment) obj;
-					return enrolment.getCurricularCourse();
+					return enrolment.getCurricularCourseScope().getCurricularCourse();
 				}
 			});
 			curricularCoursesNeverEnroled = new ArrayList();

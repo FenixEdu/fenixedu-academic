@@ -14,14 +14,16 @@ import Util.EnrolmentState;
 public class Enrolment implements IEnrolment {
 
 	private IStudentCurricularPlan studentCurricularPlan;
-	private ICurricularCourse curricularCourse;
+//	private ICurricularCourse curricularCourse;
 	private IExecutionPeriod executionPeriod;
 	private EnrolmentState enrolmentState;
 	private EnrolmentEvaluationType enrolmentEvaluationType;
+	private ICurricularCourseScope curricularCourseScope;
 
 	private Integer internalID;
 	private Integer studentCurricularPlanKey;
-	private Integer curricularCourseKey;
+//	private Integer curricularCourseKey;
+	private Integer curricularCourseScopeKey;
 	private Integer keyExecutionPeriod;
 	
 	private List evaluations;
@@ -32,29 +34,29 @@ public class Enrolment implements IEnrolment {
 		this.ojbConcreteClass = this.getClass().getName();
 	}
 
-	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, EnrolmentState state) {
+	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope, EnrolmentState state) {
 		this();
-		setCurricularCourse(curricularCourse);
+		setCurricularCourseScope(curricularCourseScope);
 		setStudentCurricularPlan(studentCurricularPlan);
 		setEnrolmentState(state);
 	}
 
 	public Enrolment(
 		IStudentCurricularPlan studentCurricularPlan,
-		ICurricularCourse curricularCourse,
+		ICurricularCourseScope curricularCourseScope,
 		EnrolmentState state,
 		IExecutionPeriod executionPeriod) {
 		this();
-		setCurricularCourse(curricularCourse);
+		setCurricularCourseScope(curricularCourseScope);
 		setStudentCurricularPlan(studentCurricularPlan);
 		setEnrolmentState(state);
 		setExecutionPeriod(executionPeriod);
 	}
 
-	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, 
+	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope, 
 	EnrolmentState state, IExecutionPeriod executionPeriod, EnrolmentEvaluationType enrolmentEvaluationType) {
 		this();
-		setCurricularCourse(curricularCourse);
+		setCurricularCourseScope(curricularCourseScope);
 		setStudentCurricularPlan(studentCurricularPlan);
 		setEnrolmentState(state);
 		setExecutionPeriod(executionPeriod);
@@ -69,8 +71,9 @@ public class Enrolment implements IEnrolment {
 
 			resultado =
 				this.getStudentCurricularPlan().equals(enrolment.getStudentCurricularPlan())
-					&& this.getCurricularCourse().equals(enrolment.getCurricularCourse())
-					&& getExecutionPeriod().equals(enrolment.getExecutionPeriod());
+//					&& this.getCurricularCourse().equals(enrolment.getCurricularCourse())
+					&& this.getCurricularCourseScope().equals(enrolment.getCurricularCourseScope())
+					&& this.getExecutionPeriod().equals(enrolment.getExecutionPeriod());
 		}
 		return resultado;
 	}
@@ -80,30 +83,19 @@ public class Enrolment implements IEnrolment {
 		result += "studentCurricularPlan = " + this.studentCurricularPlan + "; ";
 		result += "enrolmentState = " + this.enrolmentState + "; ";
 		result += "execution Period = " + this.executionPeriod + "; ";
-		result += "curricularCourse = " + this.curricularCourse + "]\n";
+		result += "curricularCourseScope = " + this.curricularCourseScope + "]\n";
+//		result += "curricularCourse = " + this.curricularCourse + "]\n";
 		return result;
 	}
 
-	/**
-	 * Returns the curricularCourse.
-	 * @return ICurricularCourse
-	 */
-	public ICurricularCourse getCurricularCourse() {
-		return curricularCourse;
-	}
+//	public ICurricularCourse getCurricularCourse() {
+//		return curricularCourse;
+//	}
+//
+//	public Integer getCurricularCourseKey() {
+//		return curricularCourseKey;
+//	}
 
-	/**
-	 * Returns the curricularCourseKey.
-	 * @return Integer
-	 */
-	public Integer getCurricularCourseKey() {
-		return curricularCourseKey;
-	}
-
-	/**
-	 * Returns the internalID.
-	 * @return Integer
-	 */
 	public Integer getInternalID() {
 		return internalID;
 	}
@@ -124,21 +116,13 @@ public class Enrolment implements IEnrolment {
 		return studentCurricularPlanKey;
 	}
 
-	/**
-	 * Sets the curricularCourse.
-	 * @param curricularCourse The curricularCourse to set
-	 */
-	public void setCurricularCourse(ICurricularCourse curricularCourse) {
-		this.curricularCourse = curricularCourse;
-	}
-
-	/**
-	 * Sets the curricularCourseKey.
-	 * @param curricularCourseKey The curricularCourseKey to set
-	 */
-	public void setCurricularCourseKey(Integer curricularCourseKey) {
-		this.curricularCourseKey = curricularCourseKey;
-	}
+//	public void setCurricularCourse(ICurricularCourse curricularCourse) {
+//		this.curricularCourse = curricularCourse;
+//	}
+//
+//	public void setCurricularCourseKey(Integer curricularCourseKey) {
+//		this.curricularCourseKey = curricularCourseKey;
+//	}
 
 	/**
 	 * Sets the internalID.
@@ -222,12 +206,10 @@ public class Enrolment implements IEnrolment {
 		this.ojbConcreteClass = ojbConcreteClass;
 	}
 
-	/* (non-Javadoc)
-	 * @see Dominio.IEnrolment#getRealCurricularCourse()
-	 */
-	public ICurricularCourse getRealCurricularCourse() {
-		return this.getCurricularCourse();	
-	}
+//	public ICurricularCourse getRealCurricularCourse() {
+//		return this.getCurricularCourse();	
+//	}
+
 	public EnrolmentEvaluationType getEnrolmentEvaluationType() {
 		return this.enrolmentEvaluationType;
 	}
@@ -242,6 +224,22 @@ public class Enrolment implements IEnrolment {
 
 	public void setEvaluations(List list) {
 		evaluations = list;
+	}
+
+	public ICurricularCourseScope getCurricularCourseScope() {
+		return curricularCourseScope;
+	}
+
+	public Integer getCurricularCourseScopeKey() {
+		return curricularCourseScopeKey;
+	}
+
+	public void setCurricularCourseScope(ICurricularCourseScope scope) {
+		curricularCourseScope = scope;
+	}
+
+	public void setCurricularCourseScopeKey(Integer integer) {
+		curricularCourseScopeKey = integer;
 	}
 
 }

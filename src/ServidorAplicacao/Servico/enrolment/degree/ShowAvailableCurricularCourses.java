@@ -107,7 +107,7 @@ public class ShowAvailableCurricularCourses implements IServico {
 			public boolean evaluate(Object obj) {
 				if(obj instanceof IEnrolmentInOptionalCurricularCourse) {
 					IEnrolmentInOptionalCurricularCourse enrolment = (IEnrolmentInOptionalCurricularCourse) obj;
-					return enrolment.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE));
+					return enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE));
 				} else {
 					return false;
 				}
@@ -121,7 +121,7 @@ public class ShowAvailableCurricularCourses implements IServico {
 		List notOptionalCurricularCoursesTemporarilyEnroled = (List) CollectionUtils.collect(enrolmentsNotInOptionalCurricularCourses, new Transformer() {
 			public Object transform(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return (enrolment.getCurricularCourse());
+				return (enrolment.getCurricularCourseScope().getCurricularCourse());
 			}
 		});
 

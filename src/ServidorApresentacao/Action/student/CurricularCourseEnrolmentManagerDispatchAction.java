@@ -328,9 +328,7 @@ public class CurricularCourseEnrolmentManagerDispatchAction
 					InfoEnrolmentInOptionalCurricularCourse optionalEnrolment =
 						(InfoEnrolmentInOptionalCurricularCourse) optionalEnrolmentsIterator
 							.next();
-					if (optionalEnrolment
-						.getInfoCurricularCourse()
-						.equals(infoCurricularCourse)) {
+					if (optionalEnrolment.getInfoCurricularCourseScope().getInfoCurricularCourse().equals(infoCurricularCourse)) {
 						curricularCoursesIndexes[i] = new Integer(i);
 						break;
 					}
@@ -416,7 +414,7 @@ public class CurricularCourseEnrolmentManagerDispatchAction
 						.next();
 				InfoCurricularCourse optionalCurricularCourse =
 					infoEnrolmentInOptionalCurricularCourse
-						.getInfoCurricularCourse();
+						.getInfoCurricularCourseScope().getInfoCurricularCourse();
 				if (!optionalCurricularCoursesChoosen
 					.contains(optionalCurricularCourse)) {
 					optionalEnrolmentsIterator.remove();

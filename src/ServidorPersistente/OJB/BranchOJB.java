@@ -8,6 +8,7 @@ import org.odmg.QueryException;
 
 import Dominio.Branch;
 import Dominio.IBranch;
+import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -42,7 +43,7 @@ public class BranchOJB extends ObjectFenixOJB implements IPersistentBranch {
 		}
 
 		// Read branch from database.
-		branchFromDB = this.readBranchByNameAndCode(branchToWrite.getName(), branchToWrite.getCode());
+		branchFromDB = this.readBranchByDegreeCurricularPlanAndCode(branchToWrite.getDegreeCurricularPlan(), branchToWrite.getCode());
 
 		// If branch is not in database, then write it.
 		if (branchFromDB == null) {
@@ -63,16 +64,48 @@ public class BranchOJB extends ObjectFenixOJB implements IPersistentBranch {
 		}
 	}
 
-	public IBranch readBranchByNameAndCode(String name, String code) throws ExcepcaoPersistencia {
+//	public IBranch readBranchByNameAndCode(String name, String code) throws ExcepcaoPersistencia {
+//
+//		try {
+//			IBranch branch = null;
+//			String oqlQuery = "select all from " + Branch.class.getName();
+//			oqlQuery += " where name = $1";
+//			oqlQuery += " and code = $2";
+//			query.create(oqlQuery);
+//			query.bind(name);
+//			query.bind(code);
+//
+//			List result = (List) query.execute();
+//			try {
+//				lockRead(result);
+//			} catch (ExcepcaoPersistencia ex) {
+//				throw ex;
+//			}
+//
+//			if( (result != null) && (result.size() != 0) ) {
+//				branch = (IBranch) result.get(0);
+//			}
+//			return branch;
+//
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
+//	}
+
+	public IBranch readBranchByDegreeCurricularPlanAndCode(IDegreeCurricularPlan degreeCurricularPlan, String code) throws ExcepcaoPersistencia {
 
 		try {
 			IBranch branch = null;
 			String oqlQuery = "select all from " + Branch.class.getName();
-			oqlQuery += " where name = $1";
-			oqlQuery += " and code = $2";
+			oqlQuery += " where code = $1";
+			oqlQuery += " and degreeCurricularPlan.name = $2";
+			oqlQuery += " and degreeCurricularPlan.degree.nome = $3";
+			oqlQuery += " and degreeCurricularPlan.degree.sigla = $4";
 			query.create(oqlQuery);
-			query.bind(name);
 			query.bind(code);
+			query.bind(degreeCurricularPlan.getName());
+			query.bind(degreeCurricularPlan.getDegree().getNome());
+			query.bind(degreeCurricularPlan.getDegree().getSigla());
 
 			List result = (List) query.execute();
 			try {

@@ -128,14 +128,14 @@ drop table if exists ENROLMENT;
 create table ENROLMENT (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_STUDENT_CURRICULAR_PLAN int(11) not null,
-   KEY_CURRICULAR_COURSE int(11) not null,
+   KEY_CURRICULAR_COURSE_SCOPE int(11) not null,
    KEY_EXECUTION_PERIOD int(11) not null,
    STATE int(11) not null,
    CLASS_NAME varchar(255) not null,
    KEY_CURRICULAR_COURSE_FOR_OPTION int (11),
    EVALUATION_TYPE int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD)
+   unique U1 (KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE_SCOPE, KEY_EXECUTION_PERIOD)
 )type=InnoDB;
 
 -- ----------------------------

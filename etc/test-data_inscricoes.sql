@@ -40,8 +40,9 @@ INSERT INTO CURRICULAR_SEMESTER values (10, 5, 2);
 
 #-----------------------------
 # Data for table 'EQUIVALENCE'
+#  KEY_EQUIVALENT_ENROLMENT, KEY_ENROLMENT, EQUIVALENCE_TYPE
 #-----------------------------
-DELETE FROM EQUIVALENCE;
+;
 DELETE FROM EQUIVALENCE;
 INSERT INTO EQUIVALENCE VALUES (1, 2, 1, 1);
 
@@ -70,28 +71,29 @@ INSERT INTO STUDENT_CURRICULAR_PLAN VALUES (6, 8, 2, 1, '2002-10-21',1, 2);
 #-----------------------------
 ;
 DELETE FROM ENROLMENT;
-INSERT INTO ENROLMENT VALUES (1, 3, 14, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 15, 1);
-INSERT INTO ENROLMENT VALUES (2, 2, 14, 1, 1, 'Dominio.Enrolment', null, 1);
-INSERT INTO ENROLMENT VALUES (3, 1, 1, 2, 2, 'Dominio.EnrolmentInOptionalCurricularCourse', 15, 1);
-INSERT INTO ENROLMENT VALUES (4, 1, 2, 2, 2, 'Dominio.Enrolment', null, 1);
-INSERT INTO ENROLMENT VALUES (5, 1, 2, 3, 2, 'Dominio.Enrolment', null, 1);
-INSERT INTO ENROLMENT VALUES (6, 1, 14, 1, 2, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (1, 3, 1, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 15, 1);
+INSERT INTO ENROLMENT VALUES (2, 2, 1, 1, 1, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (3, 1, 12, 2, 2, 'Dominio.EnrolmentInOptionalCurricularCourse', 15, 1);
+INSERT INTO ENROLMENT VALUES (4, 1, 13, 2, 2, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (5, 1, 13, 3, 2, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (6, 1, 1, 1, 2, 'Dominio.Enrolment', null, 1);
 
 #-----------------------------
 #Angela
 #-----------------------------
-INSERT INTO ENROLMENT VALUES (7, 4, 2, 2, 1, 'Dominio.Enrolment', null, 1);
-INSERT INTO ENROLMENT VALUES (8, 4, 1, 3, 1, 'Dominio.Enrolment', null, 1);
-INSERT INTO ENROLMENT VALUES (9, 4, 14, 1, 3, 'Dominio.Enrolment', null, 1);
-INSERT INTO ENROLMENT VALUES (10, 5, 1, 2, 1, 'Dominio.Enrolment', null, 1);
-INSERT INTO ENROLMENT VALUES (11, 5, 2, 3, 3, 'Dominio.Enrolment', null, 1);
-INSERT INTO ENROLMENT VALUES (12, 5, 14, 3, 3, 'Dominio.EnrolmentInExtraCurricularCourse', null, 1);
-INSERT INTO ENROLMENT VALUES (13, 6, 1, 3, 3, 'Dominio.EnrolmentInExtraCurricularCourse', null, 1);
+;
+INSERT INTO ENROLMENT VALUES (7, 4, 13, 2, 1, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (8, 4, 12, 3, 1, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (9, 4, 1, 1, 3, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (10, 5, 12, 2, 1, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (11, 5, 13, 3, 3, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (12, 5, 1, 3, 3, 'Dominio.EnrolmentInExtraCurricularCourse', null, 1);
+INSERT INTO ENROLMENT VALUES (13, 6, 12, 3, 3, 'Dominio.EnrolmentInExtraCurricularCourse', null, 1);
 #-----------------------------
 #Angela
 #-----------------------------
 #Data for table 'ENROLMENT_EVALUATION'  (int ID_INTERNAL, varchar GRADE, int EVALUATION_TYPE(unique), date EXAM_DATE, date GRADE_AVAILABLE_DATE, int RESPONSIBLE_TEACHER, int STATE, int KEY_ENROLMENT(unique))
-DELETE FROM ENROLMENT_EVALUATION;
+;
 DELETE FROM ENROLMENT_EVALUATION;
 INSERT INTO ENROLMENT_EVALUATION VALUES (1, '15', 1, '2003-02-12', '2003-03-20', 1, 1, 10);
 INSERT INTO ENROLMENT_EVALUATION VALUES (2, '18', 1, '2003-02-13', '2003-03-20', 1, 1, 7);
@@ -103,7 +105,7 @@ INSERT INTO ENROLMENT_EVALUATION VALUES (3, '14', 1, '2003-02-12', '2003-03-20',
 #-----------------------------
 # Data for table 'DEPARTMENT'
 #-----------------------------
-DELETE FROM DEPARTMENT;
+;
 DELETE FROM DEPARTMENT;
 INSERT INTO DEPARTMENT VALUES (1, 'dep1', 'd1');
 INSERT INTO DEPARTMENT VALUES (2, 'dep10', 'd10');
@@ -111,7 +113,7 @@ INSERT INTO DEPARTMENT VALUES (2, 'dep10', 'd10');
 #-----------------------------
 # Data for table 'DEPARTMENT_COURSE'
 #-----------------------------
-DELETE FROM DEPARTMENT_COURSE;
+;
 DELETE FROM DEPARTMENT_COURSE;
 INSERT INTO DEPARTMENT_COURSE VALUES (1, 'Engenharia da Programacao', 'ep', 1);
 INSERT INTO DEPARTMENT_COURSE VALUES (2, 'Nao sei', 'mvt', 1);
@@ -172,7 +174,7 @@ INSERT INTO CURRICULAR_COURSE VALUES (22,1,2,0,0,0,0,0,'Redes de Computadores II
 # Data for table 'CURRICULAR_COURSE_SCOPE'
 #   (ID_INTERNAL, KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH) 
 #-----------------------------
-DELETE FROM CURRICULAR_COURSE_SCOPE;
+;
 DELETE FROM CURRICULAR_COURSE_SCOPE;
 INSERT INTO CURRICULAR_COURSE_SCOPE values (1, 3, 14, 2,0,0,0,0, 2, 1, 1);
 INSERT INTO CURRICULAR_COURSE_SCOPE values (2, 3, 14, 3,0,0,0,0, 2, 1, 1);

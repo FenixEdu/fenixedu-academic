@@ -13,7 +13,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public interface IPersistentBranch extends IPersistentObject {
 
-    public IBranch readBranchByNameAndCode(String name, String code) throws ExcepcaoPersistencia;
+//    public IBranch readBranchByNameAndCode(String name, String code) throws ExcepcaoPersistencia;
     public ArrayList readAll() throws ExcepcaoPersistencia;
     public void lockWrite(IBranch branch) throws ExcepcaoPersistencia, ExistingPersistentException;
     public void delete(IBranch branch) throws ExcepcaoPersistencia;

@@ -5,7 +5,7 @@ import java.util.List;
 import org.odmg.QueryException;
 
 import Dominio.Enrolment;
-import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
@@ -20,9 +20,7 @@ import Util.EnrolmentState;
  * 24/Mar/2003
  */
 
-public class EnrolmentOJB
-	extends ObjectFenixOJB
-	implements IPersistentEnrolment {
+public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment {
 
 	public void deleteAll() throws ExcepcaoPersistencia {
 		try {
@@ -43,7 +41,7 @@ public class EnrolmentOJB
 		}
 
 		// Read Enrolment from database.
-		enrolmentFromDB =(IEnrolment) this.readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(enrolmentToWrite.getStudentCurricularPlan(), enrolmentToWrite.getCurricularCourse(), enrolmentToWrite.getExecutionPeriod());
+		enrolmentFromDB =(IEnrolment) this.readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(enrolmentToWrite.getStudentCurricularPlan(), enrolmentToWrite.getCurricularCourseScope(), enrolmentToWrite.getExecutionPeriod());
 		// If Enrolment is not in database, then write it.
 		if (enrolmentFromDB == null) {
 			super.lockWrite(enrolmentToWrite);
@@ -66,7 +64,44 @@ public class EnrolmentOJB
 		}
 	}
 
-	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
+//	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
+//
+//		try {
+//			IEnrolment enrolment = null;
+//			String oqlQuery = "select all from " + Enrolment.class.getName();
+//			oqlQuery += " where studentCurricularPlan.student.number = $1";
+//			oqlQuery += " and studentCurricularPlan.student.degreeType = $2";
+//			oqlQuery += " and studentCurricularPlan.currentState = $3";
+//			oqlQuery += " and curricularCourse.name = $4";
+//			oqlQuery += " and curricularCourse.code = $5";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $6";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.nome = $7";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.sigla = $8";
+//
+//			query.create(oqlQuery);
+//
+//			query.bind(studentCurricularPlan.getStudent().getNumber());
+//			query.bind(studentCurricularPlan.getStudent().getDegreeType());
+//			query.bind(studentCurricularPlan.getCurrentState());
+//			query.bind(curricularCourse.getName());
+//			query.bind(curricularCourse.getCode());
+//			query.bind(curricularCourse.getDegreeCurricularPlan().getName());
+//			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getNome());
+//			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
+//
+//			List result = (List) query.execute();
+//			lockRead(result);
+//
+//			if ((result != null) && (result.size() != 0)) {
+//				enrolment = (IEnrolment) result.get(0);
+//			}
+//			return enrolment;
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
+//	}
+
+	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia {
 
 		try {
 			IEnrolment enrolment = null;
@@ -74,22 +109,36 @@ public class EnrolmentOJB
 			oqlQuery += " where studentCurricularPlan.student.number = $1";
 			oqlQuery += " and studentCurricularPlan.student.degreeType = $2";
 			oqlQuery += " and studentCurricularPlan.currentState = $3";
-			oqlQuery += " and curricularCourse.name = $4";
-			oqlQuery += " and curricularCourse.code = $5";
-			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $6";
-			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.nome = $7";
-			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.sigla = $8";
+
+			oqlQuery += " and curricularCourseScope.curricularCourse.name = $4";
+			oqlQuery += " and curricularCourseScope.curricularCourse.code = $5";
+			oqlQuery += " and curricularCourseScope.curricularCourse.degreeCurricularPlan.name = $6";
+			oqlQuery += " and curricularCourseScope.curricularCourse.degreeCurricularPlan.degree.nome = $7";
+			oqlQuery += " and curricularCourseScope.curricularCourse.degreeCurricularPlan.degree.sigla = $8";
+			oqlQuery += " and curricularCourseScope.curricularSemester.semester = $9";
+			oqlQuery += " and curricularCourseScope.curricularSemester.curricularYear.year = $10";
+			oqlQuery += " and curricularCourseScope.branch.degreeCurricularPlan.name = $11";
+			oqlQuery += " and curricularCourseScope.branch.degreeCurricularPlan.degree.nome = $12";
+			oqlQuery += " and curricularCourseScope.branch.degreeCurricularPlan.degree.sigla = $13";
+			oqlQuery += " and curricularCourseScope.branch.code = $14";
 
 			query.create(oqlQuery);
 
 			query.bind(studentCurricularPlan.getStudent().getNumber());
 			query.bind(studentCurricularPlan.getStudent().getDegreeType());
 			query.bind(studentCurricularPlan.getCurrentState());
-			query.bind(curricularCourse.getName());
-			query.bind(curricularCourse.getCode());
-			query.bind(curricularCourse.getDegreeCurricularPlan().getName());
-			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getNome());
-			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
+
+			query.bind(curricularCourseScope.getCurricularCourse().getName());
+			query.bind(curricularCourseScope.getCurricularCourse().getCode());
+			query.bind(curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getName());
+			query.bind(curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getDegree().getNome());
+			query.bind(curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getDegree().getSigla());
+			query.bind(curricularCourseScope.getCurricularSemester().getSemester());
+			query.bind(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear());
+			query.bind(curricularCourseScope.getBranch().getDegreeCurricularPlan().getName());
+			query.bind(curricularCourseScope.getBranch().getDegreeCurricularPlan().getDegree().getNome());
+			query.bind(curricularCourseScope.getBranch().getDegreeCurricularPlan().getDegree().getSigla());
+			query.bind(curricularCourseScope.getBranch().getCode());
 
 			List result = (List) query.execute();
 			lockRead(result);
@@ -172,9 +221,59 @@ public class EnrolmentOJB
 		return enrolments;
 	}
 
-	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+//	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+//		IStudentCurricularPlan studentCurricularPlan,
+//		ICurricularCourse curricularCourse,
+//		IExecutionPeriod executionPeriod)
+//		throws ExcepcaoPersistencia {
+//		try {
+//			IEnrolment enrolment = null;
+//			String oqlQuery = "select all from " + Enrolment.class.getName();
+//			oqlQuery += " where studentCurricularPlan.student.number = $1";
+//			oqlQuery += " and studentCurricularPlan.student.degreeType = $2";
+//			oqlQuery += " and studentCurricularPlan.currentState = $3";
+//			oqlQuery += " and curricularCourse.name = $4";
+//			oqlQuery += " and curricularCourse.code = $5";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $6";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.nome = $7";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.sigla = $8";
+//			oqlQuery += " and executionPeriod.name = $9";
+//			oqlQuery += " and executionPeriod.executionYear.year = $10";
+//
+//			query.create(oqlQuery);
+//
+//			query.bind(studentCurricularPlan.getStudent().getNumber());
+//			query.bind(studentCurricularPlan.getStudent().getDegreeType());
+//			query.bind(studentCurricularPlan.getCurrentState());
+//			query.bind(curricularCourse.getName());
+//			query.bind(curricularCourse.getCode());
+//			query.bind(curricularCourse.getDegreeCurricularPlan().getName());
+//			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree()
+//					.getNome());
+//			query.bind(
+//				curricularCourse
+//					.getDegreeCurricularPlan()
+//					.getDegree()
+//					.getSigla());
+//
+//			query.bind(executionPeriod.getName());
+//			query.bind(executionPeriod.getExecutionYear().getYear());
+//
+//			List result = (List) query.execute();
+//			lockRead(result);
+//
+//			if ((result != null) && (result.size() != 0)) {
+//				enrolment = (IEnrolment) result.get(0);
+//			}
+//			return enrolment;
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
+//	}
+
+	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(
 		IStudentCurricularPlan studentCurricularPlan,
-		ICurricularCourse curricularCourse,
+		ICurricularCourseScope curricularCourseScope,
 		IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia {
 		try {
@@ -183,29 +282,39 @@ public class EnrolmentOJB
 			oqlQuery += " where studentCurricularPlan.student.number = $1";
 			oqlQuery += " and studentCurricularPlan.student.degreeType = $2";
 			oqlQuery += " and studentCurricularPlan.currentState = $3";
-			oqlQuery += " and curricularCourse.name = $4";
-			oqlQuery += " and curricularCourse.code = $5";
-			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $6";
-			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.nome = $7";
-			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.sigla = $8";
-			oqlQuery += " and executionPeriod.name = $9";
-			oqlQuery += " and executionPeriod.executionYear.year = $10";
+
+			oqlQuery += " and curricularCourseScope.curricularCourse.name = $4";
+			oqlQuery += " and curricularCourseScope.curricularCourse.code = $5";
+			oqlQuery += " and curricularCourseScope.curricularCourse.degreeCurricularPlan.name = $6";
+			oqlQuery += " and curricularCourseScope.curricularCourse.degreeCurricularPlan.degree.nome = $7";
+			oqlQuery += " and curricularCourseScope.curricularCourse.degreeCurricularPlan.degree.sigla = $8";
+			oqlQuery += " and curricularCourseScope.curricularSemester.semester = $9";
+			oqlQuery += " and curricularCourseScope.curricularSemester.curricularYear.year = $10";
+			oqlQuery += " and curricularCourseScope.branch.degreeCurricularPlan.name = $11";
+			oqlQuery += " and curricularCourseScope.branch.degreeCurricularPlan.degree.nome = $12";
+			oqlQuery += " and curricularCourseScope.branch.degreeCurricularPlan.degree.sigla = $13";
+			oqlQuery += " and curricularCourseScope.branch.code = $14";
+
+			oqlQuery += " and executionPeriod.name = $15";
+			oqlQuery += " and executionPeriod.executionYear.year = $16";
 
 			query.create(oqlQuery);
 
 			query.bind(studentCurricularPlan.getStudent().getNumber());
 			query.bind(studentCurricularPlan.getStudent().getDegreeType());
 			query.bind(studentCurricularPlan.getCurrentState());
-			query.bind(curricularCourse.getName());
-			query.bind(curricularCourse.getCode());
-			query.bind(curricularCourse.getDegreeCurricularPlan().getName());
-			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree()
-					.getNome());
-			query.bind(
-				curricularCourse
-					.getDegreeCurricularPlan()
-					.getDegree()
-					.getSigla());
+
+			query.bind(curricularCourseScope.getCurricularCourse().getName());
+			query.bind(curricularCourseScope.getCurricularCourse().getCode());
+			query.bind(curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getName());
+			query.bind(curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getDegree().getNome());
+			query.bind(curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getDegree().getSigla());
+			query.bind(curricularCourseScope.getCurricularSemester().getSemester());
+			query.bind(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear());
+			query.bind(curricularCourseScope.getBranch().getDegreeCurricularPlan().getName());
+			query.bind(curricularCourseScope.getBranch().getDegreeCurricularPlan().getDegree().getNome());
+			query.bind(curricularCourseScope.getBranch().getDegreeCurricularPlan().getDegree().getSigla());
+			query.bind(curricularCourseScope.getBranch().getCode());
 
 			query.bind(executionPeriod.getName());
 			query.bind(executionPeriod.getExecutionYear().getYear());

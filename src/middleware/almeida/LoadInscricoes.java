@@ -25,7 +25,6 @@ import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
-import Util.UniversityCode;
 
 /**
  *
@@ -92,7 +91,7 @@ public class LoadInscricoes extends LoadDataFile {
 					executionPeriod);
 			if (enrolment == null) {
 				enrolment = new Enrolment();
-				enrolment.setCurricularCourse(curricularCourse);
+//				enrolment.setCurricularCourse(curricularCourse);
 				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 				enrolment.setExecutionPeriod(executionPeriod);
 				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
@@ -100,7 +99,7 @@ public class LoadInscricoes extends LoadDataFile {
 
 				writeElement(enrolment);
 			} else {
-				enrolment.setCurricularCourse(curricularCourse);
+//				enrolment.setCurricularCourse(curricularCourse);
 				enrolment.setExecutionPeriod(executionPeriod);
 				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);

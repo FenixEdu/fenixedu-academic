@@ -81,7 +81,7 @@ public abstract class MakeEnrolmentIO {
 		Iterator iterator = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().iterator();
 		while (iterator.hasNext()) {
 			InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) iterator.next();
-			System.out.println("OPTIONAL CURRICULAR COURSE NAME: " + infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourse().getName() + "; CHOSEN CURRICULAR COURSE: " + infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseForOption().getName());
+			System.out.println("OPTIONAL CURRICULAR COURSE NAME: " + infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope().getInfoCurricularCourse().getName() + "; CHOSEN CURRICULAR COURSE: " + infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseForOption().getName());
 		}
 	}
 

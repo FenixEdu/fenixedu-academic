@@ -51,7 +51,7 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 //				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(((IEnrolmentInOptionalCurricularCourse) enrolmentContext.getOptionalCurricularCoursesEnrolments().get(0)).getCurricularCourse());
 				
 				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator.next();
-				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria( enrolmentInOptionalCurricularCourse.getCurricularCourse());
+				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria( enrolmentInOptionalCurricularCourse.getCurricularCourseScope().getCurricularCourse());
 				year2 =  ((ICurricularCourseScope) curricularCourse.getScopes().get(0)).getCurricularSemester().getCurricularYear().getYear().intValue();
 				if (year2 > year) {
 					year = year2;
@@ -68,7 +68,7 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 		List curricularCoursesOfOption = (List) CollectionUtils.collect(enrolmentContext.getOptionalCurricularCoursesEnrolments(), new Transformer() {
 			public Object transform(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return (enrolment.getCurricularCourse());
+				return (enrolment.getCurricularCourseScope().getCurricularCourse());
 			}
 		});
 

@@ -131,14 +131,14 @@ public class LoadCourseEnrolments extends DataFileLoader {
 
 				// Ver se a inscricao do aluno na disciplina está na base de dados do CIAPL
 				IEnrolment enrolmentCriteria = new Enrolment();
-				enrolmentCriteria.setCurricularCourse(curricularCourseCriteria);
+//				enrolmentCriteria.setCurricularCourse(curricularCourseCriteria);
 				enrolmentCriteria.setStudentCurricularPlan(studentCurricularPlanCriteria);
 				IEnrolment enrolment = (IEnrolment) persistentEnrolment.readDomainObjectByCriteria(enrolmentCriteria);
 				if (enrolment == null) {
 					// A inscricao nao esta na base de dados do CIAPL
 					// Adicionar a inscricao do aluno a base de dados CIAPL
 					enrolment = new Enrolment();
-					enrolment.setCurricularCourse(curricularCourse);
+//					enrolment.setCurricularCourse(curricularCourse);
 					enrolment.setStudentCurricularPlan(studentCurricularPlan);
 					persistentEnrolment.lockWrite(enrolment);
 
@@ -212,7 +212,7 @@ public class LoadCourseEnrolments extends DataFileLoader {
 					IFrequenta attendCriteria = new Frequenta();
 
 					ICurricularCourse curricularCourse =
-						enrolment.getCurricularCourse();
+						enrolment.getCurricularCourseScope().getCurricularCourse();
 
 					IDisciplinaExecucao executionCourse =
 						iDisciplinaExecucaoPersistente

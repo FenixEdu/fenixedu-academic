@@ -17,11 +17,11 @@ public class EnrolmentInExtraCurricularCourse extends Enrolment implements IEnro
 
 	public EnrolmentInExtraCurricularCourse(
 		IStudentCurricularPlan studentCurricularPlan,
-		ICurricularCourse curricularCourse,
+		ICurricularCourseScope curricularCourseScope,
 		EnrolmentState state,
 		IExecutionPeriod executionPeriod,
 		EnrolmentEvaluationType enrolmentEvaluationType) {
-		super(studentCurricularPlan, curricularCourse, state, executionPeriod, enrolmentEvaluationType);
+		super(studentCurricularPlan, curricularCourseScope, state, executionPeriod, enrolmentEvaluationType);
 	}
 
 	public String toString() {

@@ -105,7 +105,7 @@ public class MakeEnrolment {
 				Iterator iterator2 = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().iterator();
 				while(iterator2.hasNext()) {
 					InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) iterator2.next();
-					if(infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourse().equals(infoCurricularCourseScope.getInfoCurricularCourse())) {
+					if(infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope().getInfoCurricularCourse().equals(infoCurricularCourseScope.getInfoCurricularCourse())) {
 						aux.add(infoEnrolmentInOptionalCurricularCourse);
 					}
 				}

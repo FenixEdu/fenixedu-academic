@@ -35,9 +35,9 @@ public abstract class SetEnrolmentStateIO {
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 			if(enrolment instanceof IEnrolmentInOptionalCurricularCourse) {
 				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) enrolment;
-				System.out.println(i + " - CURRICULAR COURSE: " + enrolmentInOptionalCurricularCourse.getCurricularCourse().getName() + " -> " + enrolmentInOptionalCurricularCourse.getCurricularCourseForOption().getName());
+				System.out.println(i + " - CURRICULAR COURSE: " + enrolmentInOptionalCurricularCourse.getCurricularCourseScope().getCurricularCourse().getName() + " -> " + enrolmentInOptionalCurricularCourse.getCurricularCourseForOption().getName());
 			} else {
-				System.out.println(i + " - CURRICULAR COURSE: " + enrolment.getCurricularCourse().getName());
+				System.out.println(i + " - CURRICULAR COURSE: " + enrolment.getCurricularCourseScope().getCurricularCourse().getName());
 			}
 			i++;
 		}
@@ -91,9 +91,9 @@ public abstract class SetEnrolmentStateIO {
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 			if(enrolment instanceof IEnrolmentInOptionalCurricularCourse) {
 				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) enrolment;
-				System.out.println("SELECT NEW STATE FOR ENROLMENT IN CURRICULAR COURSE [" + enrolmentInOptionalCurricularCourse.getCurricularCourse().getName() + " -> " + enrolmentInOptionalCurricularCourse.getCurricularCourseForOption().getName() + "]:");
+				System.out.println("SELECT NEW STATE FOR ENROLMENT IN CURRICULAR COURSE [" + enrolmentInOptionalCurricularCourse.getCurricularCourseScope().getCurricularCourse().getName() + " -> " + enrolmentInOptionalCurricularCourse.getCurricularCourseForOption().getName() + "]:");
 			} else {
-				System.out.println("SELECT NEW STATE FOR ENROLMENT IN CURRICULAR COURSE [" + enrolment.getCurricularCourse().getName() + "]:");
+				System.out.println("SELECT NEW STATE FOR ENROLMENT IN CURRICULAR COURSE [" + enrolment.getCurricularCourseScope().getCurricularCourse().getName() + "]:");
 			}
 			if(chooseExecutionPeriodsMode) {
 				System.out.println("(APROVED = 1; NOT_APROVED = 2; ENROLED = 3; TEMPORARILY_ENROLED = 4; ANNULED = 5)");

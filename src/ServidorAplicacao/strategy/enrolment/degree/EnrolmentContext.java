@@ -65,7 +65,7 @@ public final class EnrolmentContext {
 		Iterator iterator = enrolmentsAprovedByStudent.iterator();
 		while (iterator.hasNext()) {
 			IEnrolment enrolment = (IEnrolment) iterator.next();
-			if (enrolment.getRealCurricularCourse().equals(curricularCourse)) {
+			if (enrolment.getCurricularCourseScope().getCurricularCourse().equals(curricularCourse)) {
 				return true;
 			}
 		}

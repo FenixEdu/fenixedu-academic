@@ -19,10 +19,10 @@ public class EnrolmentInOptionalCurricularCourse extends Enrolment implements IE
 
 	public EnrolmentInOptionalCurricularCourse(
 		IStudentCurricularPlan studentCurricularPlan,
-		ICurricularCourse curricularCourse,
+		ICurricularCourseScope curricularCourseScope,
 		EnrolmentState state,
 		ICurricularCourse curricularCourseForOption) {
-		super(studentCurricularPlan, curricularCourse, state);
+		super(studentCurricularPlan, curricularCourseScope, state);
 		setCurricularCourseForOption(curricularCourseForOption);
 	}
 

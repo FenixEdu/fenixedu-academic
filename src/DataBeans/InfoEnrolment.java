@@ -6,7 +6,6 @@ import java.util.List;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 
-
 /**
  * @author dcs-rjao
  *
@@ -14,20 +13,20 @@ import Util.EnrolmentState;
  */
 public class InfoEnrolment implements Serializable {
 	private InfoStudentCurricularPlan infoStudentCurricularPlan;
-	private InfoCurricularCourse infoCurricularCourse;
+//	private InfoCurricularCourse infoCurricularCourse;
 	private InfoExecutionPeriod infoExecutionPeriod;
 	private EnrolmentState state;
 	private EnrolmentEvaluationType evaluationType;
-	private InfoEnrolmentInExtraCurricularCourse infoEnrolmentInExtraCurricularCourse;
-	
+	private InfoCurricularCourseScope infoCurricularCourseScope;
+
 	private List infoEvaluations;
 
 	public InfoEnrolment() {
 	}
 
-	public InfoEnrolment(InfoStudentCurricularPlan infoStudentCurricularPlan, InfoCurricularCourse infoCurricularCourse, EnrolmentState state, InfoExecutionPeriod infoExecutionPeriod) {
+	public InfoEnrolment(InfoStudentCurricularPlan infoStudentCurricularPlan, InfoCurricularCourseScope infoCurricularCourseScope, EnrolmentState state, InfoExecutionPeriod infoExecutionPeriod) {
 		this();
-		setInfoCurricularCourse(infoCurricularCourse);
+		setInfoCurricularCourseScope(infoCurricularCourseScope);
 		setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 		setState(state);
 		setInfoExecutionPeriod(infoExecutionPeriod);
@@ -39,10 +38,10 @@ public class InfoEnrolment implements Serializable {
 		if (obj instanceof InfoEnrolment) {
 			InfoEnrolment enrolment = (InfoEnrolment) obj;
 
-			resultado =
-				this.getInfoStudentCurricularPlan().equals(enrolment.getInfoStudentCurricularPlan())
-					&& this.getInfoCurricularCourse().equals(enrolment.getInfoCurricularCourse())
-					&& getInfoExecutionPeriod().equals(enrolment.getInfoExecutionPeriod());
+			resultado = this.getInfoStudentCurricularPlan().equals(enrolment.getInfoStudentCurricularPlan()) &&
+//						this.getInfoCurricularCourse().equals(enrolment.getInfoCurricularCourse()) &&
+						this.getInfoCurricularCourseScope().equals(enrolment.getInfoCurricularCourseScope()) &&
+						this.getInfoExecutionPeriod().equals(enrolment.getInfoExecutionPeriod());
 		}
 		return resultado;
 	}
@@ -51,22 +50,18 @@ public class InfoEnrolment implements Serializable {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "infoStudentCurricularPlan = " + this.infoStudentCurricularPlan + "; ";
 		result += "infoExecutionPeriod = " + this.infoExecutionPeriod + "; ";
-		result += "state = " + this.state + "; ";		
-		result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
+		result += "state = " + this.state + "; ";
+//		result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
+		result += "infoCurricularCourseScope = " + this.infoCurricularCourseScope + "; ";
 		result += "enrolmentEvaluationType = " + this.evaluationType + "; ";
-		result += "infoEvaluations = " + this.infoEvaluations + "; ";
-		result += "infoEnrolmentInExtraCurricularCourse = " + this.infoEnrolmentInExtraCurricularCourse + "]\n";
-		
-		
+		result += "infoEvaluations = " + this.infoEvaluations + "]\n";
+
 		return result;
 	}
 
-	/**
-	 * @return InfoCurricularCourse
-	 */
-	public InfoCurricularCourse getInfoCurricularCourse() {
-		return infoCurricularCourse;
-	}
+//	public InfoCurricularCourse getInfoCurricularCourse() {
+//		return infoCurricularCourse;
+//	}
 
 	/**
 	 * @return InfoExecutionPeriod
@@ -89,13 +84,9 @@ public class InfoEnrolment implements Serializable {
 		return state;
 	}
 
-	/**
-	 * Sets the infoCurricularCourse.
-	 * @param infoCurricularCourse The infoCurricularCourse to set
-	 */
-	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-		this.infoCurricularCourse = infoCurricularCourse;
-	}
+//	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+//		this.infoCurricularCourse = infoCurricularCourse;
+//	}
 
 	/**
 	 * Sets the infoExecutionPeriod.
@@ -135,6 +126,14 @@ public class InfoEnrolment implements Serializable {
 
 	public void setInfoEvaluations(List list) {
 		infoEvaluations = list;
+	}
+
+	public InfoCurricularCourseScope getInfoCurricularCourseScope() {
+		return infoCurricularCourseScope;
+	}
+
+	public void setInfoCurricularCourseScope(InfoCurricularCourseScope scope) {
+		infoCurricularCourseScope = scope;
 	}
 
 }

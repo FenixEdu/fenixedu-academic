@@ -6,6 +6,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -54,18 +55,21 @@ public class SelectOptionalCurricularCourse implements IServico {
 		}
 		if(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE))) {
 			InfoEnrolmentInOptionalCurricularCourse infoEnrolment = new InfoEnrolmentInOptionalCurricularCourse();
-			infoEnrolment.setInfoCurricularCourse(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse());
+//			infoEnrolment.setInfoCurricularCourse(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse());
+			infoEnrolment.setInfoCurricularCourseScope(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope());
 			infoEnrolment.setInfoExecutionPeriod(infoEnrolmentContext.getInfoExecutionPeriod());
 			infoEnrolment.setInfoStudentCurricularPlan(infoEnrolmentContext.getInfoStudentActiveCurricularPlan());
 			infoEnrolment.setState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
 			infoEnrolment.setInfoCurricularCourseForOption(infoCurricularCourseForOption);
 
 			// For one optional curricular course chosen there can be only one coresponding curricular course.
-			final InfoCurricularCourse infoCurricularCourseChosen = infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse();
+//			final InfoCurricularCourse infoCurricularCourseChosen = infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse();
+			final InfoCurricularCourseScope infoCurricularCourseScopeChosen = infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope();
 			List enrolmentsList = (List) CollectionUtils.select(infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments(), new Predicate() {
 				public boolean evaluate(Object obj) {
 					InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) obj;
-					return infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourse().equals(infoCurricularCourseChosen);
+//					return infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourse().equals(infoCurricularCourseChosen);
+					return infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope().equals(infoCurricularCourseScopeChosen);
 				}
 			});
 

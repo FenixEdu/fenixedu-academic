@@ -128,7 +128,7 @@ public class LoadLEQEnrolmentsToFenix extends LoadDataToFenix {
 			IEnrolment enrolment = persistentObjectOJB.readEnrolment(this.studentCurricularPlan, this.curricularCourse, this.executionPeriod);
 			if (enrolment == null) {
 				enrolment = new Enrolment();
-				enrolment.setCurricularCourse(this.curricularCourse);
+				enrolment.setCurricularCourseScope(this.curricularCourseScope);
 				enrolment.setExecutionPeriod(this.executionPeriod);
 				enrolment.setStudentCurricularPlan(this.studentCurricularPlan);
 				enrolment.setEnrolmentEvaluationType(processEvaluationType(almeida_enrolment.getEpoca()));

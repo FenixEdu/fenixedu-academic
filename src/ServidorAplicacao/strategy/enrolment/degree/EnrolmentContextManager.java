@@ -77,7 +77,7 @@ public abstract class EnrolmentContextManager {
 		final List studentDoneCurricularCourses = (List) CollectionUtils.collect(studentEnrolmentsWithStateApproved, new Transformer() {
 			public Object transform(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return enrolment.getCurricularCourse();
+				return enrolment.getCurricularCourseScope().getCurricularCourse();
 			}
 		});
 
@@ -91,7 +91,7 @@ public abstract class EnrolmentContextManager {
 		final List studentEnroledCurricularCourses = (List) CollectionUtils.collect(studentEnrolmentsWithStateEnroled, new Transformer() {
 			public Object transform(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return enrolment.getCurricularCourse();
+				return enrolment.getCurricularCourseScope().getCurricularCourse();
 			}
 		});
 
@@ -104,7 +104,7 @@ public abstract class EnrolmentContextManager {
 		List enrolmentsWithStateNotApproved = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				ICurricularCourse curricularCourse = enrolment.getCurricularCourse();
+				ICurricularCourse curricularCourse = enrolment.getCurricularCourseScope().getCurricularCourse();
 				return !studentDoneCurricularCourses.contains(curricularCourse)
 					&& enrolment.getEnrolmentState().equals(EnrolmentState.NOT_APROVED_OBJ);
 			}
@@ -113,7 +113,7 @@ public abstract class EnrolmentContextManager {
 		List curricularCoursesEnrolled = (List) CollectionUtils.collect(enrolmentsWithStateNotApproved, new Transformer() {
 			public Object transform(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return (enrolment.getCurricularCourse().getCode() + enrolment.getCurricularCourse().getName());
+				return (enrolment.getCurricularCourseScope().getCurricularCourse().getCode() + enrolment.getCurricularCourseScope().getCurricularCourse().getName());
 			}
 		});
 

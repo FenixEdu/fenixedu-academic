@@ -13,20 +13,22 @@ import Util.EnrolmentState;
 
 public interface IEnrolment {
 
-	public ICurricularCourse getCurricularCourse();
+//	public ICurricularCourse getCurricularCourse();
 	public IStudentCurricularPlan getStudentCurricularPlan();
 	public EnrolmentState getEnrolmentState();
 	IExecutionPeriod getExecutionPeriod();
 	public EnrolmentEvaluationType getEnrolmentEvaluationType();
 	public List getEvaluations();
-		
+	public ICurricularCourseScope getCurricularCourseScope();
+
 	public void setEnrolmentState(EnrolmentState state);
-	public void setCurricularCourse(ICurricularCourse curricularCourse);
+//	public void setCurricularCourse(ICurricularCourse curricularCourse);
 	public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan);
 	void setExecutionPeriod(IExecutionPeriod executionPeriod);
 	public void setEnrolmentEvaluationType(EnrolmentEvaluationType type);
 	public void setEvaluations(List list);
+	public void setCurricularCourseScope(ICurricularCourseScope scope);
 
-	public ICurricularCourse getRealCurricularCourse();
+//	public ICurricularCourse getRealCurricularCourse();
 	
 }

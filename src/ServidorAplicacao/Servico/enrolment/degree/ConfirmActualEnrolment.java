@@ -22,6 +22,7 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -87,6 +88,7 @@ public class ConfirmActualEnrolment implements IServico {
 		IPersistentEnrolment persistentEnrolment = null;
 		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
 		IPersistentCurricularCourse persistentCurricularCourse = null;
+		IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
 		IPersistentExecutionPeriod persistentExecutionPeriod = null;
 
 		try {
@@ -94,6 +96,7 @@ public class ConfirmActualEnrolment implements IServico {
 			persistentEnrolment = sp.getIPersistentEnrolment();
 			persistentStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente();
 			persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+			persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 			persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
 			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readDomainObjectByCriteria(enrolmentContext.getStudentActiveCurricularPlan());
@@ -111,7 +114,7 @@ public class ConfirmActualEnrolment implements IServico {
 			List doingCurricularCoursesRead = (List) CollectionUtils.collect(doingEnrolmentsRead, new Transformer() {
 				public Object transform(Object obj) {
 					IEnrolment enrolment = (IEnrolment) obj;
-					return (enrolment.getCurricularCourse());
+					return (enrolment.getCurricularCourseScope().getCurricularCourse());
 				}
 			});
 
@@ -122,10 +125,12 @@ public class ConfirmActualEnrolment implements IServico {
 			IEnrolment enrolmentToWrite = null;
 			while (iterator.hasNext()) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseScope.getCurricularCourse());
-				if(!doingCurricularCoursesRead.contains(curricularCourse)) {
+//				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseScope.getCurricularCourse());
+				ICurricularCourseScope curricularCourseScope2 = (ICurricularCourseScope) persistentCurricularCourseScope.readDomainObjectByCriteria(curricularCourseScope);
+				if(!doingCurricularCoursesRead.contains(curricularCourseScope.getCurricularCourse())) {
 					enrolmentToWrite = new Enrolment();
-					enrolmentToWrite.setCurricularCourse(curricularCourse);
+//					enrolmentToWrite.setCurricularCourse(curricularCourse);
+					enrolmentToWrite.setCurricularCourseScope(curricularCourseScope2);
 					enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 					enrolmentToWrite.setExecutionPeriod(executionPeriod);
 					enrolmentToWrite.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
@@ -166,12 +171,14 @@ public class ConfirmActualEnrolment implements IServico {
 			while (iterator2.hasNext()) {
 				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator2.next();
 				
-				IEnrolmentInOptionalCurricularCourse enrolment = (IEnrolmentInOptionalCurricularCourse) persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(enrolmentInOptionalCurricularCourse.getStudentCurricularPlan(), enrolmentInOptionalCurricularCourse.getCurricularCourse(), enrolmentInOptionalCurricularCourse.getExecutionPeriod());
+				IEnrolmentInOptionalCurricularCourse enrolment = (IEnrolmentInOptionalCurricularCourse) persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(enrolmentInOptionalCurricularCourse.getStudentCurricularPlan(), enrolmentInOptionalCurricularCourse.getCurricularCourseScope(), enrolmentInOptionalCurricularCourse.getExecutionPeriod());
 				ICurricularCourse curricularCourseForOption = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourseForOption());
 				
 				if(enrolment == null) {
-					ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourse());
-					enrolmentInOptionalCurricularCourse.setCurricularCourse(curricularCourse);
+//					ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourse());
+//					enrolmentInOptionalCurricularCourse.setCurricularCourse(curricularCourse);
+					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourseScope());
+					enrolmentInOptionalCurricularCourse.setCurricularCourseScope(curricularCourseScope);
 					enrolmentInOptionalCurricularCourse.setCurricularCourseForOption(curricularCourseForOption);
 					enrolmentInOptionalCurricularCourse.setExecutionPeriod(executionPeriod);
 					enrolmentInOptionalCurricularCourse.setStudentCurricularPlan(studentCurricularPlan);

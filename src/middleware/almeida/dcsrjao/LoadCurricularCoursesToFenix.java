@@ -68,8 +68,6 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 //			curricularCourse.setCredits();
 //			curricularCourse.setCurricularCourseExecutionScope();
 //			curricularCourse.setType();
-			
-			curricularCourse.setUniversityCode("IST");
 									
 			if (almeida_disc.getTipo() == 0) {
 				curricularCourse.setMandatory(new Boolean(true));
@@ -137,9 +135,8 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 	}
 
 	private IBranch processBranch(Almeida_disc almeida_disc) {
-		
 		String code = "";
-		if (almeida_disc.getCodram() != 0) {
+		if (almeida_disc.getCodram()  != 0) {
 			// FIXME DAVID-RICARDO: Onde esta a informacao do perfil no almeida_disc?
 			code = code + almeida_disc.getCodcur() + almeida_disc.getCodram() + "0";
 		}

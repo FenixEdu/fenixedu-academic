@@ -401,10 +401,10 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="curricularCourseKey"
-		column="KEY_CURRICULAR_COURSE"
+		name="curricularCourseScopeKey"
+		column="KEY_CURRICULAR_COURSE_SCOPE"
 		jdbc-type="INTEGER"
-	/>    
+	/>
 	<field-descriptor
 		name="keyExecutionPeriod"
 		column="KEY_EXECUTION_PERIOD"
@@ -427,12 +427,12 @@
 			class-ref="Dominio.StudentCurricularPlan"
 			proxy="false">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
-	</reference-descriptor>      
+	</reference-descriptor>
 	<reference-descriptor
-			name="curricularCourse"
-			class-ref="Dominio.CurricularCourse"
+			name="curricularCourseScope"
+			class-ref="Dominio.CurricularCourseScope"
 			proxy="false">
-		<foreignkey field-ref="curricularCourseKey"/>
+		<foreignkey field-ref="curricularCourseScopeKey"/>
 	</reference-descriptor>      
 	<reference-descriptor name="executionPeriod"
 		class-ref="Dominio.ExecutionPeriod" proxy="false">
@@ -463,10 +463,10 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="curricularCourseKey"
-		column="KEY_CURRICULAR_COURSE"
+		name="curricularCourseScopeKey"
+		column="KEY_CURRICULAR_COURSE_SCOPE"
 		jdbc-type="INTEGER"
-	/>    
+	/>
 	<field-descriptor
 		name="keyExecutionPeriod"
 		column="KEY_EXECUTION_PERIOD"
@@ -491,10 +491,10 @@
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>      
 	<reference-descriptor
-			name="curricularCourse"
-			class-ref="Dominio.CurricularCourse"
+			name="curricularCourseScope"
+			class-ref="Dominio.CurricularCourseScope"
 			proxy="false">
-		<foreignkey field-ref="curricularCourseKey"/>
+		<foreignkey field-ref="curricularCourseScopeKey"/>
 	</reference-descriptor>      
 	<reference-descriptor name="executionPeriod"
 		class-ref="Dominio.ExecutionPeriod" proxy="false">
@@ -533,10 +533,10 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="curricularCourseKey"
-		column="KEY_CURRICULAR_COURSE"
+		name="curricularCourseScopeKey"
+		column="KEY_CURRICULAR_COURSE_SCOPE"
 		jdbc-type="INTEGER"
-	/>    
+	/>
 	<field-descriptor
 		name="keyExecutionPeriod"
 		column="KEY_EXECUTION_PERIOD"
@@ -559,12 +559,12 @@
 			class-ref="Dominio.StudentCurricularPlan"
 			proxy="false">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
-	</reference-descriptor>      
+	</reference-descriptor>
 	<reference-descriptor
-			name="curricularCourse"
-			class-ref="Dominio.CurricularCourse"
+			name="curricularCourseScope"
+			class-ref="Dominio.CurricularCourseScope"
 			proxy="false">
-		<foreignkey field-ref="curricularCourseKey"/>
+		<foreignkey field-ref="curricularCourseScopeKey"/>
 	</reference-descriptor>      
 	<reference-descriptor name="executionPeriod"
 		class-ref="Dominio.ExecutionPeriod" proxy="false">
