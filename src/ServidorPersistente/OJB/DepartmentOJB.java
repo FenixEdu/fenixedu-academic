@@ -1,14 +1,12 @@
 /*
- * 
+ *  
  */
 
 package ServidorPersistente.OJB;
 
 import java.util.List;
-import java.util.ListIterator;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.Department;
 import Dominio.EmployeeHistoric;
@@ -28,14 +26,10 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
     {
     }
 
-    public void apagarTodosOsDepartamentos() throws ExcepcaoPersistencia
-    {
-        String oqlQuery = "select all from " + Department.class.getName();
-        super.deleteAll(oqlQuery);
-    }
+   
 
     public void escreverDepartamento(IDepartment departmentToWrite)
-            throws ExcepcaoPersistencia, ExistingPersistentException
+        throws ExcepcaoPersistencia, ExistingPersistentException
     {
 
         IDepartment departmentFromDB = null;
@@ -50,7 +44,8 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
         // If department is not in database, then write it.
         if (departmentFromDB == null)
             super.lockWrite(departmentToWrite);
-        // else If the department is mapped to the database, then write any existing changes.
+        // else If the department is mapped to the database, then write any
+		// existing changes.
         else if (departmentFromDB.getIdInternal().equals((departmentToWrite.getIdInternal())))
         {
             super.lockWrite(departmentToWrite);
@@ -62,90 +57,28 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
 
     public IDepartment lerDepartamentoPorNome(String nome) throws ExcepcaoPersistencia
     {
-        try
-        {
-            IDepartment de = null;
-            String oqlQuery = "select all from " + Department.class.getName();
-            oqlQuery += " where nome = $1";
-            query.create(oqlQuery);
-            query.bind(nome);
-            List result = (List) query.execute();
-            super.lockRead(result);
-            if (result.size() != 0)
-                de = (IDepartment) result.get(0);
-            return de;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+
+        Criteria crit = new Criteria();
+        crit.addEqualTo("nome", nome);
+        return (IDepartment) queryObject(Department.class, crit);
+
     }
 
     public IDepartment lerDepartamentoPorSigla(String sigla) throws ExcepcaoPersistencia
     {
-        try
-        {
-            IDepartment de = null;
-            String oqlQuery = "select all from " + Department.class.getName();
-            oqlQuery += " where sigla = $1";
-            query.create(oqlQuery);
-            query.bind(sigla);
-            List result = (List) query.execute();
-            super.lockRead(result);
-            if (result.size() != 0)
-                de = (IDepartment) result.get(0);
-            return de;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria crit = new Criteria();
+        crit.addEqualTo("sigla", sigla);
+        return (IDepartment) queryObject(Department.class, crit);
+       
     }
 
-    public void apagarDepartamentoPorNome(String nome) throws ExcepcaoPersistencia
-    {
-        try
-        {
-            String oqlQuery = "select all from " + Department.class.getName();
-            oqlQuery += " where nome = $1";
-            query.create(oqlQuery);
-            query.bind(nome);
-            List result = (List) query.execute();
-            ListIterator iterator = result.listIterator();
-            while (iterator.hasNext())
-                super.delete(iterator.next());
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }
-
-    public void apagarDepartamentoPorSigla(String sigla) throws ExcepcaoPersistencia
-    {
-        try
-        {
-            String oqlQuery = "select all from " + Department.class.getName();
-            oqlQuery += " where sigla = $1";
-            query.create(oqlQuery);
-            query.bind(sigla);
-            List result = (List) query.execute();
-            ListIterator iterator = result.listIterator();
-            while (iterator.hasNext())
-                super.delete(iterator.next());
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }
-
-    public List readAllDepartments() throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();  
-        return queryList(Department.class,crit);
-    }
-    
    
+
+    public List readAllDepartments() throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        return queryList(Department.class, crit);
+    }
 
     public void apagarDepartamento(IDepartment disciplina) throws ExcepcaoPersistencia
     {
@@ -160,28 +93,31 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
     public IDepartment readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
     {
 
-        // TODO: Remove this call after refactoring teacher... teacher.getEmployee();
+        // TODO: Remove this call after refactoring teacher...
+		// teacher.getEmployee();
         EmployeeHistoric employeeHistoric = getEmployee(teacher);
 
         ICostCenter workingCC = employeeHistoric.getWorkingPlaceCostCenter();
 
         List departmentList = null;
-        
+
         String code = workingCC.getSigla();
-        
 
         if (code != null && !(code.equals("")))
         {
             Criteria workingCCCriteria = new Criteria();
             workingCCCriteria.addLike("code", code.substring(0, 2) + "%");
-            departmentList =  queryList(Department.class, workingCCCriteria);
+            departmentList = queryList(Department.class, workingCCCriteria);
         }
         IDepartment department;
-        if(departmentList.size() != 1) {
+        if (departmentList.size() != 1)
+        {
             Criteria criteria = new Criteria();
             criteria.addEqualTo("code", code);
             department = (IDepartment) queryObject(Department.class, criteria);
-        } else {
+        }
+        else
+        {
             department = (IDepartment) departmentList.get(0);
         }
         return department;
@@ -196,8 +132,8 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
         IPersistentEmployee employeeDAO = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
 
         IEmployee employee = employeeDAO.readByNumber(teacher.getTeacherNumber());
-        employee.setHistoricList(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal()
-                .intValue()));
+        employee.setHistoricList(
+            employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal().intValue()));
 
         employee.fillEmployeeHistoric();
 
