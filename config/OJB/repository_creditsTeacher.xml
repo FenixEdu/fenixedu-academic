@@ -1,6 +1,8 @@
 <!-- Please keep user defined mappings in this file only
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
+
+
 <!-- Definitions for Dominio.ShiftProfessorship -->
 <class-descriptor  class="Dominio.ShiftProfessorship"  table="SHIFT_PROFESSORSHIP">
 
@@ -23,7 +25,7 @@
 
 
 <!-- Definitions for Dominio.Credits -->
-   <class-descriptor class="Dominio.Credits" table="CREDITS">
+<class-descriptor class="Dominio.Credits" table="CREDITS">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
@@ -48,6 +50,31 @@
       </reference-descriptor> 
 </class-descriptor>
 
+
+<!-- Definitions for Dominio.CreditLine -->
+<class-descriptor class="Dominio.CreditLine" table="CREDIT_LINE">
+      <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
+				        		 primarykey="true" autoincrement="true"/>
+
+      <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+
+      <field-descriptor name="credits" column="CREDITS" jdbc-type="DOUBLE"/>
+
+      <field-descriptor name="type" column="TYPE" jdbc-type="INTEGER"/>
+
+      <field-descriptor name="explanation" column="EXPLANATION" jdbc-type="VARCHAR"/>
+      
+      <field-descriptor name="startDate" column="START_DATE" jdbc-type="DATE"/>
+      
+      <field-descriptor name="endDate" column="END_DATE" jdbc-type="DATE"/>
+      
+      <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
+         <foreignkey field-ref="keyTeacher"/>
+      </reference-descriptor>
+</class-descriptor>
+
+
+<!-- Definitions for Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent -->
 <class-descriptor class="Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent" table="TEACHER_DEGREE_FINAL_PROJECT_STUDENT">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
@@ -72,6 +99,8 @@
 
 </class-descriptor>      
 
+
+<!-- Definitions for Dominio.teacher.workTime.TeacherInstitutionWorkTime -->
 <class-descriptor class="Dominio.teacher.workTime.TeacherInstitutionWorkTime"  table="TEACHER_INSTITUTION_WORK_TIME">
 	
 	<field-descriptor	name="idInternal"  column="ID_INTERNAL" jdbc-type="INTEGER"

@@ -67,11 +67,12 @@ create table TEACHER_DEGREE_FINAL_PROJECT_STUDENT (
 drop table if exists CREDIT_LINE;
 create table CREDIT_LINE (
    ID_INTERNAL int(11) not null auto_increment,
-   KEY_CREDITS int(11) not null,
-   CREDITS float,
-   EXPLANATION varchar(250),
-   START_DATE date,
-   END_DATE date,
+   KEY_TEACHER int(11) not null,
+   CREDITS float not null,
+	 TYPE int(11) not null,
+   EXPLANATION varchar(250) not null,
+   START_DATE date not null,
+   END_DATE date not null,
    primary key (ID_INTERNAL),
 )type=InnoDB;
 
