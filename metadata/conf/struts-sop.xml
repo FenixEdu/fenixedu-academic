@@ -176,14 +176,15 @@
       
 	  <!-- ========== EXAMS ========== -->
       <!-- Dynamic-FormBean para Day And Shift Context -->
-     <form-bean name="examDayAndShiftForm"
+     <form-bean name="chooseDayAndShiftForm"
                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                 dynamic="true"
                 >
-        <form-property name="day" type="java.lang.Integer"/>
-        <form-property name="month" type="java.lang.Integer"/>
-        <form-property name="year" type="java.lang.Integer"/>
-        <form-property name="beginning" type="java.lang.Integer"/>
+        <form-property name="day" type="java.lang.String"/>
+        <form-property name="month" type="java.lang.String"/>
+        <form-property name="year" type="java.lang.String"/>
+        <form-property name="beginning" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
      </form-bean>
 
       
@@ -266,6 +267,7 @@
           <forward name="Sucesso" path="/escolherContexto.jsp"/>
       </action>
 
+	  <!-- Contexto Gestao de Horarios-->
       <action attribute="escolherContextoForm"
               input="/prepararEscolherContexto.do"
               name="escolherContextoForm"
@@ -279,8 +281,9 @@
         <forward name="Licenciatura execucao inexistente" path="/naoExecutado.do"/>
       </action>
 
+
      <!-- Gestao de Horarios -->
-	  <!-- AULAS -->
+	 <!-- AULAS -->
       <action path="/prepararAula"
               type="ServidorApresentacao.Action.sop.PrepararAulaFormAction"
               scope="request">
@@ -701,19 +704,17 @@
         
       </action>
 
-	<!-- ========== EXAMES ========== -->
-	<action path="/chooseDayAndShift"
-			attribute="examDayAndShiftForm"
-			name="examDayAndShiftForm"
+	<!-- ========== EXAMS ========== -->
+	<action path="/chooseDayAndShiftForm"
+			input="/chooseDayAndShift.jsp"
+			name="chooseDayAndShiftForm"
             type="ServidorApresentacao.Action.sop.ChooseExamDayAndShiftDispatchAction"
             parameter="method"
-            scope="request"
-            input="/chooseDayAndShift.jsp"
+            scope="session"
             validate="true"
             >
          <forward name="Show Choose Form" path="/chooseDayAndShift.jsp"/>
-         <forward name="Sucesso" path="/escolherAulas.do"/>
-         <forward name="Alterar Sala" path="/changeLessonRoom.jsp"/>
+         <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
 	 </action>
 	
 	

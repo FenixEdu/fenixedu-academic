@@ -4,6 +4,22 @@
           "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
 <form-validation>
   <formset>
+
+	<!-- Validation for exam context form -->
+	<form name="chooseDayAndShiftForm">
+		<field property="day" depends="required, integer" page="1">
+			<arg0 key="property.exam.day"/>
+		</field>
+		<field property="month" depends="required, integer" page="1">
+			<arg0 key="property.exam.month"/>
+		</field>
+		<field property="year" depends="required, integer" page="1">
+			<arg0 key="property.exam.year"/>
+		</field>
+		<field property="beginning" depends="required, integer" page="1">
+			<arg0 key="property.exam.beginning"/>
+		</field>
+	</form>
   
     <!-- Validacao para o formulario de autenticacao -->
     <form name="autenticacaoSOPForm">
@@ -489,22 +505,6 @@
     <form name="classForm">
       <field property="className" depends="required" page="1">
         <arg0 key="property.class.name"/>
-      </field>
-    </form>
-
-    <!-- Validation for form examDayAndShiftForm -->
-    <form name="examDayAndShiftForm">
-      <field property="day" depends="required" page="1">
-        <arg0 key="property.exam.day"/>
-      </field>
-      <field property="month" depends="required" page="1">
-        <arg0 key="property.exam.month"/>
-      </field>
-      <field property="year" depends="required" page="1">
-        <arg0 key="property.exam.year"/>
-      </field>
-      <field property="beginning" depends="required" page="1">
-        <arg0 key="property.exam.beginning"/>
       </field>
     </form>
 

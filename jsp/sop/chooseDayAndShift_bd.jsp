@@ -4,46 +4,45 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
         <h2><bean:message key="title.exams"/></h2>
         <span class="error"><html:errors/></span>
-        <html:form action="/chooseDayAndShift">
-			<input type="hidden" name="method" value="choose"/>
-            <!--<html:hidden property="method" value="choose"/>-->
-			<input type="hidden" name="page" value="1"/>
-            <table cellpadding="0" cellspacing="0">
+        <html:form action="/chooseDayAndShiftForm">
+            <html:hidden property="method" value="choose"/>
+			<html:hidden property="page" value="1"/>
+            <table cellpadding="0" cellspacing="2">
                 <tr>
-                    <td nowrap class="formTD">
+                    <td nowrap class="formTD" align="right">
                         <bean:message key="property.exam.year"/>
                     </td>
-                    <td nowrap class="formTD">
-                        <html:select property="year"  size="4">
+                    <td nowrap class="formTD" align="left">
+                        <html:select property="year">
                         	<option value="" selected="selected">[Ano]</option>
-                            <html:options name="years"/>
+                            <html:options name="yearsList"/>
                         </html:select>
                    </td>
-                    <td nowrap class="formTD">
+                    <td nowrap class="formTD" align="right">
                         <bean:message key="property.exam.month"/>
                     </td>
-                    <td nowrap class="formTD">
-                        <html:select property="month"  size="3">
+                    <td nowrap class="formTD" align="left">
+                        <html:select property="month">
                         	<option value="" selected="selected">[Mês]</option>
                             <html:options name="monthsOfYear"/>
                         </html:select>
                    </td>
-                    <td nowrap class="formTD">
-                        <bean:message key="property.exam.year"/>
+                    <td nowrap class="formTD" align="right">
+                        <bean:message key="property.exam.day"/>
                     </td>
-                    <td nowrap class="formTD">
-                        <html:select property="day"  size="3">
+                    <td nowrap class="formTD" align="left">
+                        <html:select property="day">
                         	<option value="" selected="selected">[Dia]</option>
                             <html:options name="daysOfMonth"/>
                         </html:select>
                    </td>
                 </tr>
                 <tr>
-                    <td nowrap="nowrap" class="formTD">
+                    <td nowrap="nowrap" class="formTD" align="right">
                         <bean:message key="property.exam.beginning"/>
                     </td>
-                    <td nowrap="nowrap">
-                        <html:select property="beginning"  size="5">
+                    <td nowrap="nowrap" align="left">
+                        <html:select property="beginning">
                         	<option value="" selected="selected">[Turno]</option>                        
                             <html:options name="horas"/>
                         </html:select>
@@ -51,7 +50,7 @@
                 </tr>
           </table>
             <br/>
-            <table align="lef">
+            <table align="left">
                 <tr align="center">
                     <td>
                         <html:submit styleClass="inputbutton">

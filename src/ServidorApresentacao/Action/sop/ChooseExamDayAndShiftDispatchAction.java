@@ -18,6 +18,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.validator.DynaValidatorForm;
 
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -50,10 +51,32 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		session.setAttribute("monthsOfYear", monthsOfYear);
 
 		ArrayList years = Util.getYears();
-		session.setAttribute("years", years);
+		session.setAttribute("yearsList", years);
 
 		return mapping.findForward("Show Choose Form");
 
+	}
+
+	public ActionForward choose(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		SessionUtils.validSessionVerification(request, mapping);
+
+		HttpSession session = request.getSession(false);
+		IUserView userView = SessionUtils.getUserView(request);
+
+		DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
+
+		Integer day = new Integer((String) chooseDayAndShiftForm.get("day"));
+		Integer month = new Integer((String) chooseDayAndShiftForm.get("month"));
+		Integer year = new Integer((String) chooseDayAndShiftForm.get("year"));
+		Integer beginning = new Integer((String) chooseDayAndShiftForm.get("beginning"));
+
+		return mapping.findForward("View Exams");
 	}
 
 }
