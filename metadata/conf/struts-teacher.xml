@@ -273,7 +273,7 @@
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 			dynamic="true">   
 			<form-property name="name" type="java.lang.String" />  
-			<form-property name="projectDescription" type="java.lang.String" />     
+			<form-property name="projectDescription" type="java.lang.String"/>     
 			<form-property name="maximumCapacity" type="java.lang.String" />
 			<form-property name="minimumCapacity" type="java.lang.String" />
 			<form-property name="idealCapacity" type="java.lang.String" />
@@ -289,8 +289,8 @@
 		<form-bean name="studentGroupForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 			dynamic="true">        
-			<form-property name="groupNumber" type="java.lang.String" />
-			<form-property name="studentCodes" type="java.lang.Integer[]" />
+			<form-property name="nrOfElements" type="java.lang.String" />
+			<form-property name="studentCodes" type="java.lang.String[]" />
 			<form-property name="studentsToRemove" type="java.lang.Integer[]" />
 			<form-property name="shift" type="java.lang.String" />
 			<form-property name="page" type="java.lang.Integer" initial="0"/>

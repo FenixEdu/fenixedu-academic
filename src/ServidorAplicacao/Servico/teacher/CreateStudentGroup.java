@@ -17,7 +17,6 @@ import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import Dominio.ITurno;
-import Dominio.Student;
 import Dominio.StudentGroup;
 import Dominio.StudentGroupAttend;
 import Dominio.Turno;
@@ -32,6 +31,7 @@ import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
+import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -99,6 +99,7 @@ public class CreateStudentGroup implements IServico {
 		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
 		IPersistentGroupProperties persistentGroupProperites = null;
 		IPersistentStudent persistentStudent = null;
+		IPessoaPersistente persistentPerson = null;
 		ITurnoPersistente persistentShift = null;
 		IFrequentaPersistente persistentAttend = null;
 		IPersistentStudentGroup persistentStudentGroup = null;
@@ -138,7 +139,7 @@ public class CreateStudentGroup implements IServico {
 				Iterator iterator = studentCodes.iterator();
 
 				while (iterator.hasNext()) {
-					IStudent student = (IStudent) persistentStudent.readByOId(new Student((Integer) iterator.next()), false);
+					IStudent student = (IStudent) persistentStudent.readByUsername((String)iterator.next());
 
 					IFrequenta attend =
 						persistentAttend.readByAlunoAndDisciplinaExecucao(student, groupProperties.getExecutionCourse());
@@ -155,7 +156,7 @@ public class CreateStudentGroup implements IServico {
 			
 			while (iter.hasNext()) {
 
-				IStudent student = (IStudent) persistentStudent.readByOId(new Student((Integer) iter.next()), false);
+				IStudent student = (IStudent) persistentStudent.readByUsername((String)iter.next());
 
 				IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student, groupProperties.getExecutionCourse());
 

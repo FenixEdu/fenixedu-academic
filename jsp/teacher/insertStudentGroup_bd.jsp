@@ -33,10 +33,9 @@
 	<tr>
 		<td>
 		<bean:message key="label.GroupNumber"/>
-		<%--<h2><span class="error"><html:errors/></span></h2>--%>
 		</td>
 		<td>
-		<html:text size="21" property="groupNumber" />
+		<html:text size="21" name="infoSiteStudentGroup" property="nrOfElements" />
 		</td>
 		
 	</tr>
@@ -56,13 +55,13 @@
 
 <br>
 
-<logic:empty name="infoStudentList">
+<logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 <h2>
 <bean:message key="message.editStudentGroupMembers.NoMembersToAdd" />
 </h2>
 </logic:empty>
 
-<logic:notEmpty name="infoStudentList">
+<logic:notEmpty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 <table width="50%" cellpadding="0" border="0">	
 	<tr>
 		<td class="listClasses-header">
@@ -75,19 +74,19 @@
 		</td>
 	</tr>
 	
-	<logic:iterate id="infoStudent" name="infoStudentList">			
+	<logic:iterate id="infoSiteStudentInformation" name="infoSiteStudentGroup" property="infoSiteStudentInformationList">				
 		<tr>	
+		<%System.out.println("ENTRA");%>
 			<td class="listClasses">
 			<html:multibox property="studentCodes">
-			<bean:write name="infoStudent" property="idInternal"/>
+			<bean:write name="infoSiteStudentInformation" property="username"/>
 			</html:multibox>
 			</td>	
-			<td class="listClasses"><bean:write name="infoStudent" property="number"/>
+			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
 			</td>	
-			<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>		
-			<td class="listClasses"><bean:write name="infoPerson" property="nome"/>
+			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="name"/>
 			</td>
-			<td class="listClasses"><bean:write name="infoPerson" property="email"/>
+			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="email"/>
 			</td>
 	 	</tr>	
 	 </logic:iterate>

@@ -100,7 +100,6 @@ public class GroupEnrolment implements IServico {
 
 			List allStudentGroup = new ArrayList();
 			allStudentGroup = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
-			System.out.println("allStudentGroup"+allStudentGroup);
 			Integer groupNumber = new Integer(1);
 			if (allStudentGroup.size() != 0) {
 				Collections.sort(allStudentGroup, new BeanComparator("groupNumber"));
@@ -111,8 +110,6 @@ public class GroupEnrolment implements IServico {
 
 			IStudentGroup newStudentGroup =
 				persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties, groupNumber);
-			
-			System.out.println("StudentGroup"+newStudentGroup);
 			
 			if (newStudentGroup != null)
 				throw new FenixServiceException();

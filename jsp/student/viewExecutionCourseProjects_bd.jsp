@@ -54,7 +54,7 @@
                      <td class="listClasses">
                    
              		<logic:notEmpty name="infoGroupProperties" property="projectDescription">
-                     	<bean:write name="infoGroupProperties" property="projectDescription"/>
+                     	<bean:write name="infoGroupProperties" property="projectDescription" filter="false"/>
                 	</logic:notEmpty>
                 	
              		<logic:empty name="infoGroupProperties" property="projectDescription">

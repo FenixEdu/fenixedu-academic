@@ -5,10 +5,15 @@
 package ServidorAplicacao.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.util.Cloner;
+import org.apache.commons.beanutils.BeanComparator;
+
+import DataBeans.ISiteComponent;
+import DataBeans.InfoSiteStudentGroup;
+import DataBeans.InfoSiteStudentInformation;
 import Dominio.DisciplinaExecucao;
 import Dominio.GroupProperties;
 import Dominio.IDisciplinaExecucao;
@@ -34,8 +39,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class PrepareCreateStudentGroup implements IServico {
 
-	private static PrepareCreateStudentGroup service =
-		new PrepareCreateStudentGroup();
+	private static PrepareCreateStudentGroup service = new PrepareCreateStudentGroup();
 
 	/**
 		* The singleton access method of this class.
@@ -59,67 +63,84 @@ public class PrepareCreateStudentGroup implements IServico {
 	 * Executes the service.
 	 */
 
-	public List run(Integer executionCourseCode,Integer groupPropertiesCode)
-		throws FenixServiceException {
-			
-		
+	public ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode) throws FenixServiceException {
+
 		IFrequentaPersistente persistentAttend = null;
 		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
 		IPersistentGroupProperties persistentGroupProperties = null;
 		IPersistentStudentGroup persistentStudentGroup = null;
 		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 		List frequentas = new ArrayList();
-		List infoStudentList = null;		
+		
+		List infoStudentInformationList = new ArrayList();
+		InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+		Integer groupNumber=null;
 		try {
-					
+
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 			persistentExecutionCourse = ps.getIDisciplinaExecucaoPersistente();
 			persistentAttend = ps.getIFrequentaPersistente();
 			persistentStudentGroup = ps.getIPersistentStudentGroup();
 			persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
-			
-			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode),false);
-			IGroupProperties groupProperties = (IGroupProperties)ps.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode),false);
-						
+
+			IDisciplinaExecucao executionCourse =
+				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode), false);
+			IGroupProperties groupProperties =
+				(IGroupProperties) ps.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
+
 			frequentas = persistentAttend.readByExecutionCourse(executionCourse);
+
+			List allStudentsGroups = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
+			groupNumber = new Integer(1);
 			
-			List allStudentsGroups =persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
-			
+			if (allStudentsGroups.size() != 0) {
+				Collections.sort(allStudentsGroups, new BeanComparator("groupNumber"));
+				Integer lastGroupNumber = ((IStudentGroup) allStudentsGroups.get(allStudentsGroups.size() - 1)).getGroupNumber();
+				groupNumber = new Integer(lastGroupNumber.intValue() + 1);
+
+			}
+
 			List allStudentAttend = new ArrayList();
 			Iterator iterator = allStudentsGroups.iterator();
 			List allStudentGroupAttend;
-		
-			while (iterator.hasNext()) 
-			{
-				
-				allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup((IStudentGroup) iterator.next()); 
+
+			while (iterator.hasNext()) {
+
+				allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup((IStudentGroup) iterator.next());
 				Iterator iterator2 = allStudentGroupAttend.iterator();
 				IFrequenta frequenta = null;
-				while(iterator2.hasNext())
-				{
-					frequenta =((IStudentGroupAttend)iterator2.next()).getAttend();
-					if(frequentas.contains(frequenta))
-					{
+				while (iterator2.hasNext()) {
+					frequenta = ((IStudentGroupAttend) iterator2.next()).getAttend();
+					if (frequentas.contains(frequenta)) {
 						frequentas.remove(frequenta);
 					}
-					
+
 				}
 			}
-		
+
+			IStudent student = null;
+			Iterator iterator3 = frequentas.iterator();
+			
+			while (iterator3.hasNext()) {
+				student = ((IFrequenta) iterator3.next()).getAluno();
+				InfoSiteStudentInformation infoSiteStudentInformation = new InfoSiteStudentInformation();
+				
+				infoSiteStudentInformation.setEmail(student.getPerson().getEmail());
+				infoSiteStudentInformation.setName(student.getPerson().getNome());
+				infoSiteStudentInformation.setNumber(student.getNumber());
+				infoSiteStudentInformation.setUsername(student.getPerson().getUsername());
+				infoStudentInformationList.add(infoSiteStudentInformation);
+			}
+
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
-		  }
-
-		IStudent student = null;
-		infoStudentList = new ArrayList();
-		Iterator iterator = frequentas.iterator();
-
-		while (iterator.hasNext()) 
-		{
-			student = ((IFrequenta) iterator.next()).getAluno();
-			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));		
 		}
+		Collections.sort(infoStudentInformationList, new BeanComparator("number"));
+				
+		infoSiteStudentGroup.setInfoSiteStudentInformationList(infoStudentInformationList);
+		infoSiteStudentGroup.setNrOfElements(groupNumber);
 		
-		return infoStudentList;
+		return infoSiteStudentGroup;
+
 	}
 }

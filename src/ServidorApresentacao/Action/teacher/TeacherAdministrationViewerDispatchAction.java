@@ -1736,15 +1736,16 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 			}
 			request.setAttribute("shiftsList", shiftsList);
 		}
-		List infoStudentList;
+		InfoSiteStudentGroup infoSiteStudentGroup;
 		Object args[] = { objectCode, groupPropertiesCode };
 		GestorServicos gestor = GestorServicos.manager();
 		try {
-			infoStudentList = (List) gestor.executar(userView, "PrepareCreateStudentGroup", args);
+			infoSiteStudentGroup = (InfoSiteStudentGroup) gestor.executar(userView, "PrepareCreateStudentGroup", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		request.setAttribute("infoStudentList", infoStudentList);
+		
+		request.setAttribute("infoSiteStudentGroup", infoSiteStudentGroup);
 		readSiteView(request, null, null, null, null);
 		return mapping.findForward("insertStudentGroup");
 	}
@@ -1764,9 +1765,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		DynaActionForm insertStudentGroupForm = (DynaActionForm) form;
 
-		List studentCodes = Arrays.asList((Integer[]) insertStudentGroupForm.get("studentCodes"));
+		List studentCodes = Arrays.asList((String[]) insertStudentGroupForm.get("studentCodes"));
 
-		String groupNumberString = (String) insertStudentGroupForm.get("groupNumber");
+		String groupNumberString = (String) insertStudentGroupForm.get("nrOfElements");
 		Integer groupNumber = new Integer(groupNumberString);
 
 		String newShiftString = (String) insertStudentGroupForm.get("shift");
