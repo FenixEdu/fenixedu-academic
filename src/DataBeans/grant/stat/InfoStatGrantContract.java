@@ -9,7 +9,7 @@ import DataBeans.InfoObject;
 /**
  * @author Barbosa
  * @author Pica
- *
+ *  
  */
 public class InfoStatGrantContract extends InfoObject {
 

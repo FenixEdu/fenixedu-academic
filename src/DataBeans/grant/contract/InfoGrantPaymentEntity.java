@@ -15,9 +15,10 @@ import Dominio.grant.contract.IGrantProject;
  */
 public abstract class InfoGrantPaymentEntity extends InfoObject {
 
-	private static final String grantCostCenterOjbConcreteClass = "Dominio.grant.contract.GrantCostCenter";
-	private static final String grantProjectOjbConcreteClass = "Dominio.grant.contract.GrantProject";
-	
+    private static final String grantCostCenterOjbConcreteClass = "Dominio.grant.contract.GrantCostCenter";
+
+    private static final String grantProjectOjbConcreteClass = "Dominio.grant.contract.GrantProject";
+
     protected String number;
 
     protected String designation;
@@ -77,20 +78,20 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
     public InfoTeacher getInfoResponsibleTeacher() {
         return infoResponsibleTeacher;
     }
-    
-	/**
-	 * @return Returns the grantCostCenterOjbConcreteClass.
-	 */
-	public static String getGrantCostCenterOjbConcreteClass() {
-		return grantCostCenterOjbConcreteClass;
-	}
-	/**
-	 * @return Returns the grantProjectOjbConcreteClass.
-	 */
-	public static String getGrantProjectOjbConcreteClass() {
-		return grantProjectOjbConcreteClass;
-	}
 
+    /**
+     * @return Returns the grantCostCenterOjbConcreteClass.
+     */
+    public static String getGrantCostCenterOjbConcreteClass() {
+        return grantCostCenterOjbConcreteClass;
+    }
+
+    /**
+     * @return Returns the grantProjectOjbConcreteClass.
+     */
+    public static String getGrantProjectOjbConcreteClass() {
+        return grantProjectOjbConcreteClass;
+    }
 
     /**
      * @param infoResponsibleTeacher
@@ -100,27 +101,27 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
         this.infoResponsibleTeacher = infoResponsibleTeacher;
     }
 
-    public static InfoGrantPaymentEntity newInfoFromDomain(
-            IGrantPaymentEntity grantPaymentEntity) {
-        if (grantPaymentEntity != null)  
-        {
-        	if(grantPaymentEntity instanceof IGrantProject) 
-                return InfoGrantProjectWithTeacherAndCostCenter.newInfoFromDomain((IGrantProject) grantPaymentEntity);
-        	else if (grantPaymentEntity instanceof IGrantCostCenter) 
-            	return InfoGrantCostCenterWithTeacher.newInfoFromDomain((IGrantCostCenter) grantPaymentEntity);
+    public static InfoGrantPaymentEntity newInfoFromDomain(IGrantPaymentEntity grantPaymentEntity) {
+        if (grantPaymentEntity != null) {
+            if (grantPaymentEntity instanceof IGrantProject)
+                return InfoGrantProjectWithTeacherAndCostCenter
+                        .newInfoFromDomain((IGrantProject) grantPaymentEntity);
+            else if (grantPaymentEntity instanceof IGrantCostCenter)
+                return InfoGrantCostCenterWithTeacher
+                        .newInfoFromDomain((IGrantCostCenter) grantPaymentEntity);
         }
         return null;
-    }    
+    }
 
-    public static IGrantPaymentEntity newDomainFromInfo(InfoGrantPaymentEntity infoGrantPaymentEntity)
-    {
+    public static IGrantPaymentEntity newDomainFromInfo(InfoGrantPaymentEntity infoGrantPaymentEntity) {
         IGrantPaymentEntity grantPaymentEntity = null;
-        if(infoGrantPaymentEntity != null)
-        {
+        if (infoGrantPaymentEntity != null) {
             if (infoGrantPaymentEntity instanceof InfoGrantCostCenter)
-                return InfoGrantCostCenterWithTeacher.newDomainFromInfo((InfoGrantCostCenter) infoGrantPaymentEntity);
+                return InfoGrantCostCenterWithTeacher
+                        .newDomainFromInfo((InfoGrantCostCenter) infoGrantPaymentEntity);
             else if (infoGrantPaymentEntity instanceof InfoGrantProject)
-                return InfoGrantProjectWithTeacherAndCostCenter.newDomainFromInfo((InfoGrantProject) infoGrantPaymentEntity);
+                return InfoGrantProjectWithTeacherAndCostCenter
+                        .newDomainFromInfo((InfoGrantProject) infoGrantPaymentEntity);
         }
         return grantPaymentEntity;
     }

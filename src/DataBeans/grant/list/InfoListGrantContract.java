@@ -17,11 +17,9 @@ public class InfoListGrantContract extends InfoObject {
 
     private InfoGrantContract infoGrantContract;
 
-    private List infoGrantContractRegimes; //The actual regime is in the first
-                                           // position
+    private List infoGrantContractRegimes; //The actual regime is in the first position
 
-    private List infoListGrantSubsidys; // The actual subsidy is in the first
-                                        // position
+    private List infoListGrantSubsidys; // The actual subsidy is in the first position
 
     /**
      * @return Returns the infoGrantContract.

@@ -15,8 +15,11 @@ import Dominio.grant.contract.IGrantPart;
 public class InfoGrantPart extends InfoObject {
 
     private Integer percentage;
+
     private InfoGrantSubsidy infoGrantSubsidy;
+
     private InfoGrantPaymentEntity infoGrantPaymentEntity;
+
     private InfoTeacher infoResponsibleTeacher;
 
     /**
@@ -30,8 +33,7 @@ public class InfoGrantPart extends InfoObject {
      * @param infoGrantPaymentEntity
      *            The infoGrantPaymentEntity to set.
      */
-    public void setInfoGrantPaymentEntity(
-            InfoGrantPaymentEntity infoGrantPaymentEntity) {
+    public void setInfoGrantPaymentEntity(InfoGrantPaymentEntity infoGrantPaymentEntity) {
         this.infoGrantPaymentEntity = infoGrantPaymentEntity;
     }
 
@@ -83,44 +85,38 @@ public class InfoGrantPart extends InfoObject {
     /**
      * @param GrantPart
      */
-    public void copyFromDomain(IGrantPart grantPart)
-    {
-    	super.copyFromDomain(grantPart);
-    	if (grantPart != null)
-    	{
-    		setPercentage(grantPart.getPercentage());
-    	}
+    public void copyFromDomain(IGrantPart grantPart) {
+        super.copyFromDomain(grantPart);
+        if (grantPart != null) {
+            setPercentage(grantPart.getPercentage());
+        }
     }
+
     /**
      * @param GrantPart
      * @return
      */
-    public static InfoGrantPart newInfoFromDomain(IGrantPart grantPart)
-    {
-    	InfoGrantPart infoGrantPart = null;
-    	if (grantPart != null)
-    	{
-    		infoGrantPart = new InfoGrantPart();
-    		infoGrantPart.copyFromDomain(grantPart);
-    	}
-    	return infoGrantPart;
+    public static InfoGrantPart newInfoFromDomain(IGrantPart grantPart) {
+        InfoGrantPart infoGrantPart = null;
+        if (grantPart != null) {
+            infoGrantPart = new InfoGrantPart();
+            infoGrantPart.copyFromDomain(grantPart);
+        }
+        return infoGrantPart;
     }
-    
-    public void copyToDomain(InfoGrantPart infoGrantPart, IGrantPart grantPart) 
-	 {
-	     super.copyToDomain(infoGrantPart, grantPart);
 
-	     grantPart.setPercentage(infoGrantPart.getPercentage());
-   }
-	    
-	 public static IGrantPart newDomainFromInfo(InfoGrantPart infoGrantPart) 
-	 {
-       IGrantPart grantPart = null;
-       if (infoGrantPart != null) 
-       {
-           grantPart = new GrantPart();
-           infoGrantPart.copyToDomain(infoGrantPart, grantPart);
-       }
-       return grantPart;
-   }
+    public void copyToDomain(InfoGrantPart infoGrantPart, IGrantPart grantPart) {
+        super.copyToDomain(infoGrantPart, grantPart);
+
+        grantPart.setPercentage(infoGrantPart.getPercentage());
+    }
+
+    public static IGrantPart newDomainFromInfo(InfoGrantPart infoGrantPart) {
+        IGrantPart grantPart = null;
+        if (infoGrantPart != null) {
+            grantPart = new GrantPart();
+            infoGrantPart.copyToDomain(infoGrantPart, grantPart);
+        }
+        return grantPart;
+    }
 }

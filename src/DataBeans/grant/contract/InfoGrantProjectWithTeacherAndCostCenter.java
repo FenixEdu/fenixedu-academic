@@ -17,12 +17,12 @@ public class InfoGrantProjectWithTeacherAndCostCenter extends InfoGrantProject {
         if (grantProject != null) {
             super.copyFromDomain(grantProject);
             if (grantProject.getResponsibleTeacher() != null) {
-                setInfoResponsibleTeacher(InfoTeacherWithPerson
-                        .newInfoFromDomain(grantProject.getResponsibleTeacher()));
+                setInfoResponsibleTeacher(InfoTeacherWithPerson.newInfoFromDomain(grantProject
+                        .getResponsibleTeacher()));
             }
             if (grantProject.getGrantCostCenter() != null) {
-                setInfoGrantCostCenter(InfoGrantCostCenterWithTeacher
-                        .newInfoFromDomain(grantProject.getGrantCostCenter()));
+                setInfoGrantCostCenter(InfoGrantCostCenterWithTeacher.newInfoFromDomain(grantProject
+                        .getGrantCostCenter()));
             }
         }
     }
@@ -36,8 +36,7 @@ public class InfoGrantProjectWithTeacherAndCostCenter extends InfoGrantProject {
         return infoGrantProject;
     }
 
-    public void copyToDomain(InfoGrantProject infoGrantProject, IGrantProject grantProject)
-    {
+    public void copyToDomain(InfoGrantProject infoGrantProject, IGrantProject grantProject) {
         super.copyToDomain(infoGrantProject, grantProject);
 
         grantProject.setResponsibleTeacher(InfoTeacherWithPerson.newDomainFromInfo(infoGrantProject
@@ -45,16 +44,14 @@ public class InfoGrantProjectWithTeacherAndCostCenter extends InfoGrantProject {
         grantProject.setGrantCostCenter(InfoGrantCostCenterWithTeacher
                 .newDomainFromInfo(infoGrantProject.getInfoGrantCostCenter()));
     }
-    
-    public static IGrantProject newDomainFromInfo(InfoGrantProject infoGrantProject)
-    {
+
+    public static IGrantProject newDomainFromInfo(InfoGrantProject infoGrantProject) {
         IGrantProject grantProject = null;
         InfoGrantProjectWithTeacherAndCostCenter infoGrantProjectWithTeacherAndCostCenter = null;
-        if(infoGrantProject != null)
-        {
+        if (infoGrantProject != null) {
             grantProject = new GrantProject();
             infoGrantProjectWithTeacherAndCostCenter = new InfoGrantProjectWithTeacherAndCostCenter();
-            infoGrantProjectWithTeacherAndCostCenter.copyToDomain(infoGrantProject,grantProject);
+            infoGrantProjectWithTeacherAndCostCenter.copyToDomain(infoGrantProject, grantProject);
         }
         return grantProject;
     }

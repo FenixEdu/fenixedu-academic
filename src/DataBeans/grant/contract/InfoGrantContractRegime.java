@@ -225,8 +225,7 @@ public class InfoGrantContractRegime extends InfoObject {
      * @param GrantContractRegime
      * @return
      */
-    public static InfoGrantContractRegime newInfoFromDomain(
-            IGrantContractRegime grantContractRegime) {
+    public static InfoGrantContractRegime newInfoFromDomain(IGrantContractRegime grantContractRegime) {
         InfoGrantContractRegime infoGrantContractRegime = null;
         if (grantContractRegime != null) {
             infoGrantContractRegime = new InfoGrantContractRegime();
@@ -239,28 +238,20 @@ public class InfoGrantContractRegime extends InfoObject {
             IGrantContractRegime grantContractRegime) {
         super.copyToDomain(infoGrantContractRegime, grantContractRegime);
 
-        grantContractRegime.setDateBeginContract(infoGrantContractRegime
-                .getDateBeginContract());
-        grantContractRegime.setDateEndContract(infoGrantContractRegime
-                .getDateEndContract());
-        grantContractRegime.setDateDispatchCC(infoGrantContractRegime
-                .getDateDispatchCC());
-        grantContractRegime.setDateDispatchCD(infoGrantContractRegime
-                .getDateDispatchCD());
-        grantContractRegime.setDateSendDispatchCC(infoGrantContractRegime
-                .getDateSendDispatchCC());
-        grantContractRegime.setDateSendDispatchCD(infoGrantContractRegime
-                .getDateSendDispatchCD());
+        grantContractRegime.setDateBeginContract(infoGrantContractRegime.getDateBeginContract());
+        grantContractRegime.setDateEndContract(infoGrantContractRegime.getDateEndContract());
+        grantContractRegime.setDateDispatchCC(infoGrantContractRegime.getDateDispatchCC());
+        grantContractRegime.setDateDispatchCD(infoGrantContractRegime.getDateDispatchCD());
+        grantContractRegime.setDateSendDispatchCC(infoGrantContractRegime.getDateSendDispatchCC());
+        grantContractRegime.setDateSendDispatchCD(infoGrantContractRegime.getDateSendDispatchCD());
         grantContractRegime.setState(infoGrantContractRegime.getState());
     }
 
-    public static IGrantContractRegime newDomainFromInfo(
-            InfoGrantContractRegime infoGrantContractRegime) {
+    public static IGrantContractRegime newDomainFromInfo(InfoGrantContractRegime infoGrantContractRegime) {
         IGrantContractRegime grantContractRegime = null;
         if (infoGrantContractRegime != null) {
             grantContractRegime = new GrantContractRegime();
-            infoGrantContractRegime.copyToDomain(infoGrantContractRegime,
-                    grantContractRegime);
+            infoGrantContractRegime.copyToDomain(infoGrantContractRegime, grantContractRegime);
         }
         return grantContractRegime;
     }

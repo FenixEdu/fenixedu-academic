@@ -12,19 +12,16 @@ import Dominio.grant.contract.IGrantOrientationTeacher;
  * @author Pica
  * @author Barbosa
  */
-public class InfoGrantOrientationTeacherWithTeacherAndGrantContract extends
-        InfoGrantOrientationTeacher {
+public class InfoGrantOrientationTeacherWithTeacherAndGrantContract extends InfoGrantOrientationTeacher {
 
     public void copyFromDomain(IGrantOrientationTeacher grantOrientationTeacher) {
         super.copyFromDomain(grantOrientationTeacher);
         if (grantOrientationTeacher != null) {
 
             setGrantContractInfo(InfoGrantContractWithGrantOwnerAndGrantType
-                    .newInfoFromDomain(grantOrientationTeacher
-                            .getGrantContract()));
-            setOrientationTeacherInfo(InfoTeacherWithPerson
-                    .newInfoFromDomain(grantOrientationTeacher
-                            .getOrientationTeacher()));
+                    .newInfoFromDomain(grantOrientationTeacher.getGrantContract()));
+            setOrientationTeacherInfo(InfoTeacherWithPerson.newInfoFromDomain(grantOrientationTeacher
+                    .getOrientationTeacher()));
         }
     }
 
@@ -40,8 +37,7 @@ public class InfoGrantOrientationTeacherWithTeacherAndGrantContract extends
     }
 
     public void copyToDomain(InfoGrantOrientationTeacher infoGrantOrientationTeacher,
-            IGrantOrientationTeacher grantOrientationTeacher) 
-    {
+            IGrantOrientationTeacher grantOrientationTeacher) {
         super.copyToDomain(infoGrantOrientationTeacher, grantOrientationTeacher);
 
         grantOrientationTeacher.setOrientationTeacher(InfoTeacherWithPerson
@@ -51,8 +47,7 @@ public class InfoGrantOrientationTeacherWithTeacherAndGrantContract extends
     }
 
     public static IGrantOrientationTeacher newDomainFromInfo(
-            InfoGrantOrientationTeacher infoGrantOrientationTeacher)
-    {
+            InfoGrantOrientationTeacher infoGrantOrientationTeacher) {
         IGrantOrientationTeacher grantOrientationTeacher = null;
         InfoGrantOrientationTeacherWithTeacherAndGrantContract infoGrantOrientationTeacherWithTeacherAndGrantContract = null;
         if (infoGrantOrientationTeacher != null) {

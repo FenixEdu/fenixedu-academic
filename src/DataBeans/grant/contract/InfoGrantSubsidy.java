@@ -15,15 +15,22 @@ import Dominio.grant.contract.IGrantSubsidy;
  */
 public class InfoGrantSubsidy extends InfoObject {
 
-	private static final int activeState = 1;
-	private static final int inactiveState = 0;
-	
+    private static final int activeState = 1;
+
+    private static final int inactiveState = 0;
+
     private Integer state;
+
     private Date dateBeginSubsidy;
+
     private Date dateEndSubsidy;
+
     private String valueFullName;
+
     private Double value;
+
     private Double totalCost;
+
     private InfoGrantContract infoGrantContract;
 
     /**
@@ -130,50 +137,46 @@ public class InfoGrantSubsidy extends InfoObject {
     public void setState(Integer state) {
         this.state = state;
     }
+
     public static Integer getActiveStateValue() {
-    	return new Integer(activeState);
-    }
-    
-    public static Integer getInactiveStateValue() {
-    	return new Integer(inactiveState);
+        return new Integer(activeState);
     }
 
+    public static Integer getInactiveStateValue() {
+        return new Integer(inactiveState);
+    }
 
     /**
      * @param GrantSubsidy
      */
-    public void copyFromDomain(IGrantSubsidy grantSubsidy)
-    {
-    	super.copyFromDomain(grantSubsidy);
-    	if (grantSubsidy != null)
-    	{
-    		setState(grantSubsidy.getState());
-    		setDateBeginSubsidy(grantSubsidy.getDateBeginSubsidy());
-    		setDateEndSubsidy(grantSubsidy.getDateEndSubsidy());
-    		setValueFullName(grantSubsidy.getValueFullName());
-			setValue(grantSubsidy.getValue());
-			setTotalCost(grantSubsidy.getTotalCost());
-      	}
+    public void copyFromDomain(IGrantSubsidy grantSubsidy) {
+        super.copyFromDomain(grantSubsidy);
+        if (grantSubsidy != null) {
+            setState(grantSubsidy.getState());
+            setDateBeginSubsidy(grantSubsidy.getDateBeginSubsidy());
+            setDateEndSubsidy(grantSubsidy.getDateEndSubsidy());
+            setValueFullName(grantSubsidy.getValueFullName());
+            setValue(grantSubsidy.getValue());
+            setTotalCost(grantSubsidy.getTotalCost());
+        }
     }
+
     /**
      * @param GrantSubsidy
      * @return
      */
-    public static InfoGrantSubsidy newInfoFromDomain(IGrantSubsidy grantSubsidy)
-    {
-    	InfoGrantSubsidy infoGrantSubsidy = null;
-    	if (grantSubsidy != null)
-    	{
-    		infoGrantSubsidy = new InfoGrantSubsidy();
-    		infoGrantSubsidy.copyFromDomain(grantSubsidy);
-    	}
-    	return infoGrantSubsidy;
+    public static InfoGrantSubsidy newInfoFromDomain(IGrantSubsidy grantSubsidy) {
+        InfoGrantSubsidy infoGrantSubsidy = null;
+        if (grantSubsidy != null) {
+            infoGrantSubsidy = new InfoGrantSubsidy();
+            infoGrantSubsidy.copyFromDomain(grantSubsidy);
+        }
+        return infoGrantSubsidy;
     }
-    
-    public void copyToDomain(InfoGrantSubsidy infoGrantSubsidy,IGrantSubsidy grantSubsidy)
-    {
-        super.copyToDomain(infoGrantSubsidy,grantSubsidy);
-        
+
+    public void copyToDomain(InfoGrantSubsidy infoGrantSubsidy, IGrantSubsidy grantSubsidy) {
+        super.copyToDomain(infoGrantSubsidy, grantSubsidy);
+
         grantSubsidy.setDateBeginSubsidy(infoGrantSubsidy.getDateBeginSubsidy());
         grantSubsidy.setDateEndSubsidy(infoGrantSubsidy.getDateEndSubsidy());
         grantSubsidy.setState(infoGrantSubsidy.getState());
@@ -181,16 +184,14 @@ public class InfoGrantSubsidy extends InfoObject {
         grantSubsidy.setValue(infoGrantSubsidy.getValue());
         grantSubsidy.setValueFullName(infoGrantSubsidy.getValueFullName());
     }
-    
-    public static IGrantSubsidy newDomainFromInfo(InfoGrantSubsidy infoGrantSubsidy)
-    {
+
+    public static IGrantSubsidy newDomainFromInfo(InfoGrantSubsidy infoGrantSubsidy) {
         IGrantSubsidy grantSubsidy = null;
-        if(infoGrantSubsidy != null)
-        {
+        if (infoGrantSubsidy != null) {
             grantSubsidy = new GrantSubsidy();
-            infoGrantSubsidy.copyToDomain(infoGrantSubsidy,grantSubsidy);       
+            infoGrantSubsidy.copyToDomain(infoGrantSubsidy, grantSubsidy);
         }
         return grantSubsidy;
     }
-    
+
 }

@@ -11,11 +11,9 @@ import Dominio.grant.contract.IGrantContractRegime;
  * @author Pica
  * @author Barbosa
  */
-public class InfoGrantContractRegimeWithTeacherAndContract extends InfoGrantContractRegime 
-{
+public class InfoGrantContractRegimeWithTeacherAndContract extends InfoGrantContractRegime {
 
-    public void copyFromDomain(IGrantContractRegime grantContractRegime) 
-    {
+    public void copyFromDomain(IGrantContractRegime grantContractRegime) {
         super.copyFromDomain(grantContractRegime);
         if (grantContractRegime != null) {
             setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(grantContractRegime.getTeacher()));
@@ -27,8 +25,7 @@ public class InfoGrantContractRegimeWithTeacherAndContract extends InfoGrantCont
         }
     }
 
-    public static InfoGrantContractRegime newInfoFromDomain(IGrantContractRegime grantContractRegime) 
-    {
+    public static InfoGrantContractRegime newInfoFromDomain(IGrantContractRegime grantContractRegime) {
         InfoGrantContractRegimeWithTeacherAndContract infoGrantContractRegime = null;
         if (grantContractRegime != null) {
             infoGrantContractRegime = new InfoGrantContractRegimeWithTeacherAndContract();
@@ -38,8 +35,7 @@ public class InfoGrantContractRegimeWithTeacherAndContract extends InfoGrantCont
     }
 
     public void copyToDomain(InfoGrantContractRegime infoGrantContractRegime,
-            IGrantContractRegime grantContractRegime) 
-    {
+            IGrantContractRegime grantContractRegime) {
         super.copyToDomain(infoGrantContractRegime, grantContractRegime);
 
         grantContractRegime.setGrantContract(InfoGrantContractWithGrantOwnerAndGrantType
@@ -48,8 +44,7 @@ public class InfoGrantContractRegimeWithTeacherAndContract extends InfoGrantCont
                 .getInfoTeacher()));
     }
 
-    public static IGrantContractRegime newDomainFromInfo(InfoGrantContractRegime infoGrantContractRegime) 
-    {
+    public static IGrantContractRegime newDomainFromInfo(InfoGrantContractRegime infoGrantContractRegime) {
         IGrantContractRegime grantContractRegime = null;
         InfoGrantContractRegimeWithTeacherAndContract infoGrantContractRegimeWithTeacherAndContract = null;
         if (infoGrantContractRegime != null) {

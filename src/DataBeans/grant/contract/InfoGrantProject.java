@@ -32,50 +32,44 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
     /**
      * @param GrantProject
      */
-    public void copyFromDomain(IGrantProject grantProject)
-    {
-    	if(grantProject != null){
-    		
-    		super.copyFromDomain(grantProject);
-    		setNumber(grantProject.getNumber());
-    		setDesignation(grantProject.getDesignation());
-    		setOjbConcreteClass(grantProject.getOjbConcreteClass());
-    	}
+    public void copyFromDomain(IGrantProject grantProject) {
+        if (grantProject != null) {
+
+            super.copyFromDomain(grantProject);
+            setNumber(grantProject.getNumber());
+            setDesignation(grantProject.getDesignation());
+            setOjbConcreteClass(grantProject.getOjbConcreteClass());
+        }
     }
 
     /**
      * @param GrantProject
      * @return
      */
-    public static InfoGrantProject newInfoFromDomain(IGrantProject grantProject)
-    {
-    	InfoGrantProject infoGrantProject = null;
-    	if (grantProject != null)
-    	{
-    		infoGrantProject = new InfoGrantProject();
-    		infoGrantProject.copyFromDomain(grantProject);
-    	}
-    	return infoGrantProject;
+    public static InfoGrantProject newInfoFromDomain(IGrantProject grantProject) {
+        InfoGrantProject infoGrantProject = null;
+        if (grantProject != null) {
+            infoGrantProject = new InfoGrantProject();
+            infoGrantProject.copyFromDomain(grantProject);
+        }
+        return infoGrantProject;
     }
-    
-    public void copyToDomain(InfoGrantProject infoGrantProject,IGrantProject grantProject)
-    {
-        super.copyToDomain(infoGrantProject,grantProject);
-        
+
+    public void copyToDomain(InfoGrantProject infoGrantProject, IGrantProject grantProject) {
+        super.copyToDomain(infoGrantProject, grantProject);
+
         grantProject.setDesignation(infoGrantProject.getDesignation());
         grantProject.setNumber(infoGrantProject.getNumber());
         grantProject.setOjbConcreteClass(infoGrantProject.getOjbConcreteClass());
     }
-    
-    public static IGrantProject newDomainFromInfo(InfoGrantProject infoGrantProject)
-    {
+
+    public static IGrantProject newDomainFromInfo(InfoGrantProject infoGrantProject) {
         IGrantProject grantProject = null;
-        if(infoGrantProject != null)
-        {
+        if (infoGrantProject != null) {
             grantProject = new GrantProject();
-            infoGrantProject.copyToDomain(infoGrantProject,grantProject);
+            infoGrantProject.copyToDomain(infoGrantProject, grantProject);
         }
         return grantProject;
     }
-    
+
 }

@@ -9,15 +9,18 @@ import DataBeans.InfoObject;
 /**
  * @author Pica
  * @author Barbosa
- *
+ *  
  */
 public class InfoStatResultGrantOwner extends InfoObject {
 
     private Integer totalNumberOfGrantOwners;
+
     private Integer numberOfGrantOwnerByCriteria;
+
     private Integer totalNumberOfGrantContracts;
+
     private Integer numberOfGrantContractsByCriteria;
-    
+
     public InfoStatResultGrantOwner() {
     }
 
@@ -27,47 +30,55 @@ public class InfoStatResultGrantOwner extends InfoObject {
     public Integer getNumberOfGrantContractsByCriteria() {
         return this.numberOfGrantContractsByCriteria;
     }
+
     /**
-     * @param numberOfGrantContractsByCriteria The numberOfGrantContractsByCriteria to set.
+     * @param numberOfGrantContractsByCriteria
+     *            The numberOfGrantContractsByCriteria to set.
      */
-    public void setNumberOfGrantContractsByCriteria(
-            Integer numberOfGrantContractsByCriteria) {
+    public void setNumberOfGrantContractsByCriteria(Integer numberOfGrantContractsByCriteria) {
         this.numberOfGrantContractsByCriteria = numberOfGrantContractsByCriteria;
     }
+
     /**
      * @return Returns the numberOfGrantOwnerByCriteria.
      */
     public Integer getNumberOfGrantOwnerByCriteria() {
         return this.numberOfGrantOwnerByCriteria;
     }
+
     /**
-     * @param numberOfGrantOwnerByCriteria The numberOfGrantOwnerByCriteria to set.
+     * @param numberOfGrantOwnerByCriteria
+     *            The numberOfGrantOwnerByCriteria to set.
      */
-    public void setNumberOfGrantOwnerByCriteria(
-            Integer numberOfGrantOwnerByCriteria) {
+    public void setNumberOfGrantOwnerByCriteria(Integer numberOfGrantOwnerByCriteria) {
         this.numberOfGrantOwnerByCriteria = numberOfGrantOwnerByCriteria;
     }
+
     /**
      * @return Returns the totalNumberOfGrantContracts.
      */
     public Integer getTotalNumberOfGrantContracts() {
         return this.totalNumberOfGrantContracts;
     }
+
     /**
-     * @param totalNumberOfGrantContracts The totalNumberOfGrantContracts to set.
+     * @param totalNumberOfGrantContracts
+     *            The totalNumberOfGrantContracts to set.
      */
-    public void setTotalNumberOfGrantContracts(
-            Integer totalNumberOfGrantContracts) {
+    public void setTotalNumberOfGrantContracts(Integer totalNumberOfGrantContracts) {
         this.totalNumberOfGrantContracts = totalNumberOfGrantContracts;
     }
+
     /**
      * @return Returns the totalNumberOfGrantOwners.
      */
     public Integer getTotalNumberOfGrantOwners() {
         return this.totalNumberOfGrantOwners;
     }
+
     /**
-     * @param totalNumberOfGrantOwners The totalNumberOfGrantOwners to set.
+     * @param totalNumberOfGrantOwners
+     *            The totalNumberOfGrantOwners to set.
      */
     public void setTotalNumberOfGrantOwners(Integer totalNumberOfGrantOwners) {
         this.totalNumberOfGrantOwners = totalNumberOfGrantOwners;

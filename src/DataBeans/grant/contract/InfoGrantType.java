@@ -17,107 +17,113 @@ import Dominio.grant.contract.IGrantType;
 public class InfoGrantType extends InfoObject {
 
     private String name;
+
     private String sigla;
+
     private Integer minPeriodDays;
+
     private Integer maxPeriodDays;
+
     private Double indicativeValue;
+
     private String source;
+
     private Date state;
 
     /**
-	 * @return
-	 */
+     * @return
+     */
     public Double getIndicativeValue() {
         return indicativeValue;
     }
 
     /**
-	 * @param indicativeValue
-	 */
+     * @param indicativeValue
+     */
     public void setIndicativeValue(Double indicativeValue) {
         this.indicativeValue = indicativeValue;
     }
 
     /**
-	 * @return
-	 */
+     * @return
+     */
     public Integer getMaxPeriodDays() {
         return maxPeriodDays;
     }
 
     /**
-	 * @param maxPeriodDays
-	 */
+     * @param maxPeriodDays
+     */
     public void setMaxPeriodDays(Integer maxPeriodDays) {
         this.maxPeriodDays = maxPeriodDays;
     }
 
     /**
-	 * @return
-	 */
+     * @return
+     */
     public Integer getMinPeriodDays() {
         return minPeriodDays;
     }
 
     /**
-	 * @param minPeriodDays
-	 */
+     * @param minPeriodDays
+     */
     public void setMinPeriodDays(Integer minPeriodDays) {
         this.minPeriodDays = minPeriodDays;
     }
 
     /**
-	 * @return
-	 */
+     * @return
+     */
     public String getName() {
         return name;
     }
 
     /**
-	 * @param name
-	 */
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-	 * @return
-	 */
+     * @return
+     */
     public String getSigla() {
         return sigla;
     }
 
     /**
-	 * @param sigla
-	 */
+     * @param sigla
+     */
     public void setSigla(String sigla) {
         this.sigla = sigla;
     }
 
     /**
-	 * @return
-	 */
+     * @return
+     */
     public String getSource() {
         return source;
     }
 
     /**
-	 * @param source
-	 */
+     * @param source
+     */
     public void setSource(String source) {
         this.source = source;
     }
 
     /**
-	 * @return
-	 */
+     * @return
+     */
     public Date getState() {
         return state;
     }
 
     /**
-	 * @param state
-	 */
+     * @param state
+     */
     public void setState(Date state) {
         this.state = state;
     }
@@ -125,39 +131,35 @@ public class InfoGrantType extends InfoObject {
     /**
      * @param GrantType
      */
-    public void copyFromDomain(IGrantType grantType)
-    {
-    	super.copyFromDomain(grantType);
-    	if (grantType != null)
-    	{
-    		setName(grantType.getName());
-    		setSigla(grantType.getSigla());
-    		setMinPeriodDays(grantType.getMinPeriodDays());
-    		setMaxPeriodDays(grantType.getMaxPeriodDays());
-    		setIndicativeValue(grantType.getIndicativeValue());
-    		setSource(grantType.getSource());
-    		setState(grantType.getState());
-    	}
+    public void copyFromDomain(IGrantType grantType) {
+        super.copyFromDomain(grantType);
+        if (grantType != null) {
+            setName(grantType.getName());
+            setSigla(grantType.getSigla());
+            setMinPeriodDays(grantType.getMinPeriodDays());
+            setMaxPeriodDays(grantType.getMaxPeriodDays());
+            setIndicativeValue(grantType.getIndicativeValue());
+            setSource(grantType.getSource());
+            setState(grantType.getState());
+        }
     }
+
     /**
      * @param GrantType
      * @return
      */
-    public static InfoGrantType newInfoFromDomain(IGrantType grantType)
-    {
-    	InfoGrantType infoGrantType = null;
-    	if (grantType != null)
-    	{
-    		infoGrantType = new InfoGrantType();
-    		infoGrantType.copyFromDomain(grantType);
-    	}
-    	return infoGrantType;
+    public static InfoGrantType newInfoFromDomain(IGrantType grantType) {
+        InfoGrantType infoGrantType = null;
+        if (grantType != null) {
+            infoGrantType = new InfoGrantType();
+            infoGrantType.copyFromDomain(grantType);
+        }
+        return infoGrantType;
     }
-    
-    public void copyToDomain(InfoGrantType infoGrantType,IGrantType grantType)
-    { 
-        super.copyToDomain(infoGrantType,grantType);
-        
+
+    public void copyToDomain(InfoGrantType infoGrantType, IGrantType grantType) {
+        super.copyToDomain(infoGrantType, grantType);
+
         grantType.setName(infoGrantType.getName());
         grantType.setSigla(infoGrantType.getSigla());
         grantType.setMinPeriodDays(infoGrantType.getMinPeriodDays());
@@ -166,18 +168,14 @@ public class InfoGrantType extends InfoObject {
         grantType.setSource(infoGrantType.getSource());
         grantType.setState(infoGrantType.getState());
     }
-    
-    public static IGrantType newDomainFromInfo(InfoGrantType infoGrantType)
-    {
+
+    public static IGrantType newDomainFromInfo(InfoGrantType infoGrantType) {
         IGrantType grantType = null;
-        if(infoGrantType != null)
-        {
+        if (infoGrantType != null) {
             grantType = new GrantType();
-            infoGrantType.copyToDomain(infoGrantType,grantType);
+            infoGrantType.copyToDomain(infoGrantType, grantType);
         }
         return grantType;
     }
-    
-    
+
 }
-    
