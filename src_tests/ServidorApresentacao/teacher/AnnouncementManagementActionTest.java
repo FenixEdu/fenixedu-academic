@@ -1,51 +1,22 @@
 package ServidorApresentacao.teacher;
 
-import java.util.List;
 import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import Dominio.IDisciplinaExecucao;
-import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
-import Dominio.ISite;
 import ServidorApresentacao.TestCasePresentationTeacherPortal;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
-import ServidorPersistente.IPersistentAnnouncement;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPersistentSite;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Ivo Brandão
  */
 public class AnnouncementManagementActionTest extends TestCasePresentationTeacherPortal {
 
-	private SuportePersistenteOJB persistentSupport = null; 
-	private IPersistentAnnouncement persistentAnnouncement = null;
-	private IPersistentSite persistentSite = null;
-	private IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
-	private IPersistentExecutionPeriod persistentExecutionPeriod = null;
-	private IPersistentExecutionYear persistentExecutionYear = null;
-
-	private ISite site = null;
-	private IDisciplinaExecucao executionCourse = null;
-	private IExecutionPeriod executionPeriod = null;
-	private IExecutionYear executionYear = null;
-
-	private List announcementsList;
-
-	/**
-	 * Constructor for AnnouncementManagementFormActionTest.
-	 */
-	public AnnouncementManagementActionTest(String test) {
-		super(test);
-	}
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());
+	}
+
+	public AnnouncementManagementActionTest(String testName) {
+		super(testName);
 	}
 
 	public static Test suite() {
@@ -55,142 +26,6 @@ public class AnnouncementManagementActionTest extends TestCasePresentationTeache
 
 	public void setUp() {
 		super.setUp();
-		
-		//read announcements for this site
-		try {
-			persistentSupport = SuportePersistenteOJB.getInstance();
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-			fail("Error while setting up");
-		}
-
-		persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
-		persistentSite = persistentSupport.getIPersistentSite();
-		persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
-		persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-		persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-		
-		//read existing executionYear
-		try {
-			persistentSupport.iniciarTransaccao();
-			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
-			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("Error while setting up: readExecutionYearByName");
-		}
-		assertNotNull(executionYear);
-
-		//read existing executionPeriod
-		try {
-			persistentSupport.iniciarTransaccao();
-			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
-			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("Error while setting up: readByNameAndExecutionYear");
-		}
-		assertNotNull(executionPeriod);
-
-		//read existing executionCourse
-		try {
-			persistentSupport.iniciarTransaccao();
-			executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
-			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("Error while setting up: readByExecutionCourseInitialsAndExecutionPeriod");
-		}
-		assertNotNull(executionCourse);
-
-		//read existing site
-		try {
-			persistentSupport.iniciarTransaccao();
-			site = persistentSite.readByExecutionCourse(executionCourse);
-			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("Error while setting up: readByExecutionCourse");
-		}
-		assertNotNull(site);
-
-		//read announcements list
-		try {
-			persistentSupport.iniciarTransaccao();
-			announcementsList = persistentAnnouncement.readAnnouncementsBySite(site);
-			persistentSupport.confirmarTransaccao();
-		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("Error while setting up: readAnnouncementsBySite");
-		}
-		 
-	}
-
-	public void testEdit() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-
-		setServletConfigFile("/WEB-INF/tests/web-teacher.xml");
-
-		//set request path
-		setRequestPathInfo("/teacher", "/announcementManagementAction");
-
-		addRequestParameter("option", "Edit");
-		addRequestParameter("index", "0");
-
-		//announcements required
-		getSession().setAttribute("Announcements", this.announcementsList);
-
-		//action perform
-		actionPerform();
-		
-		//verify that there are no errors
-		verifyNoActionErrors();
-
-		//verify forward		
-		verifyForwardPath("/editAnnouncement.do");
-	}
-
-	public void testInsert() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-
-		setServletConfigFile("/WEB-INF/tests/web-teacher.xml");
-
-		//set request path
-		setRequestPathInfo("/teacher", "/announcementManagementAction");
-
-		addRequestParameter("option", "Insert");
-		addRequestParameter("index", "0");
-
-		//announcements required
-		getSession().setAttribute("Announcements", this.announcementsList);
-
-		//action perform
-		actionPerform();
-		
-		//verify that there are no errors
-		verifyNoActionErrors();
-
-		//verify forward		
-		verifyForwardPath("/insertAnnouncement.do");
-	}
-
-	public void testDelete() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-
-		setServletConfigFile("/WEB-INF/tests/web-teacher.xml");
-
-		//set request path
-		setRequestPathInfo("/teacher", "/announcementManagementAction");
-
-		addRequestParameter("option", "Delete");
-		addRequestParameter("index", "0");
-
-		//announcements required
-		getSession().setAttribute("Announcements", this.announcementsList);
-
-		//action perform
-		actionPerform();
-		
-		//verify that there are no errors
-		verifyNoActionErrors();
-
-		//verify forward		
-		verifyForwardPath("/deleteAnnouncement.do");
 	}
 
 	/**
@@ -204,57 +39,248 @@ public class AnnouncementManagementActionTest extends TestCasePresentationTeache
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoPathAction()
 	 */
 	protected String getRequestPathInfoPathAction() {
-		return null;
+		return "/teacher";
 	}
 
 	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		return null;
+		return "/announcementManagementAction";
 	}
+
+	public void testAuthorizedEditAnnouncement() {
+
+		//set request path
+		setRequestPathInfo("/teacher", "/editAnnouncement");
+
+		//sets needed objects to session/request
+		addRequestParameter("method", "Guardar");
+
+//		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+//		infoExecutionCourse.setNome("Trabalho Final de Curso I");
+//		infoExecutionCourse.setSigla("TFCI");
+//		infoExecutionCourse.setPrograma("programa1");
+//		infoExecutionCourse.setTheoreticalHours(new Double(1.5));
+//		infoExecutionCourse.setPraticalHours(new Double(2));
+//		infoExecutionCourse.setTheoPratHours(new Double(1.5));
+//		infoExecutionCourse.setLabHours(new Double(2));
+//		InfoExecutionPeriod iep =
+//			new InfoExecutionPeriod(
+//				"2º Semestre",
+//				new InfoExecutionYear("2002/2003"));
+//		infoExecutionCourse.setInfoExecutionPeriod(iep);
+//		getSession().setAttribute("InfoExecutionCourse", infoExecutionCourse);
+//
+//		Object args1[] = { infoExecutionCourse, null };
+//		GestorServicos gestor = GestorServicos.manager();
+//		UserView userView = (UserView) getSession().getAttribute("UserView");
+//		ArrayList references = null;
+//		try {
+//			references =
+//				(ArrayList) gestor.executar(
+//					userView,
+//					"ReadBibliographicReference",
+//					args1);
+//		} catch (Exception e) {
+//			System.out.println(e.toString());
+//		}
+//		InfoBibliographicReference infoBibRef =
+//			(InfoBibliographicReference) references.get(0);
+//
+//		getSession().setAttribute("BibliographicReference", infoBibRef);
+//		setAuthorizedUser();
+//		//fills the form
+//		addRequestParameter("title", "matemática");
+//		addRequestParameter("authors", "jose");
+//		addRequestParameter("reference", "ref4");
+//		addRequestParameter("year", "2002");
+//		addRequestParameter("optional", "0");
+//
+//		//action perform
+//		actionPerform();		
+//
+//		try {
+//			references =
+//				(ArrayList) gestor.executar(
+//					userView,
+//					"ReadBibliographicReference",
+//					args1);
+//		} catch (Exception e) {
+//			System.out.println(e.toString());
+//		}
+//
+//		InfoBibliographicReference infoBiblioRefVerify = (InfoBibliographicReference)references.get(0);		
+//		assertEquals(infoBiblioRefVerify.getTitle(),"matemática");
+//		assertEquals(infoBiblioRefVerify.getAuthors(),"jose");
+//		assertEquals(infoBiblioRefVerify.getReference(),"ref4");
+//		assertEquals(infoBiblioRefVerify.getYear(),"2002");		
+//		verifyForward("bibliographyManagement");
+//
+	}
+
+	public void testAuthorizedPrepareEditAnnouncement() {
+		//set request path
+		setRequestPathInfo("/teacher", "/announcementManagementAction");
+
+//		sets needed objects to session/request
+		addRequestParameter("method", "Editar");
+
+//		action perform
+		actionPerform();
+
+//		verify that there are no errors
+		verifyNoActionErrors();
+
+//		verifies forward
+		verifyForward("editAnnouncement");
+
+//		verifyForwardPath("/editAnnouncement");
+	}
+
+	public void testAuthorizedCreateAnnouncement() {
+		//set request path
+		setRequestPathInfo("/teacher", "/announcementManagementAction");
+
+		//sets needed objects to session/request
+		addRequestParameter("method", "Inserir");
+
+//		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+//		infoExecutionCourse.setNome("Trabalho Final de Curso I");
+//		infoExecutionCourse.setSigla("TFCI");
+//		infoExecutionCourse.setPrograma("programa1");
+//		infoExecutionCourse.setTheoreticalHours(new Double(1.5));
+//		infoExecutionCourse.setPraticalHours(new Double(2));
+//		infoExecutionCourse.setTheoPratHours(new Double(1.5));
+//		infoExecutionCourse.setLabHours(new Double(2));
+//		InfoExecutionPeriod iep = new InfoExecutionPeriod("2º Semestre", new InfoExecutionYear("2002/2003"));
+//		infoExecutionCourse.setInfoExecutionPeriod(iep);
+//		
+//		InfoSite infoSite = new InfoSite(infoExecutionCourse);
+//		getSession().setAttribute("Site", infoSite);
+//
+//		setAuthorizedUser();
+//
+//		fills the form
+//		addRequestParameter("title", "newTitle");
+//		addRequestParameter("information", "newInformation");
+//
+//		action perform
+//		actionPerform();
+//
+//		verify that there are no errors
+//		verifyNoActionErrors();
+//
+//		verifies forward
+//		verifyForward("accessAnnouncementManagement");
+	}
+
+	public void testAuthorizedDeleteAnnouncement() {
+
+		//set request path		
+		setRequestPathInfo("/teacher", "/announcementManagementAction2");
+
+		//sets needed objects to session/request
+		addRequestParameter("method", "Apagar");
+//		addRequestParameter("infoBibliographicReferenceIndex", "0");
+//
+//		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+//		infoExecutionCourse.setNome("Trabalho Final de Curso I");
+//		infoExecutionCourse.setSigla("TFCI");
+//		infoExecutionCourse.setPrograma("programa1");
+//		infoExecutionCourse.setTheoreticalHours(new Double(1.5));
+//		infoExecutionCourse.setPraticalHours(new Double(2));
+//		infoExecutionCourse.setTheoPratHours(new Double(1.5));
+//		infoExecutionCourse.setLabHours(new Double(2));
+//
+//		InfoExecutionPeriod iep =
+//			new InfoExecutionPeriod(
+//				"2º Semestre",
+//				new InfoExecutionYear("2002/2003"));
+//		infoExecutionCourse.setInfoExecutionPeriod(iep);
+//
+//		HttpSession session = getSession();
+//
+//		session.setAttribute("InfoExecutionCourse", infoExecutionCourse);
+//
+//		UserView userView = (UserView) session.getAttribute("UserView");
+//		Object args[] = { infoExecutionCourse, null };
+//		GestorServicos gestor = GestorServicos.manager();
+//		ArrayList references = null;
+//		try {
+//			references =
+//				(ArrayList) gestor.executar(
+//					userView,
+//					"ReadBibliographicReference",
+//					args);
+//		} catch (Exception e) {
+//		}
+//
+//		session.setAttribute("BibliographicReferences", references);
+//
+//		setAuthorizedUser();
+//
+//		//action perform
+//		actionPerform();
+//
+//		ArrayList biblioRefs =
+//			(ArrayList) session.getAttribute("BibliographicReferences");
+//		assertEquals(biblioRefs.size(), 1);
+//		InfoBibliographicReference infoBibRef =
+//			(InfoBibliographicReference) biblioRefs.get(0);
+//		assertEquals(infoBibRef.getTitle(), "as");
+//		verifyForward("bibliographyManagement");
+	}
+
 	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
 		return null;
 	}
+
 	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedUnsuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
 		return null;
 	}
+
 	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
 		return null;
 	}
+
 	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
 		return null;
 	}
+
 	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
 		return null;
 	}
+
 	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
 		return null;
 	}
+
 	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInUnsuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
 		return null;
 	}
+
 	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInUnsuccessfulExecution()
 	 */

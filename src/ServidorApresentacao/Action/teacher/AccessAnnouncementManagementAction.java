@@ -43,7 +43,7 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 		session.removeAttribute("SectionName");
 		session.removeAttribute("AnnouncementsName");
 		session.removeAttribute("CurriculumName");
-		
+
 		InfoSite infoSite = (InfoSite) session.getAttribute("Site");
 
 		Object args[] = new Object[1];

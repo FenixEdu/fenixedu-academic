@@ -38,6 +38,13 @@
             <form-property name="year" type="java.lang.String" />
             <form-property name="optional" type="java.lang.String" />
 	</form-bean>    			
+
+	<form-bean name="insertAnnouncementForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">        
+            <form-property name="title" type="java.lang.String" />
+            <form-property name="information" type="java.lang.String" />
+	</form-bean>    			
 	
 	<!--
 	
@@ -194,30 +201,49 @@
      <action path="/naoExecutado" forward="/error.jsp"/>
 	
 	<action name="accessAnnouncementManagementAction"
-    	type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" path="/accessAnnouncementManagementAction">
-        <forward name="AnnouncementManagement"  path="/announcementManagement.do" redirect="true"/>
+    	type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" 
+    	path="/accessAnnouncementManagementAction">
+        <forward name="AnnouncementManagement"  path="/announcementManagement" redirect="true"/>
 	</action>
 
-	<action name="announcementManagementForm"
-    	type="ServidorApresentacao.Action.teacher.AnnouncementManagementAction"
-        path="/announcementManagementAction" 
-        input="/announcementManagement.jsp" >
-        <forward name="InsertAnnouncement" path="/insertAnnouncement.jsp" />
-		<forward name="EditAnnouncement" path="/editAnnouncement.jsp" />
-		<forward name="DeleteAnnouncement" path="/deleteAnnouncement.jsp" />
-	</action>
-	
 	<action     path="/bibliographicReferenceManager"
 				parameter="method"      			
 				scope="request"
       			name="bibliographicReferenceForm"
                 type="ServidorApresentacao.Action.teacher.BibliographicReferenceManagerDispatchAction"            
                 validate="false">
+
 	            <forward name="insertBibliographicReference" path="/insertBibliographicReference.jsp"/>
 				<forward name="editBibliographicReference" path="/editBibliographicReference.jsp"/>
 				<forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
 	</action>             
-	
+
+	<!-- input of actions for announcement management -->	
+	<action 
+		type="ServidorApresentacao.Action.teacher.AnnouncementManagementAction"
+		scope="request"
+		parameter="method"      			
+        path="/announcementManagementAction" 
+		validate="false">
+
+		<forward name="accessAnnouncementManagement" path="/accessAnnouncementManagementAction"/>	            
+
+        <forward name="insertAnnouncement" path="/insertAnnouncement.jsp" />
+		<forward name="editAnnouncement" path="/editAnnouncement" />
+		<forward name="deleteAnnouncement" path="/deleteAnnouncement.jsp" />
+	</action>
+
+	<!-- input of actions for edit announcement -->
+	<action name="insertAnnouncementForm"
+    	type="ServidorApresentacao.Action.teacher.AnnouncementManagementAction"
+		scope="request"
+		parameter="method"
+		input="/editAnnouncement.jsp"
+        path="/editAnnouncement"
+		validate="false">
+
+		<forward name="accessAnnouncementManagement" path="/accessAnnouncementManagementAction"/>	            
+	</action>
 
 	<!-- ExceptionHandling -->   
       <action parameter="method"
