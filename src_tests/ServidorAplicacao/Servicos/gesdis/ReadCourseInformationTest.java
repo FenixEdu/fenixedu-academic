@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Servicos.gesdis;
 
-import DataBeans.SiteView;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -15,95 +14,102 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * @author Sergio Montelobo
  *  
  */
-public class ReadCourseInformationTest
-	extends ServiceNeedsAuthenticationTestCase {
+public class ReadCourseInformationTest extends ServiceNeedsAuthenticationTestCase
+{
 
-	public ReadCourseInformationTest(String testName) {
-		super(testName);
-	}
+    public ReadCourseInformationTest(String testName)
+    {
+        super(testName);
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
 	 */
-	protected String getNameOfServiceToBeTested() {
-		return "ReadCourseInformation";
-	}
+    protected String getNameOfServiceToBeTested()
+    {
+        return "ReadCourseInformation";
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
 	 */
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/gesdis/testReadCourseInformationDataSet.xml";
-	}
+    protected String getDataSetFilePath()
+    {
+        return "etc/datasets/servicos/gesdis/testReadCourseInformationDataSet.xml";
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser() {
+    protected String[] getAuthenticatedAndAuthorizedUser()
+    {
 
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "user", "pass", getApplication()};
+        return args;
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser() {
+    protected String[] getAuthenticatedAndUnauthorizedUser()
+    {
 
-		String[] args = { "jorge", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "jorge", "pass", getApplication()};
+        return args;
+    }
 
-	protected String[] getNotAuthenticatedUser() {
+    protected String[] getNotAuthenticatedUser()
+    {
 
-		String[] args = { "jccm", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "jccm", "pass", getApplication()};
+        return args;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
 	 */
-	protected Object[] getAuthorizeArguments() {
+    protected Object[] getAuthorizeArguments()
+    {
 
-		Integer executionCourseId = new Integer(24);
+        Integer executionCourseId = new Integer(24);
 
-		Object[] args = { executionCourseId };
-		return args;
-	}
+        Object[] args = { executionCourseId };
+        return args;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
 	 */
-	protected String getApplication() {
-		return Autenticacao.EXTRANET;
-	}
+    protected String getApplication()
+    {
+        return Autenticacao.EXTRANET;
+    }
 
-	public void testSuccessfull() {
+    public void testSuccessfull()
+    {
 
-		try {
+        try
+        {
 
-			SiteView result = null;
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView userView = authenticateUser(args);
 
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args);
+            gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
-			result =
-				(SiteView) gestor.executar(
-					userView,
-					getNameOfServiceToBeTested(),
-					getAuthorizeArguments());
-
-			// TODO: verificar os dados do siteView?????'
-			// verifica as alteracoes da base de dados
-			compareDataSetUsingExceptedDataSetTablesAndColumns(
-				getDataSetFilePath());
-		} catch (FenixServiceException ex) {
-			fail("Reading a Course Information " + ex);
-		} catch (Exception ex) {
-			fail("Reading a Course Information " + ex);
-		}
-	}
+            // TODO: verificar os dados do siteView?????'
+            // verifica as alteracoes da base de dados
+            compareDataSetUsingExceptedDataSetTablesAndColumns(getDataSetFilePath());
+        }
+        catch (FenixServiceException ex)
+        {
+            fail("Reading a Course Information " + ex);
+        }
+        catch (Exception ex)
+        {
+            fail("Reading a Course Information " + ex);
+        }
+    }
 
 }

@@ -99,7 +99,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest {
 					argsReadStudentCurricularPlan);
 
 			Object[] argsSearch = { "Xxx" };
-			List infoExternalPersons = (List) serviceManager.executar(userView, "SearchExternalPersonsByName", argsSearch);
+			serviceManager.executar(userView, "SearchExternalPersonsByName", argsSearch);
 
 			InfoTeacher infoTeacherGuider = new InfoTeacher();
 			infoTeacherGuider.setIdInternal(new Integer(954));
@@ -177,7 +177,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest {
 					argsReadStudentCurricularPlan);
 
 			Object[] argsSearch = { "Xxx" };
-			List infoExternalPersons = (List) serviceManager.executar(userView, "SearchExternalPersonsByName", argsSearch);
+			serviceManager.executar(userView, "SearchExternalPersonsByName", argsSearch);
 
 			InfoTeacher infoTeacherGuider = new InfoTeacher();
 			infoTeacherGuider.setIdInternal(new Integer(954));

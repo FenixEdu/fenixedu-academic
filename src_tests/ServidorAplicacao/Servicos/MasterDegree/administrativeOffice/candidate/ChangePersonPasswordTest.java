@@ -96,7 +96,6 @@ public class ChangePersonPasswordTest extends TestCaseServicos {
 	}
 	
 	private InfoMasterDegreeCandidate readMasterDegreeCandidate(String username) {
-		IMasterDegreeCandidate masterDegreeCandidate = null;
 		ISuportePersistente sp = null;
 		List result = null; 
 		try {

@@ -16,127 +16,162 @@ import Util.State;
 import Util.TipoCurso;
 
 /**
- * 
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *               (naat@mega.ist.utl.pt)
  */
-public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest extends AdministrativeOfficeBaseTest {
+public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest
+    extends AdministrativeOfficeBaseTest
+{
 
-	/**
+    /**
 	 * @param testName
 	 */
-	public ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest(String testName) {
-		super(testName);
-		this.dataSetFilePath =
-			"etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testReadActiveMasterDegreeProofVersionByStudentCurricularPlanDataSet.xml";
-	}
+    public ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest(String testName)
+    {
+        super(testName);
+        this.dataSetFilePath =
+            "etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testReadActiveMasterDegreeProofVersionByStudentCurricularPlanDataSet.xml";
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan";
-	}
+    protected String getNameOfServiceToBeTested()
+    {
+        return "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan";
+    }
 
-	protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException {
-		Object[] argsReadMasterDegreeProofVersion = { null };
+    protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException
+    {
+        Object[] argsReadMasterDegreeProofVersion = { null };
 
-		return argsReadMasterDegreeProofVersion;
-	}
+        return argsReadMasterDegreeProofVersion;
+    }
 
-	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
-		Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
-		InfoStudentCurricularPlan infoStudentCurricularPlan =
-			(InfoStudentCurricularPlan) serviceManager.executar(
-				userViewNotAuthorized,
-				"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-				argsReadStudentCurricularPlan);
+    protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException
+    {
+        Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
+        InfoStudentCurricularPlan infoStudentCurricularPlan =
+            (InfoStudentCurricularPlan) serviceManager.executar(
+                userViewNotAuthorized,
+                "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                argsReadStudentCurricularPlan);
 
-		Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
+        Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
 
-		return argsReadMasterDegreeProofVersion;
-	}
+        return argsReadMasterDegreeProofVersion;
+    }
 
-	public void testSuccessReadActiveMasterDegreeProofVersion() {
-		try {
-			Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
-			InfoStudentCurricularPlan infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) serviceManager.executar(
-					userView,
-					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-					argsReadStudentCurricularPlan);
+    public void testSuccessReadActiveMasterDegreeProofVersion()
+    {
+        try
+        {
+            Object[] argsReadStudentCurricularPlan =
+                { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
+            InfoStudentCurricularPlan infoStudentCurricularPlan =
+                (InfoStudentCurricularPlan) serviceManager.executar(
+                    userView,
+                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                    argsReadStudentCurricularPlan);
 
-			Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
-			InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
-				(InfoMasterDegreeProofVersion) serviceManager.executar(userView, getNameOfServiceToBeTested(), argsReadMasterDegreeProofVersion);
+            Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
+            InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
+                (InfoMasterDegreeProofVersion) serviceManager.executar(
+                    userView,
+                    getNameOfServiceToBeTested(),
+                    argsReadMasterDegreeProofVersion);
 
-			assertEquals(infoMasterDegreeProofVersion.getIdInternal(), new Integer(1));
-			assertEquals(infoMasterDegreeProofVersion.getInfoMasterDegreeThesis().getIdInternal(), new Integer(1));
-			assertEquals(infoMasterDegreeProofVersion.getInfoResponsibleEmployee().getIdInternal(), new Integer(1194));
-			assertEquals(infoMasterDegreeProofVersion.getCurrentState(), new State(State.ACTIVE));
-			assertEquals(infoMasterDegreeProofVersion.getAttachedCopiesNumber(), new Integer(5));
-			assertEquals(infoMasterDegreeProofVersion.getFinalResult(), MasterDegreeClassification.APPROVED);
-			Date proofDate = new GregorianCalendar(2003, Calendar.OCTOBER, 10).getTime();
-			assertEquals(infoMasterDegreeProofVersion.getProofDate(), proofDate);
-			Date thesisDeliveryDate = new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime();
-			assertEquals(infoMasterDegreeProofVersion.getThesisDeliveryDate(), thesisDeliveryDate);
-			assertEquals(((InfoTeacher) infoMasterDegreeProofVersion.getInfoJuries().get(0)).getIdInternal(), new Integer(954));
+            assertEquals(infoMasterDegreeProofVersion.getIdInternal(), new Integer(1));
+            assertEquals(
+                infoMasterDegreeProofVersion.getInfoMasterDegreeThesis().getIdInternal(),
+                new Integer(1));
+            assertEquals(
+                infoMasterDegreeProofVersion.getInfoResponsibleEmployee().getIdInternal(),
+                new Integer(1194));
+            assertEquals(infoMasterDegreeProofVersion.getCurrentState(), new State(State.ACTIVE));
+            assertEquals(infoMasterDegreeProofVersion.getAttachedCopiesNumber(), new Integer(5));
+            assertEquals(
+                infoMasterDegreeProofVersion.getFinalResult(),
+                MasterDegreeClassification.APPROVED);
+            Date proofDate = new GregorianCalendar(2003, Calendar.OCTOBER, 10).getTime();
+            assertEquals(infoMasterDegreeProofVersion.getProofDate(), proofDate);
+            Date thesisDeliveryDate = new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime();
+            assertEquals(infoMasterDegreeProofVersion.getThesisDeliveryDate(), thesisDeliveryDate);
+            assertEquals(
+                ((InfoTeacher) infoMasterDegreeProofVersion.getInfoJuries().get(0)).getIdInternal(),
+                new Integer(954));
 
-			//ok
+            //ok
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("testSuccessReadActiveMasterDegreeProofVersion " + ex.getMessage());
-		}
+        } catch (Exception ex)
+        {
+            ex.printStackTrace();
+            fail("testSuccessReadActiveMasterDegreeProofVersion " + ex.getMessage());
+        }
 
-	}
+    }
 
-	public void testReadWithoutScholarShipFinished() {
-		try {
-			Object[] argsReadStudentCurricularPlan = { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
-			InfoStudentCurricularPlan infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) serviceManager.executar(
-					userView,
-					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-					argsReadStudentCurricularPlan);
+    public void testReadWithoutScholarShipFinished()
+    {
+        try
+        {
+            Object[] argsReadStudentCurricularPlan =
+                { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
+            InfoStudentCurricularPlan infoStudentCurricularPlan =
+                (InfoStudentCurricularPlan) serviceManager.executar(
+                    userView,
+                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                    argsReadStudentCurricularPlan);
 
-			Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
-			InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
-				(InfoMasterDegreeProofVersion) serviceManager.executar(userView, getNameOfServiceToBeTested(), argsReadMasterDegreeProofVersion);
+            Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
 
-			fail("testReadWithScholarShipNotFinished did not throw ScholarShipNotFinishedServiceException");
+            serviceManager.executar(
+                userView,
+                getNameOfServiceToBeTested(),
+                argsReadMasterDegreeProofVersion);
 
-		} catch (ScholarshipNotFinishedServiceException ex) {
-			//ok
+            fail("testReadWithScholarShipNotFinished did not throw ScholarShipNotFinishedServiceException");
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("testReadWithScholarShipNotFinished " + ex.getMessage());
-		}
+        } catch (ScholarshipNotFinishedServiceException ex)
+        {
+            //ok
 
-	}
+        } catch (Exception ex)
+        {
+            ex.printStackTrace();
+            fail("testReadWithScholarShipNotFinished " + ex.getMessage());
+        }
 
-	public void testReadNonExistentMasterDegreeProofVersion() {
-		try {
-			Object[] argsReadStudentCurricularPlan = { new Integer(5461), new TipoCurso(TipoCurso.MESTRADO)};
-			InfoStudentCurricularPlan infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) serviceManager.executar(
-					userView,
-					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-					argsReadStudentCurricularPlan);
+    }
 
-			Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
-			InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
-				(InfoMasterDegreeProofVersion) serviceManager.executar(userView, getNameOfServiceToBeTested(), argsReadMasterDegreeProofVersion);
+    public void testReadNonExistentMasterDegreeProofVersion()
+    {
+        try
+        {
+            Object[] argsReadStudentCurricularPlan =
+                { new Integer(5461), new TipoCurso(TipoCurso.MESTRADO)};
+            InfoStudentCurricularPlan infoStudentCurricularPlan =
+                (InfoStudentCurricularPlan) serviceManager.executar(
+                    userView,
+                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                    argsReadStudentCurricularPlan);
 
-			fail("testReadNonExistentMasterDegreeProofVersion did not throw NonExistingServiceException");
+            Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
 
-		} catch (NonExistingServiceException ex) {
-			//ok
+            serviceManager.executar(
+                userView,
+                getNameOfServiceToBeTested(),
+                argsReadMasterDegreeProofVersion);
 
-		} catch (FenixServiceException e) {
-			e.printStackTrace();
-			fail("testReadNonExistentMasterDegreeProofVersion " + e.getMessage());
-		}
+            fail("testReadNonExistentMasterDegreeProofVersion did not throw NonExistingServiceException");
 
-	}
+        } catch (NonExistingServiceException ex)
+        {
+            //ok
+
+        } catch (FenixServiceException e)
+        {
+            e.printStackTrace();
+            fail("testReadNonExistentMasterDegreeProofVersion " + e.getMessage());
+        }
+
+    }
 
 }

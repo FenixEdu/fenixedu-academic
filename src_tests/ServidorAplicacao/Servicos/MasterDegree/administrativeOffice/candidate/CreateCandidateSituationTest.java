@@ -13,7 +13,6 @@ import java.util.Iterator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
 import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
@@ -128,8 +127,6 @@ public class CreateCandidateSituationTest extends TestCaseServicos {
 		
 		Object[] args = {infoExecutionDegree, infoPerson };
 	
-		 InfoMasterDegreeCandidate newInfoMasterDegreeCandidate = null;
-		 
 		 try {
 			 _gestor.executar(userView, "CreateCandidateSituation", args);
 		 } catch (FenixServiceException ex) {

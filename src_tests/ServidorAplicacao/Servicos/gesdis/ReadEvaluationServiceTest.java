@@ -72,9 +72,6 @@ public class ReadEvaluationServiceTest extends TestCaseReadServices {
 			System.out.println("failed setting up the test data");
 		}
 
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-		Object[] args = { infoExecutionCourse };
 		return null;
 	}
 
