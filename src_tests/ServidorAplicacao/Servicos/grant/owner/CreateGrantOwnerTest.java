@@ -26,13 +26,13 @@ import Util.TipoDocumentoIdentificacao;
  *
  */
 
-public class EditGrantOwnerTest
+public class CreateGrantOwnerTest
 	extends ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase {
 
 	/**
 	 * @param testName
 	 */
-	public EditGrantOwnerTest(java.lang.String testName) {
+	public CreateGrantOwnerTest(java.lang.String testName) {
 		super(testName);
 	}
 
