@@ -4,7 +4,7 @@
  */
 package ServidorApresentacao.Action.teacher;
 
-import java.io.OutputStream;
+import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -23,7 +23,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
-import org.dbunit.util.Base64;
+import org.apache.xerces.impl.dv.util.Base64;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteCommon;
@@ -453,11 +453,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
 		Integer exerciceCode = getCodeFromRequest(request, "exerciceCode");
 		Integer imgCode = getCodeFromRequest(request, "imgCode");
 		String imgTypeString = request.getParameter("imgType");
@@ -466,7 +464,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 		Integer testCode = getCodeFromRequest(request, "testCode");
 
 		String img = null;
-
 		if (studentCode != null && testCode != null) {
 			Object[] args = { studentCode, testCode, exerciceCode, imgCode };
 			try {
@@ -490,14 +487,16 @@ public class TestsManagementAction extends FenixDispatchAction {
 				throw new FenixActionException(e);
 			}
 		}
-		byte[] imageData = Base64.decode(img);
+		byte[] imageData = Base64.decode(img.getBytes());
+		
 		try {
 			response.reset();
 			response.setContentType(imgTypeString);
 			response.setContentLength(imageData.length);
 			response.setBufferSize(imageData.length);
-			OutputStream os = response.getOutputStream();
-			os.write(imageData, 0, imageData.length);
+			
+			DataOutputStream dataOut = new DataOutputStream(response.getOutputStream());
+			dataOut.write(imageData);
 			response.flushBuffer();
 		} catch (java.io.IOException e) {
 			throw new FenixActionException(e);
