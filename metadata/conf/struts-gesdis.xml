@@ -166,29 +166,31 @@
 	-->
     </form-beans>
 
-	<!-- ========== Global Exception Definitions ============================== -->
-	
-	<!--
+	 <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
-		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
-				key="ServidorAplicacao.Servico.ExcepcaoInexistente"
-				path="/naoExistente.do"/>
+		<exception type="java.lang.Exception"
+			       key="java.lang.Exception"
+			       path="/naoExecutado.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
 		<exception type="ServidorAplicacao.NotAuthorizedException"
-				key="ServidorAplicacao.NotAuthorizedException"
-				path="/naoAutorizado.do"/>
-		<exception type="ServidorAplicacao.NotExecutedException"
-				key="ServidorAplicacao.NotExecutedException"
-				path="/naoExecutado.do"/>
-		<exception type="ServidorAplicacao.ExcepcaoSessaoInexistente"
-				key="ServidorAplicacao.ExcepcaoSessaoInexistente"
-				path="/docente/logout.do"/>
+			       key="ServidorAplicacao.NotAuthorizedException"
+			       path="/naoAutorizado.do"
+			       />
+		<exception type="ServidorAplicacao.FenixServiceException"
+		  	       key="ServidorAplicacao.FenixServiceException"
+		  	       path="/naoExecutado.do"
+		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       path="/naoExistente.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
 	</global-exceptions>
-	-->
 
 	<!-- ========== Global Forward Definitions =============================== -->
 	<global-forwards type="org.apache.struts.action.ActionForward">
-		<forward name="index" path="index.do" redirect="true"/>
-	</global-forwards>
+      <forward name="index" path="/index.do" redirect="true"/>
+      <forward name="firstPage" path="/teacherAuthentication.jsp"/>
+    </global-forwards>
 
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
@@ -562,13 +564,30 @@
 	</action>
 
 	-->   
+		<!-- ExceptionHandling -->   
+      <action parameter="method"
+              name="errorMailForm" 
+              path="/exceptionHandling"
+              scope="request"
+              type="ServidorApresentacao.Action.ExceptionHandlingAction"     
+              >
+        
+      </action>
+	 <!-- Action For LogOff -->
+      <action path="/logoff"
+      	      type="ServidorApresentacao.Action.commons.LogOffAction">
+      	  <forward name="Success" path="/index.do"/>
+      </action>
+	
 	<!--attention: this action is incomplete --> 
 	<action 
 		parameter="method"
 		path="/CurriculumManagerDA"
         type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
 		>
-     <forward name="AcederGestaoBibliografia" path="/acederGestaoBibliografia.do"/>
+     <forward name="viewCurriculum" path="/viewCurriculum.jsp"/>
+     <forward name="viewProgram" path="/viewProgram.jsp"/>
+     
 	</action>
 	    
 	</action-mappings>
