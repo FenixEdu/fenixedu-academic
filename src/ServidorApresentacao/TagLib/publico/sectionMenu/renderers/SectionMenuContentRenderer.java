@@ -38,7 +38,7 @@ public class SectionMenuContentRenderer extends TagSupport
 	private StringBuffer renderDepthIdent(InfoSection infoSection) {
 		StringBuffer strBuffer = new StringBuffer();
 		int depth = infoSection.getSectionDepth().intValue();
-		while (depth >0){
+		while (depth >1){
 			strBuffer.append("&nbsp&nbsp");
 			depth--;
 		}
@@ -51,11 +51,11 @@ public class SectionMenuContentRenderer extends TagSupport
 				//adds the info
 			
 			strBuffer.append("<ul><li>\n");
-			
+			strBuffer.append(renderDepthIdent(getInfoSection()));
 			
 			strBuffer.append("<a href=\""+path+"/viewSection.do?index="+i+"\""+ " onclick=\"houdini('"+infoSection.getName()+"');\">\n");
 			
-			strBuffer.append(renderDepthIdent(getInfoSection()));
+			
 			strBuffer.append(infoSection.getName());
 			strBuffer.append("</a>");
 			strBuffer.append("</li></ul>\n");}

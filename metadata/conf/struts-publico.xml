@@ -118,8 +118,12 @@
       </action>
     	
     	 <action path="/naoExecutado" forward="/error.jsp"/>
-    	<action path="/viewExecutionCourseShifts" forward="/viewExecutionCourseShifts.jsp"/>
-
+    	
+    	<action path="/viewExecutionCourseShifts" 
+    		type="ServidorApresentacao.Action.publico.SectionRemoverAction">
+    		<forward name="sucess" path="/viewExecutionCourseShifts.jsp"/>
+ 		</action>
+ 		
       <action parameter="method"
               path="/consultTimeTables"
               scope="request"
@@ -220,10 +224,19 @@
       </action>
 
 	<!-- Start of Gesdis-->
-	<action path="/curricularCourses" forward="/curricularCourses.jsp"/>
 	
-	<action path="/viewTimeTable" forward="/viewTimeTable.jsp"/>
-
+	<action path="/curricularCourses" 
+    		type="ServidorApresentacao.Action.publico.SectionRemoverAction">
+    		<forward name="sucess" path="/curricularCourses.jsp"/>
+ 		</action>
+	
+	
+	
+		<action path="/viewTimeTable" 
+    		type="ServidorApresentacao.Action.publico.SectionRemoverAction">
+    		<forward name="sucess" path="/viewTimeTable.jsp"/>
+ 		</action>
+ 		
 	<action     
 		path="/accessBibliographicReferences"
 		parameter="method"      			
