@@ -9,6 +9,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import ServidorApresentacao.TestCasePresentation;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.TipoCurso;
 
 /**
  * @author João Mota
@@ -28,7 +29,7 @@ public class ViewClassesFormActionTest extends TestCasePresentation {
 	public void setUp() {
 		super.setUp();
 		// define ficheiro de configuração Struts a utilizar
-		setServletConfigFile("/WEB-INF/tests/web-publico.xml");
+		setServletConfigFile("/WEB-INF/web.xml");
 	}
 
 	public ViewClassesFormActionTest(String testName) {
@@ -55,7 +56,7 @@ public class ViewClassesFormActionTest extends TestCasePresentation {
 					"plano1",
 					new InfoDegree(
 						"LEIC",
-						"Licenciatura de Engenharia Informatica e de Computadores")),
+						"Licenciatura de Engenharia Informatica e de Computadores",TipoCurso.LICENCIATURA_STRING)),
 				new InfoExecutionYear("2002/2003"));
 		getSession().setAttribute(
 			SessionConstants.INFO_EXECUTION_DEGREE_KEY,

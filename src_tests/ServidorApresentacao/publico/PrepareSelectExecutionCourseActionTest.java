@@ -9,6 +9,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import ServidorApresentacao.TestCasePresentation;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.TipoCurso;
 
 /**
  * @author João Mota
@@ -30,7 +31,7 @@ public class PrepareSelectExecutionCourseActionTest
 	public void setUp() {
 		super.setUp();
 		// define ficheiro de configuração Struts a utilizar
-		setServletConfigFile("/WEB-INF/tests/web-publico.xml");
+		setServletConfigFile("/WEB-INF/web.xml");
 	}
 
 	public PrepareSelectExecutionCourseActionTest(String testName) {
@@ -42,15 +43,13 @@ public class PrepareSelectExecutionCourseActionTest
 		setRequestPathInfo("publico", "/prepareSelectExecutionCourseAction");
 
 		// coloca o contexto em sessão.
-	
-
 		InfoExecutionDegree infoExecutionDegree =
 			new InfoExecutionDegree(
 				new InfoDegreeCurricularPlan(
 					"plano1",
 					new InfoDegree(
 						"LEIC",
-						"Licenciatura de Engenharia Informatica e de Computadores")),
+						"Licenciatura de Engenharia Informatica e de Computadores",TipoCurso.LICENCIATURA_STRING)),
 				new InfoExecutionYear("2002/2003"));
 
 		getSession().setAttribute(
@@ -64,7 +63,7 @@ public class PrepareSelectExecutionCourseActionTest
 		getSession().setAttribute(
 			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
 			infoExecutionPeriod);
-
+		
 		getSession().setAttribute(SessionConstants.CURRICULAR_YEAR_KEY,new Integer(2));
 		// invoca acção
 		actionPerform();
