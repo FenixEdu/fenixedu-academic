@@ -9,13 +9,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import junit.framework.Assert;
+
 import org.apache.commons.beanutils.PropertyUtils;
 
 /**
- * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
+ * @author Luis Egidio
+ * @author lmre@mega.ist.utl.pt Nuno Ochoa
+ * @author nmgo@mega.ist.utl.pt
+ * @author jpvl
  *  
  */
-public class UtilsTestCase {
+public class UtilsTestCase
+{
 
 	/**
 	 * @param objects
@@ -25,54 +31,53 @@ public class UtilsTestCase {
 	 * @param infoType
 	 * @return
 	 */
-	public static boolean readTestList(
-		List objects,
-		Object[] values,
-		String property,
-		Class infoType) {
-		boolean encontrou = true;
-		
-		if ((objects.size() == 0) || (objects.size() != values.length))
-			return false;
-		try {
-			Object object = objects.get(0);
-			List propertiesValues = new ArrayList();
-			
-			if (Beans.isInstanceOf(object, infoType)) {
-				for (int i = 0; i < values.length && encontrou; i++) {
-					Object object2 = PropertyUtils.getProperty(objects.get(i), property);
-					propertiesValues.add(object2);
-					encontrou = Arrays.asList(values).contains(object2);
+	public static void readTestList(List objects, Object[] values, String property, Class infoType)
+	{
+		if (objects == null)
+		{
+			throw new IllegalArgumentException("Objects argument cannot be null!");
+		}
+		if (values == null)
+		{
+			throw new IllegalArgumentException("Values argument cannot be null!");
+		}
+		if (property == null)
+		{
+			throw new IllegalArgumentException("Property argument cannot be null!");
+		}
+		if (infoType == null)
+		{
+			throw new IllegalArgumentException("InfoType argument cannot be null!");
+		}
 
-				}
-				if (!encontrou) {
-					System.out.println("expected Value Type->" + values[0].getClass().toString());
-					System.out.println(
-						"object Type Received->"
-							+ propertiesValues
-								.get(propertiesValues.size() - 1)
-								.getClass()
-								.toString());
-
-					System.out.println("Wrong Values Returned!");
-					System.out.println("Was Expecting: " + Arrays.asList(values));
-					System.out.println("But Received: " + propertiesValues);
-				}
-				return encontrou;
-
-			} else {
-				System.out.println(
-					"Wrong Class Returned! Was Expecting: "
-						+ infoType
-						+ " but received: "
-						+ object.getClass());
-				return false;
+		List expectedObjectList = Arrays.asList(values);
+		List receivedList = new ArrayList();
+		Assert.assertEquals("Size test:", expectedObjectList.size(), objects.size());
+		boolean failed = false;
+		for (int i = 0; i < objects.size(); i++)
+		{
+			Object object = objects.get(i);
+			if (!Beans.isInstanceOf(object, infoType))
+			{
+				Assert.fail("Object of type " + object.getClass().getName() + " not from type " + infoType.getName());
+			}
+			Object value = null;
+			try
+			{
+				value = PropertyUtils.getProperty(object, property);
+			} catch (Exception e)
+			{
+				e.printStackTrace(System.out);
+				Assert.fail("Failed to get property " + property + " from " + object.getClass().getName());
 			}
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return false;
+			failed = !expectedObjectList.contains(value);
+			receivedList.add(value);
+
+		}
+		if (failed)
+		{
+			Assert.fail("Wrong values returned. Was expecting: " + expectedObjectList + " but received:" + receivedList);
 		}
 	}
-
 }
