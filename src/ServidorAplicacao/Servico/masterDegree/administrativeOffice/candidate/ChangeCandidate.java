@@ -68,9 +68,9 @@ public class ChangeCandidate implements IService {
             person.setNumeroDocumentoIdentificacao(newCandidate.getInfoPerson()
                     .getNumeroDocumentoIdentificacao());
 
-        } catch (ExistingPersistentException ex) {
-            throw new ExistingServiceException(ex);
-        }
+//        } catch (ExistingPersistentException ex) {
+//            throw new ExistingServiceException(ex);
+//        }
 
         // Get new Country
         ICountry nationality = null;
@@ -196,6 +196,11 @@ public class ChangeCandidate implements IService {
         }
 
         sp.confirmarTransaccao();
+        } catch (ExistingPersistentException ex) {
+            throw new ExistingServiceException(ex);
+        } catch (ExcepcaoPersistencia ex) {
+            throw new ExistingServiceException(ex);
+        }
         sp.iniciarTransaccao();
 
         IMasterDegreeCandidate masterDegreeCandidateFromBD = (IMasterDegreeCandidate) sp
