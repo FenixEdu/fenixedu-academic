@@ -406,6 +406,20 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 }
 
 
+class net.sourceforge.fenixedu.domain.Role extends net.sourceforge.fenixedu.domain.DomainObject {
+	String portalSubApplication;
+	String pageNameProperty;
+	String page;
+
+	interface "
+    public net.sourceforge.fenixedu.domain.person.RoleType getRoleType();
+
+    public void setRoleType(net.sourceforge.fenixedu.domain.person.RoleType roleType);
+    "
+
+}
+
+
 class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
 	Date lastModificationDate;
