@@ -20,13 +20,21 @@
 </h2>
 
 
-<bean:define id="infoProfessorshipList" name="teacherCreditsSheet" property="infoProfessorshipList"/>
-<logic:notEmpty name="infoProfessorshipList">
-	<logic:iterate id="infoProfessorship" name="infoProfessorshipList">
-
+<bean:define id="detailedProfessorshipList" name="teacherCreditsSheet" property="detailedProfessorshipList"/>
+<logic:notEmpty name="detailedProfessorshipList">
+	<logic:iterate id="detailedProfessorship" name="detailedProfessorshipList">
+		<bean:define id="infoProfessorship" name="detailedProfessorship" property="infoProfessorship"/>
 		<h4>
 			<span class="bluetxt">		
 				<bean:write name="infoProfessorship" property="infoExecutionCourse.nome"/>
+				<bean:define id="infoDegreeList" name="detailedProfessorship" property="infoDegreeList" />
+				<bean:size id="degreeSizeList" name="infoDegreeList"/>
+				(<logic:iterate id="infoDegree" name="infoDegreeList" indexId="index">
+					<bean:write name="infoDegree" property="sigla" /> 
+					<logic:notEqual name="degreeSizeList" value="<%= String.valueOf(index.intValue() + 1) %>">
+					,
+					</logic:notEqual>
+				</logic:iterate>)
 			</span>
 		</h4>
 		
@@ -189,7 +197,7 @@
 		</table>			
 	</logic:iterate>
 </logic:notEmpty>
-<logic:empty name="infoProfessorshipList">
+<logic:empty name="detailedProfessorshipList">
 	<i><bean:message key="label.teacherCreditsSheet.noProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/><i>
 </logic:empty>
 <%-- ================================================================================== --%>
@@ -202,7 +210,7 @@
 
 <table width="100%">
 	<tr>
-		<td colspan="2" class="listClasses-subheader">
+		<td colspan="3" class="listClasses-subheader">
 			<bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 			<logic:present role="role.department.credits.manager">
 				(<html:link page="/manageTeacherDFPStudent.do?method=list&amp;page=0" paramId="teacherId" paramName="infoTeacher" paramProperty="idInternal">
@@ -219,6 +227,9 @@
 				<td class="listClasses-header" style="text-align:left">
 					<bean:message key="label.teacher-dfp-student.student-name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 				</td>
+				<td class="listClasses-header">
+					<bean:message key="label.teacher-dfp-student.percentage" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</td>
 			</tr>			
 			<logic:iterate id="infoTeacherDfpStudent" name="teacherDfpStudentsList">
 				<tr>
@@ -227,6 +238,9 @@
 					</td>
 					<td class="listClasses" style="text-align:left">
 						<bean:write name="infoTeacherDfpStudent" property="infoStudent.infoPerson.nome"/>
+					</td>
+					<td class="listClasses">
+						<bean:write name="infoTeacherDfpStudent" property="percentage"/>
 					</td>
 				</tr>				
 			</logic:iterate>
