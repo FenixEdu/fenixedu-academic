@@ -11,9 +11,13 @@
 	<jsp:include page="./guideTemplate1.jsp" flush="true" />
 
 	<%-- The Original Guide --%>
+	<jsp:include page="./guideTemplate1.jsp" flush="true" />
 
 
-	<%-- Candidate Information if necessary --%>
+    <logic:present name="<%= SessionConstants.PRINT_PASSWORD %>">
+    	<%-- Candidate Information if necessary --%>
+    	<jsp:include page="./informationTemplate1.jsp" flush="true" />
+	</logic:present >	
 
   </body>
 </html>

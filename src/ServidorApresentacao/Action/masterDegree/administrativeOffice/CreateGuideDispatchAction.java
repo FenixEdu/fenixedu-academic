@@ -24,6 +24,7 @@ import org.apache.struts.util.LabelValueBean;
 import DataBeans.InfoContributor;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoGuide;
+import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -248,9 +249,6 @@ public class CreateGuideDispatchAction extends DispatchAction {
 				return mapping.getInputForward();
 			}
 						
-			session.removeAttribute(SessionConstants.GUIDE);
-			session.setAttribute(SessionConstants.GUIDE, newInfoGuide);
-			
 			// Check if it's necessary to create a password for the candidate And to change his situation
 			String requesterType = (String) session.getAttribute(SessionConstants.REQUESTER_TYPE);
 			session.removeAttribute(SessionConstants.REQUESTER_TYPE); 
@@ -262,34 +260,50 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			if ((requesterType.equals(GuideRequester.CANDIDATE_STRING)) &&
 				(newInfoGuide.getPaymentType() != null)) 
 				//((InfoGuideSituation) infoGuide.get().get(0)).getSituation().equals(SituationOfGuide.PAYED_TYPE))
-				if ((infoGuide.getInfoPerson().getPassword() == null) || (infoGuide.getInfoPerson().getPassword().length() == 0)){
+				if ((newInfoGuide.getInfoPerson().getPassword() == null) || (newInfoGuide.getInfoPerson().getPassword().length() == 0)){
 					// Generate the password
 
-					infoGuide.getInfoPerson().setPassword(RandomStringGenerator.getRandomStringGenerator(8));					
+					newInfoGuide.getInfoPerson().setPassword(RandomStringGenerator.getRandomStringGenerator(8));					
 
-System.out.println("New Password: " + infoGuide.getInfoPerson().getPassword());
+System.out.println("New Password: " + newInfoGuide.getInfoPerson().getPassword());
 
 					// Write the Person
 					try {
-						Object args[] = {infoGuide.getInfoPerson() };
+						Object args[] = {newInfoGuide.getInfoPerson() };
 						serviceManager.executar(userView, "ChangePersonPassword", args);
 					} catch (FenixServiceException e) {
 						throw new FenixActionException();
 					}
 					
 					// The Candidate will now have a new Situation
+					
 					try {
-						Object args[] = { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson()};
+						Object args[] = { newInfoGuide.getInfoExecutionDegree(), newInfoGuide.getInfoPerson()};
 						serviceManager.executar(userView, "CreateCandidateSituation", args);
 					} catch (FenixServiceException e) {
 						throw new FenixActionException();
 					}
 					
 					// Put variable in Session to Inform that it's necessary to print the password
+
 					session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
+					InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;					
+					try {
+						Object args[] = { newInfoGuide.getInfoExecutionDegree(), newInfoGuide.getInfoPerson()};
+						infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "ReadCandidateList", args);
+					} catch (FenixServiceException e) {
+						throw new FenixActionException();
+					}
+					
+					session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
 					
 				}
-			
+
+
+			session.removeAttribute(SessionConstants.GUIDE);
+			session.setAttribute(SessionConstants.GUIDE, newInfoGuide);
+
+	
 			return mapping.findForward("CreateSuccess");
 			
 		} else throw new Exception();

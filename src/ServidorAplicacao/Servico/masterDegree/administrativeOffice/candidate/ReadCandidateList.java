@@ -9,11 +9,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoCandidateSituation;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
+import DataBeans.InfoPerson;
 import DataBeans.util.Cloner;
 import Dominio.ICandidateSituation;
+import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
+import Dominio.IPessoa;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -94,4 +98,42 @@ public class ReadCandidateList implements IServico {
 		return candidateList;
 		
 	}
+	
+	
+	public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson) throws FenixServiceException {
+		
+		ISuportePersistente sp = null;
+		IMasterDegreeCandidate result = null;
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			// Read the candidates
+			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+			IPessoa person = Cloner.copyInfoPerson2IPerson(infoPerson);
+			
+			result = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPerson(executionDegree, person);
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		} 
+
+		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(result);
+		Iterator situationIterator = result.getSituations().iterator();
+		List situations = new ArrayList();
+		while (situationIterator.hasNext()){ 
+			InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) situationIterator.next()); 
+			situations.add(infoCandidateSituation);
+			
+			// Check if this is the Active Situation
+			if 	(infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
+				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+		}			
+		infoMasterDegreeCandidate.setSituationList(situations);
+			
+		return infoMasterDegreeCandidate;
+		
+	}
+
+	
+	
 }
