@@ -267,14 +267,15 @@ public class BibliographicReferenceManagerDispatchAction
 			throw new FenixActionException(e);
 		}
 		
+		session.setAttribute(
+			SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST,
+			references);
+
 		if(references.size() == 0) {
 			session.removeAttribute("bibliographicReferenceForm");
 			return mapping.findForward("editBibliographicReference");						
 		}		
 		
-		session.setAttribute(
-			SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST,
-			references);
 		return mapping.findForward("bibliographyManagement");
 	}
 
