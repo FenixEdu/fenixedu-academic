@@ -140,8 +140,7 @@ public class Frequenta extends DomainObject implements IFrequenta {
         boolean resultado = false;
         if (obj instanceof IFrequenta) {
             IFrequenta frequenta = (IFrequenta) obj;
-            resultado = getAluno().equals(frequenta.getAluno())
-                    && getDisciplinaExecucao().equals(frequenta.getDisciplinaExecucao());
+			resultado = getIdInternal().equals(frequenta.getIdInternal());
         }
         return resultado;
     }
