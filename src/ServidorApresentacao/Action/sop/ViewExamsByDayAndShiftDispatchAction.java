@@ -121,7 +121,7 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		Calendar date = Calendar.getInstance();
 		date.setTime(infoExam.getDay());
 
-		editExamForm.set("day", new Integer(date.get(Calendar.HOUR_OF_DAY)).toString());
+		editExamForm.set("day", new Integer(date.get(Calendar.DAY_OF_MONTH)).toString());
 		editExamForm.set("month", new Integer(date.get(Calendar.MONTH)).toString());
 		editExamForm.set("year", new Integer(date.get(Calendar.YEAR)).toString());
 		if (infoExam.getBeginning() != null) {
@@ -129,8 +129,6 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		}
 		editExamForm.set("season", infoExam.getSeason().getseason().toString());
 
-		session.setAttribute("examForm", editExamForm);
-		
 		session.setAttribute(SessionConstants.EXECUTION_COURSE_KEY, infoExam.getInfoExecutionCourse());
 
 		session.setAttribute("input", "viewExamsByDayAndShift");
