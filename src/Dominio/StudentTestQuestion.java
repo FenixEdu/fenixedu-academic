@@ -7,7 +7,9 @@ package Dominio;
 /**
  * @author Susana Fernandes
  */
-public class StudentTestQuestion extends DomainObject implements IStudentTestQuestion {
+public class StudentTestQuestion
+	extends DomainObject
+	implements IStudentTestQuestion {
 	private Integer keyStudent;
 	private IStudent student;
 	private Integer keyDistributedTest;
@@ -17,9 +19,10 @@ public class StudentTestQuestion extends DomainObject implements IStudentTestQue
 
 	private Integer testQuestionOrder;
 	private Integer testQuestionValue;
+	private Double testQuestionMark;
 	private Integer response;
 	private String optionShuffle;
-	
+
 	public StudentTestQuestion() {
 	}
 
@@ -67,6 +70,10 @@ public class StudentTestQuestion extends DomainObject implements IStudentTestQue
 		return testQuestionValue;
 	}
 
+	public Double getTestQuestionMark() {
+		return testQuestionMark;
+	}
+
 	public void setDistributedTest(IDistributedTest test) {
 		distributedTest = test;
 	}
@@ -105,6 +112,10 @@ public class StudentTestQuestion extends DomainObject implements IStudentTestQue
 
 	public void setTestQuestionValue(Integer integer) {
 		testQuestionValue = integer;
+	}
+
+	public void setTestQuestionMark(Double double1) {
+		testQuestionMark = double1;
 	}
 
 }

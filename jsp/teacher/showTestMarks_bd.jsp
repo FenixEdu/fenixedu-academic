@@ -39,12 +39,15 @@
 					</b>
 					<br/>
 					<br/>
+					<bean:define id="distributedTestCode" name="studentTestQuestion" property="distributedTest.idInternal"/>
+					<html:link page="<%= "/testsManagement.do?method=downloadTestMarks&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.exportToExel"/></html:link>
+					<br/>
+					<br/>
 					<table>
 					<tr>
 						<td class="listClasses-header"><bean:message key="label.number"/></td>
 						<td class="listClasses-header"><bean:message key="label.name"/></td>
 						<bean:define id="questionNumber" name="studentTestQuestion" property="distributedTest.numberOfQuestions"/>
-						<bean:define id="distributedTestCode" name="studentTestQuestion" property="distributedTest.idInternal"/>
 						<% for(int i=1; i<=new Integer(questionNumber.toString()).intValue();i++ ){
 							out.write(new String("<td class='listClasses-header'><b>P"+i+"</b></td>"));
 						} %>
@@ -57,8 +60,9 @@
 					<tr><td class="listClasses"><bean:write name="student" property="number"/></td>
 					<td class="listClasses"><bean:write name="student" property="infoPerson.nome"/></td>
 				</logic:equal>
-				<bean:define id="mark" name="studentTestQuestion" property="mark"/>
-				<td class="listClasses"><bean:write name="mark"/></td>
+				<bean:define id="mark" name="studentTestQuestion" property="testQuestionMark"/>
+				<bean:define id="markValue" value="<%= (new java.text.DecimalFormat("#0.##").format(Double.parseDouble(mark.toString())).toString()) %>"/>
+				<td class="listClasses"><bean:write name="markValue"/></td>
 			</logic:iterate>
 			<bean:define id="finalMark" name="studentTestQuestionList" property="studentTestMark"/>
 			<td class="listClasses"><bean:write name="finalMark"/></td>

@@ -2453,6 +2453,7 @@ public abstract class Cloner {
 		infoStudentTestQuestion.setResponse(studentTestQuestion.getResponse());
 		infoStudentTestQuestion.setTestQuestionOrder(studentTestQuestion.getTestQuestionOrder());
 		infoStudentTestQuestion.setTestQuestionValue(studentTestQuestion.getTestQuestionValue());
+		infoStudentTestQuestion.setTestQuestionMark(studentTestQuestion.getTestQuestionMark());
 		//	
 		InfoDistributedTest infoDistributedTest = copyIDistributedTest2InfoDistributedTest(studentTestQuestion.getDistributedTest());
 		InfoStudent infoStudent = copyIStudent2InfoStudent(studentTestQuestion.getStudent());

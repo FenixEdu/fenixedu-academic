@@ -89,6 +89,7 @@ CREATE TABLE STUDENT_TEST_QUESTION(
   KEY_XML_DOCUMENT int(11) unsigned not null default '0',
   TEST_QUESTION_ORDER int(2) not null default '1',
   TEST_QUESTION_VALUE int(2) not null default '0',
+  TEST_QUESTION_MARK double not null default '0',
   RESPONSE int not null default '0',
   OPTION_SHUFFLE text,
   PRIMARY KEY  (ID_INTERNAL),

@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
  
-<h2><bean:message key="title.insertExercices"/></h2>
+<h2><bean:message key="title.importExercices"/></h2>
 
 <html:form action="/exercicesManagement" enctype="multipart/form-data">
 <html:hidden property="page" value="0"/>

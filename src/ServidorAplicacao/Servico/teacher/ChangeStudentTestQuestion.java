@@ -192,9 +192,12 @@ public class ChangeStudentTestQuestion implements IServico {
 							+ " RespostaOld:"
 							+ studentTestQuestion.getResponse()
 							+ " Shuffle: "
-							+ studentTestQuestion.getOptionShuffle());
+							+ studentTestQuestion.getOptionShuffle()
+							+" OldMark: "
+							+ studentTestQuestion.getTestQuestionMark());
 					studentTestQuestion.setQuestion(newQuestion);
 					studentTestQuestion.setResponse(new Integer(0));
+					studentTestQuestion.setTestQuestionMark(new Double(0));
 					persistentStudentTestQuestion.simpleLockWrite(
 						studentTestQuestion);
 				}
@@ -217,8 +220,12 @@ public class ChangeStudentTestQuestion implements IServico {
 					if (metadataQuestions == null
 						|| metadataQuestions.size() <= 1)
 						persistentMetadata.delete(metadata);
-				} else
+				} else {
 					oldQuestion.setVisibility(new Boolean(false));
+					if (metadataQuestions == null
+						|| metadataQuestions.size() <= 1)
+						metadata.setVisibility(new Boolean(false));
+				}
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

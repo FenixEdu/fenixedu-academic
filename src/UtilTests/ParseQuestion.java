@@ -96,7 +96,7 @@ public class ParseQuestion extends DefaultHandler {
 		listResponse = new ArrayList();
 
 		SAXParserFactory spf = SAXParserFactory.newInstance();
-		spf.setValidating(false);
+		//spf.setValidating(false);
 		SAXParser saxParser = spf.newSAXParser();
 		XMLReader reader = saxParser.getXMLReader();
 		reader.setContentHandler(this);

@@ -9,8 +9,11 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.InfoStudentTestQuestion;
 import DataBeans.comparators.CalendarDateComparator;
 import DataBeans.comparators.CalendarHourComparator;
+import DataBeans.util.Cloner;
+
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IStudent;
@@ -21,9 +24,11 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentTestLog;
+import ServidorPersistente.IPersistentStudentTestQuestion;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TestType;
+import UtilTests.ParseQuestion;
 
 /**
  * @author Susana Fernandes
@@ -81,6 +86,9 @@ public class InsertStudentTestResponses implements IServico {
 				Iterator it = studentTestQuestionList.iterator();
 				if (studentTestQuestionList.size() == 0)
 					return false;
+				IPersistentStudentTestQuestion persistentStudentTestQuestion =
+					persistentSuport.getIPersistentStudentTestQuestion();
+				ParseQuestion parse = new ParseQuestion();
 				while (it.hasNext()) {
 					IStudentTestQuestion studentTestQuestion =
 						(IStudentTestQuestion) it.next();
@@ -89,15 +97,54 @@ public class InsertStudentTestResponses implements IServico {
 							new TestType(1))) {
 						//não pode aceitar nova resposta
 					} else {
+						InfoStudentTestQuestion infoStudentTestQuestion =
+							Cloner
+								.copyIStudentTestQuestion2InfoStudentTestQuestion(
+								studentTestQuestion);
+						try {
+							infoStudentTestQuestion.setQuestion(
+								parse.parseQuestion(
+									infoStudentTestQuestion
+										.getQuestion()
+										.getXmlFile(),
+									infoStudentTestQuestion.getQuestion()));
+							infoStudentTestQuestion = parse.getOptionsShuffle(infoStudentTestQuestion);
+						} catch (Exception e) {
+							throw new FenixServiceException(e);
+						}
 						studentTestQuestion.setResponse(
 							new Integer(
 								options[studentTestQuestion
 									.getTestQuestionOrder()
 									.intValue()
 									- 1]));
-						persistentSuport
-							.getIPersistentStudentTestQuestion()
-							.lockWrite(
+						
+						if (infoStudentTestQuestion
+							.getQuestion()
+							.getCorrectResponse()
+							.contains(studentTestQuestion.getResponse()))
+							studentTestQuestion.setTestQuestionMark(
+								new Double(
+									studentTestQuestion
+										.getTestQuestionValue()
+										.doubleValue()));
+						else
+							studentTestQuestion.setTestQuestionMark(
+								new Double(-
+									(infoStudentTestQuestion
+										.getTestQuestionValue()
+										.intValue()
+										* (java
+											.lang
+											.Math
+											.pow(
+												infoStudentTestQuestion
+													.getQuestion()
+													.getOptionNumber()
+													.intValue()
+													- 1,
+												-1)))));
+						persistentStudentTestQuestion.lockWrite(
 							studentTestQuestion);
 					}
 				}

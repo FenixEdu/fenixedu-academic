@@ -40,7 +40,7 @@ public class ParseMetadata extends DefaultHandler {
 
 	public List parseMetadata(String file) throws Exception {
 		SAXParserFactory spf = SAXParserFactory.newInstance();
-		spf.setValidating(false);
+		//spf.setValidating(false);
 		SAXParser saxParser = spf.newSAXParser();
 		XMLReader reader = saxParser.getXMLReader();
 		reader.setContentHandler(this);
@@ -61,7 +61,7 @@ public class ParseMetadata extends DefaultHandler {
 	public InfoMetadata parseMetadata(String file, InfoMetadata infoMetadata)
 		throws Exception {
 		SAXParserFactory spf = SAXParserFactory.newInstance();
-		spf.setValidating(false);
+		//spf.setValidating(false);
 		SAXParser saxParser = spf.newSAXParser();
 		XMLReader reader = saxParser.getXMLReader();
 		reader.setContentHandler(this);

@@ -379,20 +379,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 			option[infoStudentTestQuestion.getTestQuestionOrder().intValue()
 				- 1] =
 				infoStudentTestQuestion.getResponse().toString();
-			if (infoStudentTestQuestion.getResponse().intValue() != 0)
-				if (infoStudentTestQuestion
-					.getQuestion()
-					.getCorrectResponse()
-					.contains(infoStudentTestQuestion.getResponse()))
-					classification =
-						new Double(
-							classification.doubleValue()
-								+ infoStudentTestQuestion
-									.getTestQuestionValue()
-									.intValue());
-				else
-					classification = new Double((classification.doubleValue()- (infoStudentTestQuestion.getTestQuestionValue().intValue()*(java.lang.Math.pow(infoStudentTestQuestion.getQuestion().getOptionNumber().intValue() - 1, -1)))));
-				
+		if (infoStudentTestQuestion.getTestQuestionMark()!=null)
+			classification = new Double(classification.doubleValue() + infoStudentTestQuestion.getTestQuestionMark().doubleValue());
 		}
 		DecimalFormat df = new DecimalFormat("#0.##");
 		if (classification.doubleValue()<0)

@@ -43,29 +43,11 @@
 			</tr>
 			
 			
-			<bean:define id="correct" value="false"/>
-			<bean:define id="responsed" name="testQuestion" property="response"/>
+			<bean:define id="mark" name="testQuestion" property="testQuestionMark"/>
 
 			<tr>
-				<logic:equal name="responsed" value="0">
-					<td><b><bean:message key="label.test.classification" />:</b>&nbsp;<bean:write name="responsed"/></td>
-				</logic:equal>
-				<logic:notEqual name="responsed" value="0">
-					<logic:iterate id="correctResponse" name="question" property="correctResponse">
-						<logic:equal name="correctResponse" value="<%= responsed.toString() %>">
-							<bean:define id="correct" value="true"/>
-						</logic:equal>
-					</logic:iterate>
-
-					<logic:equal name="correct" value="true">
-						<td><b><bean:message key="label.test.classification" />:</b>&nbsp;<bean:write name="testQuestionValue"/></td>
-					</logic:equal>
-					<logic:notEqual name="correct" value="true">
-						<bean:define id="optionNumber" name="question" property="optionNumber"/>
-						<bean:define id="value" value="<%= (new java.text.DecimalFormat("#0.##").format(new Double(-((Double.parseDouble(testQuestionValue.toString()))*java.lang.Math.pow((Integer.parseInt(optionNumber.toString())-1), -1))))).toString() %>"/>
-						<td><b><bean:message key="label.test.classification" />:</b>&nbsp;<bean:write name="value"/></td>	
-					</logic:notEqual>
-				</logic:notEqual>
+				<bean:define id="value" value="<%= (new java.text.DecimalFormat("#0.##").format(Double.parseDouble(mark.toString())).toString()) %>"/>
+				<td><b><bean:message key="label.test.classification" />:</b>&nbsp;<bean:write name="value"/></td>	
 			</tr>
 			<tr>
 				<td>

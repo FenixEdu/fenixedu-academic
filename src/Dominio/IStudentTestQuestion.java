@@ -18,6 +18,7 @@ public interface IStudentTestQuestion extends IDomainObject {
 	public abstract IStudent getStudent();
 	public abstract Integer getTestQuestionOrder();
 	public abstract Integer getTestQuestionValue();
+	public abstract Double getTestQuestionMark();
 	public abstract void setDistributedTest(IDistributedTest test);
 	public abstract void setKeyDistributedTest(Integer integer);
 	public abstract void setKeyQuestion(Integer integer);
@@ -28,4 +29,5 @@ public interface IStudentTestQuestion extends IDomainObject {
 	public abstract void setStudent(IStudent student);
 	public abstract void setTestQuestionOrder(Integer integer);
 	public abstract void setTestQuestionValue(Integer integer);
+	public abstract void setTestQuestionMark(Double double1);
 }

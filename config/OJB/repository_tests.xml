@@ -305,9 +305,13 @@
         column="TEST_QUESTION_VALUE"
         jdbc-type="INTEGER"/>
     <field-descriptor
+        name="testQuestionMark"
+        column="TEST_QUESTION_MARK"
+        jdbc-type="DOUBLE"/>
+    <field-descriptor
         name="response"
         column="RESPONSE"
-        jdbc-type="INTEGER"/>
+        jdbc-type="INTEGER"/>    
     <field-descriptor
         name="optionShuffle"
         column="OPTION_SHUFFLE"

@@ -879,7 +879,6 @@
 				<forward name="testsFirstPage" path="/testsFirstPage.jsp"/>
 				<forward name="exercicesFirstPage" path="/exercicesFirstPage.jsp"/>
 				<forward name="insertNewExercice" path="/insertNewExercice.jsp"/>
-				<forward name="insertXmlPaths" path="/insertXmlPaths.jsp"/>
 				<forward name="prepareRemoveExercice" path="/prepareRemoveExercice.jsp"/>
 		</action>
 		<action path="/questionsManagement"

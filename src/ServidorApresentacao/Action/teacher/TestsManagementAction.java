@@ -5,12 +5,14 @@
 package ServidorApresentacao.Action.teacher;
 
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -1154,7 +1156,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		Integer distributedTestCode =
 			getCodeFromRequest(request, "distributedTestCode");
 		Object[] args = { objectCode, distributedTestCode };
-		//List infoStudentsTestQuestionsList = null;
+
 		SiteView siteView = null;
 		try {
 			siteView =
@@ -1169,6 +1171,43 @@ public class TestsManagementAction extends FenixDispatchAction {
 		request.setAttribute("distributedTestCode", distributedTestCode);
 		request.setAttribute("siteView", siteView);
 		return mapping.findForward("showTestMarks");
+	}
+
+	public ActionForward downloadTestMarks(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		HttpSession session = getSession(request);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer distributedTestCode =
+			getCodeFromRequest(request, "distributedTestCode");
+		Object[] args = { objectCode, distributedTestCode };
+
+		String result = null;
+		try {
+			result =
+				(String) ServiceUtils.executeService(
+					userView,
+					"ReadDistributedTestMarksToString",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		try {
+			ServletOutputStream writer = response.getOutputStream();
+			response.setContentType("application/vnd.ms-excel");
+			writer.print(result);
+			writer.flush();
+			response.flushBuffer();
+		} catch (IOException e) {
+			throw new FenixActionException();
+		}
+		return null;
 	}
 
 	public ActionForward exercicesFirstPage(
@@ -1446,6 +1485,34 @@ public class TestsManagementAction extends FenixDispatchAction {
 		}
 
 		return showStudentTest(mapping, form, request, response);
+	}
+
+	public ActionForward updateStudentTestQuestionMark(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		IUserView userView =
+			(IUserView) request.getSession(false).getAttribute(
+				SessionConstants.U_VIEW);
+
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+		Integer distributedTestId =
+			getCodeFromRequest(request, "distributedTestCode");
+		try {
+			Object[] args = { executionCourseId, distributedTestId };
+			ServiceUtils.executeService(
+				userView,
+				"UpdateStudentTestQuestionMark",
+				args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("siteView", readSiteView(request));
+		return mapping.findForward("testsFirstPage");
 	}
 
 	private void error(HttpServletRequest request, String error) {

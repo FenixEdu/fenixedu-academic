@@ -1,22 +1,17 @@
 /*
- * Created on Oct 14, 2003
+ * Created on Nov 3, 2003
  *
  */
 package ServidorAplicacao.Servico.teacher;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import DataBeans.ExecutionCourseSiteView;
-import DataBeans.InfoDistributedTestMarks;
-import DataBeans.InfoSiteDistributedTestMarks;
 import DataBeans.InfoStudentTestQuestion;
-import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 
 import Dominio.DisciplinaExecucao;
@@ -38,28 +33,22 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Susana Fernandes
  *
  */
-public class ReadDistributedTestMarks implements IServico {
+public class ReadDistributedTestMarksToString implements IServico {
+	private static ReadDistributedTestMarksToString service =
+		new ReadDistributedTestMarksToString();
 
-	private static ReadDistributedTestMarks service =
-		new ReadDistributedTestMarks();
-
-	public static ReadDistributedTestMarks getService() {
+	public static ReadDistributedTestMarksToString getService() {
 		return service;
 	}
 
 	public String getNome() {
-		return "ReadDistributedTestMarks";
+		return "ReadDistributedTestMarksToString";
 	}
 
-	public SiteView run(Integer executionCourseId, Integer distributedTestId)
+	public String run(Integer executionCourseId, Integer distributedTestId)
 		throws FenixServiceException {
 
 		ISuportePersistente persistentSuport;
-
-		InfoSiteDistributedTestMarks infoSiteDistributedTestMarks =
-			new InfoSiteDistributedTestMarks();
-		List infoDistributedTestMarksList = new ArrayList();
-
 		try {
 			persistentSuport = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse =
@@ -73,6 +62,7 @@ public class ReadDistributedTestMarks implements IServico {
 			if (executionCourse == null) {
 				throw new InvalidArgumentsServiceException();
 			}
+
 			IDistributedTest distributedTest =
 				new DistributedTest(distributedTestId);
 			distributedTest =
@@ -86,9 +76,13 @@ public class ReadDistributedTestMarks implements IServico {
 
 			int numberOfQuestions =
 				distributedTest.getNumberOfQuestions().intValue();
-			int[] correctAnswers = new int[(numberOfQuestions)],
-				wrongAnswers = new int[(numberOfQuestions)],
-				notAnswered = new int[(numberOfQuestions)];
+			String result = new String("Número\tNome\t");
+			for (int i = 1;
+				i <= distributedTest.getNumberOfQuestions().intValue();
+				i++) {
+				result = result.concat("P" + i + "\t");
+			}
+			result = result.concat("Nota\n");
 
 			List studentList =
 				(List) persistentSuport
@@ -96,10 +90,12 @@ public class ReadDistributedTestMarks implements IServico {
 					.readStudentsByDistributedTest(distributedTest);
 			if (studentList == null || studentList.size() == 0)
 				throw new FenixServiceException();
+
 			Collections.sort(studentList, new BeanComparator("number"));
 
 			Iterator studentIt = studentList.iterator();
 			DecimalFormat df = new DecimalFormat("#0.##");
+
 			while (studentIt.hasNext()) {
 				IStudent student = (Student) studentIt.next();
 				List studentTestQuestionList =
@@ -115,7 +111,13 @@ public class ReadDistributedTestMarks implements IServico {
 					studentTestQuestionList,
 					new BeanComparator("testQuestionOrder"));
 
-				List infoStudentTestQuestionList = new ArrayList();
+				result =
+					result.concat(
+						student.getNumber()
+							+ "\t"
+							+ student.getPerson().getNome()
+							+ "\t");
+
 				Double finalMark = new Double(0);
 				Iterator studentTestQuestionIt =
 					studentTestQuestionList.iterator();
@@ -127,78 +129,28 @@ public class ReadDistributedTestMarks implements IServico {
 							.copyIStudentTestQuestion2InfoStudentTestQuestion(
 							studentTestQuestion);
 
-					int index =
-						studentTestQuestion.getTestQuestionOrder().intValue()
-							- 1;
-					if (studentTestQuestion.getTestQuestionMark().doubleValue() != 0) {
-						if (studentTestQuestion
-							.getTestQuestionMark()
-							.doubleValue()
-							> 0)
-							correctAnswers[index] = correctAnswers[index] + 1;
-						else
-							wrongAnswers[index] = wrongAnswers[index] + 1;
-						finalMark =
-							new Double(
-								finalMark.doubleValue()
-									+ studentTestQuestion
-										.getTestQuestionMark()
-										.doubleValue());
-					} else
-						notAnswered[index] = notAnswered[index] + 1;
-
-					infoStudentTestQuestionList.add(infoStudentTestQuestion);
+					result =
+						result.concat(
+							df.format(
+								studentTestQuestion.getTestQuestionMark())
+								+ "\t");
+					finalMark =
+						new Double(
+							finalMark.doubleValue()
+								+ studentTestQuestion
+									.getTestQuestionMark()
+									.doubleValue());
 				}
-				InfoDistributedTestMarks infoDistributedTestMarks =
-					new InfoDistributedTestMarks();
-				infoDistributedTestMarks.setInfoStudentTestQuestionList(
-					infoStudentTestQuestionList);
 				if (finalMark.doubleValue() < 0)
-					finalMark = new Double(0);
-				infoDistributedTestMarks.setStudentTestMark(
-					new Double(df.format(finalMark)));
-				infoDistributedTestMarksList.add(infoDistributedTestMarks);
+					result = result.concat("0\n");
+				else
+					result =
+						result.concat(
+							df.format(finalMark.doubleValue()) + "\n");
 			}
-
-			infoSiteDistributedTestMarks.setInfoDistributedTestMarks(
-				infoDistributedTestMarksList);
-			List correctAnswersList = new ArrayList(),
-				wrongAnswersList = new ArrayList(),
-				notAnsweredList = new ArrayList();
-			df = new DecimalFormat("0%");
-			for (int i = 0; i < correctAnswers.length; i++) {
-				correctAnswersList.add(
-					df.format(
-						correctAnswers[i]
-							* java.lang.Math.pow(studentList.size(), -1)));
-				wrongAnswersList.add(
-					df.format(
-						wrongAnswers[i]
-							* java.lang.Math.pow(studentList.size(), -1)));
-				notAnsweredList.add(
-					df.format(
-						notAnswered[i]
-							* java.lang.Math.pow(studentList.size(), -1)));
-			}
-
-			infoSiteDistributedTestMarks.setCorrectAnswersPercentage(
-				correctAnswersList);
-			infoSiteDistributedTestMarks.setWrongAnswersPercentage(
-				wrongAnswersList);
-			infoSiteDistributedTestMarks.setNotAnsweredPercentage(
-				notAnsweredList);
-
-			infoSiteDistributedTestMarks.setExecutionCourse(
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-					executionCourse));
+			return result;
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
-
-		SiteView siteView =
-			new ExecutionCourseSiteView(
-				infoSiteDistributedTestMarks,
-				infoSiteDistributedTestMarks);
-		return siteView;
 	}
 }
