@@ -777,6 +777,22 @@
        <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
 	</action>
 	
+	<action 
+		path="/viewProjectStudentGroups"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
+       <forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+	</action>
+	
+	<action 
+		path="/viewStudentGroupInformation"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
+       <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
+	</action>
+	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

@@ -24,6 +24,7 @@ import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoItem;
 import DataBeans.InfoSite;
+import DataBeans.InfoSiteAllGroups;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
@@ -37,6 +38,7 @@ import DataBeans.InfoSiteRegularSections;
 import DataBeans.InfoSiteRootSections;
 import DataBeans.InfoSiteSection;
 import DataBeans.InfoSiteSections;
+import DataBeans.InfoSiteStudentGroup;
 import DataBeans.InfoSiteSummaries;
 import DataBeans.InfoSiteSummary;
 import DataBeans.InfoSiteTeachers;
@@ -1681,11 +1683,45 @@ public class TeacherAdministrationViewerDispatchAction
 		ISiteComponent viewProjectsComponent = new InfoSiteProjects();
 			
 		readSiteView(request, viewProjectsComponent, null, null, null);
-		System.out.println("<------------FAZ A ACCAO 12:27");
 		return mapping.findForward("viewProjectsAndLink");
 		
 			
 	}
+	
+	
+	public ActionForward viewProjectStudentGroups(
+				ActionMapping mapping,
+				ActionForm form,
+				HttpServletRequest request,
+				HttpServletResponse response)
+				throws FenixActionException {
+
+				String objectCodeString =(String)request.getParameter("groupProperties");
+				
+				Integer  groupPropertiesCode = new Integer(objectCodeString);
+			
+				ISiteComponent viewAllGroups = new InfoSiteAllGroups();
+				readSiteView(request, viewAllGroups, null,groupPropertiesCode,null);
+				return mapping.findForward("groupsManagement");	
+			}
+	
+	public ActionForward viewStudentGroupInformation(
+				ActionMapping mapping,
+				ActionForm form,
+				HttpServletRequest request,
+				HttpServletResponse response)
+				throws FenixActionException {
+
+				String studentGroupCodeString =(String)request.getParameter("studentGroup");
+			
+				Integer studentGroupCode = new Integer(studentGroupCodeString);
+				ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
+				readSiteView(request, viewStudentGroup,null,studentGroupCode,null);
+				
+				return mapping.findForward("viewStudentGroupInformation");	
+	
+	
+			}
 
 	
 }

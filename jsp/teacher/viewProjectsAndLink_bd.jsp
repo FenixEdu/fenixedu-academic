@@ -17,7 +17,7 @@
                 <tr>
                     <td>
                         <br>
-                        <h2><li><html:link page="/viewProjectStudentGroups.do?method=viewProjectStudentGroups">
+                        <h2><li><html:link page="<%= "/viewProjectStudentGroups.do?method=viewProjectStudentGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")%>" paramId="groupProperties" paramName="infoGroupProperties" paramProperty="idInternal">
 							<bean:write name="infoGroupProperties" property="name"/></html:link></li></h2>
                     </td>
                 </tr>
