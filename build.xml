@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project basedir="." default="compile-proj" name="CIAPL">
 
+	<property name="sshtools.home" location="lib" />
+
+
 	<taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask"/>
 
     <property environment="env"/>
@@ -758,7 +761,9 @@
 	             windowtitle="Fenix Class OverView">
 	             
             <packageset dir="${src}" defaultexcludes="yes">
+
               <include name="**/*" />
+
             </packageset>
 
 		    <classpath>
@@ -782,7 +787,9 @@
 	             windowtitle="Fenix Class OverView">
 	             
             <packageset dir="${src.tests}" defaultexcludes="yes">
+
               <include name="**/*" />
+              
             </packageset>
 
 		    <classpath>
@@ -796,5 +803,4 @@
          </javadoc>
     </target>
 
-	
 </project>
