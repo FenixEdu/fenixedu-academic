@@ -581,23 +581,47 @@
     	<field property="other" depends="required,integer" page="1" >
     		<arg0 key="label.teacherInformation.other" />
 		</field>
-		<field property="degreeStudentsNumber" depends="required,integer" page="1">
+		<field property="degreeStudentsNumber" depends="integer" page="1">
 			<arg0 key="label.teacherInformation.studentsNumber"/>
 		</field>
-		<field property="degreeDescription" depends="required" page="1">
+		<field property="degreeDescription" depends="requiredif" page="1">
 			<arg0 key="label.teacherInformation.description"/>
+			<var>
+				<var-name>field[0]</var-name>
+				<var-value>degreeStudentsNumber</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[0]</var-name>
+				<var-value>NOTNULL</var-value>
+			</var>
 		</field>
-		<field property="masterStudentsNumber" depends="required,integer" page="1">
+		<field property="masterStudentsNumber" depends="integer" page="1">
 			<arg0 key="label.teacherInformation.studentsNumber"/>
 		</field>
-		<field property="masterDescription" depends="required" page="1">
+		<field property="masterDescription" depends="requiredif" page="1">
 			<arg0 key="label.teacherInformation.description"/>
+			<var>
+				<var-name>field[0]</var-name>
+				<var-value>masterStudentsNumber</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[0]</var-name>
+				<var-value>NOTNULL</var-value>
+			</var>
 		</field>
-		<field property="phdStudentsNumber" depends="required,integer" page="1">
+		<field property="phdStudentsNumber" depends="integer" page="1">
 			<arg0 key="label.teacherInformation.studentsNumber"/>
 		</field>
-		<field property="phdDescription" depends="required" page="1">
+		<field property="phdDescription" depends="requiredif" page="1">
 			<arg0 key="label.teacherInformation.description"/>
+			<var>
+				<var-name>field[0]</var-name>
+				<var-value>phdStudentsNumber</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[0]</var-name>
+				<var-value>NOTNULL</var-value>
+			</var>			
 		</field>
 		<field property="comunicationNational" depends="required,integer" page="1">
 		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
@@ -653,7 +677,8 @@
 			<arg0 key="label.career.year"/>
 		</field>
 		<field property="endYear" depends="required,integer,greaterThan" page="1">
-			<arg0 key="label.career.year"/>
+			<arg0 key="label.career.beginYear"/>
+			<arg1 key="label.career.endYear"/>
 			<var>
             	<var-name>secondProperty</var-name>
                 <var-value>beginYear</var-value>

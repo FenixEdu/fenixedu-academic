@@ -89,17 +89,22 @@
 			<bean:message key="label.doublePoint" />
 		</p>
 		<br />	
+		<table width="100%">	
 			<logic:iterate id="infoExternalActivity" name="infoSiteTeacherInformation" property="infoExternalActivities">
-				<bean:write name="infoExternalActivity" property="activity" />
+				<tr>
+					<td class="listClasses" style="text-align:left">
+						<bean:write name="infoExternalActivity" property="activity" />
+					</td>
+				</tr>
 			</logic:iterate>
-		<br />
+		</table>
 		<br />
 		<p class="infoop"><span class="emphasis-box">5</span>
 		<bean:message key="message.teacherInformation.ownPublications" /></p>
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
 					<tr>
-						<td class="listClasses">
+						<td class="listClasses" style="text-align:left">
 							<bean:write name="infoOldPublication" property="publication" />
 						</td>
 					</tr>
@@ -112,7 +117,7 @@
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldCientificPublications">
 					<tr>
-						<td class="listClasses">
+						<td class="listClasses" style="text-align:left">
 							<bean:write name="infoOldPublication" property="publication" />
 						</td>
 					</tr>
@@ -215,9 +220,9 @@
 								<bean:write name="infoCurricularCourse" 
 											property="infoDegreeCurricularPlan.infoDegree.nome" />
 							</td>
-<%--							<td class="listClasses"><bean:write name="infoExecutionCourse" property="" /></td>
-							<td class="listClasses"><bean:write name="infoExecutionCourse" property="" /></td>
-							<td class="listClasses"><bean:write name="infoExecutionCourse" property="" /></td>--%>
+							<td class="listClasses">&nbsp;<%--<bean:write name="infoExecutionCourse" property="" />--%></td>
+							<td class="listClasses">&nbsp;<%--<bean:write name="infoExecutionCourse" property="" />--%></td>
+							<td class="listClasses">&nbsp;<%--<bean:write name="infoExecutionCourse" property="" />--%></td>
 					</tr>
 				</logic:iterate>
 			</logic:iterate>
@@ -240,7 +245,7 @@
 					<bean:write name="infoSiteTeacherInformation" property="infoDegreeOrientation.numberOfStudents" />
 				</td>
 				<td class="listClasses">
-					<bean:write name="infoSiteTeacherInformation" property="infoDegreeOrientation.description" />
+					<bean:write name="infoSiteTeacherInformation" property="infoDegreeOrientation.description" />&nbsp;
 				</td>
 			</tr>
 			<tr>
@@ -249,7 +254,7 @@
 					<bean:write name="infoSiteTeacherInformation" property="infoMasterOrientation.numberOfStudents" />
 				</td>
 				<td class="listClasses">
-					<bean:write name="infoSiteTeacherInformation" property="infoMasterOrientation.description" />
+					<bean:write name="infoSiteTeacherInformation" property="infoMasterOrientation.description" />&nbsp;
 				</td>
 			</tr>
 			<tr>
@@ -258,7 +263,7 @@
 					<bean:write name="infoSiteTeacherInformation" property="infoPhdOrientation.numberOfStudents" />
 				</td>
 				<td class="listClasses">
-					<bean:write name="infoSiteTeacherInformation" property="infoPhdOrientation.description" />
+					<bean:write name="infoSiteTeacherInformation" property="infoPhdOrientation.description" />&nbsp;
 				</td>
 			</tr>
 		</table>

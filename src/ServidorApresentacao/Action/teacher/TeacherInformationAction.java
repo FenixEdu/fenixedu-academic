@@ -69,7 +69,8 @@ public class TeacherInformationAction extends DispatchAction
         InfoWeeklyOcupation infoWeeklyOcupation = getInfoWeeklyOcupationFromForm(form);
         List infoOrientations = getInfoOrientationsFromForm(form);
         List infoPublicationsNumber = getInfoPublicationsNumberFromForm(form);
-        Object[] args = { infoServiceProviderRegime, infoWeeklyOcupation, infoOrientations, infoPublicationsNumber };
+        Object[] args =
+            { infoServiceProviderRegime, infoWeeklyOcupation, infoOrientations, infoPublicationsNumber };
         ServiceUtils.executeService(SessionUtils.getUserView(request), getEditService(), args);
         return read(mapping, form, request, response);
     }
@@ -110,13 +111,16 @@ public class TeacherInformationAction extends DispatchAction
         DynaActionForm dynaForm = (DynaActionForm) form;
         Integer teacherId = (Integer) dynaForm.get("teacherId");
         Integer degreeOrientationId = (Integer) dynaForm.get("degreeOrientationId");
-        Integer degreeStudentsNumber = new Integer((String) dynaForm.get("degreeStudentsNumber"));
+        String value = (String) dynaForm.get("degreeStudentsNumber");
+        Integer degreeStudentsNumber = value.equals("") ? null : new Integer(value);
         String degreeDescription = (String) dynaForm.get("degreeDescription");
         Integer masterOrientationId = (Integer) dynaForm.get("masterOrientationId");
-        Integer masterStudentsNumber = new Integer((String) dynaForm.get("masterStudentsNumber"));
+        value = (String) dynaForm.get("masterStudentsNumber");
+        Integer masterStudentsNumber = value.equals("") ? null : new Integer(value);
         String masterDescription = (String) dynaForm.get("masterDescription");
         Integer phdOrientationId = (Integer) dynaForm.get("phdOrientationId");
-        Integer phdStudentsNumber = new Integer((String) dynaForm.get("phdStudentsNumber"));
+        value = (String) dynaForm.get("phdStudentsNumber");
+        Integer phdStudentsNumber = value.equals("") ? null : new Integer(value);
         String phdDescription = (String) dynaForm.get("phdDescription");
 
         InfoTeacher infoTeacher = new InfoTeacher();
@@ -162,9 +166,10 @@ public class TeacherInformationAction extends DispatchAction
         Integer teacherId = (Integer) dynaForm.get("teacherId");
         Integer comunicationPublicationsNumberId =
             (Integer) dynaForm.get("comunicationPublicationsNumberId");
-        Integer comunicationNational = new Integer((String) dynaForm.get("comunicationNational"));
-        Integer comunicationInternational =
-            new Integer((String) dynaForm.get("comunicationInternational"));
+        String value = (String) dynaForm.get("comunicationNational");
+        Integer comunicationNational = value.equals("") ? null : new Integer(value);
+        value = (String) dynaForm.get("comunicationInternational");
+        Integer comunicationInternational = value.equals("") ? null : new Integer(value);
         Integer magArticlePublicationsNumberId =
             (Integer) dynaForm.get("magArticlePublicationsNumberId");
         Integer magArticleNational = new Integer((String) dynaForm.get("magArticleNational"));
@@ -303,12 +308,18 @@ public class TeacherInformationAction extends DispatchAction
             dynaForm.set(
                 "serviceProviderRegimeTypeName",
                 providerRegimeType == null ? null : providerRegimeType.getName());
+
             dynaForm.set("weeklyOcupationId", infoWeeklyOcupation.getIdInternal());
-            dynaForm.set("management", infoWeeklyOcupation.getManagement().toString());
-            dynaForm.set("research", infoWeeklyOcupation.getResearch().toString());
-            dynaForm.set("other", infoWeeklyOcupation.getOther().toString());
-            dynaForm.set("support", infoWeeklyOcupation.getSupport().toString());
-            dynaForm.set("lecture", infoWeeklyOcupation.getLecture().toString());
+            Integer management = infoWeeklyOcupation.getManagement();
+            dynaForm.set("management", management == null ? new String() : management.toString());
+            Integer research = infoWeeklyOcupation.getResearch();
+            dynaForm.set("research", research == null ? new String() : research.toString());
+            Integer other = infoWeeklyOcupation.getOther();
+            dynaForm.set("other", other == null ? new String() : other.toString());
+            Integer support = infoWeeklyOcupation.getSupport();
+            dynaForm.set("support", support == null ? new String() : support.toString());
+            Integer lecture = infoWeeklyOcupation.getResearch();
+            dynaForm.set("lecture", lecture == null ? new String() : lecture.toString());
 
             Iterator iter = infoOrientations.iterator();
             while (iter.hasNext())
@@ -321,17 +332,23 @@ public class TeacherInformationAction extends DispatchAction
                 {
                     dynaForm.set("degreeOrientationId", orientationId);
                     dynaForm.set("degreeDescription", description);
-                    dynaForm.set("degreeStudentsNumber", numberOfStudents.toString());
+                    dynaForm.set(
+                        "degreeStudentsNumber",
+                        parseInteger(numberOfStudents));
                 } else if (infoOrientation.getOrientationType().equals(OrientationType.MASTER))
                 {
                     dynaForm.set("masterOrientationId", orientationId);
                     dynaForm.set("masterDescription", description);
-                    dynaForm.set("masterStudentsNumber", numberOfStudents.toString());
+                    dynaForm.set(
+                        "masterStudentsNumber",
+                    parseInteger(numberOfStudents));
                 } else
                 {
                     dynaForm.set("phdOrientationId", orientationId);
                     dynaForm.set("phdDescription", description);
-                    dynaForm.set("phdStudentsNumber", numberOfStudents.toString());
+                    dynaForm.set(
+                        "phdStudentsNumber",
+                    parseInteger(numberOfStudents));
                 }
             }
 
@@ -347,36 +364,51 @@ public class TeacherInformationAction extends DispatchAction
                 {
                     dynaForm.set("comunicationPublicationsNumberId", publicationsNumberId);
                     dynaForm.set("comunicationNational", national.toString());
-                    dynaForm.set("comunicationInternational", international.toString());
+                    dynaForm.set(
+                        "comunicationInternational",
+                        international == null ? new String() : international.toString());
                 } else if (
                     infoPublicationsNumber.getPublicationType().equals(PublicationType.MAG_ARTICLE))
                 {
                     dynaForm.set("magArticlePublicationsNumberId", publicationsNumberId);
                     dynaForm.set("magArticleNational", national.toString());
-                    dynaForm.set("magArticleInternational", international.toString());
+                    dynaForm.set(
+                        "magArticleInternational",
+                        international == null ? new String() : international.toString());
                 } else if (
                     infoPublicationsNumber.getPublicationType().equals(PublicationType.AUTHOR_BOOK))
                 {
                     dynaForm.set("authorBookPublicationsNumberId", publicationsNumberId);
                     dynaForm.set("authorBookNational", national.toString());
-                    dynaForm.set("authorBookInternational", international.toString());
+                    dynaForm.set(
+                        "authorBookInternational",
+                        international == null ? new String() : international.toString());
                 } else if (
                     infoPublicationsNumber.getPublicationType().equals(PublicationType.EDITOR_BOOK))
                 {
                     dynaForm.set("editorBookPublicationsNumberId", publicationsNumberId);
                     dynaForm.set("editorBookNational", national.toString());
-                    dynaForm.set("editorBookInternational", international.toString());
+                    dynaForm.set(
+                        "editorBookInternational",
+                        international == null ? new String() : international.toString());
                 } else
                 {
                     dynaForm.set("articlesChaptersPublicationsNumberId", publicationsNumberId);
                     dynaForm.set("articlesChaptersNational", national.toString());
-                    dynaForm.set("articlesChaptersInternational", international.toString());
+                    dynaForm.set(
+                        "articlesChaptersInternational",
+                        international == null ? new String() : international.toString());
                 }
             }
         } catch (Exception e)
         {
             e.printStackTrace();
         }
+    }
+
+    private String parseInteger(Integer numberOfStudents)
+    {
+        return (numberOfStudents == null || numberOfStudents.equals(new Integer(0))) ? new String() : numberOfStudents.toString();
     }
 
     /**

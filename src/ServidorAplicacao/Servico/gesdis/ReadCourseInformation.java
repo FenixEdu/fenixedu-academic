@@ -14,6 +14,7 @@ import org.apache.commons.collections.Predicate;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoCurriculum;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
@@ -97,8 +98,7 @@ public class ReadCourseInformation implements IServico
             TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView();
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
             IExecutionCourse executionCourse =
                 (IExecutionCourse) persistentExecutionCourse.readByOId(
@@ -119,10 +119,11 @@ public class ReadCourseInformation implements IServico
                 InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
                 infoEvaluationMethod.setInfoExecutionCourse(infoExecutionCourse);
                 infoSiteCourseInformation.setInfoEvaluationMethod(infoEvaluationMethod);
-            
-            } else {
-            infoSiteCourseInformation.setInfoEvaluationMethod(
-                Cloner.copyIEvaluationMethod2InfoEvaluationMethod(evaluationMethod));
+
+            } else
+            {
+                infoSiteCourseInformation.setInfoEvaluationMethod(
+                    Cloner.copyIEvaluationMethod2InfoEvaluationMethod(evaluationMethod));
             }
 
             List infoResponsibleTeachers = getInfoResponsibleTeachers(executionCourse, sp);
@@ -177,10 +178,11 @@ public class ReadCourseInformation implements IServico
     }
 
     /**
-     * Filter all the lessons to remove duplicates entries of lessons with the same type
-     * @param infoLessons
-     * @return
-     */
+	 * Filter all the lessons to remove duplicates entries of lessons with the same type
+	 * 
+	 * @param infoLessons
+	 * @return
+	 */
     private List getFilteredInfoLessons(List infoLessons)
     {
         List filteredInfoLessons = new ArrayList();
@@ -203,10 +205,11 @@ public class ReadCourseInformation implements IServico
     }
 
     /**
-     * Filter the lessons to select the first element of the given type
-     * @param infoLessons
-     * @return
-     */
+	 * Filter the lessons to select the first element of the given type
+	 * 
+	 * @param infoLessons
+	 * @return
+	 */
     private InfoLesson getFilteredInfoLessonByType(List infoLessons, TipoAula type)
     {
         final TipoAula lessonType = type;
@@ -274,9 +277,20 @@ public class ReadCourseInformation implements IServico
         while (iter.hasNext())
         {
             ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+            InfoCurricularCourse infoCurricularCourse =
+                Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
             ICurriculum curriculum =
                 persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
-            infoCurriculums.add(Cloner.copyICurriculum2InfoCurriculum(curriculum));
+            if (curriculum == null)
+            {
+                InfoCurriculum infoCurriculum = new InfoCurriculum();
+                infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
+                infoCurriculums.add(infoCurriculum);
+            } else
+            {
+                infoCurriculums.add(Cloner.copyICurriculum2InfoCurriculum(curriculum));
+            }
+
         }
         return infoCurriculums;
     }

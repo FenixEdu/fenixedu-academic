@@ -14,20 +14,20 @@
 <bean:message key="message.teachingCareer.managementCleanExplanation" />
 <bean:message key="message.teachingCareer.managementInsertCareerExplanation" />
 <bean:message key="message.teachingCareer.managementSaveExplanation" />
-<table border="1" style="margin-top:10px">	
+<table border="0" style="margin-top:10px" cellspacing="1" cellpadding="5" width="100%">	
 <logic:iterate id="infoTeachingCareer" name="infoSiteCareers" property="infoCareers">
 <tr>
-	<td>
+	<td class="listClasses">
 		<bean:write name="infoTeachingCareer" property="beginYear" />-
 		<bean:write name="infoTeachingCareer" property="endYear" />
 	</td>
-	<td>
+	<td  class="listClasses">
 		<bean:write name="infoTeachingCareer" property="infoCategory.shortName" />
 	</td>
-	<td>
+	<td  class="listClasses">
 		<bean:write name="infoTeachingCareer" property="courseOrPosition" />
 	</td>
-		<td>
+	<td  class="listClasses">
 		<div class="gen-button">
 			<html:link page="/teachingCareer.do?method=prepareEdit&amp;page=0" 
 					   paramId="idInternal" 
@@ -37,7 +37,7 @@
 			</html:link>
 		</div>
 	</td>
-	<td>
+	<td  class="listClasses">
 		<div class="gen-button">
 			<html:link page="/teachingCareer.do?method=delete&amp;page=0" 
 					   paramId="idInternal" 

@@ -171,7 +171,6 @@ public class ReadTeacherInformation implements IServico
             infoSiteTeacherInformation.setInfoExecutionPeriod(
                 Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod));
 
-            // TODO: faltam os cargos de gestão
             return new SiteView(infoSiteTeacherInformation);
         } catch (ExcepcaoPersistencia e)
         {
@@ -313,8 +312,6 @@ public class ReadTeacherInformation implements IServico
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
             infoOrientation = new InfoOrientation();
             infoOrientation.setInfoTeacher(infoTeacher);
-            infoOrientation.setNumberOfStudents(new Integer(0));
-            infoOrientation.setDescription(new String());
             infoOrientation.setOrientationType(orientationType);
         }
         return infoOrientation;
@@ -340,8 +337,6 @@ public class ReadTeacherInformation implements IServico
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
             infoPublicationsNumber = new InfoPublicationsNumber();
             infoPublicationsNumber.setInfoTeacher(infoTeacher);
-            infoPublicationsNumber.setNational(new Integer(0));
-            infoPublicationsNumber.setInternational(new Integer(0));
             infoPublicationsNumber.setPublicationType(publicationType);
         }
         return infoPublicationsNumber;

@@ -13,25 +13,25 @@
 <bean:message key="message.qualification.managementCleanExplanation" />
 <bean:message key="message.qualification.managementInsertQualExplanation" />
 <bean:message key="message.qualification.managementSaveExplanation" />
-<table border="1" style="margin-top:10px">	
+<table border="0" style="margin-top:10px" cellspacing="1" cellpadding="5" width="100%">	
 <logic:iterate id="infoQualification" name="infoSiteQualifications" property="infoQualifications">
 <tr>
-	<td>
+	<td class="listClasses">
 		<bean:write name="infoQualification" property="year" />
 	</td>
-	<td>
+	<td class="listClasses">
 		<bean:write name="infoQualification" property="school" />
 	</td>
-	<td>
+	<td class="listClasses">
 		<bean:write name="infoQualification" property="title" />
 	</td>
-	<td>
+	<td class="listClasses">
 		<bean:write name="infoQualification" property="degree" />
 	</td>
-	<td>
+	<td class="listClasses">
 		<bean:write name="infoQualification" property="mark" />
 	</td>
-	<td>
+	<td class="listClasses">
 		<div class="gen-button">
 			<html:link page="/qualificationForm.do?method=prepareEdit&amp;page=0" 
 					   paramId="idInternal" 
@@ -41,7 +41,7 @@
 			</html:link>
 		</div>
 	</td>
-	<td>
+	<td class="listClasses">
 		<div class="gen-button">
 			<html:link page="/qualificationForm.do?method=delete&amp;page=0" 
 					   paramId="idInternal" 

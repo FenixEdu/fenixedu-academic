@@ -134,10 +134,16 @@
 				<bean:message key="label.teacherInformation.manage" />
 			</html:link>
 		</div>
-		<br />	
+		<br />
+			<table width="100%">	
 			<logic:iterate id="infoExternalActivity" name="infoSiteTeacherInformation" property="infoExternalActivities">
-				<bean:write name="infoExternalActivity" property="activity" />
+				<tr>
+					<td class="listClasses" style="text-align:left">
+						<bean:write name="infoExternalActivity" property="activity" />
+					</td>
+				</tr>
 			</logic:iterate>
+			</table>
 		<br />
 		<p class="infoop"><span class="emphasis-box">5</span>
 		<bean:message key="message.teacherInformation.ownPublications" />
@@ -220,11 +226,11 @@
 		<table width="100%" border="1" cellspacing="1">	
 			<logic:iterate id="providerRegimeType" name="providerRegimeTypeList" scope="request">
 				<tr>
-					<td><bean:message name="providerRegimeType" property="name" bundle="ENUMERATION_RESOURCES"/></td>
 					<td><html:radio property="serviceProviderRegimeTypeName"
 					  		  idName="providerRegimeType"
 							  value="name"/>
 					</td>
+					<td><bean:message name="providerRegimeType" property="name" bundle="ENUMERATION_RESOURCES"/></td>
 				</tr>
 			</logic:iterate>			
 		</table>
