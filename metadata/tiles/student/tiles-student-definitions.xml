@@ -2,10 +2,10 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
-	<definition name="definition.student.masterPage" extends="df.layout.two-column-photo">
+	<definition name="definition.student.masterPage" extends="df.layout.two-column">
 	  <put name="title" value=".IST - portalEstudante" />
 	  <put name="serviceName" value="Portal do Estudante" />	
-	  <put name="photos" value="/student/commons/commonEntrPhotosStudent.jsp" />
+	  <put name="navLocal" value="/student/commons/commonNavLocalStudent.jsp" />
 <!--	  <put name="context-body" value=" "/> -->
 	  <put name="navGeral" value="/student/commons/commonNavGeralStudent.jsp" />
 	  <put name="body" value=" " />
@@ -33,7 +33,6 @@
 	</definition>
 	<definition name="definition.myExamRooms" page="/student/myExamRooms.jsp" controllerClass="ServidorApresentacao.tiles.controller.MyExamRooms">
 	</definition>
-	
 	<definition name="definition.cant.enroll" extends="definition.student.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/commons/cantEnroll.jsp"/>
 	</definition>
