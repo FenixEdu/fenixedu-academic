@@ -37,36 +37,29 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author lmac1
  */
 
-public class ManageBranchesDA extends FenixDispatchAction
-{
+public class ManageBranchesDA extends FenixDispatchAction {
 
     /**
      * Prepare information to show related branches
-     **/
-    public ActionForward showBranches(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     */
+    public ActionForward showBranches(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
         IUserView userView = SessionUtils.getUserView(request);
-        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+        Integer degreeCurricularPlanId = new Integer(request
+                .getParameter("degreeCurricularPlanId"));
 
         Object[] args = { degreeCurricularPlanId };
         List infoBranches;
-        try
-        {
-            infoBranches =
-                (List) ServiceUtils.executeService(userView, "ReadBranchesByDegreeCurricularPlan", args);
-        } catch (NonExistingServiceException e)
-        {
+        try {
+            infoBranches = (List) ServiceUtils.executeService(userView,
+                    "ReadBranchesByDegreeCurricularPlan", args);
+        } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(
-                "message.nonExistingDegreeCurricularPlan",
-                mapping.findForward("readDegree"));
-        } catch (FenixServiceException ex)
-        {
+                    "message.nonExistingDegreeCurricularPlan", mapping
+                            .findForward("readDegree"));
+        } catch (FenixServiceException ex) {
             throw new FenixActionException(ex.getMessage());
         }
 
@@ -79,41 +72,37 @@ public class ManageBranchesDA extends FenixDispatchAction
 
     /**
      * Delete selected branches
-     **/
-    public ActionForward delete(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     */
+    public ActionForward delete(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm deleteForm = (DynaActionForm) form;
 
-        List branchesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
+        List branchesIds = Arrays.asList((Integer[]) deleteForm
+                .get("internalIds"));
 
         Object args[] = { branchesIds };
 
         List errorCodes = new ArrayList();
 
-        try
-        {
-            errorCodes = (List) ServiceUtils.executeService(userView, "DeleteBranches", args);
-        } catch (FenixServiceException fenixServiceException)
-        {
+        try {
+            errorCodes = (List) ServiceUtils.executeService(userView,
+                    "DeleteBranches", args);
+        } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 
-        if (!errorCodes.isEmpty())
-        {
+        if (!errorCodes.isEmpty()) {
             ActionErrors actionErrors = new ActionErrors();
             Iterator iter = errorCodes.iterator();
             ActionError error = null;
-            while (iter.hasNext())
-            {
-                error = new ActionError("errors.invalid.delete.not.empty.branch", iter.next());
-                actionErrors.add("errors.invalid.delete.not.empty.branch", error);
+            while (iter.hasNext()) {
+                error = new ActionError(
+                        "errors.invalid.delete.not.empty.branch", iter.next());
+                actionErrors.add("errors.invalid.delete.not.empty.branch",
+                        error);
             }
             saveErrors(request, actionErrors);
         }
@@ -122,40 +111,33 @@ public class ManageBranchesDA extends FenixDispatchAction
 
     /**
      * Prepare to insert a branch
-     **/
-    public ActionForward prepareInsert(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     */
+    public ActionForward prepareInsert(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
         return mapping.findForward("insertBranch");
     }
 
     /**
      * Insert a branch
-     **/
-    public ActionForward insert(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     */
+    public ActionForward insert(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
         IUserView userView = SessionUtils.getUserView(request);
-        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+        Integer degreeCurricularPlanId = new Integer(request
+                .getParameter("degreeCurricularPlanId"));
 
         DynaActionForm insertForm = (DynaActionForm) form;
         String name = (String) insertForm.get("name");
         String code = (String) insertForm.get("code");
 
-        // Constructing errors in case the user doesn´t submit the name or the code
+        // Constructing errors in case the user doesn´t submit the name or the
+        // code
         ActionErrors errors = buildErrors(code, name);
-        if (errors != null)
-        {
+        if (errors != null) {
             saveErrors(request, errors);
             return mapping.findForward("insertBranch");
         }
@@ -171,21 +153,17 @@ public class ManageBranchesDA extends FenixDispatchAction
 
         Object[] args = { infoBranch };
 
-        try
-        {
+        try {
             ServiceUtils.executeService(userView, "InsertBranch", args);
-        } catch (NonExistingServiceException e)
-        {
+        } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(
-                "message.nonExistingDegreeCurricularPlan",
-                mapping.findForward("readDegree"));
-        } catch (ExistingServiceException exception)
-        {
+                    "message.nonExistingDegreeCurricularPlan", mapping
+                            .findForward("readDegree"));
+        } catch (ExistingServiceException exception) {
             throw new ExistingActionException(
-                "message.already.existing.branch",
-                mapping.findForward("insertBranch"));
-        } catch (FenixServiceException ex)
-        {
+                    "message.already.existing.branch", mapping
+                            .findForward("insertBranch"));
+        } catch (FenixServiceException ex) {
             throw new FenixActionException(ex.getMessage());
         }
 
@@ -194,14 +172,10 @@ public class ManageBranchesDA extends FenixDispatchAction
 
     /**
      * Prepare to edit a branch
-     **/
-    public ActionForward prepareEdit(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     */
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
         DynaActionForm editForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
@@ -209,16 +183,13 @@ public class ManageBranchesDA extends FenixDispatchAction
         Object[] args = { branchId };
         InfoBranch infoBranch;
 
-        try
-        {
-            infoBranch = (InfoBranch) ServiceUtils.executeService(userView, "ReadBranch", args);
-        } catch (NonExistingServiceException e)
-        {
-            throw new NonExistingActionException(
-                "message.non.existing.branch",
-                showBranches(mapping, form, request, response));
-        } catch (FenixServiceException ex)
-        {
+        try {
+            infoBranch = (InfoBranch) ServiceUtils.executeService(userView,
+                    "ReadBranch", args);
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("message.non.existing.branch",
+                    showBranches(mapping, form, request, response));
+        } catch (FenixServiceException ex) {
             throw new FenixActionException(ex.getMessage());
         }
 
@@ -229,14 +200,10 @@ public class ManageBranchesDA extends FenixDispatchAction
 
     /**
      * Edit a branch
-     **/
-    public ActionForward edit(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     */
+    public ActionForward edit(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
         IUserView userView = SessionUtils.getUserView(request);
         Integer branchId = new Integer(request.getParameter("branchId"));
@@ -245,10 +212,10 @@ public class ManageBranchesDA extends FenixDispatchAction
         String name = (String) editForm.get("name");
         String code = (String) editForm.get("code");
 
-        // Constructing errors in case the user doesn´t submit the name or the code
+        // Constructing errors in case the user doesn´t submit the name or the
+        // code
         ActionErrors errors = buildErrors(code, name);
-        if (errors != null)
-        {
+        if (errors != null) {
             saveErrors(request, errors);
             return mapping.findForward("editBranch");
         }
@@ -261,21 +228,16 @@ public class ManageBranchesDA extends FenixDispatchAction
 
         Object[] args = { infoBranch };
 
-        try
-        {
+        try {
             ServiceUtils.executeService(userView, "EditBranch", args);
-        } catch (NonExistingServiceException e)
-        {
-            throw new NonExistingActionException(
-                "message.non.existing.branch",
-                showBranches(mapping, form, request, response));
-        } catch (ExistingServiceException exception)
-        {
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("message.non.existing.branch",
+                    showBranches(mapping, form, request, response));
+        } catch (ExistingServiceException exception) {
             throw new ExistingActionException(
-                "message.already.existing.branch",
-                mapping.findForward("editBranch"));
-        } catch (FenixServiceException ex)
-        {
+                    "message.already.existing.branch", mapping
+                            .findForward("editBranch"));
+        } catch (FenixServiceException ex) {
             throw new FenixActionException(ex.getMessage());
         }
 
@@ -284,27 +246,25 @@ public class ManageBranchesDA extends FenixDispatchAction
 
     /**
      * Auxiliar function to construct errors
-     **/
-    private ActionErrors buildErrors(String code, String name)
-    {
+     */
+    private ActionErrors buildErrors(String code, String name) {
         ActionErrors errors = new ActionErrors();
         ActionError error;
         boolean existingError = false;
-        if (code.compareTo("") == 0)
-        {
+        if (code.compareTo("") == 0) {
             error = new ActionError("message.must.define.code");
             errors.add("message.must.define.code", error);
             existingError = true;
         }
-        if (name.compareTo("") == 0)
-        {
+        if (name.compareTo("") == 0) {
             error = new ActionError("message.must.define.name");
             errors.add("message.must.define.name", error);
             existingError = true;
         }
-        if (existingError)
+        if (existingError) {
             return errors;
-        else
-            return null;
+        }
+
+        return null;
     }
 }

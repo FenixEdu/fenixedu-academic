@@ -632,10 +632,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 			&& request.getParameter("language").equals("English"))
 		{
 			return mapping.findForward("editCurriculumEn");
-		} else
-		{
+		} 
 			return mapping.findForward("editCurriculum");
-		}
+		
 	}
 
 	private void fillForm(ActionForm form, InfoCurriculum infoCurriculum)

@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<h2><bean:message key="title.student.LEEC.enrollment"/></h2>
+<h2><bean:message key="title.student.enrollment"/></h2>
 <span class="error"><html:errors/></span>
 <html:form action="/curricularCoursesEnrollment">
 	<html:hidden property="method" value="prepareEnrollmentChooseAreas" />
@@ -25,7 +25,7 @@
 				<b><bean:message key="label.student.enrollment.number"/></b>
 				<bean:write name="studentNumber" />&nbsp;-&nbsp;
 				<bean:write name="studentName" />
-				<br />
+				<br/>
 				<b><bean:message key="label.student.enrollment.executionPeriod"/></b>
 				<bean:write name="executionPeriod" />&nbsp;				
 				<bean:write name="executionYear" />
@@ -42,7 +42,7 @@
 		<tr>
 			<td>
 				<br />
-				<bean:message key="label.student.enrollment.specializationArea" />
+				<bean:message key="label.student.enrollment.specializationArea" /> /<bean:message key="label.student.enrollment.branch" />
 			</td>
 			<td>
 				<br />

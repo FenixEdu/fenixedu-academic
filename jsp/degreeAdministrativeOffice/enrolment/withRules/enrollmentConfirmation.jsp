@@ -35,36 +35,38 @@
 <table>	
 	<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch">
 		<tr>
-			<td class="listclasses-header">
+			<td class="listClasses-header">
 				<bean:message key="label.student.enrollment.specializationArea" />:&nbsp;
+				<br/>(<bean:message key="label.student.enrollment.branch" />)
 			</td>
-			<td class="listclasses">
-				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.name" />
+			<td class="listClasses">
+				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.name" />&nbsp;
 			</td>
-			<td class="listclasses">&nbsp;&nbsp;&nbsp;</td>
-			<td class="listclasses">
+			
+			
+		<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch">
+		<td class="listClasses-header">
 				<bean:message key="label.branch.credits" />:&nbsp;
 			</td>
-			<td class="listclasses">
-			
-					<bean:write name="infoStudentEnrolmentContext" property="creditsInSpecializationArea" />
-			
-				&nbsp;<bean:message key="label.student.enrollment.from"/>&nbsp;
+			<td class="listClasses">
+							<bean:write name="infoStudentEnrolmentContext" property="creditsInSpecializationArea" />
+						&nbsp;<bean:message key="label.student.enrollment.from"/>&nbsp;
 				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.specializationCredits" />
 			</td>
 		</tr>
 		<tr>
-			<td class="listclasses-header">
+			<td class="listClasses-header">
 				<bean:message key="label.student.enrollment.secondaryArea" />:&nbsp;
+				
 			</td>
-			<td class="listclasses">
+			<td class="listClasses">
 				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.name" />
-			</td>
-			<td  class="listclasses">&nbsp;&nbsp;&nbsp;</td>
-			<td class="listclasses">
+			</td> 
+			<td  class="listClasses">&nbsp;&nbsp;&nbsp;</td>
+			<td class="listClasses-header">
 				<bean:message key="label.branch.credits" />:&nbsp;
 			</td>
-			<td class="listclasses">
+			<td class="listClasses">
 			
 					<bean:write name="infoStudentEnrolmentContext" property="creditsInSecundaryArea" />
 			
@@ -72,21 +74,25 @@
 				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.secondaryCredits" />
 			</td>
 		</tr>
+		</logic:present>
+		<logic:notPresent name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch">
+		</tr>
+		</logic:notPresent>
 	</logic:present>
 	<logic:notPresent name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch">
 		<tr>
-			<td class="listclasses-header">
+			<td class="listClasses-header">
 				<bean:message key="label.student.enrollment.specializationArea" />:&nbsp;
 			</td>
-			<td  class="listclasses">
+			<td  class="listClasses">
 				<bean:message key="label.student.enrollment.no.area" />
 			</td>
 		</tr>
 		<tr>
-			<td class="listclasses-header">
+			<td class="listClasses-header">
 				<bean:message key="label.student.enrollment.secondaryArea" />:&nbsp;
 			</td>
-			<td  class="listclasses">
+			<td  class="listClasses">
 				<bean:message key="label.student.enrollment.no.area" />
 			</td>
 		</tr>

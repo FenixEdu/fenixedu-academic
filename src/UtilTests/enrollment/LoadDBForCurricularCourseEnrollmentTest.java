@@ -200,9 +200,9 @@ public class LoadDBForCurricularCourseEnrollmentTest {
     public String getDbName() {
         if (this.dbName == null) {
             return DB_ALIAS + DEFAULT_DB_NAME;
-        } else {
+        } 
             return DB_ALIAS + this.dbName;
-        }
+        
     }
 
     public void setDbName(String dbName) {
@@ -212,9 +212,9 @@ public class LoadDBForCurricularCourseEnrollmentTest {
     public String getPassword() {
         if (this.password == null) {
             return DEFAULT_DB_PASSWORD;
-        } else {
+        } 
             return this.password;
-        }
+        
     }
 
     public void setPassword(String password) {
@@ -224,9 +224,9 @@ public class LoadDBForCurricularCourseEnrollmentTest {
     public String getUsername() {
         if (this.username == null) {
             return DEFAULT_DB_USERNAME;
-        } else {
+        } 
             return this.username;
-        }
+        
     }
 
     public void setUsername(String username) {

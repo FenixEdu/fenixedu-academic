@@ -10,10 +10,8 @@ import DataBeans.InfoObject;
 import DataBeans.InfoTeacherWithPerson;
 import DataBeans.grant.contract.InfoGrantContractRegime;
 import DataBeans.grant.contract.InfoGrantContractRegimeWithTeacherAndContract;
-import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import DataBeans.grant.contract.InfoGrantInsurance;
 import Dominio.IDomainObject;
-import Dominio.ITeacher;
 import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.GrantContractRegime;
 import Dominio.grant.contract.IGrantContract;
@@ -60,31 +58,6 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 
     public void run(InfoGrantContractRegime infoGrantContractRegime) throws FenixServiceException {
         super.run(new Integer(0), infoGrantContractRegime);
-    }
-
-    private IGrantContractRegime copyInfoGrantContractRegime2IGrantContractRegime(
-            InfoGrantContractRegime infoGrantContractRegime) {
-        IGrantContractRegime grantContractRegime = null;
-        if (infoGrantContractRegime != null) {
-            grantContractRegime = new GrantContractRegime();
-            grantContractRegime.setIdInternal(infoGrantContractRegime.getIdInternal());
-            grantContractRegime.setState(infoGrantContractRegime.getState());
-            grantContractRegime.setDateBeginContract(infoGrantContractRegime.getDateBeginContract());
-            grantContractRegime.setDateEndContract(infoGrantContractRegime.getDateEndContract());
-            grantContractRegime.setDateSendDispatchCC(infoGrantContractRegime.getDateSendDispatchCC());
-            grantContractRegime.setDateSendDispatchCD(infoGrantContractRegime.getDateSendDispatchCD());
-            grantContractRegime.setDateDispatchCC(infoGrantContractRegime.getDateDispatchCC());
-            grantContractRegime.setDateDispatchCD(infoGrantContractRegime.getDateDispatchCD());
-            if (infoGrantContractRegime.getInfoTeacher() != null) {
-                ITeacher teacher = null;
-                teacher = InfoTeacherWithPerson.newDomainFromInfo(infoGrantContractRegime.getInfoTeacher());
-                grantContractRegime.setTeacher(teacher);
-            }
-            IGrantContract grantContract = null;
-            grantContract = InfoGrantContractWithGrantOwnerAndGrantType.newDomainFromInfo(infoGrantContractRegime.getInfoGrantContract());
-            grantContractRegime.setGrantContract(grantContract);
-        }
-        return grantContractRegime;
     }
 
     /*

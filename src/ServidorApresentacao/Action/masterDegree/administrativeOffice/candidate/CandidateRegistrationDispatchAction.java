@@ -217,9 +217,9 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 			request.setAttribute("infoCandidateRegistration", infoCandidateRegistration);
 
 			return mapping.findForward("ShowResult");
-		} else {
+		} 
 			return mapping.findForward("PrepareCandidateList");
-		}
+		
 	}
 	
 	public ActionForward preparePrint(ActionMapping mapping, ActionForm form,

@@ -30,7 +30,7 @@ public class PrintDeclarationDispatchAction extends DispatchAction {
 		if (session != null) {
 	
 			return mapping.findForward("PrintReady");
-		  } else
+		  } 
 			throw new Exception();   
 
 	}

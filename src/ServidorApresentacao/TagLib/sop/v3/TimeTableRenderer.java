@@ -189,19 +189,6 @@ public class TimeTableRenderer {
 	}
 
 	/**
-	 * Method getEmptyLessonSlotNumber.
-	 * @param lessonSlotListResolved
-	 * @return int
-	 */
-	private int getEmptyLessonSlotNumber(InfoLessonWrapper[] lessonSlotList) {
-		int emptyLessonSlot = 0;
-		for (int index = 0; index < lessonSlotList.length; index++) {
-			if (lessonSlotList[index] == null)
-				emptyLessonSlot++;
-		}
-		return emptyLessonSlot;
-	}
-	/**
 	 * 
 	 * @param infoLessonWrapper may be null
 	 * @param hourIndex

@@ -2,6 +2,7 @@ package Dominio;
 
 import java.util.List;
 
+import Util.AreaType;
 import Util.BranchType;
 
 
@@ -21,7 +22,9 @@ public interface IBranch extends IDomainObject {
 	public Integer getSecondaryCredits();
 	public Integer getSpecializationCredits();
 	public BranchType getBranchType();
-	
+	public List getCurricularCourseGroups();
+    
+    public void setCurricularCourseGroups(List curricularCourseGroups) ;
 	public void setCode(String code);
 	public void setName(String name);
 	public void setScopes(List scopes);
@@ -30,4 +33,7 @@ public interface IBranch extends IDomainObject {
 	public void setSecondaryCredits(Integer secondaryCredits);
 	public void setSpecializationCredits(Integer specializationCredits);
 	public void setBranchType(BranchType branchType);
+    
+	//Enrollment purposes
+    public List getCurricularCourseGroups(AreaType areaType);
 }

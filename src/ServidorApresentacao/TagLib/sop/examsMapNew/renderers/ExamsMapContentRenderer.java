@@ -5,7 +5,6 @@
 package ServidorApresentacao.TagLib.sop.examsMapNew.renderers;
 
 import java.util.Calendar;
-import java.util.List;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 
@@ -313,37 +312,6 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer
         strBuffer.append("<br />");
 
         return strBuffer;
-    }
-
-    private String getCurricularYearsArgs()
-    {
-        String result = "";
-
-        List curricularYears = examsMap.getCurricularYears();
-        for (int i = 0; i < curricularYears.size(); i++)
-        {
-            if (curricularYears.get(i).equals(new Integer(1)))
-            {
-                result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=1";
-            }
-            if (curricularYears.get(i).equals(new Integer(2)))
-            {
-                result += "&amp;" + SessionConstants.CURRICULAR_YEARS_2 + "=2";
-            }
-            if (curricularYears.get(i).equals(new Integer(3)))
-            {
-                result += "&amp;" + SessionConstants.CURRICULAR_YEARS_3 + "=3";
-            }
-            if (curricularYears.get(i).equals(new Integer(4)))
-            {
-                result += "&amp;" + SessionConstants.CURRICULAR_YEARS_4 + "=4";
-            }
-            if (curricularYears.get(i).equals(new Integer(5)))
-            {
-                result += "&amp;" + SessionConstants.CURRICULAR_YEARS_5 + "=5";
-            }
-        }
-        return result;
     }
 
 }

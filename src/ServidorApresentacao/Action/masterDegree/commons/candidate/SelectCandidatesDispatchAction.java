@@ -81,10 +81,9 @@ public class SelectCandidatesDispatchAction extends DispatchAction
             saveErrors(request, errors);
             return mapping.findForward("NumerusClaususNotDefined");
         }
-        else
-        {
+      
             request.setAttribute("numerusClausus", numerusClausus);
-        }
+        
 
         //Create the Candidate Situation List
         List situationsList = new ArrayList();
@@ -276,15 +275,13 @@ public class SelectCandidatesDispatchAction extends DispatchAction
                 request.setAttribute("candidateList", result);
                 return mapping.findForward("OrderCandidates");
             }
-            else
-            {
+          
                 return mapping.findForward("ChooseSuccess");
-            }
+            
         }
-        else
-        {
+       
             return mapping.findForward("Cancel");
-        }
+        
     }
 
     public ActionForward getSubstituteCandidates(ActionMapping mapping, ActionForm form,
@@ -301,11 +298,10 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         {
             return mapping.findForward("BackError");
         }
-        else
-        {
+    
             generateToken(request);
             saveToken(request);
-        }
+        
 
         String[] candidateList = (String[]) substituteForm.get("situations");
         String[] ids = (String[]) substituteForm.get("candidatesID");
@@ -739,15 +735,5 @@ System.out.println("*****************" + executionDegree);
         }
         return false;
     }
-    
-	private Object getFromRequest(String parameter, HttpServletRequest request)
-		{
-			Object parameterString = request.getParameter(parameter);
-			if (parameterString == null)
-			{
-				parameterString = request.getAttribute(parameter);
-			}
-			return parameterString;
-		}
 
 }

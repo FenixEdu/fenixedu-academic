@@ -756,7 +756,7 @@ public class PrintCertificateDispatchAction extends DispatchAction
 				certificate);
 			return mapping.findForward("PrintReady");
 		}
-		else
+		
 			throw new Exception();
 	}
 }

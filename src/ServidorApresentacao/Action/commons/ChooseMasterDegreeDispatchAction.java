@@ -2,8 +2,6 @@ package ServidorApresentacao.Action.commons;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,10 +14,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.apache.struts.util.LabelValueBean;
 
-import DataBeans.InfoDegree;
-import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -94,48 +89,4 @@ public class ChooseMasterDegreeDispatchAction extends DispatchAction {
 		}
 		return parameterString;
 	}
-	private List buildExecutionDegreeLabelValueBean(List executionDegreeList)
-			{
-				List executionDegreeLabels = new ArrayList();
-				Iterator iterator = executionDegreeList.iterator();
-				while (iterator.hasNext())
-				{
-					InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-					String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
-
-					name =
-						infoExecutionDegree
-							.getInfoDegreeCurricularPlan()
-							.getInfoDegree()
-							.getTipoCurso()
-							.toString()
-							+ " em "
-							+ name;
-
-					name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
-						? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName()
-						: "";
-
-					executionDegreeLabels.add(
-						new LabelValueBean(name, name + "#" + infoExecutionDegree.getIdInternal().toString()));
-				}
-				return executionDegreeLabels;
-		}
-	private boolean duplicateInfoDegree(
-				List executionDegreeList,
-				InfoExecutionDegree infoExecutionDegree)
-			{
-				InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-				Iterator iterator = executionDegreeList.iterator();
-
-				while (iterator.hasNext())
-				{
-					InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-					if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-						&& !(infoExecutionDegree.equals(infoExecutionDegree2)))
-						return true;
-
-				}
-				return false;
-			}
 }

@@ -113,7 +113,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			session.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());  
 
 			return mapping.findForward("PrepareReady");
-		  } else
+		  } 
 			throw new Exception();   
 
 	}
@@ -193,7 +193,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 		  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY, query);
 		  
 		  return mapping.findForward("ChooseCandidate");
-		} else
+		} 
 		  throw new Exception();   
 	  }
 	  
@@ -228,7 +228,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			
 			return mapping.findForward("ActionReady");
 			
-		} else
+		} 
 	  		throw new Exception();  
 	}
 	  
@@ -264,7 +264,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, result);
 			return mapping.findForward("VisualizeCandidate");
 			
-		} else
+		} 
 			throw new Exception();  
 	}
 
@@ -336,7 +336,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 		
 			return mapping.findForward("PrepareReady");
 			
-		} else
+		} 
 			throw new Exception();  
 	}
 	  
@@ -500,7 +500,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidateChanged);
 			return mapping.findForward("ChangeSuccess");
 			
-		} else
+		} 
 			throw new Exception();  
 	}
 	
@@ -545,7 +545,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
 			return mapping.findForward("ChangePasswordSuccess");
 						
-		} else
+		} 
 			throw new Exception();  
 	}
 

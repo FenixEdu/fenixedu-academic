@@ -58,6 +58,8 @@ public interface IDegreeCurricularPlan extends IDomainObject
 		EnrollmentRuleType enrollmentRuleType);
 	public List getCurricularCoursesFromArea(IBranch area, AreaType areaType) throws ExcepcaoPersistencia;
 	public List getCommonAreas();
+    public List getSpecializationAreas();
+    public List getSecundaryAreas();
 	
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes

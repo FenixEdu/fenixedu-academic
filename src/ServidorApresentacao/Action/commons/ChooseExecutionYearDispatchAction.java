@@ -30,214 +30,182 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class ChooseExecutionYearDispatchAction extends DispatchAction
-{
+public class ChooseExecutionYearDispatchAction extends DispatchAction {
 
-	public ActionForward chooseDegreeFromList(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
+    public ActionForward chooseDegreeFromList(ActionMapping mapping,
+            ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-		if (session != null)
-		{
+        if (session != null) {
 
-			session.removeAttribute(SessionConstants.MASTER_DEGREE_LIST);
+            session.removeAttribute(SessionConstants.MASTER_DEGREE_LIST);
 
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = (IUserView) session
+                    .getAttribute(SessionConstants.U_VIEW);
 
-			TipoCurso degreeType = TipoCurso.MESTRADO_OBJ;
+            TipoCurso degreeType = TipoCurso.MESTRADO_OBJ;
 
-			Object args[] = { degreeType };
+            Object args[] = { degreeType };
 
-			List result = null;
-			try
-			{
-				result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadAllMasterDegrees", args);
-			} catch (NonExistingServiceException e)
-			{
-				throw new NonExistingActionException("O Curso de Mestrado", e);
-			}
+            List result = null;
+            try {
+                result = (List) ServiceManagerServiceFactory.executeService(
+                        userView, "ReadAllMasterDegrees", args);
+            } catch (NonExistingServiceException e) {
+                throw new NonExistingActionException("O Curso de Mestrado", e);
+            }
 
-			request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, result);
+            request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, result);
 
-			return mapping.findForward("DisplayMasterDegreeList");
-		} else
-			throw new Exception();
-	}
-	
-	public ActionForward chooseMasterDegree(
-		  ActionMapping mapping,
-		  ActionForm form,
-		  HttpServletRequest request,
-		  HttpServletResponse response)
-		  throws Exception
-	  {
-	
-		  HttpSession session = request.getSession(false);
-	
-		  if (session != null)
-		  {
-	
-			  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-	
-			  //Get the Chosen Master Degree
-			  Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
-			  if (masterDegreeID == null)
-			  {
-				  masterDegreeID = (Integer) request.getAttribute("degreeID");
-			  }
-	
-			  Object args[] = { masterDegreeID };
-			  List result = null;
-	
-			  try
-			  {
-	
-				  result =
-					  (List) ServiceManagerServiceFactory.executeService(userView, "ReadCPlanFromChosenMasterDegree", args);
-	
-			  } catch (NonExistingServiceException e)
-			  {
-				  throw new NonExistingActionException("O plano curricular ", e);
-			  }
-	
-			  request.setAttribute(SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
-	
-			  return mapping.findForward("MasterDegreeReady");
-		  } else
-			  throw new Exception();
-	  }
+            return mapping.findForward("DisplayMasterDegreeList");
+        }
+        throw new Exception();
+    }
 
-	public ActionForward prepareChooseExecutionYear(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
+    public ActionForward chooseMasterDegree(ActionMapping mapping,
+            ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-	//	HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-		// Get Execution Year List
-	/*  MessageResources messages = getResources(request);	
-	  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		ArrayList executionYearList = null;
-		try
-		{
-			executionYearList =
-				(ArrayList) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadNotClosedExecutionYears",
-					null);
-		}
-		catch (ExistingServiceException e)
-		{
-			throw new ExistingActionException(e);
-		}
+        if (session != null) {
 
-		if (request.getParameter("jspTitle") != null)
-		{
-			request.setAttribute("jspTitle", messages.getMessage(request.getParameter("jspTitle")));
-		}
+            IUserView userView = (IUserView) session
+                    .getAttribute(SessionConstants.U_VIEW);
 
-		List executionYearsLabels = transformIntoLabels(executionYearList);
-		
-		request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST, executionYearsLabels);*/
-		HttpSession session = request.getSession(false);
+            //Get the Chosen Master Degree
+            Integer masterDegreeID = new Integer(request
+                    .getParameter("degreeID"));
+            if (masterDegreeID == null) {
+                masterDegreeID = (Integer) request.getAttribute("degreeID");
+            }
 
-		if (session != null) {
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            Object args[] = { masterDegreeID };
+            List result = null;
 
-			//Get the Chosen Master Degree
-			 Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
-			 if (curricularPlanID == null)
-			 {
-				curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
-			 }
-			ArrayList executionYearList = null;
-			Object args[] = { curricularPlanID };			
-			try {
-				executionYearList = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionDegreesByDegreeCurricularPlanID", args);
-			} catch (ExistingServiceException e) {
-				throw new ExistingActionException(e);
-			}
-		   List executionYearsLabels = transformIntoLabels(executionYearList);
-		   request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST, executionYearsLabels);
-		   request.setAttribute(SessionConstants.EXECUTION_DEGREE, curricularPlanID);
+            try {
 
-			return mapping.findForward("PrepareSuccess");
-		} else
-			throw new Exception();
+                result = (List) ServiceManagerServiceFactory.executeService(
+                        userView, "ReadCPlanFromChosenMasterDegree", args);
 
-	}
+            } catch (NonExistingServiceException e) {
+                throw new NonExistingActionException("O plano curricular ", e);
+            }
 
-	private List transformIntoLabels(ArrayList executionYearList)
-	{
-		List executionYearsLabels = new ArrayList();
-		CollectionUtils.collect(executionYearList, new Transformer()
-		{
-			public Object transform(Object input)
-			{
-				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) input;
-				LabelValueBean labelValueBean =
-					new LabelValueBean(infoExecutionDegree.getInfoExecutionYear().getYear(), infoExecutionDegree.getIdInternal().toString());
-				return labelValueBean;
-			}
-		}, executionYearsLabels);
-		Collections.sort(executionYearsLabels, new BeanComparator("label"));
-		Collections.reverse(executionYearsLabels);
-		
-		return executionYearsLabels;
-	}
+            request
+                    .setAttribute(
+                            SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST,
+                            result);
 
-	public ActionForward chooseExecutionYear(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
+            return mapping.findForward("MasterDegreeReady");
+        }
+        throw new Exception();
+    }
 
-/*		HttpSession session = request.getSession(false);
+    public ActionForward prepareChooseExecutionYear(ActionMapping mapping,
+            ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		if (session != null)
-		{
-			session.setAttribute(SessionConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
-			request.setAttribute("executionYear", request.getParameter("executionYear"));
+        //	HttpSession session = request.getSession(false);
 
-			request.setAttribute("jspTitle", request.getParameter("jspTitle"));
+        // Get Execution Year List
+        /*
+         * MessageResources messages = getResources(request); IUserView userView =
+         * (IUserView) session.getAttribute(SessionConstants.U_VIEW); ArrayList
+         * executionYearList = null; try { executionYearList = (ArrayList)
+         * ServiceManagerServiceFactory.executeService( userView,
+         * "ReadNotClosedExecutionYears", null); } catch
+         * (ExistingServiceException e) { throw new ExistingActionException(e); }
+         * 
+         * if (request.getParameter("jspTitle") != null) {
+         * request.setAttribute("jspTitle",
+         * messages.getMessage(request.getParameter("jspTitle"))); }
+         * 
+         * List executionYearsLabels = transformIntoLabels(executionYearList);
+         * 
+         * request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST,
+         * executionYearsLabels);
+         */
+        HttpSession session = request.getSession(false);
 
+        if (session != null) {
+            IUserView userView = (IUserView) session
+                    .getAttribute(SessionConstants.U_VIEW);
 
+            //Get the Chosen Master Degree
+            Integer curricularPlanID = new Integer(request
+                    .getParameter("curricularPlanID"));
+            if (curricularPlanID == null) {
+                curricularPlanID = (Integer) request
+                        .getAttribute("curricularPlanID");
+            }
+            ArrayList executionYearList = null;
+            Object args[] = { curricularPlanID };
+            try {
+                executionYearList = (ArrayList) ServiceManagerServiceFactory
+                        .executeService(userView,
+                                "ReadExecutionDegreesByDegreeCurricularPlanID",
+                                args);
+            } catch (ExistingServiceException e) {
+                throw new ExistingActionException(e);
+            }
+            List executionYearsLabels = transformIntoLabels(executionYearList);
+            request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST,
+                    executionYearsLabels);
+            request.setAttribute(SessionConstants.EXECUTION_DEGREE,
+                    curricularPlanID);
 
-			return mapping.findForward("ChooseSuccess");
-		}
-		else
-			throw new Exception();*/
-			
-		HttpSession session = request.getSession(false);
+            return mapping.findForward("PrepareSuccess");
+        }
+        throw new Exception();
 
-				if (session != null)
-				{
-					session.setAttribute(SessionConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
-					Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
-		
-					if (curricularPlanID == null)
-					{
-					   curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
-			   
-					}
-			
-					request.setAttribute(SessionConstants.EXECUTION_DEGREE, request.getParameter("executionDegreeID"));
-					return mapping.findForward("ChooseSuccess");
-				} else
-					throw new Exception();
-		
-			
-	}
+    }
+
+    private List transformIntoLabels(ArrayList executionYearList) {
+        List executionYearsLabels = new ArrayList();
+        CollectionUtils.collect(executionYearList, new Transformer() {
+            public Object transform(Object input) {
+                InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) input;
+                LabelValueBean labelValueBean = new LabelValueBean(
+                        infoExecutionDegree.getInfoExecutionYear().getYear(),
+                        infoExecutionDegree.getIdInternal().toString());
+                return labelValueBean;
+            }
+        }, executionYearsLabels);
+        Collections.sort(executionYearsLabels, new BeanComparator("label"));
+        Collections.reverse(executionYearsLabels);
+
+        return executionYearsLabels;
+    }
+
+    public ActionForward chooseExecutionYear(ActionMapping mapping,
+            ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+      
+
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            session.setAttribute(SessionConstants.EXECUTION_YEAR, request
+                    .getParameter("executionYear"));
+            Integer curricularPlanID = new Integer(request
+                    .getParameter("curricularPlanID"));
+
+            if (curricularPlanID == null) {
+                curricularPlanID = (Integer) request
+                        .getAttribute("curricularPlanID");
+
+            }
+
+            request.setAttribute(SessionConstants.EXECUTION_DEGREE, request
+                    .getParameter("executionDegreeID"));
+            return mapping.findForward("ChooseSuccess");
+        }
+        throw new Exception();
+
+    }
 
 }

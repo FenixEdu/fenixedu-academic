@@ -122,7 +122,7 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 			request.setAttribute("degreeList", licenciaturas);
 
 			return mapping.findForward("chooseExamsMapContext");
-		} else
+		} 
 			throw new Exception();
 		// nao ocorre... pedido passa pelo filtro Autorizacao
 
@@ -210,33 +210,6 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 
 	}
 
-	/**
-	 * Method setCurricularYearList.
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 */
-	private List setCurricularYearList(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response) {
-
-		List curricularYearList =
-			(List) request.getAttribute("curricularYearList");
-
-		if (curricularYearList == null) {
-			curricularYearList = new ArrayList();
-			curricularYearList.add(new LabelValueBean("1º", "1"));
-			curricularYearList.add(new LabelValueBean("2º", "2"));
-			curricularYearList.add(new LabelValueBean("3º", "3"));
-			curricularYearList.add(new LabelValueBean("4º", "4"));
-			curricularYearList.add(new LabelValueBean("5º", "5"));
-			request.setAttribute("curricularYearList", curricularYearList);
-		}
-		return curricularYearList;
-	}
 	/**
 	 * Method existencesOfInfoDegree.
 	 * @param executionDegreeList

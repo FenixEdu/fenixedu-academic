@@ -189,20 +189,6 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		return false;
 	}
 
-	private Integer separateLabel(
-		DynaValidatorForm aForm,
-		HttpServletRequest request,
-		String property,
-		String name)
-	{
-		// the value returned to action is a string name#idInternal
-		String object = (String) aForm.get(property);
-		Integer objectId = Integer.valueOf(StringUtils.substringAfter(object, "#"));
-		object = object.substring(0, object.indexOf("#"));
-		aForm.set(name, object);
-		return objectId;
-	}
-
 	public ActionForward prepareInsertGratuityData(
 		ActionMapping mapping,
 		ActionForm form,

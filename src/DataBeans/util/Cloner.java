@@ -3203,8 +3203,7 @@ public abstract class Cloner
         {
             return null;
         }
-        else
-        {
+        
 
             InfoFrequenta infoFrequenta = new InfoFrequenta();
 
@@ -3226,7 +3225,7 @@ public abstract class Cloner
             infoFrequenta.setInfoEnrolment(infoEnrolment);
 
             return infoFrequenta;
-        }
+        
     }
 
     /**

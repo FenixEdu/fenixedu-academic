@@ -73,27 +73,6 @@ public class ReadCurricularYearByOID implements IServico {
 			super();
 		}
 
-		/**
-		 * @param errorType
-		 */
-		private UnexistingCurricularYearException(int errorType) {
-			super(errorType);
-		}
-
-		/**
-		 * @param s
-		 */
-		private UnexistingCurricularYearException(String s) {
-			super(s);
-		}
-
-		/**
-		 * @param cause
-		 */
-		private UnexistingCurricularYearException(Throwable cause) {
-			super(cause);
-		}
-
 	}
 
 }

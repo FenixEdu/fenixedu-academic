@@ -46,10 +46,6 @@ public class EditGrantContractTest extends ServiceNeedsAuthenticationTestCase {
         return "etc/datasets_templates/servicos/grant/contract/testEditGrantContractDataSet.xml";
     }
 
-    private String getExpectedEditDataSetFilePath() {
-        return "etc/datasets_templates/servicos/grant/contract/testEditGrantContractExpectedDataSet.xml";
-    }
-
     private String getExpectedCreateDataSetFilePath() {
         return "etc/datasets_templates/servicos/grant/contract/testCreateGrantContractExpectedDataSet.xml";
     }

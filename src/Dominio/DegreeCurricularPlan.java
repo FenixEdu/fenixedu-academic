@@ -316,6 +316,41 @@ public class DegreeCurricularPlan extends DomainObject implements
         });
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IDegreeCurricularPlan#getSpecializationAreas()
+     */
+    public List getSpecializationAreas() {
+
+        return (List) CollectionUtils.select(getAreas(), new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                IBranch branch = (IBranch) arg0;
+                return branch.getBranchType().equals(
+                        BranchType.SPECIALIZATION_BRANCH);
+            }
+
+        });
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IDegreeCurricularPlan#getSecundaryAreas()
+     */
+    public List getSecundaryAreas() {
+        return (List) CollectionUtils.select(getAreas(), new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                IBranch branch = (IBranch) arg0;
+                return branch.getBranchType().equals(
+                        BranchType.SECUNDARY_BRANCH);
+            }
+
+        });
+    }
+
     // -------------------------------------------------------------
     // END: Only for enrollment purposes
     // -------------------------------------------------------------

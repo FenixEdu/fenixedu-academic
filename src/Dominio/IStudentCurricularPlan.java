@@ -2,6 +2,8 @@ package Dominio;
 import java.util.Date;
 import java.util.List;
 
+import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
@@ -64,8 +66,13 @@ public interface IStudentCurricularPlan extends IDomainObject
     public Integer getCurricularCourseAcumulatedEnrollments(ICurricularCourse curricularCourse);
 	public List getNotNeedToEnrollCurricularCourses();
 	public void setNotNeedToEnrollCurricularCourses(List notNeedToEnrollCurricularCourses);
+	public boolean areNewAreasCompatible(IBranch specializationArea,IBranch secundaryArea) throws ExcepcaoPersistencia, BothAreasAreTheSameServiceException, InvalidArgumentsServiceException;
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes
 	// -------------------------------------------------------------
+    /**
+     * @return
+     */
+    public boolean getCanChangeSpecializationArea();
 
 }

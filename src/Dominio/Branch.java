@@ -2,6 +2,11 @@ package Dominio;
 
 import java.util.List;
 
+import org.apache.commons.collections.Predicate;
+
+import commons.CollectionUtils;
+
+import Util.AreaType;
 import Util.BranchType;
 
 /**
@@ -26,7 +31,9 @@ public class Branch extends DomainObject implements IBranch
 	private Integer specializationCredits;
 	private Integer secondaryCredits;
 	private BranchType branchType;
+	private List curricularCourseGroups;
 
+    
 	public Branch()
 	{
 	}
@@ -37,7 +44,6 @@ public class Branch extends DomainObject implements IBranch
 			IBranch branch = (IBranch) obj;
 			result =
 				this.getCode().equals(branch.getCode()) &&
-//				this.getBranchType().equals(branch.getBranchType()) &&
 				this.getDegreeCurricularPlan().equals(branch.getDegreeCurricularPlan());
 		}
 		return result;
@@ -56,10 +62,7 @@ public class Branch extends DomainObject implements IBranch
 	 * @author Fernanda Quitério
 	 */
 	public Boolean representsCommonBranch() {
-//		if (this.name != null && this.name.equals("") && this.code != null && this.code.equals("")) {
-//			return Boolean.TRUE;
-//		}
-//		return Boolean.FALSE;
+
 		if (this.getBranchType().equals(BranchType.COMMON_BRANCH))
 		{
 			return Boolean.TRUE;
@@ -196,4 +199,28 @@ public class Branch extends DomainObject implements IBranch
 	{
 		this.branchType = branchType;
 	}
+	/**
+     * @return Returns the curricularCourseGroups.
+     */
+    public List getCurricularCourseGroups() {
+        return curricularCourseGroups;
+    }
+    /**
+     * @param curricularCourseGroups The curricularCourseGroups to set.
+     */
+    public void setCurricularCourseGroups(List curricularCourseGroups) {
+        this.curricularCourseGroups = curricularCourseGroups;
+    }
+    /* (non-Javadoc)
+     * @see Dominio.IBranch#getCurricularCourseGroups(Util.AreaType)
+     */
+    public List getCurricularCourseGroups(final AreaType areaType) {
+        
+        return (List) CollectionUtils.select(getCurricularCourseGroups(),new Predicate(){
+
+            public boolean evaluate(Object arg0) {
+               ICurricularCourseGroup curricularCourseGroup=(ICurricularCourseGroup) arg0;
+                return curricularCourseGroup.getAreaType().equals(areaType);
+            }});
+    }
 }

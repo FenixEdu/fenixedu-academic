@@ -1,0 +1,75 @@
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.Branch -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.Branch" table="BRANCH">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="code"
+		column="BRANCH_CODE"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="name"
+		column="BRANCH_NAME"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="keyDegreeCurricularPlan"
+		column="KEY_DEGREE_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="acronym"
+		column="BRANCH_ACRONYM"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="specializationCredits"
+		column="SPECIALIZATION_CREDITS"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="secondaryCredits"
+		column="SECONDARY_CREDITS"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<field-descriptor
+		name="branchType"
+		column="BRANCH_TYPE"
+		jdbc-type="VARCHAR"
+		conversion="ServidorPersistente.Conversores.JavaBranchType2SqlBranchTypeFieldConversion"
+	/>
+   <reference-descriptor
+		name="degreeCurricularPlan"
+		class-ref="Dominio.DegreeCurricularPlan"
+		proxy="true">
+	<foreignkey field-ref="keyDegreeCurricularPlan"/>
+   </reference-descriptor>
+
+	<collection-descriptor
+			name="scopes"
+			element-class-ref="Dominio.CurricularCourseScope"
+			proxy="true">
+		<inverse-foreignkey field-ref="branchKey"/>
+	</collection-descriptor>    
+	<collection-descriptor
+			name="curricularCourseGroups"
+			element-class-ref="Dominio.CurricularCourseGroup"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyBranch"/>
+	</collection-descriptor>    
+
+
+</class-descriptor>

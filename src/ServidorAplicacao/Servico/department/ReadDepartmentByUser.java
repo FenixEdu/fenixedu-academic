@@ -36,11 +36,12 @@ public class ReadDepartmentByUser implements IService
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
             IPessoa person = personDAO.lerPessoaPorUsername(username);
             List departmentList = person.getManageableDepartmentCredits();
+            
             infoDepartment = Cloner.copyIDepartment2InfoDepartment((IDepartment) departmentList.get(0));
         }
         catch (ExcepcaoPersistencia e)
         {
-            e.printStackTrace(System.out);
+            
             throw new FenixServiceException("Problems on database!", e);
         }
         return infoDepartment;

@@ -116,21 +116,7 @@ public class SectionsManagementAction extends FenixDispatchAction {
 		return mapping.findForward("sectionsConfiguration");
 	}
 	
-    /**
-     * @param sectionNames
-     * @return
-     */
-    private String[] buildArrayForForm(List fields)
-    {
-        String[] array = new String[fields.size()];
-		for (int i = 0; i < array.length; i++)
-		{
-			array[i] = (String) fields.get(i);
-		}
-        return array;
-    }
-    
-	public ActionForward configureSections(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    public ActionForward configureSections(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	throws FenixActionException {
 
 		IUserView userView = SessionUtils.getUserView(request);

@@ -26,179 +26,181 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
- * 
+ *  
  */
 public class ListContributorsDispatchAction extends DispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
+        HttpSession session = request.getSession(false);
 
-		
-		HttpSession session = request.getSession(false);
+        if (session != null) {
+            DynaActionForm createContributorForm = (DynaActionForm) form;
 
-		if (session != null) {
-			DynaActionForm createContributorForm = (DynaActionForm) form;
+            // Clean the form
+            createContributorForm.set("contributorNumber", null);
 
-			// Clean the form
-			createContributorForm.set("contributorNumber", null);
+            String action = request.getParameter("action");
 
-			
-			String action = request.getParameter("action");
-			
-			if (action.equals("visualize")) {
-				session.removeAttribute(SessionConstants.CONTRIBUTOR_ACTION);
-				session.setAttribute(SessionConstants.CONTRIBUTOR_ACTION, "label.action.contributor.visualize");
-			}
-			else if (action.equals("edit")) {
-				session.removeAttribute(SessionConstants.CONTRIBUTOR_ACTION);
-				session.setAttribute(SessionConstants.CONTRIBUTOR_ACTION, "label.action.contributor.edit");
-			}
-			
-			return mapping.findForward("PrepareReady");
-		  } else
-			throw new Exception();   
+            if (action.equals("visualize")) {
+                session.removeAttribute(SessionConstants.CONTRIBUTOR_ACTION);
+                session.setAttribute(SessionConstants.CONTRIBUTOR_ACTION,
+                        "label.action.contributor.visualize");
+            } else if (action.equals("edit")) {
+                session.removeAttribute(SessionConstants.CONTRIBUTOR_ACTION);
+                session.setAttribute(SessionConstants.CONTRIBUTOR_ACTION,
+                        "label.action.contributor.edit");
+            }
 
-	}
-		
+            return mapping.findForward("PrepareReady");
+        }
+        throw new Exception();
 
-	public ActionForward getContributors(ActionMapping mapping, ActionForm form,
-										HttpServletRequest request,
-										HttpServletResponse response)
-		throws Exception {
+    }
 
+    public ActionForward getContributors(ActionMapping mapping,
+            ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		
-		HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-		if (session != null) {
-			
-			DynaActionForm createCandidateForm = (DynaActionForm) form;
+        if (session != null) {
 
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			
-			// Get the Information
+            DynaActionForm createCandidateForm = (DynaActionForm) form;
 
-			String contributorNumberString = (String) createCandidateForm.get("contributorNumber");
-			Integer contributorNumber = null;		
-			if ((contributorNumberString != null) && (contributorNumberString.length() != 0))
-				contributorNumber = new Integer(contributorNumberString);
+            IUserView userView = (IUserView) session
+                    .getAttribute(SessionConstants.U_VIEW);
 
+            // Get the Information
 
-	  		List contributors = null;
-	  		
-	  		Object args[] = { contributorNumber };
-	  		try {
-				contributors = (List) ServiceManagerServiceFactory.executeService(userView, "ReadContributorList", args);
-			} catch (Exception e) {
-				throw new Exception(e);
-			}
+            String contributorNumberString = (String) createCandidateForm
+                    .get("contributorNumber");
+            Integer contributorNumber = null;
+            if ((contributorNumberString != null)
+                    && (contributorNumberString.length() != 0))
+                contributorNumber = new Integer(contributorNumberString);
 
-			if (contributors.size() == 1) {
-				InfoContributor infoContributor = (InfoContributor) contributors.get(0);
-				session.removeAttribute(SessionConstants.CONTRIBUTOR);
-				session.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
-				return mapping.findForward("ActionReady");
-			}
-			
-		  session.removeAttribute(SessionConstants.CONTRIBUTOR_LIST);
-		  session.setAttribute(SessionConstants.CONTRIBUTOR_LIST, contributors);
-		  return mapping.findForward("ChooseContributor");
-		} else
-		  throw new Exception();   
-	  }
-	  
-	public ActionForward chooseContributor(ActionMapping mapping, ActionForm form,
-										 HttpServletRequest request,
-										 HttpServletResponse response)
-		throws Exception {
+            List contributors = null;
 
-		
-		HttpSession session = request.getSession(false);
+            Object args[] = { contributorNumber };
+            try {
+                contributors = (List) ServiceManagerServiceFactory
+                        .executeService(userView, "ReadContributorList", args);
+            } catch (Exception e) {
+                throw new Exception(e);
+            }
 
-		if (session != null) {
-			List contributorList = (List) session.getAttribute(SessionConstants.CONTRIBUTOR_LIST);
-			
+            if (contributors.size() == 1) {
+                InfoContributor infoContributor = (InfoContributor) contributors
+                        .get(0);
+                session.removeAttribute(SessionConstants.CONTRIBUTOR);
+                session.setAttribute(SessionConstants.CONTRIBUTOR,
+                        infoContributor);
+                return mapping.findForward("ActionReady");
+            }
 
-			Integer choosenContributorPosition = Integer.valueOf(request.getParameter("contributorPosition"));
-			
-			
-			// Put the selected Contributor in Session
-			InfoContributor infoContributor = (InfoContributor) contributorList.get(choosenContributorPosition.intValue());
-		
-			session.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
-			return mapping.findForward("ActionReady");
-			
-		} else
-	  		throw new Exception();  
-	}
-	  
-	  
-	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form,
-										 HttpServletRequest request,
-										 HttpServletResponse response)
-		throws Exception {
+            session.removeAttribute(SessionConstants.CONTRIBUTOR_LIST);
+            session.setAttribute(SessionConstants.CONTRIBUTOR_LIST,
+                    contributors);
+            return mapping.findForward("ChooseContributor");
+        }
+        throw new Exception();
+    }
 
-		
-		HttpSession session = request.getSession(false);
+    public ActionForward chooseContributor(ActionMapping mapping,
+            ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		if (session != null) {
-			DynaActionForm editContributorForm = (DynaActionForm) form;
+        HttpSession session = request.getSession(false);
 
-			InfoContributor infoContributor = (InfoContributor) session.getAttribute(SessionConstants.CONTRIBUTOR); 
+        if (session != null) {
+            List contributorList = (List) session
+                    .getAttribute(SessionConstants.CONTRIBUTOR_LIST);
 
+            Integer choosenContributorPosition = Integer.valueOf(request
+                    .getParameter("contributorPosition"));
 
-			// Fill in The Form
-			
-			editContributorForm.set("contributorNumber", String.valueOf(infoContributor.getContributorNumber()));
-			editContributorForm.set("contributorName", infoContributor.getContributorName());
-			editContributorForm.set("contributorAddress", infoContributor.getContributorAddress());
-			
-			return mapping.findForward("EditReady");
-			
-		} else
-			throw new Exception();  
-	}
-	
-	
-	public ActionForward edit(ActionMapping mapping, ActionForm form,
-										 HttpServletRequest request,
-										 HttpServletResponse response)
-		throws Exception {
+            // Put the selected Contributor in Session
+            InfoContributor infoContributor = (InfoContributor) contributorList
+                    .get(choosenContributorPosition.intValue());
 
-		
-		HttpSession session = request.getSession(false);
+            session.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
+            return mapping.findForward("ActionReady");
 
-		if (session != null) {
-			DynaActionForm editContributorForm = (DynaActionForm) form;
+        }
+        throw new Exception();
+    }
 
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			InfoContributor infoContributor = (InfoContributor) session.getAttribute(SessionConstants.CONTRIBUTOR);
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-			// Get the Information
-			String contributorNumberString = (String) editContributorForm.get("contributorNumber");
-			Integer contributorNumber = new Integer(contributorNumberString);
-			String contributorName = (String) editContributorForm.get("contributorName");
-			String contributorAddress = (String) editContributorForm.get("contributorAddress");
-			
-			Object args[] = { infoContributor, contributorNumber , contributorName, contributorAddress};
-			InfoContributor newInfoContributor = null;
-			try {
-				newInfoContributor = (InfoContributor) ServiceManagerServiceFactory.executeService(userView, "EditContributor", args);
-			} catch (ExistingServiceException e) {
-				throw new ExistingActionException("O Contribuinte", e);
-			}
-			
-			session.setAttribute(SessionConstants.CONTRIBUTOR, newInfoContributor);
-			return mapping.findForward("EditSuccess");
-			
-		} else
-			throw new Exception();  
-	}
-	  
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            DynaActionForm editContributorForm = (DynaActionForm) form;
+
+            InfoContributor infoContributor = (InfoContributor) session
+                    .getAttribute(SessionConstants.CONTRIBUTOR);
+
+            // Fill in The Form
+
+            editContributorForm.set("contributorNumber", String
+                    .valueOf(infoContributor.getContributorNumber()));
+            editContributorForm.set("contributorName", infoContributor
+                    .getContributorName());
+            editContributorForm.set("contributorAddress", infoContributor
+                    .getContributorAddress());
+
+            return mapping.findForward("EditReady");
+
+        }
+        throw new Exception();
+    }
+
+    public ActionForward edit(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            DynaActionForm editContributorForm = (DynaActionForm) form;
+
+            IUserView userView = (IUserView) session
+                    .getAttribute(SessionConstants.U_VIEW);
+            InfoContributor infoContributor = (InfoContributor) session
+                    .getAttribute(SessionConstants.CONTRIBUTOR);
+
+            // Get the Information
+            String contributorNumberString = (String) editContributorForm
+                    .get("contributorNumber");
+            Integer contributorNumber = new Integer(contributorNumberString);
+            String contributorName = (String) editContributorForm
+                    .get("contributorName");
+            String contributorAddress = (String) editContributorForm
+                    .get("contributorAddress");
+
+            Object args[] = { infoContributor, contributorNumber,
+                    contributorName, contributorAddress };
+            InfoContributor newInfoContributor = null;
+            try {
+                newInfoContributor = (InfoContributor) ServiceManagerServiceFactory
+                        .executeService(userView, "EditContributor", args);
+            } catch (ExistingServiceException e) {
+                throw new ExistingActionException("O Contribuinte", e);
+            }
+
+            session.setAttribute(SessionConstants.CONTRIBUTOR,
+                    newInfoContributor);
+            return mapping.findForward("EditSuccess");
+
+        }
+        throw new Exception();
+    }
+
 }

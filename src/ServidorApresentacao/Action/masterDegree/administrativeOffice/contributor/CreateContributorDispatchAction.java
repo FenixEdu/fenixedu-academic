@@ -50,7 +50,7 @@ public class CreateContributorDispatchAction extends DispatchAction {
 			createContributorForm.set("contributorAddress", null);
 			
 			return mapping.findForward("PrepareReady");
-		  } else
+		  } 
 			throw new Exception();   
 
 	}
@@ -97,7 +97,7 @@ public class CreateContributorDispatchAction extends DispatchAction {
 			}
 
 		  return mapping.findForward("CreateSuccess");
-		} else
+		} 
 		  throw new Exception();   
 	  }
 	  

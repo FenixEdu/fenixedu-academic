@@ -9,8 +9,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import Dominio.degree.enrollment.INotNeedToEnrollInCurricularCourse;
 import Dominio.degree.enrollment.CurricularCourse2Enroll;
+import Dominio.degree.enrollment.INotNeedToEnrollInCurricularCourse;
+import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
@@ -725,6 +727,30 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         }
 
         return executionPeriod2Return;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IStudentCurricularPlan#areNewAreasCompatible(Dominio.IBranch,
+     *      Dominio.IBranch)
+     */
+    public boolean areNewAreasCompatible(IBranch specializationArea,
+            IBranch secundaryArea) throws ExcepcaoPersistencia,
+            BothAreasAreTheSameServiceException, InvalidArgumentsServiceException {
+        return true;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IStudentCurricularPlan#getCanChangeSpecializationArea()
+     */
+    public boolean getCanChangeSpecializationArea() {
+        if (getBranch() != null) {
+            return false;
+        }
+        return true;
     }
 
     // -------------------------------------------------------------

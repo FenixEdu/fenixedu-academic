@@ -186,10 +186,9 @@ public class ChangeStudentAreasDispatchAction extends DispatchAction
 			request.setAttribute("degreeType", degreeType);
 			return mapping.findForward("chooseStudent");
 		}
-		else
-		{
+		
 			return mapping.findForward(methodName);
-		}
+		
 	}
 
 
