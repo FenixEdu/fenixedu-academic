@@ -62,7 +62,7 @@ public class EnrollStudentInExam implements IServico {
 		//	exam.getStudentsEnrolled().add(student);
 			student.getExamsEnrolled().add(exam);
 
-
+			persistentStudent.lockWrite(student);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

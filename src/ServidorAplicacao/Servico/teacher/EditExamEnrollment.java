@@ -75,6 +75,7 @@ public class EditExamEnrollment implements IServico {
 				if (exam.getEnrollmentEndDay().getTimeInMillis()>exam.getDay().getTimeInMillis()){
 					throw new InvalidTimeIntervalServiceException();
 				}
+				persistentExam.lockWrite(exam);
 			} catch (ExcepcaoPersistencia e) {
 				throw new FenixServiceException(e);
 			}
