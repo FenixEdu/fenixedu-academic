@@ -89,18 +89,32 @@
          
      <!-- Action for inserting a degree -->
       
-      	
+    <!-- 	<action name="sectionForm"
+		path="/createSection"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
+        validate="true"
+        className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+			<set-property property="componentClassName" value="DataBeans.InfoSiteRootSections"/>
+			<set-property property="inputForwardName" value="createSection"/>
+        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               /> 
+		<forward name="sectionsFirstPage" path="/sectionsFirstPage.jsp"/>               
+       <forward name="createSection" path="/createSection.jsp"/>
+	</action>-->
       
 	<action path="/insertDegree"
-		 name="itemForm"
+		name="insertDegreeForm"
 		input="readDegreesInput.do"
-		
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.manager.InsertDegreeDispatchAction"
-        validate="true" >
-       <forward name="insertDegree" path="/insertDegree_bd.jsp"/>
-       <forward name="readDegrees" path="/readDegrees_bd.jsp"/>
+        validate="true"  >
+       <forward name="insertDegree" path="df.page.insert-degree"/>
+       <forward name="readDegrees" path="df.page.read-degrees"/>
 	</action>		
       			
       				

@@ -11,4 +11,7 @@
 	<definition name="df.page.main-page" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/welcomScreen.jsp" />
 	</definition>
+	<definition name="df.page.insert-degree" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/insertDegree_bd.jsp" />
+	</definition>
 </tiles-definitions>
