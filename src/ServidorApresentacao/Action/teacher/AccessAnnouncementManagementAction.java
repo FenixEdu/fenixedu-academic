@@ -1,5 +1,6 @@
 package ServidorApresentacao.Action.teacher;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +41,7 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 		//remove old announcement list
 		session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
 		//put new announcement list
+		Collections.sort(announcements);
 		session.setAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST, announcements);
 
 		session.removeAttribute("insertAnnouncementForm");
