@@ -4,6 +4,7 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterBranchRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterNACandNDRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterSemesterRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentValidateNACandNDRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
 import ServidorPersistente.ExcepcaoPersistencia;
 
@@ -53,8 +54,11 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 	 * @see ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy#validateEnrolment()
 	 */
 	public EnrolmentContext validateEnrolment() throws ExcepcaoPersistencia {
-		// TODO Auto-generated method stub
-		return null;
+		IEnrolmentRule validateRule = null;
+
+		validateRule = new EnrolmentValidateNACandNDRule();
+		this.enrolmentContext = validateRule.apply(this.enrolmentContext);
+		return this.enrolmentContext;
 	}
 
 }

@@ -19,18 +19,18 @@ public final class EnrolmentContext {
 	private List curricularCoursesDoneByStudent;
 	private Map acumulatedEnrolments;
 	private Integer semester;
-	
+	private List validateMessage;
+
 	private IStudentCurricularPlan studentActiveCurricularPlan;
-	
+
 	private List actualEnrolment;
-//	private List curricularCoursesFromStudentCurricularPlan;
-	
+	//	private List curricularCoursesFromStudentCurricularPlan;
+
 	/**
 	 * defines the list that student can be enrolled
 	 */
 	private List finalCurricularCoursesScopesSpanToBeEnrolled;
-	
-	
+
 	/**
 	 *  
 	 */
@@ -80,7 +80,7 @@ public final class EnrolmentContext {
 	public void setStudent(IStudent student) {
 		this.student = student;
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -98,22 +98,8 @@ public final class EnrolmentContext {
 	/**
 	 * @return
 	 */
-	public List getActualEnrollment() {
-		return actualEnrolment;
-	}
-
-	/**
-	 * @return
-	 */
 	public Map getAcumulatedEnrolments() {
 		return acumulatedEnrolments;
-	}
-
-	/**
-	 * @param list
-	 */
-	public void setActualEnrollment(List list) {
-		actualEnrolment = list;
 	}
 
 	/**
@@ -151,19 +137,44 @@ public final class EnrolmentContext {
 		studentActiveCurricularPlan = plan;
 	}
 
-//	/**
-//	 * @return List
-//	 */
-//	public List getCurricularCoursesFromStudentCurricularPlan() {
-//		return curricularCoursesFromStudentCurricularPlan;
-//	}
-//
-//	/**
-//	 * Sets the curricularCoursesFromStudentCurricularPlan.
-//	 * @param curricularCoursesFromStudentCurricularPlan The curricularCoursesFromStudentCurricularPlan to set
-//	 */
-//	public void setCurricularCoursesFromStudentCurricularPlan(List curricularCoursesFromStudentCurricularPlan) {
-//		this.curricularCoursesFromStudentCurricularPlan = curricularCoursesFromStudentCurricularPlan;
-//	}
-//
+	//	/**
+	//	 * @return List
+	//	 */
+	//	public List getCurricularCoursesFromStudentCurricularPlan() {
+	//		return curricularCoursesFromStudentCurricularPlan;
+	//	}
+	//
+	//	/**
+	//	 * Sets the curricularCoursesFromStudentCurricularPlan.
+	//	 * @param curricularCoursesFromStudentCurricularPlan The curricularCoursesFromStudentCurricularPlan to set
+	//	 */
+	//	public void setCurricularCoursesFromStudentCurricularPlan(List curricularCoursesFromStudentCurricularPlan) {
+	//		this.curricularCoursesFromStudentCurricularPlan = curricularCoursesFromStudentCurricularPlan;
+	//	}
+	//
+	/**
+	 * @return List
+	 */
+	public List getValidateMessage() {
+		return validateMessage;
+	}
+
+	/**
+	 * Sets the validateMessage.
+	 * @param validateMessage The validateMessage to set
+	 */
+	public void setValidateMessage(List validateMessage) {
+		this.validateMessage = validateMessage;
+	}
+
+	public String toString() {
+		String result = "[" + this.getClass().getName() + ": ";
+		result += "acumulatedEnrolments = " + this.acumulatedEnrolments + "]";
+		result += "\n StudentActiveCurricularPlan = " + this.studentActiveCurricularPlan + "]";
+		result += "\n actualEnrolment = " + this.actualEnrolment + "]";
+		result += "\n finalCurricularCoursesScopesSpanToBeEnrolled = " + this.finalCurricularCoursesScopesSpanToBeEnrolled + "]";
+		result += "\n validade message = " + this.validateMessage + "]";
+		result += "\n student = " + this.student + "]";
+		return result;
+	}	
 }

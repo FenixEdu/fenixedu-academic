@@ -14,6 +14,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
@@ -119,10 +120,70 @@ public abstract class EnrolmentContextManager {
 		return computeScopesOfCurricularCourses(coursesNotDone);
 	}
 
+	/**
+	 * @param studentCurricularPlanCurricularCourses
+	 * @return List
+	 */
+	private static List computeScopesOfCurricularCourses(List curricularCourses) {
+
+		List scopes = new ArrayList();
+
+		Iterator iteratorCourses = curricularCourses.iterator();
+		while (iteratorCourses.hasNext()) {
+			ICurricularCourse curricularCourse = (ICurricularCourse) iteratorCourses.next();
+			List scopesTemp = curricularCourse.getScopes();
+			Iterator iteratorScopes = scopesTemp.iterator();
+			while (iteratorScopes.hasNext()) {
+				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopes.next();
+				scopes.add(curricularCourseScope);
+			}
+		}
+
+		return scopes;
+	}
+
+	public static EnrolmentContext getEnrolmentContext(InfoEnrolmentContext infoEnrolmentContext) {
+
+		EnrolmentContext enrolmentContext = new EnrolmentContext();
+
+		IStudent student = Cloner.copyInfoStudent2IStudent(infoEnrolmentContext.getInfoStudent());
+		
+		IStudentCurricularPlan studentActiveCurricularPlan =
+			Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoEnrolmentContext.getInfoStudentActiveCurricularPlan());
+
+		List curricularCourseScopeList = new ArrayList();
+		List infoCurricularCourseScopeList = null;
+
+		infoCurricularCourseScopeList = infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
+		if (infoCurricularCourseScopeList != null && !infoCurricularCourseScopeList.isEmpty()) {
+			Iterator iterator = infoCurricularCourseScopeList.iterator();
+			while (iterator.hasNext()) {
+				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterator.next();
+				ICurricularCourseScope curricularCourseScope =
+					Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(infoCurricularCourseScope);
+				curricularCourseScopeList.add(curricularCourseScope);
+			}
+		}
+
+		try {
+			BeanUtils.copyProperties(enrolmentContext, infoEnrolmentContext);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
+		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(curricularCourseScopeList);
+		enrolmentContext.setStudent(student);
+
+		return enrolmentContext;
+	}
+	
 	public static InfoEnrolmentContext getInfoEnrolmentContext(EnrolmentContext enrolmentContext) {
 
 		InfoEnrolmentContext infoEnrolmentContext = new InfoEnrolmentContext();
 
+		InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(enrolmentContext.getStudent());
+		
 		InfoStudentCurricularPlan infoStudentActiveCurricularPlan =
 			Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(enrolmentContext.getStudentActiveCurricularPlan());
 
@@ -148,30 +209,8 @@ public abstract class EnrolmentContextManager {
 
 		infoEnrolmentContext.setInfoStudentActiveCurricularPlan(infoStudentActiveCurricularPlan);
 		infoEnrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(infoCurricularCourseScopeList);
+		infoEnrolmentContext.setInfoStudent(infoStudent);
 
 		return infoEnrolmentContext;
 	}
-
-	/**
-	 * @param studentCurricularPlanCurricularCourses
-	 * @return List
-	 */
-	private static List computeScopesOfCurricularCourses(List curricularCourses) {
-
-		List scopes = new ArrayList();
-
-		Iterator iteratorCourses = curricularCourses.iterator();
-		while (iteratorCourses.hasNext()) {
-			ICurricularCourse curricularCourse = (ICurricularCourse) iteratorCourses.next();
-			List scopesTemp = curricularCourse.getScopes();
-			Iterator iteratorScopes = scopesTemp.iterator();
-			while (iteratorScopes.hasNext()) {
-				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopes.next();
-				scopes.add(curricularCourseScope);
-			}
-		}
-
-		return scopes;
-	}
-
 }

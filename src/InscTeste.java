@@ -1,11 +1,7 @@
-import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.enrolment.degree.ShowAvailableCurricularCourses;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author dcs-rjao
@@ -16,23 +12,29 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public class InscTeste {
 
 	public static void main(String[] args) {
-		ShowAvailableCurricularCourses servico = ShowAvailableCurricularCourses.getService();
+
+		GestorServicos gestor = null;
+		IUserView userView = new UserView("user", null);
+
+		gestor = GestorServicos.manager();
+		String argsAutenticacao[] = {"user", "pass"};
+		Object result = null;
 
 		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
 
-			try {
-				IUserView userview = new UserView("user", null);
-				InfoEnrolmentContext infoEnrolmentContext = servico.run(userview, new Integer(1));
-				sp.confirmarTransaccao();
-				System.out.println(infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
-			} catch (FenixServiceException e) {
-				e.printStackTrace();
-			}
+			Object serviceArgs1[] = {userView, new Integer(1)};
+			result = gestor.executar(userView, "ShowAvailableCurricularCourses", serviceArgs1);
+			InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) result;
+			System.out.println(infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
 
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
+			Object serviceArgs2[] = {infoEnrolmentContext};
+			result = gestor.executar(userView, "ValidateActualEnrolment", serviceArgs2);
+			infoEnrolmentContext = (InfoEnrolmentContext) result;
+			System.out.println(infoEnrolmentContext.getValidateMessage());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 }

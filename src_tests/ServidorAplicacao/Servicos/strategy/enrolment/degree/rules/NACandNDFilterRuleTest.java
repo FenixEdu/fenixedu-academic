@@ -21,7 +21,7 @@ import Util.TipoCurso;
 /**
  * @author jpvl
  */
-public class NACandNDRuleTest extends BaseEnrolmentRuleTest {
+public class NACandNDFilterRuleTest extends BaseEnrolmentRuleTest {
 
 	private dbaccess dbAcessPoint;
 
@@ -30,7 +30,7 @@ public class NACandNDRuleTest extends BaseEnrolmentRuleTest {
 	}
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite(NACandNDRuleTest.class);
+		TestSuite suite = new TestSuite(NACandNDFilterRuleTest.class);
 		return suite;
 	}
 

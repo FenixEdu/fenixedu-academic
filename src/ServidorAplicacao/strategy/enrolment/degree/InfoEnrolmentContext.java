@@ -3,6 +3,7 @@ package ServidorAplicacao.strategy.enrolment.degree;
 import java.util.List;
 import java.util.Map;
 
+import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 
 
@@ -18,12 +19,18 @@ public class InfoEnrolmentContext {
 	private InfoStudentCurricularPlan infoStudentActiveCurricularPlan;
 	private List actualEnrolment;
 	private List finalCurricularCoursesScopesSpanToBeEnrolled;
+	private List validateMessage;
+	private InfoStudent infoStudent;
+	private Integer semester;
 	
 	public InfoEnrolmentContext() {
 		setAcumulatedEnrolments(null);
 		setInfoStudentActiveCurricularPlan(null);
 		setActualEnrolment(null);
 		setFinalCurricularCoursesScopesSpanToBeEnrolled(null);
+		setValidateMessage(null);
+		setInfoStudent(null);
+		setSemester(null);
 	}
 
 	public boolean equals(Object obj) {
@@ -39,9 +46,12 @@ public class InfoEnrolmentContext {
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
 		result += "acumulatedEnrolments = " + this.acumulatedEnrolments + "]";
-		result += "StudentActiveCurricularPlan = " + this.infoStudentActiveCurricularPlan + "]";
-		result += "actualEnrolment = " + this.actualEnrolment + "]";
-		result += "finalCurricularCoursesScopesSpanToBeEnrolled = " + this.finalCurricularCoursesScopesSpanToBeEnrolled + "]";
+		result += "\n StudentActiveCurricularPlan = " + this.infoStudentActiveCurricularPlan + "]";
+		result += "\n actualEnrolment = " + this.actualEnrolment + "]";
+		result += "\n finalCurricularCoursesScopesSpanToBeEnrolled = " + this.finalCurricularCoursesScopesSpanToBeEnrolled + "]";
+		result += "\n validade message = " + this.validateMessage + "]";
+		result += "\n student = " + this.infoStudent + "]";
+		result += "\n semester= " + this.semester + "]";
 		return result;
 	}
 
@@ -104,4 +114,49 @@ public class InfoEnrolmentContext {
 	public void setInfoStudentActiveCurricularPlan(InfoStudentCurricularPlan infoStudentActiveCurricularPlan) {
 		this.infoStudentActiveCurricularPlan = infoStudentActiveCurricularPlan;
 	}
+	/**
+	 * @return List
+	 */
+	public List getValidateMessage() {
+		return validateMessage;
+	}
+
+	/**
+	 * Sets the validateMessage.
+	 * @param validateMessage The validateMessage to set
+	 */
+	public void setValidateMessage(List validateMessage) {
+		this.validateMessage = validateMessage;
+	}
+
+	/**
+	 * @return InfoStudent
+	 */
+	public InfoStudent getInfoStudent() {
+		return infoStudent;
+	}
+
+	/**
+	 * Sets the infoStudent.
+	 * @param infoStudent The infoStudent to set
+	 */
+	public void setInfoStudent(InfoStudent infoStudent) {
+		this.infoStudent = infoStudent;
+	}
+
+	/**
+	 * @return Integer
+	 */
+	public Integer getSemester() {
+		return semester;
+	}
+
+	/**
+	 * Sets the semester.
+	 * @param semester The semester to set
+	 */
+	public void setSemester(Integer semester) {
+		this.semester = semester;
+	}
+
 }

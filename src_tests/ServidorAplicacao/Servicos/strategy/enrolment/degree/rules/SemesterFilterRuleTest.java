@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterBranchRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterSemesterRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
 import ServidorPersistente.ExcepcaoPersistencia;
 import Tools.dbaccess;
@@ -21,7 +21,7 @@ import Util.TipoCurso;
 /**
  * @author jpvl
  */
-public class BranchRuleTest extends BaseEnrolmentRuleTest {
+public class SemesterFilterRuleTest extends BaseEnrolmentRuleTest {
 
 	private dbaccess dbAcessPoint;
 
@@ -30,18 +30,18 @@ public class BranchRuleTest extends BaseEnrolmentRuleTest {
 	}
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite(BranchRuleTest.class);
+		TestSuite suite = new TestSuite(SemesterFilterRuleTest.class);
 		return suite;
 	}
 
-	public void testApplyBranchRule() {
+	public void testApplySemesterRule() {
 		List finalSpan = new ArrayList();
 		List initialSpan = null;
 
 		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(3), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));
 		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
-		doApplyRule(new EnrolmentFilterBranchRule(), enrolmentContext);
+		doApplyRule(new EnrolmentFilterSemesterRule(), enrolmentContext);
 
 		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
@@ -53,7 +53,7 @@ public class BranchRuleTest extends BaseEnrolmentRuleTest {
 		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
 		assertEquals(true, finalSpan.contains(curricularCourseScope));
 
-		curricularCourse = getCurricularCourse("Fisica III", "FIII");
+		curricularCourse = getCurricularCourse("Analise Matematica II", "AMII");
 		curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
 		assertEquals(true, !finalSpan.contains(curricularCourseScope));
 
