@@ -249,9 +249,9 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 			Calendar birthDate = Calendar.getInstance();
 			if (infoPerson.getNascimento() == null) {
-				editCandidateForm.set("birthDay", Data.OPTION_DEFAULT.toString());
-				editCandidateForm.set("birthMonth", Data.OPTION_DEFAULT.toString());
-				editCandidateForm.set( "birthYear", Data.OPTION_DEFAULT.toString());
+				editCandidateForm.set("birthDay", Data.OPTION_DEFAULT);
+				editCandidateForm.set("birthMonth", Data.OPTION_DEFAULT);
+				editCandidateForm.set( "birthYear", Data.OPTION_DEFAULT);
 			} else {
 				birthDate.setTime(infoPerson.getNascimento());
 				editCandidateForm.set("birthDay", new Integer(birthDate.get(Calendar.DAY_OF_MONTH)).toString());
@@ -261,9 +261,9 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 			Calendar identificationDocumentIssueDate = Calendar.getInstance();
 			if (infoPerson.getDataEmissaoDocumentoIdentificacao() == null) {
-				editCandidateForm.set("idIssueDateDay", Data.OPTION_DEFAULT.toString());
-				editCandidateForm.set("idIssueDateMonth", Data.OPTION_DEFAULT.toString());
-				editCandidateForm.set("idIssueDateYear", Data.OPTION_DEFAULT.toString());
+				editCandidateForm.set("idIssueDateDay", Data.OPTION_DEFAULT);
+				editCandidateForm.set("idIssueDateMonth", Data.OPTION_DEFAULT);
+				editCandidateForm.set("idIssueDateYear", Data.OPTION_DEFAULT);
 			} else {
 				identificationDocumentIssueDate.setTime(infoPerson.getDataEmissaoDocumentoIdentificacao());
 				editCandidateForm.set("idIssueDateDay", new Integer(identificationDocumentIssueDate.get(Calendar.DAY_OF_MONTH)).toString());
@@ -273,9 +273,9 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 			Calendar identificationDocumentExpirationDate = Calendar.getInstance();
 			if (infoPerson.getDataValidadeDocumentoIdentificacao() == null) {
-				editCandidateForm.set("idExpirationDateDay", Data.OPTION_DEFAULT.toString());
-				editCandidateForm.set("idExpirationDateMonth", Data.OPTION_DEFAULT.toString());
-				editCandidateForm.set("idExpirationDateYear", Data.OPTION_DEFAULT.toString());
+				editCandidateForm.set("idExpirationDateDay", Data.OPTION_DEFAULT);
+				editCandidateForm.set("idExpirationDateMonth", Data.OPTION_DEFAULT);
+				editCandidateForm.set("idExpirationDateYear", Data.OPTION_DEFAULT);
 			} else {
 				identificationDocumentExpirationDate.setTime(infoPerson.getDataValidadeDocumentoIdentificacao());
 				editCandidateForm.set("idExpirationDateDay", new Integer(identificationDocumentExpirationDate.get(Calendar.DAY_OF_MONTH)).toString());
@@ -381,43 +381,44 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			
 			InfoPerson infoPerson = new InfoPerson();
 			
-			Integer day = new Integer(((String) editCandidateForm.get("birthDay")));
-			Integer month = new Integer(((String) editCandidateForm.get("birthMonth")));
-			Integer year = new Integer(((String) editCandidateForm.get("birthYear")));
+			String day = (String) editCandidateForm.get("birthDay");
+			String month = (String) editCandidateForm.get("birthMonth");
+			String year = (String) editCandidateForm.get("birthYear");
 			
 			if ((day == null) ||(month == null) ||(year == null) ||
-			    (day.intValue() == -1) ||(month.intValue() == -1) ||(year.intValue() == -1))
+			    (day.length() == 0) ||(month.length() == 0) ||(year.length() == 0)){
 				infoPerson.setNascimento(null);
-			else {
+			} else {
 				birthDate.set(new Integer(((String) editCandidateForm.get("birthYear"))).intValue(),
 					new Integer(((String) editCandidateForm.get("birthMonth"))).intValue(),
 					new Integer(((String) editCandidateForm.get("birthDay"))).intValue());
 				infoPerson.setNascimento(birthDate.getTime());
 			}
+
+			day = (String) editCandidateForm.get("idIssueDateDay");
+			month = (String) editCandidateForm.get("idIssueDateMonth");
+			year = (String) editCandidateForm.get("idIssueDateYear");
 		
-		
-			day = new Integer(((String) editCandidateForm.get("idIssueDateDay")));
-			month = new Integer(((String) editCandidateForm.get("idIssueDateMonth")));
-			year = new Integer(((String) editCandidateForm.get("idIssueDateYear")));
 	
 			if ((day == null) ||(month == null) ||(year == null) ||
-				(day.intValue() == -1) ||(month.intValue() == -1) ||(year.intValue() == -1))
+				(day.length() == 0) ||(month.length() == 0) ||(year.length() == 0)){
 				infoPerson.setDataEmissaoDocumentoIdentificacao(null);
-			else {
+			} else {
 				idDocumentIssueDate.set(new Integer(((String) editCandidateForm.get("idIssueDateYear"))).intValue(),
 					new Integer(((String) editCandidateForm.get("idIssueDateMonth"))).intValue(),
 					new Integer(((String) editCandidateForm.get("idIssueDateDay"))).intValue());
 				infoPerson.setDataEmissaoDocumentoIdentificacao(idDocumentIssueDate.getTime());		
 			}
 
-			day = new Integer(((String) editCandidateForm.get("idExpirationDateDay")));
-			month = new Integer(((String) editCandidateForm.get("idExpirationDateMonth")));
-			year = new Integer(((String) editCandidateForm.get("idExpirationDateYear")));
-	
+			day = (String) editCandidateForm.get("idExpirationDateDay");
+			month = (String) editCandidateForm.get("idExpirationDateMonth");
+			year = (String) editCandidateForm.get("idExpirationDateYear");
+			
+	 
 			if ((day == null) ||(month == null) ||(year == null) ||
-				(day.intValue() == -1) ||(month.intValue() == -1) ||(year.intValue() == -1))
+				(day.length() == 0) ||(month.length() == 0) ||(year.length() == 0)){
 				infoPerson.setDataValidadeDocumentoIdentificacao(null);
-			else {
+			} else {
 				idDocumentExpirationDate.set(new Integer(((String) editCandidateForm.get("idExpirationDateYear"))).intValue(),
 					new Integer(((String) editCandidateForm.get("idExpirationDateMonth"))).intValue(),
 					new Integer(((String) editCandidateForm.get("idExpirationDateDay"))).intValue());

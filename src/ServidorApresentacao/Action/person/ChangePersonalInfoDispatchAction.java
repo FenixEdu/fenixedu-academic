@@ -77,35 +77,57 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		InfoPerson infoPerson = new InfoPerson();
 
 
-		Integer day = new Integer((String) changePersonalInformationForm.get("birthDay"));
-		Integer month = new Integer((String) changePersonalInformationForm.get("birthMonth"));
-		Integer year = new Integer((String) changePersonalInformationForm.get("birthYear"));
+		String dayString = (String) changePersonalInformationForm.get("birthDay");
+		String monthString = (String) changePersonalInformationForm.get("birthMonth");
+		String yearString = (String) changePersonalInformationForm.get("birthYear");
+
+
+		Integer day = null;
+		Integer month = null;
+		Integer year = null;
 		
-		if ((day.equals(new Integer(-1))) || (month.equals(new Integer(-1))) || (year.equals(new Integer(-1))))
+		if ((dayString == null) || (monthString == null) || (yearString == null) || 
+			(dayString.length() == 0) || (monthString.length() == 0) || (yearString.length() == 0)){
 				infoPerson.setNascimento(null);
-		else {
+		} else {
+			day = new Integer((String) changePersonalInformationForm.get("birthDay"));
+			month = new Integer((String) changePersonalInformationForm.get("birthMonth"));
+			year = new Integer((String) changePersonalInformationForm.get("birthYear"));
+		
 			birthDate.set(year.intValue(),month.intValue(), day.intValue());
 			infoPerson.setNascimento(birthDate.getTime());			
 		}
 
-		day = new Integer((String) changePersonalInformationForm.get("idIssueDateDay"));
-		month = new Integer((String) changePersonalInformationForm.get("idIssueDateMonth"));
-		year = new Integer((String) changePersonalInformationForm.get("idIssueDateYear"));
+		dayString = (String) changePersonalInformationForm.get("idIssueDateDay");
+		monthString = (String) changePersonalInformationForm.get("idIssueDateMonth");
+		yearString = (String) changePersonalInformationForm.get("idIssueDateYear");
+
 	
-		if ((day.equals(new Integer(-1))) || (month.equals(new Integer(-1))) || (year.equals(new Integer(-1))))
+		if ((dayString == null) || (monthString == null) || (yearString == null) || 
+			(dayString.length() == 0) || (monthString.length() == 0) || (yearString.length() == 0)){
 				infoPerson.setDataEmissaoDocumentoIdentificacao(null);
-		else {
+		} else {
+			day = new Integer((String) changePersonalInformationForm.get("idIssueDateDay"));
+			month = new Integer((String) changePersonalInformationForm.get("idIssueDateMonth"));
+			year = new Integer((String) changePersonalInformationForm.get("idIssueDateYear"));
+			
 			idDocumentIssueDate.set(year.intValue(),month.intValue(), day.intValue());
 			infoPerson.setDataEmissaoDocumentoIdentificacao(idDocumentIssueDate.getTime());
 		}
+		
+		dayString = (String) changePersonalInformationForm.get("idExpirationDateDay");
+		monthString = (String) changePersonalInformationForm.get("idExpirationDateMonth");
+		yearString = (String) changePersonalInformationForm.get("idExpirationDateYear");
 			
-		day = new Integer((String) changePersonalInformationForm.get("idExpirationDateDay"));
-		month = new Integer((String) changePersonalInformationForm.get("idExpirationDateMonth"));
-		year = new Integer((String) changePersonalInformationForm.get("idExpirationDateYear"));
 
-		if ((day.equals(new Integer(-1))) || (month.equals(new Integer(-1))) || (year.equals(new Integer(-1))))
+		if ((dayString == null) || (monthString == null) || (yearString == null) || 
+			(dayString.length() == 0) || (monthString.length() == 0) || (yearString.length() == 0)){
 				infoPerson.setDataValidadeDocumentoIdentificacao(null);
-		else {
+		} else {
+			day = new Integer((String) changePersonalInformationForm.get("idExpirationDateDay"));
+			month = new Integer((String) changePersonalInformationForm.get("idExpirationDateMonth"));
+			year = new Integer((String) changePersonalInformationForm.get("idExpirationDateYear"));
+
 			idDocumentExpirationDate.set(year.intValue(),month.intValue(), day.intValue());
 			infoPerson.setDataValidadeDocumentoIdentificacao(idDocumentExpirationDate.getTime());
 		}
@@ -240,13 +262,13 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		if (infoPerson.getNascimento() == null) {
 			changePersonalInfoForm.set(
 				"birthDay",
-				Data.OPTION_DEFAULT.toString());
+				Data.OPTION_DEFAULT);
 			changePersonalInfoForm.set(
 				"birthMonth",
-				Data.OPTION_DEFAULT.toString());
+				Data.OPTION_DEFAULT);
 			changePersonalInfoForm.set(
 				"birthYear",
-				Data.OPTION_DEFAULT.toString());
+				Data.OPTION_DEFAULT);
 		} else {
 			birthDate.setTime(infoPerson.getNascimento());
 			changePersonalInfoForm.set(
@@ -264,13 +286,13 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		if (infoPerson.getDataEmissaoDocumentoIdentificacao() == null) {
 			changePersonalInfoForm.set(
 				"idIssueDateDay",
-				Data.OPTION_DEFAULT.toString());
+				Data.OPTION_DEFAULT);
 			changePersonalInfoForm.set(
 				"idIssueDateMonth",
-				Data.OPTION_DEFAULT.toString());
+				Data.OPTION_DEFAULT);
 			changePersonalInfoForm.set(
 				"idIssueDateYear",
-				Data.OPTION_DEFAULT.toString());
+				Data.OPTION_DEFAULT);
 		} else {
 			identificationDocumentIssueDate.setTime(
 				infoPerson.getDataEmissaoDocumentoIdentificacao());
@@ -294,13 +316,13 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		if (infoPerson.getDataValidadeDocumentoIdentificacao() == null) {
 			changePersonalInfoForm.set(
 				"idExpirationDateDay",
-				Data.OPTION_DEFAULT.toString());
+				Data.OPTION_DEFAULT);
 			changePersonalInfoForm.set(
 				"idExpirationDateMonth",
-				Data.OPTION_DEFAULT.toString());
+				Data.OPTION_DEFAULT);
 			changePersonalInfoForm.set(
 				"idExpirationDateYear",
-				Data.OPTION_DEFAULT.toString());
+				Data.OPTION_DEFAULT);
 		} else {
 			identificationDocumentExpirationDate.setTime(
 				infoPerson.getDataValidadeDocumentoIdentificacao());

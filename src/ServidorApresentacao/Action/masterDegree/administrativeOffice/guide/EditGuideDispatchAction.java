@@ -77,9 +77,9 @@ public class EditGuideDispatchAction extends DispatchAction {
 				throw new NonExistingActionException("A Versão da Guia", e);
 			}
 
-			editGuideForm.set("paymentDateDay", Data.OPTION_DEFAULT.toString());
-			editGuideForm.set("paymentDateMonth", Data.OPTION_DEFAULT.toString());
-			editGuideForm.set( "paymentDateYear", Data.OPTION_DEFAULT.toString());
+			editGuideForm.set("paymentDateDay", Data.OPTION_DEFAULT);
+			editGuideForm.set("paymentDateMonth", Data.OPTION_DEFAULT);
+			editGuideForm.set( "paymentDateYear", Data.OPTION_DEFAULT);
 			session.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
 			session.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
 			session.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
@@ -111,21 +111,33 @@ public class EditGuideDispatchAction extends DispatchAction {
 			
 			String remarks = (String) request.getParameter("remarks");
 			String situationOfGuide = (String) request.getParameter("guideSituation");
-			Integer paymentDateYear = new Integer((String) request.getParameter("paymentDateYear"));
-			Integer paymentDateMonth = new Integer((String) request.getParameter("paymentDateMonth"));
-			Integer paymentDateDay = new Integer((String) request.getParameter("paymentDateDay"));
+
+			String day = (String) request.getParameter("paymentDateDay");
+			String month = (String) request.getParameter("paymentDateMonth");
+			String year = (String) request.getParameter("paymentDateYear");
+
+
 			String paymentType = (String) request.getParameter("paymentType");
 			
 			// Final form Check
 
+			Integer paymentDateYear = null;
+			Integer paymentDateMonth = null;
+			Integer paymentDateDay = null;
+
+
 			ActionErrors actionErrors = new ActionErrors();
 			if ((situationOfGuide.equals(SituationOfGuide.PAYED_STRING)) && (
-					(paymentDateYear.equals(new Integer(-1))) ||
-					(paymentDateMonth.equals(new Integer(-1))) ||
-					(paymentDateDay.equals(new Integer(-1))))) {
+				(day == null) || (day.length() == 0) || 					
+				(month == null) || (month.length() == 0) || 					
+				(year == null) || (year.length() == 0))) {
 				
 				ActionError actionError = new ActionError("error.required.paymentDate");
 				actionErrors.add("UnNecessary1", actionError);
+			} else {
+				paymentDateYear = new Integer((String) request.getParameter("paymentDateYear"));
+				paymentDateMonth = new Integer((String) request.getParameter("paymentDateMonth"));
+				paymentDateDay = new Integer((String) request.getParameter("paymentDateDay"));
 			}
 	
 			if ((situationOfGuide.equals(SituationOfGuide.PAYED_STRING)) && (paymentType.equals(PaymentType.DEFAULT_STRING))){
@@ -136,6 +148,8 @@ public class EditGuideDispatchAction extends DispatchAction {
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
+
+
 		
 			
 			Calendar calendar = Calendar.getInstance();
