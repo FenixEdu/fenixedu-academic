@@ -12,9 +12,7 @@
 		<form-bean name="deleteDegreesForm"
 				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 					dynamic="true">  	      
-				<form-property name="idInternal" type="java.lang.Integer" />
-				 <form-property name="internalIds" type="java.lang.Integer[]" />
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="internalIds" type="java.lang.Integer[]" />
 		</form-bean>  
 	
 		<form-bean name="insertDegreeForm"
@@ -30,7 +28,6 @@
 					type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 					dynamic="true">        
 				<form-property name="idInternal" type="java.lang.Integer" />
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>  
     </form-beans>
 
@@ -53,7 +50,6 @@
 			       path="/naoExistente.do"
 			       handler="ServidorApresentacao.config.FenixExceptionHandler" /> 
 	</global-exceptions>
-	<!--nao sei s a excepção inexistente é precisa mas pronto-->
 
 	<!-- ========== Global Forward Definitions =============================== -->
 	<global-forwards type="org.apache.struts.action.ActionForward">
@@ -71,7 +67,6 @@
 	 <!-- Action for reading all degrees  -->
       <action path="/readDegrees"
              input="mainPageInput.do"
-             scope="request"
       	     type="ServidorApresentacao.Action.manager.ReadDegreesAction">
       	  <forward name="readDegrees" path="df.page.read-degrees"/>      	      
       </action>
@@ -91,8 +86,6 @@
       </action>
          
      <!-- Action for inserting a degree -->
-  
-
 	<action
 		path="/insertDegree"
 		name="insertDegreeForm"
@@ -102,13 +95,10 @@
 		type="ServidorApresentacao.Action.manager.InsertDegreeDispatchAction"
         validate="true">  
        <forward name="insertDegree" path="df.page.insert-degree"/>
-      <forward name="readDegrees" path="df.page.read-degrees"/>      	      
+       <forward name="readDegrees" path="df.page.read-degrees"/>      	      
 	</action>			     
-    
-
-     
+         
 	<!-- Action for deleting degrees --> 
-     
       <action 
       		 path="/deleteDegrees"
       		 name="deleteDegreesForm"
@@ -118,10 +108,18 @@
       	  <forward name="readDegrees" path="df.page.read-degrees"/>      	      
       </action>
       
-     <!--<exception type="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
-         	   key="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-               />  -->
+      <!-- Action for editing a degree -->
+	<action
+		path="/editDegree"
+		name="insertDegreeForm"
+		input="/insertDegreeInput.do"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.EditDegreeDispatchAction"
+        validate="true">  
+       <forward name="editDegree" path="df.page.insert-degree"/>
+       <forward name="readDegrees" path="df.page.read-degrees"/>      	      
+	</action>
      
       <!--Input actions-->
       <action path="/insertDegreeInput"

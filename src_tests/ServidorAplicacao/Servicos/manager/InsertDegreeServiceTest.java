@@ -72,7 +72,7 @@ public class InsertDegreeServiceTest extends TestCaseNeedAuthorizationServices {
 		
 //	insert degree with name already existing in DB
 	public void testUnsuccessfulExecutionOfInsertServiceNameExists() {
-		InfoDegree infoDegree = new InfoDegree("TNE", "Licenciatura de Engenharia Informatica e de Computadores");
+		InfoDegree infoDegree = new InfoDegree("TNE", "Licenciatura de Engenharia Informatica e de Computadores", new TipoCurso(1));
 		Object[] args = { infoDegree };
 		Object result = null;
 		try {

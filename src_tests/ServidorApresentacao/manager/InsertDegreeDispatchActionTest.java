@@ -95,7 +95,7 @@ public class InsertDegreeDispatchActionTest extends TestCasePresentationManagerP
 		result.put("method", "insert");
 		result.put("code", "MEM");
 		result.put("name", "Engenharia Mecanica");
-		result.put("degreeType", "1");
+		result.put("degreeType", "2");
 		return result;
 	}
 

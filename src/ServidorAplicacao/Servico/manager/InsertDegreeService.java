@@ -16,6 +16,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TipoCurso;
 
 /**
  * @author lmac1
@@ -50,6 +51,7 @@ public class InsertDegreeService implements IServico {
 			
 				String code = infoDegree.getSigla();
 				String name = infoDegree.getNome();
+				TipoCurso type = infoDegree.getTipoCurso();
 				List errors = new ArrayList();
 				errors.add(null);
 				errors.add(null);
@@ -61,7 +63,7 @@ public class InsertDegreeService implements IServico {
 						modified++;
 		        		errors.set(0, code);
 					}
-					if(name.compareToIgnoreCase(degreeIter.getNome())==0) {
+					if(name.compareToIgnoreCase(degreeIter.getNome())==0 && type.equals((TipoCurso) degreeIter.getTipoCurso())) {
 						modified++;
 						errors.set(1, name);
 					}
