@@ -63,7 +63,7 @@ import Util.StudentCurricularPlanState;
 import Util.TipoAula;
 
 /**
- * @author Andrï¿½ Fernandes / Joï¿½o Brito
+ * @author André Fernandes / João Brito
  */
 public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
