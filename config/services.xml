@@ -8332,6 +8332,16 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>ReadCostCenterByNumber</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.ReadCostCenterByNumber
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
 		<name>ChangeStudentCurricularPlanState</name>
 		<implementationClass> 
 			ServidorAplicacao.Servico.manager.ChangeStudentCurricularPlanState
