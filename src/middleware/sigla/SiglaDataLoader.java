@@ -6,13 +6,11 @@
 package middleware.sigla;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerException;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
@@ -27,14 +25,8 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
-import Dominio.IProfessorship;
-import Dominio.IResponsibleFor;
 import Dominio.ISite;
-import Dominio.ITeacher;
-import Dominio.Professorship;
-import Dominio.ResponsibleFor;
 import Dominio.Site;
-import Dominio.Teacher;
 import Util.PeriodState;
 
 /**
@@ -519,96 +511,7 @@ public class SiglaDataLoader {
 		System.out.println(siglaCurricularCourse);
 	}
 
-	/**
-	 * @param executionCourse
-	 * @param siglaCurricularCourses
-	 */
-	private void updateResponsibleTeachers(
-		IDisciplinaExecucao executionCourse,
-		List siglaCurricularCourses,
-		PersistenceBroker broker) {
-		//List teachers = new ArrayList();
-		Iterator iter = siglaCurricularCourses.iterator();
-		Query query = null;
-
-		List numsMec = new ArrayList();
-
-		while (iter.hasNext()) {
-
-			Curr_licenciatura siglaCurricularCourse =
-				(Curr_licenciatura) iter.next();
-			Criteria crit = new Criteria();
-			crit.addEqualTo(
-				"codigo_Disc",
-				siglaCurricularCourse.getCodigo_disc());
-			crit.addEqualTo(
-				"ano_Lectivo",
-				siglaCurricularCourse.getAno_lectivo());
-			crit.addEqualTo(
-				"codigo_Curso",
-				siglaCurricularCourse.getCodigo_lic());
-			crit.addEqualTo(
-				"ano_Curricular",
-				siglaCurricularCourse.getAno_curricular());
-			crit.addEqualTo("semestre", siglaCurricularCourse.getSemestre());
-			crit.addEqualTo(
-				"codigo_Ramo",
-				siglaCurricularCourse.getCodigo_ramo());
-			query = new QueryByCriteria(Responsavel.class, crit);
-			Collection siglaTeachers =
-				(Collection) broker.getCollectionByQuery(query);
-			Iterator iter1 = siglaTeachers.iterator();
-			while (iter1.hasNext()) {
-				Responsavel responsavel = (Responsavel) iter1.next();
-				if (!numsMec.contains(responsavel.no_Mec)) {
-					numsMec.add(responsavel.no_Mec);
-				}
-			}
-
-		}
-		System.out.println(
-			"número de docentes responsáveis->" + numsMec.size());
-		Iterator iter2 = numsMec.iterator();
-		while (iter2.hasNext()) {
-			Integer numMec = (Integer) iter2.next();
-			Criteria crit = new Criteria();
-
-			crit.addEqualTo("person.username", "D" + numMec);
-			query = new QueryByCriteria(Teacher.class, crit);
-			ITeacher teacher = (ITeacher) broker.getObjectByQuery(query);
-			if (teacher == null) {
-				System.out.println(
-					"não encontrei o docente com número mecanográfico:"
-						+ numMec);
-			} else {
-				IProfessorship professorship =
-					new Professorship(teacher, executionCourse);
-				IResponsibleFor responsibleFor =
-					new ResponsibleFor(teacher, executionCourse);
-				System.out.println(
-					"a escrever professorship"
-						+ professorship.getExecutionCourse().getNome()
-						+ "-"
-						+ professorship.getTeacher().getPerson().getUsername());
-				try {
-					broker.store(professorship);
-
-					broker.store(responsibleFor);
-				} catch (PersistenceBrokerException e1) {
-					System.out.println(
-						"a  professorship já existe: "
-							+ professorship.getExecutionCourse().getNome()
-							+ "-"
-							+ professorship
-								.getTeacher()
-								.getPerson()
-								.getUsername());
-				}
-
-			}
-		}
-
-	}
+	
 
 	/**
 	 * @return

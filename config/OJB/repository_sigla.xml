@@ -372,17 +372,17 @@
          autoincrement="true"
       />
   <field-descriptor id="2"
-    name="ano_Lectivo"
+    name="ano_lectivo"
     column="Ano_Lectivo"
     jdbc-type="INTEGER"
   />
   <field-descriptor id="3"
-    name="codigo_Curso"
+    name="cod_curso"
     column="Cod_Curso"
     jdbc-type="INTEGER"
   />
    <field-descriptor id="4"
-    name="ano_Curricular"
+    name="ano_curr"
     column="Ano_Curr"
     jdbc-type="INTEGER"
   />
@@ -392,18 +392,18 @@
     jdbc-type="INTEGER"
   />
   <field-descriptor id="6"
-    name="codigo_Ramo"
+    name="cod_ramo"
     column="Cod_Ramo"
     jdbc-type="INTEGER"
   /> 
   <field-descriptor id="7"
-    name="codigo_Disc"
+    name="cod_disc"
     column="Cod_Disc"
     jdbc-type="VARCHAR"
   />
   
   <field-descriptor id="8"
-    name="no_Mec"
+    name="no_mec"
     column="No_Mec"
     jdbc-type="INTEGER"
   />
