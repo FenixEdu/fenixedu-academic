@@ -485,6 +485,11 @@
 		<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
 	</action>
 
+	<action path="/updateSmsDeliveryReport" 
+		type="ServidorApresentacao.Action.publico.sms.UpdateSmsDeliveryReportDispatchAction" 
+		parameter="method" >	
+	</action>
+
      </action-mappings>     
     
     <!-- ========== Controller Configuration ================================ -->
