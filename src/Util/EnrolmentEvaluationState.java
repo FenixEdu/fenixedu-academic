@@ -81,7 +81,7 @@ public class EnrolmentEvaluationState extends FenixUtil {
             valueS = "PROVISORY";
             break;
         case FINAL:
-            valueS = "TO_CONFIRM";
+            valueS = "FINAL";
             break;
         //			case RECTIFIED :
         //				valueS = "RECTIFIED";
@@ -93,6 +93,6 @@ public class EnrolmentEvaluationState extends FenixUtil {
             break;
         }
 
-        return "[" + this.getClass().getName() + ": " + valueS + "]\n";
+        return valueS;
     }
 }
