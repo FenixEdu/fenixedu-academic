@@ -11,8 +11,16 @@
 		<field property="month" depends="required, integer" page="1">
 			<arg0 key="property.exam.month"/>
 		</field>
-		<field property="year" depends="required, integer" page="1">
-			<arg0 key="property.exam.year"/>
+		<field property="year" depends="required, validateDate, integer" page="1">
+			<arg0 key="data"/>
+                  <var>
+                     <var-name>month</var-name>
+                     <var-value>month</var-value>
+                  </var>
+                  <var>
+                     <var-name>day</var-name>
+                     <var-value>day</var-value>
+                  </var>
 		</field>
 		<field property="beginning" depends="required, integer" page="1">
 			<arg0 key="property.exam.beginning"/>
