@@ -1,4 +1,3 @@
-
 package ServidorAplicacao.Filtro;
 
 import java.util.ArrayList;
@@ -21,146 +20,170 @@ import Util.RoleType;
 import Util.TipoCurso;
 
 /**
- * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
+public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro
+{
 
-	public final static ReadCandidatesForSelectionAuthorizationFilter instance =
-		new ReadCandidatesForSelectionAuthorizationFilter();
+    public final static ReadCandidatesForSelectionAuthorizationFilter instance =
+        new ReadCandidatesForSelectionAuthorizationFilter();
 
-	/**
+    /**
 	 * The singleton access method of this class.
-	 *
-	 * @return Returns the instance of this class responsible for the
-	 * authorization access to services.
-	 **/
-	public static Filtro getInstance() {
-		return instance;
-	}
+	 * 
+	 * @return Returns the instance of this class responsible for the authorization access to services.
+	 */
+    public static Filtro getInstance()
+    {
+        return instance;
+    }
 
+    public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
+    {
 
-	public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception {
+        if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
+            || (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
+            || (id == null)
+            || (id.getRoles() == null))
+        {
+            throw new NotAuthorizedException();
+        }
+    }
 
-		if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-			|| (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
-			|| (id == null)
-			|| (id.getRoles() == null)) {
-			throw new NotAuthorizedException();
-		}
-	}
-
-	/**
+    /**
 	 * @param collection
 	 * @return boolean
 	 */
-	private boolean containsRole(Collection roles) {
-		Iterator rolesIterator = roles.iterator();
+    private boolean containsRole(Collection roles)
+    {
+        CollectionUtils.intersection(roles, getNeededRoles());
 
-		CollectionUtils.intersection(roles, getNeededRoles());
+        if (roles.size() != 0)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
 
-		if (roles.size() != 0){
-			return true;			
-		} else {
-			return false;
-		}
-	}
-	
-	
-	/**
+    /**
 	 * @return The Needed Roles to Execute The Service
 	 */
-	private Collection getNeededRoles() {
-		List roles = new ArrayList();
-		
-		InfoRole infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		roles.add(infoRole);
-		 
-		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.COORDINATOR);
-		roles.add(infoRole);
-				
-		return roles;
-	}
+    private Collection getNeededRoles()
+    {
+        List roles = new ArrayList();
 
+        InfoRole infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(infoRole);
 
-	/**
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.COORDINATOR);
+        roles.add(infoRole);
+
+        return roles;
+    }
+
+    /**
 	 * @param id
 	 * @param argumentos
-	 * @return  
+	 * @return
 	 */
-	private boolean hasPrivilege(IUserView id, Object[] arguments) {
-	
-		List roles = getRoleList((List) id.getRoles());
-		CollectionUtils.intersection(roles, getNeededRoles());
+    private boolean hasPrivilege(IUserView id, Object[] arguments)
+    {
 
-		String executionYearString =  (String) arguments[0];
-		String degreeCode =  (String) arguments[1];
-		
+        List roles = getRoleList((List) id.getRoles());
+        CollectionUtils.intersection(roles, getNeededRoles());
 
-		ICursoExecucao executionDegree = null;
+        String executionYearString = (String) arguments[0];
+        String degreeCode = (String) arguments[1];
 
-		// Read The DegreeCurricularPlan
-		try {
-			IExecutionYear executionYear = new ExecutionYear();
-			executionYear.setYear(executionYearString);
-			executionDegree = SuportePersistenteOJB.getInstance().getICursoExecucaoPersistente().readByDegreeCodeAndExecutionYear(degreeCode, executionYear);
-			
-			
-		} catch (Exception e) {
-			return false;
-		}
+        ICursoExecucao executionDegree = null;
 
-		if (executionDegree == null){
-			return false;
-		}
+        // Read The DegreeCurricularPlan
+        try
+        {
+            IExecutionYear executionYear = new ExecutionYear();
+            executionYear.setYear(executionYearString);
+            executionDegree =
+                SuportePersistenteOJB
+                    .getInstance()
+                    .getICursoExecucaoPersistente()
+                    .readByDegreeCodeAndExecutionYear(
+                    degreeCode,
+                    executionYear);
 
-		List roleTemp = new ArrayList();
-		roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		if (CollectionUtils.containsAny(roles, roleTemp)) {
-			if (executionDegree.getCurricularPlan().getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)){
-				return true;
-			} else {
-				return false;
-			}
-		} 
-		
-		roleTemp = new ArrayList();
-		roleTemp.add(RoleType.COORDINATOR);
-		if (CollectionUtils.containsAny(roles, roleTemp)) {
-			
-			 ITeacher teacher = null;
-			// Read The ExecutionDegree
-			try {
-				// IMPORTANT: It's assumed that the coordinator for a Degree is ALWAYS the same	
-				teacher = executionDegree.getCoordinator();
-				
-				if (teacher == null){
-					return false;
-				}
-				
-				if (id.getUtilizador().equals(teacher.getPerson().getUsername())){
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				return false;
-			}
-		} 
-		return false;		
-	}
-	
-	private List getRoleList(List roles){
-		List result = new ArrayList();
-		Iterator iterator = roles.iterator();
-		while(iterator.hasNext()){
-			result.add(((InfoRole) iterator.next()).getRoleType());
-		}
-		
-		return result;
-	}
+        } catch (Exception e)
+        {
+            return false;
+        }
+
+        if (executionDegree == null)
+        {
+            return false;
+        }
+
+        List roleTemp = new ArrayList();
+        roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        if (CollectionUtils.containsAny(roles, roleTemp))
+        {
+            if (executionDegree
+                .getCurricularPlan()
+                .getDegree()
+                .getTipoCurso()
+                .equals(TipoCurso.MESTRADO_OBJ))
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
+        roleTemp = new ArrayList();
+        roleTemp.add(RoleType.COORDINATOR);
+        if (CollectionUtils.containsAny(roles, roleTemp))
+        {
+
+            ITeacher teacher = null;
+            // Read The ExecutionDegree
+            try
+            {
+                // IMPORTANT: It's assumed that the coordinator for a Degree is ALWAYS the same
+                teacher = executionDegree.getCoordinator();
+
+                if (teacher == null)
+                {
+                    return false;
+                }
+
+                if (id.getUtilizador().equals(teacher.getPerson().getUsername()))
+                {
+                    return true;
+                } else
+                {
+                    return false;
+                }
+            } catch (Exception e)
+            {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private List getRoleList(List roles)
+    {
+        List result = new ArrayList();
+        Iterator iterator = roles.iterator();
+        while (iterator.hasNext())
+        {
+            result.add(((InfoRole) iterator.next()).getRoleType());
+        }
+
+        return result;
+    }
 
 }

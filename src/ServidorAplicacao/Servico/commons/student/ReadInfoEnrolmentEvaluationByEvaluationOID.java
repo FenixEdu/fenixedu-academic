@@ -1,10 +1,8 @@
 
 /**
- *
- * Autores :
- *   - Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *   - Joana Mota (jccm@rnl.ist.utl.pt)
- *
+ * 
+ * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota (jccm@rnl.ist.utl.pt)
+ *  
  */
 
 package ServidorAplicacao.Servico.commons.student;
@@ -22,62 +20,71 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IServico {
-    
-    private static ReadInfoEnrolmentEvaluationByEvaluationOID servico = new ReadInfoEnrolmentEvaluationByEvaluationOID();
-    
+public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IServico
+{
+
+    private static ReadInfoEnrolmentEvaluationByEvaluationOID servico =
+        new ReadInfoEnrolmentEvaluationByEvaluationOID();
+
     /**
-     * The singleton access method of this class.
-     **/
-    public static ReadInfoEnrolmentEvaluationByEvaluationOID getService() {
+	 * The singleton access method of this class.
+	 */
+    public static ReadInfoEnrolmentEvaluationByEvaluationOID getService()
+    {
         return servico;
     }
-    
+
     /**
-     * The actor of this class.
-     **/
-    private ReadInfoEnrolmentEvaluationByEvaluationOID() { 
+	 * The actor of this class.
+	 */
+    private ReadInfoEnrolmentEvaluationByEvaluationOID()
+    {
     }
-    
+
     /**
-     * Returns The Service Name */
-    
-    public final String getNome() {
+	 * Returns The Service Name
+	 */
+
+    public final String getNome()
+    {
         return "ReadInfoEnrolmentEvaluationByEvaluationOID";
     }
-    
-    
-    public InfoEnrolmentEvaluation run(IUserView userView, Integer enrolmentOID) throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
+
+    public InfoEnrolmentEvaluation run(IUserView userView, Integer enrolmentOID)
+        throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia
+    {
         ISuportePersistente sp = null;
-        
-		GestorServicos serviceManager = GestorServicos.manager();
 
-        
-		IStudentCurricularPlan studentCurricularPlan = null;
-		IEnrolment enrolment = null;
-        try {
-	        sp = SuportePersistenteOJB.getInstance();
-	        
-	        IEnrolment enrolmentTemp = new Enrolment();
-	        enrolmentTemp.setIdInternal(enrolmentOID);
-	        
-	        enrolment = (IEnrolment) sp.getIPersistentEnrolment().readByOId(enrolmentTemp, false);
+        GestorServicos serviceManager = GestorServicos.manager();
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-        
-            
-		InfoEnrolmentEvaluation enrolmentEvaluation = null;
+        IEnrolment enrolment = null;
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
 
-		try {
-			Object args[] = {enrolment};
-			 enrolmentEvaluation = (InfoEnrolmentEvaluation) serviceManager.executar(userView, "GetEnrolmentGrade", args);
-		} catch (FenixServiceException e) {
-			throw new FenixServiceException(e);
-		}
+            IEnrolment enrolmentTemp = new Enrolment();
+            enrolmentTemp.setIdInternal(enrolmentOID);
 
-		return enrolmentEvaluation;
+            enrolment = (IEnrolment) sp.getIPersistentEnrolment().readByOId(enrolmentTemp, false);
+
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+
+        InfoEnrolmentEvaluation enrolmentEvaluation = null;
+
+        try
+        {
+            Object args[] = { enrolment };
+            enrolmentEvaluation =
+                (InfoEnrolmentEvaluation) serviceManager.executar(userView, "GetEnrolmentGrade", args);
+        } catch (FenixServiceException e)
+        {
+            throw new FenixServiceException(e);
+        }
+
+        return enrolmentEvaluation;
     }
-    
+
 }

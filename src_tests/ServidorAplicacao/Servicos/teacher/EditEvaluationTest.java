@@ -10,179 +10,193 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
- * 
+ *  
  */
-public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase {
+public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase
+{
 
-	/**
+    /**
 	 * @param testName
 	 */
-	public EditEvaluationTest(String testName) {
-		super(testName);
-	}
+    public EditEvaluationTest(String testName)
+    {
+        super(testName);
+    }
 
-	/**
+    /**
 	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
-	protected String getNameOfServiceToBeTested() {
-		return "EditEvaluation";
-	}
+    protected String getNameOfServiceToBeTested()
+    {
+        return "EditEvaluation";
+    }
 
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testEditEvaluationMethodDataSet.xml";
-	}
+    protected String getDataSetFilePath()
+    {
+        return "etc/datasets/servicos/teacher/testEditEvaluationMethodDataSet.xml";
+    }
 
-	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testExpectedEditEvaluationMethodDataSet.xml";
-	}
+    protected String getExpectedDataSetFilePath()
+    {
+        return "etc/datasets/servicos/teacher/testExpectedEditEvaluationMethodDataSet.xml";
+    }
 
-	protected String getExpectedNewCurriculumDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testExpectedNewCurriculumEvaluatioMethodDataSet.xml";
-	}
+    protected String getExpectedNewCurriculumDataSetFilePath()
+    {
+        return "etc/datasets/servicos/teacher/testExpectedNewCurriculumEvaluatioMethodDataSet.xml";
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser() {
+    protected String[] getAuthenticatedAndAuthorizedUser()
+    {
 
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "user", "pass", getApplication()};
+        return args;
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser() {
+    protected String[] getAuthenticatedAndUnauthorizedUser()
+    {
 
-		String[] args = { "julia", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "julia", "pass", getApplication()};
+        return args;
+    }
 
-	protected String[] getNotAuthenticatedUser() {
+    protected String[] getNotAuthenticatedUser()
+    {
 
-		String[] args = { "fiado", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "fiado", "pass", getApplication()};
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments() {
+    protected Object[] getAuthorizeArguments()
+    {
 
-		Integer executionCourseCode = new Integer(24);
-		Integer curricularCourseCode = new Integer(14);
+        Integer executionCourseCode = new Integer(24);
+        Integer curricularCourseCode = new Integer(14);
 
-		String evaluationMethodPT = "Evaluation Methods in Portuguese";
-		String evaluationMethodEN = "Evaluation Methods in English";
+        InfoCurriculum infoCurriculum = new InfoCurriculum();
 
-		InfoCurriculum infoCurriculum = new InfoCurriculum();
+        infoCurriculum.setIdInternal(curricularCourseCode);
 
-		infoCurriculum.setIdInternal(curricularCourseCode);
+        Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
 
-		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
+        return args;
+    }
 
-		return args;
-	}
+    protected Object[] getTestEvaluationMethodSuccessfullArguments()
+    {
 
-	protected Object[] getTestEvaluationMethodSuccessfullArguments() {
+        Integer executionCourseCode = new Integer(24);
+        Integer curricularCourseCode = new Integer(14);
 
-		Integer executionCourseCode = new Integer(24);
-		Integer curricularCourseCode = new Integer(14);
+        InfoCurriculum infoCurriculum = new InfoCurriculum();
 
-		String evaluationMethodPT = "Evaluation Methods in Portuguese";
-		String evaluationMethodEN = "Evaluation Methods in English";
+        infoCurriculum.setIdInternal(curricularCourseCode);
 
-		InfoCurriculum infoCurriculum = new InfoCurriculum();
+        Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
 
-		infoCurriculum.setIdInternal(curricularCourseCode);
+        return args;
+    }
 
-		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
+    protected Object[] getTestEvaluationMethodUnsuccessfullArguments()
+    {
 
-		return args;
-	}
+        Integer executionCourseCode = new Integer(24);
+        Integer curricularCourseCode = new Integer(123);
 
-	protected Object[] getTestEvaluationMethodUnsuccessfullArguments() {
+        InfoCurriculum infoCurriculum = new InfoCurriculum();
 
-		Integer executionCourseCode = new Integer(24);
-		Integer curricularCourseCode = new Integer(123);
+        infoCurriculum.setIdInternal(curricularCourseCode);
 
-		String evaluationMethodPT = "Evaluation Methods in Portuguese";
-		String evaluationMethodEN = "Evaluation Methods in English";
+        Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
+        return args;
+    }
 
-		InfoCurriculum infoCurriculum = new InfoCurriculum();
+    protected Object[] getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments()
+    {
 
-		infoCurriculum.setIdInternal(curricularCourseCode);
+        Integer executionCourseCode = new Integer(26);
+        Integer curricularCourseCode = new Integer(16);
 
-		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
-		return args;
-	}
+        InfoCurriculum infoCurriculum = new InfoCurriculum();
 
-	protected Object[] getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments() {
+        infoCurriculum.setIdInternal(curricularCourseCode);
 
-		Integer executionCourseCode = new Integer(26);
-		Integer curricularCourseCode = new Integer(16);
+        Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
+        return args;
+    }
 
-		String evaluationMethodPT = "Evaluation Methods in Portuguese";
-		String evaluationMethodEN = "Evaluation Methods in English";
+    protected String getApplication()
+    {
+        return Autenticacao.EXTRANET;
+    }
 
-		InfoCurriculum infoCurriculum = new InfoCurriculum();
+    public void testEditEvaluationMethod()
+    {
 
-		infoCurriculum.setIdInternal(curricularCourseCode);
+        try
+        {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView userView = authenticateUser(args);
 
-		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
-		return args;
-	}
+            gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
-	protected String getApplication() {
-		return Autenticacao.EXTRANET;
-	}
+            // verificar as alteracoes da bd
+            compareDataSet(getExpectedDataSetFilePath());
 
-	public void testEditEvaluationMethod() {
+        } catch (FenixServiceException ex)
+        {
+            fail("EditEvaluationTest" + ex);
+        } catch (Exception ex)
+        {
+            fail("EditEvaluationTest error on compareDataSet" + ex);
+        }
+    }
 
-		try {
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args);
+    public void testEditEvaluationMethodWithNoCurriculum()
+    {
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+        System.out.println("Starting: testSuccessfullEditEvaluationMethodWithNoCurriculum");
+        try
+        {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView userView = authenticateUser(args);
 
-			// verificar as alteracoes da bd
-			compareDataSet(getExpectedDataSetFilePath());
+            gestor.executar(
+                userView,
+                getNameOfServiceToBeTested(),
+                getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments());
 
-		} catch (FenixServiceException ex) {
-			fail("EditEvaluationTest" + ex);
-		} catch (Exception ex) {
-			fail("EditEvaluationTest error on compareDataSet" + ex);
-		}
-	}
+            // verificar as alteracoes da bd
+            compareDataSet(getExpectedNewCurriculumDataSetFilePath());
 
-	public void testEditEvaluationMethodWithNoCurriculum() {
+            System.out.println("Finished: testSuccessfullEditEvaluationMethodWithNoCurriculum");
+        } catch (FenixServiceException ex)
+        {
+            fail("EditEvaluationTest" + ex);
+        } catch (Exception ex)
+        {
+            fail("EditEvaluationTest error on compareDataSet" + ex);
+        }
+    }
 
-		System.out.println("Starting: testSuccessfullEditEvaluationMethodWithNoCurriculum");
-		try {
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args);
+    public void testEvaluationMethodNotBelongsExecutionCourse()
+    {
 
-			gestor.executar(
-				userView,
-				getNameOfServiceToBeTested(),
-				getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments());
+        Object serviceArguments[] = getTestEvaluationMethodUnsuccessfullArguments();
 
-			// verificar as alteracoes da bd
-			compareDataSet(getExpectedNewCurriculumDataSetFilePath());
+        try
+        {
+            gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+            fail(getNameOfServiceToBeTested() + "fail testEvaluationMethodNotBelongsExecutionCourse");
+        } catch (NotAuthorizedException ex)
+        {
 
-			System.out.println("Finished: testSuccessfullEditEvaluationMethodWithNoCurriculum");
-		} catch (FenixServiceException ex) {
-			fail("EditEvaluationTest" + ex);
-		} catch (Exception ex) {
-			fail("EditEvaluationTest error on compareDataSet" + ex);
-		}
-	}
-
-	public void testEvaluationMethodNotBelongsExecutionCourse() {
-
-		Object serviceArguments[] = getTestEvaluationMethodUnsuccessfullArguments();
-
-		try {
-			 gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
-			fail(getNameOfServiceToBeTested() + "fail testEvaluationMethodNotBelongsExecutionCourse");
-		} catch (NotAuthorizedException ex) {
-
-			System.out.println(
-				"testEvaluationMethodNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-		} catch (Exception ex) {
-			fail(getNameOfServiceToBeTested() + "fail testEvaluationMethodNotBelongsExecutionCourse");
-		}
-	}
+            System.out.println(
+                "testEvaluationMethodNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
+                    + getNameOfServiceToBeTested());
+        } catch (Exception ex)
+        {
+            fail(getNameOfServiceToBeTested() + "fail testEvaluationMethodNotBelongsExecutionCourse");
+        }
+    }
 }

@@ -59,7 +59,6 @@ public class ChangeRelationBetweenCCScopeAndCCOfMathAnalysisA
         initialize();
 
         PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-        ICurricularCourseScope ccs = null;
 
         LinkedList dcpList = new LinkedList();
 

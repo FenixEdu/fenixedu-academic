@@ -5,8 +5,6 @@
  */
 package ServidorAplicacao.Servico.Seminaries;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import DataBeans.Seminaries.InfoCandidacy;
 import DataBeans.util.Cloner;
@@ -53,7 +51,6 @@ public class WriteCandidacy implements IServico
 	public void run(InfoCandidacy infoCandidacy)
 		throws BDException
 	{
-		List seminariesInfo= new LinkedList();
 		try
 		{
 			ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();

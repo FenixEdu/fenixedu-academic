@@ -224,7 +224,6 @@ public class RegisterCandidate implements IServico
             List candidateEnrolments =
                 sp.getIPersistentCandidateEnrolment().readByMDCandidate(masterDegreeCandidate);
 
-            List enrolments = new ArrayList();
             Iterator iterator = candidateEnrolments.iterator();
             while (iterator.hasNext())
             {

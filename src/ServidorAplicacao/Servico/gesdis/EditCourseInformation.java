@@ -11,7 +11,6 @@ import Dominio.IDomainObject;
 import Dominio.gesdis.ICourseReport;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
@@ -76,8 +75,6 @@ public class EditCourseInformation extends EditDomainObjectService
         throws ExcepcaoPersistencia
     {
         IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
-        IDisciplinaExecucaoPersistente persistentExecutionCourse =
-            sp.getIDisciplinaExecucaoPersistente();
 
         ICourseReport oldCourseReport = (ICourseReport) domainObject;
         ICourseReport newCourseReport =

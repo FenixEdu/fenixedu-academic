@@ -5,8 +5,8 @@
  */
 package ServidorAplicacao.Servico.Seminaries;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+
 import Dominio.Seminaries.Candidacy;
 import Dominio.Seminaries.ICandidacy;
 import ServidorAplicacao.IServico;
@@ -46,7 +46,6 @@ public class ChangeCandidacyApprovanceStatus implements IServico
 	}
 	public void run(List candidaciesIDs) throws BDException
 	{
-		List seminariesInfo= new LinkedList();
 		try
 		{
 			ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();

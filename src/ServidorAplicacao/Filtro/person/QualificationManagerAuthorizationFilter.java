@@ -178,24 +178,24 @@ public class QualificationManagerAuthorizationFilter extends Filtro
     {
         ISuportePersistente persistentSuport = null;
         IPersistentQualification persistentQualification = null;
-
+        
         try
         {
             persistentSuport = SuportePersistenteOJB.getInstance();
             persistentQualification = persistentSuport.getIPersistentQualification();
-
+            
             //Try to read the qualification from the database
             IQualification qualification = null;
             qualification =
-                (IQualification) persistentQualification.readByOID(
+            (IQualification) persistentQualification.readByOID(
                     Qualification.class,
                     qualificationKey);
-
+            
             if (qualification == null)
                 return null;
             else
                 return Cloner.copyIQualification2InfoQualification(qualification);
-
+            
         } catch (Exception e)
         {
             return null;

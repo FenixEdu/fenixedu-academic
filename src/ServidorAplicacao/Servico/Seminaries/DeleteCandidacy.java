@@ -6,7 +6,6 @@
 package ServidorAplicacao.Servico.Seminaries;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import Dominio.Seminaries.Candidacy;
@@ -52,7 +51,6 @@ public class DeleteCandidacy implements IServico
         public void run(Integer id)
             throws BDException
         {
-            List seminariesInfo= new LinkedList();
             try
             {
                 ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();

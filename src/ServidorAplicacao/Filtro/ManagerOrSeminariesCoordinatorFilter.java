@@ -4,10 +4,6 @@
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorAplicacao.Filtro;
-import java.util.Collection;
-import java.util.Iterator;
-
-import DataBeans.InfoRole;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
@@ -34,12 +30,6 @@ public class ManagerOrSeminariesCoordinatorFilter extends Filtro
 	}
 	public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
 	{
-		Collection roles= id.getRoles();
-		Iterator iter= roles.iterator();
-		while (iter.hasNext())
-		{
-			InfoRole role= (InfoRole) iter.next();
-		}
 		if (((id != null
 			&& id.getRoles() != null
 			&& !AuthorizationUtils.containsRole(id.getRoles(), getRoleType1())

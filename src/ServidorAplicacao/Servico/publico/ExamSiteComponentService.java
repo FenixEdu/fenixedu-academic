@@ -1,8 +1,6 @@
 /*
  * Created on 6/Mai/2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ *  
  */
 package ServidorAplicacao.Servico.publico;
 
@@ -28,115 +26,121 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
- *
+ * 
+ *  
  */
-public class ExamSiteComponentService implements IServico {
+public class ExamSiteComponentService implements IServico
+{
 
-	private static ExamSiteComponentService _servico =
-		new ExamSiteComponentService();
+    private static ExamSiteComponentService _servico = new ExamSiteComponentService();
 
-	/**
-	  * The actor of this class.
-	  **/
+    /**
+	 * The actor of this class.
+	 */
 
-	private ExamSiteComponentService() {
+    private ExamSiteComponentService()
+    {
 
-	}
+    }
 
-	/**
+    /**
 	 * Returns Service Name
 	 */
-	public String getNome() {
-		return "ExamSiteComponentService";
-	}
+    public String getNome()
+    {
+        return "ExamSiteComponentService";
+    }
 
-	/**
+    /**
 	 * Returns the _servico.
+	 * 
 	 * @return ReadExecutionCourse
 	 */
-	public static ExamSiteComponentService getService() {
-		return _servico;
-	}
+    public static ExamSiteComponentService getService()
+    {
+        return _servico;
+    }
 
-	public Object run(
-		ISiteComponent bodyComponent,
-		String executionYearName,
-		String executionPeriodName,
-		String degreeInitials,
-		String nameDegreeCurricularPlan,
-		List curricularYears)
-		throws FenixServiceException {
+    public Object run(
+        ISiteComponent bodyComponent,
+        String executionYearName,
+        String executionPeriodName,
+        String degreeInitials,
+        String nameDegreeCurricularPlan,
+        List curricularYears)
+        throws FenixServiceException
+    {
 
-		SiteView siteView = null;
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionPeriod persistentExecutionPeriod =
-				sp.getIPersistentExecutionPeriod();
-			IPersistentExecutionYear persistentExecutionYear =
-				sp.getIPersistentExecutionYear();
+        SiteView siteView = null;
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 
-			ICursoExecucaoPersistente executionDegreeDAO =
-				sp.getICursoExecucaoPersistente();
+            ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
 
-			IExecutionYear executionYear =
-				persistentExecutionYear.readExecutionYearByName(
-					executionYearName);
+            IExecutionYear executionYear =
+                persistentExecutionYear.readExecutionYearByName(executionYearName);
 
-			IExecutionPeriod executionPeriod =
-				persistentExecutionPeriod.readByNameAndExecutionYear(
-					executionPeriodName,
-					executionYear);
+            IExecutionPeriod executionPeriod =
+                persistentExecutionPeriod.readByNameAndExecutionYear(executionPeriodName, executionYear);
 
-			ICursoExecucao executionDegree =
-				executionDegreeDAO
-					.readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
-					degreeInitials,
-					nameDegreeCurricularPlan,
-					executionYear);
-//			if (executionDegree != null) {
-//				infoExecutionDegree =
-//					Cloner.copyIExecutionDegree2InfoExecutionDegree(
-//						executionDegree);
-//			}
-			ExamSiteComponentBuilder componentBuilder =
-				ExamSiteComponentBuilder.getInstance();
+            ICursoExecucao executionDegree =
+                executionDegreeDAO.readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
+                    degreeInitials,
+                    nameDegreeCurricularPlan,
+                    executionYear);
+            //			if (executionDegree != null) {
+            //				infoExecutionDegree =
+            //					Cloner.copyIExecutionDegree2InfoExecutionDegree(
+            //						executionDegree);
+            //			}
+            ExamSiteComponentBuilder componentBuilder = ExamSiteComponentBuilder.getInstance();
 
-			bodyComponent =
-				componentBuilder.getComponent(bodyComponent,executionPeriod, executionDegree,curricularYears);
-			siteView = new SiteView(bodyComponent);
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+            bodyComponent =
+                componentBuilder.getComponent(
+                    bodyComponent,
+                    executionPeriod,
+                    executionDegree,
+                    curricularYears);
+            siteView = new SiteView(bodyComponent);
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
 
-		return siteView;
-	}
+        return siteView;
+    }
 
-	private ITurma getDomainClass(
-		String className,
-		Integer curricularYear,
-		IExecutionPeriod executionPeriod,
-		ICursoExecucao executionDegree,
-		ISuportePersistente sp)
-		throws ExcepcaoPersistencia, FenixServiceException {
+    private ITurma getDomainClass(
+        String className,
+        Integer curricularYear,
+        IExecutionPeriod executionPeriod,
+        ICursoExecucao executionDegree,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia, FenixServiceException
+    {
 
-		ITurmaPersistente persistentClass = sp.getITurmaPersistente();
-		ITurma domainClass = null;
+        ITurmaPersistente persistentClass = sp.getITurmaPersistente();
+        ITurma domainClass = null;
 
-		if (curricularYear == null) {
-			domainClass =
-				persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod(
-					className,
-					executionDegree,
-					executionPeriod);
+        if (curricularYear == null)
+        {
+            domainClass =
+                persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod(
+                    className,
+                    executionDegree,
+                    executionPeriod);
 
-		} else {
-			domainClass = new Turma();
-			domainClass.setAnoCurricular(curricularYear);
-			domainClass.setExecutionDegree(executionDegree);
-			domainClass.setExecutionPeriod(executionPeriod);
+        } else
+        {
+            domainClass = new Turma();
+            domainClass.setAnoCurricular(curricularYear);
+            domainClass.setExecutionDegree(executionDegree);
+            domainClass.setExecutionPeriod(executionPeriod);
 
-		}
-		return domainClass;
-	}
+        }
+        return domainClass;
+    }
 }
