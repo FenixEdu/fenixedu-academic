@@ -40,9 +40,9 @@ public class DeleteDegreesActionTest extends TestCasePresentationManagerPortal {
 	 */
 	 protected String[] getActionErrors() 
 	 {
-//		String[] errors = { "errors.invalid.delete.not.empty" };
-//		return errors;
-return null;
+		String[] errors = { "errors.invalid.delete.not.empty" };
+		return errors;
+//return null;
 	 }
 	 
 	/**
@@ -101,7 +101,9 @@ return null;
 	
 	 protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() 
 	 {
-		return null;
+		Map result = new HashMap();
+		result.put("internalIds", "9");
+		return result;
      }
 
 	 protected Map getExistingAttributesListToVerifyInSuccessfulExecution() 
@@ -120,7 +122,11 @@ return null;
 
 	 protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() 
 	 {
-		return null;
+		Map result = new HashMap();
+		List requestAttributtes = new ArrayList(1);
+		requestAttributtes.add(SessionConstants.INFO_DEGREES_LIST);
+		result.put(new Integer(ScopeConstants.REQUEST), requestAttributtes);
+		return result;
 	 }
 
 	 protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() 
