@@ -278,12 +278,12 @@ public abstract class Cloner
 		}
 		else
 		{
-			System.out.println(
-				"Object " + domainObject.getClass().getName() + " implements multiple interfaces!");
+			//System.out.println(
+			//	"Object " + domainObject.getClass().getName() + " implements multiple interfaces!");
 			Class[] parameters = null;
 			for (int i = 0; i < interfaces.length; i++)
 			{
-				System.out.println("  interface: " + interfaces[i].getName());
+				//System.out.println("  interface: " + interfaces[i].getName());
 				if (Arrays.asList(interfaces[i].getInterfaces()).contains(IDomainObject.class)
 					|| ((interfaces[i].getSuperclass() != null)
 						&& (interfaces[i]
