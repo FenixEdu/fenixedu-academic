@@ -24,10 +24,19 @@ public class InvocadorServicosTransaccional extends InvocadorServicos {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			try {
+				System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + servico.getNome());
+				if (user != null)  {
+					System.out.println("USERVIEW= " + user.getUtilizador());
+				} else {
+					System.out.println("USERVIEW= no user view");
+				}
 				sp.iniciarTransaccao();
+				System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + servico.getNome() + "Started Transaction");
 				filterChain.preFiltragem(user, servico, argumentos);
+				System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + servico.getNome() + "Finished PreFilter");
 				result = doInvocation(servico, "run", argumentos);
 				sp.confirmarTransaccao();
+				System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + servico.getNome() + " finished sucessfully.");
 			} catch (Exception ex) {
 					System.out.println("LOGTIME= " + new Date());
 					if (user != null)  {

@@ -1,5 +1,7 @@
 package ServidorAplicacao;
 
+import java.util.Date;
+
 import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.SuportePersistente;
@@ -51,11 +53,16 @@ public class Executor {
 
 	public void doIt(ServicoSeguro ss) throws NotAuthorizeException, NotExecuteException, PersistenceException {
 		try {
-			ss.authorize();
+			System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName());
 			begin();
+			System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName() + "Finished begin Transaction");
+			ss.authorize();
+			System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName() + "Finished Authentication");
 			ss.execute();
 			end();
+			System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName() + " finished sucessfully.");
 		} catch (NotExecuteException e) {
+			System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName() + " aborted.");			
 			cancel();
 			throw e;
 		}
