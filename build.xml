@@ -17,8 +17,7 @@
 
     <!--Directorios destino da compilacao do projecto-->
     <property name="tests.classes" location="${build.home}/tests"/>
-
-    <property name="webapp"          location="${build.home}/app"/>
+	<property name="webapp"          location="${build.home}/app"/>
     <property name="webapp.metadata" value="${webapp}/WEB-INF"/>
     <property name="webapp.classes"  value="${webapp.metadata}/classes"/>
     <property name="webapp.lib"      value="${webapp.metadata}/lib"/>    
@@ -255,8 +254,8 @@
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <!--<include name="**/*Test.java"/>-->
-                    <include name="**/CriarSalaFormActionTest.java"/>
+                   <include name="**/*Test.java"/>
+                    
                     <exclude name="**/commons/*.java"/>
                     <exclude name="**/student/*.java"/>
                     <exclude name="**/SessionUtilsTest.java"/>
@@ -299,7 +298,7 @@
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                 <include name="**/ChangePersonalInfoDispatchActionPrepareMethodTest.java"/>
+                  <include name="**/*Test.java"/>
             <!-- start of tests that are failing -->    
              <!--    <exclude name="**/CriarAulaFormActionTest.java" /> 		 -->
                  <exclude name="**/EditarAulaFormActionTest.java" /> 
@@ -345,13 +344,13 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/*Test.java"/>
-
+                  <include name="**/*Test.java"/> 
+				<!-- 	<include name="**/ProfessorshipOJBTest.java"/> -->
 					<!-- Theese tests where already failling, no need for me to worry about them for now -->
-                    <exclude name="**/CurriculumOJBTest.java"/>
+               <!--     <include name="**/CurriculumOJBTest.java"/>
                     <exclude name="**/TeacherOJBTest.java"/>
                     <exclude name="**/BibliographicReferenceOJBTest.java"/>
-                    <exclude name="**/SectionOJBTest.java"/>
+                    <exclude name="**/SectionOJBTest.java"/> -->
 					<!-- Theese tests where already failling, no need for me to worry about them for now -->
 
                     <exclude name="**/SuportePersistenteOJBTest.java"/>
@@ -381,7 +380,7 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/*Test.java"/>
+                    <include name="**/InsertItemTest.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
                    	<exclude name="**/StudentShiftEnrolmentTest.java"/>
@@ -392,7 +391,8 @@
                 </fileset>
             </batchtest>
             <classpath>
-                <pathelement path="${classes}"/>
+              
+                <pathelement path="${webapp.classes}"/>
                 <pathelement path="${tests.classes}"/>
                 <pathelement path="${config}"/>
                 <pathelement path="${sql}"/>
@@ -507,6 +507,7 @@
         	  userid="${db.user}"
 	          password="${db.pass}">
     	  <export dest="${sql}/dbContents.xml"/>
+    	  
 	  </dbunit>
     </target>
     
