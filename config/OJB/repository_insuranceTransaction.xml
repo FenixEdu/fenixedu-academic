@@ -1,0 +1,143 @@
+<!-- Please keep user defined mappings in this file only
+     to avoid mixing user defined and system mappings. -->   
+<!-- Mapping of User defined classes starts here -->
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.transactions.InsuranceTransaction -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.transactions.InsuranceTransaction" table="INSURANCE_TRANSACTION">
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+	
+	<field-descriptor
+	   	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+	/>
+	
+	<field-descriptor
+	   	name="value"
+      	column="VALUE"
+      	jdbc-type="DOUBLE"
+	/>
+	
+	<field-descriptor
+	   	name="transactionDate"
+      	column="TRANSACTION_DATE"
+      	jdbc-type="TIMESTAMP"
+	/>
+	
+	<field-descriptor 
+		name="remarks"
+		column="REMARKS" 
+		jdbc-type="LONGVARCHAR" 
+	/>
+	
+	<field-descriptor 
+	     name="paymentType"
+	     column="PAYMENT_TYPE"
+	     jdbc-type="INTEGER"
+	     conversion="ServidorPersistente.Conversores.JavaPaymentType2SqlPaymentTypeFieldConversion"
+	/>
+	
+	<field-descriptor 
+	     name="transactionType"
+	     column="TRANSACTION_TYPE"
+	     jdbc-type="INTEGER"
+	     conversion="ServidorPersistente.Conversores.JavaTransactionType2SqlTransactionTypeFieldConversion"
+	/>
+	
+	<field-descriptor
+         name="wasInternalBalance"
+         column="WAS_INTERNAL_BALANCE"
+         jdbc-type="INTEGER"
+         conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
+    />
+		
+	<field-descriptor 
+	    name="keyResponsiblePerson"
+	    column="KEY_RESPONSIBLE_PERSON"
+	    jdbc-type="INTEGER"
+	/>
+	
+	<field-descriptor 
+	    name="keyGuideEntry"
+	    column="KEY_GUIDE_ENTRY"
+	    jdbc-type="INTEGER"
+	/>
+	
+	<field-descriptor 
+	    name="keyExecutionYear"
+	    column="KEY_EXECUTION_YEAR"
+	    jdbc-type="INTEGER"
+	/>
+	
+	<field-descriptor 
+	    name="keyStudent"
+	    column="KEY_STUDENT"
+	    jdbc-type="INTEGER"
+	/>
+	
+	<field-descriptor 
+	    name="keyPersonAccount"
+	    column="KEY_PERSON_ACCOUNT"
+	    jdbc-type="INTEGER"
+	/>
+		
+	<reference-descriptor
+       	name="personAccount"
+       	class-ref="Dominio.PersonAccount"
+       	proxy="true"
+		refresh="true"
+    >
+		<foreignkey field-ref="keyPersonAccount"/>
+	</reference-descriptor>
+	
+	<reference-descriptor
+       	name="responsiblePerson"
+       	class-ref="Dominio.Pessoa"
+       	proxy="true"
+		refresh="true"
+    >
+		<foreignkey field-ref="keyResponsiblePerson"/>
+	</reference-descriptor>
+	
+	<reference-descriptor
+       	name="guideEntry"
+       	class-ref="Dominio.GuideEntry"
+       	proxy="true"
+		refresh="true"
+    >
+		<foreignkey field-ref="keyGuideEntry"/>
+	</reference-descriptor>
+	
+	<reference-descriptor
+       	name="executionYear"
+       	class-ref="Dominio.ExecutionYear"
+       	proxy="true"
+		refresh="true"
+    >
+		<foreignkey field-ref="keyExecutionYear"/>
+	</reference-descriptor>
+	
+	<reference-descriptor
+       	name="student"
+       	class-ref="Dominio.Student"
+       	proxy="true"
+		refresh="true"
+    >
+		<foreignkey field-ref="keyStudent"/>
+	</reference-descriptor>
+		
+</class-descriptor>
+
+
+
+<!-- Mapping of User defined classes ends here -->

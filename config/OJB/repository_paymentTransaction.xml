@@ -1,0 +1,16 @@
+<!-- Please keep user defined mappings in this file only
+     to avoid mixing user defined and system mappings. -->   
+<!-- Mapping of User defined classes starts here -->
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.transactions.PaymentTransaction -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.transactions.PaymentTransaction">
+    <extent-class class-ref="Dominio.transactions.GratuityTransaction" />
+    <extent-class class-ref="Dominio.transactions.SmsTransaction" />	
+    <extent-class class-ref="Dominio.transactions.InsuranceTransaction" />	
+</class-descriptor>
+
+
+
+<!-- Mapping of User defined classes ends here -->
