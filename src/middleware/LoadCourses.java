@@ -36,14 +36,14 @@ public class LoadCourses extends DataFileLoader {
 		try {
 
 			// Obter as interfaces para o suporte persistente.
-			IPersistentCurricularCourse iDisciplinaCurricularPersistente =
-				SuportePersistenteOJB
-					.getInstance()
-					.getIPersistentCurricularCourse();
-			IDisciplinaExecucaoPersistente iDisciplinaExecucaoPersistente =
-				SuportePersistenteOJB
-					.getInstance()
-					.getIDisciplinaExecucaoPersistente();
+//			IPersistentCurricularCourse iDisciplinaCurricularPersistente =
+//				SuportePersistenteOJB
+//					.getInstance()
+//					.getIPersistentCurricularCourse();
+//			IDisciplinaExecucaoPersistente iDisciplinaExecucaoPersistente =
+//				SuportePersistenteOJB
+//					.getInstance()
+//					.getIDisciplinaExecucaoPersistente();
 
 			// Apagar todas as disciplinas execucao.
 			//iDisciplinaExecucaoPersistente.apagarTodasAsDisciplinasExecucao();
@@ -71,11 +71,15 @@ public class LoadCourses extends DataFileLoader {
 			new StringTokenizer(line, getFieldSeparator());
 
 		// Obter os dados da disciplina.
-		String codigoComposto = stringTokenizer.nextToken();
+		//codigo composto
+		stringTokenizer.nextToken();
 		String chaveLicenciatura = stringTokenizer.nextToken();
-		String chaveRamo = stringTokenizer.nextToken();
-		String anoCurricular = stringTokenizer.nextToken();
-		String semestre = stringTokenizer.nextToken();
+		// chave ramo
+		stringTokenizer.nextToken();
+		// ano curricular
+		stringTokenizer.nextToken();
+		// semestre
+		stringTokenizer.nextToken();
 		String codigoDisciplina = stringTokenizer.nextToken();
 		String cargaHorariaTeorica = stringTokenizer.nextToken();
 		String cargaHorariaPratica = stringTokenizer.nextToken();

@@ -47,8 +47,8 @@ public class LoadStudents extends DataFileLoader {
 			// Obter as interfaces para o suporte persistente.
 			IPessoaPersistente iPessoaPersistente =
 				SuportePersistenteOJB.getInstance().getIPessoaPersistente();
-			IPersistentStudent iAlunoPersistente =
-				SuportePersistenteOJB.getInstance().getIPersistentStudent();
+//			IPersistentStudent iAlunoPersistente =
+//				SuportePersistenteOJB.getInstance().getIPersistentStudent();
 
 			// Ler o ficheiro de entrada.
 			BufferedReader bufferedReader =

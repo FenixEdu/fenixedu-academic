@@ -299,12 +299,15 @@ public class LoadCourseEnrolments extends DataFileLoader {
 			new StringTokenizer(line, getFieldSeparator());
 		// Obter os dados da disciplina.
 		String numeroAluno = stringTokenizer.nextToken();
-		String anoCurricular = stringTokenizer.nextToken();
-		String semestre = stringTokenizer.nextToken();
+		//ano curricular
+		stringTokenizer.nextToken();
+		//semestre
+		stringTokenizer.nextToken();
 		String codigoDisciplinaCurricular = stringTokenizer.nextToken();
 		stringTokenizer.nextToken(); // ignora campo
 		String chaveLicenciatura = stringTokenizer.nextToken();
-		String chaveRamo = stringTokenizer.nextToken();
+		// ramo
+		stringTokenizer.nextToken();
 		// Obter interfaces de acesso ao suporte persistente.
 
 		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
