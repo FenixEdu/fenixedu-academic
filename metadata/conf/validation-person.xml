@@ -10,12 +10,12 @@
   <!-- validation for the Password Change form -->
     <form name="changePasswordForm">
       <field property="oldPassword" depends="required">
-        <arg0 key="candidate.oldPasswordError" />
+        <arg0 key="label.candidate.oldPasswordError" />
       </field>
 
         <field property="newPassword"
                depends="required,twoFields">
-                  <arg0 key="candidate.newPasswordError"/>
+                  <arg0 key="label.candidate.newPasswordError"/>
                   <var>
                      <var-name>secondProperty</var-name>
                      <var-value>reTypeNewPassword</var-value>
