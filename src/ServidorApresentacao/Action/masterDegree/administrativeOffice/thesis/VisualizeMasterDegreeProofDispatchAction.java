@@ -22,6 +22,7 @@ import ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionExcept
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.MasterDegreeClassification;
 import Util.TipoCurso;
 
 /**
@@ -113,8 +114,10 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction {
 		if (infoMasterDegreeProofVersion.getInfoJuries().isEmpty() == false)
 			request.setAttribute(SessionConstants.JURIES_LIST, infoMasterDegreeProofVersion.getInfoJuries());
 
+		int classification = infoMasterDegreeProofVersion.getFinalResult().getValue();
+		
 		request.setAttribute(SessionConstants.DISSERTATION_TITLE, infoMasterDegreeThesisDataVersion.getDissertationTitle());
-		request.setAttribute(SessionConstants.FINAL_RESULT, infoMasterDegreeProofVersion.getFinalResult().getName());
+		request.setAttribute(SessionConstants.FINAL_RESULT, MasterDegreeClassification.getClassificationString(classification));
 		request.setAttribute(SessionConstants.ATTACHED_COPIES_NUMBER, infoMasterDegreeProofVersion.getAttachedCopiesNumber());
 		request.setAttribute(SessionConstants.PROOF_DATE, infoMasterDegreeProofVersion.getProofDate());
 		request.setAttribute(SessionConstants.THESIS_DELIVERY_DATE, infoMasterDegreeProofVersion.getThesisDeliveryDate());
