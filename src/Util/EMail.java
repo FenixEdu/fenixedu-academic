@@ -4,14 +4,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.SendFailedException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class EMail extends FenixUtil
 {
@@ -46,6 +53,20 @@ public class EMail extends FenixUtil
 	{
 		return _send(Servidor, Origem, Destino, Assunto, Texto);
 	}
+	/**
+	 * Envia um mail com anexo
+	 */
+	public static boolean send(
+			String Servidor,
+			String Origem,
+			String Destino,
+			String Assunto,
+			String Texto,
+			String fileName,
+			String attachment) {
+		return _send(Servidor, Origem, Destino, Assunto, Texto, fileName, attachment);
+	}
+	
 	public static List send(String server, String fromName, String fromAddress, String subject, List tos, List ccs, List bccs, String body)
 	{
 		List unsentMails = new LinkedList();
@@ -146,6 +167,60 @@ public class EMail extends FenixUtil
 			return false;
 		} catch (MessagingException e)
 		{
+			System.out.println("EMail: Nao foi possivel enviar o email");
+			e.printStackTrace(System.out);
+			return false;
+		}
+		return true;
+	}
+	private static boolean _send(
+			String Servidor,
+			String Origem,
+			String Destino,
+			String Assunto,
+			String Texto,
+			String fileName,
+			String Attachment) {
+		// Configura as propriedades do sistema 
+		Properties props = new Properties();
+		props.put("mail.smtp.host", Servidor);
+
+		// Obtem a sessao 
+		Session sessao = Session.getDefaultInstance(props, null);
+
+		// Cria a mensagem
+		MimeMessage mensagem = new MimeMessage(sessao);
+
+		try {
+			// Define os parametros da mensagem 
+			mensagem.setFrom(new InternetAddress(Origem));
+			mensagem.addRecipient(Message.RecipientType.TO, new InternetAddress(Destino));
+			mensagem.setSubject(Assunto);
+			
+			// Create the message part
+			BodyPart messageBodyPart = new MimeBodyPart();
+
+			// Fill the message
+			messageBodyPart.setText(Texto);
+
+			Multipart multipart = new MimeMultipart();
+			multipart.addBodyPart(messageBodyPart);
+
+			// Part two is attachment
+			messageBodyPart = new MimeBodyPart();
+			DataSource source = new FileDataSource(Attachment);
+			messageBodyPart.setDataHandler(new DataHandler(source));
+			messageBodyPart.setFileName(fileName);
+			multipart.addBodyPart(messageBodyPart);
+
+			mensagem.setContent(multipart);
+			
+			Transport.send(mensagem);
+		} catch (AddressException e) {
+			System.out.println("EMail: Nao foi possivel enviar o email");
+			e.printStackTrace(System.out);
+			return false;
+		} catch (MessagingException e) {
 			System.out.println("EMail: Nao foi possivel enviar o email");
 			e.printStackTrace(System.out);
 			return false;
