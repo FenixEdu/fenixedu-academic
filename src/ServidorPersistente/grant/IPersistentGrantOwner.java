@@ -6,6 +6,7 @@ package ServidorPersistente.grant;
  */
 import java.util.List;
 
+import DataBeans.grant.list.InfoSpanByCriteriaListGrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
@@ -19,7 +20,7 @@ public interface IPersistentGrantOwner extends IPersistentObject{
 	public IGrantOwner readGrantOwnerByPersonID(String idNumber, TipoDocumentoIdentificacao idType) throws ExcepcaoPersistencia;
 	public Integer readMaxGrantOwnerNumber() throws ExcepcaoPersistencia;
     public List readAll() throws ExcepcaoPersistencia;
-    public List readAllGrantOwnersWithActiveContractBySpan(Integer spanNumber, Integer numberOfElementsInSpan, String orderBy) throws ExcepcaoPersistencia;
     public List readAllGrantOwnersBySpan(Integer spanNumber, Integer numberOfElementsInSpan, String orderBy) throws ExcepcaoPersistencia;
+    public List readAllGrantOwnersBySpanAndCriteria(InfoSpanByCriteriaListGrantOwner infoSpanByCriteriaListGrantOwner) throws ExcepcaoPersistencia;
     public Integer countAll();
 }

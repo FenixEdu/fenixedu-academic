@@ -4,6 +4,8 @@
  */
 package DataBeans.grant.list;
 
+import java.util.Date;
+
 import DataBeans.InfoObject;
 
 
@@ -17,11 +19,49 @@ public class InfoListGrantOwnerByOrder extends InfoObject
 	private Integer grantOwnerNumber;
 	private String firstName;
 	private String lastName;
+	private Integer contractNumber; //Only used in the list of grant owner by criteria
+	private Date beginContract; //Only used in the list of grant owner by criteria
+	private Date endContract; //Only used in the list of grant owner by criteria
 	private String grantType; //Sigla of the grantType
 	private String insurancePaymentEntity; //Number of the paymentEntity
-	private Boolean repeated; //If a grant owner has a repeated entry (more than one active contract)
 	
 	
+    /**
+     * @return Returns the beginContract.
+     */
+    public Date getBeginContract() {
+        return beginContract;
+    }
+    /**
+     * @param beginContract The beginContract to set.
+     */
+    public void setBeginContract(Date beginContract) {
+        this.beginContract = beginContract;
+    }
+    /**
+     * @return Returns the endContract.
+     */
+    public Date getEndContract() {
+        return endContract;
+    }
+    /**
+     * @param endContract The endContract to set.
+     */
+    public void setEndContract(Date endContract) {
+        this.endContract = endContract;
+    }
+    /**
+     * @return Returns the contractNumber.
+     */
+    public Integer getContractNumber() {
+        return contractNumber;
+    }
+    /**
+     * @param contractNumber The contractNumber to set.
+     */
+    public void setContractNumber(Integer contractNumber) {
+        this.contractNumber = contractNumber;
+    }
 	/**
 	 * @return Returns the firstName.
 	 */
@@ -105,19 +145,5 @@ public class InfoListGrantOwnerByOrder extends InfoObject
 	public void setGrantOwnerNumber(Integer grantOwnerNumber)
 	{
 		this.grantOwnerNumber = grantOwnerNumber;
-	}
-	/**
-	 * @return Returns the repeated.
-	 */
-	public Boolean getRepeated()
-	{
-		return repeated;
-	}
-	/**
-	 * @param repeated The repeated to set.
-	 */
-	public void setRepeated(Boolean repeated)
-	{
-		this.repeated = repeated;
 	}
 }

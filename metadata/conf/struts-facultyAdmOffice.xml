@@ -242,6 +242,21 @@
 				<form-property name="numberOfElementsInSpan" type="java.lang.Integer"/>
 				<form-property name="totalElements" type="java.lang.Integer"/>
 				<form-property name="orderBy" type="java.lang.String"/>
+				<form-property name="ascendingOrder" type="java.lang.Boolean"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
+
+			<form-bean name="listGrantOwnerByCriteriaForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="spanNumber" type="java.lang.Integer"/>
+				<form-property name="numberOfElementsInSpan" type="java.lang.Integer"/>
+				<form-property name="totalElements" type="java.lang.Integer"/>
+				<form-property name="orderBy" type="java.lang.String"/>
+				<form-property name="ascendingOrder" type="java.lang.Boolean"/>
+				
+				<form-property name="filterType" type="java.lang.Integer"/>
+				<form-property name="beginContract" type="java.lang.String"/>
+				<form-property name="endContract" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 				
@@ -677,6 +692,19 @@
    			parameter="method"
 		    validate="true"
    			type="ServidorApresentacao.Action.grant.list.ListGrantOwnerAction">
+   			<forward name="list-grant-owner" path="listGrantOwner"/>
+   			<forward name="show-grant-owner" path="showGrantOwner"/>
+    </action>
+
+    <!-- ================ USE CASE: LIST GRANT OWNER BY CRITERIA ====================== -->
+	<action path="/listGrantOwnerByCriteria" 
+			input="/listGrantOwnerByCriteria.do?page=0&amp;method=prepareListGrantOwnerByCriteria"
+			name="listGrantOwnerByCriteriaForm" 
+			scope="request"
+   			parameter="method"
+		    validate="true"
+   			type="ServidorApresentacao.Action.grant.list.ListGrantOwnerActionByCriteria">
+   			<forward name="select-criteria" path="selectCriteria"/>
    			<forward name="list-grant-owner" path="listGrantOwner"/>
    			<forward name="show-grant-owner" path="showGrantOwner"/>
     </action>

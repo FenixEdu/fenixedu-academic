@@ -97,6 +97,17 @@
 		<put name="body" value="/facultyAdmOffice/grant/list/showGrantOwner.jsp"></put>
 	</definition>
 	
+	<!-- GRANT OWNER BY CRITERIA LIST -->
+	<definition name="selectCriteria" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/list/selectCriteriaToListGrantOwner.jsp"></put>
+	</definition>
+	<definition name="listGrantOwner" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/list/listGrantOwnerByCriteria.jsp"></put>
+	</definition>
+	<definition name="showGrantOwner" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/list/showGrantOwner.jsp"></put>
+	</definition>
+
 
 	<!-- GRANT CORRECTIONS -->
 	<definition name="correctGrantOwner" extends="facultyAdmOffice.masterPage">

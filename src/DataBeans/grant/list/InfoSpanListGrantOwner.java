@@ -15,7 +15,20 @@ public class InfoSpanListGrantOwner extends InfoObject {
     private Integer numberOfElementsInSpan;
     private String orderBy;
     private Integer totalElements;
+    private Boolean ascendingOrder;
 
+    /**
+     * @return Returns the ascendingOrder.
+     */
+    public Boolean getAscendingOrder() {
+        return ascendingOrder;
+    }
+    /**
+     * @param ascendingOrder The ascendingOrder to set.
+     */
+    public void setAscendingOrder(Boolean ascendingOrder) {
+        this.ascendingOrder = ascendingOrder;
+    }
     /**
      * @return Returns the numberOfElementsInSpan.
      */

@@ -1,10 +1,12 @@
 package ServidorPersistente.OJB.grant.contract;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
+import DataBeans.grant.list.InfoSpanByCriteriaListGrantOwner;
 import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.IGrantContract;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -72,4 +74,30 @@ public class GrantContractOJB extends ServidorPersistente.OJB.ObjectFenixOJB
     	criteria.addLessOrEqualThan("contractRegimes.dateEndContract",Calendar.getInstance().getTime());
     	return queryList(GrantContract.class, criteria);
 	}
+    
+    public List readAllContractsByGrantOwnerAndCriteria(Integer grantOwnerId, InfoSpanByCriteriaListGrantOwner infoSpanByCriteriaListGrantOwner) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("key_grant_owner", grantOwnerId);
+        criteria.addEqualTo("contractRegimes.state", new Integer(1));
+        
+        if(infoSpanByCriteriaListGrantOwner.getJustActiveContract() != null && 
+                infoSpanByCriteriaListGrantOwner.getJustActiveContract().booleanValue()) { 
+            criteria.addGreaterOrEqualThan("contractRegimes.dateEndContract",Calendar.getInstance().getTime());
+            criteria.addEqualTo("endContractMotive","");
+        }
+        if(infoSpanByCriteriaListGrantOwner.getJustDesactiveContract() != null && 
+                infoSpanByCriteriaListGrantOwner.getJustDesactiveContract().booleanValue()) {
+            criteria.addLessOrEqualThan("contractRegimes.dateEndContract",Calendar.getInstance().getTime());
+            criteria.addNotEqualTo("endContractMotive","");
+        }
+        
+        if(infoSpanByCriteriaListGrantOwner.getBeginContract() != null) {
+            criteria.addGreaterOrEqualThan("contractRegimes.dateBeginContract",infoSpanByCriteriaListGrantOwner.getBeginContract());
+        } 
+        if(infoSpanByCriteriaListGrantOwner.getEndContract() != null) {
+            criteria.addLessOrEqualThan("contractRegimes.dateEndContract",infoSpanByCriteriaListGrantOwner.getEndContract());
+        }
+            
+        return queryList(GrantContract.class, criteria);
+    }
 }
