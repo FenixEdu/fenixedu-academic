@@ -4,7 +4,9 @@
 <%@ page import="java.util.Collection" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="Util.RoleType" %>
+<%@ page import="Util.SituationName" %>
 <%@ page import="DataBeans.InfoRole" %>
+<%@ page import="DataBeans.InfoMasterDegreeCandidate" %>
 <%@ page import="ServidorAplicacao.Servico.UserView" %>
 
 
@@ -268,13 +270,20 @@
 		 </td>
         </tr>
 
-
-		<tr>
-        <td colspan="2">
-           <html:submit property="Alterar">Alterar Dados</html:submit>
-           <html:reset property="Reset">Dados Originais</html:reset>
-        </td>
-        </tr>
-
    </table>
-      </html:form>     
+   <html:submit property="Alterar">Alterar Dados</html:submit>
+   
+   <html:reset property="Reset">Dados Originais</html:reset>
+   
+   <% InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE); 
+      if (!infoMasterDegreeCandidate.getInfoCandidateSituation().getSituation().equals(SituationName.PRE_CANDIDATO_STRING)) {	%>
+       <html:link page="/editCandidate.do?method=changePassword" target="_blank">
+       		<bean:message key="link.masterDegree.administrativeOffice.changePassword" />
+       	</html:link>
+   <% } %>
+   	<br>
+
+	</html:form>     
+
+      
+      

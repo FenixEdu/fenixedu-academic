@@ -67,6 +67,8 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			DynaActionForm createGuideForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
 
+			session.removeAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR);
+			
 			// Clean The Form
 			createGuideForm.set("degree", null);
 			createGuideForm.set("number", null);
@@ -234,7 +236,8 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			DynaActionForm createGuideForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-				
+			InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;					
+			String password = null;
 			// Get the information
 
 			String othersRemarks = (String) createGuideForm.get("othersRemarks");
@@ -277,8 +280,8 @@ public class CreateGuideDispatchAction extends DispatchAction {
 				(situationOfGuide.equals(SituationOfGuide.PAYED_TYPE))) 
 				if ((newInfoGuide.getInfoPerson().getPassword() == null) || (newInfoGuide.getInfoPerson().getPassword().length() == 0)){
 					// Generate the password
-
-					newInfoGuide.getInfoPerson().setPassword(RandomStringGenerator.getRandomStringGenerator(8));					
+					password = RandomStringGenerator.getRandomStringGenerator(8);
+					newInfoGuide.getInfoPerson().setPassword(password);					
 
 System.out.println("New Password: " + newInfoGuide.getInfoPerson().getPassword());
 
@@ -302,22 +305,15 @@ System.out.println("New Password: " + newInfoGuide.getInfoPerson().getPassword()
 					// Put variable in Session to Inform that it's necessary to print the password
 
 					session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
-					InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;					
 					try {
 						Object args[] = { newInfoGuide.getInfoExecutionDegree(), newInfoGuide.getInfoPerson()};
 						infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "ReadCandidateListByPersonAndExecutionDegree", args);
 					} catch (FenixServiceException e) {
 						throw new FenixActionException();
 					}
-					
-					session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
-					
 				}
-
-
 			session.removeAttribute(SessionConstants.GUIDE);
 			session.setAttribute(SessionConstants.GUIDE, newInfoGuide);
-
 	
 			return mapping.findForward("CreateSuccess");
 			

@@ -60,6 +60,7 @@ public class PrintGuideDispatchAction extends DispatchAction {
 				} catch (FenixServiceException e) {
 					throw new FenixActionException();
 				}
+				infoMasterDegreeCandidate.getInfoPerson().setPassword(infoGuide.getInfoPerson().getPassword());
 				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
 				
 			} else if (infoGuide.getGuideRequester().equals(GuideRequester.STUDENT_TYPE)){

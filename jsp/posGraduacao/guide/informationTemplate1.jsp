@@ -11,9 +11,7 @@
 
     <body>
     
-    <bean:define id="guide" name="<%= SessionConstants.GUIDE %>" scope="session" />
     <bean:define id="candidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" />     
-    
     
     <table width="100%" height="100%" border="0">
     <tr height="30"><td>
@@ -58,11 +56,11 @@
           </tr>
           <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.requesterName"/> </td>
-            <td> <bean:write name="guide" property="infoPerson.nome"/> </td>
+            <td> <bean:write name="candidate" property="infoPerson.nome"/> </td>
           </tr>
           <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.degree"/> </td>
-            <td> <bean:write name="guide" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/> </td>
+            <td> <bean:write name="candidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/> </td>
           </tr>
           <tr>
             <td> <bean:message key="label.candidate.candidateNumber"/> </td>
@@ -74,23 +72,23 @@
           </tr>
           <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.executionYear"/> </td>
-            <td> <bean:write name="guide" property="infoExecutionDegree.infoExecutionYear.year"/> </td>
+            <td> <bean:write name="candidate" property="infoExecutionDegree.infoExecutionYear.year"/> </td>
           </tr>
           <tr>
             <td> <bean:message key="label.candidate.identificationDocumentNumber"/> </td>
-            <td> <bean:write name="guide" property="infoPerson.numeroDocumentoIdentificacao"/> </td>
+            <td> <bean:write name="candidate" property="infoPerson.numeroDocumentoIdentificacao"/> </td>
           </tr>
           <tr>
             <td> <bean:message key="label.candidate.identificationDocumentType"/> </td>
-            <td> <bean:write name="guide" property="infoPerson.tipoDocumentoIdentificacao"/> </td>
+            <td> <bean:write name="candidate" property="infoPerson.tipoDocumentoIdentificacao"/> </td>
           </tr>
           <tr>
             <td> <bean:message key="label.candidate.username"/> </td>
-            <td> <bean:write name="guide" property="infoPerson.username"/> </td>
+            <td> <bean:write name="candidate" property="infoPerson.username"/> </td>
           </tr>
           <tr>
             <td> <bean:message key="label.candidate.password"/> </td>
-            <td> <bean:write name="guide" property="infoPerson.password"/> </td>
+            <td> <bean:write name="candidate" property="infoPerson.password"/> </td>
           </tr>
           <tr>
             <td> <bean:message key="label.candidate.accessAddress"/> </td>
@@ -135,6 +133,5 @@
     </tr>
     </table>
     
-	
     </body>
 </html>

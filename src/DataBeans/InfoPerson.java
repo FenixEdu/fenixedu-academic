@@ -140,6 +140,8 @@ public class InfoPerson {
 		buffer.append(this.getTipoDocumentoIdentificacao());
 		buffer.append(",Nome=");
 		buffer.append(this.getNome());
+		buffer.append(",Password=");
+		buffer.append(this.getPassword());
 		buffer.append("]");
 		return buffer.toString();
 	}

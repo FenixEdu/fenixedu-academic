@@ -63,6 +63,7 @@
          	name="person"
          	class-ref="Dominio.Pessoa"
          	proxy="true"
+			refresh="true"
       	  >
           <foreignkey field-id-ref="2"/>
           </reference-descriptor>
@@ -72,6 +73,7 @@
          	name="executionDegree"
          	class-ref="Dominio.CursoExecucao"
          	proxy="true"
+			refresh="true"
       	  >
           <foreignkey field-id-ref="3"/>
           </reference-descriptor>
@@ -140,6 +142,7 @@
          	name="masterDegreeCandidate"
          	class-ref="Dominio.MasterDegreeCandidate"
          	proxy="true"
+			refresh="true"
       	  >
           <foreignkey field-id-ref="5"/>
           </reference-descriptor>
@@ -269,6 +272,7 @@
          	name="contributor"
          	class-ref="Dominio.Contributor"
          	proxy="true"
+			refresh="true"
       	  >
           <foreignkey field-ref="keyContributor"/>
       </reference-descriptor>
@@ -277,6 +281,7 @@
          	name="person"
          	class-ref="Dominio.Pessoa"
          	proxy="true"
+			refresh="true"
       	  >
           <foreignkey field-ref="keyPerson"/>
       </reference-descriptor>
@@ -285,6 +290,7 @@
      	name="executionDegree"
      	class-ref="Dominio.CursoExecucao"
      	proxy="true"
+			refresh="true"
       >
       <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
@@ -360,6 +366,7 @@
          	name="guide"
          	class-ref="Dominio.Guide"
          	proxy="true"
+			refresh="true"
       	  >
           <foreignkey field-ref="keyGuide"/>
       </reference-descriptor>
@@ -416,6 +423,7 @@
          	name="guide"
          	class-ref="Dominio.Guide"
          	proxy="true"
+			refresh="true"
       	  >
           <foreignkey field-ref="keyGuide"/>
       </reference-descriptor>

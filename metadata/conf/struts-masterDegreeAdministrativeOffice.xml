@@ -274,11 +274,12 @@
 		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.ListCandidatesDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
-		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+     		 <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareReady" path="/changeCandidate.jsp"/>  
 	         <forward name="ChangeSuccess" path="/visualizeCandidate.jsp"/>  
+	         <forward name="ChangePasswordSuccess" path="/guide/informationTemplate1.jsp"/>  
       </action>
       
       
@@ -346,6 +347,7 @@
       	      name="createContributorForm"
 		      path="/editContributor"
 		      parameter="method"
+		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
               validate="true">
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
@@ -388,6 +390,43 @@
 	         <forward name="ActionReady" path="/guide/visualizeGuide.jsp"/>  
 	         <forward name="ShowVersionList" path="/guide/chooseVersionPage.jsp"/>  
       </action>
+
+
+      <!-- action to choose a guide -->
+      <action attribute="chooseGuideForm"
+      		  input="/guide/chooseGuide.jsp"
+      	      name="chooseGuideForm"
+		      path="/changeGuideDispatchAction"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.ChooseGuideDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="PrepareReady" path="/guide/chooseGuide.jsp"/> 
+	         <forward name="ActionReady" path="/guide/visualizeGuide.jsp"/>  
+	         <forward name="ShowVersionList" path="/guide/chooseVersionPage.jsp"/>  
+      </action>
+
+
+
+	  <!-- Action to Edit ONE Guide -->
+      <action attribute="editGuideForm"
+      		  input="/guide/editGuide.jsp"
+      	      name="editGuideForm"
+		      path="/editContributor"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.ChooseGuideDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="EditReady" path="/guide/editContributor.jsp"/>  
+	         <forward name="EditSuccess" path="/guide/editContributorSuccess.jsp"/>  
+      </action>
+
 
       <!-- Create Guide -->
       <action attribute="guideCreateReadyForm"
