@@ -62,7 +62,6 @@ public class SendWebSiteSectionFileToServer implements IServico {
 			IWebSiteSection webSiteSection = new WebSiteSection(sectionCode);
 			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOId(webSiteSection, false);
 
-			System.out.println("seccao de " + webSiteSection.getName());
 			List webSiteItems = persistentWebSiteItem.readPublishedWebSiteItemsByWebSiteSection(webSiteSection);
 			List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
 				public Object transform(Object arg0) {
@@ -75,7 +74,6 @@ public class SendWebSiteSectionFileToServer implements IServico {
 
 			InfoWebSiteSection infoWebSiteSection = Cloner.copyIWebSiteSection2InfoWebSiteSection(webSiteSection);
 			infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
-			System.out.println("tamanho da lista de items: " + infoWebSiteItems.size());
 
 			//****************************** build excerpts file ********************************************
 			ArrayList excerptsList = new ArrayList();
@@ -354,26 +352,21 @@ public class SendWebSiteSectionFileToServer implements IServico {
 
 	private String putItem(String itemFile, InfoWebSiteItem infoWebSiteItem) {
 		// item's main entry
-		//		itemFile = itemFile.concat("<tr>\n\t<td align='left'>\n\t\t");
 		itemFile = itemFile.concat("<p>");
 		itemFile = itemFile.concat(infoWebSiteItem.getMainEntryText());
-		//		itemFile = itemFile.concat("\n\t</td>\n</tr>\n");
-		//		itemFile = itemFile.concat("<tr>\n\t<td align='left'>\n\t\t");
 		itemFile = itemFile.concat("<br/><br/>\n");
 		itemFile = itemFile.concat(infoWebSiteItem.getInfoEditor().getNome());
 		itemFile = itemFile.concat("<br/>\n");
-		//		itemFile = itemFile.concat("\n\t</td>\n</tr>\n");
-		//		itemFile = itemFile.concat("<tr>\n\t<td align='left'>\n\t\t");
 		itemFile =
-			itemFile.concat("<a href='mailto:" + infoWebSiteItem.getInfoEditor().getEmail()
-				+ "'>"
-				+ infoWebSiteItem.getInfoEditor().getEmail()
-				+ "</a>");
+			itemFile.concat(
+				"<a href='mailto:"
+					+ infoWebSiteItem.getInfoEditor().getEmail()
+					+ "'>"
+					+ infoWebSiteItem.getInfoEditor().getEmail()
+					+ "</a>");
 		itemFile = itemFile.concat("</p>\n");
 		itemFile = itemFile.concat("\t</td>\n</tr>\n");
 
-		//		itemFile = itemFile.concat("<br/><br/>\n");
-		//		itemFile = itemFile.concat("\n\t</td>\n</tr>\n");
 		return itemFile;
 	}
 
@@ -382,11 +375,9 @@ public class SendWebSiteSectionFileToServer implements IServico {
 		stringFile = stringFile.concat("<tr>\n\t<td class='info_cell_holder' width='30%'>\n\t\t");
 		stringFile = stringFile.concat("<h3><strong>");
 		stringFile = stringFile.concat(infoWebSiteItem.getTitle());
-		//		stringFile = stringFile.concat("\n\t</td>\n</tr>\n");
 
 		// item's dates
 		if (infoWebSiteItem.getItemBeginDayCalendar() != null) {
-			//			stringFile = stringFile.concat("<tr>\n\t<td align='left'>\n\t\t");
 			stringFile = stringFile.concat("<br/>");
 			stringFile = stringFile.concat("<span class='greytxt'>");
 
@@ -410,7 +401,6 @@ public class SendWebSiteSectionFileToServer implements IServico {
 
 		}
 		stringFile = stringFile.concat("</strong></h3>\n");
-		//		stringFile = stringFile.concat("\n\t</td>\n</tr>\n");
 
 		return stringFile;
 	}
@@ -420,7 +410,6 @@ public class SendWebSiteSectionFileToServer implements IServico {
 		calendar.setTime(infoWebSiteItem.getOnlineBeginDay());
 
 		// item's excerpt
-		//		excerptsFile = excerptsFile.concat("<tr>\n\t<td align='left'>\n\t\t");
 		excerptsFile = excerptsFile.concat("<p>");
 		excerptsFile = excerptsFile.concat(infoWebSiteItem.getExcerpt());
 		excerptsFile =
