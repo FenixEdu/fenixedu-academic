@@ -184,11 +184,10 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                         } catch (FenixServiceException e)
                         {
                             throw new FenixActionException(e);
-                        }
-						
-                        conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate, "/");
-                        Date dateConclusion = Data.convertStringDate( conclusionDate, "/");
-						conclusionDate= DateFormat.getDateInstance().format(dateConclusion);
+                        }				
+                        conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate, "-");
+                        //Date dateConclusion = Data.convertStringDate( conclusionDate, "-");
+						//conclusionDate= DateFormat.getDateInstance().format(dateConclusion);
                         String dataAux = null;
                         Object result = null;
                         Iterator iterator = enrolmentList.iterator();
