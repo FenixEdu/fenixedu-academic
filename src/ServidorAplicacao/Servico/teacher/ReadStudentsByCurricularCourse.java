@@ -3,12 +3,11 @@ package ServidorAplicacao.Servico.teacher;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteCommon;
-import DataBeans.InfoSiteStudentsCurricularPlan;
-import DataBeans.InfoStudentCurricularPlan;
+import DataBeans.InfoSiteStudents;
+import DataBeans.InfoStudent;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourseScope;
@@ -20,7 +19,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IFrequenta;
 import Dominio.ISite;
-import Dominio.IStudentCurricularPlan;
+import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -82,20 +81,18 @@ public class ReadStudentsByCurricularCourse implements IServico {
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 			site = persistentSite.readByExecutionCourse(executionCourse);
 
-			List enrolments = new ArrayList();
+			List studentsList = new ArrayList();
 			if (scopeCode == null) {
 
 				//				all students that attend this execution course
 				IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
-				List studentsAttend = (List) frequentaPersistente.readByExecutionCourse(executionCourse);
+				List attendList = (List) frequentaPersistente.readByExecutionCourse(executionCourse);
 
-				ListIterator iterStudent = studentsAttend.listIterator();
+				Iterator iterStudent = attendList.listIterator();
 				while (iterStudent.hasNext()) {
 					IFrequenta attend = (Frequenta) iterStudent.next();
-					IEnrolment enrolment = attend.getEnrolment();
-					if (enrolment != null) {
-						enrolments.add(enrolment);
-					}
+					IStudent student = attend.getAluno();
+					studentsList.add(student);
 				}
 			} else {
 
@@ -104,21 +101,29 @@ public class ReadStudentsByCurricularCourse implements IServico {
 				IEnrolment enrolmentForCriteria = new Enrolment();
 				enrolmentForCriteria.setCurricularCourseScope(curricularCourseScope);
 				IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
-				enrolments = (List) persistentEnrolment.readByCriteria(enrolmentForCriteria);
+				List enrolments = (List) persistentEnrolment.readByCriteria(enrolmentForCriteria);
+
+				Iterator iterEnrolments = enrolments.listIterator();			
+				while (iterEnrolments.hasNext()) {
+					IEnrolment enrolment = (IEnrolment) iterEnrolments.next();
+					IStudent student = enrolment.getStudentCurricularPlan().getStudent();
+					studentsList.add(student);
+				}
 
 				IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 				curricularCourseScope =
 					(ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
 
 			}
+			
+			Iterator iterStudents = studentsList.listIterator();
+			
+			while (iterStudents.hasNext()) {
 
-			Iterator iterEnrolments = enrolments.listIterator();
-			while (iterEnrolments.hasNext()) {
-				IEnrolment enrolment = (IEnrolment) iterEnrolments.next();
-				IStudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
-				InfoStudentCurricularPlan infoStudentCurricularPlan =
-					Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
-				infoStudentList.add(infoStudentCurricularPlan);
+				IStudent student = (IStudent) iterStudents.next();
+				InfoStudent infoStudent =
+					Cloner.copyIStudent2InfoStudent(student);
+				infoStudentList.add(infoStudent);
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
@@ -127,7 +132,7 @@ public class ReadStudentsByCurricularCourse implements IServico {
 			throw newEx;
 		}
 
-		InfoSiteStudentsCurricularPlan infoSiteStudents = new InfoSiteStudentsCurricularPlan();
+		InfoSiteStudents infoSiteStudents = new InfoSiteStudents();
 		infoSiteStudents.setStudents(infoStudentList);
 		if (curricularCourseScope != null) {
 			infoSiteStudents.setInfoCurricularCourseScope(

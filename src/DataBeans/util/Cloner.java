@@ -1786,7 +1786,7 @@ public abstract class Cloner {
 	public static InfoMark copyIMark2InfoMark(IMark mark) {
 		InfoMark infoMark = new InfoMark();
 		InfoFrequenta infoFrequenta = new InfoFrequenta();
-		infoFrequenta = copyIFrequenta2InfoFrequenta(mark.getFrequenta());
+		infoFrequenta = copyIFrequenta2InfoFrequenta(mark.getAttend());
 		InfoExam infoExam = new InfoExam();
 		infoExam = copyIExam2InfoExam(mark.getExam());
 		
@@ -1806,7 +1806,7 @@ public abstract class Cloner {
 
 		copyObjectProperties(mark, infoMark);
 		mark.setExam((IExam)infoMark.getInfoExam());
-		mark.setFrequenta((IFrequenta)infoMark.getInfoFrequenta());
+		mark.setAttend((IFrequenta)infoMark.getInfoFrequenta());
 		return mark;
 	}
 	/**

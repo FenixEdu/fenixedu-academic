@@ -8,31 +8,31 @@ import java.util.ListIterator;
  *
  * 
  */
-public class InfoSiteStudentsCurricularPlan implements ISiteComponent {
+public class InfoSiteStudents implements ISiteComponent {
 
 	private InfoCurricularCourseScope infoCurricularCourseScope;
 	private List students;
 
 	public boolean equals(Object objectToCompare) {
 		boolean result = false;
-		if (objectToCompare instanceof InfoSiteStudentsCurricularPlan
-			&& (((((InfoSiteStudentsCurricularPlan) objectToCompare).getInfoCurricularCourseScope() != null
+		if (objectToCompare instanceof InfoSiteStudents
+			&& (((((InfoSiteStudents) objectToCompare).getInfoCurricularCourseScope() != null
 				&& this.getInfoCurricularCourseScope() != null
-				&& ((InfoSiteStudentsCurricularPlan) objectToCompare).getInfoCurricularCourseScope().equals(this.getInfoCurricularCourseScope()))
-				|| ((InfoSiteStudentsCurricularPlan) objectToCompare).getInfoCurricularCourseScope() == null
+				&& ((InfoSiteStudents) objectToCompare).getInfoCurricularCourseScope().equals(this.getInfoCurricularCourseScope()))
+				|| ((InfoSiteStudents) objectToCompare).getInfoCurricularCourseScope() == null
 				&& this.getInfoCurricularCourseScope() == null))) {
 			result = true;
 		}
 
-		if (((InfoSiteStudentsCurricularPlan) objectToCompare).getStudents() == null && this.getStudents() == null) {
+		if (((InfoSiteStudents) objectToCompare).getStudents() == null && this.getStudents() == null) {
 			return true;
 		}
-		if (((InfoSiteStudentsCurricularPlan) objectToCompare).getStudents() == null
+		if (((InfoSiteStudents) objectToCompare).getStudents() == null
 			|| this.getStudents() == null
-			|| ((InfoSiteStudentsCurricularPlan) objectToCompare).getStudents().size() != this.getStudents().size()) {
+			|| ((InfoSiteStudents) objectToCompare).getStudents().size() != this.getStudents().size()) {
 			return false;
 		}
-		ListIterator iter1 = ((InfoSiteStudentsCurricularPlan) objectToCompare).getStudents().listIterator();
+		ListIterator iter1 = ((InfoSiteStudents) objectToCompare).getStudents().listIterator();
 		ListIterator iter2 = this.getStudents().listIterator();
 		while (result && iter1.hasNext()) {
 			InfoStudent infoStudent1 = (InfoStudent) iter1.next();
