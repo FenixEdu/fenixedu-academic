@@ -7,15 +7,15 @@
 <h2><bean:message key="title.masterDegree.administrativeOffice.chooseDegree" /></h2>
 <br />
 <span class="error"><html:errors/></span>
-<html:form action="/marksManagementDispatchAction?method=chooseExecutionCourse">
+<logic:present name="<%= SessionConstants.DEGREE_LIST %>">
+<html:form action="/marksManagementDispatchAction?method=chooseCurricularCourse">
 	<table>
     <!-- Degree -->
     	<tr>
         	<td><bean:message key="label.masterDegree.administrativeOffice.degree"/>: </td>
          	<td>
             	<html:select property="degree">
-			   		<option value="" selected="selected"><bean:message key="label.candidate.degree.default"/></option>
-               		<html:options collection="<%= SessionConstants.DEGREE_LIST %>" property="infoDegreeCurricularPlan.infoDegree.nome" labelProperty="infoDegreeCurricularPlan.infoDegree.nome"/>
+               		<html:options collection="<%= SessionConstants.DEGREE_LIST %>" property="infoDegreeCurricularPlan.infoDegree.sigla" labelProperty="infoDegreeCurricularPlan.infoDegree.nome"/>
              	</html:select>          
          	</td>
         </tr>
@@ -23,3 +23,4 @@
 	<br />
 	<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
 </html:form>
+</logic:present>

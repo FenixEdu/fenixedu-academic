@@ -1,0 +1,79 @@
+package ServidorAplicacao.Servico.masterDegree.administrativeOffice;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
+import DataBeans.util.Cloner;
+import Dominio.ICurricularCourse;
+import Dominio.ICursoExecucao;
+import Dominio.IExecutionYear;
+import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+
+/**
+ * @author Fernanda Quitério
+ * 01/07/2003
+ * 
+ */
+public class ReadCurricularCoursesByDegree implements IServico {
+
+	private static ReadCurricularCoursesByDegree servico = new ReadCurricularCoursesByDegree();
+
+	/**
+	 * The singleton access method of this class.
+	 **/
+	public static ReadCurricularCoursesByDegree getService() {
+		return servico;
+	}
+
+	/**
+	 * The actor of this class.
+	 **/
+	private ReadCurricularCoursesByDegree() {
+	}
+
+	/**
+	 * Returns The Service Name */
+
+	public final String getNome() {
+		return "ReadCurricularCoursesByDegree";
+	}
+
+	public List run(String executionYearString, String degreeName) throws FenixServiceException {
+		List infoCurricularCourses = null;
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+			// Get the Actual Execution Year
+			IExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
+
+			// Read degree
+			ICursoExecucao cursoExecucao =
+				sp.getICursoExecucaoPersistente().readByDegreeCodeAndExecutionYear(degreeName, executionYear);
+
+			if (cursoExecucao.getCurricularPlan().getCurricularCourses() == null
+				|| cursoExecucao.getCurricularPlan().getCurricularCourses().size() == 0) {
+				throw new NonExistingServiceException();
+			}
+
+			infoCurricularCourses = new ArrayList();
+			ListIterator iterator = cursoExecucao.getCurricularPlan().getCurricularCourses().listIterator();
+			while (iterator.hasNext()) {
+				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+				infoCurricularCourses.add(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+			}
+
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		}
+
+		return infoCurricularCourses;
+	}
+}

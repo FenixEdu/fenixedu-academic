@@ -226,13 +226,14 @@
 			<form-property name="studentGuideList" type="java.lang.String"/>
       </form-bean>
 
-	  <!-- Bean to Choose Master Degree  -->
-      <form-bean name="chooseMasterDegreeForm" 
+	  <!-- Bean to Choose Execution Course and Master Degree  -->
+      <form-bean name="marksManagementForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
             <form-property name="degree" type="java.lang.String" />
+            <form-property name="curricularCourseCode" type="java.lang.Integer" />
       </form-bean>
 
 
@@ -736,15 +737,18 @@
 
       <action path="/marksManagementDispatchAction"
       		  input="/marksManagement/chooseMasterDegree.jsp"
-      	      name="chooseMasterDegreeForm"
+      	      name="marksManagementForm"
 		      parameter="method"
 		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.MarksManagementDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-		                key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+     		 <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="ChooseMasterDegree" path="/marksManagement/chooseMasterDegree.jsp"/> 
+	         <forward name="ChooseCurricularCourse" path="/marksManagement/chooseCurricularCourse.jsp"/> 
+	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 
+	         
       </action>
     </action-mappings>
     

@@ -91,7 +91,7 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public ICursoExecucao readByDegreeCodeAndExecutionYear(
-		String degreeName,
+		String degreeCode,
 		IExecutionYear executionYear)
 		throws ExcepcaoPersistencia;
 
