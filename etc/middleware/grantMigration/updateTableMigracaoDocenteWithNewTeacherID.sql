@@ -1,1 +1,0 @@
-select concat('update mwgrant_migracao_docente set new_id_internal=',t.id_internal,' where codigoInterno=',d.codigoInterno,';') as "" from mwgrant_migracao_docente d inner join TEACHER t on d.numero=t.TEACHER_NUMBER;

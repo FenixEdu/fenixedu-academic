@@ -182,6 +182,7 @@ create table EXECUTION_PERIOD (
    SEMESTER int (11) not null,
    BEGIN_DATE date not null,
    END_DATE date not null,
+   KEY_PREVIOUS_EXECUTION_PERIOD int (11),
    primary key (ID_INTERNAL),
    unique U1 (NAME, KEY_EXECUTION_YEAR))
    type=InnoDB comment="InnoDB free: 373760 kB";

@@ -1,1 +1,0 @@
-select concat('insert into GRANT_TYPE values (', mwg.codigoInterno, ',1,"', mwg.nome, '","', mwg.sigla, '",', mwg.periodoMinimo, ',', mwg.periodoMaximo, ',', mwg.valorIndicativo, ',"', mwg.origem, '",null);') as "" from mwgrant_tipobolsa mwg;
