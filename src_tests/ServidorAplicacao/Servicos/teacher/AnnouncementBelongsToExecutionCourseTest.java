@@ -1,17 +1,13 @@
-/*
- * Created on 8/Out/2003
- *
- */
-
 package ServidorAplicacao.Servicos.teacher;
 
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Barbosa
  * @author Pica
- *
+ * Created on 8/Out/2003
  */
 
 public abstract class AnnouncementBelongsToExecutionCourseTest
@@ -21,68 +17,50 @@ public abstract class AnnouncementBelongsToExecutionCourseTest
 		super(name);
 	}
 
-	protected void AnnouncementBelongsToExecutionCourseTestSuccessful() {
-		Object serviceArguments[] = getTestAnnouncementSuccessfullArguments();
-
-		Object result = null;
-
+	public void testAnnouncementNotBelongsToExecutionCourse() {
+		Object[] serviceArguments = getAnnouncementUnsuccessfullArguments();
+		IUserView userView = authenticateUser(getAuthorizedUser());
+		
 		try {
-			result =
-				gestor.executar(
-					userView,
-					getNameOfServiceToBeTested(),
-					serviceArguments);
-			System.out.println(
-				"AnnouncementBelongsToExecutionCourseTestSuccessful was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-
-		} catch (NotAuthorizedException ex) {
-
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				serviceArguments);
 			fail(
-				getNameOfServiceToBeTested()
-					+ "fail AnnouncementBelongsToExecutionCourseTestSuccessful");
-
-		} catch (Exception ex) {
-			fail(
-				"Não foi possivel correr o serviço"
+				"Fail AnnouncementBelongsToExecutionCourseTestUnsuccessful"
 					+ getNameOfServiceToBeTested());
-		}
-	}
-
-	protected void AnnouncementBelongsToExecutionCourseTestUnsuccessful() {
-		Object serviceArguments[] = getTestAnnouncementUnsuccessfullArguments();
-
-		Object result = null;
-
-		try {
-			result =
-				gestor.executar(
-					userView,
-					getNameOfServiceToBeTested(),
-					serviceArguments);
-			fail(getNameOfServiceToBeTested()
-				+ "fail AnnouncementBelongsToExecutionCourseTestUnsuccessful");
-
 		} catch (NotAuthorizedException ex) {
+			/*
+			 * O anúncio existe mas não pertence à disciplina.
+			 * Os pré-filtros lançam uma excepcao NotAuthorizedException,
+			 * o serviço não chega a ser invocado
+			 */
+			//Comparacao do dataset
+			//compareDataSet(getDataSetFilePath());
 			System.out.println(
 				"AnnouncementBelongsToExecutionCourseTestUnsuccessful was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
-			
+
 		} catch (Exception ex) {
 			fail(
-				"Não foi possivel correr o serviço"
+				"Fail AnnouncementBelongsToExecutionCourseTestUnsuccessful"
 					+ getNameOfServiceToBeTested());
 		}
 	}
 
+	/*
+	 *  (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase
+	 */
 	protected abstract String[] getAuthorizedUser();
 	protected abstract String[] getUnauthorizedUser();
 	protected abstract String[] getNonTeacherUser();
 	protected abstract String getNameOfServiceToBeTested();
 	protected abstract Object[] getAuthorizeArguments();
 	protected abstract String getDataSetFilePath();
-	protected abstract Object[] getNonAuthorizeArguments();
-	protected abstract Object[] getTestAnnouncementSuccessfullArguments();
-	protected abstract Object[] getTestAnnouncementUnsuccessfullArguments();
 	protected abstract String getApplication();
+	/*
+	 * Anúncio que não pertence à disciplina escolhida
+	 */
+	protected abstract Object[] getAnnouncementUnsuccessfullArguments();
 }
