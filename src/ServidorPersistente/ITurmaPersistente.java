@@ -12,7 +12,6 @@ package ServidorPersistente;
  */
 import java.util.List;
 
-import DataBeans.InfoExecutionPeriod;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurma;

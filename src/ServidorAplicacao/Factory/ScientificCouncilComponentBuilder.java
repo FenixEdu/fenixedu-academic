@@ -1,0 +1,183 @@
+/*
+ * Created on 23/Jul/2003
+ *
+ * 
+ */
+package ServidorAplicacao.Factory;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import DataBeans.ISiteComponent;
+import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoSiteCurricularCourses;
+import DataBeans.InfoSiteDegreeCurricularPlans;
+import DataBeans.InfoSiteSCDegrees;
+import DataBeans.util.Cloner;
+import Dominio.Curso;
+import Dominio.DegreeCurricularPlan;
+import Dominio.ICurricularCourse;
+import Dominio.ICurso;
+import Dominio.IDegreeCurricularPlan;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.DegreeCurricularPlanState;
+
+/**
+ * @author João Mota
+ *
+ * 23/Jul/2003
+ * fenix-head
+ * ServidorAplicacao.Factory
+ * 
+ */
+public class ScientificCouncilComponentBuilder {
+
+	private static ScientificCouncilComponentBuilder instance = null;
+
+	public ScientificCouncilComponentBuilder() {
+	}
+
+	public static ScientificCouncilComponentBuilder getInstance() {
+		if (instance == null) {
+			instance = new ScientificCouncilComponentBuilder();
+		}
+		return instance;
+	}
+
+	public ISiteComponent getComponent(
+		ISiteComponent component,
+		Integer degreeId,
+		Integer curricularYear,
+		Integer degreeCurricularPlanId)
+		throws FenixServiceException {
+		if (component instanceof InfoSiteSCDegrees) {
+			return getInfoSiteSCDegrees((InfoSiteSCDegrees) component);
+		} else if (component instanceof InfoSiteDegreeCurricularPlans) {
+			return getInfoSiteDegreeCurricularPlans(
+				(InfoSiteDegreeCurricularPlans) component,
+				degreeId);
+		} else if (component instanceof InfoSiteCurricularCourses) {
+			return getInfoSiteCurricularCourses(
+				(InfoSiteCurricularCourses) component,
+			degreeCurricularPlanId);
+		} else {
+			System.out.println("dei bronca aqui");
+			return null;
+		}
+
+	}
+
+	/**
+	 * @param courses
+	 * @param degreeCurricularPlanId
+	 * @return
+	 */
+	private ISiteComponent getInfoSiteCurricularCourses(InfoSiteCurricularCourses component, Integer degreeCurricularPlanId) throws FenixServiceException {
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			
+			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
+				sp.getIPersistentDegreeCurricularPlan();
+			IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan(degreeCurricularPlanId);
+			degreeCurricularPlan= (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(degreeCurricularPlan,false);
+			if (degreeCurricularPlan==null) {
+				throw new InvalidArgumentsServiceException();
+			}
+			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+			List curricularCourses = persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
+			Iterator iter = curricularCourses.iterator();
+			List infoCurricularCourses = new ArrayList();
+			while (iter.hasNext()){
+				ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+				InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+				infoCurricularCourses.add(infoCurricularCourse);
+			}
+			component.setCurricularCourses(infoCurricularCourses);
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+
+		return component;
+	}
+
+	/**
+	 * @param courses
+	 * @param degreeId
+	 * @param curricularYear
+	 * @return
+	 */
+	private ISiteComponent getInfoSiteDegreeCurricularPlans(
+		InfoSiteDegreeCurricularPlans component,
+		Integer degreeId)
+		throws FenixServiceException {
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			ICursoPersistente persistentDegree = sp.getICursoPersistente();
+			ICurso degree = new Curso(degreeId);
+			degree = (ICurso) persistentDegree.readByOId(degree, false);
+			if (degree == null) {
+				throw new InvalidArgumentsServiceException();
+			}
+			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
+				sp.getIPersistentDegreeCurricularPlan();
+			List degreeCurricularPlans =
+				persistentDegreeCurricularPlan.readByDegreeAndState(
+					degree,
+					new DegreeCurricularPlanState(1));
+			Iterator iter = degreeCurricularPlans.iterator();
+			List infoDegreeCurricularPlans = new ArrayList();
+			while (iter.hasNext()) {
+				IDegreeCurricularPlan degreeCurricularPlan =
+					(IDegreeCurricularPlan) iter.next();
+				InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+					Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
+						degreeCurricularPlan);
+				infoDegreeCurricularPlans.add(infoDegreeCurricularPlan);
+			}
+			component.setDegreeCurricularPlans(infoDegreeCurricularPlans);
+
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+
+		return component;
+	}
+
+	/**
+	 * @param component
+	 * @return
+	 */
+	private ISiteComponent getInfoSiteSCDegrees(InfoSiteSCDegrees component)
+		throws FenixServiceException {
+
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			ICursoPersistente persistentDegree = sp.getICursoPersistente();
+			List degrees = persistentDegree.readAll();
+			Iterator degreeIterator = degrees.iterator();
+			List infoDegrees = new ArrayList();
+			while (degreeIterator.hasNext()) {
+				ICurso degree = (ICurso) degreeIterator.next();
+				InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(degree);
+				infoDegrees.add(infoDegree);
+			}
+
+			component.setDegrees(infoDegrees);
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+
+		return component;
+	}
+
+}

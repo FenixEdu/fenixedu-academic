@@ -39,6 +39,10 @@ public class Curso extends DomainObject implements ICurso {
 	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */
 	public Curso() {
 	}
+	
+	public Curso(Integer idInternal) {
+		setIdInternal(idInternal);
+		}
 
 	public Curso(String sigla, String nome, TipoCurso tipoCurso) {
 		setSigla(sigla);

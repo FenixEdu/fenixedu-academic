@@ -25,6 +25,7 @@
 <!ENTITY sigla SYSTEM "repository_sigla.xml">
 <!ENTITY thor SYSTEM "repository_thor.xml">
 <!ENTITY almeida_coddis SYSTEM "repository_almeida_coddis.xml">
+<!ENTITY scientific_council SYSTEM "repository_scientificCouncil.xml">
 ]>
 
 
@@ -55,5 +56,6 @@
     &sigla;
     &thor;
     &almeida_coddis;
+    &scientific_council;
 	
 </descriptor-repository>

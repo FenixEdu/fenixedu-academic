@@ -92,7 +92,10 @@
             <param-name>config/equivalence</param-name>
             <param-value>/WEB-INF/conf/struts-equivalence.xml</param-value>
         </init-param>
-        
+        <init-param>
+            <param-name>config/scientificCouncil</param-name>
+            <param-value>/WEB-INF/conf/struts-scientificCouncil.xml</param-value>
+        </init-param>
         <init-param>
             <param-name>debug</param-name>
             <param-value>3</param-value>

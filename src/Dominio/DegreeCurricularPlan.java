@@ -32,6 +32,10 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 	public DegreeCurricularPlan() {
 	}
 
+	public DegreeCurricularPlan(Integer idInternal) {
+		setIdInternal(idInternal);
+		}
+		
 	public DegreeCurricularPlan(String nome, ICurso degree) {
 		setName(nome);
 		setDegree(degree);

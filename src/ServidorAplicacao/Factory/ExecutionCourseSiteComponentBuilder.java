@@ -1,8 +1,7 @@
 /*
  * Created on 5/Mai/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ *
  */
 package ServidorAplicacao.Factory;
 
@@ -59,13 +58,11 @@ import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentSummary;
-import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -240,7 +237,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		ISuportePersistente sp;
 		List allSections = null;
 		List infoSectionsList = null;
-		List infoCurricularCourseScopeList = null;
+	
 		List infoCurricularCourseList = null;
 		try {
 			// read sections	
@@ -437,21 +434,15 @@ public class ExecutionCourseSiteComponentBuilder {
 		ISite site)
 		throws FenixServiceException {
 		List infoCurricularCourseList = new ArrayList();
-		List infoCurricularCourseScopeList = null;
+		
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+		
+		
+		
 			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 
 			infoCurricularCourseList = readCurricularCourses(executionCourse);
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-			FenixServiceException newEx = new FenixServiceException(ex);
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
+		
 
 		component.setAssociatedCurricularCourses(infoCurricularCourseList);
 		return component;
@@ -513,8 +504,7 @@ public class ExecutionCourseSiteComponentBuilder {
 				persistentBibliographicReference =
 					sp.getIPersistentBibliographicReference();
 
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+			
 
 			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 
@@ -748,8 +738,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
 		List responsibleDomainTeachersList = null;
-		IPersistentTeacher persistentTeacher =
-			persistentSupport.getIPersistentTeacher();
+		
 		IPersistentResponsibleFor persistentResponsibleFor =
 			persistentSupport.getIPersistentResponsibleFor();
 		responsibleDomainTeachersList =

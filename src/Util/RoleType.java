@@ -31,6 +31,7 @@ public final class RoleType extends ValuedEnum {
 	public static final int CREDITS_MANAGER_DEPARTMENT_TYPE = 14;
 	public static final int ERASMUS_TYPE = 15;
 	public static final int DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER_TYPE = 16;
+	public static final int SCIENTIFIC_COUNCIL_TYPE = 17;
 	
 	public static final RoleType PERSON = new RoleType("person", RoleType.PERSON_TYPE);
 	public static final RoleType STUDENT = new RoleType("student", RoleType.STUDENT_TYPE);
@@ -48,6 +49,8 @@ public final class RoleType extends ValuedEnum {
 	public static final RoleType CREDITS_MANAGER_DEPARTMENT = new RoleType("creditsManagerDepartment",RoleType.CREDITS_MANAGER_DEPARTMENT_TYPE);
 	public static final RoleType DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER = new RoleType("degreeAdministrativeOfficeSuperUser",RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER_TYPE);
 	public static final RoleType ERASUMS = new RoleType("erasmus",RoleType.ERASMUS_TYPE);
+	public static final RoleType SCIENTIFIC_COUNCIL = new RoleType("scientificCouncil",RoleType.SCIENTIFIC_COUNCIL_TYPE);
+	
 	
 	/**
 	 * @param name

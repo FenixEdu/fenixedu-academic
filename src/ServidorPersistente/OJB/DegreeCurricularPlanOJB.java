@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.CurricularCourse;
@@ -17,6 +18,7 @@ import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.DegreeCurricularPlanState;
 
 /**
  * @author dcs-rjao
@@ -170,6 +172,16 @@ public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersiste
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
+	
+	public List readByDegreeAndState(ICurso degree,DegreeCurricularPlanState state) throws ExcepcaoPersistencia{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("degree.nome",degree.getNome());
+		criteria.addEqualTo("degree.sigla",degree.getSigla());
+		criteria.addEqualTo("degree.tipoCurso",degree.getTipoCurso());
+		criteria.addEqualTo("state",state);
+		
+		return queryList(DegreeCurricularPlan.class, criteria);
 	}
 
 }

@@ -17,7 +17,7 @@ import Util.CurricularCourseType;
  *
  * @author  tfc130
  */
-public class InfoCurricularCourse  extends InfoObject{
+public class InfoCurricularCourse  extends InfoObject implements Comparable{
 	private String name;
 	private String code;
 	private Double credits;
@@ -304,4 +304,31 @@ public class InfoCurricularCourse  extends InfoObject{
 		this.university = university;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(Object arg0) {
+		int result=0;
+		if (getMinScope() < ((InfoCurricularCourse)arg0).getMinScope()){
+			result = -1;
+		} else if (getMinScope() > ((InfoCurricularCourse)arg0).getMinScope()) {
+			return 1;
+		}
+		return result;
+	}
+
+	private int getMinScope() {
+		int minScope=0;
+		List scopes = getInfoScopes();
+		Iterator iter = scopes.iterator();
+		while (iter.hasNext()) {
+			InfoCurricularCourseScope infoScope = (InfoCurricularCourseScope) iter.next();
+			if (minScope==0 || minScope > infoScope.getInfoCurricularSemester().getInfoCurricularYear().getYear().intValue()){
+				minScope = infoScope.getInfoCurricularSemester().getInfoCurricularYear().getYear().intValue();
+			}
+		}
+		
+		
+		return minScope;
+	}
 }
