@@ -1,1 +1,0 @@
-alter table TEACHER_DEGREE_FINAL_PROJECT_STUDENT add PERCENTAGE float not null default '100.0';
