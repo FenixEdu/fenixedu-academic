@@ -1002,7 +1002,7 @@
 	</reference-descriptor>
 	
 	<reference-descriptor
-			name="funcionario"
+			name="employee"
 			class-ref="Dominio.Funcionario"
 			proxy="false">
 		<foreignkey field-ref="employeeKey"/>
