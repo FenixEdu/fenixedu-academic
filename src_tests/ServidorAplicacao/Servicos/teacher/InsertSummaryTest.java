@@ -2,10 +2,20 @@ package ServidorAplicacao.Servicos.teacher;
 
 import java.util.Calendar;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
+
+import Dominio.ISummary;
+import Dominio.Summary;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
 /**
@@ -22,11 +32,11 @@ public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/testInsertSummaryDataSet.xml";
+		return "etc/datasets/testInsertSummaryDataSet.xml";
 	}
 
 	protected String getExpectedDataSetFilePath() {
-		return "etc/testExpectedInsertSummaryDataSet.xml";
+		return "etc/datasets/testExpectedInsertSummaryDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {
@@ -54,7 +64,6 @@ public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase {
 	protected Object[] getAuthorizeArguments() {
 
 		Integer executionCourseId = new Integer(24);
-		Integer summaryId = new Integer(262);
 
 		Calendar summaryDate = Calendar.getInstance();
 		summaryDate.set(Calendar.DAY_OF_MONTH, 1);
@@ -64,18 +73,18 @@ public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase {
 		Calendar summaryHour = Calendar.getInstance();
 		summaryHour.set(Calendar.HOUR_OF_DAY, 12);
 		summaryHour.set(Calendar.MINUTE, 0);
+		summaryHour.set(Calendar.SECOND, 0);
 
-		int tipoAula = TipoAula.DUVIDAS;
 		String title = "Titulo";
 		String text = "Texto do sumario";
+		Integer tipoAula = new Integer(TipoAula.DUVIDAS);
 
 		Object[] args =
 			{
 				executionCourseId,
-				summaryId,
 				summaryDate,
 				summaryHour,
-				new Integer(tipoAula),
+				tipoAula,
 				title,
 				text };
 		return args;
@@ -88,13 +97,60 @@ public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase {
 	public void testSuccessfull() {
 
 		try {
-			String[] args = getAuthorizedUser();
-			IUserView userView = authenticateUser(args);
+			String[] args1 = getAuthorizedUser();
+			IUserView userView = authenticateUser(args1);
 
-			gestor.executar(
-				userView,
-				getNameOfServiceToBeTested(),
-				getAuthorizeArguments());
+			Object[] args2 = getAuthorizeArguments();
+
+			gestor.executar(userView, getNameOfServiceToBeTested(), args2);
+
+			PersistenceBroker broker =
+				PersistenceBrokerFactory.defaultPersistenceBroker();
+
+			Criteria criteria = new Criteria();
+			criteria.addOrderBy("lastModifiedDate", false);
+			Query queryCriteria = new QueryByCriteria(Summary.class, criteria);
+			ISummary summary =
+				(ISummary) broker.getObjectByQuery(queryCriteria);
+			broker.close();
+
+			// verificar se o sumario foi inserido na base de dados
+			Calendar expectedSummaryDate = (Calendar) args2[1];
+			Calendar expectedSummaryHour = (Calendar) args2[2];
+
+			assertEquals(
+				summary.getExecutionCourse().getIdInternal(),
+				(Integer) args2[0]);
+			assertEquals(
+				summary.getSummaryDate().get(Calendar.DAY_OF_MONTH),
+				expectedSummaryDate.get(Calendar.DAY_OF_MONTH));
+			assertEquals(
+				summary.getSummaryDate().get(Calendar.MONTH),
+				expectedSummaryDate.get(Calendar.MONTH));
+			assertEquals(
+				summary.getSummaryDate().get(Calendar.YEAR),
+				expectedSummaryDate.get(Calendar.YEAR));
+			assertEquals(
+				summary.getSummaryHour().get(Calendar.HOUR_OF_DAY),
+				expectedSummaryHour.get(Calendar.HOUR_OF_DAY));
+			assertEquals(
+				summary.getSummaryHour().get(Calendar.MINUTE),
+				expectedSummaryHour.get(Calendar.MINUTE));
+			assertEquals(
+				summary.getSummaryHour().get(Calendar.SECOND),
+				expectedSummaryHour.get(Calendar.SECOND));
+			assertEquals(
+				summary.getSummaryType().getTipo(),
+				(Integer) args2[3]);
+			assertEquals(summary.getTitle(), (String) args2[4]);
+			assertEquals(summary.getSummaryText(), (String) args2[5]);
+
+			// apaga o sumario inserido para verificar se nao houve mais nenhuma alteracao da bd
+			Integer summaryId = summary.getIdInternal();
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
+			sp.getIPersistentSummary().deleteByOID(Summary.class, summaryId);
+			sp.confirmarTransaccao();
 
 			// verificar as alteracoes da bd
 			compareDataSet(getExpectedDataSetFilePath());

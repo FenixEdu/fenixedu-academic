@@ -27,7 +27,11 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/testReadSummaryDataSet.xml";
+		return "etc/datasets/testReadSummaryDataSet.xml";
+	}
+
+	protected String getExpectedDataSetFilePath() {
+		return "etc/datasets/testExpectedReadSummaryDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {
@@ -77,7 +81,7 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 	public void testSuccessfull() {
 
 		try {
-			
+
 			SiteView result = null;
 
 			String[] args = getAuthorizedUser();
@@ -102,9 +106,9 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 			InfoSummary infoSummary = infoSiteSummary.getInfoSummary();
 			ISummary oldSummary = Cloner.copyInfoSummary2ISummary(infoSummary);
 
-			assertEquals(newSummary, oldSummary);
+			assertTrue(newSummary.compareTo(oldSummary));
 			// verifica se a base de dados nao foi alterada
-			compareDataSet(getDataSetFilePath());
+			compareDataSet(getExpectedDataSetFilePath());
 		}
 		catch (FenixServiceException ex) {
 			fail("Reading the Summary of a Site" + ex);

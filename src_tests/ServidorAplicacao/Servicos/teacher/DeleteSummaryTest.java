@@ -16,11 +16,11 @@ public class DeleteSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/testDeleteSummaryDataSet.xml";
+		return "etc/datasets/testDeleteSummaryDataSet.xml";
 	}
 
 	protected String getExpectedDataSetFilePath() {
-		return "etc/testExpectedDeleteSummaryDataSet.xml";
+		return "etc/datasets/testExpectedDeleteSummaryDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {

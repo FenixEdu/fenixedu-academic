@@ -27,30 +27,27 @@ public abstract class SummaryBelongsExecutionCourseTestCase
 
 		Object serviceArguments[] = getAuthorizeArguments();
 
-		Object result = null;
-
 		try {
-			result =
-				gestor.executar(
-					userView,
-					getNameOfServiceToBeTested(),
-					serviceArguments);
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				serviceArguments);
 			System.out.println(
 				"testSummaryBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 
 		}
 		catch (NotAuthorizedException ex) {
-			compareDataSet(getDataSetFilePath());
 			fail(
 				getNameOfServiceToBeTested()
-					+ "fail testSummaryBelongsExecutionCourse");
+					+ " testSummaryBelongsExecutionCourse "
+					+ ex);
 		}
 		catch (Exception ex) {
-			compareDataSet(getDataSetFilePath());
 			fail(
 				getNameOfServiceToBeTested()
-					+ "fail testSummaryBelongsExecutionCourse");
+					+ " testSummaryBelongsExecutionCourse "
+					+ ex);
 		}
 	}
 
@@ -58,20 +55,16 @@ public abstract class SummaryBelongsExecutionCourseTestCase
 
 		Object serviceArguments[] = getTestSummaryUnsuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result =
-				gestor.executar(
-					userView3,
-					getNameOfServiceToBeTested(),
-					serviceArguments);
+			gestor.executar(
+				userView3,
+				getNameOfServiceToBeTested(),
+				serviceArguments);
 			fail(
 				getNameOfServiceToBeTested()
-					+ "fail testSummaryNotBelongsExecutionCourse");
+					+ " testSummaryNotBelongsExecutionCourse");
 		}
 		catch (NotAuthorizedException ex) {
-
 			System.out.println(
 				"testItemNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
@@ -79,7 +72,7 @@ public abstract class SummaryBelongsExecutionCourseTestCase
 		catch (Exception ex) {
 			fail(
 				getNameOfServiceToBeTested()
-					+ "fail testSummaryNotBelongsExecutionCourse");
+					+ " testSummaryNotBelongsExecutionCourse" + ex);
 		}
 	}
 

@@ -27,11 +27,11 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/testEditSummaryDataSet.xml";
+		return "etc/datasets/testEditSummaryDataSet.xml";
 	}
 
 	protected String getExpectedDataSetFilePath() {
-		return "etc/testExpectedSummaryDataSet.xml";
+		return "etc/datasets/testExpectedEditSummaryDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {
@@ -166,9 +166,8 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 			sp.confirmarTransaccao();
 
 			// verificar se o sumario foi alterado na base de dados
-			Calendar expectedSummaryDate = (Calendar) args2[1];
-			Calendar expectedSummaryHour = (Calendar) args2[2];
-
+			Calendar expectedSummaryDate = (Calendar) args2[2];
+			Calendar expectedSummaryHour = (Calendar) args2[3];
 			assertEquals(
 				summary.getSummaryDate().get(Calendar.DAY_OF_MONTH),
 				expectedSummaryDate.get(Calendar.DAY_OF_MONTH));
