@@ -1,14 +1,13 @@
 /*
  * InfoExam.java
- *
+ * 
  * Created on 2003/03/19
  */
 
 package DataBeans;
 
 /**
- *
- * @author  Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz & Sara Ribeiro
  */
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,11 +28,10 @@ public class InfoExam extends InfoEvaluation implements ISiteComponent {
 	protected String publishmentMessage;
 
 	/**
-	 * The following variable serves the purpose of indicating the
-	 * execution course associated with this exam through which 
-	 * the exam was obtained. It should serve only for view purposes!!!
-	 * It was created to be used and set by the ExamsMap Utilities.
-	 * It has no meaning in the business logic.
+	 * The following variable serves the purpose of indicating the execution
+	 * course associated with this exam through which the exam was obtained. It
+	 * should serve only for view purposes!!! It was created to be used and set
+	 * by the ExamsMap Utilities. It has no meaning in the business logic.
 	 */
 	private InfoExecutionCourse infoExecutionCourse;
 
@@ -92,7 +90,9 @@ public class InfoExam extends InfoEvaluation implements ISiteComponent {
 
 	/**
 	 * Sets the beginning.
-	 * @param beginning The beginning to set
+	 * 
+	 * @param beginning
+	 *            The beginning to set
 	 */
 	public void setBeginning(Calendar beginning) {
 		this.beginning = beginning;
@@ -100,7 +100,9 @@ public class InfoExam extends InfoEvaluation implements ISiteComponent {
 
 	/**
 	 * Sets the day.
-	 * @param day The day to set
+	 * 
+	 * @param day
+	 *            The day to set
 	 */
 	public void setDay(Calendar day) {
 		this.day = day;
@@ -108,7 +110,9 @@ public class InfoExam extends InfoEvaluation implements ISiteComponent {
 
 	/**
 	 * Sets the end.
-	 * @param end The end to set
+	 * 
+	 * @param end
+	 *            The end to set
 	 */
 	public void setEnd(Calendar end) {
 		this.end = end;
@@ -325,5 +329,25 @@ public class InfoExam extends InfoEvaluation implements ISiteComponent {
 		} else {
 			return false;
 		}
+	}
+
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if (obj instanceof InfoExam) {
+			InfoExam infoExam = (InfoExam) obj;
+
+			result =
+				getIdInternal().equals(infoExam.getIdInternal())
+						&& getDate().equals(infoExam.getDate())
+						&& getEnrollmentBeginDayFormatted().equals(
+							infoExam.getEnrollmentBeginDayFormatted())
+						&& getEnrollmentBeginTimeFormatted().equals(
+							infoExam.getEnrollmentBeginTimeFormatted())
+						&& getEnrollmentEndDayFormatted().equals(
+							infoExam.getEnrollmentEndDayFormatted())
+						&& getEnrollmentEndTimeFormatted().equals(
+							infoExam.getEnrollmentEndTimeFormatted());
+		}
+		return result;
 	}
 }
