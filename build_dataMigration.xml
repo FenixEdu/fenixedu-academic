@@ -884,6 +884,7 @@
 		<replace dir="${sql}/middleware"	propertyFile="middleware.properties">
 	    	<include name="PopulateTables_generated.sql"/>
 		    <replacefilter token="@load.data.infile.root@" property="load.data.infile.root"/>
+		    <replacefilter token="@load.data.infile.rootIleec@" property="load.data.infile.rootIleec"/>
     	</replace>
 	</target>
 
@@ -1123,6 +1124,49 @@
 				</fileset>
 			</classpath>
 		</java>
+	</target>
+
+
+
+
+
+
+
+
+
+	<target name="replace-tokens-for-ileec">
+		<delete file="${sql}/middleware/PopulateTables_generated.sql"/>
+		<copy file="${sql}/middleware/ileec/populateTablesIleec.sql" toFile="${sql}/middleware/PopulateTables_generated.sql"/>
+		<replace dir="${sql}/middleware" propertyFile="middleware.properties">
+			<include name="PopulateTables_generated.sql"/>
+			<replacefilter token="@load.data.infile.rootIleec@" property="load.data.infile.rootIleec"/>
+		</replace>
+	</target>
+
+	<target name="create-tables-ileec" depends="" description="Cria as tabelas de middleware para suportar os dados do ILEEC">
+		<sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+			<fileset dir="${sql}">
+				<include name="middleware/ileec/createTablesIlecc.sql"/>
+			</fileset>
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</sql>
+	</target>
+
+	<target name="load-ileec-data" depends="create-tables-ileec, replace-tokens-for-ileec" description="Carrega os dados do ILEEC nas tabelas de middleware">
+		<sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+			<fileset dir="${sql}">
+				<include name="middleware/PopulateTables_generated.sql"/>
+			</fileset>
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</sql>
 	</target>
 
 	<!-- ********************************************************* -->
