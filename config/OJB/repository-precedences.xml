@@ -64,7 +64,7 @@
     </reference-descriptor>
 	<field-descriptor name="keyCurricularCourseAlreadyEnroled" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
     <reference-descriptor name="curricularCourseAlreadyEnroled" class-ref="Dominio.CurricularCourse">
-	    <foreignkey field-ref="keyCurricularCourseEnrolled"/>
+	    <foreignkey field-ref="keyCurricularCourseAlreadyEnroled"/>
     </reference-descriptor>
 </class-descriptor>
 

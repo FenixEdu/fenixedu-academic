@@ -8,10 +8,12 @@ package Dominio;
 /**
  * @author jpvl
  */
+
 public abstract class Restriction extends DomainObject implements IRestriction {
 	private String ojbConcreteClass;
 	private IPrecedence precedence;
 	private Integer keyPrecedence; 
+
 	/**
 	 * 
 	 */

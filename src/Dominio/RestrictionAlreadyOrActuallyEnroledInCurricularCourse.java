@@ -14,17 +14,31 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 public class RestrictionAlreadyOrActuallyEnroledInCurricularCourse extends Restriction implements IRestrictionCurricularCourseAlreadyEnrolled {
 	private ICurricularCourse curricularCourseAlreadyEnroled;
 	private Integer keyCurricularCourseAlreadyEnroled;
+
+	/**
+	 *
+	 */
+
 	/* (non-Javadoc)
 	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.EnrolmentContext)
 	 */
 	public boolean evaluate(EnrolmentContext enrolmentContext) {
-		Integer acumulatedEnrolments =
-			enrolmentContext.getCurricularCourseAcumulatedEnrolments(
-				curricularCourseAlreadyEnroled);
-		List actualEnrolment = enrolmentContext.getActualEnrolments();
 
-		return actualEnrolment.contains(curricularCourseAlreadyEnroled)
-			|| acumulatedEnrolments.intValue() > 0;
+		Integer acumulatedEnrolments = enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseAlreadyEnroled);
+
+		ICurricularCourse curricularCourse = this.getCurricularCourseAlreadyEnroled();
+
+		System.out.println("CurricularCourseAlreadyEnroled: " + curricularCourse.getName());
+
+		List scopes = curricularCourse.getScopes();
+		for (int scopeIndex = 0; scopeIndex < scopes.size();scopeIndex++) {
+			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes.get(scopeIndex);
+			if(enrolmentContext.getActualEnrolments().contains(curricularCourseScope)) {
+				return true;
+			}
+		}
+
+		return enrolmentContext.isCurricularCourseDone(this.getCurricularCourseAlreadyEnroled()) || acumulatedEnrolments.intValue() > 0;
 	}
 
 	/**

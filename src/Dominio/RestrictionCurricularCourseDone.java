@@ -9,11 +9,13 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 /**
  * @author jpvl
  */
+
 public class RestrictionCurricularCourseDone
 	extends Restriction
 	implements IRestrictionCurricularCourseDone {
 	private Integer keyPrecedentCurricularCourse;
 	private ICurricularCourse precedentCurricularCourse;
+
 	/**
 	 * 
 	 */
@@ -71,6 +73,7 @@ public class RestrictionCurricularCourseDone
 		}
 		return result;
 	}
+
 	public String toString() {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("Restriction(").append(this.getClass()).append(

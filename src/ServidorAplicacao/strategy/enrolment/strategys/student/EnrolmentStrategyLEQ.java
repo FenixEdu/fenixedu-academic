@@ -15,6 +15,7 @@ import ServidorAplicacao.strategy.enrolment.rules.EnrolmentFilterRestrictedOptio
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentValidateCurricularYearPrecedenceRule;
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentValidateLEQLaboratoryRule;
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentValidateNACandNDRule;
+import ServidorAplicacao.strategy.enrolment.rules.EnrolmentValidatePrecedenceDuringEnrolmentRule;
 import ServidorAplicacao.strategy.enrolment.rules.IEnrolmentRule;
 import ServidorAplicacao.strategy.enrolment.strategys.EnrolmentStrategy;
 import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategy;
@@ -72,6 +73,9 @@ public class EnrolmentStrategyLEQ extends EnrolmentStrategy implements IEnrolmen
 		super.setEnrolmentContext(validateRule.apply(super.getEnrolmentContext()));
 
 		validateRule = new EnrolmentValidateLEQLaboratoryRule();
+		super.setEnrolmentContext(validateRule.apply(super.getEnrolmentContext()));
+
+		validateRule = new EnrolmentValidatePrecedenceDuringEnrolmentRule();
 		super.setEnrolmentContext(validateRule.apply(super.getEnrolmentContext()));
 
 		return super.getEnrolmentContext();

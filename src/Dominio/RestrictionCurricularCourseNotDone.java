@@ -37,12 +37,7 @@ public class RestrictionCurricularCourseNotDone	extends Restriction implements I
 	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.EnrolmentContext)
 	 */
 	public boolean evaluate(EnrolmentContext enrolmentContext) {
-		if(enrolmentContext.isCurricularCourseDone(this.getPrecedentCurricularCourse())){
-			return false;
-		}
-		else{
-			return true;
-		}
+		return !enrolmentContext.isCurricularCourseDone(this.getPrecedentCurricularCourse());
 	}
 	/**
 	 * @return

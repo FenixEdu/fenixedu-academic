@@ -81,20 +81,24 @@ public class GeneralCurricularCourseEnrolmentManagerDispatchAction extends Trans
 		actualEnrolment.addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesAutomaticalyEnroled());
 
 		List curricularCourseScopesToBeEnrolled = infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
-		List optionalCurricularCoursesChoosen = new ArrayList();
+//		List optionalCurricularCoursesChoosen = new ArrayList();
+		List optionalCurricularCourseScopesChoosen = new ArrayList();
 		if (curricularCourses != null) {
 			for (int i = 0; i < curricularCourses.length; i++) {
 				// TODO see if is struts-bug : When parameter is null it won't reset array position.
 				if (request.getParameter("curricularCourses["+ i + "]") == null) {
 					curricularCourses[i] = null;
 				}
+				////////////////////////////////////////
+				
 				Integer curricularCourseIndex = curricularCourses[i];
 				if (curricularCourseIndex != null) {
 					InfoCurricularCourseScope curricularCourseScope = (InfoCurricularCourseScope) curricularCourseScopesToBeEnrolled.get(curricularCourseIndex.intValue());
 					if (!curricularCourseScope.getInfoCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)) {
 						actualEnrolment.add(curricularCourseScope);
 					} else {
-						optionalCurricularCoursesChoosen.add(curricularCourseScope.getInfoCurricularCourse());
+//						optionalCurricularCoursesChoosen.add(curricularCourseScope.getInfoCurricularCourse());
+						optionalCurricularCourseScopesChoosen.add(curricularCourseScope);
 					}
 				}
 			}
@@ -102,16 +106,28 @@ public class GeneralCurricularCourseEnrolmentManagerDispatchAction extends Trans
 
 		List enrolmentsInOptionalCourses = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments();
 
-		if (enrolmentsInOptionalCourses.size() != optionalCurricularCoursesChoosen.size()) {
-			Iterator optionalEnrolmentsIterator = enrolmentsInOptionalCourses.iterator();
-			while (optionalEnrolmentsIterator.hasNext()) {
-				InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) optionalEnrolmentsIterator.next();
-				InfoCurricularCourse optionalCurricularCourse = infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope().getInfoCurricularCourse();
-				if (!optionalCurricularCoursesChoosen.contains(optionalCurricularCourse)) {
-					optionalEnrolmentsIterator.remove();
+		if((enrolmentsInOptionalCourses == null) || (enrolmentsInOptionalCourses.size() == 0)) {
+			// Este caso acontece quando estamos a tratar as cadeiras de opção como tratamos as cadeiras normais, isto é,
+			// a pessoa não escolhe a cadeira que irá ser feita como opção .
+			actualEnrolment.addAll(optionalCurricularCourseScopesChoosen);
+		} else {
+			// Quando se des-selecciona uma opção não há interacção com o sevidor logo é necessario sincronizar o que está
+			// em sessão (o contexto) com o que está em request (optionalCurricularCoursesChoosen).
+//			if (enrolmentsInOptionalCourses.size() != optionalCurricularCoursesChoosen.size()) {
+			if (enrolmentsInOptionalCourses.size() != optionalCurricularCourseScopesChoosen.size()) {
+				Iterator optionalEnrolmentsIterator = enrolmentsInOptionalCourses.iterator();
+				while (optionalEnrolmentsIterator.hasNext()) {
+					InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) optionalEnrolmentsIterator.next();
+//					InfoCurricularCourse optionalCurricularCourse = infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope().getInfoCurricularCourse();
+//					if (!optionalCurricularCoursesChoosen.contains(optionalCurricularCourse)) {
+					InfoCurricularCourseScope optionalCurricularCourseScope = infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope();
+					if (!optionalCurricularCourseScopesChoosen.contains(optionalCurricularCourseScope)) {
+						optionalEnrolmentsIterator.remove();
+					}
 				}
 			}
 		}
+
 		this.computeRemovedCurricularCourseScope(request, infoEnrolmentContext);
 		return infoEnrolmentContext;
 	}

@@ -11,6 +11,9 @@
 	<definition name="df.page.showAvailableCurricularCourses" extends="definition.student.curricular.course.enrolment" >
 		<put name="body" value="/student/showAvailableCurricularCourses_bd.jsp" />
 	</definition>	
+	<definition name="df.page.showAvailableCurricularCourses2" extends="definition.student.curricular.course.enrolment" >
+		<put name="body" value="/student/showAvailableCurricularCourses_bd_2.jsp" />
+	</definition>	
 	<definition name="df.page.verifyEnrolment" extends="definition.student.curricular.course.enrolment" >
 		<put name="body" value="/student/verifyEnrolment_bd.jsp" />
 	</definition>	
