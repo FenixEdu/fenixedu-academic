@@ -36,7 +36,7 @@ public abstract class AnnouncementBelongsToExecutionCourseTest
 			 * o serviço não chega a ser invocado
 			 */
 			//Comparacao do dataset
-			compareDataSet(getExpectedUnsuccessfullDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getExpectedUnsuccessfullDataSetFilePath());
 			System.out.println(
 				"AnnouncementBelongsToExecutionCourseTestUnsuccessful was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());

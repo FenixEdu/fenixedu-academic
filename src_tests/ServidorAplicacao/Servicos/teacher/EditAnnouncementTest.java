@@ -193,7 +193,7 @@ public class EditAnnouncementTest
 				sp.confirmarTransaccao();
 
 				//Comparacao com o data set
-				compareDataSet(getExpectedDataSetFilePath());
+				compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
 			} catch (ExcepcaoPersistencia ex) {
 				fail("Editing an announcement of a Site " + ex);
 			}
@@ -236,7 +236,7 @@ public class EditAnnouncementTest
 			 * o serviço nem sequer chega a ser invocado
 			 */
 			//Comparacao do dataset
-			compareDataSet(getExpectedUnsuccessfullDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getExpectedUnsuccessfullDataSetFilePath());
 		} catch (FenixServiceException ex) {
 			fail("Editing an announcement of a Site " + ex);
 		} catch (Exception ex) {

@@ -150,7 +150,7 @@ public class DeleteAnnouncementTest
 			}
 
 			//Verificar se a base de dados foi alterada
-			compareDataSet(getExpectedDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
 		} catch (NotAuthorizedException ex) {
 			fail("Deleting an announcement of a Site " + ex);
 		} catch (FenixServiceException ex) {
@@ -183,7 +183,7 @@ public class DeleteAnnouncementTest
 			 * o serviço nem sequer chega a ser invocado
 			 */
 			//Comparacao do dataset
-			compareDataSet(getExpectedUnsuccessfullDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getExpectedUnsuccessfullDataSetFilePath());
 		} catch (FenixServiceException ex) {
 			fail("Deleting an announcement of a Site " + ex);
 		} catch (Exception ex) {
