@@ -46,13 +46,8 @@
       <action path="/index" forward="/indexTreasury.jsp"/>
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
+      <action path="/guideSection" forward="/guide/indexGuide.jsp"/>
       
-     
-
-     
-    
-
-
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
