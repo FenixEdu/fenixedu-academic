@@ -8,7 +8,6 @@ package ServidorApresentacao.sop;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,7 +17,6 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.CollectionUtils;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRole;
 import ServidorAplicacao.FenixServiceException;
