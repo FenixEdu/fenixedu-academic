@@ -4,8 +4,6 @@
 
 package ServidorAplicacao.Servicos.person.qualification;
 
-import DataBeans.InfoPerson;
-import DataBeans.person.InfoQualification;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -74,14 +72,7 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 	 */
 	protected Object[] getAuthorizeArgumentsGrantOwnerManager()
 	{
-		//Grant Owner qualification
-		InfoQualification info = new InfoQualification();
-		info.setIdInternal(new Integer(2));
-		info.setInfoPerson(getInfoPersonGO());
-
-		Integer infoManagerPersonKey = new Integer(17);
-
-		Object[] args = { infoManagerPersonKey, info };
+		Object[] args = { new Integer(3)};
 		return args;
 	}
 	/*
@@ -89,39 +80,19 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 	 */
 	protected Object[] getAuthorizeArgumentsTeacher()
 	{
-		//Teacher qualification
-		InfoQualification info = new InfoQualification();
-		info.setIdInternal(new Integer(3));
-		info.setInfoPerson(getInfoPersonT());
-
-		Integer infoManagerPersonKey = new Integer(18);
-
-		Object[] args = { infoManagerPersonKey, info };
+		Object[] args = { new Integer(1)};
 		return args;
 	}
 
 	protected Object[] getAuthorizeArgumentsDeleteQualificationGrantOwner()
 	{
-		//valid Grant Owner qualification
-		InfoQualification info = new InfoQualification();
-		info.setIdInternal(new Integer(1));
-		info.setInfoPerson(getInfoPersonGO());
-		Integer infoManagerPersonKey = new Integer(17);
-
-		Object[] args = { infoManagerPersonKey, info };
+		Object[] args = { new Integer(4)};
 		return args;
 	}
 
 	protected Object[] getAuthorizeArgumentsDeleteQualificationTeacher()
 	{
-		//valid teacher qualification
-		InfoQualification info = new InfoQualification();
-		info.setIdInternal(new Integer(4));
-		info.setInfoPerson(getInfoPersonT());
-
-		Integer infoManagerPersonKey = new Integer(18);
-
-		Object[] args = { infoManagerPersonKey, info };
+		Object[] args = { new Integer(2)};
 		return args;
 	}
 
@@ -260,15 +231,11 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 		{
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
-			Object[] argserv = getAuthorizeArgumentsDeleteQualificationGrantOwner();
-
-			//Invalid qualification
-			 ((InfoQualification) argserv[1]).setIdInternal(new Integer(1220));
+			Object[] argserv = {new Integer(1220)}; //Invalid qualification
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("Delete Qualification Unsuccessfull.");
-
 		} catch (NotAuthorizedException e)
 		{
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
@@ -295,10 +262,7 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 		{
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
-			Object[] argserv = getAuthorizeArgumentsDeleteQualificationGrantOwner();
-
-			//Invalid qualification
-			 ((InfoQualification) argserv[1]).setIdInternal(null);
+			Object[] argserv = { null }; //Invalid qualification
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
@@ -306,43 +270,20 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 
 		} catch (NotAuthorizedException e)
 		{
-			fail("DeleteQualificationUnsuccessfull: " + e);
-		} catch (FenixServiceException e)
-		{
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 
+		} catch (FenixServiceException e)
+		{
+			fail("DeleteQualificationUnsuccessfull: " + e);
 		} catch (Exception e)
 		{
 			fail("DeleteQualificationUnsuccessfull: " + e);
 		}
 
-	}
-
-	/**
-	 * 
-	 * End of tests
-	 *  
-	 */
-
-	//Return a valid GrantOwner Manager user
-	protected InfoPerson getInfoPersonGO()
-	{
-		InfoPerson info = new InfoPerson();
-		info.setIdInternal(new Integer(14));
-		info.setUsername("user_gom");
-		return info;
-	}
-	//Return a valid Teacher user
-	protected InfoPerson getInfoPersonT()
-	{
-		InfoPerson info = new InfoPerson();
-		info.setIdInternal(new Integer(18));
-		info.setUsername("user_t");
-		return info;
 	}
 
 }

@@ -4,13 +4,16 @@
 
 package ServidorAplicacao.Servico.person.qualification;
 
+import DataBeans.ISiteComponent;
+import DataBeans.InfoObject;
 import DataBeans.person.InfoQualification;
+import DataBeans.util.Cloner;
+import Dominio.IDomainObject;
 import Dominio.IQualification;
 import Dominio.Qualification;
-import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.framework.ReadDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentQualification;
+import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -19,81 +22,57 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Pica
  */
 
-public class ReadQualification implements IServico
+public class ReadQualification extends ReadDomainObjectService
 {
 
 	private static ReadQualification service = new ReadQualification();
-
-	/**
-	 * The singleton access method of this class.
-	 */
+	
 	public static ReadQualification getService()
 	{
 		return service;
 	}
-
-	/**
-	 * The constructor of this class.
+	
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
 	 */
-	private ReadQualification()
+	protected Class getDomainObjectClass()
 	{
+		return Qualification.class;
+	}
+	
+	private ReadQualification()
+	{}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
+	 */
+	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		return persistentSuport.getIPersistentQualification();
 	}
 
-	/**
-	 * The name of the service
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
 	 */
-	public final String getNome()
+	protected InfoObject clone2InfoObject(IDomainObject domainObject)
+	{
+		return Cloner.copyIQualification2InfoQualification((IQualification) domainObject);
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getISiteComponent(DataBeans.InfoObject)
+	 */
+	protected ISiteComponent getISiteComponent(InfoObject infoObject)
+	{
+		return (InfoQualification) infoObject;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.IServico#getNome()
+	 */
+	public String getNome()
 	{
 		return "ReadQualification";
-	}
-
-	/**
-	 * Executes the service
-	 * 
-	 * @param managerPersonKey
-	 *                    the identification of the person that is running the service
-	 * @param infoQualification
-	 *                    the create/edit qualification to be
-	 */
-	public IQualification run(Integer managerPersonkey, InfoQualification infoQualification)
-		throws FenixServiceException
-	{
-		ISuportePersistente persistentSupport = null;
-		IPersistentQualification persistentQualification = null;
-
-		try
-		{
-			persistentSupport = SuportePersistenteOJB.getInstance();
-		} catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace();
-			throw new FenixServiceException("Unable to dao factory!", e);
-		}
-
-		try
-		{
-			persistentQualification = persistentSupport.getIPersistentQualification();
-			persistentSupport.iniciarTransaccao();
-			
-			//Try to read the qualification
-			IQualification qualification = null;
-			qualification =
-				(IQualification) persistentQualification.readByOID(
-					Qualification.class,
-					infoQualification.getIdInternal());
-
-			if (qualification == null) //The qualification doesn't exist
-			{ 
-				throw new FenixServiceException("Read an inexistent Qualification");
-			}
-			return qualification;
-
-		} catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		} catch (Exception e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		}
 	}
 }

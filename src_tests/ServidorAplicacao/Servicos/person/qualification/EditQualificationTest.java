@@ -77,16 +77,14 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 	{
 		//Grant Owner Qualification
 		InfoQualification info = new InfoQualification();
-		info.setIdInternal(new Integer(1));
+		info.setIdInternal(new Integer(2));
 		info.setMark("mark");
 		info.setSchool("tagus");
 		info.setTitle("title");
 		info.setYear(new Integer(2001));
 		info.setInfoPerson(getInfoPersonGO());
 
-		Integer infoManagerPersonKey = new Integer(17);
-
-		Object[] args = { infoManagerPersonKey, info };
+		Object[] args = { info.getIdInternal(), info };
 		return args;
 	}
 	/*
@@ -103,9 +101,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setYear(new Integer(2001));
 		info.setInfoPerson(getInfoPersonT());
 
-		Integer infoManagerPersonKey = new Integer(18);
-
-		Object[] args = { infoManagerPersonKey, info };
+		Object[] args = { info.getIdInternal(), info };
 		return args;
 	}
 
@@ -119,9 +115,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setYear(new Integer(2001));
 		info.setInfoPerson(getInfoPersonGO());
 
-		Integer infoManagerPersonKey = new Integer(17);
-
-		Object[] args = { infoManagerPersonKey, info };
+		Object[] args = { info.getIdInternal(), info };
 		return args;
 	}
 
@@ -135,9 +129,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setYear(new Integer(2001));
 		info.setInfoPerson(getInfoPersonT());
 
-		Integer infoManagerPersonKey = new Integer(18);
-
-		Object[] args = { infoManagerPersonKey, info };
+		Object[] args = { info.getIdInternal(), info };
 		return args;
 	}
 
@@ -149,9 +141,8 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setSchool("NewSchool");
 		info.setYear(new Integer(2003));
 		info.setInfoPerson(getInfoPersonGO());
-		Integer infoManagerPersonKey = new Integer(17);
 
-		Object[] args = { infoManagerPersonKey, info };
+		Object[] args = { info.getIdInternal(), info };
 		return args;
 	}
 
@@ -163,9 +154,8 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setYear(new Integer(2000));
 		info.setSchool("tagus");
 		info.setInfoPerson(getInfoPersonT());
-		Integer infoManagerPersonKey = new Integer(18);
 
-		Object[] args = { infoManagerPersonKey, info };
+		Object[] args = { info.getIdInternal(), info };
 		return args;
 	}
 
@@ -366,6 +356,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 			Object[] argserv = getAuthorizeArgumentsEditQualificationGrantOwner();
 
 			//Invalid qualification
+			argserv[0] = new Integer(1220);
 			 ((InfoQualification) argserv[1]).setIdInternal(new Integer(1220));
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);

@@ -4,49 +4,102 @@
 
 package ServidorAplicacao.Servico.person.qualification;
 
+import DataBeans.InfoObject;
 import DataBeans.person.InfoQualification;
 import DataBeans.util.Cloner;
-import Dominio.IQualification;
-import Dominio.Qualification;
-import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import Dominio.IDomainObject;
+import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentQualification;
+import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+
 
 /**
  * @author Barbosa
  * @author Pica
  */
 
-public class EditQualification implements IServico
+public class EditQualification extends EditDomainObjectService
 {
-
+	
 	private static EditQualification service = new EditQualification();
 
-	/**
-	 * The singleton access method of this class.
-	 */
 	public static EditQualification getService()
 	{
 		return service;
 	}
-
-	/**
-	 * The constructor of this class.
-	 */
+	
 	private EditQualification()
+	{}
+	
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
+	 */
+	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
 	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		return persistentSuport.getIPersistentQualification();
 	}
 
-	/**
-	 * The name of the service
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
 	 */
-	public final String getNome()
+	protected IDomainObject clone2DomainObject(InfoObject infoObject)
+	{
+		return Cloner.copyInfoQualification2IQualification((InfoQualification) infoObject);
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.IServico#getNome()
+	 */
+	public String getNome()
 	{
 		return "EditQualification";
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	private static EditQualification service = new EditQualification();
+//
+//	/**
+//	 * The singleton access method of this class.
+//	 */
+//	public static EditQualification getService()
+//	{
+//		return service;
+//	}
+//
+//	/**
+//	 * The constructor of this class.
+//	 */
+//	private EditQualification()
+//	{
+//	}
+//
+//	/**
+//	 * The name of the service
+//	 */
+//	public final String getNome()
+//	{
+//		return "EditQualification";
+//	}
 
 	/**
 	 * Method that returns a qualification that exists in the database. If the qualification does not
@@ -56,7 +109,7 @@ public class EditQualification implements IServico
 	 *                    a infoQualification with the information that is going to be read
 	 * @param persistenQualification
 	 *                    persistent object for executing the query
-	 */
+	 *//*
 	private IQualification checkIfQualificationExists(
 		InfoQualification infoQualification,
 		IPersistentQualification persistentQualification)
@@ -74,7 +127,7 @@ public class EditQualification implements IServico
 			throw new FenixServiceException(e.getMessage());
 		}
 		return qualification;
-	}
+	}*/
 
 	/**
 	 * Executes the service
@@ -83,7 +136,7 @@ public class EditQualification implements IServico
 	 *                    the identification of the person that is running the service
 	 * @param infoQualification
 	 *                    the create/edit qualification to be
-	 */
+	 *//*
 	public IQualification run(Integer managerPersonKey, InfoQualification infoQualification)
 		throws FenixServiceException
 	{
@@ -144,5 +197,5 @@ public class EditQualification implements IServico
 		{
 			throw new FenixServiceException(e.getMessage());
 		}
-	}
+	}*/
 }

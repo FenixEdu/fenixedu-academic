@@ -4,12 +4,10 @@
 
 package ServidorAplicacao.Servico.person.qualification;
 
-import DataBeans.person.InfoQualification;
 import Dominio.Qualification;
-import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.framework.DeleteDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentQualification;
+import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -18,77 +16,47 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Pica
  */
 
-public class DeleteQualification implements IServico
+public class DeleteQualification extends DeleteDomainObjectService
 {
-
 	private static DeleteQualification service = new DeleteQualification();
-
-	/**
-	 * The singleton access method of this class.
-	 */
+	
 	public static DeleteQualification getService()
 	{
 		return service;
 	}
-
-	/**
-	 * The constructor of this class.
-	 */
+	
 	private DeleteQualification()
+	{}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getDomainObjectClass()
+	 */
+	protected Class getDomainObjectClass()
 	{
+		return Qualification.class;
 	}
 
-	/**
-	 * The name of the service
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
 	 */
-	public final String getNome()
+	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		return persistentSuport.getIPersistentQualification();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.IServico#getNome()
+	 */
+	public String getNome()
 	{
 		return "DeleteQualification";
 	}
 
-	/**
-	 * Executes the service
-	 * 
-	 * @param managerPersonKey
-	 *                    the identification of the person that is running the service
-	 * @param infoQualification
-	 *                    the deleted qualification to be
-	 */
-	public void run(Integer managerPersonKey, InfoQualification infoQualification)
-		throws FenixServiceException
-	{
-
-		ISuportePersistente persistentSupport = null;
-		IPersistentQualification persistentQualification = null;
-
-		try
-		{
-			persistentSupport = SuportePersistenteOJB.getInstance();
-		} catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace();
-			throw new FenixServiceException("Unable to dao factory!", e);
-		}
-
-		try
-		{
-			//If the qualification to be deleted is not defined the service returns an error
-			if (infoQualification.getIdInternal() == null)
-			{
-				throw new FenixServiceException("DeleteQualification service: Qualification id is null!");
-			}
-
-			//Deleting the qualification
-			persistentQualification = persistentSupport.getIPersistentQualification();
-			persistentSupport.iniciarTransaccao();
-			persistentQualification.deleteByOID(Qualification.class, infoQualification.getIdInternal());
-
-		} catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		} catch (Exception e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		}
-	}
 }

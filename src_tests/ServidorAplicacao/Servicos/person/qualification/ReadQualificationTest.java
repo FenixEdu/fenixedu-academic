@@ -4,7 +4,7 @@
 
 package ServidorAplicacao.Servicos.person.qualification;
 
-import DataBeans.InfoPerson;
+import DataBeans.SiteView;
 import DataBeans.person.InfoQualification;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -74,14 +74,7 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 	 */
 	protected Object[] getAuthorizeArgumentsGrantOwnerManager()
 	{
-		//A Grant Owner qualification
-		InfoQualification info = new InfoQualification();
-		info.setIdInternal(new Integer(1));
-		info.setInfoPerson(getInfoPersonGO());
-
-		Integer infoManagerPersonCode = new Integer(17);
-
-		Object[] args = { infoManagerPersonCode, info };
+		Object[] args = { new Integer(3)};
 		return args;
 	}
 	/*
@@ -89,14 +82,7 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 	 */
 	protected Object[] getAuthorizeArgumentsTeacher()
 	{
-		//A teacher qualification
-		InfoQualification info = new InfoQualification();
-		info.setIdInternal(new Integer(4));
-		info.setInfoPerson(getInfoPersonT());
-
-		Integer infoManagerPersonCode = new Integer(18);
-
-		Object[] args = { infoManagerPersonCode, info };
+		Object[] args = { new Integer(1)};
 		return args;
 	}
 
@@ -117,7 +103,14 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsGrantOwnerManager();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			SiteView siteView = (SiteView) gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+
+			//Verify if the data jas been correctly read
+			InfoQualification infoQualification = (InfoQualification) siteView.getComponent();
+			assertEquals(infoQualification.getMark(), "mark");
+			assertEquals(infoQualification.getYear(), new Integer(1999));
+			assertEquals(infoQualification.getSchool(), "ist");
+			assertEquals(infoQualification.getTitle(), "Sr. Dr. Eng.");
 
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationDataSet.xml");
 
@@ -146,7 +139,14 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsTeacher();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			SiteView siteView = (SiteView)gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+
+			//Verify if the data jas been correctly read
+			InfoQualification infoQualification = (InfoQualification) siteView.getComponent();
+			assertEquals(infoQualification.getMark(), "mark");
+			assertEquals(infoQualification.getYear(), new Integer(1999));
+			assertEquals(infoQualification.getSchool(), "ist");
+			assertEquals(infoQualification.getTitle(), "Sr. Dr. Eng.");
 
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationDataSet.xml");
 
@@ -235,10 +235,7 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 		{
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
-			Object[] argserv = getAuthorizeArgumentsGrantOwnerManager();
-
-			//Invalid qualification
-			 ((InfoQualification) argserv[1]).setIdInternal(new Integer(1220));
+			Object[] argserv = { new Integer(1220)}; //Invalid qualification
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
@@ -269,10 +266,7 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 		{
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
-			Object[] argserv = getAuthorizeArgumentsGrantOwnerManager();
-
-			//Invalid qualification
-			 ((InfoQualification) argserv[1]).setIdInternal(null);
+			Object[] argserv = { null }; //Invalid qualification
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
@@ -280,43 +274,19 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 
 		} catch (NotAuthorizedException e)
 		{
-			fail("ReadQualificationUnsuccessfull: " + e);
-		} catch (FenixServiceException e)
-		{
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-
+		} catch (FenixServiceException e)
+		{
+			fail("ReadQualificationUnsuccessfull: " + e);
 		} catch (Exception e)
 		{
 			fail("ReadQualificationUnsuccessfull: " + e);
 		}
 
-	}
-
-	/**
-	 * 
-	 * End of the tests 
-	 * 
-	 */
-	
-	//Return a valid GrantOwner Manager user
-	protected InfoPerson getInfoPersonGO()
-	{
-		InfoPerson info = new InfoPerson();
-		info.setIdInternal(new Integer(14));
-		info.setUsername("user_gom");
-		return info;
-	}
-	//Return a valid Teacher user
-	protected InfoPerson getInfoPersonT()
-	{
-		InfoPerson info = new InfoPerson();
-		info.setIdInternal(new Integer(18));
-		info.setUsername("user_t");
-		return info;
 	}
 
 }
