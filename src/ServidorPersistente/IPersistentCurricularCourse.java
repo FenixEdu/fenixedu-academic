@@ -17,7 +17,8 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
 
 	public ICurricularCourse readCurricularCourseByNameAndCode(String name, String code) throws ExcepcaoPersistencia;
 	public List readCurricularCoursesByCurricularYear(Integer year) throws ExcepcaoPersistencia;
-	public List readCurricularCoursesByCurricularSemester(Integer semester) throws ExcepcaoPersistencia;
+	public List readCurricularCoursesBySemesterAndYear(Integer semester, Integer year) throws ExcepcaoPersistencia;
+	public List readCurricularCoursesBySemesterAndYearAndBranch(Integer semester, Integer year,IBranch branch) throws ExcepcaoPersistencia;
 //	public ArrayList readCurricularCoursesByCurricularSemesterAndCurricularYear(Integer semester, Integer year) throws ExcepcaoPersistencia;
 	public List readCurricularCoursesByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
 	public List readAllCurricularCoursesByBranch(IBranch branch) throws ExcepcaoPersistencia;

@@ -310,7 +310,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		List list = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			list = persistentCurricularCourse.readCurricularCoursesByCurricularSemester(new Integer(1));
+			list = persistentCurricularCourse.readAllCurricularCoursesBySemester(new Integer(1));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Existing CurricularCourse");
@@ -406,6 +406,48 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		}
 		assertNotNull(list);
 		assertEquals(list.size(), 6);
+	}
+
+	public void testReadAllCurricularCoursesBySemesterAndYear() {
+
+		System.out.println("- Test 12 : Read All Curricular Courses Scope By Semester And Year\n");
+		
+		List list = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			list = persistentCurricularCourse.readCurricularCoursesBySemesterAndYear(new Integer(1), new Integer(1));
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Read All Curricular Courses Scope By Semester And Year");
+		}
+		assertNotNull(list);
+		assertEquals(list.size(), 1);
+	}
+	
+	public void testReadAllCurricularCoursesBySemesterAndYearAndBranch() {
+
+		System.out.println("- Test 13 : Read All Curricular Courses Scope By Semester And Year And Branch\n");
+		IBranch branch = null;
+		
+		try {
+			persistentSupport.iniciarTransaccao();
+			branch = persistentBranch.readBranchByNameAndCode("", "");
+			assertNotNull(branch);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Reading Branch");
+		}
+
+		List list = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			list = persistentCurricularCourse.readCurricularCoursesBySemesterAndYearAndBranch(new Integer(1), new Integer(1), branch);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Read All Curricular Courses Scope By Semester And Year And Branch");
+		}
+		assertNotNull(list);
+		assertEquals(list.size(), 1);
 	}
 
 }
