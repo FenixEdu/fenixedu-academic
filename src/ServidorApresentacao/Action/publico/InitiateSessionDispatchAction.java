@@ -73,9 +73,14 @@ public class InitiateSessionDispatchAction extends FenixDispatchAction {
 					"" + i));
 		}
 
-		request.setAttribute(
-			SessionConstants.LABELLIST_EXECUTIONPERIOD,
-			executionPeriodsLabelValueList);
+		if (executionPeriodsLabelValueList.size() > 1) {
+			request.setAttribute(
+				SessionConstants.LABELLIST_EXECUTIONPERIOD,
+				executionPeriodsLabelValueList);
+		} else {
+			request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
+		}
+		
 		/*------------------------------------*/
 		
 		// if executionPeriod was previously selected,form has that

@@ -1,7 +1,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <ul>
+<logic:present name="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>" scope="request">
+
 	<html:form action="/index">
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
@@ -31,6 +34,7 @@
 		</table>
 	</html:form> 
 	<br />
+</logic:present>
 
 	<li><html:link page="/index.do?method=prepare&amp;page=0" > <bean:message key="link.public.home"/> </html:link></li>
 	<li><html:link page="/chooseContextDA.do?method=preparePublic&amp;nextPage=classSearch&amp;inputPage=chooseContext" > <bean:message key="link.classes.consult"/> </html:link></li>
