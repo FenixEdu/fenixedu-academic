@@ -355,4 +355,12 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
 		}
 	}
 
+	public List readbyPerson(IPessoa person) throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("personKey", person.getIdInternal());
+		
+		return queryList(Student.class, criteria);
+	}
+
 }

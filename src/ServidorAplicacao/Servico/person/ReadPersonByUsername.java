@@ -78,7 +78,7 @@ public class ReadPersonByUsername implements IServico {
 
 		return infoPerson;
     }
-    
+        
 	public Object run(String username)
 		throws ExcepcaoInexistente, FenixServiceException {
 

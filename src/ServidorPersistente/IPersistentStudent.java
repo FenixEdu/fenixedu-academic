@@ -54,6 +54,12 @@ public interface IPersistentStudent extends IPersistentObject {
 	 * @return
 	 */
 	public Integer generateStudentNumber(TipoCurso curso) throws ExcepcaoPersistencia;
+	
+	/**
+	 * @param Person
+	 * @return All the students associated to this Person
+	 */
+	public List readbyPerson(IPessoa pessoa) throws ExcepcaoPersistencia;
 
 
 }
