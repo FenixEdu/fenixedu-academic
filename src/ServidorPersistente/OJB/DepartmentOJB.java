@@ -156,16 +156,30 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
 
 		ICostCenter workingCC = employeeHistoric.getWorkingPlaceCostCenter();
 		ICostCenter mailingCC = employeeHistoric.getMailingCostCenter();
-		Criteria workingCCCriteria = new Criteria();
 		
-		workingCCCriteria.addLike("code", workingCC.getSigla().substring(0, 2) + "%");
-		Criteria mailingCCCriteria = new Criteria();
-		mailingCCCriteria.addLike("code", mailingCC.getSigla().substring(0, 2) + "%");
-			
+		
 		Criteria criteria = new Criteria();
-		criteria.addOrCriteria(workingCCCriteria);
-		criteria.addOrCriteria(mailingCCCriteria);
-		return (IDepartment) queryObject(Department.class, criteria);
+		if (workingCC != null) {
+			Criteria workingCCCriteria = new Criteria();	
+			workingCCCriteria.addLike("code", workingCC.getSigla().substring(0, 2) + "%");
+			criteria.addOrCriteria(workingCCCriteria);
+		}
+		
+		if (mailingCC != null) {
+			Criteria mailingCCCriteria = new Criteria();
+			mailingCCCriteria.addLike("code", mailingCC.getSigla().substring(0, 2) + "%");
+			criteria.addOrCriteria(mailingCCCriteria);
+		}
+			
+		
+		
+		if (criteria.getElements().hasMoreElements()) {
+			return (IDepartment) queryObject(Department.class, criteria);
+		}else {
+			return null;
+		}
+		
+		
 	}
 
 	/**
