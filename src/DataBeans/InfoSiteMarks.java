@@ -11,7 +11,7 @@ import java.util.ListIterator;
 public class InfoSiteMarks implements ISiteComponent {
 	private InfoExam infoExam;
 	private List marksList;
-	
+	private List marksListErrors;
 
 	public boolean equals(Object objectToCompare) {
 		boolean result = false;
@@ -25,7 +25,7 @@ public class InfoSiteMarks implements ISiteComponent {
 			result = true;
 		}
 
-		if (((InfoSiteMarks) objectToCompare).getMarksList() == null && this.getMarksList() == null) {
+		if (((InfoSiteMarks) objectToCompare).getMarksList() == null && this.getMarksList() == null && result == true) {
 			return true;
 		}
 
@@ -74,6 +74,19 @@ public class InfoSiteMarks implements ISiteComponent {
 	 */
 	public void setInfoExam(InfoExam exam) {
 		infoExam = exam;
+	}
+	/**
+	 * @return
+	 */
+	public List getMarksListErrors() {
+		return marksListErrors;
+	}
+
+	/**
+	 * @param marksListErrors
+	 */
+	public void setMarksListErrors(List marksListErrors) {
+		this.marksListErrors = marksListErrors;
 	}
 
 }
