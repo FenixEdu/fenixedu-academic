@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -10,7 +11,7 @@
 <body>
 <%-- Layout component parameters : header, navLocal, body --%>
 <!-- Navbar Lateral e Body Content -->
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<table width="100%"  height="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
      <td  align="left" valign="top" bgcolor="#B5BED6"  class="barraist">
      <img alt="" border="0"  src="<%= request.getContextPath() %>/images/LogoIST.gif"  />
@@ -33,12 +34,12 @@
 </table>
 <!--End Navbar Lateral e Body Content -->
 <!-- Footer -->
-<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+<%-- <table width="100%%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td class="footer"><tiles:insert attribute="footer" ignore="true"/>
     </td>
   </tr>
-</table>
+</table> --%>
 <!--End Footer -->
 </body>
 </html:html>

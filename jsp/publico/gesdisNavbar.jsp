@@ -32,5 +32,10 @@
 <html:link page="/viewExecutionCourseShifts.do">
 		<li><bean:message key="link.executionCourse.shifts"/></li>
 </html:link>
-
-
+<logic:present name="<%=SessionConstants.INFO_SITE%>" property="mail" >
+<h3><bean:message key="label.contacts" /></h3>
+<bean:define id="mail" name="<%=SessionConstants.INFO_SITE%>" property="mail"/>
+<html:link href="<%= "mailto:" + pageContext.findAttribute("mail") %>">
+<bean:write name="mail" />		
+	</html:link>
+</logic:present>
