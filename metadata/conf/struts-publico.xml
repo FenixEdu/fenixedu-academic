@@ -144,8 +144,8 @@
     
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
-       <forward name="index" path="/index.do=prepare&amp;page=0" redirect="true"/>
-       <forward name="firstPage" path="/index.do=prepare&amp;page=0"/>
+       <forward name="index" path="/index.do?method=prepare&amp;page=0" redirect="true"/>
+       <forward name="firstPage" path="/index.do?method=prepare&amp;page=0"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -155,7 +155,6 @@
     	<!-- null pointer exceptions from readByOId -->
  	  <action path="/nonExistingObject" forward="/nonExistingError.jsp"/>
 	    <!-- page fronting actions -->
-    	
 
 	<action path="/index"
 			name="pagedIndexForm"
@@ -169,19 +168,13 @@
   		<forward name="choose" path="/index.do?method=prepare&amp;page=0"/>
 	</action>
 	
-<!--    	<action path="/index"
-      	      type="ServidorApresentacao.Action.publico.InitiateSessionAction">
-      	  <forward name="Success" path="/index.jsp"/>
-      </action>
--->    	
-    	
-      <action parameter="method"
-              path="/consultTimeTables"
-              scope="request"
-              type="ServidorApresentacao.Action.publico.ConsultTimeTablesDispatchAction">
-        <forward name="criteriaPage" path="/consultTimeTablesCriterias.jsp"/>
+	<action parameter="method"
+            path="/consultTimeTables"
+            scope="request"
+            type="ServidorApresentacao.Action.publico.ConsultTimeTablesDispatchAction">
+    	<forward name="criteriaPage" path="/consultTimeTablesCriterias.jsp"/>
         <forward name="showTimeTables" path="/viewClasses.do"/>
-      </action>
+	</action>
 		
 
       <action input="/chooseContextDA.do?method=preparePublic&amp;page=0&amp;inputPage=chooseContext"
