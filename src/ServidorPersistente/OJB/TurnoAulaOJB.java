@@ -214,9 +214,14 @@ public class TurnoAulaOJB
 				"select all from "
 					+ TurnoAula.class.getName()
 					+ " where turno.nome = $1"
-					+ " and turno.disciplinaExecucao.licenciaturaExecucao.anoLectivo = $2"
-					+ " and turno.disciplinaExecucao.licenciaturaExecucao.curso.sigla = $3"
+
+					+ " and turno.disciplinaExecucao.executionPeriod.name = $2"
+					+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $3"
 					+ " and turno.disciplinaExecucao.sigla = $4";
+
+//					+ " and turno.disciplinaExecucao.licenciaturaExecucao.anoLectivo = $2"
+//					+ " and turno.disciplinaExecucao.licenciaturaExecucao.curso.sigla = $3"
+//					+ " and turno.disciplinaExecucao.sigla = $4";
 
 			query.create(oqlQuery);
 
@@ -225,14 +230,23 @@ public class TurnoAulaOJB
 			query.bind(
 				shift
 					.getDisciplinaExecucao()
-					.getLicenciaturaExecucao()
-					.getAnoLectivo());
+					.getExecutionPeriod().getName());
 			query.bind(
 				shift
 					.getDisciplinaExecucao()
-					.getLicenciaturaExecucao()
-					.getCurso()
-					.getSigla());
+					.getExecutionPeriod().getExecutionYear().getYear());
+
+//			query.bind(
+//				shift
+//					.getDisciplinaExecucao()
+//					.getLicenciaturaExecucao()
+//					.getAnoLectivo());
+//			query.bind(
+//				shift
+//					.getDisciplinaExecucao()
+//					.getLicenciaturaExecucao()
+//					.getCurso()
+//					.getSigla());
 
 			query.bind(shift.getDisciplinaExecucao().getSigla());
 
