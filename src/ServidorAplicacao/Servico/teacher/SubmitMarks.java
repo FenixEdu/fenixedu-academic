@@ -1,16 +1,22 @@
 package ServidorAplicacao.Servico.teacher;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import middleware.marks.CreateFile;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MultiHashMap;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoMark;
@@ -18,33 +24,31 @@ import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteSubmitMarks;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
-import Dominio.ExecutionCourse;
-import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.Evaluation;
-import Dominio.Frequenta;
-import Dominio.IExecutionCourse;
+import Dominio.ExecutionCourse;
 import Dominio.IEmployee;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEvaluation;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IMark;
 import Dominio.IPessoa;
 import Dominio.ISite;
 import Dominio.ITeacher;
+import Dominio.Mark;
 import Dominio.ResponsibleFor;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEmployee;
-import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEvaluation;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentSite;
@@ -52,278 +56,432 @@ import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationState;
-import Util.EnrolmentEvaluationType;
+import Util.Ftp;
+import Util.TipoCurso;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public class SubmitMarks implements IServico {
-	private static SubmitMarks _service = new SubmitMarks();
-
-	private List enrolmentEvaluationList = new ArrayList();
-	private List errorsNotEnrolmented = new ArrayList();
-	private List errorsMarkNotPublished = new ArrayList();
-	private boolean noMarks = true;
-	private boolean allMarksNotPublished = true;
-
-	/**
+public class SubmitMarks implements IServico
+{
+    /**
 	 * The actor of this class.
-	 **/
-	private SubmitMarks() {
+	 */
+    public SubmitMarks()
+    {
 
-	}
+    }
 
-	/**
+    /**
 	 * Returns Service Name
 	 */
-	public String getNome() {
-		return "SubmitMarks";
-	}
+    public String getNome()
+    {
+        return "SubmitMarks";
+    }
 
-	/**
-	 * Returns the _servico.
-	 * @return ReadExecutionCourse
-	 */
-	public static SubmitMarks getService() {
-		return _service;
-	}
+    public Object run(
+        Integer executionCourseCode,
+        Integer evaluationCode,
+        Date evaluationDate,
+        UserView userView)
+        throws FenixServiceException
+    {
 
-	public Object run(Integer executionCourseCode, Integer evaluationCode, Date evaluationDate, UserView userView)
-		throws FenixServiceException {
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            List notEnrolledList = null;
+            List mestradoList = null;
+            List infoMarksList = null;
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            //execution course and execution course's site
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-			//execution course and execution course's site
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = new ExecutionCourse();
+            executionCourse.setIdInternal(executionCourseCode);
+            executionCourse =
+                (IExecutionCourse)persistentExecutionCourse.readByOId(executionCourse, false);
 
-			IExecutionCourse executionCourse = new ExecutionCourse();
-			executionCourse.setIdInternal(executionCourseCode);
-			executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
+            IPersistentSite persistentSite = sp.getIPersistentSite();
+            ISite site = persistentSite.readByExecutionCourse(executionCourse);
 
-			IPersistentSite persistentSite = sp.getIPersistentSite();
-			ISite site = persistentSite.readByExecutionCourse(executionCourse);
+            //evaluation
+            IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
+            IEvaluation evaluation = new Evaluation();
+            evaluation.setIdInternal(evaluationCode);
+            evaluation = (IEvaluation)persistentEvaluation.readByOId(evaluation, false);
 
-			//evaluation
-			IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-			IEvaluation evaluation = new Evaluation();
-			evaluation.setIdInternal(evaluationCode);
-			evaluation = (IEvaluation) persistentEvaluation.readByOId(evaluation, false);
+            //attend list
+            IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+            List attendList = persistentAttend.readByExecutionCourse(executionCourse);
 
-			//final evaluation's marks list
-			IPersistentMark persistentMark = sp.getIPersistentMark();
-			List marksList = persistentMark.readBy(evaluation);
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            List professors = persistentResponsibleFor.readByExecutionCourse(executionCourse);
 
-			List infoMarksList = submitMarks(userView, evaluationDate, executionCourse, evaluation, marksList);
+            //employee logged
+            IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
+            IPessoa pessoa = pessoaPersistente.lerPessoaPorUsername(userView.getUtilizador());
+            IEmployee employee = readEmployee(pessoa);
+            ITeacher teacher = ((ResponsibleFor)professors.get(0)).getTeacher();
 
-			CreateFile.fileWithMarksList(executionCourse.getAssociatedCurricularCourses(), enrolmentEvaluationList);
+            MultiHashMap enrolmentEvaluationTableByDegree =
+                getEnrolmentEvaluationsByDegree(
+                    userView,
+                    executionCourse,
+                    attendList,
+                    evaluation,
+                    evaluationDate,
+                    employee,
+                    teacher);
 
-			return createSiteView(
-				site,
-				evaluation,
-				infoMarksList,
-				errorsNotEnrolmented,
-				errorsMarkNotPublished,
-				allMarksNotPublished,
-				noMarks);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new FenixServiceException(e.getMessage());
-		}
-	}
+            if (enrolmentEvaluationTableByDegree.containsKey(new String("notEnrolled")))
+            {
+                notEnrolledList = (List)enrolmentEvaluationTableByDegree.get(new String("notEnrolled"));
+                enrolmentEvaluationTableByDegree.remove(new String("notEnrolled"));
+            }
 
-	private List submitMarks(
-		UserView userView,
-		Date evaluationDate,
-		IExecutionCourse executionCourse,
-		IEvaluation evaluation,
-		List marksList)
-		throws FenixServiceException {
-		List infoMarksList = null;
+            if (enrolmentEvaluationTableByDegree.containsKey(new String("mestrado")))
+            {
+                mestradoList = (List)enrolmentEvaluationTableByDegree.get(new String("mestrado"));
+                enrolmentEvaluationTableByDegree.remove(new String("mestrado"));
+            }
 
-		ISuportePersistente sp;
+            if (enrolmentEvaluationTableByDegree.containsKey(new String("infoMarks")))
+            {
+                infoMarksList = (List)enrolmentEvaluationTableByDegree.get(new String("infoMarks"));
+                enrolmentEvaluationTableByDegree.remove(new String("infoMarks"));
+            }
 
-		errorsMarkNotPublished.clear();
-		errorsNotEnrolmented.clear();
-		try {
-			sp = SuportePersistenteOJB.getInstance();
+            List fileList = submitMarksAndCreateFiles(enrolmentEvaluationTableByDegree);
 
-			if (marksList == null || marksList.size() <= 0) {
-				throw new FenixServiceException("errors.submitMarks.noMarks");
-			} else {
-				IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
-				IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+            //Send the files via FPT            
+            Ftp.enviarFicheiros("/IstFtpServerConfig.properties", fileList, "");
 
-				infoMarksList = new ArrayList();
+            return createSiteView(site, evaluation, infoMarksList, notEnrolledList, mestradoList);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new FenixServiceException(e.getMessage());
+        }
+    }
 
-				Iterator iterador = marksList.listIterator();
-				while (iterador.hasNext()) {
-					IMark mark = (IMark) iterador.next();
+    private MultiHashMap getEnrolmentEvaluationsByDegree(
+        UserView userView,
+        IExecutionCourse executionCourse,
+        List attendList,
+        IEvaluation evaluation,
+        Date evaluationDate,
+        IEmployee employee,
+        ITeacher teacher)
+        throws FenixServiceException
+    {
 
-					if ((mark.getMark() == null) || (mark.getMark().length() <= 0)) {
-						errorsMarkNotPublished.add(Cloner.copyIMark2InfoMark(mark));
-						continue;
-					} else {
-						noMarks = false;
-					}
+        try
+        {
+            MultiHashMap enrolmentEvaluationsByDegree = new MultiHashMap();
+            boolean allMarksPublished = true;
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentMark persistentMark = sp.getIPersistentMark();
+            IPersistentEnrolmentEvaluation enrolmentEvaluationDAO =
+                sp.getIPersistentEnrolmentEvaluation();
+            Iterator iter = attendList.iterator();
 
-					if ((mark.getPublishedMark() == null) || (mark.getPublishedMark().length() <= 0)) {
-						errorsMarkNotPublished.add(Cloner.copyIMark2InfoMark(mark));
-						continue;
-					} else {
-						allMarksNotPublished = false;
-					}
+            verifyAlreadySubmittedMarks(attendList, enrolmentEvaluationDAO);
 
-					//attend
-					IFrequenta frequenta = new Frequenta();
-					frequenta.setIdInternal(mark.getKeyAttend());
-					frequenta = (Frequenta) frequentaPersistente.readByOId(frequenta, false);
+            List markList = persistentMark.readBy(evaluation);
 
-					//enrolment
-					IEnrolment enrolment = new Enrolment();
-					enrolment.setIdInternal(frequenta.getKeyEnrolment());
-					enrolment = (Enrolment) persistentEnrolment.readByOId(enrolment, false);
-					if (enrolment == null) {
-						errorsNotEnrolmented.add(Cloner.copyIMark2InfoMark(mark));
-						continue;
-					}
+            while (iter.hasNext())
+            {
+                IFrequenta attend = (IFrequenta)iter.next();
+                IEnrolment enrolment = attend.getEnrolment();
+                IEnrolmentEvaluation enrolmentEvaluation = null;
 
-					//data for enrolment evaluation				
-					setEnrolmentEvaluation(executionCourse, evaluationDate, enrolment, mark.getPublishedMark(), userView);
+                //check student´s degree type
+                if (attend.getAluno().getDegreeType().equals(TipoCurso.MESTRADO_OBJ))
+                {
+                    enrolmentEvaluationsByDegree.put(
+                        new String("mestrado"),
+                        Cloner.copyIFrequenta2InfoFrequenta(attend));
+                    continue;
+                }
 
-					InfoMark infoMark = Cloner.copyIMark2InfoMark(mark);
-					infoMarksList.add(infoMark);
-				}
-			}
+                //check if this student is enrolled
+                if (enrolment == null)
+                {
+                    enrolmentEvaluationsByDegree.put(
+                        new String("notEnrolled"),
+                        Cloner.copyIFrequenta2InfoFrequenta(attend));
+                    continue;
+                }
 
-			if (noMarks) {
-				throw new FenixServiceException("errors.submitMarks.noMarks");
-			}
-			if (allMarksNotPublished) {
-				throw new FenixServiceException("errors.submitMarks.allMarksNotPublished");
-			}
+                IMark mark = getMark(evaluation, markList, attend);
+                if ((mark == null) || (mark.getMark().length() == 0))
+                {
 
-			return infoMarksList;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new FenixServiceException(e.getMessage());
-		}
-	}
+                    enrolmentEvaluation =
+                        getEnrolmentEvaluationByEnrolment(
+                            userView,
+                            executionCourse,
+                            enrolment,
+                            evaluationDate,
+                            "NA",
+                            employee,
+                            teacher);
+                    InfoMark infoMark = new InfoMark();
+                    infoMark.setInfoEvaluation(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
+                    infoMark.setInfoFrequenta(Cloner.copyIFrequenta2InfoFrequenta(attend));
+                    infoMark.setMark("NA");
+                    enrolmentEvaluationsByDegree.put(new String("infoMarks"), infoMark);
 
-	private void setEnrolmentEvaluation(
-		IExecutionCourse executionCourse,
-		Date evaluationDate,
-		IEnrolment enrolment,
-		String publishedMark,
-		UserView userView)
-		throws FenixServiceException {
-		ISuportePersistente sp;
-		EnrolmentEvaluation enrolmentEvaluation = null;
+                }
+                else
+                {
 
-		try {
-			sp = SuportePersistenteOJB.getInstance();
+                    enrolmentEvaluation =
+                        getEnrolmentEvaluationByEnrolment(
+                            userView,
+                            executionCourse,
+                            enrolment,
+                            evaluationDate,
+                            mark.getMark().toUpperCase(),
+                            employee,
+                            teacher);
+                    enrolmentEvaluationsByDegree.put(
+                        new String("infoMarks"),
+                        Cloner.copyIMark2InfoMark(mark));
 
-			IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
+                }
 
-			//verify if marks yet submit
-			List allEnrolmentEvaluationList = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolment);
-			if (allEnrolmentEvaluationList != null && allEnrolmentEvaluationList.size() > 0) {
-				List enrolmentEvaluationListWithGrade = (List) CollectionUtils.select(allEnrolmentEvaluationList, new Predicate() {
-					public boolean evaluate(Object obj) {
-						IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
-						return enrolmentEvaluation.getGrade().length() > 0;
-					}
-				});
-				if (allEnrolmentEvaluationList.size() == enrolmentEvaluationListWithGrade.size()) {
-					throw new FenixServiceException("errors.submitMarks.yetSubmited");
-				}
-			}
+                enrolmentEvaluationsByDegree.put(
+                    enrolment
+                        .getStudentCurricularPlan()
+                        .getDegreeCurricularPlan()
+                        .getDegree()
+                        .getIdInternal(),
+                    enrolmentEvaluation);
 
-			enrolmentEvaluation =
-				(EnrolmentEvaluation) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
-					enrolment,
-					EnrolmentEvaluationType.NORMAL_OBJ,
-					publishedMark);
-			if (enrolmentEvaluation == null) {
-				enrolmentEvaluation = new EnrolmentEvaluation();
-				//throw new FenixServiceException();
-			}
+            }
+            if (!allMarksPublished)
+            {
+                throw new FenixServiceException("errors.submitMarks.allMarksNotPublished");
+            }
 
-			enrolmentEvaluation.setGrade(publishedMark);
-			enrolmentEvaluation.setEnrolment(enrolment);
-			enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
-			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-			enrolmentEvaluation.setObservation(new String("Submissão da Pauta"));
+            return enrolmentEvaluationsByDegree;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new FenixServiceException(e.getMessage());
+        }
+    }
 
-			//teacher responsible for execution course
-			IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-			List professors = persistentResponsibleFor.readByExecutionCourse(executionCourse);
-			ITeacher teacher = ((ResponsibleFor) professors.listIterator().next()).getTeacher();
-			enrolmentEvaluation.setPersonResponsibleForGrade(teacher.getPerson());
+    private void verifyAlreadySubmittedMarks(
+        List attendList,
+        IPersistentEnrolmentEvaluation enrolmentEvaluationDAO)
+        throws ExcepcaoPersistencia, FenixServiceException
+    {
+        List enrolmentListIds = (List)CollectionUtils.collect(attendList, new Transformer()
+        {
 
-			//employee logged
-			IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
-			IPessoa pessoa = pessoaPersistente.lerPessoaPorUsername(userView.getUtilizador());
-			IEmployee employee = readEmployee(pessoa);
-			enrolmentEvaluation.setEmployee(employee);
-			//enrolmentEvaluation.setEmployeeKey(new Integer(funcionario.getCodigoInterno()));
+            public Object transform(Object input)
+            {
+                IFrequenta attend = (IFrequenta)input;
+                IEnrolment enrolment = attend.getEnrolment();
+                return enrolment == null ? null : enrolment.getIdInternal();
+            }
+        });
 
-			Calendar calendar = Calendar.getInstance();
-			enrolmentEvaluation.setWhen(new Timestamp(calendar.getTimeInMillis()));
-			enrolmentEvaluation.setGradeAvailableDate(calendar.getTime());
-			if (evaluationDate != null) {
-				enrolmentEvaluation.setExamDate(evaluationDate);
-			} else {
-				enrolmentEvaluation.setExamDate(calendar.getTime());
-			}
+        enrolmentListIds = (List)CollectionUtils.select(enrolmentListIds, new Predicate()
+        {
+            public boolean evaluate(Object arg0)
+            {
+                return arg0 != null;
+            }
+        });
+        List alreadySubmiteMarks = enrolmentEvaluationDAO.readAlreadySubmitedMarks(enrolmentListIds);
 
-			enrolmentEvaluation.setCheckSum("");
+        if (!alreadySubmiteMarks.isEmpty())
+        {
+            throw new FenixServiceException("errors.submitMarks.yetSubmited");
+        }
+    }
 
-			enrolmentEvaluationList.add(enrolmentEvaluation);
+    private IMark getMark(IEvaluation evaluation, List markList, IFrequenta attend)
+    {
+        //                IMark mark = persistentMark.readBy(evaluation, attend);
+        IMark mark = new Mark();
+        mark.setAttend(attend);
+        mark.setEvaluation(evaluation);
+        int indexOf = markList.indexOf(mark);
+        if (indexOf != -1)
+        {
+            mark = (IMark)markList.get(indexOf);
+        }
+        else
+        {
+            mark = null;
+        }
+        return mark;
+    }
 
-			persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluation);
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-			throw new FenixServiceException(e.getMessage());
-		}
-	}
+    private IEnrolmentEvaluation getEnrolmentEvaluationByEnrolment(
+        UserView userView,
+        IExecutionCourse executionCourse,
+        IEnrolment enrolment,
+        Date evaluationDate,
+        String publishedMark,
+        IEmployee employee,
+        ITeacher teacher)
+        throws FenixServiceException
+    {
+        ISuportePersistente sp;
+        IEnrolmentEvaluation enrolmentEvaluation = null;
 
-	private IEmployee readEmployee(IPessoa person) {
-		IEmployee employee = null;
-		IPersistentEmployee persistentEmployee;
-		try {
-			persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
-			employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-		}
-		return employee;
-	}
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
 
-	private Object createSiteView(
-		ISite site,
-		IEvaluation evaluation,
-		List marksList,
-		List errorsNotEnrolmented,
-		List errorsMarkNotPublished,
-		boolean allMarksNotPublished,
-		boolean noMarks)
-		throws FenixServiceException {
+            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation =
+                sp.getIPersistentEnrolmentEvaluation();
 
-		InfoSiteSubmitMarks infoSiteSubmitMarks = new InfoSiteSubmitMarks();
+            //Verify if this mark has been already submited
+            //verifyYetSubmitMarks(enrolment);
 
-		infoSiteSubmitMarks.setInfoEvaluation(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
-		infoSiteSubmitMarks.setMarksList(marksList);
-		infoSiteSubmitMarks.setErrorsNotEnrolmented(errorsNotEnrolmented);
-		infoSiteSubmitMarks.setErrorsMarkNotPublished(errorsMarkNotPublished);
-		infoSiteSubmitMarks.setAllMarksNotPublished(allMarksNotPublished);
-		infoSiteSubmitMarks.setNoMarks(noMarks);
+            List enrolmentEvaluationListTemporary =
+                persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationState(
+                    enrolment,
+                    EnrolmentEvaluationState.TEMPORARY_OBJ);
 
-		TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
-		ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
+            //There can exist only one enrolmentEvaluation with Temporary State
+            if (enrolmentEvaluationListTemporary != null && enrolmentEvaluationListTemporary.size() > 0)
+            {
+                enrolmentEvaluation = (IEnrolmentEvaluation)enrolmentEvaluationListTemporary.get(0);
+            }
+            else
+            {
+                enrolmentEvaluation = new EnrolmentEvaluation();
+            }
 
-		TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent, infoSiteSubmitMarks);
-		return siteView;
-	}
+            //teacher responsible for execution course
+
+            enrolmentEvaluation.setEnrolment(enrolment);
+            persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluation);
+
+            enrolmentEvaluation.setGrade(publishedMark);
+
+            enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
+            enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+            enrolmentEvaluation.setObservation(new String("Submissão da Pauta"));
+
+            enrolmentEvaluation.setPersonResponsibleForGrade(teacher.getPerson());
+
+            enrolmentEvaluation.setEmployee(employee);
+
+            Calendar calendar = Calendar.getInstance();
+            enrolmentEvaluation.setWhen(new Timestamp(calendar.getTimeInMillis()));
+            enrolmentEvaluation.setGradeAvailableDate(calendar.getTime());
+            if (evaluationDate != null)
+            {
+                enrolmentEvaluation.setExamDate(evaluationDate);
+            }
+            else
+            {
+                enrolmentEvaluation.setExamDate(calendar.getTime());
+            }
+
+            enrolmentEvaluation.setCheckSum("");
+
+            return enrolmentEvaluation;
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace();
+            throw new FenixServiceException(e.getMessage());
+        }
+    }
+
+    private List submitMarksAndCreateFiles(MultiHashMap enrolmentEvaluationTableByDegree)
+        throws FenixServiceException
+    {
+        Set degrees = enrolmentEvaluationTableByDegree.keySet();
+        Iterator iter = degrees.iterator();
+        List fileList = new ArrayList();
+        try
+        {
+            //degrees
+            while (iter.hasNext())
+            {
+                List enrolmentEvaluationsByDegree =
+                    (List)enrolmentEvaluationTableByDegree.get(iter.next());
+                File file = CreateFile.buildFile(enrolmentEvaluationsByDegree);
+                if (file != null)
+                {
+                    fileList.add(file);
+                }
+            }
+            return fileList;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new FenixServiceException(e.getMessage());
+        }
+    }
+
+    private IEmployee readEmployee(IPessoa person)
+    {
+        IEmployee employee = null;
+        IPersistentEmployee persistentEmployee;
+        try
+        {
+            persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
+            employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace();
+        }
+        return employee;
+    }
+
+    private Object createSiteView(
+        ISite site,
+        IEvaluation evaluation,
+        List marksList,
+        List notEnrolledList,
+        List mestradoList)
+        throws FenixServiceException
+    {
+
+        InfoSiteSubmitMarks infoSiteSubmitMarks = new InfoSiteSubmitMarks();
+
+        infoSiteSubmitMarks.setInfoEvaluation(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
+        infoSiteSubmitMarks.setMarksList(marksList);
+
+        // order errorsNotEnrolmented list by student's number
+        if (notEnrolledList != null)
+        {
+            Collections.sort(notEnrolledList, new BeanComparator("aluno.number"));
+            infoSiteSubmitMarks.setNotEnrolmented(notEnrolledList);
+        }
+
+        // order errorsMarkNotPublished list by student's number
+        if (mestradoList != null)
+        {
+            Collections.sort(mestradoList, new BeanComparator("aluno.number"));
+            infoSiteSubmitMarks.setMestrado(mestradoList);
+        }
+
+        TeacherAdministrationSiteComponentBuilder componentBuilder =
+            new TeacherAdministrationSiteComponentBuilder();
+        ISiteComponent commonComponent =
+            componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
+
+        TeacherAdministrationSiteView siteView =
+            new TeacherAdministrationSiteView(commonComponent, infoSiteSubmitMarks);
+        return siteView;
+    }
 }

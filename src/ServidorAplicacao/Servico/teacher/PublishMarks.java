@@ -78,6 +78,7 @@ public class PublishMarks implements IServico {
 			IEvaluation evaluation = new Evaluation(evaluationCode);
 			IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
 			evaluation = (IEvaluation) persistentEvaluation.readByOId(evaluation, true);
+			persistentEvaluation.lockWrite(evaluation);
 
 			if (publishmentMessage == null || publishmentMessage.length() == 0) {
 				evaluation.setPublishmentMessage(" ");

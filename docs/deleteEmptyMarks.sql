@@ -1,0 +1,1 @@
+delete from Mark where mark="" or mark is null;

@@ -1,18 +1,25 @@
 package ServidorAplicacao.Servico.publico;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluation;
+import DataBeans.InfoFrequenta;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
 import DataBeans.util.Cloner;
 import Dominio.Evaluation;
+import Dominio.ExecutionCourse;
 import Dominio.IEvaluation;
+import Dominio.IExecutionCourse;
+import Dominio.IFrequenta;
 import Dominio.IMark;
 import Dominio.ISite;
 import Dominio.Site;
@@ -21,7 +28,9 @@ import ServidorAplicacao.Factory.ExecutionCourseSiteComponentBuilder;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEvaluation;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
@@ -29,84 +38,127 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Fernanda Quitério
- *
+ *  
  */
-public class ReadPublishedMarksByExam implements IServico {
-	private static ReadPublishedMarksByExam _servico = new ReadPublishedMarksByExam();
+public class ReadPublishedMarksByExam implements IServico
+{
+    private static ReadPublishedMarksByExam _servico = new ReadPublishedMarksByExam();
 
-	/**
-		* The actor of this class.
-		**/
-	private ReadPublishedMarksByExam() {
+    /**
+	 * The actor of this class.
+	 */
+    private ReadPublishedMarksByExam()
+    {
 
-	}
+    }
 
-	/**
+    /**
 	 * Returns Service Name
 	 */
-	public String getNome() {
-		return "ReadPublishedMarksByExam";
-	}
+    public String getNome()
+    {
+        return "ReadPublishedMarksByExam";
+    }
 
-	/**
+    /**
 	 * Returns the _servico.
+	 * 
 	 * @return ReadPublishedMarksByExam
 	 */
-	public static ReadPublishedMarksByExam getService() {
-		return _servico;
-	}
+    public static ReadPublishedMarksByExam getService()
+    {
+        return _servico;
+    }
 
-	public Object run(Integer siteCode, Integer evaluationCode) throws ExcepcaoInexistente, FenixServiceException {
-		List marksList = null;
-		List infoMarksList = null;
+    public Object run(Integer siteCode, Integer evaluationCode)
+        throws ExcepcaoInexistente, FenixServiceException
+    {
+        List marksList = null;
+        List infoMarksList = null;
 
-		ISite site = null;
-		IEvaluation evaluation = null;
-		InfoEvaluation infoEvaluation = null;
+        ISite site = null;
+        IEvaluation evaluation = null;
+        InfoEvaluation infoEvaluation = null;
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			//Site
-			site = new Site(siteCode);
-			IPersistentSite siteDAO = sp.getIPersistentSite();
-			site = (ISite) siteDAO.readByOId(site, false);
+            
+            //Site
+            site = new Site(siteCode);
+            IPersistentSite siteDAO = sp.getIPersistentSite();
+            site = (ISite) siteDAO.readByOId(site, false);
+ 
+            //Execution Course
+            IExecutionCourse executionCourse = site.getExecutionCourse();            
+            
+            // Evaluation
+            evaluation = new Evaluation();
+            evaluation.setIdInternal(evaluationCode);
+            IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
+            evaluation = (IEvaluation)persistentEvaluation.readByOId(evaluation, false);
+            infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
 
-			// Evaluation
-			evaluation = new Evaluation();
-			evaluation.setIdInternal(evaluationCode);
-			IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-			evaluation = (IEvaluation)persistentEvaluation.readByOId(evaluation, false);
-			infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);			
-			
-			//Marks
-			IPersistentMark markDAO = sp.getIPersistentMark();
-			marksList = markDAO.readBy(evaluation);
+            //Attends
+            IFrequentaPersistente attendDAO = sp.getIFrequentaPersistente();
+            List attendList = attendDAO.readByExecutionCourse(executionCourse);
 
-			infoMarksList = new ArrayList();
-			Iterator iterator = marksList.listIterator();
-			IMark mark = null;
-			InfoMark infoMark = null;
-			while (iterator.hasNext()) {
-				mark = (IMark) iterator.next();
+            //Marks
+            IPersistentMark markDAO = sp.getIPersistentMark();
+            marksList = markDAO.readBy(evaluation);
 
-				infoMark = Cloner.copyIMark2InfoMark(mark);
-			
-				infoMarksList.add(infoMark);
-			}			
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-			throw new FenixServiceException("error.impossibleReadMarksList");
-		}
+            List infoAttendList = (List)CollectionUtils.collect(attendList, new Transformer()
+            {
+                public Object transform(Object input)
+                {
+                    IFrequenta attend = (IFrequenta)input;
+                    InfoFrequenta infoAttend = Cloner.copyIFrequenta2InfoFrequenta(attend);
+                    return infoAttend;
+                }
+            });
 
-		InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
-		infoSiteMarks.setMarksList(infoMarksList);
-		infoSiteMarks.setInfoEvaluation(infoEvaluation);
-		ExecutionCourseSiteComponentBuilder componentBuilder = new ExecutionCourseSiteComponentBuilder();
-		ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null,null);
+            List infoMarkList = (List)CollectionUtils.collect(marksList, new Transformer()
+            {
+                public Object transform(Object input)
+                {
+                    IMark mark = (IMark)input;
+                    InfoMark infoMark = Cloner.copyIMark2InfoMark(mark);
+                    return infoMark;
+                }
+            });
 
-		ExecutionCourseSiteView siteView = new ExecutionCourseSiteView(commonComponent, infoSiteMarks);
+            HashMap hashMarks = new HashMap();
+            Iterator iter = infoMarkList.iterator();
+            while (iter.hasNext())
+            {
+                InfoMark infoMark = (InfoMark)iter.next();
+                hashMarks.put(
+                    infoMark.getInfoFrequenta().getAluno().getNumber().toString(),
+                    infoMark.getMark());
+            }
 
-		return siteView;
-	}
+            InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
+            infoSiteMarks.setMarksList(infoMarksList);
+            infoSiteMarks.setInfoEvaluation(infoEvaluation);
+            infoSiteMarks.setHashMarks(hashMarks);
+            infoSiteMarks.setInfoAttends(infoAttendList);
+
+            ExecutionCourseSiteComponentBuilder componentBuilder =
+                new ExecutionCourseSiteComponentBuilder();
+            ISiteComponent commonComponent =
+                componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
+
+            ExecutionCourseSiteView siteView =
+                new ExecutionCourseSiteView(commonComponent, infoSiteMarks);
+
+            return siteView;
+
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace();
+            throw new FenixServiceException("error.impossibleReadMarksList");
+        }
+    }
 }
