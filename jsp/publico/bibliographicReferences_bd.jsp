@@ -61,7 +61,7 @@
 				<logic:notEmpty name="bibliographicReference" property="reference">				
 					<tr>
 						<td><h4><bean:message key="label.bibliography.reference" />:</h4></td>
-					    <td><h4><bean:write name="bibliographicReference" property="reference"/></td>
+					    <td><bean:write name="bibliographicReference" property="reference"/></td>
 					</tr>
 				</logic:notEmpty>
 				<logic:notEmpty name="bibliographicReference" property="year">
