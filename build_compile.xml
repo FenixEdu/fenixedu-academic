@@ -423,7 +423,7 @@
 				<include name="net/sourceforge/fenixedu/_development/**/*.class"/>
 	       		<include name="net/sourceforge/fenixedu/constants/**/*.class"/>
 				<include name="net/sourceforge/fenixedu/commons/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/DataBeans/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/dataTransferObject/**/*.class"/>
 	       		<include name="net/sourceforge/fenixedu/domain/**/*.class"/>
 	       		<include name="net/sourceforge/fenixedu/fileSuport/**/*.class"/>
 	       		<include name="net/sourceforge/fenixedu/middleware/**/*.class"/>
