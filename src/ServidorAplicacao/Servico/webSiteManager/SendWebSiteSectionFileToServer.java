@@ -209,7 +209,8 @@ public class SendWebSiteSectionFileToServer implements IServico {
 					itemsFile.concat("Eventuais incoerências nesta página deverão ser comunicadas afim de se efectuar a respectiva correcção.");
 				itemsFile = itemsFile.concat("</span>");
 				itemsFile = itemsFile.concat("\n</p>\n");
-
+				
+				itemsFile = itemsFile.concat("<h2>Arquivo de " + infoWebSiteSection.getName() + "</h2>\n<p>\n");
 				Iterator iterMonths = allMonthLinks.iterator();
 				while (iterMonths.hasNext()) {
 					Integer monthElem = (Integer) iterMonths.next();
@@ -228,6 +229,7 @@ public class SendWebSiteSectionFileToServer implements IServico {
 						itemsFile = itemsFile.concat("<br />\n");
 					}
 				}
+				itemsFile = itemsFile.concat("</p>");
 				itemsFile = putEndOfItemFile(itemsFile);
 
 				// prepare file for transfer
@@ -271,7 +273,7 @@ public class SendWebSiteSectionFileToServer implements IServico {
 	private String putEndOfItemFile(String stringFile) {
 		stringFile =
 			stringFile.concat(
-					"\t\t</td>\n"
+				"\t\t</td>\n"
 					+ "\t  </tr>\n"
 					+ "</table>\n"
 					+ "<div id=\"footer\">\n"
@@ -285,13 +287,15 @@ public class SendWebSiteSectionFileToServer implements IServico {
 		return stringFile;
 	}
 
-	private String putBegginingOfItemFile(String stringFile, InfoWebSiteSection infoWebSiteSection ) {
+	private String putBegginingOfItemFile(String stringFile, InfoWebSiteSection infoWebSiteSection) {
 		stringFile =
 			stringFile.concat(
 				"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
 					+ "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
 					+ "<head>\n"
-					+ "<title>www.ist.utl.pt -"+ infoWebSiteSection.getName() +"</title>\n"
+					+ "<title>www.ist.utl.pt -"
+					+ infoWebSiteSection.getName()
+					+ "</title>\n"
 					+ "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />\n"
 					+ "<meta name=\"keywords\" content=\"ensino,  ensino superior, universidade, instituto, ciência, instituto superior técnico, investigação e desenvolvimento\" />\n"
 					+ "<meta name=\"description\" content=\"O Instituto Superior Técnico é a maior escola de engenharia, ciência e tecnologia em Portugal.\" />\n"
@@ -354,21 +358,20 @@ public class SendWebSiteSectionFileToServer implements IServico {
 		itemFile = itemFile.concat("<a href=\"mailto:" + infoWebSiteItem.getInfoAuthor().getEmail() + "\">" + authorName + "</a>");
 		itemFile = itemFile.concat("</span>\n");
 		itemFile = itemFile.concat("</p>\n");
-		itemFile = itemFile.concat("<br />\n");		
+		itemFile = itemFile.concat("<br />\n");
 
 		return itemFile;
 	}
 
 	private String putBegginingOfItem(String stringFile, InfoWebSiteItem infoWebSiteItem) {
-		// item\"s title
-//		stringFile = stringFile.concat("<tr>\n\t<td class=\"info_cell_holder\" width=\"30%\">\n\t\t");
-		stringFile = stringFile.concat("<h3><strong>");
+		// item's title
+		stringFile = stringFile.concat("<h3>");
 		stringFile = stringFile.concat(infoWebSiteItem.getTitle());
+		stringFile = stringFile.concat("</h3>\n");
+		stringFile = stringFile.concat("<p class=\"post_date\">");
 
-		// item\"s dates
+		// item's dates
 		if (infoWebSiteItem.getItemBeginDayCalendar() != null) {
-			stringFile = stringFile.concat("<br />");
-			stringFile = stringFile.concat("<span class=\"greytxt\">");
 
 			stringFile = stringFile.concat("De " + infoWebSiteItem.getItemBeginDayCalendar().get(Calendar.DAY_OF_MONTH) + " ");
 
@@ -385,11 +388,18 @@ public class SendWebSiteSectionFileToServer implements IServico {
 			Mes month = new Mes(infoWebSiteItem.getItemEndDayCalendar().get(Calendar.MONTH) + 1);
 			stringFile = stringFile.concat(month.toString() + " ");
 			stringFile = stringFile.concat(String.valueOf(infoWebSiteItem.getItemEndDayCalendar().get(Calendar.YEAR)));
+		} else {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(infoWebSiteItem.getCreationDate().getTime());
+			stringFile = stringFile.concat(calendar.get(Calendar.DAY_OF_MONTH) + " ");
 
-			stringFile = stringFile.concat("</span>");
+			Mes month = new Mes(calendar.get(Calendar.MONTH) + 1);
+			stringFile = stringFile.concat(month.toString() + " ");
+			stringFile = stringFile.concat(String.valueOf(calendar.get(Calendar.YEAR)) + " - ");
+			stringFile = stringFile.concat(String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(calendar.get(Calendar.MINUTE)));
 
 		}
-		stringFile = stringFile.concat("</strong></h3>\n");
+		stringFile = stringFile.concat("</p>");
 
 		return stringFile;
 	}
