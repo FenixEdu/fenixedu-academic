@@ -500,7 +500,7 @@
         jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-        name="credits"
+        name="hours"
         column="HOURS"
         jdbc-type="FLOAT"/>
 	
