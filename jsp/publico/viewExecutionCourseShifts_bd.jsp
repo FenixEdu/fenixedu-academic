@@ -63,7 +63,7 @@
 							</td>
 							
 							<td class="listClasses">
-								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;executionPeriodOID=<%= request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).toString() %>'>
+								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;objectCode=<bean:write name="executionPeriodCode" />&amp;executionPeriodOID=<%= request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).toString() %>'>
 									<bean:write name="infoLesson" property="infoSala.nome"/>
 								</a>
 							</td>
@@ -99,7 +99,7 @@
 								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>
 							</td>
 							<td class="listClasses">
-								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;objectCode=<bean:write name="executionPeriodCode" />'>
+								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;objectCode=<bean:write name="executionPeriodCode" />&amp;executionPeriodOID=<%= request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).toString() %>'>
 									<bean:write name="infoLesson" property="infoSala.nome"/>
 								</a>
 							</td>

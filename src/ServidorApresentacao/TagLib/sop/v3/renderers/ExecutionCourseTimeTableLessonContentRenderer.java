@@ -24,6 +24,8 @@ public class ExecutionCourseTimeTableLessonContentRenderer
 			.append(lesson.getInfoSala().getNome())
 			.append("&amp;objectCode=")
 			.append(lesson.getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal())
+			.append("&amp;executionPeriodOID=")
+			.append(lesson.getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal())
 			.append("'>")
 			.append(lesson.getInfoSala().getNome())
 			.append("</a>");
