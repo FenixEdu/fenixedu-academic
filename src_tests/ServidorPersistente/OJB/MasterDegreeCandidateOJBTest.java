@@ -191,17 +191,17 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         IPessoa person = null;
         try {
             persistentSupport.iniciarTransaccao();
-	        masterDegreeTemp = persistentDegree.readBySigla("MEEC");
+	        masterDegreeTemp = persistentDegree.readBySigla("LEIC");
 	        assertNotNull(masterDegreeTemp);
 	        countryTemp = persistentCountry.readCountryByName("Portugal");
 	        assertNotNull(countryTemp);
-	        executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+	        executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 	        assertNotNull(executionYear);
 	        person = persistentPerson.lerPessoaPorUsername("nmsn");
 	        assertNotNull(person);
 	        
 	        
-	        degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano2", masterDegreeTemp);
+	        degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", masterDegreeTemp);
 	        assertNotNull(degreeCurricularPlan);
 	        
 	        executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
@@ -214,6 +214,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 
         IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate (person, executionDegree, new Integer(1), new Specialization(Specialization.MESTRADO),
         									   "LEIC", "IST", new Integer(2002), new Double(10.0));
+
         
         try {
             persistentSupport.iniciarTransaccao();
@@ -407,7 +408,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         try {
             persistentSupport.iniciarTransaccao();
             masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(new Integer(1),
-            							"2003/2004", "MEEC", new Specialization(Specialization.MESTRADO));
+            							"2002/2003", "MEEC", new Specialization(Specialization.MESTRADO));
             persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -480,7 +481,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         
 		try {
 			persistentSupport.iniciarTransaccao();
-			masterDegreeCandidateTemp1 = persistentMasterDegreeCandidate.readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(new Integer(1), "2003/2004", "MEEC", new Specialization(Specialization.MESTRADO));
+			masterDegreeCandidateTemp1 = persistentMasterDegreeCandidate.readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(new Integer(1), "2002/2003", "MEEC", new Specialization(Specialization.MESTRADO));
 			assertNotNull(masterDegreeCandidateTemp1);
 			
 			
@@ -511,7 +512,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 			masterDegreeTemp = persistentDegree.readBySigla("MEEC");
 			assertNotNull(masterDegreeTemp);
 
-			executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
 
 			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano2", masterDegreeTemp);
@@ -544,7 +545,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		try {
 			persistentSupport.iniciarTransaccao();
 
-			executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
 
 			persistentSupport.confirmarTransaccao();
@@ -577,7 +578,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			degree = persistentDegree.readBySigla("MEEC");
 			assertNotNull(degree);
-			executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
 	        
 			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano2", degree);
@@ -652,7 +653,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			degree = persistentDegree.readBySigla("MEEC");
 			assertNotNull(degree);
-			executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
 	        
 			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano2", degree);

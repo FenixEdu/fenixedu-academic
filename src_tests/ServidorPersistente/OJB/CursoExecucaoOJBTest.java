@@ -96,7 +96,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 		}
 		assertEquals(
 			"testReadByCursoAndAnoLectivo:read existing cursoExecucao",
-			1,
+			2,
 			executionDegrees.size());
 	}
 
@@ -104,15 +104,15 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 	public void testCreateNonExistingCursoExecucao() {
 		try {
 			persistentSupport.iniciarTransaccao();
-			ICurso degree = persistentDegree.readBySigla("MEEC");
+			ICurso degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
 			IDegreeCurricularPlan degreeCurricularPlan =
 				persistentDegreeCurricularPlan.readByNameAndDegree(
-					"plano2",
+					"plano1",
 					degree);
 			assertNotNull(degreeCurricularPlan);
 			IExecutionYear executionYear =
-				persistentExecutionYear.readExecutionYearByName("2002/2003");
+				persistentExecutionYear.readExecutionYearByName("2003/2004");
 			assertNotNull(executionYear);
 			persistentSupport.confirmarTransaccao();
 

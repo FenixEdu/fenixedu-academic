@@ -96,6 +96,7 @@ DELETE FROM DEGREE;
 INSERT INTO DEGREE VALUES (8,'LEIC','Licenciatura de Engenharia Informatica e de Computadores',1);
 INSERT INTO DEGREE VALUES (9,'MEEC','Mestrado em Engenharia Electrotecnica e de Computadores',2);
 INSERT INTO DEGREE VALUES (10,'MIC','Mestrado em Informatica e Computadores',2);
+INSERT INTO DEGREE VALUES (11,'MEM','Mestrado em Engenharia Mecanica',2);
 
 #-----------------------------
 # Data for table 'DEGREE_CURRICULAR_PLAN'
@@ -105,6 +106,8 @@ INSERT INTO DEGREE VALUES (10,'MIC','Mestrado em Informatica e Computadores',2);
 DELETE FROM DEGREE_CURRICULAR_PLAN;
 INSERT INTO DEGREE_CURRICULAR_PLAN VALUES (1, 'plano1', 8, 1, '0000-00-00', '0000-00-00');
 INSERT INTO DEGREE_CURRICULAR_PLAN VALUES (2, 'plano2', 9, 1, '0000-00-00', '0000-00-00');
+INSERT INTO DEGREE_CURRICULAR_PLAN VALUES (3, 'plano3', 10, 1, '0000-00-00', '0000-00-00');
+INSERT INTO DEGREE_CURRICULAR_PLAN VALUES (4, 'plano4', 11, 1, '0000-00-00', '0000-00-00');
 
 #-----------------------------
 # Data for table 'CURRICULAR_COURSE'
