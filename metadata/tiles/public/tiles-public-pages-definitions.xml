@@ -85,4 +85,13 @@
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
 		<put name="body" value="/publico/viewClasses_bd.jsp"/>
 	</definition>
+	<definition name="viewClassTimeTable" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+		<put name="body" value="/publico/viewClassTimeTable_bd.jsp"/>
+	</definition>
+	<definition name="viewRoom" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+		<put name="body" value="/publico/viewRoom_bd.jsp"/>
+	</definition>
+	
 </tiles-definitions>

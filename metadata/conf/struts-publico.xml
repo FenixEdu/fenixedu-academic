@@ -194,7 +194,7 @@
               parameter="method"
               path="/chooseContextDA"
               scope="request"
-              validate="true"
+              validate="false"
               type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction"
               >
         <forward name="chooseContext" path="/chooseContext.jsp"/>
@@ -207,7 +207,7 @@
 	<action path="/viewClasses"
               type="ServidorApresentacao.Action.publico.ViewClassesAction"
               >
-          <forward name="Sucess" path="/viewClasses.jsp"/>
+          <forward name="Sucess" path="viewClasses"/>
       </action>
 
 	<action path="/viewClassTimeTableWithClassNameAndDegreeInitialsAction"
@@ -269,11 +269,11 @@
           <forward name="Sucess" path="/chooseSemester.jsp"/>
       </action>
 
-      <action input="/viewClasses.jsp"
+      <action input="viewClassTimeTable"
       		  path="/viewClassTimeTable"
               type="ServidorApresentacao.Action.publico.ViewClassTimeTableAction"
               >
-          <forward name="Sucess" path="/viewClassTimeTable.jsp"/>
+          <forward name="Sucess" path="viewClassTimeTable"/>
       </action>
       
       <action 
@@ -395,7 +395,7 @@
 				scope="request"
 				parameter="method"
 				type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
-			<forward name="roomViewer" path="/viewRoom.jsp"/>
+			<forward name="roomViewer" path="viewRoom"/>
 			<forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
 		</action>
 	

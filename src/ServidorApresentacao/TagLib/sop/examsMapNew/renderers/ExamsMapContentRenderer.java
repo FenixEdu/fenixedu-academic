@@ -26,6 +26,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer
     {
         this.examsMap = examsMap;
         StringBuffer strBuffer = new StringBuffer();
+      
 
         boolean isFirstDayOfSeason =
             ((examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH)
@@ -96,11 +97,9 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer
         String typeUser)
     {
         StringBuffer strBuffer = new StringBuffer();
-		
         for (int i = 0; i < examsMapSlot.getExams().size(); i++)
         {
-            InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);		
-			
+            InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);					
             Integer curicularYear = infoExam.getInfoExecutionCourse().getCurricularYear();
 
             if (curicularYear.equals(year1) || curicularYear.equals(year2))
@@ -149,7 +148,19 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer
                     strBuffer.append(
                         "<a href='viewSite.do?method=firstPage&amp;objectCode="
                             + infoExecutionCourse.getIdInternal()
-                            + "'>");
+							+ "&amp;executionPeriodOID="
+						    + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()
+						    + "&amp;degreeID="
+						    + examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal()
+							+ "&amp;"
+						    + SessionConstants.EXECUTION_COURSE_OID
+						    + "="
+						    + infoExecutionCourse.getIdInternal()
+							+ "&amp;executionDegreeID="	
+						    + examsMap.getInfoExecutionDegree().getIdInternal()
+						    + "&amp;degreeCurricularPlanID="
+						    + examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getIdInternal()	
+                            + "'>"); 
                     strBuffer.append(courseInitials);
                 }
                 strBuffer.append("</a>");

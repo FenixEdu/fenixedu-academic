@@ -18,11 +18,13 @@ public class ClassTimeTableLessonContentRenderer
 		StringBuffer strBuffer = new StringBuffer();
 		InfoLesson lesson = lessonSlot.getInfoLessonWrapper().getInfoLesson();
 		InfoExecutionCourse infoExecutionCourse = lesson.getInfoDisciplinaExecucao();
+ 
 		strBuffer.append("<a class='timetable' href='viewSite.do?method=firstPage&amp;objectCode=");
 		strBuffer
 			.append(infoExecutionCourse.getIdInternal())
 			.append("&amp;executionPeriodOID=")
-			.append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());		
+			.append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal())
+			.append("&amp;shift=true");		
 		strBuffer.append("'>").append(lesson.getInfoDisciplinaExecucao().getSigla()).append("</a>");
 		strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")&nbsp;");
 		strBuffer
@@ -30,8 +32,9 @@ public class ClassTimeTableLessonContentRenderer
 			.append(lesson.getInfoSala().getNome())
 			.append("&amp;objectCode=")
 			.append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal())
- 			.append("&amp;executionPeriodOID=")
+			.append("&amp;executionPeriodOID=")
 			.append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal())
+			.append("&amp;shift=true")
 			.append("'>")
 			.append(lesson.getInfoSala().getNome())
 			.append("</a>");

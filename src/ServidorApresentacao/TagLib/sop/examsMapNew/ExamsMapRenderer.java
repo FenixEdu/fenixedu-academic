@@ -209,7 +209,19 @@ public class ExamsMapRenderer implements IExamsMapRenderer
                 {
                     strBuffer.append(
                         "<a href='viewSite.do?method=firstPage&amp;objectCode="
-                            + infoExecutionCourse.getIdInternal()
+						+ infoExecutionCourse.getIdInternal()
+						+ "&amp;executionPeriodOID="
+						+ infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()
+						+ "&amp;degreeID="
+						+ examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal()
+						+ "&amp;"
+						+ SessionConstants.EXECUTION_COURSE_OID
+						+ "="
+						+ infoExecutionCourse.getIdInternal()
+						+ "&amp;executionDegreeID="	
+						+ examsMap.getInfoExecutionDegree().getIdInternal()
+						+ "&amp;degreeCurricularPlanID="
+						+ examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getIdInternal()	
                             + "'>");
                 }
                 else if (showCreateExamLink && user.equals("sop"))
