@@ -120,9 +120,17 @@
 			</td>
 		</tr>
 	</logic:iterate>	
-
+</logic:notEmpty>
 <logic:notEmpty name="component" property="lecturingTeachers" >	
-
+	<logic:empty name="component" property="responsibleTeachers">	
+	
+	<table>
+	<tr>
+		<td>
+			<h2><bean:message key="label.lecturingTeachers"/></h2>	
+		</td>
+	</tr>	
+	</logic:empty>
 	<logic:iterate id="infoTeacher" name="component" property="lecturingTeachers">
 		<tr>
 			<td>
