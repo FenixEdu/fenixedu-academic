@@ -59,6 +59,7 @@ public abstract class SessionConstants {
 	public static final String LESSON_OID = "lessonOID";
 	public static final String SHIFT = "shift";
 	public static final String SHIFT_OID = "shift_oid";
+	public static final String CLASSES = "classes";
 	public static final String DEGREES = "licenciaturas";
 	public static final String LIST_INFOEXECUTIONPERIOD = "infoExecutionPeriodList";	
 	public static final String LABELLIST_EXECUTIONPERIOD = "executionPeriodLabelList";	

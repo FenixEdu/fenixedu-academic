@@ -56,10 +56,10 @@
 	 	</tr> 
 	</table>
 	<br />
-	<html:submit property="operation" styleClass="inputbutton">
+	<html:submit styleClass="inputbutton">
 		<bean:message key="lable.chooseRoom"/>
 	</html:submit>
-	<html:reset value="Limpar" styleClass="inputbutton">
+	<html:reset styleClass="inputbutton">
 		<bean:message key="label.clear"/>
 	</html:reset>
 </html:form>

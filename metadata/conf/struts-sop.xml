@@ -63,15 +63,15 @@
 
       <!-- Dynamic-FormBean for lesson manipulation -->
       <form-bean name="manageLessonForm"
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorActionForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
         <form-property name="diaSemana" type="java.lang.String"/>
         <form-property name="horaInicio" type="java.lang.String"/>
         <form-property name="minutosInicio" type="java.lang.String"/>
         <form-property name="horaFim" type="java.lang.String"/>
         <form-property name="minutosFim" type="java.lang.String"/>
         <form-property name="nomeSala" type="java.lang.String"/>
-        <form-property name="page" type="java.lang.Integer"/>
       </form-bean>
 
 	  <!-- AULAS -->
@@ -1163,6 +1163,32 @@
     	<forward name="ShowChooseRoomForm" path="/chooseRoomForLesson.jsp"/>
     	<forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
     	<forward name="LessonDeleted" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
+	</action>
+
+	<action path="/manageClasses"
+			input="/manageClasses.do?method=listClasses&amp;page=0"
+            type="ServidorApresentacao.Action.sop.ManageClassesDA"
+            name="classForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />
+    	<forward name="ShowClassList" path="/manageClasses.jsp"/>
+	</action>
+
+	<action path="/manageClass"
+			input="/manageClass.do?method=prepare&amp;page=0"
+            type="ServidorApresentacao.Action.sop.ManageClassDA"
+            name="classForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="EditClass" path="/manageClass.jsp"/>
 	</action>
 
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
