@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCandidateRegistration;
 import DataBeans.util.Cloner;
@@ -20,18 +23,13 @@ import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IGratuity;
 import Dominio.IMasterDegreeCandidate;
-import Dominio.IPersonRole;
-import Dominio.IPessoa;
 import Dominio.IQualification;
 import Dominio.IRole;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.IStudentKind;
 import Dominio.MasterDegreeCandidate;
-import Dominio.PersonRole;
-import Dominio.Pessoa;
 import Dominio.Qualification;
-import Dominio.Role;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
@@ -45,7 +43,8 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
-import Util.EnrollmentState;
+import Util.EnrolmentState;
+import Util.EntryPhase;
 import Util.GratuityState;
 import Util.RoleType;
 import Util.SituationName;
@@ -62,6 +61,8 @@ import Util.enrollment.EnrollmentCondition;
  */
 public class RegisterCandidate implements IService {
 
+	boolean personIsLocked = false;
+
     /**
      * The actor of this class.
      */
@@ -75,11 +76,12 @@ public class RegisterCandidate implements IService {
 
         IStudentCurricularPlan studentCurricularPlanResult = null;
         IMasterDegreeCandidate masterDegreeCandidate = null;
+        IStudent student = null;
         try {
             sp = SuportePersistenteOJB.getInstance();
 
             if (studentNumber != null) {
-                IStudent student = sp.getIPersistentStudent()
+                student = sp.getIPersistentStudent()
                         .readStudentByNumberAndDegreeType(studentNumber,
                                 TipoCurso.MESTRADO_OBJ);
 
@@ -98,19 +100,23 @@ public class RegisterCandidate implements IService {
             }
 
             // Check if a Master Degree Student Already Exists
-            IStudent student = sp.getIPersistentStudent()
+            if (student == null) {
+            	student = sp.getIPersistentStudent()
                     .readByPersonAndDegreeType(
                             masterDegreeCandidate.getPerson(),
                             TipoCurso.MESTRADO_OBJ);
+            }
 
-            IRole role = new Role();
-            role.setRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
-            IPersonRole personRole = sp.getIPersistentPersonRole()
-                    .readByPersonAndRole(masterDegreeCandidate.getPerson(),
-                            role);
-            if (personRole != null) {
-                sp.getIPersistentPersonRole().deleteByOID(PersonRole.class,
-                        personRole.getIdInternal());
+            IRole role = (IRole) CollectionUtils.find(masterDegreeCandidate.getPerson().getPersonRoles(), new Predicate() {
+				public boolean evaluate(Object arg0) {
+					IRole role = (IRole) arg0;
+					return role.getRoleType().getValue() == RoleType.MASTER_DEGREE_CANDIDATE.getValue();
+				}
+            	});
+            if (role != null) {
+            	sp.getIPessoaPersistente().simpleLockWrite(masterDegreeCandidate.getPerson());
+            	personIsLocked = true;
+            	masterDegreeCandidate.getPerson().getPersonRoles().remove(role);
             }
             Integer newStudentNumber = null;
             newStudentNumber = sp.getIPersistentStudent()
@@ -123,6 +129,9 @@ public class RegisterCandidate implements IService {
             if (student == null) {
                 student = new Student();
                 sp.getIPersistentStudent().simpleLockWrite(student);
+                student.setPayedTuition(new Boolean(false));
+                student.setEnrollmentForbidden(new Boolean(false));
+                student.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
                 student.setDegreeType(TipoCurso.MESTRADO_OBJ);
                 student.setPerson(masterDegreeCandidate.getPerson());
                 student.setState(new StudentState(StudentState.INSCRITO));
@@ -147,12 +156,12 @@ public class RegisterCandidate implements IService {
 
                 // Give The Student Role if Necessary
                 if (!AuthorizationUtils.containsRole(roles, RoleType.STUDENT)) {
-                    personRole = new PersonRole();
-                    sp.getIPersistentPersonRole().simpleLockWrite(personRole);
-                    personRole.setPerson(masterDegreeCandidate.getPerson());
-                    role = sp.getIPersistentRole().readByRoleType(
+                	role = sp.getIPersistentRole().readByRoleType(
                             RoleType.STUDENT);
-                    personRole.setRole(role);
+                	if (!personIsLocked) {
+                		sp.getIPessoaPersistente().simpleLockWrite(masterDegreeCandidate.getPerson());
+                		masterDegreeCandidate.getPerson().getPersonRoles().add(role);
+                	}
                 }
             }
 
@@ -164,18 +173,6 @@ public class RegisterCandidate implements IService {
             if ((studentCurricularPlanOld != null)
                     && (studentCurricularPlanOld.getCurrentState()
                             .equals(StudentCurricularPlanState.ACTIVE_OBJ))) {
-                sp.getIStudentCurricularPlanPersistente().simpleLockWrite(
-                        studentCurricularPlanOld);
-
-                //				System.out.println("------------- MASTER DEGREE STUDENT WITH
-                // ACTIVE CURRICULAR PLAN ----------------");
-                //				System.out.println(" -- STUDENT NUMBER: " +
-                // studentCurricularPlanOld.getStudent().getNumber() + "[id: " +
-                // studentCurricularPlanOld.getStudent().getIdInternal() + "]");
-                //				System.out.println(" -- STUDENT CURRICULAR PLAN ID : " +
-                // studentCurricularPlanOld.getIdInternal());
-                //				System.out.println("--------------------------------------------------------------------------------");
-
                 throw new ActiveStudentCurricularPlanAlreadyExistsServiceException();
             }
 
@@ -187,6 +184,7 @@ public class RegisterCandidate implements IService {
                     Branch.class, branchID);
 
             studentCurricularPlan.setBranch(branch);
+            studentCurricularPlan.setEnrolments(new ArrayList());
             studentCurricularPlan
                     .setCurrentState(StudentCurricularPlanState.ACTIVE_OBJ);
             studentCurricularPlan.setDegreeCurricularPlan(masterDegreeCandidate
@@ -211,13 +209,12 @@ public class RegisterCandidate implements IService {
 
                 IEnrollment enrolment = new Enrolment();
                 sp.getIPersistentEnrolment().simpleLockWrite(enrolment);
-                //enrolment.setCurricularCourseScope(candidateEnrolment.getCurricularCourseScope());
                 enrolment.setCurricularCourse(candidateEnrolment
                         .getCurricularCourse());
                 enrolment
                         .setEnrolmentEvaluationType(new EnrolmentEvaluationType(
                                 EnrolmentEvaluationType.NORMAL));
-                enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
+                enrolment.setEnrolmentState(EnrolmentState.ENROLED);
                 enrolment.setExecutionPeriod(sp.getIPersistentExecutionPeriod()
                         .readActualExecutionPeriod());
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);
@@ -289,22 +286,13 @@ public class RegisterCandidate implements IService {
             }
             qualification.setDegree(masterDegreeCandidate.getMajorDegree());
 
-            sp.confirmarTransaccao();
-            sp.iniciarTransaccao();
-
             // Change the Username If neccessary
-
             changeUsernameIfNeccessary(studentCurricularPlan.getStudent());
 
-            studentCurricularPlanResult = sp
-                    .getIStudentCurricularPlanPersistente()
-                    .readActiveStudentCurricularPlan(student.getNumber(),
-                            TipoCurso.MESTRADO_OBJ);
-
+            studentCurricularPlanResult = studentCurricularPlan;
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException(
                     "Persistence layer error");
-            //newEx.fillInStackTrace();
             throw newEx;
         }
 
@@ -336,13 +324,9 @@ public class RegisterCandidate implements IService {
                     || (student.getPerson().getUsername().indexOf("Esp") != -1)
                     || (student.getPerson().getUsername().indexOf("Int") != -1)) {
 
-                IPessoa person = (IPessoa) sp.getIPessoaPersistente()
-                        .readByOID(Pessoa.class,
-                                student.getPerson().getIdInternal(), true);
-                person.setUsername("M" + student.getNumber());
-                student.setPerson(person);
+            	sp.getIPessoaPersistente().simpleLockWrite(student.getPerson());
+                student.getPerson().setUsername("M" + student.getNumber());
             }
-
         } catch (ExcepcaoPersistencia e) {
             throw new ExcepcaoPersistencia();
         }
