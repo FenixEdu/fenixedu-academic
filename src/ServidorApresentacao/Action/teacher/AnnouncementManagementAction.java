@@ -66,7 +66,7 @@ public class AnnouncementManagementAction extends FenixDispatchAction {
 			HttpSession session = request.getSession(false);
 
 			//retrieve announcement
-			List announcements = (List) session.getAttribute("Announcements");
+			List announcements = (List) session.getAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
 			String announcementIndex = (String) request.getParameter("index");
 			Integer index = new Integer(announcementIndex);
 			InfoAnnouncement infoAnnouncement = (InfoAnnouncement) announcements.get(index.intValue());
@@ -115,16 +115,12 @@ public class AnnouncementManagementAction extends FenixDispatchAction {
 
 			InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 			
-			List announcements = (List) session.getAttribute("Announcements");
+			List announcements = (List) session.getAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
 			String announcementIndex = (String) request.getParameter("index");
 			Integer index = new Integer(announcementIndex);
 			InfoAnnouncement infoAnnouncement = (InfoAnnouncement) announcements.get(index.intValue());
 
 			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-
-			if (infoSite.getInfoExecutionCourse()!=null) 
-				System.out.println("infoSite.getInfoExecutionCourse()!=null");
-			else System.out.println("infoSite.getInfoExecutionCourse()==null");
 
 			Object args[] = { infoSite, infoAnnouncement };
 			GestorServicos manager = GestorServicos.manager();
@@ -141,7 +137,7 @@ public class AnnouncementManagementAction extends FenixDispatchAction {
 		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-			List announcements = (List) request.getSession().getAttribute("Announcements");
+			List announcements = (List) request.getSession().getAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
 
 			//return to announcementManagement
 			return mapping.findForward("showAnnouncements");

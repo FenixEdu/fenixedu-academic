@@ -38,9 +38,9 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 
 		List announcements = (List) manager.executar(userView, "ReadAnnouncements", args);
 		//remove old announcement list
-		session.removeAttribute("Announcements");
+		session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
 		//put new announcement list
-		session.setAttribute("Announcements", announcements);
+		session.setAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST, announcements);
 		
 		
 		if (!(announcements.isEmpty()))

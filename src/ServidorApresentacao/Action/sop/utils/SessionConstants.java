@@ -37,7 +37,6 @@ public abstract class SessionConstants {
 	public static final String INFO_SITE_ANNOUNCEMENT= "info_site_announcement";
 	public static final String INFO_SITE_SECTION= "info_site_section";
 	public static final String INFO_SITE_ITEM= "info_site_item";
-	public static final String INFO_SITE_ANNOUNCEMENT_LIST= "info_site_announcement_list";
 	public static final String INFO_SITES_LIST = "info_sites_list";
 	public static final String INFO_TEACHER = "info_teacher";	
 	public static final String INFO_BIBLIOGRAPHIC_REFERENCE_LIST = "BibliographicReferences";		
@@ -46,7 +45,9 @@ public abstract class SessionConstants {
 	public static final String RESPONSIBLE_TEACHERS_LIST = "responsible_teachers_list";
 	public static final String IS_RESPONSIBLE = "is_responsible";
 	public static final String ALTERNATIVE_SITE ="alternative";
+
 	public static final String LAST_ANNOUNCEMENT ="last_announcement";
+	public static final String INFO_SITE_ANNOUNCEMENT_LIST= "info_site_announcement_list";
 
 
 	// -------------------------------------------------------------------------------

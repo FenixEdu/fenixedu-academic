@@ -73,8 +73,6 @@ public class ReadSite extends FenixAction {
 			} catch (FenixServiceException fenixServiceException){
 				throw new FenixActionException(fenixServiceException.getMessage());
 			}
-			System.out.println("session.getAttribute(SessionConstants.LAST_ANNOUNCEMENT)" + session.getAttribute(SessionConstants.LAST_ANNOUNCEMENT));
-			
 			
 			return mapping.findForward("viewSite");}
 
