@@ -7,7 +7,8 @@
 <table width="90%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td bgcolor="#FFFFFF" class="infoselected">
-Os enunciados e as respectivas chaves de correcção estão disponíveis em <html:link href="http://galileu.fisica.ist.utl.pt/" target="about_blank">http://galileu.fisica.ist.utl.pt/</html:link>
+<bean:define id="testslink" type="java.lang.String"><bean:message key="link.gauging.physics.test" bundle="GLOBAL_RESOURCES"/></bean:define>
+Os enunciados e as respectivas chaves de correcção estão disponíveis em <html:link href="<%= testslink %>" target="about_blank"><%= testslink %></html:link>
 </td></tr>
 </table>
 <br/>

@@ -3,7 +3,7 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.assiduousness.masterPage" page="/fenixLayout_2col.jsp">
-	  <put name="title" value=".IST - Portal Assiduidade" />
+	  <put name="title" value="Portal Assiduidade" />
 	  <put name="serviceName" value="Portal do Assiduidade" />	
 	  <put name="navGeral" value="" />	
 	  <put name="body" value="" />

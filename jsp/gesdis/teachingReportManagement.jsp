@@ -46,7 +46,7 @@
 			<td><strong><bean:message key="message.teachingReport.courseURL"/></strong></td>
 			<td>
 					<bean:define id="objectCode" name="siteCourseInformation" property="infoExecutionCourse.idInternal"/>
-						https://fenix.ist.utl.pt/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<%= objectCode %>
+					<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/>publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<%= objectCode %>
 			</td>
 		</tr>
 	</table>

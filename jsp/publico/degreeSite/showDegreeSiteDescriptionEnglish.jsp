@@ -8,7 +8,9 @@
 <p><span class="error"><html:errors/></span></p>
 
 <logic:notPresent name="infoDegreeInfo">
-	<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> >
+
+<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+<div class="breadcumbs"><a href="<%= institution.url %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> >
 		<html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>"> Master Degrees</html:link>
 		&nbsp;/&nbsp;
 		<html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>"> Master Degrees</html:link>				
@@ -16,7 +18,9 @@
 </logic:notPresent>
 
 <logic:present name="infoDegreeInfo">
-	<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> >
+
+<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+<div class="breadcumbs"><a href="<%= institution.url %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> >
 		<bean:define id="degreeType" name="infoDegreeInfo" property="infoDegree.tipoCurso" />	
 		<logic:equal name="degreeType" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
 			 <html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >Master Degrees</html:link>

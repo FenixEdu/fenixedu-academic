@@ -23,37 +23,6 @@
 				</logic:iterate>
 			</td>
 		</tr>
-<!--
-		<tr>
-			<td><strong><bean:message key="message.studentReport.responsibleTeacher"/></strong></td>
-			<td>
-				<%--<logic:iterate id="infoTeacher" name="siteCourseInformation" property="infoResponsibleTeachers">
-					<bean:write name="infoTeacher" property="infoPerson.nome" />
-					<br />
-				</logic:iterate>--%>	
-			</td>
-		</tr>
-		<tr>
-			<td><strong><bean:message key="message.studentReport.courseDepartment"/></strong></td>
-			<td>
-				<%--<logic:iterate id="infoDepartment" name="siteCourseInformation" property="infoDepartments">
-					<bean:write name="infoDepartment" property="name" />
-					<br />
-				</logic:iterate>--%>
-			</td>
-		</tr>
-		<tr>
-			<td><strong><bean:message key="message.studentReport.courseSection"/></strong></td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr>
-			<td><strong><bean:message key="message.studentReport.courseURL"/></strong></td>
-			<td>
-				<%--<bean:define id="objectCode" name="siteCourseInformation" property="infoExecutionCourse.idInternal"/>
-				https://fenix.ist.utl.pt/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<%= objectCode %>--%>
-			</td>
-		</tr>
--->
 	</table>
 	<br />
 	<h3 class="bluetxt"><bean:message key="message.studentReport.executionYear" />

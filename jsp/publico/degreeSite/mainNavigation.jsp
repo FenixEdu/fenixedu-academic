@@ -11,15 +11,15 @@
   	<li class="treenode"><a href="">Ensino</a>
 		<ul class="expmenu">
 			<li><html:link page="<%= "/showDegrees.do?method=nonMaster" %>" ><bean:message key="link.degree.nonMaster"/></html:link></li>
-<%-- &executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) --%>
-			<li><a href="http://www.ist.utl.pt/html/ensino/pos_grad.html">Pós-graduações</a></li>
+			<bean:define id="institutionUrlPostGraduation" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/ensino/pos_grad.html</bean:define>
+			<li><a href="<%= institutionUrlPostGraduation %>">Pós-graduações</a></li>
 			<li><html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" ><bean:message key="link.degree.master"/></html:link></li>
-			<li><a href="http://www.ist.utl.pt/html/ensino/doutoramentos.html">Doutoramentos</a></li>
+			<bean:define id="institutionUrlPhd" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/ensino/doutoramentos.html</bean:define>
+			<li><a href="<%= institutionUrlPhd %>">Doutoramentos</a></li>
 		</ul>
 	</li>
 	<li><a href="/html/id/">I &amp; D</a></li>
 	<li><a href="/html/sociedade/">Liga&ccedil;&atilde;o &agrave; Sociedade </a></li>
 	<li><a href="/html/viverist/">Viver no IST</a></li>
-	<%--	 <li><a href="http://www.ist.utl.pt/html/recursos/">Recursos</a></li> --%>
 	<li><html:link page="<%= "/prepareConsultRoomsNew.do?method=prepare" %>" >Recursos</html:link></li>
 </ul>

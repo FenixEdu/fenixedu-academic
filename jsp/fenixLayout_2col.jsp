@@ -20,7 +20,8 @@
 	<img alt="Logo dot ist" src="<%= request.getContextPath() %>/images/dotist-id.gif" />
     <p><tiles:getAsString name="serviceName" /></p>
 </div>
-<div id="hdr-nav"><a href="mailto:suporte@dot.ist.utl.pt"><img alt="Suporte" src="<%= request.getContextPath() %>/images/sup-bar.gif" /></a><a href="<%= request.getContextPath() %>/logoff.do"><img alt="Logout" src="<%= request.getContextPath() %>/images/logoff-bar.gif" /></a></div>
+<bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/></bean:define>
+<div id="hdr-nav"><a href="<%= supportLink %>"><img alt="Suporte" src="<%= request.getContextPath() %>/images/sup-bar.gif" /></a><a href="<%= request.getContextPath() %>/logoff.do"><img alt="Logout" src="<%= request.getContextPath() %>/images/logoff-bar.gif" /></a></div>
 <!-- End Header -->
 <!-- NavGeral -->
 <tiles:insert attribute="navGeral" />

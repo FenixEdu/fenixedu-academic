@@ -1,5 +1,20 @@
-<div id="logoist"><a href="http://www.ist.utl.pt/"><img alt="[Logo] Instituto Superior T�écnico" width="234" height="51" border="0" src="<%= request.getContextPath() %>/images/wwwist.gif" /></a></div>
-<div id="header_links"><a href="https://fenix.ist.utl.pt/loginPage.jsp">Login .IST</a> | <a href="http://www.ist.utl.pt/html/instituto/index.shtml#cont">Contactos</a> | <a href="http://www.ist.utl.pt/html/mapadosite/">Mapa do Site</a> </div>
+<%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
+<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+<bean:define id="fenixUrl" type="java.lang.String"><bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+
+<div id="logoist">
+	<a href="<%= institutionUrl %>">
+		<img alt="[Logo] Instituto Superior T�écnico" width="234" height="51" border="0"
+				src="<%= request.getContextPath() %>/images/wwwist.gif" />
+	</a>
+</div>
+<div id="header_links">
+	<a href="<%= fenixUrl %>/loginPage.jsp">Login <bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/></a>
+	| <a href="<%= institutionUrl %>/html/instituto/index.shtml#cont">Contactos</a>
+	| <a href="<%= institutionUrl %>/html/mapadosite/">Mapa do Site</a>
+</div>
 
 <div id="search">
 		<form method="get" action="http://www.google.com/u/wwwist">

@@ -8,8 +8,10 @@
 <p><span class="error"><html:errors/></span></p>
 
 <logic:present name="infoDegreeInfo">
-	<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml"><bean:message key="label.school" /></a>
-		&nbsp;&gt;&nbsp;<a href="http://www.ist.utl.pt/html/ensino/index.shtml"><bean:message key="label.education" /></a>
+<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+<div class="breadcumbs"><a href="<%= institution.url %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> >
+<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>ensino/index.shtml</bean:define>
+&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="label.education" /></a>
 		<bean:define id="degreeType" name="infoDegreeInfo" property="infoDegree.tipoCurso" />	
 		&nbsp;&gt;&nbsp; 
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>">
@@ -18,17 +20,6 @@
 		&nbsp;&gt;&nbsp;<bean:message key="label.accessRequirements"/>
 	</div>
 	
-	
-	<!-- LANGUAGE 	
-	<div class="version">
-		<span class="px10">
-			<bean:define id="imageFlag"><bean:message key="image.flag" /></bean:define>
-			<bean:define id="imageFlagAlt"><bean:message key="image.flag.alt" /></bean:define>
-			<html:link page="htp://www.ist.utl.pt"><bean:message key="label.language" /></html:link>
-			<img src="<%= request.getContextPath() + imageFlag %>" alt="<%= imageFlagAlt %>" width="16" height="12" />
-		</span>
-
-	</div>-->	
 	
 	<!-- COURSE NAME -->
 	<h1>
