@@ -23,7 +23,7 @@ public class ViewUtils {
 			ArrayList sonNode = (ArrayList) fatherNode.clone();
 			sonNode.add(section.getName());
 			result.add(sonNode);
-			result.addAll(buildSectionsList(section.getInferiorSections(), sonNode));
+			result.addAll(buildSectionsList(section.getInferiorInfoSections(), sonNode));
 		}
 		
 		return result;
