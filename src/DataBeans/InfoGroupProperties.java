@@ -246,4 +246,43 @@ public class InfoGroupProperties extends InfoObject{
 		public void setEnrolmentEndDay(Calendar enrolmentEndDay) {
 			this.enrolmentEndDay=enrolmentEndDay;
 		}
+		
+	public String getShiftTypeFormatted() {
+		String result = "";
+		int value = getShiftType().getTipo().intValue();
+		switch (value) {
+			case 1 :
+				return "Teórica";
+			case 2 :
+				return "Prática";
+			case 3 :
+				return "Teórico-Prática";
+			case 4 :
+				return "Laboratorial";
+		}
+		return result;
+	}
+	
+	public String getEnrolmentBeginDayFormatted() {
+		String result = "";
+		Calendar date = getEnrolmentBeginDay();
+		result += date.get(Calendar.DAY_OF_MONTH);
+		result += "/";
+		result += date.get(Calendar.MONTH) + 1;
+		result += "/";
+		result += date.get(Calendar.YEAR);
+		return result;
+	}
+	
+	public String getEnrolmentEndDayFormatted() {
+			String result = "";
+			Calendar date = getEnrolmentEndDay();
+			result += date.get(Calendar.DAY_OF_MONTH);
+			result += "/";
+			result += date.get(Calendar.MONTH) + 1;
+			result += "/";
+			result += date.get(Calendar.YEAR);
+			return result;
+		}
+	
 }
