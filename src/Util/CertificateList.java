@@ -23,6 +23,8 @@ public class CertificateList implements Serializable {
 	public static final int FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA = 8;
 	public static final int FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA = 9;
 	public static final int DIPLOMA = 10;
+	public static final int FIM_CURSO_SIMPLES = 11;
+	public static final int FIM_CURSO_DISCRIMINADA_COM_MEDIA = 12;
 	
 
 	public static final CertificateList MATRICULA_TYPE = new CertificateList(MATRICULA);
@@ -35,6 +37,8 @@ public class CertificateList implements Serializable {
 	public static final CertificateList FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_TYPE = new CertificateList(FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA);
 	public static final CertificateList FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_TYPE = new CertificateList(FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA);
 	public static final CertificateList DIPLOMA_TYPE = new CertificateList(DIPLOMA);
+	public static final CertificateList FIM_CURSO_SIMPLES_TYPE = new CertificateList(FIM_CURSO_SIMPLES);
+	public static final CertificateList FIM_CURSO_DISCRIMINADA_COM_MEDIA_TYPE = new CertificateList(FIM_CURSO_DISCRIMINADA_COM_MEDIA);
 
 	public static final String MATRICULA_STRING = "Matrícula";
 	public static final String MATRICULA_INSCRICAO_STRING = "Matrícula e Inscrição";
@@ -46,6 +50,8 @@ public class CertificateList implements Serializable {
 	public static final String FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING = "Fim parte escolar discriminada sem média";
 	public static final String FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING = "Fim parte escolar discriminada com média";
 	public static final String DIPLOMA_STRING = "Diploma";
+	public static final String FIM_CURSO_SIMPLES_STRING = "Fim de curso de Mestrado simples";
+	public static final String FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING = "Fim de curso de Mestrado discriminada com média";
 
 	public static final String DEFAULT = "[Escolha um Tipo de Documento]";
 
@@ -84,6 +90,8 @@ public class CertificateList implements Serializable {
 		result.add(new LabelValueBean(CertificateList.FIM_PARTE_ESCOLAR_SIMPLES_STRING, CertificateList.FIM_PARTE_ESCOLAR_SIMPLES_STRING));
 		result.add(new LabelValueBean(CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING, CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING));
 		result.add(new LabelValueBean(CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING, CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING));
+		result.add(new LabelValueBean(CertificateList.FIM_CURSO_SIMPLES_STRING, CertificateList.FIM_CURSO_SIMPLES_STRING));
+		result.add(new LabelValueBean(CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING, CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING));
 		result.add(new LabelValueBean(CertificateList.DIPLOMA_STRING, CertificateList.DIPLOMA_STRING));
 		return result;	
 	}
@@ -97,7 +105,9 @@ public class CertificateList implements Serializable {
 		if (type.intValue()== CertificateList.APROVEITAMENTO_EXTRA_CURRICULAR) return CertificateList.APROVEITAMENTO_EXTRA_CURRICULAR_STRING;
 		if (type.intValue()== CertificateList.FIM_PARTE_ESCOLAR_SIMPLES) return CertificateList.FIM_PARTE_ESCOLAR_SIMPLES_STRING;
 		if (type.intValue()== CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA) return CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING;		
-		if (type.intValue()== CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA) return CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING;		
+		if (type.intValue()== CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA) return CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING;
+		if (type.intValue()== CertificateList.FIM_CURSO_SIMPLES) return CertificateList.FIM_CURSO_SIMPLES_STRING;		
+		if (type.intValue()== CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA) return CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING;
 		if (type.intValue()== CertificateList.DIPLOMA) return CertificateList.DIPLOMA_STRING;
 		
 		return "ERRO!"; // Nunca e atingido
