@@ -477,7 +477,7 @@ public class ExecutionCourseSiteComponentBuilder {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 			IEvaluationMethod evaluation =
-				sp.getIPersistentEvaluation().readByExecutionCourse(
+				sp.getIPersistentEvaluationMethod().readByExecutionCourse(
 					executionCourse);
 			if (evaluation != null) {
 				component = Cloner.copyIEvaluation2InfoEvaluation(evaluation);

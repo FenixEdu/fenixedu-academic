@@ -36,7 +36,7 @@ public class EditEvaluation implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
-			IPersistentEvaluationMethod persistentEvaluation = sp.getIPersistentEvaluation();
+			IPersistentEvaluationMethod persistentEvaluation = sp.getIPersistentEvaluationMethod();
 
 			IDisciplinaExecucao executionCourse =
 				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);

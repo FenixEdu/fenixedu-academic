@@ -84,7 +84,7 @@ public class TeacherAdministrationSiteComponentServiceEvaluationTest extends Tes
 
 			sections = persistentSection.readBySite(site);
 
-			evaluation = sp.getIPersistentEvaluation().readByExecutionCourse(executionCourse);
+			evaluation = sp.getIPersistentEvaluationMethod().readByExecutionCourse(executionCourse);
 
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {

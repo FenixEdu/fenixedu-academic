@@ -19,6 +19,7 @@ import DataBeans.InfoSite;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
+import DataBeans.InfoSiteEvaluation;
 import DataBeans.InfoSiteExam;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteInstructions;
@@ -40,6 +41,7 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IEvaluation;
 import Dominio.IEvaluationMethod;
 import Dominio.IExam;
 import Dominio.IItem;
@@ -106,7 +108,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		} else if (component instanceof InfoSiteTeachers) {
 			return getInfoSiteTeachers((InfoSiteTeachers) component, site, (String) obj2);
 		}else if (component instanceof InfoSiteExam) {
-			return getInfoSiteExam((InfoSiteExam) component, site);
+			return getInfoSiteEvaluation((InfoSiteEvaluation) component, site);
 		} else if (component instanceof InfoSiteRootSections) {
 			return getInfoSiteRootSections((InfoSiteRootSections) component, site);
 		} else if (component instanceof InfoSiteSection) {
@@ -294,7 +296,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
-			IEvaluationMethod evaluation = sp.getIPersistentEvaluation().readByExecutionCourse(executionCourse);
+			IEvaluationMethod evaluation = sp.getIPersistentEvaluationMethod().readByExecutionCourse(executionCourse);
 			if (evaluation != null) {
 				InfoEvaluationMethod infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
 				component.setEvaluationElements(infoEvaluation.getEvaluationElements());
@@ -448,22 +450,37 @@ public class TeacherAdministrationSiteComponentBuilder {
  * @param site
  * @return
  */
-	private ISiteComponent getInfoSiteExam(InfoSiteExam component, ISite site) {
+	private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ISite site) {
 		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
-		List exams = executionCourse.getAssociatedExams();
-		List infoExams = new ArrayList();
-		Iterator iter = exams.iterator();
+		List evaluations = executionCourse.getAssociatedExams();
+		List infoEvaluations = new ArrayList();
+		Iterator iter = evaluations.iterator();
 		while (iter.hasNext()){
-			IExam exam = (IExam) iter.next();
-			infoExams.add(Cloner.copyIExam2InfoExam(exam));
+			IEvaluation evaluation = (IEvaluation) iter.next();
+			infoEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
 		}
-		component.setInfoExams(infoExams);
+		component.setInfoEvaluations(infoEvaluations);
 		return component;
 	}
 
-
-
-
+	/**
+	 * 
+	 * @param component
+	 * @param site
+	 * @return
+	 */
+		private ISiteComponent getInfoSiteExam(InfoSiteExam component, ISite site) {
+			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+			List exams = executionCourse.getAssociatedExams();
+			List infoExams = new ArrayList();
+			Iterator iter = exams.iterator();
+			while (iter.hasNext()){
+				IExam exam = (IExam) iter.next();
+				infoExams.add(Cloner.copyIExam2InfoExam(exam));
+			}
+			component.setInfoExams(infoExams);
+			return component;
+		}
 	/**
 	 * @param sections
 	 * @param site

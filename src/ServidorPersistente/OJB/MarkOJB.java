@@ -6,7 +6,7 @@ import java.util.ListIterator;
 
 import org.odmg.QueryException;
 
-import Dominio.IExam;
+import Dominio.IEvaluation;
 import Dominio.IFrequenta;
 import Dominio.IMark;
 import Dominio.Mark;
@@ -64,14 +64,14 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 		}
 	}
 
-	public List readBy(IExam exam) throws ExcepcaoPersistencia {
+	public List readBy(IEvaluation evaluation) throws ExcepcaoPersistencia {
 
 		try {
 			
 			String oqlQuery = "select all from " + Mark.class.getName();
 			oqlQuery += " where exam = $1";
 			query.create(oqlQuery);
-			query.bind(exam.getIdInternal());
+			query.bind(evaluation.getIdInternal());
 			List result = (List) query.execute();
 			lockRead(result);
 			return result;
@@ -81,7 +81,7 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 		}
 	}
 
-	public IMark readBy(IExam exam, IFrequenta attend) throws ExcepcaoPersistencia {
+	public IMark readBy(IEvaluation evaluation, IFrequenta attend) throws ExcepcaoPersistencia {
 
 		try {
 			IMark mark = null;
@@ -90,7 +90,7 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 			oqlQuery += " and attend = $2";
 			
 			query.create(oqlQuery);
-			query.bind(exam.getIdInternal());
+			query.bind(evaluation.getIdInternal());
 			query.bind(attend.getIdInternal());
 			List result = (List) query.execute();
 			try {

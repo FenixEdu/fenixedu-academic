@@ -86,7 +86,7 @@ public interface ISuportePersistente {
 	public IPersistentPrecedence getIPersistentPrecedence();
 	public IPersistentRestriction getIPersistentRestriction();
 	
-	public IPersistentEvaluationMethod getIPersistentEvaluation();
+	public IPersistentEvaluationMethod getIPersistentEvaluationMethod();
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
 	public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo();
@@ -102,4 +102,5 @@ public interface ISuportePersistente {
 	public IPersistentExamStudentRoom getIPersistentExamStudentRoom();
 	
 	public IPersistentMark getIPersistentMark();
+	public IPersistentEvaluation getIPersistentEvaluation();
 }
