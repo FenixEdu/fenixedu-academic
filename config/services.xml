@@ -701,7 +701,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="StudentCurriculumAuthorization"/>
+            <chain name="StudentAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -6041,6 +6041,14 @@
         <name>ReadStudentByNumberAndAllDegreeTypes</name>
         <implementationClass> 
             ServidorAplicacao.Servico.student.ReadStudentByNumberAndAllDegreeTypes</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
+        <name>ReadCurricularCoursesByDegreeCurricularPlanId</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
