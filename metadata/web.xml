@@ -7,6 +7,7 @@
 	    <filter-name>indexFilter</filter-name>
 	    <!--<filter-class>ServidorApresentacao.servlets.filters.RequestWrapperFilter</filter-class>-->
 		<filter-class>ServidorApresentacao.servlets.filters.RequestWrapperCacheFilter</filter-class>
+		<!--<filter-class>ServidorApresentacao.servlets.filters.RequestWrapperCaptureFilter</filter-class>-->
 	</filter>
 	<filter>
 		 <filter-name>profiling</filter-name>
