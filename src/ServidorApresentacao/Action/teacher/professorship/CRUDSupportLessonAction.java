@@ -4,8 +4,8 @@
  */
 package ServidorApresentacao.Action.teacher.professorship;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,7 +30,6 @@ import Util.DiaSemana;
  */
 public class CRUDSupportLessonAction extends CRUDActionByOID
 {
-
 
     /**
 	 * @param string
@@ -107,49 +106,66 @@ public class CRUDSupportLessonAction extends CRUDActionByOID
             "infoProfessorshipId",
             infoSupportLesson.getInfoProfessorship().getIdInternal());
         supportLessonForm.set("weekDay", getWeekDayString(infoSupportLesson.getWeekDay()));
+        Date startTime = infoSupportLesson.getStartTime();
+        Date endTime = infoSupportLesson.getEndTime();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-
-        supportLessonForm.set("startTime", sdf.format(infoSupportLesson.getStartTime()));
-        supportLessonForm.set("endTime", sdf.format(infoSupportLesson.getEndTime()));
+        if (startTime != null || endTime != null)
+        {
+            Calendar time = Calendar.getInstance();
+            if (startTime != null)
+            {
+                time.setTime(startTime);
+                supportLessonForm.set("startTimeHour", String.valueOf(time.get(Calendar.HOUR_OF_DAY)));
+                supportLessonForm.set("startTimeMinutes", String.valueOf(time.get(Calendar.MINUTE)));
+            }
+            if (endTime != null)
+            {
+                time.setTime(endTime);
+                supportLessonForm.set("endTimeHour", String.valueOf(time.get(Calendar.HOUR_OF_DAY)));
+                supportLessonForm.set("endTimeMinutes", String.valueOf(time.get(Calendar.MINUTE)));
+            }
+        }
         supportLessonForm.set("place", infoSupportLesson.getPlace());
     }
 
-    /* (non-Javadoc)
-     * @see ServidorApresentacao.Action.framework.CRUDActionByOID#populateInfoObjectFromForm(org.apache.struts.action.ActionForm, ServidorApresentacao.mapping.framework.CRUDMapping)
-     */
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorApresentacao.Action.framework.CRUDActionByOID#populateInfoObjectFromForm(org.apache.struts.action.ActionForm,
+	 *          ServidorApresentacao.mapping.framework.CRUDMapping)
+	 */
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping)
         throws FenixActionException
     {
-		DynaActionForm supportLessonForm = (DynaActionForm) form;
-		InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
+        DynaActionForm supportLessonForm = (DynaActionForm) form;
+        InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
 
-		infoSupportLesson.setIdInternal((Integer) supportLessonForm.get("idInternal"));
-		InfoProfessorship infoProfessorship =
-			new InfoProfessorship((Integer) supportLessonForm.get("infoProfessorshipId"));
+        infoSupportLesson.setIdInternal((Integer) supportLessonForm.get("idInternal"));
+        InfoProfessorship infoProfessorship =
+            new InfoProfessorship((Integer) supportLessonForm.get("infoProfessorshipId"));
 
-		infoSupportLesson.setInfoProfessorship(infoProfessorship);
-        
+        infoSupportLesson.setInfoProfessorship(infoProfessorship);
 
-		DiaSemana weekDay = getWeekDay((String) supportLessonForm.get("weekDay"));
-		infoSupportLesson.setWeekDay(weekDay);
+        DiaSemana weekDay = getWeekDay((String) supportLessonForm.get("weekDay"));
+        infoSupportLesson.setWeekDay(weekDay);
 
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        Calendar calendar = Calendar.getInstance();
 
-		try
-		{
-			infoSupportLesson.setStartTime(sdf.parse((String) supportLessonForm.get("startTime")));
-			infoSupportLesson.setEndTime(sdf.parse((String) supportLessonForm.get("endTime")));
-		}
-		catch (ParseException e)
-		{
-			e.printStackTrace(System.out);
-			throw new FenixActionException(e);
-		}
+        setHoursAndMinutes(
+            calendar,
+            Integer.valueOf((String) supportLessonForm.get("startTimeHour")),
+            Integer.valueOf((String) supportLessonForm.get("startTimeMinutes")));
+        infoSupportLesson.setStartTime(new Date(calendar.getTimeInMillis()));
 
-		infoSupportLesson.setPlace((String) supportLessonForm.get("place"));
+        setHoursAndMinutes(
+            calendar,
+            Integer.valueOf((String) supportLessonForm.get("endTimeHour")),
+            Integer.valueOf((String) supportLessonForm.get("endTimeMinutes")));
+        infoSupportLesson.setEndTime(new Date(calendar.getTimeInMillis()));
 
-		return infoSupportLesson;
+        infoSupportLesson.setPlace((String) supportLessonForm.get("place"));
+
+        return infoSupportLesson;
     }
 
     /*
@@ -175,6 +191,17 @@ public class CRUDSupportLessonAction extends CRUDActionByOID
                 "ReadProfessorshipByOID",
                 new Object[] { professorshipId });
         request.setAttribute("infoProfessorship", infoProfessorship);
+    }
+
+    /**
+	 * @param calendar
+	 * @param integer
+	 * @param integer2
+	 */
+    private void setHoursAndMinutes(Calendar calendar, Integer hour, Integer minutes)
+    {
+        calendar.set(Calendar.HOUR_OF_DAY, hour != null ? hour.intValue() : 0);
+        calendar.set(Calendar.MINUTE, minutes != null ? minutes.intValue() : 0);
     }
 
 }

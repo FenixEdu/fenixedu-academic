@@ -45,7 +45,7 @@
 				<bean:message key="label.teacher-institution-working-time.start-time"/>(<i><bean:write name="hoursPattern"/></i>)
 			</td>
 			<td>
-				<html:text property="startTime"/>
+				<html:text property="startTimeHour" size="3"/>:<html:text property="startTimeMinutes" size="3"/>
 			</td>
 		</tr>
 		<tr>
@@ -53,7 +53,7 @@
 				<bean:message key="label.teacher-institution-working-time.end-time"/>(<i><bean:write name="hoursPattern"/></i>)
 			</td>
 			<td>
-				<html:text property="endTime"/>
+				<html:text property="endTimeHour" size="3"/>:<html:text property="endTimeMinutes" size="3"/>
 			</td>
 		</tr>
 	</table>

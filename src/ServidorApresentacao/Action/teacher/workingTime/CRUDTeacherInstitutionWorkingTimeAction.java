@@ -4,8 +4,9 @@
  */
 package ServidorApresentacao.Action.teacher.workingTime;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -117,7 +118,25 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID
             getWeekDayString(infoTeacherInstitutionWorkTime.getWeekDay()));
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		Date startTime = infoTeacherInstitutionWorkTime.getStartTime();
+		Date endTime = infoTeacherInstitutionWorkTime.getEndTime();
 
+		if (startTime != null || endTime != null)
+		{
+			Calendar time = Calendar.getInstance();
+			if (startTime != null)
+			{
+				time.setTime(startTime);
+				teacherInstitutionWorkTimeForm.set("startTimeHour", String.valueOf(time.get(Calendar.HOUR_OF_DAY)));
+				teacherInstitutionWorkTimeForm.set("startTimeMinutes", String.valueOf(time.get(Calendar.MINUTE)));
+			}
+			if (endTime != null)
+			{
+				time.setTime(endTime);
+				teacherInstitutionWorkTimeForm.set("endTimeHour", String.valueOf(time.get(Calendar.HOUR_OF_DAY)));
+				teacherInstitutionWorkTimeForm.set("endTimeMinutes", String.valueOf(time.get(Calendar.MINUTE)));
+			}
+		}
         teacherInstitutionWorkTimeForm.set(
             "startTime",
             sdf.format(infoTeacherInstitutionWorkTime.getStartTime()));
@@ -153,23 +172,34 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID
         DiaSemana weekDay = getWeekDay((String) teacherInstitutionWorkTimeForm.get("weekDay"));
         infoTeacherInstitutionWorkTime.setWeekDay(weekDay);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		Calendar calendar = Calendar.getInstance();
 
-        try
-        {
-            infoTeacherInstitutionWorkTime.setStartTime(
-                sdf.parse((String) teacherInstitutionWorkTimeForm.get("startTime")));
-            infoTeacherInstitutionWorkTime.setEndTime(
-                sdf.parse((String) teacherInstitutionWorkTimeForm.get("endTime")));
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace(System.out);
-            throw new FenixActionException(e);
-        }
+		setHoursAndMinutes(
+			calendar,
+			Integer.valueOf((String) teacherInstitutionWorkTimeForm.get("startTimeHour")),
+			Integer.valueOf((String) teacherInstitutionWorkTimeForm.get("startTimeMinutes")));
+		infoTeacherInstitutionWorkTime.setStartTime(new Date(calendar.getTimeInMillis()));
+
+		setHoursAndMinutes(
+			calendar,
+			Integer.valueOf((String) teacherInstitutionWorkTimeForm.get("endTimeHour")),
+			Integer.valueOf((String) teacherInstitutionWorkTimeForm.get("endTimeMinutes")));
+		infoTeacherInstitutionWorkTime.setEndTime(new Date(calendar.getTimeInMillis()));
+
         return infoTeacherInstitutionWorkTime;
     }
+	/**
+	 * @param calendar
+	 * @param integer
+	 * @param integer2
+	 */
+	private void setHoursAndMinutes(Calendar calendar, Integer hour, Integer minutes)
+	{
+		calendar.set(Calendar.HOUR_OF_DAY, hour != null ? hour.intValue() : 0);
+		calendar.set(Calendar.MINUTE, minutes != null ? minutes.intValue() : 0);
+	}
 
+    
     public ActionForward list(
         ActionMapping mapping,
         ActionForm form,
