@@ -13,50 +13,56 @@ package ServidorAplicacao.Servico.sop;
  **/
 import DataBeans.RoomKey;
 import Dominio.ISala;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.notAuthorizedPersistentDeleteException;
 
 public class ApagarSala implements IServico {
 
-  private static ApagarSala _servico = new ApagarSala();
-  /**
-   * The singleton access method of this class.
-   **/
-  public static ApagarSala getService() {
-    return _servico;
-  }
+	private static ApagarSala _servico = new ApagarSala();
+	/**
+	 * The singleton access method of this class.
+	 **/
+	public static ApagarSala getService() {
+		return _servico;
+	}
 
-  /**
-   * The actor of this class.
-   **/
-  private ApagarSala() { }
+	/**
+	 * The actor of this class.
+	 **/
+	private ApagarSala() {
+	}
 
-  /**
-   * Devolve o nome do servico
-   **/
-  public final String getNome() {
-    return "ApagarSala";
-  }
+	/**
+	 * Devolve o nome do servico
+	 **/
+	public final String getNome() {
+		return "ApagarSala";
+	}
 
-  public Object run(RoomKey keySala) throws Exception {
+	public Object run(RoomKey keySala) throws FenixServiceException {
 
-    ISala sala1 = null;
-    boolean result = false;
+		ISala sala1 = null;
+		boolean result = false;
 
-    try {
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      sala1 = sp.getISalaPersistente().readByName(keySala.getNomeSala());
-      if (sala1 != null) {
-          sp.getISalaPersistente().delete(sala1);
-          result = true;
-      }
-    } catch (ExcepcaoPersistencia ex) {
-		ex.printStackTrace();
-    }
-    
-    return new Boolean (result);
-  }
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			sala1 = sp.getISalaPersistente().readByName(keySala.getNomeSala());
+			if (sala1 != null) {
+				sp.getISalaPersistente().delete(sala1);
+				result = true;
+			}
+		} catch (notAuthorizedPersistentDeleteException ex) {
+			throw new notAuthorizedServiceDeleteException(ex);
+		} catch (ExcepcaoPersistencia ex) {
+			throw new FenixServiceException(ex);
+		}
+
+		return new Boolean(result);
+	}
 
 }

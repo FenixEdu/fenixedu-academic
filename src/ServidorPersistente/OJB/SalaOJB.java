@@ -22,6 +22,7 @@ import Dominio.Sala;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import ServidorPersistente.exceptions.notAuthorizedPersistentDeleteException;
 
 public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
    
@@ -78,7 +79,7 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 			List result = (List) query.execute();
 			lockRead(result);
 			if (result.size() != 0) {
-			throw new ExcepcaoPersistencia("Não é possível apagar salas com aulas associadas");
+			throw new notAuthorizedPersistentDeleteException("Cannot delete rooms with classes");
 			}
 			
 		} catch (QueryException ex) {

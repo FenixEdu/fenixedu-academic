@@ -400,6 +400,10 @@
               path="/manipularSalas"
               scope="session"
               type="ServidorApresentacao.Action.sop.ManipularSalasAction">
+        <exception type="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
+         	   key="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               />      
         <forward name="SalaApagada" path="/manipularSalas.jsp" />
 		<forward name="VerSala" path="/viewRoom.do" />
         <forward name="EditarSala" path="/editarSala.jsp" />

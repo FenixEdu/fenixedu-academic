@@ -1,0 +1,56 @@
+/*
+ * Created on 6/Mar/2003
+ *
+ * To change this generated comment go to 
+ * Window>Preferences>Java>Code Generation>Code Template
+ */
+package ServidorAplicacao.Servico.exceptions;
+
+import ServidorAplicacao.FenixServiceException;
+
+/**
+ * @author jmota
+ */
+public class notAuthorizedServiceDeleteException
+	extends FenixServiceException {
+
+	/**
+	 * 
+	 */
+	public notAuthorizedServiceDeleteException() {
+		super();
+	}
+
+	/**
+	 * @param s
+	 */
+	public notAuthorizedServiceDeleteException(String s) {
+		super(s);
+	}
+
+	/**
+	 * @param cause
+	 */
+	public notAuthorizedServiceDeleteException(Throwable cause) {
+		super(cause);
+	}
+
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public notAuthorizedServiceDeleteException(
+		String message,
+		Throwable cause) {
+		super(message, cause);
+	}
+
+	public String toString() {
+		String result = "[notAuthorizedServiceDeleteException\n";
+		result += "message" + this.getMessage() + "\n";
+		result += "cause" + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
+
+}

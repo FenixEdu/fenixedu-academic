@@ -19,7 +19,9 @@ import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.utils.Util;
 
 /**
@@ -163,7 +165,11 @@ public class ManipularSalasAction extends FenixAction {
 				userView,
 				"ApagarSala",
 				argsCriarSala);
-		} catch (Exception e) {
+		} 
+		catch (notAuthorizedServiceDeleteException e) {
+			Object[] values = {"A Sala","as aulas"};
+			throw new notAuthorizedActionDeleteException("errors.invalid.delete.with.objects",values);}
+		catch (Exception e) {
 
 			ActionErrors actionErrors = new ActionErrors();
 			actionErrors.add(
