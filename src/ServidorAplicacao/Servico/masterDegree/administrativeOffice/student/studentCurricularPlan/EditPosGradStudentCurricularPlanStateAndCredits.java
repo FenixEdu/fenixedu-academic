@@ -104,57 +104,34 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 					}
 				}
 			} else {
-
+			   
 				while (iterator.hasNext()) {
 					IEnrolment enrolment = (IEnrolment) iterator.next();
-					IEnrolment auxEnrolment = null;
+					
 					if (extraCurricularCourses.contains(enrolment.getIdInternal())) {
 						if (!(enrolment instanceof EnrolmentInExtraCurricularCourse)) {
-							auxEnrolment = new EnrolmentInExtraCurricularCourse();
-							auxEnrolment.setIdInternal(enrolment.getIdInternal());
-							//auxEnrolment.setCurricularCourseScope(
-							//	enrolment.getCurricularCourseScope());
-							auxEnrolment.setCurricularCourse(
-								enrolment.getCurricularCourse());								
-							auxEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
-							auxEnrolment.setStudentCurricularPlan(
-								enrolment.getStudentCurricularPlan());
+						    persistentEnrolment.delete(enrolment);
+						    
+							IEnrolment auxEnrolment = new EnrolmentInExtraCurricularCourse();	
 							persistentEnrolment.simpleLockWrite(auxEnrolment);
-							try {
-
-								auxEnrolment.setEnrolmentEvaluationType(
-									enrolment.getEnrolmentEvaluationType());
-								auxEnrolment.setEnrolmentState(enrolment.getEnrolmentState());
-								auxEnrolment.setEvaluations(enrolment.getEvaluations());
-
-							} catch (Exception e1) {
-								throw new FenixServiceException(e1);
-							}
+						    
+							copyEnrollment(enrolment, auxEnrolment);
+							changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment, auxEnrolment);							
+						} else {
+							changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment, enrolment);						
 						}
 					} else {
 						if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
+						    persistentEnrolment.delete(enrolment);
 
-							auxEnrolment = new Enrolment();
-							auxEnrolment.setIdInternal(enrolment.getIdInternal());
-							//auxEnrolment.setCurricularCourseScope(
-							//	enrolment.getCurricularCourseScope());
-							auxEnrolment.setCurricularCourse(
-								enrolment.getCurricularCourse());
-							auxEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
-							auxEnrolment.setStudentCurricularPlan(
-								enrolment.getStudentCurricularPlan());
+						    IEnrolment auxEnrolment = new Enrolment();
 							persistentEnrolment.simpleLockWrite(auxEnrolment);
-							try {
-								auxEnrolment.setEnrolmentEvaluationType(
-									enrolment.getEnrolmentEvaluationType());
-								auxEnrolment.setEnrolmentState(enrolment.getEnrolmentState());
-								auxEnrolment.setEvaluations(enrolment.getEvaluations());
-							} catch (Exception e1) {
-								throw new FenixServiceException(e1);
-							}
-
+							
+							copyEnrollment(enrolment, auxEnrolment);
+							changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment, auxEnrolment);
+						} else {
+							changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment, enrolment);						
 						}
-
 					}
 				}
 			}
@@ -164,7 +141,48 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 
 	}
 
-	private Calendar stringDateToCalendar(String startDate) throws NumberFormatException {
+	/**
+     * @param enrolment
+     * @param auxEnrolment
+     * @throws FenixServiceException
+     */
+    private void copyEnrollment(IEnrolment enrolment, IEnrolment auxEnrolment) throws FenixServiceException
+    {
+	    auxEnrolment.setIdInternal(enrolment.getIdInternal());
+        //auxEnrolment.setCurricularCourseScope(
+        //	enrolment.getCurricularCourseScope());
+        auxEnrolment.setCurricularCourse(
+        	enrolment.getCurricularCourse());
+        auxEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
+        auxEnrolment.setStudentCurricularPlan(
+        	enrolment.getStudentCurricularPlan());
+        try {
+        	auxEnrolment.setEnrolmentEvaluationType(
+        		enrolment.getEnrolmentEvaluationType());
+        	auxEnrolment.setEnrolmentState(enrolment.getEnrolmentState());
+        	auxEnrolment.setEvaluations(enrolment.getEvaluations());
+        } catch (Exception e1) {
+        	throw new FenixServiceException(e1);
+        }
+    }
+
+    /**
+     * @param newState
+     * @param persistentEnrolment
+     * @param enrolment
+     * @throws ExcepcaoPersistencia
+     */
+    private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState, IPersistentEnrolment persistentEnrolment, IEnrolment enrolment) throws ExcepcaoPersistencia
+    {
+        if (newState.getState().intValue() == StudentCurricularPlanState.ACTIVE) {
+            if (enrolment.getEnrolmentState().getValue() ==  EnrolmentState.ANNULED_TYPE) {
+        		persistentEnrolment.simpleLockWrite(enrolment);		
+        		enrolment.setEnrolmentState(EnrolmentState.ENROLED);
+        	}					    
+        }
+    }
+
+    private Calendar stringDateToCalendar(String startDate) throws NumberFormatException {
 		Calendar calendar = Calendar.getInstance();
 		String[] aux = startDate.split("/");
 		calendar.set(Calendar.DAY_OF_MONTH, (new Integer(aux[0])).intValue());

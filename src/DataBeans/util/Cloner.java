@@ -869,6 +869,19 @@ public abstract class Cloner
 	 */
 	public static InfoPerson copyIPerson2InfoPerson(IPessoa person)
 	{
+
+		try {
+			// Temporary bug fix.
+			// Try to materialize the proxy... if it fails return null.
+			// Should look into this further... but I don't have the time
+			// at the moment. This situation occores constantly when
+			// viewing Class 05102 of the execution period 80.
+		    person.getIdInternal();
+		} catch (Throwable nex)
+		{
+			return null;
+		}
+
 		InfoPerson infoPerson = null;
 		if (person != null)
 		{

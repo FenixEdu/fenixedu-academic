@@ -336,6 +336,9 @@ public class StudentsGratuityListAction extends DispatchAction
 		else if (orderingType.equals(new String("insurance")))
 		{
 			Collections.sort(infoGratuitySituationList, new BeanComparator("insurancePayed"));
+		} else if (orderingType.equals(new String("scplan")))
+		{
+			Collections.sort(infoGratuitySituationList, new BeanComparator("infoStudentCurricularPlan.currentState.state"));
 		}
 	}
 

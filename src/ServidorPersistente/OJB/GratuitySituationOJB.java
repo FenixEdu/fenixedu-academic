@@ -18,7 +18,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGratuitySituation;
 import Util.GratuitySituationType;
 import Util.Specialization;
-import Util.StudentCurricularPlanState;
 
 /**
  * @author Tânia Pousão
@@ -83,6 +82,7 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 			criteria.addNotNull("studentCurricularPlan.specialization");
 		}
 		
+		/*
 		//student curricular plan actives or with school part conclued
 		Criteria criteriaState = new Criteria();		
 		criteriaState.addEqualTo(
@@ -94,7 +94,7 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 				StudentCurricularPlanState.SCHOOLPARTCONCLUDED_OBJ);
 		criteriaState.addOrCriteria(criteriaStateConclued);
 		
-		criteria.addAndCriteria(criteriaState);
+		criteria.addAndCriteria(criteriaState);*/
 		
 		return queryList(GratuitySituation.class, criteria);
 	}

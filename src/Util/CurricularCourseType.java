@@ -65,6 +65,54 @@ public class CurricularCourseType extends FenixUtil {
 		return resultado;
 	}
 
+	//Key name in Application Resources file
+	public String getKeyName() {
+
+		int value = this.type.intValue();
+		String keyName = null;
+
+		switch (value) {
+			case TFC_COURSE:
+				keyName = "option.curricularCourse.tfc";
+				break;
+			case PROJECT_COURSE:
+				keyName = "option.curricularCourse.project";
+				break;
+			case NORMAL_COURSE:
+				keyName = "option.curricularCourse.normal";
+				break;
+			case OPTIONAL_COURSE:
+				keyName = "option.curricularCourse.optional";
+				break;
+			case TRAINING_COURSE:
+				keyName = "option.curricularCourse.training";
+				break;		
+			case LABORATORY_COURSE:
+				keyName = "option.curricularCourse.laboratory";
+				break;
+			case M_TYPE_COURSE:
+				keyName = "option.curricularCourse.mType";
+				break;
+			case P_TYPE_COURSE:
+				keyName = "option.curricularCourse.pType";
+				break;
+			case DM_TYPE_COURSE:
+				keyName = "option.curricularCourse.dmType";
+				break;
+			case A_TYPE_COURSE:
+				keyName = "option.curricularCourse.aType";
+				break;
+			case ML_TYPE_COURSE:
+				keyName = "option.curricularCourse.mlType";
+				break;
+				
+			default:
+				break;
+		}
+
+		return keyName;
+	}
+	
 	public String toString() {
 
 		int value = this.type.intValue();

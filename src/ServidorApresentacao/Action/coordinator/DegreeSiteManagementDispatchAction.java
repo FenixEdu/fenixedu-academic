@@ -342,43 +342,38 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
 		infoDegreeCurricularPlan.setIdInternal(infoDegreeCurricularPlanId);
 
-		infoDegreeCurricularPlan.setDescription(
-			(String) descriptionCurricularPlanForm.get("descriptionDegreeCurricularPlan"));
-		infoDegreeCurricularPlan.setDescriptionEn(
-			(String) descriptionCurricularPlanForm.get("descriptionDegreeCurricularPlanEn"));
+		infoDegreeCurricularPlan.setDescription((String) descriptionCurricularPlanForm
+						.get("descriptionDegreeCurricularPlan"));
+		infoDegreeCurricularPlan.setDescriptionEn((String) descriptionCurricularPlanForm
+						.get("descriptionDegreeCurricularPlanEn"));
 
-		Object[] args = { infoExecutionDegreeId, infoDegreeCurricularPlan };
-
+		Object[] args = {infoExecutionDegreeId, infoDegreeCurricularPlan};
 		try
 		{
-			ServiceManagerServiceFactory.executeService(
-				userView,
-				"EditDescriptionDegreeCurricularPlan",
-				args);
-		}
-		catch (NotAuthorizedException e)
+			infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ServiceManagerServiceFactory
+							.executeService(userView, "EditDescriptionDegreeCurricularPlan", args);
+		} catch (NotAuthorizedException e)
 		{
 			errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
-		}
-		catch (NonExistingServiceException e)
+		} catch (NonExistingServiceException e)
 		{
-			errors.add(
-				"noDegreeCurricularPlan",
-				new ActionError("message.nonExistingDegreeCurricularPlan"));
-		}
-		catch (FenixServiceException e)
+			errors.add("noDegreeCurricularPlan", new ActionError(
+							"message.nonExistingDegreeCurricularPlan"));
+		} catch (FenixServiceException e)
 		{
 			if (e.getMessage().equals("message.nonExistingDegreeCurricularPlan"))
 			{
-				errors.add(
-					"nonExistingDegreeCurricularPlan",
-					new ActionError("message.nonExistingDegreeCurricularPlan"));
-			}
-			else
+				errors.add("nonExistingDegreeCurricularPlan", new ActionError(
+								"message.nonExistingDegreeCurricularPlan"));
+			} else
 			{
 				e.printStackTrace();
 				throw new FenixActionException(e);
 			}
+		}
+		if (infoDegreeCurricularPlan == null)
+		{
+			errors.add("error.impossibleEditDCPInfo", new ActionError("error.impossibleEditDCPInfo"));
 		}
 		if (!errors.isEmpty())
 		{
@@ -386,6 +381,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 			return (new ActionForward(mapping.getInput()));
 		}
 
+		request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
 		return mapping.findForward("editOK");
 	}
 

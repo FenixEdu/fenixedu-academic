@@ -87,8 +87,7 @@
 			<td><html:select property="enrolmentPolicy">
 			<html:option value="<%= enrolmentPolicyValue.toString() %>"><bean:write name="enrolmentPolicyName"/></html:option>
 			<html:options name="enrolmentPolicyValues" labelName="enrolmentPolicyNames"/>
-			</html:select></td>
-			
+			</html:select></td>			
 		</tr>
 		
 		
@@ -96,10 +95,9 @@
 		<tr>
 			<td><bean:message key="message.groupPropertiesShiftType"/></td>
 			<td><html:select property="shiftType">
+			<html:option value="<%= shiftTypeValue.toString() %>"><bean:write name="shiftTypeName"/></html:option>
 			<html:options name="shiftTypeValues" labelName="shiftTypeNames"/>
-			</html:select></td>
-			
-			
+			</html:select></td>		
 		</tr>
 
 		<tr>

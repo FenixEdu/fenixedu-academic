@@ -1,6 +1,7 @@
 package ServidorAplicacao.Servico.coordinator;
 
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.util.Cloner;
 import Dominio.DegreeCurricularPlan;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.IServico;
@@ -35,7 +36,7 @@ public class EditDescriptionDegreeCurricularPlan implements IServico
         return "EditDescriptionDegreeCurricularPlan";
     }
 
-    public void run(Integer infoExecutionDegreeId, InfoDegreeCurricularPlan newInfoDegreeCP) throws FenixServiceException
+    public InfoDegreeCurricularPlan run(Integer infoExecutionDegreeId, InfoDegreeCurricularPlan newInfoDegreeCP) throws FenixServiceException
     {
 		if (infoExecutionDegreeId == null || newInfoDegreeCP == null)
 		{
@@ -43,25 +44,27 @@ public class EditDescriptionDegreeCurricularPlan implements IServico
 		}
         
         IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
-        IDegreeCurricularPlan oldDegreeCP = null;
+        IDegreeCurricularPlan degreeCP = null;
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
         try
         {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
 
-            oldDegreeCP = new DegreeCurricularPlan();
-            oldDegreeCP.setIdInternal(newInfoDegreeCP.getIdInternal());
+            degreeCP = new DegreeCurricularPlan();
+            degreeCP.setIdInternal(newInfoDegreeCP.getIdInternal());
 
-            oldDegreeCP =
-                (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(oldDegreeCP, true);
-            if (oldDegreeCP == null)
+            degreeCP =
+                (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(degreeCP, true);
+            if (degreeCP == null)
             {
                 throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
             }
 
-            oldDegreeCP.setDescription(newInfoDegreeCP.getDescription());
-            oldDegreeCP.setDescriptionEn(newInfoDegreeCP.getDescriptionEn());
+            degreeCP.setDescription(newInfoDegreeCP.getDescription());
+            degreeCP.setDescriptionEn(newInfoDegreeCP.getDescriptionEn());
 
+            infoDegreeCurricularPlan  = Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCP);
         } catch (ExistingPersistentException ex)
         {
             throw new ExistingServiceException(ex);
@@ -69,5 +72,7 @@ public class EditDescriptionDegreeCurricularPlan implements IServico
         {
             throw new FenixServiceException(excepcaoPersistencia);
         }
+        
+        return infoDegreeCurricularPlan;  
     }
 }

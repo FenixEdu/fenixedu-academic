@@ -66,6 +66,8 @@
 		<bean:define id="coordinators" value="" />
 		<logic:iterate id="infoExecutionDegree" name="infoExecutionDegrees" indexId="executionDegreesSize" >
 			<logic:iterate id="infoCoordinator" name="infoExecutionDegree" property="coordinatorsList">
+  				<logic:equal name="infoCoordinator" property="responsible" value="true">
+
 				<bean:define id="coordinatorName" name="infoCoordinator" property="infoTeacher.infoPerson.nome" />
 				<logic:notMatch name="coordinators" value="<%= coordinatorName.toString()%>">
 					<bean:message key="label.title.coordinator" />&nbsp; 
@@ -100,6 +102,7 @@
 					
 					<bean:define id="coordinators" value="<%= coordinators.toString().concat(coordinatorName.toString()) %>" />
 				</logic:notMatch>
+				</logic:equal>
 			 </logic:iterate>
 		</logic:iterate>
 	</logic:present>			

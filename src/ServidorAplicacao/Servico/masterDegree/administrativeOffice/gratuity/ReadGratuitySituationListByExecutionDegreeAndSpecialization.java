@@ -323,8 +323,9 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 	 */
 	private void calculateGratuityRemainingValue(ISuportePersistente sp,
 			InfoGratuitySituation infoGratuitySituation) throws Exception
-	{ //first find the total value that it will be pay
-
+	{ 
+	    
+	    //first find the total value that it will be pay
 		if (infoGratuitySituation.getInfoStudentCurricularPlan().getSpecialization() != null
 				&& (infoGratuitySituation.getInfoStudentCurricularPlan().getSpecialization().equals(
 						Specialization.MESTRADO_TYPE) || infoGratuitySituation
@@ -366,7 +367,9 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 			{
 				infoGratuitySituation.setRemainingValue(new Double(0));
 			}
-		} //discount exemption
+		} 
+		
+		//discount exemption
 		if (infoGratuitySituation.getExemptionPercentage() != null
 				&& infoGratuitySituation.getExemptionPercentage().doubleValue() > 0)
 		{

@@ -40,9 +40,28 @@ public class ReadFinalDegreeWorkProposalAuthorization extends Filtro
 				(IProposal) persistentFinalDegreeWork.readByOID(
 					Proposal.class,
 					finalDegreeWorkProposalOID);
-			if (proposal != null && proposal.getStatus() != null && proposal.getStatus().equals(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS))
+			if (proposal != null)
 			{
-				return;
+				if (proposal.getStatus() != null && proposal.getStatus().equals(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS))
+				{
+					return;
+				}
+				if (proposal.getOrientator() != null
+						&& proposal.getOrientator().getPerson() != null
+						&& proposal.getOrientator().getPerson().getUsername() != null
+						&& id != null
+						&& proposal.getOrientator().getPerson().getUsername().equals(id.getUtilizador()))
+				{
+					return;
+				}
+				if (proposal.getCoorientator() != null
+						&& proposal.getCoorientator().getPerson() != null
+						&& proposal.getCoorientator().getPerson().getUsername() != null
+						&& id != null
+						&& proposal.getCoorientator().getPerson().getUsername().equals(id.getUtilizador()))
+				{
+					return;
+				}
 			}
         }
         throw new NotAuthorizedFilterException();
