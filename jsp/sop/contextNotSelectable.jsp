@@ -32,3 +32,6 @@
 			</tr>
 		</table>
 </logic:present>
+<logic:present name="executionCourse">
+	<bean:write name="executionCourse" property="nome"/>
+</logic:present>
