@@ -22,7 +22,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  */
 
 public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersistentCurricularCourseScope {
-    
+
 	public void deleteAll() throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select all from " + CurricularCourseScope.class.getName();
@@ -42,13 +42,20 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 		}
 
 		// Read CurricularCourseScope from database.
-		curricularCourseScopeFromDB = this.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourseScopeToWrite.getCurricularCourse(), curricularCourseScopeToWrite.getCurricularSemester(), curricularCourseScopeToWrite.getBranch());
+		curricularCourseScopeFromDB =
+			this.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+				curricularCourseScopeToWrite.getCurricularCourse(),
+				curricularCourseScopeToWrite.getCurricularSemester(),
+				curricularCourseScopeToWrite.getBranch());
 
 		// If CurricularCourseScope is not in database, then write it.
 		if (curricularCourseScopeFromDB == null) {
 			super.lockWrite(curricularCourseScopeToWrite);
-		// else If the CurricularCourseScope is mapped to the database, then write any existing changes.
-		} else if ((curricularCourseScopeToWrite instanceof CurricularCourseScope) && ((CurricularCourseScope) curricularCourseScopeFromDB).getInternalID().equals(((CurricularCourseScope) curricularCourseScopeToWrite).getInternalID())) {
+			// else If the CurricularCourseScope is mapped to the database, then write any existing changes.
+		} else if (
+			(curricularCourseScopeToWrite instanceof CurricularCourseScope)
+				&& ((CurricularCourseScope) curricularCourseScopeFromDB).getInternalID().equals(
+					((CurricularCourseScope) curricularCourseScopeToWrite).getInternalID())) {
 			super.lockWrite(curricularCourseScopeToWrite);
 			// else Throw an already existing exception
 		} else
@@ -63,7 +70,11 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 		}
 	}
 
-	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch) throws ExcepcaoPersistencia {
+	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+		ICurricularCourse curricularCourse,
+		ICurricularSemester curricularSemester,
+		IBranch branch)
+		throws ExcepcaoPersistencia {
 
 		try {
 			ICurricularCourseScope enrolment = null;
@@ -97,7 +108,7 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 				throw ex;
 			}
 
-			if( (result != null) && (result.size() != 0) ) {
+			if ((result != null) && (result.size() != 0)) {
 				enrolment = (ICurricularCourseScope) result.get(0);
 			}
 			return enrolment;
@@ -121,7 +132,7 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 				throw ex;
 			}
 
-			if( (result != null) && (result.size() != 0) ) {
+			if ((result != null) && (result.size() != 0)) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
 					list.add((ICurricularCourseScope) iterator.next());
@@ -131,5 +142,4 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-
 }

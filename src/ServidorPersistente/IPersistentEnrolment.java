@@ -6,6 +6,7 @@ import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.EnrolmentState;
 
 /**
  * @author dcs-rjao
@@ -15,9 +16,10 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public interface IPersistentEnrolment extends IPersistentObject {
 
-		public void deleteAll() throws ExcepcaoPersistencia;
-		public void lockWrite(IEnrolment enrolmentToWrite) throws ExcepcaoPersistencia, ExistingPersistentException;
-		public void delete(IEnrolment enrolment) throws ExcepcaoPersistencia;
-		public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
-		public ArrayList readAll() throws ExcepcaoPersistencia;
+	public void deleteAll() throws ExcepcaoPersistencia;
+	public void lockWrite(IEnrolment enrolmentToWrite) throws ExcepcaoPersistencia, ExistingPersistentException;
+	public void delete(IEnrolment enrolment) throws ExcepcaoPersistencia;
+	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
+	public ArrayList readEnrolmentsByStudentCurricularPlanAndEnrolmentState(IStudentCurricularPlan studentCurricularPlan, EnrolmentState enrolmentState) throws ExcepcaoPersistencia;
+	public ArrayList readAll() throws ExcepcaoPersistencia;
 }

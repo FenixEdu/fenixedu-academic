@@ -152,6 +152,7 @@ public class LoadStudents extends DataFileLoader {
 				student,
 				null,
 				null,
+				null,
 				new StudentCurricularPlanState(
 					StudentCurricularPlanState.ACTIVE));
 

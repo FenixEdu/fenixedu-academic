@@ -5,15 +5,19 @@ import java.util.ArrayList;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.CurricularCourse;
+import Dominio.CurricularYear;
+import Dominio.IBranch;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularSemester;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaDepartamento;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
+import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentCurricularYear;
+import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
@@ -30,7 +34,8 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 	ICursoPersistente persistentDegree = null;
 	IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
 	IPersistentCurricularCourse persistentCurricularCourse = null;
-	
+	IPersistentBranch persistentBranch = null;
+	IPersistentCurricularSemester persistentCurricularSemester = null;
 
 	public CurricularCourseOJBTest(java.lang.String testName) {
 		super(testName);
@@ -58,6 +63,8 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		persistentDegree = persistentSupport.getICursoPersistente();
 		persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 		persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
+		persistentBranch = persistentSupport.getIPersistentBranch();
+		persistentCurricularSemester = persistentSupport.getIPersistentCurricularSemester();		
 	}
 
 	protected void tearDown() {
@@ -109,7 +116,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		} catch (ExistingPersistentException ex) {
 			// All Is OK
 			try {
-//				NOTE: DAVID-RICARDO: Aqui devia estar um cancelarTransaccao mas nao esta porque rebenta (java.util.ConcurrentModificationException)
+				//				NOTE: DAVID-RICARDO: Aqui devia estar um cancelarTransaccao mas nao esta porque rebenta (java.util.ConcurrentModificationException)
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia e) {
 				e.printStackTrace();
@@ -159,7 +166,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		assertTrue(curricularCourse2.getDepartmentCourse().equals(curricularCourse.getDepartmentCourse()));
 
 	}
-// -------------------------------------------------------------------------------------------------------------------------------------------
+	// -------------------------------------------------------------------------------------------------------------------------------------------
 
 	public void testDeleteAllCurricularCourses() {
 
@@ -313,21 +320,102 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		assertEquals(list.size(), 6);
 	}
 
-/*
-	public void testReadCurricularCoursesByCurricularSemesterAndCurricularYear() {
+	/*
+		public void testReadCurricularCoursesByCurricularSemesterAndCurricularYear() {
+	
+			// CurricularCourses existentes
+			System.out.println("- Test 8 : Read Existing CurricularCourses\n");
+	
+			ArrayList list = null;
+			try {
+				persistentSupport.iniciarTransaccao();
+				list = persistentCurricularCourse.readCurricularCoursesByCurricularSemesterAndCurricularYear(new Integer(1), new Integer(1));
+				persistentSupport.confirmarTransaccao();
+			} catch (ExcepcaoPersistencia ex2) {
+				fail("Read Existing CurricularCourse");
+			}
+			assertNotNull(list);
+		}
+	*/
 
-		// CurricularCourses existentes
-		System.out.println("- Test 8 : Read Existing CurricularCourses\n");
+	public void testReadCurricularCoursesByDegreeCurricularPlan() {
+
+		System.out.println("- Test 9 : Read Existing CurricularCourses By Degree Curricular Plan\n");
+		IDegreeCurricularPlan degreeCurricularPlan = null;
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			ICurso degree = persistentDegree.readBySigla("LEIC");
+			assertNotNull(degree);
+			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			assertNotNull(degreeCurricularPlan);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Read Existing CurricularCourse");
+		}
 
 		ArrayList list = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			list = persistentCurricularCourse.readCurricularCoursesByCurricularSemesterAndCurricularYear(new Integer(1), new Integer(1));
+			list = persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Existing CurricularCourse");
 		}
 		assertNotNull(list);
+		assertEquals(list.size(), 5);
 	}
-*/
+
+	public void testReadAllCurricularCoursesByBranch() {
+
+		System.out.println("- Test 10 : Read All Curricular Courses Scope By Branch\n");
+		IBranch branch = null;
+		
+		try {
+			persistentSupport.iniciarTransaccao();
+			branch = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial", "IA");
+			assertNotNull(branch);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Reading Branch");
+		}
+
+		ArrayList list = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			list = persistentCurricularCourse.readAllCurricularCoursesByBranch(branch);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Read All Curricular Courses Scope By Branch");
+		}
+		assertNotNull(list);
+		assertEquals(list.size(), 1);
+	}
+
+	public void testReadAllCurricularCoursesBySemester() {
+
+		System.out.println("- Test 11 : Read All Curricular Courses Scope By Semester\n");
+		ICurricularSemester curricularSemester = null;
+		
+		try {
+			persistentSupport.iniciarTransaccao();
+			curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(new Integer(1),new CurricularYear(new Integer(2)));
+			assertNotNull(curricularSemester);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Reading Semester");
+		}
+
+		ArrayList list = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			list = persistentCurricularCourse.readAllCurricularCoursesBySemester(curricularSemester);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Read All Curricular Courses Scope By Semester");
+		}
+		assertNotNull(list);
+		assertEquals(list.size(), 3);
+	}
+
 }

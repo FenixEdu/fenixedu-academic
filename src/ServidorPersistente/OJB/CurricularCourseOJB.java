@@ -7,7 +7,13 @@ import java.util.ListIterator;
 import org.odmg.QueryException;
 
 import Dominio.CurricularCourse;
+import Dominio.CurricularCourseScope;
+import Dominio.IBranch;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
+import Dominio.ICurricularSemester;
+import Dominio.IDegreeCurricularPlan;
+import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -117,7 +123,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	
+
 	public ArrayList readCurricularCoursesByCurricularYear(Integer year) throws ExcepcaoPersistencia {
 		try {
 			ArrayList list = new ArrayList();
@@ -144,7 +150,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	
+
 	public ArrayList readCurricularCoursesByCurricularSemester(Integer semester) throws ExcepcaoPersistencia {
 		try {
 			ArrayList list = new ArrayList();
@@ -171,34 +177,139 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	
-//	public ArrayList readCurricularCoursesByCurricularSemesterAndCurricularYear(Integer semester, Integer year) throws ExcepcaoPersistencia {
-//		try {
-//			ArrayList list = new ArrayList();
-//			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-//			oqlQuery += " where associatedCurricularSemesters.semester = $1";
-//			oqlQuery += " and associatedCurricularSemesters.curricularYear.year = $2";
-//			query.create(oqlQuery);
-//			query.bind(semester);
-//			query.bind(year);
-//			List result = (List) query.execute();
-//
-//			try {
-//				lockRead(result);
-//			} catch (ExcepcaoPersistencia ex) {
-//				throw ex;
-//			}
-//
-//			if ((result != null) && (result.size() != 0)) {
-//				ListIterator iterator = result.listIterator();
-//				while (iterator.hasNext())
-//					list.add((ICurricularCourse) iterator.next());
-//			}
-//			return list;
-//
-//		} catch (QueryException ex) {
-//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-//		}
-//	}
-	
+
+	//	public ArrayList readCurricularCoursesByCurricularSemesterAndCurricularYear(Integer semester, Integer year) throws ExcepcaoPersistencia {
+	//		try {
+	//			ArrayList list = new ArrayList();
+	//			String oqlQuery = "select all from " + CurricularCourse.class.getName();
+	//			oqlQuery += " where associatedCurricularSemesters.semester = $1";
+	//			oqlQuery += " and associatedCurricularSemesters.curricularYear.year = $2";
+	//			query.create(oqlQuery);
+	//			query.bind(semester);
+	//			query.bind(year);
+	//			List result = (List) query.execute();
+	//
+	//			try {
+	//				lockRead(result);
+	//			} catch (ExcepcaoPersistencia ex) {
+	//				throw ex;
+	//			}
+	//
+	//			if ((result != null) && (result.size() != 0)) {
+	//				ListIterator iterator = result.listIterator();
+	//				while (iterator.hasNext())
+	//					list.add((ICurricularCourse) iterator.next());
+	//			}
+	//			return list;
+	//
+	//		} catch (QueryException ex) {
+	//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+	//		}
+	//	}
+
+	public ArrayList readCurricularCoursesByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+
+		try {
+			ArrayList list = new ArrayList();
+			String oqlQuery = "select all from " + CurricularCourse.class.getName();
+			oqlQuery += " where degreeCurricularPlan.name = $1";
+			oqlQuery += " and degreeCurricularPlan.degree.nome = $2";
+			oqlQuery += " and degreeCurricularPlan.degree.sigla = $3";
+			query.create(oqlQuery);
+
+			query.bind(degreeCurricularPlan.getName());
+			query.bind(degreeCurricularPlan.getDegree().getNome());
+			query.bind(degreeCurricularPlan.getDegree().getSigla());
+
+			List result = (List) query.execute();
+
+			try {
+				lockRead(result);
+			} catch (ExcepcaoPersistencia ex) {
+				throw ex;
+			}
+
+			if ((result != null) && (result.size() != 0)) {
+				ListIterator iterator = result.listIterator();
+				while (iterator.hasNext())
+					list.add((ICurricularCourse) iterator.next());
+			}
+			return list;
+
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+	public ArrayList readAllCurricularCoursesByBranch(IBranch branch) throws ExcepcaoPersistencia {
+		try {
+			ArrayList list = new ArrayList();
+			String oqlQuery = "select all from " + CurricularCourseScope.class.getName();
+			oqlQuery += " where branch.name = $1";
+			oqlQuery += " and branch.code = $2";
+
+			query.create(oqlQuery);
+
+			query.bind(branch.getName());
+			query.bind(branch.getCode());
+
+			List result = (List) query.execute();
+			try {
+				lockRead(result);
+			} catch (ExcepcaoPersistencia ex) {
+				throw ex;
+			}
+
+			ICurricularCourseScope curricularCourseScope = null;
+
+			if ((result != null) && (result.size() != 0)) {
+				ListIterator iterator = result.listIterator();
+				while (iterator.hasNext()) {
+					curricularCourseScope = (ICurricularCourseScope) iterator.next();
+					list.add(curricularCourseScope.getCurricularCourse());
+				}
+			}
+			return list;
+
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+	public ArrayList readAllCurricularCoursesBySemester(ICurricularSemester curricularSemester, IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
+		try {
+			ArrayList list = new ArrayList();
+			String oqlQuery = "select all from " + CurricularCourseScope.class.getName();
+			oqlQuery += " where curricularSemester.semester = $1";
+			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $2";
+			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.name = $3";
+
+			query.create(oqlQuery);
+
+			query.bind(curricularSemester.getSemester());
+			query.bind(studentCurricularPlan.getDegreeCurricularPlan().getName());
+			query.bind(studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome());
+
+			List result = (List) query.execute();
+			try {
+				lockRead(result);
+			} catch (ExcepcaoPersistencia ex) {
+				throw ex;
+			}
+
+			ICurricularCourseScope curricularCourseScope = null;
+
+			if ((result != null) && (result.size() != 0)) {
+				ListIterator iterator = result.listIterator();
+				while (iterator.hasNext()) {
+					curricularCourseScope = (ICurricularCourseScope) iterator.next();
+					list.add(curricularCourseScope.getCurricularCourse());
+				}
+			}
+			return list;
+
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
 }

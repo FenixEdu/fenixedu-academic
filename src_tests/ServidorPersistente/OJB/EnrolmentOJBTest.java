@@ -13,6 +13,7 @@ import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.EnrolmentState;
 import Util.TipoCurso;
 
 /**
@@ -83,7 +84,7 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 		assertNotNull(studentCurricularPlan);
 
 		// Enrolment ja existente
-		IEnrolment enrolment = new Enrolment(studentCurricularPlan, curricularCourse);
+		IEnrolment enrolment = new Enrolment(studentCurricularPlan, curricularCourse, new EnrolmentState(EnrolmentState.APROVED));
 
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -116,7 +117,7 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 		assertNotNull(curricularCourse);
 		assertNotNull(studentCurricularPlan);
 
-		enrolment = new Enrolment(studentCurricularPlan, curricularCourse);
+		enrolment = new Enrolment(studentCurricularPlan, curricularCourse, new EnrolmentState(EnrolmentState.APROVED));
 
 		System.out.println("\n- Test 1.2 : Write Non Existing Enrolment\n");
 		try {
@@ -311,6 +312,38 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 		}
 		assertNotNull(list);
 		assertEquals(list.size(), 2);
+	}
+
+	// -------------------------------------------------------------------------------------------------------------------------
+
+	public void testReadEnrolmentByStudentCurricularPlanAndEnrolmentState() {
+
+		ArrayList list = null;
+
+		IStudentCurricularPlan studentCurricularPlan = null;
+
+		System.out.println("\n- Test 6 : Read Existing Enrolment By StudentCurricularPlan And EnrolmentState\n");
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("Reading StudentCurricularPlan");
+		}
+
+		assertNotNull(studentCurricularPlan);
+
+		// Enrolment ja existente
+		try {
+			persistentSupport.iniciarTransaccao();
+			list = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlan, new EnrolmentState(EnrolmentState.APROVED));
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Read Existing Enrolment");
+		}
+		assertNotNull(list);
+		assertEquals(list.size(), 1);
 	}
 
 }

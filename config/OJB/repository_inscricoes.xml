@@ -281,6 +281,11 @@
 		column="START_DATE"
 		jdbc-type="DATE"
 	/>
+	<field-descriptor
+		name="branchKey"
+		column="KEY_BRANCH"
+		jdbc-type="INTEGER"
+	/>
 	<reference-descriptor
 			name="student"
 			class-ref="Dominio.Student"
@@ -293,6 +298,14 @@
 			proxy="false">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	</reference-descriptor>
+	<reference-descriptor
+			name="branch"
+			class-ref="Dominio.Branch"
+			proxy="false">
+		<foreignkey field-ref="branchKey"/>
+	</reference-descriptor>
+
+<!--
 	<collection-descriptor
 			name="associatedBranches"
 			element-class-ref="Dominio.Branch"
@@ -302,6 +315,8 @@
 		<fk-pointing-to-this-class column="KEY_STUDENT_CURRICULAR_PLAN"/>
 		<fk-pointing-to-element-class column="KEY_BRANCH"/>
 	</collection-descriptor>
+	
+-->
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -325,6 +340,12 @@
 		column="KEY_CURRICULAR_COURSE"
 		jdbc-type="INTEGER"
 	/>    
+	<field-descriptor
+		name="state"
+		column="STATE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaEnrolmentState2SqlEnrolmentStateFieldConversion"
+	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
@@ -428,6 +449,7 @@
 		column="BRANCH_NAME"
 		jdbc-type="VARCHAR"
 	/>
+<!--
 	<collection-descriptor
 			name="associatedStudentCurricularPlans"
 			element-class-ref="Dominio.StudentCurricularPlan"
@@ -437,7 +459,7 @@
 		<fk-pointing-to-this-class column="KEY_BRANCH"/>
 		<fk-pointing-to-element-class column="KEY_STUDENT_CURRICULAR_PLAN"/>
 	</collection-descriptor>
-
+-->
 <!--
 	<collection-descriptor
 			name="associatedCurricularCourses"

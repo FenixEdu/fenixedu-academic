@@ -7,7 +7,6 @@
 package Dominio;
 
 import java.util.Date;
-import java.util.List;
 
 import Util.StudentCurricularPlanState;
 
@@ -19,16 +18,15 @@ import Util.StudentCurricularPlanState;
 
 public interface IStudentCurricularPlan {
   public IStudent getStudent();
+  public IBranch getBranch();
   public IDegreeCurricularPlan getDegreeCurricularPlan();
   public StudentCurricularPlanState getCurrentState();
   public Date getStartDate();
   
-  public List getAssociatedBranches();
-  
   public void setStudent(IStudent student);
+  public void setBranch(IBranch branch);
   public void setDegreeCurricularPlan(IDegreeCurricularPlan courseCurricularPlan);
   public void setCurrentState(StudentCurricularPlanState state);
   public void setStartDate(Date startDate);
   
-  public void setAssociatedBranches(List associatedBranches);
 }

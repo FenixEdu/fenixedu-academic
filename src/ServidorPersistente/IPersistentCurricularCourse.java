@@ -2,7 +2,11 @@ package ServidorPersistente;
 
 import java.util.ArrayList;
 
+import Dominio.IBranch;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularSemester;
+import Dominio.IDegreeCurricularPlan;
+import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
@@ -17,7 +21,10 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
 	public ArrayList readCurricularCoursesByCurricularYear(Integer year) throws ExcepcaoPersistencia;
 	public ArrayList readCurricularCoursesByCurricularSemester(Integer semester) throws ExcepcaoPersistencia;
 //	public ArrayList readCurricularCoursesByCurricularSemesterAndCurricularYear(Integer semester, Integer year) throws ExcepcaoPersistencia;
+	public ArrayList readCurricularCoursesByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
+	public ArrayList readAllCurricularCoursesByBranch(IBranch branch) throws ExcepcaoPersistencia;
 	public ArrayList readAll() throws ExcepcaoPersistencia;
+	public ArrayList readAllCurricularCoursesBySemester(ICurricularSemester curricularSemester, IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
 	public void lockWrite(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;

@@ -1,5 +1,7 @@
 package Dominio;
 
+import Util.EnrolmentState;
+
 /**
  * @author dcs-rjao
  *
@@ -8,8 +10,10 @@ package Dominio;
 
 public interface IEnrolment {
 
-	ICurricularCourse getCurricularCourse();
-	IStudentCurricularPlan getStudentCurricularPlan();
-	void setCurricularCourse(ICurricularCourse curricularCourse);
-	void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan);
+	public ICurricularCourse getCurricularCourse();
+	public IStudentCurricularPlan getStudentCurricularPlan();
+	public EnrolmentState getState();
+	public void setState(EnrolmentState state);
+	public void setCurricularCourse(ICurricularCourse curricularCourse);
+	public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan);
 }

@@ -16,6 +16,7 @@ import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEquivalence;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.EnrolmentState;
 import Util.EquivalenceType;
 import Util.TipoCurso;
 
@@ -284,11 +285,11 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
 				assertNotNull(curricularCourse);
 				assertNotNull(studentCurricularPlan);
-				this.enrolment = new Enrolment(studentCurricularPlan, curricularCourse);
+				this.enrolment = new Enrolment(studentCurricularPlan, curricularCourse, new EnrolmentState(EnrolmentState.APROVED));
 
 				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 				assertNotNull(studentCurricularPlan);
-				this.equivalentEnrolment = new Enrolment(studentCurricularPlan, curricularCourse);
+				this.equivalentEnrolment = new Enrolment(studentCurricularPlan, curricularCourse, new EnrolmentState(EnrolmentState.APROVED));
 
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia ex) {

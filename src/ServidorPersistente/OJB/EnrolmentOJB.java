@@ -13,6 +13,7 @@ import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.EnrolmentState;
 
 /**
  * @author dcs-rjao
@@ -110,6 +111,42 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 			ArrayList list = new ArrayList();
 			String oqlQuery = "select all from " + Enrolment.class.getName();
 			query.create(oqlQuery);
+			List result = (List) query.execute();
+
+			try {
+				lockRead(result);
+			} catch (ExcepcaoPersistencia ex) {
+				throw ex;
+			}
+
+			if( (result != null) && (result.size() != 0) ) {
+				ListIterator iterator = result.listIterator();
+				while (iterator.hasNext())
+					list.add((IEnrolment) iterator.next());
+			}
+			return list;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+	public ArrayList readEnrolmentsByStudentCurricularPlanAndEnrolmentState(IStudentCurricularPlan studentCurricularPlan, EnrolmentState enrolmentState) throws ExcepcaoPersistencia {
+
+		try {
+			ArrayList list = new ArrayList();
+			String oqlQuery = "select all from " + Enrolment.class.getName();
+			oqlQuery += " where studentCurricularPlan.student.number = $1";
+			oqlQuery += " and studentCurricularPlan.student.degreeType = $2";
+			oqlQuery += " and studentCurricularPlan.currentState = $3";
+			oqlQuery += " and state = $4";
+
+			query.create(oqlQuery);
+
+			query.bind(studentCurricularPlan.getStudent().getNumber());
+			query.bind(studentCurricularPlan.getStudent().getDegreeType());
+			query.bind(studentCurricularPlan.getCurrentState());
+			query.bind(enrolmentState.getState());
+
 			List result = (List) query.execute();
 
 			try {

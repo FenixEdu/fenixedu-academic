@@ -14,16 +14,12 @@ public class Branch implements IBranch {
 	private Integer internalID;
 	private String name;
 	private String code;
-//	private List associatedCurricularCourses;
-	private List associatedStudentCurricularPlans;
 	private List scopes;
 
 	public Branch() {
 		setName(null);
 		setCode(null);
 		setInternalID(null);
-//		setAssociatedCurricularCourses(null);
-		setAssociatedStudentCurricularPlans(null);
 		setScopes(null);
 	}
 
@@ -47,8 +43,6 @@ public class Branch implements IBranch {
 		result += "idInternal = " + this.internalID + "; ";
 		result += "name = " + this.name + "; ";
 		result += "code = " + this.code + "]\n";
-//		result += "associatedCurricularCourses = " + this.associatedCurricularCourses + "; ";
-//		result += "associatedStudentCurricularPlans = " + this.associatedStudentCurricularPlans + "]";
 		return result;
 	}
 
@@ -97,35 +91,6 @@ public class Branch implements IBranch {
 		this.name = name;
 	}
 
-//	/**
-//	 * @return List
-//	 */
-//	public List getAssociatedCurricularCourses() {
-//		return associatedCurricularCourses;
-//	}
-
-	/**
-	 * @return List
-	 */
-	public List getAssociatedStudentCurricularPlans() {
-		return associatedStudentCurricularPlans;
-	}
-
-//	/**
-//	 * Sets the associatedCurricularCourses.
-//	 * @param associatedCurricularCourses The associatedCurricularCourses to set
-//	 */
-//	public void setAssociatedCurricularCourses(List associatedCurricularCourses) {
-//		this.associatedCurricularCourses = associatedCurricularCourses;
-//	}
-
-	/**
-	 * Sets the associatedStudentCurricularPlans.
-	 * @param associatedStudentCurricularPlans The associatedStudentCurricularPlans to set
-	 */
-	public void setAssociatedStudentCurricularPlans(List associatedStudentCurricularPlans) {
-		this.associatedStudentCurricularPlans = associatedStudentCurricularPlans;
-	}
 
 	/**
 	 * @return List

@@ -13,13 +13,9 @@ public interface IBranch {
 
 	public String getCode();
 	public String getName();
-//	public List getAssociatedCurricularCourses();
-	public List getAssociatedStudentCurricularPlans();
 	public List getScopes();
 
 	public void setCode(String code);
 	public void setName(String name);
-//	public void setAssociatedCurricularCourses(List associatedCurricularCourses);
-	public void setAssociatedStudentCurricularPlans(List associatedStudentCurricularPlans);
 	public void setScopes(List scopes);
 }

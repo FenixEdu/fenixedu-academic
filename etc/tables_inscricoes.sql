@@ -62,29 +62,6 @@ create table DEGREE_CURRICULAR_PLAN (
    unique U1 (NAME, KEY_DEGREE)
 )type=InnoDB;
 
-#------------------------------------------
-# Table structure for curricular_course
-# key_department should be not null
-#   ainda não se tem a disciplina departamento
-#------------------------------------------
-#drop table if exists CURRICULAR_COURSE;
-#create table CURRICULAR_COURSE (
-#   ID_INTERNAL int(11) not null auto_increment,
-#   KEY_DEPARTMENT_COURSE int(11),
-#   KEY_DEGREE_CURRICULAR_PLAN int(11) not null,
-#   CREDITS double,
-#   THEORETICAL_HOURS double,
-#   PRATICAL_HOURS double,
-#   THEO_PRAT_HOURS double,
-#   LAB_HOURS double,
-#   CURRICULAR_YEAR int(11),
-#   SEMESTER int(11),
-#   NAME varchar(100),
-#   CODE varchar(50) not null,
-#   primary key (ID_INTERNAL ),
-#   unique U1 (CODE, NAME, SEMESTER, CURRICULAR_YEAR,  KEY_DEGREE_CURRICULAR_PLAN))
-#   type=InnoDB;
-
 #----------------------------
 # Table structure for CURRICULAR_COURSE
 #----------------------------
@@ -114,10 +91,10 @@ create table STUDENT_CURRICULAR_PLAN (
    KEY_DEGREE_CURRICULAR_PLAN int(11) not null,
    CURRENT_STATE int(11) not null,
    START_DATE date not null,
+   KEY_BRANCH int(11) not null,
    primary key (ID_INTERNAL),
    unique U1 (KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE)
 )type=InnoDB;
-#  KEY_COURSE_CURRICULAR_PLAN int(11) not null,
 
 #==================================================================================
 # ZONA INSCRICAO
@@ -131,6 +108,7 @@ create table ENROLMENT (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_STUDENT_CURRICULAR_PLAN int(11) not null,
    KEY_CURRICULAR_COURSE int(11) not null,
+   STATE int(11) not null,
    primary key (ID_INTERNAL),
    unique U1 (KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE)
 )type=InnoDB;
@@ -186,7 +164,7 @@ create table CURRICULAR_COURSE_SCOPE (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_CURRICULAR_SEMESTER int(11) not null,
    KEY_CURRICULAR_COURSE int(11) not null,
-   KEY_BRANCH int(11),
+   KEY_BRANCH int(11) not null, 
    primary key (ID_INTERNAL),
    unique U1 (KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH)
 )type=InnoDB;
@@ -194,14 +172,14 @@ create table CURRICULAR_COURSE_SCOPE (
 #----------------------------
 # Table structure for STUDENT_CURRICULAR_PLAN_BRANCH
 #----------------------------
-drop table if exists STUDENT_CURRICULAR_PLAN_BRANCH;
-create table STUDENT_CURRICULAR_PLAN_BRANCH (
-   ID_INTERNAL int(11) not null auto_increment,
-   KEY_BRANCH int(11) not null,
-   KEY_STUDENT_CURRICULAR_PLAN int(11) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (KEY_BRANCH, KEY_STUDENT_CURRICULAR_PLAN)
-)type=InnoDB;
+#drop table if exists STUDENT_CURRICULAR_PLAN_BRANCH;
+#create table STUDENT_CURRICULAR_PLAN_BRANCH (
+#   ID_INTERNAL int(11) not null auto_increment,
+#   KEY_BRANCH int(11) not null,
+#   KEY_STUDENT_CURRICULAR_PLAN int(11) not null,
+#   primary key (ID_INTERNAL),
+#   unique U1 (KEY_BRANCH, KEY_STUDENT_CURRICULAR_PLAN)
+#)type=InnoDB;
 
 #----------------------------
 # Table structure for EQUIVALENCE

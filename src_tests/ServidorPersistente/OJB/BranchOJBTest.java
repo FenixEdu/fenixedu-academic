@@ -104,7 +104,6 @@ public class BranchOJBTest extends TestCaseOJB {
 		assertTrue(b2.getName().equals(branch.getName()));
 
 		assertNull(b2.getScopes());
-		assertNull(b2.getAssociatedStudentCurricularPlans());
 	}
 
 	// -------------------------------------------------------------------------------------------------------------------------
@@ -152,7 +151,6 @@ public class BranchOJBTest extends TestCaseOJB {
 		assertTrue(branch.getName().equals("Inteligencia Artificial"));
 		assertTrue(branch.getCode().equals("IA"));
 		assertNotNull(branch.getScopes());
-		assertNotNull(branch.getAssociatedStudentCurricularPlans());
 
 		// branch inexistente
 		branch = null;

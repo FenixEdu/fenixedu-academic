@@ -1,7 +1,6 @@
 package Dominio;
 
 import java.util.Date;
-import java.util.List;
 
 import Util.StudentCurricularPlanState;
 
@@ -9,33 +8,34 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 
 	protected Integer internalCode;
 	protected Integer studentKey;
+	protected Integer branchKey;
 	protected Integer degreeCurricularPlanKey;
 
 	protected IStudent student;
+	protected IBranch branch;
 	protected IDegreeCurricularPlan degreeCurricularPlan;
 	protected Date startDate;
 	protected StudentCurricularPlanState currentState;
 
-	private List associatedBranches;
-
 	public StudentCurricularPlan() {
 		setInternalCode(null);
 		setStudent(null);
+		setBranch(null);
 		setDegreeCurricularPlan(null);
 		setStartDate(null);
 		setCurrentState(null);
 		setDegreeCurricularPlanKey(null);
 		setStudentKey(null);
+		setBranchKey(null);
 	}
 
-	public StudentCurricularPlan(IStudent student, IDegreeCurricularPlan degreeCurricularPlan, Date startDate, StudentCurricularPlanState currentState) {
+	public StudentCurricularPlan(IStudent student, IDegreeCurricularPlan degreeCurricularPlan, IBranch branch, Date startDate, StudentCurricularPlanState currentState) {
+		this();
 		setStudent(student);
 		setDegreeCurricularPlan(degreeCurricularPlan);
+		setBranch(branch);
 		setStartDate(startDate);
 		setCurrentState(currentState);
-		setInternalCode(null);
-		setDegreeCurricularPlanKey(null);
-		setStudentKey(null);
 	}
 
 	public boolean equals(Object obj) {
@@ -172,18 +172,33 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 	}
 
 	/**
-	 * @return List
+	 * @return IBranch
 	 */
-	public List getAssociatedBranches() {
-		return associatedBranches;
+	public IBranch getBranch() {
+		return branch;
 	}
 
 	/**
-	 * Sets the associatedBranches.
-	 * @param associatedBranches The associatedBranches to set
+	 * @return Integer
 	 */
-	public void setAssociatedBranches(List associatedBranches) {
-		this.associatedBranches = associatedBranches;
+	public Integer getBranchKey() {
+		return branchKey;
+	}
+
+	/**
+	 * Sets the branch.
+	 * @param branch The branch to set
+	 */
+	public void setBranch(IBranch branch) {
+		this.branch = branch;
+	}
+
+	/**
+	 * Sets the branchKey.
+	 * @param branchKey The branchKey to set
+	 */
+	public void setBranchKey(Integer branchKey) {
+		this.branchKey = branchKey;
 	}
 
 }

@@ -1,5 +1,7 @@
 package Dominio;
 
+import Util.EnrolmentState;
+
 /**
  * @author dcs-rjao
  *
@@ -10,6 +12,7 @@ public class Enrolment implements IEnrolment {
 
 	private IStudentCurricularPlan studentCurricularPlan;
 	private ICurricularCourse curricularCourse;
+	private EnrolmentState state;
 
 	private Integer internalID;
 	private Integer studentCurricularPlanKey;
@@ -18,19 +21,18 @@ public class Enrolment implements IEnrolment {
 	public Enrolment() {
 		setCurricularCourse(null);
 		setStudentCurricularPlan(null);
+		setState(null);
 
 		setInternalID(null);
 		setStudentCurricularPlanKey(null);
 		setCurricularCourseKey(null);
 	}
 
-	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse) {
+	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, EnrolmentState state) {
+		this();
 		setCurricularCourse(curricularCourse);
 		setStudentCurricularPlan(studentCurricularPlan);
-
-		setInternalID(null);
-		setStudentCurricularPlanKey(null);
-		setCurricularCourseKey(null);
+		setState(state);
 	}
 
 	public boolean equals(Object obj) {
@@ -130,6 +132,21 @@ public class Enrolment implements IEnrolment {
 	 */
 	public void setStudentCurricularPlanKey(Integer studentCurricularPlanKey) {
 		this.studentCurricularPlanKey = studentCurricularPlanKey;
+	}
+
+	/**
+	 * @return EnrolmentState
+	 */
+	public EnrolmentState getState() {
+		return state;
+	}
+
+	/**
+	 * Sets the state.
+	 * @param state The state to set
+	 */
+	public void setState(EnrolmentState state) {
+		this.state = state;
 	}
 
 }
