@@ -10,11 +10,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.IExamExecutionCourse;
-import Dominio.IExecutionPeriod;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
@@ -27,11 +25,6 @@ public interface IPersistentExamExecutionCourse extends IPersistentObject {
 		IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia;
 	public List readBy(Date day, Calendar beginning)
-			throws ExcepcaoPersistencia;
-	public List readBy(
-			ICursoExecucao executionDegree,
-			IExecutionPeriod executionPeriod,
-			Integer curricularYear)
 			throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
 	public void lockWrite(IExamExecutionCourse examExecutionCourseToWrite)

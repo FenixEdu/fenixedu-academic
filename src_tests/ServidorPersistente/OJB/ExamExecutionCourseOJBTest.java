@@ -90,7 +90,7 @@ public class ExamExecutionCourseOJBTest extends TestCaseOJB {
 			executionYear =	ps.getIPersistentExecutionYear().readExecutionYearByName("2002/2003");
 			executionPeriod =ps.getIPersistentExecutionPeriod().readByNameAndExecutionYear("2º Semestre", executionYear);
 			executionCourse = ps.getIDisciplinaExecucaoPersistente().readByExecutionCourseInitialsAndExecutionPeriod("RCI", executionPeriod);
-			exam = ps.getIPersistentExam().readBy(beginning.getTime(), beginning, executionCourse);
+			exam = (IExam) executionCourse.getAssociatedExams().get(0);
 			// Make sure test data set is ok
 			assertNotNull("testReadByExamExecutionCourse: test data (executionCourse) have been altered!!!",executionCourse);
 			assertNotNull("testReadByExamExecutionCourse: test data (exans) have been altered!!!", exam);
@@ -115,6 +115,70 @@ public class ExamExecutionCourseOJBTest extends TestCaseOJB {
 		} catch (ExcepcaoPersistencia e) {
 			fail("testReadByDayAndBeginningAndExecutionCourse: unexpected exception: " + e);
 		}
+	}
+
+	
+	public void testReadByDayAndBeginning(){
+		Calendar beginning = Calendar.getInstance();
+		beginning.set(Calendar.YEAR, 2003);
+		beginning.set(Calendar.MONTH, Calendar.MARCH);
+		beginning.set(Calendar.DAY_OF_MONTH, 19);
+		beginning.set(Calendar.HOUR_OF_DAY, 13);
+		beginning.set(Calendar.MINUTE, 0);
+		beginning.set(Calendar.SECOND, 0);
+		
+		try {
+			ps.iniciarTransaccao();
+			List result = ps.getIPersistentExamExecutionCourse().readBy(beginning.getTime(), beginning);
+			ps.confirmarTransaccao();
+			assertNotNull("result list is null", result);
+			assertEquals("result list size not expected", 7, result.size());
+		} catch (ExcepcaoPersistencia e) {
+			fail("unexpected exception" + e);
+		}
+				
+	}
+
+	public void testLockWrite(){
+
+		try {
+			ps.iniciarTransaccao();
+			//List result = ps.getIPersistentExamExecutionCourse().readBy(beginning.getTime(), beginning);
+			ps.confirmarTransaccao();
+			//assertNotNull("result list is null", result);
+			//assertEquals("result list size not expected", 7, result.size());
+		} catch (ExcepcaoPersistencia e) {
+			fail("unexpected exception" + e);
+		}
+				
+	}
+
+	public void testDelete(){
+
+		try {
+			ps.iniciarTransaccao();
+			//List result = ps.getIPersistentExamExecutionCourse().readBy(beginning.getTime(), beginning);
+			ps.confirmarTransaccao();
+			//assertNotNull("result list is null", result);
+			//assertEquals("result list size not expected", 7, result.size());
+		} catch (ExcepcaoPersistencia e) {
+			fail("unexpected exception" + e);
+		}
+				
+	}
+
+	public void testDeleteAll(){
+
+		try {
+			ps.iniciarTransaccao();
+			//List result = ps.getIPersistentExamExecutionCourse().readBy(beginning.getTime(), beginning);
+			ps.confirmarTransaccao();
+			//assertNotNull("result list is null", result);
+			//assertEquals("result list size not expected", 7, result.size());
+		} catch (ExcepcaoPersistencia e) {
+			fail("unexpected exception" + e);
+		}
+				
 	}
 
 }

@@ -79,7 +79,7 @@ public class DeleteExamServiceTest extends TestCaseDeleteAndEditServices {
 		Season season = new Season(Season.SEASON1);
 
 		Object argsDeleteExam[] = new Object[1];
-		argsDeleteExam[0] = new InfoExam(beginning.getTime(), beginning, null, season, infoExecutionCourse);
+		argsDeleteExam[0] = new InfoExam(beginning.getTime(), beginning, null, season);
 
 		return argsDeleteExam;
 	}
@@ -113,7 +113,7 @@ public class DeleteExamServiceTest extends TestCaseDeleteAndEditServices {
 		Season season = new Season(Season.SEASON1);
 
 		Object argsDeleteExam[] = new Object[1];
-		argsDeleteExam[0] = new InfoExam(beginning.getTime(), beginning, null, season, infoExecutionCourse);
+		argsDeleteExam[0] = new InfoExam(beginning.getTime(), beginning, null, season);
 
 		return argsDeleteExam;
 	}
