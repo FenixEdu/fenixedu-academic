@@ -1913,8 +1913,13 @@ public abstract class Cloner {
 	 * @return InfoFrequenta
 	 */
 	public static InfoFrequenta copyIFrequenta2InfoFrequenta(IFrequenta frequenta) {
+		if (frequenta==null) {
+			return null;
+		}else {
+			
+		
 		InfoFrequenta infoFrequenta = new InfoFrequenta();
-
+		
 		InfoStudent infoStudent = new InfoStudent();
 		infoStudent = Cloner.copyIStudent2InfoStudent(frequenta.getAluno());
 
@@ -1926,14 +1931,14 @@ public abstract class Cloner {
 			infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(frequenta.getEnrolment());
 		}
 
-		//copyObjectProperties(infoFrequenta, frequenta);
-
+		
+		infoFrequenta.setIdInternal(frequenta.getIdInternal());
 		infoFrequenta.setAluno(infoStudent);
 		infoFrequenta.setDisciplinaExecucao(infoExecutionCourse);
 		infoFrequenta.setInfoEnrolment(infoEnrolment);
 
 		return infoFrequenta;
-	}
+	}}
 
 	/**
 	 * 
@@ -1955,8 +1960,7 @@ public abstract class Cloner {
 			enrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEnrolment);
 		}
 
-		//copyObjectProperties(frequenta, infoFrequenta);
-
+		frequenta.setIdInternal(infoFrequenta.getIdInternal());
 		frequenta.setAluno(student);
 		frequenta.setDisciplinaExecucao(disciplinaExecucao);
 		frequenta.setEnrolment(enrolment);
