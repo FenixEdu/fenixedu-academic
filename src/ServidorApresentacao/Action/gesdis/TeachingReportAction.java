@@ -23,6 +23,7 @@ import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.gesdis.InfoSiteCourseInformation;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -30,7 +31,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Leonor Almeida
  * @author Sergio Montelobo
  */
-public class CourseInformationAction extends DispatchAction
+public class TeachingReportAction extends DispatchAction
 {
     private String getReadService()
     {
@@ -69,32 +70,35 @@ public class CourseInformationAction extends DispatchAction
 	 * @param form
 	 * @return InfoServiceProviderRegime created
 	 */
-    protected InfoCourseReport getInfoCourseReportFromForm(ActionForm form)
+    protected InfoCourseReport getInfoCourseReportFromForm(ActionForm form) throws FenixActionException
     {
-        DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer courseReportId = (Integer) dynaForm.get("courseReportId");
-        Integer executionCourseId = (Integer) dynaForm.get("executionCourseId");
-        Integer executionPeriodId = (Integer) dynaForm.get("executionPeriodId");
-        Integer executionYearId = (Integer) dynaForm.get("executionYearId");
-        String report = (String) dynaForm.get("report");
+        try
+        {
+            DynaActionForm dynaForm = (DynaActionForm) form;
+            InfoCourseReport infoCourseReport = new InfoCourseReport();
+            BeanUtils.copyProperties(infoCourseReport, dynaForm);
+            Integer executionCourseId = (Integer) dynaForm.get("executionCourseId");
+            Integer executionPeriodId = (Integer) dynaForm.get("executionPeriodId");
+            Integer executionYearId = (Integer) dynaForm.get("executionYearId");
 
-        InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear.setIdInternal(executionYearId);
+            InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+            infoExecutionYear.setIdInternal(executionYearId);
 
-        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-        infoExecutionPeriod.setIdInternal(executionPeriodId);
-        infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
+            InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
+            infoExecutionPeriod.setIdInternal(executionPeriodId);
+            infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
 
-        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-        infoExecutionCourse.setIdInternal(executionCourseId);
-        infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+            InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+            infoExecutionCourse.setIdInternal(executionCourseId);
+            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
-        InfoCourseReport infoCourseReport = new InfoCourseReport();
-        infoCourseReport.setIdInternal(courseReportId);
-        infoCourseReport.setReport(report);
-        infoCourseReport.setInfoExecutionCourse(infoExecutionCourse);
+            infoCourseReport.setInfoExecutionCourse(infoExecutionCourse);
 
-        return infoCourseReport;
+            return infoCourseReport;
+        } catch (Exception e)
+        {
+            throw new FenixActionException(e.getMessage());
+        }
     }
 
     /**
@@ -122,18 +126,17 @@ public class CourseInformationAction extends DispatchAction
     {
         try
         {
+            DynaActionForm dynaForm = (DynaActionForm) form;
             BeanUtils.copyProperties(form, infoCourseReport);
 
-            DynaActionForm dynaForm = (DynaActionForm) form;
-
             InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
-            InfoExecutionPeriod infoExecutionPeriod = infoExecutionCourse.getInfoExecutionPeriod();
-            InfoExecutionYear infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
-            dynaForm.set("courseReportId", infoCourseReport.getIdInternal());
-            dynaForm.set("report", infoCourseReport.getReport());
             dynaForm.set("executionCourseId", infoExecutionCourse.getIdInternal());
-            dynaForm.set("executionPeriodId", infoExecutionPeriod.getIdInternal());
-            dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());
+            dynaForm.set(
+                "executionPeriodId",
+                infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+            dynaForm.set(
+                "executionYearId",
+                infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getIdInternal());
         } catch (Exception e)
         {
             e.printStackTrace();

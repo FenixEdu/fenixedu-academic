@@ -56,9 +56,9 @@
 					    </td> 
 					    <td class="listClasses" rowspan="<%=  pageContext.findAttribute("numberCourses") %>">&nbsp; 
 					    	<logic:present  name="infoSiteTeacherInformation" property="lastModificationDate">
-					    	 <dt:format pattern="dd/MM/yyyy HH:mm"> 
-					    	 	<bean:write name="infoSiteTeacherInformation" property="lastModificationDate.time"/>
-					    	  </dt:format>
+						    	<dt:format pattern="dd/MM/yyyy HH:mm"> 
+						    		<bean:write name="infoSiteTeacherInformation" property="lastModificationDate.time"/>
+						    	</dt:format>
 					    	</logic:present> 
 					    	<logic:notPresent name="infoSiteTeacherInformation" property="lastModificationDate">
 					    	 <bean:message key="label.teachersInformation.notModified"/> 
@@ -99,6 +99,6 @@
 	<br />
 	<bean:message key="label.teachersInformation.filled"/>: <%= filled %>
 	<br/>
-	<bean:message key="label.teachersInformation.stats"/>: <%= stats %>%
+	<%--<bean:message key="label.teachersInformation.stats"/>: <%= stats %>%--%>
 </logic:present>
 </logic:present>

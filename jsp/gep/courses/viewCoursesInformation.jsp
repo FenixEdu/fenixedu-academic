@@ -104,12 +104,12 @@
 									       paramId="executionCourseId" 
 									       paramName="infoSiteCourseInformation"
 									       paramProperty="infoExecutionCourse.idInternal">
-			   					        <bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.nome"/>-
-					       		   		<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.sigla"/>
+			   					        <bean:write name="infoCurricularCourse" property="name"/>-
+					       		   		<bean:write name="infoCurricularCourse" property="code"/>
 						      	</html:link>
 			       			</td>
 			       			<td class="listClasses">&nbsp;
-		   				   		<bean:write name="infoCurricularCourse" property="code"/>
+		   				   		<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.sigla"/>
 				         	</td>
 				         	<td class="listClasses" >&nbsp;
    				        		<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.name"/>
@@ -227,7 +227,7 @@
 	<br />
 	<bean:message key="label.gep.filled" bundle="GEP_RESOURCES"/>: <%= filled %>
 	<br/>
-	<bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>: <%= stats %>%
+	<%--<bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>: <%= stats %>%--%>
 	<br />
 	<br />
 	<logic:present name="infoExecutionDegree">

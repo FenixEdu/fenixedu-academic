@@ -23,6 +23,7 @@ import DataBeans.InfoSiteCommon;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.gesdis.InfoSiteCourseInformation;
+import DataBeans.gesdis.InfoSiteEvaluationInformation;
 import DataBeans.util.Cloner;
 import Dominio.Aula;
 import Dominio.ExecutionCourse;
@@ -31,8 +32,11 @@ import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
+import Dominio.IDepartment;
+import Dominio.IEnrolment;
 import Dominio.IEvaluationMethod;
 import Dominio.IExecutionCourse;
+import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.ISite;
 import Dominio.ITeacher;
@@ -45,6 +49,8 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentCurriculum;
+import ServidorPersistente.IPersistentDepartment;
+import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
@@ -54,6 +60,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
+import Util.EnrolmentState;
 import Util.TipoAula;
 
 /**
@@ -67,18 +74,7 @@ public class ReadCourseInformation implements IService
 	 *  
 	 */
     public ReadCourseInformation()
-    {
-    }
-
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public final String getNome()
-    {
-        return "ReadCourseInformation";
-    }
+    {}
 
     /**
 	 * Executes the service.
@@ -111,14 +107,16 @@ public class ReadCourseInformation implements IService
                 infoEvaluationMethod.setInfoExecutionCourse(infoExecutionCourse);
                 infoSiteCourseInformation.setInfoEvaluationMethod(infoEvaluationMethod);
 
-            }
-            else
+            } else
             {
                 infoSiteCourseInformation.setInfoEvaluationMethod(
                     Cloner.copyIEvaluationMethod2InfoEvaluationMethod(evaluationMethod));
             }
 
-            List infoResponsibleTeachers = getInfoResponsibleTeachers(executionCourse, sp);
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+
+            List infoResponsibleTeachers = getInfoResponsibleTeachers(responsiblesFor, sp);
             infoSiteCourseInformation.setInfoResponsibleTeachers(infoResponsibleTeachers);
 
             List curricularCourses = executionCourse.getAssociatedCurricularCourses();
@@ -133,6 +131,9 @@ public class ReadCourseInformation implements IService
 
             List infoBibliographicReferences = getInfoBibliographicReferences(executionCourse, sp);
             infoSiteCourseInformation.setInfoBibliographicReferences(infoBibliographicReferences);
+
+            List infoDepartments = getInfoDepartments(responsiblesFor, sp);
+            infoSiteCourseInformation.setInfoDepartments(infoDepartments);
 
             List infoLessons = getInfoLessons(executionCourse, sp);
             infoSiteCourseInformation.setInfoLessons(getFilteredInfoLessons(infoLessons));
@@ -153,12 +154,18 @@ public class ReadCourseInformation implements IService
                 InfoCourseReport infoCourseReport = new InfoCourseReport();
                 infoCourseReport.setInfoExecutionCourse(infoExecutionCourse);
                 infoSiteCourseInformation.setInfoCourseReport(infoCourseReport);
-            }
-            else
+            } else
             {
                 infoSiteCourseInformation.setInfoCourseReport(
                     Cloner.copyICourseReport2InfoCourseReport(courseReport));
             }
+
+            List infoSiteEvaluationInformations =
+                getInfoSiteEvaluationInformation(
+                    executionCourse.getExecutionPeriod(),
+                    curricularCourses,
+                    sp);
+            infoSiteCourseInformation.setInfoSiteEvaluationInformations(infoSiteEvaluationInformations);
 
             IPersistentSite persistentSite = sp.getIPersistentSite();
             ISite site = persistentSite.readByExecutionCourse(executionCourse);
@@ -171,11 +178,129 @@ public class ReadCourseInformation implements IService
             siteView.setCommonComponent(commonComponent);
 
             return siteView;
-        }
-        catch (ExcepcaoPersistencia e)
+        } catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
         }
+    }
+
+    /**
+	 * @param period
+	 * @param curricularCourses
+	 * @param sp
+	 * @return
+	 */
+    private List getInfoSiteEvaluationInformation(
+        IExecutionPeriod executionPeriod,
+        List curricularCourses,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        List infoSiteEvalutationInformations = new ArrayList();
+        Iterator iter = curricularCourses.iterator();
+        while (iter.hasNext())
+        {
+            ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+            InfoSiteEvaluationInformation infoSiteEvaluationInformation =
+                new InfoSiteEvaluationInformation();
+
+            List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
+            infoSiteEvaluationInformation.setEnrolled(new Integer(enrolled.size()));
+
+            infoSiteEvaluationInformation.setEvaluated(getEvaluated(enrolled));
+
+            Integer approved = getApproved(executionPeriod, curricularCourse, sp);
+            infoSiteEvaluationInformation.setApproved(approved);
+
+            InfoCurricularCourse infoCurricularCourse =
+                Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+            infoSiteEvaluationInformation.setInfoCurricularCourse(infoCurricularCourse);
+            infoSiteEvalutationInformations.add(infoSiteEvaluationInformation);
+        }
+        return infoSiteEvalutationInformations;
+    }
+
+    /**
+	 * @param curricularCourses
+	 * @param sp
+	 * @return
+	 */
+    private Integer getApproved(
+        IExecutionPeriod executionPeriod,
+        ICurricularCourse curricularCourse,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+        List approved =
+            persistentEnrolment.readByCurricularCourseAndExecutionPeriodAndEnrolmentState(
+                curricularCourse,
+                executionPeriod,
+                EnrolmentState.APROVED);
+        return new Integer(approved.size());
+    }
+
+    /**
+	 * @param curricularCourses
+	 * @param sp
+	 * @return
+	 */
+    private Integer getEvaluated(List enrolments) throws ExcepcaoPersistencia
+    {
+        int evaluated = 0;
+        Iterator iter = enrolments.iterator();
+        while (iter.hasNext())
+        {
+            IEnrolment enrolment = (IEnrolment) iter.next();
+            EnrolmentState enrolmentState = enrolment.getEnrolmentState();
+            if (enrolmentState.equals(EnrolmentState.APROVED)
+                || enrolmentState.equals(EnrolmentState.NOT_APROVED)
+                || enrolmentState.equals(EnrolmentState.NOT_EVALUATED))
+            {
+                evaluated++;
+            }
+        }
+        return new Integer(evaluated);
+    }
+
+    /**
+	 * @param curricularCourses
+	 * @param sp
+	 * @return
+	 */
+    private List getEnrolled(
+        IExecutionPeriod executionPeriod,
+        ICurricularCourse curricularCourse,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+        List enrolments =
+            persistentEnrolment.readByCurricularCourseAndExecutionPeriod(
+                curricularCourse,
+                executionPeriod);
+        return enrolments;
+    }
+
+    /**
+	 * @param executionCourse
+	 * @param sp
+	 * @return
+	 */
+    private List getInfoDepartments(List responsiblesFor, ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentDepartment persistentDepartment = sp.getIDepartamentoPersistente();
+        List infoDepartments = new ArrayList();
+        Iterator iter = responsiblesFor.iterator();
+        while (iter.hasNext())
+        {
+            ResponsibleFor responsibleFor = (ResponsibleFor) iter.next();
+            ITeacher teacher = responsibleFor.getTeacher();
+            IDepartment department = persistentDepartment.readByTeacher(teacher);
+            infoDepartments.add(Cloner.copyIDepartment2InfoDepartment(department));
+        }
+        return infoDepartments;
     }
 
     /**
@@ -183,7 +308,8 @@ public class ReadCourseInformation implements IService
 	 * @param i
 	 * @return
 	 */
-    private Integer getNumberOfLessons(List infoLessons, int lessonType, ISuportePersistente sp) throws ExcepcaoPersistencia
+    private Integer getNumberOfLessons(List infoLessons, int lessonType, ISuportePersistente sp)
+        throws ExcepcaoPersistencia
     {
 
         final int lessonTypeForPredicate = lessonType;
@@ -206,7 +332,7 @@ public class ReadCourseInformation implements IService
 
             Iterator iter = lessonsOfType.iterator();
             ITurno shift = null;
-           
+
             List temp = new ArrayList();
             while (iter.hasNext())
             {
@@ -221,7 +347,7 @@ public class ReadCourseInformation implements IService
                 if (shifts != null && !shifts.isEmpty())
                 {
 
-                    ITurno aux =  (ITurno) shifts.get(0);
+                    ITurno aux = (ITurno) shifts.get(0);
                     if (shift == null)
                     {
                         shift = aux;
@@ -234,8 +360,7 @@ public class ReadCourseInformation implements IService
 
             }
             return new Integer(temp.size());
-        }
-        else
+        } else
         {
 
             return null;
@@ -244,8 +369,7 @@ public class ReadCourseInformation implements IService
     }
 
     /**
-	 * Filter all the lessons to remove duplicates entries of lessons with the
-	 * same type
+	 * Filter all the lessons to remove duplicates entries of lessons with the same type
 	 * 
 	 * @param infoLessons
 	 * @return
@@ -367,8 +491,7 @@ public class ReadCourseInformation implements IService
             {
                 infoCurriculum = new InfoCurriculum();
 
-            }
-            else
+            } else
             {
                 infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
             }
@@ -384,12 +507,9 @@ public class ReadCourseInformation implements IService
 	 * @return @throws
 	 *         ExcepcaoPersistencia
 	 */
-    private List getInfoResponsibleTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
+    private List getInfoResponsibleTeachers(List responsiblesFor, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
-        IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-        List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse);
-
         List infoResponsibleTeachers = new ArrayList();
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext())

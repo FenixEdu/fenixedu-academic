@@ -66,7 +66,7 @@
 					    	 ((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
 					    	 ){%>
 					    	 (<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>) <% }  %> 
-					    	 </td>
+					    </td>
 					    <td  class="listClasses" >
 					    	 <logic:iterate id="curricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">
 					    	 	<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>&nbsp;
@@ -117,5 +117,5 @@
 	<br />
 	<bean:message key="label.gep.filled" bundle="GEP_RESOURCES"/>: <%= filled %>
 	<br/>
-	<bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>: <%= stats %>%
+	<%--<bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>: <%= stats %>%--%>
 </logic:present>

@@ -75,9 +75,10 @@ public class ReadTeachersInformation implements IService
 	 *  
 	 */
     public ReadTeachersInformation()
-    {}
+    {
+    }
 
-    public List run(Integer executionDegreeId) throws FenixServiceException
+    public List run(Integer executionDegreeId, Boolean basic) throws FenixServiceException
     {
         try
         {
@@ -85,12 +86,32 @@ public class ReadTeachersInformation implements IService
             ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
             IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 
-            ICursoExecucao executionDegree =
-                (ICursoExecucao) persistentExecutionDegree.readByOID(
-                    CursoExecucao.class,
-                    executionDegreeId);
+            List professorships = null;
+            if (executionDegreeId == null)
+            {
+                IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+                IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+                List executionDegrees = persistentExecutionDegree.readByExecutionYear(executionYear);
 
-            List professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
+                if (basic.equals(Boolean.FALSE))
+                    professorships = persistentProfessorship.readByExecutionDegrees(executionDegrees);
+                else
+                    professorships =
+                        persistentProfessorship.readByExecutionDegreesAndBasic(executionDegrees, basic);
+            } else
+            {
+                ICursoExecucao executionDegree =
+                    (ICursoExecucao) persistentExecutionDegree.readByOID(
+                        CursoExecucao.class,
+                        executionDegreeId);
+
+                if (basic.equals(Boolean.FALSE))
+                    professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
+                else
+                    professorships =
+                        persistentProfessorship.readByExecutionDegreeAndBasic(executionDegree, basic);
+            }
+
             List teachers = (List) CollectionUtils.collect(professorships, new Transformer()
             {
                 public Object transform(Object o)

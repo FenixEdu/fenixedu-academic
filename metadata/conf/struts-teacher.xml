@@ -324,15 +324,22 @@
             <form-property name="method" type="java.lang.String" />
         </form-bean>
         <!-- COURSE INFORMATION FORM  -->
-        <form-bean name="courseInformationForm" type="org.apache.struts.validator.DynaValidatorForm" 
+        <form-bean name="viewCourseInformationForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
-            <form-property name="page" type="java.lang.Integer"/>
-            <form-property name="courseReportId" type="java.lang.Integer" initial="0" />
-            <form-property name="report" type="java.lang.String" />
             <form-property name="executionCourseId" type="java.lang.Integer" />
-            <form-property name="executionPeriodId" type="java.lang.Integer" />
-            <form-property name="executionYearId" type="java.lang.Integer" />
         </form-bean>
+        <!-- TEACHING REPORT FORM  -->
+		<form-bean name="teachingReportForm" 
+			type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="idInternal" type="java.lang.Integer" 
+				initial="0" />
+			<form-property name="report" type="java.lang.String" />
+			<form-property name="executionCourseId" type="java.lang.Integer" />
+			<form-property name="executionPeriodId" type="java.lang.Integer" />
+			<form-property name="executionYearId" type="java.lang.Integer" />
+		</form-bean>
+        
         <!-- PROFESSIONAL CAREER FORM -->
         <form-bean name="professionalCareerForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
@@ -1020,15 +1027,27 @@
             <forward name="prepareForm" path="/selectCandidacies.do?method=prepare"/>
         </action>
         <!-- Course Information -->
-        <action type="ServidorApresentacao.Action.gesdis.CourseInformationAction" path="/courseInformation" 
-            name="courseInformationForm" parameter="method" scope="request" validate="true" 
-            input="/courseInformation.do?page=0&amp;method=prepareEdit">
+        <action type="ServidorApresentacao.Action.gesdis.ViewCourseInformationAction" path="/viewCourseInformation" 
+            name="viewCourseInformationForm" scope="request">
             <exception type="ServidorAplicacao.Servico.exceptions.FenixServiceException" 
                 key="error.exception.notAuthorized" 
                 handler="ServidorApresentacao.config.FenixNotAuthorizedExceptionHandler" />
-            <forward name="show-form" path="course-information-management"/>
             <forward name="successfull-read" path="view-course-information"/>
         </action>
+        <!-- Teaching Report -->
+		<action type="ServidorApresentacao.Action.gesdis.TeachingReportAction" 
+			path="/teachingReport" name="teachingReportForm" 
+			input="/teachingReport.do?page=0&amp;method=prepareEdit" 
+			parameter="method" validate="true" scope="request">
+			<!--<exception 
+				type="ServidorAplicacao.Servico.exceptions.FenixServiceException" 
+				key="error.exception.notAuthorized" 
+				handler="ServidorApresentacao.config.FenixNotAuthorizedExceptionHandler" 
+				/>-->
+			<forward name="successfull-read" path="view-teaching-report"/>
+			<forward name="show-form" path="teaching-report-management"/>
+		</action>
+        
         <!-- Professional Career -->
         <action type="ServidorApresentacao.Action.framework.CRUDActionByOID" path="/professionalCareer" 
             name="professionalCareerForm" parameter="method" scope="request" validate="true" 
@@ -1133,12 +1152,14 @@
             <forward name="show-form" path="view-external-activities"/>
         </action>
         <!-- Teacher Information -->
-        <action type="ServidorApresentacao.Action.teacher.TeacherInformationAction" 
-            path="/teacherInformation" name="teacherInformationForm" parameter="method" scope="request" 
-            validate="true" input="/teacherInformation.do?page=0&amp;method=prepareEdit">
-            <forward name="show-form" path="teacher-information-management"/>
-            <forward name="successfull-read" path="view-teacher-information"/>
-        </action>
+		<action 
+			type="ServidorApresentacao.Action.teacher.TeacherInformationAction" 
+			path="/teacherInformation" name="teacherInformationForm" 
+			parameter="method" scope="request" validate="true" 
+			input="/teacherInformation.do?page=0&amp;method=prepareEdit">
+			<forward name="show-form" path="teacher-information-management"/>
+			<forward name="successfull-read" path="view-teacher-information"/>
+		</action>
         <!-- ================== USE CASE: View Teacher Credits Sheet ========================== -->
         <action path="/prepareTeacherCreditsSheet" 
             type="ServidorApresentacao.Action.teacher.credits.PrepareTeacherCreditsSheet">

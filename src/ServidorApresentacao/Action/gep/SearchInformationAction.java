@@ -27,7 +27,7 @@ import Util.TipoCurso;
  * @author Sergio Montelobo
  *  
  */
-public class SearchTeachersInformationAction extends SearchAction
+public class SearchInformationAction extends SearchAction
 {
     /*
 	 * (non-Javadoc)
@@ -43,15 +43,21 @@ public class SearchTeachersInformationAction extends SearchAction
     {
         IUserView userView = SessionUtils.getUserView(request);
 
-        Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
+        if (!request.getParameter("executionDegreeId").equals("all"))
+        {
+            Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
-        Object[] args = { executionDegreeId };
-        InfoExecutionDegree infoExecutionDegree =
-            (InfoExecutionDegree) ServiceUtils.executeService(
-                userView,
-                "ReadExecutionDegreeByOID",
-                args);
-        request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+            Object[] args = { executionDegreeId };
+            InfoExecutionDegree infoExecutionDegree =
+                (InfoExecutionDegree) ServiceUtils.executeService(
+                    userView,
+                    "ReadExecutionDegreeByOID",
+                    args);
+            request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+        }
+        String basic = request.getParameter("basic");
+        if (basic != null)
+            request.setAttribute("basic", basic);
     }
 
     /*
@@ -63,9 +69,16 @@ public class SearchTeachersInformationAction extends SearchAction
     protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form)
         throws Exception
     {
-        Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
+        Integer executionDegreeId = null;
 
-        return new Object[] { executionDegreeId };
+        if (!request.getParameter("executionDegreeId").equals("all"))
+            executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
+
+        Boolean basic = Boolean.FALSE;
+        if (request.getParameter("basic") != null)
+            basic = Boolean.TRUE;
+
+        return new Object[] { executionDegreeId, basic };
     }
 
     /*

@@ -18,9 +18,7 @@ import Util.StudentCurricularPlanState;
 
 public interface IPersistentEnrolment extends IPersistentObject
 {
-
-	
-	  public void delete(IEnrolment enrolment) throws ExcepcaoPersistencia;
+    public void delete(IEnrolment enrolment) throws ExcepcaoPersistencia;
     public List readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
         IStudentCurricularPlan studentCurricularPlan,
         EnrolmentState enrolmentState)
@@ -38,6 +36,10 @@ public interface IPersistentEnrolment extends IPersistentObject
         String year)
         throws ExcepcaoPersistencia;
     public List readByCurricularCourseAndYear(ICurricularCourse curricularCourse, String year)
+        throws ExcepcaoPersistencia;
+    public List readByCurricularCourseAndExecutionPeriod(
+        ICurricularCourse curricularCourse,
+        IExecutionPeriod executionPeriod)
         throws ExcepcaoPersistencia;
     public List readEnrolmentsByStudentCurricularPlanStateAndEnrolmentStateAndDegreeCurricularPlans(
         StudentCurricularPlanState state,
@@ -67,5 +69,16 @@ public interface IPersistentEnrolment extends IPersistentObject
         IStudentCurricularPlan studentCurricularPlan,
         EnrolmentState enrolmentState,
         IExecutionPeriod executionPeriod)
+        throws ExcepcaoPersistencia;
+    /**
+	 * @param curricularCourse
+	 * @param executionPeriod
+	 * @param state
+	 * @return
+	 */
+    public List readByCurricularCourseAndExecutionPeriodAndEnrolmentState(
+        ICurricularCourse curricularCourse,
+        IExecutionPeriod executionPeriod,
+        EnrolmentState state)
         throws ExcepcaoPersistencia;
 }

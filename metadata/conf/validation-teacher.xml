@@ -557,7 +557,7 @@
     
     <!-- validation for the courseInformationForm -->
     <form name="courseInformationForm">
-      <field property="report" depends="required" page="1">
+      <field property="teachingReportForm" depends="required" page="1">
       	<arg0 key="label.courseInformation.report" />
       </field>
     </form>

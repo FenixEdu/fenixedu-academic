@@ -7,11 +7,7 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
         <!-- Form vazio -->
-        <form-bean name="searchTeachersInformationForm" 
-            type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-            <form-property name="executionDegreeId" type="java.lang.Integer"/>
-        </form-bean>
-        <form-bean name="searchCoursesInformationForm" 
+        <form-bean name="searchInformationForm" 
             type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="executionDegreeId" type="java.lang.Integer"/>
             <form-property name="basic" type="java.lang.Boolean"/>
@@ -39,8 +35,8 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
         <action path="/index" forward="index" />
         <action path="/searchTeachersInformation" 
-            type="ServidorApresentacao.Action.gep.SearchTeachersInformationAction" 
-            name="searchTeachersInformationForm" 
+            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
+            name="searchInformationForm" 
             input="/searchTeachersInformation?method=searchForm" scope="request" parameter="method" 
             className="ServidorApresentacao.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadTeachersInformation"/>
@@ -52,8 +48,8 @@
             <forward name="list-many" path="view-teachers-information"/>
         </action>
         <action path="/searchCoursesInformation" 
-            type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction" 
-            name="searchCoursesInformationForm" 
+            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
+            name="searchInformationForm" 
             input="/searchCoursesInformation.do?method=searchForm" scope="request" parameter="method" 
             className="ServidorApresentacao.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadCoursesInformation"/>
@@ -76,7 +72,7 @@
         </action>
         
         <action path="/listCoursesInformation" 
-            type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction" 
+            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
             input="/listCoursesInformation.do?method=searchForm" scope="request" parameter="method" 
             className="ServidorApresentacao.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadCoursesInformation"/>

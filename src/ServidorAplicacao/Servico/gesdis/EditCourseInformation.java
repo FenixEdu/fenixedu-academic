@@ -10,7 +10,6 @@ import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.gesdis.ICourseReport;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
-import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
@@ -27,14 +26,6 @@ public class EditCourseInformation extends EditDomainObjectService
 	 */
     public EditCourseInformation()
     {
-    }
-
-    /**
-	 * The name of the service
-	 */
-    public final String getNome()
-    {
-        return "EditCourseInformation";
     }
 
     /*
@@ -58,20 +49,5 @@ public class EditCourseInformation extends EditDomainObjectService
         ICourseReport courseReport =
             Cloner.copyInfoCourseReport2ICourseReport((InfoCourseReport) infoObject);
         return courseReport;
-    }
-
-    protected boolean canCreate(IDomainObject domainObject, ISuportePersistente sp)
-        throws ExcepcaoPersistencia
-    {
-        IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
-
-        ICourseReport oldCourseReport = (ICourseReport) domainObject;
-        ICourseReport newCourseReport =
-            persistentCourseReport.readCourseReportByExecutionCourse(oldCourseReport.getExecutionCourse());
-
-        if ((newCourseReport != null)
-            && !(newCourseReport.getIdInternal().equals(oldCourseReport.getIdInternal())))
-            return false;
-        return true;
     }
 }

@@ -3,6 +3,8 @@ package ServidorPersistente.OJB;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.EnrolmentEvaluation;
@@ -43,7 +45,7 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
 
         //		enrolmentEvaluationFromDB =
         //			(IEnrolmentEvaluation)
-		// this.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
+        // this.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
         //				enrolmentEvaluationToWrite.getEnrolment(),
         //				new
         // EnrolmentEvaluationType(enrolmentEvaluationToWrite.getEnrolmentEvaluationType().getType()),
@@ -53,17 +55,15 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
         {
             super.lockWrite(enrolmentEvaluationToWrite);
             // else If the Enrolment is mapped to the database, then write any
-			// existing changes.
-        }
-        else if (
+            // existing changes.
+        } else if (
             (enrolmentEvaluationToWrite instanceof EnrolmentEvaluation)
                 && ((EnrolmentEvaluation) enrolmentEvaluationFromDB).getIdInternal().equals(
                     ((EnrolmentEvaluation) enrolmentEvaluationToWrite).getIdInternal()))
         {
             super.lockWrite(enrolmentEvaluationToWrite);
             // else Throw an already existing exception
-        }
-        else
+        } else
             throw new ExistingPersistentException();
     }
 
@@ -72,8 +72,7 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
         try
         {
             super.delete(enrolmentEvaluation);
-        }
-        catch (ExcepcaoPersistencia ex)
+        } catch (ExcepcaoPersistencia ex)
         {
             throw ex;
         }
@@ -159,12 +158,12 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
         //            "enrolment.curricularCourseScope.branch.code",
         //            enrolment.getCurricularCourseScope().getBranch().getCode());
         //        criteria.addEqualTo("enrolmentEvaluationType",
-		// evaluationType.getType());
+        // evaluationType.getType());
         //        criteria.addEqualTo("grade", grade);
         //
         //        IEnrolmentEvaluation enrolmentEvaluation =
         //            (IEnrolmentEvaluation) queryObject(EnrolmentEvaluation.class,
-		// criteria);
+        // criteria);
         //        return enrolmentEvaluation;
 
         Criteria criteria = new Criteria();
@@ -211,8 +210,7 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
                 (IEnrolmentEvaluation) queryObject(EnrolmentEvaluation.class, criteria);
 
             return evaluationsWithRepetition;
-        }
-        catch (ExcepcaoPersistencia e)
+        } catch (ExcepcaoPersistencia e)
         {
             throw e;
         }

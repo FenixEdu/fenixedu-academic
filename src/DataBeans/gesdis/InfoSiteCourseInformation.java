@@ -27,12 +27,14 @@ public class InfoSiteCourseInformation implements ISiteComponent
 
     private InfoExecutionCourse infoExecutionCourse;
     private InfoEvaluationMethod infoEvaluationMethod;
+    private List infoSiteEvaluationInformations;
     private List infoCurricularCourses;
     private List infoResponsibleTeachers;
     private List infoCurriculums;
     private List infoLecturingTeachers;
     private List infoLessons;
     private List infoBibliographicReferences;
+    private List infoDepartments;
     private InfoCourseReport infoCourseReport;
     private Integer numberOfTheoLessons;
     private Integer numberOfPratLessons;
@@ -40,7 +42,8 @@ public class InfoSiteCourseInformation implements ISiteComponent
     private Integer numberOfLabLessons;
 
     public InfoSiteCourseInformation()
-    {}
+    {
+    }
 
     /**
 	 * @return Returns the infoCourseReport.
@@ -237,67 +240,101 @@ public class InfoSiteCourseInformation implements ISiteComponent
         return minDate;
     }
     /**
-     * @return Returns the numberOfLabLessons.
-     */
+	 * @return Returns the numberOfLabLessons.
+	 */
     public Integer getNumberOfLabLessons()
     {
         return numberOfLabLessons;
     }
 
     /**
-     * @param numberOfLabLessons The numberOfLabLessons to set.
-     */
+	 * @param numberOfLabLessons
+	 *            The numberOfLabLessons to set.
+	 */
     public void setNumberOfLabLessons(Integer numberOfLabLessons)
     {
         this.numberOfLabLessons = numberOfLabLessons;
     }
 
     /**
-     * @return Returns the numberOfPratLessons.
-     */
+	 * @return Returns the numberOfPratLessons.
+	 */
     public Integer getNumberOfPratLessons()
     {
         return numberOfPratLessons;
     }
 
     /**
-     * @param numberOfPratLessons The numberOfPratLessons to set.
-     */
+	 * @param numberOfPratLessons
+	 *            The numberOfPratLessons to set.
+	 */
     public void setNumberOfPratLessons(Integer numberOfPratLessons)
     {
         this.numberOfPratLessons = numberOfPratLessons;
     }
 
     /**
-     * @return Returns the numberOfTheoLessons.
-     */
+	 * @return Returns the numberOfTheoLessons.
+	 */
     public Integer getNumberOfTheoLessons()
     {
         return numberOfTheoLessons;
     }
 
     /**
-     * @param numberOfTheoLessons The numberOfTheoLessons to set.
-     */
+	 * @param numberOfTheoLessons
+	 *            The numberOfTheoLessons to set.
+	 */
     public void setNumberOfTheoLessons(Integer numberOfTheoLessons)
     {
         this.numberOfTheoLessons = numberOfTheoLessons;
     }
 
     /**
-     * @return Returns the numberOfTheoPratLessons.
-     */
+	 * @return Returns the numberOfTheoPratLessons.
+	 */
     public Integer getNumberOfTheoPratLessons()
     {
         return numberOfTheoPratLessons;
     }
 
     /**
-     * @param numberOfTheoPratLessons The numberOfTheoPratLessons to set.
-     */
+	 * @param numberOfTheoPratLessons
+	 *            The numberOfTheoPratLessons to set.
+	 */
     public void setNumberOfTheoPratLessons(Integer numberOfTheoPratLessons)
     {
         this.numberOfTheoPratLessons = numberOfTheoPratLessons;
+    }
+    /**
+     * @return Returns the infoDepartments.
+     */
+    public List getInfoDepartments()
+    {
+        return infoDepartments;
+    }
+
+    /**
+     * @param infoDepartments The infoDepartments to set.
+     */
+    public void setInfoDepartments(List infoDepartments)
+    {
+        this.infoDepartments = infoDepartments;
+    }
+    /**
+     * @return Returns the infoSiteEvaluationInformations.
+     */
+    public List getInfoSiteEvaluationInformations()
+    {
+        return infoSiteEvaluationInformations;
+    }
+
+    /**
+     * @param infoSiteEvaluationInformations The infoSiteEvaluationInformations to set.
+     */
+    public void setInfoSiteEvaluationInformations(List infoSiteEvaluationInformations)
+    {
+        this.infoSiteEvaluationInformations = infoSiteEvaluationInformations;
     }
 
 }
