@@ -91,9 +91,11 @@
 			</td>
 		</tr>
 	</logic:notPresent>
+	</table>
+	<br/>
+	<table>
 	<tr>
 		<td class="listClasses-header">
-			<br />
 			<b><bean:message key="message.student.enrolled.curricularCourses" /></b>
 		</td>
 		<td class="listClasses-header">Estado da Inscrição</td>
