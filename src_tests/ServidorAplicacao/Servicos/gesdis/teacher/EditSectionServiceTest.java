@@ -84,7 +84,7 @@ public class EditSectionServiceTest extends TestCaseDeleteAndEditServices {
 							persistentSection.readBySiteAndSectionAndName(
 								site,
 								fatherSection,
-								"SubSeccao2dePO");
+								"SubSeccao1dePO");
 
 			sp.confirmarTransaccao();
 			
@@ -92,6 +92,7 @@ public class EditSectionServiceTest extends TestCaseDeleteAndEditServices {
 			newInfoSection = Cloner.copyISection2InfoSection(section);
 			newInfoSection.setName("NewSectionName");
 			newInfoSection.setSectionOrder(new Integer(0));
+			newInfoSection.setSuperiorInfoSection(null);
 
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("failed setting up the test data");
