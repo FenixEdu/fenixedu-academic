@@ -117,11 +117,27 @@
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.manager.InsertDegreeDispatchAction"
-        validate="true"  >
+        validate="true"  
+        className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+			
+			<set-property property="inputForwardName" value="prepareInsert"/>
+		
+			<exception type="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
+         	   key="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               /> 
        <forward name="insertDegree" path="df.page.insert-degree"/>
-       <forward name="readDegrees" path="df.page.read-degrees"/>
+    
 	</action>			
       
+      
+      
+		<exception type="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
+         	   key="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               /> 
+	    <forward name="viewTeachers" path="/viewTeachers.jsp"/>  
+	</action>
      				
      
 	<!-- Action for deleting degrees --> 
