@@ -8,7 +8,6 @@ package Dominio;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 
 import Util.EstadoCivil;
 import Util.Sexo;
@@ -43,7 +42,6 @@ public interface IPessoa {
 	public ICountry getPais();
 	public String getPassword();
 	public Collection getPersonRoles();
-	public Set getPrivilegios();
 	public String getProfissao();
 	public Sexo getSexo();
 	public String getTelefone();
@@ -77,7 +75,6 @@ public interface IPessoa {
 	public void setPais(ICountry pais);
 	public void setPassword(String password);
 	public void setPersonRoles(Collection personRoles);
-	public void setPrivilegios(Set privilegios);
 	public void setProfissao(String profissao);
 	public void setSexo(Sexo sexo);
 	public void setTelefone(String telefone);

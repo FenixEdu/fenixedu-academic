@@ -18,8 +18,7 @@ public interface IDisciplinaExecucao extends Serializable{
     public void setNome(java.lang.String nome);
     public String getSigla();
     public void setSigla(java.lang.String sigla);
-    public String getPrograma();
-    public void setPrograma(java.lang.String programa);
+
     public Double getTheoreticalHours();    
     public void setTheoreticalHours(Double theoreticalHours);
     public Double getPraticalHours();    
@@ -36,5 +35,4 @@ public interface IDisciplinaExecucao extends Serializable{
     
     IExecutionPeriod getExecutionPeriod();
     void setExecutionPeriod(IExecutionPeriod executionPeriod);
-	
 }

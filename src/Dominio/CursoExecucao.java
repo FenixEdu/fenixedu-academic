@@ -13,11 +13,8 @@ package Dominio;
 
 public class CursoExecucao implements ICursoExecucao {
 	
-	
-	
 	// codigos internos da base de dados
 	private Integer codigoInterno;
-	
 
 	private IExecutionYear executionYear;
 
@@ -28,24 +25,6 @@ public class CursoExecucao implements ICursoExecucao {
 
 	/** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
 	public CursoExecucao() {
-	}
-
-	/**
-	 * @deprecated
-	 * @param anoLectivo
-	 * @param curso
-	 * @param executionYear
-	 * @param curricularPlan
-	 */
-	public CursoExecucao(
-		String anoLectivo,
-		ICurso curso,
-		IExecutionYear executionYear,
-		IDegreeCurricularPlan curricularPlan) {
-	//	setAnoLectivo(anoLectivo);
-	//	setCurso(curso);
-		setExecutionYear(executionYear);
-		setCurricularPlan(curricularPlan);
 	}
 
 	public CursoExecucao(
@@ -60,12 +39,6 @@ public class CursoExecucao implements ICursoExecucao {
 	public void setCodigoInterno(Integer codInt) {
 		this.codigoInterno = codInt;
 	}
-
-	
-
-	
-
-	
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;

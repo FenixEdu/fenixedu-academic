@@ -2,96 +2,72 @@ package Dominio;
 
 import java.util.List;
 
-public class DisciplinaExecucao implements IDisciplinaExecucao{
+public class DisciplinaExecucao implements IDisciplinaExecucao {
 
-    private String nome;
-    private String sigla;
-    private String programa;
-    private Double theoreticalHours;
-    private Double praticalHours;
-    private Double theoPratHours;
-    private Double labHours;
-   
-    
-    private Integer chaveResponsavel; 
-    private Integer codigoInterno;
+	private String nome;
+	private String sigla;
+
+	private Double theoreticalHours;
+	private Double praticalHours;
+	private Double theoPratHours;
+	private Double labHours;
+
+	private Integer codigoInterno;
 
 	private List associatedCurricularCourses = null;
-	private List associatedExams = null;	
-	
+	private List associatedExams = null;
+
 	private IExecutionPeriod executionPeriod;
 	private Integer keyExecutionPeriod;
 
-    /* Construtores */
-    
-    public DisciplinaExecucao() { }
-    /**
-     * @deprecated
-     * @param nome
-     * @param sigla
-     * @param programa
-     * @param licenciaturaExecucao
-     * @param theoreticalHours
-     * @param praticalHours
-     * @param theoPratHours
-     * @param labHours
-     * @param executionPeriod
-     */
-    public DisciplinaExecucao(String nome, String sigla, String programa,
-                              ICursoExecucao licenciaturaExecucao,Double theoreticalHours, 
-                              Double praticalHours, Double theoPratHours, Double labHours,IExecutionPeriod executionPeriod) {
-        setNome(nome);
-        setSigla(sigla);
-       // setLicenciaturaExecucao(licenciaturaExecucao);
-        setPrograma(programa);
-		setChaveResponsavel(new Integer(-1));
+	/* Construtores */
+
+	public DisciplinaExecucao() {
+	}
+
+	public DisciplinaExecucao(
+		String nome,
+		String sigla,
+		Double theoreticalHours,
+		Double praticalHours,
+		Double theoPratHours,
+		Double labHours,
+		IExecutionPeriod executionPeriod) {
+		
+		setNome(nome);
+		setSigla(sigla);
 		setTheoreticalHours(theoreticalHours);
 		setPraticalHours(praticalHours);
 		setTheoPratHours(theoPratHours);
 		setLabHours(labHours);
 		setExecutionPeriod(executionPeriod);
-    }
+	}
+	
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof IDisciplinaExecucao) {
+			IDisciplinaExecucao de = (IDisciplinaExecucao) obj;
 
-	public DisciplinaExecucao(String nome, String sigla, String programa,
-						Double theoreticalHours, 
-								  Double praticalHours, Double theoPratHours, Double labHours,IExecutionPeriod executionPeriod) {
-			setNome(nome);
-			setSigla(sigla);
-			setPrograma(programa);
-			setChaveResponsavel(new Integer(-1));
-			setTheoreticalHours(theoreticalHours);
-			setPraticalHours(praticalHours);
-			setTheoPratHours(theoPratHours);
-			setLabHours(labHours);
-			setExecutionPeriod(executionPeriod);
+			resultado =
+				(getSigla().equals(de.getSigla()))
+					&& (getExecutionPeriod().equals(de.getExecutionPeriod()));
 		}
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof IDisciplinaExecucao ) {
-            IDisciplinaExecucao de = (IDisciplinaExecucao) obj;
-
-            resultado = (getSigla().equals(de.getSigla())) &&            
-                        (getExecutionPeriod().equals(de.getExecutionPeriod()));
-        }
-        return resultado;
-    }    
-
+		return resultado;
+	}
 
 	public String toString() {
-	  String result = "[EXECUTION_COURSE";
-	  result += ", codInt=" + codigoInterno;
-	  result += ", sigla=" + sigla;
-	  result += ", nome=" + nome;
-	  result += ", programa=" + programa;
-	  result += ", theoreticalHours=" + theoreticalHours;
-	  result += ", praticalHours=" + praticalHours;
-	  result += ", theoPratHours=" + theoPratHours;
-	  result += ", labHours=" + labHours;
-	  result += ", executionPeriod=" + getExecutionPeriod();
-	  result += "]";
-	  return result;
-	}    
-    
+		String result = "[EXECUTION_COURSE";
+		result += ", codInt=" + codigoInterno;
+		result += ", sigla=" + sigla;
+		result += ", nome=" + nome;
+		result += ", theoreticalHours=" + theoreticalHours;
+		result += ", praticalHours=" + praticalHours;
+		result += ", theoPratHours=" + theoPratHours;
+		result += ", labHours=" + labHours;
+		result += ", executionPeriod=" + getExecutionPeriod();
+		result += "]";
+		return result;
+	}
 
 	/**
 	 * Returns the associatedCurricularCourses.
@@ -99,16 +75,6 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 	 */
 	public List getAssociatedCurricularCourses() {
 		return associatedCurricularCourses;
-	}
-
-	
-
-	/**
-	 * Returns the chaveResponsavel.
-	 * @return int
-	 */
-	public Integer getChaveResponsavel() {
-		return chaveResponsavel;
 	}
 
 	/**
@@ -119,22 +85,12 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 		return codigoInterno;
 	}
 
-	
-
 	/**
 	 * Returns the nome.
 	 * @return String
 	 */
 	public String getNome() {
 		return nome;
-	}
-
-	/**
-	 * Returns the programa.
-	 * @return String
-	 */
-	public String getPrograma() {
-		return programa;
 	}
 
 	/**
@@ -185,16 +141,6 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 		this.associatedCurricularCourses = associatedCurricularCourses;
 	}
 
-	
-
-	/**
-	 * Sets the chaveResponsavel.
-	 * @param chaveResponsavel The chaveResponsavel to set
-	 */
-	public void setChaveResponsavel(Integer chaveResponsavel) {
-		this.chaveResponsavel = chaveResponsavel;
-	}
-
 	/**
 	 * Sets the codigoInterno.
 	 * @param codigoInterno The codigoInterno to set
@@ -202,8 +148,6 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 	public void setCodigoInterno(Integer codigoInterno) {
 		this.codigoInterno = codigoInterno;
 	}
-
-	
 
 	/**
 	 * Sets the nome.
@@ -214,21 +158,12 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 	}
 
 	/**
-	 * Sets the programa.
-	 * @param programa The programa to set
-	 */
-	public void setPrograma(String programa) {
-		this.programa = programa;
-	}
-
-	/**
 	 * Sets the sigla.
 	 * @param sigla The sigla to set
 	 */
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
-
 
 	/**
 	 * Sets the theoreticalHours.
@@ -253,7 +188,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 	public void setTheoPratHours(Double theoPratHours) {
 		this.theoPratHours = theoPratHours;
 	}
-	
+
 	/**
 	 * Sets the labHours.
 	 * @param labHours The labHours to set
@@ -261,7 +196,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 	public void setLabHours(Double labHours) {
 		this.labHours = labHours;
 	}
-	
+
 	/**
 	 * @see Dominio.IDisciplinaExecucao#getExecutionPeriod()
 	 */
@@ -274,7 +209,6 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 	public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
 		this.executionPeriod = executionPeriod;
 	}
-
 
 	/**
 	 * Returns the keyExecutionPeriod.
@@ -291,7 +225,6 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 	public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
 		this.keyExecutionPeriod = keyExecutionPeriod;
 	}
-
 
 	/**
 	 * @return

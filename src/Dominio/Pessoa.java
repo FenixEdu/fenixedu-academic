@@ -1,7 +1,6 @@
 package Dominio;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 
 import Util.EstadoCivil;
 import Util.Sexo;
@@ -40,7 +39,6 @@ public class Pessoa implements IPessoa {
 	private String password;
 
 	private Collection personRoles;
-	private Set privilegios;
 	private String profissao;
 	private Sexo sexo;
 	private String telefone;
@@ -82,7 +80,6 @@ public class Pessoa implements IPessoa {
 		this.username = "";
 		this.pais = null;
 		this.codigoFiscal = "";
-		this.privilegios = null;
 	}
 
 	public Pessoa(TipoDocumentoIdentificacao idDocumentType,String userName) {
@@ -117,7 +114,6 @@ public class Pessoa implements IPessoa {
 		this.username = userName;
 		this.pais = null;
 		this.codigoFiscal = "";
-		this.privilegios = null;
 	}
 
 	public Pessoa(
@@ -427,13 +423,6 @@ public class Pessoa implements IPessoa {
 		return personRoles;
 	}
 
-	/** Getter for property privilegios.
-	 * @return Value of property privilegios.
-	 *
-	 */
-	public java.util.Set getPrivilegios() {
-		return privilegios;
-	}
 
 	/** Getter for property profissao.
 	 * @return Value of property profissao.
@@ -726,13 +715,6 @@ public class Pessoa implements IPessoa {
 		this.personRoles = personRoles;
 	}
 
-	/** Setter for property privilegios.
-	 * @param privilegios New value of property privilegios.
-	 *
-	 */
-	public void setPrivilegios(java.util.Set privilegios) {
-		this.privilegios = privilegios;
-	}
 
 	/** Setter for property profissao.
 	 * @param profissao New value of property profissao.
