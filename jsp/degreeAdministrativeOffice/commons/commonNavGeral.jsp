@@ -3,7 +3,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>	
+<%@ page import="org.apache.struts.Globals" %>	
 <bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
+<logic:present name="<%= Global.MODULE_KEY %>">
+<b>Prefixo :<bean:write name="<%= Global.MODULE_KEY %>" property="prefix"/></b>
+<bean:define id="modulePrefix" name="<%= Global.MODULE_KEY %>" property="prefix"/>
 <ul id="navgeral">
 	<logic:iterate id="role" name="userView" property="roles">
 		<bean:define id="bundleKeyPageName"><bean:write name="role" property="pageNameProperty"/>.name</bean:define>
@@ -16,3 +20,8 @@
 				</logic:notEqual>
 	</logic:iterate>	
 </ul>
+
+</logic:present>
+<logic:notPresent name="<%= Global.MODULE_KEY %>">
+	<span class="error">Não passou pelo RequestProcessor</span>
+</logic:notPresent>

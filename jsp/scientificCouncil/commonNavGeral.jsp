@@ -1,3 +1,6 @@
+<%-- FIXME: See what is necessary to remove this file... --%>
+<%@ include file="/commons/commonGeneralNavigationBar.jsp" %>
+<%--
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -21,4 +24,4 @@
 <td width="20%" nowrap class="centerContent"><html:link forward="logoff"><span class="logout">Sair </span><img alt="" border="0" src="<%= request.getContextPath() %>/images/dotist_logout.gif"></html:link></td>
   </tr>
 </table>	
-
+--%>
