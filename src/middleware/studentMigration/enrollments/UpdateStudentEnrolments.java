@@ -728,7 +728,6 @@ public class UpdateStudentEnrolments
 			{
 				return true;
 			}
-
 		}
 		return false;
 	}
