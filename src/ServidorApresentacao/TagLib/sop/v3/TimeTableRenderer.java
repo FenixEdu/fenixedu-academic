@@ -57,6 +57,9 @@ public class TimeTableRenderer {
 			strBuffer.append("<td class='horariosHoras");
 			if (hourIndex == 0)
 				strBuffer.append("_first");
+			if (hourIndex == timeTable.getNumberOfHours().intValue() - 1){
+				strBuffer.append("_bottom");
+			}
 
 			strBuffer.append("'>").append(
 				getHourLabelByIndex(hourIndex)).append(
@@ -82,32 +85,45 @@ public class TimeTableRenderer {
 						getEmptyLessonSlotNumber(lessonSlotListResolved);
 
 					for (int slotIndex = 0, colspan = 0;
-						slotIndex < lessonSlotListResolved.length && colspan < lessonSlotListResolved.length;
-						slotIndex++, colspan ++) {
+						slotIndex < lessonSlotListResolved.length
+							&& colspan < lessonSlotListResolved.length;
+						slotIndex++, colspan++) {
 						InfoLessonWrapper infoLessonWrapper =
 							lessonSlotListResolved[slotIndex];
 
-						strBuffer.append("<td class='");
+						strBuffer.append("<td ");
 
+						if (infoLessonWrapper != null) {
+							strBuffer.append(
+								"style='background-color: #99CCFF' ");
+						}
+						
+
+						if (infoLessonWrapper != null
+							&& infoLessonWrapper
+								.getNumberOfCollisions()
+								.intValue()
+								== 0) {
+							strBuffer
+								.append(" colspan ='")
+								.append(
+									dayColumn.getMaxColisionSize().intValue())
+								.append("'");
+							colspan = lessonSlotListResolved.length;
+							slotIndex = lessonSlotListResolved.length - 1;
+						}
+						strBuffer.append(" class='");
 						strBuffer.append(
 							getSlotCssClass(
 								infoLessonWrapper,
 								hourIndex,
-								dayIndex,
+								dayColumn,
 								grid,
 								lessonSlotListResolved,
 								slotIndex));
 						strBuffer.append("' ");
-												 
-						
-						if (infoLessonWrapper !=null)
-							System.out.println("COLISIONS :"+infoLessonWrapper.getNumberOfCollisions().intValue());
-							
-						if (infoLessonWrapper != null && infoLessonWrapper.getNumberOfCollisions().intValue() == 0){
-							strBuffer.append(" colspan ='").append(dayColumn.getMaxColisionSize().intValue() - slotIndex).append("'");
-							colspan = lessonSlotListResolved.length;
-						}
-						
+
+
 						strBuffer.append(">");
 
 						if (infoLessonWrapper != null) {
@@ -128,24 +144,23 @@ public class TimeTableRenderer {
 						}
 						strBuffer.append("</td>\r\n");
 					}
-				} else {
-					for (int slot = 0;
-						slot < dayColumn.getMaxColisionSize().intValue();
-						slot++) {
-						strBuffer
-							.append("<td ")
-							.append(" class='")
-							.append(
-								getSlotCssClass(
-									null,
-									hourIndex,
-									dayIndex,
-									grid,
-									null,
-									slot))
-							.append("'>")
-							.append("&nbsp;")
-							.append("</td>\r\n");
+				} else { /** no lessons */
+					for (int slotIndex = 0; slotIndex < dayColumn.getMaxColisionSize().intValue(); slotIndex ++){
+					strBuffer
+						.append("<td ")
+						.append(" class='")
+						.append(
+							getSlotCssClass(
+								null,
+								hourIndex,
+								dayColumn,
+								grid,
+								null,
+								slotIndex))
+						.append("'")
+						.append(">")
+						.append("&nbsp;")
+						.append("</td>\r\n");
 					}
 				}
 
@@ -182,10 +197,11 @@ public class TimeTableRenderer {
 	private String getSlotCssClass(
 		InfoLessonWrapper infoLessonWrapper,
 		int hourIndex,
-		int dayIndex,
+		DayColumn dayColumn,
 		TimeTableSlot[][] timeTableGrid,
 		InfoLessonWrapper[] slotColisions,
 		int slotIndex) {
+		int dayIndex = dayColumn.getIndex();
 
 		StringBuffer strBuffer = new StringBuffer("slot");
 
@@ -202,7 +218,7 @@ public class TimeTableRenderer {
 			}
 		}
 
-		/* get border style */
+		/* Get column's first slot */
 		if (hourIndex == 0) {
 			strBuffer.append("_top");
 		}
@@ -214,7 +230,7 @@ public class TimeTableRenderer {
 			strBuffer.append("_right");
 		}
 
-		/**/
+		/* find if slot has a lesson slot after*/
 		if ((infoLessonWrapper == null)
 			&& (hourIndex + 1 < timeTable.getNumberOfHours().intValue())) {
 			TimeTableSlot nextSlot = timeTableGrid[dayIndex][hourIndex + 1];
@@ -223,13 +239,13 @@ public class TimeTableRenderer {
 					&& (!nextSlot.getLessonSlotList().isEmpty()))) {
 				List nextLessonSlotList = nextSlot.getLessonSlotList();
 				if (nextLessonSlotList.size() - 1 >= slotIndex) {
-					Iterator lessonSlotListIterator =
+					Iterator nextLessonSlotListIterator =
 						nextLessonSlotList.iterator();
-					while (lessonSlotListIterator.hasNext()) {
+					while (nextLessonSlotListIterator.hasNext()) {
 						LessonSlot lessonSlot =
-							(LessonSlot) lessonSlotListIterator.next();
+							(LessonSlot) nextLessonSlotListIterator.next();
 						if (lessonSlot.getStartIndex() == hourIndex + 1) {
-							strBuffer.append("_bottom");
+							strBuffer.append("_lessonAfter");
 							break;
 						}
 					}
@@ -238,11 +254,29 @@ public class TimeTableRenderer {
 			}
 		}
 
-		/**/
+		/* test if is column last slot*/
 		if (hourIndex + 1 == timeTable.getNumberOfHours().intValue()) {
 			strBuffer.append("_bottom");
 		}
+
+		/* get if is the most right slot */
+		if (slotIndex == dayColumn.getMaxColisionSize().intValue() - 1) {
+			strBuffer.append("_last");
+		}
+
+		/*
+		 * Get empty slot with lesson slot by right side
+		 */
+		if ((slotIndex != dayColumn.getMaxColisionSize().intValue() - 1)
+			&& ((slotColisions != null)
+				&& (infoLessonWrapper == null)
+				&& (slotColisions[slotIndex + 1] != null)
+				&& (slotColisions[slotIndex + 1].getInfoLesson() != null))) {
+			strBuffer.append("_lesson");
+		}
+
 		return strBuffer.toString();
+
 	}
 
 	/**
@@ -250,7 +284,7 @@ public class TimeTableRenderer {
 	 * @param strBuffer
 	 */
 	private void renderHeader(StringBuffer strBuffer) {
-		
+
 		strBuffer.append("<td width='15%'> &nbsp; </td>\r\n");
 
 		for (int index = 0;
@@ -292,9 +326,9 @@ public class TimeTableRenderer {
 				lessonSlot.getInfoLessonWrapper();
 
 			if (infoLessonWrapper.isLocked()) {
-//				System.out.println(
-//					"***************** Tenho uma disciplina locked at "
-//						+ infoLessonWrapper.getSlotIndex());
+				//				System.out.println(
+				//					"***************** Tenho uma disciplina locked at "
+				//						+ infoLessonWrapper.getSlotIndex());
 				list[infoLessonWrapper.getSlotIndex()] = infoLessonWrapper;
 			} else {
 				lessonSlotNotLocked.add(infoLessonWrapper);
@@ -312,7 +346,7 @@ public class TimeTableRenderer {
 			for (int index = 0; index < list.length; index++) {
 				if (list[index] == null) {
 					list[index] = infoLessonWrapper;
-//					System.out.println("Lockei em " + index);
+					//					System.out.println("Lockei em " + index);
 					infoLessonWrapper.setLocked(true, index);
 					break;
 				}
@@ -325,13 +359,12 @@ public class TimeTableRenderer {
 	private StringBuffer getHourLabelByIndex(int hourIndex) {
 		StringBuffer label = new StringBuffer("");
 
-
 		double startLabelHour =
 			startHour.doubleValue()
 				+ new Integer(hourIndex).doubleValue()
 					/ (60.0 / slotSize.doubleValue());
 		double startMinutes = startLabelHour - Math.floor(startLabelHour);
-		
+
 		String startMinutesLabel = String.valueOf((int) (startMinutes * 60));
 		if (startMinutesLabel.length() == 1) {
 			startMinutesLabel = "0" + startMinutesLabel;
@@ -344,17 +377,17 @@ public class TimeTableRenderer {
 
 		double endMinutes = endLabelHour - Math.floor(endLabelHour);
 
-		String endMinutesLabel = String.valueOf((int)(endMinutes * 60));
+		String endMinutesLabel = String.valueOf((int) (endMinutes * 60));
 		if (endMinutesLabel.length() == 1) {
 			endMinutesLabel = "0" + endMinutesLabel;
 		}
 
 		return label
-			.append((int)startLabelHour)
+			.append((int) startLabelHour)
 			.append(":")
 			.append(startMinutesLabel)
 			.append("-")
-			.append((int)endLabelHour)
+			.append((int) endLabelHour)
 			.append(":")
 			.append(endMinutesLabel);
 
