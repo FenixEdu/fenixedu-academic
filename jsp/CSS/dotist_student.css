@@ -126,10 +126,16 @@ a:hover {
 	padding-bottom: 6px;
 	}
 
-#navgeral a:link.active, #navgeral a:visited.active, #navgeral a:hover {
+#navgeral a:link.active, #navgeral a:visited.active {
 	border-bottom: 4px solid #223D4A;
 	padding-bottom: 2px;
 	}
+
+#navgeral a:hover {
+	border-bottom: 4px solid #369;
+	padding-bottom: 2px;
+	}	
+
 /*
 	end site-wide navigation
 */
@@ -284,3 +290,12 @@ a:hover {
 	width: 150px;
 	height: 30px;
 }
+
+/*****************************************************************
+	photo album
+******************************************************************/
+
+.photo img {
+	border: 2px solid #ccc;
+	margin: 5px;
+	}

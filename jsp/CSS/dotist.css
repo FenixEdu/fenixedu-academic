@@ -123,10 +123,16 @@ a:hover {
 	padding-bottom: 6px;
 	}
 
-#navgeral a:link.active, #navgeral a:visited.active, #navgeral a:hover {
+#navgeral a:link.active, #navgeral a:visited.active {
 	border-bottom: 4px solid #223D4A;
 	padding-bottom: 2px;
 	}
+
+#navgeral a:hover {
+	border-bottom: 4px solid #369;
+	padding-bottom: 2px;
+	}
+
 /*
 	end site-wide navigation
 */
@@ -380,6 +386,10 @@ select.courseEnroll {
 	color: #c00;
 	}
 	
+.bluetxt {
+	color: #369;
+	}
+	
 .inline {
 	display: inline;
 	}
@@ -399,7 +409,7 @@ select.courseEnroll {
 	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color: #fff;
 	background: #930;
-	padding: 3px;
+	padding: 3px 6px 3px 6px;
 	}
 	
 /*****************************************************************
