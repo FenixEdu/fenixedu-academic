@@ -299,4 +299,16 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		criteria.addEqualTo("scopes.curricularSemester.semester", semester);
 		return queryList(CurricularCourse.class, criteria);
 	}
+
+	public List readCurricularCoursesByDegreeCurricularPlanAndMandatoryAttribute(
+		IDegreeCurricularPlan degreeCurricularPlan,
+		Boolean mandatory)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("degreeCurricularPlan.id_internal", degreeCurricularPlan.getIdInternal());
+		criteria.addEqualTo("mandatory", mandatory);
+		return queryList(CurricularCourse.class, criteria);
+	}
+
 }
