@@ -2,7 +2,7 @@
  * Created on 07/11/2003
  */
 
-package ServidorAplicacao.Servico.person;
+package ServidorAplicacao.Servico.person.qualification;
 
 import DataBeans.person.InfoQualification;
 import DataBeans.util.Cloner;

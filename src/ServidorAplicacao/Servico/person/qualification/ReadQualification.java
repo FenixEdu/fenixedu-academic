@@ -2,7 +2,7 @@
  * Created on 12/Nov/2003
  */
 
-package ServidorAplicacao.Servico.person;
+package ServidorAplicacao.Servico.person.qualification;
 
 import DataBeans.person.InfoQualification;
 import Dominio.IQualification;
