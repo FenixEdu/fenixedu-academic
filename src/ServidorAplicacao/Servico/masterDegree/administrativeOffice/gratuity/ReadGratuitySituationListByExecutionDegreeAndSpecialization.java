@@ -126,7 +126,6 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
 			if (gratuitySituationList != null && gratuitySituationList.size() > 0)
 			{
-				System.out.println("gratuitySituationList: " + gratuitySituationList.size());
 				ListIterator listIterator = gratuitySituationList.listIterator();
 				//while it is cloner each element of the list
 				//it is calculate the total values of payed and remaning values.
@@ -222,7 +221,6 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 				result = true; //hasn't enrolments, but appear in list
 			}
 		}
-		System.out.println("verifySpecializationOfThisYear: " + result);
 		return result;
 	}
 
