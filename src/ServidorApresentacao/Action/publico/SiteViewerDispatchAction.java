@@ -1,7 +1,5 @@
 package ServidorApresentacao.Action.publico;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,12 +11,11 @@ import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoRoom;
-import DataBeans.InfoSite;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
+import DataBeans.InfoSiteCurricularCourse;
 import DataBeans.InfoSiteEvaluation;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteObjectives;
@@ -58,8 +55,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			request,
 			firstPageComponent,
 			infoExecutionCourseCode,
+			null,
 			null);
-
 		return mapping.findForward("sucess");
 	}
 
@@ -71,7 +68,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
-		readSiteView(request, announcementsComponent, null, null);
+		readSiteView(request, announcementsComponent, null, null, null);
 
 		return mapping.findForward("sucess");
 	}
@@ -84,7 +81,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent objectivesComponent = new InfoSiteObjectives();
-		readSiteView(request, objectivesComponent, null, null);
+		readSiteView(request, objectivesComponent, null, null, null);
 
 		return mapping.findForward("sucess");
 	}
@@ -97,7 +94,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent programComponent = new InfoSiteProgram();
-		readSiteView(request, programComponent, null, null);
+		readSiteView(request, programComponent, null, null, null);
 
 		return mapping.findForward("sucess");
 	}
@@ -110,7 +107,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent evaluationComponent = new InfoEvaluationMethod();
-		readSiteView(request, evaluationComponent, null, null);
+		readSiteView(request, evaluationComponent, null, null, null);
 
 		return mapping.findForward("sucess");
 	}
@@ -123,7 +120,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent bibliographyComponent = new InfoSiteBibliography();
-		readSiteView(request, bibliographyComponent, null, null);
+		readSiteView(request, bibliographyComponent, null, null, null);
 
 		return mapping.findForward("sucess");
 	}
@@ -137,7 +134,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent curricularCoursesComponent =
 			new InfoSiteAssociatedCurricularCourses();
-		readSiteView(request, curricularCoursesComponent, null, null);
+		readSiteView(request, curricularCoursesComponent, null, null, null);
 
 		return mapping.findForward("sucess");
 	}
@@ -150,7 +147,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent timeTableComponent = new InfoSiteTimetable();
-		readSiteView(request, timeTableComponent, null, null);
+		readSiteView(request, timeTableComponent, null, null, null);
 
 		return mapping.findForward("sucess");
 	}
@@ -163,7 +160,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent shiftsComponent = new InfoSiteShifts();
-		readSiteView(request, shiftsComponent, null, null);
+		readSiteView(request, shiftsComponent, null, null, null);
 
 		return mapping.findForward("sucess");
 	}
@@ -176,7 +173,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent evaluationComponent = new InfoSiteEvaluation();
-		readSiteView(request, evaluationComponent, null, null);
+		readSiteView(request, evaluationComponent, null, null, null);
 
 		return mapping.findForward("sucess");
 	}
@@ -192,7 +189,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		Integer sectionIndex = new Integer(indexString);
 
 		ISiteComponent sectionComponent = new InfoSiteSection();
-		readSiteView(request, sectionComponent, null, sectionIndex);
+		readSiteView(request, sectionComponent, null, sectionIndex, null);
 
 		return mapping.findForward("sucess");
 	}
@@ -205,7 +202,33 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent summariesComponent = new InfoSiteSummaries();
-		readSiteView(request, summariesComponent, null, null);
+		readSiteView(request, summariesComponent, null, null, null);
+
+		return mapping.findForward("sucess");
+
+	}
+
+	public ActionForward curricularCourse(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		String curricularCourseIdString =
+			(String) request.getParameter("ccCode");
+		if (curricularCourseIdString == null) {
+			curricularCourseIdString = (String) request.getAttribute("ccCode");
+		}
+		Integer curricularCourseId = new Integer(curricularCourseIdString);
+		ISiteComponent curricularCourseComponent =
+			new InfoSiteCurricularCourse();
+		readSiteView(
+			request,
+			curricularCourseComponent,
+			null,
+			null,
+			curricularCourseId);
 
 		return mapping.findForward("sucess");
 
@@ -215,9 +238,10 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		ISiteComponent firstPageComponent,
 		Integer infoExecutionCourseCode,
-		Integer sectionIndex)
+		Integer sectionIndex,
+		Integer curricularCourseId)
 		throws FenixActionException {
-		InfoSite infoSite = null;
+
 		Integer objectCode = null;
 		if (infoExecutionCourseCode == null) {
 			String objectCodeString = request.getParameter("objectCode");
@@ -237,7 +261,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 				firstPageComponent,
 				objectCode,
 				infoExecutionCourseCode,
-				sectionIndex };
+				sectionIndex,
+				curricularCourseId };
 
 		try {
 			ExecutionCourseSiteView siteView =
@@ -299,8 +324,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		}
 
 		RoomKey roomKey = null;
-		InfoRoom infoRoom = null;
-		List lessons = null;
 
 		if (roomName != null) {
 
