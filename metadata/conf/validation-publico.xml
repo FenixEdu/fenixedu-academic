@@ -22,7 +22,6 @@
       <field property="objectCode" depends="required, integer">
         <msg name="required" key="error.execution.course.not.found"/>
         <arg0 key="property.context.course"/>
-        
       </field>
     </form>
     
