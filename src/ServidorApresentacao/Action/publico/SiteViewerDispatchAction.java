@@ -213,7 +213,13 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			site = (InfoSite) manager.executar(userView,"ReadSite",args2);
 			session.setAttribute(SessionConstants.INFO_SITE,site);
 //read Sections			
-			
+
+//read responsible
+
+		Object[] args3 = {infoExecCourse};
+		List teacherList = null; 
+		teacherList = (List) manager.executar(userView,"ReadTeachersByExecutionCourseResponsibility",args3);
+		session.setAttribute(SessionConstants.RESPONSIBLE_TEACHERS_LIST,teacherList);	
 //			Read last Anouncement
 			 Object args1[] = new Object[1];
 					  args1[0] = site;
