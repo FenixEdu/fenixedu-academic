@@ -459,7 +459,7 @@
 	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
-    <message-resources parameter="ServidorApresentacao.StudentResources" />
+    <message-resources parameter="ServidorApresentacao.StudentResources" null="false"/>
     
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

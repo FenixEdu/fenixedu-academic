@@ -144,7 +144,7 @@
   <!-- ========== Controller Configuration ================================ -->
   <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
   
-  <message-resources parameter="ServidorApresentacao.AssiduousnessResources" />
+  <message-resources parameter="ServidorApresentacao.AssiduousnessResources" null="false"/>
   
   <plug-in className="org.apache.struts.tiles.TilesPlugin" >
     <set-property property="definitions-config"

@@ -106,7 +106,7 @@
 	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions =========================== -->
-	<message-resources parameter="ServidorApresentacao.EquivalenceResources"/>
+	<message-resources parameter="ServidorApresentacao.EquivalenceResources" null="false"/>
 
 	<!-- ========== Plug Ins Configuration ================================== -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">

@@ -1351,8 +1351,11 @@
 	 <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
-    <message-resources parameter="ServidorApresentacao.ApplicationResources" />
-    
+    <message-resources
+    	parameter="ServidorApresentacao.ApplicationResources"
+    	null="false"
+    />
+
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 
