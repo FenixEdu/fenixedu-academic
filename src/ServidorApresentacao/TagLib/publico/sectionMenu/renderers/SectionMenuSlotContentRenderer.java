@@ -14,7 +14,7 @@ package ServidorApresentacao.TagLib.publico.sectionMenu.renderers;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public interface SectionMenuSlotContentRenderer {
-	public StringBuffer renderSectionLabel();
+	public StringBuffer renderSectionLabel(int i);
 	/**
 	 * 
 	 */

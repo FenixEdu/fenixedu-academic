@@ -12,7 +12,7 @@
         	<html:hidden property="page" value="1"/>
         	<table width="100%" align="center" border="0" cellpadding='0' cellspacing='0'>
         		<tr>
-        			<td class="infoop"><bean:message key="label.course.infochoose" />
+        			<td class="infoop"><%--<bean:message key="label.course.infochoose" />--%>
             		</td>
         		</tr>
         	</table>

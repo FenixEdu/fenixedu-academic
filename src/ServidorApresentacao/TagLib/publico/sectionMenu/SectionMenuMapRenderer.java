@@ -85,7 +85,7 @@ public class SectionMenuMapRenderer {
 				InfoSection infoSection = (InfoSection) sections.get(i);
 				SectionMenuSlotContentRenderer sectionMenuSlot =
 					new SectionMenuContentRenderer(infoSection);
-				strBuffer.append(sectionMenuSlot.renderSectionLabel());
+				strBuffer.append(sectionMenuSlot.renderSectionLabel(i));
 				strBuffer.append(renderSuffix(sections, i));
 				
 				i=i+1;
