@@ -26,7 +26,6 @@
 		<html:text property="day" size="2" maxlength="2" />&nbsp;/&nbsp;
 		<html:text property="month" size="2" maxlength="2"/>&nbsp;/&nbsp;
 		<html:text property="year" size="4" maxlength="4"/>
-		<%--<span class="error"><html:errors property="publishmentMessage"/></span>--%>
 	</td>
 </tr>
 </table>
