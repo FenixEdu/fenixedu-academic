@@ -30,6 +30,7 @@ public class InfoCandidacyDetails
     private Double classification;
     private Integer completedCourses;
     private Boolean approved;
+    private InfoClassification infoClassification;
 
 	/**
 	 * @return
@@ -161,6 +162,7 @@ public class InfoCandidacyDetails
 
 	/**
 	 * @return
+	 * @deprecated
 	 */
 	public Double getClassification()
 	{
@@ -169,6 +171,7 @@ public class InfoCandidacyDetails
 
 	/**
 	 * @return
+	 *  @deprecated
 	 */
 	public Integer getCompletedCourses()
 	{
@@ -177,6 +180,7 @@ public class InfoCandidacyDetails
 
 	/**
 	 * @param integer
+	 *  @deprecated
 	 */
 	public void setClassification(Double integer)
 	{
@@ -185,6 +189,7 @@ public class InfoCandidacyDetails
 
 	/**
 	 * @param integer
+	 *  @deprecated
 	 */
 	public void setCompletedCourses(Integer integer)
 	{
@@ -205,6 +210,22 @@ public class InfoCandidacyDetails
 	public void setApproved(Boolean boolean1)
 	{
 		approved= boolean1;
+	}
+
+	/**
+	 * @return
+	 */
+	public InfoClassification getInfoClassification()
+	{
+		return infoClassification;
+	}
+
+	/**
+	 * @param classification
+	 */
+	public void setInfoClassification(InfoClassification classification)
+	{
+		infoClassification = classification;
 	}
 
 }

@@ -15,7 +15,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoStudent;
+import DataBeans.Seminaries.InfoCandidacy;
 import DataBeans.Seminaries.InfoEquivalency;
+import DataBeans.Seminaries.InfoTheme;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -30,6 +33,23 @@ import framework.factory.ServiceManagerServiceFactory;
  */
 public class ShowCandidacySecondForm extends FenixAction
 {
+	
+	public InfoStudent readStudentByUserView(IUserView userView) throws FenixActionException
+	{
+		InfoStudent student= null;
+		try
+		{
+			Object[] argsReadStudent= { userView.getUtilizador()};
+			student= (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByUsername", argsReadStudent);
+		}
+		catch (Exception e)
+		{
+			throw new FenixActionException();
+		}
+		return student;
+	}
+	
+	
     public ActionForward execute(
         ActionMapping mapping,
         ActionForm form,
@@ -89,11 +109,46 @@ public class ShowCandidacySecondForm extends FenixAction
         {
             throw new FenixActionException();
         }
-        destiny = mapping.findForward("showCandidacyFormNonCompleteModalitySecondInfo");
-        request.setAttribute("equivalency", equivalency);
-        request.setAttribute("unselectedCases", cases);
-        request.setAttribute("selectedCases", new LinkedList());
-        request.setAttribute("hiddenSelectedCases", new LinkedList());
+        if (equivalency.getHasCaseStudy().booleanValue())
+        {
+			request.setAttribute("equivalency", equivalency);
+			request.setAttribute("unselectedCases", cases);
+			request.setAttribute("selectedCases", new LinkedList());
+			request.setAttribute("hiddenSelectedCases", new LinkedList());
+        	destiny = mapping.findForward("showCandidacyFormNonCompleteModalitySecondInfo");
+        }
+        else
+        {
+        	InfoTheme theme = null;
+			String motivation= request.getParameter("motivation");
+			InfoCandidacy infoCandidacy= new InfoCandidacy();
+			infoCandidacy.setCurricularCourseIdInternal(equivalency.getCurricularCourse().getIdInternal());
+			infoCandidacy.setModalityIdInternal(equivalency.getModality().getIdInternal());
+			infoCandidacy.setSeminaryIdInternal(equivalency.getSeminaryIdInternal());
+			infoCandidacy.setSeminaryName(equivalency.getSeminaryName());
+			infoCandidacy.setStudentIdInternal(this.readStudentByUserView(userView).getIdInternal());
+			infoCandidacy.setThemeIdInternal(themeID);
+			infoCandidacy.setMotivation(motivation);
+			infoCandidacy.setCaseStudyChoices(new LinkedList());
+			try
+			{
+				Object[] argsWriteCandidacy= { infoCandidacy };
+				ServiceManagerServiceFactory.executeService(userView, "Seminaries.WriteCandidacy", argsWriteCandidacy);
+				Object[] argsReadTheme= { themeID };
+				theme = (InfoTheme) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetThemeById", argsReadTheme);
+			}
+			catch (Exception e)
+			{
+				System.out.println("############# excepcao !! " + e);
+				throw new FenixActionException();
+			}
+			request.setAttribute("cases",new LinkedList());                
+			request.setAttribute("motivation",motivation);
+			request.setAttribute("modalityName",equivalency.getModality().getName());
+			request.setAttribute("theme",theme);
+			request.setAttribute("seminaryName",infoCandidacy.getSeminaryName());
+			destiny= mapping.findForward("candidacySubmited");
+        }
         return destiny;
     }
 }

@@ -11,7 +11,6 @@ import java.util.Iterator;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
-
 import DataBeans.InfoRole;
 import Dominio.IStudent;
 import Dominio.Seminaries.Candidacy;
@@ -64,7 +63,6 @@ public class CandidacyAccessFilter extends Filtro
         while (iter.hasNext())
         {
             InfoRole role = (InfoRole) iter.next();
-            System.out.println("Tenho este role: " + role);
         }
         if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(
                         id.getRoles(), getRoleType())))
@@ -79,7 +77,6 @@ public class CandidacyAccessFilter extends Filtro
     {
         boolean result = true;
         Integer candidacyID = (Integer) arguments[0];
-        System.out.println("#############Vou ler a candidatura " + candidacyID);
         ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
         IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
                         .getIPersistentSeminaryCandidacy();
@@ -89,8 +86,6 @@ public class CandidacyAccessFilter extends Filtro
         {
             ICandidacy candidacy = (ICandidacy) persistentCandidacy.readByOID(
                             Candidacy.class, candidacyID);
-            System.out.println(" O aluno e " + student + "e a candidatura tem o nº "
-                            + candidacy.getStudentIdInternal());
             //
             if ((candidacy != null)
                             && (candidacy.getStudentIdInternal().intValue() != student.getIdInternal()
@@ -99,7 +94,6 @@ public class CandidacyAccessFilter extends Filtro
         else
         {
             result = false;
-            System.out.println("O aluno e nullllllll !!!");
         }
         return result;
     }

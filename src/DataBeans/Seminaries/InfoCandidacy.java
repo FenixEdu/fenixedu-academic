@@ -4,9 +4,7 @@
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package DataBeans.Seminaries;
-
 import java.util.List;
-
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *
@@ -16,17 +14,16 @@ import java.util.List;
  */
 public class InfoCandidacy
 {
-    private Integer idInternal;
-    private List caseStudyChoices;
-    private String motivation;
-    private String seminaryName;
-    
-    private Integer themeIdInternal;
-    private Integer modalityIdInternal;
-    private Integer seminaryIdInternal;
-    private Integer studentIdInternal;
-    private Integer curricularCourseIdInternal;
-    private Boolean approved;
+	private Integer idInternal;
+	private List caseStudyChoices;
+	private String motivation;
+	private String seminaryName;
+	private Integer themeIdInternal;
+	private Integer modalityIdInternal;
+	private Integer seminaryIdInternal;
+	private Integer studentIdInternal;
+	private Integer curricularCourseIdInternal;
+	private Boolean approved;
 	/**
 	 * @return
 	 */
@@ -34,7 +31,6 @@ public class InfoCandidacy
 	{
 		return caseStudyChoices;
 	}
-
 	/**
 	 * @return
 	 */
@@ -42,7 +38,6 @@ public class InfoCandidacy
 	{
 		return curricularCourseIdInternal;
 	}
-
 	/**
 	 * @return
 	 */
@@ -50,7 +45,6 @@ public class InfoCandidacy
 	{
 		return idInternal;
 	}
-
 	/**
 	 * @return
 	 */
@@ -58,7 +52,6 @@ public class InfoCandidacy
 	{
 		return modalityIdInternal;
 	}
-
 	/**
 	 * @return
 	 */
@@ -66,7 +59,6 @@ public class InfoCandidacy
 	{
 		return seminaryIdInternal;
 	}
-
 	/**
 	 * @return
 	 */
@@ -74,7 +66,6 @@ public class InfoCandidacy
 	{
 		return studentIdInternal;
 	}
-
 	/**
 	 * @return
 	 */
@@ -82,63 +73,55 @@ public class InfoCandidacy
 	{
 		return themeIdInternal;
 	}
-
 	/**
 	 * @param list
 	 */
 	public void setCaseStudyChoices(List list)
 	{
-		caseStudyChoices= list;
+		caseStudyChoices = list;
 	}
-
 	/**
 	 * @param integer
 	 */
 	public void setCurricularCourseIdInternal(Integer integer)
 	{
-		curricularCourseIdInternal= integer;
+		curricularCourseIdInternal = integer;
 	}
-
 	/**
 	 * @param integer
 	 */
 	public void setIdInternal(Integer integer)
 	{
-		idInternal= integer;
+		idInternal = integer;
 	}
-
 	/**
 	 * @param integer
 	 */
 	public void setModalityIdInternal(Integer integer)
 	{
-		modalityIdInternal= integer;
+		modalityIdInternal = integer;
 	}
-
 	/**
 	 * @param integer
 	 */
 	public void setSeminaryIdInternal(Integer integer)
 	{
-		seminaryIdInternal= integer;
+		seminaryIdInternal = integer;
 	}
-
 	/**
 	 * @param integer
 	 */
 	public void setStudentIdInternal(Integer integer)
 	{
-		studentIdInternal= integer;
+		studentIdInternal = integer;
 	}
-
 	/**
 	 * @param integer
 	 */
 	public void setThemeIdInternal(Integer integer)
 	{
-		themeIdInternal= integer;
+		themeIdInternal = integer;
 	}
-
 	/**
 	 * @return
 	 */
@@ -146,30 +129,26 @@ public class InfoCandidacy
 	{
 		return motivation;
 	}
-
 	/**
 	 * @param string
 	 */
 	public void setMotivation(String string)
 	{
-		motivation= string;
+		motivation = string;
 	}
-    
-    public String toString()
-    {
-        String result = "[InfoCandidacy:";
-        result += "Theme=" + this.themeIdInternal + ";";
-        result += "IdIntenal=" + this.idInternal + ";";
-        result += "Motivation=" + this.motivation + ";";
-        result += "Student=" + this.studentIdInternal +";";
-        result += "CaseStudyChoices" + this.caseStudyChoices +";";
-        result += "CurricularCourse=" + this.curricularCourseIdInternal +";";
-        result += "Seminary:=" + this.seminaryIdInternal +";";
-        result +="Modality=" + this.modalityIdInternal +"]";
-        
-        return result;
-    }
-
+	public String toString()
+	{
+		String result = "[InfoCandidacy:";
+		result += "Theme=" + this.themeIdInternal + ";";
+		result += "IdIntenal=" + this.idInternal + ";";
+		result += "Motivation=" + this.motivation + ";";
+		result += "Student=" + this.studentIdInternal + ";";
+		result += "CaseStudyChoices" + this.caseStudyChoices + ";";
+		result += "CurricularCourse=" + this.curricularCourseIdInternal + ";";
+		result += "Seminary:=" + this.seminaryIdInternal + ";";
+		result += "Modality=" + this.modalityIdInternal + "]";
+		return result;
+	}
 	/**
 	 * @return
 	 */
@@ -177,15 +156,13 @@ public class InfoCandidacy
 	{
 		return seminaryName;
 	}
-
 	/**
 	 * @param string
 	 */
 	public void setSeminaryName(String string)
 	{
-		seminaryName= string;
+		seminaryName = string;
 	}
-
 	/**
 	 * @return
 	 */
@@ -193,13 +170,11 @@ public class InfoCandidacy
 	{
 		return approved;
 	}
-
 	/**
 	 * @param boolean1
 	 */
 	public void setApproved(Boolean boolean1)
 	{
-		approved= boolean1;
+		approved = boolean1;
 	}
-
 }

@@ -5,6 +5,8 @@
  */
 package ServidorApresentacao.Action.Seminaries;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,16 +21,19 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.SiteView;
 import DataBeans.Seminaries.InfoCandidacy;
 import DataBeans.Seminaries.InfoCaseStudy;
 import DataBeans.Seminaries.InfoCaseStudyChoice;
+import DataBeans.Seminaries.InfoClassification;
 import DataBeans.Seminaries.InfoModality;
 import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -169,6 +174,7 @@ public class DownloadCandidaciesTable extends FenixAction
 		String document= DownloadCandidaciesTable.COLUMNS_HEADERS + "\n";
 		HttpSession session= this.getSession(request);
 		IUserView userView= (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		InfoClassification ic = null;		
 		//
 		List candidacies= new LinkedList();
 		try
@@ -222,10 +228,66 @@ public class DownloadCandidaciesTable extends FenixAction
 				//
 				document += "\"" + student.getNumber() + "\"" + "\t";
 				document += "\"" + student.getInfoPerson().getNome() + "\"" + "\t";
-				document += "\"" + studentCurricularPlan.getClassification() + "\"" + "\t";
-				document += "\"" + studentCurricularPlan.getCompletedCourses() + "\"" + "\t";
+				//
+				//
+				//
+//
+				//
+				//
+				Object argsReadStudentCurricularPlans[] =
+					{ new UserView(student.getInfoPerson().getUsername(), new LinkedList())};
+				InfoStudentCurricularPlan selectedSCP = null;
+				List cps =
+					(ArrayList) ServiceManagerServiceFactory.executeService(
+						userView,
+						"ReadStudentCurricularPlans",
+						argsReadStudentCurricularPlans);
+				long startDate = Long.MAX_VALUE;
+				for (Iterator iter = cps.iterator(); iter.hasNext();)
+				{
+					InfoStudentCurricularPlan cp = (InfoStudentCurricularPlan) iter.next();
+					if (cp.getStartDate().getTime() < startDate)
+					{
+						startDate = cp.getStartDate().getTime();
+						selectedSCP = cp;
+					}
+				}			
+				Object getCurriculumArgs[] = { userView, selectedSCP.getIdInternal()};
+				List enrollments =
+					(ArrayList) ServiceManagerServiceFactory.executeService(
+						userView,
+						"ReadStudentCurriculum",
+						getCurriculumArgs);						
+				//  
+				//
+				ic = new InfoClassification();
+				int i = 0;
+				float acc = 0;
+				float grade = 0;
+				for (Iterator iter = enrollments.iterator(); iter.hasNext();)
+				{
+					InfoEnrolment ie = (InfoEnrolment) iter.next();
+					String stringGrade = ie.getInfoEnrolmentEvaluation().getGrade();
+					if (!stringGrade.equals("RE"))
+					{
+						grade = new Float(stringGrade).floatValue();
+						acc += grade;
+						i++;
+					}
+				}
+				if (i != 0)
+				{
+					String value = new DecimalFormat("#0.0").format(acc/i);
+					ic.setAritmeticClassification(value);
+				}
+				ic.setCompletedCourses(new Integer(i).toString());				
+				document += "\"" + ic.getAritmeticClassification() + "\"" + "\t";
+				document += "\"" + ic.getCompletedCourses() + "\"" + "\t";
+				//
+				//
+				//
 				String friendlyBoolean;
-				if (candidacy.getApproved().booleanValue())
+				if ((candidacy.getApproved() != null) && (candidacy.getApproved().booleanValue()))
 					friendlyBoolean= "Sim";
 				else
 					friendlyBoolean= "Não";
@@ -247,13 +309,14 @@ public class DownloadCandidaciesTable extends FenixAction
 				{
 					InfoCaseStudy caseStudy= (InfoCaseStudy) casesIterator.next();
 					document += "\"" + caseStudy.getName() + "\"" + "\t";
-				}
+				}				
 				document += "\n";
 			}
 		}
 		catch (Exception e)
 		{
-			throw new FenixActionException();
+			e.printStackTrace();
+			throw new FenixActionException(e);
 		}
 		try
 		{

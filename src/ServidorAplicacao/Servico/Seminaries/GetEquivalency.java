@@ -57,10 +57,6 @@ public class GetEquivalency implements IServico
 			if (equivalency != null)
 				infoEquivalency= Cloner.copyIEquivalency2InfoEquivalency(equivalency);
            
-           System.out.println ("###################################################");
-           System.out.println ("A equivalencia e " + equivalency.getSeminaryIdInternal());
-           System.out.println ("A info de equivalencia e " + infoEquivalency.getSeminaryIdInternal());
-           System.out.println ("###################################################");
 		}
 		catch (ExcepcaoPersistencia ex)
 		{

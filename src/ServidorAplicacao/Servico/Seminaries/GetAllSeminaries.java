@@ -4,6 +4,8 @@
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorAplicacao.Servico.Seminaries;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,7 +47,7 @@ public class GetAllSeminaries implements IServico
 	{
 		return "Seminaries.GetAllSeminaries";
 	}
-	public List run() throws BDException
+	public List run(Boolean inEnrollmentPeriod) throws BDException
 	{
 		List seminariesInfo= new LinkedList();
 		try
@@ -56,7 +58,16 @@ public class GetAllSeminaries implements IServico
 			for (Iterator iterator= seminaries.iterator(); iterator.hasNext();)
 			{
 				InfoSeminary infoSeminary= Cloner.copyISeminary2InfoSeminary((ISeminary) iterator.next());
-                seminariesInfo.add(infoSeminary);
+				Calendar now = new GregorianCalendar();
+				Calendar endDate = new GregorianCalendar();
+				Calendar beginDate = new GregorianCalendar();
+				endDate.setTimeInMillis(infoSeminary.getEnrollmentEndTime().getTimeInMillis()+infoSeminary.getEnrollmentEndDate().getTimeInMillis());
+				beginDate.setTimeInMillis(infoSeminary.getEnrollmentBeginTime().getTimeInMillis()+infoSeminary.getEnrollmentBeginDate().getTimeInMillis());
+				if (
+					(!inEnrollmentPeriod.booleanValue()) || 
+					(endDate.after(now) && beginDate.before(now))
+					)								
+                	seminariesInfo.add(infoSeminary);
 			}
         }
 		catch (ExcepcaoPersistencia ex)

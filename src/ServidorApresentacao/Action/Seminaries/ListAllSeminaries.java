@@ -4,6 +4,8 @@
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorApresentacao.Action.Seminaries;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,13 +16,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoStudent;
+import DataBeans.Seminaries.InfoCandidacy;
+import DataBeans.Seminaries.InfoSeminary;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *
@@ -30,7 +33,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  */
 public class ListAllSeminaries extends FenixAction
 {
-	public void setCurrentCandidaciesInfo(ActionMapping mapping, HttpServletRequest request, IUserView userView) throws FenixActionException
+	public List setCurrentCandidaciesInfo(ActionMapping mapping, HttpServletRequest request, IUserView userView) throws FenixActionException
 	{
         List currentCandidacies = null;
         InfoStudent student = null;
@@ -45,7 +48,7 @@ public class ListAllSeminaries extends FenixAction
 		{
             throw new FenixActionException();
 		}
-        request.setAttribute("currentCandidacies", currentCandidacies);
+        return currentCandidacies;
         
 	}
 	public ActionForward execute(
@@ -59,15 +62,29 @@ public class ListAllSeminaries extends FenixAction
 		IUserView userView= (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		List seminaries= null;
 		ActionForward destiny= null;
+		List currentCandidacies = setCurrentCandidaciesInfo(mapping,request,userView);
+		List candidaciesToDisplay = new LinkedList();		
 		try
 		{
-			seminaries= (List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetAllSeminaries", new Object[0]);
+			Object[] args = {new Boolean(true)};
+			seminaries= (List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetAllSeminaries", args);
+			for (Iterator iter = currentCandidacies.iterator(); iter.hasNext();)
+			{
+				InfoCandidacy infoCandidacy = (InfoCandidacy) iter.next();
+				Integer seminaryID = infoCandidacy.getSeminaryIdInternal();
+				for (Iterator iterator = seminaries.iterator(); iterator.hasNext();)
+				{
+					InfoSeminary infoSeminary = (InfoSeminary) iterator.next();
+					if (infoSeminary.getIdInternal().equals(seminaryID))
+							candidaciesToDisplay.add(infoCandidacy);					
+				}
+			}
 		}
 		catch (Exception e)
 		{
             throw new FenixActionException();
 		}
-        this.setCurrentCandidaciesInfo(mapping,request,userView);
+		request.setAttribute("currentCandidacies", candidaciesToDisplay);
 		destiny= mapping.findForward("listSeminaries");
 		request.setAttribute("seminaries", seminaries);
 		return destiny;

@@ -37,6 +37,13 @@ public class CandidacyOJB extends ObjectFenixOJB implements IPersistentSeminaryC
         criteria.addEqualTo("student_id_internal", id);
         return super.queryList(Candidacy.class, criteria);
     }
+	public List readByStudentIDAndSeminaryID(Integer studentID,Integer seminaryID) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("student_id_internal", studentID);
+		criteria.addEqualTo("seminary_id_internal", seminaryID);		
+		return super.queryList(Candidacy.class, criteria);
+	}    
     public List readAll() throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();

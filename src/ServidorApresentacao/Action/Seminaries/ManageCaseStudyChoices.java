@@ -224,6 +224,7 @@ public class ManageCaseStudyChoices extends FenixAction
 			Object[] argsReadEquivalency= { equivalencyID };
 			equivalency=
 				(InfoEquivalency) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetEquivalency", argsReadEquivalency);
+				
 			if (themeID != null) // we want the cases of ONE theme
 			{
 				Object[] argsReadCases= { themeID };
@@ -286,6 +287,7 @@ public class ManageCaseStudyChoices extends FenixAction
 					InfoCaseStudyChoice caseChoice= new InfoCaseStudyChoice();
 					caseChoice.setCaseStudyIdInternal(infoCaseStudy.getIdInternal());
 					caseChoice.setOrder(new Integer(i));
+					caseChoice.setCandidacyIdInternal(infoCandidacy.getIdInternal());
 					caseStudyChoices.add(caseChoice);
 				}
 				infoCandidacy.setCaseStudyChoices(caseStudyChoices);

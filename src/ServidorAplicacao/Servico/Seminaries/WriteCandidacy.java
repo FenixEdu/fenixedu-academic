@@ -65,6 +65,7 @@ public class WriteCandidacy implements IServico
             for (Iterator iter= candidacy.getCaseStudyChoices().iterator(); iter.hasNext();)
 			{
 				ICaseStudyChoice element= (ICaseStudyChoice) iter.next();
+				element.setCandidacyIdInternal(candidacy.getIdInternal());				
 				persistentChoice.lockWrite(element);
 			}
 		}

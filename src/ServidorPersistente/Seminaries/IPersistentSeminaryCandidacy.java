@@ -18,6 +18,7 @@ import ServidorPersistente.IPersistentObject;
 public interface IPersistentSeminaryCandidacy extends IPersistentObject
 {
 	ICandidacy readByName(String name) throws ExcepcaoPersistencia;
+	public List readByStudentIDAndSeminaryID(Integer studentID,Integer seminaryID) throws ExcepcaoPersistencia;	
 	public List readAll() throws ExcepcaoPersistencia;
 	void delete(ICandidacy candidacy) throws ExcepcaoPersistencia;
 	List readByStudentID(Integer id) throws ExcepcaoPersistencia;

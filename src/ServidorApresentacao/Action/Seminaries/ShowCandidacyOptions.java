@@ -93,11 +93,11 @@ public class ShowCandidacyOptions extends FenixAction
                 }
             }
             seminary.setEquivalencies(avaliableEquivalencies);
-            Object[] argsReadCandidacies = { student.getIdInternal()};
+            Object[] argsReadCandidacies = { student.getIdInternal(),seminaryID};
             List candidacies =
                 (List) ServiceManagerServiceFactory.executeService(
                     userView,
-                    "Seminaries.GetCandidaciesByStudentID",
+                    "Seminaries.GetCandidaciesByStudentIDAndSeminaryID",
                     argsReadCandidacies);
             if (candidacies.size() >= seminary.getAllowedCandidaciesPerStudent().intValue())
             {

@@ -50,4 +50,8 @@ public class MockCandidacyOJB extends ObjectFenixOJB implements IPersistentSemin
 	{
 		throw new ExcepcaoPersistencia();
 	}
+	public List readByStudentIDAndSeminaryID(Integer studentID, Integer seminaryID) throws ExcepcaoPersistencia
+	{
+		throw new ExcepcaoPersistencia();
+	}
 }

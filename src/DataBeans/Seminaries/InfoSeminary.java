@@ -5,6 +5,7 @@
  */
 package DataBeans.Seminaries;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -21,6 +22,12 @@ public class InfoSeminary
     private String description;
     private List equivalencies;
     private Integer allowedCandidaciesPerStudent;
+	private Calendar enrollmentBeginDate;
+	private Calendar enrollmentBeginTime;
+	private Calendar enrollmentEndDate;
+	private Calendar enrollmentEndTime; 
+	private Boolean hasThemes;
+	private Boolean hasCaseStudy;
 	/**
 	 * @return
 	 */
@@ -98,6 +105,121 @@ public class InfoSeminary
 	public void setAllowedCandidaciesPerStudent(Integer integer)
 	{
 		allowedCandidaciesPerStudent= integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentBeginDate()
+	{
+		return enrollmentBeginDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentBeginTime()
+	{
+		return enrollmentBeginTime;
+	}
+
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentEndDate()
+	{
+		return enrollmentEndDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentEndTime()
+	{
+		return enrollmentEndTime;
+	}
+
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentBeginDate(Calendar calendar)
+	{
+		enrollmentBeginDate = calendar;
+	}
+
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentBeginTime(Calendar calendar)
+	{
+		enrollmentBeginTime = calendar;
+	}
+
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentEndDate(Calendar calendar)
+	{
+		enrollmentEndDate = calendar;
+	}
+
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentEndTime(Calendar calendar)
+	{
+		enrollmentEndTime = calendar;
+	}
+	
+	public String printDeadline()
+	{
+		StringBuffer result = new StringBuffer();
+		result.append (this.getEnrollmentEndDate().get(Calendar.DAY_OF_MONTH)); 
+		result.append("-").append(this.getEnrollmentEndDate().get(Calendar.MONTH+1));
+		result.append("-").append(this.getEnrollmentEndDate().get(Calendar.YEAR));
+		result.append(", ");
+		int minute = this.getEnrollmentEndTime().get(Calendar.MINUTE);
+		int hour = this.getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY);
+		if (hour < 10)
+			result.append("0"); /*lets stuff an with an extra 0 for readability improvement*/
+		result.append(hour).append(":");		
+		if (minute < 10)
+			result.append("0"); /*lets stuff an with an extra 0 for readability improvement*/
+		result.append(minute);
+				
+		return result.toString();
+	}
+
+	/**
+	 * @return
+	 */
+	public Boolean getHasCaseStudy()
+	{
+		return hasCaseStudy;
+	}
+
+	/**
+	 * @return
+	 */
+	public Boolean getHasThemes()
+	{
+		return hasThemes;
+	}
+
+	/**
+	 * @param boolean1
+	 */
+	public void setHasCaseStudy(Boolean boolean1)
+	{
+		hasCaseStudy = boolean1;
+	}
+
+	/**
+	 * @param boolean1
+	 */
+	public void setHasThemes(Boolean boolean1)
+	{
+		hasThemes = boolean1;
 	}
 
 }

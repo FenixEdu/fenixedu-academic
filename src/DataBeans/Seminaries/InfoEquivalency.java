@@ -22,6 +22,8 @@ public class InfoEquivalency
     private InfoCurricularCourse curricularCourse;
     private InfoModality modality;
     private String seminaryName;
+    private Boolean hasTheme;
+    private Boolean hasCaseStudy;
     private List themes;
     
     private Integer seminaryIdInternal;
@@ -164,6 +166,38 @@ public class InfoEquivalency
 	public void setSeminaryName(String string)
 	{
 		seminaryName= string;
+	}
+
+	/**
+	 * @return
+	 */
+	public Boolean getHasCaseStudy()
+	{
+		return hasCaseStudy;
+	}
+
+	/**
+	 * @return
+	 */
+	public Boolean getHasTheme()
+	{
+		return hasTheme;
+	}
+
+	/**
+	 * @param boolean1
+	 */
+	public void setHasCaseStudy(Boolean boolean1)
+	{
+		hasCaseStudy = boolean1;
+	}
+
+	/**
+	 * @param boolean1
+	 */
+	public void setHasTheme(Boolean boolean1)
+	{
+		hasTheme = boolean1;
 	}
 
 }

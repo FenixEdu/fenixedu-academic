@@ -4,6 +4,7 @@
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package Dominio.Seminaries;
+import java.util.Calendar;
 import java.util.List;
 import Dominio.DomainObject;
 /**
@@ -19,8 +20,13 @@ public class Seminary extends DomainObject implements ISeminary
 	private String name;
 	private String description;
 	private List equivalencies;
-    private Integer allowedCandidaciesPerStudent;
-    
+	private Integer allowedCandidaciesPerStudent;
+	private Calendar enrollmentBeginDate;
+	private Calendar enrollmentBeginTime;
+	private Calendar enrollmentEndDate;
+	private Calendar enrollmentEndTime;
+	private Boolean hasTheme;
+	private Boolean hasCaseStudy;
 	public Seminary()
 	{
 	}
@@ -30,12 +36,11 @@ public class Seminary extends DomainObject implements ISeminary
 		this.setName(name);
 		this.setEquivalencies(equivalencies);
 	}
-    
-    public Seminary(String name, String description)
-    {
-        this.setDescription(description);
-        this.setName(name);
-    }
+	public Seminary(String name, String description)
+	{
+		this.setDescription(description);
+		this.setName(name);
+	}
 	/**
 	 * @return
 	 */
@@ -62,21 +67,21 @@ public class Seminary extends DomainObject implements ISeminary
 	 */
 	public void setDescription(String string)
 	{
-		description= string;
+		description = string;
 	}
 	/**
 	 * @param string
 	 */
 	public void setName(String string)
 	{
-		name= string;
+		name = string;
 	}
 	/**
 	 * @param list
 	 */
 	public void setEquivalencies(List list)
 	{
-        equivalencies= list;
+		equivalencies = list;
 	}
 	/**
 	 * @return
@@ -90,32 +95,32 @@ public class Seminary extends DomainObject implements ISeminary
 	 */
 	public void setIdInternal(Integer integer)
 	{
-		idInternal= integer;
+		idInternal = integer;
 	}
 	public String toString()
 	{
-		String retorno;
-		retorno= "[Seminary:";
-		retorno += "ID=" + this.getIdInternal();
-		retorno += "Name=" + this.getName();
-		retorno += ",Description=" + this.getDescription();
-        retorno += ",Allowed Candidacies Per Student=" + this.getAllowedCandidaciesPerStudent();
-		retorno += ",Modalities=" + this.getEquivalencies() +"]";
-		return retorno;
+		String result;
+		result = "[Seminary:";
+		result += "ID=" + this.getIdInternal();
+		result += ",Name=" + this.getName();
+		result += ",Description=" + this.getDescription();
+		result += ",Allowed Candidacies Per Student=" + this.getAllowedCandidaciesPerStudent();
+		result += ",Modalities=" + this.getEquivalencies() + "]";
+		return result;
 	}
 	/**
 	 * true if the names are equals
 	 */
 	public boolean equals(Object obj)
 	{
-		boolean equalsResult= false;
+		boolean equalsResult = false;
 		if (obj instanceof ISeminary)
 		{
-			ISeminary seminary= (ISeminary) obj;
+			ISeminary seminary = (ISeminary) obj;
 			if (seminary.getName() == null)
-				equalsResult= (this.getName() == null);
+				equalsResult = (this.getName() == null);
 			else
-				equalsResult= this.getName().equalsIgnoreCase(seminary.getName());
+				equalsResult = this.getName().equalsIgnoreCase(seminary.getName());
 		}
 		return equalsResult;
 	}
@@ -126,12 +131,95 @@ public class Seminary extends DomainObject implements ISeminary
 	{
 		return allowedCandidaciesPerStudent;
 	}
-
 	/**
 	 * @param integer
 	 */
 	public void setAllowedCandidaciesPerStudent(Integer integer)
 	{
-		allowedCandidaciesPerStudent= integer;
+		allowedCandidaciesPerStudent = integer;
+	}
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentBeginDate()
+	{
+		return enrollmentBeginDate;
+	}
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentBeginTime()
+	{
+		return enrollmentBeginTime;
+	}
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentEndDate()
+	{
+		return enrollmentEndDate;
+	}
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentEndTime()
+	{
+		return enrollmentEndTime;
+	}
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentBeginDate(Calendar calendar)
+	{
+		enrollmentBeginDate = calendar;
+	}
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentBeginTime(Calendar calendar)
+	{
+		enrollmentBeginTime = calendar;
+	}
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentEndDate(Calendar calendar)
+	{
+		enrollmentEndDate = calendar;
+	}
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentEndTime(Calendar calendar)
+	{
+		enrollmentEndTime = calendar;
+	}
+	/**
+	 * @return
+	 */
+	public Boolean getHasTheme()
+	{
+		return hasTheme;
+	}
+	/**
+	 * @param boolean1
+	 */
+	public void setHasTheme(Boolean boolean1)
+	{
+		hasTheme = boolean1;
+	}
+	/**
+	 * @return
+	 */
+	public Boolean getHasCaseStudy()
+	{
+		return hasCaseStudy;
+	}
+	/**
+	 * @param boolean1
+	 */
+	public void setHasCaseStudy(Boolean boolean1)
+	{
+		hasCaseStudy = boolean1;
 	}
 }

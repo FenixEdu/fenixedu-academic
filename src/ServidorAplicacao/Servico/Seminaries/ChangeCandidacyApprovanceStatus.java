@@ -55,6 +55,8 @@ public class ChangeCandidacyApprovanceStatus implements IServico
 				ICandidacy candidacy=
 					(ICandidacy) persistentCandidacy.readByOID(Candidacy.class, (Integer) iterator.next());
 				persistentCandidacy.lockWrite(candidacy);
+				if (candidacy.getApproved() == null)
+					candidacy.setApproved(new Boolean(false));
 				candidacy.setApproved(new Boolean(!candidacy.getApproved().booleanValue()));
 			}
 		}

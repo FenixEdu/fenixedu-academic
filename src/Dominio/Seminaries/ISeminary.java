@@ -4,6 +4,7 @@
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package Dominio.Seminaries;
+import java.util.Calendar;
 import java.util.List;
 
 import Dominio.IDomainObject;
@@ -45,4 +46,19 @@ public interface ISeminary extends IDomainObject
     
     public abstract Integer getAllowedCandidaciesPerStudent();
     public void setAllowedCandidaciesPerStudent(Integer integer);
+    
+    public void setEnrollmentBeginTime(Calendar calendar);
+	public void setEnrollmentBeginDate(Calendar calendar);
+	public void setEnrollmentEndTime(Calendar calendar);
+	public void setEnrollmentEndDate(Calendar calendar);
+	
+	public Calendar getEnrollmentBeginTime();
+	public Calendar getEnrollmentBeginDate();
+	public Calendar getEnrollmentEndTime();
+	public Calendar getEnrollmentEndDate();		
+	
+	public Boolean getHasCaseStudy();
+	public Boolean getHasTheme();
+	public void setHasCaseStudy (Boolean hasCaseStudy);
+	public void setHasTheme (Boolean hasTheme);	
 }
