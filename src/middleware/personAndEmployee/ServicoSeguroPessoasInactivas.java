@@ -15,7 +15,6 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 import Dominio.IPessoa;
 import Dominio.Pessoa;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
-import Util.LeituraFicheiroPessoa;
 import Util.RoleType;
 
 /**
@@ -43,10 +42,16 @@ public class ServicoSeguroPessoasInactivas {
 			System.out.println("Reading persons from File");
 			servico._listaPessoasFromFile = LeituraFicheiroPessoa.lerFicheiro(servico._ficheiro, servico._delimitador);
 			System.out.println("Finished read persons from File(" + servico._listaPessoasFromFile.size() + ")");
-		} catch (NotExecuteException nee) {
+		} catch (Exception nee) {
 			throw new NotExecuteException(nee.getMessage());
 		}
 
+		desactivarPessoas(servico);
+		System.out.println("  Done !");
+	}
+
+	private static void desactivarPessoas(ServicoSeguroPessoasInactivas servico)
+	{
 		if (servico._listaPessoasFromFile != null) {
 			//Open databases
 			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
@@ -94,7 +99,6 @@ public class ServicoSeguroPessoasInactivas {
 			//close databases
 			broker.commitTransaction();
 		}
-		System.out.println("  Done !");
 	}
 
 	private static List readAllPersonsEmployee(PersistenceBroker broker) {

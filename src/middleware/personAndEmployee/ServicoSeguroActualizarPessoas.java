@@ -24,7 +24,6 @@ import Dominio.Pessoa;
 import Dominio.Role;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteFiltroPessoa.DB;
-import Util.LeituraFicheiroPessoa;
 import Util.RoleType;
 
 /**
@@ -48,8 +47,8 @@ public class ServicoSeguroActualizarPessoas {
 
 		try {
 			listaPessoasFromFile = LeituraFicheiroPessoa.lerFicheiro(servico._ficheiro, servico._delimitador);
-		} catch (NotExecuteException nee) {
-			throw new NotExecuteException(nee.getMessage());
+		} catch (Exception e) {
+			throw new NotExecuteException(e.getMessage());
 		}
 		System.out.println("Converting Persons " + listaPessoasFromFile.size() + " ... ");
 
@@ -242,7 +241,6 @@ public class ServicoSeguroActualizarPessoas {
 
 							broker.store(pessoaFromDB);
 							counter++;
-							//							System.out.println("Inactive person: " + pessoaFromDB.getNumeroDocumentoIdentificacao() + "-" + pessoaFromDB.getTipoDocumentoIdentificacao().getTipo());							
 						}
 					} catch (Exception e) {
 						e.printStackTrace();

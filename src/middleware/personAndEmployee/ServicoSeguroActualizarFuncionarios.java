@@ -19,7 +19,6 @@ import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.Pessoa;
 import Dominio.Role;
-import Util.LeituraFicheiroFuncionario;
 import Util.RoleType;
 
 /**

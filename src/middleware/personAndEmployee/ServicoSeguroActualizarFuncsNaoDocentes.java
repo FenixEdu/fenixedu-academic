@@ -20,7 +20,6 @@ import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
 import Dominio.Teacher;
-import Util.LeituraFicheiroFuncNaoDocente;
 import Util.RoleType;
 
 /**

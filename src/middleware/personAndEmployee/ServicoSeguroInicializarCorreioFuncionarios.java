@@ -1,4 +1,5 @@
-package ServidorAplicacao.Servico.assiduousness;
+package middleware.personAndEmployee;
+
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.ICentroCustoPersistente;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
-import Util.LeituraFicheiroFuncionarioCorreio;
 
 /**
  * @author  Fernanda Quitério & Tânia Pousão
@@ -57,7 +57,7 @@ public class ServicoSeguroInicializarCorreioFuncionarios {
 	public static void main(String[] args) throws NotExecuteException {
 		new ServicoSeguroInicializarCorreioFuncionarios(args);
 
-		LeituraFicheiroFuncionarioCorreio servicoLeitura = new LeituraFicheiroFuncionarioCorreio();
+		LeituraFicheiroFuncionarioCentroCusto servicoLeitura = new LeituraFicheiroFuncionarioCentroCusto();
 
 		lista = servicoLeitura.lerFicheiro(ficheiro, delimitador, estrutura, ordem);
 
