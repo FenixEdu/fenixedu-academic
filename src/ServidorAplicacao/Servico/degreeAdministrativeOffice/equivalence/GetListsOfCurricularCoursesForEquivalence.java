@@ -9,6 +9,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.degreeAdministrativeOffice.InfoEquivalenceContext;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
@@ -27,6 +28,7 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.CurricularCourseType;
 import Util.EnrolmentState;
 
 /**
@@ -49,7 +51,7 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 		return "GetListsOfCurricularCoursesForEquivalence";
 	}
 
-	public InfoEquivalenceContext run(IUserView userView) throws FenixServiceException {
+	public InfoEquivalenceContext run(IUserView userView, InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 
 		InfoEquivalenceContext infoEquivalenceContext = new InfoEquivalenceContext();
 
@@ -58,8 +60,8 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 			IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 			IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-			IStudent student = persistentStudent.readByUsername(((UserView) userView).getUtilizador());
 
+			IStudent student = persistentStudent.readByUsername(((UserView) userView).getUtilizador());
 			IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 			final IDegreeCurricularPlan currentDegreeCurricularPlanForStudent = studentActiveCurricularPlan.getDegreeCurricularPlan();
 			List curricularCoursesFromCurrentDegreeCurricularPlanForStudent = currentDegreeCurricularPlanForStudent.getCurricularCourses();
@@ -80,6 +82,29 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 				}
 			});
 
+			List studentEnroledEnrolments = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
+				public boolean evaluate(Object obj) {
+					IEnrolment enrolment = (IEnrolment) obj;
+					return enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED) || enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED);
+				}
+			});
+
+			List curricularCoursesScopesFromStudentEnroledEnrolments = (List) CollectionUtils.collect(studentEnroledEnrolments, new Transformer() {
+				public Object transform(Object obj) {
+					IEnrolment enrolment = (IEnrolment) obj;
+					return enrolment.getCurricularCourseScope();
+				}
+			});
+
+			List otherIrelevanteCurricularCourses = (List) CollectionUtils.select(curricularCoursesFromCurrentDegreeCurricularPlanForStudent, new Predicate() {
+				public boolean evaluate(Object obj) {
+					ICurricularCourse curricularCourse = (ICurricularCourse) obj;
+					return	curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ) ||
+							curricularCourse.getType().equals(CurricularCourseType.TFC_COURSE_OBJ) ||
+							curricularCourse.getType().equals(CurricularCourseType.TRAINING_COURSE_OBJ);
+				}
+			});
+
 			List curricularCourseScopesFromCurrentDegreeCurricularPlanForStudent = new ArrayList();
 			Iterator iterator1 = curricularCoursesFromCurrentDegreeCurricularPlanForStudent.iterator();
 			while(iterator1.hasNext()) {
@@ -91,8 +116,14 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 					if	(
 							(curricularCourseScope.getBranch().equals(studentActiveCurricularPlan.getBranch()) ||
 							(curricularCourseScope.getBranch().getName().equals("") && curricularCourseScope.getBranch().getCode().equals(""))) &&
-							(!curricularCoursesScopesFromStudentAprovedEnrolments.contains(curricularCourseScope))
+							(!curricularCoursesScopesFromStudentAprovedEnrolments.contains(curricularCourseScope)) &&
+							(!curricularCoursesScopesFromStudentEnroledEnrolments.contains(curricularCourseScope)) &&
+							(!otherIrelevanteCurricularCourses.contains(curricularCourseScope.getCurricularCourse()))
 						) {
+						// TODO DAVID-RICARDO: Perguntar se são estas mesmo as disciplinas a remover (opções, TFC, estágios, etc...)
+						// In this manner, for this list, we are excluding curricular courses from other branches that not the student's;
+						// curricular courses already aproved, enroled and temporarily enroled;
+						// optional curricular courses; TFC and training curricular courses.
 						curricularCourseScopesFromCurrentDegreeCurricularPlanForStudent.add(curricularCourseScope);
 					}
 				}
@@ -112,6 +143,9 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 				infoEquivalenceContext.setInfoCurricularCourseScopesToGiveEquivalence(new ArrayList());
 				infoEquivalenceContext.setInfoCurricularCourseScopesToGetEquivalence(new ArrayList());
 			}
+			
+			infoEquivalenceContext.setCurrentInfoExecutionPeriod(infoExecutionPeriod);
+			infoEquivalenceContext.setInfoStudentCurricularPlan(Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentActiveCurricularPlan));
 
 			return infoEquivalenceContext;
 		} catch (ExcepcaoPersistencia e) {

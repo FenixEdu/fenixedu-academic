@@ -261,7 +261,7 @@ public class GenerateExtraData {
 			curricularCourseToWrite.setCurricularCourseExecutionScope(curricularCourse.getCurricularCourseExecutionScope());
 			curricularCourseToWrite.setDegreeCurricularPlan(degreeCurricularPlan2);
 			curricularCourseToWrite.setMandatory(curricularCourse.getMandatory());
-			curricularCourseToWrite.setName(curricularCourse.getName() + " - Plano Da Tanga " + i);
+			curricularCourseToWrite.setName(curricularCourse.getName() + i);
 			curricularCourseToWrite.setType(curricularCourse.getType());
 			curricularCourseToWrite.setUniversityCode(curricularCourse.getUniversityCode());
 

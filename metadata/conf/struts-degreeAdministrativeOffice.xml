@@ -200,7 +200,10 @@
 				scope="session"
 				validate="false">
 			<forward name="showCurricularCoursesForEquivalence" path="df.page.showCurricularCoursesForEquivalence"/>
-			<forward name="begin" path="/prepareStudentEnrolment.do?method=optionalWithoutRules"/>
+			<forward name="verifyCurricularCoursesForEquivalence" path="df.page.verifyCurricularCoursesForEquivalence"/>
+			<forward name="acceptCurricularCoursesForEquivalence" path="df.page.acceptCurricularCoursesForEquivalence"/>
+
+			<forward name="begin" path="/setStartMode.do?method=manualEquivalence"/>
 			<forward name="home" path="df.page.main"/>
 		</action>
 	</action-mappings>

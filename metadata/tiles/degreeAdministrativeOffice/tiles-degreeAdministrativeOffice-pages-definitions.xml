@@ -73,4 +73,10 @@
 	<definition name="df.page.showCurricularCoursesForEquivalence" extends="definition.degreeAdministrativeOffice.curricular.course.manual.equivalence">
 		<put name="body" value="/degreeAdministrativeOffice/equivalence/showCurricularCoursesForEquivalence.jsp"/>
 	</definition>
+	<definition name="df.page.verifyCurricularCoursesForEquivalence" extends="definition.degreeAdministrativeOffice.curricular.course.manual.equivalence">
+		<put name="body" value="/degreeAdministrativeOffice/equivalence/verifyCurricularCoursesForEquivalence.jsp"/>
+	</definition>
+	<definition name="df.page.acceptCurricularCoursesForEquivalence" extends="definition.degreeAdministrativeOffice.curricular.course.manual.equivalence">
+		<put name="body" value="/degreeAdministrativeOffice/equivalence/acceptCurricularCoursesForEquivalence.jsp"/>
+	</definition>
 </tiles-definitions>
