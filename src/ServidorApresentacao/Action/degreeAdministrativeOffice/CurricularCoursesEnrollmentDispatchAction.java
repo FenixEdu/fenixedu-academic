@@ -84,17 +84,21 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		enrollmentForm.set("enrolledCurricularCoursesBefore", enrolledInArray);
 		enrollmentForm.set("enrolledCurricularCoursesAfter", enrolledInArray);
 
-		// por no form a area de especilizacao e a area secundaria do aluno
-		// onde estao as listas das areas de especializacao e area secundaria
-		enrollmentForm.set(
-			"specializationArea",
-			infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoBranch().getIdInternal());
-		enrollmentForm.set(
-			"secondaryArea",
-			infoStudentEnrolmentContext
-				.getInfoStudentCurricularPlan()
-				.getInfoSecundaryBranch()
-				.getIdInternal());
+//		if (infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoBranch(). != null)
+//		{
+//			enrollmentForm.set(
+//				"specializationArea",
+//				infoStudentEnrolmentContext
+//					.getInfoStudentCurricularPlan()
+//					.getInfoBranch()
+//					.getIdInternal());
+//			enrollmentForm.set(
+//				"secondaryArea",
+//				infoStudentEnrolmentContext
+//					.getInfoStudentCurricularPlan()
+//					.getInfoSecundaryBranch()
+//					.getIdInternal());
+//		}
 		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
 
 		return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
@@ -136,7 +140,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		ActionErrors errors = new ActionErrors();
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
 
-		Integer studentNumber = new Integer((String) enrollmentForm.get("studentNumber"));
+		Integer studentNumber = Integer.valueOf((String) request.getParameter("studentNumber"));
 
 		String specialization = request.getParameter("specializationArea");
 		String secondary = request.getParameter("secondaryArea");

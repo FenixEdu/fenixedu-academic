@@ -861,7 +861,7 @@
    <reference-descriptor
 		name="degreeCurricularPlan"
 		class-ref="Dominio.DegreeCurricularPlan"
-		proxy="true">
+		proxy="false">
 	<foreignkey field-ref="keyDegreeCurricularPlan"/>
    </reference-descriptor>
 
