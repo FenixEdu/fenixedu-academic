@@ -9,6 +9,15 @@
         <html:form action="/chooseDayAndShiftForm">
             <html:hidden property="method" value="choose"/>
 			<html:hidden property="page" value="1"/>
+			
+	        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	          <tr>
+	            <td bgcolor="#FFFFFF" class="infoop">Por favor, proceda &agrave; escolha
+	              do dia pretendido.</td>
+	          </tr>
+	        </table>
+			<br />
+			
             <table cellpadding="0" cellspacing="2">
                 <tr>
                     <td nowrap class="formTD" align="right">
@@ -39,34 +48,44 @@
                         </html:select>
                    </td>
                 </tr>
-                <tr>
-                    <td nowrap="nowrap" class="formTD" align="right">
-                        <bean:message key="property.exam.beginning"/>
-                    </td>
-                    <td nowrap="nowrap" align="left">
-                        <html:select property="beginning">
-                        	<option value="" selected="selected">[Turno]</option>                        
-                            <html:options name="<%= SessionConstants.LABLELIST_HOURS %>"/>
-                        </html:select>
-                    </td>
-                </tr>
-          </table>
-            <br/>
-            <table align="left">
-                <tr align="center">
-                    <td>
-                        <html:submit styleClass="inputbutton">
-                        	<bean:message key="lable.choose"/>
-                        </html:submit>
-                    </td>
-                    <td width="20"> </td>
-                    <td>
-                        <html:reset value="Limpar" styleClass="inputbutton">
-                            <bean:message key="label.clear"/>
-                        </html:reset>
-                    </td>
-                </tr>
-            </table>
-        </html:form>
-    </body>
+		</table>
+       	<br/>
+       	
+       	<table>
+	   		<tr>
+	        	<td bgcolor="#FFFFFF" class="infoop">Escolha o turno de exame pretendido.</td>
+	            </br>
+	        </tr>
+	    </table>
+	    <table>
+	    	<tr>
+            	<td nowrap="nowrap" class="formTD" align="right">
+                	<bean:message key="property.exam.beginning"/>
+                </td>
+                <td nowrap="nowrap" align="left">
+                    <html:select property="beginning">
+                    	<option value="" selected="selected">[Turno]</option>                        
+                        <html:options name="<%= SessionConstants.LABLELIST_HOURS %>"/>
+                    </html:select>
+                </td>
+            </tr>
+      	</table>
+        <br/>
+        <table align="left">
+            <tr align="center">
+                <td>
+                    <html:submit styleClass="inputbutton">
+                    	<bean:message key="lable.choose"/>
+                    </html:submit>
+                </td>
+                <td width="20"> </td>
+                <td>
+                    <html:reset value="Limpar" styleClass="inputbutton">
+                        <bean:message key="label.clear"/>
+                    </html:reset>
+                </td>
+            </tr>
+        </table>
+    </html:form>
+</body>
 </html:html>

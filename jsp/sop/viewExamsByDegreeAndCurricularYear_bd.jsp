@@ -84,7 +84,7 @@
 							</logic:notEmpty>
 							
 							<logic:empty name="infoViewExam" property="infoExam.beginning">
-								Não disponivel
+								<bean:message key="message.exam.not.scheduled"/>
 							</logic:empty>
 						</td>
 					</tr>

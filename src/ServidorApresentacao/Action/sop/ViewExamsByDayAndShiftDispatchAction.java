@@ -20,6 +20,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoViewExam;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -46,15 +47,18 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 			(Calendar) session.getAttribute(SessionConstants.EXAM_DATEANDTIME);
 
 		Object args[] = { examDateAndTime.getTime(), examDateAndTime };
-		List infoExams =
-			(List) ServiceUtils.executeService(
+		InfoViewExam infoViewExams = 
+			(InfoViewExam) ServiceUtils.executeService(
 				userView,
 				"ReadExamsByDayAndBeginning",
 				args);
 
+		List infoExams = infoViewExams.getInfoViewExamsByDayAndShift();
+
 		if (infoExams != null && infoExams.size() == 0)
 			infoExams = null;
 
+		session.setAttribute(SessionConstants.AVAILABLE_ROOM_OCCUPATION, infoViewExams.getAvailableRoomOccupation());
 		session.removeAttribute(SessionConstants.LIST_EXAMSANDINFO);
 		session.setAttribute(SessionConstants.LIST_EXAMSANDINFO, infoExams);
 

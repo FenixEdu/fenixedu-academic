@@ -10,6 +10,8 @@ package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,10 +49,14 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		session.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
 
 		ArrayList daysOfMonth = Util.getDaysOfMonth();
-		session.setAttribute(SessionConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
+		session.setAttribute(
+			SessionConstants.LABLELIST_DAYSOFMONTH,
+			daysOfMonth);
 
 		ArrayList monthsOfYear = Util.getMonthsOfYear();
-		session.setAttribute(SessionConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
+		session.setAttribute(
+			SessionConstants.LABLELIST_MONTHSOFYEAR,
+			monthsOfYear);
 
 		ArrayList years = Util.getYears();
 		session.setAttribute(SessionConstants.LABLELIST_YEARS, years);
@@ -74,11 +80,16 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
 
 		Integer day = new Integer((String) chooseDayAndShiftForm.get("day"));
-		Integer month = new Integer((String) chooseDayAndShiftForm.get("month"));
+		Integer month =
+			new Integer((String) chooseDayAndShiftForm.get("month"));
 		Integer year = new Integer((String) chooseDayAndShiftForm.get("year"));
-		Integer beginning = new Integer((String) chooseDayAndShiftForm.get("beginning"));
+		Integer beginning =
+			new Integer((String) chooseDayAndShiftForm.get("beginning"));
 
-		Calendar examDateAndTime = Calendar.getInstance();
+		Calendar examDateAndTime =
+			Calendar.getInstance(
+				TimeZone.getTimeZone("GMT"),
+				new Locale("pt", "PT"));
 		examDateAndTime.set(Calendar.YEAR, year.intValue());
 		examDateAndTime.set(Calendar.MONTH, month.intValue());
 		examDateAndTime.set(Calendar.DAY_OF_MONTH, day.intValue());
@@ -86,8 +97,22 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		examDateAndTime.set(Calendar.MINUTE, 0);
 		examDateAndTime.set(Calendar.SECOND, 0);
 
+		session.setAttribute(
+			SessionConstants.EXAM_DATEANDTIME_STR,
+			""
+				+ year
+				+ "/"
+				+ month
+				+ "/"
+				+ day
+				+ "  às  "
+				+ beginning
+				+ " horas");
+
 		session.removeAttribute(SessionConstants.EXAM_DATEANDTIME);
-		session.setAttribute(SessionConstants.EXAM_DATEANDTIME, examDateAndTime);
+		session.setAttribute(
+			SessionConstants.EXAM_DATEANDTIME,
+			examDateAndTime);
 
 		return mapping.findForward("View Exams");
 	}

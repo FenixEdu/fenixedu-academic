@@ -4,13 +4,18 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td bgcolor="#FFFFFF" class="infoselected"><p>O dia e turno selecionados
+        	s&atilde;o:</p>
+			<strong><jsp:include page="timeContext.jsp"/></strong>
+         </td>
+    </tr>
+</table>
+<br/>
 
-<h2><bean:message key="title.exams"/></h2>
+<h2><bean:message key="title.exams.list"/></h2>
 <span class="error"><html:errors/></span>
-
-<br/> Falta colocar aqui uma secção de contexto do gégnero que
-aparece qd se escolhe a licenciatura e ano curricular na gestão
-de horários. <br/> <br/>
 
 <logic:notPresent name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
 	<table align="center"  cellpadding='0' cellspacing='0'>
@@ -59,7 +64,6 @@ de horários. <br/> <br/>
 	</table>
 
 	<br/> <br/>
-	- Nº de vagas para exames: todo <br/>
-	- Havia mais uma coisa para indicar aqui... consultar folha de proposta.
+	- Nº de vagas para exames: <bean:write name="<%= SessionConstants.AVAILABLE_ROOM_OCCUPATION %>" scope="session"/> <br/>
 
 </logic:present>

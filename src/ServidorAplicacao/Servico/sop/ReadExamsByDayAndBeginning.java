@@ -16,11 +16,13 @@ import java.util.Date;
 import java.util.List;
 
 import DataBeans.InfoExam;
+import DataBeans.InfoViewExam;
 import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.IExam;
+import Dominio.ISala;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -50,7 +52,8 @@ public class ReadExamsByDayAndBeginning implements IServico {
 		return "ReadExamsByDayAndBeginning";
 	}
 
-	public List run(Date day, Calendar beginning) {
+	public InfoViewExam run(Date day, Calendar beginning) {
+		InfoViewExam infoViewExam = new InfoViewExam();
 		ArrayList infoViewExams = new ArrayList();
 
 		try {
@@ -65,6 +68,7 @@ public class ReadExamsByDayAndBeginning implements IServico {
 			ICurso tempDegree = null;
 			List tempInfoDegrees = null;
 			Integer numberStudentesAttendingCourse = null;
+			int totalNumberStudents = 0;
 
 			// For every exam return:
 			//    - exam info
@@ -85,16 +89,27 @@ public class ReadExamsByDayAndBeginning implements IServico {
 
 				// determine number of students attending course
 				numberStudentesAttendingCourse = sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(tempExam.getExecutionCourse());
+				totalNumberStudents += numberStudentesAttendingCourse.intValue(); 
 
 				// add exam and degree info to result list
 				infoViewExams.add(new InfoViewExamByDayAndShift(tempInfoExam, tempInfoDegrees, numberStudentesAttendingCourse));
 			}
+			
+			infoViewExam.setInfoViewExamsByDayAndShift(infoViewExams);
+			
+			// Read all rooms to determine total exam capacity
+			List rooms = sp.getISalaPersistente().readAll();
+			int totalExamCapacity = 0;
+			for (int i = 0; i < rooms.size(); i++) 
+				totalExamCapacity += ((ISala) rooms.get(i)).getCapacidadeExame().intValue();
 
+			infoViewExam.setAvailableRoomOccupation(new Integer(totalExamCapacity-totalNumberStudents));
+			
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
 		}
 
-		return infoViewExams;
+		return infoViewExam;
 	}
 
 }

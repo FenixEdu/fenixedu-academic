@@ -86,20 +86,21 @@ public abstract class SessionConstants {
 	public static final String NATIONALITY_LIST_KEY = "NATIONALITY_LIST_KEY";
 	public static final String SEX_LIST_KEY ="SEX_LIST_KEY";	
 	
-	public static final String INFO_EXAMS_KEY = "INFO_EXAMS_KEY";
 
 	
 	// -------------------------------------------------------------------------------
 	//    SOP Constants - For Exams
 	// -------------------------------------------------------------------------------
-	public static final String EXAM_DATEANDTIME       = "examDateAndTime";
-	public static final String LABLELIST_DAYSOFMONTH  = "daysOfMonth";
-	public static final String LABLELIST_HOURS        = "horas";
-	public static final String LABLELIST_MONTHSOFYEAR = "monthsOfYear";
-	public static final String LABLELIST_SEASONS      = "seasonList";
-	public static final String LABLELIST_YEARS        = "yearsList";
-	public static final String LIST_EXAMSANDINFO      = "infoExams";
-
+	public static final String EXAM_DATEANDTIME       		= "examDateAndTime";
+	public static final String EXAM_DATEANDTIME_STR   		= "examDateAndTimeString";
+	public static final String INFO_EXAMS_KEY         		= "INFO_EXAMS_KEY";
+	public static final String LABLELIST_DAYSOFMONTH  		= "daysOfMonth";
+	public static final String LABLELIST_HOURS        		= "horas";
+	public static final String LABLELIST_MONTHSOFYEAR 		= "monthsOfYear";
+	public static final String LABLELIST_SEASONS      		= "seasonList";
+	public static final String LABLELIST_YEARS        		= "yearsList";
+	public static final String LIST_EXAMSANDINFO      		= "infoExams";
+	public static final String AVAILABLE_ROOM_OCCUPATION	= "availableRoomOccupation";
 
 	// -------------------------------------------------------------------------------
 	//    Messy Constants Section - For All Sorts of Purposes

@@ -752,7 +752,7 @@
          <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
 	</action>
 	
-    <action input="/chooseExamsContextDA.do?method=prepare&amp;page=0"
+    <action input="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext"
             name="chooseContextForm"
             parameter="method"
             path="/chooseExamsContextDA"
