@@ -75,7 +75,7 @@
 			</td>
 			<td>
 				<html:form action="/manageLesson">
-					<html:hidden property="method" value="prepare"/>
+					<html:hidden property="method" value="prepareCreate"/>
 					<html:hidden property="page" value="0"/>
 
 					<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"

@@ -16,13 +16,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.comparators.RoomAlphabeticComparator;
-import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -33,18 +32,49 @@ import Util.DiaSemana;
  * 
  */
 public class ManageLessonDA
-	extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+	extends FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
 	public static String INVALID_TIME_INTERVAL =
 		"errors.lesson.invalid.time.interval";
 	public static String UNKNOWN_ERROR = "errors.unknown";
 
-	public ActionForward prepare(
+	public ActionForward prepareCreate(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+
+		return mapping.findForward("ShowLessonForm");
+	}
+
+	public ActionForward prepareEdit(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		DynaActionForm manageLessonForm = (DynaActionForm) form;
+
+		InfoLesson infoLesson =
+			(InfoLesson) request.getAttribute(SessionConstants.LESSON);
+
+		manageLessonForm.set(
+			"diaSemana",
+			infoLesson.getDiaSemana().getDiaSemana().toString());
+		manageLessonForm.set(
+			"horaInicio",
+			"" + infoLesson.getInicio().get(Calendar.HOUR_OF_DAY));
+		manageLessonForm.set(
+			"minutosInicio",
+			"" + infoLesson.getInicio().get(Calendar.MINUTE));
+		manageLessonForm.set(
+			"horaFim",
+			"" + infoLesson.getFim().get(Calendar.HOUR_OF_DAY));
+		manageLessonForm.set(
+			"minutosFim",
+			"" + infoLesson.getFim().get(Calendar.MINUTE));
 
 		return mapping.findForward("ShowLessonForm");
 	}
@@ -190,19 +220,19 @@ public class ManageLessonDA
 			infoLesson.setFim(fim);
 
 			InfoShift infoShift =
-				(InfoShift) (request
-					.getAttribute(SessionConstants.SHIFT));
+				(InfoShift) (request.getAttribute(SessionConstants.SHIFT));
 
-			infoLesson.setInfoDisciplinaExecucao(infoShift.getInfoDisciplinaExecucao());
+			infoLesson.setInfoDisciplinaExecucao(
+				infoShift.getInfoDisciplinaExecucao());
 			infoLesson.setTipo(infoShift.getTipo());
 			infoLesson.setInfoSala(infoSala);
 
 			Object args[] = { infoLesson, infoShift };
 
 			ServiceUtils.executeService(
-					SessionUtils.getUserView(request),
-					"CreateLesson",
-					args);
+				SessionUtils.getUserView(request),
+				"CreateLesson",
+				args);
 
 			return mapping.findForward("EditShift");
 		} else {

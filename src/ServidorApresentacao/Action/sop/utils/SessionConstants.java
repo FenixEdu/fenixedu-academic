@@ -55,6 +55,8 @@ public abstract class SessionConstants {
 	public static final String EXECUTION_DEGREE_OID = "execution_degree_oid";
 	public static final String EXECUTION_PERIOD = "execution_period";
 	public static final String EXECUTION_PERIOD_OID = "executionPeriodOID";
+	public static final String LESSON = "lesson";
+	public static final String LESSON_OID = "lessonOID";
 	public static final String SHIFT = "shift";
 	public static final String SHIFT_OID = "shift_oid";
 	public static final String DEGREES = "licenciaturas";
@@ -238,7 +240,6 @@ public abstract class SessionConstants {
 	public static final String INFO_EXECUTION_DEGREE_LIST   = "INFO_EXECUTION_DEGREE_LIST";
 	public static final String PAVILLIONS_NAMES_LIST        = "PAVILLIONS_NAMES_LIST";
 	public static final String SHIFTS = "shifts";
-	public static final String LESSON = "lesson";
 
 	// -------------------------------------------------------------------------------
 	//    Messy Constants Section - For All Sorts of Purposes

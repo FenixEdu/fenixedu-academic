@@ -372,6 +372,46 @@ public class ContextUtils {
 		}
 	}
 
+	/**
+	 * @param request
+	 */
+	public static void setLessonContext(HttpServletRequest request) {
+		String lessonOIDString =
+			(String) request.getAttribute(SessionConstants.LESSON_OID);
+		System.out.println("Class from request: " + lessonOIDString);
+		if (lessonOIDString == null) {
+			lessonOIDString =
+				request.getParameter(SessionConstants.LESSON_OID);
+			System.out.println("Class from parameter: " + lessonOIDString);
+		}
+
+		Integer lessonOID = null;
+		if (lessonOIDString != null) {
+			lessonOID = new Integer(lessonOIDString);
+		}
+
+		InfoLesson infoLesson = null;
+
+		if (lessonOID != null) {
+			// Read from database
+			try {
+				Object[] args = { lessonOID };
+				infoLesson =
+					(InfoLesson) ServiceUtils.executeService(
+						null,
+						"ReadLessonByOID",
+						args);
+			} catch (FenixServiceException e) {
+				e.printStackTrace();
+			}
+
+			// Place it in request
+			request.setAttribute(SessionConstants.LESSON, infoLesson);
+		}
+	}
+
+
+
 	public static void setSelectedRoomsContext(HttpServletRequest request)
 		throws FenixActionException {
 		//		System.out.println("### setSelectedRoomsContext - IN");

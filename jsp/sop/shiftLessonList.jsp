@@ -32,6 +32,7 @@ Aulas já atribuidas ao turno
 		        </td>
 			</tr>
 			<logic:iterate id="lesson" name="shift" property="infoLessons">
+				<bean:define id="lessonOID" name="lesson" property="idInternal"/>
 				<tr align="center">
 					<td class="listClasses">
 						<bean:write name="lesson" property="diaSemana"/>
@@ -53,6 +54,32 @@ Aulas já atribuidas ao turno
 						<bean:write name="lesson" property="infoSala.capacidadeNormal"/>
 					</td>
 					<td class="listClasses">
+	               		<html:link page="<%= "/manageLesson.do?method=prepareEdit&amp;page=0&amp;"
+    	           							+ SessionConstants.LESSON_OID
+				  							+ "="
+            	   				   			+ pageContext.findAttribute("lessonOID")
+               					   			+ "&amp;"
+    	           							+ SessionConstants.SHIFT_OID
+				  							+ "="
+            	   				   			+ pageContext.findAttribute("shiftOID")
+               					   			+ "&amp;"
+			  								+ SessionConstants.EXECUTION_COURSE_OID
+  											+ "="
+  											+ pageContext.findAttribute("executionCourseOID")
+               				   				+ "&amp;"
+			  								+ SessionConstants.EXECUTION_PERIOD_OID
+  											+ "="
+	  										+ pageContext.findAttribute("executionPeriodOID")
+  											+ "&amp;"
+  											+ SessionConstants.CURRICULAR_YEAR_OID
+				  							+ "="
+  											+ pageContext.findAttribute("curricularYearOID")
+  											+ "&amp;"
+			  								+ SessionConstants.EXECUTION_DEGREE_OID
+  											+ "="
+  											+ pageContext.findAttribute("executionDegreeOID") %>">
+							<bean:message key="link.edit"/>
+						</html:link>
 					</td>
 					<td class="listClasses">
 					</td>
