@@ -44,11 +44,14 @@ public class TimePeriod
         Calendar startCalendar = Calendar.getInstance();
         startCalendar.setTimeInMillis(start);
 
+        int endMinutes = endCalendar.get(Calendar.MINUTE);
+        int startMinutes = startCalendar.get(Calendar.MINUTE);
+       
         endCalendar.roll(Calendar.HOUR_OF_DAY, -(startCalendar.get(Calendar.HOUR_OF_DAY)));
         endCalendar.roll(Calendar.MINUTE, -(startCalendar.get(Calendar.MINUTE)));
-
-        int hours = endCalendar.get(Calendar.HOUR_OF_DAY);
+        
         int minutes = endCalendar.get(Calendar.MINUTE);
+        int hours = endMinutes < startMinutes ? endCalendar.get(Calendar.HOUR_OF_DAY) - 1 : endCalendar.get(Calendar.HOUR_OF_DAY);
 
         double minutesInHours = minutes / 60.0;
 

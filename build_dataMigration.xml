@@ -1255,5 +1255,18 @@
 	<!-- ********************************************************************* -->
 
 	<!-- ************************************************************************************************************************ -->
+	<target name="credits-initialize" depends="compile-proj" description="inicializa a base de dados ao nível da tabela creditos para o semestre currente">
+		<java classname="middleware.credits.CreditsInitializer" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
 
 </project>
