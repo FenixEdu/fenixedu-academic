@@ -44,49 +44,36 @@ public class ReadDisciplinesByStudent implements IServico {
 		return "ReadDisciplinesByStudent";
 	}
 
-	public Object run(Integer number,TipoCurso degreeType) {
-	
-		
+	public Object run(Integer number, TipoCurso degreeType) {
 		ArrayList disciplines = new ArrayList();
 		ArrayList courses = new ArrayList();
-
-		System.out.println("chegueiServicoReadDisciplinesByStudent");
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IStudent student = sp.getIPersistentStudent().readByNumero(number,degreeType);
 			
-			System.out.println("Vou escrever as disciplinas encontradas:");
 			if (student != null) {
-					List frequencies = sp.getIFrequentaPersistente().readByStudentId(number);
-					for(int i = 0; i < frequencies.size(); i++) {
-						IFrequenta frequent = (IFrequenta) frequencies.get(i);
-						IDisciplinaExecucao executionCourse = frequent.getDisciplinaExecucao();
-					/*InfoExecutionCourse infoExecutionDiscipline = new InfoExecutionCourse(
-													ExecutionDiscipline.getNome(),
-													ExecutionDiscipline.getNome(),
-													ExecutionDiscipline.getPrograma(),
-													null);*/
-					//disciplines.add(infoExecutionDiscipline);
-					disciplines.add(executionCourse);
-					
-					
-					}
-				  }
-			  System.out.println("acabeiCicloServico");
-
-					
+				List frequencies = sp.getIFrequentaPersistente().readByStudentId(number);
+				for(int i = 0; i < frequencies.size(); i++) {
+					IFrequenta frequent = (IFrequenta) frequencies.get(i);
+					IDisciplinaExecucao executionCourse = frequent.getDisciplinaExecucao();
+				/*InfoExecutionCourse infoExecutionDiscipline = new InfoExecutionCourse(
+												ExecutionDiscipline.getNome(),
+												ExecutionDiscipline.getNome(),
+												ExecutionDiscipline.getPrograma(),
+												null);*/
+				//disciplines.add(infoExecutionDiscipline);
+				disciplines.add(executionCourse);
+				
+				
+				}
+			}
 			if (disciplines != null)
 				for (int i = 0; i < disciplines.size(); i++) {
 					IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) disciplines.get(i);
 					InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
 					courses.add(infoExecutionCourse);
 				}
-			
-			System.out.println("Vou escrever as disciplinas do InfoExecutionCourse:");
-			for(int i=0;i < courses.size();i++)
-			{
-			System.out.println(courses.get(i).toString());
-			}
+		
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 		}

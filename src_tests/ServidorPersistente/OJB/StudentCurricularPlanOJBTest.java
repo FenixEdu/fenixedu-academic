@@ -72,7 +72,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-            studentCurricularPlanTemp = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(600);
+            studentCurricularPlanTemp = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
             persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Failed Reading Existing");
@@ -91,7 +91,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-            studentCurricularPlanTemp = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(999999);
+            studentCurricularPlanTemp = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(999999), new TipoCurso(TipoCurso.LICENCIATURA));
             persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
@@ -168,7 +168,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-            studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(600);
+            studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
             assertNotNull(studentCurricularPlan);
             persistentSupport.confirmarTransaccao();
          
@@ -178,7 +178,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
             
 			persistentSupport.iniciarTransaccao();
 			studentCurricularPlan = null;
-			studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(600);
+			studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 			assertNull(studentCurricularPlan);
 			persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
@@ -222,7 +222,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-            studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(600);
+            studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
             assertNotNull(studentCurricularPlan);
             persistentSupport.confirmarTransaccao();
          
@@ -233,7 +233,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
             persistentSupport.confirmarTransaccao();
             
             persistentSupport.iniciarTransaccao();
-            studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(600);
+            studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 			assertNull(studentCurricularPlan);
             persistentSupport.confirmarTransaccao();
          

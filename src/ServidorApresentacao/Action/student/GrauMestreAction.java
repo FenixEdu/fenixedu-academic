@@ -12,7 +12,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.InfoCourse;
+import DataBeans.InfoDegree;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -25,6 +25,8 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  */
 
 public class GrauMestreAction extends Action {
+
+	// TODO : Not used at this time, and needs corrections
 
 	public static String INFO_STUDENT_KEY = "infoStudent";
 
@@ -64,7 +66,7 @@ public class GrauMestreAction extends Action {
 
 
 		ArrayList DisciplinesList = new ArrayList();
-		InfoCourse Course=null;
+		InfoDegree infoDegree = null;
 		String result="Inexistente";
 
 		System.out.println("iniciarChamada");
@@ -78,14 +80,14 @@ public class GrauMestreAction extends Action {
 			
 			// obter o curso de mestrado
 			
-			Course =
-				(InfoCourse) ServiceUtils.executeService(
+			infoDegree =
+				(InfoDegree) ServiceUtils.executeService(
 						userView,
 						"ReadCourseByStudent",
 						argsReadCourseByStudent);
-			if (Course!=null) {
-				System.out.println(Course.toString());
-				session.setAttribute("infoCourse", Course);
+			if (infoDegree!=null) {
+				System.out.println(infoDegree.toString());
+				session.setAttribute("infoCourse", infoDegree);
 			}
 					System.out.println("acabeiServico");
 				} catch (Exception e) {

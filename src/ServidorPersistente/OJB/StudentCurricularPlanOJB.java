@@ -20,6 +20,7 @@ import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import Util.StudentCurricularPlanState;
+import Util.TipoCurso;
 
 public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudentCurricularPlanPersistente {
     
@@ -27,16 +28,20 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
     public StudentCurricularPlanOJB() {
     }
     
-    public IStudentCurricularPlan readActiveStudentCurricularPlan(int studentNumber /*, StudentType studentType */) throws ExcepcaoPersistencia {
+    public IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber , TipoCurso degreeType ) throws ExcepcaoPersistencia {
         try {
             IStudentCurricularPlan studentCurricularPlan = null;
             String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
-            oqlQuery += " where student.number = " + studentNumber;
-            oqlQuery += " and CURRENT_STATE = " + StudentCurricularPlanState.ACTIVE;
-
-// ACRESCENTAR AQUI A VERIFICACAO DO TIPO DE ALUNO
+            oqlQuery += " where student.number = $1" ;
+            oqlQuery += " and student.degreeType = $2";
+            oqlQuery += " and currentState = $3" ;
 
             query.create(oqlQuery);
+            query.bind(studentNumber);
+            query.bind(degreeType);
+            query.bind(new Integer(StudentCurricularPlanState.ACTIVE));
+            
+            
             List result = (List) query.execute();
             lockRead(result);
             if (result.size() != 0) 

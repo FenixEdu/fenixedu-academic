@@ -11,7 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.InfoCourse;
+import DataBeans.InfoDegree;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -47,7 +47,7 @@ public class ShowDisciplineListAction extends Action {
 
 
 		ArrayList DisciplinesList = new ArrayList();
-		InfoCourse Course=null;
+		InfoDegree degree = null;
 
 		System.out.println("iniciarChamada");
 		try {
@@ -60,14 +60,16 @@ public class ShowDisciplineListAction extends Action {
 					session.setAttribute("disciplinesList", DisciplinesList);
 			}
 
-			Course =
-				(InfoCourse) ServiceUtils.executeService(
+			degree =
+				(InfoDegree) ServiceUtils.executeService(
 						userView,
 						"ReadCourseByStudent",
 						argsReadCourseByStudent);
-			if (Course!=null) {
-				System.out.println(Course.toString());
-				session.setAttribute("infoCourse", Course);
+			if (degree!=null) {
+				System.out.println(degree);
+				
+				// TODO : This session attribute name should be infoDegree
+				session.setAttribute("infoCourse", degree);
 			} else {
 				System.out.println("course esta a chegar null a Action");
 			}
