@@ -5,8 +5,10 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %> 
 <logic:present name="equivalency" >
 <bean:define id="equivalency" type="DataBeans.Seminaries.InfoEquivalency" scope="request" name="equivalency"/>
-<h2><bean:message key="label.candidacyFormTitle"/></h2>	
-<html:form action="submitCandidacyFirstInfo.do" method="post">
+<h2><bean:message key="label.candidacyFormTitle"/></h2>
+
+
+<html:form action="submitCandidacyFirstInfo.do" method="get">
 <table width="90%" align="center">
 	<tr>
 		<td width="0%" valign="top">
@@ -17,16 +19,18 @@
 		</td>
 	</tr>
 	<tr>
-	<logic:notEqual name="equivalency" property="modality.name" value="Completa">
-		<td valign="top">
-			<b><bean:message key="label.seminaries.theme"/></b>
-		</td>
-		<td>
-			<html:select property="themeID">
-					<html:optionsCollection name="equivalency" property="themes" label="name" value="idInternal"/>
-			</html:select>
-		</td>
-	</logic:notEqual>
+	<logic:equal name="equivalency" property="hasTheme" value="true">
+		<logic:notEqual name="equivalency" property="modality.name" value="Completa">
+			<td valign="top">
+				<b><bean:message key="label.seminaries.theme"/></b>
+			</td>
+			<td>
+				<html:select property="themeID">
+						<html:optionsCollection name="equivalency" property="themes" label="name" value="idInternal"/>
+				</html:select>
+			</td>
+		</logic:notEqual>
+	</logic:equal>
 	</tr>
 		<td>
 		</td>

@@ -16,8 +16,9 @@
 	<tr>
 		<td class="listClasses-header" ><bean:message key="label.seminaryTitle"/></td>
 		<td class="listClasses-header" ><bean:message key="label.enroll" /></td>
+		<td class="listClasses-header" ><bean:message key="label.deadline" /></td>
 	</tr>	
-		<logic:iterate id="seminary" name="listSeminaries">
+		<logic:iterate id="seminary" name="listSeminaries" type="DataBeans.Seminaries.InfoSeminary">
 		<tr>
 			<td class="listClasses"><bean:write name="seminary" property="name"/></td>		
 			<td class="listClasses">
@@ -27,6 +28,9 @@
 						   paramId="objectCode">
 								<bean:message key="label.seminaryEnroll" />
 				</html:link>
+			</td>
+			<td class="listClasses">
+				<%=seminary.printDeadline()%>
 			</td>
 		</tr>
 	</logic:iterate>

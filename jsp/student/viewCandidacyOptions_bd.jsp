@@ -7,9 +7,6 @@
 <logic:notEmpty name="equivalencies">
 	<logic:present name="seminary" >
     	<h2><bean:write name="seminary" property="name"/></h2>
-    	<br />
-    		<span class="error">ATENÇÃO: As inscrições foram adiadas até à próxima sexta-feira dia 26 de Setembro 2003.</span>
-    	<br />
     	<h3><bean:message key="label.seminariesEquivalencies"/></h3>
     	<table width="90%" align="center">
     	<tr>
@@ -23,12 +20,18 @@
     			<td class="listClasses"><bean:write name="equivalency" property="curricularCourse.name"/></td>	
     			<td class="listClasses"><bean:write name="equivalency" property="modality.name"/></td>		
     			<td class="listClasses">
-    				<logic:iterate indexId="index_1" id="eqTheme" name="equivalency" property="themes">
-						<logic:notEqual name="index_1" value="0">
-							,
-						</logic:notEqual>
-    					<bean:write name="eqTheme" property="shortName"/>
-    				</logic:iterate>
+					<bean:size name="equivalency" property="themes" id="themesSize"/>
+					<logic:equal name="themesSize" value="0">
+						<bean:write name="seminary" property="name"/>
+					</logic:equal>
+					<logic:notEqual name="themesSize" value="0">
+						<logic:iterate indexId="index_1" id="eqTheme" name="equivalency" property="themes">
+							<logic:notEqual name="index_1" value="0">
+								,
+							</logic:notEqual>
+							<bean:write name="eqTheme" property="shortName"/>
+						</logic:iterate>
+					</logic:notEqual>
     			</td>
     			<td class="listClasses">
     				<html:link page="/fillCandidacy.do" 
@@ -47,5 +50,5 @@
     <html:errors/>
  </logic:notEmpty>
  <logic:empty name="equivalencies">
- 	<span class="error">Não existem seminários disponíveis para a sua licenciatura.</span>
+ 	<span class="error">Não existem opções disponíveis para a sua licenciatura neste ciclo de seminários.</span>
  </logic:empty>
