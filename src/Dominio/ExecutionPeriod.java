@@ -12,6 +12,7 @@ import Util.PeriodState;
  */
 public class ExecutionPeriod implements IExecutionPeriod {
 
+	private Integer semester;
 	private PeriodState state;
 	protected IExecutionYear executionYear;
 	protected String name;
@@ -125,6 +126,20 @@ public class ExecutionPeriod implements IExecutionPeriod {
 	 */
 	public PeriodState getState() {
 		return this.state;
+	}
+
+	/* (non-Javadoc)
+	 * @see Dominio.IExecutionPeriod#getSemester()
+	 */
+	public Integer getSemester() {
+		return this.semester;
+	}
+
+	/* (non-Javadoc)
+	 * @see Dominio.IExecutionPeriod#setSemester(java.lang.Integer)
+	 */
+	public void setSemester(Integer semester) {
+		this.semester = semester;		
 	}
 
 }

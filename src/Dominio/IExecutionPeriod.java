@@ -18,4 +18,7 @@ public interface IExecutionPeriod {
 	
 	void setState(PeriodState newState);
 	PeriodState getState();
+	
+	Integer getSemester();
+	void setSemester (Integer semester);
 }
