@@ -626,74 +626,6 @@
  
  <!-- End of definitions for class QUALIFICATION -->
 
-
-<!-- Definitions for class GRATUITY -->
-
-      <class-descriptor
-              class="Dominio.Gratuity"
-              table="GRATUITY"
-      >
-        <field-descriptor 
-           name="idInternal"    
-           column="ID_INTERNAL"  
-           jdbc-type="INTEGER"
-           primarykey="true"
-           autoincrement="true"
-        />
-
-        <field-descriptor
-           name="keyStudentCurricularPlan"
-           column="KEY_STUDENT_CURRICULAR_PLAN"
-           jdbc-type="INTEGER"
-         />
- 
-         <field-descriptor
-            name="state"
-            column="STATE"
-            jdbc-type="INTEGER"
-       	    conversion="ServidorPersistente.Conversores.JavaState2SQLStateFieldConversion"
-         />
-         <field-descriptor 
-            name="gratuityState"
-            column="GRATUITY_STATE"
-            jdbc-type="INTEGER"
-       	    conversion="ServidorPersistente.Conversores.JavaGratuityState2SQLGratuityStateFieldConversion"
-         />
-         <field-descriptor 
-            name="date"
-            column="DATE"
-            jdbc-type="DATE"
-         />
-         <field-descriptor 
-            name="remarks"
-		    column="REMARKS"
-            jdbc-type="LONGVARCHAR"
-         />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-
-	   <reference-descriptor
-         	name="studentCurricularPlan"
-         	class-ref="Dominio.StudentCurricularPlan"
-         	proxy="true"
-			refresh="true"
-      	  >
-          <foreignkey field-ref="keyStudentCurricularPlan"/>
-      </reference-descriptor>
-
- 
-  </class-descriptor>
- 
- 
- <!-- End of definitions for class GRATUITY -->
-
-
-
-
 <!-- Definitions for class CANDIDATE_ENROLMENT -->
 
       <class-descriptor
@@ -1271,6 +1203,306 @@
    
 <!-- End of definitions for class Dominio.WorkLocation -->
 
+<!-- Definitions for class GRATUITY -->
+<class-descriptor
+              class="Dominio.Gratuity"
+              table="GRATUITY"
+      >
+        <field-descriptor 
+           name="idInternal"    
+           column="ID_INTERNAL"  
+           jdbc-type="INTEGER"
+           primarykey="true"
+           autoincrement="true"
+        />
 
+        <field-descriptor
+           name="keyStudentCurricularPlan"
+           column="KEY_STUDENT_CURRICULAR_PLAN"
+           jdbc-type="INTEGER"
+         />
+ 
+         <field-descriptor
+            name="state"
+            column="STATE"
+            jdbc-type="INTEGER"
+       	    conversion="ServidorPersistente.Conversores.JavaState2SQLStateFieldConversion"
+         />
+         <field-descriptor 
+            name="gratuityState"
+            column="GRATUITY_STATE"
+            jdbc-type="INTEGER"
+       	    conversion="ServidorPersistente.Conversores.JavaGratuityState2SQLGratuityStateFieldConversion"
+         />
+         <field-descriptor 
+            name="date"
+            column="DATE"
+            jdbc-type="DATE"
+         />
+         <field-descriptor 
+            name="remarks"
+		    column="REMARKS"
+            jdbc-type="LONGVARCHAR"
+         />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
+	   <reference-descriptor
+         	name="studentCurricularPlan"
+         	class-ref="Dominio.StudentCurricularPlan"
+         	proxy="true"
+			refresh="true"
+      	  >
+          <foreignkey field-ref="keyStudentCurricularPlan"/>
+      </reference-descriptor>
+
+ 
+  </class-descriptor>
+<!-- End of definitions for class Gratuity -->
+
+<!-- Definitions for class GratuityValues -->
+<class-descriptor
+		class="Dominio.GratuityValues"
+		table="GRATUITY"
+	>
+	<field-descriptor 
+    	name="idInternal"    
+        column="ID_INTERNAL"  
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+   	/>
+   	<field-descriptor
+   		name="anualValue"
+   		column="ANUAL_VALUE"
+   		jdbc-type="FLOAT"
+   	/>
+   	<field-descriptor
+   		name="scholarShipValue"
+   		column="SCHOLARSHIP_VALUE"
+   		jdbc-type="FLOAT"
+   	/>
+   	<field-descriptor
+   		name="finalProofValue"
+   		column="FINAL_PROOF_VALUE"
+   		jdbc-type="FLOAT"
+   	/>
+   	<field-descriptor
+   		name="courseValue"
+   		column="COURSE_VALUE"
+   		jdbc-type="FLOAT"
+   	/>
+   	<field-descriptor
+   		name="creditValue"
+   		column="CREDIT_VALUE"
+   		jdbc-type="FLOAT"
+   	/>
+   	<field-descriptor
+   		name="proofRequestPayment"
+   		column="PROOF_REQUEST_PAYMENT"
+   		jdbc-type="BIT"
+   	/>
+   	<field-descriptor
+   		name="startPayment"
+   		column="START_PAYMENT"
+   		jdbc-type="DATE"
+   		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+   	/>
+   	<field-descriptor
+   		name="endPayment"
+   		column="END_PAYMENT"
+   		jdbc-type="DATE"
+   		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+   	/>
+   	<field-descriptor
+   		name="keyExecutionDegree"
+   		column="KEY_EXECUTION_DEGREE"
+   		jdbc-type="INTEGER"
+   	/>
+   	<field-descriptor
+   		name="keyEmployee"
+   		column="KEY_EMPLOYEE"
+   		jdbc-type="INTEGER"
+   	/>   	   	
+    <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+    />   	
+    <reference-descriptor
+      	name="executionDegree"
+       	class-ref="Dominio.CursoExecucao"
+       	proxy="true"
+		refresh="true"
+    >
+        <foreignkey field-ref="keyExecutionDegree"/>
+    </reference-descriptor>
+    <reference-descriptor
+      	name="employee"
+       	class-ref="Dominio.Employee"
+       	proxy="true"
+		refresh="true"
+    >
+        <foreignkey field-ref="keyEmployee"/>
+    </reference-descriptor>    
+	<collection-descriptor
+		name="paymentPhaseList"
+		element-class-ref="Dominio.PaymentPhase"
+		refresh="true"
+		auto-retrieve="true"
+		auto-update="false"
+		auto-delete="false"
+		proxy="true">
+		<inverse-foreignkey field-ref="keyGratuity"/>
+	 </collection-descriptor>   
+</class-descriptor>  
+<!-- End of definitions for class GratuityValues -->
+
+<!-- Definitions for class GratuitySituation -->
+	<class-descriptor
+		class="Dominio.GratuitySituation"
+		table="GRATUITY_SITUATION"
+	>
+	<field-descriptor 
+    	name="idInternal"    
+        column="ID_INTERNAL"  
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+   	/>
+   	<field-descriptor
+   		name="payedValue"
+   		column="PAYED_VALUE"
+   		jdbc-type="FLOAT"   		
+   	/>
+   	<field-descriptor
+   		name="remainingValue"
+   		column="REMAINING_VALUE"
+   		jdbc-type="FLOAT"   		
+   	/>
+   	<field-descriptor
+   		name="exemptionPercentage"
+   		column="EXEMPTION_PERCENTAGE"
+   		jdbc-type="INTEGER"   		
+   	/>
+   	<field-descriptor
+   		name="exemptionType"
+   		column="EXEMPTION_TYPE"
+   		jdbc-type="INTEGER"   	
+		conversion="ServidorPersistente.Conversores.JavaExemptionGratuityType2SqlExemptionGratuityTypeFieldConversion"   			   		
+   	/>
+   	<field-descriptor
+   		name="exemptionDescription"
+   		column="EXEMPTION_DESCRIPTION"
+   		jdbc-type="VARCHAR"   		
+   	/>
+   	<field-descriptor
+   		name="keyGratuity"
+   		column="KEY_GRATUITY"
+   		jdbc-type="INTEGER"   		
+   	/>
+   	<field-descriptor
+   		name="keyStudent"
+   		column="KEY_STUDENT"
+   		jdbc-type="INTEGER"   		
+   	/>   	   	   	   	   	   	
+    <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+    />    
+    <reference-descriptor
+      	name="gratuity"
+       	class-ref="Dominio.GratuityValues"
+       	proxy="true"
+		refresh="true"
+    >
+        <foreignkey field-ref="keyGratuity"/>
+    </reference-descriptor>
+    <reference-descriptor
+      	name="student"
+       	class-ref="Dominio.Student"
+       	proxy="true"
+		refresh="true"
+    >
+        <foreignkey field-ref="keyStudent"/>
+    </reference-descriptor>   
+	<!--<collection-descriptor
+		name="transactionList"
+		element-class-ref="Dominio.Transaction"
+		refresh="true"
+		auto-retrieve="true"
+		auto-update="false"
+		auto-delete="false"
+		proxy="true">
+		<inverse-foreignkey field-ref="keyGratuitySituation"/>
+	 </collection-descriptor>-->         	
+</class-descriptor>
+<!-- End of definitions for class GratuitySituation -->
+<!-- Definitions for class PaymentPhase -->
+<class-descriptor
+		class="Dominio.PaymentPhase"
+		table="PAYMENT_PHASE"
+	>
+	<field-descriptor 
+    	name="idInternal"    
+        column="ID_INTERNAL"  
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+   	/> 
+   	<field-descriptor
+   		name="EnrollmentPaymentValue"
+   		column="ENROLLMENT_PAYMENT_VALUE"
+   		jdbc-type="FLOAT"
+   	/>
+   	<field-descriptor
+   		name="startDate"
+   		column="START_DATE"
+   		jdbc-type="DATE"
+   		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+   	/>
+   	<field-descriptor
+   		name="endDate"
+   		column="END_DATE"
+   		jdbc-type="DATE"
+   		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+   	/>  
+   	<field-descriptor
+   		name="value"
+   		column="VALUE"
+   		jdbc-type="INTEGER"   		   		
+   	/>
+   	<field-descriptor
+   		name="description"
+   		column="DESCRIPTION"
+   		jdbc-type="VARCHAR"   		
+   	/>
+   	<field-descriptor
+   		name="keyGratuity"
+   		column="KEY_GRATUITY"
+   		jdbc-type="INTEGER"   		
+   	/>
+   	<field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+    />      	    
+    <reference-descriptor
+      	name="gratuity"
+       	class-ref="Dominio.GratuityValues"
+       	proxy="true"
+		refresh="true"
+    >   	
+        <foreignkey field-ref="keyGratuity"/>
+    </reference-descriptor>
+</class-descriptor>
+<!-- End of definitions for class PaymentPhase -->
 <!-- Mapping of User defined classes ends here -->

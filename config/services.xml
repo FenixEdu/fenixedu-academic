@@ -3788,14 +3788,6 @@
         <filterChains/>
     </service>
     <service>
-        <name>ReadStudentByNumberAndDegreeType</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.student.ReadStudentByNumberAndDegreeType</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
-    </service>
-    <service>
         <name>ReadStudentTimeTable</name>
         <implementationClass>ServidorAplicacao.Servico.student.ReadStudentTimeTable</implementationClass>
         <description/>

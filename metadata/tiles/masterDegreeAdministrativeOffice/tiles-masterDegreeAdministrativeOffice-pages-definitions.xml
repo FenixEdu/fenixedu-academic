@@ -76,5 +76,11 @@
 	</definition>     
 	<definition name="chooseStudent" extends="definition.masterDegreeAdministrativeOffice.gratuity">
 		<put name="body" value="/posGraduacao/gratuity/chooseStudent.jsp"/>
-	</definition>	
+	</definition>
+	<definition name="chooseStudentCurricularPlan" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/chooseStudentCurricularPlan.jsp"/>
+	</definition>
+		<definition name="insertExemptionGratuity" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/insertExemptionGratuity.jsp"/>
+	</definition>			
 </tiles-definitions>

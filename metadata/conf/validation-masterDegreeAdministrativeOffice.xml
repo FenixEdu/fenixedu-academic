@@ -730,8 +730,8 @@
 		<field property="studentNumber" depends="integer, required" page="1">
 	        <arg0 key="label.student.number" />
 		</field>
-	  	<field property="specialization" depends="required" page="1">
-        	<arg0 key="label.specialization" />
+	  	<field property="executionYear" depends="required" page="1">
+        	<arg0 key="label.executionYear" />
       	</field>
     </form>
 	

@@ -593,7 +593,7 @@
 
             <form-property name="page" type="java.lang.Integer" />
             <form-property name="studentNumber" type="java.lang.Integer"/>
-            <form-property name="specialization" type="java.lang.Integer"/>
+            <form-property name="executionYear" type="java.lang.String" />
        </form-bean>
    </form-beans>
     
@@ -2055,6 +2055,7 @@
 	<action path="/chooseStudent"
 	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
 	parameter="method"
+	input="/gratuitySection.do"
 	>
 		<forward name="chooseStudent" path="chooseStudent"/>
 	</action>
@@ -2063,11 +2064,15 @@
 	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
 	parameter="method"
 	name="chooseStudentGratuityForm"
+	input="/chooseStudent.do?method=chooseStudent"
 	>
-		<forward name="insertExemption" path="insertExemption"/>
+		<forward name="insertExemptionGratuity" path="insertExemptionGratuity"/>
+		<forward name="chooseStudentCurricularPlan" path="chooseStudentCurricularPlan" />
 	</action>
       
     </action-mappings>
+    
+    
     
     <!-- ========== Controller Configuration ================================ -->
 	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>

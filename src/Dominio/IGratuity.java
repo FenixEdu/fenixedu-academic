@@ -1,12 +1,12 @@
 /*
- * ICountry.java
+ * IGratuity
  *
  * Created on 28 of December 2002, 10:02
  */
 
 /**
  *
- * @author  Nuno Nunes & Joana Mota
+ * @author Nuno Nunes & Joana Mota
  */
 
 package Dominio;

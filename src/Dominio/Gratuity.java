@@ -4,8 +4,6 @@ import java.util.Date;
 
 import Util.GratuityState;
 import Util.State;
-
-
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
