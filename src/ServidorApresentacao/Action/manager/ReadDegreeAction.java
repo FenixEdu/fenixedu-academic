@@ -79,6 +79,7 @@ public class ReadDegreeAction extends FenixAction  {
 				
 				//Caso tudo corra como esperado, i.e., o curso existe mesmo
 				request.setAttribute(SessionConstants.INFO_DEGREE, degree);
+				request.setAttribute("internalId", internalId);
 				return mapping.findForward("viewDegree");
 	}
 }
