@@ -191,8 +191,8 @@
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
 
-	<action name="teacher.accessAnnouncementManagement"
-    	type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagement" path="/teacher/accessAnnouncementManagement">
+	<action name="teacher.accessAnnouncementManagementAction"
+    	type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" path="/teacher/accessAnnouncementManagementAction">
         <forward name="AnnouncementManagement"  path="/teacher/announcementManagement.do" redirect="true"/>
 	</action>
 
