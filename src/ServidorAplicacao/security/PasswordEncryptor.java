@@ -43,7 +43,6 @@ public abstract class PasswordEncryptor {
 	private static MessageDigest getMessageDigest() {
 		MessageDigest algorithm = null;
 		try {
-			//algorithm = MessageDigest.getInstance("SHA-1");
 			algorithm = MessageDigest.getInstance("MD5");
 		} catch (NoSuchAlgorithmException e) {
 			System.out.println(e);

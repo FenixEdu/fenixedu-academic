@@ -1,5 +1,7 @@
 package ServidorAplicacao.Servico.enrollment;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -115,6 +117,16 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                                 return infoCurricularCourse;
                             }
                         }));
+        Collections.sort(infoStudentEnrolmentContext
+                .getCurricularCourses2Enroll(), new Comparator() {
+
+            public int compare(Object o1, Object o2) {
+                InfoCurricularCourse2Enroll obj1 = (InfoCurricularCourse2Enroll) o1;
+                InfoCurricularCourse2Enroll obj2 = (InfoCurricularCourse2Enroll) o2;
+                return obj1.getCurricularYear().getYear().compareTo(
+                        obj2.getCurricularYear().getYear());
+            }
+        });
         infoStudentEnrolmentContext
                 .setStudentCurrentSemesterInfoEnrollments((List) CollectionUtils
                         .collect(

@@ -87,19 +87,7 @@ public class DegreeCurricularPlan extends DomainObject implements
         return studentCurricularPlan;
     }
 
-    public boolean equals(Object obj) {
-        boolean result = false;
-
-        if (obj instanceof IDegreeCurricularPlan) {
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) obj;
-
-            result = getDegree().equals(degreeCurricularPlan.getDegree())
-                    && getName().equals(degreeCurricularPlan.getName());
-        }
-
-        return result;
-    }
-
+    
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";
         result += "idInternal = " + getIdInternal() + "; ";

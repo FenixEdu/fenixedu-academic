@@ -708,22 +708,22 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
     protected List getCommonBranchAndStudentBranchesCourses(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 
         List curricularCourses = new ArrayList();
-
-        List commonAreas = getDegreeCurricularPlan().getCommonAreas();
+        IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+        List commonAreas = degreeCurricularPlan.getCommonAreas();
         int commonAreasSize = commonAreas.size();
 
         for (int i = 0; i < commonAreasSize; i++) {
             IBranch area = (IBranch) commonAreas.get(i);
-            curricularCourses.addAll(getDegreeCurricularPlan().getCurricularCoursesFromArea(area, AreaType.BASE_OBJ));
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(area, AreaType.BASE_OBJ));
         }
 
         if (getBranch() != null) {
-            curricularCourses.addAll(getDegreeCurricularPlan().getCurricularCoursesFromArea(getBranch(),
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getBranch(),
                     AreaType.SPECIALIZATION_OBJ));
         }
 
         if (getSecundaryBranch() != null) {
-            curricularCourses.addAll(getDegreeCurricularPlan().getCurricularCoursesFromArea(getSecundaryBranch(),
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getSecundaryBranch(),
                     AreaType.SECONDARY_OBJ));
         }
 
