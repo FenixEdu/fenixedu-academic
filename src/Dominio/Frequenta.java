@@ -29,7 +29,10 @@ public class Frequenta extends DomainObject implements IFrequenta {
 		setDisciplinaExecucao(disciplinaExecucao);
 	}
 
-	public Frequenta(IStudent aluno, IDisciplinaExecucao disciplinaExecucao, IEnrolment enrolment) {
+	public Frequenta(
+		IStudent aluno,
+		IDisciplinaExecucao disciplinaExecucao,
+		IEnrolment enrolment) {
 		setAluno(aluno);
 		setDisciplinaExecucao(disciplinaExecucao);
 		setEnrolment(enrolment);
@@ -67,7 +70,6 @@ public class Frequenta extends DomainObject implements IFrequenta {
 		_chaveDisciplinaExecucao = chaveDisciplinaExecucao;
 	}
 
-
 	public Integer getKeyEnrolment() {
 		return _keyEnrolment;
 	}
@@ -82,15 +84,16 @@ public class Frequenta extends DomainObject implements IFrequenta {
 
 	public void setEnrolment(IEnrolment enrolment) {
 		this._enrolment = enrolment;
-		
+
 	}
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof IFrequenta) {
 			IFrequenta frequenta = (IFrequenta) obj;
-				resultado = //getCodigoInterno().equals(((Frequenta)obj).getCodigoInterno());
-	getAluno().equals(frequenta.getAluno()) && getDisciplinaExecucao().equals(getDisciplinaExecucao());
+			resultado =
+				getAluno().equals(frequenta.getAluno())
+					&& getDisciplinaExecucao().equals(frequenta.getDisciplinaExecucao());
 		}
 		return resultado;
 	}
