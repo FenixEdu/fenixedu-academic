@@ -5,10 +5,8 @@
 package ServidorAplicacao.Servicos;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -17,7 +15,6 @@ import junit.framework.TestCase;
 import org.dbunit.Assertion;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
@@ -72,12 +69,14 @@ public abstract class ServiceTestCase extends TestCase {
 			IDataSet dataSet = getDataSet();
 
 			backUpDataBaseContents();
+
 			DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
 
 			gestor = GestorServicos.manager();
 
 			connection.close();
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			fail("Setup failed loading database with test data set: " + ex);
 		}
 	}
@@ -92,13 +91,20 @@ public abstract class ServiceTestCase extends TestCase {
 		//		}
 	}
 
-	protected void compareDataSet(String expectedFileName) throws Exception {
+	protected void compareDataSet(String expectedFileName) {
 
-		FileReader fileReader = new FileReader(new File(expectedFileName));
-		IDataSet expectedDataSet = new FlatXmlDataSet(fileReader);
+		try {
 
-		IDataSet currentDataSet = getConnection().createDataSet();
-		Assertion.assertEquals(currentDataSet, expectedDataSet);
+			FileReader fileReader = new FileReader(new File(expectedFileName));
+			IDataSet expectedDataSet = new FlatXmlDataSet(fileReader);
+
+			IDataSet currentDataSet = getConnection().createDataSet();
+
+			Assertion.assertEquals(expectedDataSet, currentDataSet);
+		}
+		catch (Exception ex) {
+			fail("compareDataSet failed to read data set files");
+		}
 	}
 
 	protected String getBackUpDataSetFilePath() {
