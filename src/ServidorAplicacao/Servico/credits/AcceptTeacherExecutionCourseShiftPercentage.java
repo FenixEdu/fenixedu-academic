@@ -13,12 +13,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
-import Dominio.Credits;
 import Dominio.ExecutionCourse;
 import Dominio.IAula;
-import Dominio.ICredits;
 import Dominio.IExecutionCourse;
-import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.IShiftProfessorship;
 import Dominio.ITeacher;
@@ -26,7 +23,6 @@ import Dominio.ITurno;
 import Dominio.ShiftProfessorship;
 import Dominio.Teacher;
 import Dominio.Turno;
-import ServidorAplicacao.Servico.credits.calcutation.CreditsCalculator;
 import ServidorAplicacao.Servico.credits.validator.CreditsValidator;
 import ServidorAplicacao.Servico.credits.validator.OverlappingLessonPeriod;
 import ServidorAplicacao.Servico.credits.validator.OverlappingPeriodException;
@@ -39,7 +35,6 @@ import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.credits.IPersistentCredits;
 import Util.DiaSemana;
 
 /**
@@ -120,24 +115,24 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
 
                 validateShiftProfessorshipAdded(shiftProfessorshipAdded);
 
-                CreditsCalculator creditsCalculator = CreditsCalculator
-                        .getInstance();
-                IExecutionPeriod executionPeriod = professorship
-                        .getExecutionCourse().getExecutionPeriod();
-                Double lessonsCredits = creditsCalculator.calculateLessons(
-                        professorship, shiftProfessorshipAdded,
-                        shiftProfessorshipDeleted, sp);
-
-                IPersistentCredits creditsDAO = sp.getIPersistentCredits();
-                ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(
-                        teacher, executionPeriod);
-                if (credits == null) {
-                    credits = new Credits();
-                }
-                creditsDAO.simpleLockWrite(credits);
-                credits.setExecutionPeriod(executionPeriod);
-                credits.setTeacher(teacher);
-                credits.setLessons(lessonsCredits);
+//                CreditsCalculator creditsCalculator = CreditsCalculator
+//                        .getInstance();
+//                IExecutionPeriod executionPeriod = professorship
+//                        .getExecutionCourse().getExecutionPeriod();
+//                Double lessonsCredits = creditsCalculator.calculateLessons(
+//                        professorship, shiftProfessorshipAdded,
+//                        shiftProfessorshipDeleted, sp);
+//
+//                IPersistentCredits creditsDAO = sp.getIPersistentCredits();
+//                ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(
+//                        teacher, executionPeriod);
+//                if (credits == null) {
+//                    credits = new Credits();
+//                }
+//                creditsDAO.simpleLockWrite(credits);
+//                credits.setExecutionPeriod(executionPeriod);
+//                credits.setTeacher(teacher);
+//                credits.setLessons(lessonsCredits);
             }
 
         } catch (ExcepcaoPersistencia e) {
