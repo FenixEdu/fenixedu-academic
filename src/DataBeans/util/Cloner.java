@@ -1003,16 +1003,14 @@ public abstract class Cloner {
 		InfoExam infoExam = new InfoExam();
 
 		copyObjectProperties(infoExam, exam);
-
+		List infoRooms = new ArrayList();
 		if (exam != null && exam.getAssociatedRooms() != null && exam.getAssociatedRooms().size() > 0) {
-			List infoRooms = new ArrayList();
+		
 			for (int i = 0; i < exam.getAssociatedRooms().size(); i++) {
 				infoRooms.add(copyRoom2InfoRoom((ISala) exam.getAssociatedRooms().get(i)));
-			}
+			}}
 			infoExam.setAssociatedRooms(infoRooms);
-		} else {
-			infoExam.setAssociatedRooms(null);
-		}
+		 
 
 		return infoExam;
 	}
