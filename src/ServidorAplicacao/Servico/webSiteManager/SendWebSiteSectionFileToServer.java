@@ -294,8 +294,8 @@ public class SendWebSiteSectionFileToServer implements IServico {
 					+ "\t  </tr>\n"
 					+ "</table>\n"
 					+ "<div id=\"footer\">\n"
-					+ "\t  <div id=\"foot_links\"> <a href=\"http://www.ist.utl.pt/contactos/index-pt.shtml\">contactos</a> | <a href=\"mailto:ja@ist.utl.pt\">webmaster</a> | <a href=\"http://www.ist.utl.pt/pt/\">mapa\n"
-					+ "\t      do site</a> | <a href=\"html/internacional.html\"> ingl&ecirc;s</a> </div>\n"
+					+ "\t  <div id=\"foot_links\"> <a href=\"http://www.ist.utl.pt/contactos/index-pt.shtml\">contactos</a> | <a href=\"mailto:webmaster@ist.utl.pt\">webmaster</a> <!--| <a href=\"http://www.ist.utl.pt/pt/\">mapa\n"
+					+ "\t      do site</a>--> | <a href=\"/html/internacional.shtml\"> ingl&ecirc;s</a> </div>\n"
 					+ "\t  <div id=\"foot_copy\">&copy;2003, Instituto Superior Técnico. Todos os direitos reservados.</div>\n"
 					+ "\t  <div class=\"clear\"></div>\n"
 					+ "</div>\n"
@@ -316,23 +316,23 @@ public class SendWebSiteSectionFileToServer implements IServico {
 					+ "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />\n"
 					+ "<meta name=\"keywords\" content=\"ensino,  ensino superior, universidade, instituto, ciência, instituto superior técnico, investigação e desenvolvimento\" />\n"
 					+ "<meta name=\"description\" content=\"O Instituto Superior Técnico é a maior escola de engenharia, ciência e tecnologia em Portugal.\" />\n"
-					+ "<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"../css/iststyle.css\" />\n"
-					+ "<link rel=\"stylesheet\" type=\"text/css\" media=\"print\" href=\"../css/print.css\" />\n"
-					+ "<script type=\"text/javascript\" src=\"../../scripts/cssbox_scriptjs\"></script>\n"
+					+ "<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"../../css/iststyle.css\" />\n"
+					+ "<link rel=\"stylesheet\" type=\"text/css\" media=\"print\" href=\"../../css/print.css\" />\n"
+					+ "<script type=\"text/javascript\" src=\"../../scripts/cssbox_script.js\"></script>\n"
 					+ "</head>\n"
 					+ "<body>\n"
 					+ "<div id=\"header\">\n"
-					+ "\t  <div id=\"logoist\"><img alt=\"Logo: Instituto Superior T&eacute;cnico\" height=\"49\" src=\"../../img/logo_ist_alt.gif\" width=\"90\" /></div>\n"
+					+ "\t  <div id=\"logoist\"><img alt=\"Logo: Instituto Superior T&eacute;cnico\" height=\"51\" src=\"/img/logo_ist_class.gif\" width=\"38\" /></div>\n"
 					+ "\t  <div id=\"login_dotist\"><a href=\"https://fenix.ist.utl.pt/loginPage.jsp\"><img alt=\"Icon: Login - dotist\" border=\"0\" src=\"../../img/login_dotist.gif\" /></a></div>\n"
 					+ "\t  <div id=\"logoutl\"><a href=\"http://www.utl.pt/\"><img src=\"../../img/utl_logo_40.gif\" alt=\"Universidade T&eacute;cnica de Lisboa\" border=\"0\" title=\"UTL\" /></a></div>\n"
 					+ "</div>\n"
 					+ "<div id=\"nav\">"
 					+ "\t  <ul id=\"perfnav\">\n"
-					+ "\t\t    <li><a href=\"../../index.html\">Instituto</a></li>\n"
-					+ "\t\t    <li><a href=\"aluno.html\">Aluno</a></li>\n"
-					+ "\t\t    <li><a href=\"docente.html\">Docente</a></li>\n"
-					+ "\t\t    <li><a href=\"funcionario.html\">Funcion&aacute;rio</a></li>\n"
-					+ "\t\t    <li><a href=\"international.html\">International</a></li>\n"
+					+ "\t\t    <li><a href=\"../../index.shtml\">Instituto</a></li>\n"
+					+ "\t\t    <li><a href=\"/html/aluno.shtml\">Aluno</a></li>\n"
+					+ "\t\t    <li><a href=\"/html/docente.shtml\">Docente</a></li>\n"
+					+ "\t\t    <li><a href=\"/html/funcionario.shtml\">Funcion&aacute;rio</a></li>\n"
+					+ "\t\t    <li><a href=\"/html/international.shtml\">International</a></li>\n"
 					+ "\t  </ul>\n"
 					+ "</div>\n"
 					+ "<table id=\"bigtable\" width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n"
@@ -373,7 +373,7 @@ public class SendWebSiteSectionFileToServer implements IServico {
 		itemFile = itemFile.concat("\n<br /><br />\n");
 		itemFile = itemFile.concat("<span class=\"greytxt\">");
 		itemFile =
-			itemFile.concat("<a href=\"mailto:" + infoWebSiteItem.getAuthorEmail() + "\">" + infoWebSiteItem.getAuthorName() + "</a>");
+			itemFile.concat("<strong>Contacto: </strong><a href=\"mailto:" + infoWebSiteItem.getAuthorEmail() + "\">" + infoWebSiteItem.getAuthorName() + "</a>");
 		itemFile = itemFile.concat("</span>\n");
 		itemFile = itemFile.concat("</p>\n");
 		itemFile = itemFile.concat("<br />\n");
@@ -434,6 +434,8 @@ public class SendWebSiteSectionFileToServer implements IServico {
 			excerptsFile.concat(
 				" ("
 					+ "<a href=\""
+					+ "/News/"
+					+ infoWebSiteSection.getName()+"_principal/"					
 					+ infoWebSiteSection.getName()
 					+ "-"
 					+ new Mes(calendar.get(Calendar.MONTH) + 1)
