@@ -39,255 +39,282 @@ import Util.PrecedenceScopeToApply;
 
 public class VerifyLEECCurricularPlan
 {
-	public static void main(String args[])
-	{
-		try
-		{
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
-			IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSuport.getIPersistentDegreeCurricularPlan();
-			
-			persistentSuport.iniciarTransaccao();
-			
-			IDegreeCurricularPlan degreeCurricularPlan =
-				(IDegreeCurricularPlan) degreeCurricularPlanDAO.readByOID(DegreeCurricularPlan.class, new Integer("48"));
+    public static void main(String args[])
+    {
+        try
+        {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
+            IPersistentDegreeCurricularPlan degreeCurricularPlanDAO =
+                persistentSuport.getIPersistentDegreeCurricularPlan();
 
-			List branches = branchDAO.readByDegreeCurricularPlan(degreeCurricularPlan);
-			
-			Iterator iterator = branches.iterator();
-			while (iterator.hasNext())
-			{
-				IBranch branch = (IBranch) iterator.next();
-				if (branch.getBranchType().equals(BranchType.COMMON_BRANCH))
-				{
-					System.out.println("BASES: [" + branch.getName() + "]");
-					printItForThisArea(branch, AreaType.BASE_OBJ);
-				} else
-				{
-					System.out.println("ÁREA DE ESPECIALIZAÇÃO: [" + branch.getName() + "]");
-					printItForThisArea(branch, AreaType.SPECIALIZATION_OBJ);
-					System.out.println("ÁREA SECUNDÁRIA: [" + branch.getName() + "]");
-					printItForThisArea(branch, AreaType.SECONDARY_OBJ);
-				}
-			}
-			
-			printItForPrecedences(degreeCurricularPlan);
+            persistentSuport.iniciarTransaccao();
 
-			persistentSuport.confirmarTransaccao();
-		} catch (Throwable e)
-		{
-			e.printStackTrace(System.out);
-		}
-	}
+            IDegreeCurricularPlan degreeCurricularPlan =
+                (IDegreeCurricularPlan) degreeCurricularPlanDAO.readByOID(
+                    DegreeCurricularPlan.class,
+                    new Integer("48"));
 
-	/**
-	 * @param branch
-	 * @throws ExcepcaoPersistencia
-	 */
-	private static void printItForCommonArea(IBranch branch) throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentCurricularCourseScope curricularCourseScopeDAO = persistentSuport.getIPersistentCurricularCourseScope();
-		
-		System.out.println("TRONCO COMUM:");
-		List curricularCourseScopes = curricularCourseScopeDAO.readByBranch(branch);
-		sortCurricularCourseScopes(curricularCourseScopes);
-		
-		ArrayList curricularCourses = new ArrayList(); 
-		Iterator iterScopes = curricularCourseScopes.iterator();
-		
-		while(iterScopes.hasNext())
-		{
-			ICurricularCourseScope ccs = (ICurricularCourseScope)iterScopes.next();
-			if(!curricularCourses.contains(ccs.getCurricularCourse()))			
-				curricularCourses.add(ccs.getCurricularCourse());			
-		}
-		
-		Iterator iterator = curricularCourses.iterator();
-		while (iterator.hasNext())
-		{
-			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-			String name = curricularCourse.getName();
-			//String year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().toString();
-			//String semester = curricularCourseScope.getCurricularSemester().getSemester().toString();
-			String scientificAreaName = "";
-			if (curricularCourse.getScientificArea() != null)
-			{
-				scientificAreaName = curricularCourse.getScientificArea().getName();
-			}
-			System.out.print("\t");
-			System.out.println(
-				//"ANO: ["
-				//	+ year
-				//	+ "] SEMESTRE: ["
-				//	+ semester
-				//	+ "] 
-				"NOME: ["
-					+ name
-					+ "] ÁREA CIENTÍFICA: ["
-					+ scientificAreaName
-					+ "]");
-		}
-		System.out.println("");
-		System.out.println("");
-	}
+            List branches = branchDAO.readByDegreeCurricularPlan(degreeCurricularPlan);
 
-	/**
-	 * @param branch
-	 * @param areaType
-	 * @throws ExcepcaoPersistencia
-	 */
-	private static void printItForThisArea(IBranch branch, AreaType areaType) throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
-		
-		List groups = curricularCourseGroupDAO.readByBranchAndAreaType(branch, areaType);
-		Iterator iterator1 = groups.iterator();
-		while (iterator1.hasNext())
-		{
-			ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator1.next();
-			List scientificAreas = curricularCourseGroup.getScientificAreas();
-			Iterator iterator2 = scientificAreas.iterator();
-			while (iterator2.hasNext())
-			{
-				IScientificArea scientificArea = (IScientificArea) iterator2.next();
+            Iterator iterator = branches.iterator();
+            while (iterator.hasNext())
+            {
+                IBranch branch = (IBranch) iterator.next();
+                if (branch.getBranchType().equals(BranchType.COMMON_BRANCH))
+                {
+                    System.out.println("BASES: [" + branch.getName() + "]");
+					printItForThisArea(branch,AreaType.BASE_OBJ);
+                }
+                else
+                {
+                    System.out.println("ÁREA DE ESPECIALIZAÇÃO: [" + branch.getName() + "]");
+                    printItForThisArea(branch, AreaType.SPECIALIZATION_OBJ);
+                    System.out.println("ÁREA SECUNDÁRIA: [" + branch.getName() + "]");
+                    printItForThisArea(branch, AreaType.SECONDARY_OBJ);
+                }
+            }
 
-				System.out.println("");
-				System.out.print("\t");
-				System.out.println(
-					"ÁREA CIENTÍFICA: ["
-						+ scientificArea.getName()
-						+ "] Nº MÍNIMO DE CRÉDITOS: ["
-						+ curricularCourseGroup.getMinimumCredits().toString()
-						+ "] Nº MÁXIMO DE CRÉDITOS: ["
-						+ curricularCourseGroup.getMaximumCredits().toString() + "]");
-				
-				List curricularCourseScopes =
-					getCurricularCoursesByScientificAreaInGroup(curricularCourseGroup, scientificArea);
-				//sortCurricularCourseScopes(curricularCourseScopes);
-				
-				Iterator iterator3 = curricularCourseScopes.iterator();
-				while (iterator3.hasNext())
-				{
-					ICurricularCourse curricularCourse = (ICurricularCourse) iterator3.next();
-					String name = curricularCourse.getName();
-					//String year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().toString();
-					//String semester = curricularCourseScope.getCurricularSemester().getSemester().toString();
-					System.out.print("\t\t");
-					System.out.println("NOME: [" + name + "]");
-				}
-			}
-		}
-		System.out.println("");
-		System.out.println("");
-	}
+            printItForPrecedences(degreeCurricularPlan);
 
-	/**
-	 * @param curricularCourseGroup
-	 * @param scientificArea
-	 * @return curricular course scopes list from the group and belonging to that scientific area.
-	 */
-	private static List getCurricularCoursesByScientificAreaInGroup(
-		ICurricularCourseGroup curricularCourseGroup,
-		IScientificArea scientificArea)
-	{
-		List result = new ArrayList();
-		List curricularCourses = curricularCourseGroup.getCurricularCourses();
-		Iterator iterator1 = curricularCourses.iterator();
-		while (iterator1.hasNext())
-		{
-			ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
-			if (curricularCourse.getScientificArea().equals(scientificArea))
-			{
-				/*Iterator iterator2 = curricularCourse.getScopes().iterator();
-				while (iterator2.hasNext())
-				{
-					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator2.next();
-					result.add(curricularCourseScope);
-				}*/
-				
-				result.add(curricularCourse);
-			}
-		}
-		return result;
-	}
+            persistentSuport.confirmarTransaccao();
+        }
+        catch (Throwable e)
+        {
+            e.printStackTrace(System.out);
+        }
+    }
 
-	/**
-	 * @param curricularCourseScopes
-	 */
-	private static void sortCurricularCourseScopes(List curricularCourseScopes)
-	{
-		ComparatorChain comparatorChain = new ComparatorChain();
-		comparatorChain.addComparator(new BeanComparator("curricularSemester.curricularYear.year"));
-		comparatorChain.addComparator(new BeanComparator("curricularSemester.semester"));
-		comparatorChain.addComparator(new BeanComparator("curricularCourse.name"));
-		Collections.sort(curricularCourseScopes, comparatorChain);
-	}
+    /**
+     * @param branch
+     * @throws ExcepcaoPersistencia
+     */
+    private static void printItForCommonArea(IBranch branch) throws ExcepcaoPersistencia
+    {
+        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        IPersistentCurricularCourseScope curricularCourseScopeDAO =
+            persistentSuport.getIPersistentCurricularCourseScope();
 
-	/**
-	 * @param degreeCurricularPlan
-	 * @throws ExcepcaoPersistencia
-	 */
-	private static void printItForPrecedences(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
-		IPersistentCurricularCourse curricularCourseDAO = persistentSuport.getIPersistentCurricularCourse();
-		
-		System.out.println("PRECEDÊNCIAS:");
+        //System.out.println("");
+        //System.out.println("\tGRUPO: [" + branch.getName() + "]");
+        List curricularCourseScopes = curricularCourseScopeDAO.readByBranch(branch);
+        sortCurricularCourseScopes(curricularCourseScopes);
 
-		List curricularCourses = curricularCourseDAO.readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
-		Iterator iterator1 = curricularCourses.iterator();
-		while (iterator1.hasNext())
-		{
-			ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
-			List precedences = precedenceDAO.readByCurricularCourse(curricularCourse, PrecedenceScopeToApply.TO_APPLY_TO_SPAN);
-			if (precedences != null && !precedences.isEmpty())
-			{
-				System.out.print("\t");
-				System.out.println("DISCIPLINA: [" + curricularCourse.getName() + "] TEM PRECEDÊNCIA DE:");
-				Iterator iterator2 = precedences.iterator();
-				while (iterator2.hasNext())
-				{
-					IPrecedence precedence = (IPrecedence) iterator2.next();
-					List restrictions = precedence.getRestrictions();
-					Iterator iterator3 = restrictions.iterator();
-					while (iterator3.hasNext())
-					{
-						IRestriction restriction = (IRestriction) iterator3.next();
-						if (restriction instanceof RestrictionByNumberOfDoneCurricularCourses)
-						{
-							RestrictionByNumberOfDoneCurricularCourses actualRestriction =
-								(RestrictionByNumberOfDoneCurricularCourses) restriction;
-							Integer numberOfDoneCurricularCourses = actualRestriction.getNumberOfCurricularCourses();
-							System.out.print("\t\t");
-							System.out.println(numberOfDoneCurricularCourses + " disciplinas feitas");
-						} else if (restriction instanceof RestrictionDoneCurricularCourse)
-						{
-							RestrictionDoneCurricularCourse actualRestriction = (RestrictionDoneCurricularCourse) restriction;
-							System.out.print("\t\t");
-							System.out.println(actualRestriction.getPrecedentCurricularCourse().getName() + " feita");
-						} else
-						{
-							throw new RuntimeException("RESTRIÇÃO DESCONHECIDA!");
-						}
-						if (iterator3.hasNext())
-						{
-							System.out.print("\t\t\t");
-							System.out.println("E");
-						}
-					}
-					if (iterator2.hasNext())
-					{
-						System.out.print("\t\t");
-						System.out.println("OU");
-					}
-				}
-			}
-		}
-		System.out.println("");
-		System.out.println("");
-	}
+        ArrayList curricularCourses = new ArrayList();
+        Iterator iterScopes = curricularCourseScopes.iterator();
+
+        while (iterScopes.hasNext())
+        {
+            ICurricularCourseScope ccs = (ICurricularCourseScope) iterScopes.next();
+            if (!curricularCourses.contains(ccs.getCurricularCourse()))
+                curricularCourses.add(ccs.getCurricularCourse());
+        }
+
+        sortCurricularCourses(curricularCourses);
+        Iterator iterator = curricularCourses.iterator();
+        while (iterator.hasNext())
+        {
+            ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+            String name = curricularCourse.getName();
+            //String year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().toString();
+            //String semester = curricularCourseScope.getCurricularSemester().getSemester().toString();
+            String scientificAreaName = "";
+            if (curricularCourse.getScientificArea() != null)
+            {
+                scientificAreaName = curricularCourse.getScientificArea().getName();
+            }
+            System.out.print("\t");
+            System.out.println("NOME: [" + name + "] ÁREA CIENTÍFICA: [" + scientificAreaName + "]");
+        }
+        System.out.println("");
+        System.out.println("");
+    }
+
+    /**
+     * @param branch
+     * @param areaType
+     * @throws ExcepcaoPersistencia
+     */
+    private static void printItForThisArea(IBranch branch, AreaType areaType)
+        throws ExcepcaoPersistencia
+    {
+        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        IPersistentCurricularCourseGroup curricularCourseGroupDAO =
+            persistentSuport.getIPersistentCurricularCourseGroup();
+
+        List groups = curricularCourseGroupDAO.readByBranchAndAreaType(branch, areaType);
+        Iterator iterator1 = groups.iterator();
+        while (iterator1.hasNext())
+        {
+            ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator1.next();
+            List scientificAreas = curricularCourseGroup.getScientificAreas();
+            Iterator iterator2 = scientificAreas.iterator();
+
+            System.out.println("");
+            System.out.print("\t");
+            System.out.println(
+                "GRUPO: ["
+                	+ curricularCourseGroup.getIdInternal()
+                    + "] Nº MÍNIMO DE CRÉDITOS: ["
+                    + curricularCourseGroup.getMinimumCredits().toString()
+                    + "] Nº MÁXIMO DE CRÉDITOS: ["
+                    + curricularCourseGroup.getMaximumCredits().toString()
+                    + "]");
+
+            while (iterator2.hasNext())
+            {
+                IScientificArea scientificArea = (IScientificArea) iterator2.next();
+
+                System.out.println("");
+                System.out.print("\t\t");
+                System.out.println("ÁREA CIENTÍFICA: [" + scientificArea.getName() + "]");
+
+                List curricularCourses =
+                    getCurricularCoursesByScientificAreaInGroup(curricularCourseGroup, scientificArea);
+                sortCurricularCourses(curricularCourses);
+
+                Iterator iterator3 = curricularCourses.iterator();
+                while (iterator3.hasNext())
+                {
+                    ICurricularCourse curricularCourse = (ICurricularCourse) iterator3.next();
+                    String name = curricularCourse.getName();
+                    //String year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().toString();
+                    //String semester = curricularCourseScope.getCurricularSemester().getSemester().toString();
+                    System.out.print("\t\t\t");
+                    System.out.println("NOME: [" + name + "]");
+                }
+            }
+        }
+        System.out.println("");
+        System.out.println("");
+    }
+
+    /**
+     * @param curricularCourseGroup
+     * @param scientificArea
+     * @return curricular course scopes list from the group and belonging to that scientific area.
+     */
+    private static List getCurricularCoursesByScientificAreaInGroup(
+        ICurricularCourseGroup curricularCourseGroup,
+        IScientificArea scientificArea)
+    {
+        List result = new ArrayList();
+        List curricularCourses = curricularCourseGroup.getCurricularCourses();
+        Iterator iterator1 = curricularCourses.iterator();
+        while (iterator1.hasNext())
+        {
+            ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
+            if (curricularCourse.getScientificArea().equals(scientificArea))
+            {
+                /*Iterator iterator2 = curricularCourse.getScopes().iterator();
+                while (iterator2.hasNext())
+                {
+                	ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator2.next();
+                	result.add(curricularCourseScope);
+                }*/
+
+                result.add(curricularCourse);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * @param curricularCourseScopes
+     */
+    private static void sortCurricularCourseScopes(List curricularCourseScopes)
+    {
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("curricularSemester.curricularYear.year"));
+        comparatorChain.addComparator(new BeanComparator("curricularSemester.semester"));
+        comparatorChain.addComparator(new BeanComparator("curricularCourse.name"));
+        Collections.sort(curricularCourseScopes, comparatorChain);
+    }
+
+    /**
+     * @param degreeCurricularPlan
+     * @throws ExcepcaoPersistencia
+     */
+    private static void printItForPrecedences(IDegreeCurricularPlan degreeCurricularPlan)
+        throws ExcepcaoPersistencia
+    {
+        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
+        IPersistentCurricularCourse curricularCourseDAO =
+            persistentSuport.getIPersistentCurricularCourse();
+
+        System.out.println("PRECEDÊNCIAS:");
+
+        List curricularCourses =
+            curricularCourseDAO.readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
+        sortCurricularCourses(curricularCourses);
+        Iterator iterator1 = curricularCourses.iterator();
+        while (iterator1.hasNext())
+        {
+            ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
+            List precedences =
+                precedenceDAO.readByCurricularCourse(
+                    curricularCourse,
+                    PrecedenceScopeToApply.TO_APPLY_TO_SPAN);
+            if (precedences != null && !precedences.isEmpty())
+            {
+                System.out.print("\t");
+                System.out.println(
+                    "DISCIPLINA: [" + curricularCourse.getName() + "] TEM PRECEDÊNCIA DE:");
+                Iterator iterator2 = precedences.iterator();
+                while (iterator2.hasNext())
+                {
+                    IPrecedence precedence = (IPrecedence) iterator2.next();
+                    List restrictions = precedence.getRestrictions();
+                    Iterator iterator3 = restrictions.iterator();
+                    while (iterator3.hasNext())
+                    {
+                        IRestriction restriction = (IRestriction) iterator3.next();
+                        if (restriction instanceof RestrictionByNumberOfDoneCurricularCourses)
+                        {
+                            RestrictionByNumberOfDoneCurricularCourses actualRestriction =
+                                (RestrictionByNumberOfDoneCurricularCourses) restriction;
+                            Integer numberOfDoneCurricularCourses =
+                                actualRestriction.getNumberOfCurricularCourses();
+                            System.out.print("\t\t");
+                            System.out.println(numberOfDoneCurricularCourses + " disciplinas feitas");
+                        }
+                        else if (restriction instanceof RestrictionDoneCurricularCourse)
+                        {
+                            RestrictionDoneCurricularCourse actualRestriction =
+                                (RestrictionDoneCurricularCourse) restriction;
+                            System.out.print("\t\t");
+                            System.out.println(
+                                actualRestriction.getPrecedentCurricularCourse().getName() + " feita");
+                        }
+                        else
+                        {
+                            throw new RuntimeException("RESTRIÇÃO DESCONHECIDA!");
+                        }
+                        if (iterator3.hasNext())
+                        {
+                            System.out.print("\t\t\t");
+                            System.out.println("E");
+                        }
+                    }
+                    if (iterator2.hasNext())
+                    {
+                        System.out.print("\t\t");
+                        System.out.println("OU");
+                    }
+                }
+            }
+        }
+        System.out.println("");
+        System.out.println("");
+    }
+
+    private static void sortCurricularCourses(List curricularCourseList)
+    {
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("name"));
+
+        Collections.sort(curricularCourseList, comparatorChain);
+    }
 
 }
