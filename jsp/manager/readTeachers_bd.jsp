@@ -17,7 +17,7 @@
 		</logic:present>		
 	</tr>
 </table>
-<%--
+
 <br>
 
 <span class="error"><html:errors/></span>
@@ -46,7 +46,7 @@
 				
 				<logic:iterate id="infoTeacher" name="infoTeachersList">
 					<%--<bean:define id="infoExecutionPeriod" name="infoTeacher" property="infoExecutionPeriod"/>--%>
-				<%--	<tr>	 			
+					<tr>	 			
 						<td class="listClasses"><bean:write name="infoTeacher" property="infoPerson.nome"/>
 						</td>
 						<td class="listClasses"><bean:write name="infoTeacher" property="teacherNumber"/>
@@ -57,4 +57,3 @@
 			</table>
 		</logic:notEmpty>	 	
 	</logic:present>
---%>
