@@ -81,5 +81,6 @@
 		<br/>
 		<br/>
 		<html:submit styleClass="inputbutton"><bean:message key="button.continue.enrolment" bundle="STUDENT_RESOURCES"/></html:submit>
+		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>		
 	</html:form>
 </logic:notEqual>

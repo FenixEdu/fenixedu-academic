@@ -18,6 +18,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -53,37 +54,48 @@ public class GetAllAvailableCurricularCoursesForCoordinatorEquivalence implement
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 			IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
+			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 
 			InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
 			IDegreeCurricularPlan degreeCurricularPlan = Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoDegreeCurricularPlan);
 
-			List studentCurricularPlansList = persistentStudentCurricularPlan.readByDegreeCurricularPlan(degreeCurricularPlan);
+			List degreeCurricularPlansList = persistentDegreeCurricularPlan.readByDegree(degreeCurricularPlan.getDegree());
+
+			Iterator iterator1 = degreeCurricularPlansList.iterator();
+			while(iterator1.hasNext()) {
+				IDegreeCurricularPlan degreeCurricularPlan2 = (IDegreeCurricularPlan) iterator1.next();
+
+				List studentCurricularPlansList = persistentStudentCurricularPlan.readByDegreeCurricularPlan(degreeCurricularPlan2);
 			
-			Iterator iterator2 = studentCurricularPlansList.iterator();
-			while(iterator2.hasNext()) {
-				IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator2.next();
-				IStudent student = studentCurricularPlan.getStudent();
-				final IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
+				Iterator iterator2 = studentCurricularPlansList.iterator();
+				while(iterator2.hasNext()) {
+					IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator2.next();
+					IStudent student = studentCurricularPlan.getStudent();
+					final IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 
-				List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentCurricularPlan);
+					List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentCurricularPlan);
 
-				List studentAprovedEnrolments = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
-					public boolean evaluate(Object obj) {
-						IEnrolment enrolment = (IEnrolment) obj;
-						return enrolment.getEnrolmentState().equals(EnrolmentState.APROVED);
-					}
-				});
+					List studentAprovedEnrolments = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
+						public boolean evaluate(Object obj) {
+							IEnrolment enrolment = (IEnrolment) obj;
+							return enrolment.getEnrolmentState().equals(EnrolmentState.APROVED);
+						}
+					});
 
-				List studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan = (List) CollectionUtils.select(studentAprovedEnrolments, new Predicate() {
-					public boolean evaluate(Object obj) {
-						IEnrolment enrolment = (IEnrolment) obj;
-						return !enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().equals(studentActiveCurricularPlan.getDegreeCurricularPlan());
-					}
-				});
+					List studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan = (List) CollectionUtils.select(studentAprovedEnrolments, new Predicate() {
+						public boolean evaluate(Object obj) {
+							IEnrolment enrolment = (IEnrolment) obj;
+//System.out.println(enrolment);
+							return !enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().equals(studentActiveCurricularPlan.getDegreeCurricularPlan());
+						}
+					});
 
-				List studentAprovedEnrolmentsWithDiferentDegreeCurricularPlanAndWithNoEquivalences = GetListsOfCurricularCoursesForEquivalence.getEnrolmentsWithNoEquivalences(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan, persistentSupport);
+//System.out.println(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan);
 
-				midResult.addAll(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlanAndWithNoEquivalences);
+					List studentAprovedEnrolmentsWithDiferentDegreeCurricularPlanAndWithNoEquivalences = GetListsOfCurricularCoursesForEquivalence.getEnrolmentsWithNoEquivalences(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan, persistentSupport);
+
+					midResult.addAll(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlanAndWithNoEquivalences);
+				}
 			}
 
 			Iterator iterator3 = midResult.iterator();

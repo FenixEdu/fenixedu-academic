@@ -1,6 +1,7 @@
 package ServidorPersistente;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
@@ -13,4 +14,5 @@ public interface IPersistentDegreeCurricularPlan extends IPersistentObject {
 	public void deleteDegreeCurricularPlan(IDegreeCurricularPlan planoCurricular) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
 	public IDegreeCurricularPlan readByNameAndDegree(String name, ICurso degree) throws ExcepcaoPersistencia;
+	public List readByDegree(ICurso degree) throws ExcepcaoPersistencia;
 }

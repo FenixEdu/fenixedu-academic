@@ -5,7 +5,7 @@
 	<definition name="df.page.main" extends="definition.student.masterPage" >
 		<put name="body" value="/student/main_bd.jsp" />
 	</definition>
-	<definition name="df.page.acceptEnrolment" extends="definition.student.curricular.course.enrolment" >
+	<definition name="df.page.acceptEnrolment" extends="definition.student.masterPage" >
 		<put name="body" value="/student/acceptEnrolment_bd.jsp" />
 	</definition>
 	<definition name="df.page.showAvailableCurricularCourses" extends="definition.student.curricular.course.enrolment" >

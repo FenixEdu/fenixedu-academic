@@ -34,6 +34,8 @@ public class EnrolmentStrategyLEQ extends EnrolmentStrategy implements IEnrolmen
 
 		super.setEnrolmentContext(super.filterByExecutionCourses(super.getEnrolmentContext()));
 
+		super.setEnrolmentContext(super.filterScopesOfCurricularCoursesToBeChosenForOptionalCurricularCourses(super.getEnrolmentContext()));
+
 		enrolmentRule = new EnrolmentFilterCurricularYearPrecedence();
 		super.setEnrolmentContext(enrolmentRule.apply(super.getEnrolmentContext()));
 

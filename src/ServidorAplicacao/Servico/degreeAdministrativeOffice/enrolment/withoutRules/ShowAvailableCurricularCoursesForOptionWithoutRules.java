@@ -44,10 +44,19 @@ public class ShowAvailableCurricularCoursesForOptionWithoutRules implements ISer
 	}
 
 	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext) throws FenixServiceException {
+
+		// Small trick to be able to use code from class 'EnrolmentFilterAllOptionalCoursesRule' but with no restrivtion in terms of
+		// minimal curricular year for curricular courses that can be chosen for optional courses:
+		int min_year_of_optional_courses = infoEnrolmentContext.getInfoStudentActiveCurricularPlan().getInfoDegreeCurricularPlan().getMinimalYearForOptionalCourses().intValue();
+		infoEnrolmentContext.getInfoStudentActiveCurricularPlan().getInfoDegreeCurricularPlan().setMinimalYearForOptionalCourses(new Integer(1));
+		
 		IEnrolmentRule enrolmentRule = new EnrolmentFilterAllOptionalCoursesRule();
 		EnrolmentContext enrolmentContext = enrolmentRule.apply(EnrolmentContextManager.getEnrolmentContext(infoEnrolmentContext));
 		InfoEnrolmentContext infoEnrolmentContext2 = EnrolmentContextManager.getInfoEnrolmentContext(enrolmentContext);
 		infoEnrolmentContext2.setOptionalInfoCurricularCoursesToChooseFromDegree(this.filterByExecutionCourses(infoEnrolmentContext2.getOptionalInfoCurricularCoursesToChooseFromDegree(), infoEnrolmentContext2.getInfoExecutionPeriod()));
+
+		infoEnrolmentContext.getInfoStudentActiveCurricularPlan().getInfoDegreeCurricularPlan().setMinimalYearForOptionalCourses(new Integer(min_year_of_optional_courses));
+
 		return infoEnrolmentContext2;
 	}
 

@@ -25,6 +25,7 @@
 			<th align="center"><bean:message key="label.curricular.course.name"/></th>
 			<th align="center"><bean:message key="label.degree.name"/></th>
 			<th align="center"><bean:message key="label.student.number"/></th>
+			<th align="center">&nbsp;</th>
 		</tr>
 		<logic:iterate id="infoEnrolment" name="enrolmentsList" indexId="index">
 			<bean:define id="link">
@@ -32,18 +33,17 @@
 			</bean:define>
 			<tr>
 				<td align="center">
-					<html:link page="<%= pageContext.findAttribute("link").toString() %>">
 						<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
-					</html:link>
 				</td>
 				<td align="center">
-					<html:link page="<%= pageContext.findAttribute("link").toString() %>">
 						<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/>
-					</html:link>
+				</td>
+				<td align="center">
+						<bean:write name="infoEnrolment" property="infoStudentCurricularPlan.infoStudent.number"/>
 				</td>
 				<td align="center">
 					<html:link page="<%= pageContext.findAttribute("link").toString() %>">
-						<bean:write name="infoEnrolment" property="infoStudentCurricularPlan.infoStudent.number"/>
+						<bean:message key="label.chosse.situation"/>
 					</html:link>
 				</td>
 			</tr>

@@ -6,11 +6,17 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
 
 import Dominio.ICurricularCourseScope;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
+import Dominio.IPossibleCurricularCourseForOptionalCurricularCourse;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author dcs-rjao
@@ -71,6 +77,39 @@ public abstract class EnrolmentStrategy implements IEnrolmentStrategy {
 		}
 
 		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(curricularCoursesFromActualExecutionPeriod);
+		return enrolmentContext;
+	}
+
+	protected EnrolmentContext filterScopesOfCurricularCoursesToBeChosenForOptionalCurricularCourses(EnrolmentContext enrolmentContext) {
+
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentChosenCurricularCourseForOptionalCurricularCourse persistentChosenCurricularCourseForOptionalCurricularCourse = sp.getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
+
+			List possibleCurricularCoursesForOptionalCurricularCourseList = persistentChosenCurricularCourseForOptionalCurricularCourse.readAllByDegreeCurricularPlan(enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan());
+			List possibleCurricularCourses = (List) CollectionUtils.collect(possibleCurricularCoursesForOptionalCurricularCourseList, new Transformer() {
+				public Object transform(Object obj) {
+					IPossibleCurricularCourseForOptionalCurricularCourse possibleCurricularCourseForOptionalCurricularCourse = (IPossibleCurricularCourseForOptionalCurricularCourse) obj;
+					return possibleCurricularCourseForOptionalCurricularCourse.getPossibleCurricularCourse();
+				}
+			});
+
+			List curricularCourseScopesToRemove = new ArrayList();
+			Iterator iterator = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
+			while(iterator.hasNext()) {
+				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
+				if(possibleCurricularCourses != null) {
+					if(possibleCurricularCourses.contains(curricularCourseScope.getCurricularCourse())) {
+						curricularCourseScopesToRemove.add(curricularCourseScope);
+					}
+				}
+			}
+
+			List finalSpan = (List) CollectionUtils.subtract(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled(), curricularCourseScopesToRemove);
+			enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(finalSpan);
+		} catch (ExcepcaoPersistencia e) {
+		}
+
 		return enrolmentContext;
 	}
 

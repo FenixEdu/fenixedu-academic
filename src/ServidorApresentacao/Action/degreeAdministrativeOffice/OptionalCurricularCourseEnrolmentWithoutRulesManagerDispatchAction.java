@@ -1,16 +1,12 @@
 package ServidorApresentacao.Action.degreeAdministrativeOffice;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -20,24 +16,22 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
-import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
-import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
+import ServidorApresentacao.Action.commons.GeneralCurricularCourseEnrolmentManagerDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import Util.CurricularCourseType;
 
 /**
  * @author David Santos
  *
  */
 
-public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends TransactionalDispatchAction {
+public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends GeneralCurricularCourseEnrolmentManagerDispatchAction {
 
-	private final String[] forwards = { "showAvailableOptionalCurricularCourses", "verifyEnrolment", "acceptEnrolment", "searchOptionalCurricularCourses", "concreteOptionalList", "cancel", "home" };
+	private final String[] forwards = { "showAvailableOptionalCurricularCourses", "verifyEnrolment", "acceptEnrolment", "searchOptionalCurricularCourses", "concreteOptionalList", "cancel" };
 
 	public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -45,15 +39,23 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 
 		HttpSession session = request.getSession();
 
+		session.removeAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
+		session.removeAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
+		session.removeAttribute(SessionConstants.ACTUAL_ENROLMENT_KEY);
+
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		InfoStudent infoStudent = CurricularCourseEnrolmentWithRulesManagerDispatchAction.getInfoStudent(request, form, userView);
+		InfoStudent infoStudent = super.getInfoStudent(request, form, userView);
 		Object args[] = { infoStudent };
 
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableOptionalCurricularCoursesWithoutRules", args);
 
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
-		this.initializeForm(infoEnrolmentContext, (DynaActionForm) form);
+
+		super.initializeForm(infoEnrolmentContext, (DynaActionForm) form);
+
+		super.initializeRemovedCurricularCourseScopesList(request, infoEnrolmentContext);
+
 		return mapping.findForward(forwards[0]);
 	}
 
@@ -61,20 +63,30 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 
 		super.validateToken(request, form, mapping, "error.transaction.enrolment");
 
-		DynaActionForm enrolmentForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
+
+		if (isCancelled(request)) {
+			session.removeAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
+			session.removeAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
+			session.removeAttribute(SessionConstants.ACTUAL_ENROLMENT_KEY);
+			return mapping.findForward(forwards[5]);
+		}
+
+		DynaActionForm enrolmentForm = (DynaActionForm) form;
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		InfoEnrolmentContext infoEnrolmentContext = this.processEnrolment(request, enrolmentForm, session);
 
-		Object args[] = { infoEnrolmentContext };
+		List list = (List) session.getAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
+
+		Object args[] = { infoEnrolmentContext, list };
 
 		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ValidateActualOptionalEnrolmentWithouRules", args);
 
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 		if (!infoEnrolmentContext.getEnrolmentValidationResult().isSucess()) {
-			this.saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
+			super.saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
 			return mapping.findForward(forwards[0]);
 		} else {
 			return mapping.findForward(forwards[1]);
@@ -99,10 +111,13 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 
 		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ConfirmActualOptionalEnrolmentWithoutRules", args);
 		if (infoEnrolmentContext.getEnrolmentValidationResult().isSucess()) {
+			session.removeAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
+			session.removeAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
+			session.removeAttribute(SessionConstants.ACTUAL_ENROLMENT_KEY);
 			return mapping.findForward(forwards[2]);
 		} else {
 			session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
-			saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
+			super.saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
 			return mapping.findForward(forwards[0]);
 		}
 
@@ -128,8 +143,6 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 
-		this.initializeRemovedCurricularCourseScopesList(request, infoEnrolmentContext);
-
 		return mapping.findForward(forwards[3]);
 	}
 
@@ -142,14 +155,9 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
 
+		// FIXME DAVID-RICARDO: Problema com index out of bounds
 		if(isCancelled(request)) {
-			if(enrolmentForm.get("curricularCourses") == null) {
-				enrolmentForm.set("curricularCourses", new Integer[infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().size()]);
-			}
-			Integer[] curricularCoursesIndexes = (Integer[]) enrolmentForm.get("curricularCourses");
-			Integer optionalCurricularCourseIndex = (Integer) enrolmentForm.get("optionalCourseIndex");
-			curricularCoursesIndexes[optionalCurricularCourseIndex.intValue()] = null;
-			enrolmentForm.set("curricularCourses", curricularCoursesIndexes);
+			super.uncheckCurricularCourse(enrolmentForm, infoEnrolmentContext);
 			return mapping.findForward(forwards[0]);
 		}
 
@@ -199,8 +207,9 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 		Integer optionalCourseChoosenIndex = (Integer) enrolmentForm.get("optionalCurricularCourse");
 
 		if(optionalCourseChoosenIndex == null) {
-			infoEnrolmentContext.getEnrolmentValidationResult().setErrorMessage("error.choose.one.optional.curricular.course");
-			this.saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
+			infoEnrolmentContext.getEnrolmentValidationResult().reset();
+			infoEnrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.NO_OPTIONAL_CURRICULAR_COURSES_TO_ENROLL);
+			super.saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
 			return mapping.findForward(forwards[4]);
 		} else {
 			InfoCurricularCourse infoCurricularCourseOptional = (InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(optionalCourseChoosenIndex.intValue());
@@ -214,132 +223,6 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 			session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 
 			return mapping.findForward(forwards[0]);
-		}
-	}
-
-	private void initializeForm(InfoEnrolmentContext infoEnrolmentContext, DynaActionForm enrolmentForm) {
-		List actualEnrolment = infoEnrolmentContext.getActualEnrolment();
-		List infoFinalSpan = infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
-		Integer[] curricularCoursesIndexes = new Integer[infoFinalSpan.size()];
-
-		for (int i = 0; i < infoFinalSpan.size(); i++) {
-			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoFinalSpan.get(i);
-			InfoCurricularCourse infoCurricularCourse = infoCurricularCourseScope.getInfoCurricularCourse();
-
-			if (infoCurricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)) {
-				List optionalEnrolments = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments();
-				Iterator optionalEnrolmentsIterator = optionalEnrolments.iterator();
-				while (optionalEnrolmentsIterator.hasNext()) {
-					InfoEnrolmentInOptionalCurricularCourse optionalEnrolment = (InfoEnrolmentInOptionalCurricularCourse) optionalEnrolmentsIterator.next();
-					if (optionalEnrolment.getInfoCurricularCourseScope().getInfoCurricularCourse().equals(infoCurricularCourse)) {
-						curricularCoursesIndexes[i] = new Integer(i);
-						break;
-					}
-				}
-			} else {
-				if (actualEnrolment.contains(infoCurricularCourseScope)) {
-					curricularCoursesIndexes[i] = new Integer(i);
-				} else {
-					curricularCoursesIndexes[i] = null;
-				}
-			}
-		}
-		enrolmentForm.set("curricularCourses", curricularCoursesIndexes);
-	}
-
-	private InfoEnrolmentContext processEnrolment(HttpServletRequest request, DynaActionForm enrolmentForm, HttpSession session) {
-
-		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
-
-		if (request.getParameter("curricularCourses") == null)
-			enrolmentForm.set("curricularCourses", new Integer[infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().size()]);
-
-		Integer[] curricularCourses = (Integer[]) enrolmentForm.get("curricularCourses");
-
-		List actualEnrolment = infoEnrolmentContext.getActualEnrolment();
-
-		actualEnrolment.clear();
-		actualEnrolment.addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesAutomaticalyEnroled());
-
-		List curricularCourseScopesToBeEnrolled = infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
-		List optionalCurricularCoursesChoosen = new ArrayList();
-		if (curricularCourses != null) {
-			for (int i = 0; i < curricularCourses.length; i++) {
-				Integer curricularCourseIndex = curricularCourses[i];
-				if (curricularCourseIndex != null) {
-					InfoCurricularCourseScope curricularCourseScope = (InfoCurricularCourseScope) curricularCourseScopesToBeEnrolled.get(curricularCourseIndex.intValue());
-					if (!curricularCourseScope.getInfoCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)) {
-						actualEnrolment.add(curricularCourseScope);
-					} else {
-						optionalCurricularCoursesChoosen.add(curricularCourseScope.getInfoCurricularCourse());
-					}
-				}
-			}
-		}
-
-		List enrolmentsInOptionalCourses = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments();
-
-		if (enrolmentsInOptionalCourses.size() != optionalCurricularCoursesChoosen.size()) {
-			Iterator optionalEnrolmentsIterator = enrolmentsInOptionalCourses.iterator();
-			while (optionalEnrolmentsIterator.hasNext()) {
-				InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) optionalEnrolmentsIterator.next();
-				InfoCurricularCourse optionalCurricularCourse = infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope().getInfoCurricularCourse();
-				if (!optionalCurricularCoursesChoosen.contains(optionalCurricularCourse)) {
-					optionalEnrolmentsIterator.remove();
-//					this.setRemovedCurricularCourseScope(request, infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope());
-				}
-			}
-		}
-		return infoEnrolmentContext;
-	}
-
-	private void saveErrorsFromInfoEnrolmentContext(HttpServletRequest request, InfoEnrolmentContext infoEnrolmentContext) {
-		ActionErrors actionErrors = new ActionErrors();
-
-		EnrolmentValidationResult enrolmentValidationResult = infoEnrolmentContext.getEnrolmentValidationResult();
-
-		Map messages = enrolmentValidationResult.getMessage();
-
-		Iterator messagesIterator = messages.keySet().iterator();
-		ActionError actionError;
-		while (messagesIterator.hasNext()) {
-			String message = (String) messagesIterator.next();
-			List messageArguments = (List) messages.get(message);
-			actionError = new ActionError(message, messageArguments.toArray());
-			actionErrors.add(message, actionError);
-		}
-		saveErrors(request, actionErrors);
-	}
-
-	private void computeRemovedCurricularCourseScope(HttpServletRequest request, InfoEnrolmentContext infoEnrolmentContext) {
-		HttpSession session = request.getSession();
-		List list = (List) session.getAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
-		if(list != null) {
-			List aux = new ArrayList();
-			aux.addAll(infoEnrolmentContext.getActualEnrolment());
-			Iterator iterator = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().iterator();
-			while(iterator.hasNext()) {
-				InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) iterator.next();
-				InfoCurricularCourseScope optionalCurricularCourseScope = infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope();
-				aux.add(optionalCurricularCourseScope);
-			}
-			session.setAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY, list);
-		}
-	}
-
-	private void initializeRemovedCurricularCourseScopesList(HttpServletRequest request, InfoEnrolmentContext infoEnrolmentContext) {
-		HttpSession session = request.getSession();
-		List list = (List) session.getAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
-		if(list == null) {
-			list = new ArrayList();
-			list.addAll(infoEnrolmentContext.getActualEnrolment());
-			Iterator iterator = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().iterator();
-			while(iterator.hasNext()) {
-				InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) iterator.next();
-				InfoCurricularCourseScope optionalCurricularCourseScope = infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope();
-				list.add(optionalCurricularCourseScope);
-			}
-			session.setAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY, list);
 		}
 	}
 }

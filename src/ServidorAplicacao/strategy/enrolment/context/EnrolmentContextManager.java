@@ -698,7 +698,7 @@ public abstract class EnrolmentContextManager {
 		try {
 			enrolmentPeriod = getEnrolmentPeriod(enrolmentPeriodDAO, studentActiveCurricularPlan);
 		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
-			// There is nothing to do!
+			//FIXME DAVID-RICARDO: There is nothing to do!?
 		}
 		IExecutionPeriod executionPeriod = enrolmentPeriod.getExecutionPeriod();
 
@@ -716,7 +716,8 @@ public abstract class EnrolmentContextManager {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
 //				return curricularCourseScope.getCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ);
 				return	curricularCourseScope.getCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ) &&
-						curricularCourseScope.getBranch().equals(studentBranch) && //FIXME DAVID-RICARDO: Verificar o ramo vazio!?
+						//FIXME DAVID-RICARDO: Verificar o ramo e o semestre?
+						(curricularCourseScope.getBranch().equals(studentBranch) || (curricularCourseScope.getBranch().getName().equals("") && curricularCourseScope.getBranch().getCode().equals(""))) &&
 						curricularCourseScope.getCurricularSemester().getSemester().equals(currentSemester);
 			}
 		});
@@ -746,7 +747,11 @@ public abstract class EnrolmentContextManager {
 				return (enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED) || enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED)) &&
 						enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ) &&
 						enrolment.getCurricularCourseScope().getCurricularSemester().getSemester().equals(currentSemester) &&
-						enrolment.getCurricularCourseScope().getBranch().equals(studentBranch);
+						//FIXME DAVID-RICARDO: Verificar o ramo e o semestre?
+						(enrolment.getCurricularCourseScope().getBranch().equals(studentBranch) ||
+						(enrolment.getCurricularCourseScope().getBranch().getName().equals("") &&
+						enrolment.getCurricularCourseScope().getBranch().getCode().equals("")));
+//						enrolment.getCurricularCourseScope().getBranch().equals(studentBranch);
 			}
 		});
 

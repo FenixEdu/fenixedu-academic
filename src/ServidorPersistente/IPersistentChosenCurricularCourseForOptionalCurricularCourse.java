@@ -6,6 +6,10 @@
  */
 package ServidorPersistente;
 
+import java.util.List;
+
+import Dominio.IDegreeCurricularPlan;
+
 
 /**
  * @author dcs-rjao
@@ -14,4 +18,6 @@ package ServidorPersistente;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public interface IPersistentChosenCurricularCourseForOptionalCurricularCourse extends IPersistentObject {
+	public List readAllByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
+
 }
