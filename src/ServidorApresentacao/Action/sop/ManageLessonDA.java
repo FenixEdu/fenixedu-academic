@@ -317,9 +317,9 @@ public class ManageLessonDA
 		IUserView userView = (IUserView) sessao.getAttribute("UserView");
 		GestorServicos gestor = GestorServicos.manager();
 
-		System.out.println(
-			"##### lessonOID = "
-				+ request.getParameter(SessionConstants.LESSON_OID));
+//		System.out.println(
+//			"##### lessonOID = "
+//				+ request.getParameter(SessionConstants.LESSON_OID));
 		Object argsReadLessonByOID[] =
 			{ new Integer(request.getParameter(SessionConstants.LESSON_OID))};
 
@@ -348,8 +348,9 @@ public class ManageLessonDA
 					"ApagarAula",
 					argsApagarAula);
 
-			//		if (result != null && result.booleanValue()) {
-			//		}
+			if (result != null && result.booleanValue()) {
+				request.removeAttribute(SessionConstants.LESSON_OID);
+			}
 
 		}
 
