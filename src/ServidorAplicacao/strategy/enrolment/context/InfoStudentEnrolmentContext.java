@@ -23,6 +23,8 @@ public final class InfoStudentEnrolmentContext
 	private InfoStudentCurricularPlan infoStudentCurricularPlan;
 	private List studentCurrentSemesterInfoEnrollments;
 	private List finalInfoCurricularCoursesWhereStudentCanBeEnrolled;
+	private Integer creditsInSecundaryArea;
+	private Integer creditsInSpecializationArea;
 
 	public InfoStudentEnrolmentContext() {}
 
@@ -91,6 +93,38 @@ public final class InfoStudentEnrolmentContext
 	}
 
 	/**
+	 * @return Returns the creditsInSecundaryArea.
+	 */
+	public Integer getCreditsInSecundaryArea()
+	{
+		return creditsInSecundaryArea;
+	}
+
+	/**
+	 * @param creditsInSecundaryArea The creditsInSecundaryArea to set.
+	 */
+	public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea)
+	{
+		this.creditsInSecundaryArea = creditsInSecundaryArea;
+	}
+
+	/**
+	 * @return Returns the creditsInSpecializationArea.
+	 */
+	public Integer getCreditsInSpecializationArea()
+	{
+		return creditsInSpecializationArea;
+	}
+
+	/**
+	 * @param creditsInSpecializationArea The creditsInSpecializationArea to set.
+	 */
+	public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea)
+	{
+		this.creditsInSpecializationArea = creditsInSpecializationArea;
+	}
+
+	/**
 	 * @param infoStudentEnrolmentContext
 	 * @return StudentEnrolmentContext
 	 */
@@ -126,7 +160,10 @@ public final class InfoStudentEnrolmentContext
 		infoStudentEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);
 		infoStudentEnrolmentContext.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 		infoStudentEnrolmentContext.setStudentCurrentSemesterInfoEnrollments(studentCurrentSemesterInfoEnrollments);
+		infoStudentEnrolmentContext.setCreditsInSecundaryArea(studentEnrolmentContext.getCreditsInSecundaryArea());
+		infoStudentEnrolmentContext.setCreditsInSpecializationArea(studentEnrolmentContext.getCreditsInSpecializationArea());
 		
 		return infoStudentEnrolmentContext;
 	}
+
 }

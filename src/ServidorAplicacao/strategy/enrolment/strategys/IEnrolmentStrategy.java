@@ -13,7 +13,7 @@ public interface IEnrolmentStrategy
 	public void setStudentEnrolmentContext(StudentEnrolmentContext studentEnrolmentContext);
 
 	public StudentEnrolmentContext getAvailableCurricularCourses() throws ExcepcaoPersistencia;
-	public StudentEnrolmentContext validateEnrolment();
-	public StudentEnrolmentContext getOptionalCurricularCourses();
-	public StudentEnrolmentContext getDegreesForOptionalCurricularCourses();
+//	public StudentEnrolmentContext validateEnrolment();
+//	public StudentEnrolmentContext getOptionalCurricularCourses();
+//	public StudentEnrolmentContext getDegreesForOptionalCurricularCourses();
 }

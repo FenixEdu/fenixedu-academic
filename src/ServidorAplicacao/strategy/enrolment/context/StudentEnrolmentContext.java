@@ -28,7 +28,9 @@ public final class StudentEnrolmentContext
 	private List studentApprovedEnrollments;
 	private List studentCurrentSemesterEnrollments;
 	private List finalCurricularCoursesWhereStudentCanBeEnrolled;
-
+	private Integer creditsInSecundaryArea;
+	private Integer creditsInSpecializationArea;
+	
 	public StudentEnrolmentContext() {}
 
 	/**
@@ -128,6 +130,38 @@ public final class StudentEnrolmentContext
 	}
 
 	/**
+	 * @return Returns the creditsInSecundaryArea.
+	 */
+	public Integer getCreditsInSecundaryArea()
+	{
+		return creditsInSecundaryArea;
+	}
+
+	/**
+	 * @param creditsInSecundaryArea The creditsInSecundaryArea to set.
+	 */
+	public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea)
+	{
+		this.creditsInSecundaryArea = creditsInSecundaryArea;
+	}
+
+	/**
+	 * @return Returns the creditsInSpecializationArea.
+	 */
+	public Integer getCreditsInSpecializationArea()
+	{
+		return creditsInSpecializationArea;
+	}
+
+	/**
+	 * @param creditsInSpecializationArea The creditsInSpecializationArea to set.
+	 */
+	public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea)
+	{
+		this.creditsInSpecializationArea = creditsInSpecializationArea;
+	}
+
+	/**
 	 * @param curricularCourse
 	 * @return curricularCourseAcumulatedEnrolments
 	 */
@@ -177,4 +211,5 @@ public final class StudentEnrolmentContext
 		}
 		return false;
 	}
+
 }

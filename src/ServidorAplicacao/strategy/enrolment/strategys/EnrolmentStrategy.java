@@ -30,12 +30,12 @@ public abstract class EnrolmentStrategy implements IEnrolmentStrategy
 
     public abstract StudentEnrolmentContext getAvailableCurricularCourses() throws ExcepcaoPersistencia;
 
-    public abstract StudentEnrolmentContext validateEnrolment();
-
-    public abstract StudentEnrolmentContext getOptionalCurricularCourses();
-
-    public abstract StudentEnrolmentContext getDegreesForOptionalCurricularCourses();
-
+//    public abstract StudentEnrolmentContext validateEnrolment();
+//
+//    public abstract StudentEnrolmentContext getOptionalCurricularCourses();
+//
+//    public abstract StudentEnrolmentContext getDegreesForOptionalCurricularCourses();
+//
 //    protected EnrolmentContext filterByExecutionCourses(EnrolmentContext enrolmentContext)
 //    {
 //
