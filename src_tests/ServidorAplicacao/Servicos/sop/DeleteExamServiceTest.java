@@ -11,7 +11,9 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -19,6 +21,7 @@ import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
+import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import Util.Season;
 
@@ -78,8 +81,17 @@ public class DeleteExamServiceTest extends TestCaseDeleteAndEditServices {
 		end.set(Calendar.SECOND, 0);
 		Season season = new Season(Season.SEASON1);
 
+
+		InfoExam infoExam = new InfoExam(beginning.getTime(), beginning, null, season);
+		List infoExecutionCourses = new ArrayList();
+		infoExecutionCourses.add(infoExecutionCourse);
+
+		InfoViewExamByDayAndShift infoViewExam = new InfoViewExamByDayAndShift();
+		infoViewExam.setInfoExam(infoExam);
+		infoViewExam.setInfoExecutionCourses(infoExecutionCourses);
+
 		Object argsDeleteExam[] = new Object[1];
-		argsDeleteExam[0] = new InfoExam(beginning.getTime(), beginning, null, season);
+		argsDeleteExam[0] = infoViewExam;
 
 		return argsDeleteExam;
 	}

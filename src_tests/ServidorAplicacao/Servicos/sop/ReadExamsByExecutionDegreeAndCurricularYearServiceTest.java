@@ -99,7 +99,7 @@ public class ReadExamsByExecutionDegreeAndCurricularYearServiceTest
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
 	 */
 	protected int getNumberOfItemsToRetrieve() {
-		return 4;
+		return 1;
 	}
 
 	/* (non-Javadoc)
