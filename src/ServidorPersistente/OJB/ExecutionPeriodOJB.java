@@ -93,23 +93,39 @@ public class ExecutionPeriodOJB
 		// Read all Execution Courses and delete them 
 		List result = new ArrayList();
 		try {
-			result = SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().readByExecutionPeriod(executionPeriod);
+			result =
+				SuportePersistenteOJB
+					.getInstance()
+					.getIDisciplinaExecucaoPersistente()
+					.readByExecutionPeriod(executionPeriod);
 			Iterator iterator = result.iterator();
-			while(iterator.hasNext()){
-				SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().deleteExecutionCourse((IDisciplinaExecucao) iterator.next());
+			while (iterator.hasNext()) {
+				SuportePersistenteOJB
+					.getInstance()
+					.getIDisciplinaExecucaoPersistente()
+					.deleteExecutionCourse(
+						(IDisciplinaExecucao) iterator.next());
 			}
 		} catch (ExcepcaoPersistencia e) {
-					return false;
+			return false;
 		}
-		
+
 		// Read all Classes and delete them
-		
+
 		result = new ArrayList();
 		try {
-			result = SuportePersistenteOJB.getInstance().getITurmaPersistente().readByExecutionPeriod(executionPeriod);
+			result =
+				SuportePersistenteOJB
+					.getInstance()
+					.getITurmaPersistente()
+					.readByExecutionPeriod(executionPeriod);
 			Iterator iterator = result.iterator();
-			while(iterator.hasNext()){
-				SuportePersistenteOJB.getInstance().getITurmaPersistente().delete((ITurma) iterator.next());
+			while (iterator.hasNext()) {
+				SuportePersistenteOJB
+					.getInstance()
+					.getITurmaPersistente()
+					.delete(
+					(ITurma) iterator.next());
 			}
 		} catch (ExcepcaoPersistencia e) {
 			return false;
@@ -127,15 +143,21 @@ public class ExecutionPeriodOJB
 	 */
 	public boolean deleteAll() {
 		try {
+			
+			String oqlQuery =
+				"select all from " + ExecutionPeriod.class.getName();
 
-			ArrayList list = readAllExecutionPeriod();
-			Iterator iter = list.iterator();
+			query.create(oqlQuery);
+
+			List result = (List) query.execute();
+			Iterator iter = result.iterator();
 			while (iter.hasNext()) {
-				IExecutionPeriod executionPeriod = (IExecutionPeriod) iter.next();
+				IExecutionPeriod executionPeriod =
+					(IExecutionPeriod) iter.next();
 				delete(executionPeriod);
 			}
 			return true;
-		} catch (ExcepcaoPersistencia e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
@@ -144,14 +166,15 @@ public class ExecutionPeriodOJB
 	 * :FIXME: this is wrong if we have more than one EXECUTION_PERIOD
 	 * @see ServidorPersistente.IPersistentExecutionPeriod#readActualExecutionPeriod()
 	 */
-	public IExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia{
+	public IExecutionPeriod readActualExecutionPeriod()
+		throws ExcepcaoPersistencia {
 		try {
 			IExecutionPeriod executionPeriod = null;
 			String oqlQuery =
 				"select all from " + ExecutionPeriod.class.getName();
-			
+
 			query.create(oqlQuery);
-			
+
 			List result = (List) query.execute();
 			lockRead(result);
 			if (result.size() != 0)
@@ -166,28 +189,29 @@ public class ExecutionPeriodOJB
 	 */
 	public IExecutionPeriod readByNameAndExecutionYear(
 		String executionPeriodName,
-		IExecutionYear executionYear) throws ExcepcaoPersistencia {
-			try {
+		IExecutionYear executionYear)
+		throws ExcepcaoPersistencia {
+		try {
 
-				IExecutionPeriod executionPeriod = null;
-				String oqlQuery =
-					"select all from " + ExecutionPeriod.class.getName();
-				oqlQuery += " where name = $1 and executionYear.year= $2 ";
-				query.create(oqlQuery);
-				query.bind(executionPeriodName);
-				query.bind(executionYear.getYear());
-				
-				List result = (List) query.execute();
-				
-				lockRead(result);
-				
-				if (result.size() != 0)
-					return (IExecutionPeriod) result.get(0);
-				
-				return executionPeriod;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
+			IExecutionPeriod executionPeriod = null;
+			String oqlQuery =
+				"select all from " + ExecutionPeriod.class.getName();
+			oqlQuery += " where name = $1 and executionYear.year= $2 ";
+			query.create(oqlQuery);
+			query.bind(executionPeriodName);
+			query.bind(executionYear.getYear());
+
+			List result = (List) query.execute();
+
+			lockRead(result);
+
+			if (result.size() != 0)
+				return (IExecutionPeriod) result.get(0);
+
+			return executionPeriod;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 	}
 
 }

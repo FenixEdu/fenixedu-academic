@@ -154,7 +154,7 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 		_suportePersistente.confirmarTransaccao();
 		_cursoExecucao2 = new CursoExecucao(executionYear, curricularPlan2);
 		_suportePersistente.iniciarTransaccao();
-		_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
+		_cursoExecucaoPersistente.lockWrite(_cursoExecucao2);
 		_suportePersistente.confirmarTransaccao();
 
 		_turma1 =

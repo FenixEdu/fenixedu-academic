@@ -20,14 +20,22 @@ import DataBeans.ClassKey;
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoClass;
 import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionYear;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IPessoa;
+import Dominio.IPlanoCurricularCurso;
 import Dominio.ITurma;
 import Dominio.Pessoa;
+import Dominio.PlanoCurricularCurso;
 import Dominio.Privilegio;
 import Dominio.Turma;
 import ServidorAplicacao.IUserView;
@@ -38,7 +46,10 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPessoaPersistente;
+import ServidorPersistente.IPlanoCurricularCursoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -62,6 +73,10 @@ public class ClassManagerDispatchActionTest extends MockStrutsTestCase {
 	protected ITurma _turma1 = null;
 	protected ITurma _turma2 = null;
 	protected IPessoa _pessoa1 = null;
+	protected IPersistentExecutionYear persistentExecutionYear = null;
+	protected IPersistentExecutionPeriod persistentExecutionPeriod = null;
+	protected IPlanoCurricularCursoPersistente persistentCurricularPlan = null;
+
 	/**
 	 * Constructor for ClassManagerDispatchActionTest.
 	 * @param arg0
@@ -103,7 +118,25 @@ public class ClassManagerDispatchActionTest extends MockStrutsTestCase {
 		_suportePersistente.iniciarTransaccao();
 		_pessoaPersistente.escreverPessoa(_pessoa1);
 		_suportePersistente.confirmarTransaccao();
-
+		IExecutionYear executionYear = new ExecutionYear("2002/03");
+		_suportePersistente.iniciarTransaccao();
+		persistentExecutionYear.lockWrite(executionYear);
+		_suportePersistente.confirmarTransaccao();
+		IExecutionPeriod executionPeriod =
+			new ExecutionPeriod("2º semestre", executionYear);
+		_suportePersistente.iniciarTransaccao();
+		persistentExecutionPeriod.lockWrite(executionPeriod);
+		_suportePersistente.confirmarTransaccao();
+		IPlanoCurricularCurso curricularPlan =
+			new PlanoCurricularCurso("plano1", curso1);
+		IPlanoCurricularCurso curricularPlan2 =
+			new PlanoCurricularCurso("plano2", curso2);
+		_suportePersistente.iniciarTransaccao();
+		persistentCurricularPlan.lockWrite(curricularPlan);
+		_suportePersistente.confirmarTransaccao();
+		_suportePersistente.iniciarTransaccao();
+		persistentCurricularPlan.lockWrite(curricularPlan2);
+		_suportePersistente.confirmarTransaccao();
 		curso1 =
 			new Curso(
 				"LEIC",
@@ -120,20 +153,30 @@ public class ClassManagerDispatchActionTest extends MockStrutsTestCase {
 		_suportePersistente.iniciarTransaccao();
 		_cursoPersistente.lockWrite(curso1);
 		_suportePersistente.confirmarTransaccao();
-		_cursoExecucao1 = new CursoExecucao("2002/03", curso1);
+		_cursoExecucao1 = new CursoExecucao(executionYear, curricularPlan);
 		_suportePersistente.iniciarTransaccao();
 		_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
 		_suportePersistente.confirmarTransaccao();
-		_cursoExecucao2 = new CursoExecucao("2002/03", curso2);
+		_cursoExecucao2 = new CursoExecucao(executionYear, curricularPlan2);
 		_suportePersistente.iniciarTransaccao();
-		_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
+		_cursoExecucaoPersistente.lockWrite(_cursoExecucao2);
 		_suportePersistente.confirmarTransaccao();
 
-		_turma1 = new Turma("10501", new Integer(1), new Integer(1), curso1);
+		_turma1 =
+			new Turma(
+				"10501",
+				new Integer(1),
+				_cursoExecucao1,
+				executionPeriod);
 		_suportePersistente.iniciarTransaccao();
 		_turmaPersistente.lockWrite(_turma1);
 		_suportePersistente.confirmarTransaccao();
-		_turma2 = new Turma("14501", new Integer(1), new Integer(1), curso2);
+		_turma2 =
+			new Turma(
+				"14501",
+				new Integer(1),
+				_cursoExecucao2,
+				executionPeriod);
 		_suportePersistente.iniciarTransaccao();
 		_turmaPersistente.lockWrite(_turma2);
 		_suportePersistente.confirmarTransaccao();
@@ -160,8 +203,6 @@ public class ClassManagerDispatchActionTest extends MockStrutsTestCase {
 		String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
 		verifyActionErrors(errors);
 
-
-	   
 	}
 
 	public void testAuthorizedCreateExistingClass() {
@@ -209,7 +250,10 @@ public class ClassManagerDispatchActionTest extends MockStrutsTestCase {
 		addRequestParameter("className", "newClassName");
 		//		Coloca contexto em sessão
 		InfoDegree iL = new InfoDegree("LEIC", "Informatica");
-		InfoExecutionDegree iLE = new InfoExecutionDegree("2002/03", iL);
+		InfoExecutionDegree iLE =
+			new InfoExecutionDegree(
+				new InfoDegreeCurricularPlan("plano1", iL),
+				new InfoExecutionYear("2002/03"));
 		CurricularYearAndSemesterAndInfoExecutionDegree aCSiLE =
 			new CurricularYearAndSemesterAndInfoExecutionDegree(
 				new Integer(5),
@@ -311,7 +355,10 @@ public class ClassManagerDispatchActionTest extends MockStrutsTestCase {
 		addRequestParameter("className", _turma1.getNome());
 		//		Coloca contexto em sessão
 		InfoDegree iL = new InfoDegree("LEIC", "Informatica");
-		InfoExecutionDegree iLE = new InfoExecutionDegree("2002/03", iL);
+		InfoExecutionDegree iLE =
+			new InfoExecutionDegree(
+				new InfoDegreeCurricularPlan("plano1", iL),
+				new InfoExecutionYear("2002/03"));
 		CurricularYearAndSemesterAndInfoExecutionDegree aCSiLE =
 			new CurricularYearAndSemesterAndInfoExecutionDegree(
 				new Integer(5),
@@ -482,6 +529,12 @@ public class ClassManagerDispatchActionTest extends MockStrutsTestCase {
 			_cursoPersistente = _suportePersistente.getICursoPersistente();
 			_pessoaPersistente = _suportePersistente.getIPessoaPersistente();
 			_turmaPersistente = _suportePersistente.getITurmaPersistente();
+			persistentCurricularPlan =
+				_suportePersistente.getIPlanoCurricularCursoPersistente();
+			persistentExecutionPeriod =
+				_suportePersistente.getIPersistentExecutionPeriod();
+			persistentExecutionYear =
+				_suportePersistente.getIPersistentExecutionYear();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Exception when opening database");
 		}
@@ -501,6 +554,15 @@ public class ClassManagerDispatchActionTest extends MockStrutsTestCase {
 			_suportePersistente.confirmarTransaccao();
 			_suportePersistente.iniciarTransaccao();
 			_turmaPersistente.deleteAll();
+			_suportePersistente.confirmarTransaccao();
+			_suportePersistente.iniciarTransaccao();
+			persistentCurricularPlan.apagarTodosOsPlanosCurriculares();
+			_suportePersistente.confirmarTransaccao();
+			_suportePersistente.iniciarTransaccao();
+			persistentExecutionPeriod.deleteAll();
+			_suportePersistente.confirmarTransaccao();
+			_suportePersistente.iniciarTransaccao();
+			persistentExecutionYear.deleteAll();
 			_suportePersistente.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Exception when cleaning data");
