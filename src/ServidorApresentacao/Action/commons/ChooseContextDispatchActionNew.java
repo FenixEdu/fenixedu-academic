@@ -273,7 +273,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
         Integer index = null;
-        if (escolherContextoForm.get("index") != null
+   /*  if (escolherContextoForm.get("index") != null
                 && !escolherContextoForm.get("index").equals("null")) {
 
             index = new Integer((String) escolherContextoForm.get("index"));
@@ -284,7 +284,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             } else {
                 index = new Integer(0);
             }
-        }
+    }*/
 
         request.setAttribute("curYear", anoCurricular);
         request.setAttribute("semester", semestre);
