@@ -495,8 +495,15 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
     public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
             ICurricularCourse curricularCourse, IExecutionPeriod currentExecutionPeriod) {
 
-        if (!curricularCourse.hasActiveScopeInGivenSemester(currentExecutionPeriod.getSemester())) {
-            return CurricularCourseEnrollmentType.NOT_ALLOWED;
+        if (getBranch() == null) {
+            if (!curricularCourse.hasActiveScopeInGivenSemester(currentExecutionPeriod.getSemester())) {
+                return CurricularCourseEnrollmentType.NOT_ALLOWED;
+            }
+        } else {
+            if (!curricularCourse.hasActiveScopeInGivenSemesterForCommonAndGivenBranch(
+                    currentExecutionPeriod.getSemester(), getBranch())) {
+                return CurricularCourseEnrollmentType.NOT_ALLOWED;
+            }
         }
 
         if (isCurricularCourseApproved(curricularCourse)) {
@@ -554,7 +561,6 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
         return CurricularCourseEnrollmentType.DEFINITIVE;
     }
-    
 
     protected boolean hasActiveScopeInGivenSemester(ICurricularCourse curricularCourse,
             IExecutionPeriod currentExecutionPeriod) {
@@ -686,7 +692,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
                     return false;
             }
         });
-    }    
+    }
 
     // -------------------------------------------------------------
 
@@ -1009,7 +1015,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
             curricularCoursesToKeep.addAll(optionalCurricularCourseGroup.getCurricularCourses());
         }
     }
-    
+
     protected boolean hasCurricularCourseEquivalenceIn(ICurricularCourse curricularCourse,
             List curricularCoursesEnrollments) {
 
