@@ -135,5 +135,3 @@
 		</logic:notEmpty>	 	
 	</logic:present>
 	
-	<span class="error"><html:errors/></span>
-

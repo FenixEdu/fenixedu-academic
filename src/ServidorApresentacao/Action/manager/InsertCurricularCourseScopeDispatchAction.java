@@ -48,9 +48,8 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 			HttpSession session = request.getSession(false);
 			UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
 			
-			Integer degreeId = new Integer(request.getParameter("degreeId"));
 			Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-			Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
+		
 			
 			Object[] args = { degreeCurricularPlanId };
 			

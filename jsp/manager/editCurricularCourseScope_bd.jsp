@@ -1,12 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-
-<%--<bean:define id="infoCurricularCourseScope" name="infoCurricularCourseScope" property="infoBranch"/>
-<bean:define id="infoCurricularSemester" name="infoCurricularCourseScope" property="infoCurricularSemester"/>
-<bean:define id="infoCurricularYear" name="infoCurricularSemester" property="infoCurricularYear"/>--%>
-				
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>			
 
 				
 <h2><bean:message key="label.manager.edit.curricularCourse" /></h2>
@@ -16,10 +11,10 @@
 	<html:hidden property="page" value="1"/>
 
 	<html:hidden property="method" value="edit"/>
-	<html:hidden property="degreeId"/>
-	<html:hidden property="degreeCurricularPlanId"/>
-	<html:hidden property="curricularCourseId"/>
-	<html:hidden property="curricularCourseScopeId"/>
+	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
+	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
+	<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
+	<html:hidden property="curricularCourseScopeId" value="<%= request.getParameter("curricularCourseScopeId") %>"/>
 	
 	
 	<table>
@@ -50,10 +45,8 @@
 			</td>
 			<td>
 				<html:select property="branchId">
-				<html:option key="option.curricular.course.scope.branch.1" value="1"/>
-    			<html:option key="option.curricular.course.scope.branch.2" value="2"/>
-    			<html:option key="option.curricular.course.scope.branch.3" value="3"/>
-    			</html:select>
+					<html:options collection="branchesList" property="value" labelProperty="label"/>
+				</html:select>				
 			</td>
 		</tr>
 

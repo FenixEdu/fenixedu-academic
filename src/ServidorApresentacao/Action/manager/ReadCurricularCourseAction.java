@@ -42,9 +42,9 @@ public class ReadCurricularCourseAction extends FenixAction  {
 						
 				UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 			System.out.println("INICIO DA ACCAO READCURRICULARCOURSE");	
-				Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+//				Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 				Integer	curricularCourseId = new Integer(request.getParameter("curricularCourseId"));	
-				Integer	degreeId = new Integer(request.getParameter("degreeId"));
+//				Integer	degreeId = new Integer(request.getParameter("degreeId"));
 
 				Object args[] = { curricularCourseId };
 				

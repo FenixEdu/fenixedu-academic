@@ -48,6 +48,7 @@
 				<!--copiei pq a falta tava a dar erro-->
 				<form-property name="branchId" type="java.lang.String" />
 				<form-property name="curricularSemesterId" type="java.lang.String" />
+			
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -64,7 +65,7 @@
 				<form-property name="minIncrementNac" type="java.lang.String" />
 				<form-property name="weight" type="java.lang.String" />
 				<form-property name="branchId" type="java.lang.String" />
-			
+				<form-property name="semesterId" type="java.lang.String" />
 				<!--deixei pq a falta tava a dar erro-->
 				<form-property name="curricularSemesterId" type="java.lang.String" />
 
@@ -195,7 +196,7 @@
     <action path="/readDegreeCurricularPlan"
          input="/readDegreeInput.do"
          type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlanAction">
-     <forward name="viewDegreeCurricularPlan" path="df.page.read-degreeCurricularPlan"/>  
+     <forward name="viewDegreeCurricularPlan" path="df.page.read-degree-curricular-plan"/>  
      <forward name="readDegree" path="/readDegree.do"/> 	      
     </action>
       
@@ -255,7 +256,6 @@
       		FALTAVA
       		no EditCCScope fazer set do curricularcourseId->nao alteriu nada-->
     <action path="/readCurricularCourse"
-        name="curricularCourseScopeForm"
         input="/readDegreeCurricularPlan.do"
         scope="request"
         type="ServidorApresentacao.Action.manager.ReadCurricularCourseAction">

@@ -78,6 +78,8 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 			)
 			throws ExcepcaoPersistencia {
  
+ System.out.println("AAAAAA"+curricularCourse.getIdInternal()+"AAAAAA"+curricularSemester.getIdInternal()+"AAAAAA"+branch.getIdInternal());
+ 
 				Criteria criteria = new Criteria();
 				criteria.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
 				criteria.addEqualTo("curricularSemesterKey", curricularSemester.getIdInternal());
