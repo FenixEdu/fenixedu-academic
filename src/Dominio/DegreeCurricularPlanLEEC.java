@@ -44,7 +44,7 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlan implements ID
 			{
 				ICurricularCourse curricularCourse = (ICurricularCourse) courses.get(j);
 
-				if (curricularCourses.contains(curricularCourse))
+				if (!curricularCourses.contains(curricularCourse))
 				{
 					curricularCourses.add(curricularCourse);
 				}
