@@ -32,6 +32,16 @@
                  dynamic="true">
         <form-property name="courseInitials" type="java.lang.String"/>
 	  </form-bean>
+	  
+	  <!-- Dynamic-FormBean for Choose Context-->
+      <form-bean name="chooseContextForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+        <form-property name="index" type="java.lang.String"/>
+        <form-property name="curricularYear" type="java.lang.Integer"/>
+        <form-property name="page" type="java.lang.Integer"/> 
+      </form-bean>
+	  
 
 	  <!-- ROOMS -->
       <!-- Dynamic-FormBean para CriarSala -->
@@ -66,11 +76,34 @@
         <form-property name="degreeInitials" type="java.lang.String"/>
         <form-property name="nameDegreeCurricularPlan" type="java.lang.String"/>
       </form-bean>
-      
-      	
 
 
-     </form-beans>
+	  <!-- EXAMS -->
+      <!-- Dynamic-FormBean for Choose Context-->
+      <form-bean name="chooseExamsMapContextForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+        <form-property name="index" type="java.lang.String"/>
+        <form-property name="selectedCurricularYears" type="java.lang.String[]" size="0"/>
+        <form-property name="selectAllCurricularYears" type="java.lang.Boolean"/>
+        <form-property name="page" type="java.lang.Integer"/> 
+      </form-bean>
+
+    
+      <!-- Dynamic-FormBean para Day And Shift Context -->
+     <form-bean name="chooseDayAndShiftForm"
+                type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true"
+                >
+        <form-property name="day" type="java.lang.String"/>
+        <form-property name="month" type="java.lang.String"/>
+        <form-property name="year" type="java.lang.String"/>
+        <form-property name="beginning" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
+     </form-bean>
+     
+  </form-beans>     
+     
     
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
@@ -102,6 +135,9 @@
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
+	    <action path="/consultExams" forward="/consultExams.jsp"/>
+    
+    
 	    <!-- page fronting actions -->
     	
     	<action path="/index"
@@ -288,6 +324,76 @@
 	
 <!-- End of Gesdis-->
 
+<!-- EXAMS -->
+	<action path="/chooseDayAndShiftForm"
+			input="/chooseDayAndShift.jsp"
+			name="chooseDayAndShiftForm"
+            type="ServidorApresentacao.Action.sop.ChooseExamDayAndShiftDispatchAction"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+         <forward name="Show Choose Form" path="/chooseDayAndShift.jsp"/>
+         <forward name="View Exams" path="/viewExamsDayAndShiftForm.do?method=view"/>
+	</action>
+
+	<action path="/viewExamsDayAndShiftForm"		
+			input="/viewExamsDayAndShift.jsp"
+            type="ServidorApresentacao.Action.sop.ViewExamsByDayAndShiftDispatchAction"
+            parameter="method"
+            name="examForm"
+            validate="false"
+            >
+         <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
+         <forward name="Deleted Exam" path="/viewExamsDayAndShiftForm.do?method=view"/>
+         <forward name="Edit Exam" path="/editExam.jsp"/>
+         <forward name="Add Execution Course" path="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext&amp;nextPage=addExecutionCourseToExam"/>
+	</action>
+
+
+    <action input="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext"
+            name="chooseContextForm"
+            parameter="method"
+            path="/chooseExamsContextDA"
+            scope="request"
+            validate="true"
+            type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction"
+            >
+        <forward name="chooseExamsContext" path="/chooseExamsContext.jsp"/>
+        <forward name="createExam" path="/chooseExecutionCourseForm.do"/>
+        <forward name="listByDegreeAndAcademicYear" path="/viewExamsByDegreeAndCurricularYear.do"/>
+        <forward name="addExecutionCourseToExam" path="/chooseExecutionCourseToAddToExam.do"/>
+    </action>
+
+	<action path="/viewExamsByDegreeAndCurricularYear"
+    		type="ServidorApresentacao.Action.sop.ViewExamsByDegreeAndCurricularYearAction"
+    		>
+    	<forward name="Sucess" path="/viewExamsByDegreeAndCurricularYear.jsp"/>
+	</action>
+
+    <action input="/chooseExamsMapContextDA.do?method=prepare&amp;page=0"
+            name="chooseExamsMapContextForm"
+            parameter="method"
+            path="/chooseExamsMapContextDA"
+            scope="request"
+            validate="true"
+            type="ServidorApresentacao.Action.sop.ChooseExamsMapContextDA"
+            >
+        <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
+        <forward name="showExamsMap" path="/viewExamsMap.do?method=view"/>
+    </action>
+
+    <action path="/viewExamsMap"
+            type="ServidorApresentacao.Action.sop.ViewExamsMapDA"
+            parameter="method"
+            name="examForm"
+            validate="false"
+            >
+        <forward name="viewExamsMap" path="/viewExamsMap.jsp"/>
+        <forward name="viewExecutionCourseByCode" path="/siteViewer.do?method=executionCourseViewer"/>
+    </action>
+	
+<!-- END OF EXAMS -->
 
     <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
 		<action path="/siteViewer"
