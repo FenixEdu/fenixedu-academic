@@ -654,6 +654,8 @@ public abstract class Cloner {
 
 		section.setSuperiorSection(fatherSection);
 		section.setSite(site);
+		section.setInternalCode(infoSection.getInternalCode());
+		
 		//		section.setInferiorSections(inferiorSections);
 		//		section.setItems(items);
 
@@ -688,7 +690,9 @@ public abstract class Cloner {
 		copyObjectProperties(infoSection, section);
 
 		infoSection.setSuperiorInfoSection(fatherInfoSection);
-		infoSection.setInfoSite(infoSite);
+		infoSection.setInfoSite(infoSite);		
+		infoSection.setInternalCode(section.getInternalCode());
+		
 		//		infoSection.setInferiorInfoSections(inferiorInfoSections);
 		//		infoSection.setInfoItems(infoItems);
 
