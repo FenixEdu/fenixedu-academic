@@ -51,11 +51,10 @@
 	
 <div id="nav">
    <h3>Contacto</h3>	
-  <ul><li>
+ 
   	<bean:define id="mail" name="<%=SessionConstants.INFO_SITE%>" property="mail"/>
 	<html:link href="<%= "mailto:" + pageContext.findAttribute("mail") %>">
-		<bean:write name="mail" /></html:link>
-  	</li>
-  </ul> 
+		<p class="contacto"><bean:write name="mail" /></p></html:link>
+  
 </div>
 </logic:present>
