@@ -322,6 +322,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  IStudent studentTemp = persistentStudent.readByNumero(new Integer(900), new TipoCurso(TipoCurso.LICENCIATURA));
 	  assertNotNull(studentTemp);
 	  
+	  persistentStudent.readByOId(studentShift, true);
 	  studentShift.setAluno(studentTemp);
 	  persistentSupport.confirmarTransaccao();
 	  

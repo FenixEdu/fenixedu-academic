@@ -81,8 +81,8 @@ public class TurnoAlunoOJB
 		// else If the shiftStudent is mapped to the database, then write any existing changes.
 		else if (
 			(shiftStudentToWrite instanceof TurnoAluno)
-				&& ((TurnoAluno) shiftStudentFromDB).getCodigoInterno().equals(
-					((TurnoAluno) shiftStudentToWrite).getCodigoInterno())) {
+				&& shiftStudentFromDB.getIdInternal().equals(
+					shiftStudentToWrite.getIdInternal())) {
 			super.lockWrite(shiftStudentToWrite);
 			// else Throw an already existing exception
 		} else

@@ -104,8 +104,8 @@ public class TurmaTurnoOJB
 		// else If the classShift is mapped to the database, then write any existing changes.
 		else if (
 			(classShiftToWrite instanceof TurmaTurno)
-				&& ((TurmaTurno) classShiftFromDB).getCodigoInterno().equals(
-					((TurmaTurno) classShiftToWrite).getCodigoInterno())) {
+				&& classShiftFromDB.getIdInternal().equals(
+					classShiftToWrite.getIdInternal())) {
 			super.lockWrite(classShiftToWrite);
 			// else Throw an already existing exception
 		} else

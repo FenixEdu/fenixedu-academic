@@ -10,12 +10,11 @@ package Dominio;
  *
  * @author  tfc130
  */
-public class TurmaTurno implements ITurmaTurno {
+public class TurmaTurno extends DomainObject implements ITurmaTurno {
   protected ITurma _turma;
   protected ITurno _turno;  
     
   // c�digos internos da base de dados
-  private Integer _codigoInterno;
   private Integer _chaveTurma;
   private Integer _chaveTurno;
     
@@ -27,14 +26,6 @@ public class TurmaTurno implements ITurmaTurno {
     setTurno(turno);
   }
 
-  public Integer getCodigoInterno() {
-    return _codigoInterno;
-  }
-    
-  public void setCodigoInterno(Integer codigoInterno) {
-    _codigoInterno = codigoInterno;
-  }
-  
   public Integer getChaveTurma() {
     return _chaveTurma;
   }

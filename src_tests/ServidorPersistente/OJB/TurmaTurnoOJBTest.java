@@ -278,6 +278,7 @@ public class TurmaTurnoOJBTest extends TestCaseOJB {
 		ITurno shift2 = persistentShift.readByNameAndExecutionCourse("turno2", executionCourse);
 		assertNotNull(shift2);
 
+		persistentShift.readByOId(turmaTurno, true);
 		turmaTurno.setTurno(shift2);
 
 		persistentSupport.confirmarTransaccao();

@@ -281,6 +281,7 @@ public class FrequentaOJBTest extends TestCaseOJB {
 					"MEEC");
 			assertNotNull(executionCourse1);
 
+			persistentExecutionCourse.readByOId(attend, true);
 			attend.setDisciplinaExecucao(executionCourse1);
 			persistentSupport.confirmarTransaccao();
 

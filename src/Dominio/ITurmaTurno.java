@@ -10,7 +10,7 @@ package Dominio;
  *
  * @author  tfc130
  */
-public interface ITurmaTurno {
+public interface ITurmaTurno extends IDomainObject {
   public ITurma getTurma();
   public ITurno getTurno();
 

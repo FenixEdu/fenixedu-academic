@@ -368,6 +368,7 @@ public class AulaOJBTest extends TestCaseOJB {
 					room,
 					executionCourse.getExecutionPeriod());
 			assertNotNull(lesson1);
+			persistentLesson.readByOId(lesson1, true);
 			lesson1.setDiaSemana(new DiaSemana(DiaSemana.DOMINGO));
 
 			persistentSupport.confirmarTransaccao();

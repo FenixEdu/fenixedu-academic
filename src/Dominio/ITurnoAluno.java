@@ -10,7 +10,7 @@ package Dominio;
  *
  * @author  tfc130
  */
-public interface ITurnoAluno {
+public interface ITurnoAluno extends IDomainObject {
   public ITurno getTurno();
   public IStudent getAluno();  
 

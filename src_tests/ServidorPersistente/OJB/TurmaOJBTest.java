@@ -248,6 +248,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 			classTemp = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
 			assertNotNull(classTemp);
 
+			persistentClass.readByOId(classTemp, true);
 			classTemp.setNome("10510");
 			persistentSupport.confirmarTransaccao();
 
