@@ -9,11 +9,12 @@
 <span class="error"><html:errors/></span>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td class="infoop"><bean:message key="message.public.degree.choose"/></td>
+            <td class="infoop"><bean:message key="message.public.degreeCurricularPlan.choose"/></td>
           </tr>
 </table>
 	<br />
 <center><table>
+<tr><td class="listClasses-header"><bean:message key="label.degreeCurricularPlan"/> </td></tr>
 <logic:iterate id="degreeCurricularPlan" name="degreeCurricularPlans">
 <tr>
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan" property="idInternal"/>

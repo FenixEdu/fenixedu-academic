@@ -6,7 +6,7 @@
 
 
 <ul>
-<li><bean:message key="link.home"/></li>
+<%-- <li><bean:message key="link.home"/></li> --%>
 <br />
 <br />
 <%--<li><bean:message key="link.degreeManagement"/> <i>(brevemente)</i></li>--%>

@@ -14,6 +14,7 @@
 </table>
 	<br />
 <center><table  >
+<tr><td class="listClasses-header"><bean:message key="label.degree"/> </td></tr>
 <logic:iterate id="degree" name="degreeList">
 <tr>
 <bean:define id="degreeId" name="degree" property="idInternal"/>

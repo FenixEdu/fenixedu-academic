@@ -4,6 +4,6 @@
   <tiles:put name="serviceName" value="Portal do Conselho Científico" />
   <tiles:put name="navLocal" value="/scientificCouncil/navigation.jsp" />
   <tiles:put name="navGeral" value="/scientificCouncil/commonNavGeral.jsp" />
-  <tiles:put name="body" value="/scientificCouncil/showDegreeCurricularPlansBasic_bd.jsp" />
+  <tiles:put name="body" value="/scientificCouncil/viewCurriculum_bd.jsp" />
   <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
 </tiles:insert>

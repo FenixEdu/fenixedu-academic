@@ -5,10 +5,11 @@
  */
 package DataBeans;
 
+
 /**
  * @author João Mota
  */
-public class InfoCurriculum extends InfoObject{
+public class InfoCurriculum extends InfoObject implements ISiteComponent{
 	protected String generalObjectives;
 	protected String operacionalObjectives;
 	protected String program;

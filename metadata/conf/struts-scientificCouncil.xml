@@ -15,6 +15,18 @@
                  dynamic="true">
          <form-property name="basicCurricularCourses" type="java.lang.String[]" />  
       </form-bean>
+      
+      <form-bean name="curriculumForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+         <form-property name="program" type="java.lang.String" />  
+         <form-property name="programEn" type="java.lang.String" />  
+         <form-property name="operacionalObjectives" type="java.lang.String" />  
+         <form-property name="operacionalObjectivesEn" type="java.lang.String" />  
+         <form-property name="generalObjectives" type="java.lang.String" />  
+         <form-property name="generalObjectivesEn" type="java.lang.String" />  
+         
+      </form-bean>
 		
     </form-beans>
 
@@ -66,8 +78,23 @@
     		<forward name="selectDegree" path="selectDegree.jsp"/>
     		<forward name="showDegreeCurricularPlans" path="showDegreeCurricularPlans.jsp"/>
     		<forward name="showCurricularCourses" path="showCurricularCourses.jsp"/>
+    		<forward name="viewCurriculum" path="viewCurriculum.jsp"/>
+    		<forward name="editCurriculum" path="editCurriculum.jsp"/>
     		
-    		</action>	  
+    		</action>	 
+    		
+     <action path="/curriculumManager"
+     		name="curriculumForm"
+    		type="ServidorApresentacao.Action.scientificCouncil.CurricularCourseManagerDA" 
+    		parameter="method"
+    		scope="request"
+    		
+    		>
+    		<forward name="editCurriculum" path="editCurriculum.jsp"/>
+    		<forward name="insertCurriculum" path="insertCurriculum.jsp"/>
+    		<forward name="showCurricularCourses" path="showCurricularCourses.jsp"/>
+    		
+    		</action>	 		 
 	<action path="/basicCurricularCourseManager"
 			name="selectBasicCurricularCourses"
     		type="ServidorApresentacao.Action.scientificCouncil.CurricularCourseManagerDA" 

@@ -21,6 +21,7 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteBasicCurricularCourses;
 import DataBeans.InfoSiteCurricularCourses;
+import DataBeans.InfoSiteCurriculum;
 import DataBeans.InfoSiteDegreeCurricularPlans;
 import DataBeans.InfoSiteSCDegrees;
 import DataBeans.SiteView;
@@ -186,16 +187,17 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 			for (int i = 0; i < coursesIdsString.length; i++) {
 				coursesIds.add(new Integer(coursesIdsString[i]));
 			}
-			
-			String curricularPlanId = (String) request.getParameter("curricularIndex");
- 			
-			Object[] args = { coursesIds , new Integer(curricularPlanId)};
-			
+
+			String curricularPlanId =
+				(String) request.getParameter("curricularIndex");
+
+			Object[] args = { coursesIds, new Integer(curricularPlanId)};
+
 			try {
-				 ServiceUtils.executeService(
-						userView,
-						"setBasicCurricularCourses",
-						args);
+				ServiceUtils.executeService(
+					userView,
+					"setBasicCurricularCourses",
+					args);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
@@ -206,6 +208,232 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 		//			 nao ocorre... pedido passa pelo filtro Autorizacao
 
 	}
+
+	public ActionForward viewCurriculum(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			IUserView userView =
+				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+			String curricularCourseIdString =
+				(String) request.getParameter("index");
+
+			Object[] args =
+				{
+					new InfoSiteCurriculum(),
+					new Integer(curricularCourseIdString),
+					null };
+			SiteView siteView = null;
+			try {
+				siteView =
+					(SiteView) ServiceUtils.executeService(
+						userView,
+						"ScientificCouncilCurricularCourseCurriculumComponentService",
+						args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+			request.setAttribute("siteView", siteView);
+			return mapping.findForward("viewCurriculum");
+		} else
+			throw new FenixActionException();
+		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+
+	}
+
+	public ActionForward prepareEditCurriculum(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			IUserView userView =
+				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+			String curriculumIdString = (String) request.getParameter("index");
+
+			Object[] args = { new Integer(curriculumIdString)};
+			SiteView siteView = null;
+			try {
+				siteView =
+					(SiteView) ServiceUtils.executeService(
+						userView,
+						"ReadCurriculumByOIdService",
+						args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+			request.setAttribute("siteView", siteView);
+			return mapping.findForward("editCurriculum");
+		} else
+			throw new FenixActionException();
+		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+
+	}
+
+	public ActionForward editCurriculum(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			IUserView userView =
+				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+			String program = request.getParameter("program");
+			String programEn = request.getParameter("programEn");
+			String operacionalObjectives =
+				request.getParameter("operacionalObjectives");
+			String operacionalObjectivesEn =
+				request.getParameter("operacionalObjectivesEn");
+			String generalObjectives =
+				request.getParameter("generalObjectives");
+			String generalObjectivesEn =
+				request.getParameter("generalObjectivesEn");
+			String curriculumIdString = request.getParameter("curriculumId");
+			
+			
+			Object[] args =
+				{
+					new Integer(curriculumIdString),
+					program,
+					programEn,
+					operacionalObjectives,
+					operacionalObjectivesEn,
+					generalObjectives,
+					generalObjectivesEn,
+					new Boolean(true)};
+			
+			Boolean result;
+			try {
+				result= (Boolean) ServiceUtils.executeService(
+						userView,
+						"EditCurriculum",
+						args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+			
+			if (result.booleanValue()) {
+				return showCurricularCourses(
+							 mapping,
+							 form,
+							 request,
+							 response);
+			} else {
+				return null;
+			}
+			
+			
+		} else
+			throw new FenixActionException();
+		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+
+	}
+	
+	public ActionForward prepareInsertCurriculum(
+			ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response)
+			throws FenixActionException {
+			HttpSession session = request.getSession(false);
+			if (session != null) {
+				IUserView userView =
+					(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+				String curricularCourseIdString = (String) request.getParameter("index");
+
+				Object[] args = { new Integer(curricularCourseIdString)};
+				SiteView siteView = null;
+				try {
+					siteView =
+						(SiteView) ServiceUtils.executeService(
+							userView,
+							"ReadCurricularCourseByOIdService",
+							args);
+				} catch (FenixServiceException e) {
+					throw new FenixActionException(e);
+				}
+				request.setAttribute("siteView", siteView);
+				return mapping.findForward("insertCurriculum");
+			} else
+				throw new FenixActionException();
+			//			 nao ocorre... pedido passa pelo filtro Autorizacao
+
+		}
+
+		public ActionForward insertCurriculum(
+			ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response)
+			throws FenixActionException {
+			HttpSession session = request.getSession(false);
+			if (session != null) {
+				IUserView userView =
+					(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+				String program = request.getParameter("program");
+				String programEn = request.getParameter("programEn");
+				String operacionalObjectives =
+					request.getParameter("operacionalObjectives");
+				String operacionalObjectivesEn =
+					request.getParameter("operacionalObjectivesEn");
+				String generalObjectives =
+					request.getParameter("generalObjectives");
+				String generalObjectivesEn =
+					request.getParameter("generalObjectivesEn");
+				String curricularCourseIdString = request.getParameter("curricularCourseId");
+			
+			
+				Object[] args =
+					{
+						new Integer(curricularCourseIdString),
+						program,
+						programEn,
+						operacionalObjectives,
+						operacionalObjectivesEn,
+						generalObjectives,
+						generalObjectivesEn,
+						new Boolean(true)};
+			
+				Boolean result;
+				try {
+					result= (Boolean) ServiceUtils.executeService(
+							userView,
+							"InsertCurriculum",
+							args);
+				} catch (FenixServiceException e) {
+					throw new FenixActionException(e);
+				}
+			
+				if (result.booleanValue()) {
+					return showCurricularCourses(
+								 mapping,
+								 form,
+								 request,
+								 response);
+				} else {
+					System.out.println("############error");
+					return null;
+				}
+			
+			
+			} else
+				throw new FenixActionException();
+			//			 nao ocorre... pedido passa pelo filtro Autorizacao
+
+		}
 
 	private SiteView readSiteView(
 		HttpServletRequest request,

@@ -1,3 +1,4 @@
+
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -10,10 +11,16 @@
 <center><table>
 <tr>
 <td class="listClasses-header"><bean:message key="label.name"/></td>
+<td class="listClasses-header"><bean:message key="label.curricularCourseType"/></td>
 </tr>
 <logic:iterate id="infoCurricularCourse" name="curricularCourses">
 <tr>
-<td class="listClasses"><bean:write name="infoCurricularCourse" property="name"/></td>
+<bean:define id="curricularCourseId" name="infoCurricularCourse" property="idInternal"/>
+<td class="listClasses">
+<html:link page="<%= "/curricularCourseManager.do?method=viewCurriculum&index=" + curricularCourseId %>" >
+	<bean:write name="infoCurricularCourse" property="name"/></td>
+</html:link>
+<td class="listClasses"><bean:write name="infoCurricularCourse" property="ownershipType"/></td>
 </tr>
 </logic:iterate>
 </table></center>

@@ -9,7 +9,12 @@
 <bean:define id="curricularPlan" name="component" property="infoDegreeCurricularPlan"/>
 
 <span class="error"><html:errors/></span>
-
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td class="infoop"><bean:message key="message.basicCurricularCoursesSelection"/></td>
+          </tr>
+</table>
+	<br />
 <html:form action="/basicCurricularCourseManager">
 <html:hidden property="method" value="setBasicCurricularCourses"/>
 <bean:define id="curricularPlanId" name="curricularPlan" property="idInternal"/>

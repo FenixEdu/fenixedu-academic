@@ -17,7 +17,7 @@ import Util.CurricularCourseType;
  *
  * @author  tfc130
  */
-public class InfoCurricularCourse  extends InfoObject implements Comparable{
+public class InfoCurricularCourse  extends InfoObject implements Comparable,ISiteComponent{
 	private String name;
 	private String code;
 	private Double credits;
@@ -33,6 +33,7 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable{
 	private Boolean mandatory;
 	private IUniversity university;
 	private Boolean basic;
+	
 
 	/**
 	 * @return
@@ -50,6 +51,16 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable{
 	}
 
 	public InfoCurricularCourse() {
+	}
+
+	public String getOwnershipType(){
+		String result="";
+		if (getBasic().booleanValue()){
+			result="Básica";
+		} else {
+			result="Não Básica";
+		}
+		return result;
 	}
 
 	public boolean equals(Object obj) {
