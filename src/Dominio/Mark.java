@@ -52,7 +52,7 @@ public class Mark extends DomainObject implements IMark {
 		result += "idInternal = " + getIdInternal() + "; ";
 		result += "mark = " + this.mark + "; ";
 		result += "published mark = " + this.publishedMark + "; ";
-		result += "Exam = " + this.exam.getIdInternal() + "; ";
+//		result += "Exam = " + this.exam.getIdInternal() + "; ";
 		result += "attend = " + this.attend.getIdInternal() + "; ";
 
 		return result;

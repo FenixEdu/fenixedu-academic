@@ -407,6 +407,11 @@
          autoincrement="true"
       />
       <field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
          name="day"
          column="DAY"
          jdbc-type="DATE"
@@ -548,8 +553,8 @@
       <reference-descriptor
          name="exam"
          class-ref="Dominio.Exam"
-         proxy="true"
       >
+         <!-- proxy="true" -->
          <foreignkey field-ref="keyExam"/>
       </reference-descriptor> 
       

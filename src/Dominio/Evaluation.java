@@ -6,7 +6,7 @@ package Dominio;
  */
 public abstract class Evaluation extends DomainObject implements IEvaluation {
 	private String ojbConcreteClass;
-	protected String publishmentMessage;
+	private String publishmentMessage;
 
 	public Evaluation() {
 		super();

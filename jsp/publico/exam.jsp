@@ -41,7 +41,7 @@
 				</td>
 			</logic:notEmpty>
 			<logic:empty name="exam" property="publishmentMessage">
-				<td class="listClasses" ></td>
+				<td class="listClasses" >&nbsp;</td>
 			</logic:empty>
 		</logic:equal>	
 	</tr>

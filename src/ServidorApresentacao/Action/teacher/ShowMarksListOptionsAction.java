@@ -47,17 +47,17 @@ public class ShowMarksListOptionsAction extends DispatchAction {
 
 		ISiteComponent commonComponent = new InfoSiteCommon();
 		Object[] args = { executionCourseCode, commonComponent, null, null, null, null };
-
+		TeacherAdministrationSiteView siteView = null;
 		try {
-			TeacherAdministrationSiteView siteView =
+			siteView =
 				(TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "TeacherAdministrationSiteComponentService", args);
 
-			request.setAttribute("siteView", siteView);
-			request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-
+		
+		request.setAttribute("siteView", siteView);
+		request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
 		request.setAttribute("examCode", examCode);
 		
 		return mapping.findForward("showMarksListOptions");
