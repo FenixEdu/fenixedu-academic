@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
-<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.HashMap, java.util.Iterator, DataBeans.InfoCurriculum" %>
 <logic:present name="infoSiteCoursesInformation">
 	<logic:present name="infoExecutionDegree">
 		<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
@@ -35,6 +35,14 @@
 				</html:link>
 			</div>
 			<div class="button">
+				<html:link page="/listCoursesInformationEnglish.do?method=doSearch&amp;basic=basic" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list.ectsEnglish" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+			<div class="button">
 				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=basic" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
@@ -50,6 +58,14 @@
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
 					<bean:message key="label.list.ects" bundle="GEP_RESOURCES"/>
+				</html:link>
+			</div>
+			<div class="button">
+				<html:link page="/listCoursesInformationEnglish.do?method=doSearch" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list.ectsEnglish" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
 			<div class="button">
@@ -113,36 +129,114 @@
 			<td class="listClasses-header">
 				<bean:message key="label.gep.teachingReport" bundle="GEP_RESOURCES"/>	
 			</td>
-		</tr> 
-		
-		<% HashMap statistics = new HashMap(); %>
+		</tr>
+		<% 
+			HashMap statistics = new HashMap();
+			HashMap statistics_en = new HashMap();			
+		%>
 		<logic:iterate id="infoSiteCourseInformation" name="infoSiteCoursesInformation" type="DataBeans.gesdis.InfoSiteCourseInformation">
-			<% int numberOfFields = 0; %>
+			<% 
+				int numberOfFields = 0; 
+				int numberOfFields_en = 0;
+			%>
 			<logic:present name="infoSiteCourseInformation" property="infoLecturingTeachers">
-				<% if (infoSiteCourseInformation.getInfoLecturingTeachers().size() > 0)
-					 numberOfFields++; 
+				<% 
+					if (infoSiteCourseInformation.getInfoLecturingTeachers().size() > 0)
+					{
+						numberOfFields++;
+					}
 				%>
 			</logic:present>
 			<logic:present name="infoSiteCourseInformation" property="infoCurriculums">
-				<% if (infoSiteCourseInformation.getInfoCurriculums().size() > 0)
-					 numberOfFields += 2; 
-				 %>
+				<bean:define id="curriculums" name="infoSiteCourseInformation" property="infoCurriculums" type="java.util.List"/>
+				<% 
+					Iterator iter = curriculums.iterator();
+					while(iter.hasNext())
+					{
+						InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
+						if (infoCurriculum.getGeneralObjectives() != null)
+						{
+							numberOfFields++;
+							break;
+						}
+					}
+					
+					iter = curriculums.iterator();
+					while(iter.hasNext())
+					{
+						InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
+						if (infoCurriculum.getProgram() != null)
+						{
+							numberOfFields++;
+							break;
+						}
+					}
+					
+					iter = curriculums.iterator();
+					while(iter.hasNext())
+					{
+						InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
+						if (infoCurriculum.getGeneralObjectivesEn() != null)
+						{
+							numberOfFields_en++;
+							break;
+						}
+					}
+					
+					iter = curriculums.iterator();
+					while(iter.hasNext())
+					{
+						InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
+						if (infoCurriculum.getOperacionalObjectivesEn() != null)
+						{
+							numberOfFields_en++;
+							break;
+						}
+					}
+					
+					iter = curriculums.iterator();
+					while(iter.hasNext())
+					{
+						InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
+						if (infoCurriculum.getProgramEn() != null)
+						{
+							numberOfFields_en++;
+							break;
+						}
+					}
+				%>
 			</logic:present>
 			<logic:present name="infoSiteCourseInformation" property="infoBibliographicReferences">
-				<% if (infoSiteCourseInformation.getInfoBibliographicReferences().size() > 0)
-					numberOfFields++; 
+				<% 
+					if (infoSiteCourseInformation.getInfoBibliographicReferences().size() > 0)
+					{
+						numberOfFields++;
+						numberOfFields_en++;
+					}
 				%>
 			</logic:present>
 			<logic:present name="infoSiteCourseInformation" property="infoEvaluationMethod">
-				<% numberOfFields++; %>
+				<% 
+					numberOfFields++; 
+					numberOfFields_en++; 
+				%>
 			</logic:present>
-			<% if (!statistics.containsKey(new Integer(numberOfFields)))
+			<% 
+				if (!statistics.containsKey(new Integer(numberOfFields)))
 					statistics.put(new Integer(numberOfFields), new Integer(1));
 				else
 				{
 					int value = ((Integer) statistics.get(new Integer(numberOfFields))).intValue();
 					value++;
 					statistics.put(new Integer(numberOfFields), new Integer(value));
+				}
+				if (!statistics_en.containsKey(new Integer(numberOfFields_en)))
+					statistics_en.put(new Integer(numberOfFields_en), new Integer(1));
+				else
+				{
+					int value = ((Integer) statistics_en.get(new Integer(numberOfFields_en))).intValue();
+					value++;
+					statistics_en.put(new Integer(numberOfFields_en), new Integer(value));
 				}
 			%>
 			<logic:iterate id="infoCurricularCourse" name="infoSiteCourseInformation" property="infoCurricularCourses">
@@ -324,16 +418,11 @@
 	<bean:size id="length" name="infoSiteCoursesInformation"/>
 	<bean:message key="label.gep.numberOfCourses" bundle="GEP_RESOURCES"/>:
 	<bean:write name="length"/>
-	<% int filled = 0; %>
-	<logic:iterate id="infoSiteCourseInformation" name="infoSiteCoursesInformation">
-		<logic:present name="infoSiteCourseInformation" property="lastModificationDate">
-			<% filled++; %>
-		</logic:present>
-	</logic:iterate>
 	<br />
 	<bean:message key="label.gep.numberOfCoursesTotal" bundle="GEP_RESOURCES"/>: 5
 	<br />
 	<br />
+	<bean:message key="label.gep.coursesInformation.statistics" bundle="GEP_RESOURCES"/>
 	<table width="50%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
 			<td class="listClasses"><bean:message key="label.gep.numberOfFields" bundle="GEP_RESOURCES"/></td>
@@ -408,6 +497,81 @@
 	</table>
 	<br />
 	<br />
+	<bean:message key="label.gep.ects.statistics" bundle="GEP_RESOURCES"/>
+	<table width="50%" border="0" cellspacing="1" style="margin-top:10px">
+		<tr>
+			<td class="listClasses"><bean:message key="label.gep.numberOfFields" bundle="GEP_RESOURCES"/></td>
+			<td class="listClasses"><bean:message key="label.gep.numberOfFieldsWithInfo" bundle="GEP_RESOURCES"/></td>
+		</tr>
+		<tr>
+			<td class="listClasses">5</td>
+			<td class="listClasses">
+			<%
+				Integer value5_en = new Integer(0);
+				if (statistics_en.containsKey(new Integer(5)))
+					value5_en = (Integer) statistics_en.get(new Integer(5));
+			%>
+			<%= value5_en %>
+			</td>
+		</tr>
+		<tr>
+			<td class="listClasses">4</td>
+			<td class="listClasses">			
+			<%
+				Integer value4_en = new Integer(0);
+				if (statistics_en.containsKey(new Integer(4)))
+					value4_en = (Integer) statistics_en.get(new Integer(4));
+			%>
+			<%= value4_en %>
+			</td>
+		</tr>
+		<tr>
+			<td class="listClasses">3</td>
+			<td class="listClasses">
+			<%
+				Integer value3_en = new Integer(0);
+				if (statistics_en.containsKey(new Integer(3)))
+					value3_en = (Integer) statistics_en.get(new Integer(3));
+			%>
+			<%= value3_en %>
+			</td>
+		</tr>
+		<tr>
+			<td class="listClasses">2</td>
+			<td class="listClasses">
+			<%
+				Integer value2_en = new Integer(0);
+				if (statistics_en.containsKey(new Integer(2)))
+					value2_en = (Integer) statistics_en.get(new Integer(2));
+			%>
+			<%= value2_en %>
+			</td>
+		</tr>
+		<tr>
+			<td class="listClasses">1</td>
+			<td class="listClasses">
+			<%
+				Integer value1_en = new Integer(0);
+				if (statistics_en.containsKey(new Integer(1)))
+					value1_en = (Integer) statistics_en.get(new Integer(1));
+			%>
+			<%= value1_en %>
+			</td>
+		</tr>
+		<tr>
+			<td class="listClasses">0</td>
+			<td class="listClasses">
+			<%
+				Integer value0_en = new Integer(0);
+				if (statistics_en.containsKey(new Integer(0)))
+					value0_en = (Integer) statistics_en.get(new Integer(0));
+			%>
+			<%= value0_en %>
+			</td>
+		</tr>
+	</table>
+	<br />
+	<br />
 	<logic:present name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">
@@ -416,6 +580,14 @@
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
 					<bean:message key="label.list.ects" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+			<div class="button">
+				<html:link page="/listCoursesInformationEnglish.do?method=doSearch&amp;basic=basic" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list.ectsEnglish" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
 			<div class="button">
@@ -434,6 +606,14 @@
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
 					<bean:message key="label.list.ects" bundle="GEP_RESOURCES"/>
+				</html:link>
+			</div>
+			<div class="button">
+				<html:link page="/listCoursesInformationEnglish.do?method=doSearch" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list.ectsEnglish" bundle="GEP_RESOURCES"/>
 				</html:link>
 			</div>
 			<div class="button">

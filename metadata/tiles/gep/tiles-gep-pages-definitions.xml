@@ -26,6 +26,9 @@
     <definition name="list-courses-information" extends="definition.gep.one-column">
         <put name="body" value="/gep/courses/ectsInformation.jsp"/>
     </definition>
+    <definition name="list-courses-information-english" extends="definition.gep.one-column">
+        <put name="body" value="/gep/courses/ectsInformation_en.jsp"></put>
+    </definition>
     <definition name="list-courses-acreditation" extends="definition.gep.one-column">
         <put name="body" value="/gep/courses/acreditationInformation.jsp"/>
     </definition>

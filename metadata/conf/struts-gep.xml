@@ -89,6 +89,18 @@
             <forward name="list-one" path="list-courses-information"/>
             <forward name="list-many" path="list-courses-information"/>
         </action>
+        <action path="/listCoursesInformationEnglish" 
+            type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction" 
+            input="/listCoursesInformationEnglish.do?method=searchForm" scope="request" parameter="method" 
+            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            <set-property property="serviceName" value="ReadCoursesInformation"/>
+            <set-property property="objectAttribute" value="infoSiteCourseInformation"/>
+            <set-property property="listAttribute" value="infoSiteCoursesInformation"/>
+            <set-property property="notFoundMessageKey" value="label.gep.notFound"/>
+            <forward name="search-form" path="search-courses-information"/>
+            <forward name="list-one" path="list-courses-information-english"/>
+            <forward name="list-many" path="list-courses-information-english"/>
+        </action>
          <action path="/listCoursesAcreditation" 
             type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction" 
             input="/listCoursesAcreditation.do?method=searchForm" scope="request" parameter="method" 

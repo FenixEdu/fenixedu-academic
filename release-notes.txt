@@ -3,7 +3,8 @@ Release XXXX
 ---------------------------------------------------------------------
 
 NEW FEATURES:
-
+-added ECTS information in english
+-added stats of the ECTS information in english
 
 NOTES:
  ficheiro de sql "guiasAAlterar.sql" que lista as guias onde se alterarão o execution degree.
