@@ -29,9 +29,9 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 
 
-public class InsertItemTest extends TestCaseCreateServices {
+public class InsertItemServiceTest extends TestCaseCreateServices {
 
-	public InsertItemTest(java.lang.String testName) {
+	public InsertItemServiceTest(java.lang.String testName) {
 		super(testName);
 	}
 
@@ -40,7 +40,7 @@ public class InsertItemTest extends TestCaseCreateServices {
 	}
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite(InsertItemTest.class);
+		TestSuite suite = new TestSuite(InsertItemServiceTest.class);
 
 		return suite;
 	}

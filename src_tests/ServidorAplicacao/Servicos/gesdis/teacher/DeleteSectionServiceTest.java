@@ -1,14 +1,13 @@
 /*
- * Created on 26/Mar/2003
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
+ * Created on 27/Mar/2003
  */
 package ServidorAplicacao.Servicos.gesdis.teacher;
-
+/**
+ * @author lmac1
+ */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.gesdis.InfoItem;
+import DataBeans.gesdis.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
@@ -21,18 +20,14 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-/**
- * @author lmac2
- */
-public class DeleteItemTest extends TestCaseDeleteAndEditServices {
+public class DeleteSectionServiceTest extends TestCaseDeleteAndEditServices {
 
-	public DeleteItemTest(String testName) {
+	public DeleteSectionServiceTest(String testName) {
 		super(testName);		
 	}
 	
@@ -41,7 +36,7 @@ public class DeleteItemTest extends TestCaseDeleteAndEditServices {
 	}
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite(DeleteItemTest.class);
+		TestSuite suite = new TestSuite(DeleteSectionServiceTest.class);
 
 		return suite;
 	}
@@ -55,7 +50,7 @@ public class DeleteItemTest extends TestCaseDeleteAndEditServices {
 	}
 	
 	protected String getNameOfServiceToBeTested() {
-		return "DeleteItem";
+		return "DeleteSection";
 	}
 	
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
@@ -86,18 +81,16 @@ public class DeleteItemTest extends TestCaseDeleteAndEditServices {
 			IPersistentSection ipSection =sp.getIPersistentSection();
 			section =ipSection.readBySiteAndSectionAndName(site,null,"Seccao1deTFCI");
 			
-			IPersistentItem ipItem=sp.getIPersistentItem();
-			item = ipItem.readBySectionAndName(section,"Item1deTFCI");
 			sp.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia e) {
 				System.out.println("failed setting up the test data");
 				e.printStackTrace();
 			}
 
-		InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
-		Object[] argsDeleteItem = {infoItem};
+		InfoSection infoSection = Cloner.copyISection2InfoSection(section);		
+		Object[] argsDeleteSection = {infoSection};
 		
-		return argsDeleteItem;		
+		return argsDeleteSection;		
 	}
 	
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
