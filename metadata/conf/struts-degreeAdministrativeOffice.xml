@@ -69,6 +69,16 @@
 			<form-property name="lastStudentNumber" type="java.lang.String"/>
 		</form-bean>
 		
+		<!-- VIEW STUDENT CURRICULUM FORMS -->
+		<form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        	<form-property name="studentCPID" type="java.lang.String" />
+        	<form-property name="select" type="java.lang.String" />
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>	
+		
 	</form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -140,11 +150,11 @@
 		<action path="/viewCurriculum"
 		      	type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction"
               	parameter="method"
-		      	name="curriculumForm"	
+		      	name="studentCurricularPlanAndEnrollmentsSelectionForm"
 				scope="request"
 				validate="true"
 				input="/viewStudentCurriculum.do?method=prepareViewStudentCurriculumChooseStudent&amp;page=0">
-        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
+<!--        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>-->
         	<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
         	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
       	</action>

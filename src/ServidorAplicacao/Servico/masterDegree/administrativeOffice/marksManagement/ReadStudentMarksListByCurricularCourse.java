@@ -23,6 +23,8 @@ import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
+import ServidorAplicacao.Servico.commons.student.GetEnrolmentGrade;
+import ServidorAplicacao.Servico.equivalence.GetEnrollmentEvaluation;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -84,9 +86,12 @@ public class ReadStudentMarksListByCurricularCourse implements IService {
                             .getNumber().intValue())) {
                 numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
 
-                Object args[] = { enrolment };
+/*                Object args[] = { enrolment };
                 InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory
                         .executeService(userView, "GetEnrolmentGrade", args);
+  */
+                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (new GetEnrolmentGrade()).run(enrolment);
+                
                 if (infoEnrolmentEvaluation != null) {
 
                     InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod

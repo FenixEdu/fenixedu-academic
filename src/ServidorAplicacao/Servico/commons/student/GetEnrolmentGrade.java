@@ -3,7 +3,6 @@ package ServidorAplicacao.Servico.commons.student;
 import java.util.Collections;
 import java.util.List;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoPerson;
 import Dominio.IEmployee;
@@ -18,7 +17,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class GetEnrolmentGrade implements IService {
+public class GetEnrolmentGrade {
 
     /**
      * The actor of this class.

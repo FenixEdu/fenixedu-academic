@@ -94,10 +94,12 @@ public class ReadStudentListByCurricularCourse implements IService {
                             .getNumber().intValue())) {
                 numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
 
-                Object args[] = { enrolment };
+/*                Object args[] = { enrolment };
                 InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory
                         .executeService(userView, "GetEnrolmentGrade", args);
-
+*/
+                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (new GetEnrolmentGrade()).run(enrolment);
+                
                 InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                         .newInfoFromDomain(enrolment);
                 infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);

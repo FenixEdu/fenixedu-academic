@@ -748,7 +748,17 @@
         dynamic="true">
       		<form-property name="page" type="java.lang.Integer" initial="0" />
    	        <form-property name="sibsPaymentFileEntryId" type="java.lang.Integer" />     
-      </form-bean> 	
+      </form-bean>
+	  
+	  <!-- VIEW STUDENT CURRICULUM FORMS -->
+		<form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        	<form-property name="studentCPID" type="java.lang.String" />
+        	<form-property name="select" type="java.lang.String" />
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>	
 	  
    </form-beans>
     
@@ -773,6 +783,7 @@
       <forward name="logoff" path="/logoff.do" contextRelative="true"/> 
 
 		<forward name="equivalence" path="/equivalence/equivalence.do" contextRelative="true"/>
+
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -781,6 +792,7 @@
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       <action path="/index" forward="/index.jsp"/>
+      <action path="/viewCurriculum" forward="/studentCurriculum.do" />
 
       	<!-- ****************** Enrollment Without Rules **************************** -->
 		<action path="/courseEnrolmentWithoutRulesManagerDA"
@@ -909,12 +921,15 @@
   	         <forward name="NoStudents" path="/listMasterDegrees.do?method=chooseMasterDegree&amp;page=0"/> 
 	  </action>
 	  
+	  
+	  
+	  
         <!-- List Student Curriculum -->
         <action path="/studentCurriculum"
+				name="studentCurricularPlanAndEnrollmentsSelectionForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction"
-			  >
+              type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction">
 	         <forward name="ShowStudentCurriculum" path="/student/displayStudentCurriculum.jsp"/>
  			 <forward name="NotAuthorized" path="/student/notAuthorized.jsp" />
 	  </action>

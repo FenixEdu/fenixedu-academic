@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE struts-config PUBLIC 
       "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
       "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
@@ -84,6 +83,13 @@
         <form-property name="username" type="java.lang.String" />
         <form-property name="password" type="java.lang.String" />
         <form-property name="ids" type="java.lang.String" />
+      </form-bean>
+
+	  <form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="studentCPID" type="java.lang.String" />
+        <form-property name="select" type="java.lang.String" />
       </form-bean>
       
       
@@ -173,9 +179,10 @@
 
 
       <action path="/viewCurriculum"
+				name="studentCurricularPlanAndEnrollmentsSelectionForm"
               parameter="method"
 		      type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction">
-        <forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
+<!--        <forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>-->
         <forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
         <forward name="NotAuthorized" path="df.page.notAuthorized"/>
         

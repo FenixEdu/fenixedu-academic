@@ -45,9 +45,11 @@ public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IService {
         InfoEnrolmentEvaluation enrolmentEvaluation = null;
 
         try {
-            Object args[] = { enrolment };
+            /*Object args[] = { enrolment };
             enrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(
                     userView, "GetEnrolmentGrade", args);
+            */
+            enrolmentEvaluation = (new GetEnrolmentGrade()).run(enrolment);
         } catch (FenixServiceException e) {
             throw new FenixServiceException(e);
         }
