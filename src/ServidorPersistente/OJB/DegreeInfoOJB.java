@@ -55,11 +55,13 @@ public class DegreeInfoOJB extends ObjectFenixOJB implements IPersistentDegreeIn
 				if (degreeInfoFromBD == null) {
 					System.out.println("if degreeInfo isn't in database, then write it.");
 					//if degreeInfo isn't in database, then write it.
-					super.lockWrite(degreeInfoToWrite);
+					//super.lockWrite(degreeInfoToWrite);
+					simpleLockWrite(degreeInfoToWrite);
 				} else if (degreeInfoFromBD.getIdInternal().equals(degreeInfoToWrite.getIdInternal())) {
 					//else if the degreeInfo is mapped to the database, then write any existing change.
 					System.out.println("else if the degreeInfo is mapped to the database, then write any existing change.");					
-					super.lockWrite(degreeInfoToWrite);
+					//super.lockWrite(degreeInfoToWrite);
+					simpleLockWrite(degreeInfoToWrite);
 				} else { 
 					//else throw an already existing exception.
 					System.out.println("else throw an already existing exception.");					

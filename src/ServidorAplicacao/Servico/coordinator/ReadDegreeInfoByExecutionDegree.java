@@ -19,8 +19,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Tânia Pousão 
- * Created on 4/Nov/2003
+ * @author Tânia Pousão Created on 4/Nov/2003
  */
 public class ReadDegreeInfoByExecutionDegree implements IServico {
 	private static ReadDegreeInfoByExecutionDegree service = new ReadDegreeInfoByExecutionDegree();
@@ -54,15 +53,21 @@ public class ReadDegreeInfoByExecutionDegree implements IServico {
 			executionDegree.setIdInternal(infoExecutionDegreeId);
 			executionDegree = (ICursoExecucao) cursoExecucaoPersistente.readByOId(executionDegree, false);
 
+			if (executionDegree == null || executionDegree.getCurricularPlan() == null) {
+				return infoDegreeInfo;
+			}
+
 			ICurso degree = null;
-			if (executionDegree != null && executionDegree.getCurricularPlan() != null) {
-				degree = executionDegree.getCurricularPlan().getDegree();
+			degree = executionDegree.getCurricularPlan().getDegree();
+
+			if (degree == null) {
+				return infoDegreeInfo;
 			}
 
 			IPersistentDegreeInfo persistentDegreeInfo = suportePersistente.getIPersistentDegreeInfo();
 			//Read degree information
 			List degreeInfoList = persistentDegreeInfo.readDegreeInfoByDegree(degree);
-			
+
 			//Last information about this degree
 			if (degreeInfoList != null && degreeInfoList.size() > 0) {
 				System.out.println("==degreeInfoList: " + degreeInfoList.size());
@@ -72,7 +77,7 @@ public class ReadDegreeInfoByExecutionDegree implements IServico {
 			} else {
 				System.out.println("==degreeInfoList: NULL");
 			}
-			
+
 			//verify if the record finded is this execution period
 			//IPersistentExecutionPeriod persistentExecutionPeriod = suportePersistente.getIPersistentExecutionPeriod();
 			//IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
@@ -80,7 +85,7 @@ public class ReadDegreeInfoByExecutionDegree implements IServico {
 			e.printStackTrace();
 			throw new FenixServiceException(e);
 		}
-		
+
 		System.out.println("--->Terminou ReadDegreeInfoByExecutionDegree...");
 		return infoDegreeInfo;
 	}

@@ -45,7 +45,7 @@ public class EditDegreeInfoByExecutionDegree implements IServico {
 		try {
 			ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
 
-			//Execution Course
+			//Execution Degree
 			ICursoExecucaoPersistente cursoExecucaoPersistente = suportePersistente.getICursoExecucaoPersistente();
 			ICursoExecucao executionDegree = new CursoExecucao();
 			executionDegree.setIdInternal(infoExecutionDegreeId);
@@ -60,13 +60,18 @@ public class EditDegreeInfoByExecutionDegree implements IServico {
 			//DegreeInfo
 			IPersistentDegreeInfo persistentDegreeInfo = suportePersistente.getIPersistentDegreeInfo();
 			IDegreeInfo degreeInfo = new DegreeInfo();
-			
-			//edit the information
 			degreeInfo.setIdInternal(infoDegreeInfoId);
-			
-			//associate the degree
-			degreeInfo.setDegree(degree);
-						
+
+			degreeInfo = (IDegreeInfo) persistentDegreeInfo.readByOId(degreeInfo, true);
+			if (degreeInfo == null) {
+				degreeInfo = new DegreeInfo();
+				
+				//associate the degree
+				degreeInfo.setDegree(degree);
+				
+				persistentDegreeInfo.simpleLockWrite(degreeInfo);
+			}
+
 			//update information that it will be displayed in degree site.
 			degreeInfo.setObjectives(infoDegreeInfo.getObjectives());
 			degreeInfo.setHistory(infoDegreeInfo.getHistory());
@@ -81,19 +86,19 @@ public class EditDegreeInfoByExecutionDegree implements IServico {
 			degreeInfo.setMarkMin(infoDegreeInfo.getMarkMin());
 			degreeInfo.setMarkMax(infoDegreeInfo.getMarkMax());
 			degreeInfo.setMarkAverage(infoDegreeInfo.getMarkAverage());
-			
+
 			//update last modification date
 			degreeInfo.setLastModificationDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-		
-			persistentDegreeInfo.lockWrite(degreeInfo);
+
 			
-			System.out.println("--->Escreveu: " + degreeInfo);			
-			System.out.println("--->Terminou EditDegreeInfoByExecutionDegree...");			
+
+			System.out.println("--->Escreveu: " + degreeInfo);
+			System.out.println("--->Terminou EditDegreeInfoByExecutionDegree...");
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("--->EXCEPCAO: Ocorreu EditDegreeInfoByExecutionDegree...");
 			e.printStackTrace();
 			throw new FenixServiceException(e);
-		}		
+		}
 		return true;
 	}
 }
