@@ -66,7 +66,7 @@ public class BranchOJBTest extends TestCaseOJB {
 		} catch (ExistingPersistentException ex) {
 			// All Is OK
 			try {
-				persistentSupport.cancelarTransaccao();
+				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia e) {
 				e.printStackTrace();
 				fail("cancelarTransaccao() in Write Existing Branch");
