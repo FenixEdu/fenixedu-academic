@@ -306,7 +306,6 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                 request.setAttribute("forHidden", "true");
                 Integer lessonSelected = new Integer(request.getParameter("lesson"));
                 findNextSummaryDate(request, infoSummary, lessonSelected);
-                                request.setAttribute("datesVisible", "true");
             } else {
                 request.setAttribute("forHidden", "false");
                 request.setAttribute("datesVisible", "false");
