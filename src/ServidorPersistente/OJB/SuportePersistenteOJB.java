@@ -310,4 +310,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new TeacherOJB();
 	}
 
+    public IPersistentExam getIPersistentExam() {
+    	return new ExamOJB();
+    }
+
 }
