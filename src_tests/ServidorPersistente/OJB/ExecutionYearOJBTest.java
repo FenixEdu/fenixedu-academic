@@ -22,6 +22,7 @@ import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.PeriodState;
 
 public class ExecutionYearOJBTest extends TestCaseOJB {
 	
@@ -85,6 +86,7 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 		try {
 			persistentSupport.iniciarTransaccao();
 			executionYear = new ExecutionYear("2000");
+			executionYear.setState(PeriodState.NOT_OPEN);
 			persistentExecutionYear.writeExecutionYear(executionYear);
 			persistentSupport.confirmarTransaccao();
 
@@ -132,6 +134,7 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 
 			// Create and write deletable
 			executionYear = new ExecutionYear("2000");
+			executionYear.setState(PeriodState.NOT_OPEN);
 			persistentExecutionYear.writeExecutionYear(executionYear);
 			persistentSupport.confirmarTransaccao();
 			
@@ -153,7 +156,7 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 
 			List executionYears = persistentExecutionYear.readAllExecutionYear();
 			assertEquals(executionYears .isEmpty(), false);
-			assertEquals(executionYears .size(), 2);
+			assertEquals(4, executionYears .size());
 
 			persistentSupport.confirmarTransaccao();
 	   } catch (ExcepcaoPersistencia ex) {
@@ -167,12 +170,13 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 
 			persistentSupport.iniciarTransaccao();
 			IExecutionYear executionYear = new ExecutionYear("2000");
+			executionYear.setState(PeriodState.NOT_OPEN);
 			persistentExecutionYear.writeExecutionYear(executionYear);			
 			persistentSupport.confirmarTransaccao();
 			
 			persistentSupport.iniciarTransaccao();
 			List executionYears = persistentExecutionYear.readAllExecutionYear();
-			assertEquals(executionYears.size(), 3);
+			assertEquals(5, executionYears.size());
 			persistentExecutionYear.deleteAll();
 			persistentSupport.confirmarTransaccao();
 
@@ -183,7 +187,7 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 			
 			// The result is Two because the Execution Years have execution Periods
 			// and classes associated
-			assertEquals(executionYears.size(), 2);
+			assertEquals(4, executionYears.size());
 
 			persistentSupport.confirmarTransaccao();
 			
@@ -201,7 +205,7 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 			
 			IExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readActualExecutionYear();
 			assertNotNull(executionYear);
-			assertEquals(executionYear.getYear(), "2003/2004");
+			assertEquals(executionYear.getYear(), "2002/2003");
 			persistentSupport.confirmarTransaccao();
 		
 		} catch (ExcepcaoPersistencia ex) {
