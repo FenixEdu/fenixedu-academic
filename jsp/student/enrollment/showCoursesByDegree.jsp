@@ -12,8 +12,10 @@
 	</h2>
 	<span class="error"><html:errors/></span>
 	<br />
-	<p align="left">
+	<p align="center">
 		<span class="error">ATENÇÃO: A INSCRIÇÃO EM TURNOS/TURMAS NÃO SUBSTITUI A INSCRIÇÃO EM DISCIPLINAS EFECTUADA NA <a href="http://secreta.ist.utl.pt/secretaria/" target="_blank">SECRETARIA</a>.</span>
+	</p>
+	<p align="left">
 		<h2 class="redtxt" style="text-align:center">
 			<bean:message key="label.useInformation" />:
 		</h2>
@@ -64,9 +66,9 @@
 		<html:select property="wantedCourse" size="8" styleClass="courseEnroll">
 			<html:options collection="executionCourses" labelProperty="nome" property="idInternal"/>
 		</html:select>
-		<p style="text-align:center;margin-top:1px">
+		<p style="text-align:center;margin-top:5px">
 			<logic:lessThan name="wantedCoursesSize" value="8">			
-				<html:submit property="method" styleClass="inputbutton" style="width:100%">
+				<html:submit property="method" styleClass="inputbutton" style="width:15%">
 					<bean:message key="button.addCourse"/>
 				</html:submit>
 			</logic:lessThan>
@@ -90,8 +92,8 @@
 				<html:options collection="attendingCourses" labelProperty="nome"  property="idInternal"/>
 			</html:select>
 			<logic:notEqual name="wantedCoursesSize" value="0">
-				<p style="text-align:center;margin-top:1px">
-					<html:submit property="method" styleClass="inputbutton" style="width:100%">
+				<p style="text-align:center;margin-top:5px">
+					<html:submit property="method" styleClass="inputbutton" style="width:15%">
 						<bean:message key="button.removeCourse"/>
 					</html:submit>
 				</p>
