@@ -1,13 +1,13 @@
 package ServidorAplicacao.Servico.manager;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import DataBeans.util.Cloner;
+import DataBeans.InfoDegree;
 import Dominio.ICurso;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -15,33 +15,21 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author lmac1
  */
-
 public class ReadDegrees implements IService {
 
-    /**
-     * Executes the service. Returns the current collection of infodegrees .
-     */
-    public List run() throws FenixServiceException {
-        ISuportePersistente sp;
-        List allDegrees = null;
+    public List run() throws ExcepcaoPersistencia {
 
-        try {
-            sp = SuportePersistenteOJB.getInstance();
-            allDegrees = sp.getICursoPersistente().readAll();
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        List degrees = sp.getICursoPersistente().readAll();
 
-        if (allDegrees == null || allDegrees.isEmpty())
-            return allDegrees;
+        return (List) CollectionUtils.collect(degrees, new Transformer() {
 
-        // build the result of this service
-        Iterator iterator = allDegrees.iterator();
-        List result = new ArrayList(allDegrees.size());
+            public Object transform(Object arg0) {
+                ICurso degree = (ICurso) arg0;
+                InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
+                return infoDegree;
+            }
+        });
 
-        while (iterator.hasNext())
-            result.add(Cloner.copyIDegree2InfoDegree((ICurso) iterator.next()));
-
-        return result;
     }
 }
