@@ -96,6 +96,7 @@ public abstract class SessionConstants {
 	public static final String LABLELIST_DAYSOFMONTH  = "daysOfMonth";
 	public static final String LABLELIST_HOURS        = "horas";
 	public static final String LABLELIST_MONTHSOFYEAR = "monthsOfYear";
+	public static final String LABLELIST_SEASONS      = "seasonList";
 	public static final String LABLELIST_YEARS        = "yearsList";
 	public static final String LIST_EXAMSANDINFO      = "infoExams";
 

@@ -198,13 +198,15 @@
 
       <!-- Dynamic-FormBean for Exam -->
      <form-bean name="examForm"
-                type="org.apache.struts.validator.DynaValidatorForm"
+                type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                 dynamic="true"
                 >
         <form-property name="day" type="java.lang.String"/>
         <form-property name="month" type="java.lang.String"/>
         <form-property name="year" type="java.lang.String"/>
         <form-property name="beginning" type="java.lang.String"/>
+        <form-property name="season" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
      </form-bean>
 
       
@@ -776,15 +778,17 @@
             scope="request"
             type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
             validate="true">
-        <forward name="forwardChoose" path="/createExam.jsp"/>
+        <forward name="forwardChoose" path="/createExam.do?method=prepare&amp;page=0"/>
         <forward name="showForm" path="/chooseExecutionCourse.jsp"/>        
     </action>
 
 	<action path="/createExam"
 			name="examForm"
 			input="/createExam.jsp"
-    		type="ServidorApresentacao.Action.sop.CreateExamAction"
+    		type="ServidorApresentacao.Action.sop.CreateExamActionDA"
+            parameter="method"
     		>
+    	<forward name="showCreateForm" path="/createExam.jsp"/>
     	<forward name="Sucess" path="/mainExams.jsp"/>
 	</action>
 

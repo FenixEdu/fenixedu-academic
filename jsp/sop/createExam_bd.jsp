@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ page import="org.apache.struts.action.Action" %>
+<%@ page import ="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -18,55 +19,63 @@
 <span class="error"><html:errors /></span>
 
 <html:form action="/createExam">
-
+	<html:hidden property="page" value="1"/>
 	<table cellpadding="0" cellspacing="2">
     	<tr>
         	<td nowrap class="formTD" align="right">
             	<bean:message key="property.exam.year"/>
             </td>
             <td nowrap class="formTD" align="left">
-            	<html:select property="year">
-                	<option value="" selected="selected">[Ano]</option>
-                    <html:options name="<%= SessionConstants.LABLELIST_YEARS %>"/>
-                </html:select>
+            	<html:text property="year"/>
             </td>
             <td nowrap class="formTD" align="right">
             	<bean:message key="property.exam.month"/>
             </td>
             <td nowrap class="formTD" align="left">
-                        <html:select property="month">
-                        	<option value="" selected="selected">[Mês]</option>
-                            <html:options collection="<%= SessionConstants.LABLELIST_MONTHSOFYEAR %>" property="value" labelProperty="label"/>
-                        </html:select>
+            	<html:select property="month">
+		            <option value="" selected="selected">[Mês]</option>
+		            <html:options collection="<%= SessionConstants.LABLELIST_MONTHSOFYEAR %>" property="value" labelProperty="label"/>
+	            </html:select>
             </td>
             <td nowrap class="formTD" align="right">
-                        <bean:message key="property.exam.day"/>
+            	<bean:message key="property.exam.day"/>
             </td>
             <td nowrap class="formTD" align="left">
-                        <html:select property="day">
-                        	<option value="" selected="selected">[Dia]</option>
-                            <html:options name="<%= SessionConstants.LABLELIST_DAYSOFMONTH %>"/>
-                        </html:select>
+            	<html:select property="day">
+                	<option value="" selected="selected">[Dia]</option>
+                    <html:options name="<%= SessionConstants.LABLELIST_DAYSOFMONTH %>"/>
+                </html:select>
             </td>
 		</tr>
         <tr>
             <td nowrap="nowrap" class="formTD" align="right">
-                        <bean:message key="property.exam.beginning"/>
+                <bean:message key="property.exam.beginning"/>
             </td>
             <td nowrap="nowrap" align="left">
-                        <html:select property="beginning">
-                        	<option value="" selected="selected">[Turno]</option>                        
-                            <html:options name="<%= SessionConstants.LABLELIST_HOURS %>"/>
-                        </html:select>
+            	<html:select property="beginning">
+                  	<option value="" selected="selected">[Turno]</option>                        
+                    <html:options name="<%= SessionConstants.LABLELIST_HOURS %>"/>
+                </html:select>
+            </td>
+       	</tr>
+        <tr>
+            <td nowrap="nowrap" class="formTD" align="right">
+                <bean:message key="property.exam.season"/>
+            </td>
+            <td nowrap="nowrap" align="left">
+            	<html:select property="season">
+                  	<option value="" selected="selected">[Época]</option>           
+		            <html:options collection="<%= SessionConstants.LABLELIST_SEASONS %>" property="value" labelProperty="label"/>                  	             
+                </html:select>
             </td>
        	</tr>
 	</table>
 
-  <!----------------------------------------------------------------------------->
 	<br/>
     <table align="lef">
     	<tr align="center">
         	<td>
+        		<html:hidden property="method" value="create"/>
             	<html:submit styleClass="inputbutton">
               		<bean:message key="label.create"/>
              	</html:submit>
@@ -80,15 +89,3 @@
 		</tr>
 	</table>
 </html:form>
-
- --- TODO ---<br/>
-<br/>
-<br/>
-Falta por aqui uma caixa de input para o ano<br/>
-Falta por aqui uma caixa de input para o mês<br/>
-Falta por aqui uma caixa de input para o dia<br/>
-Falta por aqui uma caixa de input para o turno de inicio<br/>
-Opcionalmente falta por aqui uma caixa opcional de input para a hora de fim/duração<br/>
-<br/>
-No Futuro breve falta também por aqui uma caixinha para indicar a época.<br/>
-<br/>

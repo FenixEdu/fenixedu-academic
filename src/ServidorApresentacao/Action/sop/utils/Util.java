@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.struts.util.LabelValueBean;
 
 import Util.DiaSemana;
+import Util.Season;
 import Util.TipoSala;
 
 /**
@@ -226,6 +227,20 @@ public class Util {
 
 		return monthsOfYearList;
 	}
+
+	/**
+	 * Method getExamSeasons.
+	 * @return ArrayList
+	 */
+	public static ArrayList getExamSeasons() {
+		ArrayList examSeasonsList = new ArrayList();
+
+		examSeasonsList.add(new LabelValueBean(Season.SEASON1_STRING, "" + Season.SEASON1));
+		examSeasonsList.add(new LabelValueBean(Season.SEASON2_STRING, "" + Season.SEASON2));
+
+		return examSeasonsList;
+	}
+
 
 	/**
 	 * Method getYears.

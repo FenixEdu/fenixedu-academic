@@ -21,17 +21,20 @@
 
 	<!-- Validation for exam context form -->
 	<form name="examForm">
-		<field property="day" depends="required, integer">
+		<field property="day" depends="required, integer" page="1">
 			<arg0 key="property.exam.day"/>
 		</field>
-		<field property="month" depends="required, integer">
+		<field property="month" depends="required, integer" page="1">
 			<arg0 key="property.exam.month"/>
 		</field>
-		<field property="year" depends="required, integer">
+		<field property="year" depends="required, integer" page="1">
 			<arg0 key="property.exam.year"/>
 		</field>
-		<field property="beginning" depends="required, integer">
+		<field property="beginning" depends="required, integer" page="1">
 			<arg0 key="property.exam.beginning"/>
+		</field>
+		<field property="season" depends="required, integer" page="1">
+			<arg0 key="property.exam.season"/>
 		</field>
 	</form>
 
