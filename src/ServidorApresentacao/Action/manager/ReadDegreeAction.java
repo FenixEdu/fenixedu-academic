@@ -70,8 +70,7 @@ public class ReadDegreeAction extends FenixAction  {
 				List degreeCurricularPlans = null;
 		
 				try {		
-						GestorServicos serviceManager = GestorServicos.manager();
-						degreeCurricularPlans = (List) serviceManager.executar(
+						degreeCurricularPlans = (List) manager.executar(
 									userView,
 									"ReadDegreeCurricularPlansService",
 									args);	
