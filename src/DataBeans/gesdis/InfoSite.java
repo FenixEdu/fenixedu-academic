@@ -1,11 +1,7 @@
 package DataBeans.gesdis;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import DataBeans.InfoExecutionCourse;
-import DataBeans.util.ViewUtils;
 
 /**
  * This is the view class that contains information about the site domain objects.
@@ -18,10 +14,10 @@ import DataBeans.util.ViewUtils;
 public class InfoSite {
   
     private InfoSection initialInfoSection;
-    private List infoSections;
+    //private List infoSections;
     private String initialSectionName;
     private InfoExecutionCourse infoExecutionCourse;
-    private List infoAnnouncements;
+    //private List infoAnnouncements;
     
 	/** 
 	* Construtor
@@ -44,7 +40,7 @@ public class InfoSite {
 	*/
 	
 	
-    public InfoSite(InfoSection initialInfoSection, List infoSections, InfoExecutionCourse infoExecutionCourse, List infoAnnouncements) {
+    public InfoSite(InfoSection initialInfoSection, InfoExecutionCourse infoExecutionCourse) {
 //		this.initialInfoSection = ViewUtils.buildQualifiedName(initialInfoSection);
 
 		setInitialInfoSection(initialInfoSection);
@@ -55,13 +51,13 @@ public class InfoSite {
 		else
 			initialSectionName=new String("");
 		
-		if (infoSections != null && !infoSections.isEmpty()) {
-			this.infoSections = ViewUtils.buildSectionsList(infoSections, new ArrayList());			
-		} else
-			infoSections = new ArrayList();
+//		if (infoSections != null && !infoSections.isEmpty()) {
+//			this.infoSections = ViewUtils.buildSectionsList(infoSections, new ArrayList());			
+//		} else
+//			infoSections = new ArrayList();
 			
 		setInfoExecutionCourse(infoExecutionCourse);
-		setInfoAnnouncements(infoAnnouncements);
+		//setInfoAnnouncements(infoAnnouncements);
 		
     }
     
@@ -85,17 +81,17 @@ public class InfoSite {
 	/**
 	 * @return List
 	 */
-	public List getInfoAnnouncements() {
-		return infoAnnouncements;
-	}
+//	public List getInfoAnnouncements() {
+//		return infoAnnouncements;
+//	}
 
 	/**
 	 * Sets the infoAnnouncements.
 	 * @param infoAnnouncements The infoAnnouncements to set
 	 */
-	public void setInfoAnnouncements(List infoAnnouncements) {
-		this.infoAnnouncements = infoAnnouncements;
-	}
+//	public void setInfoAnnouncements(List infoAnnouncements) {
+//		this.infoAnnouncements = infoAnnouncements;
+//	}
 
 	/**
 	* @return InfoSection
@@ -133,17 +129,17 @@ public class InfoSite {
 	* @return List of InfoSections
 	*/
 	
-	public List getInfoSections() {
-			return infoSections;
-	}
+//	public List getInfoSections() {
+//			return infoSections;
+//	}
 
 	/**
 	 * Sets the infoSections.
 	 * @param infoSections The infoSections to set
 	 */
-	public void setInfoSections(List infoSections) {
-		this.infoSections = infoSections;
-	}
+//	public void setInfoSections(List infoSections) {
+//		this.infoSections = infoSections;
+//	}
 	
 	
 	public boolean equals(Object obj) {
@@ -163,8 +159,8 @@ public class InfoSite {
 		String result = "[INFOSITE";
 		result += ", infoExecutionCourse=" + getInfoExecutionCourse();
 		result += ", initialInfoSection=" + getInitialInfoSection();
-		result += ", sections=" + getInfoSections();
-		result += ", announcements=" + getInfoAnnouncements();		
+//		result += ", sections=" + getInfoSections();
+//		result += ", announcements=" + getInfoAnnouncements();		
 		result += "]";
 		return result;
 	}
