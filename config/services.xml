@@ -5525,7 +5525,7 @@
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>          
-<service>
+	<service>
     	<name>ShowAvailableCurricularCourses</name>
     	<description>Returns information about student enrollments in curricular courses</description>
     	<implementationClass>ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCourses</implementationClass>
@@ -5536,6 +5536,13 @@
     	<name>DeleteEnrolment</name>
     	<description>Deletes enrolment of student in a curricular course</description>
     	<implementationClass>ServidorAplicacao.Servico.enrolment.DeleteEnrolment</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains/>
+    </service>  
+    <service>
+    	<name>WriteStudentAreas</name>
+    	<description>Modifies areas belonging to student curricular plan</description>
+    	<implementationClass>ServidorAplicacao.Servico.enrolment.WriteStudentAreas</implementationClass>
     	<isTransactional>True</isTransactional>
         <filterChains/>
     </service>  

@@ -7,12 +7,18 @@
 <html:form action="/curricularCoursesEnrollment">
 	<html:hidden property="method" value="prepareEnrollmentChooseCurricularCourses" />
 	<html:hidden property="studentNumber" />
-	<%--<html:hidden property="enrolledCurricularCoursesBefore" />--%>
+	<bean:define id="studentCurricularPlanId" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.idInternal" />
+	<html:hidden property="studentCurricularPlanId" value="<%=studentCurricularPlanId.toString()%>"/>
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td align="center" class="infoselected">
 				<b><bean:message key="label.student.enrollment.number"/></b>
-				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.number" />
+				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.number" />&nbsp;-&nbsp;
+				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome" />
+				<br />
+				<b><bean:message key="label.student.enrollment.executionPeriod"/></b>
+				<bean:write name="infoStudentEnrolmentContext" property="infoExecutionPeriod.name" />&nbsp;				
+				<bean:write name="infoStudentEnrolmentContext" property="infoExecutionPeriod.infoExecutionYear.year" />
 			</td>
 		</tr>
 	</table>

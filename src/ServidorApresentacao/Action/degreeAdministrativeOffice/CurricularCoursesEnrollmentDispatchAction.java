@@ -19,6 +19,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoEnrolment;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
@@ -87,13 +88,13 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		// onde estao as listas das areas de especializacao e area secundaria
 		enrollmentForm.set(
 			"specializationArea",
-			infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoBranch().getName());
+			infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoBranch().getIdInternal());
 		enrollmentForm.set(
 			"secondaryArea",
 			infoStudentEnrolmentContext
 				.getInfoStudentCurricularPlan()
 				.getInfoSecundaryBranch()
-				.getName());
+				.getIdInternal());
 		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
 
 		return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
@@ -132,20 +133,34 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		throws Exception
 	{
 		IUserView userView = SessionUtils.getUserView(request);
+		ActionErrors errors = new ActionErrors();
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
 		Integer specializationArea = (Integer) enrollmentForm.get("specializationArea");
 		Integer secondaryArea = (Integer) enrollmentForm.get("secondaryArea");
+		Integer studentCurricularPlanId =
+			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 
 		// alterar as areas do aluno
-		Object[] args = { specializationArea, secondaryArea };
+		Object[] args = { studentCurricularPlanId, specializationArea, secondaryArea };
 		try
 		{
-			ServiceManagerServiceFactory.executeService(userView, "", args);
+			ServiceManagerServiceFactory.executeService(userView, "WriteStudentAreas", args);
 
+		}
+		catch (BothAreasAreTheSameServiceException e)
+		{
+			errors.add("bothAreas", new ActionError(e.getMessage()));
+			saveErrors(request, errors);
+		}
+		catch (ExistingServiceException e)
+		{
+			errors.add("studentCurricularPlan", new ActionError(e.getMessage()));
+			saveErrors(request, errors);
 		}
 		catch (FenixServiceException e)
 		{
-
+			e.printStackTrace();
+			throw new FenixActionException(e.getMessage());
 		}
 
 		return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
@@ -158,13 +173,27 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
+		IUserView userView = SessionUtils.getUserView(request);
+		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
+		Integer[] curricularCoursesToEnroll =
+			(Integer[]) enrollmentForm.get("unenrolledCurricularCourses");
 
-		List specializationAreas = new ArrayList();
-		List secondaryAreas = new ArrayList();
+		List toEnroll = Arrays.asList(curricularCoursesToEnroll);
+		Integer studentCurricularPlanId =
+			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 
-		request.setAttribute("specializationAreas", specializationAreas);
-		request.setAttribute("secondaryAreas", secondaryAreas);
-		return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
+		System.out.println(toEnroll.toString());
+		Object[] args = { studentCurricularPlanId, toEnroll.get(0), null };
+		try
+		{
+			ServiceManagerServiceFactory.executeService(userView, "WriteEnrolment", args);
+		}
+		catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e.getMessage());
+		}
+
+		return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
 	}
 
 	public ActionForward unenrollFromCurricularCourse(

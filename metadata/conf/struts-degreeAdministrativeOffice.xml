@@ -46,8 +46,8 @@
 		<!-- ******************* LEEC Enrollment **************** -->
 		<form-bean name="curricularCoursesEnrollmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="studentNumber" type="java.lang.String"/>
-			<form-property name="specializationArea" type="java.lang.String"/>
-			<form-property name="secondaryArea" type="java.lang.String"/>
+			<form-property name="specializationArea" type="java.lang.Integer"/>
+			<form-property name="secondaryArea" type="java.lang.Integer"/>
 			<form-property name="enrolledCurricularCoursesBefore" type="java.lang.Integer[]"/>
 			<form-property name="enrolledCurricularCoursesAfter" type="java.lang.Integer[]"/>
 			<form-property name="unenrolledCurricularCourses" type="java.lang.Integer[]"/>
