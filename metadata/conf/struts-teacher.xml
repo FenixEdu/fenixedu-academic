@@ -455,6 +455,7 @@
             <form-property name="objectCode" type="java.lang.Integer" />
             <form-property name="method" type="java.lang.String" />
 			<form-property name="viewPhoto" type="java.lang.String" />
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" />			
         </form-bean>
 		
         <form-bean name="selectCandidaciesForm" type="org.apache.struts.validator.DynaValidatorForm" 
