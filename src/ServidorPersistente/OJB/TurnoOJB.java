@@ -275,8 +275,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 			query.bind(siglaLicenciatura);
 			List result = (List) query.execute();
 			lockRead(result);
-			
-			System.out.println(result.size());
+	
 			
 			for (int i = 0; i != result.size(); i++)
 				turnos.add((ITurno) (result.get(i)));
