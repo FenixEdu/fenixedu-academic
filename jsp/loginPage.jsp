@@ -28,6 +28,7 @@
 	 
 	<div id="alert">	
 		<p><span class="error"><html:errors property="invalidAuthentication"/></span></p>
+		<p><span class="error"><html:errors property="errors.noAuthorization"/></span></p>
 		<p><span class="error"><html:errors property="error.invalid.session"/></span></p>
 	</div>
 	</div>

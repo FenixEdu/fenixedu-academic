@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="java.util.TreeMap" %>
 
 	<logic:present name="seminaries">
 		<logic:present name="cases">
@@ -186,6 +187,15 @@
 								<html:link page="/getTabSeparatedCandidacies.do" name="args">
 									<bean:message key="link.getExcelSpreadSheet"/><br/><br/>
 								</html:link>
+								<%Map sendMailParameters = new TreeMap(request.getParameterMap());
+						              sendMailParameters.put("method","prepareCandidaciesSend");
+						              sendMailParameters.put("candidaciesSend","true");
+									  request.setAttribute("sendMailParameters",sendMailParameters);
+								%>
+								<bean:define id="sendMailLinkParameters" type="java.util.Map" name="sendMailParameters"/>
+							   <html:link page="/sendMailToAllStudents.do" name="sendMailLinkParameters">
+									<bean:message key="link.sendEmailToAllStudents"/><br/><br/>
+							   </html:link>
 								<bean:define name="candidacies" type="java.util.List" id="candidacies"/>
 								<%=candidacies.size()%> <bean:message key="message.enrolledStudents"/>
 									</td>
@@ -201,6 +211,9 @@
 									</td>
 									<td class="listClasses-header">
 										Nome
+									</td>
+									<td class="listClasses-header">
+										E-Mail
 									</td>
 									<td class="listClasses-header">
 										Seminário
@@ -261,6 +274,11 @@
 										%>
 									</td>
 									<td class="listClasses">
+										<a href=mailto:<%=candidacy.getStudent().getInfoPerson().getEmail()%>>
+											<bean:write name="candidacy" property="student.infoPerson.email"/>
+										</a>
+									</td>
+									<td class="listClasses">
 										<html:link page="/showCandidacies.do" 
 											  paramId="seminaryID" 
 											  paramName="candidacy" 
@@ -306,7 +324,18 @@
 										</logic:empty>
 									</td>
 									<td class="listClasses">
-										<bean:write name="candidacy" property="motivation"/>
+										<%
+                
+											String motivationDigest = new String();
+											String[] motivationVector = candidacy.getMotivation().split(" ");
+											
+											for (int i= 0; i < motivationVector.length && i < 15; i++)
+												motivationDigest += motivationVector[i] + " ";
+											motivationDigest+= "[...]";
+
+											out.print(motivationDigest);
+
+										%>
 									</td>
 									<logic:iterate indexId="index" name="candidacy" property="cases" id="caseStudy" type="DataBeans.Seminaries.InfoCaseStudy">
 										<td  class="listClasses" title="<bean:write name="caseStudy" property="name"/>">

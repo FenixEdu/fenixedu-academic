@@ -41,6 +41,20 @@
 	<html:hidden property="shiftCode"/>
 	<html:hidden property="studentGroupCode"/>
 	<html:hidden property="objectCode"/>
+	<%-- TODO: this must be redisigned to be fully reusable--%>
+	<html:hidden property="candidaciesSend"/>
 	<html:hidden property="method" value="send"/>
-	<html:submit property="submition"><bean:message key="button.sendMail"/></html:submit>
+	<html:hidden property="seminaryID" />
+	<html:hidden property="case1ID" />
+	<html:hidden property="case2ID" />
+	<html:hidden property="case3ID" />
+	<html:hidden property="case4ID" />
+	<html:hidden property="case5ID" />
+	<html:hidden property="degreeID"/>
+	<html:hidden property="modalityID" />
+	<html:hidden property="courseID" />
+	<html:hidden property="themeID" />  
+
+   <html:submit property="submition"><bean:message key="button.sendMail"/></html:submit>
 </html:form>
+

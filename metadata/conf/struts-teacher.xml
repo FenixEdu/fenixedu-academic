@@ -334,6 +334,17 @@
 			<form-property name="fromName" type="java.lang.String" />
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="subject" type="java.lang.String" />
+			<form-property name="candidaciesSend" type="java.lang.String" />
+			<form-property name="seminaryID" type="java.lang.Integer" />      
+			<form-property name="case1ID" type="java.lang.Integer" />      
+			<form-property name="case2ID" type="java.lang.Integer" />      
+			<form-property name="case3ID" type="java.lang.Integer" />      
+			<form-property name="case4ID" type="java.lang.Integer" />      
+			<form-property name="case5ID" type="java.lang.Integer" />      
+			<form-property name="degreeID" type="java.lang.Integer" />
+			<form-property name="modalityID" type="java.lang.Integer" />
+			<form-property name="courseID" type="java.lang.Integer" />
+			<form-property name="themeID" type="java.lang.Integer" />
 		</form-bean>
 
 		<form-bean name="studentsByCurricularCourseForm"

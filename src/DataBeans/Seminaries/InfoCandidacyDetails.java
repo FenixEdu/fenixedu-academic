@@ -27,6 +27,8 @@ public class InfoCandidacyDetails
     private String motivation; 
     private InfoCurricularCourse curricularCourse;
     private Integer idInternal;
+    private Integer classification;
+    private Integer completedCourses;
 
 	/**
 	 * @return
@@ -154,6 +156,38 @@ public class InfoCandidacyDetails
 	public void setIdInternal(Integer integer)
 	{
 		idInternal= integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getClassification()
+	{
+		return classification;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getCompletedCourses()
+	{
+		return completedCourses;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setClassification(Integer integer)
+	{
+		classification= integer;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setCompletedCourses(Integer integer)
+	{
+		completedCourses= integer;
 	}
 
 }

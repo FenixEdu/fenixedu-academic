@@ -34,22 +34,20 @@ import Util.TipoCurso;
 public class UpdateStudent {
 
 
-	public static void main(String args[]) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	public static void main(String args[]) throws Exception {
 
 		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();		
-		
-//		broker.beginTransaction();
 		
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWAluno persistentAluno = mws.getIPersistentMWAluno();
 		
 		System.out.println("Reading Students ....");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
 		List result = persistentAluno.readAll();
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
 		System.out.println("Updating " + result.size() + " students ...");
 
 				
-//		broker.commitTransaction();
-
 		Iterator iterator = result.iterator();
 		while(iterator.hasNext()) {
 			MWAluno student = (MWAluno) iterator.next();
@@ -66,21 +64,13 @@ public class UpdateStudent {
 	 * 
 	 */ 
 	
-	public static void updateCorrectStudents(MWAluno oldStudent) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	public static void updateCorrectStudents(MWAluno oldStudent) throws Exception {
 		
 		try {
-			
-	
 			
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 	
-	
-			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();		
-			
-//			broker.beginTransaction();
-//			broker.clearCache();
-		
 			sp.iniciarTransaccao();
 			
 			// Read Fenix Student
@@ -88,7 +78,6 @@ public class UpdateStudent {
 			
 			if (student == null) {
 				System.out.println("Error Reading Fenix Student! Student Number [" + oldStudent.getNumber() + "]");
-//				broker.commitTransaction();
 				sp.confirmarTransaccao();
 				return;
 			}
@@ -104,10 +93,7 @@ public class UpdateStudent {
 			// his information
 	
 			if (studentList.size() > 1) {
-	
-	System.out.println("MWAluno de Mestrado [Person ID" + student.getPerson().getIdInternal() + "]");
-				
-//				broker.commitTransaction();
+				System.out.println("MWAluno de Mestrado [Person ID" + student.getPerson().getIdInternal() + "]");
 				sp.confirmarTransaccao();
 				return;
 			}
@@ -151,14 +137,12 @@ public class UpdateStudent {
 			
 			// Change all the information
 			
-//			broker.commitTransaction();
 			PersonUtils.updateStudentPerson(student.getPerson(), oldStudent.getMiddlewarePerson());
 			sp.confirmarTransaccao();
 
 		} catch(Exception e) {
-
-			
 			e.printStackTrace();
+			throw new Exception(e);
 		}
 		
 	}
@@ -176,12 +160,6 @@ public class UpdateStudent {
 
 
 		// Get the Old Degree
-		
-		
-System.out.println("codigo do curso " + oldStudent.getDegreecode());
-
-				
-		
 		MWBranch mwBranch = persistentBranch.readByDegreeCodeAndBranchCode(oldStudent.getDegreecode(), new Integer(0));
 		
 		// Get the Actual Degree Curricular Plan for this Degree
