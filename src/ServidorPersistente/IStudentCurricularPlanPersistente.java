@@ -17,48 +17,50 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.Specialization;
+import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
 public interface IStudentCurricularPlanPersistente extends IPersistentObject {
-    
-    /**
-     * 
-     * @param studentNumber
-     * @param degreeType
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-    IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber, TipoCurso degreeType ) throws ExcepcaoPersistencia;
-    
-    /**
-     * 
-     * @param studentCurricularPlan
-     * @throws ExcepcaoPersistencia
-     * @throws ExistingPersistentException
-     */
-    public void lockWrite(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia, ExistingPersistentException;
-    
-    /**
-     * 
-     * @param studentCurricularPlan
-     * @throws ExcepcaoPersistencia
-     */
-    public void delete(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
-    
-    /**
-     * 
-     * @throws ExcepcaoPersistencia
-     */
-    public void deleteAll() throws ExcepcaoPersistencia;
-    
-    /**
-     * 
-     * @param studentNumber
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-    public List readAllFromStudent(int studentNumber /*, StudentType studentType */) throws ExcepcaoPersistencia;
-	
+
+	/**
+	 * 
+	 * @param studentNumber
+	 * @param degreeType
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber, TipoCurso degreeType) throws ExcepcaoPersistencia;
+
+	/**
+	 * 
+	 * @param studentCurricularPlan
+	 * @throws ExcepcaoPersistencia
+	 * @throws ExistingPersistentException
+	 */
+	public void lockWrite(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia, ExistingPersistentException;
+
+	/**
+	 * 
+	 * @param studentCurricularPlan
+	 * @throws ExcepcaoPersistencia
+	 */
+	public void delete(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
+
+	/**
+	 * 
+	 * @throws ExcepcaoPersistencia
+	 */
+	public void deleteAll() throws ExcepcaoPersistencia;
+
+	/**
+	 * 
+	 * @param studentNumber
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readAllFromStudent(int studentNumber /*, StudentType studentType */
+	) throws ExcepcaoPersistencia;
+
 	/**
 	 * 
 	 * @param studentNumber
@@ -67,8 +69,9 @@ public interface IStudentCurricularPlanPersistente extends IPersistentObject {
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(Integer studentNumber, TipoCurso degreeType, Specialization specialization ) throws ExcepcaoPersistencia;
-	
+	public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(Integer studentNumber, TipoCurso degreeType, Specialization specialization)
+		throws ExcepcaoPersistencia;
+
 	/**
 	 * 
 	 * @param degreeCurricularPlan
@@ -76,7 +79,7 @@ public interface IStudentCurricularPlanPersistente extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
-	
+
 	/**
 	 * 
 	 * @param username
@@ -84,6 +87,7 @@ public interface IStudentCurricularPlanPersistente extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public List readByUsername(String username) throws ExcepcaoPersistencia;
-	
 
+	public List readAllByDegreeCurricularPlanAndState(IDegreeCurricularPlan degreeCurricularPlan, StudentCurricularPlanState state)
+		throws ExcepcaoPersistencia;
 }

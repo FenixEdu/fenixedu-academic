@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Iterator;
 
 import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.equivalence.InfoCurricularCourseScopeGrade;
@@ -36,6 +37,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
+import Util.CurricularCourseType;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
@@ -90,10 +92,10 @@ public class ConfirmEquivalence implements IServico {
 
 				IEnrolmentEquivalence enrolmentEquivalence = createNewEnrolmentEquivalence(newEnrolment);
 
-				Iterator enrolmentsToGiveEquivalenceIterator = infoEquivalenceContext.getChosenInfoEnrolmentsToGiveEquivalence().iterator();
-				while (enrolmentsToGiveEquivalenceIterator.hasNext()) {
-					IEnrolment enrolmentToGiveEquivalence = (IEnrolment) enrolmentsToGiveEquivalenceIterator.next();
-					createNewEnrolmentEquivalenceRestriction(enrolmentEquivalence, enrolmentToGiveEquivalence);
+				Iterator infoEnrolmentsToGiveEquivalenceIterator = infoEquivalenceContext.getChosenInfoEnrolmentsToGiveEquivalence().iterator();
+				while (infoEnrolmentsToGiveEquivalenceIterator.hasNext()) {
+					InfoEnrolment infpEnrolmentToGiveEquivalence = (InfoEnrolment) infoEnrolmentsToGiveEquivalenceIterator.next();
+					createNewEnrolmentEquivalenceRestriction(enrolmentEquivalence, infpEnrolmentToGiveEquivalence);
 				}
 				//				TODO DAVID-RICARDO: Tratar opções
 			}
@@ -108,12 +110,12 @@ public class ConfirmEquivalence implements IServico {
 
 	private IEnrolmentEquivalenceRestriction createNewEnrolmentEquivalenceRestriction(
 		IEnrolmentEquivalence enrolmentEquivalence,
-		IEnrolment enrolmentToGiveEquivalence)
+		InfoEnrolment infoEnrolmentToGiveEquivalence)
 		throws ExistingPersistentException, ExcepcaoPersistencia {
 		try {
 			IEnrolmentEquivalenceRestriction enrolmentEquivalenceRestriction = new EnrolmentEquivalenceRestriction();
 			enrolmentEquivalenceRestriction.setEnrolmentEquivalence(enrolmentEquivalence);
-			enrolmentEquivalenceRestriction.setEquivalentEnrolment(enrolmentToGiveEquivalence);
+			enrolmentEquivalenceRestriction.setEquivalentEnrolment(Cloner.copyInfoEnrolment2IEnrolment(infoEnrolmentToGiveEquivalence));
 			persistentEnrolmentEquivalenceRestriction.lockWrite(enrolmentEquivalenceRestriction);
 			return enrolmentEquivalenceRestriction;
 		} catch (ExistingPersistentException e) {
@@ -178,6 +180,10 @@ public class ConfirmEquivalence implements IServico {
 			InfoStudentCurricularPlan infoStudentCurricularPlan = infoEquivalenceContext.getInfoStudentCurricularPlan();
 			IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
 
+//			if(curricularCourseScopeToEnrol.getCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)){
+//				
+//				
+//			}
 			newEnrolment = new Enrolment();
 			newEnrolment.setCurricularCourseScope(curricularCourseScopeToEnrol);
 			newEnrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);

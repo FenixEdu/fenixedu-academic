@@ -4,11 +4,13 @@ import java.util.List;
 
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.EnrolmentState;
+import Util.StudentCurricularPlanState;
 
 /**
  * @author dcs-rjao
@@ -47,5 +49,6 @@ public interface IPersistentEnrolment extends IPersistentObject {
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	public List readByCurricularCourse(ICurricularCourse curricularCourse, String year) throws ExcepcaoPersistencia ;  
+	public List readByCurricularCourse(ICurricularCourse curricularCourse, String year) throws ExcepcaoPersistencia ;
+	public List readEnrolmentsByStudentCurricularPlanStateAndEnrolmentStateAndDegreeCurricularPlans(StudentCurricularPlanState state, EnrolmentState state2, IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;  
 }

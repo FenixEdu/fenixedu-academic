@@ -8,7 +8,7 @@ package middleware.almeida.dcsrjao;
 public class InfoForMigration {
 
 	public static final String NAME_OF_OLD_DEGREE_CURRICULAR_PLAN = "LEQ";
-	public static final String NAME_OF_NEW_DEGREE_CURRICULAR_PLAN = "LEQ-2003";
+	public static final String NAME_OF_NEW_DEGREE_CURRICULAR_PLAN = "LEQ2003/2004";
 
 	private String type;
 	

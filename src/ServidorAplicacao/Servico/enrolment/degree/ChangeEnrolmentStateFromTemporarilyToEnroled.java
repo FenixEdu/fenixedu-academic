@@ -1,25 +1,32 @@
 package ServidorAplicacao.Servico.enrolment.degree;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import Dominio.DegreeCurricularPlan;
 import Dominio.EnrolmentEvaluation;
+import Dominio.Frequenta;
+import Dominio.IDegreeCurricularPlan;
+import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
-import Dominio.IStudent;
-import Dominio.IStudentCurricularPlan;
+import Dominio.IFrequenta;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IFrequentaPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentState;
+import Util.StudentCurricularPlanState;
 
 /**
  * @author dcs-rjao
@@ -27,6 +34,15 @@ import Util.EnrolmentState;
  * 9/Abr/2003
  */
 public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
+
+	private static ISuportePersistente persistentSupport = null;
+	private static IPersistentStudent studentDAO = null;
+	private static IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
+	private static IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
+	private static IPersistentEnrolment persistentEnrolment = null;
+	private static IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = null;
+	private static IFrequentaPersistente frequentaPersistente = null;
+
 
 	private static ChangeEnrolmentStateFromTemporarilyToEnroled _servico = new ChangeEnrolmentStateFromTemporarilyToEnroled();
 	/**
@@ -55,43 +71,91 @@ public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 	 * @return EnrolmentContext
 	 * @throws FenixServiceException
 	 */
-	public void run(IUserView userView) throws FenixServiceException {
+	public void run(String degreeCurricularPlanName) throws FenixServiceException {
 
 		try {
-			ISuportePersistente persistentSupport =	SuportePersistenteOJB.getInstance();
-			IPersistentStudent studentDAO =	persistentSupport.getIPersistentStudent();
-			IStudentCurricularPlanPersistente persistentStudentCurricularPlan =	persistentSupport.getIStudentCurricularPlanPersistente();
-			IPersistentEnrolment persistentEnrolment =	persistentSupport.getIPersistentEnrolment();
+			persistentSupport = SuportePersistenteOJB.getInstance();
+			persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
+			persistentEnrolment = persistentSupport.getIPersistentEnrolment();
+			frequentaPersistente = persistentSupport.getIFrequentaPersistente();
+			persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
+			persistentEnrolmentEvaluation = persistentSupport.getIPersistentEnrolmentEvaluation();
+			
+			IDegreeCurricularPlan degreeCurricularPlanCriteria = new DegreeCurricularPlan();
+			degreeCurricularPlanCriteria.setName(degreeCurricularPlanName);
+			IDegreeCurricularPlan degreeCurricularPlan =
+				(IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlanCriteria);
 
-			// FIXME DAVID-RICARDO: Este algoritmo não devia ser para todos os cursos em vez de ser só para um estudante?
-			IStudent student = studentDAO.readByUsername(((UserView) userView).getUtilizador());
-			IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
-			List TemporarilyEnrolemts = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentActiveCurricularPlan, EnrolmentState.TEMPORARILY_ENROLED);
+			//			IStudent student = studentDAO.readByUsername(((UserView) userView).getUtilizador());
+			//			IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
+			//			List TemporarilyEnrolemts = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentActiveCurricularPlan, EnrolmentState.TEMPORARILY_ENROLED);
 
-			Iterator iterator = TemporarilyEnrolemts.iterator();
-			while (iterator.hasNext()) {
-				IEnrolment enrolment = (IEnrolment) iterator.next();
+//			List listActiveStudentCurricularPlans =
+//				persistentStudentCurricularPlan.readAllByDegreeCurricularPlanAndState(degreeCurricularPlan, StudentCurricularPlanState.ACTIVE_OBJ);
+//			Iterator iterator = listActiveStudentCurricularPlans.iterator();
+//			while (iterator.hasNext()) {
+//				IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+//				List TemporarilyEnrolemts =
+//					persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlan, EnrolmentState.TEMPORARILY_ENROLED);
+//
+//				Iterator temporarilyEnrolemtsIterator = TemporarilyEnrolemts.iterator();
+//				while (temporarilyEnrolemtsIterator.hasNext()) {
+//					IEnrolment enrolment = (IEnrolment) temporarilyEnrolemtsIterator.next();
+//					enrolment.setEnrolmentState(EnrolmentState.ENROLED);
+//					persistentEnrolment.lockWrite(enrolment);
+//					createEnrolmentEvaluation(enrolment);
+//					createAttend(enrolment);
+//				}
+//			}
+			List TemporarilyEnrolemts =
+				persistentEnrolment.readEnrolmentsByStudentCurricularPlanStateAndEnrolmentStateAndDegreeCurricularPlans(StudentCurricularPlanState.ACTIVE_OBJ, EnrolmentState.TEMPORARILY_ENROLED, degreeCurricularPlan);
+
+			Iterator temporarilyEnrolemtsIterator = TemporarilyEnrolemts.iterator();
+			while (temporarilyEnrolemtsIterator.hasNext()) {
+				IEnrolment enrolment = (IEnrolment) temporarilyEnrolemtsIterator.next();
 				enrolment.setEnrolmentState(EnrolmentState.ENROLED);
 				persistentEnrolment.lockWrite(enrolment);
 				createEnrolmentEvaluation(enrolment);
+				createAttend(enrolment);
 			}
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace(System.out);
-			throw new FenixServiceException(ex);
-		} catch (IllegalStateException ex) {
-			ex.printStackTrace(System.out);
-			throw new FenixServiceException(ex);
+
+		} catch (ExistingPersistentException e) {
+			throw new FenixServiceException(e);
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
 		}
 
 	}
 
-	private void createEnrolmentEvaluation(IEnrolment enrolment) {
-		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-		enrolmentEvaluation.setEnrolment(enrolment);
-		enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
-		enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-		// TODO DAVID-RICARDO: Quando o algoritmo do checksum estiver feito tem de ser actualizar este campo
-		enrolmentEvaluation.setCheckSum(null);
+	private void createAttend(IEnrolment enrolment) throws ExcepcaoPersistencia, ExistingPersistentException {
+		try {
+			IFrequenta frequenta = new Frequenta();
+			frequenta.setAluno(enrolment.getStudentCurricularPlan().getStudent());
+			frequenta.setEnrolment(enrolment);
+			frequenta.setDisciplinaExecucao(
+				(IDisciplinaExecucao) enrolment.getCurricularCourseScope().getCurricularCourse().getAssociatedExecutionCourses().get(0));
+			frequentaPersistente.lockWrite(frequenta);
+		} catch (ExistingPersistentException e) {
+			throw e;
+		} catch (ExcepcaoPersistencia e) {
+			throw e;
+		}
 	}
-	
+
+	private void createEnrolmentEvaluation(IEnrolment enrolment) throws ExcepcaoPersistencia {
+
+		try {
+			IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
+			enrolmentEvaluation.setEnrolment(enrolment);
+			enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
+			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+			enrolmentEvaluation.setWhen(new Date());
+			// TODO DAVID-RICARDO: Quando o algoritmo do checksum estiver feito tem de ser actualizar este campo
+			enrolmentEvaluation.setCheckSum(null);
+			persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluation);
+		} catch (ExcepcaoPersistencia e) {
+			throw e;
+		}
+	}
+
 }

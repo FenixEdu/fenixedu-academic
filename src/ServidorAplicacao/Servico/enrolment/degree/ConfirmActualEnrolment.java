@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import Util.TipoCurso;
 import Dominio.Enrolment;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -98,8 +99,13 @@ public class ConfirmActualEnrolment implements IServico {
 			persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 			persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-			IStudentCurricularPlan studentCurricularPlan =
-				(IStudentCurricularPlan) persistentStudentCurricularPlan.readDomainObjectByCriteria(enrolmentContext.getStudentActiveCurricularPlan());
+			//			IStudentCurricularPlan studentCurricularPlan =
+			//				(IStudentCurricularPlan) persistentStudentCurricularPlan.readDomainObjectByCriteria(enrolmentContext.getStudentActiveCurricularPlan());
+			Integer studentNumber = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getNumber();
+			TipoCurso tipoCurso = TipoCurso.LICENCIATURA_OBJ;
+
+			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readActiveStudentCurricularPlan(studentNumber, tipoCurso);;
+
 			IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readDomainObjectByCriteria(enrolmentContext.getExecutionPeriod());
 
 			// list of all temporarily enrolments.

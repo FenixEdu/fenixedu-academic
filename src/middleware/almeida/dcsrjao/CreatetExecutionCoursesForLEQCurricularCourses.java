@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import Util.CurricularCourseType;
+
 import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
@@ -34,14 +36,14 @@ public class CreatetExecutionCoursesForLEQCurricularCourses extends LoadDataToFe
 			loader = new CreatetExecutionCoursesForLEQCurricularCourses();
 		}
 
-		loader.migrationStart("CreatetExecutionCoursesForLEQCurricularCourses");
+		loader.migrationStart(loader.getClassName());
 
 		loader.setupDAO();
 		IDegreeCurricularPlan degreeCurricularPlan = loader.processNewLEQDegreeCurricularPlan();
 		loader.shutdownDAO();
 		if (degreeCurricularPlan == null) {
 			logString += error.toString();
-			loader.migrationEnd("CreatetExecutionCoursesForLEQCurricularCourses", logString);
+			loader.migrationEnd(loader.getClassName(), logString);
 			return;
 		}
 
@@ -53,7 +55,7 @@ public class CreatetExecutionCoursesForLEQCurricularCourses extends LoadDataToFe
 			errorDBID = "";
 			error = loader.setErrorMessage(errorMessage, errorDBID, error);
 			logString += error.toString();
-			loader.migrationEnd("CreatetExecutionCoursesForLEQCurricularCourses", logString);
+			loader.migrationEnd(loader.getClassName(), logString);
 			return;
 		}
 
@@ -61,11 +63,11 @@ public class CreatetExecutionCoursesForLEQCurricularCourses extends LoadDataToFe
 		List leqCurricularCourses = loader.persistentObjectOJB.readAllLEQCurricularCourses(degreeCurricularPlan);
 		loader.shutdownDAO();
 		if (leqCurricularCourses == null) {
-			errorMessage = "\n Erro ao ler as cadeiras do plano curricular LEQ - 2003!";
+			errorMessage = "\n Erro ao ler as cadeiras do plano curricular " + degreeCurricularPlan.getName() + "!";
 			errorDBID = "";
 			error = loader.setErrorMessage(errorMessage, errorDBID, error);
 			logString += error.toString();
-			loader.migrationEnd("CreatetExecutionCoursesForLEQCurricularCourses", logString);
+			loader.migrationEnd(loader.getClassName(), logString);
 			return;
 		}
 
@@ -79,11 +81,11 @@ public class CreatetExecutionCoursesForLEQCurricularCourses extends LoadDataToFe
 			loader.shutdownDAO();
 		}
 		logString += error.toString();
-		loader.migrationEnd("CreatetExecutionCoursesForLEQCurricularCourses", logString);
+		loader.migrationEnd(loader.getClassName(), logString);
 	}
 
 	private void processCurricularCourse(ICurricularCourse curricularCourse) {
-		if (!curricularCourse.getName().startsWith("OPÇÃO")) {
+		if (!curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)){
 
 			IDisciplinaExecucao executionCourse = loader.persistentObjectOJB.readExecutionCourseByUnique(curricularCourse.getCode(), this.executionPeriod);
 			if (executionCourse != null) {
@@ -106,9 +108,9 @@ public class CreatetExecutionCoursesForLEQCurricularCourses extends LoadDataToFe
 	}
 
 	private IDegreeCurricularPlan processNewLEQDegreeCurricularPlan() {
-		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName("LEQ-2003");
+		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName(InfoForMigration.NAME_OF_NEW_DEGREE_CURRICULAR_PLAN);
 		if (degreeCurricularPlan == null) {
-			errorMessage = "\n O plano curricular LEQ-2003 não existe!";
+			errorMessage = "\n O plano curricular " + InfoForMigration.NAME_OF_NEW_DEGREE_CURRICULAR_PLAN + " não existe!";
 			errorDBID = "";
 			error = loader.setErrorMessage(errorMessage, errorDBID, error);
 			return null;
@@ -118,7 +120,7 @@ public class CreatetExecutionCoursesForLEQCurricularCourses extends LoadDataToFe
 	}
 
 	protected String getFilenameOutput() {
-		return "etc/migration/dcs-rjao/logs/CreatetExecutionCoursesForLEQCurricularCourses.txt";
+		return "etc/migration/dcs-rjao/logs/" + this.getClassName() +".txt";
 	}
 
 	protected String getClassName() {

@@ -13,6 +13,7 @@ package ServidorPersistente.OJB;
 
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.IDegreeCurricularPlan;
@@ -26,71 +27,80 @@ import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
 public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudentCurricularPlanPersistente {
-    
-    /** Creates a new instance of StudentCurricularPlanOJB */
-    public StudentCurricularPlanOJB() {
-    }
-    
-    // TODO Remove TipoCurso from method interface...
-    public IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber , TipoCurso degreeType ) throws ExcepcaoPersistencia {
-        try {
-            IStudentCurricularPlan studentCurricularPlan = null;
-            String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
-            oqlQuery += " where student.number = $1" ;
-            oqlQuery += " and student.degreeType = $2";
-            oqlQuery += " and currentState = $3" ;
 
-            query.create(oqlQuery);
-            query.bind(studentNumber);
-            query.bind(degreeType);
-            query.bind(new Integer(StudentCurricularPlanState.ACTIVE));
-            
-            
-            List result = (List) query.execute();
-            lockRead(result);
-            if (result.size() != 0) 
-                studentCurricularPlan = (IStudentCurricularPlan) result.get(0);
-            return studentCurricularPlan;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }
+	/** Creates a new instance of StudentCurricularPlanOJB */
+	public StudentCurricularPlanOJB() {
+	}
+
+	// TODO Remove TipoCurso from method interface...
+	public IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber, TipoCurso degreeType) throws ExcepcaoPersistencia {
+		try {
+			IStudentCurricularPlan studentCurricularPlan = null;
+			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
+			oqlQuery += " where student.number = $1";
+			oqlQuery += " and student.degreeType = $2";
+			oqlQuery += " and currentState = $3";
+
+			query.create(oqlQuery);
+			query.bind(studentNumber);
+			query.bind(degreeType);
+			query.bind(new Integer(StudentCurricularPlanState.ACTIVE));
+
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0)
+				studentCurricularPlan = (IStudentCurricularPlan) result.get(0);
+			return studentCurricularPlan;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+	public List readAllByDegreeCurricularPlanAndState(IDegreeCurricularPlan degreeCurricularPlan, StudentCurricularPlanState state)
+		throws ExcepcaoPersistencia {
+
+		try {
+			Criteria criteria = new Criteria();
+			criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+			criteria.addEqualTo("currentState", state);
+			return queryList(StudentCurricularPlan.class, criteria);
+		} catch (ExcepcaoPersistencia e) {
+			throw e;
+		}
+	}
 
 	// TODO : This method is not yet availabe through the StudentCurricularPlanPersistente interface.
 	//        I wrote it to be used in the lockWrite method, but maby it should be made available to
 	//        the aplication layer as well.
 	// TODO : Write a test case for this method.
-	public IStudentCurricularPlan readStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlanToRead)
-		throws ExcepcaoPersistencia {
-			try {
-				IStudentCurricularPlan studentCurricularPlanFromDB = null;
-				String oqlQuery =
-					"select all from " + StudentCurricularPlan.class.getName();
-				oqlQuery += " where student.number = $1";
-				oqlQuery += " and student.degreeType = $2";
-				oqlQuery += " and degreeCurricularPlan.name = $3";
-				oqlQuery += " and degreeCurricularPlan.degree.sigla = $4";
-				oqlQuery += " and currentState = $5";
+	public IStudentCurricularPlan readStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlanToRead) throws ExcepcaoPersistencia {
+		try {
+			IStudentCurricularPlan studentCurricularPlanFromDB = null;
+			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
+			oqlQuery += " where student.number = $1";
+			oqlQuery += " and student.degreeType = $2";
+			oqlQuery += " and degreeCurricularPlan.name = $3";
+			oqlQuery += " and degreeCurricularPlan.degree.sigla = $4";
+			oqlQuery += " and currentState = $5";
 
-				query.create(oqlQuery);
-				query.bind(studentCurricularPlanToRead.getStudent().getNumber());
-				query.bind(studentCurricularPlanToRead.getStudent().getDegreeType());
-				query.bind(studentCurricularPlanToRead.getDegreeCurricularPlan().getName());
-				query.bind(studentCurricularPlanToRead.getDegreeCurricularPlan().getDegree().getSigla());
-				query.bind(studentCurricularPlanToRead.getCurrentState());
+			query.create(oqlQuery);
+			query.bind(studentCurricularPlanToRead.getStudent().getNumber());
+			query.bind(studentCurricularPlanToRead.getStudent().getDegreeType());
+			query.bind(studentCurricularPlanToRead.getDegreeCurricularPlan().getName());
+			query.bind(studentCurricularPlanToRead.getDegreeCurricularPlan().getDegree().getSigla());
+			query.bind(studentCurricularPlanToRead.getCurrentState());
 
-				List result = (List) query.execute();
-				lockRead(result);
-				if (result.size() != 0)
-					studentCurricularPlanFromDB = (IStudentCurricularPlan) result.get(0);
-				return studentCurricularPlanFromDB;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0)
+				studentCurricularPlanFromDB = (IStudentCurricularPlan) result.get(0);
+			return studentCurricularPlanFromDB;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 	}
 
-	public void lockWrite(IStudentCurricularPlan studentCurricularPlanToWrite)
-		throws ExcepcaoPersistencia, ExistingPersistentException {
+	public void lockWrite(IStudentCurricularPlan studentCurricularPlanToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
 
 		IStudentCurricularPlan studentCurricularPlanFromDB = null;
 
@@ -114,95 +124,94 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 		} else
 			throw new ExistingPersistentException();
 	}
-    
-    public void delete(IStudentCurricularPlan curricularPlan) throws ExcepcaoPersistencia {
-        super.delete(curricularPlan);
-    }
-    
-     public void deleteAll() throws ExcepcaoPersistencia {
-        String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
-        super.deleteAll(oqlQuery);
-   }
 
-    public List readAllFromStudent(int studentNumber /*, StudentType studentType */) throws ExcepcaoPersistencia {
-        try {
-           String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
-            oqlQuery += " where student.number = " + studentNumber;
+	public void delete(IStudentCurricularPlan curricularPlan) throws ExcepcaoPersistencia {
+		super.delete(curricularPlan);
+	}
 
-// ACRESCENTAR AQUI A VERIFICACAO DO TIPO DE ALUNO
-            
-            query.create(oqlQuery);
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }   
-    
-	public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(Integer studentNumber , TipoCurso degreeType ,Specialization specialization) throws ExcepcaoPersistencia {
-		   try {
-			   IStudentCurricularPlan studentCurricularPlan = null;
-			   String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
-			   oqlQuery += " where student.number = $1" ;
-			   oqlQuery += " and student.degreeType = $2";
-			   oqlQuery += " and currentState = $3" ;
-			   oqlQuery += " and specialization = $4" ;
+	public void deleteAll() throws ExcepcaoPersistencia {
+		String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
+		super.deleteAll(oqlQuery);
+	}
 
-			   query.create(oqlQuery);
-			   query.bind(studentNumber);
-			   query.bind(degreeType);
-			   query.bind(new Integer(StudentCurricularPlanState.ACTIVE));
-			   query.bind(specialization.getSpecialization());
-            
-            
-			   List result = (List) query.execute();
-			   lockRead(result);
-			   if (result.size() != 0) 
-				   studentCurricularPlan = (IStudentCurricularPlan) result.get(0);
-			   return studentCurricularPlan;
-		   } catch (QueryException ex) {
-			   throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		   }
-	   }
+	public List readAllFromStudent(int studentNumber /*, StudentType studentType */
+	) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
+			oqlQuery += " where student.number = " + studentNumber;
 
+			// ACRESCENTAR AQUI A VERIFICACAO DO TIPO DE ALUNO
+
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+	public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(Integer studentNumber, TipoCurso degreeType, Specialization specialization)
+		throws ExcepcaoPersistencia {
+		try {
+			IStudentCurricularPlan studentCurricularPlan = null;
+			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
+			oqlQuery += " where student.number = $1";
+			oqlQuery += " and student.degreeType = $2";
+			oqlQuery += " and currentState = $3";
+			oqlQuery += " and specialization = $4";
+
+			query.create(oqlQuery);
+			query.bind(studentNumber);
+			query.bind(degreeType);
+			query.bind(new Integer(StudentCurricularPlanState.ACTIVE));
+			query.bind(specialization.getSpecialization());
+
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0)
+				studentCurricularPlan = (IStudentCurricularPlan) result.get(0);
+			return studentCurricularPlan;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
 
 	public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
 		try {
-		   IStudentCurricularPlan studentCurricularPlan = null;
-		   		   
-		   String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
-		   oqlQuery += " where degreeCurricularPlan.name = $1" ;
-		   oqlQuery += " and degreeCurricularPlan.degree.sigla = $2" ;
-		   query.create(oqlQuery);
-		   query.bind(degreeCurricularPlan.getName());
-		   query.bind(degreeCurricularPlan.getDegree().getSigla());
-		   			       
-		   List studentCurricularPlanList = (List) query.execute();
-		   lockRead(studentCurricularPlanList);
-		   return studentCurricularPlanList;
-	   } catch (QueryException ex) {
-		   throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-	   }
+			IStudentCurricularPlan studentCurricularPlan = null;
+
+			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
+			oqlQuery += " where degreeCurricularPlan.name = $1";
+			oqlQuery += " and degreeCurricularPlan.degree.sigla = $2";
+			query.create(oqlQuery);
+			query.bind(degreeCurricularPlan.getName());
+			query.bind(degreeCurricularPlan.getDegree().getSigla());
+
+			List studentCurricularPlanList = (List) query.execute();
+			lockRead(studentCurricularPlanList);
+			return studentCurricularPlanList;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 	}
 
 	public List readByUsername(String username) throws ExcepcaoPersistencia {
 		try {
-		   IStudentCurricularPlan studentCurricularPlan = null;
-		   		   
-		   String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
-		   oqlQuery += " where student.person.username = $1" ;
+			IStudentCurricularPlan studentCurricularPlan = null;
 
-		   query.create(oqlQuery);
-		   query.bind(username);
-		   			       
-		   List studentCurricularPlanList = (List) query.execute();
-		   lockRead(studentCurricularPlanList);
-		   return studentCurricularPlanList;
-	   } catch (QueryException ex) {
-		   throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-	   }
+			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
+			oqlQuery += " where student.person.username = $1";
 
+			query.create(oqlQuery);
+			query.bind(username);
+
+			List studentCurricularPlanList = (List) query.execute();
+			lockRead(studentCurricularPlanList);
+			return studentCurricularPlanList;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 
 	}
 }

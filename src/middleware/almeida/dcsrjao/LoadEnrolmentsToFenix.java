@@ -888,7 +888,7 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 	}
 
 	protected String getFilenameOutput() {
-		return "etc/migration/dcs-rjao/logs/LoadEnrolmentsToFenix.txt";
+		return "etc/migration/dcs-rjao/logs/" + this.getClassName() + ".txt";
 	}
 
 	protected String getClassName() {
