@@ -19,11 +19,15 @@ import DataBeans.KeyLesson;
 import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.ISala;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.sop.exceptions.InterceptingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class EditarAula implements IServico {
 
@@ -48,7 +52,8 @@ public class EditarAula implements IServico {
 		return "EditarAula";
 	}
 
-	public Object run(KeyLesson aulaAntiga, InfoLesson aulaNova) {
+	public Object run(KeyLesson aulaAntiga, InfoLesson aulaNova)
+		throws FenixServiceException {
 
 		IAula aula = null;
 		InfoLessonServiceResult result = null;
@@ -83,19 +88,23 @@ public class EditarAula implements IServico {
 				boolean resultB = validNoInterceptingLesson(newLesson);
 
 				if (result.isSUCESS() && resultB) {
-
 					aula.setDiaSemana(aulaNova.getDiaSemana());
 					aula.setInicio(aulaNova.getInicio());
 					aula.setFim(aulaNova.getFim());
 					aula.setTipo(aulaNova.getTipo());
 					aula.setSala(salaNova);
-					sp.getIAulaPersistente().lockWrite(aula);
+					try {
+						sp.getIAulaPersistente().lockWrite(aula);
+					} catch (ExistingPersistentException ex) {
+						throw new ExistingServiceException(ex);
+					}
 				} else {
 					result.setMessageType(2);
 				}
 			}
+
 		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
+			throw new FenixServiceException(ex.getMessage());
 		}
 
 		return result;
@@ -117,7 +126,33 @@ public class EditarAula implements IServico {
 		   * @param aula
 		   * @return InfoLessonServiceResult
 		   */
-	private boolean validNoInterceptingLesson(IAula lesson) {
+	/*	private boolean validNoInterceptingLesson(IAula lesson) {
+	
+			try {
+				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+	
+				IAulaPersistente persistentLesson = sp.getIAulaPersistente();
+	
+				List lessonMatchList =
+					persistentLesson.readLessonsInBroadPeriod(lesson);
+	
+				System.out.println("Tenho aulas:" + lessonMatchList.size());
+				
+				if ((lessonMatchList.size() >0 && !lessonMatchList.contains(lesson)) || (lessonMatchList.size() >1 && lessonMatchList.contains(lesson))) {
+					
+					return false;
+				} else {
+					return true;
+				}
+			} catch (ExcepcaoPersistencia e) {
+				return false;
+	
+			}
+		}
+	*/
+
+	private boolean validNoInterceptingLesson(IAula lesson)
+		throws ExistingServiceException, InterceptingServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -128,16 +163,19 @@ public class EditarAula implements IServico {
 				persistentLesson.readLessonsInBroadPeriod(lesson);
 
 			System.out.println("Tenho aulas:" + lessonMatchList.size());
-			
-			if ((lessonMatchList.size() >0 && !lessonMatchList.contains(lesson)) || (lessonMatchList.size() >1 && lessonMatchList.contains(lesson))) {
-				
-				return false;
+
+			if (lessonMatchList.size() > 0) {
+				if (lessonMatchList.contains(lesson)) {
+					throw new ExistingServiceException();
+				} else {
+					throw new InterceptingServiceException();
+				}
 			} else {
 				return true;
 			}
 		} catch (ExcepcaoPersistencia e) {
 			return false;
-
 		}
 	}
+
 }
