@@ -83,15 +83,11 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		Integer[] responsibleCoordinatorsIds = findResponsibleCoodinators(
 		infoExecutionDegree.getCoordinatorsList());
 		DynaActionForm coordinatorsForm = (DynaActionForm) actionForm;
-		//clean
-		coordinatorsForm.set(
-				"responsibleCoordinatorsIds",
-				null);
 		coordinatorsForm.set(
 			"responsibleCoordinatorsIds",
 			responsibleCoordinatorsIds);
 
-		request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+		request.setAttribute("infoExecutionDegree", infoExecutionDegree);	
 		request.setAttribute(
 			"degreeId",
 			infoExecutionDegree

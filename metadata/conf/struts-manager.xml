@@ -132,8 +132,8 @@
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
 				<form-property name="number" type="java.lang.String" />
-        <form-property name="professorshipsListSize" type="java.lang.Integer" />
-        <form-property name="responsibleForListSize" type="java.lang.Integer" />
+        		<form-property name="professorshipsListSize" type="java.lang.Integer" />
+		        <form-property name="responsibleForListSize" type="java.lang.Integer" />
 				<form-property name="deletePS" type="java.lang.Boolean" />
 				<form-property name="deleteRF" type="java.lang.Boolean" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
