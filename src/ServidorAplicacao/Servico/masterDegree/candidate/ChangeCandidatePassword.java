@@ -63,11 +63,11 @@ public class ChangeCandidatePassword implements IServico {
 
 			if (masterDegreeCandidate == null)
 				throw new ExcepcaoInexistente("Unknown Candidate !!");
-			if (!masterDegreeCandidate.getPassword().equals(oldPassword))	
+			if (!masterDegreeCandidate.getPerson().getPassword().equals(oldPassword))	
 				throw new InvalidPasswordServiceException("Invalid Existing Password !!");
 
 			// Change the Password
-			masterDegreeCandidate.setPassword(newPassword);
+			masterDegreeCandidate.getPerson().setPassword(newPassword);
 
 			}
 }

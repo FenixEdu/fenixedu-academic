@@ -20,6 +20,7 @@ import org.odmg.QueryException;
 
 import Dominio.CandidateSituation;
 import Dominio.ICandidateSituation;
+import Dominio.IMasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCandidateSituation;
 import Util.CandidateSituationValidation;
@@ -31,21 +32,23 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
     public CandidateSituationOJB() {
     }
     
-    public ICandidateSituation readActiveCandidateSituation(Integer candidateNumber, String degreeCode, String applicationYear) throws ExcepcaoPersistencia {
+    public ICandidateSituation readActiveCandidateSituation(IMasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {
         try {
             ICandidateSituation candidate = null;
             
             String oqlQuery = "select all from " + CandidateSituation.class.getName()
-            + " where masterDegreeCandidate.candidateNumber = $1"
-            + " and masterDegreeCandidate.executionDegree.curricularPlan.curso.sigla = $2"
-            + " and masterDegreeCandidate.executionDegree.executionYear.year = $3"
-            + " and validation = $4";
+				            + " where masterDegreeCandidate.candidateNumber = $1"
+				            + " and masterDegreeCandidate.executionDegree.curricularPlan.curso.sigla = $2"
+				            + " and masterDegreeCandidate.executionDegree.executionYear.year = $3"
+							+ " and validation = $4"
+							+ " and masterDegreeCandidate.specialization = $5";
             
             query.create(oqlQuery);
-			query.bind(candidateNumber);
-			query.bind(degreeCode);
-			query.bind(applicationYear);
+			query.bind(masterDegreeCandidate.getCandidateNumber());
+			query.bind(masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getCurso().getSigla());
+			query.bind(masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear());
 			query.bind(new Integer(CandidateSituationValidation.ACTIVE));
+			query.bind(masterDegreeCandidate.getSpecialization().getSpecialization());
             
             List result = (List) query.execute();
             lockRead(result);
@@ -57,17 +60,19 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
         }
     }
     
-	public List readCandidateSituations(Integer candidateNumber, String degreeCode, String applicationYear) throws ExcepcaoPersistencia {
+	public List readCandidateSituations(IMasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select all from " + CandidateSituation.class.getName()
-			+ " where masterDegreeCandidate.candidateNumber = $1"
-			+ " and masterDegreeCandidate.executionDegree.curricularPlan.curso.sigla = $2"
-			+ " and masterDegreeCandidate.executionDegree.executionYear.year = $3";
+							+ " where masterDegreeCandidate.candidateNumber = $1"
+							+ " and masterDegreeCandidate.executionDegree.curricularPlan.curso.sigla = $2"
+							+ " and masterDegreeCandidate.executionDegree.executionYear.year = $3"
+							+ " and masterDegreeCandidate.specialization = $4";
             
 			query.create(oqlQuery);
-			query.bind(candidateNumber);
-			query.bind(degreeCode);
-			query.bind(applicationYear);
+			query.bind(masterDegreeCandidate.getCandidateNumber());
+			query.bind(masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getCurso().getSigla());
+			query.bind(masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear());
+			query.bind(masterDegreeCandidate.getSpecialization().getSpecialization());
             
 			List result = (List) query.execute();
 			lockRead(result);

@@ -92,9 +92,9 @@ public class CreateMasterDegreeCandidate implements IServico {
 			situations.add(candidateSituation);
 			
 			masterDegreeCandidate.setSituations(situations);
-			masterDegreeCandidate.setName(newMasterDegreeCandidate.getName());
-			masterDegreeCandidate.setIdentificationDocumentNumber(newMasterDegreeCandidate.getIdentificationDocumentNumber());
-			masterDegreeCandidate.setIdentificationDocumentType(new TipoDocumentoIdentificacao(newMasterDegreeCandidate.getInfoIdentificationDocumentType()));			
+//			masterDegreeCandidate.setName(newMasterDegreeCandidate.getName());
+//			masterDegreeCandidate.setIdentificationDocumentNumber(newMasterDegreeCandidate.getIdentificationDocumentNumber());
+//			masterDegreeCandidate.setIdentificationDocumentType(new TipoDocumentoIdentificacao(newMasterDegreeCandidate.getInfoIdentificationDocumentType()));			
 			masterDegreeCandidate.setSpecialization(new Specialization(newMasterDegreeCandidate.getSpecialization()));
 			masterDegreeCandidate.setExecutionDegree(executionDegree);
 

@@ -17,94 +17,69 @@ package Dominio;
 import java.util.Date;
 import java.util.Set;
 
-import Util.EstadoCivil;
-import Util.Sexo;
 import Util.Specialization;
-import Util.TipoDocumentoIdentificacao;
 
 
 public interface IMasterDegreeCandidate {
     
     // Set Methods
-    void setIdentificationDocumentNumber(String identificationDocumentNumber);
-    void setIdentificationDocumentType(TipoDocumentoIdentificacao identificationDocumentType);
-    void setIdentificationDocumentIssuePlace(String identificationDocumentIssuePlace);
-    void setIdentificationDocumentIssueDate(Date identificationDocumentIssueDate);
-    void setIdentificationDocumentExpirationDate(Date identificationDocumentExpirationDate);
-    void setName(String name);
-    void setSex(Sexo sex);
-    void setMaritalStatus(EstadoCivil maritalStatus);
-    void setBirth(Date birth);
-    void setFatherName(String fatherName);
-    void setMotherName(String motherName);
-    void setNationality(ICountry nationality);
-    void setBirthPlaceParish(String birthPlaceParish);
-    void setBirthPlaceMunicipality(String birthPlaceMunicipality);
-    void setBirthPlaceDistrict(String birthPlaceDistrict);
-    void setAddress(String address);
-    void setPlace(String place);
-    void setPostCode(String postCode);
-    void setAddressParish(String addressParish);
-    void setAddressMunicipality(String addressMunicipality);
-    void setAddressDistrict(String addressDistrict);
-    void setTelephone(String telephone);
-    void setMobilePhone(String mobilePhone);
-    void setEmail(String email);
-    void setWebSite(String webSite);
-    void setContributorNumber(String contributorNumber);
-    void setOccupation(String occupation);
     void setMajorDegree(String majorDegree);
-    void setUsername(String username);
-    void setPassword(String password);
     void setCandidateNumber(Integer candidateNumber);
     void setSpecialization(Specialization specialization);
     void setMajorDegreeSchool(String majorDegreeSchool);
     void setMajorDegreeYear(Integer majorDegreeYear);
     void setAverage(Double average);
     void setExecutionDegree(ICursoExecucao executionDegree);    
-    void setCountry(ICountry country);
     void setSituations(Set situations);
+    void setPerson(IPessoa person);
     
     // Get Methods
-    String getIdentificationDocumentNumber();
-    TipoDocumentoIdentificacao getIdentificationDocumentType();
-    String getIdentificationDocumentIssuePlace();
-	Date getIdentificationDocumentIssueDate();
-	Date getIdentificationDocumentExpirationDate();
-    String getName();
-    Sexo getSex();
-    EstadoCivil getMaritalStatus();
-    Date getBirth();
-    String getFatherName();
-    String getMotherName();
-    ICountry getNationality();
-    String getBirthPlaceParish();
-    String getBirthPlaceMunicipality();
-    String getBirthPlaceDistrict();
-    String getAddress();
-    String getPlace();
-    String getPostCode();
-    String getAddressParish();
-    String getAddressMunicipality();
-    String getAddressDistrict();
-    String getTelephone();
-    String getMobilePhone();
-    String getEmail();
-    String getWebSite();
-    String getContributorNumber();
-    String getOccupation();
     String getMajorDegree();
-    String getUsername();
-    String getPassword();
     Integer getCandidateNumber();
     Specialization getSpecialization();
     String getMajorDegreeSchool();
     Integer getMajorDegreeYear();
     Double getAverage();
     ICursoExecucao getExecutionDegree();    
-	ICountry getCountry();    
 	Set getSituations();
+    IPessoa getPerson();
     
+    /**
+     * @deprecated
+     * @param name
+     * @param majorDegree
+     * @param majorDegreeSchool
+     * @param majorDegreeYear
+     * @param fatherName
+     * @param motherName
+     * @param birthPlaceParish
+     * @param birthPlaceMunicipality
+     * @param birthPlaceDistrict
+     * @param identificationDocumentNumber
+     * @param identificationDocumentIssuePlace
+     * @param address
+     * @param place
+     * @param postCode
+     * @param addressParish
+     * @param addressMunicipality
+     * @param addressDistrict
+     * @param telephone
+     * @param mobilePhone
+     * @param email
+     * @param webSite
+     * @param contributorNumber
+     * @param occupation
+     * @param sex
+     * @param identificationDocumentType
+     * @param maritalStatus
+     * @param country
+     * @param nationality
+     * @param specialization
+     * @param average
+     * @param birth
+     * @param identificationDocumentIssueDate
+     * @param identificationDocumentExpirationDate
+     */
     void changePersonalData(String name, String majorDegree, String majorDegreeSchool, Integer majorDegreeYear, 
     		String fatherName, String motherName, String birthPlaceParish, 
     		String birthPlaceMunicipality, String birthPlaceDistrict, 

@@ -17,200 +17,55 @@
 	  />
 
 	  <field-descriptor id="2"
-	     name="identificationDocumentNumber"
-	     column="IDENTIFICATION_DOCUMENT_NUMBER"
-	     jdbc-type="VARCHAR"
+	     name="personKey"
+	     column="PERSON_KEY"
+	     jdbc-type="INTEGER"
 	  />
 
 	  <field-descriptor id="3"
-	     name="identificationDocumentType"
-	     column="IDENTIFICATION_DOCUMENT_TYPE"
-             jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaTipoDocId2SqlTipoDocIdFieldConversion"
+	     name="executionDegreeKey"
+	     column="EXECUTION_DEGREE_KEY"
+	     jdbc-type="INTEGER"
 	  />
-	  
 	  <field-descriptor id="4"
-	     name="identificationDocumentIssuePlace"
-	     column="IDENTIFICATION_DOCUMENT_ISSUE_PLACE"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="5"
-	     name="identificationDocumentIssueDate"
-	     column="IDENTIFICATION_DOCUMENT_ISSUE_DATE"
-	     jdbc-type="DATE"
-	  />
-	  <field-descriptor id="6"
-	     name="name"
-	     column="NAME"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="7"
-	     name="sex"
-	     column="SEX"
-	     jdbc-type="INTEGER"
-	     conversion="ServidorPersistente.Conversores.JavaSexo2SqlSexoFieldConversion"
-	  />
-	  <field-descriptor id="8"
-	     name="maritalStatus"
-	     column="MARITAL_STATUS"
-	     jdbc-type="INTEGER"
-	     conversion="ServidorPersistente.Conversores.JavaEstadoCivil2SqlEstadoCivilFieldConversion"
-	  />
-	  <field-descriptor id="9"
-	     name="birth"
-	     column="BIRTH"
-	     jdbc-type="DATE"
-	  />
-	  <field-descriptor id="10"
-	     name="fatherName"
-	     column="FATHER_NAME"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="11"
-	     name="motherName"
-	     column="MOTHER_NAME"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="12"
-	     name="nationalityCountryKey"
-	     column="NATIONALITY_COUNTRY_KEY"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor id="13"
-	     name="birthPlaceParish"
-	     column="BIRTH_PLACE_PARISH"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="14"
-	     name="birthPlaceMunicipality"
-	     column="BIRTH_PLACE_MUNICIPALITY"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="15"
-	     name="birthPlaceDistrict"
-	     column="BIRTH_PLACE_DISTRICT"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="16"
-	     name="address"
-	     column="ADDRESS"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="17"
-	     name="place"
-	     column="PLACE"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="18"
-	     name="postCode"
-	     column="POSTCODE"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="19"
-	     name="addressParish"
-	     column="ADDRESS_PARISH"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="20"
-	     name="addressMunicipality"
-	     column="ADDRESS_MUNICIPALITY"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="21"
-	     name="addressDistrict"
-	     column="ADDRESS_DISTRICT"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="22"
-	     name="telephone"
-	     column="TELEPHONE"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="23"
-	     name="mobilePhone"
-	     column="MOBILE_PHONE"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="24"
-	     name="email"
-	     column="EMAIL"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="25"
-	     name="webSite"
-	     column="WEB_SITE"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="26"
-	     name="contributorNumber"
-	     column="CONTRIBUTOR_NUMBER"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="27"
-	     name="occupation"
-	     column="OCCUPATION"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="28"
-	     name="majorDegree"
-	     column="MAJOR_DEGREE"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="29"
-	     name="username"
-	     column="USERNAME"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="30"
-	     name="password"
-	     column="PASSWORD"
-	     jdbc-type="VARCHAR"
-	  />
-
-	  <field-descriptor id="31"
 	     name="candidateNumber"
 	     column="CANDIDATE_NUMBER"
 	     jdbc-type="INTEGER"
 	  />
-	  <field-descriptor id="32"
+	  <field-descriptor id="5"
 	     name="specialization"
 	     column="SPECIALIZATION"
 	     jdbc-type="INTEGER"
 	     conversion="ServidorPersistente.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
 	  />
-	  <field-descriptor id="33"
+	  <field-descriptor id="6"
+	     name="majorDegree"
+	     column="MAJOR_DEGREE"
+	     jdbc-type="VARCHAR"
+	  />
+	  <field-descriptor id="7"
 	     name="majorDegreeSchool"
 	     column="MAJOR_DEGREE_SCHOOL"
 	     jdbc-type="VARCHAR"
 	  />
-	  <field-descriptor id="34"
+	  <field-descriptor id="8"
 	     name="majorDegreeYear"
 	     column="MAJOR_DEGREE_YEAR"
 	     jdbc-type="INTEGER"
 	  />
-	 <field-descriptor id="35"
+	 <field-descriptor id="9"
 	     name="average"
 	     column="AVERAGE"
 	     jdbc-type="DOUBLE"
 	  />
 
-	 <field-descriptor id="36"
-	     name="executionDegreeKey"
-	     column="EXECUTION_DEGREE_KEY"
-	     jdbc-type="INTEGER"
-	  />
-	  
-	 <field-descriptor id="37"
-	     name="countryKey"
-	     column="COUNTRY_KEY"
-	     jdbc-type="INTEGER"
-	  />
-	  
-	 <field-descriptor id="38"
-	     name="identificationDocumentExpirationDate"
-	     column="IDENTIFICATION_DOCUMENT_EXPIRATION_DATE"
-	     jdbc-type="DATE"
-	  />
+      	  <reference-descriptor
+         	name="person"
+         	class-ref="Dominio.Pessoa"
+         	proxy="true"
+      	  >
+          <foreignkey field-id-ref="2"/>
+          </reference-descriptor>
 	  
 	  
       	  <reference-descriptor
@@ -218,26 +73,9 @@
          	class-ref="Dominio.CursoExecucao"
          	proxy="true"
       	  >
-          <foreignkey field-id-ref="36"/>
+          <foreignkey field-id-ref="3"/>
           </reference-descriptor>
           
-          <reference-descriptor
-         	name="country"
-         	class-ref="Dominio.Country"
-         	proxy="true"
-      	  >
-          <foreignkey field-id-ref="37"/>
-          </reference-descriptor>
-
-          <reference-descriptor
-         	name="nationality"
-         	class-ref="Dominio.Country"
-         	proxy="true"
-      	  >
-          <foreignkey field-id-ref="12"/>
-          </reference-descriptor>
-
-
          <collection-descriptor
 	         name="situations"
 	         collection-class="org.apache.ojb.broker.util.collections.ManageableHashSet"

@@ -793,6 +793,8 @@ public class Pessoa implements IPessoa {
 			+ localEmissaoDocumentoIdentificacao;
 		result += "\n  - Identification Document Issue Date : "
 			+ dataEmissaoDocumentoIdentificacao;
+		result += "\n  - Identification Document Expiration Date : "
+					+ dataValidadeDocumentoIdentificacao;
 		result += "\n  - Name : " + nome;
 		result += "\n  - Sex : " + sexo;
 		result += "\n  - Marital Status : " + estadoCivil;
@@ -816,6 +818,7 @@ public class Pessoa implements IPessoa {
 		result += "\n  - Contributor Number : " + numContribuinte;
 		result += "\n  - Username : " + username;
 		result += "\n  - Password : " + password;
+		result += "\n  - Occupation : " + profissao;
 		return result;
 	}
 

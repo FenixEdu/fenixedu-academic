@@ -110,9 +110,9 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 
 			// Create the new Master Degree Candidate
 			InfoMasterDegreeCandidate newMasterDegreeCandidate = new InfoMasterDegreeCandidate();
-			newMasterDegreeCandidate.setName(name);
-			newMasterDegreeCandidate.setIdentificationDocumentNumber(identificationDocumentNumber);
-			newMasterDegreeCandidate.setInfoIdentificationDocumentType(identificationDocumentType);
+//			newMasterDegreeCandidate.setName(name);
+//			newMasterDegreeCandidate.setIdentificationDocumentNumber(identificationDocumentNumber);
+//			newMasterDegreeCandidate.setInfoIdentificationDocumentType(identificationDocumentType);
 			newMasterDegreeCandidate.setSpecialization(degreeType);
 			
 			Object args[] = { newMasterDegreeCandidate , degreeName };

@@ -24,13 +24,11 @@
         name="dataEmissaoDocumentoIdentificacao"
         column="EMISSION_DATE_OF_DOCUMENT_ID"
         jdbc-type="DATE"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
     />
     <field-descriptor id="5"
         name="dataValidadeDocumentoIdentificacao"
         column="EXPERATION_DATE_OF_DOCUMENT_ID"
         jdbc-type="DATE"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
     />
     <field-descriptor id="6"
         name="nome"
@@ -41,7 +39,6 @@
         name="nascimento"
         column="DATE_OF_BIRTH"
         jdbc-type="DATE"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
     />
     <field-descriptor id="8"
         name="nomePai"

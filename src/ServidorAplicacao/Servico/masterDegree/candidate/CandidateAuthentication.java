@@ -59,8 +59,8 @@ public class CandidateAuthentication implements IServico {
       throw new FenixServiceException(ex.getMessage());
     }
 
-    if (masterDegreeCandidate != null && masterDegreeCandidate.getPassword().equals(password)) {
-      return new UserView(masterDegreeCandidate.getUsername(), null);
+    if (masterDegreeCandidate != null && masterDegreeCandidate.getPerson().getPassword().equals(password)) {
+      return new UserView(masterDegreeCandidate.getPerson().getUsername(), null);
     } else    
       throw new ExcepcaoAutenticacao("Incorrect Authentication !!");
   }

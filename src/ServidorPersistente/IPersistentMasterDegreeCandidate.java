@@ -13,6 +13,7 @@
  */
 package ServidorPersistente;
 
+import Util.Specialization;
 import Dominio.ICursoExecucao;
 import Dominio.IMasterDegreeCandidate;
 
@@ -32,7 +33,8 @@ public interface IPersistentMasterDegreeCandidate {
      * @return
      * @throws ExcepcaoPersistencia
      */
-    public IMasterDegreeCandidate readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(Integer candidateNumber, String applicationYear, String degreeCode) throws ExcepcaoPersistencia;
+    public IMasterDegreeCandidate readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(Integer candidateNumber, String applicationYear, String degreeCode, 
+    							  Specialization specialization) throws ExcepcaoPersistencia;
     /**
      * 
      * @param masterDegreeCandidate
@@ -67,7 +69,7 @@ public interface IPersistentMasterDegreeCandidate {
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegree(String identificationDocumentNumber, 
-				Integer IdentificationDocumentType, ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegree(String idDocumentNumber, 
+			Integer idDocumentType, ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
 
 } // End of class definition
