@@ -58,7 +58,7 @@ public class DeleteEnrolment implements IService
                     {
                         IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator
                                 .next();
-                        
+
                         enrolmentEvaluationDAO.deleteByOID(
                                 EnrolmentEvaluation.class, enrolmentEvaluation
                                         .getIdInternal());
@@ -67,7 +67,6 @@ public class DeleteEnrolment implements IService
 
                 deleteAttend(enrolment);
 
-                
                 enrolmentDAO.deleteByOID(Enrolment.class, enrolment
                         .getIdInternal());
             }
@@ -125,7 +124,7 @@ public class DeleteEnrolment implements IService
                         if (shiftsStudentIsIn == null
                                 || shiftsStudentIsIn.isEmpty())
                         {
-                            
+
                             attendDAO.deleteByOID(Frequenta.class, attend
                                     .getIdInternal());
                         }
