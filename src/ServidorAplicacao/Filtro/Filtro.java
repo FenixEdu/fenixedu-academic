@@ -28,8 +28,8 @@ abstract public class Filtro {
 	 * @throws NotAuthorizedException
 	 **/
 	abstract public void preFiltragem(
-		IUserView id,
-		IServico servico,
-		Object argumentos[])
+		IUserView requester,
+		IServico service,
+		Object arguments[])
 		throws Exception;
 }
