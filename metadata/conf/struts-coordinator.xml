@@ -75,6 +75,7 @@
       <!-- Dynamic-FormBean for searchExecutionCourse -->
       <form-bean name="degreeInfoForm"
 								 type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">		
+			 	<form-property name="page" type="java.lang.Integer" initial="0"/>
 				<form-property name="description" type="java.lang.String" />				 
 				<form-property name="objectives" type="java.lang.String" />
 				<form-property name="history" type="java.lang.String" />

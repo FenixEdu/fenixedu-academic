@@ -19,6 +19,8 @@
 
 	<html:hidden property="method" value="editDescriptionDegreeCurricularPlan" />
 	
+	<html:hidden property="page" value="1" />
+	
 	<table>	
 		<tr>
 			<td><strong><bean:message key="label.coordinator.degreeSite.description"/>&nbsp;<bean:message key="label.curricularPlan" /></strong></td>

@@ -13,6 +13,8 @@
 	<html:hidden property="infoDegreeInfoID" value="<%=  infoDegreeInfoID.toString() %>"/>
 
 	<html:hidden property="method" value="editDegreeInformation" />
+	
+	<html:hidden property="page" value="1" />
 
 	<logic:notPresent name="inEnglish">
 		<h2><bean:message key="title.coordinator.degreeSite.edit"/></h2>
