@@ -124,6 +124,9 @@
 				 propertyFile="build.properties">
 			<include name="**/**/*.xml"/>
 	    	<include name="**/**/slide.properties"/>
+	    	<include name="**/ServidorPersistenteConfig.properties"/>
+	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
+	    	<include name="**/**/IstFtpServerConfig.properties"/>
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
 						   property="validation.doctype"/>
 
@@ -182,7 +185,15 @@
 
 			<replacefilter token="@application@" 
 		    			   property="application"/>
-
+             <replacefilter 
+                 token="@ftp.IST.server.user@" 
+                 property="ftp.IST.server.user"/>
+		  <replacefilter 
+                  token="@ftp.IST.server.pass@" 
+                  property="ftp.IST.server.pass"/>
+		  <replacefilter 
+                 token="@ftp.IST.server.address@" 
+                 property="ftp.IST.server.address"/>
 			<replacefilter token="@db.slide.driver@" 
 		    			   property="db.slide.driver"/>
 			<replacefilter token="@db.slide.alias@" 
@@ -200,7 +211,7 @@
     		description="Compile application server"
     		depends="prepare-app-server">
 		<javac destdir="${build.app-server}"
-               extdirs="${lib};${env.JBOSS_HOME}/client"
+               extdirs="${lib}"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
@@ -302,10 +313,18 @@
 				 propertyFile="build.properties">
 			<include name="**/**/*.xml"/>
 			<include name="**/**/ApplicationResources.properties"/>
-
+            <include name="**/**/IstFtpServerConfig.properties"/>
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
 						   property="validation.doctype"/>
-
+         <replacefilter 
+		    token="@ftp.IST.server.user@" 
+		    property="ftp.IST.server.user"/>
+		  <replacefilter 
+		    token="@ftp.IST.server.pass@" 
+		    property="ftp.IST.server.pass"/>
+		  <replacefilter 
+		    token="@ftp.IST.server.address@" 
+		    property="ftp.IST.server.address"/>
 			<replacefilter token="@application@" 
 		    			   property="application"/>
 
@@ -319,7 +338,7 @@
     		description="Compile web client"
     		depends="prepare-web-client">
 		<javac destdir="${build.web-client.webinf.classes}"
-               extdirs="${lib};${env.JBOSS_HOME}/client"
+               extdirs="${lib}"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
@@ -338,7 +357,6 @@
        		<include name="ServidorAplicacao/Servico/UserView.java"/>
        		<include name="ServidorAplicacao/Servico/exceptions/FenixServiceException.java"/>
        		-->
-       		<include name="ServidorAplicacao/logging/*.java"/>
        		<include name="ServidorApresentacao/**/*.java"/>
        		<include name="Util/**/*.java"/>
        		<include name="UtilInsc/**/*.java"/>
