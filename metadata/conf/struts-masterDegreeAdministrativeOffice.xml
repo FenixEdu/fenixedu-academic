@@ -942,6 +942,7 @@
 	         <forward name="changeStudentMark" path="/marksManagement/showMarksManagementMenu.jsp"/>
 			 <forward name="studentMarks" path="/marksManagement/showStudentMarks.jsp"/> 
 			 <forward name="editStudentMark" path="/marksManagement/editStudentMark.jsp"/> 
+			 <forward name="editStudentMarkChanged" path="/changeMarkDispatchAction.do?method=chooseStudentMarks"/> 			 
 			 <forward name="chooseCurricularCourse" path="/marksManagement/chooseCurricularCourseToManageMarks.jsp"/>
       </action>
       <action path="/marksSubmission"

@@ -26,6 +26,6 @@
 	<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
 	<html:hidden property="degree" value="<%= pageContext.findAttribute("degree").toString() %>" />
 	<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />
-	<html:hidden property="scopeCode" value="<%= pageContext.findAttribute("scopeCode").toString() %>" />
+	<html:hidden property="curricularCourseCode" value="<%= pageContext.findAttribute("curricularCourseCode").toString() %>" />
 	<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
 </html:form>

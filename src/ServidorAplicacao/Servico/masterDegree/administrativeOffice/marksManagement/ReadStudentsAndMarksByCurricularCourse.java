@@ -136,18 +136,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 					infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
 				}
 			}
-			//			else {
-			//				//			if there is no evaluation yet we have to get all students enroled in curricularCourseScope
-			//				List enrolments = persistentEnrolment.readByCriteria(enrolment);
-			//
-			//				ListIterator iterEnrolments = enrolments.listIterator();
-			//				while (iterEnrolments.hasNext()) {
-			//					IEnrolment element = (IEnrolment) iterEnrolments.next();
-			//					InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
-			//					infoEnrolmentEvaluation.setInfoEnrolment(Cloner.copyIEnrolment2InfoEnrolment(element));
-			//					infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
-			//				}
-			//			}
+			
 
 			if (infoEnrolmentEvaluations.size() == 0) {
 				throw new NonExistingServiceException();
@@ -272,11 +261,12 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 					(List) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationState(
 						enrolment,
 						enrolmentEvaluationState);
-
+				List infoTeachers = new ArrayList();
 				if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
 					IPessoa person = ((IEnrolmentEvaluation) enrolmentEvaluations.get(0)).getPersonResponsibleForGrade();
 					ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
 					infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+					infoTeachers.add(infoTeacher);
 				}
 
 				List infoEnrolmentEvaluations = new ArrayList();
@@ -295,9 +285,9 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 				}
 				InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
 				infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
-				infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
+				infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);				
 				infoSiteEnrolmentEvaluations.add(infoSiteEnrolmentEvaluation);
-				//				}
+//				}
 
 			}
 		} catch (ExcepcaoPersistencia ex) {

@@ -24,6 +24,7 @@ import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentTeacher;
+import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -70,6 +71,7 @@ public class ReadStudentEnrolmentEvaluation implements IServico {
 			IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
 			IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+			IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
 
 			
 			
@@ -91,6 +93,8 @@ public class ReadStudentEnrolmentEvaluation implements IServico {
 			InfoPerson person2 = Cloner.copyIPerson2InfoPerson(person);
 			ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
 			infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+
+			
 			
 			infoEnrolmentEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
 			infoEnrolmentEvaluation.setInfoPersonResponsibleForGrade(infoTeacher.getInfoPerson());

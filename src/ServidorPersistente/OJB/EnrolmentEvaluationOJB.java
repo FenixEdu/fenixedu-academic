@@ -7,10 +7,8 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.EnrolmentEvaluation;
-import Dominio.Funcionario;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
-import Dominio.IPessoa;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.exceptions.ExistingPersistentException;

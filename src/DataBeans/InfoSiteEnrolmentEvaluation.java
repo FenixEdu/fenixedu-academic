@@ -13,6 +13,7 @@ public class InfoSiteEnrolmentEvaluation implements ISiteComponent {
 	private List enrolmentEvaluations;
 	private InfoTeacher infoTeacher;
 	private Date lastEvaluationDate;
+	
 
 	public boolean equals(Object objectToCompare) {
 		boolean result = false;
@@ -36,13 +37,14 @@ public class InfoSiteEnrolmentEvaluation implements ISiteComponent {
 			&& result == true) {
 			return true;
 		}
-
+		
 		if (((InfoSiteEnrolmentEvaluation) objectToCompare).getEnrolmentEvaluations() == null
 			|| this.getEnrolmentEvaluations() == null
 			|| ((InfoSiteEnrolmentEvaluation) objectToCompare).getEnrolmentEvaluations().size()
 				!= this.getEnrolmentEvaluations().size()) {
 			return false;
 		}
+		
 
 		ListIterator iter1 = ((InfoSiteEnrolmentEvaluation) objectToCompare).getEnrolmentEvaluations().listIterator();
 		ListIterator iter2 = this.getEnrolmentEvaluations().listIterator();
@@ -53,6 +55,8 @@ public class InfoSiteEnrolmentEvaluation implements ISiteComponent {
 				result = false;
 			}
 		}
+		
+		
 		return result;
 	}
 
@@ -97,5 +101,7 @@ public class InfoSiteEnrolmentEvaluation implements ISiteComponent {
 	public void setInfoTeacher(InfoTeacher infoTeacher) {
 		this.infoTeacher = infoTeacher;
 	}
+
+	
 
 }

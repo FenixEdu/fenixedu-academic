@@ -2,6 +2,7 @@ package ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManag
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,7 +27,9 @@ import DataBeans.InfoTeacher;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.EnrolmentEvaluationType;
 import Util.FormataData;
@@ -53,9 +56,9 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 		String executionYear = getFromRequest("executionYear", request);
 		String degree = getFromRequest("degree", request);
 		String curricularCourse = getFromRequest("curricularCourse", request);
-		Integer scopeCode = new Integer(getFromRequest("curricularCourseCode", request));
+		Integer curricularCourseCode = new Integer(getFromRequest("curricularCourseCode", request));
 		request.setAttribute("executionYear",executionYear);
-		request.setAttribute("scopeCode",scopeCode);
+		request.setAttribute("curricularCourseCode",curricularCourseCode);
 		request.setAttribute("curricularCourse", curricularCourse);
 		request.setAttribute("degree", degree);
 		} else
@@ -74,11 +77,12 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 		MessageResources messages = getResources(request);
 
-		String executionYear = (String) request.getParameter("executionYear");
-		String degree = request.getParameter("degree");
-		String curricularCourse = request.getParameter("curricularCourse");
-		Integer curricularCourseCode = new Integer(request.getParameter("scopeCode"));
-		Integer studentNumber = new Integer(request.getParameter("studentNumber"));
+		String executionYear = (String) getFromRequest("executionYear", request); 
+		String degree = getFromRequest("degree", request);
+		String curricularCourse = getFromRequest("curricularCourse", request);
+
+		Integer curricularCourseCode = Integer.valueOf(getFromRequest("curricularCourseCode", request));
+		Integer studentNumber = Integer.valueOf(getFromRequest("studentNumber", request));
 
 		// Get mark student List			
 		Object args[] = { curricularCourseCode,studentNumber };
@@ -161,6 +165,7 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException(e);
 			}
+			
 			request.setAttribute("executionYear", executionYear);
 			request.setAttribute("degree", degree);
 			request.setAttribute("curricularCourse", curricularCourse);
@@ -199,23 +204,25 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 			Integer studentNumber = Integer.valueOf(getFromRequest("studentNumber",request));	
 			
 //			boolean result = true;
-//			result = Data.validDate(Integer.valueOf(examDay),Integer.valueOf(examMonth),Integer.valueOf(examYear));
+//			
+//			
 //
 //
-//			if (!result){
+//			if (!Util.Data.validDate(Integer.valueOf(examDay),Integer.valueOf(examMonth),Integer.valueOf(examYear))){
+//
 //				ActionErrors actionErrors = new ActionErrors();
 //					actionErrors.add(
 //							"StudentNotEnroled",
 //							new ActionError(
 //								"error.student.Mark.NotAvailable"));
 //					saveErrors(request, actionErrors);
-//					return mapping.findForward("studentMarks");
-//				
+//					return mapping.findForward("studentMarks");			
 //			}
 			Locale locale = new Locale("pt", "PT");
 			Date examDate = DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(getFromRequest("examDate",request));
 			Date gradeAvailableDate = DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(getFromRequest("gradeAvailableDate",request));
-			
+//ver isso das datas
+////			result = DataIndisponivel.isDataIndisponivel(examDate);
 			
 			InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
 			InfoTeacher infoTeacher = new InfoTeacher();
@@ -241,26 +248,40 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 			infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
 			
 			
+			
 //			Object args[] = {enrolmentEvaluationCode,infoEnrolmentEvaluation,infoTeacher};
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos serviceManager = GestorServicos.manager();
-			Object args[] = {curricularCourseCode, enrolmentEvaluationCode,infoEnrolmentEvaluation,infoTeacher.getTeacherNumber(), userView};
-			InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
-			try {
-				Object resultObj = (Object) serviceManager.executar(userView, "AlterStudentEnrolmentEvaluation", args);
-			} catch (ExistingServiceException e) {
-				throw new ExistingActionException(e);
-			}
-
-
 			request.setAttribute("executionYear", executionYear);
 			request.setAttribute("degree", degree);
 			request.setAttribute("curricularCourse", curricularCourse);
 			request.setAttribute("curricularCourseCode", curricularCourseCode);
+			request.setAttribute("scopeCode", curricularCourseCode);
+			request.setAttribute("studentNumber", studentNumber);
+			List evaluationsWithError = null;
+			try {
+				IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+				GestorServicos serviceManager = GestorServicos.manager();
+				Object args[] = {curricularCourseCode, enrolmentEvaluationCode,infoEnrolmentEvaluation,infoTeacher.getTeacherNumber(), userView};
+				InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
+				evaluationsWithError = (List) serviceManager.executar(userView, "AlterStudentEnrolmentEvaluation", args);
+			} catch (NonExistingServiceException e) {
+				throw new NonExistingActionException(teacherNumber.toString(), e);
+			}
+			request.setAttribute("Label.MarkChange", "Registo  Alterado");
+			
+//			check for invalid marks
+			ActionErrors actionErrors = null;
+			actionErrors = checkForErrors(evaluationsWithError);
+			if (actionErrors != null) {
+				saveErrors(request, actionErrors);
+				return mapping.getInputForward();
+			}
+
+			
 		}
-			return mapping.findForward("studentMarks");
+			return mapping.findForward("editStudentMarkChanged");
 		
 	}
+	
 	private String getFromRequest(String parameter, HttpServletRequest request) {
 		String parameterString = request.getParameter(parameter);
 		if (parameterString == null) {
@@ -268,4 +289,30 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 		}
 		return parameterString;
 	}
+	
+	private ActionErrors checkForErrors(List evaluationsWithError) {
+			ActionErrors actionErrors = null;
+
+			if (evaluationsWithError != null && evaluationsWithError.size() > 0) {
+				actionErrors = new ActionErrors();
+				Iterator iterator = evaluationsWithError.listIterator();
+				while (iterator.hasNext()) {
+					InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) iterator.next();
+
+					actionErrors.add(
+						"invalidGrade",
+						new ActionError(
+							"errors.invalidMark",
+							infoEnrolmentEvaluation.getGrade(),
+							String.valueOf(
+								infoEnrolmentEvaluation
+									.getInfoEnrolment()
+									.getInfoStudentCurricularPlan()
+									.getInfoStudent()
+									.getNumber()
+									.intValue())));
+				}
+			}
+			return actionErrors;
+		}
 }
