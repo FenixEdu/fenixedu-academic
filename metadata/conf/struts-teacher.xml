@@ -211,9 +211,7 @@
 				scope="request"
       			name="bibliographicReferenceForm"
                 type="ServidorApresentacao.Action.teacher.BibliographicReferenceManagerDispatchAction"            
-                validate="false">
-
-	            <forward name="insertBibliographicReference" path="/insertBibliographicReference.jsp"/>
+                validate="false">	           
 				<forward name="editBibliographicReference" path="/editBibliographicReference.jsp"/>
 				<forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
 	</action>             

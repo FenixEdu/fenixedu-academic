@@ -75,5 +75,10 @@ public abstract class SessionConstants {
 	
 	public static final String INFO_SITES_LIST = "info_sites_list";
 	
-	public static final String INFO_TEACHER = "info_teacher";
+	public static final String INFO_TEACHER = "info_teacher";	
+	
+	public static final String INFO_BIBLIOGRAPHIC_REFERENCE_LIST = "BibliographicReferences";		
+	
+	public static final String INFO_BIBLIOGRAPHIC_REFERENCE = "BibliographicReference";
+	
 }

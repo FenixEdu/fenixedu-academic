@@ -17,9 +17,11 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.gesdis.InfoBibliographicReference;
+import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.TestCasePresentationTeacherPortal;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author PTRLV
@@ -113,8 +115,9 @@ public class BibliographicReferenceManagerDispatchActionTest
 		//set request path
 		setRequestPathInfo("/teacher", "/bibliographicReferenceManager");
 		//sets needed objects to session/request
-		addRequestParameter("method", "Inserir");
+		addRequestParameter("method", "Confirmar Inserir");
 
+		
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse.setNome("Trabalho Final de Curso I");
 		infoExecutionCourse.setSigla("TFCI");
@@ -128,7 +131,9 @@ public class BibliographicReferenceManagerDispatchActionTest
 				"2º Semestre",
 				new InfoExecutionYear("2002/2003"));
 		infoExecutionCourse.setInfoExecutionPeriod(iep);
-		getSession().setAttribute("InfoExecutionCourse", infoExecutionCourse);
+		
+		InfoSite infoSite = new InfoSite(infoExecutionCourse);		
+		getSession().setAttribute(SessionConstants.INFO_SITE, infoSite);
 
 		setAuthorizedUser();
 
@@ -167,17 +172,19 @@ public class BibliographicReferenceManagerDispatchActionTest
 				"2º Semestre",
 				new InfoExecutionYear("2002/2003"));
 		infoExecutionCourse.setInfoExecutionPeriod(iep);
-		getSession().setAttribute("InfoExecutionCourse", infoExecutionCourse);
+
+		InfoSite infoSite = new InfoSite(infoExecutionCourse);		
+		getSession().setAttribute(SessionConstants.INFO_SITE, infoSite);				
 
 		setAuthorizedUser();
 
 		//action perform
 		actionPerform();
 
-		assertNotNull(getSession().getAttribute("BibliographicReferences"));
+		assertNotNull(getSession().getAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST));
 		ArrayList biblioRefs =
-			(ArrayList) getSession().getAttribute("BibliographicReferences");
-		assertEquals(biblioRefs.size(), 2);
+			(ArrayList) getSession().getAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST);
+		assertEquals(biblioRefs.size(), 3);
 		InfoBibliographicReference infoBibRef =
 			(InfoBibliographicReference) biblioRefs.get(0);
 		assertEquals(infoBibRef.getTitle(), "xpto");
@@ -207,9 +214,8 @@ public class BibliographicReferenceManagerDispatchActionTest
 		infoExecutionCourse.setInfoExecutionPeriod(iep);
 
 		HttpSession session = getSession();
-
-		session.setAttribute("InfoExecutionCourse", infoExecutionCourse);
-
+		InfoSite infoSite = new InfoSite(infoExecutionCourse);		
+		session.setAttribute(SessionConstants.INFO_SITE, infoSite);
 		UserView userView = (UserView) session.getAttribute("UserView");
 		Object args[] = { infoExecutionCourse, null };
 		GestorServicos gestor = GestorServicos.manager();
@@ -223,16 +229,15 @@ public class BibliographicReferenceManagerDispatchActionTest
 		} catch (Exception e) {
 		}
 
-		session.setAttribute("BibliographicReferences", references);
-
+		session.setAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST, references);
 		setAuthorizedUser();
 
 		//action perform
 		actionPerform();
 
 		ArrayList biblioRefs =
-			(ArrayList) session.getAttribute("BibliographicReferences");
-		assertEquals(biblioRefs.size(), 1);
+			(ArrayList) session.getAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST);
+		assertEquals(biblioRefs.size(), 2);
 		InfoBibliographicReference infoBibRef =
 			(InfoBibliographicReference) biblioRefs.get(0);
 		assertEquals(infoBibRef.getTitle(), "as");
@@ -244,7 +249,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 		//set request path
 		setRequestPathInfo("/teacher", "/bibliographicReferenceManager");
 		//sets needed objects to session/request
-		addRequestParameter("method", "Editar");
+		addRequestParameter("method", "Confirmar Editar");
 
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse.setNome("Trabalho Final de Curso I");
@@ -258,9 +263,9 @@ public class BibliographicReferenceManagerDispatchActionTest
 			new InfoExecutionPeriod(
 				"2º Semestre",
 				new InfoExecutionYear("2002/2003"));
-		infoExecutionCourse.setInfoExecutionPeriod(iep);
-		getSession().setAttribute("InfoExecutionCourse", infoExecutionCourse);
-
+		infoExecutionCourse.setInfoExecutionPeriod(iep);		
+		InfoSite infoSite = new InfoSite(infoExecutionCourse);		
+		getSession().setAttribute(SessionConstants.INFO_SITE, infoSite);
 		Object args1[] = { infoExecutionCourse, null };
 		GestorServicos gestor = GestorServicos.manager();
 		UserView userView = (UserView) getSession().getAttribute("UserView");
@@ -277,7 +282,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 		InfoBibliographicReference infoBibRef =
 			(InfoBibliographicReference) references.get(0);
 
-		getSession().setAttribute("BibliographicReference", infoBibRef);
+		getSession().setAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE, infoBibRef);
 		setAuthorizedUser();
 		//fills the form
 		addRequestParameter("title", "matemática");
