@@ -262,9 +262,6 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			if ((othersPriceString != null) && (othersPriceString.length() != 0))
 				othersPrice = new Double(othersPriceString);
 				
-				
-			System.out.println("[" + guideSituationString + "] tamanho " + guideSituationString.length());
-				
 			SituationOfGuide situationOfGuide = new SituationOfGuide(guideSituationString);
 			InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
 	
