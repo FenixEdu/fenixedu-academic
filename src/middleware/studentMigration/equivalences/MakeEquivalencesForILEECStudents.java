@@ -1199,11 +1199,11 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 			while (iterator.hasNext())
 			{
 				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-				enrolmentEvaluationDAO.simpleLockWrite(enrolment);
+//				enrolmentEvaluationDAO.simpleLockWrite(enrolment);
 				enrolmentEvaluationDAO.deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
 				MakeEquivalencesForILEECStudents.deletedEnrollmentEvaluations++;
 			}
-			enrolmentDAO.simpleLockWrite(enrolment);
+//			enrolmentDAO.simpleLockWrite(enrolment);
 			enrolmentDAO.deleteByOID(Enrolment.class, enrolment.getIdInternal());
 			MakeEquivalencesForILEECStudents.deletedEnrollments++;
 		}

@@ -1,9 +1,9 @@
-REM mysql ciapl < update_enrolment_states.sql | mysql ciapl
+REM mysql ciapl < general_enrolment_and_enrolmentEvaluation_updates.sql | mysql ciapl
 REM mysql ciapl < update_enrolment_set_state1.sql | mysql ciapl
 REM mysql ciapl < update_enrolment_set_state2.sql | mysql ciapl
 REM mysql ciapl < update_enrolment_set_state6.sql | mysql ciapl
 
-REM mysql ciapl < update_enrolment_states.sql > temp1.sql
+REM mysql ciapl < general_enrolment_and_enrolmentEvaluation_updates.sql > temp1.sql
 REM mysql ciapl < temp1.sql
 REM mysql ciapl < update_enrolment_set_state1.sql > temp2.sql
 REM mysql ciapl < temp2.sql
