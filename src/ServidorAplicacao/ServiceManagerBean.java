@@ -140,6 +140,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			FenixRemoteServiceException fenixRemoteServiceException = new FenixRemoteServiceException();
 			fenixRemoteServiceException.setCausePackageName(e.getClass().getPackage().getName());
 			fenixRemoteServiceException.setCauseClassName(e.getClass().getName());
