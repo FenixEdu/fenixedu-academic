@@ -85,7 +85,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
   }
 
   // write new existing cursoExecucao
-  public void testCreateExistingCursoExecucao() {
+  public void testCreateExistingCursoExecucao(){
 	try {
 		persistentSupport.iniciarTransaccao();
 		ICurso degree = persistentDegree.readBySigla("LEIC");
@@ -105,6 +105,16 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 		fail("testCreateNonExistingCursoExecucao");	
 	} catch (ExcepcaoPersistencia ex) {
 	   // All is OK
+	   
+		try {
+			//REMOVE
+			ex.printStackTrace(System.out);
+			System.out.println("AQUI");
+			persistentSupport.cancelarTransaccao();
+		} catch (Exception e) {
+			//ignored
+			e.printStackTrace(System.out);
+		}
 	}
   }
 
@@ -128,8 +138,9 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 
 		executionYear2 = persistentExecutionYear.readExecutionYearByName("2003/2004");
 		assertNotNull(executionYear2);
-
+		
 		executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan1, executionYear1);
+		System.out.println("=========executionDegree"+executionDegree);
 		executionDegree.setExecutionYear(executionYear2);
 
 		persistentSupport.confirmarTransaccao();
@@ -137,7 +148,8 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 		persistentSupport.iniciarTransaccao();
 		ICursoExecucao executionDegreeTemp = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan1, executionYear2);		
 		persistentSupport.confirmarTransaccao();
-
+		System.out.println("=========executionDegreeTemp"+executionDegreeTemp);
+		System.out.println("=========executionDegree"+executionDegree);
 		assertEquals(executionDegreeTemp, executionDegree);
 
 	} catch (ExcepcaoPersistencia ex) {

@@ -11,14 +11,13 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
     private Double praticalHours;
     private Double theoPratHours;
     private Double labHours;
-    protected ICursoExecucao licenciaturaExecucao;
-
-    private Integer chaveLicenciaturaExecucao;
+   
+    
     private Integer chaveResponsavel; 
     private Integer codigoInterno;
 
 	private List associatedCurricularCourses = null;
-	private Integer semester;
+	
 	
 	private IExecutionPeriod executionPeriod;
 	private Integer keyExecutionPeriod;
@@ -43,7 +42,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
                               Double praticalHours, Double theoPratHours, Double labHours,IExecutionPeriod executionPeriod) {
         setNome(nome);
         setSigla(sigla);
-        setLicenciaturaExecucao(licenciaturaExecucao);
+       // setLicenciaturaExecucao(licenciaturaExecucao);
         setPrograma(programa);
 		setChaveResponsavel(new Integer(-1));
 		setTheoreticalHours(theoreticalHours);
@@ -72,17 +71,12 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
             IDisciplinaExecucao de = (IDisciplinaExecucao) obj;
 
             resultado = (getNome().equals(de.getNome())) &&
-                        (getSigla().equals(de.getSigla())) &&
-//                      (getPrograma().equals(de.getPrograma())) && 
+                        (getSigla().equals(de.getSigla())) &&            
                         (getTheoreticalHours().equals(de.getTheoreticalHours())) &&
                         (getPraticalHours().equals(de.getPraticalHours())) &&
-                        (getTheoPratHours().equals(de.getTheoPratHours())) &&
-                        (getSemester().equals(de.getSemester())) &&
-                        (getLabHours().equals(de.getLabHours())) /*&&
-                        (getLicenciaturaExecucao().getAnoLectivo().equals( de.getLicenciaturaExecucao().getAnoLectivo() ) ) &&
-                        (getLicenciaturaExecucao().getSemestre().equals( de.getLicenciaturaExecucao().getSemestre() ) )&&
-                        (getLicenciaturaExecucao().getLicenciatura().getNome().equals( de.getLicenciaturaExecucao().getLicenciatura().getNome() ) )&&
-                        (getLicenciaturaExecucao().getLicenciatura().getSigla().equals( de.getLicenciaturaExecucao().getLicenciatura().getSigla()))*/;
+                        (getTheoPratHours().equals(de.getTheoPratHours())) &&            
+                        (getLabHours().equals(de.getLabHours())) &&
+                        (getExecutionPeriod().equals(de.getExecutionPeriod()));
         }
         return resultado;
     }    
@@ -112,13 +106,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 		return associatedCurricularCourses;
 	}
 
-	/**
-	 * Returns the chaveLicenciaturaExecucao.
-	 * @return int
-	 */
-	public Integer getChaveLicenciaturaExecucao() {
-		return chaveLicenciaturaExecucao;
-	}
+	
 
 	/**
 	 * Returns the chaveResponsavel.
@@ -136,13 +124,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 		return codigoInterno;
 	}
 
-	/**
-	 * Returns the licenciaturaExecucao.
-	 * @return ICursoExecucao
-	 */
-	public ICursoExecucao getLicenciaturaExecucao() {
-		return licenciaturaExecucao;
-	}
+	
 
 	/**
 	 * Returns the nome.
@@ -208,13 +190,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 		this.associatedCurricularCourses = associatedCurricularCourses;
 	}
 
-	/**
-	 * Sets the chaveLicenciaturaExecucao.
-	 * @param chaveLicenciaturaExecucao The chaveLicenciaturaExecucao to set
-	 */
-	public void setChaveLicenciaturaExecucao(Integer chaveLicenciaturaExecucao) {
-		this.chaveLicenciaturaExecucao = chaveLicenciaturaExecucao;
-	}
+	
 
 	/**
 	 * Sets the chaveResponsavel.
@@ -232,13 +208,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 		this.codigoInterno = codigoInterno;
 	}
 
-	/**
-	 * Sets the licenciaturaExecucao.
-	 * @param licenciaturaExecucao The licenciaturaExecucao to set
-	 */
-	public void setLicenciaturaExecucao(ICursoExecucao licenciaturaExecucao) {
-		this.licenciaturaExecucao = licenciaturaExecucao;
-	}
+	
 
 	/**
 	 * Sets the nome.
@@ -296,18 +266,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 	public void setLabHours(Double labHours) {
 		this.labHours = labHours;
 	}
-	/**
-	 * @see Dominio.IDisciplinaExecucao#getSemester()
-	 */
-	public Integer getSemester() {
-		return this.semester;
-	}
-	/**
-	 * @see Dominio.IDisciplinaExecucao#setSemester(java.lang.Integer)
-	 */
-	public void setSemester(Integer semester) {
-		this.semester = semester;
-	}
+	
 	/**
 	 * @see Dominio.IDisciplinaExecucao#getExecutionPeriod()
 	 */

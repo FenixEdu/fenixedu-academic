@@ -52,6 +52,14 @@ public class InfoExecutionDegree implements Serializable {
 		return result;
 	}
 
+	public String toString() {
+		String result = "[INFOEXECUTIONDEGREE";
+			result += ", infoExecutionYear=" + infoExecutionYear;
+			result += ", infoDegreeCurricularPlan=" + infoDegreeCurricularPlan;
+			result += "]";
+		return result;
+	}
+
 
 	/**
 	 * Returns the infoExecutionYear.

@@ -71,16 +71,8 @@ public class TurnoAluno implements ITurnoAluno {
     boolean resultado = false;
     if (obj instanceof ITurnoAluno) {
       ITurnoAluno turnoAluno = (ITurnoAluno)obj;
-      resultado = getTurno().getNome().equals(turnoAluno.getTurno().getNome()) &&
-                  getTurno().getTipo().equals(turnoAluno.getTurno().getTipo()) &&
-                  getTurno().getLotacao().equals(turnoAluno.getTurno().getLotacao()) &&
-                  getTurno().getDisciplinaExecucao().getNome().equals(turnoAluno.getTurno().getDisciplinaExecucao().getNome()) &&
-                  getTurno().getDisciplinaExecucao().getSigla().equals(turnoAluno.getTurno().getDisciplinaExecucao().getSigla()) &&
-                  getTurno().getDisciplinaExecucao().getPrograma().equals(turnoAluno.getTurno().getDisciplinaExecucao().getPrograma()) &&
-                  getTurno().getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo().equals(turnoAluno.getTurno().getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo()) &&
-                  getTurno().getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getNome().equals(turnoAluno.getTurno().getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getNome()) &&
-                  getTurno().getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla().equals(turnoAluno.getTurno().getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla()) &&
-                  getAluno().getNumber().equals(turnoAluno.getAluno().getNumber());
+      resultado = getTurno().equals(turnoAluno.getTurno()) &&
+                  getAluno().equals(turnoAluno.getAluno());
     }
     return resultado;
   }

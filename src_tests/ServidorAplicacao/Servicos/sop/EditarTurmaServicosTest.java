@@ -14,6 +14,8 @@ package ServidorAplicacao.Servicos.sop;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoClass;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
 import DataBeans.util.Cloner;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
@@ -34,7 +36,7 @@ import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class EditarTurmaServicosTest extends TestCaseDeleteAndEditServices {
-	
+
 	private InfoClass infoClass = null;
 
 	public EditarTurmaServicosTest(java.lang.String testName) {
@@ -65,14 +67,18 @@ public class EditarTurmaServicosTest extends TestCaseDeleteAndEditServices {
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-		this. ligarSuportePersistente(true);
+		this.ligarSuportePersistente(true);
 
 		Object argsEditarTurma[] = new Object[2];
 		argsEditarTurma[0] = this.infoClass;
 		ITurma turma = Cloner.copyInfoClass2Class(this.infoClass);
 		InfoClass newInfoClass = Cloner.copyClass2InfoClass(turma);
 		newInfoClass.setAnoCurricular(new Integer(2));
-		newInfoClass.setSemestre(new Integer(2));
+		//TODO: verify if infoExecutionDegree is needed for the service
+		newInfoClass.setInfoExecutionPeriod(
+			new InfoExecutionPeriod(
+				"2º Semestre",
+				new InfoExecutionYear("2002/2003")));
 		newInfoClass.setNome("turmaXPTO");
 		argsEditarTurma[1] = newInfoClass;
 
@@ -81,14 +87,18 @@ public class EditarTurmaServicosTest extends TestCaseDeleteAndEditServices {
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
-		this. ligarSuportePersistente(false);
+		this.ligarSuportePersistente(false);
 
 		Object argsEditarTurma[] = new Object[2];
 		argsEditarTurma[0] = this.infoClass;
 		ITurma turma = Cloner.copyInfoClass2Class(this.infoClass);
 		InfoClass newInfoClass = Cloner.copyClass2InfoClass(turma);
 		newInfoClass.setAnoCurricular(new Integer(2));
-		newInfoClass.setSemestre(new Integer(2));
+		//TODO: verify if infoExecutionDegree is needed for the service
+		newInfoClass.setInfoExecutionPeriod(
+			new InfoExecutionPeriod(
+				"2º Semestre",
+				new InfoExecutionYear("2002/2003")));
 		newInfoClass.setNome("turmaXPTO");
 		argsEditarTurma[1] = newInfoClass;
 
@@ -106,26 +116,36 @@ public class EditarTurmaServicosTest extends TestCaseDeleteAndEditServices {
 			ICursoPersistente icp = sp.getICursoPersistente();
 			ICurso ic = icp.readBySigla("LEIC");
 
-			IPlanoCurricularCursoPersistente ipccp = sp.getIPlanoCurricularCursoPersistente();
-			IPlanoCurricularCurso ipcc = ipccp.readByNameAndDegree("plano1", ic);
+			IPlanoCurricularCursoPersistente ipccp =
+				sp.getIPlanoCurricularCursoPersistente();
+			IPlanoCurricularCurso ipcc =
+				ipccp.readByNameAndDegree("plano1", ic);
 
 			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
 			IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
 
 			ICursoExecucaoPersistente icep = sp.getICursoExecucaoPersistente();
-			ICursoExecucao ice = icep.readByDegreeCurricularPlanAndExecutionYear(ipcc, iey);
+			ICursoExecucao ice =
+				icep.readByDegreeCurricularPlanAndExecutionYear(ipcc, iey);
 
-			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
-			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
-			
+			IPersistentExecutionPeriod iepp =
+				sp.getIPersistentExecutionPeriod();
+			IExecutionPeriod iep =
+				iepp.readByNameAndExecutionYear("2º Semestre", iey);
+
 			ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
 			ITurma turma = null;
-			if(existing) {
-				turma = turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("turma413", ice, iep);
+			if (existing) {
+				turma =
+					turmaPersistente
+						.readByNameAndExecutionDegreeAndExecutionPeriod(
+						"turma413",
+						ice,
+						iep);
 			} else {
 				turma = new Turma("asdasdsad", new Integer(1), ice, iep);
 			}
-			
+
 			this.infoClass = Cloner.copyClass2InfoClass(turma);
 
 			sp.confirmarTransaccao();

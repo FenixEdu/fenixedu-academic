@@ -29,6 +29,7 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import Dominio.CurricularCourse;
 import Dominio.Curso;
@@ -140,7 +141,10 @@ public class SessionUtilsTest extends TestCase {
 				_degreeInitials,
 				_degreeName,
 				new TipoCurso(TipoCurso.LICENCIATURA));
-		_executionDegree = new CursoExecucao(new ExecutionYear(_schoolYear),new PlanoCurricularCurso("plano1", _degree));
+		_executionDegree =
+			new CursoExecucao(
+				new ExecutionYear(_schoolYear),
+				new PlanoCurricularCurso("plano1", _degree));
 
 		IPlanoCurricularCurso degreeCurriculum =
 			new PlanoCurricularCurso("Plano 1", _degree);
@@ -152,11 +156,9 @@ public class SessionUtilsTest extends TestCase {
 
 		_sp.iniciarTransaccao();
 		for (int i = 1; i < 10; i++) {
-			IDepartamento d = new Departamento("nome"+i, "sigla"+i);
-			IDisciplinaDepartamento dd = new DisciplinaDepartamento(
-				"Disciplina " + i,
-				"D" + i,
-				d);			
+			IDepartamento d = new Departamento("nome" + i, "sigla" + i);
+			IDisciplinaDepartamento dd =
+				new DisciplinaDepartamento("Disciplina " + i, "D" + i, d);
 			_curricularCourse =
 				new CurricularCourse(
 					new Double(1.0),
@@ -167,7 +169,8 @@ public class SessionUtilsTest extends TestCase {
 					new Integer(_curricularYear),
 					new Integer(_semester),
 					"Disciplina " + i,
-					"D" + i,dd,
+					"D" + i,
+					dd,
 					degreeCurriculum);
 			_executionCourse =
 				new DisciplinaExecucao(
@@ -178,17 +181,21 @@ public class SessionUtilsTest extends TestCase {
 					new Double(2.0),
 					new Double(0),
 					new Double(0),
-					new ExecutionPeriod("2º Semestre",new ExecutionYear("2002/2003")));
+					new ExecutionPeriod(
+						"2º Semestre",
+						new ExecutionYear("2002/2003")));
 
 			List list = new ArrayList();
 
 			list.add(_curricularCourse);
 			_executionCourse.setAssociatedCurricularCourses(list);
 
-			
 			_sp.getIDepartamentoPersistente().escreverDepartamento(d);
-			_sp.getIDisciplinaDepartamentoPersistente().escreverDisciplinaDepartamento(dd);
-			
+			_sp
+				.getIDisciplinaDepartamentoPersistente()
+				.escreverDisciplinaDepartamento(
+				dd);
+
 			_curricularCourseDAO.writeCurricularCourse(_curricularCourse);
 			_executionCourseDAO.escreverDisciplinaExecucao(_executionCourse);
 
@@ -214,25 +221,25 @@ public class SessionUtilsTest extends TestCase {
 	private void copyExecutionCourseToInfoExecutionCourse(
 		InfoExecutionCourse infoExecutionCourse,
 		IDisciplinaExecucao executionCourse) {
-		InfoDegree infoDegree = new InfoDegree();
-		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-
+		//		InfoDegree infoDegree = new InfoDegree();
+		//		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
+		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
 		try {
 			BeanUtils.copyProperties(infoExecutionCourse, executionCourse);
 
 			BeanUtils.copyProperties(
-				infoExecutionDegree,
-				executionCourse.getLicenciaturaExecucao());
+				infoExecutionPeriod,
+				executionCourse.getExecutionPeriod());
 
 			BeanUtils.copyProperties(
-				infoDegree,
-				executionCourse.getLicenciaturaExecucao().getCurso());
+				infoExecutionYear,
+				executionCourse.getExecutionPeriod().getExecutionYear());
 		} catch (Exception e) {
 			fail("Executing copyExecutionCourseToInfoExecutionCourse");
 		}
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan= new InfoDegreeCurricularPlan("plano1",infoDegree);
-		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-		infoExecutionCourse.setInfoLicenciaturaExecucao(infoExecutionDegree);
+		infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
+		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 	}
 
 	protected void startPersistentLayer() {
@@ -262,7 +269,9 @@ public class SessionUtilsTest extends TestCase {
 			_degreeCurriculumDAO.apagarTodosOsPlanosCurriculares();
 			_personDAO.apagarTodasAsPessoas();
 			_sp.getIDepartamentoPersistente().apagarTodosOsDepartamentos();
-			_sp.getIDisciplinaDepartamentoPersistente().apagarTodasAsDisciplinasDepartamento();
+			_sp
+				.getIDisciplinaDepartamentoPersistente()
+				.apagarTodasAsDisciplinasDepartamento();
 		} catch (ExcepcaoPersistencia e) {
 			fail("Cleaning data!");
 		} finally {
@@ -371,8 +380,7 @@ public class SessionUtilsTest extends TestCase {
 		setToSessionUserView(request);
 		List infoExecutionCourseList = null;
 		try {
-			infoExecutionCourseList =
-				SessionUtils.getExecutionCourses(request);
+			infoExecutionCourseList = SessionUtils.getExecutionCourses(request);
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 			fail("testGetExecutionCoursesNotYetInSession: Executing getExecutionCourses");
@@ -430,7 +438,9 @@ public class SessionUtilsTest extends TestCase {
 
 		InfoDegree infoDegree = new InfoDegree(_degreeInitials, _degreeName);
 		InfoExecutionDegree infoExecutionDegree =
-			new InfoExecutionDegree(new InfoDegreeCurricularPlan("plano1",infoDegree),new InfoExecutionYear(_schoolYear));
+			new InfoExecutionDegree(
+				new InfoDegreeCurricularPlan("plano1", infoDegree),
+				new InfoExecutionYear(_schoolYear));
 		c.setInfoLicenciaturaExecucao(infoExecutionDegree);
 
 		return c;

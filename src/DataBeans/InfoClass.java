@@ -15,9 +15,9 @@ import java.io.Serializable;
 
 public class InfoClass implements Serializable {
 	protected String _name;
-	protected Integer _semestre;
+	
 	protected Integer _anoCurricular;
-	protected InfoDegree _infoLicenciatura;
+	
 
 	private InfoExecutionDegree infoExecutionDegree;
 	private InfoExecutionPeriod infoExecutionPeriod;
@@ -46,13 +46,7 @@ public class InfoClass implements Serializable {
 		_name = nome;
 	}
 
-	public Integer getSemestre() {
-		return _semestre;
-	}
-
-	public void setSemestre(Integer semestre) {
-		_semestre = semestre;
-	}
+	
 
 	public Integer getAnoCurricular() {
 		return _anoCurricular;
@@ -62,13 +56,7 @@ public class InfoClass implements Serializable {
 		_anoCurricular = anoCurricular;
 	}
 
-	public InfoDegree getInfoLicenciatura() {
-		return _infoLicenciatura;
-	}
-
-	public void setInfoLicenciatura(InfoDegree infoLicenciatura) {
-		_infoLicenciatura = infoLicenciatura;
-	}
+	
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
@@ -85,7 +73,8 @@ public class InfoClass implements Serializable {
 	public String toString() {
 		String result = "[INFOTURMA";
 		result += ", nome=" + _name;
-		result += ", semestre=" + _semestre + infoExecutionDegree.toString() + infoExecutionPeriod.toString();
+		result += ", infoExecutionPeriod=" + infoExecutionPeriod;
+		result += ", infoExecutionDegree=" + infoExecutionDegree;
 		result += "]";
 		return result;
 	}

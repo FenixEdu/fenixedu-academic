@@ -86,12 +86,7 @@ public class Turno implements ITurno {
       ITurno turno = (ITurno)obj;
       resultado = (getNome().equals(turno.getNome())) &&
                   (getTipo().equals(turno.getTipo())) &&
-                  (getDisciplinaExecucao().getNome().equals(turno.getDisciplinaExecucao().getNome())) &&
-                  (getDisciplinaExecucao().getPrograma().equals(turno.getDisciplinaExecucao().getPrograma())) &&
-                  (getDisciplinaExecucao().getSigla().equals(turno.getDisciplinaExecucao().getSigla())) &&
-                  (getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo().equals(turno.getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo())) &&
-                  (getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getNome().equals(turno.getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getNome())) &&
-                  (getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla().equals(turno.getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla())) &&
+                  (getDisciplinaExecucao().equals(turno.getDisciplinaExecucao())) &&
                   (getLotacao().equals(turno.getLotacao()));
     }
     return resultado;

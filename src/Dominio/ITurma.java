@@ -13,16 +13,15 @@ package Dominio;
 
 public interface ITurma {
   public String getNome();
-  public Integer getSemestre();
+  
   public Integer getAnoCurricular();
     
 
   public void setNome(String nome);
-  public void setSemestre(Integer semestre);
+  
   public void setAnoCurricular(Integer anoCurricular);
   
-  public ICurso getLicenciatura();
-  public void setLicenciatura(ICurso licenciatura);
+  
   
   public ICursoExecucao getExecutionDegree();
   void setExecutionDegree(ICursoExecucao executionDegree);

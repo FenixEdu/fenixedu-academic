@@ -28,11 +28,9 @@ public interface IDisciplinaExecucao extends Serializable{
     public void setTheoPratHours(Double theoPratHours);
     public Double getLabHours();    
     public void setLabHours(Double labHours);
-    public Integer getSemester();
-    public void setSemester (Integer semester);
+   
     
-    public ICursoExecucao getLicenciaturaExecucao();
-    public void setLicenciaturaExecucao(ICursoExecucao licenciaturaExecucao);
+   
     
     public void setAssociatedCurricularCourses(List associatedCurricularCourses);
     public List getAssociatedCurricularCourses();

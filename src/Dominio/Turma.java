@@ -13,19 +13,13 @@ package Dominio;
 
 public class Turma implements ITurma {
 	protected String _nome;
-	/**
-	 * @deprecated
-	 */
-	protected Integer _semestre;
+	
 	protected Integer _anoCurricular;
-	/**
-	 * @deprecated
-	 */
-	protected ICurso _licenciatura;
+	
 
-	// cï¿½digos internos da base de dados
+	// códigos internos da base de dados
 	private Integer _codigoInterno;
-	private Integer _chaveLicenciatura;
+	
 
 	private ICursoExecucao executionDegree;
 	private Integer keyExecutionDegree;
@@ -50,9 +44,9 @@ public class Turma implements ITurma {
 		Integer anoCurricular,
 		ICurso licenciatura) {
 		setNome(nome);
-		setSemestre(semestre);
+	//	setSemestre(semestre);
 		setAnoCurricular(anoCurricular);
-		setLicenciatura(licenciatura);
+	//	setLicenciatura(licenciatura);
 	}
 	
 	public Turma(
@@ -96,13 +90,7 @@ public class Turma implements ITurma {
 		return _anoCurricular;
 	}
 
-	/**
-	 * Returns the licenciatura.
-	 * @return ICurso
-	 */
-	public ICurso getLicenciatura() {
-		return _licenciatura;
-	}
+	
 
 	/**
 	 * Returns the nome.
@@ -112,13 +100,7 @@ public class Turma implements ITurma {
 		return _nome;
 	}
 
-	/**
-	 * Returns the semestre.
-	 * @return Integer
-	 */
-	public Integer getSemestre() {
-		return _semestre;
-	}
+	
 
 	/**
 	 * Returns the executionDegree.
@@ -144,14 +126,7 @@ public class Turma implements ITurma {
 		_anoCurricular = anoCurricular;
 	}
 
-	/**
-	 * Sets the licenciatura.
-	 * @param licenciatura The licenciatura to set
-	 */
-	public void setLicenciatura(ICurso licenciatura) {
-		_licenciatura = licenciatura;
-	}
-
+	
 	/**
 	 * Sets the nome.
 	 * @param nome The nome to set
@@ -160,14 +135,7 @@ public class Turma implements ITurma {
 		_nome = nome;
 	}
 
-	/**
-	 * Sets the semestre.
-	 * @param semestre The semestre to set
-	 */
-	public void setSemestre(Integer semestre) {
-		_semestre = semestre;
-	}
-
+	
 	/**
 	 * Sets the executionDegree.
 	 * @param executionDegree The executionDegree to set
@@ -184,13 +152,7 @@ public class Turma implements ITurma {
 		this.keyExecutionDegree = keyExecutionDegree;
 	}
 
-	/**
-	 * Returns the chaveLicenciatura.
-	 * @return Integer
-	 */
-	public Integer getChaveLicenciatura() {
-		return _chaveLicenciatura;
-	}
+	
 
 	/**
 	 * Returns the codigoInterno.
@@ -216,13 +178,7 @@ public class Turma implements ITurma {
 		return keyExecutionPeriod;
 	}
 
-	/**
-	 * Sets the chaveLicenciatura.
-	 * @param chaveLicenciatura The chaveLicenciatura to set
-	 */
-	public void setChaveLicenciatura(Integer chaveLicenciatura) {
-		_chaveLicenciatura = chaveLicenciatura;
-	}
+	
 
 	/**
 	 * Sets the codigoInterno.

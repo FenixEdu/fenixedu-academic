@@ -63,5 +63,11 @@ public class InfoExecutionPeriod {
 		}
 		return false;
 	}
-
+	public String toString() {
+			String result = "[INFOEXECUTIONPERIOD";
+				result += ", name=" + name;
+				result += ", infoExecutionYear=" + infoExecutionYear;
+				result += "]";
+			return result;
+		}
 }

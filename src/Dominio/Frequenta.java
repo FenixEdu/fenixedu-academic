@@ -72,13 +72,8 @@ public class Frequenta implements IFrequenta {
     boolean resultado = false;
     if (obj instanceof IFrequenta) {
       IFrequenta frequenta = (IFrequenta)obj;
-      resultado = getAluno().getNumber().equals(frequenta.getAluno().getNumber()) &&
-                  getDisciplinaExecucao().getNome().equals(frequenta.getDisciplinaExecucao().getNome()) &&
-                  getDisciplinaExecucao().getSigla().equals(frequenta.getDisciplinaExecucao().getSigla()) &&
-                  getDisciplinaExecucao().getPrograma().equals(frequenta.getDisciplinaExecucao().getPrograma()) &&
-                  getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo().equals(frequenta.getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo()) &&
-                  getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getNome().equals(frequenta.getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getNome()) &&
-                  getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla().equals(frequenta.getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla());
+      resultado = getAluno().equals(frequenta.getAluno()) &&
+                  getDisciplinaExecucao().equals(getDisciplinaExecucao());
     }
     return resultado;
   }

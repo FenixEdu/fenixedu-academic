@@ -41,5 +41,11 @@ public class InfoExecutionYear {
 		}
 		return false;
 	}
-
+	
+	public String toString() {
+			String result = "[INFOEXECUTIONYEAR";
+				result += ", year=" + year;
+				result += "]";
+			return result;
+		}
 }

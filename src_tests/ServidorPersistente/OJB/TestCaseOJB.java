@@ -98,6 +98,8 @@ public class TestCaseOJB extends TestCase {
 
   protected void tearDown() {
   	try {
+//		persistentSupport.iniciarTransaccao();
+//		persistentSupport.confirmarTransaccao();
   		dbAcessPoint.openConnection();
   		dbAcessPoint.loadDataBase("etc/testBackup.xml");
   		//dbAcessPoint.loadDataBase("etc/testDataSet.xml");

@@ -72,19 +72,8 @@ public class TurmaTurno implements ITurmaTurno {
     boolean resultado = false;
     if (obj instanceof ITurmaTurno) {
       ITurmaTurno turma_turno = (ITurmaTurno)obj;
-      resultado = getTurma().getNome().equals(turma_turno.getTurma().getNome()) &&
-                  getTurma().getSemestre().equals(turma_turno.getTurma().getSemestre()) &&
-                  getTurma().getLicenciatura().getNome().equals(turma_turno.getTurma().getLicenciatura().getNome()) &&
-                  getTurma().getLicenciatura().getSigla().equals(turma_turno.getTurma().getLicenciatura().getSigla()) &&
-                  getTurno().getNome().equals(turma_turno.getTurno().getNome()) &&
-                  getTurno().getTipo().equals(turma_turno.getTurno().getTipo()) &&
-                  getTurno().getLotacao().equals(turma_turno.getTurno().getLotacao()) &&
-                  getTurno().getDisciplinaExecucao().getNome().equals(turma_turno.getTurno().getDisciplinaExecucao().getNome()) &&
-                  getTurno().getDisciplinaExecucao().getSigla().equals(turma_turno.getTurno().getDisciplinaExecucao().getSigla()) &&
-                  getTurno().getDisciplinaExecucao().getPrograma().equals(turma_turno.getTurno().getDisciplinaExecucao().getPrograma()) &&
-                  getTurno().getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo().equals(turma_turno.getTurno().getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo()) &&
-                  getTurno().getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getNome().equals(turma_turno.getTurno().getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getNome()) &&
-                  getTurno().getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla().equals(turma_turno.getTurno().getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla());
+      resultado = getTurma().equals(turma_turno.getTurma()) &&
+                  getTurno().equals(turma_turno.getTurno()) ;
     }
     return resultado;
   }

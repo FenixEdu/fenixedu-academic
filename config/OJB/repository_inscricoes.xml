@@ -340,69 +340,53 @@
         column="CODE"
         jdbc-type="VARCHAR"
     />
-    <!-- :FIXME: to be removed -->
+   
     <field-descriptor id="4"
-        name="chaveLicenciaturaExecucao"
-        column="KEY_EXECUTION_DEGREE"
-        jdbc-type="INTEGER"
-    />
-    <field-descriptor id="5"
         name="chaveResponsavel"
         column="KEY_TEACHER_IN_CHARGE"
         jdbc-type="INTEGER"
     />
-    <field-descriptor id="6"
+    <field-descriptor id="5"
         name="programa"
         column="PROGRAM"
         jdbc-type="LONGVARCHAR"
     />
-    <field-descriptor id="7"
+    <field-descriptor id="6"
         name="theoreticalHours"
         column="THEORETICAL_HOURS"
         jdbc-type="DOUBLE"
     />
-    <field-descriptor id="8"
+    <field-descriptor id="7"
         name="praticalHours"
         column="PRATICAL_HOURS"
         jdbc-type="DOUBLE"
     />
-    <field-descriptor id="9"
+    <field-descriptor id="8"
         name="theoPratHours"
         column="THEO_PRAT_HOURS"
         jdbc-type="DOUBLE"
     />
-    <field-descriptor id="10"
+    <field-descriptor id="9"
         name="labHours"
         column="LAB_HOURS"
         jdbc-type="DOUBLE"
     />    
-    <!-- :FIXME: to be removed -->
-    <field-descriptor id="11"
-        name="semester"
-        column="SEMESTER"
-        jdbc-type="INTEGER"
-    />    
+   
 
-    <field-descriptor id="12"
+    <field-descriptor id="10"
         name="keyExecutionPeriod"
         column="KEY_EXECUTION_PERIOD"
         jdbc-type="INTEGER"
     />    
      <!-- :FIXME: to be removed -->
-    <reference-descriptor
-         name="licenciaturaExecucao"
-         class-ref="Dominio.CursoExecucao"
-         proxy="true"
-      >
-         <foreignkey field-id-ref="4"/>
-      </reference-descriptor> 
+    
 
     <reference-descriptor
          name="executionPeriod"
          class-ref="Dominio.ExecutionPeriod"
          proxy="true"
       >
-         <foreignkey field-id-ref="12"/>
+         <foreignkey field-id-ref="10"/>
       </reference-descriptor> 
       
    

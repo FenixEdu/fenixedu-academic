@@ -16,13 +16,12 @@ public class InfoExecutionCourse implements Serializable {
 	protected String _nome;
 	protected String _sigla;
 	protected String _programa;
-	protected Integer _semester;
 	private Double _theoreticalHours;
 	private Double _praticalHours;
 	private Double _theoPratHours;
 	private Double _labHours;
 
-	protected InfoExecutionDegree _infoLicenciaturaExecucao;
+	
 	// A chave do responsavel falta ainda porque ainda nao existe a respeciva ligacao
 	// na base de dados.
 
@@ -56,7 +55,7 @@ public class InfoExecutionCourse implements Serializable {
 			setNome(nome);
 			setSigla(sigla);
 			setPrograma(programa);
-			setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
+	//		setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
 			setTheoreticalHours(theoreticalHours);
 			setPraticalHours(praticalHours);
 			setTheoPratHours(theoPratHours);
@@ -110,7 +109,7 @@ public class InfoExecutionCourse implements Serializable {
 		setNome(nome);
 		setSigla(sigla);
 		setPrograma(programa);
-		setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
+	//	setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
 		setTheoreticalHours(theoreticalHours);
 		setPraticalHours(praticalHours);
 		setTheoPratHours(theoPratHours);
@@ -124,13 +123,7 @@ public class InfoExecutionCourse implements Serializable {
 		_nome = nome;
 	}
 
-	public Integer getSemester() {
-		return _semester;
-	}
-
-	public void setSemester(Integer semester) {
-		_semester = semester;
-	}
+	
 
 	public String getSigla() {
 		return _sigla;
@@ -180,13 +173,7 @@ public class InfoExecutionCourse implements Serializable {
 		_labHours = labHours;
 	}
 
-	public InfoExecutionDegree getInfoLicenciaturaExecucao() {
-		return _infoLicenciaturaExecucao;
-	}
-
-	public void setInfoLicenciaturaExecucao(InfoExecutionDegree infoLicenciaturaExecucao) {
-		_infoLicenciaturaExecucao = infoLicenciaturaExecucao;
-	}
+	
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
@@ -208,7 +195,7 @@ public class InfoExecutionCourse implements Serializable {
 		result += ", praticalHours=" + _praticalHours;
 		result += ", theoPratHours=" + _theoPratHours;
 		result += ", labHours=" + _labHours;
-		result += ", infoLicenciaturaExecucao=" + _infoLicenciaturaExecucao;
+		result += ", infoExecutionPeriod=" + infoExecutionPeriod;
 		result += "]";
 		return result;
 	}
