@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project basedir="." default="run-tests-cache" name="Tests">
+
+	<property name="encoding" value="ISO-8859-1"/>
+
+    <property name="src" location="src"/>
+    <property name="config" location="config"/>
+    <property name="config.j2ee" value="${config}/jboss"/>
+    <property name="config.web" location="metadata"/>
+
+    <property name="lib" location="lib" />
+	<property name="lib.web" location="lib_web"/>
+
+	<property name="src.tests" location="src_tests"/>
+	<property name="src.tests.cache" location="${src.tests}/ServidorPersistente/cache"/>
+
+	<property name="build.home" location="build"/>
+	<property name="build.app-server" value="${build.home}/app-server"/>
+	<property name="build.tests" value="${build.home}/tests"/>
+	<property name="build.tests.cache" value="${build.tests}/cache"/>
+
+	<target name="compile-tests-cache"
+            description="Compiles tests to verify correct cache distribution.">
+		<ant antfile="build_jboss.xml" target="compile-app-server"/>
+		<mkdir dir="${build.tests.cache}"/>
+		<javac classpath="${build.app-server}"
+               destdir="${build.tests.cache}"
+               extdirs="${lib}" 
+               srcdir="${src.tests.cache}"
+               debug="true"
+               optimize="true"
+               deprecation="true"
+               encoding="${encoding}"
+               fork="yes"
+               />
+	</target>
+
+	<target name="run-tests-cache"
+			depends="compile-tests-cache"
+            description="Verifies correct cache distribution.">
+		<java classname="ServidorPersistente.cache.DistributedCacheTest"
+           fork="true"
+           failonerror="true"
+           maxmemory="128m"
+           >
+			<arg value="-h"/>
+			<classpath>
+				<pathelement path="${build.tests.cache}"/>
+				<pathelement path="${build.app-server}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="/usr/local/jboss/client">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+	</target>
+
+</project>
