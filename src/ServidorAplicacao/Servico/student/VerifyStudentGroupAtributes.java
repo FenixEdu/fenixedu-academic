@@ -15,6 +15,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
@@ -106,6 +107,10 @@ public class VerifyStudentGroupAtributes implements IServico {
                     .getIPersistentStudentGroup().readByOID(
                             GroupProperties.class, groupPropertiesCode);
 
+            if(groupProperties == null){
+            	throw new InvalidChangeServiceException();
+            }
+            
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
 			.getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory

@@ -40,6 +40,8 @@
 		
 		<table width="95%" border="0" style="text-align: left;">
 		<tbody>
+		<b><bean:message key="label.groupPropertiesManagement"/></b>&nbsp
+		
 			<html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
 				<bean:message key="link.editGroupProperties"/>
 			</html:link>
@@ -80,6 +82,8 @@
 		
 		<table width="95%" border="0" style="text-align: left;">
 		<tbody>
+		<b><bean:message key="label.groupPropertiesManagement"/></b>&nbsp
+		
 			<html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
 				<bean:message key="link.editGroupProperties"/>
 			</html:link>
@@ -114,6 +118,8 @@
 		
 		<table width="95%" border="0" style="text-align: left;">
 		<tbody>
+		<b><bean:message key="label.groupPropertiesManagement"/></b>&nbsp
+		
 			<html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
 				<bean:message key="link.editGroupProperties"/>
 			</html:link>

@@ -1472,7 +1472,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 
     					infoSiteShift = new InfoSiteShift();
     					infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
-    					System.out.println(infoSiteShift.getInfoShift().getNome());
     					List infoLessons = infoSiteShift.getInfoShift().getInfoLessons();
           
     					ComparatorChain chainComparator = new ComparatorChain();

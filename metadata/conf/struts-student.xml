@@ -493,6 +493,7 @@
         <forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
+        <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
       </action>
       
       	<action type="ServidorApresentacao.Action.student.EditStudentGroupShiftDispatchAction"

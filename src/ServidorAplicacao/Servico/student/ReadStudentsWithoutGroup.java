@@ -15,16 +15,15 @@ import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteStudentsWithoutGroup;
 import DataBeans.util.Cloner;
 import Dominio.GroupProperties;
+import Dominio.IAttendsSet;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
-import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
-import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentStudent;
@@ -88,17 +87,24 @@ public class ReadStudentsWithoutGroup implements IServico {
                     .getIPersistentGroupProperties().readByOID(
                             GroupProperties.class, groupPropertiesCode);
 
-            List allStudentGroup = new ArrayList();
-            allStudentGroup = persistentStudentGroup
-                    .readAllStudentGroupByAttendsSet(groupProperties.getAttendsSet());
+            if(groupProperties == null){
+            	throw new ExistingServiceException();
+             }
+            
+
+            IAttendsSet attendsSet = (IAttendsSet)groupProperties.getAttendsSet();
+            
+
+            List allStudentsGroups = attendsSet.getStudentGroups();
+            
             
            
             Integer groupNumber = new Integer(1);
-            if (allStudentGroup.size() != 0) {
-                Collections.sort(allStudentGroup, new BeanComparator(
+            if (allStudentsGroups.size() != 0) {
+                Collections.sort(allStudentsGroups, new BeanComparator(
                         "groupNumber"));
-                Integer lastGroupNumber = ((IStudentGroup) allStudentGroup
-                        .get(allStudentGroup.size() - 1)).getGroupNumber();
+                Integer lastGroupNumber = ((IStudentGroup) allStudentsGroups
+                        .get(allStudentsGroups.size() - 1)).getGroupNumber();
                 groupNumber = new Integer(lastGroupNumber.intValue() + 1);
 
             }
@@ -119,9 +125,6 @@ public class ReadStudentsWithoutGroup implements IServico {
 
             frequentas = groupProperties.getAttendsSet().getAttends();
 
-            List allStudentsGroups = persistentStudentGroup
-                    .readAllStudentGroupByAttendsSet(groupProperties.getAttendsSet());
-
             userStudent = persistentStudent.readByUsername(username);
 
             List allStudentGroupAttend = new ArrayList();
@@ -138,6 +141,8 @@ public class ReadStudentsWithoutGroup implements IServico {
                     }
                 }
             }
+            
+            
             IStudent student = null;
             Iterator iterStudent = frequentas.iterator();
             infoStudentList = new ArrayList();
@@ -148,11 +153,6 @@ public class ReadStudentsWithoutGroup implements IServico {
                             .copyIStudent2InfoStudent(student));
             }
 
-            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
-            
             infoSiteStudentsWithoutGroup.setInfoStudentList(infoStudentList);
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {

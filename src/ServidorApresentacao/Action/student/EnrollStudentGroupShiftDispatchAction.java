@@ -73,8 +73,8 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
         {
             ActionErrors actionErrors1 = new ActionErrors();
             ActionError error1 = null;
-            error1 = new ActionError("errors.enrollStudentGroupShift.notEnroled ");
-            actionErrors1.add("errors.enrollStudentGroupShift.notEnroled ", error1);
+            error1 = new ActionError("errors.enrollStudentGroupShift.notEnroled");
+            actionErrors1.add("errors.enrollStudentGroupShift.notEnroled", error1);
             saveErrors(request, actionErrors1);
             return mapping.findForward("viewStudentGroupInformation");
 

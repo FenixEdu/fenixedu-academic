@@ -16,6 +16,7 @@ import DataBeans.ISiteComponent;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoGroupPropertiesWithInfoGroupPropertiesExecutionCourseAccepted;
 import DataBeans.InfoShift;
+import DataBeans.InfoShiftWithInfoLessons;
 import DataBeans.InfoSiteGroupsByShift;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteShift;
@@ -202,18 +203,15 @@ public class GroupSiteComponentBuilder {
             		InfoSiteShift infoSiteShift = null;
 
             		while (iter.hasNext()) {
+           			ITurno shift = (ITurno) iter.next();
+    					List allStudentGroups = persistentStudentGroup
+						.readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet(), shift);
 
-            			ITurno shift = (ITurno) iter.next();
-            			List allStudentGroups = persistentStudentGroup
-						.readAllStudentGroupByAttendsSetAndShift(
-								groupProperties.getAttendsSet(), shift);
-
-            			infoSiteShift = new InfoSiteShift();
-            			infoSiteShift.setInfoShift((InfoShift) Cloner.get(shift));
-                    
-            			List infoLessons = infoSiteShift.getInfoShift().getInfoLessons();
-                    
-            			ComparatorChain chainComparator = new ComparatorChain();
+    					infoSiteShift = new InfoSiteShift();
+    					infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+    					List infoLessons = infoSiteShift.getInfoShift().getInfoLessons();
+            			
+    					ComparatorChain chainComparator = new ComparatorChain();
             			chainComparator.addComparator(new BeanComparator(
             			"diaSemana.diaSemana"));
             			chainComparator.addComparator(new BeanComparator(
@@ -238,14 +236,11 @@ public class GroupSiteComponentBuilder {
 
             				while (iterGroups.hasNext()) {
             					InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-            					InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
-            					infoStudentGroup = Cloner
-								.copyIStudentGroup2InfoStudentGroup((IStudentGroup) iterGroups
-										.next());
-            					infoSiteStudentGroup
+    							InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+    							infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups.next());
+    							infoSiteStudentGroup
 								.setInfoStudentGroup(infoStudentGroup);
-            					infoSiteStudentGroupsList.add(infoSiteStudentGroup);
-
+    							infoSiteStudentGroupsList.add(infoSiteStudentGroup);
             				}
             				Collections.sort(infoSiteStudentGroupsList,
             						new BeanComparator(
@@ -311,6 +306,79 @@ public class GroupSiteComponentBuilder {
             else{
             	
             	infoSiteShiftsAndGroups = new ArrayList();
+            	
+    			if(!groupProperties.getAttendsSet().getStudentGroupsWithShift().isEmpty()){
+    				
+    				List allShifts=new ArrayList();
+    				List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();
+    				if (allStudentsGroup.size() != 0) {
+    					Iterator iterator = allStudentsGroup.iterator();
+    					while (iterator.hasNext()) {
+    						ITurno shift = ((IStudentGroup) iterator.next()).getShift();
+    						if (!allShifts.contains(shift)) {
+    							allShifts.add(shift);
+    						}
+    					}
+    				}
+
+    				if (allShifts.size() != 0) {
+    					Iterator iter = allShifts.iterator();
+    					InfoSiteGroupsByShift infoSiteGroupsByShiftAux = null;
+    					InfoSiteShift infoSiteShiftAux = null;
+
+    					while (iter.hasNext()) {
+    						ITurno shift = (ITurno) iter.next();
+    						List allStudentGroupsAux = persistentStudentGroup
+							.readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet(), shift);
+    						infoSiteShiftAux = new InfoSiteShift();
+    						infoSiteShiftAux.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+    						List infoLessons = infoSiteShiftAux.getInfoShift().getInfoLessons();
+    						ComparatorChain chainComparator = new ComparatorChain();
+    						chainComparator.addComparator(new BeanComparator("diaSemana.diaSemana"));
+    						chainComparator.addComparator(new BeanComparator("inicio"));
+    						chainComparator.addComparator(new BeanComparator("fim"));
+    						chainComparator.addComparator(new BeanComparator("infoSala.nome"));
+    						Collections.sort(infoLessons, chainComparator);
+    		          
+    						infoSiteShiftAux.setNrOfGroups(new Integer(allStudentGroupsAux
+    		    					.size())); 
+    						
+    						infoSiteGroupsByShiftAux = new InfoSiteGroupsByShift();
+    						infoSiteGroupsByShiftAux.setInfoSiteShift(infoSiteShiftAux);
+    						List infoSiteStudentGroupsListAux = null;
+    						if (allStudentGroupsAux.size() != 0) {
+    							infoSiteStudentGroupsListAux = new ArrayList();
+    							Iterator iterGroups = allStudentGroupsAux.iterator();
+    							while (iterGroups.hasNext()) {
+    								InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+    								InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+    								infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups.next());
+    								infoSiteStudentGroup
+									.setInfoStudentGroup(infoStudentGroup);
+    								infoSiteStudentGroupsListAux.add(infoSiteStudentGroup);
+    							}
+    							Collections.sort(infoSiteStudentGroupsListAux,
+    									new BeanComparator(
+    									"infoStudentGroup.groupNumber"));
+
+    						}
+    						infoSiteGroupsByShiftAux
+							.setInfoSiteStudentGroupsList(infoSiteStudentGroupsListAux);
+
+    						infoSiteShiftsAndGroups.add(infoSiteGroupsByShiftAux);
+    					}
+    		    	
+    		        /* Sort the list of shifts */
+
+    					ComparatorChain chainComparator = new ComparatorChain();
+    					chainComparator.addComparator(new BeanComparator(
+    					"infoSiteShift.infoShift.tipo"));
+    					chainComparator.addComparator(new BeanComparator(
+    					"infoSiteShift.infoShift.nome"));
+    					Collections.sort(infoSiteShiftsAndGroups, chainComparator);
+    				}
+    			}
+            	
                 InfoSiteGroupsByShift infoSiteGroupsByShift = null;
                 InfoSiteShift infoSiteShift = new InfoSiteShift();
 

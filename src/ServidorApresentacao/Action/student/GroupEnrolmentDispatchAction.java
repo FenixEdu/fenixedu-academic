@@ -26,6 +26,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidStudentNumberServiceException;
 import ServidorAplicacao.Servico.exceptions.NoChangeMadeServiceException;
@@ -75,6 +76,13 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 			actionErrors2.add("errors.noStudentInAttendsSet", error2);
 			saveErrors(request, actionErrors2);
 			return mapping.findForward("insucess");
+		}catch (InvalidChangeServiceException e) {
+			ActionErrors actionErrors2 = new ActionErrors();
+			ActionError error2 = null;
+			error2 = new ActionError("error.noProject");
+			actionErrors2.add("error.noProject", error2);
+			saveErrors(request, actionErrors2);
+			return mapping.findForward("viewExecutionCourseProjects");
 		}catch (InvalidArgumentsServiceException e) {
 			ActionErrors actionErrors2 = new ActionErrors();
 			ActionError error2 = null;
@@ -101,15 +109,20 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 			studentsNotEnroled =
 				(InfoSiteStudentsWithoutGroup) ServiceUtils.executeService(userView, "ReadStudentsWithoutGroup", args3);
 
-		} catch (FenixServiceException e) {
+		} catch (ExistingServiceException e) {
 			ActionErrors actionErrors1 = new ActionErrors();
 			ActionError error1 = null;
-			// Create an ACTION_ERROR 
+			error1 = new ActionError("error.noProject");
+			actionErrors1.add("error.noProject", error1);
+			saveErrors(request, actionErrors1);
+			return mapping.findForward("viewExecutionCourseProjects");
+		}catch (FenixServiceException e) {
+			ActionErrors actionErrors1 = new ActionErrors();
+			ActionError error1 = null;
 			error1 = new ActionError("error.existingGroup");
 			actionErrors1.add("error.existingGroup", error1);
 			saveErrors(request, actionErrors1);
 			return prepareEnrolment(mapping, form, request, response);
-
 		}
 
 		List infoStudentList = studentsNotEnroled.getInfoStudentList();
@@ -154,15 +167,13 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		}catch (NonExistingServiceException e) {
 			ActionErrors actionErrors1 = new ActionErrors();
 			ActionError error1 = null;
-			// Create an ACTION_ERROR 
 			error1 = new ActionError("error.noProject");
 			actionErrors1.add("error.noProject", error1);
 			saveErrors(request, actionErrors1);
-			return mapping.findForward("viewStudentGroupInformation");
+			return mapping.findForward("viewExecutionCourseProjects");
 		}catch (NoChangeMadeServiceException e) {
 			ActionErrors actionErrors1 = new ActionErrors();
 			ActionError error1 = null;
-			// Create an ACTION_ERROR 
 			error1 = new ActionError("errors.noStudentInAttendsSet");
 			actionErrors1.add("errors.noStudentInAttendsSet", error1);
 			saveErrors(request, actionErrors1);
@@ -170,7 +181,6 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		} catch (InvalidStudentNumberServiceException e) {
 			ActionErrors actionErrors1 = new ActionErrors();
 			ActionError error1 = null;
-			// Create an ACTION_ERROR 
 			error1 = new ActionError("errors.noStudentsInAttendsSet");
 			actionErrors1.add("errors.noStudentsInAttendsSet", error1);
 			saveErrors(request, actionErrors1);
@@ -178,7 +188,6 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		} catch (InvalidArgumentsServiceException e) {
 			ActionErrors actionErrors1 = new ActionErrors();
 			ActionError error1 = null;
-			// Create an ACTION_ERROR 
 			error1 = new ActionError("errors.impossible.nrOfGroups.groupEnrolment");
 			actionErrors1.add("errors.impossible.nrOfGroups.groupEnrolment", error1);
 			saveErrors(request, actionErrors1);
@@ -186,7 +195,6 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		} catch (NonValidChangeServiceException e) {
 			ActionErrors actionErrors1 = new ActionErrors();
 			ActionError error1 = null;
-			// Create an ACTION_ERROR 
 			error1 = new ActionError("errors.impossible.minimumCapacity.groupEnrolment");
 			actionErrors1.add("errors.impossible.minimumCapacity.groupEnrolment", error1);
 			saveErrors(request, actionErrors1);
@@ -194,7 +202,6 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		} catch (NotAuthorizedException e) {
 			ActionErrors actionErrors1 = new ActionErrors();
 			ActionError error1 = null;
-			// Create an ACTION_ERROR 
 			error1 = new ActionError("errors.impossible.maximumCapacity.groupEnrolment");
 			actionErrors1.add("errors.impossible.maximumCapacity.groupEnrolment", error1);
 			saveErrors(request, actionErrors1);
@@ -203,7 +210,6 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		} catch (ExistingServiceException e) {
 			ActionErrors actionErrors1 = new ActionErrors();
 			ActionError error1 = null;
-			// Create an ACTION_ERROR 
 			error1 = new ActionError("errors.existing.elementsEnrolment");
 			actionErrors1.add("errors.existing.elementsEnrolment", error1);
 			saveErrors(request, actionErrors1);
@@ -212,7 +218,6 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		} catch (InvalidSituationServiceException e) {
 			ActionErrors actionErrors1 = new ActionErrors();
 			ActionError error1 = null;
-			// Create an ACTION_ERROR 
 			error1 = new ActionError("errors.existing.groupStudentEnrolment");
 			actionErrors1.add("errors.existing.groupStudentEnrolment", error1);
 			saveErrors(request, actionErrors1);
@@ -221,7 +226,6 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		} catch (FenixServiceException e) {
 		   ActionErrors actionErrors1 = new ActionErrors();
 		   ActionError error1 = null;
-		   // Create an ACTION_ERROR 
 		   error1 = new ActionError("error.existingGroup");
 		   actionErrors1.add("error.existingGroup", error1);
 		   saveErrors(request, actionErrors1);

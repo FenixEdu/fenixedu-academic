@@ -19,7 +19,7 @@
 </table>
 <br>	
 
-
+	<span class="error"><html:errors/></span> 	
 	
 	<logic:empty name="infoGroupPropertiesList">
 	<h2><bean:message key="message.infoGroupPropertiesList.not.available" /></h2>

@@ -68,10 +68,11 @@
 	<br/>
 
 
+
 <logic:empty name="infoAttendsSet" property="infoAttends">
 
-<html:link page="<%="/viewExecutionCourseProjects.do?method=prepareViewExecutionCourseProjects&amp;objectCode=" + pageContext.findAttribute("objectCode")%>">
-    	<bean:message key="link.backToProjectsAndLink"/></html:link><br/>
+<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+    	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
 	<br/>
 		
 	<h2><bean:message key="message.infoAttendsSet.not.available" /></h2>
@@ -86,8 +87,8 @@
 	
 	<logic:notEmpty name="infoAttendsSet" property="infoAttends">
 
-<html:link page="<%="/viewExecutionCourseProjects.do?method=prepareViewExecutionCourseProjects&amp;objectCode=" + pageContext.findAttribute("objectCode")%>">
-    	<bean:message key="link.backToProjectsAndLink"/></html:link><br/>
+<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+    	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
 	<br/>
 		
 	
