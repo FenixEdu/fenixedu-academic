@@ -49,6 +49,8 @@ public class ReadSeniorInfoByUsername implements IService {
             readInfoSenior.setIdInternal(senior.getIdInternal());
             readInfoSenior.setName(person.getNome());
             readInfoSenior.setAddress(person.getMorada());
+            readInfoSenior.setAreaCode(person.getCodigoPostal());
+            readInfoSenior.setAreaCodeArea(person.getLocalidadeCodigoPostal());
             readInfoSenior.setPhone(person.getTelefone());
             readInfoSenior.setMobilePhone(person.getTelemovel());
             readInfoSenior.setEmail(person.getEmail());

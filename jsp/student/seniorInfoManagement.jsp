@@ -14,6 +14,8 @@
 	<html:hidden property="seniorIDInternal"/>
 	<html:hidden property="name" name="seniorInfoForm"/>
 	<html:hidden property="address" name="seniorInfoForm"/>	
+	<html:hidden property="areaCode" name="seniorInfoForm"/>	
+	<html:hidden property="areaCodeArea" name="seniorInfoForm"/>	
 	<html:hidden property="phone" name="seniorInfoForm"/>	
 	<html:hidden property="mobilePhone" name="seniorInfoForm"/>			
 	<html:hidden property="email" name="seniorInfoForm"/>
@@ -48,10 +50,16 @@
 		            <td align="right"><bean:message key="label.person.address" bundle="DEFAULT" /></td>
 		            <td colspan="5"><bean:write name="seniorInfoForm" property="address" filter="false"/></td>
 		        </tr>
+          		<tr>
+		            <td align="right"><bean:message key="label.person.postCode" bundle="DEFAULT" /></td>
+		            <td><bean:write name="seniorInfoForm" property="areaCode" filter="false"/></td>
+		            <td align="right" colspan="2"><bean:message key="label.person.areaOfPostCode" bundle="DEFAULT" /></td>
+		            <td><bean:write name="seniorInfoForm" property="areaCodeArea" filter="false"/></td>
+		        </tr>
 				<tr>	
-					<td align="right" width="6%"><bean:message key="label.person.telephone" bundle="DEFAULT" /></td>
+					<td align="right" width="14%"><bean:message key="label.person.telephone" bundle="DEFAULT" /></td>
             		<td width="8%"><bean:write name="seniorInfoForm" property="phone"/></td>
-            		<td align="right"width="16%"><bean:message key="label.person.mobilePhone" bundle="DEFAULT" /></td>
+            		<td align="right"width="16%" colspan="2"><bean:message key="label.person.mobilePhone" bundle="DEFAULT" /></td>
             		<td width="16%"><bean:write name="seniorInfoForm" property="mobilePhone"/></td>
             		<td align="right" width="16%"><bean:message key="label.person.email" bundle="DEFAULT" /></td>
 	        		<td width="16%"><bean:write name="seniorInfoForm" property="email"/></td>

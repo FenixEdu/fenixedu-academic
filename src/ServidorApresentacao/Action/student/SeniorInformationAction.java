@@ -56,6 +56,8 @@ public class SeniorInformationAction extends DispatchAction {
         seniorInfoForm.set("seniorIDInternal", infoSenior.getIdInternal());
         seniorInfoForm.set("name", infoSenior.getName());
         seniorInfoForm.set("address", infoSenior.getAddress());
+        seniorInfoForm.set("areaCode", infoSenior.getAreaCode());
+        seniorInfoForm.set("areaCodeArea", infoSenior.getAreaCodeArea());
         seniorInfoForm.set("phone", infoSenior.getPhone());
         seniorInfoForm.set("mobilePhone", infoSenior.getMobilePhone());
         seniorInfoForm.set("email", infoSenior.getEmail());
@@ -97,11 +99,12 @@ public class SeniorInformationAction extends DispatchAction {
         expectedDegreeTermination.set(expectedDegreeTerminationYear.intValue(),
                 expectedDegreeTerminationMonth.intValue() - 1, expectedDegreeTerminationDay.intValue());
 
-        if (expectedDegreeTermination.before(Calendar.getInstance())) {
+        // display an error if date is set before today
+/*        if (expectedDegreeTermination.before(Calendar.getInstance())) {
             return setError(request, mapping, "error.senior.terminationDateBeforeToday", "show-form",
                     null);
         }
-
+*/
         InfoSenior changedInfoSenior = new InfoSenior();
         changedInfoSenior.setIdInternal((Integer) changedSeniorInfoForm.get("seniorIDInternal"));
         changedInfoSenior.setExpectedDegreeTermination(expectedDegreeTermination.getTime());

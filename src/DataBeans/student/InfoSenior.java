@@ -16,6 +16,8 @@ public class InfoSenior extends InfoObject {
     
     private String name;
     private String address;
+    private String areaCode;
+    private String areaCodeArea;
     private String phone;
     private String mobilePhone;
     private String email;
@@ -38,6 +40,8 @@ public class InfoSenior extends InfoObject {
     /**
      * @param name
      * @param address
+     * @param areaCode
+     * @param areaCodeArea
      * @param phone
      * @param mobilePhone
      * @param email
@@ -51,12 +55,14 @@ public class InfoSenior extends InfoObject {
      * @param professionalExperience
      * @param lastModificationDate
      */
-    public InfoSenior(String name, String address, String phone, String mobilePhone, String email,
+    public InfoSenior(String name, String address, String areaCode, String areaCodeArea, String phone, String mobilePhone, String email,
             Date expectedDegreeTermination, Integer expectedDegreeAverageGrade, String specialtyField,
             String professionalInterests, String languageSkills, String informaticsSkills,
             String extracurricularActivities, String professionalExperience, Date lastModificationDate) {
         this.name = name;
         this.address = address;
+        this.areaCode = areaCode;
+        this.areaCodeArea = areaCodeArea;
         this.phone = phone;
         this.mobilePhone = mobilePhone;
         this.email = email;
@@ -80,6 +86,8 @@ public class InfoSenior extends InfoObject {
         String result = "Senior :\n";
         result += "\n  - Name : " + name;
         result += "\n  - Address : " + address;
+        result += "\n  - AreaCode : " + areaCode;
+        result += "\n  - AreaCodeArea : " + areaCodeArea;
         result += "\n  - Phone : " + phone;
         result += "\n  - MobilePhone : " + mobilePhone;
         result += "\n  - Expected Degree Termination : " + expectedDegreeTermination;
@@ -105,6 +113,30 @@ public class InfoSenior extends InfoObject {
      */
     public void setAddress(String address) {
         this.address = address;
+    }	
+    /**
+     * @return Returns the areaCode.
+     */
+    public String getAreaCode() {
+        return areaCode;
+    }
+    /**
+     * @param address The areaCode to set.
+     */
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }	
+    /**
+     * @return Returns the areaCodeArea.
+     */
+    public String getAreaCodeArea() {
+        return areaCodeArea;
+    }
+    /**
+     * @param address The areaCodeArea to set.
+     */
+    public void setAreaCodeArea(String areaCodeArea) {
+        this.areaCodeArea = areaCodeArea;
     }
     /**
      * @return Returns the email.

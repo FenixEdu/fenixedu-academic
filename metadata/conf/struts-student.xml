@@ -139,6 +139,8 @@
         	<form-property name="page" type="java.lang.Integer" />			
 			<form-property name="name" type="java.lang.String" />
 			<form-property name="address" type="java.lang.String" />
+			<form-property name="areaCode" type="java.lang.String" />
+			<form-property name="areaCodeArea" type="java.lang.String" />			
 			<form-property name="phone" type="java.lang.String" />
 			<form-property name="mobilePhone" type="java.lang.String" />		
 			<form-property name="email" type="java.lang.String" />
