@@ -115,7 +115,7 @@
    	  table="SHIFT"
    >
       <field-descriptor id="1"
-         name="codigoInterno"
+         name="idInternal"
          column="ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
@@ -146,15 +146,14 @@
       />
       <reference-descriptor
          name="disciplinaExecucao"
-         class-ref="Dominio.DisciplinaExecucao"
-         proxy="true"
-      >
+         class-ref="Dominio.DisciplinaExecucao">
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>
+      
       <collection-descriptor
 			name="associatedTeacherProfessorShipPercentage"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			element-class-ref="Dominio.CreditsTeacher"
+			element-class-ref="Dominio.TeacherShiftPercentage"
 			proxy="true"
 			auto-retrieve="true">
 		<inverse-foreignkey field-ref="keyShift"/>
