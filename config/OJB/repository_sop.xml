@@ -150,13 +150,24 @@
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>
       
-      <collection-descriptor
+     <collection-descriptor
 			name="associatedTeacherProfessorShipPercentage"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
 			element-class-ref="Dominio.TeacherShiftPercentage"
 			proxy="true"
-			auto-retrieve="true">
+			auto-retrieve="true"
+			refresh="true">
 		<inverse-foreignkey field-ref="keyShift"/>
+	</collection-descriptor>
+     <collection-descriptor
+			name="associatedLessons"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			element-class-ref="Dominio.Aula"
+			indirection-table="SHIFT_LESSON"
+			proxy="true"
+			auto-retrieve="true">
+		<fk-pointing-to-this-class column="KEY_SHIFT"/>
+		<fk-pointing-to-element-class column="KEY_LESSON"/>
 	</collection-descriptor>
    </class-descriptor>
 
