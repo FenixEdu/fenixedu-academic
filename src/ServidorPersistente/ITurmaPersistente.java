@@ -10,7 +10,6 @@ package ServidorPersistente;
  *
  * @author  tfc130
  */
-import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.ICursoExecucao;
@@ -56,7 +55,6 @@ public interface ITurmaPersistente extends IPersistentObject {
 	 * @param executionDegree
 	 * @param executionPeriod
 	 * @return ITurma
-	 * @deprecated
 	 */
 	public ITurma readByNameAndExecutionDegreeAndExecutionPeriod(
 		String className,
