@@ -293,48 +293,48 @@ insert into ENROLMENT values (37, 1, 45, 1, 1, 'Dominio.Enrolment', null);
 
 -- -----------------------------
 -- Data for table 'PRECEDENCE'
--- (ID_INTERNAL, KEY_CURRICULAR_COURSE, ENROLMENT_STEP)
+-- (ID_INTERNAL, KEY_CURRICULAR_COURSE, SCOPE_TO_APPLY)
 -- -----------------------------
 delete from PRECEDENCE;
-insert into PRECEDENCE values (1, 29, 'offline');
-insert into PRECEDENCE values (2, 8, 'offline');
-insert into PRECEDENCE values (3, 11, 'offline');
-insert into PRECEDENCE values (4, 16, 'offline');
-insert into PRECEDENCE values (5, 17, 'offline');
-insert into PRECEDENCE values (6, 21, 'offline');
-insert into PRECEDENCE values (7, 27, 'offline');
-insert into PRECEDENCE values (8, 19, 'offline');
-insert into PRECEDENCE values (9, 22, 'offline');
-insert into PRECEDENCE values (10, 38, 'offline');
-insert into PRECEDENCE values (11, 44, 'offline');
-insert into PRECEDENCE values (12, 35, 'offline');
-insert into PRECEDENCE values (13, 45, 'offline');
-insert into PRECEDENCE values (14, 15, 'offline');
-insert into PRECEDENCE values (15, 24, 'offline');
-insert into PRECEDENCE values (16, 30, 'offline');
-insert into PRECEDENCE values (17, 42, 'offline');
-insert into PRECEDENCE values (18, 43, 'offline');
-insert into PRECEDENCE values (19, 7, 'offline');
-insert into PRECEDENCE values (20, 13, 'offline');
-insert into PRECEDENCE values (21, 28, 'offline');
-insert into PRECEDENCE values (22, 23, 'offline');
-insert into PRECEDENCE values (23, 37, 'offline');
-insert into PRECEDENCE values (24, 20, 'offline');
-insert into PRECEDENCE values (25, 26, 'offline');
-insert into PRECEDENCE values (26, 6, 'offline');
-insert into PRECEDENCE values (27, 14, 'offline');
-insert into PRECEDENCE values (28, 18, 'offline');
-insert into PRECEDENCE values (29, 25, 'offline');
-insert into PRECEDENCE values (30, 34, 'offline');
-insert into PRECEDENCE values (31, 32, 'offline');
-insert into PRECEDENCE values (32, 31, 'offline');
-insert into PRECEDENCE values (33, 33, 'offline');
-insert into PRECEDENCE values (34, 39, 'offline');
-insert into PRECEDENCE values (35, 40, 'offline');
-insert into PRECEDENCE values (36, 41, 'offline');
-insert into PRECEDENCE values (37, 48, 'offline');
-insert into PRECEDENCE values (38, 46, 'offline');
-insert into PRECEDENCE values (39, 47, 'offline');
+insert into PRECEDENCE values (1, 29, 'SP');
+insert into PRECEDENCE values (2, 8, 'SP');
+insert into PRECEDENCE values (3, 11, 'SP');
+insert into PRECEDENCE values (4, 16, 'SP');
+insert into PRECEDENCE values (5, 17, 'SP');
+insert into PRECEDENCE values (6, 21, 'SP');
+insert into PRECEDENCE values (7, 27, 'SP');
+insert into PRECEDENCE values (8, 19, 'SP');
+insert into PRECEDENCE values (9, 22, 'SP');
+insert into PRECEDENCE values (10, 38, 'SP');
+insert into PRECEDENCE values (11, 44, 'SP');
+insert into PRECEDENCE values (12, 35, 'SP');
+insert into PRECEDENCE values (13, 45, 'SP');
+insert into PRECEDENCE values (14, 15, 'SP');
+insert into PRECEDENCE values (15, 24, 'SP');
+insert into PRECEDENCE values (16, 30, 'SP');
+insert into PRECEDENCE values (17, 42, 'SP');
+insert into PRECEDENCE values (18, 43, 'SP');
+insert into PRECEDENCE values (19, 7, 'SP');
+insert into PRECEDENCE values (20, 13, 'SP');
+insert into PRECEDENCE values (21, 28, 'SP');
+insert into PRECEDENCE values (22, 23, 'SP');
+insert into PRECEDENCE values (23, 37, 'SP');
+insert into PRECEDENCE values (24, 20, 'SP');
+insert into PRECEDENCE values (25, 26, 'SP');
+insert into PRECEDENCE values (26, 6, 'SP');
+insert into PRECEDENCE values (27, 14, 'SP');
+insert into PRECEDENCE values (28, 18, 'SP');
+insert into PRECEDENCE values (29, 25, 'SP');
+insert into PRECEDENCE values (30, 34, 'SP');
+insert into PRECEDENCE values (31, 32, 'SP');
+insert into PRECEDENCE values (32, 31, 'SP');
+insert into PRECEDENCE values (33, 33, 'SP');
+insert into PRECEDENCE values (34, 39, 'SP');
+insert into PRECEDENCE values (35, 40, 'SP');
+insert into PRECEDENCE values (36, 41, 'SP');
+insert into PRECEDENCE values (37, 48, 'SP');
+insert into PRECEDENCE values (38, 46, 'SP');
+insert into PRECEDENCE values (39, 47, 'SP');
 
 -- -----------------------------
 -- Data for table 'RESTRICTION'
