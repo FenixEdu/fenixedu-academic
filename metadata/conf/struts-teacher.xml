@@ -1000,7 +1000,7 @@
         <action type="ServidorApresentacao.Action.gesdis.CourseInformationAction" path="/courseInformation" 
             name="courseInformationForm" parameter="method" scope="request" validate="true" 
             input="/courseInformation.do?page=0&amp;method=prepareEdit">
-            <exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
+            <exception type="ServidorAplicacao.Servico.exceptions.FenixServiceException" 
                 key="error.exception.notAuthorized" 
                 handler="ServidorApresentacao.config.FenixNotAuthorizedExceptionHandler" />
             <forward name="show-form" path="course-information-management"/>

@@ -112,4 +112,10 @@
 			</logic:iterate>
 		</logic:iterate>
 	</table>
+	<br/>
+	<h2><bean:message key="label.gep.statistics" bundle="GEP_RESOURCES"/>:</h2>
+	<br/>
+	<bean:size id="length" name="infoSiteCoursesInformation"/>
+	<bean:message key="label.gep.numberOfCourses" bundle="GEP_RESOURCES"/>:
+	<bean:write name="length"/>
 </logic:present>

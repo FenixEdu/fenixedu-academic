@@ -27,6 +27,8 @@ import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoSiteTeacherInformation;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -483,10 +485,16 @@ public class TeacherInformationAction extends DispatchAction
         HttpServletResponse response)
         throws Exception
     {
-        InfoSiteTeacherInformation infoSiteTeacherInformation =
-            readInfoSiteTeacherInformation(mapping, form, request);
-        setInfoSiteTeacherInformationToRequest(request, infoSiteTeacherInformation, mapping);
-        return mapping.findForward("successfull-read");
+        try
+        {
+            InfoSiteTeacherInformation infoSiteTeacherInformation =
+                readInfoSiteTeacherInformation(mapping, form, request);
+            setInfoSiteTeacherInformationToRequest(request, infoSiteTeacherInformation, mapping);
+            return mapping.findForward("successfull-read");
+        } catch (NotAuthorizedFilterException e)
+        {
+            return mapping.findForward("unsuccessfull-read");
+        }
     }
 
     /**
@@ -500,7 +508,7 @@ public class TeacherInformationAction extends DispatchAction
         ActionMapping mapping,
         ActionForm form,
         HttpServletRequest request)
-        throws FenixServiceException
+        throws FenixServiceException, FenixFilterException
     {
         IUserView userView = SessionUtils.getUserView(request);
         Object[] args = { userView.getUtilizador()};

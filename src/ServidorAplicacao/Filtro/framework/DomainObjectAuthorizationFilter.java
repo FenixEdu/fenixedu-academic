@@ -10,7 +10,7 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedFilterException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import Util.RoleType;
 
 /**

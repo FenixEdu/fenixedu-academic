@@ -7,7 +7,7 @@ package ServidorAplicacao.Filtro;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedFilterException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import Util.RoleType;
 
 /**

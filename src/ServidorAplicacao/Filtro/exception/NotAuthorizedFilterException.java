@@ -2,45 +2,44 @@
  * Created on Dec 16, 2003
  *  
  */
-package ServidorAplicacao.Servico.exceptions;
+package ServidorAplicacao.Filtro.exception;
 
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class NotAuthorizedFilterException extends FilterException
+public class NotAuthorizedFilterException extends FenixFilterException
 {
     /**
-	 *  
-	 */
+     *  
+     */
     public NotAuthorizedFilterException()
     {
         super();
     }
 
     /**
-	 * @param message
-	 */
+     * @param message
+     */
     public NotAuthorizedFilterException(String message)
     {
         super(message);
     }
 
     /**
-	 * @param message
-	 * @param cause
-	 */
+     * @param message
+     * @param cause
+     */
     public NotAuthorizedFilterException(String message, Throwable cause)
     {
         super(message, cause);
     }
 
     /**
-	 * @param cause
-	 */
+     * @param cause
+     */
     public NotAuthorizedFilterException(Throwable cause)
     {
         super(cause);

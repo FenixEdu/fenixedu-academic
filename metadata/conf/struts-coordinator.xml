@@ -448,9 +448,6 @@
       		scope="request"
       		validate="true"
       		input="/courseInformation.do?method=read">
-  		<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
-			   key="error.exception.notAuthorized"
-               handler="ServidorApresentacao.config.FenixNotAuthorizedExceptionHandler" /> 
 		<forward name="successfull-read" path="view-course-information"/>
 	  </action>	
     </action-mappings>

@@ -22,6 +22,7 @@ import DataBeans.SiteView;
 import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.gesdis.InfoSiteCourseInformation;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -198,7 +199,7 @@ public class CourseInformationAction extends DispatchAction
 	 * @return
 	 */
     private SiteView readSiteView(ActionMapping mapping, ActionForm form, HttpServletRequest request)
-        throws FenixServiceException
+        throws FenixServiceException, FenixFilterException
     {
         IUserView userView = SessionUtils.getUserView(request);
         String executionCourseId = request.getParameter("executionCourseId");

@@ -15,7 +15,7 @@ import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedFilterException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentProfessorship;

@@ -31,8 +31,8 @@ public class FenixServiceException extends Exception {
 
 	public String toString() {
 			String result = "[" +  this.getClass().getName() +"\n";
-			result += "message" +this.getMessage()+ "\n";
-			result += "cause" +this.getCause()+ "\n";
+			result += "message " +this.getMessage()+ "\n";
+			result += "cause " +this.getCause()+ "\n";
 			result += "]";
 			return result;
 		}
