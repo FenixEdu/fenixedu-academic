@@ -678,6 +678,18 @@
 		column="BRANCH_NAME"
 		jdbc-type="VARCHAR"
 	/>
+	<field-descriptor
+		name="keyDegreeCurricularPlan"
+		column="KEY_DEGREE_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+   <reference-descriptor
+		name="degreeCurricularPlan"
+		class-ref="Dominio.DegreeCurricularPlan"
+		proxy="false">
+	<foreignkey field-ref="keyDegreeCurricularPlan"/>
+   </reference-descriptor>
+	
 <!--
 	<collection-descriptor
 			name="associatedStudentCurricularPlans"

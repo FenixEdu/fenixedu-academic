@@ -12,15 +12,19 @@ import java.util.List;
 public class Branch implements IBranch {
 
 	private Integer internalID;
+	private Integer keyDegreeCurricularPlan;
+	
 	private String name;
 	private String code;
 	private List scopes;
+	private IDegreeCurricularPlan degreeCurricularPlan; 
 
 	public Branch() {
 		setName(null);
 		setCode(null);
 		setInternalID(null);
 		setScopes(null);
+		setDegreeCurricularPlan(null);
 	}
 
 	public Branch(String name, String code) {
@@ -33,7 +37,8 @@ public class Branch implements IBranch {
 		boolean resultado = false;
 		if (obj instanceof Branch) {
 			Branch branch = (Branch) obj;
-			resultado = this.getName().equals(branch.getName()) && this.getCode().equals(branch.getCode());
+			resultado = this.getName().equals(branch.getName()) && this.getCode().equals(branch.getCode()) &&
+						this.getDegreeCurricularPlan().equals(branch.getDegreeCurricularPlan());
 		}
 		return resultado;
 	}
@@ -46,6 +51,7 @@ public class Branch implements IBranch {
 		return result;
 	}
 
+	
 	/**
 	 * @return String
 	 */
@@ -105,6 +111,34 @@ public class Branch implements IBranch {
 	 */
 	public void setScopes(List scopes) {
 		this.scopes = scopes;
+	}
+
+	/**
+	 * @return
+	 */
+	public IDegreeCurricularPlan getDegreeCurricularPlan() {
+		return degreeCurricularPlan;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getKeyDegreeCurricularPlan() {
+		return keyDegreeCurricularPlan;
+	}
+
+	/**
+	 * @param plan
+	 */
+	public void setDegreeCurricularPlan(IDegreeCurricularPlan plan) {
+		degreeCurricularPlan = plan;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setKeyDegreeCurricularPlan(Integer integer) {
+		keyDegreeCurricularPlan = integer;
 	}
 
 }

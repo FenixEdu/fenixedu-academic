@@ -190,8 +190,9 @@ create table BRANCH (
    ID_INTERNAL int(11) not null auto_increment,
    BRANCH_CODE varchar(50) not null,
    BRANCH_NAME varchar(255),
+   KEY_DEGREE_CURRICULAR_PLAN integer(11),
    primary key (ID_INTERNAL),
-   unique U1 (BRANCH_NAME, BRANCH_CODE)
+   unique U1 (BRANCH_NAME, BRANCH_CODE, KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
 
 -- ==================================================================================
