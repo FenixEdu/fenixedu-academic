@@ -532,7 +532,7 @@ public class ExecutionPeriodOJB
 		executionCourseToCreate.setAssociatedCurricularCourses(new ArrayList());
 		executionCourseToCreate.setAssociatedEvaluations(new ArrayList());
 		executionCourseToCreate.setAssociatedExams(new ArrayList());
-		executionCourseToCreate.setComment("");
+		executionCourseToCreate.setComment(" ");
 		executionCourseToCreate.setExecutionPeriod(
 			executionPeriodToImportDataTo);
 		executionCourseToCreate.setIdInternal(null);
