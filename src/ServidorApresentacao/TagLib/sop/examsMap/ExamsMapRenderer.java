@@ -14,9 +14,13 @@ import org.apache.commons.collections.Predicate;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRoom;
-import ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer;
+import ServidorApresentacao
+	.TagLib
+	.sop
+	.examsMap
+	.renderers
+	.ExamsMapSlotContentRenderer;
 import Util.Season;
-
 
 /*
  * @author Luis Cruz & Sara Ribeiro
@@ -222,34 +226,65 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 					}
 				});
 
-				// Print rooms for 1st season exam
-				if (season1Exam != null) {
-					List infoRooms = season1Exam.getAssociatedRooms();
-					if (infoRooms != null && infoRooms.size() > 0) {
-						strBuffer.append("&nbsp;&nbsp;&nbsp;Salas - 1ª Época: ");
-						for (int r = 0; r < infoRooms.size(); r++) {
-							InfoRoom infoRoom = (InfoRoom) infoRooms.get(r);
-							strBuffer.append(infoRoom.getNome() + ";");
+				if ((season1Exam != null
+					&& season1Exam.getAssociatedRooms() != null
+					&& season1Exam.getAssociatedRooms().size() > 0)
+					|| (season2Exam != null
+						&& season2Exam.getAssociatedRooms() != null
+						&& season2Exam.getAssociatedRooms().size() > 0)) {
+
+					strBuffer.append("<table>");
+					
+					strBuffer.append("<tr>");
+					strBuffer.append("<td colspan='2'>");
+					strBuffer.append("Salas");
+					strBuffer.append("</td>");
+					strBuffer.append("</tr>");
+
+					// Print rooms for 1st season exam
+					if (season1Exam != null) {
+						List infoRooms = season1Exam.getAssociatedRooms();
+						if (infoRooms != null && infoRooms.size() > 0) {
+							strBuffer.append("<tr>");
+							strBuffer.append("<td nowrap='nowrap' valign='top'>");
+							strBuffer.append(
+								"1ª Época: ");
+							strBuffer.append("</td>");
+							strBuffer.append("<td>");	
+							for (int r = 0; r < infoRooms.size(); r++) {
+								InfoRoom infoRoom = (InfoRoom) infoRooms.get(r);
+								strBuffer.append(infoRoom.getNome() + "; ");
+							}
+							strBuffer.append("</td>");
+							strBuffer.append("</tr>");
+
 						}
 					}
-				}
-				// Print rooms for 2nd season exam
-				if (season2Exam != null) {
-					List infoRooms = season2Exam.getAssociatedRooms();					
-					if (infoRooms != null && infoRooms.size() > 0) {
-						if (season1Exam != null) { 
-							strBuffer.append("<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 2ª Época:");
-						}							
-						else {
-							strBuffer.append("&nbsp;&nbsp;&nbsp;Salas - 2ª Época: ");							
+					// Print rooms for 2nd season exam
+					if (season2Exam != null) {
+						List infoRooms = season2Exam.getAssociatedRooms();
+						if (infoRooms != null && infoRooms.size() > 0) {
+							strBuffer.append("<tr>");
+							strBuffer.append("<td nowrap='nowrap' valign='top'>");
+								strBuffer.append(
+									"2ª Época: ");
+							strBuffer.append("</td>");
+
+							strBuffer.append("<td>");
+							for (int r = 0; r < infoRooms.size(); r++) {
+								InfoRoom infoRoom = (InfoRoom) infoRooms.get(r);
+								strBuffer.append(infoRoom.getNome() + "; ");
+							}
+							strBuffer.append("</td>");
+							strBuffer.append("</tr>");
+
+							strBuffer.append("<br />");
 						}
-						for (int r = 0; r < infoRooms.size(); r++) {
-							InfoRoom infoRoom = (InfoRoom) infoRooms.get(r);
-							strBuffer.append(infoRoom.getNome() + ";");
-						}
-						strBuffer.append("<br />");
 					}
+
+					strBuffer.append("</table>");
 				}
+
 				strBuffer.append("<br />");
 			}
 		}
