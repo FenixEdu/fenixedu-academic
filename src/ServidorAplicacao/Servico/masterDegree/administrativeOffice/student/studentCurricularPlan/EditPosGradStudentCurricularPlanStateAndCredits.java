@@ -99,8 +99,8 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 			if (newState.getState().intValue() == StudentCurricularPlanState.INACTIVE) {
 				while (iterator.hasNext()) {
 					IEnrollment enrolment = (IEnrollment) iterator.next();
-					if (enrolment.getEnrolmentState().getValue() ==  EnrolmentState.ENROLED_TYPE
-							|| enrolment.getEnrolmentState().getValue() ==  EnrolmentState.TEMPORARILY_ENROLED_TYPE) {
+					if (enrolment.getEnrolmentState().getValue() ==  EnrolmentState.ENROLLED_TYPE
+							|| enrolment.getEnrolmentState().getValue() ==  EnrolmentState.TEMPORARILY_ENROLLED_TYPE) {
 						persistentEnrolment.simpleLockWrite(enrolment);
 						enrolment.setEnrolmentState(EnrolmentState.ANNULED);
 					}
@@ -179,7 +179,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
         if (newState.getState().intValue() == StudentCurricularPlanState.ACTIVE) {
             if (enrolment.getEnrolmentState().getValue() ==  EnrolmentState.ANNULED_TYPE) {
         		persistentEnrolment.simpleLockWrite(enrolment);		
-        		enrolment.setEnrolmentState(EnrolmentState.ENROLED);
+        		enrolment.setEnrolmentState(EnrolmentState.ENROLLED);
         	}					    
         }
     }

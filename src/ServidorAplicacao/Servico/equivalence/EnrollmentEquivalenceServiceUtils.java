@@ -45,7 +45,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service
 	 */
 	protected boolean isAnEnroledEnrollment(IEnrollment enrollment)
 	{
-		return (enrollment.getEnrolmentState().equals(EnrolmentState.ENROLED) || enrollment.getEnrolmentState().equals(
+		return (enrollment.getEnrolmentState().equals(EnrolmentState.ENROLLED) || enrollment.getEnrolmentState().equals(
 			EnrolmentState.TEMPORARILY_ENROLED));
 	}
 

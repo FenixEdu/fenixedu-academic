@@ -13,7 +13,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import DataBeans.InfoEnrolmentWithInfoCurricularCourse;
+import DataBeans.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoStudentCurricularPlanWithInfoStudent;
@@ -67,7 +67,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
                         .getIPersistentEnrolment();
                 List enrollments = persistentEnrolment
                         .readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
-                                studentCurricularPlan, EnrolmentState.ENROLED);
+                                studentCurricularPlan, EnrolmentState.ENROLLED);
 
                 infoStudentEnrolmentContext = buildResult(
                         studentCurricularPlan, enrollments);
@@ -102,7 +102,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
                     new Transformer() {
                         public Object transform(Object input) {
                             IEnrollment enrolment = (IEnrollment) input;
-                            return InfoEnrolmentWithInfoCurricularCourse.newInfoFromDomain(enrolment);
+                            return InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear.newInfoFromDomain(enrolment);
                         }
                     });
             Collections.sort(infoEnrollments, new BeanComparator(

@@ -101,11 +101,10 @@ public class ReadCurricularCoursesToEnroll implements IService {
                     curricularCoursesFromDegreeCurricularPlan, new Predicate() {
                         public boolean evaluate(Object arg0) {
                             return !studentCurricularPlan
-                                    .isCurricularCourseApproved(((CurricularCourse2Enroll) arg0)
-                                            .getCurricularCourse())
+                                    .isCurricularCourseApproved((ICurricularCourse) arg0)
+
                                     && !studentCurricularPlan
-                                            .isCurricularCourseEnrolled(((CurricularCourse2Enroll) arg0)
-                                                    .getCurricularCourse());
+                                            .isCurricularCourseEnrolled((ICurricularCourse) arg0);
                         }
                     });
             if (!((curricularYearsList == null || curricularYearsList.size() <= 0) && (curricularSemestersList == null || curricularSemestersList
@@ -237,9 +236,8 @@ public class ReadCurricularCoursesToEnroll implements IService {
     private List filterOptionalCourses(List curricularCourses) {
         List result = (List) CollectionUtils.select(curricularCourses, new Predicate() {
             public boolean evaluate(Object arg0) {
-                CurricularCourse2Enroll curricularCourse = (CurricularCourse2Enroll) arg0;
-                return !curricularCourse.getCurricularCourse().getType().equals(
-                        CurricularCourseType.OPTIONAL_COURSE_OBJ);
+                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+                return !curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ);
             }
         });
 

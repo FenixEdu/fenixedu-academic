@@ -1,13 +1,11 @@
 package ServidorApresentacao.Action.degreeAdministrativeOffice.withoutRules;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionError;
@@ -20,6 +18,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoBranch;
 import DataBeans.InfoStudentCurricularPlan;
+import DataBeans.enrollment.InfoAreas2Choose;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -35,287 +34,239 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author David Santos in Apr 13, 2004
  */
 
-public class ChangeStudentAreasDispatchAction extends DispatchAction
-{
-	public ActionForward chooseStudent(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		request.setAttribute("degreeType", TipoCurso.LICENCIATURA_OBJ.getTipoCurso());
-		return mapping.findForward("chooseStudent");
-	}
+public class ChangeStudentAreasDispatchAction extends DispatchAction {
+    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setAttribute("degreeType", TipoCurso.LICENCIATURA_OBJ.getTipoCurso());
+        return mapping.findForward("chooseStudent");
+    }
 
-	public ActionForward showAndChooseStudentAreas(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-		HttpServletResponse response) throws Exception
-	{
-		ActionErrors errors = new ActionErrors();
-		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward showAndChooseStudentAreas(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ActionErrors errors = new ActionErrors();
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		DynaActionForm changeStudentAreasForm = (DynaActionForm) form;
+        DynaActionForm changeStudentAreasForm = (DynaActionForm) form;
 
-		Integer studentNumber = Integer.valueOf((String) changeStudentAreasForm.get("studentNumber"));
+        Integer studentNumber = Integer.valueOf((String) changeStudentAreasForm.get("studentNumber"));
 
-		Integer degreeTypeCode = (Integer) changeStudentAreasForm.get("degreeType");
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(degreeTypeCode);
+        Integer degreeTypeCode = (Integer) changeStudentAreasForm.get("degreeType");
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(degreeTypeCode);
 
-		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-		List infoBranches = null;
+        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+        InfoAreas2Choose infoBranches = null;
 
-		Object[] args1 = { studentNumber, degreeType };
-		try
-		{
-			List infoStudentCurricularPlans = (List) ServiceManagerServiceFactory.executeService(userView,
-				"ReadStudentCurricularPlansByNumberAndDegreeType", args1);
-			
-			infoStudentCurricularPlan = getActiveInfoStudentCurricularPlan(infoStudentCurricularPlans);
-		}
-		catch (Exception e)
-		{
-			setAcurateErrorMessage(request, e, errors, studentNumber, "chooseStudent");
-		}
+        Object[] args1 = { studentNumber, degreeType };
+        try {
+            List infoStudentCurricularPlans = (List) ServiceManagerServiceFactory.executeService(
+                    userView, "ReadStudentCurricularPlansByNumberAndDegreeType", args1);
 
-		Object[] args2 = { null, null, studentNumber };
-		try
-		{
-			infoBranches = (List) ServiceManagerServiceFactory.executeService(userView,
-				"ReadSpecializationAndSecundaryAreasByStudent", args2);
-		}
-		catch (Exception e)
-		{
-			setAcurateErrorMessage(request, e, errors, studentNumber, "chooseStudent");
-		}
+            infoStudentCurricularPlan = getActiveInfoStudentCurricularPlan(infoStudentCurricularPlans);
+        } catch (Exception e) {
+            setAcurateErrorMessage(request, e, errors, studentNumber, "chooseStudent");
+        }
 
-		if (!errors.isEmpty())
-		{
-			return mapping.getInputForward();
-		}
+        Object[] args2 = { null, null, studentNumber };
+        try {
+            infoBranches = (InfoAreas2Choose) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadSpecializationAndSecundaryAreasByStudent", args2);
+        } catch (Exception e) {
+            setAcurateErrorMessage(request, e, errors, studentNumber, "chooseStudent");
+        }
 
-		Collections.sort(infoBranches, new BeanComparator("name"));
+        if (!errors.isEmpty()) {
+            return mapping.getInputForward();
+        }
 
-		setFromElementsValues(changeStudentAreasForm, studentNumber.toString(), degreeType, infoStudentCurricularPlan);
+        setFromElementsValues(changeStudentAreasForm, studentNumber.toString(), degreeType,
+                infoStudentCurricularPlan);
 
-		prepareContext(request, infoStudentCurricularPlan.getInfoBranch(), infoStudentCurricularPlan.getInfoSecundaryBranch(),
-			studentNumber);
+        prepareContext(request, infoStudentCurricularPlan.getInfoBranch(), infoStudentCurricularPlan
+                .getInfoSecundaryBranch(), studentNumber);
 
-		request.setAttribute("infoBranches", infoBranches);
-		return mapping.findForward("showAndChooseStudentAreas");
-	}
-	
-	public ActionForward showChangeOfStudentAreasConfirmation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-		HttpServletResponse response) throws Exception
-	{
-		ActionErrors errors = new ActionErrors();
-		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        request.setAttribute("infoBranches", infoBranches);
+        return mapping.findForward("showAndChooseStudentAreas");
+    }
 
-		DynaActionForm changeStudentAreasForm = (DynaActionForm) form;
+    public ActionForward showChangeOfStudentAreasConfirmation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ActionErrors errors = new ActionErrors();
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer studentNumber = Integer.valueOf((String) changeStudentAreasForm.get("studentNumber"));
+        DynaActionForm changeStudentAreasForm = (DynaActionForm) form;
 
-		Integer degreeTypeCode = (Integer) changeStudentAreasForm.get("degreeType");
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(degreeTypeCode);
+        Integer studentNumber = Integer.valueOf((String) changeStudentAreasForm.get("studentNumber"));
 
-		Integer specializationAreaID = (Integer) changeStudentAreasForm.get("specializationAreaID");
+        Integer degreeTypeCode = (Integer) changeStudentAreasForm.get("degreeType");
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(degreeTypeCode);
 
-		Integer secondaryAreaID = (Integer) changeStudentAreasForm.get("secondaryAreaID");
+        Integer specializationAreaID = (Integer) changeStudentAreasForm.get("specializationAreaID");
 
-		Integer studentCurricularPlanID = (Integer) changeStudentAreasForm.get("studentCurricularPlanID");
+        Integer secondaryAreaID = (Integer) changeStudentAreasForm.get("secondaryAreaID");
 
-		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-		Object[] args1 = { studentNumber, degreeType };
-		try
-		{
-			List infoStudentCurricularPlans = (List) ServiceManagerServiceFactory.executeService(userView,
-				"ReadStudentCurricularPlansByNumberAndDegreeType", args1);
-			
-			infoStudentCurricularPlan = getActiveInfoStudentCurricularPlan(infoStudentCurricularPlans);
-		}
-		catch (Exception e)
-		{
-			setAcurateErrorMessage(request, e, errors, studentNumber, "showAndChooseStudentAreas");
-			setFromElementsValues(changeStudentAreasForm, studentNumber.toString(), degreeType, null);
-		}
+        Integer studentCurricularPlanID = (Integer) changeStudentAreasForm
+                .get("studentCurricularPlanID");
 
-		Object[] args2 = {infoStudentCurricularPlan.getInfoStudent(), degreeType, studentCurricularPlanID, specializationAreaID,
-			secondaryAreaID};
-		try
-		{
-			ServiceManagerServiceFactory.executeService(userView, "WriteStudentAreasWithoutRestrictions", args2);
-		} catch (Exception e)
-		{
-			setAcurateErrorMessage(request, e, errors, studentNumber, "showAndChooseStudentAreas");
-			setFromElementsValues(changeStudentAreasForm, studentNumber.toString(), degreeType, null);
-		}
+        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+        Object[] args1 = { studentNumber, degreeType };
+        try {
+            List infoStudentCurricularPlans = (List) ServiceManagerServiceFactory.executeService(
+                    userView, "ReadStudentCurricularPlansByNumberAndDegreeType", args1);
 
-		ActionForward forward = showAndChooseStudentAreas(mapping, form, request, response);
+            infoStudentCurricularPlan = getActiveInfoStudentCurricularPlan(infoStudentCurricularPlans);
+        } catch (Exception e) {
+            setAcurateErrorMessage(request, e, errors, studentNumber, "showAndChooseStudentAreas");
+            setFromElementsValues(changeStudentAreasForm, studentNumber.toString(), degreeType, null);
+        }
 
-		if (!errors.isEmpty())
-		{
-			return mapping.getInputForward();
-		}
+        Object[] args2 = { infoStudentCurricularPlan.getInfoStudent(), degreeType,
+                studentCurricularPlanID, specializationAreaID, secondaryAreaID };
+        try {
+            ServiceManagerServiceFactory.executeService(userView,
+                    "WriteStudentAreasWithoutRestrictions", args2);
+        } catch (Exception e) {
+            setAcurateErrorMessage(request, e, errors, studentNumber, "showAndChooseStudentAreas");
+            setFromElementsValues(changeStudentAreasForm, studentNumber.toString(), degreeType, null);
+        }
 
-		if (!forward.equals(mapping.getInputForward()))
-		{
-			errors.add("success", new ActionError("message.change.areas.success"));
-			saveErrors(request, errors);
-			request.setAttribute("methodName", "showAndChooseStudentAreas");
-		}
+        ActionForward forward = showAndChooseStudentAreas(mapping, form, request, response);
 
-		return forward;
-	}
+        if (!errors.isEmpty()) {
+            return mapping.getInputForward();
+        }
 
-	public ActionForward exit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
-		return mapping.findForward("exit");
-	}
+        if (!forward.equals(mapping.getInputForward())) {
+            errors.add("success", new ActionError("message.change.areas.success"));
+            saveErrors(request, errors);
+            request.setAttribute("methodName", "showAndChooseStudentAreas");
+        }
 
-	public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
-		String methodName = (String) request.getAttribute("methodName");
-		if (methodName == null)
-		{
-			Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
-			request.setAttribute("degreeType", degreeType);
-			return mapping.findForward("chooseStudent");
-		}
-		
-			return mapping.findForward(methodName);
-		
-	}
+        return forward;
+    }
 
+    public ActionForward exit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return mapping.findForward("exit");
+    }
 
+    public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        String methodName = (String) request.getAttribute("methodName");
+        if (methodName == null) {
+            Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
+            request.setAttribute("degreeType", degreeType);
+            return mapping.findForward("chooseStudent");
+        }
 
+        return mapping.findForward(methodName);
 
+    }
 
+    /**
+     * @param request
+     * @param e
+     * @param errors
+     * @param studentNumber
+     * @param methodName
+     */
+    private void setAcurateErrorMessage(HttpServletRequest request, Exception e, ActionErrors errors,
+            Integer studentNumber, String methodName) {
+        e.printStackTrace();
 
+        if (e instanceof NotAuthorizedException) {
+            errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
+        } else if (e instanceof ExistingServiceException) {
+            if (e.getMessage().equals("student")) {
+                errors.add("student", new ActionError("error.no.student.in.database", studentNumber));
+            } else if (e.getMessage().equals("studentCurricularPlan")) {
+                errors.add("studentCurricularPlan", new ActionError(
+                        "error.student.curricularPlan.nonExistent"));
+            }
+        } else if (e instanceof NonExistingServiceException) {
+            errors.add("studentCurricularPlan", new ActionError(
+                    "error.student.curricularPlan.nonExistent"));
+        } else if (e instanceof BothAreasAreTheSameServiceException) {
+            errors.add("bothAreas", new ActionError("error.student.enrollment.AreasNotEqual"));
+        } else if (e instanceof FenixServiceException) {
+            errors.add("noResult", new ActionError("error.impossible.operations"));
+        } else {
+            errors.add("noResult", new ActionError("error.impossible.operations"));
+        }
 
-	/**
-	 * @param request
-	 * @param e
-	 * @param errors
-	 * @param studentNumber
-	 * @param methodName
-	 */
-	private void setAcurateErrorMessage(HttpServletRequest request, Exception e, ActionErrors errors, Integer studentNumber,
-		String methodName)
-	{
-		e.printStackTrace();
+        saveErrors(request, errors);
+        request.setAttribute("methodName", methodName);
+    }
 
-		if (e instanceof NotAuthorizedException)
-		{
-			errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
-		} else if (e instanceof ExistingServiceException)
-		{
-			if (e.getMessage().equals("student"))
-			{
-				errors.add("student", new ActionError("error.no.student.in.database", studentNumber));
-			} else if (e.getMessage().equals("studentCurricularPlan"))
-			{
-				errors.add("studentCurricularPlan", new ActionError("error.student.curricularPlan.nonExistent"));
-			}
-		} else if (e instanceof NonExistingServiceException)
-		{
-			errors.add("studentCurricularPlan", new ActionError("error.student.curricularPlan.nonExistent"));
-		} else if (e instanceof BothAreasAreTheSameServiceException)
-		{
-			errors.add("bothAreas", new ActionError("error.student.enrollment.AreasNotEqual"));
-		} else if (e instanceof FenixServiceException)
-		{
-			errors.add("noResult", new ActionError("error.impossible.operations"));
-		} else
-		{
-			errors.add("noResult", new ActionError("error.impossible.operations"));
-		}
+    /**
+     * @param form
+     * @param studentNumber
+     * @param degreeType
+     * @param infoStudentCurricularPlan
+     */
+    private void setFromElementsValues(DynaActionForm form, String studentNumber, TipoCurso degreeType,
+            InfoStudentCurricularPlan infoStudentCurricularPlan) {
+        form.set("studentNumber", studentNumber);
+        form.set("degreeType", degreeType.getTipoCurso());
+        if (infoStudentCurricularPlan != null) {
+            if (infoStudentCurricularPlan.getInfoBranch() != null) {
+                form.set("specializationAreaID", infoStudentCurricularPlan.getInfoBranch()
+                        .getIdInternal());
+            } else {
+                form.set("specializationAreaID", new Integer(0));
+            }
 
-		saveErrors(request, errors);
-		request.setAttribute("methodName", methodName);
-	}
+            if (infoStudentCurricularPlan.getInfoSecundaryBranch() != null) {
+                form.set("secondaryAreaID", infoStudentCurricularPlan.getInfoSecundaryBranch()
+                        .getIdInternal());
+            } else {
+                form.set("secondaryAreaID", new Integer(0));
+            }
 
-	/**
-	 * @param form
-	 * @param studentNumber
-	 * @param degreeType
-	 * @param infoStudentCurricularPlan
-	 */
-	private void setFromElementsValues(DynaActionForm form, String studentNumber, TipoCurso degreeType,
-		InfoStudentCurricularPlan infoStudentCurricularPlan)
-	{
-		form.set("studentNumber", studentNumber);
-		form.set("degreeType", degreeType.getTipoCurso());
-		if (infoStudentCurricularPlan != null)
-		{
-			if (infoStudentCurricularPlan.getInfoBranch() != null)
-			{
-				form.set("specializationAreaID", infoStudentCurricularPlan.getInfoBranch().getIdInternal());
-			} else
-			{
-				form.set("specializationAreaID", new Integer(0));
-			}
+            form.set("studentCurricularPlanID", infoStudentCurricularPlan.getIdInternal());
+        }
+    }
 
-			if (infoStudentCurricularPlan.getInfoSecundaryBranch() != null)
-			{
-				form.set("secondaryAreaID", infoStudentCurricularPlan.getInfoSecundaryBranch().getIdInternal());
-			} else
-			{
-				form.set("secondaryAreaID", new Integer(0));
-			}
+    /**
+     * @param request
+     * @param specializationArea
+     * @param secondaryArea
+     * @param studentNumber
+     */
+    private void prepareContext(HttpServletRequest request, InfoBranch specializationArea,
+            InfoBranch secondaryArea, Integer studentNumber) {
+        request.setAttribute("studentNumber", studentNumber);
 
-			form.set("studentCurricularPlanID", infoStudentCurricularPlan.getIdInternal());
-		}
-	}
+        if (specializationArea != null) {
+            request.setAttribute("specializationAreaName", specializationArea.getName());
+        } else {
+            request.setAttribute("specializationAreaName", "");
+        }
 
-	/**
-	 * @param request
-	 * @param specializationArea
-	 * @param secondaryArea
-	 * @param studentNumber
-	 */
-	private void prepareContext(HttpServletRequest request, InfoBranch specializationArea, InfoBranch secondaryArea,
-		Integer studentNumber)
-	{
-		request.setAttribute("studentNumber", studentNumber);
+        if (secondaryArea != null) {
+            request.setAttribute("secondaryAreaName", secondaryArea.getName());
+        } else {
+            request.setAttribute("secondaryAreaName", "");
+        }
+    }
 
-		if (specializationArea != null)
-		{
-			request.setAttribute("specializationAreaName", specializationArea.getName());
-		} else
-		{
-			request.setAttribute("specializationAreaName", "");
-		}
+    /**
+     * @param infoStudentCurricularPlans
+     * @return InfoStudentCurricularPlan
+     */
+    private InfoStudentCurricularPlan getActiveInfoStudentCurricularPlan(List infoStudentCurricularPlans) {
+        List result = (List) CollectionUtils.select(infoStudentCurricularPlans, new Predicate() {
+            public boolean evaluate(Object obj) {
+                InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) obj;
+                return infoStudentCurricularPlan.getCurrentState().equals(
+                        StudentCurricularPlanState.ACTIVE_OBJ);
+            }
+        });
 
-		if (secondaryArea != null)
-		{
-			request.setAttribute("secondaryAreaName", secondaryArea.getName());
-		} else
-		{
-			request.setAttribute("secondaryAreaName", "");
-		}
-	}
-
-	/**
-	 * @param infoStudentCurricularPlans
-	 * @return InfoStudentCurricularPlan
-	 */
-	private InfoStudentCurricularPlan getActiveInfoStudentCurricularPlan(List infoStudentCurricularPlans)
-	{
-		List result = (List) CollectionUtils.select(infoStudentCurricularPlans, new Predicate()
-		{
-			public boolean evaluate(Object obj)
-			{
-				InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) obj;
-				return infoStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE_OBJ);
-			}
-		});
-
-		return (InfoStudentCurricularPlan) result.get(0);
-	}
+        return (InfoStudentCurricularPlan) result.get(0);
+    }
 
 }

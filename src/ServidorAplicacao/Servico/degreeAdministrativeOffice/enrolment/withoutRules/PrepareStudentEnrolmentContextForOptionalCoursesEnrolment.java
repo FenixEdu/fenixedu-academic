@@ -78,7 +78,7 @@ public class PrepareStudentEnrolmentContextForOptionalCoursesEnrolment
 
                 List enrollmentsEnrolled = enrolmentDAO
                         .readEnrolmentsByStudentCurricularPlanAndEnrolmentStateAndCurricularCourseType(
-                                studentCurricularPlan, EnrolmentState.ENROLED,
+                                studentCurricularPlan, EnrolmentState.ENROLLED,
                                 CurricularCourseType.OPTIONAL_COURSE_OBJ);
 
                 List enrollments = studentCurricularPlan.getEnrolments();

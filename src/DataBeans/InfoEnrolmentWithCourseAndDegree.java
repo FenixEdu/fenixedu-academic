@@ -9,20 +9,20 @@ import Dominio.IEnrollment;
 /**
  * @author Tânia Pousão 23/Jun/2004
  */
-public class InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear extends
-        InfoEnrolmentWithCourseAndDegree {
+public class InfoEnrolmentWithCourseAndDegree extends InfoEnrolment {
     public void copyFromDomain(IEnrollment enrolment) {
         super.copyFromDomain(enrolment);
         if (enrolment != null) {
-            setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(enrolment
-                    .getExecutionPeriod()));//with year
+            setInfoCurricularCourse(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(enrolment
+                    .getCurricularCourse()));//with degree
+
         }
     }
 
     public static InfoEnrolment newInfoFromDomain(IEnrollment enrolment) {
-        InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear infoEnrolment = null;
+        InfoEnrolmentWithCourseAndDegree infoEnrolment = null;
         if (enrolment != null) {
-            infoEnrolment = new InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear();
+            infoEnrolment = new InfoEnrolmentWithCourseAndDegree();
             infoEnrolment.copyFromDomain(enrolment);
         }
 

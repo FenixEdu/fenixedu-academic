@@ -53,6 +53,12 @@
 							%>
 							</logic:equal>
 						</td>
+						<td class="listClasses">
+							<bean:write name="infoEnrollment" property="infoCurricularCourse.infoDegreeCurricularPlan.name"/>
+						</td>
+						<td class="listClasses">
+							<bean:write name="infoEnrollment" property="infoExecutionPeriod.name"/>-<bean:write name="infoEnrollment" property="infoExecutionPeriod.infoExecutionYear.year"/>
+						</td>
 						<td class="listClasses"><html:multibox property="unenrollments" value="<%= infoEnrollmentId.toString() %>" /></td>
 					</tr>
 				</logic:iterate>

@@ -127,7 +127,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements
 
         List enrollmentsWithEnrolledState = enrolmentDAO
                 .readAllByStudentCurricularPlanAndEnrolmentStateAndExecutionPeriod(
-                        studentCurricularPlan, EnrolmentState.ENROLED,
+                        studentCurricularPlan, EnrolmentState.ENROLLED,
                         executionPeriod);
 
         List baseAreasCurricularCourses = getBaseAreasCurricularCourses(
@@ -1375,7 +1375,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements
                 enrolment.setCurricularCourse(curricularCourse);
                 enrolment
                         .setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-                enrolment.setEnrolmentState(EnrolmentState.ENROLED);
+                enrolment.setEnrolmentState(EnrolmentState.ENROLLED);
                 enrolment.setExecutionPeriod(executionPeriod);
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);
                 enrolment.setCreationDate(new Date());

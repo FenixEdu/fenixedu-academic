@@ -103,7 +103,7 @@ public class WriteEnrollment implements IService
 				IEnrollment enrolmentToWrite = new Enrolment();
 				enrolmentDAO.simpleLockWrite(enrolmentToWrite);
 				enrolmentToWrite.setCurricularCourse(curricularCourse);
-				enrolmentToWrite.setEnrolmentState(EnrolmentState.ENROLED);
+				enrolmentToWrite.setEnrolmentState(EnrolmentState.ENROLLED);
 				enrolmentToWrite.setExecutionPeriod(executionPeriod);
 				enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
 				enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);

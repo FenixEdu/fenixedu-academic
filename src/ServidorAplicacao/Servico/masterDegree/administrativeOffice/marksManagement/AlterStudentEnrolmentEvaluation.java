@@ -96,7 +96,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 
                 persistentEnrolment.simpleLockWrite(enrolment);
 
-                enrolment.setEnrolmentState(EnrolmentState.ENROLED);
+                enrolment.setEnrolmentState(EnrolmentState.ENROLLED);
                 enrolment.setCurricularCourse(enrolmentEvaluationCopy
                         .getEnrolment().getCurricularCourse());
                 enrolment.setEnrolmentEvaluationType(enrolmentEvaluationCopy

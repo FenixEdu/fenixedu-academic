@@ -71,7 +71,7 @@ public class WriteEnrolmentInOptionalCourse implements IService
 				enrolmentDAO.simpleLockWrite(enrolmentToWrite);
 				enrolmentToWrite.setCurricularCourse(optionalCurricularCourse);
 				enrolmentToWrite.setCurricularCourseForOption(chosenCurricularCourse);
-				enrolmentToWrite.setEnrolmentState(EnrolmentState.ENROLED);
+				enrolmentToWrite.setEnrolmentState(EnrolmentState.ENROLLED);
 				enrolmentToWrite.setExecutionPeriod(executionPeriod);
 				enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
 				enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
