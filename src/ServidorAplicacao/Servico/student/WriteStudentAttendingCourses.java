@@ -79,7 +79,6 @@ public class WriteStudentAttendingCourses implements IService
 			{
 				infoExecutionCourseIds = new ArrayList();
 			}
-			System.out.println(infoExecutionCourseIds);
 
 			IStudent student =
 				persistentStudent.readStudentByNumberAndDegreeType(
