@@ -57,8 +57,8 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyExam", exam.getIdInternal());
 		List examEnrollments = queryList(ExamStudentRoom.class, criteria);
-		if (examEnrollments != null || !examEnrollments.isEmpty()) {
-		throw new notAuthorizedPersistentDeleteException();
+		if (examEnrollments != null && !examEnrollments.isEmpty()) {
+			throw new notAuthorizedPersistentDeleteException();
 		}
 		else{
 
