@@ -7,5 +7,9 @@
   <body>
     <html:errors/>
     Não Executado
+    
+    <html:link page="/exceptionHandling.do">
+    Teste
+    </html:link>
   </body>
 </html>

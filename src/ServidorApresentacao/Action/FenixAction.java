@@ -9,6 +9,7 @@ import org.apache.struts.action.Action;
  * @author jorge
  */
 public abstract class FenixAction extends Action {
+	
 
 /*  public abstract ActionForward execute(ActionMapping mapping, ActionForm form,
                                           HttpServletRequest request,

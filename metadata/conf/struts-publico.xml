@@ -76,13 +76,16 @@
 	<global-exceptions>
 		<exception type="ServidorAplicacao.NotAuthorizedException"
 			       key="ServidorAplicacao.NotAuthorizedException"
-			       path="/naoAutorizado.do"/>
+			       path="/naoAutorizado.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
 		<exception type="ServidorAplicacao.NotExecutedException"
 		  	       key="ServidorAplicacao.NotExecutedException"
-		  	       path="/naoExecutado.do"/>
+		  	       path="/naoExecutado.do"
+		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
 		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
-			       path="/naoExistente.do"/>
+			       path="/naoExistente.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
 	</global-exceptions>
 
     
@@ -232,7 +235,15 @@
             type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
           <forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
     </action>
-    
+     	<!-- ExceptionHandling -->   
+      <action 
+              
+              path="/exceptionHandling"
+              scope="request"
+              type="ServidorApresentacao.Action.ExceptionHandlingAction"     
+              >
+        
+      </action>
     
      </action-mappings>     
 
