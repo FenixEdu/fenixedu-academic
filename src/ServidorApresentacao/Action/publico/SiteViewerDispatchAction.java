@@ -265,7 +265,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 			infoSections =
 				(List) gestor.executar(null, "ReadSections", argsReadSections);
-			System.out.println("without sort: "+infoSections);	
+			
 			
 			if (infoSections!=null){	Collections.sort(infoSections);	}
 			
