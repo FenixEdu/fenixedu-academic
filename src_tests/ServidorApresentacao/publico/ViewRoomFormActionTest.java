@@ -61,7 +61,7 @@ public class ViewRoomFormActionTest extends TestCasePresentation {
 			new InfoExecutionPeriod(
 				"2º Semestre",
 				new InfoExecutionYear("2002/2003"));
-		getSession().setAttribute(
+		getSession().getServletContext().setAttribute(
 			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
 			infoExecutionPeriod);
 
