@@ -127,5 +127,5 @@
 </logic:present>
 
 <logic:notPresent name="infoCurriculum" >
-	<h1><p><bean:message key="error.coordinator.noCurriculum" /></p></h1>
+	<p><span class="error"><bean:message key="error.impossibleCurricularCourseInfo" /></span></p>
 </logic:notPresent>

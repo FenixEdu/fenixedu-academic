@@ -705,7 +705,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         {
             HttpSession session = request.getSession(false);
             session.removeAttribute("bibliographicReferenceForm");
-            return mapping.findForward("insertBibliographicReference");
+            //return mapping.findForward("insertBibliographicReference");
+			return mapping.findForward("bibliographyManagement");
         }
     }
     public ActionForward prepareCreateBibliographicReference(

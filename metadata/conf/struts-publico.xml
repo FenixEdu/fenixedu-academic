@@ -430,7 +430,7 @@
      <action path="/showCourseSite"
      type="ServidorApresentacao.Action.publico.ShowCourseSiteAction"
      parameter="method"
-     input="/showDegreeCurricularPlan.do?method=showCurricularPlan"
+     input="showCurricularCourseSite"
      >
      	<forward name="showCurricularCourseSite" path="showCurricularCourseSite"/>
      	<forward name="showExecutionCourseSite" path="showExecutionCourseSite" />
