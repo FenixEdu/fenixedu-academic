@@ -10,7 +10,6 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Barbosa
@@ -85,10 +84,10 @@ public class EditQualificationTest
 		//Qualificação de um bolseiro
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(1));
-		info.setQualificationMark("mark");
-		info.setQualificationSchool("tagus");
-		info.setQualificationTitle("title");
-		info.setQualificationYear(new Integer(2001));
+		info.setMark("mark");
+		info.setSchool("tagus");
+		info.setTitle("title");
+		info.setYear(new Integer(2001));
 		info.setPersonInfo(getInfoPersonGO());
 
 		Integer infoManagerPersonCode = new Integer(17);
@@ -105,10 +104,10 @@ public class EditQualificationTest
 		//Qualificação de um professor
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(1));
-		info.setQualificationMark("mark");
-		info.setQualificationSchool("tagus");
-		info.setQualificationTitle("Sr. Dr. Eng.");
-		info.setQualificationYear(new Integer(2001));
+		info.setMark("mark");
+		info.setSchool("tagus");
+		info.setTitle("Sr. Dr. Eng.");
+		info.setYear(new Integer(2001));
 		info.setPersonInfo(getInfoPersonT());
 
 		Integer infoManagerPersonCode = new Integer(18);
@@ -125,10 +124,10 @@ public class EditQualificationTest
 	protected Object[] getAuthorizeArgumentsCreateQualificationGrantOwner() {
 		//Qualificação de um bolseiro
 		InfoQualification info = new InfoQualification();
-		info.setQualificationMark("mark");
-		info.setQualificationSchool("tagus");
-		info.setQualificationTitle("title");
-		info.setQualificationYear(new Integer(2001));
+		info.setMark("mark");
+		info.setSchool("tagus");
+		info.setTitle("title");
+		info.setYear(new Integer(2001));
 		info.setPersonInfo(getInfoPersonGO());
 
 		Integer infoManagerPersonCode = new Integer(17);
@@ -140,10 +139,10 @@ public class EditQualificationTest
 	protected Object[] getAuthorizeArgumentsCreateQualificationTeacher() {
 		//Qualificação de um professor
 		InfoQualification info = new InfoQualification();
-		info.setQualificationMark("mark");
-		info.setQualificationSchool("tagus");
-		info.setQualificationTitle("Sr. Dr. Eng.");
-		info.setQualificationYear(new Integer(2001));
+		info.setMark("mark");
+		info.setSchool("tagus");
+		info.setTitle("Sr. Dr. Eng.");
+		info.setYear(new Integer(2001));
 		info.setPersonInfo(getInfoPersonT());
 
 		Integer infoManagerPersonCode = new Integer(18);
@@ -157,8 +156,8 @@ public class EditQualificationTest
 
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(2));
-		info.setQualificationSchool("NewSchool");
-		info.setQualificationYear(new Integer(2003));
+		info.setSchool("NewSchool");
+		info.setYear(new Integer(2003));
 		info.setPersonInfo(getInfoPersonGO());
 		Integer infoManagerPersonCode = new Integer(17);
 
@@ -171,8 +170,8 @@ public class EditQualificationTest
 
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(1));
-		info.setQualificationYear(new Integer(2000));
-		info.setQualificationSchool("tagus");
+		info.setYear(new Integer(2000));
+		info.setSchool("tagus");
 		info.setPersonInfo(getInfoPersonT());
 		Integer infoManagerPersonCode = new Integer(18);
 

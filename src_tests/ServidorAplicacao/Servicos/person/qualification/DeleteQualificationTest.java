@@ -10,7 +10,6 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Barbosa
