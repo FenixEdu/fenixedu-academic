@@ -11,14 +11,12 @@ package ServidorAplicacao.Servico.gesdis.teacher;
  * @author jmota
  */
 
-import java.lang.reflect.InvocationTargetException;
-
-import org.apache.commons.beanutils.BeanUtils;
-
 import DataBeans.gesdis.InfoAnnouncement;
 import DataBeans.gesdis.InfoSite;
+import DataBeans.util.Cloner;
 import Dominio.IAnnouncement;
 import Dominio.ISite;
+import Dominio.Site;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -41,16 +39,17 @@ public class DeleteAnnouncement implements IServico {
 		return "DeleteAnnouncement";
 	}
 
-	public void run(InfoSite infoSite, InfoAnnouncement infoAnnouncement)
+	public Boolean run(InfoSite infoSite, InfoAnnouncement infoAnnouncement)
 		throws FenixServiceException {
 
 		try {
 			String announcementTitle = infoAnnouncement.getTitle();
 			
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			
-			ISite site = null;
-			BeanUtils.copyProperties(site, infoSite);
+
+			ISite site = new Site();
+//			BeanUtils.copyProperties(site, infoSite);
+			site = Cloner.copyInfoSite2ISite(infoSite);
 			
 			IPersistentAnnouncement persistentAnnouncement = sp.getIPersistentAnnouncement();
 			
@@ -63,12 +62,14 @@ public class DeleteAnnouncement implements IServico {
 			
 			if (announcement != null)
 				persistentAnnouncement.delete(announcement);
+				
+			return new Boolean(true);	
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
-		} catch (IllegalAccessException e) {
-			throw new FenixServiceException(e);
-		} catch (InvocationTargetException e) {
-			throw new FenixServiceException(e);
+//		} catch (IllegalAccessException e) {
+//			throw new FenixServiceException(e);
+//		} catch (InvocationTargetException e) {
+//			throw new FenixServiceException(e);
 		}
 
 	}
