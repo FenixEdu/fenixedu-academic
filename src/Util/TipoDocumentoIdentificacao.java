@@ -83,36 +83,36 @@ public class TipoDocumentoIdentificacao {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
-		StringBuffer buffer = new StringBuffer("[TipoDocumentoIdentificacao=");
-		switch (this.tipo.intValue()) {
-			case BILHETE_DE_IDENTIDADE:
-				buffer.append("bi");			
-				break;
-			case PASSAPORTE :
-				buffer.append("passport");			
-				break;
-			case BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO:
-				buffer.append("bi_cid_est");			
-				break;
-			case BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM:
-				buffer.append("bi_pais_origem");			
-				break;
-			case BILHETE_DE_IDENTIDADE_DA_MARINHA:
-				buffer.append("bi_marinha");			
-				break;
-			case BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA:
-				buffer.append("bi_forca_aerea");			
-				break;
-			case OUTRO:
-				buffer.append("outro");			
-				break;
-		}
-		buffer.append("]");
-		return buffer.toString();
-	}
+//	public String toString() {
+//		StringBuffer buffer = new StringBuffer("[TipoDocumentoIdentificacao=");
+//		switch (this.tipo.intValue()) {
+//			case BILHETE_DE_IDENTIDADE:
+//				buffer.append("bi");			
+//				break;
+//			case PASSAPORTE :
+//				buffer.append("passport");			
+//				break;
+//			case BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO:
+//				buffer.append("bi_cid_est");			
+//				break;
+//			case BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM:
+//				buffer.append("bi_pais_origem");			
+//				break;
+//			case BILHETE_DE_IDENTIDADE_DA_MARINHA:
+//				buffer.append("bi_marinha");			
+//				break;
+//			case BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA:
+//				buffer.append("bi_forca_aerea");			
+//				break;
+//			case OUTRO:
+//				buffer.append("outro");			
+//				break;
+//		}
+//		buffer.append("]");
+//		return buffer.toString();
+//	}
     
-	public String toString2() {
+	public String toString() {
 		if (tipo.intValue() == TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE) return TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING;
 		if (tipo.intValue() == TipoDocumentoIdentificacao.PASSAPORTE) return TipoDocumentoIdentificacao.PASSAPORTE_STRING;
 		if (tipo.intValue() == TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO) return TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO_STRING;
