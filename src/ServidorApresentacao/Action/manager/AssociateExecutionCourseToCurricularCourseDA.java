@@ -31,7 +31,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author lmac1
  */
 
-public class AssociateExecutionCoursesToCurricularCourseAction extends FenixDispatchAction {
+public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchAction {
 
 	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
@@ -71,7 +71,7 @@ public class AssociateExecutionCoursesToCurricularCourseAction extends FenixDisp
 		return mapping.findForward("viewExecutionCoursesToAssociate");
 	}
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+	public ActionForward associate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
 		DynaActionForm associateForm = (DynaActionForm) form;
@@ -87,7 +87,7 @@ public class AssociateExecutionCoursesToCurricularCourseAction extends FenixDisp
 		GestorServicos manager = GestorServicos.manager();
 
 		try {
-			manager.executar(userView, "AssociateExecutionCoursesToCurricularCourse", args);
+			manager.executar(userView, "AssociateExecutionCourseToCurricularCourse", args);
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), mapping.findForward("readAvailableExecutionPeriods"));
 		} catch (NonExistingServiceException ex) {

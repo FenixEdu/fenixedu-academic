@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionCourse;
 import ServidorAplicacao.GestorServicos;
@@ -31,8 +30,7 @@ public class DissociateExecutionCourseDA extends FenixDispatchAction {
 	public ActionForward prepareDissociate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
 			HttpSession session = request.getSession(false);
-		
-			DynaActionForm readDegreeForm = (DynaActionForm) form;
+
 
 			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 			

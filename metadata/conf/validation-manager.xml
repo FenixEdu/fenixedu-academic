@@ -83,14 +83,15 @@
       <field property="code" depends="required" page="1" >
         <arg0 key="label.manager.curricularCourse.code" resource="true"/>
       </field>
-      <field property="executionCourseId" depends="required" page="1" >
-        <arg0 key="label.manager.executionCourseId" resource="true"/>
-      </field>
     </form>
 
-
-
-
+ 	<!--validation to the form associate a ExecutionCourse to a CurricularCourse-->
+	<form name="associateExecutionCourseToCurricularCourseForm">
+ 		<field property="executionCourseId" depends="required" page="1" >
+       	 <arg0 key="label.manager.executionCourse.to.associate" resource="true"/>
+     	 </field>
+	</form>
+	
     <form name="createExecutionPeriodForm">
       <field property="semesterToCreate" depends="required" page="1">
         <arg0 key="property.semester.toCreate" resource="true"/>

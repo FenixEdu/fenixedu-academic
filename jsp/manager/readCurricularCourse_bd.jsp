@@ -20,7 +20,7 @@
 <ul style="list-style-type: square;">
 	<li><html:link page="<%="/editCurricularCourse.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>"><bean:message key="label.manager.edit.curricularCourse"/></html:link></li>
 	<li><html:link page="<%="/insertCurricularCourseScope.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>"><bean:message key="label.manager.insert.curricularCourseScope"/></html:link></li>
-	<li><html:link page="<%="/readExecutionPeriodToAssociateExecutionCoursesAction.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="name" paramName="curricularCourseName"><bean:message key="label.manager.associate.executionCourses"/></html:link></li>
+	<li><html:link page="<%="/readExecutionPeriodToAssociateExecutionCoursesAction.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="name" paramName="curricularCourseName"><bean:message key="label.manager.associate.executionCourses"/></html:link></li>
 </ul>
 
 <br>

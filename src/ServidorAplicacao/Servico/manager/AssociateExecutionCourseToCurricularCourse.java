@@ -3,6 +3,7 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import java.util.Iterator;
 import java.util.List;
 
 import Dominio.CurricularCourse;
@@ -10,6 +11,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.IDisciplinaExecucao;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -32,7 +34,7 @@ public class AssociateExecutionCourseToCurricularCourse implements IServico {
 
 	private AssociateExecutionCourseToCurricularCourse() {
 	}
- 
+
 	public final String getNome() {
 		return "AssociateExecutionCourseToCurricularCourse";
 	}
@@ -50,15 +52,21 @@ public class AssociateExecutionCourseToCurricularCourse implements IServico {
 				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(curricularCourseId), false);
 				
 				if(curricularCourse == null)
-					throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+					throw new NonExistingServiceException("b", null);
 					
 				List executionCourses = curricularCourse.getAssociatedExecutionCourses();
 				
-				executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseId), false);
+				Iterator iter = executionCourses.iterator();
+				System.out.println("executionCoursesAssociados"+executionCourses);
+				while(iter.hasNext()){
+				Integer associatedExecutionPeriodId = ((IDisciplinaExecucao) iter.next()).getExecutionPeriod().getIdInternal();
+				if(associatedExecutionPeriodId.equals(executionPeriodId))
+					throw new ExistingServiceException("message.unavailable.execution.period",null);
+				}
 				
+				executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseId), false);
 				if(executionCourse == null)
-					throw new NonExistingServiceException("message.non.existing.execution.course", null);
-					
+					throw new NonExistingServiceException("c", null);
 				else {
 						List curricularCourses = executionCourse.getAssociatedCurricularCourses();
 						if(!executionCourses.contains(executionCourse) && !curricularCourses.contains(curricularCourse)) {
@@ -67,7 +75,7 @@ public class AssociateExecutionCourseToCurricularCourse implements IServico {
 							curricularCourses.add(curricularCourse);
 							curricularCourse.setAssociatedExecutionCourses(executionCourses);
 							executionCourse.setAssociatedCurricularCourses(curricularCourses);
-						}	
+						}
 				}	 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
