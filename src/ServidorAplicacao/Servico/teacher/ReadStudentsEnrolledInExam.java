@@ -6,18 +6,24 @@ import java.util.List;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoExam;
+import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteTeacherStudentsEnrolledList;
 import DataBeans.InfoStudent;
-import DataBeans.SiteView;
+import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
+import Dominio.DisciplinaExecucao;
 import Dominio.Exam;
+import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
+import Dominio.ISite;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExam;
+import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -51,6 +57,12 @@ public class ReadStudentsEnrolledInExam implements IServico {
 			IPersistentExam persistentExam = sp.getIPersistentExam();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
+			IPersistentSite persistentSite = sp.getIPersistentSite();
+
+			IDisciplinaExecucao executionCourse =
+				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode), false);
+			ISite site = persistentSite.readByExecutionCourse(executionCourse);
+
 			IExam exam = new Exam();
 			exam.setIdInternal(examCode);
 			exam = (IExam) persistentExam.readByOId(exam, false);
@@ -65,9 +77,19 @@ public class ReadStudentsEnrolledInExam implements IServico {
 			}
 			InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
 			ISiteComponent component =
-				new InfoSiteTeacherStudentsEnrolledList(infoStudents,infoExam);
+				new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoExam);
 
-			SiteView siteView = new SiteView(component);
+			TeacherAdministrationSiteComponentBuilder componentBuilder =
+				TeacherAdministrationSiteComponentBuilder.getInstance();
+			ISiteComponent commonComponent =
+				componentBuilder.getComponent(
+					new InfoSiteCommon(),
+					site,
+					null,
+					null,
+					null);
+
+			TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent, component);
 			return siteView;
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

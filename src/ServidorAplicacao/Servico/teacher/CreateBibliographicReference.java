@@ -63,15 +63,27 @@ public class CreateBibliographicReference implements IServico {
 				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
 			site = persistentSite.readByExecutionCourse(executionCourse);
 
+			
+			
 			IBibliographicReference newBibliographicReference =
-				new BibliographicReference(
-					executionCourse,
-					newBibliographyTitle,
-					newBibliographyAuthors,
-					newBibliographyReference,
-					newBibliographyYear,
-					newBibliographyOptional);
+				new BibliographicReference();
+//					executionCourse,
+//					newBibliographyTitle,
+//					newBibliographyAuthors,
+//					newBibliographyReference,
+//					newBibliographyYear,
+//					newBibliographyOptional);
+
+
 			persistentBibliographicReference.lockWrite(newBibliographicReference);
+			newBibliographicReference.setExecutionCourse(executionCourse);
+			newBibliographicReference.setTitle(newBibliographyTitle);
+			newBibliographicReference.setAuthors(newBibliographyAuthors);
+			newBibliographicReference.setReference(newBibliographyReference);
+			newBibliographicReference.setYear(newBibliographyYear);
+			newBibliographicReference.setOptional(newBibliographyOptional);
+			
+			
 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());

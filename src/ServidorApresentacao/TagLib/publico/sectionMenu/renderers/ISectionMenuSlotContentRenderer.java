@@ -12,7 +12,7 @@ package ServidorApresentacao.TagLib.publico.sectionMenu.renderers;
  * 
  */
 public interface ISectionMenuSlotContentRenderer {
-	public StringBuffer renderSectionLabel(int i,String path);
+	public StringBuffer renderSectionLabel(int i,String path, boolean hasChilds);
 	/**
 	 * 
 	 */

@@ -29,9 +29,13 @@ public class SectionMenuContentRenderer
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuSlotContentRenderer#renderSectionLabel(ServidorApresentacao.TagLib.publico.sectionMenu.SectionMenuSlot)
 	 */
-	public StringBuffer renderSectionLabel(int i, String path) {
+	public StringBuffer renderSectionLabel(
+		int i,
+		String path,
+		boolean hasChilds) {
 		StringBuffer strBuffer = new StringBuffer();
-		strBuffer.append(renderDepthContent(getInfoSection(), i, path));
+		strBuffer.append(
+			renderDepthContent(getInfoSection(), i, path, hasChilds));
 		return strBuffer;
 	}
 
@@ -47,7 +51,8 @@ public class SectionMenuContentRenderer
 	private StringBuffer renderDepthContent(
 		InfoSection infoSection,
 		int i,
-		String path) {
+		String path,
+		boolean hasChilds) {
 		StringBuffer strBuffer = new StringBuffer();
 		int depth = infoSection.getSectionDepth().intValue();
 		if (depth == 0) {
@@ -56,24 +61,21 @@ public class SectionMenuContentRenderer
 			strBuffer.append("<ul><li>\n");
 			strBuffer.append(renderDepthIdent(getInfoSection()));
 
-			strBuffer.append(
-				"<a href=\""
-					+ path
-					+ "/viewSite.do?method=section&amp;index="
-					+ i
-					+ "&amp;objectCode="
-					+ getInfoSection()
-						.getInfoSite()
-						.getIdInternal()
-					+ "\""
-					+ " onclick=\"houdini('"
-					+ infoSection.getName()
-					+ "');\">\n");
+			strBuffer
+				.append("<a href=\"")
+				.append(path)
+				.append("/viewSite.do?method=section&amp;index=")
+				.append(i)
+				.append("&amp;objectCode=")
+				.append(getInfoSection().getInfoSite().getIdInternal())
+				.append("\"");
+			if (hasChilds)
+				strBuffer.append(" onclick=\"houdini('").append(
+					infoSection.getName()).append(
+					"');\"");
 
-			strBuffer.append(infoSection.getName());
-
-			strBuffer.append("</a>");
-			strBuffer.append("</li></ul>\n");
+			strBuffer.append(">\n").append(infoSection.getName());
+			strBuffer.append("</a>").append("</li></ul>\n");
 		} else {
 			//adds the info
 			strBuffer.append("<dd>");
@@ -83,9 +85,7 @@ public class SectionMenuContentRenderer
 				"<a href=\"viewSite.do?method=section&amp;index="
 					+ i
 					+ "&amp;objectCode="
-					+ getInfoSection()
-						.getInfoSite()
-						.getIdInternal()
+					+ getInfoSection().getInfoSite().getIdInternal()
 					+ "\" >");
 			//falta o index 
 

@@ -27,9 +27,9 @@ public class SectionMenuTeacherContentRenderer extends TagSupport implements ISe
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuSlotContentRenderer#renderSectionLabel(ServidorApresentacao.TagLib.publico.sectionMenu.SectionMenuSlot)
 	 */
-	public StringBuffer renderSectionLabel(int i, String path) {
+	public StringBuffer renderSectionLabel(int i, String path, boolean hasChilds) {
 		StringBuffer strBuffer = new StringBuffer();
-		strBuffer.append(renderDepthContent(getInfoSection(), i, path));
+		strBuffer.append(renderDepthContent(getInfoSection(), i, path, hasChilds));
 		return strBuffer;
 	}
 
@@ -42,7 +42,8 @@ public class SectionMenuTeacherContentRenderer extends TagSupport implements ISe
 		}
 		return strBuffer;
 	}
-	private StringBuffer renderDepthContent(InfoSection infoSection, int i, String path) {
+	
+	private StringBuffer renderDepthContent(InfoSection infoSection, int i, String path, boolean hasChilds) {
 		StringBuffer strBuffer = new StringBuffer();
 		int depth = infoSection.getSectionDepth().intValue();
 		if (depth == 0) {

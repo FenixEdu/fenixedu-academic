@@ -4,6 +4,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.ITeacher;
 import Dominio.Professorship;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -12,6 +13,7 @@ import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author Fernanda Quitério
  *
@@ -53,7 +55,9 @@ public class AssociateTeacher implements IServico {
 			DisciplinaExecucao executionCourse = new DisciplinaExecucao(infoExecutionCourseCode);
 			IDisciplinaExecucao iExecutionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
 			persistentProfessorship.lockWrite(new Professorship(iTeacher, iExecutionCourse));
-		} catch (ExcepcaoPersistencia ex) {
+		} catch (ExistingPersistentException ex){
+			throw new ExistingServiceException(ex); 
+		}catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex);
 		}
 		return true;

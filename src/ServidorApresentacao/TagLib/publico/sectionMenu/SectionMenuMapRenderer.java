@@ -78,11 +78,17 @@ public class SectionMenuMapRenderer {
 				InfoSection infoSection = (InfoSection) sections.get(i);
 				
 				ISectionMenuSlotContentRenderer sectionMenuSlot = getContentRenderer(infoSection,getRenderer());
-					
-				strBuffer.append(sectionMenuSlot.renderSectionLabel(i,getPath()));
+				
+				boolean hasChilds = false;
+				if ( (i + 1) < sections.size()){
+					InfoSection nextInfoSection = (InfoSection) sections.get(i+1);
+					hasChilds = nextInfoSection.getSectionDepth().intValue() > infoSection.getSectionDepth().intValue();
+				}
+				
+				strBuffer.append(sectionMenuSlot.renderSectionLabel(i,getPath(), hasChilds));
 				strBuffer.append(renderSuffix(sections, i));
 				
-				i=i+1;
+				i++;
 			}
 		}
 		return strBuffer;

@@ -48,10 +48,10 @@
 <bean:define id="sections" name="component" property="sections"/>
 <logic:notEmpty name="sections" >
 	<logic:present name="infoSection" >
-	<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="infoSection" />
+		<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="infoSection"/>
 	</logic:present>
 	<logic:notPresent name="infoSection" >
-	<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" />
+		<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" />
 	</logic:notPresent>		
 </logic:notEmpty>	
 </div>

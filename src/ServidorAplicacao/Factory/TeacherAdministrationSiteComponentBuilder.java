@@ -19,6 +19,7 @@ import DataBeans.InfoSite;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
+import DataBeans.InfoSiteExam;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteInstructions;
 import DataBeans.InfoSiteItems;
@@ -40,6 +41,7 @@ import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEvaluation;
+import Dominio.IExam;
 import Dominio.IItem;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
@@ -103,6 +105,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 			return getInfoBibliographicReference((InfoBibliographicReference) component, site, (Integer) obj1);
 		} else if (component instanceof InfoSiteTeachers) {
 			return getInfoSiteTeachers((InfoSiteTeachers) component, site, (String) obj2);
+		}else if (component instanceof InfoSiteExam) {
+			return getInfoSiteExam((InfoSiteExam) component, site);
 		} else if (component instanceof InfoSiteRootSections) {
 			return getInfoSiteRootSections((InfoSiteRootSections) component, site);
 		} else if (component instanceof InfoSiteSection) {
@@ -437,6 +441,28 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		return component;
 	}
+
+/**
+ * 
+ * @param component
+ * @param site
+ * @return
+ */
+	private ISiteComponent getInfoSiteExam(InfoSiteExam component, ISite site) {
+		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+		List exams = executionCourse.getAssociatedExams();
+		List infoExams = new ArrayList();
+		Iterator iter = exams.iterator();
+		while (iter.hasNext()){
+			IExam exam = (IExam) iter.next();
+			infoExams.add(Cloner.copyIExam2InfoExam(exam));
+		}
+		component.setInfoExams(infoExams);
+		return component;
+	}
+
+
+
 
 	/**
 	 * @param sections
