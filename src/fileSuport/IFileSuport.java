@@ -31,6 +31,8 @@ public interface IFileSuport {
 
 	public boolean isStorageAllowed(FileSuportObject file);
 	
+	public long getDirectorySize(String path);
+	
 	/**
 	 * @param fileName
 	 * @param fileData

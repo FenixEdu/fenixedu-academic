@@ -73,7 +73,10 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
 import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
+import ServidorApresentacao
+	.Action
+	.exceptions
+	.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.mapping.SiteManagementActionMapping;
@@ -1002,6 +1005,22 @@ public class TeacherAdministrationViewerDispatchAction
 			} else {
 				return sectionsFirstPage(mapping, form, request, response);
 			}
+		} catch (notAuthorizedServiceDeleteException notnotAuthorizedServiceDeleteException) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+				"notAuthorizedSectionDelete",
+				new ActionError("error.notAuthorizedSectionDelete.fileExists"));
+			saveErrors(request, actionErrors);
+			if (superiorSectionCode != null) {
+				return viewSection(
+					mapping,
+					form,
+					request,
+					response,
+					superiorSectionCode);
+			} else {
+				return sectionsFirstPage(mapping, form, request, response);
+			}
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		} catch (Exception e) {
@@ -1078,15 +1097,15 @@ public class TeacherAdministrationViewerDispatchAction
 					"errors.unableToStoreFile",
 					file.getFileName()));
 			saveErrors(request, actionErrors);
-			return prepareFileUpload(mapping, form,request, response);
-			
+			return prepareFileUpload(mapping, form, request, response);
+
 		}
 		if (!serviceResult.booleanValue()) {
 			actionErrors.add(
 				"fileTooBig",
 				new ActionError("errors.fileTooBig", file.getFileName()));
 			saveErrors(request, actionErrors);
-			return prepareFileUpload(mapping, form,request, response);
+			return prepareFileUpload(mapping, form, request, response);
 		}
 		return viewSection(mapping, form, request, response);
 	}
@@ -1228,6 +1247,12 @@ public class TeacherAdministrationViewerDispatchAction
 		GestorServicos manager = GestorServicos.manager();
 		try {
 			manager.executar(userView, "DeleteItem", deleteItemArguments);
+		} catch (notAuthorizedServiceDeleteException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+				"notAuthorizedItemDelete",
+				new ActionError("error.notAuthorizedItemDelete.fileExists"));
+			saveErrors(request, actionErrors);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -1616,13 +1641,18 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		
-		String groupPropertiesCodeString = (String) request.getParameter("groupPropertiesCode");
+
+		String groupPropertiesCodeString =
+			(String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
 		ISiteComponent shiftsView = new InfoSiteProjectShifts();
 		TeacherAdministrationSiteView siteView =
-			(TeacherAdministrationSiteView) readSiteView(request, shiftsView, null, groupPropertiesCode, null);
+			(TeacherAdministrationSiteView) readSiteView(request,
+				shiftsView,
+				null,
+				groupPropertiesCode,
+				null);
 
 		if (((InfoSiteProjectShifts) shiftsView).getInfoSiteShifts() == null) {
 
@@ -1640,7 +1670,8 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		String groupPropertiesCodeString = (String) request.getParameter("groupPropertiesCode");
+		String groupPropertiesCodeString =
+			(String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
 		String shiftCodeString = (String) request.getParameter("shiftCode");
@@ -1648,7 +1679,11 @@ public class TeacherAdministrationViewerDispatchAction
 
 		ISiteComponent groupsView = new InfoSiteGroupsByShift();
 		TeacherAdministrationSiteView siteView =
-			(TeacherAdministrationSiteView) readSiteView(request, groupsView, null, groupPropertiesCode, shiftCode);
+			(TeacherAdministrationSiteView) readSiteView(request,
+				groupsView,
+				null,
+				groupPropertiesCode,
+				shiftCode);
 		return mapping.findForward("viewStudentGroups");
 
 	}
@@ -1674,7 +1709,8 @@ public class TeacherAdministrationViewerDispatchAction
 				studentGroupCode,
 				null);
 
-InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) result.getComponent();
+		InfoSiteStudentGroup infoSiteStudentGroup =
+			(InfoSiteStudentGroup) result.getComponent();
 		if (infoSiteStudentGroup.getInfoSiteStudentInformationList() == null) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
@@ -1961,23 +1997,32 @@ InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) result.getCom
 		} catch (NonValidChangeServiceException e) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
-			error = new ActionError("error.exception.nrOfGroups.editGroupProperties");
-			actionErrors.add("error.exception.nrOfGroups.editGroupProperties", error);
+			error =
+				new ActionError("error.exception.nrOfGroups.editGroupProperties");
+			actionErrors.add(
+				"error.exception.nrOfGroups.editGroupProperties",
+				error);
 			saveErrors(request, actionErrors);
 			return prepareEditGroupProperties(mapping, form, request, response);
 		} catch (InvalidArgumentsServiceException e) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
-			error = new ActionError("error.exception.maximumCapacity.editGroupProperties");
-			actionErrors.add("error.exception.maximumCapacity.editGroupProperties", error);
+			error =
+				new ActionError("error.exception.maximumCapacity.editGroupProperties");
+			actionErrors.add(
+				"error.exception.maximumCapacity.editGroupProperties",
+				error);
 			saveErrors(request, actionErrors);
 			return prepareEditGroupProperties(mapping, form, request, response);
 
 		} catch (InvalidSituationServiceException e) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
-			error = new ActionError("error.exception.minimumCapacity.editGroupProperties");
-			actionErrors.add("error.exception.minimumCapacity.editGroupProperties", error);
+			error =
+				new ActionError("error.exception.minimumCapacity.editGroupProperties");
+			actionErrors.add(
+				"error.exception.minimumCapacity.editGroupProperties",
+				error);
 			saveErrors(request, actionErrors);
 			return prepareEditGroupProperties(mapping, form, request, response);
 
@@ -2022,8 +2067,11 @@ InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) result.getCom
 		} catch (InvalidSituationServiceException e) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
-			error = new ActionError("errors.invalid.delete.not.empty.studentGroup");
-			actionErrors.add("errors.invalid.delete.not.empty.studentGroup", error);
+			error =
+				new ActionError("errors.invalid.delete.not.empty.studentGroup");
+			actionErrors.add(
+				"errors.invalid.delete.not.empty.studentGroup",
+				error);
 			saveErrors(request, actionErrors);
 			return viewStudentGroups(mapping, form, request, response);
 
@@ -2141,7 +2189,11 @@ InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) result.getCom
 				error = new ActionError("errors.invalid.insert.studentGroup");
 				actionErrors.add("errors.invalid.insert.studentGroup", error);
 				saveErrors(request, actionErrors);
-					return prepareCreateStudentGroup(mapping, form, request, response);
+				return prepareCreateStudentGroup(
+					mapping,
+					form,
+					request,
+					response);
 
 			} catch (InvalidSituationServiceException e) {
 				ActionErrors actionErrors = new ActionErrors();
@@ -2150,7 +2202,11 @@ InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) result.getCom
 				error = new ActionError("errors.existing.studentEnrolment");
 				actionErrors.add("errors.existing.studentEnrolment", error);
 				saveErrors(request, actionErrors);
-				return prepareCreateStudentGroup(mapping, form, request, response);
+				return prepareCreateStudentGroup(
+					mapping,
+					form,
+					request,
+					response);
 
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
@@ -2234,7 +2290,11 @@ InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) result.getCom
 			error = new ActionError("errors.invalid.insert.studentGroupShift");
 			actionErrors.add("errors.invalid.insert.studentGroupShift", error);
 			saveErrors(request, actionErrors);
-			return prepareEditStudentGroupShift(mapping, form, request, response);
+			return prepareEditStudentGroupShift(
+				mapping,
+				form,
+				request,
+				response);
 		} else {
 
 			Integer newShiftCode = new Integer(newShiftString);
@@ -2242,7 +2302,7 @@ InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) result.getCom
 			GestorServicos gestor = GestorServicos.manager();
 
 			try {
-					gestor.executar(userView, "EditStudentGroupShift", args);
+				gestor.executar(userView, "EditStudentGroupShift", args);
 			} catch (InvalidArgumentsServiceException e) {
 				ActionErrors actionErrors = new ActionErrors();
 				ActionError error = null;

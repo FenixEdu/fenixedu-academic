@@ -5,9 +5,7 @@ package ServidorAplicacao.Servico.teacher;
  */
 import java.util.Iterator;
 import java.util.List;
-import org.apache.slide.common.SlideException;
-import fileSuport.FileSuport;
-import fileSuport.IFileSuport;
+
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ISection;
@@ -15,12 +13,15 @@ import Dominio.ISite;
 import Dominio.Section;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import fileSuport.FileSuport;
+import fileSuport.IFileSuport;
 public class DeleteSection implements IServico {
 	private static DeleteSection service = new DeleteSection();
 	public static DeleteSection getService() {
@@ -52,17 +53,16 @@ public class DeleteSection implements IServico {
 			if (sectionToDelete == null) {
 				throw new FenixServiceException("non existing section");
 			}
-
+			IFileSuport fileSuport = FileSuport.getInstance();			
+			long size=	fileSuport.getDirectorySize(sectionToDelete.getSlideName());			
+			if (size>0) {
+				throw new notAuthorizedServiceDeleteException();
+				}
 			ISection superiorSection = sectionToDelete.getSuperiorSection();
 			Integer sectionToDeleteOrder = sectionToDelete.getSectionOrder();
 
 			persistentSection.delete(sectionToDelete);
-			IFileSuport fileSuport = FileSuport.getInstance();
-			try {
-				fileSuport.deleteFolder( sectionToDelete.getSlideName());
-			} catch (SlideException e1) {
-				System.out.println("não consegui apagar os ficheiros dos items da secção");
-			}
+		
 			sp.confirmarTransaccao();
 
 			sp.iniciarTransaccao();

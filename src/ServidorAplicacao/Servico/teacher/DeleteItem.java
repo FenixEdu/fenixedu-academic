@@ -2,20 +2,17 @@ package ServidorAplicacao.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.slide.common.SlideException;
-
-import fileSuport.FileSuport;
-import fileSuport.IFileSuport;
-
 import Dominio.IItem;
 import Dominio.Item;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-
+import fileSuport.FileSuport;
+import fileSuport.IFileSuport;
 /**
  * @author  Fernanda Quitério
  * 
@@ -25,39 +22,42 @@ public class DeleteItem implements IServico {
 	public static DeleteItem getService() {
 		return service;
 	}
-	
+
 	private DeleteItem() {
 	}
-	
+
 	public final String getNome() {
 		return "DeleteItem";
 	}
-	
-	public Boolean run(Integer infoExecutionCourseCode, Integer itemCode) throws FenixServiceException {
+
+	public Boolean run(Integer infoExecutionCourseCode, Integer itemCode)
+		throws FenixServiceException {
 		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
-
-			IItem deletedItem = (IItem) persistentItem.readByOId(new Item(itemCode), false);
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+			IPersistentItem persistentItem =
+				persistentSuport.getIPersistentItem();
+			IItem deletedItem =
+				(IItem) persistentItem.readByOId(new Item(itemCode), false);
 			if (deletedItem == null) {
 				return new Boolean(true);
 			}
-
+			IFileSuport fileSuport = FileSuport.getInstance();
+			
+			long size=	fileSuport.getDirectorySize(deletedItem.getSlideName());
+			
+			if (size>0) {
+				throw new notAuthorizedServiceDeleteException();
+			}
 			Integer orderOfDeletedItem = deletedItem.getItemOrder();
 			persistentItem.delete(deletedItem);
-			IFileSuport fileSuport = FileSuport.getInstance();
-			try {
-				fileSuport.deleteFolder(deletedItem.getSlideName());
-			} catch (SlideException e1) {
-				System.out.println("não consegui apagar os ficheiros do item");
-			}
-			
+
 			persistentSuport.confirmarTransaccao();
 			persistentSuport.iniciarTransaccao();
-
 			List itemsList = null;
-			itemsList = persistentItem.readAllItemsBySection(deletedItem.getSection());
+			itemsList =
+				persistentItem.readAllItemsBySection(deletedItem.getSection());
 			Iterator iterItems = itemsList.iterator();
 			while (iterItems.hasNext()) {
 				IItem item = (IItem) iterItems.next();
