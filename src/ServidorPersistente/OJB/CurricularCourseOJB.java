@@ -85,7 +85,6 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 					throw ex;
 				}
 
-				if(result.size()!=1) return null;
 				if ((result != null) && (result.size() != 0)) {
 					curricularCourse = (ICurricularCourse) result.get(0);
 				}
@@ -462,5 +461,4 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	
 }

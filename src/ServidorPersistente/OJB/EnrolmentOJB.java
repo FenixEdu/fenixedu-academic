@@ -1,6 +1,5 @@
 package ServidorPersistente.OJB;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -466,37 +465,4 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 
 		return queryList(Enrolment.class, criteria);
 	}
-	
-	
-	
-	public List readEnrolmentsByExecutionPeriodsAndCurricularCourseScopes(
-																		  List curricularCourseScopesIds,
-																		  List executionPeriodsIds )throws ExcepcaoPersistencia {
-				
-				
-				
-					Iterator iter1 = curricularCourseScopesIds.iterator();
-					Iterator iter2 = executionPeriodsIds.iterator();
-					List enrolments = null;
-				
-					while(iter1.hasNext()){
-						Integer curricularCourseScopeId = (Integer) iter1.next();
-					
-						while(iter2.hasNext()){
-							Integer executionPeriodId = (Integer) iter2.next();
-					
-							Criteria crit = new Criteria();
-							crit.addEqualTo("curricularCourseScopeKey", curricularCourseScopeId);
-							crit.addEqualTo("keyExecutionPeriod", executionPeriodId);
-							enrolments = queryList(Enrolment.class, crit);
-							if (!enrolments.isEmpty())
-								return null;
-						}
-					
-					}
-				
-				
-					return enrolments;
-		}
-
 }

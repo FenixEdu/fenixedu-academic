@@ -235,22 +235,4 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	
-//	//APAGAR
-//	public List readEnrolmentsByCurricularCourseScopeAndExecutionPeriod(Integer curricularCourseScopeId, Integer executionPeriodId )throws ExcepcaoPersistencia {
-//				
-//				Criteria crit = new Criteria();
-//				crit.addEqualTo("curricularCourseScopeKey", curricularCourseScopeId);
-//				crit.addEqualTo("keyExecutionPeriod", executionPeriodId);
-//				List result = queryList(Enrolment.class, crit);
-//				if (!result.isEmpty())
-//					return null;
-//				
-//				return result;
-//	}
-
-//qd receber do servico ver qd eh null
-
- 
-
 }
