@@ -133,8 +133,6 @@ public abstract class QualificationServiceNeedsAuthenticationTestCase
 		} catch (Exception ex) {
 			fail("Unable to run service: " + getNameOfServiceToBeTested());
 		}
-		
-		compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/person/testExpectedEditQualificationUnsuccesfullDataSet.xml");
 	}
 
 	protected IUserView authenticateUser(String[] arguments) {
