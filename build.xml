@@ -204,12 +204,10 @@
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
                     <include name="**/*Test.java"/>
-                    <!--<include name="**/TurnoOJBTest.java"/>-->
+                    <!--<include name="**/CriarTurnoServicosTest.java"/>-->
                     <exclude name="**/commons/*.java"/>
                     <exclude name="**/student/*.java"/>
                     <exclude name="**/SessionUtilsTest.java"/>
-                    <exclude name="**/CandidateSituationOJBTest.java"/>
-                    <exclude name="**/MasterDegreeCandidateOJBTest.java"/>
                     <exclude name="**/SuportePersistenteOJBTest.java"/>
                     <exclude name="**/MasterDegree/**/*.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
@@ -286,8 +284,6 @@
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
                     <include name="**/*Test.java"/>
-                    <exclude name="**/CandidateSituationOJBTest.java"/>
-                    <exclude name="**/MasterDegreeCandidateOJBTest.java"/>
                     <exclude name="**/SuportePersistenteOJBTest.java"/>
                     <exclude name="ServidorAplicacao/**/*.java"/>
                     <exclude name="ServidorApresentacao/**/*.java"/>
@@ -316,10 +312,9 @@
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
                     <include name="**/*Test.java"/>
-                    <exclude name="**/MasterDegree/**/*.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
-                   <exclude name="**/StudentShiftEnrolmentTest.java"/>
+                   	<exclude name="**/StudentShiftEnrolmentTest.java"/>
                     <exclude name="**/ReadActualExecutionPeriodTest.java"/>
                     <exclude name="ServidorApresentacao/**/*.java"/>
                     <exclude name="ServidorPersistente/**/*.java"/>

@@ -17,11 +17,14 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurno;
 import Dominio.Turno;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CriarTurno implements IServico {
 
@@ -46,7 +49,8 @@ public class CriarTurno implements IServico {
 		return "CriarTurno";
 	}
 
-	public Boolean run(InfoShift infoTurno) {
+	public Boolean run(InfoShift infoTurno)
+		throws FenixServiceException {
 
 		ITurno turno = null;
 		boolean result = false;
@@ -72,7 +76,12 @@ public class CriarTurno implements IServico {
 					infoTurno.getLotacao(),
 					executionCourse);
 
-			sp.getITurnoPersistente().lockWrite(turno);
+			
+			try {
+				sp.getITurnoPersistente().lockWrite(turno);
+			} catch (ExistingPersistentException ex) {
+				throw new ExistingServiceException(ex);
+			}
 
 			result = true;
 		} catch (ExcepcaoPersistencia ex) {

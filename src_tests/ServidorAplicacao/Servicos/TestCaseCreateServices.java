@@ -43,11 +43,11 @@ public abstract class TestCaseCreateServices extends TestCaseNeedAuthorizationSe
 
 				try {
 					result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
-					System.out.println("testUnsuccessfulExecutionsOfCreateService [" + key + "] was UNSUCCESSFULY runned by class: " + this.getClass().getName());
+					System.out.println("testUnsuccessfulExecutionsOfCreateService [" + key + "] was UNSUCCESSFULY run by class: " + this.getClass().getName());
 					fail("testUnsuccessfulExecutionsOfCreateService");
 				} catch (Exception ex) {
 					assertNull("testUnsuccessfulExecutionsOfCreateService", result);
-					System.out.println("testUnsuccessfulExecutionsOfCreateService [" + key + "] was SUCCESSFULY runned by class: " + this.getClass().getName());
+					System.out.println("testUnsuccessfulExecutionsOfCreateService [" + key + "] was SUCCESSFULY run by class: " + this.getClass().getName());
 				}
 			}
 		}
@@ -63,11 +63,11 @@ public abstract class TestCaseCreateServices extends TestCaseNeedAuthorizationSe
 			Object result = null;
 			try {
 				result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
-				System.out.println("testUnsuccessfulExecutionOfCreateService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
+				System.out.println("testUnsuccessfulExecutionOfCreateService was UNSUCCESSFULY run by class: " + this.getClass().getName());
 				fail("testUnsuccessfulExecutionOfCreateService");
 			} catch (Exception ex) {
 				assertNull("testUnsuccessfulExecutionOfCreateService", result);
-				System.out.println("testUnsuccessfulExecutionOfCreateService was SUCCESSFULY runned by class: " + this.getClass().getName());
+				System.out.println("testUnsuccessfulExecutionOfCreateService was SUCCESSFULY run by class: " + this.getClass().getName());
 			}
 		}
 	}
@@ -82,10 +82,10 @@ public abstract class TestCaseCreateServices extends TestCaseNeedAuthorizationSe
 			try {
 				result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
 				assertEquals("testSuccessfulExecutionOfCreateService", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
-				System.out.println("testSuccessfulExecutionOfCreateService was SUCCESSFULY runned by class: " + this.getClass().getName());
+				System.out.println("testSuccessfulExecutionOfCreateService was SUCCESSFULY run by class: " + this.getClass().getName());
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				System.out.println("testSuccessfulExecutionOfCreateService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
+				System.out.println("testSuccessfulExecutionOfCreateService was UNSUCCESSFULY run by class: " + this.getClass().getName());
 				fail("testSuccessfulExecutionOfCreateService");
 			}
 		}
