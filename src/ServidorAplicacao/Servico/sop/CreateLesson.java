@@ -30,6 +30,7 @@ import Dominio.ISala;
 import Dominio.ITurno;
 import Dominio.ITurnoAula;
 import Dominio.Turno;
+import Dominio.TurnoAula;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -118,21 +119,28 @@ public class CreateLesson implements IServico {
 							infoShift.getIdInternal());
 
 					InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula);
-
+					
 					if (infoShiftServiceResult.isSUCESS()) {
 						IAula aula2 = new Aula();
 						sp.getIAulaPersistente().simpleLockWrite(aula2);
+						Integer originalID = aula2.getIdInternal();
 						try {
 							BeanUtils.copyProperties(aula2, aula);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						sp.getITurnoPersistente().simpleLockWrite(shift);
-						shift.getAssociatedLessons().add(aula2);
+						aula2.setIdInternal(originalID);
+
+						ITurnoAula shiftLesson = new TurnoAula();
+						sp.getITurnoAulaPersistente().simpleLockWrite(shiftLesson);
+						shiftLesson.setTurno(shift);
+						shiftLesson.setAula(aula2);
+
+						//sp.getITurnoPersistente().simpleLockWrite(shift);
+						//shift.getAssociatedLessons().add(aula2);
 					} else {
 						throw new InvalidLoadException(infoShiftServiceResult.toString());
 					}
-
 				} catch (ExistingPersistentException ex) {
 					throw new ExistingServiceException(ex);
 				}
@@ -202,7 +210,7 @@ public class CreateLesson implements IServico {
 		double hours = getTotalHoursOfShiftType(shift);
 		double lessonDuration =
 			(getLessonDurationInMinutes(lesson).doubleValue()) / 60;
-
+		
 		if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICA))) {
 			if (hours
 				== shift
@@ -278,8 +286,9 @@ public class CreateLesson implements IServico {
 		double duration = 0;
 		for (int i = 0; i < lessonsOfShiftType.size(); i++) {
 			lesson = ((ITurnoAula) lessonsOfShiftType.get(i)).getAula();
+			System.out.println("Sub 3");
 			duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
-
+			System.out.println("Sub 4");
 		}
 		return duration;
 	}
