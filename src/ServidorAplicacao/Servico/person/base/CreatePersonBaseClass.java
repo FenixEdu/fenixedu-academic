@@ -36,88 +36,98 @@ import Util.RoleType;
 
 public class CreatePersonBaseClass
 {
-    public IPessoa createPersonBase(
+    public static IPessoa setPersonAttributes(
+        IPessoa personToLock,
         InfoPerson newPerson,
-        ISuportePersistente persistentSupport,
-        IPessoaPersistente persistentPerson,
-        IPersistentPersonRole persistentPersonRole)
+        IPersistentCountry pCountry)
+        throws ExcepcaoPersistencia
+    {
+        personToLock.setNome(newPerson.getNome());
+        if (newPerson.getNumeroDocumentoIdentificacao() != null)
+            personToLock.setNumeroDocumentoIdentificacao(newPerson.getNumeroDocumentoIdentificacao());
+        if (newPerson.getTipoDocumentoIdentificacao() != null)
+            personToLock.setTipoDocumentoIdentificacao(newPerson.getTipoDocumentoIdentificacao());
+
+        personToLock.setCodigoFiscal(newPerson.getCodigoFiscal());
+        personToLock.setCodigoPostal(newPerson.getCodigoPostal());
+        personToLock.setConcelhoMorada(newPerson.getConcelhoMorada());
+        personToLock.setConcelhoNaturalidade(newPerson.getConcelhoNaturalidade());
+        personToLock.setDataEmissaoDocumentoIdentificacao(
+            newPerson.getDataEmissaoDocumentoIdentificacao());
+        personToLock.setDataValidadeDocumentoIdentificacao(
+            newPerson.getDataValidadeDocumentoIdentificacao());
+        personToLock.setDistritoMorada(newPerson.getDistritoMorada());
+        personToLock.setDistritoNaturalidade(newPerson.getDistritoNaturalidade());
+        personToLock.setEmail(newPerson.getEmail());
+        personToLock.setEnderecoWeb(newPerson.getEnderecoWeb());
+        personToLock.setEstadoCivil(newPerson.getEstadoCivil());
+        personToLock.setFreguesiaMorada(newPerson.getFreguesiaMorada());
+        personToLock.setFreguesiaNaturalidade(newPerson.getFreguesiaNaturalidade());
+        personToLock.setLocalEmissaoDocumentoIdentificacao(
+            newPerson.getLocalEmissaoDocumentoIdentificacao());
+        personToLock.setLocalidade(newPerson.getLocalidade());
+        personToLock.setLocalidadeCodigoPostal(newPerson.getLocalidadeCodigoPostal());
+        personToLock.setMorada(newPerson.getMorada());
+        personToLock.setNacionalidade(newPerson.getNacionalidade());
+        personToLock.setNascimento(newPerson.getNascimento());
+        personToLock.setNomeMae(newPerson.getNomeMae());
+        personToLock.setNomePai(newPerson.getNomePai());
+        personToLock.setNumContribuinte(newPerson.getNumContribuinte());
+
+        personToLock.setProfissao(newPerson.getProfissao());
+        personToLock.setSexo(newPerson.getSexo());
+        personToLock.setTelefone(newPerson.getTelefone());
+        personToLock.setTelemovel(newPerson.getTelemovel());
+
+        if (newPerson.getInfoPais() != null)
+        {
+            ICountry country = pCountry.readCountryByCode(newPerson.getInfoPais().getCode());
+            personToLock.setPais(country);
+        }
+
+        //Generate person's Password
+        if (personToLock.getPassword() == null)
+            personToLock.setPassword(
+                PasswordEncryptor.encryptPassword(GeneratePassword.generatePassword()));
+
+        return personToLock;
+    }
+
+    public static IPessoa createPersonBase(
+        IPessoa personToLock,
+        InfoPerson newPerson,
+        ISuportePersistente sp,
+        IPessoaPersistente pPerson,
+        IPersistentPersonRole pPersonRole)
         throws FenixServiceException
     {
-        IPersistentCountry persistentCountry = null;
+        IPersistentCountry pCountry = null;
 
-        IPessoa person = null;
+        //IPessoa person = null;
         try
         {
-            persistentCountry = persistentSupport.getIPersistentCountry();
+            pCountry = sp.getIPersistentCountry();
 
             //Check if the person Exists
-            person =
-                persistentPerson.lerPessoaPorNumDocIdETipoDocId(
+            personToLock =
+                pPerson.lerPessoaPorNumDocIdETipoDocId(
                     newPerson.getNumeroDocumentoIdentificacao(),
                     newPerson.getTipoDocumentoIdentificacao());
 
             // Create the new Person if it does not exist
-            if (person == null)
+            if (personToLock == null)
             {
-                person = new Pessoa();
+                personToLock = new Pessoa();
 
                 IPersonRole personRole = new PersonRole();
-                persistentPersonRole.simpleLockWrite(personRole);
-                personRole.setPerson(person);
-                personRole.setRole(
-                    persistentSupport.getIPersistentRole().readByRoleType(RoleType.PERSON));
+                pPersonRole.simpleLockWrite(personRole);
+                personRole.setPerson(personToLock);
+                personRole.setRole(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
             }
             //lock person for WRITE
-            persistentPerson.simpleLockWrite(person);
-
-            person.setNome(newPerson.getNome());
-            if (newPerson.getNumeroDocumentoIdentificacao() != null)
-                person.setNumeroDocumentoIdentificacao(newPerson.getNumeroDocumentoIdentificacao());
-            if (newPerson.getTipoDocumentoIdentificacao() != null)
-                person.setTipoDocumentoIdentificacao(newPerson.getTipoDocumentoIdentificacao());
-
-            person.setCodigoFiscal(newPerson.getCodigoFiscal());
-            person.setCodigoPostal(newPerson.getCodigoPostal());
-            person.setConcelhoMorada(newPerson.getConcelhoMorada());
-            person.setConcelhoNaturalidade(newPerson.getConcelhoNaturalidade());
-            person.setDataEmissaoDocumentoIdentificacao(
-                newPerson.getDataEmissaoDocumentoIdentificacao());
-            person.setDataValidadeDocumentoIdentificacao(
-                newPerson.getDataValidadeDocumentoIdentificacao());
-            person.setDistritoMorada(newPerson.getDistritoMorada());
-            person.setDistritoNaturalidade(newPerson.getDistritoNaturalidade());
-            person.setEmail(newPerson.getEmail());
-            person.setEnderecoWeb(newPerson.getEnderecoWeb());
-            person.setEstadoCivil(newPerson.getEstadoCivil());
-            person.setFreguesiaMorada(newPerson.getFreguesiaMorada());
-            person.setFreguesiaNaturalidade(newPerson.getFreguesiaNaturalidade());
-            person.setLocalEmissaoDocumentoIdentificacao(
-                newPerson.getLocalEmissaoDocumentoIdentificacao());
-            person.setLocalidade(newPerson.getLocalidade());
-            person.setLocalidadeCodigoPostal(newPerson.getLocalidadeCodigoPostal());
-            person.setMorada(newPerson.getMorada());
-            person.setNacionalidade(newPerson.getNacionalidade());
-            person.setNascimento(newPerson.getNascimento());
-            person.setNomeMae(newPerson.getNomeMae());
-            person.setNomePai(newPerson.getNomePai());
-            person.setNumContribuinte(newPerson.getNumContribuinte());
-
-            person.setProfissao(newPerson.getProfissao());
-            person.setSexo(newPerson.getSexo());
-            person.setTelefone(newPerson.getTelefone());
-            person.setTelemovel(newPerson.getTelemovel());
-
-            if (newPerson.getInfoPais() != null)
-            {
-                ICountry country =
-                    persistentCountry.readCountryByCode(newPerson.getInfoPais().getCode());
-                person.setPais(country);
-            }
-
-            //Generate person's Password
-            if (person.getPassword() == null)
-                person.setPassword(
-                    PasswordEncryptor.encryptPassword(GeneratePassword.generatePassword()));
+            pPerson.simpleLockWrite(personToLock);
+            
+            personToLock = setPersonAttributes(personToLock,newPerson,pCountry);
 
         } catch (ExistingPersistentException ex)
         {
@@ -128,6 +138,6 @@ public class CreatePersonBaseClass
             newEx.fillInStackTrace();
             throw newEx;
         }
-        return person;
+        return personToLock;
     }
 }
