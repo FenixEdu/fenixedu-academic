@@ -15,7 +15,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoShift;
+import DataBeans.ShiftKey;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -30,30 +33,30 @@ public class ViewClassesWithShift extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
+		SessionUtils.validSessionVerification(request, mapping);
 		try {
 			DynaValidatorForm shiftForm = (DynaValidatorForm) form;
-			String name = (String)shiftForm.get("name");
-			
-			InfoShift infoShift = getInfoShift (name, request);
-			
-			Object[] args = {infoShift};
+			String name = (String) shiftForm.get("name");
+
+			InfoShift infoShift = getInfoShift(name, request);
+
+			Object[] args = { infoShift };
 			List infoClasses =
 				(List) ServiceUtils.executeService(
-						SessionUtils.getUserView(request),
-						"ReadClassesWithShiftService",
-						args);
-			
-				if (infoClasses == null || infoClasses.isEmpty()) {
-					ActionErrors actionErrors = new ActionErrors();
-					actionErrors.add(
-						"message.shift.no.classes",
-						new ActionError("message.shift.no.classes", name));
-				
-					saveErrors(request, actionErrors);
-					return mapping.getInputForward();
-				}
-			
+					SessionUtils.getUserView(request),
+					"ReadClassesWithShiftService",
+					args);
+
+			if (infoClasses == null || infoClasses.isEmpty()) {
+				ActionErrors actionErrors = new ActionErrors();
+				actionErrors.add(
+					"message.shift.no.classes",
+					new ActionError("message.shift.no.classes", name));
+
+				saveErrors(request, actionErrors);
+				return mapping.getInputForward();
+			}
+
 			request.setAttribute("classesWithShift", infoClasses);
 			return mapping.findForward("sucess");
 		} catch (Exception e) {
@@ -67,22 +70,46 @@ public class ViewClassesWithShift extends Action {
 	 * @param request
 	 * @return InfoShift
 	 */
-	private InfoShift getInfoShift(String name, HttpServletRequest request) {
+	private InfoShift getInfoShift(String name, HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession(false);
-		List infoShiftList = (List) session.getAttribute(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY);
-		
-		if (infoShiftList == null){
-			throw new IllegalStateException("A sessão não está válida");
-		}
-		
-		Iterator listIterator = infoShiftList.iterator();
-		while (listIterator.hasNext()) {
-			InfoShift infoShift = (InfoShift) listIterator.next();
+		List infoShiftList =
+			(List) session.getAttribute(
+				SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY);
+		InfoShift infoShift = null;
+		if (infoShiftList == null) {
+			InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+			InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) session.getAttribute(
+					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+			infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+			String infoExecutionCourseCode = request.getParameter("ecCode");
 			
-			if (infoShift.getNome().equalsIgnoreCase(name)){
-				return infoShift; 
+			if (infoExecutionCourseCode == null) {
+				throw new IllegalStateException("A sessão não está válida");
+			} else {
+				ShiftKey shiftKey = new ShiftKey();
+				infoExecutionCourse.setSigla(infoExecutionCourseCode);
+				shiftKey.setInfoExecutionCourse(infoExecutionCourse);
+				shiftKey.setShiftName(name);
+				Object args[] = { shiftKey };
+				
+				infoShift = (InfoShift) ServiceUtils.executeService(SessionUtils.getUserView(request),"LerTurno", args);
+			}
+
+		}else{
+			Iterator listIterator = infoShiftList.iterator();
+			while (listIterator.hasNext() && infoShift == null) {
+				InfoShift infoShiftAux = (InfoShift) listIterator.next();
+
+				if (infoShiftAux.getNome().equalsIgnoreCase(name)) {
+					infoShift = infoShiftAux;
+				}
 			}
 		}
-		throw new IllegalStateException("O turno pretendido não está em sessão!");
+		
+		if (infoShift == null)
+			throw new IllegalStateException("O turno pretendido não está em sessão!");
+		else
+			return infoShift;
 	}
 }
