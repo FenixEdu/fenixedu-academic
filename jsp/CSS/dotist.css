@@ -175,6 +175,14 @@ a:hover {
 	font-size: 11px;
 	color: #333333;
 	}
+	
+.inputbutton {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	background-color: #b5bdd6;
+	width: 100px;
+}
 
 .inputbuttonSmall {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
