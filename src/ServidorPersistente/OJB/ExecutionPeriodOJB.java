@@ -12,6 +12,7 @@ import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.PeriodState;
 
 /**
  * Created on 11/Fev/2003
@@ -35,8 +36,6 @@ public class ExecutionPeriodOJB
 	 */
 	public List readAllExecutionPeriod() throws ExcepcaoPersistencia {
 		try {
-
-			IExecutionPeriod executionPeriod = null;
 			String oqlQuery =
 				"select all from " + ExecutionPeriod.class.getName();
 
@@ -138,7 +137,7 @@ public class ExecutionPeriodOJB
 	}
 
 	/**
-	 * :FIXME: this is wrong if we have more than one EXECUTION_PERIOD
+	 * 
 	 * @see ServidorPersistente.IPersistentExecutionPeriod#readActualExecutionPeriod()
 	 */
 	public IExecutionPeriod readActualExecutionPeriod()
@@ -146,13 +145,15 @@ public class ExecutionPeriodOJB
 		try {
 			IExecutionPeriod executionPeriod = null;
 			String oqlQuery =
-				"select all from " + ExecutionPeriod.class.getName();
+				"select all from " + ExecutionPeriod.class.getName()
+				+" where state = $1";
 
 			query.create(oqlQuery);
-
+			query.bind(PeriodState.ACTUAL);
+			
 			List result = (List) query.execute();
 			lockRead(result);
-			if (result.size() != 0)
+			if ((result != null) && (!result.isEmpty()))
 				executionPeriod = (IExecutionPeriod) result.get(0);
 			return executionPeriod;
 		} catch (QueryException e) {
