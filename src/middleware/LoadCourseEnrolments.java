@@ -26,7 +26,7 @@ import Dominio.ITurnoAluno;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import Dominio.Turno;
-import Dominio.TurnoAluno;
+import Dominio.ShiftStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
@@ -236,14 +236,14 @@ public class LoadCourseEnrolments extends DataFileLoader {
 								attendCriteria);
 
 						// Ler os TurnoAlunos associados ao frequenta
-						ITurnoAluno shiftStudentCriteria = new TurnoAluno();
+						ITurnoAluno shiftStudentCriteria = new ShiftStudent();
 
 						ITurno shiftCriteria = new Turno();
 						shiftCriteria.setDisciplinaExecucao(executionCourse);
 
-						shiftStudentCriteria.setAluno(
+						shiftStudentCriteria.setStudent(
 							enrolment.getStudentCurricularPlan().getStudent());
-						shiftStudentCriteria.setTurno(shiftCriteria);
+						shiftStudentCriteria.setShift(shiftCriteria);
 
 						// Apagar os TurnoAlunos equivalentes
 						shiftStudentDAO.deleteByCriteria(shiftStudentCriteria);

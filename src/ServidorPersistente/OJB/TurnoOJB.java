@@ -23,7 +23,7 @@ import Dominio.ITurnoAluno;
 import Dominio.ITurnoAula;
 import Dominio.TurmaTurno;
 import Dominio.Turno;
-import Dominio.TurnoAluno;
+import Dominio.ShiftStudent;
 import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ITurnoPersistente;
@@ -159,7 +159,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 		try {
 			ITurnoAluno turnoAluno = null;
 			TurnoAlunoOJB turnoAlunoOJB = new TurnoAlunoOJB();
-			String oqlQuery2 = "select all from " + TurnoAluno.class.getName();
+			String oqlQuery2 = "select all from " + ShiftStudent.class.getName();
 			oqlQuery2
 				+= " where turno.nome = $1 and turno.disciplinaExecucao.sigla = $2 "
 				+ "and  turno.disciplinaExecucao.executionPeriod.name = $3  "

@@ -21,7 +21,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.ISala;
 import Dominio.ITurno;
 import Dominio.ITurnoAula;
-import Dominio.TurnoAluno;
+import Dominio.ShiftStudent;
 import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ITurnoAulaPersistente;
@@ -119,7 +119,7 @@ public class TurnoAulaOJB
 	public List readLessonsByStudent(String username)
 		throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select all from " + TurnoAluno.class.getName();
+			String oqlQuery = "select all from " + ShiftStudent.class.getName();
 			oqlQuery += " where aluno.person.username = $1";
 			query.create(oqlQuery);
 			query.bind(username);
@@ -132,7 +132,7 @@ public class TurnoAulaOJB
 				oqlQuery += " where turno.nome = $1";
 				query.create(oqlQuery);
 				query.bind(
-					((TurnoAluno) studentShifts.get(i)).getTurno().getNome());
+					((ShiftStudent) studentShifts.get(i)).getShift().getNome());
 				List auxLessons = (List) query.execute();
 				
 				lockRead(lessons);

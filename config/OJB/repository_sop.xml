@@ -132,6 +132,11 @@
          column="CAPACITY"
          jdbc-type="INTEGER"
       />
+      <field-descriptor id="6"
+         name="availabilityFinal"
+         column="AVAILLABILITY_FINAL"
+         jdbc-type="INTEGER"
+      />
       <reference-descriptor
          name="disciplinaExecucao"
          class-ref="Dominio.DisciplinaExecucao">
@@ -270,43 +275,39 @@
 
    
       
-<!-- Definitions for Dominio.TurnoAluno -->
+ 
+<!-- Definitions for Dominio.ShiftStudent -->
    <class-descriptor
-   	  class="Dominio.TurnoAluno"
+   	  class="Dominio.ShiftStudent"
    	  table="SHIFT_STUDENT"
    >
-      <field-descriptor id="1"
+      <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor id="2"
-         name="chaveTurno"
+         autoincrement="true"/>
+      <field-descriptor
+         name="keyShift"
          column="KEY_SHIFT"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="3"
-         name="chaveAluno"
+         jdbc-type="INTEGER"/>
+      <field-descriptor
+         name="keyStudent"
          column="KEY_STUDENT"
-         jdbc-type="INTEGER"
-      />
+         jdbc-type="INTEGER"/>
       <reference-descriptor
-         name="turno"
-         class-ref="Dominio.Turno"
-         proxy="true"
-      >
-         <foreignkey field-id-ref="2"/>
+         name="shift"
+         class-ref="Dominio.Turno">
+      <foreignkey field-ref="keyShift"/>
       </reference-descriptor>      
          <reference-descriptor
-         name="aluno"
-         class-ref="Dominio.Student"
-         proxy="true"
-      >
-         <foreignkey field-id-ref="3"/>
+         name="student"
+         class-ref="Dominio.Student">
+      <foreignkey field-ref="keyStudent"/>
       </reference-descriptor>      
    </class-descriptor>         
+
+
 
 
    <!-- Definitions for Dominio.TurnoAula -->

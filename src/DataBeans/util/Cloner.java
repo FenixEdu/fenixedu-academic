@@ -167,6 +167,7 @@ public abstract class Cloner {
 		copyObjectProperties(shift, infoShift);
 
 		shift.setDisciplinaExecucao(executionCourse);
+		shift.setIdInternal(infoShift.getIdInternal());
 		return shift;
 	}
 	/**
@@ -494,7 +495,9 @@ public abstract class Cloner {
 		InfoShift infoShift = new InfoShift();
 		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(shift.getDisciplinaExecucao());
 		copyObjectProperties(infoShift, shift);
+		infoShift.setAvailabilityFinal(shift.getAvailabilityFinal());
 		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+		infoShift.setIdInternal(shift.getIdInternal());
 		return infoShift;
 	}
 	/**

@@ -163,7 +163,33 @@ public class TurmaTurnoOJB
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+	/**
+	 * Returns a class list
+	 * @see ServidorPersistente.ITurmaTurnoPersistente#readByClass(ITurma)
+	 */
+	public List readByShift(ITurno group) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery =
+				"select turma from " + TurmaTurno.class.getName();
+			oqlQuery += " where turno.idInternal = $1 ";
+			query.create(oqlQuery);
 
+			query.bind(group.getIdInternal());
+			
+			List result = (List) query.execute();
+			lockRead(result);
+			
+			List classList = new ArrayList();
+			Iterator resultIterator = result.iterator();
+			while (resultIterator.hasNext()) {
+				ITurmaTurno classShift = (ITurmaTurno) resultIterator.next();
+				classList.add(classShift.getTurma());
+			}
+			return classList;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
 	public List readClassesWithShift(ITurno turno)
 		throws ExcepcaoPersistencia {
 		try {

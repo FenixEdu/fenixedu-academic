@@ -20,7 +20,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IStudent;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
-import Dominio.TurnoAluno;
+import Dominio.ShiftStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -34,7 +34,7 @@ public class TurnoAlunoOJB
 		throws ExcepcaoPersistencia {
 		try {
 			ITurnoAluno turnoAluno = null;
-			String oqlQuery = "select turnoaluno from " + TurnoAluno.class.getName()
+			String oqlQuery = "select turnoaluno from " + ShiftStudent.class.getName()
 							+ " where aluno.number = $1"
 							+ " and aluno.degreeType = $2"
 							+ " and turno.nome = $3"
@@ -72,21 +72,27 @@ public class TurnoAlunoOJB
 		// Read shiftStudent from database.
 		shiftStudentFromDB =
 			this.readByTurnoAndAluno(
-				shiftStudentToWrite.getTurno(),
-				shiftStudentToWrite.getAluno());
+				shiftStudentToWrite.getShift(),
+				shiftStudentToWrite.getStudent());
+
 
 		// If shiftStudent is not in database, then write it.
 		if (shiftStudentFromDB == null)
 			super.lockWrite(shiftStudentToWrite);
 		// else If the shiftStudent is mapped to the database, then write any existing changes.
 		else if (
-			(shiftStudentToWrite instanceof TurnoAluno)
-				&& shiftStudentFromDB.getIdInternal().equals(
-					shiftStudentToWrite.getIdInternal())) {
+			(shiftStudentToWrite instanceof ShiftStudent)
+			&& ((ShiftStudent) shiftStudentFromDB).getIdInternal().equals(
+			((ShiftStudent) shiftStudentToWrite).getIdInternal())) {
 			super.lockWrite(shiftStudentToWrite);
 			// else Throw an already existing exception
 		} else
 			throw new ExistingPersistentException();
+	}
+
+	//Not sure if it works...
+	public void simpleLockWrite(ITurnoAluno shiftStudentToWrite) throws ExcepcaoPersistencia {
+		super.lockWrite(shiftStudentToWrite);
 	}
 
 	public void delete(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia {
@@ -94,7 +100,7 @@ public class TurnoAlunoOJB
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
-		String oqlQuery = "select all from " + TurnoAluno.class.getName();
+		String oqlQuery = "select all from " + ShiftStudent.class.getName();
 		super.deleteAll(oqlQuery);
 	}
 
@@ -107,7 +113,7 @@ public class TurnoAlunoOJB
 		String nameExecutionCourse)
 		throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select turno from " + TurnoAluno.class.getName();
+			String oqlQuery = "select turno from " + ShiftStudent.class.getName();
 			oqlQuery += " where turno.tipo = $1";
 			oqlQuery
 				+= " and turno.disciplinaExecucao.licenciaturaExecucao.nome = $2";
@@ -119,7 +125,7 @@ public class TurnoAlunoOJB
 			List result = (List) query.execute();
 			lockRead(result);
 			if (result != null && !(result.isEmpty()))
-				return ((ITurnoAluno) result.get(0)).getTurno();
+				return ((ITurnoAluno) result.get(0)).getShift();
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
@@ -130,7 +136,7 @@ public class TurnoAlunoOJB
 	 */
 	public List readByShift(ITurno shift) throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select turno from " + TurnoAluno.class.getName()
+			String oqlQuery = "select turno from " + ShiftStudent.class.getName()
 							+ " where turno.nome = $1"
 							+ " and turno.disciplinaExecucao.sigla = $2"
 							+ " and turno.disciplinaExecucao.executionPeriod.name = $3"
@@ -152,7 +158,7 @@ public class TurnoAlunoOJB
 			Iterator iterator = result.iterator();
 			while (iterator.hasNext()) {
 				ITurnoAluno shiftStudent = (ITurnoAluno) iterator.next();
-				studentList.add(shiftStudent.getAluno());	
+				studentList.add(shiftStudent.getStudent());		
 			}			
 			return studentList;
 		} catch (QueryException ex) {

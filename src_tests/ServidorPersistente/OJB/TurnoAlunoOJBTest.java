@@ -31,7 +31,7 @@ import Dominio.IExecutionYear;
 import Dominio.IStudent;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
-import Dominio.TurnoAluno;
+import Dominio.ShiftStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -123,8 +123,8 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  ITurnoAluno studentShift = persistentStudentShift.readByTurnoAndAluno(shift, student);
 	  assertNotNull(studentShift);
 	  
-	  assertEquals(studentShift.getAluno(), student);
-	  assertEquals(studentShift.getTurno(), shift);
+	  assertEquals(studentShift.getStudent(), student);
+	  assertEquals(studentShift.getShift(), shift);
 	  
 	  // Non existing
 
@@ -227,7 +227,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  ITurnoAluno studentShift = persistentStudentShift.readByTurnoAndAluno(shift, student);
 	  assertNotNull(studentShift);
 	  
-	  ITurnoAluno shiftStudent = new TurnoAluno(shift, student);
+	  ITurnoAluno shiftStudent = new ShiftStudent(shift, student);
 	  persistentStudentShift.lockWrite(shiftStudent);
 
 	  persistentSupport.confirmarTransaccao();
@@ -269,7 +269,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  assertNull(shiftStudent);
 
 
-	  shiftStudent = new TurnoAluno(shift, student);
+	  shiftStudent = new ShiftStudent(shift, student);
 	  persistentStudentShift.lockWrite(shiftStudent);
 	  persistentSupport.confirmarTransaccao();
 
@@ -279,8 +279,8 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  shiftStudent = persistentStudentShift.readByTurnoAndAluno(shift, student);
 	  assertNotNull(shiftStudent);
 	  
-	  assertEquals(shiftStudent.getAluno(), student);
-	  assertEquals(shiftStudent.getTurno(), shift);
+	  assertEquals(shiftStudent.getStudent(), student);
+	  assertEquals(shiftStudent.getShift(), shift);
 	  
 	  persistentSupport.confirmarTransaccao();
 	} catch (ExcepcaoPersistencia ex) {
@@ -323,7 +323,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  assertNotNull(studentTemp);
 	  
 	  persistentStudent.readByOId(studentShift, true);
-	  studentShift.setAluno(studentTemp);
+	  studentShift.setStudent(studentTemp);
 	  persistentSupport.confirmarTransaccao();
 	  
 
@@ -337,8 +337,8 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  studentShift = persistentStudentShift.readByTurnoAndAluno(shift, studentTemp);
 	  assertNotNull(studentShift);
 	  
-	  assertEquals(studentShift.getAluno(), studentTemp);
-	  assertEquals(studentShift.getTurno(), shift);
+	  assertEquals(studentShift.getStudent(), studentTemp);
+	  assertEquals(studentShift.getShift(), shift);
 	  
 	  persistentSupport.confirmarTransaccao();
 	} catch (ExcepcaoPersistencia ex) {
@@ -419,7 +419,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 		///////////////////////////////////////////////////////////////////
 
         OQLQuery query = odmg.newOQLQuery();
-        String oqlQuery = "select turnoAluno from " + TurnoAluno.class.getName();
+		String oqlQuery = "select turnoAluno from " + ShiftStudent.class.getName();
         query.create(oqlQuery);
         result = (List) query.execute();
       } catch (QueryException ex) {

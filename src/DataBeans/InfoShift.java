@@ -16,6 +16,7 @@ public class InfoShift extends InfoObject {
 	protected String _nome;
 	protected TipoAula _tipo;
 	protected Integer _lotacao;
+	protected Integer availabilityFinal;
 	protected InfoExecutionCourse _infoDisciplinaExecucao;
 
 	public InfoShift() {
@@ -84,6 +85,22 @@ public class InfoShift extends InfoObject {
 		result += ", infoDisciplinaExecucao=" + _infoDisciplinaExecucao;
 		result += "]";
 		return result;
+		
 	}
+	
+	/**
+	 * @return
+	 */
+	public Integer getAvailabilityFinal() {
+		return availabilityFinal;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setAvailabilityFinal(Integer integer) {
+		availabilityFinal = integer;
+	}
+
 
 }

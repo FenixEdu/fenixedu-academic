@@ -18,6 +18,7 @@ public class Turno extends DomainObject implements ITurno {
 	protected String _nome;
 	protected TipoAula _tipo;
 	protected Integer _lotacao;
+	private   Integer  availabilityFinal;
 	protected IDisciplinaExecucao _disciplinaExecucao;
 	private List associatedTeacherProfessorShipPercentage;
 	
@@ -136,6 +137,20 @@ public class Turno extends DomainObject implements ITurno {
 	 */
 	public void setAssociatedLessons(List lessons) {
 		associatedLessons = lessons;
+	}
+	
+	/**
+	 * @return
+	 */
+	public Integer getAvailabilityFinal() {
+		return availabilityFinal;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setAvailabilityFinal(Integer integer) {
+		availabilityFinal = integer;
 	}
 
 }

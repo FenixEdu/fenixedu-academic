@@ -15,12 +15,15 @@
                  dynamic="true">
         <form-property name="certidao" type="java.lang.String"/>
       </form-bean> -->
-
-	  <form-bean name="shiftEnrolmentForm"
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="shiftName" type="java.lang.String" />
+      
+      <form-bean name="studentShiftEnrolmentForm"
+      			type="org.apache.struts.validator.DynaValidatorForm"
+      			dynamic="true">
+      		<form-property name="method" type="java.lang.String"/>
+	      	<form-property name="shifts" type="java.lang.Integer[]"/>
+	      	<form-property name="class" type="java.lang.String"/>
       </form-bean>
+      
 <!--
 	  <form-bean name="curricularCourseEnrolmentForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -133,6 +136,34 @@
 		<forward name="cancel" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
       </action>
 
+      <!-- TODO: tdi-dev (bruno) -> redo this-->
+	  <action name="studentShiftEnrolmentForm"
+        type="ServidorApresentacao.Action.student.ShiftStudentEnrolmentManagerDispatchAction"
+        path="/studentShiftEnrolmentManager"
+        input="/studentShiftEnrolmentManager.do?method=initializeEnrolment" 
+        parameter="method"
+        scope="session"
+        validate="false">
+        <exception type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+          key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+          handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+                           
+        <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=initializeEnrolment"/>
+              
+        <forward name="selectClass" path="/showClassesForShiftEnrolment.jsp"/>
+        <forward name="showAvailableShifts" path="/showAvailableShifts.jsp"/>
+        <forward name="validateAndConfirmShiftEnrolment" path="/validateAndConfirmShiftEnrolment.jsp"/>
+      </action>
+      
+      <action 
+        type="ServidorApresentacao.Action.commons.VoidAction"
+        path="/studentShiftEnrolmentOptions"
+        scope="request">
+        <forward name="Success" path="/showShiftEnrolmentOptions.jsp"/>
+      </action>
+      
+
+      
       <action type="ServidorApresentacao.Action.student.ShiftEnrolmentAction"
               path="/shiftEnrolment"
               input="/viewShiftsList.do"

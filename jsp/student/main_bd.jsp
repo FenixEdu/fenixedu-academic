@@ -25,6 +25,11 @@
             </tr>
              <tr>
                 <td>
+                    <html:link page="/viewEnrolment.do"> <bean:message key="link.shift.enrolment"/> </html:link>
+                </td>
+            </tr>
+             <tr>
+                <td>
                     <html:link page="/examEnrollmentManager.do?method=viewExamsToEnroll" > <bean:message key="link.exams.enrolment"/> </html:link>
                 </td>
             </tr>

@@ -15,6 +15,9 @@ package ServidorApresentacao.Action.sop.utils;
  */
 public abstract class SessionConstants {
 	
+	// Constants for Student Shift Enrolment	
+	public static final String INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY ="INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY";
+
 	// -------------------------------------------------------------------------------
 	//    Degree Administrative Office Constants
 	// -------------------------------------------------------------------------------

@@ -20,7 +20,7 @@ public class DisciplinaExecucao extends DomainObject implements IDisciplinaExecu
 	private Integer keyExecutionPeriod;
 
 	protected String comment;
-
+	private List attendingStudents;
 	/* Construtores */
 
 	public DisciplinaExecucao() {
@@ -257,6 +257,19 @@ public class DisciplinaExecucao extends DomainObject implements IDisciplinaExecu
 	 */
 	public void setAssociatedEvaluations(List list) {
 		associatedEvaluations = list;
+	}
+	/**
+	 * @return
+	 */
+	public List getAttendingStudents() {
+		return attendingStudents;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setAttendingStudents(List list) {
+		attendingStudents = list;
 	}
 
 }

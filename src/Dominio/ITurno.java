@@ -18,8 +18,10 @@ public interface ITurno extends IDomainObject {
   public String getNome();
   public TipoAula getTipo();
   public Integer getLotacao();
+  public Integer getAvailabilityFinal();
   public IDisciplinaExecucao getDisciplinaExecucao();
 
+  public void setAvailabilityFinal(Integer i);
   public void setNome(String nome);
   public void setTipo(TipoAula tipo);
   public void setLotacao(Integer Lotacao);

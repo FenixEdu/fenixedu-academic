@@ -12,6 +12,7 @@ package ServidorPersistente.OJB;
  */
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -23,7 +24,10 @@ import Dominio.Exam;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.ISala;
+import Dominio.ITurmaTurno;
+import Dominio.ITurno;
 import Dominio.Sala;
+import Dominio.TurmaTurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -289,6 +293,33 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("edificio", pavillion);
 		return queryList(Sala.class, criteria);
+	}
+	/**
+	 * Returns a class list
+	 * @see ServidorPersistente.ITurmaTurnoPersistente#readByClass(ITurma)
+	 */
+	public List readByShift(ITurno group) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery =
+				"select turma from " + TurmaTurno.class.getName();
+			oqlQuery += " where turno.idInternal = $1 ";
+			query.create(oqlQuery);
+
+			query.bind(group.getIdInternal());
+			
+			List result = (List) query.execute();
+			lockRead(result);
+			
+			List classList = new ArrayList();
+			Iterator resultIterator = result.iterator();
+			while (resultIterator.hasNext()) {
+				ITurmaTurno classShift = (ITurmaTurno) resultIterator.next();
+				classList.add(classShift.getTurma());
+			}
+			return classList;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 	}
 
 }

@@ -40,5 +40,6 @@ public interface IDisciplinaExecucao extends Serializable, IDomainObject {
 
 	public String getComment();
 	public void setComment(String string);
-
+	public List getAttendingStudents();
+	public void setAttendingStudents(List attendingStudents);
 }

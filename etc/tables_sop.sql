@@ -40,6 +40,7 @@ create table SHIFT (
    KEY_EXECUTION_COURSE int(11) not null,
    TYPE int(11) not null,
    CAPACITY int(11) not null,
+   AVAILLABILITY_FINAL int(11) not null,
    primary key (ID_INTERNAL),
    unique U1 (NAME, KEY_EXECUTION_COURSE))
    type=InnoDB;

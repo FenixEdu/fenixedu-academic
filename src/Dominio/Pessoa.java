@@ -67,37 +67,37 @@ public class Pessoa extends DomainObject implements IPessoa {
 	/* Construtores */
 
 	public Pessoa() {
-		this.numeroDocumentoIdentificacao = "";
-		this.tipoDocumentoIdentificacao = null;
-		this.localEmissaoDocumentoIdentificacao = "";
-		this.dataEmissaoDocumentoIdentificacao = null;
-		this.dataValidadeDocumentoIdentificacao = null;
-		this.nome = "";
-		this.sexo = null;
-		this.estadoCivil = null;
-		this.nascimento = null;
-		this.nomePai = "";
-		this.nomeMae = "";
-		this.nacionalidade = "";
-		this.freguesiaNaturalidade = "";
-		this.concelhoNaturalidade = "";
-		this.distritoNaturalidade = "";
-		this.morada = "";
-		this.localidade = "";
-		this.codigoPostal = "";
-		this.localidadeCodigoPostal = "";
-		this.freguesiaMorada = "";
-		this.concelhoMorada = "";
-		this.distritoMorada = "";
-		this.telefone = "";
-		this.telemovel = "";
-		this.email = "";
-		this.enderecoWeb = "";
-		this.numContribuinte = "";
-		this.profissao = "";
-		this.username = "";
-		this.pais = null;
-		this.codigoFiscal = "";
+//		this.numeroDocumentoIdentificacao = "";
+//		this.tipoDocumentoIdentificacao = null;
+//		this.localEmissaoDocumentoIdentificacao = "";
+//		this.dataEmissaoDocumentoIdentificacao = null;
+//		this.dataValidadeDocumentoIdentificacao = null;
+//		this.nome = "";
+//		this.sexo = null;
+//		this.estadoCivil = null;
+//		this.nascimento = null;
+//		this.nomePai = "";
+//		this.nomeMae = "";
+//		this.nacionalidade = "";
+//		this.freguesiaNaturalidade = "";
+//		this.concelhoNaturalidade = "";
+//		this.distritoNaturalidade = "";
+//		this.morada = "";
+//		this.localidade = "";
+//		this.codigoPostal = "";
+//		this.localidadeCodigoPostal = "";
+//		this.freguesiaMorada = "";
+//		this.concelhoMorada = "";
+//		this.distritoMorada = "";
+//		this.telefone = "";
+//		this.telemovel = "";
+//		this.email = "";
+//		this.enderecoWeb = "";
+//		this.numContribuinte = "";
+//		this.profissao = "";
+//		this.username = "";
+//		this.pais = null;
+//		this.codigoFiscal = "";
 	}
 
 	public Pessoa(TipoDocumentoIdentificacao idDocumentType, String userName) {
