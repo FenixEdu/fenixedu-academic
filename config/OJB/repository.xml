@@ -20,8 +20,8 @@
 <!ENTITY authentication-roles SYSTEM "repository_authentication_roles.xml">
 <!ENTITY teacher-credits SYSTEM "repository_creditsTeacher.xml">
 <!ENTITY assiduousness SYSTEM "repository_assiduousness.xml">
-<!ENTITY almeida-enrolment SYSTEM "repository_almeida_enrolment.xml">
-<!-- <!ENTITY leq-new-curricular-course SYSTEM "repository_LEQ_New_Curricular_Course.xml"> -->
+<!--<!ENTITY almeida-enrolment SYSTEM "repository_almeida_enrolment.xml">
+<!ENTITY leq-new-curricular-course SYSTEM "repository_LEQ_New_Curricular_Course.xml">-->
 <!ENTITY sigla SYSTEM "repository_sigla.xml">
 ]>
 
@@ -48,8 +48,8 @@
     &almeida;
     &posgrad;
     &assiduousness;
-    &almeida-enrolment;
-    <!-- &leq-new-curricular-course; -->
+<!--    &almeida-enrolment;
+    &leq-new-curricular-course;-->
     &sigla;
 	
 </descriptor-repository>
