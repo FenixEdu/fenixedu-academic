@@ -79,7 +79,7 @@
 </class-descriptor>
 
 <!-- ******************************** -->
-<!-- **********   SECCAO   ********** -->
+<!-- **********   SECTION  ********** -->
 <!-- ******************************** -->
    
 <!-- Definitions for Dominio.Section -->
@@ -200,6 +200,59 @@
       >
          <foreignkey field-id-ref="6"/>
       </reference-descriptor>
+   </class-descriptor>
+
+<!-- ********************************* -->
+<!-- **********   TEACHER   ********** -->
+<!-- ********************************* --> 
+
+<!-- Definitions for Dominio.Teacher -->
+   <class-descriptor
+   	  class="Dominio.Teacher"
+   	  table="TEACHER"
+   >
+      <field-descriptor id="1"
+         name="codigoInterno"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor id="2"
+         name="username"
+         column="USERNAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor id="3"
+         name="password"
+         column="PASSWORD"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor id="4"
+         name="teacherNumber"
+         column="TEACHER_NUMBER"
+         jdbc-type="INTEGER"
+      />
+             
+  <!-- Para reflectir a relacao de 1..* entre Docente e Sitio de responsÃ¡vel -->
+  <collection-descriptor
+         name="sitesOwned"
+         element-class-ref="Dominio.Site"
+         indirection-table="OWNS"
+      >
+         <fk-pointing-to-this-class column="ID_TEACHER"/>
+         <fk-pointing-to-element-class column="ID_SITE"/>
+      </collection-descriptor>
+  
+      <collection-descriptor
+         name="professorShipsSites"
+         element-class-ref="Dominio.Site"
+         indirection-table="PROFESSORSHIPS"
+      >
+         <fk-pointing-to-this-class column="ID_TEACHER"/>
+         <fk-pointing-to-element-class column="ID_SITE"/>
+      </collection-descriptor>
+  
    </class-descriptor>
 
 <!-- Mapping of User defined classes ends here -->
