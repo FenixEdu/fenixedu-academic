@@ -173,7 +173,7 @@ public class UpdateStudentEnrolments
 		{
 			boolean sameDegree = true;
 			MwEnrolment mwEnrolment = (MwEnrolment) iterator.next();
-
+			
 			// Get the Degree Of the Student
 			IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(mwEnrolment.getDegreecode(), studentCurricularPlan, sp);
 
@@ -201,7 +201,7 @@ public class UpdateStudentEnrolments
 
 			if (curricularCourses.size() != 1)
 			{
-
+				
 				sameDegree = false;
 
 				// if the result size is greater than 1 then check if the Branch Code match in Any
@@ -217,12 +217,10 @@ public class UpdateStudentEnrolments
 					enrolmentNotWritten++;
 
 					return;
-				}
-
-				// Try to read by CourseCode Only (this will assume that all the Degree Curricular Plan name ends with "2003/2004"
-				if (curricularCourses.size() == 0)
-				{
+				} else { // size == 0
+//					Try to read by CourseCode Only (this will assume that all the Degree Curricular Plan name ends with "2003/2004"
 					curricularCourses = sp.getIPersistentCurricularCourse().readbyCourseCode(StringUtils.trim(mwEnrolment.getCoursecode()));
+					
 					if (curricularCourses.size() == 1)
 					{
 						curricularCourse = (ICurricularCourse) curricularCourses.get(0);
@@ -260,7 +258,7 @@ public class UpdateStudentEnrolments
 						return;
 					}
 				}
-			} else
+			} else // curricularCourses.size() == 1
 			{
 				curricularCourse = (ICurricularCourse) curricularCourses.get(0);
 			}
@@ -459,8 +457,10 @@ public class UpdateStudentEnrolments
 				sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 			if (executionCourse == null)
 			{
-				System.out.println("No Execution Found for Curricular Course " + mwEnrolment.getCoursecode());
-				executionCoursesNotFound++;
+				
+				ReportEnrolment.addExecutionCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(),mwEnrolment.getNumber().toString());
+//				System.out.println("No Execution Found for Curricular Course " + mwEnrolment.getCoursecode());
+//				executionCoursesNotFound++;
 				return;
 			}
 			IStudent student = sp.getIPersistentStudent().readByNumero(mwEnrolment.getNumber(), TipoCurso.LICENCIATURA_OBJ);
@@ -717,33 +717,6 @@ public class UpdateStudentEnrolments
 	}
 
 	/**
-	 * @param oldStudent
-	 * @return the New Degree Curricular Plan
-	 */
-	//	private static IDegreeCurricularPlan getDegreeCurricularPlan(Integer degreeCode, ISuportePersistente sp) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
-	//
-	//		IDegreeCurricularPlan degreeCurricularPlan = null;
-	//		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-	//		IPersistentMWBranch persistentBranch = mws.getIPersistentMWBranch();
-	//
-	//		// Get the Old Degree
-	//
-	//		MWBranch mwBranch = persistentBranch.readByDegreeCodeAndBranchCode(degreeCode, new Integer(0));
-	//
-	//		// Get the Actual Degree Curricular Plan for this Degree
-	//
-	//		String degreeName = StringUtils.prechomp(mwBranch.getDescription(), "DE ");
-	//
-	//		if (degreeName.indexOf("TAGUS") != -1) {
-	//			degreeName = "Engenharia Informática e de Computadores - Taguspark";
-	//		}
-	//
-	//		ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeNameAndExecutionYearAndDegreeType(degreeName, executionPeriod.getExecutionYear(), TipoCurso.LICENCIATURA_OBJ);
-	//
-	//		return executionDegree.getCurricularPlan();
-	//	}
-
-	/**
 	 * 
 	 * @param degreeCode
 	 * @param studentCurricularPlan
@@ -781,37 +754,6 @@ public class UpdateStudentEnrolments
 				return executionDegree.getCurricularPlan();
 			}
 		}
-		
-//		List degreeCurricularPlans = sp.getIPersistentDegreeCurricularPlan().readByDegree(mwDegreeTranslation.getDegree());
-//
-//		Iterator iterator = degreeCurricularPlans.iterator();
-//		while (iterator.hasNext())
-//		{
-//			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iterator.next();
-//			if (degreeCurricularPlan.equals(studentCurricularPlan.getDegreeCurricularPlan()))
-//			{
-//
-//				// Check for Execution
-//
-//				if (sp
-//					.getICursoExecucaoPersistente()
-//					.readByDegreeNameAndExecutionYearAndDegreeType(
-//						degreeCurricularPlan.getDegree().getNome(),
-//						executionPeriod.getExecutionYear(),
-//						TipoCurso.LICENCIATURA_OBJ)
-//					== null)
-//				{
-//					System.out.println("[ERROR] The Degree Has no Execution in " + executionPeriod.getExecutionYear().getYear());
-//					return null;
-//				} else
-//				{
-//					return degreeCurricularPlan;
-//				}
-//			}
-//		}
-//
-//		System.out.println("[ERROR] The Student Has Changed his Degree ! " + studentCurricularPlan.getStudent().getNumber());
-//		return null;
 	}
 
 	private static IBranch getBranch(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp)
