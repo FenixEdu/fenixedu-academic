@@ -25,9 +25,9 @@ public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy imp
 		
 	public Integer enrolmentPolicyNewGroup(IGroupProperties groupProperties,int numberOfStudentsToEnrole,ITurno shift){
 		
-		if(checkNumberOfGroups(groupProperties,shift))
-			return new Integer(1);
-		else
+		if(checkNumberOfGroups(groupProperties,shift)){
+			return new Integer(1);}
+		
 			return new Integer(-1);			
 				
 	}

@@ -58,22 +58,22 @@ public class ReadActiveDegreeCurricularPlanByID extends
                 return groupScopesByCurricularYearAndCurricularCourse(super
                         .readActiveCurricularCourseScopes(degreeCurricularPlan,
                                 sp));
-            } else {
-
-                IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                        .getIPersistentExecutionPeriod();
-                IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
-                        .readByOID(ExecutionPeriod.class, executionPeriodCode);
-                if (executionPeriod == null
-                        || executionPeriod.getExecutionYear() == null) {
-                    throw new FenixServiceException("nullDegree");
-                }
-
-                return groupScopesByCurricularYearAndCurricularCourse(super
-                        .readActiveCurricularCourseScopesInExecutionYear(
-                                degreeCurricularPlan, executionPeriod
-                                        .getExecutionYear(), sp));
             }
+
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp
+                    .getIPersistentExecutionPeriod();
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
+                    .readByOID(ExecutionPeriod.class, executionPeriodCode);
+            if (executionPeriod == null
+                    || executionPeriod.getExecutionYear() == null) {
+                throw new FenixServiceException("nullDegree");
+            }
+
+            return groupScopesByCurricularYearAndCurricularCourse(super
+                    .readActiveCurricularCourseScopesInExecutionYear(
+                            degreeCurricularPlan, executionPeriod
+                                    .getExecutionYear(), sp));
+
         } catch (ExcepcaoPersistencia e) {
 
             throw new FenixServiceException("Problems on database!", e);

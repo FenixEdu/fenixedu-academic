@@ -8,9 +8,9 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Servi�o CreateLesson.
- *
+ * 
  * @author Luis Cruz & Sara Ribeiro
- **/
+ */
 
 import java.util.Calendar;
 import java.util.List;
@@ -46,290 +46,255 @@ import Util.TipoAula;
 
 public class CreateLesson implements IServico {
 
-	private static CreateLesson _servico = new CreateLesson();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static CreateLesson getService() {
-		return _servico;
-	}
+    private static CreateLesson _servico = new CreateLesson();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private CreateLesson() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static CreateLesson getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "CreateLesson";
-	}
+    /**
+     * The actor of this class.
+     */
+    private CreateLesson() {
+    }
 
-	public InfoLessonServiceResult run(
-		InfoLesson infoLesson,
-		InfoShift infoShift)
-		throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "CreateLesson";
+    }
 
-		InfoLessonServiceResult result = null;
+    public InfoLessonServiceResult run(InfoLesson infoLesson,
+            InfoShift infoShift) throws FenixServiceException {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ISala sala =
-				sp.getISalaPersistente().readByName(
-					infoLesson.getInfoSala().getNome());
+        InfoLessonServiceResult result = null;
 
-			IPersistentExecutionCourse executionCourseDAO =
-				sp.getIPersistentExecutionCourse();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISala sala = sp.getISalaPersistente().readByName(
+                    infoLesson.getInfoSala().getNome());
 
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoLesson
-						.getInfoDisciplinaExecucao()
-						.getInfoExecutionPeriod());
+            IPersistentExecutionCourse executionCourseDAO = sp
+                    .getIPersistentExecutionCourse();
 
-			IExecutionCourse executionCourse =
-				executionCourseDAO
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					infoLesson.getInfoDisciplinaExecucao().getSigla(),
-					executionPeriod);
+            IExecutionPeriod executionPeriod = Cloner
+                    .copyInfoExecutionPeriod2IExecutionPeriod(infoLesson
+                            .getInfoDisciplinaExecucao()
+                            .getInfoExecutionPeriod());
 
-			IAula aula =
-				new Aula(
-					infoLesson.getDiaSemana(),
-					infoLesson.getInicio(),
-					infoLesson.getFim(),
-					infoLesson.getTipo(),
-					sala,
-					executionCourse);
+            IExecutionCourse executionCourse = executionCourseDAO
+                    .readByExecutionCourseInitialsAndExecutionPeriod(infoLesson
+                            .getInfoDisciplinaExecucao().getSigla(),
+                            executionPeriod);
 
-			result = validTimeInterval(aula);
-			if (result.getMessageType() == 1) {
-				throw new InvalidTimeIntervalServiceException();
-			}
+            IAula aula = new Aula(infoLesson.getDiaSemana(), infoLesson
+                    .getInicio(), infoLesson.getFim(), infoLesson.getTipo(),
+                    sala, executionCourse);
 
-			boolean resultB = validNoInterceptingLesson(aula, executionPeriod);
+            result = validTimeInterval(aula);
+            if (result.getMessageType() == 1) {
+                throw new InvalidTimeIntervalServiceException();
+            }
 
-			if (result.isSUCESS() && resultB) {
-				try {
-					ITurno shift =
-						(ITurno) sp.getITurnoPersistente().readByOID(
-							Turno.class,
-							infoShift.getIdInternal());
+            boolean resultB = validNoInterceptingLesson(aula, executionPeriod);
 
-					InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula);
-					
-					if (infoShiftServiceResult.isSUCESS()) {
-						IAula aula2 = new Aula();
-						sp.getIAulaPersistente().simpleLockWrite(aula2);
-						Integer originalID = aula2.getIdInternal();
-						try {
-							BeanUtils.copyProperties(aula2, aula);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						aula2.setIdInternal(originalID);
+            if (result.isSUCESS() && resultB) {
+                try {
+                    ITurno shift = (ITurno) sp.getITurnoPersistente()
+                            .readByOID(Turno.class, infoShift.getIdInternal());
 
-						ITurnoAula shiftLesson = new TurnoAula();
-						sp.getITurnoAulaPersistente().simpleLockWrite(shiftLesson);
-						shiftLesson.setTurno(shift);
-						shiftLesson.setAula(aula2);
+                    InfoShiftServiceResult infoShiftServiceResult = valid(
+                            shift, aula);
 
-						//sp.getITurnoPersistente().simpleLockWrite(shift);
-						//shift.getAssociatedLessons().add(aula2);
-					} else {
-						throw new InvalidLoadException(infoShiftServiceResult.toString());
-					}
-				} catch (ExistingPersistentException ex) {
-					throw new ExistingServiceException(ex);
-				}
-			} else {
-				result.setMessageType(2);
-			}
+                    if (infoShiftServiceResult.isSUCESS()) {
+                        IAula aula2 = new Aula();
+                        sp.getIAulaPersistente().simpleLockWrite(aula2);
+                        Integer originalID = aula2.getIdInternal();
+                        try {
+                            BeanUtils.copyProperties(aula2, aula);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        aula2.setIdInternal(originalID);
 
-		} catch (ExcepcaoPersistencia ex) {
+                        ITurnoAula shiftLesson = new TurnoAula();
+                        sp.getITurnoAulaPersistente().simpleLockWrite(
+                                shiftLesson);
+                        shiftLesson.setTurno(shift);
+                        shiftLesson.setAula(aula2);
 
-			throw new FenixServiceException(ex.getMessage());
-		}
+                        //sp.getITurnoPersistente().simpleLockWrite(shift);
+                        //shift.getAssociatedLessons().add(aula2);
+                    } else {
+                        throw new InvalidLoadException(infoShiftServiceResult
+                                .toString());
+                    }
+                } catch (ExistingPersistentException ex) {
+                    throw new ExistingServiceException(ex);
+                }
+            } else {
+                result.setMessageType(2);
+            }
 
-		return result;
-	}
+        } catch (ExcepcaoPersistencia ex) {
 
-	/**
-	 * @param aula
-	 * @return InfoLessonServiceResult
-	 */
-	private boolean validNoInterceptingLesson(
-		IAula lesson,
-		IExecutionPeriod executionPeriod)
-		throws ExistingServiceException, InterceptingServiceException {
+            throw new FenixServiceException(ex.getMessage());
+        }
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        return result;
+    }
 
-			IAulaPersistente persistentLesson = sp.getIAulaPersistente();
+    /**
+     * @param aula
+     * @return InfoLessonServiceResult
+     */
+    private boolean validNoInterceptingLesson(IAula lesson,
+            IExecutionPeriod executionPeriod) throws ExistingServiceException,
+            InterceptingServiceException {
 
-			List lessonMatchList =
-				persistentLesson.readLessonsInBroadPeriod(
-					lesson,
-					null,
-					executionPeriod);
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			if (lessonMatchList.size() > 0) {
-				if (lessonMatchList.contains(lesson)) {
-					throw new ExistingServiceException();
-				} else {
-					throw new InterceptingServiceException();
-				}
-			} else {
-				return true;
-			}
-		} catch (ExcepcaoPersistencia e) {
-			return false;
-		}
-	}
+            IAulaPersistente persistentLesson = sp.getIAulaPersistente();
 
-	private InfoLessonServiceResult validTimeInterval(IAula lesson) {
-		InfoLessonServiceResult result = new InfoLessonServiceResult();
+            List lessonMatchList = persistentLesson.readLessonsInBroadPeriod(
+                    lesson, null, executionPeriod);
 
-		if (lesson.getInicio().getTime().getTime()
-			>= lesson.getFim().getTime().getTime()) {
-			result.setMessageType(
-				InfoLessonServiceResult.INVALID_TIME_INTERVAL);
-		}
+            if (lessonMatchList.size() > 0) {
+                if (lessonMatchList.contains(lesson)) {
+                    throw new ExistingServiceException();
+                }
+                throw new InterceptingServiceException();
 
-		return result;
-	}
+            }
+            return true;
 
-	private InfoShiftServiceResult valid(ITurno shift, IAula lesson)
-		throws ExcepcaoPersistencia {
-		InfoShiftServiceResult result = new InfoShiftServiceResult();
-		result.setMessageType(InfoShiftServiceResult.SUCESS);
+        } catch (ExcepcaoPersistencia e) {
+            return false;
+        }
+    }
 
-		double hours = getTotalHoursOfShiftType(shift);
-		double lessonDuration =
-			(getLessonDurationInMinutes(lesson).doubleValue()) / 60;
-		
-		if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICA))) {
-			if (hours
-				== shift
-					.getDisciplinaExecucao()
-					.getTheoreticalHours()
-					.doubleValue())
-				result.setMessageType(
-					InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_REACHED);
-			else if (
-				(hours + lessonDuration)
-					> shift
-						.getDisciplinaExecucao()
-						.getTheoreticalHours()
-						.doubleValue())
-				result.setMessageType(
-					InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_EXCEEDED);
-		} else if (shift.getTipo().equals(new TipoAula(TipoAula.PRATICA))) {
-			if (hours
-				== shift.getDisciplinaExecucao().getPraticalHours().doubleValue())
-				result.setMessageType(
-					InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_REACHED);
-			else if (
-				(hours + lessonDuration)
-					> shift
-						.getDisciplinaExecucao()
-						.getPraticalHours()
-						.doubleValue())
-				result.setMessageType(
-					InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_EXCEEDED);
-		} else if (
-			shift.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA))) {
-			if (hours
-				== shift.getDisciplinaExecucao().getTheoPratHours().doubleValue())
-				result.setMessageType(
-					InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_REACHED);
-			else if (
-				(hours + lessonDuration)
-					> shift
-						.getDisciplinaExecucao()
-						.getTheoPratHours()
-						.doubleValue())
-				result.setMessageType(
-					InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_EXCEEDED);
-		} else if (
-			shift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL))) {
-			if (hours
-				== shift.getDisciplinaExecucao().getLabHours().doubleValue())
-				result.setMessageType(
-					InfoShiftServiceResult.LAB_HOURS_LIMIT_REACHED);
-			else if (
-				(hours + lessonDuration)
-					> shift.getDisciplinaExecucao().getLabHours().doubleValue())
-				result.setMessageType(
-					InfoShiftServiceResult.LAB_HOURS_LIMIT_EXCEEDED);
-		}
+    private InfoLessonServiceResult validTimeInterval(IAula lesson) {
+        InfoLessonServiceResult result = new InfoLessonServiceResult();
 
-		return result;
-	}
+        if (lesson.getInicio().getTime().getTime() >= lesson.getFim().getTime()
+                .getTime()) {
+            result.setMessageType(InfoLessonServiceResult.INVALID_TIME_INTERVAL);
+        }
 
-	private double getTotalHoursOfShiftType(ITurno shift)
-		throws ExcepcaoPersistencia {
-		ITurno shiftCriteria = new Turno();
-		shiftCriteria.setNome(shift.getNome());
-		shiftCriteria.setDisciplinaExecucao(shift.getDisciplinaExecucao());
+        return result;
+    }
 
-		List lessonsOfShiftType =
-			SuportePersistenteOJB
-				.getInstance()
-				.getITurnoAulaPersistente()
-				.readLessonsByShift(shiftCriteria);
+    private InfoShiftServiceResult valid(ITurno shift, IAula lesson)
+            throws ExcepcaoPersistencia {
+        InfoShiftServiceResult result = new InfoShiftServiceResult();
+        result.setMessageType(InfoShiftServiceResult.SUCESS);
 
-		IAula lesson = null;
-		double duration = 0;
-		for (int i = 0; i < lessonsOfShiftType.size(); i++) {
-			lesson = ((ITurnoAula) lessonsOfShiftType.get(i)).getAula();
-			try {
-				lesson.getIdInternal();
-				duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);	
-			} catch (Exception ex)
-			{
-				// all is ok
-				// the lesson contained a proxy to null.
-			}
-		}
-		return duration;
-	}
+        double hours = getTotalHoursOfShiftType(shift);
+        double lessonDuration = (getLessonDurationInMinutes(lesson)
+                .doubleValue()) / 60;
 
-	private Integer getLessonDurationInMinutes(IAula lesson) {
-		int beginHour = lesson.getInicio().get(Calendar.HOUR_OF_DAY);
-		int beginMinutes = lesson.getInicio().get(Calendar.MINUTE);
-		int endHour = lesson.getFim().get(Calendar.HOUR_OF_DAY);
-		int endMinutes = lesson.getFim().get(Calendar.MINUTE);
-		int duration = 0;
+        if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICA))) {
+            if (hours == shift.getDisciplinaExecucao().getTheoreticalHours()
+                    .doubleValue())
+                result
+                        .setMessageType(InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_REACHED);
+            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao()
+                    .getTheoreticalHours().doubleValue())
+                result
+                        .setMessageType(InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_EXCEEDED);
+        } else if (shift.getTipo().equals(new TipoAula(TipoAula.PRATICA))) {
+            if (hours == shift.getDisciplinaExecucao().getPraticalHours()
+                    .doubleValue())
+                result
+                        .setMessageType(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_REACHED);
+            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao()
+                    .getPraticalHours().doubleValue())
+                result
+                        .setMessageType(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_EXCEEDED);
+        } else if (shift.getTipo().equals(
+                new TipoAula(TipoAula.TEORICO_PRATICA))) {
+            if (hours == shift.getDisciplinaExecucao().getTheoPratHours()
+                    .doubleValue())
+                result
+                        .setMessageType(InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_REACHED);
+            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao()
+                    .getTheoPratHours().doubleValue())
+                result
+                        .setMessageType(InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_EXCEEDED);
+        } else if (shift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL))) {
+            if (hours == shift.getDisciplinaExecucao().getLabHours()
+                    .doubleValue())
+                result
+                        .setMessageType(InfoShiftServiceResult.LAB_HOURS_LIMIT_REACHED);
+            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao()
+                    .getLabHours().doubleValue())
+                result
+                        .setMessageType(InfoShiftServiceResult.LAB_HOURS_LIMIT_EXCEEDED);
+        }
 
-		duration = (endHour - beginHour) * 60 + (endMinutes - beginMinutes);
-		return new Integer(duration);
-	}
+        return result;
+    }
 
-	/**
-	 * To change the template for this generated type comment go to
-	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
-	 */
-	public class InvalidLoadException extends FenixServiceException {
+    private double getTotalHoursOfShiftType(ITurno shift)
+            throws ExcepcaoPersistencia {
+        ITurno shiftCriteria = new Turno();
+        shiftCriteria.setNome(shift.getNome());
+        shiftCriteria.setDisciplinaExecucao(shift.getDisciplinaExecucao());
 
-		/**
-		 * 
-		 */
-		private InvalidLoadException() {
-			super();
-		}
+        List lessonsOfShiftType = SuportePersistenteOJB.getInstance()
+                .getITurnoAulaPersistente().readLessonsByShift(shiftCriteria);
 
-		/**
-		 * @param s
-		 */
-		InvalidLoadException(String s) {
-			super(s);
-		}
+        IAula lesson = null;
+        double duration = 0;
+        for (int i = 0; i < lessonsOfShiftType.size(); i++) {
+            lesson = ((ITurnoAula) lessonsOfShiftType.get(i)).getAula();
+            try {
+                lesson.getIdInternal();
+                duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
+            } catch (Exception ex) {
+                // all is ok
+                // the lesson contained a proxy to null.
+            }
+        }
+        return duration;
+    }
 
+    private Integer getLessonDurationInMinutes(IAula lesson) {
+        int beginHour = lesson.getInicio().get(Calendar.HOUR_OF_DAY);
+        int beginMinutes = lesson.getInicio().get(Calendar.MINUTE);
+        int endHour = lesson.getFim().get(Calendar.HOUR_OF_DAY);
+        int endMinutes = lesson.getFim().get(Calendar.MINUTE);
+        int duration = 0;
 
-	}
+        duration = (endHour - beginHour) * 60 + (endMinutes - beginMinutes);
+        return new Integer(duration);
+    }
+
+    /**
+     * To change the template for this generated type comment go to
+     * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+     */
+    public class InvalidLoadException extends FenixServiceException {
+
+        /**
+         *  
+         */
+        private InvalidLoadException() {
+            super();
+        }
+
+        /**
+         * @param s
+         */
+        InvalidLoadException(String s) {
+            super(s);
+        }
+
+    }
 
 }

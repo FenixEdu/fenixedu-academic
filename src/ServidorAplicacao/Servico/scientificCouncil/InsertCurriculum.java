@@ -76,6 +76,7 @@ public class InsertCurriculum implements IServico {
                 throw new InvalidArgumentsServiceException();
             }
             if (curricularCourse.getBasic().equals(basic)) {
+                persistentCurriculum.simpleLockWrite(curriculum);
                 curriculum.setCurricularCourse(curricularCourse);
                 curriculum.setProgram(program);
                 curriculum.setProgramEn(programEn);
@@ -83,12 +84,10 @@ public class InsertCurriculum implements IServico {
                 curriculum.setOperacionalObjectivesEn(operacionalObjectivesEn);
                 curriculum.setGeneralObjectives(generalObjectives);
                 curriculum.setGeneralObjectivesEn(generalObjectivesEn);
-                persistentCurriculum.simpleLockWrite(curriculum);
                 return new Boolean(true);
-            } else {
-                System.out.println("########## FALSE");
-                return new Boolean(false);
             }
+
+            return new Boolean(false);
 
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

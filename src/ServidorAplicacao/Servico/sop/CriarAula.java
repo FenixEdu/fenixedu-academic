@@ -32,68 +32,64 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class CriarAula implements IService
-{
+public class CriarAula implements IService {
 
     /**
      * The actor of this class.
      */
-    public CriarAula()
-    {
+    public CriarAula() {
     }
 
-    public InfoLessonServiceResult run(InfoLesson infoLesson) throws FenixServiceException
-    {
+    public InfoLessonServiceResult run(InfoLesson infoLesson)
+            throws FenixServiceException {
 
         InfoLessonServiceResult result = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ISala sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
+            ISala sala = sp.getISalaPersistente().readByName(
+                    infoLesson.getInfoSala().getNome());
 
             System.out.println("infoLesson.getInfoSala().getNome()= "
                     + infoLesson.getInfoSala().getNome());
             System.out.println("sala= " + sala);
 
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse executionCourseDAO = sp
+                    .getIPersistentExecutionCourse();
 
             IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(infoLesson.getInfoDisciplinaExecucao()
+                    .copyInfoExecutionPeriod2IExecutionPeriod(infoLesson
+                            .getInfoDisciplinaExecucao()
                             .getInfoExecutionPeriod());
 
             IExecutionCourse executionCourse = executionCourseDAO
                     .readByExecutionCourseInitialsAndExecutionPeriod(infoLesson
-                            .getInfoDisciplinaExecucao().getSigla(), executionPeriod);
+                            .getInfoDisciplinaExecucao().getSigla(),
+                            executionPeriod);
 
-            IAula aula = new Aula(infoLesson.getDiaSemana(), infoLesson.getInicio(),
-                    infoLesson.getFim(), infoLesson.getTipo(), sala, executionCourse);
+            IAula aula = new Aula(infoLesson.getDiaSemana(), infoLesson
+                    .getInicio(), infoLesson.getFim(), infoLesson.getTipo(),
+                    sala, executionCourse);
 
             result = validTimeInterval(aula);
-            if (result.getMessageType() == 1) { throw new InvalidTimeIntervalServiceException(); }
+            if (result.getMessageType() == 1) {
+                throw new InvalidTimeIntervalServiceException();
+            }
 
             boolean resultB = validNoInterceptingLesson(aula, executionPeriod);
 
-            if (result.isSUCESS() && resultB)
-            {
-                try
-                {
+            if (result.isSUCESS() && resultB) {
+                try {
                     sp.getIAulaPersistente().simpleLockWrite(aula);
-                }
-                catch (ExistingPersistentException ex)
-                {
+                } catch (ExistingPersistentException ex) {
 
                     throw new ExistingServiceException(ex);
                 }
-            }
-            else
-            {
+            } else {
                 result.setMessageType(2);
             }
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
 
             throw new FenixServiceException(ex.getMessage());
         }
@@ -105,48 +101,38 @@ public class CriarAula implements IService
      * @param aula
      * @return InfoLessonServiceResult
      */
-    private boolean validNoInterceptingLesson(IAula lesson, IExecutionPeriod executionPeriod)
-            throws ExistingServiceException, InterceptingServiceException
-    {
+    private boolean validNoInterceptingLesson(IAula lesson,
+            IExecutionPeriod executionPeriod) throws ExistingServiceException,
+            InterceptingServiceException {
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IAulaPersistente persistentLesson = sp.getIAulaPersistente();
 
-            List lessonMatchList = persistentLesson.readLessonsInBroadPeriod(lesson, null,
-                    executionPeriod);
+            List lessonMatchList = persistentLesson.readLessonsInBroadPeriod(
+                    lesson, null, executionPeriod);
 
-            if (lessonMatchList.size() > 0)
-            {
-                if (lessonMatchList.contains(lesson))
-                {
+            if (lessonMatchList.size() > 0) {
+                if (lessonMatchList.contains(lesson)) {
                     throw new ExistingServiceException();
                 }
-                else
-                {
-                    throw new InterceptingServiceException();
-                }
+                throw new InterceptingServiceException();
             }
-            else
-            {
-                return true;
-            }
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+            return true;
+
+        } catch (ExcepcaoPersistencia e) {
             return false;
         }
     }
 
-    private InfoLessonServiceResult validTimeInterval(IAula lesson)
-    {
+    private InfoLessonServiceResult validTimeInterval(IAula lesson) {
         InfoLessonServiceResult result = new InfoLessonServiceResult();
 
-        if (lesson.getInicio().getTime().getTime() >= lesson.getFim().getTime().getTime())
-        {
-            result.setMessageType(InfoLessonServiceResult.INVALID_TIME_INTERVAL);
+        if (lesson.getInicio().getTime().getTime() >= lesson.getFim().getTime()
+                .getTime()) {
+            result
+                    .setMessageType(InfoLessonServiceResult.INVALID_TIME_INTERVAL);
         }
 
         return result;

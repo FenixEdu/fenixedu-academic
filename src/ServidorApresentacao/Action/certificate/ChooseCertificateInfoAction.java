@@ -94,7 +94,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 			session.setAttribute(SessionConstants.CERTIFICATE_LIST, new CertificateList().toArrayList());
 			
 			return mapping.findForward("PrepareReady");
-		  } else
+		  } 
 			throw new Exception();   
 
 	}
@@ -159,7 +159,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 				throw new NonExistingActionException("O aluno");
 			}
 				
-			else {
+		
 				
 			try {
 				if (certificateString.equals( "Fim de curso de Mestrado discriminada com média") || certificateString.equals("Fim de curso de Mestrado simples"))
@@ -223,9 +223,9 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 					session.setAttribute(SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION,infoMasterDegreeThesisDataVersion);
 					session.setAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY,infoMasterDegreeProofVersion);
 					return mapping.findForward("ChooseSuccess"); 
-			}
 			
-		  } else
+			
+		  }
 		  throw new Exception();   
 	  }
 

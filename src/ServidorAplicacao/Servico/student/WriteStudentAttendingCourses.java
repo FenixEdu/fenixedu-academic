@@ -99,9 +99,9 @@ public class WriteStudentAttendingCourses implements IService {
                 if (executionCourse == null) {
 
                     throw new FenixServiceException("nullExecutionCourseId");
-                } else {
+                } 
                     wantedAttendingCourses.add(executionCourse);
-                }
+                
             }
 
             //Delete all courses the student is currently attending to that

@@ -28,7 +28,6 @@ import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
 import DataBeans.InfoSection;
 import DataBeans.InfoSectionWithAll;
-import DataBeans.InfoSectionWithSuperiorSection;
 import DataBeans.InfoShift;
 import DataBeans.InfoSite;
 import DataBeans.InfoSiteAnnouncement;

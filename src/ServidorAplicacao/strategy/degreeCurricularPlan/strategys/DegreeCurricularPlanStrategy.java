@@ -60,8 +60,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		{
 			return MarkType.getMarks(degreeCurricularPlan.getMarkType()).contains(mark);
 		}
-		else
-		{
+		
 			boolean result = false;
 			StringTokenizer st = new StringTokenizer(mark, ".");
 
@@ -87,7 +86,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 				}
 			}
 			return result;
-		}
+		
 	}
 
 	public Double calculateStudentRegularAverage(IStudentCurricularPlan studentCurricularPlan)

@@ -23,97 +23,91 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Luis Cruz
  *  
  */
-public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService
-{
+public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService {
 
-    public RemoveStudentFromFinalDegreeWorkStudentGroup()
-    {
+    public RemoveStudentFromFinalDegreeWorkStudentGroup() {
         super();
     }
 
-    public boolean run(String username, Integer groupOID, Integer studentToRemoveID) throws ExcepcaoPersistencia, FenixServiceException
-    {
-        ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport.getIPersistentFinalDegreeWork();
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
+    public boolean run(String username, Integer groupOID,
+            Integer studentToRemoveID) throws ExcepcaoPersistencia,
+            FenixServiceException {
+        ISuportePersistente persistentSupport = SuportePersistenteOJB
+                .getInstance();
+        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
+                .getIPersistentFinalDegreeWork();
+        IPersistentStudent persistentStudent = persistentSupport
+                .getIPersistentStudent();
 
-        IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
+        IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(
+                Group.class, groupOID);
         IStudent student = persistentStudent.readByUsername(username);
-        if (group == null
-                || student == null
+        if (group == null || student == null
                 || group.getGroupStudents() == null
-                || student.getIdInternal().equals(studentToRemoveID))
-        {
+                || student.getIdInternal().equals(studentToRemoveID)) {
             return false;
-        } else
-        {
-            if (!group.getGroupProposals().isEmpty())
-            {
-                throw new GroupProposalCandidaciesExistException();
-            }
-
-            PREDICATE_FILTER_STUDENT_ID predicate = new PREDICATE_FILTER_STUDENT_ID(studentToRemoveID);
-            for (int i = 0; i < group.getGroupStudents().size(); i++)
-            {
-                IGroupStudent groupStudent = (IGroupStudent) group.getGroupStudents().get(i);
-                if (!predicate.evaluate(groupStudent))
-                {
-                    persistentFinalDegreeWork.deleteByOID(GroupStudent.class, groupStudent.getIdInternal());
-                }
-            }
-            return true;
         }
+        if (!group.getGroupProposals().isEmpty()) {
+            throw new GroupProposalCandidaciesExistException();
+        }
+
+        PREDICATE_FILTER_STUDENT_ID predicate = new PREDICATE_FILTER_STUDENT_ID(
+                studentToRemoveID);
+        for (int i = 0; i < group.getGroupStudents().size(); i++) {
+            IGroupStudent groupStudent = (IGroupStudent) group
+                    .getGroupStudents().get(i);
+            if (!predicate.evaluate(groupStudent)) {
+                persistentFinalDegreeWork.deleteByOID(GroupStudent.class,
+                        groupStudent.getIdInternal());
+            }
+        }
+        return true;
+
     }
 
-    private class PREDICATE_FILTER_STUDENT_ID implements Predicate
-    {
+    private class PREDICATE_FILTER_STUDENT_ID implements Predicate {
         Integer studentID;
 
-        public boolean evaluate(Object arg0)
-        {
+        public boolean evaluate(Object arg0) {
             IGroupStudent groupStudent = (IGroupStudent) arg0;
-            if (groupStudent != null && groupStudent.getStudent() != null && studentID != null
-                    && !studentID.equals(groupStudent.getStudent().getIdInternal()))
-            {
+            if (groupStudent != null
+                    && groupStudent.getStudent() != null
+                    && studentID != null
+                    && !studentID.equals(groupStudent.getStudent()
+                            .getIdInternal())) {
                 return true;
-            } else
-            {
-                return false;
             }
+            return false;
+
         }
 
-        public PREDICATE_FILTER_STUDENT_ID(Integer studentID)
-        {
+        public PREDICATE_FILTER_STUDENT_ID(Integer studentID) {
             super();
             this.studentID = studentID;
         }
     }
 
-    public class GroupProposalCandidaciesExistException extends FenixServiceException
-    {
+    public class GroupProposalCandidaciesExistException extends
+            FenixServiceException {
 
-        public GroupProposalCandidaciesExistException()
-        {
+        public GroupProposalCandidaciesExistException() {
             super();
         }
 
-        public GroupProposalCandidaciesExistException(int errorType)
-        {
+        public GroupProposalCandidaciesExistException(int errorType) {
             super(errorType);
         }
 
-        public GroupProposalCandidaciesExistException(String s)
-        {
+        public GroupProposalCandidaciesExistException(String s) {
             super(s);
         }
 
-        public GroupProposalCandidaciesExistException(Throwable cause)
-        {
+        public GroupProposalCandidaciesExistException(Throwable cause) {
             super(cause);
         }
 
-        public GroupProposalCandidaciesExistException(String message, Throwable cause)
-        {
+        public GroupProposalCandidaciesExistException(String message,
+                Throwable cause) {
             super(message, cause);
         }
     }

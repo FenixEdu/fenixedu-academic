@@ -74,10 +74,9 @@ public abstract class FenixDispatchAction extends DispatchAction
         {
             return mapping.findForward(forwardPage);
         }
-        else
-        {
+        
             return mapping.getInputForward();
-        }
+        
     }
     
     /*
@@ -90,10 +89,9 @@ public abstract class FenixDispatchAction extends DispatchAction
         {
             return true;
         }
-        else
-        {
+        
         	return false;
-        }
+        
     }
     
     /*
@@ -106,9 +104,8 @@ public abstract class FenixDispatchAction extends DispatchAction
     	{
     		return true;
     	}
-    	else
-    	{
+    	
     		return false;
-    	}
+    	
     }
 }

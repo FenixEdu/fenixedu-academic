@@ -104,12 +104,12 @@ public class UnEnrollStudentInExam implements IServico {
             Calendar now = Calendar.getInstance();
             if (enrollmentEnd.getTimeInMillis() > now.getTimeInMillis()) {
                 return true;
-            } else {
-                return false;
             }
-        } else {
             return false;
+
         }
+        return false;
+
     }
 
 }

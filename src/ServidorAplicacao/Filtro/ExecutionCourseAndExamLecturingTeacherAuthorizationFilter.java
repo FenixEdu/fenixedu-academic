@@ -152,9 +152,8 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends
 
             if (executionCourse != null && exam != null) {
                 return executionCourse.getAssociatedExams().contains(exam);
-            } else {
-                return false;
             }
+            return false;
 
         } catch (Exception e) {
             return false;

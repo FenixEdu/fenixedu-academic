@@ -99,9 +99,9 @@ public class DeleteTeacher implements IServico {
             if (responsibleFor != null) {
                 if (!canDeleteResponsibleFor()) {
                     throw new notAuthorizedServiceDeleteException();
-                } else {
+                } 
                     responsibleForDAO.delete(responsibleFor);
-                }
+                
 
             }
 
@@ -118,9 +118,9 @@ public class DeleteTeacher implements IServico {
             } else {
                 if (!shiftProfessorshipList.isEmpty()) {
                     throw new ExistingShiftProfessorship();
-                } else {
+                } 
                     throw new ExistingSupportLesson();
-                }
+                
 
             }
 

@@ -250,7 +250,7 @@ public class InsertDistributedTest implements IService {
 			for (int i = 0; i < shifts.length; i++) {
 				if (shifts[i].equals("Todos os Turnos")) {
 					continue;
-				} else {
+				} 
 					ITurno shift = (ITurno) persistentShift.readByOID(
 							Turno.class, new Integer(shifts[i]));
 					Iterator studentIt = persistentSuport
@@ -261,7 +261,7 @@ public class InsertDistributedTest implements IService {
 						if (!studentsList.contains(student))
 							studentsList.add(student);
 					}
-				}
+				
 			}
 		} catch (Exception e) {
 			throw new FenixServiceException(e);
@@ -288,13 +288,13 @@ public class InsertDistributedTest implements IService {
 						studentsList.add(student);
 					}
 					break;
-				} else {
+				} 
 					IStudent student = (IStudent) persistentSuport
 							.getIPersistentStudent().readByOID(Student.class,
 									new Integer(students[i]));
 					if (!studentsList.contains(student))
 						studentsList.add(student);
-				}
+				
 			}
 		} catch (Exception e) {
 			throw new FenixServiceException(e);

@@ -67,11 +67,10 @@ public class EditCurriculum implements IServico {
                 curriculum.setGeneralObjectives(generalObjectives);
                 curriculum.setGeneralObjectivesEn(generalObjectivesEn);
                 return new Boolean(true);
-            } else {
-                return new Boolean(false);
             }
+            return new Boolean(false);
 
-            //TODO: KEEP STORY OF CURRICULAR INFORMATION
+            //TODO: KEEP HISTORY OF CURRICULAR INFORMATION
 
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

@@ -112,9 +112,9 @@ public class ServiceDiscriptorProperty2XML extends FileUtil {
 			serviceDescriptor += "\t</service>\n";
 
 			return serviceDescriptor;
-		} else {
+		} 
 			return new String();
-		}
+		
 	}
 
 	/*

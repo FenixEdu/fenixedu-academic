@@ -38,8 +38,9 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
                 .getIPersistentFinalDegreeWork();
         IPersistentStudent persistentStudent = persistentSupport
                 .getIPersistentStudent();
-//        IStudentCurricularPlanPersistente studentCurricularPlanPersistente = persistentSupport
-//                .getIStudentCurricularPlanPersistente();
+        //        IStudentCurricularPlanPersistente studentCurricularPlanPersistente =
+        // persistentSupport
+        //                .getIStudentCurricularPlanPersistente();
         IPersistentEnrolment persistentEnrolment = persistentSupport
                 .getIPersistentEnrolment();
 
@@ -52,36 +53,38 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
                 || CollectionUtils.find(group.getGroupStudents(),
                         new PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(student)) != null) {
             return false;
-        } else {
-            IScheduleing scheduleing = persistentFinalDegreeWork
-                    .readFinalDegreeWorkScheduleing(group.getExecutionDegree()
-                            .getIdInternal());
-
-            if (scheduleing == null
-                    || scheduleing.getMaximumNumberOfStudents() == null) {
-                throw new MaximumNumberOfStudentsUndefinedException();
-            } else if (scheduleing.getMinimumNumberOfCompletedCourses() == null) {
-                throw new MinimumNumberOfCompletedCoursesUndefinedException();
-            } else if (scheduleing.getMaximumNumberOfStudents().intValue() <= group
-                    .getGroupStudents().size()) {
-                throw new MaximumNumberOfStudentsReachedException(scheduleing
-                        .getMaximumNumberOfStudents().toString());
-            } else {
-                int numberOfCompletedCourses = persistentEnrolment
-                        .countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student);
-
-                if (numberOfCompletedCourses < scheduleing
-                        .getMinimumNumberOfCompletedCourses().intValue()) { throw new MinimumNumberOfCompletedCoursesNotReachedException(
-                        scheduleing.getMinimumNumberOfCompletedCourses()
-                                .toString()); }
-            }
-
-            IGroupStudent groupStudent = new GroupStudent();
-            persistentFinalDegreeWork.simpleLockWrite(groupStudent);
-            groupStudent.setStudent(student);
-            groupStudent.setFinalDegreeDegreeWorkGroup(group);
-            return true;
         }
+        IScheduleing scheduleing = persistentFinalDegreeWork
+                .readFinalDegreeWorkScheduleing(group.getExecutionDegree()
+                        .getIdInternal());
+
+        if (scheduleing == null
+                || scheduleing.getMaximumNumberOfStudents() == null) {
+            throw new MaximumNumberOfStudentsUndefinedException();
+        } else if (scheduleing.getMinimumNumberOfCompletedCourses() == null) {
+            throw new MinimumNumberOfCompletedCoursesUndefinedException();
+        } else if (scheduleing.getMaximumNumberOfStudents().intValue() <= group
+                .getGroupStudents().size()) {
+            throw new MaximumNumberOfStudentsReachedException(scheduleing
+                    .getMaximumNumberOfStudents().toString());
+        } else {
+            int numberOfCompletedCourses = persistentEnrolment
+                    .countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student);
+
+            if (numberOfCompletedCourses < scheduleing
+                    .getMinimumNumberOfCompletedCourses().intValue()) {
+                throw new MinimumNumberOfCompletedCoursesNotReachedException(
+                        scheduleing.getMinimumNumberOfCompletedCourses()
+                                .toString());
+            }
+        }
+
+        IGroupStudent groupStudent = new GroupStudent();
+        persistentFinalDegreeWork.simpleLockWrite(groupStudent);
+        groupStudent.setStudent(student);
+        groupStudent.setFinalDegreeDegreeWorkGroup(group);
+        return true;
+
     }
 
     public class MaximumNumberOfStudentsUndefinedException extends

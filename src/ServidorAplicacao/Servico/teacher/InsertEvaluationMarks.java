@@ -229,10 +229,10 @@ public class InsertEvaluationMarks implements IServico {
 
         if (mark == null || mark.length() == 0) {
             return true;
-        } else {
+        } 
             return degreeCurricularPlanStrategy.checkMark(mark, Cloner
                     .copyIEvaluation2InfoEvaluation(evaluation)
                     .getEvaluationType());
-        }
+        
     }
 }

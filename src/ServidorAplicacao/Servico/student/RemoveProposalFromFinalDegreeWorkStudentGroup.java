@@ -53,10 +53,9 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup implements IService
             persistentFinalDegreeWork.simpleLockWrite(group);
             group.getGroupProposals().remove(groupProposal);
             return true;
-        } else
-        {
+        } 
             return false;
-        }
+        
     }
 
     private class PREDICATE_FIND_BY_ID implements Predicate

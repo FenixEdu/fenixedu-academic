@@ -142,8 +142,7 @@ public class EditarAula implements IServico {
      * (lessonMatchList.size() >1 && lessonMatchList.contains(lesson))) {
      * 
      * return false; } else { return true; } } catch (ExcepcaoPersistencia e) {
-     * return false;
-     *  } }
+     * return false; } }
      */
 
     private boolean validNoInterceptingLesson(IAula newLesson, IAula oldLesson,
@@ -161,12 +160,12 @@ public class EditarAula implements IServico {
             if (lessonMatchList.size() > 0) {
                 if (lessonMatchList.contains(newLesson)) {
                     throw new ExistingServiceException();
-                } else {
-                    throw new InterceptingServiceException();
                 }
-            } else {
-                return true;
+                throw new InterceptingServiceException();
+
             }
+            return true;
+
         } catch (ExcepcaoPersistencia e) {
             return false;
         }

@@ -66,7 +66,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction
 
             return mapping.findForward("PrepareReady");
         }
-        else
+        
             throw new Exception();
 
     }
@@ -134,8 +134,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction
             {
                 throw new NonExistingActionException("O Aluno");
             }
-            else
-            {
+         
                 InfoFinalResult infoFinalResult = null;
                 try
                 {
@@ -154,8 +153,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                 {
                     throw new FinalResulUnreachedActionException("");
                 }
-                else
-                {
+               
                     try
                     {
                         Object args[] = { infoStudentCurricularPlan, EnrolmentState.APROVED };
@@ -175,8 +173,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                     {
                         throw new NonExistingActionException("Inscrição em Disciplinas");
                     }
-                    else
-                    {
+                    
                         //check the last exam date
                         //                        InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
 
@@ -308,12 +305,12 @@ public class ChooseFinalResultInfoAction extends DispatchAction
 
                         return mapping.findForward("ChooseSuccess");
 
-                    }
+                    
                 }
-            }
+            
 
-        }
-        else
+        
+        
             throw new Exception();
     }
 }

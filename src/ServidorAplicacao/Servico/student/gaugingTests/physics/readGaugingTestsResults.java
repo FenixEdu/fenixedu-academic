@@ -65,10 +65,9 @@ public class readGaugingTestsResults implements IService
                     Cloner.copyIGaugingTestResult2IngoGaugingTestResult(gaugingTestsResult);
                 return infoGaugingTestResult;
             }
-            else
-            {
+          
                 return null;
-            }
+            
 
         }
         catch (ExcepcaoPersistencia e)

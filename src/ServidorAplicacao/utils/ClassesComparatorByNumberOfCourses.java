@@ -63,7 +63,7 @@ public class ClassesComparatorByNumberOfCourses implements Comparator {
 		
 		if (list == null) {
 			return null;
-		} else {
+		} 
 			Iterator iter = list.iterator();
 			List executionCourses = new ArrayList();
 			while (iter.hasNext()) {
@@ -71,7 +71,7 @@ public class ClassesComparatorByNumberOfCourses implements Comparator {
 				executionCourses.add(shift.getDisciplinaExecucao());
 			}
 			return executionCourses;
-		}
+		
 
 	}
 

@@ -18,74 +18,61 @@ import Util.PeriodState;
  * @author Luis Crus & Sara Ribeiro
  */
 
-public class AlterExecutionPeriodState implements IService
-{
-
-    
+public class AlterExecutionPeriodState implements IService {
 
     /**
      * The actor of this class.
      */
-    public AlterExecutionPeriodState()
-    {
+    public AlterExecutionPeriodState() {
     }
 
-   
-
-    public Boolean run(InfoExecutionPeriod infoExecutionPeriod, PeriodState periodState)
-            throws FenixServiceException
-    {
+    public Boolean run(InfoExecutionPeriod infoExecutionPeriod,
+            PeriodState periodState) throws FenixServiceException {
 
         Boolean result = new Boolean(false);
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-            IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+            IPersistentExecutionPeriod executionPeriodDAO = sp
+                    .getIPersistentExecutionPeriod();
+            IPersistentExecutionYear executionYearDAO = sp
+                    .getIPersistentExecutionYear();
 
-            IExecutionPeriod executionPeriod = executionPeriodDAO.readBySemesterAndExecutionYear(
-                    infoExecutionPeriod.getSemester(), executionYearDAO
-                            .readExecutionYearByName(infoExecutionPeriod.getInfoExecutionYear()
-                                    .getYear()));
+            IExecutionPeriod executionPeriod = executionPeriodDAO
+                    .readBySemesterAndExecutionYear(infoExecutionPeriod
+                            .getSemester(), executionYearDAO
+                            .readExecutionYearByName(infoExecutionPeriod
+                                    .getInfoExecutionYear().getYear()));
 
-            if (executionPeriod == null)
-            {
+            if (executionPeriod == null) {
                 throw new InvalidExecutionPeriod();
             }
-            else
-            {
-                System.out.println("periodState.getStateCode()= " + periodState.getStateCode());
-                if (periodState.getStateCode().equals(PeriodState.CURRENT))
-                {
-                    // Deactivate the current
-                    IExecutionPeriod currentExecutionPeriod = executionPeriodDAO
-                            .readActualExecutionPeriod();
-                    executionPeriodDAO.simpleLockWrite(currentExecutionPeriod);
-                    currentExecutionPeriod.setState(new PeriodState(PeriodState.OPEN));
-                }
 
-                executionPeriodDAO.simpleLockWrite(executionPeriod);
-                executionPeriod.setState(periodState);
+            if (periodState.getStateCode().equals(PeriodState.CURRENT)) {
+                // Deactivate the current
+                IExecutionPeriod currentExecutionPeriod = executionPeriodDAO
+                        .readActualExecutionPeriod();
+                executionPeriodDAO.simpleLockWrite(currentExecutionPeriod);
+                currentExecutionPeriod.setState(new PeriodState(
+                        PeriodState.OPEN));
             }
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+
+            executionPeriodDAO.simpleLockWrite(executionPeriod);
+            executionPeriod.setState(periodState);
+
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex.getMessage());
         }
 
         return result;
     }
 
-    
-    public class InvalidExecutionPeriod extends FenixServiceException
-    {
+    public class InvalidExecutionPeriod extends FenixServiceException {
 
         /**
-         * 
+         *  
          */
-        InvalidExecutionPeriod()
-        {
+        InvalidExecutionPeriod() {
             super();
         }
 
