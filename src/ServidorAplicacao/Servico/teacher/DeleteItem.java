@@ -2,6 +2,11 @@ package ServidorAplicacao.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.slide.common.SlideException;
+
+import fileSuport.FileSuport;
+import fileSuport.IFileSuport;
+
 import Dominio.IItem;
 import Dominio.Item;
 import ServidorAplicacao.IServico;
@@ -41,6 +46,13 @@ public class DeleteItem implements IServico {
 
 			Integer orderOfDeletedItem = deletedItem.getItemOrder();
 			persistentItem.delete(deletedItem);
+			IFileSuport fileSuport = FileSuport.getInstance();
+			try {
+				fileSuport.deleteFolder(deletedItem.getSlideName());
+			} catch (SlideException e1) {
+				System.out.println("não consegui apagar os ficheiros do item");
+			}
+			
 			persistentSuport.confirmarTransaccao();
 			persistentSuport.iniciarTransaccao();
 
