@@ -32,7 +32,7 @@ public class SituationName {
     public static final String PENDENTE_STRING = "Pendente";
     public static final String ADMITIDO_STRING = "Admitido";
     public static final String SUPLENTE_STRING = "Suplente";
-    public static final String NAO_ACEITE_STRING = "Não Aceite";
+    public static final String NAO_ACEITE_STRING = "Não Admitido";
     public static final String DESISTIU_STRING = "Desistiu";
     public static final String SUPRA_NUMERARIO_STRING = "Supra Numerário";
     public static final String EXTRAORDINARIO_STRING = "Extraordinário";
