@@ -1,6 +1,4 @@
-INSERT INTO ENROLMENT_PERIOD (ID_INTERNAL, KEY_DEGREE_CURRICULAR_PLAN, KEY_EXECUTION_PERIOD, START_DATE, END_DATE, ACK_OPT_LOCK) VALUES (1, 48, 80, '2004-02-16', '2004-02-25', 1);
-UPDATE EXECUTION_PERIOD SET STATE = 'O' WHERE ID_INTERNAL = 2;
-UPDATE EXECUTION_PERIOD SET STATE = 'C' WHERE ID_INTERNAL = 80;
+ALTER TABLE RESTRICTION ADD PERIOD_TO_APPLY int(11) default null;
 
 -- -------------------------------------------------------------------------------------------------------------------------
 
@@ -231,10 +229,6 @@ UPDATE CURRICULAR_COURSE SET MANDATORY = 0 WHERE ID_INTERNAL = 2766;
 -- -------------------------------------------------------------------------------------------------------------------------
 
 UPDATE CURRICULAR_COURSE SET CREDITS = 4 WHERE KEY_DEGREE_CURRICULAR_PLAN = 48;
-
--- -------------------------------------------------------------------------------------------------------------------------
-
-ALTER TABLE RESTRICTION ADD PERIOD_TO_APPLY int(11) default null;
 
 -- -------------------------------------------------------------------------------------------------------------------------
 
