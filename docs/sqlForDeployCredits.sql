@@ -22,4 +22,4 @@ create table crd_EXEMPTION_SITUATION_CREDIT_LINE(
    primary key (ID_INTERNAL)
 )type=InnoDB;   
 
-#insert into PERSON_ROLE (key_person, key_role) values (<person id>, 13);
+#

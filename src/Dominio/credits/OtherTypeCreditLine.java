@@ -13,6 +13,7 @@ public class OtherTypeCreditLine extends CreditLine implements IOtherTypeCreditL
     private IExecutionPeriod executionPeriod;
     private String reason;
     private Double credits;
+    private Integer keyExecutionPeriod;
 
     public OtherTypeCreditLine()
     {
@@ -75,6 +76,22 @@ public class OtherTypeCreditLine extends CreditLine implements IOtherTypeCreditL
     public void setCredits(Double credits)
     {
         this.credits = credits;
+    }
+
+    /**
+     * @return Returns the keyExecutionPeriod.
+     */
+    public Integer getKeyExecutionPeriod()
+    {
+        return keyExecutionPeriod;
+    }
+
+    /**
+     * @param keyExecutionPeriod The keyExecutionPeriod to set.
+     */
+    public void setKeyExecutionPeriod(Integer keyExecutionPeriod)
+    {
+        this.keyExecutionPeriod = keyExecutionPeriod;
     }
 
 }

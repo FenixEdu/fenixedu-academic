@@ -12,6 +12,7 @@ import Dominio.ITeacher;
 public abstract class CreditLine extends DomainObject implements ICreditLine
 {
     private ITeacher teacher;
+    private Integer keyTeacher;
     /**
      * @param idInternal
      */
@@ -41,6 +42,22 @@ public abstract class CreditLine extends DomainObject implements ICreditLine
     public void setTeacher(ITeacher teacher)
     {
         this.teacher = teacher;
+    }
+
+    /**
+     * @return Returns the keyTeacher.
+     */
+    public Integer getKeyTeacher()
+    {
+        return keyTeacher;
+    }
+
+    /**
+     * @param keyTeacher The keyTeacher to set.
+     */
+    public void setKeyTeacher(Integer keyTeacher)
+    {
+        this.keyTeacher = keyTeacher;
     }
 
 }

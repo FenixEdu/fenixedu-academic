@@ -71,8 +71,8 @@
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
-      <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER" access="anonymous"/>
-	  <field-descriptor name="keyExecutionPeriod" column="KEY_EXECUTION_PERIOD" jdbc-type="INTEGER" access="anonymous" />
+      <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+	  <field-descriptor name="keyExecutionPeriod" column="KEY_EXECUTION_PERIOD" jdbc-type="INTEGER"/>
 
       <field-descriptor name="credits" column="CREDITS" jdbc-type="DOUBLE"/>
       <field-descriptor name="reason" column="REASON" jdbc-type="VARCHAR"/>
@@ -96,7 +96,7 @@
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
-      <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER" access="anonymous"/>
+      <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 
       <field-descriptor name="type" column="TYPE" jdbc-type="INTEGER" conversion="ServidorPersistente.Conversores.ServiceExemptionTypeFieldConversion"/>
 
@@ -114,7 +114,7 @@
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
-      <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER" access="anonymous"/>
+      <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 
       <field-descriptor name="position" column="POSITION" jdbc-type="VARCHAR"/>
 
