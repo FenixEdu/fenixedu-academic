@@ -4,6 +4,8 @@
 
 package ServidorApresentacao.Action.grant.owner;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,30 +38,28 @@ public class ManageGrantOwnerAction extends DispatchAction
         HttpServletResponse response)
         throws Exception
     {
-        //Integer grantOwnerId = (Integer)request.getAttribute("grantOwnerId");
-        Integer grantOwnerId = new Integer(21);
+        Integer idInternal = new Integer(request.getParameter("idInternal"));
         InfoGrantOwner infoGrantOwner = null;
-        
-        if(grantOwnerId == null)
+
+        if (idInternal.intValue() == 0)
         {
             //ERRO!!!!!
         }
-        
-		Object[] args = { grantOwnerId };
-		IUserView userView = SessionUtils.getUserView(request);
-		infoGrantOwner = (InfoGrantOwner)ServiceUtils.executeService(userView, "ReadGrantOwner", args);
-        
-		if(infoGrantOwner != null)
-		{
-		    request.setAttribute("infoGrantOwner",infoGrantOwner);
-		}
-		else
-		{
-		    request.setAttribute("duh","duh");
-		}
-		
-		//Faltam os contratos
-		
-		return mapping.findForward("manage-grant-owner");
+
+        Object[] args = { idInternal };
+        IUserView userView = SessionUtils.getUserView(request);
+        infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService(userView, "ReadGrantOwner", args);
+
+        if (infoGrantOwner != null)
+            request.setAttribute("infoGrantOwner", infoGrantOwner);
+
+        //Ler contractos
+        List infoGrantContractList =
+            (List) ServiceUtils.executeService(userView, "ReadAllContractsByGrantOwner", args);
+
+        if (infoGrantContractList != null || !infoGrantContractList.isEmpty())
+            request.setAttribute("infoGrantContractList", infoGrantContractList);
+
+        return mapping.findForward("manage-grant-owner");
     }
 }

@@ -7,8 +7,7 @@
 		<!-- ========== Data Source Configuration =============================== -->
 	
 		<!-- ========== Form Bean Definitions ================================== -->
-		<form-beans type="org.apache.struts.action.ActionFormBean">  
-		
+		<form-beans type="org.apache.struts.action.ActionFormBean">
 			<!-- Form vazio -->
 			<form-bean name="voidForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -44,7 +43,7 @@
 				<form-property name="fatherName" type="java.lang.String"/>				
 				<form-property name="motherName" type="java.lang.String"/>				
 				<form-property name="nationality" type="java.lang.String"/>												
-				<form-property name="country" type="java.lang.String"/>				
+				<form-property name="country" type="java.lang.Integer"/>				
 				<form-property name="parishOfBirth" type="java.lang.String"/>				
 				<form-property name="districtSubBirth" type="java.lang.String"/>				
 				<form-property name="districtBirth" type="java.lang.String"/>				
@@ -63,7 +62,7 @@
 				<form-property name="profession" type="java.lang.String"/>				
 				<form-property name="fiscalCode" type="java.lang.String"/>								
 				<form-property name="sex" type="java.lang.Integer"/>				
-				<form-property name="maritalStatus" type="java.lang.Integer"/>												
+				<form-property name="maritalStatus" type="java.lang.Integer"/>				
 			</form-bean>
 			
     </form-beans>
@@ -136,7 +135,7 @@
    			type="ServidorApresentacao.Action.grant.owner.EditGrantOwnerAction">
    			<forward name="edit-grant-owner-form" path="editGrantOwnerForm"/>
    			<forward name="grant-owner-main" path="searchGrantOwnerForm"/>
-  			<forward name="manage-grant-owner" path="manageGrantOwner"/> 
+  			<forward name="manage-grant-owner" path="/manageGrantOwner.do?method=prepareManageGrantOwner"/> 
     </action>
 
     <!-- ================================================================================= -->

@@ -1,5 +1,7 @@
 package ServidorPersistente.OJB.grant.contract;
 
+import java.util.List;
+
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.grant.contract.GrantContract;
@@ -34,9 +36,17 @@ public class GrantContractOJB
         grantContract = (IGrantContract) queryObject(GrantContract.class, criteria);
         return grantContract;
     }
+    
+    public List readAllContractsByGrantOwner(Integer grantOwnerId) throws ExcepcaoPersistencia
+    {
+		List contractsList = null;
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("key_grant_owner", grantOwnerId);
+		contractsList = queryList(GrantContract.class,criteria);
+		return contractsList;
+    }
 
-    public Integer readMaxGrantContractNumberByGrantOwner(Integer grantOwnerId)
-        throws ExcepcaoPersistencia
+    public Integer readMaxGrantContractNumberByGrantOwner(Integer grantOwnerId) throws ExcepcaoPersistencia
     {
         IGrantContract grantContract = new GrantContract();
         Integer maxGrantContractNumber = new Integer(0);

@@ -38,8 +38,8 @@ public class EditGrantOwnerAction extends DispatchAction
 {
 
     /*
-     * Fills the form with the correspondent data
-     */
+	 * Fills the form with the correspondent data
+	 */
     public ActionForward prepareEditGrantOwnerForm(
         ActionMapping mapping,
         ActionForm form,
@@ -54,12 +54,12 @@ public class EditGrantOwnerAction extends DispatchAction
         personUsername = request.getParameter("personUsername");
         if (request.getParameter("idInternal") != null)
             idInternal = new Integer(request.getParameter("idInternal"));
-
+        
         /*
-         * 3 cases: personId and idInternal not null = grant owner exists personId not null and
-         * idInternal null = person exists, but grant owner doesn't personId and idInternal null =
-         * person doesn't exists
-         */
+		 * 3 cases: personId and idInternal not null = grant owner exists personId not null and
+		 * idInternal null = person exists, but grant owner doesn't personId and idInternal null =
+		 * person doesn't exists
+		 */
         if (idInternal != null)
         {
             //Read the grant owner
@@ -69,8 +69,7 @@ public class EditGrantOwnerAction extends DispatchAction
                     SessionUtils.getUserView(request),
                     "ReadGrantOwner",
                     args);
-            request.setAttribute("infoGrantOwner", infoGrantOwner);
-            return mapping.findForward("manage-grant-owner-form");
+
         } else if (personUsername != null)
         {
             //Read the person
@@ -85,8 +84,8 @@ public class EditGrantOwnerAction extends DispatchAction
         }
 
         /*
-         * Fill the form (grant owner e person information)
-         */
+		 * Fill the form (grant owner e person information)
+		 */
         DynaValidatorForm grantOwnerInformationForm = (DynaValidatorForm) form;
         if (infoGrantOwner.getIdInternal() != null)
             setFormGrantOwnerInformation(grantOwnerInformationForm, infoGrantOwner);
@@ -96,35 +95,25 @@ public class EditGrantOwnerAction extends DispatchAction
             setFormPersonalInformation(grantOwnerInformationForm, infoGrantOwner);
 
         /*
-         * Tipos de documento de identificação
-         */
+		 * Tipos de documento de identificação
+		 */
         List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
         request.setAttribute("documentTypeList", documentTypeList);
         /*
-         * Tipos de estado civil
-         */
+		 * Tipos de estado civil
+		 */
         List maritalStatusList = EstadoCivil.toIntegerArrayList();
         request.setAttribute("maritalStatusList", maritalStatusList);
         /*
-         * Pais
-         */
+		 * Pais
+		 */
         List countryList =
             (List) ServiceUtils.executeService(
                 SessionUtils.getUserView(request),
                 "ReadAllCountries",
                 null);
         request.setAttribute("countryList", countryList);
-
-        /*
-         * Variaveis da string de procura para o butao back
-         */
-        //String searchName = (String) request.getAttribute("name");
-        //String searchIdNumber = (String) request.getAttribute("idNumber");
-        //Integer searchIdType = (Integer) request.getAttribute("idType");
-        //grantOwnerInformationForm.set("searchName", searchName);
-        //grantOwnerInformationForm.set("searchIdNumber", searchIdNumber);
-        //grantOwnerInformationForm.set("searchIdType", searchIdType);
-
+        
         return mapping.findForward("edit-grant-owner-form");
     }
 
@@ -133,11 +122,15 @@ public class EditGrantOwnerAction extends DispatchAction
         InfoPerson infoPerson = infoGrantOwner.getPersonInfo();
         form.set("name", infoPerson.getNome());
         form.set("idNumber", infoPerson.getNumeroDocumentoIdentificacao());
-        form.set("idType", infoPerson.getTipoDocumentoIdentificacao().getTipo());
+        if(infoPerson.getTipoDocumentoIdentificacao() != null)
+            form.set("idType", infoPerson.getTipoDocumentoIdentificacao().getTipo());
         form.set("idLocation", infoPerson.getLocalEmissaoDocumentoIdentificacao());
-        form.set("idDate", infoPerson.getDataEmissaoDocumentoIdentificacao().toString());
-        form.set("idValidDate", infoPerson.getDataValidadeDocumentoIdentificacao().toString());
-        form.set("birthdate", infoPerson.getNascimento().toString());
+        if(infoPerson.getDataEmissaoDocumentoIdentificacao() != null)
+            form.set("idDate", infoPerson.getDataEmissaoDocumentoIdentificacao().toString());
+        if(infoPerson.getDataValidadeDocumentoIdentificacao() != null)
+            form.set("idValidDate", infoPerson.getDataValidadeDocumentoIdentificacao().toString());
+        if(infoPerson.getNascimento() != null)
+            form.set("birthdate", infoPerson.getNascimento().toString());
         form.set("fatherName", infoPerson.getNomePai());
         form.set("motherName", infoPerson.getNomeMae());
         form.set("nationality", infoPerson.getNacionalidade());
@@ -160,8 +153,8 @@ public class EditGrantOwnerAction extends DispatchAction
         form.set("fiscalCode", infoPerson.getCodigoFiscal());
         form.set("sex", infoPerson.getSexo().getSexo());
         form.set("maritalStatus", infoPerson.getEstadoCivil().getEstadoCivil());
-		if(infoPerson.getInfoPais() != null)
-			form.set("country", infoPerson.getInfoPais().getIdInternal());
+        if (infoPerson.getInfoPais() != null)
+            form.set("country", infoPerson.getInfoPais().getIdInternal());
     }
 
     private void setFormGrantOwnerInformation(DynaValidatorForm form, InfoGrantOwner infoGrantOwner)
@@ -187,11 +180,16 @@ public class EditGrantOwnerAction extends DispatchAction
         IUserView userView = SessionUtils.getUserView(request);
         ServiceUtils.executeService(userView, "CreateGrantOwner", args);
 
-        //Read Grant Owner By Person Id
-        //TODO: service doesn't exist
-        Integer grantOwnerId = new Integer(0);
-        request.setAttribute("grantOwnerId", grantOwnerId);
-
+        //Read the grant owner by person
+        Object[] args2 = { infoGrantOwner.getPersonInfo().getUsername()};
+        infoGrantOwner =
+            (InfoGrantOwner) ServiceUtils.executeService(
+                SessionUtils.getUserView(request),
+                "ReadGrantOwnerByPerson",
+                args2);
+        
+        if(infoGrantOwner != null)
+            request.setAttribute( "idInternal", infoGrantOwner.getIdInternal());       
         ActionForward actionForward = mapping.findForward("manage-grant-owner");
         return actionForward;
     }
@@ -255,7 +253,7 @@ public class EditGrantOwnerAction extends DispatchAction
         estadoCivil.setEstadoCivil((Integer) editGrantOwnerForm.get("maritalStatus"));
         infoPerson.setEstadoCivil(estadoCivil);
         InfoCountry infoCountry = new InfoCountry();
-        infoCountry.setIdInternal((Integer)editGrantOwnerForm.get("country"));
+        infoCountry.setIdInternal((Integer) editGrantOwnerForm.get("country"));
         infoPerson.setInfoPais(infoCountry);
 
         infoGrantOwner.setPersonInfo(infoPerson);
