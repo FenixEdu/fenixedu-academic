@@ -14,11 +14,12 @@
 
 package Util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
 
-public class EstadoCivil {
+public class EstadoCivil implements Serializable {
 
     public static final int SOLTEIRO = 1;
     public static final int CASADO = 2;
