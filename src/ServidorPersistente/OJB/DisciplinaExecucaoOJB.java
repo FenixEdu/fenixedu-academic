@@ -239,7 +239,8 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
 						ICurricularCourse curricularCourse =
 							(ICurricularCourse) iterator2.next();
 							
-//						System.out.println(curricularCourse.getDegreeCurricularPlan().getCurso());
+						//System.out.println("############# curricular course:" +  curricularCourse.getDegreeCurricularPlan().getCurso());
+						//System.out.println("############# execution course:" +  executionDegree.getCurricularPlan().getCurso());
 							
 						if (curricularCourse.getCurricularYear().equals(anoCurricular) &&
 							curricularCourse.getDegreeCurricularPlan().getCurso().equals(executionDegree.getCurricularPlan().getCurso())){

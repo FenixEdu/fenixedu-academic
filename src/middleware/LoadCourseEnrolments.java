@@ -248,7 +248,7 @@ public class LoadCourseEnrolments extends DataFileLoader {
 
 					IDisciplinaExecucao executionCourse =
 						iDisciplinaExecucaoPersistente
-							.readBySiglaAndAnoLectivAndSiglaLicenciatura(
+							.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 							curricularCourse.getCode(),
 							"2002/2003",
 							curricularCourse

@@ -15,9 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoCourseExecutionAndListOfTypeLessonAndInfoShift;
-import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
 import DataBeans.TypeLessonAndInfoShift;
@@ -35,7 +33,6 @@ import Dominio.IStudentCurricularPlan;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
-import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import Dominio.Turma;
 import Dominio.TurmaTurno;
