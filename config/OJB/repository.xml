@@ -15,6 +15,8 @@
 <!ENTITY treasury SYSTEM "repository_coordinator.xml">
 <!ENTITY sopload SYSTEM "repository_sopload.xml">
 <!ENTITY gesdis SYSTEM "repository_gesdis.xml">
+<!ENTITY almeida SYSTEM "repository_almeida.xml">
+<!ENTITY posgrad SYSTEM "repository_posgrad.xml">
 <!ENTITY authentication-roles SYSTEM "repository_authentication_roles.xml">
 ]>
 
@@ -37,5 +39,7 @@
     &sopload;
     &gesdis;
     &authentication-roles;
+    &almeida;
+    &posgrad;
 
 </descriptor-repository>
