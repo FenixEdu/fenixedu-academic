@@ -389,20 +389,7 @@
 		    <replacefilter
 		    	token="@2WEEKS_BEFORE@"
 		    	value="${2weeks_before}"/>
-		</replace>
-		
-		<tstamp>
-         	<format property="today" pattern="yyyy-MM-dd"/>
-		</tstamp>
-		<tstamp>
-	      <format property="week_before" pattern="yyyy-MM-dd"
-              offset="-1" unit="week"/>
-        </tstamp>
-        <tstamp>
-	      <format property="week_before" pattern="yyyy-MM-dd"
-              offset="1" unit="week"/>
-        </tstamp>
-		
+		</replace>	
 		
     </target>
 
