@@ -41,6 +41,7 @@
             <form-property name="page" type="java.lang.Integer" />
    	        <form-property name="candidateID" type="java.lang.Integer"/>
    	        <form-property name="givenCreditsRemarks" type="java.lang.String"/>
+   	        <form-property name="executionYear" type="java.lang.String"/>
         	<form-property name="selection" type="java.lang.Integer[]"/>
         	<form-property name="attributedCredits" type="java.lang.String"/>
       </form-bean>     
@@ -263,7 +264,7 @@
 		</action>		
 
       <action path="/displayCourseListToStudyPlan"
-      		  input="/candidate/displayListOfCoursesToChoose.jsp" 
+      		  input="/candidate/displayListOfCoursesToChoose.jsp"
       		  attribute="chooseCourseListForm"
 		      name="chooseCourseListForm"
 		      parameter="method"
