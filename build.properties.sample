@@ -1,15 +1,73 @@
+#------------------------------------------------------------------------------
+# General Configuration
+#------------------------------------------------------------------------------
+#
+#   app.name: name of the application
+#   application: application to install. Valid options are: extranet, intranet
+#   index.html.link: initial page to be displayed from applications root
+#   login.page: absolute path to the login page
+#
 app.name=ciapl
+application=extranet
 
+index.html.link=publico/index.do?method=prepare&amp;page=0
+login.page=https://fenix.ist.utl.pt/privado
+#
+#
+#------------------------------------------------------------------------------
+# Web Container Configuration
+#------------------------------------------------------------------------------
+#
+#   app.path: relative path the application will be accesible under
+#   manager.username: username of web container manager for installing the app
+#   manager.password: the password of the web container manager
+#   manager.url: absolute path to the web container managment interface
+#
 app.path=/${app.name}
+manager.username=admin
 manager.password=admin
 manager.url=http://localhost:8080/manager
-manager.username=admin
-
-# Tokens for replace
+#
+#
+#------------------------------------------------------------------------------
+# Data Repository Configuration
+#------------------------------------------------------------------------------
+#
+#   db.name: name of the database used by the application
+#   db.user: username with necessary authorization to access the database
+#   db.pass: password for indicated username
+#   db.alias: alias used to connect to database
+#   db.assiduousness.name: 
+#   db.assiduousness.platform: 
+#   db.assiduousness.driver: 
+#   db.assiduousness.protocol: 
+#   db.assiduousness.subprotocol: 
+#   db.assiduousness.user: 
+#   db.assiduousness.pass: 
+#   db.assiduousness.alias: 
+#   db.assiduousness.validationQuery: 
+#   db.personFilter.name: 
+#   db.personFilter.platform: 
+#   db.personFilter.driver: 
+#   db.personFilter.protocol: 
+#   db.personFilter.subprotocol: 
+#   db.personFilter.user: 
+#   db.personFilter.pass: 
+#   db.personFilter.alias: 
+#   db.personFilter.validationQuery: 
+#   db.personFilter.other: 
+#   db.personFilter.errorFile: 
+#   db.personFilter.log: 
+#   db.slide.driver: 
+#   db.slide.alias: 
+#   db.slide.user: 
+#   db.slide.pass: 
+#   slide.config: 
+#
 db.name=ciapl
 db.user=root
 db.pass=
-db.alias=//localhost:3306/ciapl?useUnicode=true&amp;characterEncoding=latin1
+db.alias=//localhost:3306/${db.name}?useUnicode=true&amp;characterEncoding=latin1
 
 db.assiduousness.name=AssiduidadeOracleTeste
 db.assiduousness.platform=MySQL
@@ -39,7 +97,19 @@ db.slide.alias=mysql://localhost:3306/slide
 db.slide.user=root
 db.slide.pass=
 slide.config=D:\\\\eclipse-M3\\\\workspace\\\\fenix-head\\\\build\\\\app\\\\WEB-INF\\\\classes\\\\Domain.xml
-
+#
+#
+#------------------------------------------------------------------------------
+# FTP Configuration's
+#------------------------------------------------------------------------------
+#
+#   ftp.IST.server.user: 
+#   ftp.IST.server.pass: 
+#   ftp.IST.server.address: 
+#   ftp.degree.grades.server.user: 
+#   ftp.degree.grades.server.pass: 
+#   ftp.degree.grades.server.address: 
+#
 ftp.IST.server.user=ciist
 ftp.IST.server.pass=desenvolvimento
 ftp.IST.server.address=saladd2.ist.utl.pt
@@ -47,11 +117,21 @@ ftp.IST.server.address=saladd2.ist.utl.pt
 ftp.degree.grades.server.user=user
 ftp.degree.grades.server.pass=pass
 ftp.degree.grades.server.address=address
-
-login.page=https://fenix.ist.utl.pt/privado
-application=extranet
+#
+#
+#------------------------------------------------------------------------------
+# Validation/Verification Configuratio
+#------------------------------------------------------------------------------
+#
+#   validation.doctype: path to struts validation dtd file.
+#   verify_serializable: flag that enables/disables serialization checking of
+#                        service results
+#
 validation.doctype=<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN" "file:///D:/eclipse-M3/workspace/fenix-head/metadata/dtds/validator_1_0.dtd">
 
-index.html.link=publico/index.do?method=prepare&amp;page=0
-
 verify_serializable=true
+#
+#
+#------------------------------------------------------------------------------
+# End of build.properties.sample file
+#------------------------------------------------------------------------------
