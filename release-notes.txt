@@ -15,6 +15,7 @@ NEW FEATURES:
 - Department office portal - added the possibility to view professorships other than in current execution year
 - Plugable request cache.
 - Profiling analysis interface.
+- Added suport to upload and process sibs files including guide creation
 
 NOTES:
 ======
@@ -30,6 +31,8 @@ CHANGES:
 - Added a method in Turno and Shift classes called hours to give the duration in hours.
 - Seminaries Portal - services used in this portal stopped calling CLONER methods to new philosophy
 - Coordinator Portal - coordinators for degrees - services used in this portal stopped calling CLONER methods to new philosophy
+- Updated external person and work location tests
+- Minor changes to sms user interface
 	
 BUG FIXES:
 ==========
@@ -40,6 +43,8 @@ BUG FIXES:
 - Department office portal - fixed wrong argument for service call
 - Department office portal - fixed class ProfessorShip method afterInsert. It was generating nullPointerException 
 - Master Degree Portal - fixed date of end of scholarship
+- Corrected EditGuideInformation service because was causing the system crash
+- Removed the possibility to edit payed guides.
 
 KNOWN ISSUES:
 =============
