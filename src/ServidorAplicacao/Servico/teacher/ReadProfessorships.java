@@ -4,15 +4,20 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoProfessorship;
+import DataBeans.teacher.professorship.DetailedProfessorship;
 import DataBeans.util.Cloner;
+import Dominio.ICurricularCourse;
+import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -24,62 +29,74 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author jpvl
  */
-public class ReadProfessorships implements IServico
+public class ReadProfessorships implements IService
 {
-
-    private static ReadProfessorships service = new ReadProfessorships();
-
-    /**
-	 * The singleton access method of this class.
-	 */
-
-    public static ReadProfessorships getService()
+    public ReadProfessorships()
     {
-        return service;
     }
-
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
-        return "ReadProfessorships";
-    }
+    
     public List run(IUserView userView) throws FenixServiceException
     {
-
-        List infoProfessorshipsList = new ArrayList();
-
         try
         {
             ISuportePersistente persistentSuport;
             persistentSuport = SuportePersistenteOJB.getInstance();
-            IPersistentProfessorship persistentProfessorship =
-                persistentSuport.getIPersistentProfessorship();
+            IPersistentProfessorship persistentProfessorship = persistentSuport
+                    .getIPersistentProfessorship();
             IPersistentTeacher teacherDAO = persistentSuport.getIPersistentTeacher();
             ITeacher teacher = teacherDAO.readTeacherByUsername(userView.getUtilizador());
 
             List professorships = persistentProfessorship.readByTeacher(teacher);
 
-            Iterator iter = professorships.iterator();
+            List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
+                    new Transformer()
+                    {
 
-            while (iter.hasNext())
-            {
+                        public Object transform(Object input)
+                        {
+                            IProfessorship professorship = (IProfessorship) input;
+                            InfoProfessorship infoProfessorShip = Cloner
+                                    .copyIProfessorship2InfoProfessorship(professorship);
 
-                IProfessorship professorship = (IProfessorship) iter.next();
-                InfoProfessorship infoProfessorShip =
-                    Cloner.copyIProfessorship2InfoProfessorship(professorship);
+                            List executionCourseCurricularCoursesList = getInfoCurricularCourses(
+                                    professorship.getExecutionCourse());
 
-                infoProfessorshipsList.add(infoProfessorShip);
-            }
+                            DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
 
-            return infoProfessorshipsList;
+                            detailedProfessorship.setInfoProfessorship(infoProfessorShip);
+                            detailedProfessorship.setExecutionCourseCurricularCoursesList(
+                                    executionCourseCurricularCoursesList);
+
+                            return detailedProfessorship;
+                        }
+
+                        private List getInfoCurricularCourses(IExecutionCourse executionCourse)
+                        {
+
+                            List infoCurricularCourses = (List) CollectionUtils.collect(executionCourse
+                                    .getAssociatedCurricularCourses(),
+                                    new Transformer()
+                                    {
+
+                                        public Object transform(Object input)
+                                        {
+                                            ICurricularCourse curricularCourse = (ICurricularCourse) input;
+                                            InfoCurricularCourse infoCurricularCourse = Cloner
+                                                    .copyCurricularCourse2InfoCurricularCourse(
+                                                            curricularCourse);
+                                            return infoCurricularCourse;
+                                        }
+                                    });
+                            return infoCurricularCourses;
+                        }
+                    });
+
+            return detailedProfessorshipList;
         }
         catch (ExcepcaoPersistencia e)
         {
-            throw new FenixServiceException(e);
+            e.printStackTrace(System.out);
+            throw new FenixServiceException("Problems on database!", e);
         }
     }
 
