@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
@@ -28,7 +30,6 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public abstract class TestCaseActionExecution extends TestCasePresentation {
 
 	protected GestorServicos gestor = null;
-	protected IUserView userView = null;
 
 	public TestCaseActionExecution(String testName) {
 		super(testName);
@@ -146,6 +147,8 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 
 			Set keys = null;
 			Iterator keysIterator = null;
+			
+			// FIXME : must test the two collections (existing and nonexisting): if we want that x attribute exists and attribute y not exists.  			
 			if (existingAttributesList != null) {
 				keys = existingAttributesList.keySet();
 				keysIterator = keys.iterator();
@@ -177,23 +180,29 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 		List nonExistingAttributesList) {
 
 		Enumeration attNames = null;
+		String scopeStr = "";
 		switch (scope) {
 			case ScopeConstants.SESSION :
 				attNames = getSession().getAttributeNames();
+				scopeStr = "session";
 				break;
 			case ScopeConstants.REQUEST :
 				attNames = getRequest().getAttributeNames();
+				scopeStr = "request";
 				break;
 			case ScopeConstants.APP_CONTEXT :
 				attNames =
 					getActionServlet().getServletContext().getAttributeNames();
+				scopeStr = "context";
 				break;
 			default :
 				throw new IllegalArgumentException(
-					"Unknown scope! Use " + ScopeConstants.class.getName());
+					"Unknown scope! Use " + ScopeConstants.class.getName()+" constants!");
 		}
-		verifyAttributes(attNames, existingAttributesList, true);
-		verifyAttributes(attNames, nonExistingAttributesList, false);
+		
+		
+		verifyAttributes(scopeStr, attNames,existingAttributesList , true);
+		verifyAttributes(scopeStr, attNames, nonExistingAttributesList, false);
 	}
 
 	/**
@@ -202,21 +211,28 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * @param exists
 	 */
 	private void verifyAttributes(
+		String scopeStr,
 		Enumeration attNames,
 		List list,
 		boolean contains) {
-
 		if ((list != null) && (attNames != null)) {
-			while (attNames.hasMoreElements()) {
-				String attName = (String) attNames.nextElement();
+			Collection scopeCollection = new ArrayList();
+			CollectionUtils.addAll(scopeCollection, attNames);		
+			Iterator listIterator = list.iterator();
+
+			while (listIterator.hasNext()) {
+				String attName = (String) listIterator.next();
 				String message = null;
-				if (list.contains(attName) == contains) {
-					message = "Scope contains attribute ";
-				} else {
-					message = "Scope doesn't contain attribute ";
+				if (scopeCollection.contains(attName) && !contains){
+					message = "Scope "+scopeStr+" contains attribute ";
 					fail(message + attName + ".");
 				}
-			}
+				if (!scopeCollection.contains(attName) && contains){
+					message = "Scope "+scopeStr+" doesn't contains attribute ";
+					fail(message + attName + ".");
+				}
+				
+			}			
 		}
 	}
 
