@@ -80,7 +80,7 @@ abstract public class BaseEnrolmentRuleTest extends TestCase {
 			enrolmentContext = enrolmentStrategy.getEnrolmentContext();
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			fail("Getting enrolment context!");
 		}	
 		return enrolmentContext;
