@@ -29,8 +29,10 @@ import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.Util;
+import Util.Season;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -135,19 +137,16 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 		InfoExecutionPeriod infoExecutionPeriod =
 			(InfoExecutionPeriod) session.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-		InfoExecutionDegree infoExecutionDegree =
-			(InfoExecutionDegree) session.getAttribute(
-				SessionConstants.INFO_EXECUTION_DEGREE_KEY);
 
-		InfoExamsMap infoExamsMap =
-			(InfoExamsMap) session.getAttribute(
-				SessionConstants.INFO_EXAMS_MAP);
+		String executionCourseInitials = request.getParameter("executionCourseInitials");
+		Season season = new Season(new Integer(request.getParameter("season")));
 
-		Integer indexExam = new Integer(request.getParameter("indexExam"));
-		// infoExamsMap.getExecutionCourses().get();
-
-		InfoViewExamByDayAndShift infoViewExam =
-			new InfoViewExamByDayAndShift();
+		Object args[] = { executionCourseInitials, season, infoExecutionPeriod };
+		InfoViewExamByDayAndShift infoViewExamByDayAndShift = 
+			(InfoViewExamByDayAndShift) ServiceUtils.executeService(
+				userView,
+				"ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod",
+				args);
 
 		ArrayList horas = Util.getExamShifts();
 		session.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
@@ -166,7 +165,7 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 		session.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
 
 		Calendar date = Calendar.getInstance();
-		date = infoViewExam.getInfoExam().getDay();
+		date = infoViewExamByDayAndShift.getInfoExam().getDay();
 
 		editExamForm.set(
 			"day",
@@ -177,21 +176,21 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 		editExamForm.set(
 			"year",
 			new Integer(date.get(Calendar.YEAR)).toString());
-		if (infoViewExam.getInfoExam().getBeginning() != null) {
+		if (infoViewExamByDayAndShift.getInfoExam().getBeginning() != null) {
 			editExamForm.set(
 				"beginning",
 				new Integer(
-					infoViewExam.getInfoExam().getBeginning().get(
+			infoViewExamByDayAndShift.getInfoExam().getBeginning().get(
 						Calendar.HOUR_OF_DAY))
 					.toString());
 		}
 		editExamForm.set(
 			"season",
-			infoViewExam.getInfoExam().getSeason().getseason().toString());
+			infoViewExamByDayAndShift.getInfoExam().getSeason().getseason().toString());
 
-		session.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExam);
+		session.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExamByDayAndShift);
 
-		session.setAttribute("input", "viewExamsByDayAndShift");
+		session.setAttribute("input", "viewExamsMap");
 
 		return mapping.findForward("editExam");
 	}

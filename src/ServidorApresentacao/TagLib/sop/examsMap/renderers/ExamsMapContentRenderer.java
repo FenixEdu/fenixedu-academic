@@ -52,8 +52,11 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 					infoExam.getInfoExecutionCourse().getSigla();
 
 				strBuffer.append(
-					"<a href='viewExamsMap.do?method=edit&amp;indexExam="
-						+ i
+					"<a href='viewExamsMap.do?method=edit"
+						+ "&amp;executionCourseInitials="
+						+ infoExam.getInfoExecutionCourse().getSigla()
+						+ "&amp;season="
+						+ infoExam.getSeason().getseason()
 						+ "'>");
 
 				if (isOnValidWeekDay) {

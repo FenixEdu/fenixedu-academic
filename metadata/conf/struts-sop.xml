@@ -850,6 +850,7 @@
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
         		   />
     	<forward name="viewExamsByDayAndShift" path="/viewExamsDayAndShiftForm.do?method=view"/>
+    	<forward name="viewExamsMap" path="/viewExamsMap.do?method=view"/>
 	</action>
 
     <action input="/chooseExamsMapContextDA.do?method=prepare&amp;page=0"
@@ -867,10 +868,12 @@
     <action path="/viewExamsMap"
             type="ServidorApresentacao.Action.sop.ViewExamsMapDA"
             parameter="method"
+            name="examForm"
+            validate="false"
             >
         <forward name="viewExamsMap" path="/viewExamsMap.jsp"/>
         <forward name="createExam" path="/createExam.do?method=prepare&amp;page=0&amp;nextPage=viewExamsMap"/>
-        <forward name="editExam" path="/viewExamsMap.jsp"/>
+        <forward name="editExam" path="/editExam.jsp"/>
     </action>
 
       
