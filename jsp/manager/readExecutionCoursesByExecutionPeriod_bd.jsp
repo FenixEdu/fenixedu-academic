@@ -4,15 +4,21 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <table>
-	<tr>
 		<td>
 			<h3><bean:message key="label.manager.curricularCourse.administrating"/></h3>
 		</td>
 		<td>
 			<h2><b><bean:define id="curricularCourseName" value="<%= request.getParameter("name") %>"/>
 					<bean:write name="curricularCourseName"/></b></h2>
-		</td>	
-	</tr>
+		</td>
+</table>
+<table>
+		<td>
+			<h3><bean:message key="label.manager.executionPeriod"/></h3>
+		</td>
+		<td>
+			<h2><bean:write name="executionPeriodNameAndYear"/></h2>
+		</td>
 </table>
 
 <logic:notEmpty name="infoExecutionCoursesList" scope="request">
@@ -24,7 +30,8 @@
 	<html:hidden property="executionPeriodId" value="<%= request.getParameter("executionPeriodId") %>"/>
 
 	<bean:message key="list.title.execution.courses.toAssociate"/>
-	
+	<br>
+	</br>
 	<table>
 		<tr>
 			<td class="listClasses-header">	

@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -35,18 +36,31 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 
 	Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
 		
-	Object args1[] = { executionPeriodId };
+	Object args[] = { executionPeriodId };
 
 		List infoExecutionCoursesList = null;
 		try {
-			infoExecutionCoursesList = (List) ServiceUtils.executeService(userView, "ReadExecutionCoursesByExecutionPeriod", args1);
+			infoExecutionCoursesList = (List) ServiceUtils.executeService(userView, "ReadExecutionCoursesByExecutionPeriod", args);
 
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("message.nonExistingCurricularCourse", "", e);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
+	
+	InfoExecutionPeriod infoExecutionPeriod = null;
+	
+	try {
+			infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadExecutionPeriod", args);
 
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("message.nonExistingExecutionPeriod", "", e);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException);
+		}
+	String ExecutionPeriodNameAndYear = new String(infoExecutionPeriod.getName()+"-"+infoExecutionPeriod.getInfoExecutionYear().getYear());
+	request.setAttribute("executionPeriodNameAndYear",ExecutionPeriodNameAndYear);
+	
 	request.setAttribute("infoExecutionCoursesList", infoExecutionCoursesList);
 	
 	return mapping.findForward("viewExecutionCourses");
