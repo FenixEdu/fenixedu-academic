@@ -3,14 +3,12 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %> 
-
-<bean:define id="listSeminaries" type="java.util.List" scope="request" name="seminaries"/>
-
+<bean:define id="listSeminaries" type="java.util.List" scope="request" name="seminaries"/> 
 <logic:empty name="listSeminaries" >
 		<h2><bean:message key="message.no.seminaries.to.enroll"/></h2>
 </logic:empty>
-
 <logic:notEmpty name="listSeminaries" >
+	<span class="error"><html:errors /></span>
 	<h2><bean:message key="label.seminariesToEnroll"/></h2>
 	<table width="90%" align="center">
 	<tr>
