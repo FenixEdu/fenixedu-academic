@@ -70,6 +70,7 @@ public class SectionMenuTeacherContentRenderer extends TagSupport
 			
 			
 			strBuffer.append(infoSection.getName());
+			
 			strBuffer.append("</a>");
 			strBuffer.append("</dd>\n");}
 			
