@@ -111,8 +111,9 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
 		IPersistentExecutionPeriod executionPeriodDAO = persistentSuport.getIPersistentExecutionPeriod();
-		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
+//		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
 		IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
+		IPersistentCurricularCourse curricularCourseDAO = persistentSuport.getIPersistentCurricularCourse();
 
 		IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 
@@ -132,23 +133,38 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 				studentCurricularPlan.getDegreeCurricularPlan(),
 				BranchType.COMMON_BRANCH);
 
+//		Iterator iterator = commonBranches.iterator();
+//		while (iterator.hasNext())
+//		{
+//			IBranch commonArea = (IBranch) iterator.next();
+//			List groups = curricularCourseGroupDAO.readByBranchAndAreaType(commonArea, AreaType.BASE_OBJ);
+//			Iterator iterator2 = groups.iterator();
+//			while (iterator2.hasNext())
+//			{
+//				ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator2.next();
+//				commonAreasCurricularCourses.addAll(curricularCourseGroup.getCurricularCourses());
+//			}
+//		}
+//
+//		selectDesiredCurricularCourses(enrollmentsWithAprovedState, commonAreasCurricularCourses);
+//		selectDesiredCurricularCourses(enrollmentsWithEnrolledState, commonAreasCurricularCourses);
+//		selectDesiredCurricularCourses(commonAreasCurricularCourses, executionPeriod.getSemester());
+
 		Iterator iterator = commonBranches.iterator();
 		while (iterator.hasNext())
 		{
 			IBranch commonArea = (IBranch) iterator.next();
-			List groups = curricularCourseGroupDAO.readByBranchAndAreaType(commonArea, AreaType.BASE_OBJ);
-			Iterator iterator2 = groups.iterator();
-			while (iterator2.hasNext())
-			{
-				ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator2.next();
-				commonAreasCurricularCourses.addAll(curricularCourseGroup.getCurricularCourses());
-			}
+			List commonAreaCurricularCourses =
+			curricularCourseDAO.readAllCurricularCoursesByDegreeCurricularPlanAndBranchAndSemester(
+					studentCurricularPlan.getDegreeCurricularPlan(),
+					commonArea,
+					executionPeriod.getSemester());
+			commonAreasCurricularCourses.addAll(commonAreaCurricularCourses);
 		}
 
 		selectDesiredCurricularCourses(enrollmentsWithAprovedState, commonAreasCurricularCourses);
 		selectDesiredCurricularCourses(enrollmentsWithEnrolledState, commonAreasCurricularCourses);
-		selectDesiredCurricularCourses(commonAreasCurricularCourses, executionPeriod.getSemester());
-
+		
 		List areas = branchDAO.readByDegreeCurricularPlan(studentCurricularPlan.getDegreeCurricularPlan());
 		List finalAreas = new ArrayList();
 		iterator = areas.iterator();
@@ -175,7 +191,15 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		List acumulatedEnrolments = new ArrayList();
 		acumulatedEnrolments.addAll(enrollmentsWithAprovedState);
 		acumulatedEnrolments.addAll(enrollmentsWithEnrolledState);
-		this.studentEnrolmentContext.setAcumulatedEnrolments(acumulatedEnrolments);
+		List acumulatedCurricularCourses = new ArrayList();
+		iterator = acumulatedEnrolments.iterator();
+		while (iterator.hasNext())
+		{
+			IEnrolment enrolment = (IEnrolment) iterator.next();
+			acumulatedCurricularCourses.add(enrolment.getCurricularCourse());
+		}
+		this.studentEnrolmentContext.setAcumulatedEnrolments(acumulatedCurricularCourses);
+		
 		this.studentEnrolmentContext.setExecutionPeriod(executionPeriod);
 		this.studentEnrolmentContext.setStudentApprovedEnrollments(enrollmentsWithAprovedState);
 		this.studentEnrolmentContext.setStudentCurrentSemesterEnrollments(enrollmentsWithEnrolledState);

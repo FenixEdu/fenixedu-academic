@@ -144,11 +144,11 @@ public final class StudentEnrolmentContext
 	}
 
 	/**
-	 * @param studentAprovedCurricularCourses
+	 * @param studentEverEnrollledCurricularCourses
 	 */
-	public void setAcumulatedEnrolments(List studentAprovedCurricularCourses)
+	public void setAcumulatedEnrolments(List studentEverEnrollledCurricularCourses)
 	{
-		this.acumulatedEnrolments = CollectionUtils.getCardinalityMap(studentAprovedCurricularCourses);
+		this.acumulatedEnrolments = CollectionUtils.getCardinalityMap(studentEverEnrollledCurricularCourses);
 	}
 
 	/**

@@ -14,10 +14,7 @@ public abstract class EnrolmentPrecedenceRule implements IEnrolmentRule
 {
 	public StudentEnrolmentContext apply(StudentEnrolmentContext studentEnrolmentContext)
 	{
-		List curricularCoursesToApply = getListOfCurricularCoursesToApply(studentEnrolmentContext);
-
-		doApply(studentEnrolmentContext, curricularCoursesToApply);
-
+		doApply(studentEnrolmentContext);
 		return studentEnrolmentContext;
 	}
 
@@ -33,8 +30,7 @@ public abstract class EnrolmentPrecedenceRule implements IEnrolmentRule
 	 * @param curricularCourseToApply
 	 */
 	abstract protected void doApply(
-		StudentEnrolmentContext studentEnrolmentContext,
-		List curricularCourseToApply);
+		StudentEnrolmentContext studentEnrolmentContext);
 
 	/**
 	 * Tells what PrecedenceScopeToAplly

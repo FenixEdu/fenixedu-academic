@@ -19,12 +19,13 @@ import Util.PrecedenceScopeToApply;
 
 public class EnrolmentApplyPrecedencesForEnrollmentValidationRule extends EnrolmentPrecedenceRule implements IEnrolmentRule
 {
-	protected void doApply(StudentEnrolmentContext studentEnrolmentContext, List curricularCoursesToApply)
+	protected void doApply(StudentEnrolmentContext studentEnrolmentContext)
 	{
 //		EnrolmentValidationResult enrolmentValidationResult = studentEnrolmentContext.getEnrolmentValidationResult();
-		for (int i = 0; i < curricularCoursesToApply.size(); i++)
+		for (int i = 0; i < studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled().size(); i++)
 		{
-			ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesToApply.get(i);
+			ICurricularCourse curricularCourse =
+				(ICurricularCourse) studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled().get(i);
 			List precedenceList = null;
 			try
 			{

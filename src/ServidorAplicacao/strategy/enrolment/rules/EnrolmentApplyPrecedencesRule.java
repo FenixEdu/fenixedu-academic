@@ -19,26 +19,19 @@ import Util.PrecedenceScopeToApply;
 
 public class EnrolmentApplyPrecedencesRule extends EnrolmentPrecedenceRule implements IEnrolmentRule
 {
-	protected void doApply(StudentEnrolmentContext studentEnrolmentContext, List curricularCoursesToApply)
-	{
-		doIt(studentEnrolmentContext, curricularCoursesToApply, getScopeToApply());
-	}
-
-	protected static void doIt(
-		StudentEnrolmentContext studentEnrolmentContext,
-		List curricularCoursesToApply,
-		PrecedenceScopeToApply precedenceScopeToApply)
+	protected void doApply(StudentEnrolmentContext studentEnrolmentContext)
 	{
 		List curricularCoursesToKeep = new ArrayList();
-		for (int i = 0; i < curricularCoursesToApply.size(); i++)
+		for (int i = 0; i < studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled().size(); i++)
 		{
-			ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesToApply.get(i);
+			ICurricularCourse curricularCourse =
+			(ICurricularCourse) studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled().get(i);
 			List precedenceList = null;
 			try
 			{
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
-				precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse, precedenceScopeToApply);
+				precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse, getScopeToApply());
 			} catch (ExcepcaoPersistencia e)
 			{
 				e.printStackTrace(System.out);
@@ -70,7 +63,8 @@ public class EnrolmentApplyPrecedencesRule extends EnrolmentPrecedenceRule imple
 			}
 		}
 
-		curricularCoursesToApply = curricularCoursesToKeep;
+		studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled().clear();
+		studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled().addAll(curricularCoursesToKeep);
 	}
 
 	protected PrecedenceScopeToApply getScopeToApply()

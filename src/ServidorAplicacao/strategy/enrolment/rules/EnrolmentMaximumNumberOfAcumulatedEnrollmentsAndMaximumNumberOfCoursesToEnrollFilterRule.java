@@ -2,10 +2,9 @@ package ServidorAplicacao.strategy.enrolment.rules;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseScope;
+import Dominio.IEnrolment;
 import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
 
 /**
@@ -23,44 +22,34 @@ public class EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCour
 	{
 		// NAC stands for Number of Aumulated enrollments in one Curricular course.
 		// NC stands for Number of Curricular courses the student can be enrolled in.
-		int degreeDuration =
-			studentEnrolmentContext.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeDuration().intValue();
 		int maxCourses =
 			studentEnrolmentContext.getStudentCurricularPlan().getStudent().getStudentKind().getMaxCoursesToEnrol().intValue();
 		int maxTotalNAC =
 			studentEnrolmentContext.getStudentCurricularPlan().getStudent().getStudentKind().getMaxNACToEnrol().intValue();
 
-		List finalListOfPossibleCurricularCoursesWhereStudentCanBeEnrolled = new ArrayList();
 		int totalNAC = 0;
 		int NC = 0;
-		int year = 1;
 
-		while ((NC < maxCourses) && (totalNAC < maxTotalNAC) && (year <= degreeDuration))
+		Iterator iterator = studentEnrolmentContext.getStudentCurrentSemesterEnrollments().iterator();
+		while (iterator.hasNext())
 		{
-			Iterator iterator = studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled().iterator();
-			while (iterator.hasNext())
+			IEnrolment enrolment = (IEnrolment) iterator.next();
+			ICurricularCourse curricularCourse = enrolment.getCurricularCourse();
+			if (studentEnrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourse).intValue() > 0)
 			{
-				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-				if (hasYear(curricularCourse, year))
-				{
-					finalListOfPossibleCurricularCoursesWhereStudentCanBeEnrolled.add(curricularCourse);
-
-					NC += getWeigth(curricularCourse).intValue();
-
-					if (studentEnrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourse).intValue() > 0)
-					{
-						totalNAC += getMaxIncrementNac(curricularCourse).intValue();
-					} else
-					{
-						totalNAC += getMinIncrementNac(curricularCourse).intValue();
-					}
-				}
+				totalNAC += getMaxIncrementNac(curricularCourse).intValue();
+			} else
+			{
+				totalNAC += getMinIncrementNac(curricularCourse).intValue();
 			}
-			year++;
+			NC += getWeigth(curricularCourse).intValue();
 		}
 
-		studentEnrolmentContext.setFinalCurricularCoursesWhereStudentCanBeEnrolled(
-			finalListOfPossibleCurricularCoursesWhereStudentCanBeEnrolled);
+		if (totalNAC >= maxTotalNAC || NC >= maxCourses)
+		{
+			studentEnrolmentContext.setFinalCurricularCoursesWhereStudentCanBeEnrolled(new ArrayList());
+		}
+
 		return studentEnrolmentContext;
 	}
 
@@ -91,22 +80,68 @@ public class EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCour
 		return curricularCourse.getEnrollmentWeigth();
 	}
 
-	/**
-	 * @param curricularCourse
-	 * @param yearValue
-	 * @return true/false
-	 */
-	private boolean hasYear(ICurricularCourse curricularCourse, int yearValue)
-	{
-		List scopes = curricularCourse.getScopes();
-		Integer year = new Integer(yearValue);
-		Iterator iterator = scopes.iterator();
-		boolean result = false;
-		while (iterator.hasNext() && !result)
-		{
-			ICurricularCourseScope scope = (ICurricularCourseScope) iterator.next();
-			result = scope.getCurricularSemester().getCurricularYear().getYear().equals(year);
-		}
-		return result;
-	}
+//	/**
+//	 * @param curricularCourse
+//	 * @param yearValue
+//	 * @return true/false
+//	 */
+//	private boolean hasYear(ICurricularCourse curricularCourse, int yearValue)
+//	{
+//		List scopes = curricularCourse.getScopes();
+//		Integer year = new Integer(yearValue);
+//		Iterator iterator = scopes.iterator();
+//		boolean result = false;
+//		while (iterator.hasNext() && !result)
+//		{
+//			ICurricularCourseScope scope = (ICurricularCourseScope) iterator.next();
+//			result = scope.getCurricularSemester().getCurricularYear().getYear().equals(year);
+//		}
+//		return result;
+//	}
+//
+//	public StudentEnrolmentContext apply(StudentEnrolmentContext studentEnrolmentContext)
+//	{
+//		// NAC stands for Number of Aumulated enrollments in one Curricular course.
+//		// NC stands for Number of Curricular courses the student can be enrolled in.
+//		int degreeDuration =
+//		studentEnrolmentContext.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeDuration().intValue();
+//		int maxCourses =
+//		studentEnrolmentContext.getStudentCurricularPlan().getStudent().getStudentKind().getMaxCoursesToEnrol().intValue();
+//		int maxTotalNAC =
+//		studentEnrolmentContext.getStudentCurricularPlan().getStudent().getStudentKind().getMaxNACToEnrol().intValue();
+//
+//		List finalListOfPossibleCurricularCoursesWhereStudentCanBeEnrolled = new ArrayList();
+//		int totalNAC = 0;
+//		int NC = 0;
+//		int year = 1;
+//
+//		while ((NC < maxCourses) && (totalNAC < maxTotalNAC) && (year <= degreeDuration))
+//		{
+//			Iterator iterator = studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled().iterator();
+//			while (iterator.hasNext())
+//			{
+//				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+//				if (hasYear(curricularCourse, year))
+//				{
+//					finalListOfPossibleCurricularCoursesWhereStudentCanBeEnrolled.add(curricularCourse);
+//
+//					NC += getWeigth(curricularCourse).intValue();
+//
+//					if (studentEnrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourse).intValue() > 0)
+//					{
+//						totalNAC += getMaxIncrementNac(curricularCourse).intValue();
+//					} else
+//					{
+//						totalNAC += getMinIncrementNac(curricularCourse).intValue();
+//					}
+//				}
+//			}
+//			year++;
+//		}
+//
+//		studentEnrolmentContext.setFinalCurricularCoursesWhereStudentCanBeEnrolled(
+//				finalListOfPossibleCurricularCoursesWhereStudentCanBeEnrolled);
+//		return studentEnrolmentContext;
+//	}
+
 }

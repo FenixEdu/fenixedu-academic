@@ -11,11 +11,12 @@ import Util.PrecedenceScopeToApply;
  * @author David Santos in Jan 27, 2004
  */
 
-public class EnrolmentApplyPrecedencesForOptionalCurricularCoursesRule extends EnrolmentPrecedenceRule implements IEnrolmentRule
+public class EnrolmentApplyPrecedencesForOptionalCurricularCoursesRule /*extends EnrolmentPrecedenceRule implements IEnrolmentRule*/
 {
 	protected void doApply(StudentEnrolmentContext studentEnrolmentContext, List curricularCoursesToApply)
 	{
-		EnrolmentApplyPrecedencesRule.doIt(studentEnrolmentContext, curricularCoursesToApply, getScopeToApply());
+//		List result = EnrolmentApplyPrecedencesRule.doIt(studentEnrolmentContext, curricularCoursesToApply, getScopeToApply());
+//		studentEnrolmentContext.setFinalCurricularCoursesWhereStudentCanBeEnrolled(result);
 	}
 
 	protected PrecedenceScopeToApply getScopeToApply()
