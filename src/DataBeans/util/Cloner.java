@@ -2548,9 +2548,6 @@ public abstract class Cloner {
 		InfoPerson person = Cloner.copyIPerson2InfoPerson(item.getEditor());
 		infoWebSiteItem.setInfoEditor(person);
 
-		InfoPerson person2 = Cloner.copyIPerson2InfoPerson(item.getAuthor());
-		infoWebSiteItem.setInfoAuthor(person2);
-
 		if (item.getItemBeginDay() != null) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.clear();

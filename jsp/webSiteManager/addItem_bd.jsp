@@ -39,8 +39,11 @@
 	<tr><td><bean:message key="label.keywords"/>:</td></tr>
 	<tr><td><html:textarea rows="3" cols="50" property="keywords"/></td><tr/>
 
-	<tr><td><bean:message key="label.authorUsername"/>:</td></tr>
-	<tr><td><html:text size="6" property="author"/></td></tr>
+	<tr><td><bean:message key="label.authorName"/>:</td></tr>
+	<tr><td><html:text size="60" property="authorName"/></td></tr>
+
+	<tr><td><bean:message key="label.authorEmail"/>:</td></tr>
+	<tr><td><html:text size="60" property="authorEmail"/></td></tr>
 
 	<tr>
 		<td>

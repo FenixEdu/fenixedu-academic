@@ -21,10 +21,11 @@ public class InfoWebSiteItem extends InfoObject {
 	private Calendar itemBeginDayCalendar;
 	private Calendar itemEndDayCalendar;
 	private Boolean toDelete;
+	private String authorName;
+	private String authorEmail;
 
 	private InfoWebSiteSection infoWebSiteSection;
 	private InfoPerson infoEditor;
-	private InfoPerson infoAuthor;
 
 	/**
 	 * @return
@@ -224,7 +225,8 @@ public class InfoWebSiteItem extends InfoObject {
 			if (elementsAreEqual(webSiteItem.getTitle(), this.getTitle())
 				&& elementsAreEqual(webSiteItem.getCreationDate(), this.getCreationDate())
 				&& elementsAreEqual(webSiteItem.getInfoEditor(), this.getInfoEditor())
-				&& elementsAreEqual(webSiteItem.getInfoAuthor(), this.getInfoAuthor())
+				&& elementsAreEqual(webSiteItem.getAuthorName(), this.getAuthorName())
+			&& elementsAreEqual(webSiteItem.getAuthorEmail(), this.getAuthorEmail())
 				&& elementsAreEqual(webSiteItem.getExcerpt(), this.getExcerpt())
 				&& elementsAreEqual(webSiteItem.getItemBeginDayCalendar(), this.getItemBeginDayCalendar())
 				&& elementsAreEqual(webSiteItem.getItemEndDayCalendar(), this.getItemEndDayCalendar())
@@ -262,7 +264,8 @@ public class InfoWebSiteItem extends InfoObject {
 		result += ", itemEndDay=" + this.getItemEndDayCalendar();
 		result += ", webSiteSection=" + this.getInfoWebSiteSection();
 		result += ", editor=" + this.getInfoEditor();
-		result += ", author=" + this.getInfoAuthor();
+		result += ", authorName=" + this.getAuthorName();
+		result += ", authorEmail=" + this.getAuthorEmail();
 		result += "]";
 		return result;
 	}
@@ -270,15 +273,29 @@ public class InfoWebSiteItem extends InfoObject {
 	/**
 	 * @return
 	 */
-	public InfoPerson getInfoAuthor() {
-		return infoAuthor;
+	public String getAuthorEmail() {
+		return authorEmail;
 	}
 
 	/**
-	 * @param infoAuthor
+	 * @param authorEmail
 	 */
-	public void setInfoAuthor(InfoPerson infoAuthor) {
-		this.infoAuthor = infoAuthor;
+	public void setAuthorEmail(String authorEmail) {
+		this.authorEmail = authorEmail;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getAuthorName() {
+		return authorName;
+	}
+
+	/**
+	 * @param authorName
+	 */
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
 	}
 
 }

@@ -15,7 +15,8 @@
 			<form-property name="mainEntryText" type="java.lang.String"/>
 			<form-property name="excerpt" type="java.lang.String"/>
 			<form-property name="keywords" type="java.lang.String"/>
-			<form-property name="author" type="java.lang.String"/>
+			<form-property name="authorName" type="java.lang.String"/>
+			<form-property name="authorEmail" type="java.lang.String"/>
 			<form-property name="itemBeginDay" type="java.lang.String"/>
 			<form-property name="itemEndDay" type="java.lang.String"/>
 			<form-property name="publish" type="java.lang.Boolean"/>

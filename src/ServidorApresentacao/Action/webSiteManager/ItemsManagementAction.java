@@ -16,7 +16,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.InfoPerson;
 import DataBeans.InfoWebSite;
 import DataBeans.InfoWebSiteItem;
 import DataBeans.InfoWebSiteSection;
@@ -86,9 +85,6 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		} catch (InvalidArgumentsServiceException e) {
 			errors.add("notFilled", new ActionError("error.notFilled"));
 			saveErrors(request, errors);
-		} catch (NonExistingServiceException e) {
-			errors.add("nonexistingAuthor", new ActionError("error.noAuthor", infoWebSiteItem.getInfoAuthor().getUsername()));
-			saveErrors(request, errors);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -101,7 +97,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		if (infoWebSiteItem.getPublished() != null && infoWebSiteItem.getPublished().equals(Boolean.TRUE)) {
 			// build file to send to ist server
 			try {
-				Object args[] = { objectCode };
+				Object args[] = { objectCode, Boolean.FALSE };
 				ServiceUtils.executeService(userView, "SendWebSiteSectionFileToServer", args);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
@@ -130,9 +126,8 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		infoWebSiteItem.setKeywords((String) itemForm.get("keywords"));
 		infoWebSiteItem.setMainEntryText((String) itemForm.get("mainEntryText"));
 
-		InfoPerson infoAuthor = new InfoPerson();
-		infoAuthor.setUsername((String) itemForm.get("author"));
-		infoWebSiteItem.setInfoAuthor(infoAuthor);
+		infoWebSiteItem.setAuthorName((String) itemForm.get("authorName"));
+		infoWebSiteItem.setAuthorEmail((String) itemForm.get("authorEmail"));
 
 		String onlineBeginDayString = (String) itemForm.get("onlineBeginDay");
 		infoWebSiteItem.setOnlineBeginDay(convertStringDate(onlineBeginDayString));
@@ -204,6 +199,14 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+		
+		try {
+			Object args[] = { objectCode, Boolean.TRUE };
+			ServiceUtils.executeService(userView, "SendWebSiteSectionFileToServer", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
 		return listItems(mapping, form, request, response);
 	}
 
@@ -262,7 +265,8 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		itemForm.set("mainEntryText", infoWebSiteItem.getMainEntryText());
 		itemForm.set("excerpt", infoWebSiteItem.getExcerpt());
 		itemForm.set("keywords", infoWebSiteItem.getKeywords());
-		itemForm.set("author", infoWebSiteItem.getInfoAuthor().getUsername());
+		itemForm.set("authorName", infoWebSiteItem.getAuthorName());
+		itemForm.set("authorEmail", infoWebSiteItem.getAuthorEmail());
 		if (infoWebSiteItem.getItemBeginDayCalendar() != null) {
 			itemForm.set("itemBeginDay", getDateFormatted(infoWebSiteItem.getItemBeginDayCalendar().getTime()));
 		}
@@ -318,9 +322,6 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		} catch (InvalidArgumentsServiceException e) {
 			errors.add("notFilled", new ActionError("error.notFilled"));
 			saveErrors(request, errors);
-		} catch (NonExistingServiceException e) {
-			errors.add("nonexistingAuthor", new ActionError("error.noAuthor", infoWebSiteItem.getInfoAuthor().getUsername()));
-			saveErrors(request, errors);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -331,7 +332,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		if (infoWebSiteItem.getPublished() != null && infoWebSiteItem.getPublished().equals(Boolean.TRUE)) {
 			// build file to send to ist server
 			try {
-				Object args[] = { objectCode };
+				Object args[] = { objectCode, Boolean.FALSE };
 				ServiceUtils.executeService(userView, "SendWebSiteSectionFileToServer", args);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);

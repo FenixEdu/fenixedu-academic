@@ -13,7 +13,6 @@ import java.util.ListIterator;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.lang.StringUtils;
 
 import DataBeans.InfoWebSiteItem;
 import DataBeans.InfoWebSiteSection;
@@ -53,7 +52,7 @@ public class SendWebSiteSectionFileToServer implements IServico {
 		return "SendWebSiteSectionFileToServer";
 	}
 
-	public Boolean run(final Integer sectionCode) throws FenixServiceException {
+	public Boolean run(final Integer sectionCode, Boolean itemsDeleted) throws FenixServiceException {
 
 		try {
 			SuportePersistenteOJB persistentSupport = SuportePersistenteOJB.getInstance();
@@ -136,40 +135,57 @@ public class SendWebSiteSectionFileToServer implements IServico {
 			List items = new ArrayList();
 			items.addAll(infoWebSiteSection.getInfoItemsList());
 
-			// obtain last item inserted
-			Collections.sort(items, new BeanComparator("creationDate"));
-			Collections.reverse(items);
-			InfoWebSiteItem lastInfoWebSiteItem = (InfoWebSiteItem) items.get(0);
-
+			List allMonthLinks = new ArrayList();
+			ArrayList monthLinks = new ArrayList();
+			List monthList = new ArrayList();
 			Calendar calendarCycle = Calendar.getInstance();
 			Calendar calendarLast = Calendar.getInstance();
-			calendarLast.setTime(lastInfoWebSiteItem.getOnlineBeginDay());
-			List monthList = new ArrayList();
-			List allMonthLinks = new ArrayList();
+			if (!itemsDeleted.booleanValue()) {
+				// obtain last item inserted
+				Collections.sort(items, new BeanComparator("creationDate"));
+				Collections.reverse(items);
+				InfoWebSiteItem lastInfoWebSiteItem = (InfoWebSiteItem) items.get(0);
 
-			// get items with the same month as last
-			Iterator iterItems = infoWebSiteSection.getInfoItemsList().iterator();
-			while (iterItems.hasNext()) {
-				InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterItems.next();
-				calendarCycle.clear();
-				calendarCycle.setTime(infoWebSiteItem.getOnlineBeginDay());
-				if (calendarCycle.get(Calendar.MONTH) == calendarLast.get(Calendar.MONTH)) {
-					monthList.add(infoWebSiteItem);
+				calendarLast.setTime(lastInfoWebSiteItem.getOnlineBeginDay());
+
+				// get items with the same month as last
+				Iterator iterItems = infoWebSiteSection.getInfoItemsList().iterator();
+				while (iterItems.hasNext()) {
+					InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterItems.next();
+					calendarCycle.clear();
+					calendarCycle.setTime(infoWebSiteItem.getOnlineBeginDay());
+					if (calendarCycle.get(Calendar.MONTH) == calendarLast.get(Calendar.MONTH)) {
+						monthList.add(infoWebSiteItem);
+					}
+
+					// get collection of months present in database
+					Integer monthToCreateLink = new Integer(calendarCycle.get(Calendar.MONTH));
+					if (!allMonthLinks.contains(monthToCreateLink)) {
+						allMonthLinks.add(monthToCreateLink);
+					}
 				}
 
-				// get collection of months present in database
-				Integer monthToCreateLink = new Integer(calendarCycle.get(Calendar.MONTH));
-				if (!allMonthLinks.contains(monthToCreateLink)) {
-					allMonthLinks.add(monthToCreateLink);
+				if (monthList.size() > 1) {
+					// file already exists so only this file needs to be refreshed
+					monthLinks.add(new Integer(calendarLast.get(Calendar.MONTH)));
+					items = monthList;
+				} else {
+					// there is a new month to send to server, so build file and refresh links on other files
+					monthLinks.addAll(allMonthLinks);
 				}
-			}
-			ArrayList monthLinks = new ArrayList();
-			if (monthList.size() > 1) {
-				// file already exists so only this file needs to be refreshed
-				monthLinks.add(new Integer(calendarLast.get(Calendar.MONTH)));
-				items = monthList;
 			} else {
-				// there is a new month to send to server, so build file and refresh links on other files
+				Iterator iterItems = infoWebSiteSection.getInfoItemsList().iterator();
+				while (iterItems.hasNext()) {
+					InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterItems.next();
+					calendarCycle.clear();
+					calendarCycle.setTime(infoWebSiteItem.getOnlineBeginDay());
+
+					// get collection of months present in database
+					Integer monthToCreateLink = new Integer(calendarCycle.get(Calendar.MONTH));
+					if (!allMonthLinks.contains(monthToCreateLink)) {
+						allMonthLinks.add(monthToCreateLink);
+					}
+				}
 				monthLinks.addAll(allMonthLinks);
 			}
 			Iterator iterLinks = monthLinks.iterator();
@@ -178,7 +194,7 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				Mes thisMonthString = new Mes(monthLink.intValue() + 1);
 
 				List thisMonthList = new ArrayList();
-				if (monthList.size() == 1) {
+				if (monthList.size() <= 1) {
 					Iterator iterAllItems = items.iterator();
 					while (iterAllItems.hasNext()) {
 						InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterAllItems.next();
@@ -209,7 +225,7 @@ public class SendWebSiteSectionFileToServer implements IServico {
 					itemsFile.concat("Eventuais incoerências nesta página deverão ser comunicadas afim de se efectuar a respectiva correcção.");
 				itemsFile = itemsFile.concat("</span>");
 				itemsFile = itemsFile.concat("\n</p>\n");
-				
+
 				itemsFile = itemsFile.concat("<h2>Arquivo de " + infoWebSiteSection.getName() + "</h2>\n<p>\n");
 				Iterator iterMonths = allMonthLinks.iterator();
 				while (iterMonths.hasNext()) {
@@ -240,6 +256,7 @@ public class SendWebSiteSectionFileToServer implements IServico {
 					e.printStackTrace();
 					return Boolean.FALSE;
 				}
+
 				Ftp.enviarFicheiro(
 					"/IstFtpServerConfig.properties",
 					infoWebSiteSection.getName() + "-" + thisMonthString.toString() + ".shtml",
@@ -347,15 +364,16 @@ public class SendWebSiteSectionFileToServer implements IServico {
 	}
 
 	private String putItem(String itemFile, InfoWebSiteItem infoWebSiteItem) {
-		String authorName =
-			StringUtils.substringBefore(infoWebSiteItem.getInfoAuthor().getNome(), " ").concat(" ").concat(
-				StringUtils.substringAfterLast(infoWebSiteItem.getInfoAuthor().getNome(), " "));
+		//		String authorName =
+		//			StringUtils.substringBefore(infoWebSiteItem.getAuthorName(), " ").concat(" ").concat(
+		//				StringUtils.substringAfterLast(infoWebSiteItem.getAuthorName(), " "));
 		// item\"s main entry
 		itemFile = itemFile.concat("<p>");
 		itemFile = itemFile.concat(infoWebSiteItem.getMainEntryText());
 		itemFile = itemFile.concat("\n<br /><br />\n");
 		itemFile = itemFile.concat("<span class=\"greytxt\">");
-		itemFile = itemFile.concat("<a href=\"mailto:" + infoWebSiteItem.getInfoAuthor().getEmail() + "\">" + authorName + "</a>");
+		itemFile =
+			itemFile.concat("<a href=\"mailto:" + infoWebSiteItem.getAuthorEmail() + "\">" + infoWebSiteItem.getAuthorName() + "</a>");
 		itemFile = itemFile.concat("</span>\n");
 		itemFile = itemFile.concat("</p>\n");
 		itemFile = itemFile.concat("<br />\n");
@@ -396,7 +414,8 @@ public class SendWebSiteSectionFileToServer implements IServico {
 			Mes month = new Mes(calendar.get(Calendar.MONTH) + 1);
 			stringFile = stringFile.concat(month.toString() + " ");
 			stringFile = stringFile.concat(String.valueOf(calendar.get(Calendar.YEAR)) + " - ");
-			stringFile = stringFile.concat(String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(calendar.get(Calendar.MINUTE)));
+			stringFile =
+				stringFile.concat(String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(calendar.get(Calendar.MINUTE)));
 
 		}
 		stringFile = stringFile.concat("</p>");

@@ -12,6 +12,9 @@
 		   	<field property="keywords" depends="required" page="1">
 		   		<arg0 key="message.keywords" resource="true"/>
 		   	</field>
+		   	<field property="authorEmail" depends="email" page="1">
+		   		<arg0 key="message.Email" resource="true"/>
+		   	</field>
 			<field property="itemBeginDay" depends="requiredif,mask,date" page="1" >
 				<msg name="date" key="errors.invalid.date"/>
 			   	<msg name="mask" key="errors.invalid.date"/>

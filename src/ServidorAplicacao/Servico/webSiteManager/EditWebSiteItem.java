@@ -15,7 +15,6 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentWebSiteItem;
 import ServidorPersistente.IPersistentWebSiteSection;
@@ -87,18 +86,17 @@ public class EditWebSiteItem implements IServico {
 			webSiteItem.setEditor(person);
 
 			// treat author of item
+			String authorName = infoWebSiteItem.getAuthorName();
+			String authorEmail = infoWebSiteItem.getAuthorEmail();
 			IPessoa authorPerson = null;
-			if(infoWebSiteItem.getInfoAuthor().getUsername() != null) {
-				authorPerson = persistentPerson.lerPessoaPorUsername(infoWebSiteItem.getInfoAuthor().getUsername());
-				if(authorPerson == null) {
-					throw new NonExistingServiceException();
-				}
-			} else {
-				// in case author was not filled editor becomes the author
-				authorPerson = person;
+			if ((authorName == null || authorName.length() == 0)
+				&& (authorEmail == null || authorEmail.length() == 0)) {
+					// in case author was not filled editor becomes the author
+					authorName = person.getNome();
+					authorEmail = person.getEmail();
 			}
-			webSiteItem.setAuthor(authorPerson);
-			webSiteItem.setKeyAuthor(authorPerson.getIdInternal());
+			webSiteItem.setAuthorName(authorName);
+			webSiteItem.setAuthorEmail(authorEmail);
 
 			webSiteItem.setExcerpt(infoWebSiteItem.getExcerpt());
 			if (infoWebSiteItem.getItemBeginDayCalendar() != null) {

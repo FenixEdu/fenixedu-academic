@@ -170,9 +170,14 @@
          jdbc-type="INTEGER"
       />
       <field-descriptor
-         name="keyAuthor"
-         column="KEY_AUTHOR"
-         jdbc-type="INTEGER"
+         name="authorName"
+         column="AUTHOR_NAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="authorEmail"
+         column="AUTHOR_EMAIL"
+         jdbc-type="VARCHAR"
       />
       <field-descriptor
          name="keywords"
@@ -214,13 +219,6 @@
          <foreignkey field-ref="keyEditor"/>
       </reference-descriptor>
 
-      <reference-descriptor
-         name="author"
-         class-ref="Dominio.Pessoa"
-         proxy="false"
-      >
-         <foreignkey field-ref="keyAuthor"/>
-      </reference-descriptor>
       <reference-descriptor
          name="webSiteSection"
          class-ref="Dominio.WebSiteSection"
