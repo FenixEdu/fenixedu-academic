@@ -28,14 +28,14 @@ public abstract class DomainObjectTeacherAuthorizationFilter extends Authorizati
     }
 
     /**
-     * Executes the filtering
-     */
-    public void preFiltragem(IUserView id, Object[] arguments)
-        throws NotAuthorizedException
+	 * Executes the filtering
+	 */
+    public void preFiltragem(IUserView id, Object[] arguments) throws NotAuthorizedException
     {
         try
         {
-            boolean isNew = ((arguments[0] == null) || ((Integer) arguments[0]).equals(new Integer(0)));
+            Integer idInternal = (Integer) arguments[0];
+            boolean isNew = ((idInternal == null) || idInternal.equals(new Integer(0)));
 
             if (((id != null
                 && id.getRoles() != null

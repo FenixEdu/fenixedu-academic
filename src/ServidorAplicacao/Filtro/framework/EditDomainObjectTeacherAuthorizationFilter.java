@@ -28,17 +28,22 @@ public abstract class EditDomainObjectTeacherAuthorizationFilter extends Authori
         return RoleType.TEACHER;
     }
 
-    public void preFiltragem(IUserView id, Object[] arguments)
-        throws NotAuthorizedException
+    /**
+	 * Executes the filtering
+	 */
+    public void preFiltragem(IUserView id, Object[] arguments) throws NotAuthorizedException
     {
         try
         {
+            Integer idInternal = ((InfoObject) arguments[1]).getIdInternal();
+            boolean isNew = (idInternal == null) || idInternal.equals(new Integer(0));
+
             if (((id != null
                 && id.getRoles() != null
                 && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())))
                 || (id == null)
                 || (id.getRoles() == null)
-                || !domainObjectBelongsToTeacher(id, (InfoObject) arguments[1]))
+                || ((!isNew) && (!domainObjectBelongsToTeacher(id, (InfoObject) arguments[1]))))
             {
                 throw new NotAuthorizedException();
             }

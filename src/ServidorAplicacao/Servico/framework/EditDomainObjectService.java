@@ -13,8 +13,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 import DataBeans.InfoObject;
 import Dominio.IDomainObject;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
@@ -147,7 +147,9 @@ public abstract class EditDomainObjectService implements IServico
     protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
         throws ExcepcaoPersistencia, FenixServiceException
     {
-        return null;
+
+        IPersistentObject persistentObject = getIPersistentObject(sp);
+        return persistentObject.readByOId(domainObject, false);
     }
 
     /**
@@ -172,7 +174,7 @@ public abstract class EditDomainObjectService implements IServico
 
             if (!canCreate(objectToEdit, objectFromDatabase))
             {
-                throw new NonExistingServiceException("The object does not exist");
+                throw new ExistingServiceException("The object already exists");
             }
             IDomainObject domainObject = null;
 
@@ -181,7 +183,7 @@ public abstract class EditDomainObjectService implements IServico
                 domainObject = (IDomainObject) objectToEdit.getClass().newInstance();
             } else
             {
-                domainObject = objectFromDatabase == null ? objectToEdit : objectFromDatabase;
+                domainObject = objectFromDatabase;
             }
             doBeforeLock(domainObject, infoObject, sp);
 
