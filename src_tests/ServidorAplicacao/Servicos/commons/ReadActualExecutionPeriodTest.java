@@ -7,9 +7,12 @@ import junit.framework.TestSuite;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear; 
+import Dominio.IExecutionYear;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -17,6 +20,9 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *
  */
 public class ReadActualExecutionPeriodTest extends TestCaseServicos {
+	protected ISuportePersistente _suportePersistente = null;
+	protected IPersistentExecutionPeriod persistentExecutionPeriod=null;
+	protected IPersistentExecutionYear persistentExecutionYear=null;
 
 	/**
 	 * Constructor for SelectShiftsTest.
