@@ -33,19 +33,20 @@ public class ValidateDate {
 		HttpServletRequest request, 
 		ServletContext application) {
 			
-		Integer year = new Integer(ValidatorUtil.getValueAsString(bean,field.getProperty()));
 		String valueString = ValidatorUtil.getValueAsString(bean,field.getProperty());
 		String sProperty2 = field.getVarValue("month");
-		Integer month = new Integer(ValidatorUtil.getValueAsString(bean,sProperty2));
 		String sProperty3 = field.getVarValue("day");
+
+
+		if ((valueString == null) || (sProperty2 == null) || (sProperty3 == null) ||
+			(valueString.length() == 0) || (sProperty2.length() == 0) || (sProperty3.length() == 0)){
+			return true;
+		}
+
+		Integer year = new Integer(ValidatorUtil.getValueAsString(bean,field.getProperty()));
+		Integer month = new Integer(ValidatorUtil.getValueAsString(bean,sProperty2));
 		Integer day = new Integer(ValidatorUtil.getValueAsString(bean,sProperty3));
 
-
-		if ((day.intValue() == -1) || (month.intValue() == -1) || (year.intValue() == -1)){
-			
-			errors.add(field.getKey(), Resources.getActionError(request, va, field));
-			return false;
-		}
 		
 		if (!GenericValidator.isBlankOrNull(valueString)) {
 			  if (!Data.validDate(day, month, year) || 

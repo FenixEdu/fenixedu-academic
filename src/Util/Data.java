@@ -36,7 +36,7 @@ public class Data {
   public static Integer OCTOBER = new Integer(9);
   public static Integer NOVEMBER = new Integer(10);
   public static Integer DECEMBER = new Integer(11);
-  public static Integer OPTION_DEFAULT = new Integer(-1);
+  public static String OPTION_DEFAULT = null;
 
 
   /* Construtores */
@@ -86,7 +86,7 @@ public class Data {
   
   public static ArrayList getMonthDays() {
 	ArrayList result = new ArrayList();
-	result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT.toString()));
+	result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
 	for (int i = 1; i<=31; i++)
 		result.add(new LabelValueBean(new Integer(i).toString(), new Integer(i).toString()));
 	return result;	
@@ -95,7 +95,7 @@ public class Data {
 
   public static ArrayList getMonths() {
 	ArrayList result = new ArrayList();
-	result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT.toString()));
+	result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
 	result.add(new LabelValueBean(Data.JANUARY_STRING, Data.JANUARY.toString()));
 	result.add(new LabelValueBean(Data.FEBRUARY_STRING, Data.FEBRUARY.toString()));
 	result.add(new LabelValueBean(Data.MARCH_STRING, Data.MARCH.toString()));
@@ -116,7 +116,7 @@ public class Data {
 	ArrayList result = new ArrayList();
 	Calendar date = Calendar.getInstance();
 	
-	result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT.toString()));
+	result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
 
 	for (int i = date.get(Calendar.YEAR); i>1900; i--)
 		result.add(new LabelValueBean(new Integer(i).toString(), new Integer(i).toString()));
@@ -128,7 +128,7 @@ public class Data {
 	  ArrayList result = new ArrayList();
 	  Calendar date = Calendar.getInstance();
 	
-	  result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT.toString()));
+	  result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
 
 	  for (int i = date.get(Calendar.YEAR); i<(date.get(Calendar.YEAR) + 20); i++)
 		  result.add(new LabelValueBean(new Integer(i).toString(), new Integer(i).toString()));

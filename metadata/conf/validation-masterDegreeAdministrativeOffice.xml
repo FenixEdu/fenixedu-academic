@@ -244,7 +244,7 @@
         <arg0 key="label.masterDegree.administrativeOffice.guideSituation" />
       </field>
       <field property="paymentDateYear" depends="validateDate" page="1">
-          <arg0 key="Data de Pagamento" />
+          <arg0 key="label.masterDegree.administrativeOffice.paymentDate" />
           <var>
              <var-name>month</var-name>
              <var-value>paymentDateMonth</var-value>
