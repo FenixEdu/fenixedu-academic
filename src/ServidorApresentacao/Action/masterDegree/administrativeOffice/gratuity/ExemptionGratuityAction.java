@@ -421,12 +421,9 @@ public class ExemptionGratuityAction extends DispatchAction
 		infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 
 		//Gratuity Values
-		if (gratuityValuesID != null)
-		{
-			InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
-			infoGratuityValues.setIdInternal(Integer.valueOf(gratuityValuesID));
-			infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
-		}
+		InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
+		infoGratuityValues.setIdInternal(Integer.valueOf(gratuityValuesID));
+		infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
 
 		//employee who made register
 		InfoPerson infoPerson = new InfoPerson();

@@ -28,9 +28,10 @@ public class GratuityFileSIBS
 	public static final int MAX_LINES_NUMBER = 8;
 	public static final int MAX_INT_PAYMENT = 8;
 	public static final int MAX_DEC_PAYMENT = 2;
+	public static final int MAX_STUDENT_NUMBER = 5;
 	public static final char SPACE = ' ';
 	public static final char ZERO = '0';
-	public static final double INSURANCE = 2.5;
+	public static final double INSURANCE = 2.50;
 	public static final String WITHOUT_ADDRESS = "Sem morada";
 	public static final String NOTHING_TO_PAY = "Nada a pagar";
 
@@ -106,7 +107,6 @@ public class GratuityFileSIBS
 		fileName.append(year);
 		fileName.append(".txt");
 
-		System.out.println("-->File Name: " + fileName.toString());
 		return fileName.toString();
 	}
 
@@ -129,7 +129,7 @@ public class GratuityFileSIBS
 		header.append(1); //last file's sequence number that it was sended, usually it is 1
 		header.append(20801); //entity's code
 		header.append(978); //currency(coin) code, in this case it is euro's code
-		header.append(addCharToStringUntilMax(SPACE, null, WHITE_SPACES_HEADER)); // three white spaces
+		header.append(addCharToStringUntilMax(SPACE, "", WHITE_SPACES_HEADER)); // three white spaces
 
 		writer.write(header.toString());
 		writer.newLine();
@@ -238,7 +238,7 @@ public class GratuityFileSIBS
 				payValue,
 				MAX_INT_PAYMENT,
 				MAX_DEC_PAYMENT));
-		line.append(addCharToStringUntilMax(SPACE, null, WHITE_SPACES_LINE)); // two white spaces
+		line.append(addCharToStringUntilMax(SPACE, "", WHITE_SPACES_LINE)); // two white spaces
 
 		//write the line
 		writer.write(line.toString());
@@ -255,7 +255,7 @@ public class GratuityFileSIBS
 		footer.append(9); //register type, usually 9
 		footer.append(addCharToStringUntilMax(ZERO, String.valueOf(linesNumber), MAX_LINES_NUMBER));
 		//number of lines except header and footer, attention number with 8 digits
-		footer.append(addCharToStringUntilMax(SPACE, null, WHITE_SPACES_FOOTER));
+		footer.append(addCharToStringUntilMax(SPACE, "", WHITE_SPACES_FOOTER));
 		// forty-one white spaces
 
 		writer.write(footer.toString());
@@ -282,8 +282,7 @@ public class GratuityFileSIBS
 				.getYear();
 		reference.append(year.substring(2, year.indexOf('/'))); //year was like 2003/2004
 		//student's number
-		reference.append(
-			infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent().getNumber());
+		reference.append(addCharToStringUntilMax(ZERO, infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent().getNumber().toString(), MAX_STUDENT_NUMBER));
 		//code
 		reference.append("40"); //for now is 40 and fixe, but later will not be thus
 
@@ -319,19 +318,25 @@ public class GratuityFileSIBS
 		String valueString = String.valueOf(value);
 		String intPart = valueString.substring(0, valueString.indexOf('.'));
 		String decPart = valueString.substring(valueString.indexOf('.') + 1);
-
-		for (int i = 0; i <= intDigits - intPart.length(); i++)
+//		
+//		System.out.println("-->1 " + valueString);
+//		System.out.println("-->2 " + intPart);
+//		System.out.println("-->3 " + decPart);
+		
+		for (int i = 0; i < intDigits - intPart.length(); i++)
 		{
 			stringBuffer.append(ZERO);
 		}
 		stringBuffer.append(intPart);
-
-		for (int i = 0; i <= decDigits - decPart.length(); i++)
+//		System.out.println("-->4 " + stringBuffer);
+		
+		for (int i = 0; i < decDigits - decPart.length(); i++)
 		{
 			stringBuffer.append(ZERO);
 		}
 		stringBuffer.append(decPart);
-
+//		System.out.println("-->5 " + stringBuffer);
+		
 		return stringBuffer.toString();
 	}
 
@@ -354,25 +359,26 @@ public class GratuityFileSIBS
 
 		StringBuffer dateString = new StringBuffer();
 		dateString.append(calendar.get(Calendar.YEAR));
+		
 
 		int month = calendar.get(Calendar.MONTH) + 1;
-		String monthString = null;
+		String monthString = "";
 		if (month < 10)
 		{
 			monthString = "0";
 		}
 		monthString = monthString + String.valueOf(month);
 		dateString.append(monthString);
-
+		
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
-		String dayString = null;
+		String dayString = "";
 		if (day < 10)
 		{
 			dayString = "0";
 		}
 		dayString = dayString + String.valueOf(day);
 		dateString.append(dayString);
-
+		
 		return dateString.toString();
 	}
 
@@ -388,7 +394,13 @@ public class GratuityFileSIBS
 	{
 		StringBuffer stringComplete = new StringBuffer();
 
-		for (int i = 0; i <= maxlength - string.length(); i++)
+		int stringLength = 0;
+		if(string != null)
+		{
+			stringLength = string.length();
+		}
+		
+		for (int i = 0; i < maxlength - stringLength; i++)
 		{
 			stringComplete.append(c);
 		}

@@ -21,7 +21,7 @@ import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
 public class GratuityFileLetters
 {
 	public static final String SEPARATOR = ";";
-	public static final double INSURANCE = 2.5;
+	public static final double INSURANCE = 2.50;
 	public static final String NOTHING = "-";
 	public static final String WITHOUT_ADDRESS = "Sem morada";
 	public static final String NOTHING_TO_PAY = "Nada a pagar";
@@ -91,7 +91,6 @@ public class GratuityFileLetters
 		fileName.append(year);
 		fileName.append(".txt");
 
-		System.out.println("-->File Name: " + fileName.toString());
 		return fileName.toString();
 	}
 	

@@ -76,27 +76,35 @@ public class EditGratuitySituationById implements IServico
 			IGratuitySituation gratuitySituation = new GratuitySituation();
 			gratuitySituation.setIdInternal(infoGratuitySituation.getIdInternal());
 
+			IGratuityValues gratuityValues = new GratuityValues();
+			gratuityValues.setIdInternal(infoGratuitySituation.getInfoGratuityValues().getIdInternal());
+			gratuitySituation.setGratuityValues(gratuityValues);
+
+			IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
+			studentCurricularPlan.setIdInternal(
+				infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal());
+			gratuitySituation.setStudentCurricularPlan(studentCurricularPlan);
+
 			gratuitySituation =
-				(IGratuitySituation) persistentGratuitySituation.readByOId(gratuitySituation, true);
-			if (gratuitySituation == null)
+				persistentGratuitySituation
+					.readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
+					studentCurricularPlan,
+					gratuityValues);
+			if (gratuitySituation == null) //it doesn't exist in database, then write it
 			{
 				gratuitySituation = new GratuitySituation();
 
 				//gratuity values
-				IGratuityValues gratuityValues = new GratuityValues();
-				if (infoGratuitySituation.getInfoGratuityValues() != null)
-				{
-					gratuityValues.setIdInternal(
-						infoGratuitySituation.getInfoGratuityValues().getIdInternal());
-					IPersistentGratuityValues persistentGratuityValues =
-						sp.getIPersistentGratuityValues();
-					gratuityValues =
-						(IGratuityValues) persistentGratuityValues.readByOId(gratuityValues, false);
-					gratuitySituation.setGratuityValues(gratuityValues);
-				}
+				gratuityValues = new GratuityValues();
+				gratuityValues.setIdInternal(
+					infoGratuitySituation.getInfoGratuityValues().getIdInternal());
+				IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
+				gratuityValues =
+					(IGratuityValues) persistentGratuityValues.readByOId(gratuityValues, false);
+				gratuitySituation.setGratuityValues(gratuityValues);
 
 				//student curricular plan
-				IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
+				studentCurricularPlan = new StudentCurricularPlan();
 				studentCurricularPlan.setIdInternal(
 					infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal());
 				IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
@@ -108,6 +116,7 @@ public class EditGratuitySituationById implements IServico
 				gratuitySituation.setStudentCurricularPlan(studentCurricularPlan);
 
 				persistentGratuitySituation.simpleLockWrite(gratuitySituation);
+
 			}
 
 			//employee who made register
@@ -124,11 +133,11 @@ public class EditGratuitySituationById implements IServico
 
 			Calendar now = Calendar.getInstance();
 			gratuitySituation.setWhen(now.getTime());
-			
+
 			gratuitySituation.setExemptionDescription(infoGratuitySituation.getExemptionDescription());
 			gratuitySituation.setExemptionPercentage(infoGratuitySituation.getExemptionPercentage());
 			gratuitySituation.setExemptionType(infoGratuitySituation.getExemptionType());
-		
+
 			infoGratuitySituation =
 				Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
 		}

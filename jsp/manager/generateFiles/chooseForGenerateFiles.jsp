@@ -5,11 +5,22 @@
 <h2><bean:message key="label.generateFiles"/></h2>
 <span class="error"><html:errors/></span>
 
+<bean:define id="fileToGenerate" name="file"/>
+<p>
+<b>
+	<bean:message key="label.generateFiles.generating" />
+	<logic:equal name="fileToGenerate" value="sibs">
+		<bean:message key="label.generateFiles.SIBS" />
+	</logic:equal>
+	<logic:equal name="fileToGenerate" value="letters">
+		<bean:message key="label.generateFiles.letters" />
+	</logic:equal>
+</b>
+<p>
 <html:form action="/generateFiles">  
 	<html:hidden property="method" value="generateGratuityFile" />
 	<html:hidden property="page" value="1" />
-	
-	<bean:define id="fileToGenerate" name="file"/>
+		
 	<html:hidden property="file" value="<%=fileToGenerate.toString() %>" />
 	<table>
 		<tr>
