@@ -6,4 +6,4 @@
 	<tiles:put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 	<tiles:put name="body" value="/publico/viewClassTimeTable_bd.jsp" />
 	<tiles:put name="footer" value="/publico/degreeSite/footer.jsp" />
-</tiles:insert> 
+</tiles:insert>
