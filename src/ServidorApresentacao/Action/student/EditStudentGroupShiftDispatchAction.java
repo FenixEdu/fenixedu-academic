@@ -173,8 +173,8 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 				ActionErrors actionErrors3 = new ActionErrors();
 				ActionError error3 = null;
 				// Create an ACTION_ERROR 
-				error3 = new ActionError("errors.editStudentGroupShift.allShiftsFull");
-				actionErrors3.add("errors.editStudentGroupShift.allShiftsFull", error3);
+				error3 = new ActionError("errors.editStudentGroupShift.shiftFull");
+				actionErrors3.add("errors.editStudentGroupShift.shiftFull", error3);
 				saveErrors(request, actionErrors3);
 				return mapping.findForward("viewStudentGroupInformation");
 
