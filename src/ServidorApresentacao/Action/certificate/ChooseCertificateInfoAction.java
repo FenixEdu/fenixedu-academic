@@ -53,12 +53,14 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 			
 			session.removeAttribute(SessionConstants.SPECIALIZATIONS);
 			session.removeAttribute(SessionConstants.DOCUMENT_REASON);
+			session.removeAttribute(SessionConstants.CERTIFICATE_LIST);
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			ArrayList specializations = Specialization.toArrayList();
 			ArrayList documentReason = DocumentReason.toArrayList();
 			
+			// inputs	
 			Object args[] = {GraduationType.MASTER_DEGREE_TYPE, DocumentType.CERTIFICATE_TYPE};
 	        
 			// output
@@ -105,16 +107,16 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 			session.removeAttribute(SessionConstants.DEGREE_TYPE);
 			session.removeAttribute(SessionConstants.DATE);
 			session.removeAttribute(SessionConstants.DOCUMENT_REASON_LIST);
+			session.removeAttribute(SessionConstants.CERTIFICATE_TYPE);	
 
 			
 			// Get the Information
 			Integer requesterNumber = new Integer((String) chooseDeclaration.get("requesterNumber"));
 			String graduationType = (String) chooseDeclaration.get("graduationType");
+			String certificateString = (String) chooseDeclaration.get("certificateList");
 			String[] destination =  (String[]) chooseDeclaration.get("destination");
 		    
-			if (destination.length != 0)
-				session.setAttribute(SessionConstants.DOCUMENT_REASON_LIST,destination);
-		   
+			
 		
 
 			// inputs
@@ -144,9 +146,10 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 				Locale locale = new Locale("pt", "PT");
 				Date date = new Date();
 				String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
-	
+				if (destination.length != 0)
+					session.setAttribute(SessionConstants.DOCUMENT_REASON_LIST,destination);
 				session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
-				
+				session.setAttribute(SessionConstants.CERTIFICATE_TYPE, certificateString);	
 				session.setAttribute(SessionConstants.DATE, formatedDate);	
 				return mapping.findForward("ChooseSuccess"); 
 			}

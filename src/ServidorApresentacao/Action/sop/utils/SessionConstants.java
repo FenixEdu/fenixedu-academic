@@ -110,7 +110,7 @@ public abstract class SessionConstants {
 	public static final String DEGREE_TYPE = "degree_type"; 
 	public static final String DOCUMENT_REASON_LIST = "document_Reason_list"; 
 	public static final String CERTIFICATE_LIST = "certificate_list"; 
-	
+	public static final String CERTIFICATE_TYPE = "certificateString"; 
 
 	// -------------------------------------------------------------------------------
 	//    Person Constants - For Person
