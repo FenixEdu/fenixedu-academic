@@ -12,10 +12,9 @@ import Dominio.IQualification;
 public interface IPersistentQualification extends IPersistentObject
 {
     public List readQualificationsByPerson(IPessoa person) throws ExcepcaoPersistencia;
-    public IQualification readByYearAndSchoolAndDegreeAndPerson(
+    public IQualification readByYearAndSchoolAndPerson(
         Integer year,
         String school,
-        String degree,
         IPessoa person)
         throws ExcepcaoPersistencia;
 }

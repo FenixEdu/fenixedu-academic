@@ -78,10 +78,9 @@ public class EditQualification extends EditDomainObjectService
         IPersistentQualification persistentQualification = sp.getIPersistentQualification();
         IQualification oldQualification = (IQualification) domainObject;
         IQualification newQualification =
-            persistentQualification.readByYearAndSchoolAndDegreeAndPerson(
+            persistentQualification.readByYearAndSchoolAndPerson(
                 oldQualification.getYear(),
                 oldQualification.getSchool(),
-                oldQualification.getDegree(),
                 oldQualification.getPerson());
         return newQualification;
     }

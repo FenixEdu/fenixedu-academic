@@ -35,7 +35,7 @@ public class QualificationOJB extends ObjectFenixOJB implements IPersistentQuali
 	 * @see ServidorPersistente.IPersistentQualification#readByYearAndSchoolAndDegreeAndPerson(java.lang.String,
 	 *      java.lang.String, java.lang.String, Dominio.IPessoa)
 	 */
-    public IQualification readByYearAndSchoolAndDegreeAndPerson(
+    public IQualification readByYearAndSchoolAndPerson(
         Integer year,
         String school,
         String degree,
@@ -45,7 +45,6 @@ public class QualificationOJB extends ObjectFenixOJB implements IPersistentQuali
         Criteria criteria = new Criteria();
         criteria.addEqualTo("year", year);
         criteria.addEqualTo("school", school);
-        criteria.addEqualTo("degree", degree);
         criteria.addEqualTo("person.idInternal", person.getIdInternal());
         IQualification qualification = (IQualification) queryObject(Qualification.class, criteria);
         return qualification;
