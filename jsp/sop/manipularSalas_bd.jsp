@@ -11,12 +11,12 @@
     <table align="center" border=1 cellpadding='5'>
       <%! int i; %>
       <% i = 0; %>
-      <logic:iterate id="elem" name="publico.infoRooms">
+      <logic:iterate id="infoRoom" name="publico.infoRooms">
         <tr align="center">
           <td>
-            <html:radio name="posicaoFormBean" property="posicao" value="<%= (new Integer(i)).toString()%>"/>
+            <html:radio property="index" value="<%= (new Integer(i)).toString()%>"/>
           </td>
-          <td><bean:write name="elem" property="nome"/></td>
+          <td><bean:write name="infoRoom" property="nome"/></td>
         </tr>
         <% i++; %>
       </logic:iterate>
