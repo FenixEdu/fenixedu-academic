@@ -898,20 +898,20 @@
 	<!-- Choose Execution Course Form for exam -->
     <action path="/chooseExecutionCourseForm"
     		name="chooseExecutionCourseForm"
-			input="/escolherDisciplinaExecucao.jsp"
+			input="/chooseExecutionCourse.jsp"
             scope="request"
             type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
-            validate="true">
+            validate="false">
         <forward name="forwardChoose" path="/createExam.do?method=prepare&amp;page=0"/>
         <forward name="showForm" path="/chooseExecutionCourse.jsp"/>        
     </action>
 
     <action path="/chooseExecutionCourseToAddToExam"
     		name="chooseExecutionCourseForm"
-			input="/escolherDisciplinaExecucao.jsp"
+			input="/chooseExecutionCourse.jsp"
             scope="request"
             type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
-            validate="true">
+            validate="false">
         <forward name="forwardChoose" path="/addExecutionCourseToExam.do"/>
         <forward name="showForm" path="/chooseExecutionCourse.jsp"/>        
     </action>
