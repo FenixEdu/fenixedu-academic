@@ -1,25 +1,25 @@
 LOAD DATA INFILE '@load.data.infile.root@alunos.txt' into table mw_STUDENT_AUXILIARY_TABLE;
 LOAD DATA INFILE '@load.data.infile.root@pessoa.txt' into table mw_PERSON IGNORE 1 LINES;
--- LOAD DATA INFILE '@load.data.infile.root@nomedis.txt' into table mw_COURSE;
 LOAD DATA INFILE '@load.data.infile.root@curram.txt' into table mw_BRANCH;
 LOAD DATA INFILE '@load.data.infile.root@medias.txt' into table mw_AVERAGE;
 LOAD DATA INFILE '@load.data.infile.root@curriculo.txt' into table mw_ENROLMENT_AUXILIARY_TABLE_1;
 LOAD DATA INFILE '@load.data.infile.root@nomedis.txt' into table mw_CURRICULAR_COURSE;
 LOAD DATA INFILE '@load.data.infile.root@disciplinas.txt' into table mw_CURRICULAR_COURSE_SCOPE_AUXILIARY_TABLE;
+LOAD DATA INFILE '@load.data.infile.root@escolas.txt' into table mw_UNIVERSITY;
 --LOAD DATA INFILE '@load.data.infile.root@student-class-distribution.txt' into table mw_STUDENT_CLASS IGNORE 1 LINES;
 --LOAD DATA INFILE '@load.data.infile.root@student-class-distribution-2nd-phase.txt' into table mw_STUDENT_CLASS IGNORE 1 LINES (STUDENT_NUMBER, DEGREE_CODE,CLASS_NAME);
-LOAD DATA INFILE '@load.data.infile.root@escolas.txt' into table mw_UNIVERSITY;
 
+CREATE INDEX mw_ENROLMENT_AUXILIARY_TABLE_1_INDEX_1 on mw_ENROLMENT_AUXILIARY_TABLE_1(number,enrolmentYear,curricularCourseYear,curricularCourseSemester,season,courseCode,degreeCode,branchCode,grade,teacherNumber,examDate,universityCode,remarks);
+CREATE INDEX mw_ENROLMENT_AUXILIARY_TABLE_1_INDEX_2 on mw_ENROLMENT_AUXILIARY_TABLE_1(enrolmentYear,degreeCode);
+CREATE INDEX mw_ENROLMENT_AUXILIARY_TABLE_1_INDEX_3 on mw_ENROLMENT_AUXILIARY_TABLE_1(number);
+CREATE INDEX mw_ENROLMENT_AUXILIARY_TABLE_1_INDEX_4 on mw_ENROLMENT_AUXILIARY_TABLE_1(enrolmentYear);
+
+CREATE INDEX mw_STUDENT_AUXILIARY_TABLE_INDEX_1 on mw_STUDENT_AUXILIARY_TABLE(number);
 
 UPDATE mw_CURRICULAR_COURSE SET courseCode = LTRIM(courseCode);
 UPDATE mw_ENROLMENT_AUXILIARY_TABLE_1 SET courseCode = LTRIM(courseCode);
 UPDATE mw_CURRICULAR_COURSE_SCOPE_AUXILIARY_TABLE SET courseCode = LTRIM(courseCode);
 UPDATE mw_UNIVERSITY SET universityCode = LTRIM(universityCode);
--- UPDATE mw_COURSE SET courseCode = LTRIM(courseCode);
--- UPDATE mw_CURRICULAR_COURSE SET courseName = RTRIM(courseName);
--- UPDATE mw_UNIVERSITY SET universityName = RTRIM(universityName);
--- UPDATE mw_BRANCH SET description = RTRIM(description);
-
 
 delete from mw_DEGREE_TRANSLATION;
 insert into mw_DEGREE_TRANSLATION values (01,1),(02,2),(03,3),(04,4),(05,5),(06,6)
@@ -28,6 +28,11 @@ insert into mw_DEGREE_TRANSLATION values (01,1),(02,2),(03,3),(04,4),(05,5),(06,
 ,(51,1),(53,3),(54,4),(64,14);
 
 
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------
 -- Temporary Delete's (Student's that changed degree but the Branch wasn't updated)
 delete from mw_STUDENT_AUXILIARY_TABLE where number = 42980;
 delete from mw_STUDENT_AUXILIARY_TABLE where number = 51335;
@@ -52,4 +57,4 @@ create table mw_PERSON_WITH_DUPLICATE_ID
 drop table if exists mw_STUDENTS_WITH_VARIOUS_NUMBERS;
 create table mw_STUDENTS_WITH_VARIOUS_NUMBERS
 	select documentidnumber, number, max(number) as maxidinternal, count(1) as total from mw_STUDENT_AUXILIARY_TABLE group by documentidnumber having count(1) > 1;
-
+-----------------------------------------------------------------------------------------------------------------------------

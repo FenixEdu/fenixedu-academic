@@ -400,7 +400,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			}
 		}
 
-		if (curricularCourse != null) {
+		if ((curricularCourse != null) && (curricularCourse.getUniversity() == null) ) {
 			IUniversity university = CreateAndUpdateAllStudentsPastEnrolments.getUniversity(mwEnrolment.getUniversitycode(), fenixPersistentSuport);
 			if (university == null) {
 				System.out.println("[ERROR 210] No record of University with code: [" + mwEnrolment.getUniversitycode() + "]!");
@@ -530,10 +530,15 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		// Create the EnrolmentEvaluation.
 		Date whenAltered = null;
 		if (mwEnrolment.getExamdate() == null) {
-			whenAltered = new Date();
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(mwEnrolment.getEnrolmentyear().intValue(), 9, 1);
+			whenAltered = new Date(calendar.getTimeInMillis());
 		} else {
 			whenAltered = mwEnrolment.getExamdate();
 		}
+		long dateInLongFormat = whenAltered.getTime();
+		dateInLongFormat = dateInLongFormat + (mwEnrolment.getIdinternal().longValue() * 1000);
+		whenAltered = new Date(dateInLongFormat);
 		
 		String grade = CreateAndUpdateAllStudentsPastEnrolments.getAcurateGrade(mwEnrolment);
 
@@ -571,12 +576,12 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 
 				CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.put(key, enrolmentEvaluation);
 			} else {
-				System.out.println("[WARNING 203] No EnrolmentEvaluation was created!");
-				ReportAllPastEnrollmentMigration.addNotCreatedEnrolmentEvaluation(key, mwEnrolment);
+//				System.out.println("[WARNING 203] No EnrolmentEvaluation was created!");
+//				ReportAllPastEnrollmentMigration.addNotCreatedEnrolmentEvaluation(key, mwEnrolment);
 			}
 		} else {
-			System.out.println("[WARNING 204] No EnrolmentEvaluation was created!");
-			ReportAllPastEnrollmentMigration.addNotCreatedEnrolmentEvaluation(key, mwEnrolment);
+//			System.out.println("[WARNING 204] No EnrolmentEvaluation was created!");
+//			ReportAllPastEnrollmentMigration.addNotCreatedEnrolmentEvaluation(key, mwEnrolment);
 		}
 
 		CreateAndUpdateAllStudentsPastEnrolments.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
@@ -893,11 +898,11 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		String grade = mwEnrolment.getGrade();
 
 		if (grade == null) {
-			return "0";
+			return "NA";
 		}
 
 		if (grade.equals("")) {
-			return "0";
+			return "NA";
 		}
 
 		if (grade.equals("RE")) {

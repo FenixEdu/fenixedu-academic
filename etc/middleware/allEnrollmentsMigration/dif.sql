@@ -7,12 +7,14 @@
 -- ALTER TABLE mw_ENROLMENT_AUXILIARY_TABLE_1 DROP INDEX I1;
 -- ALTER TABLE mw_ENROLMENT_AUXILIARY_TABLE_1 DROP INDEX I2;
 
+-- Isto está no ficheiro: etc/middleware/PopulateTables.sql
 CREATE INDEX mw_ENROLMENT_AUXILIARY_TABLE_1_INDEX_1 on mw_ENROLMENT_AUXILIARY_TABLE_1(number,enrolmentYear,curricularCourseYear,curricularCourseSemester,season,courseCode,degreeCode,branchCode,grade,teacherNumber,examDate,universityCode,remarks);
 CREATE INDEX mw_ENROLMENT_AUXILIARY_TABLE_1_INDEX_2 on mw_ENROLMENT_AUXILIARY_TABLE_1(enrolmentYear,degreeCode);
 CREATE INDEX mw_ENROLMENT_AUXILIARY_TABLE_1_INDEX_3 on mw_ENROLMENT_AUXILIARY_TABLE_1(number);
 CREATE INDEX mw_ENROLMENT_AUXILIARY_TABLE_1_INDEX_4 on mw_ENROLMENT_AUXILIARY_TABLE_1(enrolmentYear);
 
 CREATE INDEX mw_STUDENT_AUXILIARY_TABLE_INDEX_1 on mw_STUDENT_AUXILIARY_TABLE(number);
+--
 
 drop table if exists mw_ENROLMENT_AUXILIARY_TABLE_2;
 create table mw_ENROLMENT_AUXILIARY_TABLE_2
@@ -22,6 +24,7 @@ CREATE INDEX mw_ENROLMENT_AUXILIARY_TABLE_2_INDEX_1 on mw_ENROLMENT_AUXILIARY_TA
 
 -----------------------------------------------------------------------------------------------------------------------------
 
+-- Isto está no ficheiro: etc/middleware/allEnrollmentsMigration/loadMWTablesWithDataForAllEnrollmentMigration.sql
 drop table if exists mw_ENROLMENT;
 create table mw_ENROLMENT
 select * from mw_ENROLMENT_AUXILIARY_TABLE_1 where degreeCode = 1 and enrolmentYear <> 2003;
@@ -32,6 +35,7 @@ select mwa.* from mw_STUDENT_AUXILIARY_TABLE mwa inner join mw_ENROLMENT mwe on 
 
 CREATE INDEX mw_ENROLMENT_INDEX_1 on mw_ENROLMENT(number,enrolmentYear,curricularCourseYear,curricularCourseSemester,season,courseCode,degreeCode,branchCode,grade,teacherNumber,examDate,universityCode,remarks);
 CREATE INDEX mw_STUDENT_INDEX_1 on mw_STUDENT(number);
+--
 
 -----------------------------------------------------------------------------------------------------------------------------
 
