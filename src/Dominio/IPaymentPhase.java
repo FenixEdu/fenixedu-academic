@@ -19,8 +19,7 @@ public interface IPaymentPhase extends IDomainObject
 	public String getDescription();
 	public IGratuityValues getGratuityValues();	
 	public List getTransactionList();
-	
-	
+		
 	public void setValue(Double value);
 	public void setStartDate(Date startDate);
 	public void setEndDate(Date endDate);
