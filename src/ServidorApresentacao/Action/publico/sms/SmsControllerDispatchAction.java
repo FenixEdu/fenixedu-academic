@@ -133,10 +133,7 @@ public class SmsControllerDispatchAction extends FenixDispatchAction
 		}
 
 		//check if the host is accepted
-		if (remoteAddress.equals(hostAddress) == false)
-			return false;
-		else
-			return true;
+		return remoteAddress.equals(hostAddress);
 	}
 
 	private String getFromRequest(String parameter, HttpServletRequest request)

@@ -5,6 +5,8 @@ package Dominio.credits;
 
 import java.util.Date;
 
+import Dominio.IExecutionPeriod;
+
 /**
  * @author jpvl
  */
@@ -26,4 +28,6 @@ public interface IDatePeriodBasedCreditLine extends ICreditLine
      * @param start The start to set.
      */
     public abstract void setStart(Date start);
+    
+    public boolean belongsTo(IExecutionPeriod executionPeriod);
 }

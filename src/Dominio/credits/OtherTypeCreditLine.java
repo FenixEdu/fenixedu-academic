@@ -4,6 +4,7 @@
 package Dominio.credits;
 
 import Dominio.IExecutionPeriod;
+import Dominio.credits.event.CreditsEvent;
 
 /**
  * @author jpvl
@@ -92,6 +93,20 @@ public class OtherTypeCreditLine extends CreditLine implements IOtherTypeCreditL
     public void setKeyExecutionPeriod(Integer keyExecutionPeriod)
     {
         this.keyExecutionPeriod = keyExecutionPeriod;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.credits.CreditLine#getCreditEventGenerated()
+     */
+    protected CreditsEvent getCreditEventGenerated() {
+        return CreditsEvent.OTHER_CREDIT;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.credits.event.ICreditsEventOriginator#belongsToExecutionPeriod(Dominio.IExecutionPeriod)
+     */
+    public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
+        return this.getExecutionPeriod().equals(executionPeriod);
     }
 
 }

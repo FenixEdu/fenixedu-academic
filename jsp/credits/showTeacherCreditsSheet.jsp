@@ -368,7 +368,7 @@
 	</logic:notEmpty>
 	<logic:empty name="otherCreditLines">
 		<tr>
-			<td colspan="7" class="listClasses"> 
+			<td colspan="2" class="listClasses"> 
 				<i><bean:message key="message.otherTypeCreditLine.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>						
 			</td>
 		</tr>
@@ -425,7 +425,7 @@
 	</logic:notEmpty>
 	<logic:empty name="managementPositions">
 		<tr>
-			<td colspan="3" class="listClasses"> 
+			<td colspan="4" class="listClasses"> 
 				<i><bean:message key="message.managementPositions.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>						
 			</td>
 		</tr>

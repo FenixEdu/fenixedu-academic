@@ -23,5 +23,9 @@ public interface IProfessorship extends IDomainObject
 
     public List getAssociatedShiftProfessorship();
     public void setAssociatedShiftProfessorship(List associatedTeacherShiftPercentage);
+    
+    public List getSupportLessons();
+    public void setSupportLessons(List supportLessons);
+    
 
 }

@@ -6,17 +6,16 @@ package DataBeans;
 import java.io.Serializable;
 
 /**
- * @author jmota the super class of all Databeans
+ * the super class of all Databeans
+ * @author jmota 
  */
 
-public abstract class DataTranferObject implements Serializable
-{
+public abstract class DataTranferObject implements Serializable {
 
     /**
-     * 
+     *  
      */
-    public DataTranferObject()
-    {
+    public DataTranferObject() {
     }
 
 }

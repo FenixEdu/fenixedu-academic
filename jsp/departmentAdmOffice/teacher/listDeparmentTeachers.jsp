@@ -22,17 +22,17 @@
 	<table width="100%">
 		<tr>
 			<td class="listClasses-header" width="10%">
-				<html:link href="javascript:void()" onclick="document.forms[0].sortBy.value='teacherNumber'; document.forms[0].submit();return true;">			
+				<html:link href="javascript:void(0)" onclick="document.forms[0].sortBy.value='teacherNumber'; document.forms[0].submit();return false;">			
 					<bean:message key="label.departmentTeachersList.teacherNumber" />
 				</html:link>
 			</td>
 			<td class="listClasses-header" style="text-align:left">
-				<html:link href="javascript:void()" onclick="document.forms[0].sortBy.value='infoPerson.nome';document.forms[0].submit();return true;">			
+				<html:link href="javascript:void(0)" onclick="document.forms[0].sortBy.value='teacherName';document.forms[0].submit();return false;">			
 					<bean:message key="label.departmentTeachersList.teacherName" />
 				</html:link>
 			</td>
 			<td class="listClasses-header" width="10%">
-				<html:link href="javascript:void()" onclick="document.forms[0].sortBy.value='infoCategory.shortName';document.forms[0].submit();return true;">
+				<html:link href="javascript:void(0)" onclick="document.forms[0].sortBy.value='category.code';document.forms[0].submit();return false;">
 					<bean:message key="label.departmentTeachersList.teacherCategory" />
 				</html:link>
 			</td>
@@ -50,13 +50,15 @@
 					<bean:write name="infoTeacherCreditsDetails" property="teacherNumber"/>
 				</td>
 				<td class="listClasses" style="text-align:left">
-					<bean:write name="infoTeacherCreditsDetails" property="infoPerson.nome"/>			
+					<bean:write name="infoTeacherCreditsDetails" property="teacherName"/>			
 				</td>
 				<td class="listClasses">
-					<logic:present name="infoTeacherCreditsDetails" property="infoCategory">
-						<bean:write name="infoTeacherCreditsDetails" property="infoCategory.code"/>			
+					<logic:present name="infoTeacherCreditsDetails" property="category">
+						<label title='<bean:write name="infoTeacherCreditsDetails" property="category.longName" />'>
+							<bean:write name="infoTeacherCreditsDetails" property="category.code"/>
+						</label>						
 					</logic:present>
-					<logic:notPresent name="infoTeacherCreditsDetails" property="infoCategory">
+					<logic:notPresent name="infoTeacherCreditsDetails" property="category">
 						--
 					</logic:notPresent>
 				</td>

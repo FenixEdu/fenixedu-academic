@@ -46,4 +46,6 @@ public interface IExecutionCourse extends  IDomainObject, INode
 
     public List getExecutionCourseProperties();
 	public void setExecutionCourseProperties(List executionCourseProperties);
+	
+	public boolean isMasterDegreeOnly();
 }

@@ -5,6 +5,8 @@ package Dominio.credits;
 
 import java.util.Date;
 
+import Dominio.IExecutionPeriod;
+
 /**
  * @author jpvl
  */
@@ -43,5 +45,18 @@ public abstract class DatePeriodBaseCreditLine extends CreditLine implements IDa
     {
         this.start = start;
     }
+    
+    /* (non-Javadoc)
+     * @see Dominio.credits.event.ICreditsEventOriginator#belongsToExecutionPeriod(Dominio.IExecutionPeriod)
+     */
+    public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
+        return belongsTo(executionPeriod);
+    }
 
+    /* (non-Javadoc)
+     * @see Dominio.credits.IDatePeriodBasedCreditLine#belongsTo(Dominio.IExecutionPeriod)
+     */
+    public boolean belongsTo(IExecutionPeriod executionPeriod) {
+        return (this.end.after(executionPeriod.getBeginDate()) && this.start.before(executionPeriod.getEndDate()));
+    }
 }

@@ -3,6 +3,7 @@
  */
 package Dominio.credits;
 
+import Dominio.credits.event.CreditsEvent;
 import Util.credits.ServiceExemptionType;
 
 /**
@@ -26,6 +27,13 @@ public class ServiceExemptionCreditLine extends DatePeriodBaseCreditLine impleme
     public void setType(ServiceExemptionType type)
     {
         this.type = type;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.credits.CreditLine#getCreditEventGenerated()
+     */
+    protected CreditsEvent getCreditEventGenerated() {
+        return CreditsEvent.SERVICE_EXEMPTION;
     }
 
 }

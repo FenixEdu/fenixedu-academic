@@ -11,15 +11,14 @@ import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerAware;
 import org.apache.ojb.broker.PersistenceBrokerException;
 
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.credits.IPersistentCredits;
+import Dominio.credits.event.CreditsEvent;
+import Dominio.credits.event.ICreditsEventOriginator;
 
 /**
  * @author João Mota
  */
-public class Professorship extends DomainObject implements IProfessorship, PersistenceBrokerAware {
+public class Professorship extends DomainObject implements IProfessorship, ICreditsEventOriginator,
+        PersistenceBrokerAware {
     protected ITeacher teacher;
 
     protected IExecutionCourse executionCourse;
@@ -30,13 +29,13 @@ public class Professorship extends DomainObject implements IProfessorship, Persi
 
     private List associatedShiftProfessorshift;
 
+    private List supportLessons;
+
     /**
      * This attributes only matter if executionCourse is only from a master
      * degree.
      */
     private Double hours;
-
-    private Double previousHours;
 
     /**
      *  
@@ -167,6 +166,30 @@ public class Professorship extends DomainObject implements IProfessorship, Persi
         this.hours = hours;
     }
 
+    /**
+     * @return Returns the supportLessons.
+     */
+    public List getSupportLessons() {
+        return supportLessons;
+    }
+
+    /**
+     * @param supportLessons
+     *            The supportLessons to set.
+     */
+    public void setSupportLessons(List supportLessons) {
+        this.supportLessons = supportLessons;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.credits.event.ICreditsEventOriginator#belongsToExecutionPeriod(Dominio.IExecutionPeriod)
+     */
+    public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
+        return this.getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -181,40 +204,7 @@ public class Professorship extends DomainObject implements IProfessorship, Persi
      * @see org.apache.ojb.broker.PersistenceBrokerAware#afterUpdate(org.apache.ojb.broker.PersistenceBroker)
      */
     public void afterUpdate(PersistenceBroker broker) throws PersistenceBrokerException {
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCredits creditsDAO = sp.getIPersistentCredits();
-
-            ITeacher teacher = this.getTeacher();
-
-            IExecutionPeriod executionPeriod = this.getExecutionCourse().getExecutionPeriod();
-            ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
-            if (credits == null) {
-                credits = new Credits();
-//                credits.setTeacher(teacher);
-//                credits.setExecutionPeriod(executionPeriod);
-            }
-            //            creditsDAO.simpleLockWrite(credits);
-            credits.setTeacher(teacher);
-            credits.setExecutionPeriod(executionPeriod);
-            Double masterDegreeCredits = credits.getMasterDegreeCredits();
-
-            double masterDegreeCreditsValue = masterDegreeCredits != null ? masterDegreeCredits
-                    .doubleValue() : 0;
-
-            double newValue = masterDegreeCreditsValue + this.getHours().doubleValue()
-                    - this.previousHours.doubleValue();
-            credits.setMasterDegreeCredits(new Double(newValue));
-
-            // JPVL: used pb.store because I couldn't figure out how to put
-            // previous
-            // commented code to work! :(
-            // The problem is in create a new credits register.
-            broker.store(credits);
-        } catch (ExcepcaoPersistencia e) {
-            throw new PersistenceBrokerException(e);
-        }
-
+        notifyTeacher();
     }
 
     /*
@@ -223,7 +213,6 @@ public class Professorship extends DomainObject implements IProfessorship, Persi
      * @see org.apache.ojb.broker.PersistenceBrokerAware#beforeInsert(org.apache.ojb.broker.PersistenceBroker)
      */
     public void beforeInsert(PersistenceBroker broker) throws PersistenceBrokerException {
-
     }
 
     /*
@@ -232,35 +221,7 @@ public class Professorship extends DomainObject implements IProfessorship, Persi
      * @see org.apache.ojb.broker.PersistenceBrokerAware#afterInsert(org.apache.ojb.broker.PersistenceBroker)
      */
     public void afterInsert(PersistenceBroker broker) throws PersistenceBrokerException {
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCredits creditsDAO = sp.getIPersistentCredits();
-
-            ITeacher teacher = this.getTeacher();
-
-            IExecutionPeriod executionPeriod = this.getExecutionCourse().getExecutionPeriod();
-            ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
-            if (credits == null) {
-                credits = new Credits();
-            }
-            //            creditsDAO.simpleLockWrite(credits);
-            credits.setTeacher(teacher);
-            credits.setExecutionPeriod(executionPeriod);
-            Double masterDegreeCredits = credits.getMasterDegreeCredits();
-            double masterDegreeCreditsValue = masterDegreeCredits != null ? masterDegreeCredits
-                    .doubleValue() : 0;
-            double newValue = masterDegreeCreditsValue + (this.getHours() != null ? this.getHours().doubleValue() : 0);
-            credits.setMasterDegreeCredits(new Double(newValue));
-
-            // JPVL: used pb.store because I couldn't figure out how to put
-            // previous
-            // commented code to work! :(
-            // The problem is in create a new credits register.
-            broker.store(credits);
-        } catch (ExcepcaoPersistencia e) {
-            throw new PersistenceBrokerException(e);
-        }
-
+        notifyTeacher();
     }
 
     /*
@@ -277,24 +238,7 @@ public class Professorship extends DomainObject implements IProfessorship, Persi
      * @see org.apache.ojb.broker.PersistenceBrokerAware#afterDelete(org.apache.ojb.broker.PersistenceBroker)
      */
     public void afterDelete(PersistenceBroker broker) throws PersistenceBrokerException {
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCredits creditsDAO = sp.getIPersistentCredits();
-
-            ITeacher teacher = this.getTeacher();
-
-            IExecutionPeriod executionPeriod = this.getExecutionCourse().getExecutionPeriod();
-            ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
-            if (credits != null) {
-                creditsDAO.simpleLockWrite(credits);
-                Double masterDegreeCredits = credits.getMasterDegreeCredits();
-                double newValue = masterDegreeCredits.doubleValue() - previousHours.doubleValue();
-                credits.setMasterDegreeCredits(new Double(newValue));
-            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new PersistenceBrokerException(e);
-        }
-
+        notifyTeacher();
     }
 
     /*
@@ -303,7 +247,12 @@ public class Professorship extends DomainObject implements IProfessorship, Persi
      * @see org.apache.ojb.broker.PersistenceBrokerAware#afterLookup(org.apache.ojb.broker.PersistenceBroker)
      */
     public void afterLookup(PersistenceBroker broker) throws PersistenceBrokerException {
-        this.previousHours = this.getHours() == null ? new Double(0) : this.getHours();
     }
 
+    private void notifyTeacher() {
+        if (this.getExecutionCourse().isMasterDegreeOnly()) {
+            ITeacher teacher = this.getTeacher();
+            teacher.notifyCreditsChange(CreditsEvent.MASTER_DEGREE_LESSONS, this);
+        }
+    }
 }

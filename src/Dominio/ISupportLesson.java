@@ -23,5 +23,6 @@ public interface ISupportLesson extends IDomainObject
     public void setProfessorship(IProfessorship professorship);
     public void setStartTime(Date startTime);
     public void setWeekDay(DiaSemana weekDay);
+    public double hours();
 
 }

@@ -6,7 +6,7 @@ package DataBeans;
 
 import java.util.List;
 
-import DataBeans.teacher.credits.InfoCredits;
+import DataBeans.credits.InfoCredits;
 
 /**
  * @author jpvl

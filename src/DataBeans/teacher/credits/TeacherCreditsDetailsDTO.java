@@ -3,43 +3,107 @@
  */
 package DataBeans.teacher.credits;
 
-import DataBeans.InfoTeacher;
+import DataBeans.DataTranferObject;
+import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
+import DataBeans.credits.InfoCredits;
+import DataBeans.teacher.InfoCategory;
 
 /**
+ * 
+ * TODO Remove InfoTeacher extends... doesn't makeSense
+ * 
  * @author jpvl
  */
-public class TeacherCreditsDetailsDTO extends InfoTeacher
-{
+public class TeacherCreditsDetailsDTO extends DataTranferObject {
     private InfoCredits infoCredits;
+    private String teacherName;
+    private Integer teacherId;
+    private InfoCategory category;
+    private Integer teacherNumber;
     
+    private InfoExecutionPeriodWithInfoExecutionYear infoExecution;
+
     /**
      * @param infoTeacher
      */
-    public TeacherCreditsDetailsDTO(InfoTeacher infoTeacher)
-    {
-        super.setIdInternal(infoTeacher.getIdInternal());
-        super.setInfoCategory(infoTeacher.getInfoCategory());
-        super.setInfoPerson(infoTeacher.getInfoPerson());
-        super.setProfessorShipsExecutionCourses(infoTeacher.getProfessorShipsExecutionCourses());
-        super.setResponsibleForExecutionCourses(infoTeacher.getResponsibleForExecutionCourses());
-        super.setTeacherNumber(infoTeacher.getTeacherNumber());
+    public TeacherCreditsDetailsDTO() {
     }
-
 
     /**
      * @return Returns the infoCredits.
      */
-    public InfoCredits getInfoCredits()
-    {
+    public InfoCredits getInfoCredits() {
         return infoCredits;
     }
 
     /**
-     * @param infoCredits The infoCredits to set.
+     * @param infoCredits
+     *            The infoCredits to set.
      */
-    public void setInfoCredits(InfoCredits infoCredits)
-    {
+    public void setInfoCredits(InfoCredits infoCredits) {
         this.infoCredits = infoCredits;
     }
 
+    /**
+     * @return Returns the infoExecution.
+     */
+    public InfoExecutionPeriodWithInfoExecutionYear getInfoExecution() {
+        return infoExecution;
+    }
+
+    /**
+     * @param infoExecution
+     *            The infoExecution to set.
+     */
+    public void setInfoExecution(InfoExecutionPeriodWithInfoExecutionYear infoExecution) {
+        this.infoExecution = infoExecution;
+    }
+    /**
+     * @return Returns the teacherCategory.
+     */
+    public InfoCategory getCategory() {
+        return category;
+    }
+    /**
+     * @param teacherCategory The teacherCategory to set.
+     */
+    public void setCategory(InfoCategory teacherCategory) {
+        this.category = teacherCategory;
+    }
+    /**
+     * @return Returns the teacherId.
+     */
+    public Integer getTeacherId() {
+        return teacherId;
+    }
+    /**
+     * @param teacherId The teacherId to set.
+     */
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
+    }
+    /**
+     * @return Returns the teacherName.
+     */
+    public String getTeacherName() {
+        return teacherName;
+    }
+    /**
+     * @param teacherName The teacherName to set.
+     */
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+    /**
+     * @return Returns the teacherNumber.
+     */
+    public Integer getTeacherNumber() {
+        return teacherNumber;
+    }
+    /**
+     * @param teacherNumber The teacherNumber to set.
+     */
+    public void setTeacherNumber(Integer teacherNumber) {
+        this.teacherNumber = teacherNumber;
+    }
 }

@@ -3,7 +3,6 @@
  */
 package ServidorPersistente.OJB;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +11,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.Employee;
 import Dominio.EmployeeHistoric;
 import Dominio.IDepartment;
 import Dominio.IEmployeeHistoric;
@@ -64,17 +62,10 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
 	 */
     public List readByDepartment(IDepartment department) throws ExcepcaoPersistencia
     { // TODO remove this method by refactoring teacher. Teacher has an employee instead of a person.
-        List employees = getEmployees(department);
-        Collection teacherNumberList = CollectionUtils.collect(employees, new Transformer()
-        {
-            public Object transform(Object input)
-            {
-                Employee employee = (Employee) input;
-                return employee.getEmployeeNumber();
-            }
-        });
+        List employeesNumber = getEmployees(department);
         Criteria criteria = new Criteria();
-        criteria.addIn("teacherNumber", teacherNumberList);
+
+        criteria.addIn("teacherNumber", employeesNumber);
         return queryList(Teacher.class, criteria);
     }
     private List getEmployees(IDepartment department) throws ExcepcaoPersistencia
@@ -98,17 +89,15 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
         finalCriteria.addOrCriteria(criteriaDate2);
         finalCriteria.addAndCriteria(activeEmployeeCriteria);
         List employeesHistoric = queryList(EmployeeHistoric.class, finalCriteria);
-        Collection employeesIdInternals = CollectionUtils.collect(employeesHistoric, new Transformer()
+        List employeesNumbers = (List) CollectionUtils.collect(employeesHistoric, new Transformer()
         {
             public Object transform(Object input)
             {
                 IEmployeeHistoric employeeHistoric = (IEmployeeHistoric) input;
-                return employeeHistoric.getEmployee().getIdInternal();
+                return employeeHistoric.getEmployee().getEmployeeNumber();
             }
         });
-        Criteria criteria = new Criteria();
-        criteria.addIn("idInternal", employeesIdInternals);
-        return queryList(Employee.class, criteria);
+        return employeesNumbers;
     }
     /*
 	 * (non-Javadoc)

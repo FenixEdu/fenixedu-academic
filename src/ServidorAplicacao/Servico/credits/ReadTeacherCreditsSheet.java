@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servico.credits;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -13,20 +14,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoProfessorship;
+import DataBeans.InfoProfessorshipWithInfoExecutionCourse;
 import DataBeans.InfoTeacher;
+import DataBeans.credits.InfoCredits;
 import DataBeans.credits.InfoManagementPositionCreditLine;
 import DataBeans.credits.InfoOtherTypeCreditLine;
 import DataBeans.credits.InfoServiceExemptionCreditLine;
 import DataBeans.credits.TeacherCreditsSheetDTO;
 import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
-import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
 import DataBeans.teacher.professorship.DetailedProfessorship;
 import DataBeans.teacher.professorship.InfoSupportLesson;
 import DataBeans.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionPeriod;
-import Dominio.ICredits;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -46,17 +47,11 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
-import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.credits.IPersistentCredits;
 import ServidorPersistente.credits.IPersistentManagementPositionCreditLine;
-import ServidorPersistente.credits.IPersistentOtherTypeCreditLine;
 import ServidorPersistente.credits.IPersistentServiceExemptionCreditLine;
-import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
-import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
-import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import Util.TipoCurso;
 
 /**
@@ -86,110 +81,111 @@ public class ReadTeacherCreditsSheet implements IService {
 
     /**
      * @param sp
+     * @param infoCredits
      * @param infoTeacher
      * @param infoExecutionPeriod
      * @return
      */
-    private List readInfoMasterDegreeProfessorships(ISuportePersistente sp, ITeacher teacher,
-            IExecutionPeriod executionPeriod) throws FenixServiceException {
-        IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
-        List masterDegreeProfessorshipList;
-        try {
-            masterDegreeProfessorshipList = professorshipDAO.readByTeacherAndTypeOfDegree(teacher,
-                    TipoCurso.MESTRADO_OBJ);
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
-            throw new FenixServiceException("Problems getting master degree professorships!", e);
+    private List readInfoMasterDegreeProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod)
+            throws FenixServiceException {
+        List professorships = teacher.getProfessorships();
+
+        List infoMasterDegreeProfessorships = new ArrayList();
+        for (int i = 0; i < professorships.size(); i++) {
+            IProfessorship professorship = (IProfessorship) professorships.get(i);
+            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+
+            if (executionCourse.getExecutionPeriod().equals(executionPeriod)
+                    && executionCourse.isMasterDegreeOnly()) {
+                InfoProfessorship infoProfessorship = InfoProfessorshipWithInfoExecutionCourse
+                        .newInfoFromDomain(professorship);
+                infoMasterDegreeProfessorships.add(infoProfessorship);
+            }
         }
-        List infoMasterDegreeProfessorships = (List) CollectionUtils.collect(
-                masterDegreeProfessorshipList, new Transformer() {
-
-                    public Object transform(Object input) {
-                        IProfessorship professorship = (IProfessorship) input;
-                        InfoProfessorship infoProfessorship = Cloner
-                                .copyIProfessorship2InfoProfessorship(professorship);
-                        return infoProfessorship;
-                    }
-                });
-
         return infoMasterDegreeProfessorships;
     }
 
     /**
      * @param sp
+     * @param infoCredits
      * @param infoTeacher
      * @param infoExecutionPeriod
      * @return
      */
-    private List readInfoShiftProfessorships(ISuportePersistente sp, ITeacher teacher,
-            IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-        IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentShiftProfessorship();
+    private List readInfoShiftProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod)
+            throws ExcepcaoPersistencia {
+        List professorships = teacher.getProfessorships();
+        List shiftProfessorships = new ArrayList();
+        for (int i = 0; i < professorships.size(); i++) {
+            IProfessorship professorship = (IProfessorship) professorships.get(i);
+            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+            if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
+                shiftProfessorships.addAll(professorship.getAssociatedShiftProfessorship());
+            }
+        }
 
-        List shiftProfessorships = shiftProfessorshipDAO.readByTeacherAndExecutionPeriodAndDegreeType(
-                teacher, executionPeriod, TipoCurso.LICENCIATURA_OBJ);
-
-        List infoShiftProfessorships = (List) CollectionUtils.collect(shiftProfessorships,
-                new Transformer() {
-
-                    public Object transform(Object input) {
-                        IShiftProfessorship shiftProfessorship = (IShiftProfessorship) input;
-                        InfoShiftProfessorship infoShiftProfessorship = Cloner
-                                .copyIShiftProfessorship2InfoShiftProfessorship(shiftProfessorship);
-                        return infoShiftProfessorship;
-                    }
-                });
-
+        List infoShiftProfessorships = new ArrayList();
+        for (int i = 0; i < shiftProfessorships.size(); i++) {
+            IShiftProfessorship shiftProfessorship = (IShiftProfessorship) shiftProfessorships.get(i);
+            InfoShiftProfessorship infoShiftProfessorship = Cloner
+                    .copyIShiftProfessorship2InfoShiftProfessorship(shiftProfessorship);
+            infoShiftProfessorships.add(infoShiftProfessorship);
+        }
         return infoShiftProfessorships;
     }
 
     /**
      * @param teacher
      * @param executionPeriod
+     * @param infoCredits
      * @param sp
      * @return
      */
-    private List readInfoSupportLessonList(ITeacher teacher, IExecutionPeriod executionPeriod,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
-        List supportLessonList = supportLessonDAO.readByTeacherAndExecutionPeriod(teacher,
-                executionPeriod);
-        List infoSupportLessonList = (List) CollectionUtils.collect(supportLessonList,
-                new Transformer() {
+    private List readInfoSupportLessonList(ITeacher teacher, IExecutionPeriod executionPeriod)
+            throws ExcepcaoPersistencia {
 
-                    public Object transform(Object input) {
-                        ISupportLesson supportLesson = (ISupportLesson) input;
-                        InfoSupportLesson infoSupportLesson = Cloner
-                                .copyISupportLesson2InfoSupportLesson(supportLesson);
-                        return infoSupportLesson;
-                    }
-                });
+        List professorships = teacher.getProfessorships();
+        List supportLessonList = new ArrayList();
+        for (int i = 0; i < professorships.size(); i++) {
+            IProfessorship professorship = (IProfessorship) professorships.get(i);
+            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+            if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
+                supportLessonList.addAll(professorship.getSupportLessons());
 
+            }
+        }
+        List infoSupportLessonList = new ArrayList();
+        for (int i = 0; i < supportLessonList.size(); i++) {
+            ISupportLesson supportLesson = (ISupportLesson) supportLessonList.get(i);
+
+            InfoSupportLesson infoSupportLesson = Cloner
+                    .copyISupportLesson2InfoSupportLesson(supportLesson);
+            infoSupportLessonList.add(infoSupportLesson);
+        }
         return infoSupportLessonList;
     }
 
     /**
      * @param teacher
      * @param executionPeriod
+     * @param infoCredits
      * @param sp
      * @return
      */
-    private List readInfoTeacherInstitutionWorkingTime(ITeacher teacher,
-            IExecutionPeriod executionPeriod, ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
-                .getIPersistentTeacherInstitutionWorkingTime();
-        List teacherInstitutionWorkingTimeList = teacherInstitutionWorkingTimeDAO
-                .readByTeacherAndExecutionPeriod(teacher, executionPeriod);
+    private List readInfoTeacherInstitutionWorkingTime(ITeacher teacher, IExecutionPeriod executionPeriod)
+            throws ExcepcaoPersistencia {
+        List teacherInstitutionWorkingTimeList = teacher.getInstitutionWorkTimePeriods();
 
-        List infoTeacherInstitutionWorkingTimeList = (List) CollectionUtils.collect(
-                teacherInstitutionWorkingTimeList, new Transformer() {
-
-                    public Object transform(Object input) {
-                        ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (ITeacherInstitutionWorkTime) input;
-                        InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = Cloner
-                                .copyITeacherInstitutionWorkingTime2InfoTeacherInstitutionWorkTime(teacherInstitutionWorkTime);
-                        return infoTeacherInstitutionWorkTime;
-                    }
-                });
+        List infoTeacherInstitutionWorkingTimeList = new ArrayList();
+        for (int i = 0; i < teacherInstitutionWorkingTimeList.size(); i++) {
+            ITeacherInstitutionWorkTime item = (ITeacherInstitutionWorkTime) teacherInstitutionWorkingTimeList
+                    .get(i);
+            if (item.getExecutionPeriod().equals(executionPeriod)) {
+                InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = Cloner
+                        .copyITeacherInstitutionWorkingTime2InfoTeacherInstitutionWorkTime(item);
+                infoTeacherInstitutionWorkingTimeList.add(infoTeacherInstitutionWorkTime);
+            }
+        }
         return infoTeacherInstitutionWorkingTimeList;
     }
 
@@ -208,28 +204,26 @@ public class ReadTeacherCreditsSheet implements IService {
     /**
      * @param teacher
      * @param executionPeriod
+     * @param infoCredits
      * @param sp
      * @return
      */
     private List readTeacherDegreeFinalProjectStudentList(ITeacher teacher,
-            IExecutionPeriod executionPeriod, ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentTeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudentDAO = sp
-                .getIPersistentTeacherDegreeFinalProjectStudent();
+            IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 
-        List teacherDegreeFinalProjectStudentList = teacherDegreeFinalProjectStudentDAO
-                .readByTeacherAndExecutionPeriod(teacher, executionPeriod);
-        List infoTeacherDegreeFinalProjectStudentList = (List) CollectionUtils.collect(
-                teacherDegreeFinalProjectStudentList, new Transformer() {
+        List teacherDegreeFinalProjectStudentList = teacher.getDegreeFinalProjectStudents();
 
-                    public Object transform(Object input) {
-                        ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) input;
-                        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = Cloner
-                                .copyITeacherDegreeFinalProjectStudent2InfoTeacherDegreeFinalProjectStudent(teacherDegreeFinalProjectStudent);
-                        return infoTeacherDegreeFinalProjectStudent;
-                    }
-                });
-
-        return infoTeacherDegreeFinalProjectStudentList;
+        List infoList = new ArrayList();
+        for (int i = 0; i < teacherDegreeFinalProjectStudentList.size(); i++) {
+            ITeacherDegreeFinalProjectStudent student = (ITeacherDegreeFinalProjectStudent) teacherDegreeFinalProjectStudentList
+                    .get(i);
+            if (student.getExecutionPeriod().equals(executionPeriod)) {
+                InfoTeacherDegreeFinalProjectStudent infoStudent = Cloner
+                        .copyITeacherDegreeFinalProjectStudent2InfoTeacherDegreeFinalProjectStudent(student);
+                infoList.add(infoStudent);
+            }
+        }
+        return infoList;
     }
 
     public TeacherCreditsSheetDTO run(InfoTeacher infoTeacherParam, Integer executionPeriodId)
@@ -246,33 +240,35 @@ public class ReadTeacherCreditsSheet implements IService {
             IExecutionPeriod executionPeriod = readExecutionPeriod(executionPeriodId, executionPeriodDAO);
             ITeacher teacher = readTeacher(infoTeacherParam.getTeacherNumber(), teacherDAO);
 
-            List infoMasterDegreeProfessorships = readInfoMasterDegreeProfessorships(sp, teacher,
+            List infoMasterDegreeProfessorships = readInfoMasterDegreeProfessorships(teacher,
                     executionPeriod);
 
-            List infoShiftProfessorships = readInfoShiftProfessorships(sp, teacher, executionPeriod);
+            List infoShiftProfessorships = readInfoShiftProfessorships(teacher, executionPeriod);
 
             List infoTimeInstitutionWorkingTimeList = readInfoTeacherInstitutionWorkingTime(teacher,
-                    executionPeriod, sp);
+                    executionPeriod);
 
-            List infoSupportLessonList = readInfoSupportLessonList(teacher, executionPeriod, sp);
+            List infoSupportLessonList = readInfoSupportLessonList(teacher, executionPeriod);
 
             List infoTeacherDegreeFinalProjectStudentList = readTeacherDegreeFinalProjectStudentList(
-                    teacher, executionPeriod, sp);
+                    teacher, executionPeriod);
 
             List detailedProfessorshipList = readDetailedProfessorships(teacher, executionPeriod, sp);
 
-            List otherTypeCreditLineList = readOtherTypeCreditLine(teacher, executionPeriod, sp);
+            List otherTypeCreditLineList = readOtherTypeCreditLine(teacher, executionPeriod);
 
             List infoManagementPositions = readManagementPositions(teacher, executionPeriod, sp);
-            List infoServiceExemptions = readServiceExcemptions(teacher, executionPeriod, sp);
 
-            InfoCredits infoCredits = readCredits(teacher, executionPeriod, sp);
+            List infoServiceExemptions = readServiceExcemptions(teacher, executionPeriod, sp);
 
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
 
             teacherCreditsSheetDTO.setInfoTeacher(infoTeacher);
             teacherCreditsSheetDTO.setInfoExecutionPeriod(infoExecutionPeriod);
+
+            InfoCredits infoCredits = teacher.getExecutionPeriodCredits(executionPeriod);
+
             teacherCreditsSheetDTO.setInfoCredits(infoCredits);
 
             teacherCreditsSheetDTO.setInfoMasterDegreeProfessorships(infoMasterDegreeProfessorships);
@@ -361,25 +357,23 @@ public class ReadTeacherCreditsSheet implements IService {
     /**
      * @param teacher
      * @param executionPeriod
+     * @param infoCredits
      * @param sp
      * @return
      */
-    private List readOtherTypeCreditLine(ITeacher teacher, IExecutionPeriod executionPeriod,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = sp.getIPersistentOtherTypeCreditLine();
+    private List readOtherTypeCreditLine(ITeacher teacher, IExecutionPeriod executionPeriod)
+            throws ExcepcaoPersistencia {
 
-        List otherCreditLines = otherTypeCreditLineDAO.readByTeacherAndExecutionPeriod(teacher,
-                executionPeriod);
-
-        List infoOtherCreditLines = (List) CollectionUtils.collect(otherCreditLines, new Transformer() {
-
-            public Object transform(Object input) {
-                IOtherTypeCreditLine otherTypeCreditLine = (IOtherTypeCreditLine) input;
+        List otherCreditLines = teacher.getOtherTypeCreditLines();
+        List infoOtherCreditLines = new ArrayList();
+        for (int i = 0; i < otherCreditLines.size(); i++) {
+            IOtherTypeCreditLine otherTypeCreditLine = (IOtherTypeCreditLine) otherCreditLines.get(i);
+            if (otherTypeCreditLine.getExecutionPeriod().equals(executionPeriod)) {
                 InfoOtherTypeCreditLine infoOtherTypeCreditLine = Cloner
                         .copyIOtherTypeCreditLine2InfoOtherCreditLine(otherTypeCreditLine);
-                return infoOtherTypeCreditLine;
+                infoOtherCreditLines.add(infoOtherTypeCreditLine);
             }
-        });
+        }
         return infoOtherCreditLines;
     }
 
@@ -389,13 +383,14 @@ public class ReadTeacherCreditsSheet implements IService {
      * @param sp
      * @return
      */
-    private InfoCredits readCredits(ITeacher teacher, IExecutionPeriod executionPeriod,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentCredits creditsDAO = sp.getIPersistentCredits();
-        ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
-        return credits == null ? null : Cloner.copyICredits2InfoCredits(credits);
-    }
-
+    //    private InfoCredits readCredits(ITeacher teacher, IExecutionPeriod
+    // executionPeriod,
+    //            ISuportePersistente sp) throws ExcepcaoPersistencia {
+    //        IPersistentCredits creditsDAO = sp.getIPersistentCredits();
+    //        ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(teacher,
+    // executionPeriod);
+    //        return credits == null ? null : Cloner.copyICredits2InfoCredits(credits);
+    //    }
     /**
      * @param teacher
      * @param executionPeriod
@@ -419,11 +414,10 @@ public class ReadTeacherCreditsSheet implements IService {
                         InfoProfessorship infoProfessorShip = Cloner
                                 .copyIProfessorship2InfoProfessorship(professorship);
 
-                        
                         DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
-                        
-                        List executionCourseCurricularCoursesList = getInfoCurricularCourses(detailedProfessorship, professorship
-                                .getExecutionCourse());
+
+                        List executionCourseCurricularCoursesList = getInfoCurricularCourses(
+                                detailedProfessorship, professorship.getExecutionCourse());
 
                         IResponsibleFor responsibleFor = new ResponsibleFor();
                         responsibleFor.setExecutionCourse(professorship.getExecutionCourse());
@@ -438,7 +432,9 @@ public class ReadTeacherCreditsSheet implements IService {
                         return detailedProfessorship;
                     }
 
-                    private List getInfoCurricularCourses(final DetailedProfessorship detailedProfessorship, IExecutionCourse executionCourse) {
+                    private List getInfoCurricularCourses(
+                            final DetailedProfessorship detailedProfessorship,
+                            IExecutionCourse executionCourse) {
 
                         List infoCurricularCourses = (List) CollectionUtils.collect(executionCourse
                                 .getAssociatedCurricularCourses(), new Transformer() {

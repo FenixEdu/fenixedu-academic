@@ -12,7 +12,7 @@
 		</b>							
 		<bean:message key="label.credits.masterDegreeLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
 		<b>	
-			<bean:write name="infoCredits" property="supportLessonsFormatted"/>						
+			<bean:write name="infoCredits" property="supportLessonsFormatted"/>
 		</b>							
 		<bean:message key="label.credits.supportLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
 		<b>

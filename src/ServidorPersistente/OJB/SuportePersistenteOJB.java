@@ -33,7 +33,6 @@ import ServidorPersistente.OJB.Seminaries.CaseStudyOJB;
 import ServidorPersistente.OJB.Seminaries.EquivalencyOJB;
 import ServidorPersistente.OJB.Seminaries.ModalityOJB;
 import ServidorPersistente.OJB.Seminaries.ThemeOJB;
-import ServidorPersistente.OJB.credits.CreditsOJB;
 import ServidorPersistente.OJB.credits.ManagementPositionCreditLineOJB;
 import ServidorPersistente.OJB.credits.OtherTypeCreditLineOJB;
 import ServidorPersistente.OJB.credits.ServiceExemptionCreditLineOJB;
@@ -88,7 +87,6 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquival
 import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
 import ServidorPersistente.cache.ObjectCacheOSCacheImpl;
-import ServidorPersistente.credits.IPersistentCredits;
 import ServidorPersistente.credits.IPersistentManagementPositionCreditLine;
 import ServidorPersistente.credits.IPersistentOtherTypeCreditLine;
 import ServidorPersistente.credits.IPersistentServiceExemptionCreditLine;
@@ -1092,11 +1090,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         if (tx == null)
             throw new StorageException(StorageException.NO_TRANSACTION_IN_COURSE);
         return ((HasBroker) tx).getBroker();
-    }
-
-    public IPersistentCredits getIPersistentCredits()
-    {
-        return new CreditsOJB();
     }
 
     public IPersistentGratuityValues getIPersistentGratuityValues()

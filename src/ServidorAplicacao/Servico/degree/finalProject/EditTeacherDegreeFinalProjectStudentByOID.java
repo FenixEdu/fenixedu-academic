@@ -14,15 +14,11 @@ import DataBeans.InfoObject;
 import DataBeans.InfoStudent;
 import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import DataBeans.util.Cloner;
-import Dominio.Credits;
 import Dominio.ExecutionPeriod;
-import Dominio.ICredits;
 import Dominio.IDomainObject;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
-import Dominio.ITeacher;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
-import ServidorAplicacao.Servico.credits.calcutation.CreditsCalculator;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -30,7 +26,6 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.credits.IPersistentCredits;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import Util.TipoCurso;
 
@@ -226,44 +221,4 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends
 
         return teacherDegreeFinalProjectStudent;
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doAfterLock(Dominio.IDomainObject,
-     *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
-     */
-    protected void doAfterLock(IDomainObject domainObjectLocked,
-            InfoObject infoObject, ISuportePersistente sp)
-            throws FenixServiceException {
-        ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) domainObjectLocked;
-
-        CreditsCalculator creditsCalculator = CreditsCalculator.getInstance();
-
-        ITeacher teacher = teacherDegreeFinalProjectStudent.getTeacher();
-        IExecutionPeriod executionPeriod = teacherDegreeFinalProjectStudent
-                .getExecutionPeriod();
-
-        try {
-            Double dfpStudentsCredits = creditsCalculator
-                    .calcuteDegreeFinalProjectStudentAfterInsert(teacher,
-                            executionPeriod, teacherDegreeFinalProjectStudent,
-                            sp);
-            IPersistentCredits creditsDAO = sp.getIPersistentCredits();
-            ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(
-                    teacher, executionPeriod);
-            if (credits == null) {
-                credits = new Credits();
-            }
-            creditsDAO.simpleLockWrite(credits);
-            credits.setExecutionPeriod(executionPeriod);
-            credits.setTeacher(teacher);
-            credits.setDegreeFinalProjectStudents(dfpStudentsCredits);
-
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException("Problems on database!", e);
-        }
-    }
-
 }

@@ -14,7 +14,6 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
-import ServidorPersistente.credits.IPersistentCredits;
 import ServidorPersistente.credits.IPersistentManagementPositionCreditLine;
 import ServidorPersistente.credits.IPersistentOtherTypeCreditLine;
 import ServidorPersistente.credits.IPersistentServiceExemptionCreditLine;
@@ -266,8 +265,6 @@ public interface ISuportePersistente
     //Nuno Correia & Ricardo Rodrigues
     public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup();
     public IPersistentScientificArea getIPersistentScientificArea();
-
-    public IPersistentCredits getIPersistentCredits();
 
     public IPersistentGratuityValues getIPersistentGratuityValues();
     public IPersistentGratuitySituation getIPersistentGratuitySituation();

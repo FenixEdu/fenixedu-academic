@@ -14,7 +14,6 @@ import org.apache.commons.collections.Predicate;
 import DataBeans.DataTranferObject;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoTeacher;
-import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
 import DataBeans.teacher.professorship.InfoSupportLesson;
 

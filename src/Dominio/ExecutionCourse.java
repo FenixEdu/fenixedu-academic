@@ -2,307 +2,359 @@ package Dominio;
 
 import java.util.List;
 
+import org.apache.commons.collections.Predicate;
+
+import Util.TipoCurso;
+
+import commons.CollectionUtils;
+
 import fileSuport.INode;
 
 public class ExecutionCourse extends DomainObject implements IExecutionCourse {
 
-	private String nome;
-	private String sigla;
+    private String nome;
 
-	private Double theoreticalHours;
-	private Double praticalHours;
-	private Double theoPratHours;
-	private Double labHours;
+    private String sigla;
 
-	private List associatedCurricularCourses = null;
-	private List associatedExams = null;
-	private List associatedEvaluations = null;
-	
-	private IExecutionPeriod executionPeriod;
-	private Integer keyExecutionPeriod;
+    private Double theoreticalHours;
 
-	protected String comment;
-	private List attendingStudents;
-	private List executionCourseProperties;
+    private Double praticalHours;
 
-	public ExecutionCourse() {
-	}
+    private Double theoPratHours;
 
-	public ExecutionCourse(Integer idInternal) {
-		setIdInternal(idInternal);
-		}
+    private Double labHours;
 
+    private List associatedCurricularCourses = null;
 
-	public ExecutionCourse(
-		String nome,
-		String sigla,
-		Double theoreticalHours,
-		Double praticalHours,
-		Double theoPratHours,
-		Double labHours,
-		IExecutionPeriod executionPeriod) {
-		
-		setNome(nome);
-		setSigla(sigla);
-		setTheoreticalHours(theoreticalHours);
-		setPraticalHours(praticalHours);
-		setTheoPratHours(theoPratHours);
-		setLabHours(labHours);
-		setExecutionPeriod(executionPeriod);
-		setComment(new String());
-	}
-	
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof IExecutionCourse) {
-			IExecutionCourse de = (IExecutionCourse) obj;
+    private List associatedExams = null;
 
-			resultado =
-				(getSigla().equals(de.getSigla()))
-					&& (getExecutionPeriod().equals(de.getExecutionPeriod()));
-		}
-		return resultado;
-	}
+    private List associatedEvaluations = null;
 
-	public String toString() {
-		String result = "[EXECUTION_COURSE";
-		result += ", codInt=" + getIdInternal();
-		result += ", sigla=" + sigla;
-		result += ", nome=" + nome;
-		result += ", theoreticalHours=" + theoreticalHours;
-		result += ", praticalHours=" + praticalHours;
-		result += ", theoPratHours=" + theoPratHours;
-		result += ", labHours=" + labHours;
-		result += ", executionPeriod=" + getExecutionPeriod();
-		result += "]";
-		return result;
-	}
+    private IExecutionPeriod executionPeriod;
 
-	/**
-	 * Returns the associatedCurricularCourses.
-	 * @return List
-	 */
-	public List getAssociatedCurricularCourses() {
-		return associatedCurricularCourses;
-	}
+    private Integer keyExecutionPeriod;
 
-	/**
-	 * Returns the nome.
-	 * @return String
-	 */
-	public String getNome() {
-		return nome;
-	}
+    protected String comment;
 
-	/**
-	 * Returns the sigla.
-	 * @return String
-	 */
-	public String getSigla() {
-		return sigla;
-	}
+    private List attendingStudents;
 
-	/**
-	 * Returns the theoreticalHours.
-	 * @return double
-	 */
-	public Double getTheoreticalHours() {
-		return theoreticalHours;
-	}
+    private List executionCourseProperties;
 
-	/**
-	 * Returns the praticalHours.
-	 * @return double
-	 */
-	public Double getPraticalHours() {
-		return praticalHours;
-	}
+    public ExecutionCourse() {
+    }
 
-	/**
-	 * Returns the theoPratHours.
-	 * @return double
-	 */
-	public Double getTheoPratHours() {
-		return theoPratHours;
-	}
+    public ExecutionCourse(Integer idInternal) {
+        setIdInternal(idInternal);
+    }
 
-	/**
-	 * Returns the labHours.
-	 * @return double
-	 */
-	public Double getLabHours() {
-		return labHours;
-	}
+    public ExecutionCourse(String nome, String sigla, Double theoreticalHours, Double praticalHours,
+            Double theoPratHours, Double labHours, IExecutionPeriod executionPeriod) {
 
-	/**
-	 * Sets the associatedCurricularCourses.
-	 * @param associatedCurricularCourses The associatedCurricularCourses to set
-	 */
-	public void setAssociatedCurricularCourses(List associatedCurricularCourses) {
-		this.associatedCurricularCourses = associatedCurricularCourses;
-	}
+        setNome(nome);
+        setSigla(sigla);
+        setTheoreticalHours(theoreticalHours);
+        setPraticalHours(praticalHours);
+        setTheoPratHours(theoPratHours);
+        setLabHours(labHours);
+        setExecutionPeriod(executionPeriod);
+        setComment(new String());
+    }
 
-	/**
-	 * Sets the nome.
-	 * @param nome The nome to set
-	 */
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof IExecutionCourse) {
+            IExecutionCourse de = (IExecutionCourse) obj;
 
-	/**
-	 * Sets the sigla.
-	 * @param sigla The sigla to set
-	 */
-	public void setSigla(String sigla) {
-		this.sigla = sigla;
-	}
+            resultado = (getSigla().equals(de.getSigla()))
+                    && (getExecutionPeriod().equals(de.getExecutionPeriod()));
+        }
+        return resultado;
+    }
 
-	/**
-	 * Sets the theoreticalHours.
-	 * @param theoreticalHours The theoreticalHours to set 
-	 */
-	public void setTheoreticalHours(Double theoreticalHours) {
-		this.theoreticalHours = theoreticalHours;
-	}
+    public String toString() {
+        String result = "[EXECUTION_COURSE";
+        result += ", codInt=" + getIdInternal();
+        result += ", sigla=" + sigla;
+        result += ", nome=" + nome;
+        result += ", theoreticalHours=" + theoreticalHours;
+        result += ", praticalHours=" + praticalHours;
+        result += ", theoPratHours=" + theoPratHours;
+        result += ", labHours=" + labHours;
+        result += ", executionPeriod=" + getExecutionPeriod();
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * Sets the praticalHours.
-	 * @param praticalHours The praticalHours to set
-	 */
-	public void setPraticalHours(Double praticalHours) {
-		this.praticalHours = praticalHours;
-	}
+    /**
+     * Returns the associatedCurricularCourses.
+     * 
+     * @return List
+     */
+    public List getAssociatedCurricularCourses() {
+        return associatedCurricularCourses;
+    }
 
-	/**
-	* Sets the theoPratHours.
-	 * @param theoPratHours The theoPratHours to set
-	 */
-	public void setTheoPratHours(Double theoPratHours) {
-		this.theoPratHours = theoPratHours;
-	}
+    /**
+     * Returns the nome.
+     * 
+     * @return String
+     */
+    public String getNome() {
+        return nome;
+    }
 
-	/**
-	 * Sets the labHours.
-	 * @param labHours The labHours to set
-	 */
-	public void setLabHours(Double labHours) {
-		this.labHours = labHours;
-	}
+    /**
+     * Returns the sigla.
+     * 
+     * @return String
+     */
+    public String getSigla() {
+        return sigla;
+    }
 
-	/**
-	 * @see Dominio.IDisciplinaExecucao#getExecutionPeriod()
-	 */
-	public IExecutionPeriod getExecutionPeriod() {
-		return this.executionPeriod;
-	}
-	/**
-	 * @see Dominio.IDisciplinaExecucao#setExecutionPeriod(Dominio.IExecutionPeriod)
-	 */
-	public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
-		this.executionPeriod = executionPeriod;
-	}
+    /**
+     * Returns the theoreticalHours.
+     * 
+     * @return double
+     */
+    public Double getTheoreticalHours() {
+        return theoreticalHours;
+    }
 
-	/**
-	 * Returns the keyExecutionPeriod.
-	 * @return Integer
-	 */
-	public Integer getKeyExecutionPeriod() {
-		return keyExecutionPeriod;
-	}
+    /**
+     * Returns the praticalHours.
+     * 
+     * @return double
+     */
+    public Double getPraticalHours() {
+        return praticalHours;
+    }
 
-	/**
-	 * Sets the keyExecutionPeriod.
-	 * @param keyExecutionPeriod The keyExecutionPeriod to set
-	 */
-	public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
-		this.keyExecutionPeriod = keyExecutionPeriod;
-	}
+    /**
+     * Returns the theoPratHours.
+     * 
+     * @return double
+     */
+    public Double getTheoPratHours() {
+        return theoPratHours;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getAssociatedExams() {
-		return associatedExams;
-	}
+    /**
+     * Returns the labHours.
+     * 
+     * @return double
+     */
+    public Double getLabHours() {
+        return labHours;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setAssociatedExams(List list) {
-		associatedExams = list;
-	}
+    /**
+     * Sets the associatedCurricularCourses.
+     * 
+     * @param associatedCurricularCourses
+     *            The associatedCurricularCourses to set
+     */
+    public void setAssociatedCurricularCourses(List associatedCurricularCourses) {
+        this.associatedCurricularCourses = associatedCurricularCourses;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getComment() {
-		return comment;
-	}
+    /**
+     * Sets the nome.
+     * 
+     * @param nome
+     *            The nome to set
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setComment(String string) {
-		comment = string;
-	}
+    /**
+     * Sets the sigla.
+     * 
+     * @param sigla
+     *            The sigla to set
+     */
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getAssociatedEvaluations() {
-		return associatedEvaluations;
-	}
+    /**
+     * Sets the theoreticalHours.
+     * 
+     * @param theoreticalHours
+     *            The theoreticalHours to set
+     */
+    public void setTheoreticalHours(Double theoreticalHours) {
+        this.theoreticalHours = theoreticalHours;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setAssociatedEvaluations(List list) {
-		associatedEvaluations = list;
-	}
-	/**
-	 * @return
-	 */
-	public List getAttendingStudents() {
-		return attendingStudents;
-	}
+    /**
+     * Sets the praticalHours.
+     * 
+     * @param praticalHours
+     *            The praticalHours to set
+     */
+    public void setPraticalHours(Double praticalHours) {
+        this.praticalHours = praticalHours;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setAttendingStudents(List list) {
-		attendingStudents = list;
-	}
+    /**
+     * Sets the theoPratHours.
+     * 
+     * @param theoPratHours
+     *            The theoPratHours to set
+     */
+    public void setTheoPratHours(Double theoPratHours) {
+        this.theoPratHours = theoPratHours;
+    }
 
-	/* (non-Javadoc)
-	 * @see fileSuport.INode#getSlideName()
-	 */
-	public String getSlideName() {
-		String result = getParentNode().getSlideName()+"/EC"+getIdInternal();
-		return result;
-	}
+    /**
+     * Sets the labHours.
+     * 
+     * @param labHours
+     *            The labHours to set
+     */
+    public void setLabHours(Double labHours) {
+        this.labHours = labHours;
+    }
 
-	/* (non-Javadoc)
-	 * @see fileSuport.INode#getParentNode()
-	 */
-	public INode getParentNode() {	
-		IExecutionPeriod executionPeriod = getExecutionPeriod();	
-		return executionPeriod;
-	}
+    /**
+     * @see Dominio.IDisciplinaExecucao#getExecutionPeriod()
+     */
+    public IExecutionPeriod getExecutionPeriod() {
+        return this.executionPeriod;
+    }
 
-	/**
-	 * @return Returns the executionCourseProperties.
-	 */
-	public List getExecutionCourseProperties()
-	{
-		return executionCourseProperties;
-	}
+    /**
+     * @see Dominio.IDisciplinaExecucao#setExecutionPeriod(Dominio.IExecutionPeriod)
+     */
+    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
+        this.executionPeriod = executionPeriod;
+    }
 
-	/**
-	 * @param executionCourseProperties The executionCourseProperties to set.
-	 */
-	public void setExecutionCourseProperties(List executionCourseProperties)
-	{
-		this.executionCourseProperties = executionCourseProperties;
-	}
+    /**
+     * Returns the keyExecutionPeriod.
+     * 
+     * @return Integer
+     */
+    public Integer getKeyExecutionPeriod() {
+        return keyExecutionPeriod;
+    }
+
+    /**
+     * Sets the keyExecutionPeriod.
+     * 
+     * @param keyExecutionPeriod
+     *            The keyExecutionPeriod to set
+     */
+    public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
+        this.keyExecutionPeriod = keyExecutionPeriod;
+    }
+
+    /**
+     * @return
+     */
+    public List getAssociatedExams() {
+        return associatedExams;
+    }
+
+    /**
+     * @param list
+     */
+    public void setAssociatedExams(List list) {
+        associatedExams = list;
+    }
+
+    /**
+     * @return
+     */
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * @param string
+     */
+    public void setComment(String string) {
+        comment = string;
+    }
+
+    /**
+     * @return
+     */
+    public List getAssociatedEvaluations() {
+        return associatedEvaluations;
+    }
+
+    /**
+     * @param list
+     */
+    public void setAssociatedEvaluations(List list) {
+        associatedEvaluations = list;
+    }
+
+    /**
+     * @return
+     */
+    public List getAttendingStudents() {
+        return attendingStudents;
+    }
+
+    /**
+     * @param list
+     */
+    public void setAttendingStudents(List list) {
+        attendingStudents = list;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see fileSuport.INode#getSlideName()
+     */
+    public String getSlideName() {
+        String result = getParentNode().getSlideName() + "/EC" + getIdInternal();
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see fileSuport.INode#getParentNode()
+     */
+    public INode getParentNode() {
+        IExecutionPeriod executionPeriod = getExecutionPeriod();
+        return executionPeriod;
+    }
+
+    /**
+     * @return Returns the executionCourseProperties.
+     */
+    public List getExecutionCourseProperties() {
+        return executionCourseProperties;
+    }
+
+    /**
+     * @param executionCourseProperties
+     *            The executionCourseProperties to set.
+     */
+    public void setExecutionCourseProperties(List executionCourseProperties) {
+        this.executionCourseProperties = executionCourseProperties;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IExecutionCourse#isMasterDegreeOnly()
+     */
+    public boolean isMasterDegreeOnly() {
+        return CollectionUtils.exists(this.getAssociatedCurricularCourses(), new Predicate() {
+
+            public boolean evaluate(Object input) {
+                ICurricularCourse curricularCourse = (ICurricularCourse) input;
+                return !curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
+                        TipoCurso.LICENCIATURA_OBJ);
+            }
+        });
+    }
 }

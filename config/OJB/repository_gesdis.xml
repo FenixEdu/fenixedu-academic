@@ -525,6 +525,14 @@
          proxy="true">
 		<inverse-foreignkey field-ref="keyProfessorship"/>
     </collection-descriptor>
+	<collection-descriptor
+         name="supportLessons"
+         element-class-ref="Dominio.SupportLesson"
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true">
+		<inverse-foreignkey field-ref="keyProfessorship"/>
+    </collection-descriptor>	
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->

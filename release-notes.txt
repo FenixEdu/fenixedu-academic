@@ -11,7 +11,11 @@ NOTES:
 
 CHANGES:
 ========
-	
+- Removed pre-calculated credits.
+- Credits are calculated on-the-fly. Use of an event mechanism for notify teacher 
+		that credits info changed and is to be calculated the next time it is requested.
+- All credits based services and classes were refactored.
+
 BUG FIXES:
 ==========
 

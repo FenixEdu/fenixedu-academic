@@ -11,15 +11,12 @@ import java.util.List;
 import DataBeans.InfoObject;
 import DataBeans.teacher.professorship.InfoSupportLesson;
 import DataBeans.util.Cloner;
-import Dominio.Credits;
-import Dominio.ICredits;
 import Dominio.IDomainObject;
 import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.ISupportLesson;
 import Dominio.ITeacher;
 import Dominio.Professorship;
-import ServidorAplicacao.Servico.credits.calcutation.CreditsCalculator;
 import ServidorAplicacao.Servico.credits.validator.CreditsValidator;
 import ServidorAplicacao.Servico.credits.validator.OverlappingSupportLessonPeriod;
 import ServidorAplicacao.Servico.credits.validator.PeriodType;
@@ -29,7 +26,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.credits.IPersistentCredits;
 import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 import Util.DiaSemana;
 
@@ -91,7 +87,6 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentSupportLesson supportLessonDAO = sp
                 .getIPersistentSupportLesson();
-
         ISupportLesson supportLesson = supportLessonDAO
                 .readByUnique((ISupportLesson) domainObject);
         return supportLesson;
@@ -167,41 +162,4 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
 
         super.doBeforeLock(domainObjectToLock, infoObject, sp);
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doAfterLock(Dominio.IDomainObject,
-     *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
-     */
-    protected void doAfterLock(IDomainObject domainObjectLocked,
-            InfoObject infoObject, ISuportePersistente sp)
-            throws FenixServiceException {
-
-        ISupportLesson supportLesson = (ISupportLesson) domainObjectLocked;
-
-        CreditsCalculator creditsCalculator = CreditsCalculator.getInstance();
-        try {
-            ITeacher teacher = supportLesson.getProfessorship().getTeacher();
-            IExecutionPeriod executionPeriod = supportLesson.getProfessorship()
-                    .getExecutionCourse().getExecutionPeriod();
-
-            Double supportLessonsCredits = creditsCalculator
-                    .calculateSupportLessonsAfterInsert(teacher,
-                            executionPeriod, supportLesson, sp);
-            IPersistentCredits creditsDAO = sp.getIPersistentCredits();
-            ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(
-                    teacher, executionPeriod);
-            if (credits == null) {
-                credits = new Credits();
-            }
-            creditsDAO.simpleLockWrite(credits);
-            credits.setExecutionPeriod(executionPeriod);
-            credits.setTeacher(teacher);
-            credits.setSupportLessons(supportLessonsCredits);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException("Problems on database!", e);
-        }
-    }
-
 }

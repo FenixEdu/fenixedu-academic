@@ -3,6 +3,8 @@
  */
 package Dominio.credits;
 
+import Dominio.credits.event.CreditsEvent;
+
 /**
  * @author jpvl
  */
@@ -38,5 +40,12 @@ public class ManagementPositionCreditLine extends DatePeriodBaseCreditLine imple
      */
     public void setCredits(Double credits) {
         this.credits = credits;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.credits.CreditLine#getCreditEventGenerated()
+     */
+    protected CreditsEvent getCreditEventGenerated() {
+        return CreditsEvent.MANAGEMENT_POSITION;
     }
 }

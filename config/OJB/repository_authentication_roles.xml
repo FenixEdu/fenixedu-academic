@@ -425,5 +425,54 @@
 		<fk-pointing-to-this-class column="KEY_TEACHER"/>
 		<fk-pointing-to-element-class column="KEY_PUBLICATION"/>
 	</collection-descriptor>
-    	
+
+	<collection-descriptor
+         name="professorships"
+         element-class-ref="Dominio.Professorship"
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+    </collection-descriptor>    	
+	<collection-descriptor
+         name="institutionWorkTimePeriods"
+         element-class-ref="Dominio.teacher.workTime.TeacherInstitutionWorkTime"
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+    </collection-descriptor>    	
+	<collection-descriptor
+         name="degreeFinalProjectStudents"
+         element-class-ref="Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent"
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+    </collection-descriptor>   
+	<collection-descriptor
+         name="otherTypeCreditLines"
+         element-class-ref="Dominio.credits.OtherTypeCreditLine"
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+    </collection-descriptor>  	 	
+	<collection-descriptor
+         name="managementPositions"
+         element-class-ref="Dominio.credits.ManagementPositionCreditLine"
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+    </collection-descriptor>  	 	
+	<collection-descriptor
+         name="serviceExemptionSituations"
+         element-class-ref="Dominio.credits.ServiceExemptionCreditLine"
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+    </collection-descriptor>  	 	
+
    </class-descriptor>

@@ -122,7 +122,6 @@ import DataBeans.teacher.InfoPublicationsNumber;
 import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoTeachingCareer;
 import DataBeans.teacher.InfoWeeklyOcupation;
-import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
 import DataBeans.teacher.professorship.InfoSupportLesson;
 import DataBeans.teacher.workTime.InfoTeacherInstitutionWorkTime;
@@ -2078,22 +2077,6 @@ public abstract class Cloner {
         professorship.setTeacher(teacher);
 
         return professorship;
-    }
-
-    public static InfoCredits copyICredits2InfoCredits(ICredits creditsTeacher) {
-        ITeacher teacher = creditsTeacher.getTeacher();
-        InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-
-        IExecutionPeriod executionPeriod = creditsTeacher.getExecutionPeriod();
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
-
-        InfoCredits infoCreditsTeacher = new InfoCredits();
-        copyObjectProperties(infoCreditsTeacher, creditsTeacher);
-
-        infoCreditsTeacher.setInfoTeacher(infoTeacher);
-        infoCreditsTeacher.setInfoExecutionPeriod(infoExecutionPeriod);
-
-        return infoCreditsTeacher;
     }
 
     /**
