@@ -48,7 +48,6 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
 		try {
 			HttpSession session = request.getSession(false);
 			IUserView userView = SessionUtils.getUserView(request);
@@ -85,8 +84,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
-			HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
 		InfoShift infoShift = getInfoShift(request, SessionConstants.CLASS_INFO_SHIFT_LIST_KEY);
@@ -134,7 +132,6 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
 		IUserView userView = SessionUtils.getUserView(request);
 
 		InfoClass classView = getInfoTurma(request);
@@ -158,7 +155,6 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 		
 		IUserView userView = SessionUtils.getUserView(request);

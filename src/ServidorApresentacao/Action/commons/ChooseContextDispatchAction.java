@@ -50,8 +50,6 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
-
 			HttpSession session = request.getSession(false);
 			if (session != null) {
 				String inputPage = request.getParameter(SessionConstants.INPUT_PAGE);
@@ -81,7 +79,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 				anosCurriculares.add(new LabelValueBean("3 º", "3"));
 				anosCurriculares.add(new LabelValueBean("4 º", "4"));
 				anosCurriculares.add(new LabelValueBean("5 º", "5"));
-				session.setAttribute("anosCurriculares", anosCurriculares);
+				session.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, anosCurriculares);
 
 				/* Cria o form bean com as licenciaturas em execucao.*/
 				Object argsLerLicenciaturas[] =
@@ -108,9 +106,6 @@ public class ChooseContextDispatchAction extends DispatchAction {
 							.getInfoDegreeCurricularPlan()
 							.getInfoDegree()
 							.getNome();
-					String value =
-						infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();
-
 					name
 						+= duplicateInfoDegree(
 							executionDegreeList,
@@ -148,9 +143,6 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			
-			SessionUtils.validSessionVerification(request, mapping);
-			
 			HttpSession session = request.getSession(false);
 			DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
@@ -168,8 +160,6 @@ public class ChooseContextDispatchAction extends DispatchAction {
 
 				int index = Integer.parseInt((String)escolherContextoForm.get("index"));
 
-				IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			
 				session.setAttribute("anoCurricular", anoCurricular);
 				session.setAttribute("semestre", semestre);
 
