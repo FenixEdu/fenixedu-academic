@@ -92,7 +92,6 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 	public void testWriteShiftLesson() {
 		try {
 
-			ITurnoAula createdShiftLesson = null;
 			ITurno shift = null;
 			IAula lesson = null;
 
@@ -156,7 +155,6 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 	/** Test of delete method, of class ServidorPersistente.OJB.TurnoAulaOJB. */
 	public void testDeleteTurnoAula() {
 		try {
-			ITurnoAula createdShiftLesson = null;
 			ITurno shift = null;
 			IAula lesson = null;
 
@@ -353,8 +351,8 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			persistentSupport.confirmarTransaccao();
 			assertNotNull("testReadLessonsByStudent", lessons);
 			assertEquals("testReadLessonsByStudent", lessons.size(), 1);
-
 		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace(System.out);
 			fail("testReadLessonsByStudent");
 		}
 	}

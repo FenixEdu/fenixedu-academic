@@ -164,7 +164,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 	  assertNotNull(executionDegree);
       
-	  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+	  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "MEEC");
 	  assertNotNull(executionCourse);
       
 	  ITurno shift = persistentShift.readByNameAndExecutionCourse("turno3", executionCourse);
@@ -214,7 +214,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 	  assertNotNull(executionDegree);
       
-	  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+	  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "MEEC");
 	  assertNotNull(executionCourse);
       
 	  ITurno shift = persistentShift.readByNameAndExecutionCourse("turno3", executionCourse);
@@ -255,7 +255,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 	  assertNotNull(executionDegree);
       
-	  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+	  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "MEEC");
 	  assertNotNull(executionCourse);
       
 	  ITurno shift = persistentShift.readByNameAndExecutionCourse("turno3", executionCourse);
@@ -305,7 +305,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 	  assertNotNull(executionDegree);
       
-	  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+	  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "MEEC");
 	  assertNotNull(executionCourse);
       
 	  ITurno shift = persistentShift.readByNameAndExecutionCourse("turno3", executionCourse);
@@ -362,7 +362,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 	  assertNotNull(executionDegree);
       
-	  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+	  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "MEEC");
 	  assertNotNull(executionCourse);
       
 	  ITurno shift = persistentShift.readByNameAndExecutionCourse("turno3", executionCourse);

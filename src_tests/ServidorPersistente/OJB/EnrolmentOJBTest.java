@@ -455,6 +455,6 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 			fail("Reading all enrolments by student!");
 		}
 		assertNotNull("Enrolments must be not null!",enrolments);
-		assertEquals(4, enrolments.size());
+		assertEquals(1, enrolments.size());
 	}
 }

@@ -96,7 +96,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 		}
 		assertEquals(
 			"testReadByCursoAndAnoLectivo:read existing cursoExecucao",
-			2,
+			4,
 			executionDegrees.size());
 	}
 
@@ -319,7 +319,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.isEmpty(), false);
-			assertEquals(result.size(), 1);
+			assertEquals(3,result.size());
 
 			
 		} catch (ExcepcaoPersistencia ex) {

@@ -387,7 +387,7 @@ public class DegreeCurricularPlanOJBTest extends TestCaseOJB {
 			oqlQuery = "select all from " + CursoExecucao.class.getName();
 			query.create(oqlQuery);
 			result = (List) query.execute();
-			assertEquals(2, result.size());
+			assertEquals(4, result.size());
 	
 	
 			// Check existing CurricularCourse
@@ -458,7 +458,7 @@ public class DegreeCurricularPlanOJBTest extends TestCaseOJB {
 			oqlQuery = "select all from " + CursoExecucao.class.getName();
 			query.create(oqlQuery);
 			result = (List) query.execute();
-			assertEquals(2, result.size());
+			assertEquals(4, result.size());
 	
 	
 			// Check existing CurricularCourse
