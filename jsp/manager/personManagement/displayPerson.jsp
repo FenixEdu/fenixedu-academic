@@ -12,8 +12,14 @@
 
 <logic:present name="personListFinded">
 	<bean:size id="numberFindedPersons" name="personListFinded"/>
-	<b><bean:message key="label.manager.numberFindedPersons" arg0="<%= String.valueOf(numberFindedPersons) %>" /></b>
-	<br>
+	<logic:notEqual name="numberFindedPersons" value="1">
+		<b><bean:message key="label.manager.numberFindedPersons" arg0="<%= String.valueOf(numberFindedPersons) %>" /></b>	
+	</logic:notEqual>
+	
+	<logic:equal name="numberFindedPersons" value="1">
+		<b><bean:message key="label.manager.findedOnePersons" arg0="<%= String.valueOf(numberFindedPersons) %>" /></b>
+	</logic:equal>
+	<br /><br />
 	<logic:iterate id="personalInfo" name="personListFinded" indexId="personIndex">	    
 		<bean:define id="personID" name="personalInfo" property="idInternal"/>
 	  	<table width="100%" cellpadding="0" cellspacing="0">

@@ -167,7 +167,6 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente
 	{
 		List personList = null;
 
-		System.out.println("-->findPersonByNameAndEmailAndNumber: " + name + " " + email + " " + username);
 		Criteria criteria = new Criteria();
 
 		if (name != null && name.length() > 0)

@@ -47,7 +47,6 @@ public class SearchPerson extends SearchService
 	protected List doSearch(HashMap parametersSearch, ISuportePersistente sp)
 		throws ExcepcaoPersistencia
 	{
-		System.out.println("SearchPerson Service: doSearch");
 		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 
 		String name = (String) parametersSearch.get(new String("name"));

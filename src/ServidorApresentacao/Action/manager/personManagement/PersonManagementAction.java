@@ -56,7 +56,6 @@ public class PersonManagementAction extends FenixDispatchAction
 			HttpServletResponse response)
 	throws Exception
 	{		
-		System.out.println("PersonManagementAction: findPerson");
 		ActionErrors errors = new ActionErrors();
 		
 		IUserView userView = SessionUtils.getUserView(request);
@@ -70,8 +69,6 @@ public class PersonManagementAction extends FenixDispatchAction
 		parametersSearch.put(new String("name"), name);
 		parametersSearch.put(new String("email"), email);
 		parametersSearch.put(new String("username"), username);
-		
-		System.out.println("-->" + name + " " + email + " " + username);
 		
 		Object[] args = { parametersSearch };
 		
@@ -90,7 +87,6 @@ public class PersonManagementAction extends FenixDispatchAction
 			return mapping.getInputForward();
 		}
 				
-		System.out.println("PersonManagementAction: findPerson(result: " + personListFinded.size() + ")");
 		request.setAttribute("personListFinded", personListFinded);
 		
 		return mapping.findForward("displayPerson");
