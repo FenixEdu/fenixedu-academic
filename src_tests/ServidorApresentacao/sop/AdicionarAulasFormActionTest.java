@@ -1,7 +1,9 @@
 package ServidorApresentacao.sop;
   
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -12,10 +14,7 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.TestCasePresentation;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.TestCaseActionExecution;
 import Util.TipoAula;
 import Util.TipoSala;
 
@@ -24,7 +23,7 @@ import Util.TipoSala;
  * 
  * @author Ivo Brandão
  */
-public class AdicionarAulasFormActionTest extends TestCasePresentation {
+public class AdicionarAulasFormActionTest extends TestCaseActionExecution {
 
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());
@@ -38,16 +37,13 @@ public class AdicionarAulasFormActionTest extends TestCasePresentation {
 	
 	public void setUp() {
 		super.setUp();
-		
-		// define ficheiro de configuracao Struts a utilizar
-		setServletConfigFile("/WEB-INF/tests/web-sop.xml");
 	}
 
 	public AdicionarAulasFormActionTest(String testName) {
 		super(testName);
 	}
 
-	public void testSuccessfulAdicionarAulas() {
+	public void testSuccessfulExecution() {
 
 		// coloca credenciais na sessao
 		HashSet privilegios = new HashSet();
@@ -60,19 +56,25 @@ public class AdicionarAulasFormActionTest extends TestCasePresentation {
 		addRequestParameter("indexTurno", new Integer(0).toString());
 		actionPerform();
 
-		// coloca credenciais na sessao
-		privilegios = new HashSet();
-		privilegios.add("LerSalas");
-		privilegios.add("LerAulasDeDisciplinaExecucao");
-		privilegios.add("LerDisciplinasExecucaoDeCursoExecucaoEAnoCurricular");
-		privilegios.add("AdicionarAula");
-		privilegios.add("LerTurnosDeDisciplinaExecucao");
-		IUserView userView = new UserView("user", privilegios);
+		doTest(null, getItemsToPutInSession(), getSuccessfulForward(), null, null, null);
 
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
+	}
 
-		// define mapping de origem
-		setRequestPathInfo("/sop", "/adicionarAulasForm");
+	/** :FIXME dummy method to prevent super.testSuccessfulExecutionOfAction() 
+	 * from executing 
+	 */
+	public void testSuccessfulExecutionOfAction() {
+	}
+
+	/** :FIXME dummy method to prevent super.testUnsuccessfulExecutionOfAction() 
+	 * from executing 
+	 */
+	public void testUnsuccessfulExecutionOfAction() {
+	}
+	
+	protected Map getItemsToPutInSession() {
+
+		Map items = new HashMap();
 
 		try {
 			GestorServicos gestor = GestorServicos.manager();
@@ -105,26 +107,57 @@ public class AdicionarAulasFormActionTest extends TestCasePresentation {
 			Object argsLerAulas[] = new Object[1];
 			argsLerAulas[0] = infoExecutionCourse;
 			ArrayList infoLessons = (ArrayList) gestor.executar(userView, "LerAulasDeDisciplinaExecucao", argsLerAulas);
-			getSession().setAttribute("infoAulasDeDisciplinaExecucao", infoLessons);
+			
+			items.put("infoAulasDeDisciplinaExecucao", infoLessons);
 
 			//create shifts
 			Object argsLerTurnos[] = new Object[1];
 			argsLerTurnos[0] = infoExecutionCourse;
 			ArrayList infoShifts = (ArrayList) gestor.executar(userView, "LerTurnosDeDisciplinaExecucao", argsLerTurnos);
-			getSession().setAttribute("infoTurnosDeDisciplinaExecucao", infoShifts);
+			
+			items.put("infoTurnosDeDisciplinaExecucao", infoShifts);			
 
-		} catch (Exception ex) {
-			System.out.println("Erro na invocacao do servico " + ex);
+		} catch (Exception exception) {
+			System.out.println("Error while performing the service " + exception);
 		}
 
-		// invoca acção
-		actionPerform();
-
-		//verifica ausencia de erros
-		verifyNoActionErrors();
-
-		// verifica reencaminhamento
-		verifyForward("Sucesso");
-
+		return items;
+		
 	}
+
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
+	 */
+	protected String getServletConfigFile() {
+		return "/WEB-INF/tests/web-sop.xml";
+	}
+
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoPathAction()
+	 */
+	protected String getRequestPathInfoPathAction() {
+		return "/sop";
+	}
+
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
+	 */
+	protected String getRequestPathInfoNameAction() {
+		return "/adicionarAulasForm";
+	}
+	
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
+	 */
+	protected String getSuccessfulForward() {
+		return "Sucesso";
+	}
+	
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getUnsuccessfulForward()
+	 */
+	protected String getUnsuccessfulForwardPath() {
+		return "/adicionarAulas.jsp";
+	}
+	
 }
