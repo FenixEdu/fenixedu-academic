@@ -104,7 +104,7 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends Dispatc
 		} catch (NonExistingServiceException e) {
 			// no active master degree thesis
 			if (forward.equals("cancel"))
-				return mapping.findForward("changeThesisCancel");
+				return mapping.findForward("createThesisCancel");
 			else
 				return mapping.findForward("createThesis");
 		} catch (FenixServiceException e) {
