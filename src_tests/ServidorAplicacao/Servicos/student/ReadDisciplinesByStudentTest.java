@@ -49,7 +49,6 @@ public class ReadDisciplinesByStudentTest extends TestCaseReadServices {
 
 	// TODO: Not used at this time
 
-
   protected String getNameOfServiceToBeTested() {
 	  return "ReadDisciplinesByStudent";
   }

@@ -55,7 +55,7 @@ public class ReadShiftLessons implements IServico {
 			ITurno shift = Cloner.copyInfoShift2Shift(infoShift); 
 			
 			List lessons =
-				sp.getITurnoAulaPersistente().readLessonsByShift(
+				sp.getITurnoAulaPersistente().readByShift(
 					shift);
 
 			for (int i = 0; i < lessons.size(); i++) {

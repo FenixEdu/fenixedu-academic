@@ -62,6 +62,9 @@ public class ReadShiftEnrolmentTest extends TestCaseServicos {
     return suite;
   }
     
+    
+    
+  // FIXME : The service needs lots of corrections  
   protected void setUp() {
     super.setUp();
     
