@@ -23,6 +23,11 @@ import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.sop.exceptions.InterceptingServiceException;
+import ServidorAplicacao
+	.Servico
+	.sop
+	.exceptions
+	.InvalidTimeIntervalServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -84,6 +89,9 @@ public class EditarAula implements IServico {
 
 			if (aula != null) {
 				result = valid(newLesson);
+				if (result.getMessageType() == 1) {
+					throw new InvalidTimeIntervalServiceException();
+				}
 				boolean resultB = validNoInterceptingLesson(newLesson, aula);
 
 				if (result.isSUCESS() && resultB) {
@@ -92,7 +100,7 @@ public class EditarAula implements IServico {
 					aula.setFim(aulaNova.getFim());
 					aula.setTipo(aulaNova.getTipo());
 					aula.setSala(salaNova);
-				} 
+				}
 			}
 
 		} catch (ExcepcaoPersistencia ex) {

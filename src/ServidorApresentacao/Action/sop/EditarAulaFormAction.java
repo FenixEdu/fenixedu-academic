@@ -24,7 +24,9 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.sop.exceptions.InterceptingServiceException;
+import ServidorAplicacao.Servico.sop.exceptions.InvalidTimeIntervalServiceException;
 import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
 import ServidorApresentacao.Action.sop.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.exceptions.InterceptingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -36,9 +38,9 @@ import Util.TipoAula;
  */
 public class EditarAulaFormAction extends FenixAction {
 
-	public static String INVALID_TIME_INTERVAL ="errors.lesson.invalid.time.interval";
+	public static String INVALID_TIME_INTERVAL =
+		"errors.lesson.invalid.time.interval";
 	public static String UNKNOWN_ERROR = "errors.unknown";
-
 
 	public ActionForward execute(
 		ActionMapping mapping,
@@ -50,54 +52,57 @@ public class EditarAulaFormAction extends FenixAction {
 
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
-			IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
-		
+			IUserView userView =
+				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
+
 			GestorServicos gestor = GestorServicos.manager();
 			InfoLesson iAulaAntiga =
 				(InfoLesson) sessao.getAttribute("infoAula");
-			
+
 			Calendar inicio = Calendar.getInstance();
 			inicio.set(
 				Calendar.HOUR_OF_DAY,
-				Integer.parseInt((String)editarAulaForm.get("horaInicio")));
+				Integer.parseInt((String) editarAulaForm.get("horaInicio")));
 			inicio.set(
 				Calendar.MINUTE,
-				Integer.parseInt((String)editarAulaForm.get("minutosInicio")));
+				Integer.parseInt((String) editarAulaForm.get("minutosInicio")));
 			inicio.set(Calendar.SECOND, 0);
 			Calendar fim = Calendar.getInstance();
 			fim.set(
 				Calendar.HOUR_OF_DAY,
-				Integer.parseInt((String)editarAulaForm.get("horaFim")));
+				Integer.parseInt((String) editarAulaForm.get("horaFim")));
 			fim.set(
 				Calendar.MINUTE,
-				Integer.parseInt((String)editarAulaForm.get("minutosFim")));
+				Integer.parseInt((String) editarAulaForm.get("minutosFim")));
 			fim.set(Calendar.SECOND, 0);
-			
+
 			InfoRoom infoSala = new InfoRoom();
 			infoSala.setNome((String) editarAulaForm.get("nomeSala"));
-			
+
 			RoomKey kSalaAntiga =
 				new RoomKey(iAulaAntiga.getInfoSala().getNome());
-		
+
 			KeyLesson kAulaAntiga =
 				new KeyLesson(
 					iAulaAntiga.getDiaSemana(),
 					iAulaAntiga.getInicio(),
 					iAulaAntiga.getFim(),
 					kSalaAntiga);
-				
+
 			InfoLesson iAula =
 				new InfoLesson(
-					new DiaSemana(new Integer((String) editarAulaForm.get("diaSemana"))),
+					new DiaSemana(
+						new Integer((String) editarAulaForm.get("diaSemana"))),
 					inicio,
 					fim,
-					new TipoAula(new Integer((String) editarAulaForm.get("tipoAula"))),
+					new TipoAula(
+						new Integer((String) editarAulaForm.get("tipoAula"))),
 					infoSala,
 					iAulaAntiga.getInfoDisciplinaExecucao());
-		
+
 			Object argsEditarAula[] = { kAulaAntiga, iAula };
-			
-			InfoLessonServiceResult result = null;				
+
+			InfoLessonServiceResult result = null;
 			try {
 				result =
 					(InfoLessonServiceResult) gestor.executar(
@@ -108,8 +113,10 @@ public class EditarAulaFormAction extends FenixAction {
 				throw new ExistingActionException("A aula", ex);
 			} catch (InterceptingServiceException ex) {
 				throw new InterceptingActionException(infoSala.getNome(), ex);
+			} catch (InvalidTimeIntervalServiceException ex) {
+				throw new InvalidTimeIntervalActionException(ex);
 			}
-		
+
 			InfoExecutionCourse iDE =
 				(InfoExecutionCourse) sessao.getAttribute(
 					"infoDisciplinaExecucao");
@@ -120,16 +127,15 @@ public class EditarAulaFormAction extends FenixAction {
 					userView,
 					"LerAulasDeDisciplinaExecucao",
 					argsLerAulas);
-			
+
 			sessao.removeAttribute("listaAulas");
 			if (infoAulas != null && !infoAulas.isEmpty())
 				sessao.setAttribute("listaAulas", infoAulas);
-			
-			
+
 			sessao.removeAttribute("indexAula");
-			
+
 			ActionErrors actionErrors = getActionErrors(result, inicio, fim);
-			
+
 			if (actionErrors.isEmpty()) {
 				sessao.removeAttribute("infoAula");
 				return mapping.findForward("Sucesso");
@@ -140,7 +146,6 @@ public class EditarAulaFormAction extends FenixAction {
 		} else
 			throw new Exception();
 	}
-
 
 	private ActionErrors getActionErrors(
 		InfoLessonServiceResult result,
@@ -153,8 +158,7 @@ public class EditarAulaFormAction extends FenixAction {
 		if (inicio.get(Calendar.MINUTE) == 0)
 			beginMinAppend = "0";
 		if (fim.get(Calendar.MINUTE) == 0)
-				endMinAppend = "0";
-
+			endMinAppend = "0";
 
 		switch (result.getMessageType()) {
 			case InfoLessonServiceResult.SUCESS :
