@@ -9,136 +9,146 @@
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
 	
-	 <!-- evaluation form--> 
-	 <form-bean name="evaluationForm" 
-	 	type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
-	 	<form-property name="evaluationElements" type="java.lang.String"/>
-	 	<form-property name="evaluationElementsEn" type="java.lang.String"/>
-	 	<form-property name="page" type="java.lang.Integer" initial="0"/>
-	 </form-bean>
-	 
-	 <!-- examEnrollment form -->
-   	<form-bean name="examEnrollmentForm"
-		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">        
-        <form-property name="enrollmentBeginDayFormatted" type="java.lang.String" />
-        <form-property name="enrollmentBeginTimeFormatted" type="java.lang.String" />
-        <form-property name="enrollmentEndDayFormatted" type="java.lang.String" />
-        <form-property name="enrollmentEndTimeFormatted" type="java.lang.String" />
-     </form-bean>    	
-	 
-     <!--curriculum forms --> 
-     <form-bean name="executionCourseCurriculumForm"
-		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">		
-		<form-property name="generalObjectives" type="java.lang.String" />
-		<form-property name="operacionalObjectives" type="java.lang.String" />
-		<form-property name="program" type="java.lang.String" />
-		<form-property name="generalObjectivesEn" type="java.lang.String" />
-		<form-property name="operacionalObjectivesEn" type="java.lang.String" />
-		<form-property name="programEn" type="java.lang.String" />
-		<form-property name="page" type="java.lang.Integer" initial="0"/>
-	</form-bean>
+		 <!-- evaluation form--> 
+		 <form-bean name="evaluationForm" 
+			 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			 <form-property name="evaluationElements" type="java.lang.String"/>
+			 <form-property name="evaluationElementsEn" type="java.lang.String"/>
+			 <form-property name="page" type="java.lang.Integer" initial="0"/>
+		 </form-bean>
+		 
+		 <!-- examEnrollment form -->
+		   <form-bean name="examEnrollmentForm"
+			type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">        
+			<form-property name="enrollmentBeginDayFormatted" type="java.lang.String" />
+			<form-property name="enrollmentBeginTimeFormatted" type="java.lang.String" />
+			<form-property name="enrollmentEndDayFormatted" type="java.lang.String" />
+			<form-property name="enrollmentEndTimeFormatted" type="java.lang.String" />
+		 </form-bean>    	
+		 
+		 <!--curriculum forms --> 
+		 <form-bean name="executionCourseCurriculumForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">		
+			<form-property name="generalObjectives" type="java.lang.String" />
+			<form-property name="operacionalObjectives" type="java.lang.String" />
+			<form-property name="program" type="java.lang.String" />
+			<form-property name="generalObjectivesEn" type="java.lang.String" />
+			<form-property name="operacionalObjectivesEn" type="java.lang.String" />
+			<form-property name="programEn" type="java.lang.String" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="executionCourseObjectivesForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">		
+			<form-property name="generalObjectives" type="java.lang.String" />
+			<form-property name="operacionalObjectives" type="java.lang.String" />
+			<form-property name="generalObjectivesEn" type="java.lang.String" />
+			<form-property name="operacionalObjectivesEn" type="java.lang.String" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+				
+		<form-bean name="executionCourseProgramForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			<form-property name="program" type="java.lang.String" />
+			<form-property name="programEn" type="java.lang.String" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
 	
-    	<form-bean name="executionCourseObjectivesForm"
-    		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">		
-    		<form-property name="generalObjectives" type="java.lang.String" />
-    		<form-property name="operacionalObjectives" type="java.lang.String" />
-    		<form-property name="generalObjectivesEn" type="java.lang.String" />
-    		<form-property name="operacionalObjectivesEn" type="java.lang.String" />
-    		<form-property name="page" type="java.lang.Integer" initial="0"/>
-    	</form-bean>
-    		
-    <form-bean name="executionCourseProgramForm"
-		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
-		<form-property name="program" type="java.lang.String" />
-		<form-property name="programEn" type="java.lang.String" />
-		<form-property name="page" type="java.lang.Integer" initial="0"/>
-	</form-bean>
-
-	<!-- Announcement Forms  -->
-    <form-bean name="insertAnnouncementForm"
-    	type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-		dynamic="true">        
-        <form-property name="title" type="java.lang.String" />
-        <form-property name="information" type="java.lang.String" />
-        <form-property name="page" type="java.lang.Integer" initial="0" />
-    </form-bean>    			
+		<!-- Announcement Forms  -->
+		<form-bean name="insertAnnouncementForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">        
+			<form-property name="title" type="java.lang.String" />
+			<form-property name="information" type="java.lang.String" />
+			<form-property name="page" type="java.lang.Integer" initial="0" />
+		</form-bean>    			
+		
+		<form-bean name="bibliographicReferenceForm"
+					type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+					dynamic="true">        
+				<form-property name="title" type="java.lang.String" />
+				<form-property name="authors" type="java.lang.String" />
+				<form-property name="reference" type="java.lang.String" />
+				<form-property name="year" type="java.lang.String" />
+				<form-property name="optional" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0" />
+				<form-property name="method" type="java.lang.String"/>
+		</form-bean>    			
 	
-	<form-bean name="bibliographicReferenceForm"
-				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-                dynamic="true">        
-            <form-property name="title" type="java.lang.String" />
-            <form-property name="authors" type="java.lang.String" />
-            <form-property name="reference" type="java.lang.String" />
-            <form-property name="year" type="java.lang.String" />
-            <form-property name="optional" type="java.lang.String" />
-            <form-property name="page" type="java.lang.Integer" initial="0" />
-            <form-property name="method" type="java.lang.String"/>
-	</form-bean>    			
+		<!--Teacher form -->
+		   <form-bean name="teacherForm"
+					type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+					dynamic="true">        
+				<form-property name="teacherNumber" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>    	
+	
+		<form-bean name="alternativeSiteForm"
+					type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+					dynamic="true">        
+				<form-property name="siteAddress" type="java.lang.String" />
+				<form-property name="mail" type="java.lang.String" /> 
+				<form-property name="initialStatement" type="java.lang.String" />
+				<form-property name="introduction" type="java.lang.String" />              
+				<form-property name="method" type="java.lang.String" />    
+				<form-property name="page" type="java.lang.Integer" initial="0" />           
+		</form-bean>    			
+	
+		<form-bean name="sectionForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">
+			<form-property name="name" type="java.lang.String" /> 
+			<form-property name="sectionOrder" type="java.lang.String" />    
+			<form-property name="page" type="java.lang.Integer" initial="0" />           
+		</form-bean>    			
+	
+		<form-bean name="editSectionForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">
+			<form-property name="name" type="java.lang.String" /> 
+			<form-property name="sectionOrder" type="java.lang.Integer" />    
+			<!-- to remove -->
+			<form-property name="parentSection" type="java.lang.String" />         
+			<form-property name="sectionIndex" type="java.lang.Integer" />         
+			
+			<form-property name="page" type="java.lang.Integer" initial="0" />           
+		</form-bean>    			
+	
+		<form-bean name="itemForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">
+			<form-property name="information" type="java.lang.String"/>  
+			<form-property name="itemOrder" type="java.lang.String" />   
+			<form-property name="name" type="java.lang.String" />   
+			<form-property name="urgent" type="java.lang.String"/>   
+		   <form-property name="page" type="java.lang.Integer" initial="0" />      
+		</form-bean> 		          
+	
+		<!-- Forms for credits -->
+		<form-bean name="executionCourseShiftsPercentageForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">
+			<form-property name="objectCode" type="java.lang.Integer"/>
+			<form-property name="shiftProfessorships"  type="java.lang.Integer[]"/>
+			<form-property name="method" type="java.lang.String"></form-property>       
+		</form-bean> 		          
+		<form-bean name="creditsTeacherForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">
+			<form-property name="tfcStudentsNumber"  type="java.lang.Integer"/>
+			<form-property name="method" type="java.lang.String"></form-property>       
+			<form-property name="page" type="java.lang.Integer"></form-property>               
+		</form-bean> 		          
 
-	<!--Teacher form -->
-   	<form-bean name="teacherForm"
-				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-                dynamic="true">        
-            <form-property name="teacherNumber" type="java.lang.String" />
-            <form-property name="page" type="java.lang.Integer" initial="0"/>
-    </form-bean>    	
-
-	<form-bean name="alternativeSiteForm"
-				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-                dynamic="true">        
-            <form-property name="siteAddress" type="java.lang.String" />
-            <form-property name="mail" type="java.lang.String" /> 
-            <form-property name="initialStatement" type="java.lang.String" />
-            <form-property name="introduction" type="java.lang.String" />              
-            <form-property name="method" type="java.lang.String" />    
-            <form-property name="page" type="java.lang.Integer" initial="0" />           
-	</form-bean>    			
-
-	<form-bean name="sectionForm"
-		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-        dynamic="true">
-        <form-property name="name" type="java.lang.String" /> 
-        <form-property name="sectionOrder" type="java.lang.String" />    
-        <form-property name="page" type="java.lang.Integer" initial="0" />           
-	</form-bean>    			
-
-	<form-bean name="editSectionForm"
-		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-        dynamic="true">
-        <form-property name="name" type="java.lang.String" /> 
-        <form-property name="sectionOrder" type="java.lang.Integer" />    
-        <!-- to remove -->
-        <form-property name="parentSection" type="java.lang.String" />         
-        <form-property name="sectionIndex" type="java.lang.Integer" />         
-        
-        <form-property name="page" type="java.lang.Integer" initial="0" />           
-	</form-bean>    			
-
-	<form-bean name="itemForm"
-		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-        dynamic="true">
-        <form-property name="information" type="java.lang.String"/>  
-        <form-property name="itemOrder" type="java.lang.String" />   
-        <form-property name="name" type="java.lang.String" />   
-        <form-property name="urgent" type="java.lang.String"/>   
-       <form-property name="page" type="java.lang.Integer" initial="0" />      
-	</form-bean> 		          
-
-	<!-- Forms for credits -->
-	<form-bean name="executionCourseShiftsPercentageForm"
-		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-        dynamic="true">
-        <form-property name="objectCode" type="java.lang.Integer"/>
-        <form-property name="shiftProfessorships"  type="java.lang.Integer[]"/>
-        <form-property name="method" type="java.lang.String"></form-property>       
-	</form-bean> 		          
-	<form-bean name="creditsTeacherForm"
-		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-        dynamic="true">
-        <form-property name="tfcStudentsNumber"  type="java.lang.Integer"/>
-        <form-property name="method" type="java.lang.String"></form-property>       
-        <form-property name="page" type="java.lang.Integer"></form-property>               
-	</form-bean> 		          
+		<form-bean name="roomDistributionForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">
+			<form-property name="examCode"  type="java.lang.String"/>
+			<form-property name="objectCode"  type="java.lang.String"/>
+			<form-property name="rooms"  type="java.lang.Integer[]"/>			
+			<form-property name="method" type="java.lang.String"></form-property>       
+			<form-property name="page" type="java.lang.Integer"></form-property>               
+		</form-bean> 		          
 	
 
     </form-beans>
@@ -543,14 +553,22 @@
        <forward name="showTable" path="df.teacher.showShiftsPercentageTable"/>
        <forward name="acceptSuccess" path="/creditsManagement.do?page=0&amp;method=prepare" redirect="true"/>
 	</action>	
-	<action 
-		path="/showStudentsEnrolledInExam"
+
+	<action path="/showStudentsEnrolledInExam"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.ShowStudentsEnrolledInExamAction"
 		  >
        <forward name="showStudents" path="showStudentsEnrolledInExam.jsp"/>
-       
 	</action>	
+	<action path="/distributeStudentsByRoom"
+		name="roomDistributionForm"
+		scope="request"
+		parameter="method"
+		type="ServidorApresentacao.Action.teacher.DistributeStudentsByRoomDispatchAction">
+       <forward name="show-rooms" path="distribute.students.by.room"/>
+       <forward name="show-distribution" path="/showStudentsEnrolledInExam.do?method=prepare"/>       
+	</action>	
+
 	<!-- End of Actions for Teacher credits -->	
 	
 	<!-- Action for Teacher Administration Site -->
