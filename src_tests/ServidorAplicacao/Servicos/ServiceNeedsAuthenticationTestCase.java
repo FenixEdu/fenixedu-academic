@@ -13,7 +13,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
  *
  */
-public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase {
+public abstract class ServiceNeedsAuthenticationTestCase
+	extends ServiceTestCase {
 
 	protected IUserView userView = null;
 	protected IUserView userView2 = null;
@@ -34,9 +35,12 @@ public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
 	public void testAuthorizedUser() {
 
 		Object serviceArguments[] = getAuthorizeArguments();
-		try {
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+		try {
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				serviceArguments);
 			System.out.println(
 				"testAuthorizedUser was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
@@ -46,16 +50,17 @@ public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
 
 		} catch (Exception ex) {
 			fail("Unable to run service: " + getNameOfServiceToBeTested());
-
 		}
-
 	}
 
 	public void testUnauthorizedUser() {
 		Object serviceArguments[] = getAuthorizeArguments();
 
 		try {
-			gestor.executar(userView2, getNameOfServiceToBeTested(), serviceArguments);
+			gestor.executar(
+				userView2,
+				getNameOfServiceToBeTested(),
+				serviceArguments);
 			fail(getNameOfServiceToBeTested() + "fail testUnauthorizedUser");
 
 		} catch (NotAuthorizedException ex) {
@@ -66,27 +71,29 @@ public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
 
 		} catch (Exception ex) {
 			fail("Unable to run service: " + getNameOfServiceToBeTested());
-
 		}
 	}
 
-	public void testNonTeacherUser() {
+	public void testNonAuthenticatedUser() {
 
 		Object serviceArguments[] = getAuthorizeArguments();
 
 		try {
-			gestor.executar(userView3, getNameOfServiceToBeTested(), serviceArguments);
-			fail(getNameOfServiceToBeTested() + "fail testNonTeacherUser");
+			gestor.executar(
+				userView3,
+				getNameOfServiceToBeTested(),
+				serviceArguments);
+			fail(
+				getNameOfServiceToBeTested() + "fail testNonAuthenticatedUser");
 
 		} catch (NotAuthorizedException ex) {
 
 			System.out.println(
-				"testNonTeacherUser was SUCCESSFULY runned by service: "
+				"testNonAuthenticatedUser was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 
 		} catch (Exception ex) {
 			fail("Unable to run service: " + getNameOfServiceToBeTested());
-
 		}
 	}
 
@@ -99,7 +106,6 @@ public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
 		} catch (Exception ex) {
 			fail("Authenticating User!" + ex);
 			return null;
-
 		}
 	}
 
