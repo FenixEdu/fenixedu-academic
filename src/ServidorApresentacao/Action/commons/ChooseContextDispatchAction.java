@@ -521,7 +521,6 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			(InfoExecutionPeriod) session.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		if (infoExecutionPeriod == null) {
-			System.out.println("Nao ha Periodo Execucao em sessao, vai ler actual");
 			IUserView userView = SessionUtils.getUserView(request);
 			infoExecutionPeriod =
 				(InfoExecutionPeriod) ServiceUtils.executeService(
@@ -533,7 +532,6 @@ public class ChooseContextDispatchAction extends DispatchAction {
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
 				infoExecutionPeriod);
 		}
-		System.out.println("Periodo Execucao seleccionado "+infoExecutionPeriod);
 		return infoExecutionPeriod;
 	}
 }
