@@ -79,7 +79,6 @@ public class DisciplinaExecucaoOJB
 	}
 
 	/**
-	 * TODO: :FIXME: THIS QUERY IS TOO SLOW... Must implement indirection Class.
 	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByAnoCurricularAndAnoLectivoAndSiglaLicenciatura(java.lang.Integer, Dominio.IExecutionPeriod, java.lang.String)
 	 */
 	public List readByCurricularYearAndExecutionPeriodAndExecutionDegree(
