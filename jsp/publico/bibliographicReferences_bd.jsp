@@ -12,106 +12,61 @@
 	<h2><bean:message key="message.bibliography.not.available"/></h2>
 </logic:empty>	
 <logic:notEmpty name="component" property="bibliographicReferences" >
-<table >
+<h2><bean:message key="message.recommendedBibliography"/></h2>
+<table>
 	<tbody>
-		<tr>
-        	<td>                               
-            	<h2>
-                	<bean:message key="message.recommendedBibliography"/>
-				</h2>
-			</td>
-		</tr>
-            <logic:iterate id="bibliographicReference" name="component" property="bibliographicReferences">
-                <logic:notEqual name="bibliographicReference" property="optional" value="true">
-                    <tr>
-                    	<td>
-                    		<bean:message key="label.bibliography.title" />
-                    	</td>
-                        <td>                                               
-                            <bean:write name="bibliographicReference" property="title"/>
-                        </td>
-                    </tr>
-                    <tr>
-                    	<td>
-                    		<bean:message key="label.bibliography.authors" />
-                    	</td>
-                        <td>
-                            <bean:write name="bibliographicReference" property="authors"/>
-                        </td>
-                    </tr>
-                    <tr>
-                    	<td>
-                    		<bean:message key="label.bibliography.reference" />
-                    	</td>
-                        <td>
-                            <bean:write name="bibliographicReference" property="reference"/>
-                        </td>
-                    </tr>
-                    <tr>
-                    	<td>
-                    		<bean:message key="label.bibliography.year" />
-                    	</td>
-                        <td>
-                            <bean:write name="bibliographicReference" property="year"/>                            
-                        </td>
-                    </tr>
-                    <tr>
-                    </tr>
-                     <tr>
-                    </tr>
-                </logic:notEqual>
-               
-            </logic:iterate>
-            
-            <tr>
-                <td>
-                    <h2>
-                     	<bean:message key="message.optionalBibliography"/>
-                    </h2>
-                </td>
-            </tr>           
-
-             <logic:iterate id="bibliographicReference" name="component" property="bibliographicReferences">
-                <logic:notEqual name="bibliographicReference" property="optional" value="false">
-                    <tr>
-                    	<td>
-                    		<bean:message key="label.bibliography.title" />
-                    	</td>
-                        <td>                            
-                            <bean:write name="bibliographicReference" property="title"/>
-                        </td>
-                    </tr>
-                    <tr>
-                    	<td>
-                    		<bean:message key="label.bibliography.authors" />
-                    	</td>
-                        <td>
-                            <bean:write name="bibliographicReference" property="authors"/>
-                        </td>
-                    </tr>
-                    <tr>
-                    	<td>
-                    		<bean:message key="label.bibliography.reference" />
-                    	</td>
-                        <td>
-                            <bean:write name="bibliographicReference" property="reference"/>
-                        </td>
-                    </tr>
-                    <tr>
-                    	<td>
-                    		<bean:message key="label.bibliography.year" />
-                    	</td>
-                        <td>
-                            <bean:write name="bibliographicReference" property="year"/>                            
-                        </td>
-                    </tr>
-                      <tr>
-                    </tr>
-                     <tr>
-                    </tr>
-                </logic:notEqual>
-            </logic:iterate>
-        </tbody>
+		<logic:iterate id="bibliographicReference" name="component" property="bibliographicReferences">
+		    <logic:notEqual name="bibliographicReference" property="optional" value="true">
+				<tr>
+					<td><bean:message key="label.bibliography.title" /></td>
+				    <td><bean:write name="bibliographicReference" property="title"/></td>
+				</tr>
+				<tr>
+					<td><bean:message key="label.bibliography.authors" /></td>
+				    <td><bean:write name="bibliographicReference" property="authors"/></td>
+				</tr>
+				<tr>
+					<td><bean:message key="label.bibliography.reference" /></td>
+				    <td><bean:write name="bibliographicReference" property="reference"/></td>
+				</tr>
+				<tr>
+					<td><bean:message key="label.bibliography.year" /></td>
+				    <td><bean:write name="bibliographicReference" property="year"/></td>
+				</tr>
+				<tr>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+		    </logic:notEqual>
+		</logic:iterate>
+	</tbody>
+</table>
+<h2><bean:message key="message.optionalBibliography"/></h2>
+<table>
+	<tbody>
+         <logic:iterate id="bibliographicReference" name="component" property="bibliographicReferences">
+            <logic:notEqual name="bibliographicReference" property="optional" value="false">
+				<tr>
+					<td><bean:message key="label.bibliography.title" /></td>
+				    <td><bean:write name="bibliographicReference" property="title"/></td>
+				</tr>
+				<tr>
+					<td><bean:message key="label.bibliography.authors" /></td>
+				    <td><bean:write name="bibliographicReference" property="authors"/></td>
+				</tr>
+				<tr>
+					<td><bean:message key="label.bibliography.reference" /></td>
+				    <td><bean:write name="bibliographicReference" property="reference"/></td>
+				</tr>
+				<tr>
+					<td><bean:message key="label.bibliography.year" /></td>
+				    <td><bean:write name="bibliographicReference" property="year"/></td>
+				</tr>
+				<tr>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+            </logic:notEqual>
+        </logic:iterate>
+	</tbody>
 </table>
 </logic:notEmpty>
 </logic:present>
