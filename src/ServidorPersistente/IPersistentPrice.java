@@ -47,4 +47,13 @@ public interface IPersistentPrice extends IPersistentObject {
      * @throws ExcepcaoPersistencia
      */
 	public List readByGraduationTypeAndDocumentType(GraduationType graduationType, DocumentType documentType) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param graduationType
+	 * @param types
+	 * @return List
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByGraduationTypeAndDocumentType(GraduationType graduationType, List types) throws ExcepcaoPersistencia;
 }

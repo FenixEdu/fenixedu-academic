@@ -1,7 +1,14 @@
 package ServidorPersistente.OJB;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
 import Dominio.IPrice;
@@ -93,4 +100,26 @@ public class PriceOJB extends ObjectFenixOJB implements IPersistentPrice {
 				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}		
 		 }
+		 
+	public List readByGraduationTypeAndDocumentType(GraduationType graduationType, List types)
+				 throws ExcepcaoPersistencia {
+		 	
+		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+	
+		Criteria criteria = new Criteria();
+		Criteria criteriaDocs = new Criteria();
+		criteria.addEqualTo("graduationType", graduationType.getType());
+		List typesInteger = new ArrayList();
+		Iterator iterator = types.iterator();
+		while(iterator.hasNext()){
+			typesInteger.add(((DocumentType) iterator.next()).getType());
+
+		}
+		criteriaDocs.addIn("documentType", typesInteger);		
+		criteria.addAndCriteria(criteriaDocs);
+		Query query = new QueryByCriteria(Price.class,criteria);
+		
+		return  (List) broker.getCollectionByQuery(query);
+
+			 }
 }

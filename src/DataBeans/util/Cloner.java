@@ -38,6 +38,7 @@ import DataBeans.InfoItem;
 import DataBeans.InfoLesson;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
+import DataBeans.InfoPrice;
 import DataBeans.InfoProfessorShip;
 import DataBeans.InfoRole;
 import DataBeans.InfoRoom;
@@ -110,6 +111,7 @@ import Dominio.IGuideSituation;
 import Dominio.IItem;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
+import Dominio.IPrice;
 import Dominio.IProfessorship;
 import Dominio.IRole;
 import Dominio.ISala;
@@ -125,6 +127,7 @@ import Dominio.ITurno;
 import Dominio.Item;
 import Dominio.MasterDegreeCandidate;
 import Dominio.Pessoa;
+import Dominio.Price;
 import Dominio.Professorship;
 import Dominio.Sala;
 import Dominio.Section;
@@ -1767,6 +1770,31 @@ public abstract class Cloner {
 
 		return infoCreditsTeacher;
 	}
+
+
+	/**
+	 * 
+	 * @param infoPrice
+	 * @return IPrice
+	 */
+	public static IPrice copyInfoPrice2IPrice(InfoPrice infoPrice) {
+		IPrice price = new Price();
+		copyObjectProperties(price, infoPrice);
+		return price;
+	}
+
+	/**
+	 * 
+	 * @param price
+	 * @return InfoPrice
+	 */
+	public static InfoPrice copyIPrice2InfoPrice(IPrice price) {
+
+		InfoPrice infoPrice = new InfoPrice();
+		copyObjectProperties(infoPrice, price);
+		return infoPrice;
+	}
+
 
 	
 }
