@@ -984,4 +984,18 @@
 		</java>
 	</target>
 
+	<target name="verify-LEEC-curricular-plan" description="" depends="compile-app-server">
+		<java classname="Tools.enrollment.VerifyLEECCurricularPlan" fork="true">
+			<classpath>
+				<pathelement path="${build.app-server}"/>
+            	<fileset dir="${env.JBOSS_HOME}/client">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+	</target>
+
 </project>
