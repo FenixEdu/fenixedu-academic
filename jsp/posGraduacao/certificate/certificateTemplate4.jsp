@@ -25,7 +25,7 @@
 	<bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
 	</logic:iterate>
 		</logic:present>
-		</logic:present>
+	</logic:present>
 		<logic:present name="<%= SessionConstants.APROVMENT%>">
 	<logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
 	<br />
