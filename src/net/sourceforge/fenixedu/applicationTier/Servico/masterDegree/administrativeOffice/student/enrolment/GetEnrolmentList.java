@@ -12,6 +12,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
+import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -51,6 +52,10 @@ public class GetEnrolmentList implements IService {
 
         while (iterator.hasNext()) {
             IEnrollment enrolment = (IEnrollment) iterator.next();
+			if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
+				continue;				
+			}
+			
             if (!enrolment.getCurricularCourse().getType()
                     .equals(CurricularCourseType.P_TYPE_COURSE_OBJ)) {
                 InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod
@@ -85,6 +90,10 @@ public class GetEnrolmentList implements IService {
 
         while (iterator.hasNext()) {
             IEnrollment enrolment = (IEnrollment) iterator.next();
+			if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
+				continue;				
+			}
+			
             if (!enrolment.getCurricularCourse().getType()
                     .equals(CurricularCourseType.P_TYPE_COURSE_OBJ)) {
                 InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
@@ -114,6 +123,10 @@ public class GetEnrolmentList implements IService {
         List result = new ArrayList();
         for (Iterator iter = enrolmentList.iterator(); iter.hasNext();) {
             IEnrollment enrollment = (IEnrollment) iter.next();
+			if (enrollment instanceof EnrolmentInExtraCurricularCourse) {
+				continue;				
+			}
+			
             InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod
                     .newInfoFromDomain(enrollment);
             result.add(infoEnrolment);
