@@ -256,8 +256,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 				userView,
 				"LerTurnosDeDisciplinaExecucao",
 				argsLerTurnosDeDisciplinaExecucao);
-		System.out.println("=============executei o outro serviço===========");
-		if (listAvailable != null && listClassShift != null) {
+				if (listAvailable != null && listClassShift != null) {
 			listAvailable.removeAll(listClassShift);
 		}
 
