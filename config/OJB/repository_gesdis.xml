@@ -33,12 +33,12 @@
     <field-descriptor id="5"
          name="initialStatement"
          column="INITIAL_STATEMENT"
-    	 jdbc-type="VARCHAR"/>
+    	 jdbc-type="LONGVARCHAR"/>
     	 
     <field-descriptor id="6"
          name="introduction"
          column="INTRODUCTION"
-    	 jdbc-type="VARCHAR"/>
+    	 jdbc-type="LONGVARCHAR"/>
     	 
     <field-descriptor id="7"
          name="style"
@@ -85,7 +85,7 @@
     <field-descriptor id="5"
         name="information"
         column="INFORMATION"
-        jdbc-type="VARCHAR"
+        jdbc-type="LONGVARCHAR"
 	/>
     <field-descriptor id="6"
         name="keySite"
@@ -299,17 +299,17 @@
 	<field-descriptor id="3"
         name="generalObjectives"
         column="GENERAL_OBJECTIVES"
-        jdbc-type="VARCHAR"
+        jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor id="4"
         name="operacionalObjectives"
         column="OPERACIONAL_OBJECTIVES"
-        jdbc-type="VARCHAR"
+        jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor id="5"
         name="program"
         column="PROGRAM"
-        jdbc-type="VARCHAR"
+        jdbc-type="LONGVARCHAR"
 	/>
     <reference-descriptor
          name="executionCourse"
