@@ -1,7 +1,6 @@
 package ServidorApresentacao.Action.commons.student;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,78 +8,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoPerson;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
+import DataBeans.util.InfoStudentCurricularPlansWithSelectedEnrollments;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.EnrollmentStateSelectionType;
+import Util.StudentCurricularPlanIDDomainType;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * @author David Santos
+ * @author André Fernandes / João Brito 
  */
 
-public class CurriculumDispatchAction extends DispatchAction {
-
-    public ActionForward getCurriculum(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession();
-
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-        String studentCurricularPlanID = request.getParameter("studentCPID");
-        if (studentCurricularPlanID == null) {
-            studentCurricularPlanID = (String) request.getAttribute("studentCPID");
-        }
-
-        Integer executionDegreeId = getExecutionDegree(request);
-        List result = null;
-        try {
-            Object args[] = { executionDegreeId, Integer.valueOf(studentCurricularPlanID) };
-            result = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
-                    "ReadStudentCurriculum", args);
-        } catch (NotAuthorizedException e) {
-            return mapping.findForward("NotAuthorized");
-        }
-
-        BeanComparator courseName = new BeanComparator("infoCurricularCourse.name");
-        BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
-        ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(courseName);
-        chainComparator.addComparator(executionYear);
-
-        Collections.sort(result, chainComparator);
-
-        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-        try {
-            Object args[] = { Integer.valueOf(studentCurricularPlanID) };
-            infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadStudentCurricularPlan", args);
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException(e);
-        }
-
-        request.setAttribute(SessionConstants.CURRICULUM, result);
-        request.setAttribute(SessionConstants.STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
-
-        return mapping.findForward("ShowStudentCurriculum");
-    }
-
+public class CurriculumDispatchAction extends DispatchAction
+{
     public ActionForward getStudentCP(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -88,79 +42,197 @@ public class CurriculumDispatchAction extends DispatchAction {
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         String studentNumber = getStudent(request);
-        List infoStudents = null;
         InfoPerson infoPerson = null;
+        
+        String username = null;
 
-        if (studentNumber == null) {
-            try {
-                Object args1[] = { userView.getUtilizador() };
-                infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
-                        userView, "ReadPersonByUsername", args1);
-
-                Object args2[] = { infoPerson };
-                infoStudents = (List) ServiceManagerServiceFactory.executeService(userView,
-                        "ReadStudentsByPerson", args2);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
-        } else {
-            try {
+        if (studentNumber == null)
+        {
+            username = userView.getUtilizador();
+        }
+        else
+        {
+            try
+            {
                 Object args[] = { Integer.valueOf(studentNumber) };
                 InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(
                         userView, "ReadStudentByNumberAndAllDegreeTypes", args);
-                infoStudents = new ArrayList();
-                infoStudents.add(infoStudent);
+                
                 infoPerson = infoStudent.getInfoPerson();
-            } catch (FenixServiceException e) {
+                
+                username = infoPerson.getUsername();
+            }
+            catch (FenixServiceException e)
+            {
                 throw new FenixActionException(e);
             }
-
         }
 
-        List result = new ArrayList();
-        if (infoStudents != null) {
-            Iterator iterator = infoStudents.iterator();
-            while (iterator.hasNext()) {
-                InfoStudent infoStudent = (InfoStudent) iterator.next();
-                try {
-                    Object args[] = { infoStudent.getNumber(), infoStudent.getDegreeType() };
-                    List resultTemp = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
-                            "ReadStudentCurricularPlans", args);
-                    result.addAll(resultTemp);
-                } catch (NonExistingServiceException e) {
-                }
-            }
-        }
+        executeService(username,request);
 
-        getExecutionDegree(request);
-
-        request.setAttribute("studentCPs", result);
         request.setAttribute("studentPerson", infoPerson);
 
-        return mapping.findForward("ShowStudentCurricularPlans");
+        return mapping.findForward("ShowStudentCurriculum");
     }
 
-    private String getStudent(HttpServletRequest request) {
-        String studentNumber = request.getParameter("studentNumber");
-        if (studentNumber == null) {
-            studentNumber = (String) request.getAttribute("studentNumber");
-        }
-        return studentNumber;
-    }
 
-    private Integer getExecutionDegree(HttpServletRequest request) {
-        Integer executionDegreeId = null;
+	public ActionForward getCurriculum(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
+/*	    IUserView userView = (IUserView)request.getSession().getAttribute(SessionConstants.U_VIEW);
+		executeService(userView.getUtilizador(),request);
 
-        String executionDegreeIdString = request.getParameter("executionDegreeId");
-        if (executionDegreeIdString == null) {
-            executionDegreeIdString = (String) request.getAttribute("executionDegreeId");
-        }
-        if (executionDegreeIdString != null) {
-            executionDegreeId = Integer.valueOf(executionDegreeIdString);
-        }
-        request.setAttribute("executionDegreeId", executionDegreeId);
+		return mapping.findForward("ShowStudentCurriculum");*/
+	    return getStudentCP(mapping,form,request,response);
+	}
+	
+	private void executeService(String username, HttpServletRequest request) throws Exception
+	{
+	    IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
+	    	    
+	    String criterioStr = (String)request.getAttribute("select");
+	    if (criterioStr == null)
+	        criterioStr = (String)request.getParameter("select");
+		
+		String scpIDStr = request.getParameter("studentCPID");
+        if (scpIDStr == null)
+            scpIDStr = (String) request.getAttribute("studentCPID");
+	    
+	    StudentCurricularPlanIDDomainType scpID = null;
+		EnrollmentStateSelectionType criterio = null;
+		
+		if (criterioStr != null)
+		    criterio = new EnrollmentStateSelectionType(criterioStr);
+		else
+		    criterio = EnrollmentStateSelectionType.ALL;
+		
+		if(scpIDStr != null)
+		    scpID = new StudentCurricularPlanIDDomainType(scpIDStr);
+		else
+		    scpID = StudentCurricularPlanIDDomainType.NEWEST;
+		
+		InfoStudentCurricularPlansWithSelectedEnrollments infoSCPs = null;
+		InfoStudentCurricularPlansWithSelectedEnrollments allInfoSCPs = null;
+		
+		try
+		{
+		    /* invoca o servico para obter os SCPs pedidos */
+		    Object args[] = { username, scpID, criterio};
+		    infoSCPs = (InfoStudentCurricularPlansWithSelectedEnrollments) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlansByPersonAndCriteria", args);
+		    
+		    /* invoca o servico para obter TODOS os SCPs com NENHUM enrollment*/
+		    Object args1[] = {username, StudentCurricularPlanIDDomainType.ALL, EnrollmentStateSelectionType.NONE};
+		    allInfoSCPs = (InfoStudentCurricularPlansWithSelectedEnrollments)ServiceManagerServiceFactory.executeService(userView,"ReadStudentCurricularPlansByPersonAndCriteria",args1);
+		}
+		catch (NonExistingServiceException e)
+		{
+		    throw new FenixActionException(e);
+		}
 
-        return executionDegreeId;
-    }
+		request.setAttribute("studentCPs", infoSCPs);
+		
+		List enrollmentOptions = EnrollmentStateSelectionType.getLabelValueBeanList();
+		request.setAttribute("enrollmentOptions",enrollmentOptions);
+		
+		List allSCPs = getLabelValueBeanList(allInfoSCPs);
+		request.setAttribute("allSCPs",allSCPs);
+	}
 
+	private String getStudent(HttpServletRequest request)
+	{
+	    String studentNumber = request.getParameter("studentNumber");
+		if (studentNumber == null)
+		{
+			studentNumber = (String) request.getAttribute("studentNumber");
+		}
+		return studentNumber;
+	}
+
+	private Integer getExecutionDegree(HttpServletRequest request)
+	{
+		Integer executionDegreeId = null;
+
+		String executionDegreeIdString = request.getParameter("executionDegreeId");
+		if (executionDegreeIdString == null)
+		{
+			executionDegreeIdString = (String) request.getAttribute("executionDegreeId");
+		}
+		if (executionDegreeIdString != null)
+		{
+			executionDegreeId = Integer.valueOf(executionDegreeIdString);
+		}
+		request.setAttribute("executionDegreeId", executionDegreeId);
+
+		return executionDegreeId;
+	}
+	
+	
+	
+	public static List getLabelValueBeanList(InfoStudentCurricularPlansWithSelectedEnrollments infoSCPs)
+	{
+		ArrayList result = new ArrayList();
+		
+		List sCPs = infoSCPs.getInfoStudentCurricularPlans();
+
+		Iterator it = sCPs.iterator();
+		
+		// adiciona "todos" e "o mais recente"
+		result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.ALL_STRING, StudentCurricularPlanIDDomainType.ALL.toString()));
+		result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.NEWEST_STRING, StudentCurricularPlanIDDomainType.NEWEST.toString()));
+		
+		while(it.hasNext())
+		{
+		    InfoStudentCurricularPlan infoSCP = (InfoStudentCurricularPlan)it.next();
+		    String label = "";
+		    
+		    /*
+		     * (<bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" />)  
+                <bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.nome" /> - 
+				<logic:present name="studentCP" property="specialization" >
+        			<bean:write name="studentCP" property="specialization" /> - 
+				</logic:present>
+    			<bean:write name="studentCP" property="startDate" />
+		     * 
+		     * */
+		    
+		    label += infoSCP.getInfoDegreeCurricularPlan().getInfoDegree().getNome()+" ";
+		    label += "("+infoSCP.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()+")";
+		    
+		    //TODO perguntar disto
+		    if (infoSCP.getSpecialization() != null)
+		        label += " - "+infoSCP.getSpecialization();
+		    
+		    label += " - "+infoSCP.getStartDate();
+		    
+		    
+		    result.add(new LabelValueBean(label,String.valueOf(infoSCP.getIdInternal())));		    
+		}
+				
+		return result;	
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
