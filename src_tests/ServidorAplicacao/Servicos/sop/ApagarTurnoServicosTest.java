@@ -58,22 +58,11 @@ public class ApagarTurnoServicosTest extends TestCaseServicosWithAuthorization {
 		super.tearDown();
 	}
 
-	// unauthorized delete turno
-	public void testUnauthorizedDeleteTurno() {
-
-		super.testUnauthorizedExecutionOfService("ApagarTurno");
-
-//		this.ligarSuportePersistente(true);
-//
-//		Object argsDeleteTurno[] = { new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao()) };
-//
-//		Object result = null;
-//		try {
-//			result = _gestor.executar(_userView2, "ApagarTurno", argsDeleteTurno);
-//			fail("testUnauthorizedDeleteTurno");
-//		} catch (Exception ex) {
-//			assertNull("testUnauthorizedDeleteTurno", result);
-//		}
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "ApagarTurno";
 	}
 
 	// delete existing turno
@@ -85,7 +74,7 @@ public class ApagarTurnoServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "ApagarTurno", argsDeleteTurno);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteTurno);
 			assertEquals("testDeleteExistingTurno", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testDeleteExistingTurno");
@@ -101,7 +90,7 @@ public class ApagarTurnoServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "ApagarTurno", argsDeleteTurno);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteTurno);
 			assertEquals("testDeleteNonExistingTurno", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testDeleteNonExistingTurno");
@@ -133,11 +122,7 @@ public class ApagarTurnoServicosTest extends TestCaseServicosWithAuthorization {
 				it = new Turno("qqqqq", new TipoAula(1), new Integer(100), ide);
 			}
 			
-			System.out.println(it.toString());
-			
 			this.infoShift = Cloner.copyIShift2InfoShift(it);
-
-			System.out.println(this.infoShift.toString());
 
 			sp.confirmarTransaccao();
 
@@ -150,5 +135,4 @@ public class ApagarTurnoServicosTest extends TestCaseServicosWithAuthorization {
 			fail("ligarSuportePersistente: confirmarTransaccao");
 		}
 	}
-
 }

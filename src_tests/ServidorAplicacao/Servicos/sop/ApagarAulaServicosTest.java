@@ -44,36 +44,11 @@ public class ApagarAulaServicosTest extends TestCaseServicosWithAuthorization {
 		super.tearDown();
 	}
 
-	// delete aula by unauthorized user
-	public void testUnauthorizedDeleteAula() {
-
-		super.testUnauthorizedExecutionOfService("ApagarAula");
-
-//		DiaSemana diaSemana = null;
-//		Calendar inicio = null;
-//		Calendar fim = null;
-//		diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
-//		inicio = Calendar.getInstance();
-//		inicio.set(Calendar.HOUR_OF_DAY, 8);
-//		inicio.set(Calendar.MINUTE, 0);
-//		inicio.set(Calendar.SECOND, 0);
-//		fim = Calendar.getInstance();
-//		fim.set(Calendar.HOUR_OF_DAY, 9);
-//		fim.set(Calendar.MINUTE, 30);
-//		fim.set(Calendar.SECOND, 0);
-//
-//		RoomKey keySala = new RoomKey("Ga1");
-//
-//		Object argsDeleteAula[] = new Object[1];
-//		argsDeleteAula[0] = new KeyLesson(diaSemana, inicio, fim, keySala);
-//
-//		Object result = null;
-//		try {
-//			result = _gestor.executar(_userView2, "ApagarAula", argsDeleteAula);
-//			fail("testUnauthorizedDeleteAula");
-//		} catch (Exception ex) {
-//			assertNull("testUnauthorizedDeleteAula", result);
-//		}
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "ApagarAula";
 	}
 
 	// delete existing aula
@@ -99,7 +74,7 @@ public class ApagarAulaServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "ApagarAula", argsDeleteAula);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteAula);
 			assertEquals("testDeleteNonExistingAula", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testDeleteNonExistingAula");
@@ -129,7 +104,7 @@ public class ApagarAulaServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "ApagarAula", argsDeleteAula);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteAula);
 			assertEquals("testDeleteNonExistingAula", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testDeleteNonExistingAula");

@@ -59,9 +59,11 @@ public class CriarTurmaServicosTest extends TestCaseServicosWithAuthorization {
 		super.tearDown();
 	}
 
-	// unauthorized write turma
-	public void testUnauthorizedCreateTurma() {
-		super.testUnauthorizedExecutionOfService("CriarTurma");
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "CriarTurma";
 	}
 
 	// write existing turma
@@ -73,7 +75,7 @@ public class CriarTurmaServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "CriarTurma", argsCriarTurma);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurma);
 			fail("testCreateExistingTurma");
 		} catch (Exception ex) {
 			assertNull("testCreateExistingTurma", result);
@@ -89,7 +91,7 @@ public class CriarTurmaServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "CriarTurma", argsCriarTurma);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurma);
 			assertEquals("testCreateNonExistingTurma", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testCreateNonExistingTurma");
@@ -127,11 +129,7 @@ public class CriarTurmaServicosTest extends TestCaseServicosWithAuthorization {
 				turma = new Turma("turma1", new Integer(1), ice, iep);
 			}
 			
-//			System.out.println(turma.toString());
-			
 			this.infoClass = Cloner.copyClass2InfoClass(turma);
-
-//			System.out.println(this.infoClass.toString());
 
 			sp.confirmarTransaccao();
 

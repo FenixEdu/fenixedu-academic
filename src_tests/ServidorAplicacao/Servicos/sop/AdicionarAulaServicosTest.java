@@ -64,35 +64,11 @@ public class AdicionarAulaServicosTest extends TestCaseServicosWithAuthorization
 		super.tearDown();
 	}
 
-	// write turnoAula by unauthorized user
-	public void testUnauthorizedCreateTurnoAula() {
-
-		super.testUnauthorizedExecutionOfService("AdicionarAula");
-
-//		DiaSemana diaSemana = null;
-//		Calendar inicio = null;
-//		Calendar fim = null;
-//		diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
-//		inicio = Calendar.getInstance();
-//		inicio.set(Calendar.HOUR_OF_DAY, 8);
-//		inicio.set(Calendar.MINUTE, 0);
-//		inicio.set(Calendar.SECOND, 0);
-//		fim = Calendar.getInstance();
-//		fim.set(Calendar.HOUR_OF_DAY, 9);
-//		fim.set(Calendar.MINUTE, 30);
-//		fim.set(Calendar.SECOND, 0);
-//		
-//		this.ligarSuportePersistente("turno1", diaSemana, inicio, fim);
-//		Object argsCriarTurnoAula[] = {this.infoShift, this.infoLesson};
-//
-//		Object result = null;
-//
-//		try {
-//			result = _gestor.executar(_userView2, "AdicionarAula", argsCriarTurnoAula);
-//			fail("testUnauthorizedCreateTurnoAula");
-//		} catch (Exception ex) {
-//			assertNull("testUnauthorizedCreateTurnoAula", result);
-//		}
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "AdicionarAula";
 	}
 
 	// write existing turnoAula
@@ -116,7 +92,7 @@ public class AdicionarAulaServicosTest extends TestCaseServicosWithAuthorization
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "AdicionarAula", argsCriarTurnoAula);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula);
 			fail("testCreateExistingTurnoAula:");
 		} catch (Exception ex) {
 			assertNull("testCreateExistingTurnoAula", result);
@@ -144,7 +120,7 @@ public class AdicionarAulaServicosTest extends TestCaseServicosWithAuthorization
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "AdicionarAula", argsCriarTurnoAula);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula);
 			assertTrue("testCreateNonExistingTurnoAula", ((InfoShiftServiceResult) result).isSUCESS());
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
@@ -183,9 +159,9 @@ public class AdicionarAulaServicosTest extends TestCaseServicosWithAuthorization
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "AdicionarAula", argsCriarTurnoAula1);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula1);
 			assertTrue("testCreateNonExistingTurnoAula_HoursLimitReached", ((InfoShiftServiceResult) result).isSUCESS());
-			result = _gestor.executar(_userView, "AdicionarAula", argsCriarTurnoAula2);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula2);
 			assertTrue("testCreateNonExistingTurnoAula_HoursLimitReached", ((InfoShiftServiceResult) result).getMessageType() == new InfoShiftServiceResult(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_REACHED).getMessageType());
 		} catch (Exception ex) {
 			fail("testCreateNonExistingTurnoAula_HoursLimitReached: " + ex);
@@ -228,9 +204,9 @@ public class AdicionarAulaServicosTest extends TestCaseServicosWithAuthorization
 
 	    Object result = null; 
 	      try {
-			result = _gestor.executar(_userView, "AdicionarAula", argsCriarTurnoAula1);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula1);
 			assertTrue("testCreateNonExistingTurnoAula_HourLimitExceeded", ((InfoShiftServiceResult) result).isSUCESS());
-			result = _gestor.executar(_userView, "AdicionarAula", argsCriarTurnoAula2);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula2);
 			assertTrue("testCreateNonExistingTurnoAula_HourLimitExceeded", ((InfoShiftServiceResult) result).getMessageType() == new InfoShiftServiceResult(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_EXCEEDED).getMessageType());
 	      } catch (Exception ex) {
 	      	fail("testCreateNonExistingTurnoAula_HourLimitExceeded:" + ex);
@@ -257,8 +233,6 @@ public class AdicionarAulaServicosTest extends TestCaseServicosWithAuthorization
 			IAulaPersistente iap = sp.getIAulaPersistente();
 			IAula ia = iap.readByDiaSemanaAndInicioAndFimAndSala(diaSemana, inicio, fim, is);
 			
-//			System.out.println(ia.toString());
-			
 			String nomeDisciplinaExecucao = null;
 			if(nomeTurno.equals("turno1") || nomeTurno.equals("turno2")) {
 				nomeDisciplinaExecucao = "TFCI";
@@ -272,13 +246,8 @@ public class AdicionarAulaServicosTest extends TestCaseServicosWithAuthorization
 			ITurnoPersistente itp = sp.getITurnoPersistente();
 			ITurno it = itp.readByNameAndExecutionCourse(nomeTurno, ide);
 			
-//			System.out.println(it.toString());
-			
 			this.infoLesson = Cloner.copyILesson2InfoLesson(ia);
 			this.infoShift = Cloner.copyIShift2InfoShift(it);
-
-//			System.out.println(this.infoLesson.toString());
-//			System.out.println(this.infoShift.toString());
 
 			sp.confirmarTransaccao();
 
@@ -291,5 +260,4 @@ public class AdicionarAulaServicosTest extends TestCaseServicosWithAuthorization
 			fail("ligarSuportePersistente: confirmarTransaccao");
 		}
 	}
-
 }

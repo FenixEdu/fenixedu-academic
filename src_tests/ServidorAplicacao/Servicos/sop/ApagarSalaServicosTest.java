@@ -40,21 +40,11 @@ public class ApagarSalaServicosTest extends TestCaseServicosWithAuthorization {
 		super.tearDown();
 	}
 
-	// unauthorized delete sala
-	public void testUnauthorizedDeleteSala() {
-
-		super.testUnauthorizedExecutionOfService("ApagarSala");
-
-//		Object argsDeleteSala[] = new Object[1];
-//		argsDeleteSala[0] = new RoomKey(new String("Ga1"));
-//
-//		Object result = null;
-//		try {
-//			result = _gestor.executar(_userView2, "ApagarSala", argsDeleteSala);
-//			fail("testUnauthorizedDeleteSala");
-//		} catch (Exception ex) {
-//			assertNull("testUnauthorizedDeleteSala", result);
-//		}
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "ApagarSala";
 	}
 
 	// delete existing sala
@@ -65,7 +55,7 @@ public class ApagarSalaServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "ApagarSala", argsDeleteSala);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteSala);
 			assertEquals("testDeleteExistingSala", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testDeleteExistingSala");
@@ -80,7 +70,7 @@ public class ApagarSalaServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "ApagarSala", argsDeleteSala);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteSala);
 			assertEquals("testDeleteNonExistingSala", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testDeleteNonExistingSala");
@@ -95,11 +85,10 @@ public class ApagarSalaServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "ApagarSala", argsDeleteSala);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteSala);
 			assertEquals("testDeleteExistingSala", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testDeleteExistingSala");
 		}
 	}
-
 }

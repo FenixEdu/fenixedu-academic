@@ -64,22 +64,11 @@ public class AdicionarTurnoServicosTest extends TestCaseServicosWithAuthorizatio
 		super.tearDown();
 	}
 
-	// write turmaTurno by unauthorized user
-	public void testUnauthorizedCreateTurmaTurno() {
-
-		super.testUnauthorizedExecutionOfService("AdicionarTurno");
-
-//		this.ligarSuportePersistente(false);
-//
-//		Object argsCriarTurmaTurno[] = { this.infoClass, this.infoShift };
-//
-//		Object result = null;
-//		try {
-//			result = _gestor.executar(_userView2, "AdicionarTurno", argsCriarTurmaTurno);
-//			fail("testUnauthorizedCreateTurmaTurno");
-//		} catch (Exception ex) {
-//			assertNull("testUnauthorizedCreateTurmaTurno", result);
-//		}
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "AdicionarTurno";
 	}
 
 	// write existing turmaTurno
@@ -91,7 +80,7 @@ public class AdicionarTurnoServicosTest extends TestCaseServicosWithAuthorizatio
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "AdicionarTurno", argsCriarTurmaTurno);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurmaTurno);
 			fail("testCreateExistingTurmaTurno");
 		} catch (Exception ex) {
 			assertNull("testCreateExistingTurmaTurno", result);
@@ -107,7 +96,7 @@ public class AdicionarTurnoServicosTest extends TestCaseServicosWithAuthorizatio
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "AdicionarTurno", argsCriarTurmaTurno);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurmaTurno);
 			assertEquals("testCreateNonExistingTurmaTurno", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testCreateNonExistingTurmaTurno");
@@ -140,8 +129,6 @@ public class AdicionarTurnoServicosTest extends TestCaseServicosWithAuthorizatio
 			ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
 			ITurma turma = turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("turma413", ice, iep);
 			
-//			System.out.println(turma.toString());
-			
 			IDisciplinaExecucaoPersistente idep = sp.getIDisciplinaExecucaoPersistente();
 			IDisciplinaExecucao ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
 			
@@ -153,13 +140,8 @@ public class AdicionarTurnoServicosTest extends TestCaseServicosWithAuthorizatio
 				it = itp.readByNameAndExecutionCourse("turno1", ide);
 			}
 			
-//			System.out.println(it.toString());
-			
 			this.infoClass = Cloner.copyClass2InfoClass(turma);
 			this.infoShift = Cloner.copyIShift2InfoShift(it);
-
-//			System.out.println(this.infoClass.toString());
-//			System.out.println(this.infoShift.toString());
 
 			sp.confirmarTransaccao();
 
@@ -172,5 +154,4 @@ public class AdicionarTurnoServicosTest extends TestCaseServicosWithAuthorizatio
 			fail("ligarSuportePersistente: confirmarTransaccao");
 		}
 	}
-
 }

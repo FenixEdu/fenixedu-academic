@@ -42,9 +42,11 @@ public class CriarSalaServicosTest extends TestCaseServicosWithAuthorization {
 		super.tearDown();
 	}
 
-	// unauthorized write sala
-	public void testUnauthorizedCreateSala() {
-		super.testUnauthorizedExecutionOfService("CriarSala");
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "CriarSala";
 	}
 
 	// write existing sala
@@ -54,7 +56,7 @@ public class CriarSalaServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "CriarSala", argsCriarSala);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarSala);
 			fail("testCreateExistingSala");
 		} catch (Exception ex) {
 			assertNull("testCreateExistingSala", result);
@@ -68,7 +70,7 @@ public class CriarSalaServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "CriarSala", argsCriarSala);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarSala);
 			assertEquals("testCreateNonExistingSala", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testCreateNonExistingSala");

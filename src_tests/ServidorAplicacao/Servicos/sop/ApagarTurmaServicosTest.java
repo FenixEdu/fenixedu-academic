@@ -59,21 +59,11 @@ public class ApagarTurmaServicosTest extends TestCaseServicosWithAuthorization {
 		super.tearDown();
 	}
 
-	// unauthorized delete turma
-	public void testUnauthorizedDeleteTurma() {
-
-		super.testUnauthorizedExecutionOfService("ApagarSala");
-
-//		this.ligarSuportePersistente(true);
-//		Object argsDeleteTurma[] = {this.infoClass};
-//
-//		Object result = null;
-//		try {
-//			result = _gestor.executar(_userView2, "ApagarTurma", argsDeleteTurma);
-//			fail("testUnauthorizedDeleteTurma");
-//		} catch (Exception ex) {
-//			assertNull("testUnauthorizedDeleteTurma", result);
-//		}
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "ApagarTurma";
 	}
 
 	// delete existing turma
@@ -84,7 +74,7 @@ public class ApagarTurmaServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "ApagarTurma", argsDeleteTurma);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteTurma);
 			assertEquals("testDeleteExistingTurma", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testDeleteExistingTurma");
@@ -99,7 +89,7 @@ public class ApagarTurmaServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "ApagarTurma", argsDeleteTurma);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteTurma);
 			assertEquals("testDeleteNonExistingTurma", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testDeleteNonExistingTurma");
@@ -137,11 +127,7 @@ public class ApagarTurmaServicosTest extends TestCaseServicosWithAuthorization {
 				turma = new Turma("asdasdsad", new Integer(1), ice, iep);
 			}
 			
-//			System.out.println(turma.toString());
-			
 			this.infoClass = Cloner.copyClass2InfoClass(turma);
-
-//			System.out.println(this.infoClass.toString());
 
 			sp.confirmarTransaccao();
 
@@ -154,5 +140,4 @@ public class ApagarTurmaServicosTest extends TestCaseServicosWithAuthorization {
 			fail("ligarSuportePersistente: confirmarTransaccao");
 		}
 	}
-
 }

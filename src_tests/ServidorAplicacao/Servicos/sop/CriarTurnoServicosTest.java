@@ -56,9 +56,11 @@ public class CriarTurnoServicosTest extends TestCaseServicosWithAuthorization {
 		super.tearDown();
 	}
 
-	// unauthorized write turno
-	public void testUnauthorizedCreateTurno() {
-		super.testUnauthorizedExecutionOfService("CriarTurno");
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "CriarTurno";
 	}
 
 	// write existing turno
@@ -70,7 +72,7 @@ public class CriarTurnoServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "CriarTurno", argsCriarTurno);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurno);
 			fail("testCreateExistingTurno");
 		} catch (Exception ex) {
 			assertNull("testCreateExistingTurno", result);
@@ -86,7 +88,7 @@ public class CriarTurnoServicosTest extends TestCaseServicosWithAuthorization {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, "CriarTurno", argsCriarTurno);
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurno);
 			assertEquals("testCreateNonExistingTurno", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testCreateNonExistingTurno");
@@ -119,11 +121,7 @@ public class CriarTurnoServicosTest extends TestCaseServicosWithAuthorization {
 				it = new Turno("turnoXPTO", new TipoAula(TipoAula.TEORICA), new Integer(100), ide);
 			}
 
-//			System.out.println(it.toString());
-			
 			this.infoShift = Cloner.copyIShift2InfoShift(it);
-
-//			System.out.println(this.infoShift.toString());
 
 			sp.confirmarTransaccao();
 
