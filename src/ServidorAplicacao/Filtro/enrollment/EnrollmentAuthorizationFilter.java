@@ -85,7 +85,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
                     return "noAuthorization";
                 }
                 if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
-                    return "noAuthorization";
+                    return "error.message.tuitionNotPayed";
                 }
                 if (!curriculumOwner(student, id)) {
                     return "noAuthorization";

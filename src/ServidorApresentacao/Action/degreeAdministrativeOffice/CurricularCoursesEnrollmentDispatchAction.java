@@ -23,6 +23,7 @@ import DataBeans.InfoObject;
 import DataBeans.InfoRole;
 import DataBeans.enrollment.InfoAreas2Choose;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.ChosenAreasAreIncompatibleServiceException;
 import ServidorAplicacao.Servico.exceptions.EnrolmentRuleServiceException;
@@ -30,7 +31,6 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedBranchChangeException;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
@@ -103,7 +103,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
                         .executeService(userView,
                                 "ShowAvailableCurricularCoursesWithoutEnrollmentPeriod", args);
             }
-        } catch (NotAuthorizedException e) {
+        } catch (NotAuthorizedFilterException e) {
             if (e.getMessage() != null) {
                 addAuthorizationErrors(errors, e);
             } else {
@@ -154,8 +154,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
     }
 
-    private void addAuthorizationErrors(ActionErrors errors, NotAuthorizedException e) {
-        String messageException = e.getCause().getCause().getMessage();
+    private void addAuthorizationErrors(ActionErrors errors, NotAuthorizedFilterException e) {
+        String messageException = e.getMessage();
         String message = null;
         String arg1 = null;
         String arg2 = null;
@@ -211,7 +211,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         try {
             infoAreas2Choose = (InfoAreas2Choose) ServiceManagerServiceFactory.executeService(userView,
                     "ReadSpecializationAndSecundaryAreasByStudent", args);
-        } catch (NotAuthorizedException e) {
+        } catch (NotAuthorizedFilterException e) {
             if (e.getMessage() != null) {
                 addAuthorizationErrors(errors, e);
             } else {
@@ -273,7 +273,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         Object[] args = { executionDegreeId, studentCurricularPlanId, specializationArea, secondaryArea };
         try {
             ServiceManagerServiceFactory.executeService(userView, "WriteStudentAreas", args);
-        } catch (NotAuthorizedException e) {
+        } catch (NotAuthorizedFilterException e) {
             if (e.getMessage() != null) {
                 addAuthorizationErrors(errors, e);
             } else {
@@ -341,7 +341,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
                     enrollmentType, new Integer(courseType), userView };
             try {
                 ServiceManagerServiceFactory.executeService(userView, "WriteEnrollment", args);
-            } catch (NotAuthorizedException e) {
+            } catch (NotAuthorizedFilterException e) {
                 if (e.getMessage() != null) {
                     addAuthorizationErrors(errors, e);
                 } else {
@@ -379,7 +379,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
             Object[] args = { executionDegreeId, studentCurricularPlanId, (Integer) toUnenroll.get(0) };
             try {
                 ServiceManagerServiceFactory.executeService(userView, "DeleteEnrolment", args);
-            } catch (NotAuthorizedException e) {
+            } catch (NotAuthorizedFilterException e) {
                 if (e.getMessage() != null) {
                     addAuthorizationErrors(errors, e);
                 } else {
@@ -416,7 +416,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
                         .executeService(userView,
                                 "ShowAvailableCurricularCoursesWithoutEnrollmentPeriod", args);
             }
-        } catch (NotAuthorizedException e) {
+        } catch (NotAuthorizedFilterException e) {
             if (e.getMessage() != null) {
                 addAuthorizationErrors(errors, e);
             } else {
@@ -452,7 +452,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         try {
             curriculum = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
                     "ReadStudentCurriculumForEnrollmentConfirmation", args2);
-        } catch (NotAuthorizedException e) {
+        } catch (NotAuthorizedFilterException e) {
             if (e.getMessage() != null) {
                 addAuthorizationErrors(errors, e);
             } else {
