@@ -5,8 +5,8 @@
 
     <!-- Validation for Index Form -->
     <form name="indexForm">
-      <field property="nome" depends="required">
-        <arg0 key="nome" resource="false"/>
+      <field property="roomName" depends="required">
+        <arg0 key="roomName" resource="false"/>
       </field>
     </form>
 

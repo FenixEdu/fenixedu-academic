@@ -18,7 +18,6 @@ import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import Util.TipoSala;
 
 /**
@@ -91,7 +90,7 @@ public class SelectRoomsFormAction extends FenixAction {
 				throw new FenixActionException(e1);
 			}
 
-			RequestUtils.setExecutionPeriodToRequest(request, executionPeriod);
+			request.setAttribute("objectCode", executionPeriod.getIdInternal());
 			return mapping.findForward("Sucess");
 		} else
 			throw new FenixActionException();

@@ -13,7 +13,7 @@
 			<bean:define id="i" value="i_index" />
                 <tr>
                     <td>
-	                    <html:radio idName="infoRoom" name="infoRoom" property="nome" value="nome"/>
+	                    <html:radio idName="infoRoom" property="roomName" value="nome"/>
                     </td>
                     <td>
 	                    <bean:write name="infoRoom" property="nome"/>
@@ -22,8 +22,8 @@
 			</logic:iterate>
 		</table>
 		<br/>
-		<html:hidden  property="ePName" value="<%= pageContext.findAttribute("ePName").toString() %>" />
-		<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
+		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden  property="method" value="roomViewer" />	
 		<html:submit styleClass="inputbutton">
 			<bean:message key="label.choose"/>
 		</html:submit>

@@ -25,10 +25,8 @@ public class ClassTimeTableLessonContentRenderer
 		strBuffer
 			.append(" <a class='timetable' href='siteViewer.do?method=roomViewer&amp;roomName=")
 			.append(lesson.getInfoSala().getNome())
-			.append("&amp;ePName=")
-			.append(infoExecutionCourse.getInfoExecutionPeriod().getName())
-			.append("&amp;eYName=")
-			.append(infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear())
+			.append("&amp;objectCode=")
+			.append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal())
 			.append("'>")
 			.append(lesson.getInfoSala().getNome())
 			.append("</a>");

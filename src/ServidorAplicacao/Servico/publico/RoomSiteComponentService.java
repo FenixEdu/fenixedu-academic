@@ -5,9 +5,9 @@
  */
 package ServidorAplicacao.Servico.publico;
 
-import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.RoomKey;
+import DataBeans.SiteView;
 import Dominio.ExecutionPeriod;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
@@ -28,8 +28,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class RoomSiteComponentService implements IServico {
 
-	private static RoomSiteComponentService _servico =
-		new RoomSiteComponentService();
+	private static RoomSiteComponentService _servico = new RoomSiteComponentService();
 
 	/**
 	  * The actor of this class.
@@ -48,47 +47,29 @@ public class RoomSiteComponentService implements IServico {
 
 	/**
 	 * Returns the _servico.
-	 * @return ReadExecutionCourse
+	 * @return ReadRoom
 	 */
 	public static RoomSiteComponentService getService() {
 		return _servico;
 	}
 
-	public Object run(
-		ISiteComponent commonComponent,
-		ISiteComponent bodyComponent,
-		RoomKey roomKey,
-		Integer infoExecutionPeriodCode)
+	public Object run(ISiteComponent bodyComponent, RoomKey roomKey, Integer infoExecutionPeriodCode)
 		throws FenixServiceException {
-		ExecutionCourseSiteView siteView = null;
+		SiteView siteView = null;
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			ISalaPersistente persistentRoom = sp.getISalaPersistente();
-			IPersistentExecutionPeriod persistentExecutionPeriod =
-				sp.getIPersistentExecutionPeriod();
+			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
 			ISala room = persistentRoom.readByName(roomKey.getNomeSala());
 			IExecutionPeriod executionPeriod =
-				(IExecutionPeriod) persistentExecutionPeriod.readByOId(
-					new ExecutionPeriod(infoExecutionPeriodCode));
+				(IExecutionPeriod) persistentExecutionPeriod.readByOId(new ExecutionPeriod(infoExecutionPeriodCode));
 
-			RoomSiteComponentBuilder componentBuilder =
-				RoomSiteComponentBuilder.getInstance();
-			//			commonComponent =
-			//				componentBuilder.getComponent(
-			//					commonComponent,
-			//					site,
-			//					null,
-			//					null);
-			bodyComponent =
-				componentBuilder.getComponent(
-					bodyComponent,
-					executionPeriod,
-					room);
-
-			siteView =
-				new ExecutionCourseSiteView(commonComponent, bodyComponent);
+			RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();
+			bodyComponent = componentBuilder.getComponent(bodyComponent, executionPeriod, room);
+			System.out.println("component"+bodyComponent);
+			siteView = new SiteView(bodyComponent);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
