@@ -2,14 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <p><img height="36" src="<%= request.getContextPath() %>/images/intranetSOP.gif" width="239" /></p>
 
-  A aplica&ccedil;&atilde;o online SOP, exclusivamente dispon&iacute;vel para
-  utilizadores credenciados, integra um conjunto de servi&ccedil;os denominado
-  .IST cujos objectivos residem na utiliza&ccedil;&atilde;o de tecnologias web
-  para criar, modificar, armazenar e aceder a informa&ccedil;&atilde;o privilegiada
-  de forma forma flex&iacute;vel, funcional e descentralizada, contribuindo -
-dessa forma - para din&acirc;micas de trabalho mais produtivas e eficientes.
-<p>Descrevem-se, de seguida, as funcionalidades existentes nas duas grandes &aacute;reas
-dispon&iacute;veis.</p>
+<bean:define id="dotTitle"type="java.lang.String"><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/></bean:define>
+<bean:message key="introduction.message" arg0="<%= dotTitle %>"/>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
