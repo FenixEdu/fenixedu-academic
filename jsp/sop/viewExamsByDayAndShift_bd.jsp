@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<h2><bean:message key="title.exams.list"/></h2>
 <table width="100%">
 	<tr>
 		<td class="infoselected"><p>O dia e turno selecionados s&atilde;o:</p>
@@ -12,8 +13,7 @@
         </td>
     </tr>
 </table>
-<br />
-<h2><bean:message key="title.exams.list"/></h2>
+<br/><br/>
 <span class="error"><html:errors/></span>
 
 <bean:define id="deleteConfirm">

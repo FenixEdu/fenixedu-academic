@@ -5,7 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
-<br/>
+<center><h2><bean:message key="title.exams.list"/></h2></center>
+<br/><br/>
 <table width="80%" border="0" cellpadding="0" cellspacing="0" align="center">
 	<tr>
 		<td bgcolor="#FFFFFF" class="infoselected"><p>O curso seleccionado
