@@ -326,9 +326,9 @@
 	</action>
 	
 	<!-- Section viewer -->
-	<action name="sectionForm"
-		
+	<action name="sectionForm"		
 		path="/viewSection"
+		input="/viewSection.jsp"
         type="ServidorApresentacao.Action.teacher.ViewSectionAction">    
      <forward name="Sucess" path="/viewSection.jsp"/>         
 	</action>

@@ -25,6 +25,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
+import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -61,6 +62,7 @@ public class InsertItem implements IServico {
 
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
+				
 			persistentItem = persistentSuport.getIPersistentItem();
 
 			List itemsList = persistentItem.readAllItemsBySection(section);
@@ -81,12 +83,10 @@ public class InsertItem implements IServico {
 				}
 
 			}
-		} 
-		catch (ExistingPersistentException excepcaoPersistencia) {
+		} catch (ExistingPersistentException excepcaoPersistencia) {
 
-							throw new ExistingServiceException(excepcaoPersistencia);
-						}
-		catch (ExcepcaoPersistencia excepcaoPersistencia) {
+			throw new ExistingServiceException(excepcaoPersistencia);
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
@@ -99,20 +99,23 @@ public class InsertItem implements IServico {
 		IItem item = null;
 		ISection section = null;
 
+		IPersistentItem persistentItem = null;
 		try {
 
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
 
-			IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
+			persistentItem = persistentSuport.getIPersistentItem();
 
-			InfoSection infoSection = infoItem.getInfoSection();
-			section = Cloner.copyInfoSection2ISection(infoSection);
+			IPersistentSite persistentSite =
+				persistentSuport.getIPersistentSite();
 
 			IExecutionYear executionYear =
 				persistentSuport
 					.getIPersistentExecutionYear()
 					.readExecutionYearByName(
-					infoSection
+					infoItem
+						.getInfoSection()
 						.getInfoSite()
 						.getInfoExecutionCourse()
 						.getInfoExecutionPeriod()
@@ -122,7 +125,8 @@ public class InsertItem implements IServico {
 				persistentSuport
 					.getIPersistentExecutionPeriod()
 					.readByNameAndExecutionYear(
-					infoSection
+					infoItem
+						.getInfoSection()
 						.getInfoSite()
 						.getInfoExecutionCourse()
 						.getInfoExecutionPeriod()
@@ -132,22 +136,26 @@ public class InsertItem implements IServico {
 				persistentSuport
 					.getIDisciplinaExecucaoPersistente()
 					.readByExecutionCourseInitialsAndExecutionPeriod(
-						infoSection
+						infoItem
+							.getInfoSection()
 							.getInfoSite()
 							.getInfoExecutionCourse()
 							.getSigla(),
-						executionPeriod);
-				
-			ISite site = section.getSite();
-			site =
-				persistentSuport.getIPersistentSite().readByExecutionCourse(
-					executionCourse);
+						executionPeriod);												
 			
-//			site =
-//				persistentSuport.getIPersistentSite().readByExecutionCourse(
-//					site.getExecutionCourse());
+			section =
+				Cloner.copyInfoSection2ISection(infoItem.getInfoSection());
+			
+			ISite site = persistentSite.readByExecutionCourse(executionCourse);
+										
 			section.setSite(site);
-		
+			ISection superiorSection = section.getSuperiorSection(); 
+			
+			while (superiorSection != null) {			
+				superiorSection.setSite(site);
+				superiorSection = superiorSection.getSuperiorSection();
+			}										
+
 			item =
 				new Item(
 					infoItem.getName(),
@@ -159,8 +167,9 @@ public class InsertItem implements IServico {
 			organizeExistingItemsOrder(
 				section,
 				infoItem.getItemOrder().intValue());
-
+			
 			persistentItem.lockWrite(item);
+
 		} catch (ExistingPersistentException e) {
 
 			throw new ExistingServiceException(e);

@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<span class="error"><html:errors property="error.default" /></span>
 <h2><bean:message key="message.createRootSection" /></h2>
 <br />
 <table>

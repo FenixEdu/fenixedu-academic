@@ -77,15 +77,10 @@ public class InsertSection implements IServico {
 					}
 
 				}
-
 			}
-		} 
-		catch (ExistingPersistentException excepcaoPersistencia) {
-
-							throw new ExistingServiceException(excepcaoPersistencia);
-						}
-		
-		catch (ExcepcaoPersistencia excepcaoPersistencia) {
+		} catch (ExistingPersistentException excepcaoPersistencia) {
+			throw new ExistingServiceException(excepcaoPersistencia);
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
@@ -141,10 +136,10 @@ public class InsertSection implements IServico {
 				persistentSuport.getIPersistentSite().readByExecutionCourse(
 					executionCourse);
 
-			if (!isRoot(infoSection)) {				
+			if (!isRoot(infoSection)) {
 
 				InfoSection infoFatherSection =
-					infoSection.getSuperiorInfoSection();				
+					infoSection.getSuperiorInfoSection();
 
 				if (infoFatherSection.getSuperiorInfoSection() != null) {
 
@@ -161,13 +156,13 @@ public class InsertSection implements IServico {
 							null,
 							infoFatherSection.getName());
 				}
-				
-				fatherSection.setSite(site);											
+
+				fatherSection.setSite(site);
 				section =
 					new Section(infoSection.getName(), site, fatherSection);
 				section.setSectionOrder(infoSection.getSectionOrder());
 
-			} else {								
+			} else {
 				section = new Section();
 				section.setSuperiorSection(null);
 				section.setName(infoSection.getName());
@@ -182,13 +177,10 @@ public class InsertSection implements IServico {
 
 			persistentSection.lockWrite(section);
 
-		} 
-		catch (ExistingPersistentException excepcaoPersistencia) {
+		} catch (ExistingPersistentException excepcaoPersistencia) {
 
-					throw new ExistingServiceException(excepcaoPersistencia);
-				}
-		
-		catch (ExcepcaoPersistencia excepcaoPersistencia) {
+			throw new ExistingServiceException(excepcaoPersistencia);
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
