@@ -88,6 +88,17 @@
         <form-property name="page" type="java.lang.Integer" initial="0" />           
 	</form-bean>    			
 
+	<form-bean name="itemForm"
+		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+        dynamic="true">
+        <form-property name="information" type="java.lang.String"/>  
+        <form-property name="itemOrder" type="java.lang.Integer" />   
+        <form-property name="itemName" type="java.lang.String" />   
+        <form-property name="urgent" type="java.lang.Boolean"/>           
+		          
+	
+	</form-bean> 
+
     </form-beans>
 
 	 <!-- ========== Global Exception Definitions ============================== -->
