@@ -33,6 +33,7 @@ import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoCurriculum;
 import DataBeans.InfoEvaluationMethod;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
@@ -1431,12 +1432,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		Object args[] = {objectCode};
 		try
 		{
-			InfoExecutionPeriod  infoExecutionPeriod = (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionPeriod", args);
+			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionCourseByOID", args);
+			InfoExecutionPeriod  infoExecutionPeriod = infoExecutionCourse.getInfoExecutionPeriod();
 			request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
 			request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 		}catch (FenixServiceException fenixServiceException)
 		{
-			throw new FenixActionException(fenixServiceException.getMessage());
+			throw new FenixActionException(fenixServiceException);
 		}
 		
 		ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
