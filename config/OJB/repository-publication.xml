@@ -1,0 +1,43 @@
+<class-descriptor class="Dominio.Publication" table="PUBLICATION">
+
+    <extent-class class-ref="Dominio.InternationalJournalArticle"/>
+    <extent-class class-ref="Dominio.InternationalConference"/>
+    <extent-class class-ref="Dominio.NacionalConference"/>
+    <extent-class class-ref="Dominio.TechnicalReport"/>
+    <extent-class class-ref="Dominio.PhDThese"/>
+    <extent-class class-ref="Dominio.MScThese"/>
+    <extent-class class-ref="Dominio.GraduationThese"/>
+    <extent-class class-ref="Dominio.BookAuthor"/>
+    <extent-class class-ref="Dominio.BookEditor"/>
+    <extent-class class-ref="Dominio.BookChapter"/>
+    <extent-class class-ref="Dominio.NationalJournalArticle"/>
+    <extent-class class-ref="Dominio.Other"/>
+    <extent-class class-ref="Dominio.EditedProceedings"/>
+    <extent-class class-ref="Dominio.Patents"/>
+</class-descriptor>
+
+<class-descriptor class="Dominio.InternationalJournalArticle" table="PUBLICATION">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
+	<field-descriptor name="conference" column="CONFERENCE" jdbc-type="VARCHAR" nullable="false"/>
+	<field-descriptor name="journal" column="JOURNAL" jdbc-type="VARCHAR" nullable="false"/>
+	<field-descriptor name="location" column="LOCATION" jdbc-type="VARCHAR" nullable="false"/>
+	<field-descriptor name="month" column="MONTH" jdbc-type="INTEGER" nullable="false"/>
+	<field-descriptor name="number" column="NUMBER" jdbc-type="INTEGER" nullable="false"/>
+	<field-descriptor name="pages" column="PAGES" jdbc-type="VARCHAR" nullable="false"/>
+	<field-descriptor name="publisher" column="PUBLISHER" jdbc-type="VARCHAR" nullable="false"/>
+	<field-descriptor name="series" column="SERIES" jdbc-type="VARCHAR" nullable="false"/>
+	<field-descriptor name="title" column="TITLE" jdbc-type="VARCHAR" nullable="false"/>
+	<field-descriptor name="trnumber" column="TRNUMBER" jdbc-type="INTEGER" nullable="false"/>
+	<field-descriptor name="university" column="UNIVERSITY" jdbc-type="VARCHAR" nullable="false"/>
+	<field-descriptor name="volume" column="VOLUME" jdbc-type="INTEGER" nullable="false"/>
+	<field-descriptor name="year" column="YEAR" jdbc-type="INTEGER" nullable="false"/>
+	<collection-descriptor name="restrictions" element-class-ref="Dominio.Restriction" proxy="true">
+       <inverse-foreignkey field-ref="keyPrecedence"/>
+    </collection-descriptor>
+    
+	<reference-descriptor name="precedence" class-ref="Dominio.Precedence" proxy="true">
+	    <foreignkey field-ref="keyPrecedence"/>
+    </reference-descriptor>
+	<field-descriptor name="numberOfCurricularCourses" column="NUMBER_OF_CURRICULAR_COURSE_DONE" jdbc-type="INTEGER" nullable="false"/>
+</class-descriptor>
