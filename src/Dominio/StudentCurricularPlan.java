@@ -5,6 +5,7 @@ import java.util.List;
 
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
+import Util.enrollment.EnrollmentRuleType;
 
 public class StudentCurricularPlan extends DomainObject implements IStudentCurricularPlan {
 
@@ -30,30 +31,10 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	protected String observations;
 	protected Integer employeeKey;
 
-	public StudentCurricularPlan() {
-		setStudent(null);
-		setBranch(null);
-		setDegreeCurricularPlan(null);
-		setStartDate(null);
-		setCurrentState(null);
-		setDegreeCurricularPlanKey(null);
-		setStudentKey(null);
-		setBranchKey(null);
-		setSpecialization(null);
+	public StudentCurricularPlan()
+	{
 	}
 
-	public StudentCurricularPlan(IStudent student, IDegreeCurricularPlan degreeCurricularPlan, IBranch branch, Date startDate, StudentCurricularPlanState currentState) {
-		this();
-		setStudent(student);
-		setDegreeCurricularPlan(degreeCurricularPlan);
-		setBranch(branch);
-		setStartDate(startDate);
-		setCurrentState(currentState);
-	}
-
-	/**
-	 * @param studentCurricularPlanId
-	 */
 	public StudentCurricularPlan(Integer studentCurricularPlanId) {
 		setIdInternal(studentCurricularPlanId);
 	}
@@ -84,8 +65,6 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		result += "employee = " + this.employee.getPerson().getNome()  + "]\n";}
 		return result;
 	}
-
-	
 
 	/**
 	 * Returns the degreeCurricularPlan.
@@ -391,5 +370,59 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	{
 		this.secundaryBranchKey = secundaryBranchKey;
 	}
+
+	// -------------------------------------------------------------
+	// BEGIN: Only for enrollment purposes
+	// -------------------------------------------------------------
+
+	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, IDegreeCurricularPlan degreeCurricularPlan,
+		EnrollmentRuleType enrollmentRuleType)
+	{
+		return null;
+	}
+
+	public List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType)
+	{
+		return null;
+	}
+	
+	public List getStudentApprovedEnrollments()
+	{
+		return null;
+	}
+
+	public List getStudentEnrolledEnrollments()
+	{
+		return null;
+	}
+
+	public List getStudentTemporarilyEnrolledEnrollments()
+	{
+		return null;
+	}
+
+	public List getStudentNotNeedToEnrollCourses()
+	{
+		return null;
+	}
+
+	public List getCommonBranchCourses()
+	{
+		return null;
+	}
+
+	public List getStudentBranchesCourses()
+	{
+		return null;
+	}
+
+	public List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment()
+	{
+		return null;
+	}
+
+	// -------------------------------------------------------------
+	// END: Only for enrollment purposes
+	// -------------------------------------------------------------
 
 }

@@ -18,7 +18,7 @@ import Util.PrecedenceScopeToApply;
 
 public abstract class PrecedencesEnrollmentRule implements IEnrollmentRule
 {
-	private PrecedenceContext precedenceContext;
+	protected PrecedenceContext precedenceContext;
 
 	public List apply(List curricularCoursesWhereToApply)
 	{

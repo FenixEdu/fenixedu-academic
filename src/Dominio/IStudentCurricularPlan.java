@@ -6,8 +6,10 @@
 package Dominio;
 import java.util.Date;
 import java.util.List;
+
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
+import Util.enrollment.EnrollmentRuleType;
 /**
  *
  * @author  Nuno Nunes & Joana Mota
@@ -45,4 +47,23 @@ public interface IStudentCurricularPlan extends IDomainObject
 	public void setClassification(Double double1);
 	public void setEmployee(IEmployee funcionario);
 	public void setWhen(Date date);
+
+
+	// -------------------------------------------------------------
+	// BEGIN: Only for enrollment purposes
+	// -------------------------------------------------------------
+	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, IDegreeCurricularPlan degreeCurricularPlan,
+		EnrollmentRuleType enrollmentRuleType);
+	public List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType);
+	public List getStudentApprovedEnrollments();
+	public List getStudentEnrolledEnrollments();
+	public List getStudentTemporarilyEnrolledEnrollments();
+	public List getStudentNotNeedToEnrollCourses();
+	public List getCommonBranchCourses();
+	public List getStudentBranchesCourses();
+	public List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
+	// -------------------------------------------------------------
+	// END: Only for enrollment purposes
+	// -------------------------------------------------------------
+
 }
