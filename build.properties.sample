@@ -17,7 +17,20 @@ db.name=fenix
 db.user=root
 db.pass=
 db.alias=//localhost:3306/ciapl
+
+db.assiduousness.name=ciapl
+
+db.assiduousness.platform=MySQL
+db.assiduousness.driver=com.mysql.jdbc.Driver
+db.assiduousness.protocol=jdbc
+db.assiduousness.subprotocol=mysql
+db.assiduousness.user=root
+db.assiduousness.pass=
+db.assiduousness.alias=//localhost:3306/ciapl
+db.assiduousness.validationQuery=select 1
+
 login.page=https://fenix.ist.utl.pt/loginPage.jsp
+
 #application must be intranet or (extranet = <empty string>)
 application=extranet
 validation.doctype=<!DOCTYPE form-validation PUBLIC \n \
