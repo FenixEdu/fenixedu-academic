@@ -257,7 +257,7 @@
               type="ServidorApresentacao.Action.ExceptionHandlingAction"     
               >
         
-      </action>
+      </action>  
     
      </action-mappings>     
 
