@@ -36,7 +36,8 @@ public class FenixRequestProcessor extends RequestProcessor {
             e1.printStackTrace();
         }
         if (((uri.indexOf("login.do") == -1) && (uri.indexOf("/publico/index.do") == -1) && (uri
-                .indexOf("showErrorPage.do") == -1)) && (uri.indexOf("/manager/manageCache.do") == -1)) {
+                .indexOf("showErrorPage.do") == -1)) && (uri.indexOf("/manager/manageCache.do") == -1)
+                && (uri.indexOf("/isAlive.do") == -1)) {
             if (request.getRemoteUser() == null) {
                 //			if ((session == null)
                 //				|| (session.isNew())
