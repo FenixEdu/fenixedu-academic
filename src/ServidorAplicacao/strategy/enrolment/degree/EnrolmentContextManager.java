@@ -28,14 +28,15 @@ import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
+import Dominio.IEnrolmentPeriod;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
-import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.IPersistentEnrolmentPeriod;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentState;
 
@@ -51,9 +52,7 @@ public abstract class EnrolmentContextManager {
 		ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
 		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
-		
-		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-
+		IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSupport.getIPersistentEnrolmentPeriod();
 		IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
 		final IStudentCurricularPlan studentActiveCurricularPlan =
@@ -115,7 +114,11 @@ public abstract class EnrolmentContextManager {
 
 		List studentCurricularPlanCurricularCourses = computeStudentCurricularPlanCurricularCourses(degreeCurricularPlanCurricularCourses, studentActiveCurricularPlan);
 		
-		IExecutionPeriod actualExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod(); 
+		
+		
+		IEnrolmentPeriod enrolmentPeriod = enrolmentPeriodDAO.readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan.getDegreeCurricularPlan());
+		
+		IExecutionPeriod enrolmentExecutionPeriod = enrolmentPeriod.getExecutionPeriod(); 
 
 		enrolmentContext.setCurricularCoursesFromStudentCurricularPlan(studentCurricularPlanCurricularCourses);
 		enrolmentContext.setStudent(student);
@@ -126,7 +129,7 @@ public abstract class EnrolmentContextManager {
 		enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
 		enrolmentContext.setEnrolmentValidationResult(new EnrolmentValidationResult());
 		enrolmentContext.setCurricularCoursesScopesEnroledByStudent(studentEnroledCurricularCourseScopes);
-		enrolmentContext.setExecutionPeriod(actualExecutionPeriod);
+		enrolmentContext.setExecutionPeriod(enrolmentExecutionPeriod);
 		
 //		enrolmentContext.setChosenOptionalDegree(new Curso());
 //		enrolmentContext.setChosenOptionalCurricularCourseScope(new CurricularCourseScope());
