@@ -45,7 +45,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
         }
     }
 
-    private List getRoleList(List roles) {
+    private List getRoleList(Collection roles) {
         List result = new ArrayList();
         Iterator iterator = roles.iterator();
         while (iterator.hasNext()) {
@@ -87,7 +87,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
                 return "errors.enrollment.equivalence.operation.not.authorized";
             }
 
-            List roles = getRoleList((List) userView.getRoles());
+            List roles = getRoleList(userView.getRoles());
 
             Integer studentNumber = (Integer) serviceArgs[0];
             TipoCurso degreeType = (TipoCurso) serviceArgs[1];
@@ -138,8 +138,8 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @return true/false
      */
     private boolean containsAtLeastOneOfTheRoles(IUserView userView) {
-        List neededRoles = getRoleList((List) getNeededRoles());
-        List userRoles = getRoleList((List) userView.getRoles());
+        List neededRoles = getRoleList(getNeededRoles());
+        List userRoles = getRoleList(userView.getRoles());
 
         for (int i = 0; i < neededRoles.size(); i++) {
             if (userRoles.contains(neededRoles.get(i))) {

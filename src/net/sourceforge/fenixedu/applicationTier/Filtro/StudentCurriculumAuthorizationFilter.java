@@ -94,7 +94,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         return roles;
     }
 
-    private List getRoleList(List roles) {
+    private List getRoleList(Collection roles) {
         List result = new ArrayList();
         Iterator iterator = roles.iterator();
         while (iterator.hasNext()) {
@@ -110,7 +110,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
      * @return null if authorized string with message if not authorized
      */
     private String hasProvilege(IUserView id, Object[] arguments) {
-        List roles = getRoleList((List) id.getRoles());
+        List roles = getRoleList(id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
 
         Integer studentCurricularPlanID = (Integer) arguments[1];

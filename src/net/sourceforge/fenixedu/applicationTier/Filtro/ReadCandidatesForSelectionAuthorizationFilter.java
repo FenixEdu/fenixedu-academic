@@ -72,7 +72,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
      */
     private boolean hasPrivilege(IUserView id, Object[] arguments) {
 
-        List roles = getRoleList((List) id.getRoles());
+        List roles = getRoleList(id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
 
         /*
@@ -155,7 +155,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
         return false;
     }
 
-    private List getRoleList(List roles) {
+    private List getRoleList(Collection roles) {
         List result = new ArrayList();
         Iterator iterator = roles.iterator();
         while (iterator.hasNext()) {
