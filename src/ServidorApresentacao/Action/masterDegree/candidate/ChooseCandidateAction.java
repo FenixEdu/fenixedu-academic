@@ -45,7 +45,7 @@ public class ChooseCandidateAction extends ServidorApresentacao.Action.base.Feni
 	  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
 
       return mapping.findForward("Success");
-    } else
+    } 
       throw new Exception();   
   }
 

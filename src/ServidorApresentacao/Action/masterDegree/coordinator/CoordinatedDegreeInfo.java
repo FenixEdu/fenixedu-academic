@@ -65,7 +65,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
                     SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT,
                     new Integer(result.size()));
             return mapping.findForward("Success");
-        } else
+        } 
             throw new Exception();
     }
 

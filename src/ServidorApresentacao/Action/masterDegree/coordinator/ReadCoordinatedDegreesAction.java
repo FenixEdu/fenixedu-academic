@@ -13,7 +13,6 @@
 
 package ServidorApresentacao.Action.masterDegree.coordinator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +44,6 @@ public class ReadCoordinatedDegreesAction extends ServidorApresentacao.Action.ba
       Object args[] = new Object[1];
 	  args[0] = userView;
 	  List degrees = null;
-	  List candidates = new ArrayList();
 	  try {
 	  	degrees = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCoordinatedDegrees", args);
 	  
@@ -61,7 +59,7 @@ public class ReadCoordinatedDegreesAction extends ServidorApresentacao.Action.ba
 	  }
       return mapping.findForward("ChooseDegree");
 
-    } else
+    } 
       throw new Exception();   
   }
 

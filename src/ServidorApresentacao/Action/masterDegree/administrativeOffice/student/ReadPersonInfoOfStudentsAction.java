@@ -122,7 +122,7 @@ public class ReadPersonInfoOfStudentsAction extends ServidorApresentacao.Action.
             session.setAttribute(SessionConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
 
             return mapping.findForward("Success");
-        } else
+        } 
             throw new Exception();
     }
 

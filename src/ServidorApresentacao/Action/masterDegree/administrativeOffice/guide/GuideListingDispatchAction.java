@@ -51,12 +51,11 @@ public class GuideListingDispatchAction extends DispatchAction {
 		if (session != null) {
 
 			DynaActionForm chooseYearForm = (DynaActionForm) form;
-//			session.removeAttribute(SessionConstants.REQUESTER_NUMBER);
-//			session.removeAttribute(SessionConstants.GUIDE_LIST);
+
 			chooseYearForm.set("year", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));			
 			
 			return mapping.findForward("PrepareReady");
-		  } else
+		  } 
 			throw new Exception();   
 
 	}
@@ -90,7 +89,7 @@ public class GuideListingDispatchAction extends DispatchAction {
 			request.setAttribute(SessionConstants.GUIDE_LIST, result);
 		  
 			return mapping.findForward("ShowGuideList");
-		} else
+		} 
 		  throw new Exception();   
 	  }
 
@@ -123,7 +122,7 @@ public class GuideListingDispatchAction extends DispatchAction {
 			request.setAttribute(SessionConstants.GUIDE_YEAR, guideYear);
 		  
 			return mapping.findForward("ShowVersionList");
-		} else
+		} 
 		  throw new Exception();   
 	  }
 
@@ -141,7 +140,7 @@ public class GuideListingDispatchAction extends DispatchAction {
 			request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST, TipoDocumentoIdentificacao.toArrayList());  
 			
 			return mapping.findForward("PrepareSuccess");
-		  } else
+		  } 
 			throw new Exception();   
 
 	}
@@ -204,7 +203,7 @@ public class GuideListingDispatchAction extends DispatchAction {
 
 			
 			return mapping.findForward("ShowGuideList");
-		  } else
+		  } 
 			throw new Exception();   
 
 	}
@@ -241,7 +240,7 @@ public class GuideListingDispatchAction extends DispatchAction {
 
 			
 			return mapping.findForward("ShowGuideList");
-		  } else
+		  } 
 			throw new Exception();   
 
 	}

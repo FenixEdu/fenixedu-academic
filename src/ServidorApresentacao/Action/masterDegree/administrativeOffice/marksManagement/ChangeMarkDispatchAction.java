@@ -145,10 +145,9 @@ public class ChangeMarkDispatchAction extends DispatchAction
 			{
 				return prepareChangeMark(mapping, form, request, response);
 			}
-			else
-			{
+			
 				return mapping.findForward("chooseCurricularCourse");
-			}
+			
 		}
 		catch (FenixServiceException e)
 		{
@@ -412,15 +411,14 @@ public class ChangeMarkDispatchAction extends DispatchAction
 			//				infoEnrolmentEvaluation.setExamDate(null);
 			//throw new FenixActionException("error.data.exame.inválida");
 		}
-		else
-		{
+		
 			day = new Integer((String) studentNumberForm.get("examDateDay"));
 			month = new Integer((String) studentNumberForm.get("examDateMonth"));
 			year = new Integer((String) studentNumberForm.get("examDateYear"));
 
 			examDate.set(year.intValue(), month.intValue(), day.intValue());
 			infoEnrolmentEvaluation.setExamDate(examDate.getTime());
-		}
+		
 
 		day = null;
 		month = null;
@@ -442,15 +440,14 @@ public class ChangeMarkDispatchAction extends DispatchAction
 			//				infoEnrolmentEvaluation.setGradeAvailableDate(null);
 			//throw new FenixActionException("error.data.lançamento.inválida");
 		}
-		else
-		{
+		
 			day = new Integer((String) studentNumberForm.get("gradeAvailableDateDay"));
 			month = new Integer((String) studentNumberForm.get("gradeAvailableDateMonth"));
 			year = new Integer((String) studentNumberForm.get("gradeAvailableDateYear"));
 
 			examDate.set(year.intValue(), month.intValue(), day.intValue());
 			infoEnrolmentEvaluation.setGradeAvailableDate(examDate.getTime());
-		}
+		
 		infoTeacher.setTeacherNumber(teacherNumber);
 
 		InfoStudent infoStudent = new InfoStudent();

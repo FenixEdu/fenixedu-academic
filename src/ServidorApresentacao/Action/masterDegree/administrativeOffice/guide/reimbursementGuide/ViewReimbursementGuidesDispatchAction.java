@@ -66,9 +66,9 @@ public class ViewReimbursementGuidesDispatchAction extends FenixDispatchAction
 				"error.exception.masterDegree.nonExistingReimbursementGuides",
 				mapping.findForward("error"));
 
-		if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE))
-			return mapping.findForward("start");
-		else
+		if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE)){
+			return mapping.findForward("start");}
+		
 			throw new InvalidGuideSituationActionException(mapping.findForward("error"));
 
 	}

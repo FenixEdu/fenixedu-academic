@@ -268,7 +268,7 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
             populateForm(changeApplicationInfoForm,newInfoPerson);
 
 			return mapping.findForward("Success");
-		} else
+		} 
 		
 			throw new Exception();
 	}

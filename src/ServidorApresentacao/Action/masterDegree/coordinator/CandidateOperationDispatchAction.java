@@ -52,7 +52,7 @@ public class CandidateOperationDispatchAction extends DispatchAction {
 	  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
  
 	  return mapping.findForward("ViewList");
-	} else
+	} 
 	  throw new Exception();  
   }
   
@@ -78,7 +78,7 @@ public class CandidateOperationDispatchAction extends DispatchAction {
 		  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
 		  return mapping.findForward("ActionReady");
 			
-	  } else
+	  } 
 		  throw new Exception();  
   }
 	   

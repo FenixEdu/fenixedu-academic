@@ -66,9 +66,9 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction
 			throw new FenixActionException(e);
 		}
 
-		if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE))
-			return mapping.findForward("start");
-		else
+		if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE)){
+			return mapping.findForward("start");}
+		
 			throw new InvalidGuideSituationActionException(mapping.findForward("error"));
 
 	}

@@ -184,7 +184,7 @@ public class StudentGuideDispatchAction extends DispatchAction {
 
             return mapping.findForward("CreateStudentGuideReady");
 
-        } else
+        } 
             throw new Exception();
     }
 

@@ -38,7 +38,7 @@ public class SelectSemesterAction extends FenixAction {
 			request.setAttribute("publico.semester", types);
 			
 			return mapping.findForward("Sucess");
-		} else
+		} 
 			throw new Exception(); 
 		}
 }

@@ -93,7 +93,7 @@ public class EditGuideDispatchAction extends DispatchAction
             session.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, SituationOfGuide.toArrayList());
 
             return mapping.findForward("EditReady");
-        } else
+        } 
             throw new Exception();
     }
 
@@ -204,7 +204,7 @@ public class EditGuideDispatchAction extends DispatchAction
 
             return mapping.findForward("SituationChanged");
 
-        } else
+        } 
             throw new Exception();
     }
 
@@ -260,7 +260,7 @@ public class EditGuideDispatchAction extends DispatchAction
 
             return mapping.findForward("PrepareReady");
 
-        } else
+        } 
             throw new Exception();
     }
 
@@ -390,17 +390,11 @@ public class EditGuideDispatchAction extends DispatchAction
             }
             request.setAttribute(SessionConstants.GUIDE_LIST, guideList);
 
-            // Add the new Version to the Guide List
-            //			if (!oldGuideVersion.equals(result.getVersion())){
-            //				List guides = (List) session.getAttribute(SessionConstants.GUIDE_LIST);
-            //				guides.add(result);
-            //				session.setAttribute(SessionConstants.GUIDE_LIST, guides);
-            //			}
-
+         
             request.setAttribute(SessionConstants.GUIDE, result);
             return mapping.findForward("EditInformationSuccess");
 
-        } else
+        } 
             throw new Exception();
     }
 

@@ -85,7 +85,7 @@ public class StudentListDispatchAction extends DispatchAction {
 			
 			
 			return mapping.findForward("PrepareSuccess");
-		} else
+		} 
 		  throw new Exception();   
   }
   

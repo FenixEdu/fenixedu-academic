@@ -63,7 +63,7 @@ public class ReadPersonCandidatesAction extends ServidorApresentacao.Action.base
             session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
             return mapping.findForward("ChooseCandidate");
 
-        } else
+        } 
             throw new Exception();
     }
 

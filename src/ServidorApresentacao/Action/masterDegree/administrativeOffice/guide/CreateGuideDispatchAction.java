@@ -135,7 +135,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
                     GuideRequester.toArrayList());
 
             return mapping.findForward("PrepareSuccess");
-        } else
+        } 
             throw new Exception();
 
     }
@@ -301,7 +301,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
             }
 
             throw new FenixActionException("Unknown requester type!");
-        } else
+        } 
             throw new FenixActionException();
     }
 
@@ -313,10 +313,10 @@ public class CreateGuideDispatchAction extends DispatchAction {
 
         if (!isTokenValid(request)) {
             return mapping.findForward("BackError");
-        } else {
+        } 
             generateToken(request);
             saveToken(request);
-        }
+        
 
         DynaActionForm createGuideForm = (DynaActionForm) form;
         IUserView userView = (IUserView) session

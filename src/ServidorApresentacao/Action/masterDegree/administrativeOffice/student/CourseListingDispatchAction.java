@@ -67,7 +67,7 @@ public class CourseListingDispatchAction extends DispatchAction
 
             return mapping.findForward("DisplayMasterDegreeList");
         }
-        else
+        
             throw new Exception();
     }
 
@@ -109,7 +109,7 @@ public class CourseListingDispatchAction extends DispatchAction
 
             return mapping.findForward("MasterDegreeReady");
         }
-        else
+        
             throw new Exception();
     }
 

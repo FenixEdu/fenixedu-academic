@@ -48,7 +48,7 @@ public class ChangePersonPasswordAction extends ServidorApresentacao.Action.base
 				throw new InvalidPasswordActionException(e);
 			} 
 		  return mapping.findForward("Success");
-		} else
+		} 
 		  throw new Exception();   
 	  }
 

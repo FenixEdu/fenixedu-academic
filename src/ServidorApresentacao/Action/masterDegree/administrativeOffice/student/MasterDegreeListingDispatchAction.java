@@ -71,7 +71,7 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
             request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, result);
 
             return mapping.findForward("DisplayMasterDegreeList");
-        } else
+        } 
             throw new Exception();
     }
 
@@ -114,7 +114,7 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
             request.setAttribute(SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
 
             return mapping.findForward("MasterDegreeReady");
-        } else
+        } 
             throw new Exception();
     }
     

@@ -61,10 +61,10 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 
 			if (!isTokenValid(request)){
 				return mapping.findForward("BackError");
-			} else {
+			}
 				generateToken(request);
 				saveToken(request);
-			}
+			
 
 			InfoMasterDegreeCandidate newMasterDegreeCandidate =
 				(InfoMasterDegreeCandidate) session.getAttribute(
@@ -285,7 +285,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 				newMasterDegreeCandidate);
 
 			return mapping.findForward("Success");
-		} else
+		} 
 			throw new Exception();
 	}
 
@@ -388,7 +388,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 				generateToken(request);
 				saveToken(request);
 			return mapping.findForward("prepareReady");
-		} else
+		} 
 			throw new Exception();
 	}
 

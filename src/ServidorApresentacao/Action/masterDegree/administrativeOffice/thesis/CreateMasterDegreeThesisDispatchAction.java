@@ -38,13 +38,12 @@ public class CreateMasterDegreeThesisDispatchAction extends DispatchAction
 		if (isSuccess)
 		{
 			return mapping.findForward("start");
-		} else
-		{
+		} 
 			throw new NonExistingActionException(
 				"error.exception.masterDegree.nonExistentStudent",
 				mapping.findForward("error"));
 
-		}
+		
 
 	}
 

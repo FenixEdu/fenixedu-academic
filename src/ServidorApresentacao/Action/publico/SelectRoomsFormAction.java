@@ -122,9 +122,9 @@ public class SelectRoomsFormAction extends FenixContextAction {
 		DynaActionForm roomForm,
 		String name) {
 		String obj = readFormValue(roomForm, name);
-		if (obj != null)
-			return new Integer(obj);
-		else
+		if (obj != null){
+			return new Integer(obj);}
+		
 			return null;
 	}
 
@@ -132,9 +132,9 @@ public class SelectRoomsFormAction extends FenixContextAction {
 		DynaActionForm roomForm,
 		String name) {
 		Integer obj = readIntegerFormValue(roomForm, name);
-		if (obj != null)
-			return new TipoSala(obj);
-		else
+		if (obj != null){
+			return new TipoSala(obj);}
+		
 			return null;
 	}
 
