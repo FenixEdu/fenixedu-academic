@@ -11,16 +11,12 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
-import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -47,45 +43,26 @@ public class DeleteExam implements IServico {
 		return "DeleteExam";
 	}
 
-	public Object run(InfoViewExamByDayAndShift infoViewExam) throws FenixServiceException {
+	public Object run(InfoViewExamByDayAndShift infoViewExam)
+		throws FenixServiceException {
 
 		boolean result = false;
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IDisciplinaExecucaoPersistente executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+			IExam examToDelete =
+				(IExam) sp.getIPersistentExam().readByOId(
+					Cloner.copyInfoExam2IExam(
+						infoViewExam.getInfoExam()), false);
 
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					((InfoExecutionCourse) infoViewExam.getInfoExecutionCourses().get(0))
-					.getInfoExecutionPeriod());
-
-			IDisciplinaExecucao executionCourse =
-				executionCourseDAO
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					((InfoExecutionCourse) infoViewExam.getInfoExecutionCourses().get(0))
-					.getSigla(),
-					executionPeriod);
-
-			if (executionCourse == null)
-				return new Boolean(result);
-
-			for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
-				IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
-				if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
-						sp.getIPersistentExam().delete(exam);
-						result = true;					
-				}
-			}
-
+			sp.getIPersistentExam().delete(examToDelete);
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException("Errer deleteing exam");
 		}
 
 		return new Boolean(result);
-		
+
 	}
 
 }

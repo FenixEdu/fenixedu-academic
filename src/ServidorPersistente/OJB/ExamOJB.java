@@ -30,13 +30,11 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
 	public List readBy(Calendar day, Calendar beginning)
 		throws ExcepcaoPersistencia {
-			Criteria criteria = new Criteria();
-			criteria.addEqualTo("day",day);
-			criteria.addEqualTo("beginning",beginning);
-			return queryList(Exam.class, criteria);
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("day", day);
+		criteria.addEqualTo("beginning", beginning);
+		return queryList(Exam.class, criteria);
 	}
-	
-	
 
 	public List readAll() throws ExcepcaoPersistencia {
 		try {
@@ -53,36 +51,40 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
 	public void delete(IExam exam) throws ExcepcaoPersistencia {
 
-		List associatedExecutionCourses = exam.getAssociatedExecutionCourses();
+		// TODO : Return indication if exam can be romoved or not.
+		if (exam.getStudentsEnrolled() != null
+			|| exam.getStudentsEnrolled().isEmpty()) {
 
-		if (associatedExecutionCourses != null) {
-			for (int i = 0; i < associatedExecutionCourses.size(); i++) {
-				IDisciplinaExecucao executionCourse =
-					(IDisciplinaExecucao) associatedExecutionCourses.get(i);
-				executionCourse.getAssociatedExams().remove(exam);
+			List associatedExecutionCourses =
+				exam.getAssociatedExecutionCourses();
 
-				IExamExecutionCourse examExecutionCourseToDelete =
+			if (associatedExecutionCourses != null) {
+				for (int i = 0; i < associatedExecutionCourses.size(); i++) {
+					IDisciplinaExecucao executionCourse =
+						(IDisciplinaExecucao) associatedExecutionCourses.get(i);
+					executionCourse.getAssociatedExams().remove(exam);
+
+					IExamExecutionCourse examExecutionCourseToDelete =
+						SuportePersistenteOJB
+							.getInstance()
+							.getIPersistentExamExecutionCourse()
+							.readBy(
+							exam,
+							executionCourse);
+
 					SuportePersistenteOJB
 						.getInstance()
 						.getIPersistentExamExecutionCourse()
-						.readBy(
-						exam,
-						executionCourse);
-
-				SuportePersistenteOJB
-					.getInstance()
-					.getIPersistentExamExecutionCourse()
-					.delete(
-					examExecutionCourseToDelete);
+						.delete(
+						examExecutionCourseToDelete);
+				}
 			}
+
+			exam.setAssociatedExecutionCourses(null);
+
+			super.delete(exam);
+
 		}
-
-		exam.setAssociatedExecutionCourses(null);
-
-		super.delete(exam);
-
-		//		PersistenceBroker broker = ((HasBroker) tx).getBroker();
-		//		broker.clearCache();
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
