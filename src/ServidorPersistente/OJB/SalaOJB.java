@@ -285,4 +285,10 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 		return queryList(Sala.class, criteria);
 	}
 
+	public List readByPavillion(String pavillion) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("edificio", pavillion);
+		return queryList(Sala.class, criteria);
+	}
+
 }

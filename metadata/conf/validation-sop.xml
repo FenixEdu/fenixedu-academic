@@ -85,6 +85,17 @@
         </field>
     </form>
 
+    <form name="chooseViewAllRoomsSchedulesContextForm">
+        <field property="selectAllPavillions"
+               depends="multiBoxWithSelectAllCheckBox" page="1">
+                  <arg0 key="pavilhão" resource="true"/>
+                  <var>
+                     <var-name>secondProperty</var-name>
+                     <var-value>selectedPavillions</var-value>
+                  </var>
+        </field>
+    </form>
+
 
     <form name="pagedIndexForm">
       <field property="index" depends="required, integer" page="1">

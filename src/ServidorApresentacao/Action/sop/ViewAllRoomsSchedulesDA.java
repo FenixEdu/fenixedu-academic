@@ -123,10 +123,10 @@ public class ViewAllRoomsSchedulesDA  extends DispatchAction {
 			}
 
 
-			Object[] args =	{ infoExecutionPeriod };
+			Object[] args =	{ selectedPavillions, infoExecutionPeriod };
 			List infoViewClassScheduleList =
 				(List) gestor.executar(
-					userView,"ReadAllRoomsLessons",	args);
+					userView,"ReadPavillionsRoomsLessons",	args);
 
 			if (infoViewClassScheduleList != null
 				&& infoViewClassScheduleList.isEmpty()) {

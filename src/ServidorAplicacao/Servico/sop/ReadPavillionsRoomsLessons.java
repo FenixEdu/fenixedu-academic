@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoViewRoomSchedule;
@@ -29,30 +31,30 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadAllRoomsLessons implements IServico {
+public class ReadPavillionsRoomsLessons implements IServico {
 
-	private static ReadAllRoomsLessons _servico = new ReadAllRoomsLessons();
+	private static ReadPavillionsRoomsLessons _servico = new ReadPavillionsRoomsLessons();
 	/**
 	 * The singleton access method of this class.
 	 **/
-	public static ReadAllRoomsLessons getService() {
+	public static ReadPavillionsRoomsLessons getService() {
 		return _servico;
 	}
 
 	/**
 	 * The actor of this class.
 	 **/
-	private ReadAllRoomsLessons() {
+	private ReadPavillionsRoomsLessons() {
 	}
 
 	/**
 	 * Devolve o nome do servico
 	 **/
 	public final String getNome() {
-		return "ReadAllRoomsLessons";
+		return "ReadPavillionsRoomsLessons";
 	}
 
-	public List run(InfoExecutionPeriod infoExecutionPeriod) {
+	public List run(List pavillions, InfoExecutionPeriod infoExecutionPeriod) {
 
 		List infoViewRoomScheduleList = new ArrayList();
 
@@ -68,7 +70,17 @@ public class ReadAllRoomsLessons implements IServico {
 			ITurnoAulaPersistente shiftLessonDAO =
 				sp.getITurnoAulaPersistente();
 
-			List rooms = roomDAO.readAll();
+			// Read pavillions rooms
+			List rooms = new ArrayList();
+			for (int i = 0; i < pavillions.size(); i++ ){
+				List pavillionRooms = roomDAO.readByPavillion((String)pavillions.get(i));
+				Iterator iterator = pavillionRooms.iterator();
+				CollectionUtils.addAll(rooms,iterator);
+			}
+
+			System.out.println("### Pavilhoes - "+pavillions.size());
+			System.out.println("### Salas - "+rooms.size());			
+			// Read rooms classes
 			for (int i = 0; i < rooms.size(); i++) {
 				InfoViewRoomSchedule infoViewRoomSchedule =
 					new InfoViewRoomSchedule();

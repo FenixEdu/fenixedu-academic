@@ -10,7 +10,7 @@
 	<logic:iterate id="viewRoomSchedule" name="<%=SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request">
 		<table width="100%" cellspacing="0">
 			<tr>
-				<td class="infoselected"> <p>O período execução seleccionado &eacute;:</p>
+				<td class="infoselected">
 					<strong>
 						<bean:define id="infoExecutionPeriod" name="<%=SessionConstants.INFO_EXECUTION_PERIOD %>" scope="request"/>
 						<bean:write name="infoExecutionPeriod" property="name"/> - 

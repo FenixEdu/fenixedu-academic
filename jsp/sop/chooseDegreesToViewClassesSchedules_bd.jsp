@@ -25,6 +25,7 @@
 		<html:checkbox property="selectAllDegrees">
 			<bean:message key="checkbox.show.all.degrees"/><br />
 		</html:checkbox>
+		<br />
 		<%int index = 0;%>
 		<logic:iterate id="infoExecutionDegree" name="<%= SessionConstants.INFO_EXECUTION_DEGREE_LIST %>">
 			<html:multibox property="selectedDegrees" value="<%= new String(""+index)%>"/>
