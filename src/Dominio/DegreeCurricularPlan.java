@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import Util.DegreeCurricularPlanState;
+import Util.MarkType;
 
 /**
  * @author dcs-rjao
@@ -23,6 +24,8 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	private Date endDate;
 	private Integer degreeDuration;
 	private Integer minimalYearForOptionalCourses;
+	private Double neededCredits;
+	private MarkType markType;
 	
 	private List curricularCourses;
 	
@@ -69,8 +72,41 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		result += "initialDate = " + this.initialDate + "; ";
 		result += "endDate = " + this.endDate + "; ";
 		result += "state = " + this.state + "; ";
+		result += "needed Credits = " + this.neededCredits + "; ";
+		result += "Mark Type = " + this.markType+ "; ";
 		result += "degree = " + this.degree + "]\n";
+		
 		return result;
+	}
+
+	
+
+	/**
+	 * @return MarkType
+	 */
+	public MarkType getMarkType() {
+		return markType;
+	}
+
+	/**
+	 * @param markType
+	 */
+	public void setMarkType(MarkType markType) {
+		this.markType = markType;
+	}
+
+	/**
+	 * @return The Needed Credits to finish the degree
+	 */
+	public Double getNeededCredits() {
+		return neededCredits;
+	}
+
+	/**
+	 * @param needed Credits to finish the degree
+	 */
+	public void setNeededCredits(Double neededCredits) {
+		this.neededCredits = neededCredits;
 	}
 
 	/**

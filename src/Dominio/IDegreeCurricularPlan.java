@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import Util.DegreeCurricularPlanState;
+import Util.MarkType;
 
 /**
  * @author dcs-rjao
@@ -22,6 +23,8 @@ public interface IDegreeCurricularPlan {
 	List getCurricularCourses();
 	public Integer getDegreeDuration();
 	public Integer getMinimalYearForOptionalCourses();
+	public Double getNeededCredits();
+	public MarkType getMarkType();
 
 	public void setDegreeDuration(Integer integer);
 	public void setMinimalYearForOptionalCourses(Integer integer);
@@ -31,5 +34,7 @@ public interface IDegreeCurricularPlan {
 	public void setEndDate(Date endDate);
 	public void setInitialDate(Date initialDate);
 	void setCurricularCourses(List curricularCourses);	
-
+	public void setNeededCredits(Double neededCredits);
+	public void setMarkType(MarkType markType);
+	
 }

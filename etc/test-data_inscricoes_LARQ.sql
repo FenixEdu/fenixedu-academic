@@ -31,7 +31,7 @@ insert into DEGREE values (1, 'LARQ', 'Licenciatura em Arquitectura', 1);
 -- (ID_INTERNAL, NAME, KEY_DEGREE, STATE, INITIAL_DATE, END_DATE, KEY_DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO)
 -- -----------------------------
 delete from DEGREE_CURRICULAR_PLAN;
-insert into DEGREE_CURRICULAR_PLAN values (1, 'LARQ-2003', 1, 1, '0000-00-00', '0000-00-00', 1);
+insert into DEGREE_CURRICULAR_PLAN values (1, 'LARQ-2003', 1, 1, '0000-00-00', '0000-00-00', 1, 0, 20);
 
 -- -----------------------------
 -- Data for table 'CURRICULAR_COURSE'
