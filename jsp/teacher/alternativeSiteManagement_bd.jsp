@@ -3,52 +3,76 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<h3><bean:message key="title.personalizationOptions"/></h3>
-	<table border="0" style="text-align: left;">
-
-
+<h2><bean:message key="title.personalizationOptions"/></h2>
 <html:form action="/alternativeSite">
-
-
-
-<table>
-<tr>
-	<td>
-		<h2><bean:message key="message.siteAddress"/></h2>
+<br />
+<br />
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_1.gif" alt="0" />
+		</td>
+		<td class="infoop"><bean:message key="message.siteandmail.information" />
+		</td>
+	</tr>
+</table>
+<br />
+<table width="100%">
+	<td height="21">
+		<bean:message key="message.siteAddress"/>
 	</td>
-	<td>
-		<html:text property="siteAddress" size="30"/>
+	<td><html:text property="siteAddress" size="30"/>
 	</td>
-	<td>
-		<span class="error" ><html:errors property="siteAddress"/></span>
-	</td>
-</tr>	
-<tr>
-	<td>
-		<h2><bean:message key="message.mailAddress"/></h2>
-	</td>	
-	<td>
-		<html:text property="mail" size="30"/>
-	</td>
-	<td>
-		<span class="error" ><html:errors property="mail"/></span>
+	<td><span class="error" ><html:errors property="siteAddress"/></span>
 	</td>
 </tr>
 <tr>
 	<td>
-		<h2><bean:message key="message.initialStatement"/></h2>
-	</td>	
+	  <bean:message key="message.mailAddress"/>
 	<td>
-		<html:textarea name="<%=SessionConstants.INFO_SITE%>" property="initialStatement" rows="4" cols="56"/>
+	  <html:text property="mail" size="30"/>
+	</td>
+	<td><span class="error" >
+	  <html:errors property="mail"/></span>
+    </td>
+</tr>
+</table>
+<br />
+<table width="100%" cellpadding="0" cellspacing="0">
+<tr>
+	<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_2.gif" alt="0" />
+	</td>
+	<td class="infoop">
+	  <bean:message key="message.initialStatement.explanation" />
 	</td>
 </tr>
+</table>
+<br />
+<table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-	<td>
-		<h2><bean:message key="message.introduction"/></h2>
+	<td valign="top">
+		<bean:message key="message.initialStatement"/>
 	</td>	
-	<td>
-		<html:textarea name="<%=SessionConstants.INFO_SITE%>" property="introduction" rows="4" cols="56"/>
+	<td><html:textarea name="<%=SessionConstants.INFO_SITE%>" property="initialStatement" rows="4" cols="56"/>
 	</td>
+</tr>
+</table>
+<br />
+<table width="100%" cellpadding="0" cellspacing="0">
+<tr>
+	<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_3.gif" alt="0" />
+	</td>
+	<td class="infoop">
+	  <bean:message key="message.introduction.explanation" />
+	</td>
+</tr>
+</table>
+<br />
+<table width="100%" cellpadding="0" cellspacing="0">
+<tr>
+	<td valign="top">
+		<bean:message key="message.introduction"/>
+	</td>	
+	<td><html:textarea name="<%=SessionConstants.INFO_SITE%>" property="introduction" rows="4" cols="56"/></td>
 </tr>
 </table>
 <h3><table>
@@ -67,12 +91,4 @@
 	</td>
 </tr>
 </table></h3>
-<bean:message key="message.initialStatement.explanation" />
 </html:form>
-
-
-
-
-
-
-
