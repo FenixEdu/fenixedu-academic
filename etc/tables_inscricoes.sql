@@ -170,17 +170,6 @@ create table CURRICULAR_COURSE_SCOPE (
    unique U1 (KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH)
 )type=InnoDB;
 
-#----------------------------
-# Table structure for STUDENT_CURRICULAR_PLAN_BRANCH
-#----------------------------
-#drop table if exists STUDENT_CURRICULAR_PLAN_BRANCH;
-#create table STUDENT_CURRICULAR_PLAN_BRANCH (
-#   ID_INTERNAL int(11) not null auto_increment,
-#   KEY_BRANCH int(11) not null,
-#   KEY_STUDENT_CURRICULAR_PLAN int(11) not null,
-#   primary key (ID_INTERNAL),
-#   unique U1 (KEY_BRANCH, KEY_STUDENT_CURRICULAR_PLAN)
-#)type=InnoDB;
 
 #----------------------------
 # Table structure for EQUIVALENCE
@@ -194,16 +183,3 @@ create table EQUIVALENCE (
    primary key (ID_INTERNAL),
    unique U1 (KEY_EQUIVALENT_ENROLMENT, KEY_ENROLMENT)
 )type=InnoDB;
-
-#----------------------------
-# Table structure for PRECEDENCE
-#----------------------------
-drop table if exists PRECEDENCE;
-create table PRECEDENCE (
-   ID_INTERNAL int(11) not null auto_increment,
-   KEY_CURRICULAR_COURSE int(11) not null,
-   KEY_PRECEDING_CURRICULAR_COURSE int(11) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (KEY_CURRICULAR_COURSE, KEY_PRECEDING_CURRICULAR_COURSE)
-)type=InnoDB;
-

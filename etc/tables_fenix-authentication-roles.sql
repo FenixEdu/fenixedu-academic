@@ -93,14 +93,3 @@ create table TEACHER (
    primary key (ID_INTERNAL),
    UNIQUE KEY U1 (TEACHER_NUMBER,KEY_PERSON))
    type=InnoDB comment="InnoDB free: 372736 kB";
-
-#----------------------------------------
-# Table structure for table 'PRIVILEGIO'
-#----------------------------------------
-drop table if exists PRIVILEGIO;
-CREATE TABLE PRIVILEGIO (
-  CHAVE_PESSOA int(11) NOT NULL default '0',
-  SERVICO varchar(100) NOT NULL default '0',
-  CODIGO_INTERNO int(11) unsigned NOT NULL default '0',
-  PRIMARY KEY  (CODIGO_INTERNO)
-) TYPE=InnoDB;
