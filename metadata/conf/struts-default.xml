@@ -16,10 +16,19 @@
         <form-property name="username" type="java.lang.String" />
         <form-property name="password" type="java.lang.String" />
       </form-bean>
-    </form-beans>
+      <!-- ERROR HANDLING  -->
+      <!-- Dynamic-FormBean for Error handling -->
+      <form-bean name="errorMailForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="email" type="java.lang.String" />
+        <form-property name="subject" type="java.lang.String" />
+        <form-property name="body" type="java.lang.String" />
+      </form-bean>
+    </form-beans> 
     
     <!-- ========== Global Exception Definitions ============================== -->
-	<global-exceptions>
+	 <global-exceptions>
 		<exception type="java.lang.Exception"
 			       key="java.lang.Exception"
 			       path="/naoExecutado.do"
@@ -35,19 +44,20 @@
 		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       path="/naoExistente.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
-    </global-exceptions>
+			       handler="ServidorApresentacao.config.FenixExceptionHandler" /> 
+    </global-exceptions> 
 
     
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
       <forward name="firstPage" path="/loginPage.jsp"/>
+      <forward name="logoff" path="/logoff.do" contextRelative="true"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
-      <action path="/naoExecutado" forward="/error.jsp"/>
+   	  <action path="/naoExecutado" forward="/error.jsp"/>
 
       <!-- page fronting actions -->
       <action path="/autenticacao" forward="/autenticacao.jsp" />
@@ -75,6 +85,16 @@
 	  <action path="/dotIstPortal"
 			  type="ServidorApresentacao.Action.base.FenixSwitchAction">
 	  </action>
+	  <!-- ExceptionHandling -->   
+      <action parameter="method"
+              name="errorMailForm" 
+              path="/exceptionHandling"
+              scope="request"
+              type="ServidorApresentacao.Action.ExceptionHandlingAction"     
+              >
+        
+      </action> 
+	  
     </action-mappings> 
     
     <!-- ========== Controller Configuration ================================ -->

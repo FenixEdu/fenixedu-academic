@@ -10,14 +10,14 @@
 	<form-beans type="org.apache.struts.action.ActionFormBean">
 	
 	  <!-- ERROR HANDLING  -->
-      <!-- Dynamic-FormBean for Error handling -->
+      <!-- Dynamic-FormBean for Error handling 
       <form-bean name="errorMailForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="email" type="java.lang.String" />
         <form-property name="subject" type="java.lang.String" />
         <form-property name="body" type="java.lang.String" />
-      </form-bean>
+      </form-bean> -->
      <!--curriculum forms --> 
      <form-bean name="executionCourseCurriculumForm"
 		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">		
@@ -118,19 +118,20 @@
 		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       path="/naoExistente.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+			       handler="ServidorApresentacao.config.FenixExceptionHandler" /> 
 	</global-exceptions>
 
 	<!-- ========== Global Forward Definitions =============================== -->
 	<global-forwards type="org.apache.struts.action.ActionForward">
      <forward name="index" path="/index.do" redirect="true"/>
      <forward name="firstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>  
+   	 <forward name="logoff" path="/logoff.do" contextRelative="true"/>
     </global-forwards>
 
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
-     <action path="/naoExecutado" forward="/error.jsp"/>
-	 <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
+    <!-- <action path="/naoExecutado" forward="/error.jsp"/>
+	 <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/> -->
 
 	<action     path="/bibliographicReferenceManager"
 				parameter="method"      			
@@ -192,14 +193,14 @@
 	</action>
 
 	<!-- ExceptionHandling -->   
-      <action parameter="method"
+    <!--  <action parameter="method"
               name="errorMailForm" 
               path="/exceptionHandling"
               scope="request"
               type="ServidorApresentacao.Action.ExceptionHandlingAction"     
               >
         
-      </action>
+      </action> -->
 	 <!-- Action For LogOff -->
       <action path="/logoff" 
 		      type="ServidorApresentacao.Action.base.FenixForwardAction"
@@ -244,6 +245,7 @@
 	</action>
 	
  	<action path="/deleteSection"
+ 			 input="/viewSection.jsp"
               type="ServidorApresentacao.Action.teacher.DeleteSectionAction">
           <forward name="AccessSiteManagement" path="/viewSite.do"/>
           <forward name="AccessSectionManagement" path="/viewSection.do"/>
@@ -326,7 +328,7 @@
 	<action name="itemForm"
 		path="/editItem"
 		parameter="method"
-		type="ServidorApresentacao.Action.teacher.EditItemDispatchAction"
+		type="ServidorApresentacao.Action.teacher.EditItemAction"
         validate="false" >
          <forward name="editItem" path="/editItem.jsp"/>
        <forward name="viewSection" path="/viewSection.do"/>

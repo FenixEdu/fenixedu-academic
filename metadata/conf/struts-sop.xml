@@ -254,7 +254,7 @@
       <action path="/index" forward="/autenticacaoSOP.jsp"/>
       <action path="/autenticacaoSOP" forward="/autenticacaoSOP.jsp"/>
       <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
-      <action path="/naoExecutado" forward="/error.jsp"/>
+      <action path="/naoExecutado" forward="/xptoerror.jsp"/>
       <action path="/criarSala" forward="/criarSala.jsp"/>
       <action path="/gestaoHorarios" forward="/gestaoHorarios.jsp"/>
       <action path="/principalAulas" forward="/principalAulas.jsp"/>
