@@ -5,11 +5,7 @@
  */
 package ServidorAplicacao.Filtro;
 
-import java.util.Collection;
-import java.util.Iterator;
-
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
@@ -29,7 +25,8 @@ import Util.RoleType;
  * @author João Mota
  *
  */
-public class ExecutionCourseLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
+public class ExecutionCourseLecturingTeacherAuthorizationFilter
+	extends AuthorizationByRoleFilter {
 
 	public final static ExecutionCourseLecturingTeacherAuthorizationFilter instance =
 		new ExecutionCourseLecturingTeacherAuthorizationFilter();
@@ -51,67 +48,66 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
 		return RoleType.TEACHER;
 	}
 
-	public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception {
-		if (((id != null && id.getRoles() != null && !containsRole(id.getRoles()) && !lecturesExecutionCourse(id, argumentos)))
-			|| (id == null)
-			|| (id.getRoles() == null)) {
+	public void preFiltragem(
+		IUserView id,
+		IServico servico,
+		Object[] argumentos)
+		throws Exception {
+		if ((id == null)
+			|| (id.getRoles() == null)
+			|| !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+			|| !lecturesExecutionCourse(id, argumentos)) {
 			throw new NotAuthorizedException();
 		}
-
 	}
 
-	/**
-		 * @param collection
-		 * @return boolean
-		 */
-	private boolean containsRole(Collection roles) {
-		Iterator rolesIterator = roles.iterator();
-		while (rolesIterator.hasNext()) {
-			InfoRole infoRole = (InfoRole) rolesIterator.next();
-			if (infoRole.getRoleType().equals(getRoleType()))
-				return true;
-		}
-		return false;
-	}
 	/**
 	 * @param id
 	 * @param argumentos
 	 * @return
 	 */
-	private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos) {
+	private boolean lecturesExecutionCourse(
+		IUserView id,
+		Object[] argumentos) {
 		InfoExecutionCourse infoExecutionCourse = null;
-		IDisciplinaExecucao executionCourse =null;
+		IDisciplinaExecucao executionCourse = null;
 		ISuportePersistente sp;
 		IProfessorship professorship = null;
-		if (argumentos==null) {
+		if (argumentos == null) {
 			return false;
 		}
 		try {
-			
+
 			sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+				sp.getIDisciplinaExecucaoPersistente();
 			if (argumentos[0] instanceof InfoExecutionCourse) {
 				infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-				 executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+				executionCourse =
+					Cloner.copyInfoExecutionCourse2ExecutionCourse(
+						infoExecutionCourse);
 			} else {
-				executionCourse = 
-						(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao((Integer) argumentos[0]), false);
+				executionCourse =
+					(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+						new DisciplinaExecucao((Integer) argumentos[0]),
+						false);
 			}
-		
-			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-			ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
-			IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-			professorship = persistentProfessorship.readByTeacherAndExecutionCoursePB(teacher, executionCourse);
 
+			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+			ITeacher teacher =
+				persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
+			if (teacher != null && executionCourse != null) {
+				IPersistentProfessorship persistentProfessorship =
+					sp.getIPersistentProfessorship();
+				professorship =
+					persistentProfessorship.readByTeacherAndExecutionCoursePB(
+						teacher,
+						executionCourse);
+			}
 		} catch (Exception e) {
 			return false;
 		}
-		if (professorship == null) {
-			return false;
-		} else {
-			return true;
-		}
-
+		return professorship != null;
 	}
 
 }
