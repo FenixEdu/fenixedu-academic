@@ -32,10 +32,6 @@
     		<form-property name="operacionalObjectives" type="java.lang.String" />
     	</form-bean>
     	
-    	<form-bean name="executionCourseProgramForm"
-    		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-    		<form-property name="program" type="java.lang.String" />
-    	</form-bean>
     	<!-- Announcement Forms  -->
     	<form-bean name="announcementManagementForm"
     		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -59,12 +55,6 @@
 		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 		<form-property name="program" type="java.lang.String" />
 	</form-bean>
-	<!-- Announcement Forms  -->
-	<form-bean name="announcementManagementForm"
-		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-		<form-property name="index" type="java.lang.Integer" />
-		<form-property name="option" type="java.lang.String" />
-	</form-bean>			
 	
 	<form-bean name="bibliographicReferenceForm"
 				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"

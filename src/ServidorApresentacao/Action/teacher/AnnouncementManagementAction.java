@@ -67,8 +67,8 @@ public class AnnouncementManagementAction extends FenixDispatchAction {
 			String announcementIndex = (String) request.getParameter("index");
 			Integer index = new Integer(announcementIndex);
 			InfoAnnouncement infoAnnouncement = (InfoAnnouncement) announcements.get(index.intValue());
-			request.setAttribute("title", infoAnnouncement.getTitle());
-			request.setAttribute("information", infoAnnouncement.getInformation());
+			
+			session.setAttribute("Announcement", infoAnnouncement);
 
 			return mapping.findForward("editAnnouncement");
 	}

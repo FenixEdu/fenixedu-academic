@@ -12,7 +12,7 @@
 					<bean:message key="label.title" />
 				</td>
 				<td>
-					<html:text name="insertAnnouncementForm" property="title" >
+					<html:text name="Announcement" property="title" >
 					</html:text>
 				</td>
 			</tr>
@@ -21,7 +21,7 @@
 					<bean:message key="label.information" />	
 				</td>
 				<td>
-					<html:text name="insertAnnouncementForm" property="information" >
+					<html:text name="Announcement" property="information" >
 					</html:text>
 				</td>
 			</tr>
