@@ -94,7 +94,7 @@ INSERT INTO DEPARTMENT_COURSE VALUES (2, 'Nao sei', 'mvt', 1);
 ;
 DELETE FROM DEGREE;
 INSERT INTO DEGREE VALUES (8,'LEIC','Licenciatura de Engenharia Informatica e de Computadores',1);
-INSERT INTO DEGREE VALUES (9,'LEEC','Licenciatura de Engenharia Electrotecnica e de Computadores',2);
+INSERT INTO DEGREE VALUES (9,'MEEC','Mestrado em Engenharia Electrotecnica e de Computadores',2);
 INSERT INTO DEGREE VALUES (10,'MIC','Mestrado em Informatica e Computadores',2);
 
 #-----------------------------

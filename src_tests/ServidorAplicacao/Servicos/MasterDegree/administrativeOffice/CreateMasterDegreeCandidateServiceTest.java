@@ -71,7 +71,7 @@ public class CreateMasterDegreeCandidateServiceTest extends TestCaseServicos {
 		infoMasterDegreeCandidate.setInfoPerson(infoPerson);
 		
 		InfoDegree infoDegree = new InfoDegree();
-		infoDegree.setNome("Licenciatura de Engenharia Electrotecnica e de Computadores");
+		infoDegree.setNome("Mestrado em Engenharia Electrotecnica e de Computadores");
 		
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
 		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
@@ -121,7 +121,7 @@ public class CreateMasterDegreeCandidateServiceTest extends TestCaseServicos {
 		infoMasterDegreeCandidate.setSpecialization(Specialization.INTEGRADO_STRING);
 		infoMasterDegreeCandidate.setInfoPerson(infoPerson);
 		
-		Object[] args = {infoMasterDegreeCandidate, "Licenciatura de Engenharia Electrotecnica e de Computadores", userView};
+		Object[] args = {infoMasterDegreeCandidate, "Mestrado em Engenharia Electrotecnica e de Computadores", userView};
 	
 		 InfoMasterDegreeCandidate newInfoMasterDegreeCandidate = null;
 		 

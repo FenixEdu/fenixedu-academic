@@ -58,6 +58,7 @@
 	  <forward name="index" path="index.do" redirect="true"/>
       <forward name="Candidate" path="/indexCand.jsp" contextRelative="true" redirect="true" />
       <forward name="firstPage" path="/index.do"/>
+      <forward name="logoff" path="/logoff.do" contextRelative="true"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -98,9 +99,6 @@
       </action>
 
 
-      <!-- Action For LogOff -->
-      <action path="/logoff" forward="/switchAction.do?prefix=&amp;page=/logoff.do"/>
-      
       	<!-- ExceptionHandling -->   
       <action parameter="method"
               name="errorMailForm" 

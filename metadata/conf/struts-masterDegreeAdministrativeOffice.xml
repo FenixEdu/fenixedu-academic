@@ -28,11 +28,11 @@
       <form-bean name="listCandidatesForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
-                 <form-property name="page" type="java.lang.Integer" />
-		         <form-property name="degree" type="java.lang.String" />
-        		 <form-property name="specialization" type="java.lang.String" />
-		         <form-property name="candidateSituation" type="java.lang.String" />
-		         <form-property name="candidateNumber" type="java.lang.String" />
+         <form-property name="page" type="java.lang.Integer" />
+		 <form-property name="degree" type="java.lang.String" />
+         <form-property name="specialization" type="java.lang.String" />
+		 <form-property name="candidateSituation" type="java.lang.String" />
+		 <form-property name="candidateNumber" type="java.lang.String" />
       </form-bean>
       
       <!-- Bean for The Creation of a Contributor -->
@@ -40,10 +40,10 @@
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
 
-            <form-property name="page" type="java.lang.Integer" />
-        	<form-property name="contributorNumber" type="java.lang.String" />
-        	<form-property name="contributorName" type="java.lang.String" />
-        	<form-property name="contributorAddress" type="java.lang.String" />
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="contributorNumber" type="java.lang.String" />
+         <form-property name="contributorName" type="java.lang.String" />
+         <form-property name="contributorAddress" type="java.lang.String" />
       </form-bean>
 
 
@@ -52,8 +52,8 @@
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
 
-            <form-property name="page" type="java.lang.Integer" />
-        	<form-property name="contributorNumber" type="java.lang.String" />
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="contributorNumber" type="java.lang.String" />
       </form-bean>
 
 

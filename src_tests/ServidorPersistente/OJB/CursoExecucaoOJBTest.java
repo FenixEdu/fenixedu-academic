@@ -104,7 +104,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 	public void testCreateNonExistingCursoExecucao() {
 		try {
 			persistentSupport.iniciarTransaccao();
-			ICurso degree = persistentDegree.readBySigla("LEEC");
+			ICurso degree = persistentDegree.readBySigla("MEEC");
 			assertNotNull(degree);
 			IDegreeCurricularPlan degreeCurricularPlan =
 				persistentDegreeCurricularPlan.readByNameAndDegree(
@@ -332,7 +332,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
 			assertNotNull(executionYear);
-			ICursoExecucao result = persistentExecutionDegree.readByDegreeNameAndExecutionYear("Licenciatura de Engenharia Electrotecnica e de Computadores", executionYear);
+			ICursoExecucao result = persistentExecutionDegree.readByDegreeNameAndExecutionYear("Mestrado em Engenharia Electrotecnica e de Computadores", executionYear);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 

@@ -8,8 +8,8 @@
   <body>
   	<bean:message key="label.masterDegree.administrativeOffice.candidate" /><br>
         &nbsp;&nbsp;- <html:link page="/createCandidateDispatchAction.do?method=prepare&page=0"><bean:message key="link.masterDegree.administrativeOffice.createCandidate" /></html:link><br>
-        &nbsp;&nbsp;- <html:link page="/visualizeCandidates.do?method=prepareChoose&action=visualize"><bean:message key="link.masterDegree.administrativeOffice.visualizeCandidateInformations" /></html:link><br>
-        &nbsp;&nbsp;- <html:link page="/editCandidates.do?method=prepareChoose&action=edit"><bean:message key="link.masterDegree.administrativeOffice.editCandidateInformations" /></html:link><br>
+        &nbsp;&nbsp;- <html:link page="/visualizeCandidates.do?method=prepareChoose&action=visualize&page=0"><bean:message key="link.masterDegree.administrativeOffice.visualizeCandidateInformations" /></html:link><br>
+        &nbsp;&nbsp;- <html:link page="/editCandidates.do?method=prepareChoose&action=edit&page=0"><bean:message key="link.masterDegree.administrativeOffice.editCandidateInformations" /></html:link><br>
 	<br>
 	
 	<html:link page="/contributorSection.do"><bean:message key="link.masterDegree.administrativeOffice.contributor" />

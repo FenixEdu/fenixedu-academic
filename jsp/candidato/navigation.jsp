@@ -9,8 +9,8 @@
     <html:link page="/visualizeApplicationInfo.do"><bean:message key="link.candidate.visualizeSituation" /></html:link><br/>
     <html:link page="/changeApplicationInfoDispatchAction.do?method=prepare"><bean:message key="link.candidate.changeApplicationInfo" /></html:link><br/>
     <html:link forward="logoff">
-	<bean:message key="link.logout"/>
-</html:link><br/>
+		<bean:message key="link.logout"/>
+	</html:link><br/>
     
   </body>
 </html>
