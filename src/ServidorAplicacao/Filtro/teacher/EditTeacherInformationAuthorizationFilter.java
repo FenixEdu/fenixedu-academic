@@ -28,7 +28,7 @@ import Util.RoleType;
 public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRoleFilter
 {
 
-    private EditTeacherInformationAuthorizationFilter()
+    public EditTeacherInformationAuthorizationFilter()
     {
     }
 

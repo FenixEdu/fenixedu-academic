@@ -36,7 +36,7 @@ import Util.RoleType;
 public class EditCourseInformationAuthorizationFilter extends AuthorizationByRoleFilter
 {
 
-    private EditCourseInformationAuthorizationFilter()
+    public EditCourseInformationAuthorizationFilter()
     {
     }
 

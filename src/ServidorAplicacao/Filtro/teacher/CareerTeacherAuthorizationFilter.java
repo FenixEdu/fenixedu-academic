@@ -24,17 +24,7 @@ import ServidorPersistente.teacher.IPersistentCareer;
 public class CareerTeacherAuthorizationFilter extends DomainObjectTeacherAuthorizationFilter
 {
 
-    private static CareerTeacherAuthorizationFilter instance = new CareerTeacherAuthorizationFilter();
-
-    /**
-	 * The singleton access method of this class.
-	 * 
-	 * @return Returns the instance of this class responsible for the authorization access to services.
-	 */
-    public static Filtro getInstance()
-    {
-        return instance;
-    }
+    public CareerTeacherAuthorizationFilter() {}
 
     /*
 	 * (non-Javadoc)

@@ -8,7 +8,6 @@ import Dominio.ITeacher;
 import Dominio.teacher.ExternalActivity;
 import Dominio.teacher.IExternalActivity;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Filtro.framework.DomainObjectTeacherAuthorizationFilter;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTeacher;
@@ -24,25 +23,16 @@ import ServidorPersistente.teacher.IPersistentExternalActivity;
 public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectTeacherAuthorizationFilter
 {
 
-    private static ExternalActivityTeacherAuthorizationFilter instance =
-        new ExternalActivityTeacherAuthorizationFilter();
-
-    /**
-	 * The singleton access method of this class.
-	 * 
-	 * @return Returns the instance of this class responsible for the authorization access to services.
-	 */
-    public static Filtro getInstance()
+    public ExternalActivityTeacherAuthorizationFilter()
     {
-        return instance;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.framework.DomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
-	 *      java.lang.Integer)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.framework.DomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
+     *          java.lang.Integer)
+     */
     protected boolean domainObjectBelongsToTeacher(IUserView id, Integer objectId)
     {
         try
@@ -52,17 +42,17 @@ public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectTeac
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IExternalActivity externalActivity =
-                (IExternalActivity) persistentExternalActivity.readByOID(
-                    ExternalActivity.class,
-                    objectId);
+            IExternalActivity externalActivity = (IExternalActivity) persistentExternalActivity
+                            .readByOID(ExternalActivity.class, objectId);
 
             return externalActivity.getTeacher().equals(teacher);
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.out.println("Filter error(Unknown): " + e.getMessage());
             return false;
