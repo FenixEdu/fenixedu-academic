@@ -26,12 +26,13 @@
 
 	  <!-- Bean for The List of Candidates -->
       <form-bean name="listCandidatesForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
-        <form-property name="degree" type="java.lang.String" />
-        <form-property name="specialization" type="java.lang.String" />
-        <form-property name="candidateSituation" type="java.lang.String" />
-        <form-property name="candidateNumber" type="java.lang.String" />
+                 <form-property name="page" type="java.lang.Integer" />
+		         <form-property name="degree" type="java.lang.String" />
+        		 <form-property name="specialization" type="java.lang.String" />
+		         <form-property name="candidateSituation" type="java.lang.String" />
+		         <form-property name="candidateNumber" type="java.lang.String" />
       </form-bean>
       
       <!-- Bean for The Creation of a Contributor -->

@@ -55,13 +55,15 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			DynaActionForm createCandidateForm = (DynaActionForm) form;
+
+			DynaActionForm listCandidatesForm = (DynaActionForm) form;
+
 			String action = request.getParameter("action");
 			
-			createCandidateForm.set("degree", null);			
-			createCandidateForm.set("specialization", null);			
-			createCandidateForm.set("candidateSituation", null);			
-			createCandidateForm.set("candidateNumber", null);			
+			listCandidatesForm.set("degree", null);			
+			listCandidatesForm.set("specialization", null);			
+			listCandidatesForm.set("candidateSituation", null);			
+			listCandidatesForm.set("candidateNumber", null);			
 			
 			if (action.equals("visualize")) {
 				session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION);
@@ -70,7 +72,8 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			else if (action.equals("edit")) {
 				session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION);
 				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.edit");
-			}
+											
+		    }
 			GestorServicos serviceManager = GestorServicos.manager();
 			
 			
@@ -112,17 +115,17 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			
-			DynaActionForm createCandidateForm = (DynaActionForm) form;
-
+			DynaActionForm listCandidatesForm = (DynaActionForm) form;
+			
 			GestorServicos serviceManager = GestorServicos.manager();
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Get the Information
-			String degreeTypeTemp = (String) createCandidateForm.get("specialization");
-			String degreeName = (String) createCandidateForm.get("degree");
-			String candidateSituationTemp = (String) createCandidateForm.get("candidateSituation");
-			String candidateNumberTemp = (String) createCandidateForm.get("candidateNumber");
+			String degreeTypeTemp = (String) listCandidatesForm.get("specialization");
+			String degreeName = (String) listCandidatesForm.get("degree");
+			String candidateSituationTemp = (String) listCandidatesForm.get("candidateSituation");
+			String candidateNumberTemp = (String) listCandidatesForm.get("candidateNumber");
 			
 			Integer candidateNumber = null;
 			Specialization specialization = null;
@@ -181,7 +184,8 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			
-			DynaActionForm createCandidateForm = (DynaActionForm) form;
+			DynaActionForm listCandidatesForm = (DynaActionForm) form;
+
 
 			GestorServicos serviceManager = GestorServicos.manager();
 			
