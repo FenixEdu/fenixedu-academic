@@ -63,6 +63,12 @@
             <form-property name="page" type="java.lang.Integer" initial="0" />
             <form-property name="method" type="java.lang.String"/>
 	</form-bean>    			
+	<!--Teacher form -->
+   <form-bean name="teacherForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">        
+            <form-property name="teacherNumber" type="java.lang.Integer" />
+     </form-bean>    	
 
     </form-beans>
 
@@ -162,6 +168,7 @@
 	
 	<!-- Actions For Teachers  -->
 	<action 
+		name="teacherForm"
 		input="/viewTeachers.jsp"
 		parameter="method"
 		path="/teachersManagerDA"
@@ -170,8 +177,17 @@
 	<exception type="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
          	   key="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-               />   	
-    <forward name="viewTeachers" path="/viewTeachers.jsp"/>    
+               /> 
+    <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               />       
+    <exception type="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+         	   key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               />                   	
+    <forward name="viewTeachers" path="/viewTeachers.jsp"/>  
+    <forward name="associateTeacher" path="/associateTeacher.jsp"/>    
     
 	</action>
 	

@@ -72,7 +72,7 @@ public class AssociateTeacher implements IServico {
 			throw new ExistingServiceException(ex);
 		}
 		catch (ExcepcaoPersistencia ex) {
-			throw new ExistingServiceException(ex);
+			throw new FenixServiceException(ex);
 		}
 	}
 }
