@@ -130,9 +130,6 @@
         <exception type="ServidorAplicacao.NotExecutedException"
                    key="ServidorAplicacao.NotExecutedException"
                    path="/authentication.do"/>
-        <exception type="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
-                   key="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
-                   path="/logonUnsuccessful.jsp"/>
         <forward name="Candidate" path="/candidato/indexCand.jsp" contextRelative="true" redirect="true"/>
       </action>
 	

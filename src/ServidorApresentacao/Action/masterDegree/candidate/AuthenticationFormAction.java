@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -11,6 +13,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.ExcepcaoAutenticacao;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -32,8 +35,16 @@ public class AuthenticationFormAction extends ServidorApresentacao.Action.FenixA
                              	   authenticationForm.get("password")};
 
     IUserView userView = null; 
-    userView = (IUserView) gestor.executar(null, "CandidateAuthentication", authenticationArgs);
-
+    try {
+    	userView = (IUserView) gestor.executar(null, "CandidateAuthentication", authenticationArgs);
+	} catch (ExcepcaoAutenticacao e) {
+		ActionErrors actionErrors = new ActionErrors();
+		actionErrors.add(
+			"invalidAuthentication",
+			new ActionError("errors.invalidAuthentication"));
+		saveErrors(request, actionErrors);
+		return mapping.getInputForward();
+	} 
 
     // Invalidate existing session if it exists
     HttpSession sessao = request.getSession(false);

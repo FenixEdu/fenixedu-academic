@@ -30,6 +30,8 @@
        <tr>
          <td><p>&nbsp;</p>
            <html:form action="/authenticationForm">
+           <center><span class="error"><html:errors property="invalidAuthentication"/></span></center>
+           <center><span class="error"><html:errors property="error.invalid.session"/></span></center>  
 		   <table align='center' border="0">
            <!-- input username -->
            <tr>
