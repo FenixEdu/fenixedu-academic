@@ -5,12 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import junit.framework.TestCase;
-
 import Dominio.Aula;
 import Dominio.Curso;
-import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
 import Dominio.Frequenta;
 import Dominio.IAula;
 import Dominio.ICurricularCourse;
@@ -20,6 +20,8 @@ import Dominio.IDepartamento;
 import Dominio.IDisciplinaDepartamento;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IFrequenta;
 import Dominio.IItem;
 import Dominio.IPessoa;
@@ -216,7 +218,9 @@ public class TestCaseOJB extends TestCase {
   protected IStudent _aluno2 = null;
 
   protected TipoCurso licenciatura = new TipoCurso(TipoCurso.LICENCIATURA);
-  
+  protected IExecutionPeriod executionPeriod = null;
+  protected IExecutionYear executionYear = null;
+    
   public TestCaseOJB(String testName) {
     super(testName);
   }
@@ -271,12 +275,17 @@ public class TestCaseOJB extends TestCase {
   	curso1 = new Curso("LEIC", "Licenciatura de Engenharia Informatica e de Computadores", new TipoCurso(TipoCurso.LICENCIATURA));
   	curso2 = new Curso("LEEC", "Licenciatura de Engenharia Electrotecnica e de Computadores", new TipoCurso(TipoCurso.LICENCIATURA));
 
-  	cursoExecucao1 = new CursoExecucao("2002/03", curso1);
-  	cursoExecucao2 = new CursoExecucao("2003/04", curso2);
+	
 
-  	_disciplinaExecucao1 = new DisciplinaExecucao("Trabalho Final de Curso I", "TFCI", "programa1", cursoExecucao1,new Double(0),new Double(0),new Double(0),new Double(0));
-  	_disciplinaExecucao2 = new DisciplinaExecucao("Trabalho Final de Curso II", "TFCII", "programa10", cursoExecucao1,new Double(0),new Double(0),new Double(0),new Double(0));
-  	_disciplinaExecucao3 = new DisciplinaExecucao("Introducao a Programacao", "IP", "programa10", cursoExecucao1,new Double(0),new Double(0),new Double(0),new Double(0));
+//  	cursoExecucao1 = new CursoExecucao("2002/03", curso1);
+//  	cursoExecucao2 = new CursoExecucao("2003/04", curso2);
+//
+  	executionYear = new ExecutionYear("2000/2001");
+	executionPeriod = new ExecutionPeriod("1 semestre", executionYear);
+
+  	_disciplinaExecucao1 = new DisciplinaExecucao("Trabalho Final de Curso I", "TFCI", "programa1", new Double(0),new Double(0),new Double(0),new Double(0), executionPeriod );
+  	_disciplinaExecucao2 = new DisciplinaExecucao("Trabalho Final de Curso II", "TFCII", "programa10", new Double(0),new Double(0),new Double(0),new Double(0), executionPeriod);
+  	_disciplinaExecucao3 = new DisciplinaExecucao("Introducao a Programacao", "IP", "programa10", new Double(0),new Double(0),new Double(0),new Double(0), executionPeriod);
 
 	
 	List list = new LinkedList();
