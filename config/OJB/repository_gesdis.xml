@@ -501,7 +501,7 @@
 	/>
 	<field-descriptor
         name="credits"
-        column="CREDITS"
+        column="HOURS"
         jdbc-type="FLOAT"/>
 	
 	<reference-descriptor
