@@ -101,7 +101,7 @@ public interface ISuportePersistente {
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
 	public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo();
-	public IPersistentChosenCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
+	public IPersistentPossibleCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
 
 	
 	public IPersistentStudentKind getIPersistentStudentKind();

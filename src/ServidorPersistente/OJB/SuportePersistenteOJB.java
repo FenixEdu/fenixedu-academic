@@ -36,7 +36,7 @@ import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCandidateEnrolment;
 import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente
-	.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
+	.IPersistentPossibleCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCreditsTeacher;
@@ -512,8 +512,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new DegreeCurricularPlanEnrolmentInfoOJB();
 	}
 
-	public IPersistentChosenCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse() {
-		return new ChosenCurricularCourseForOptionalCurricularCourseOJB();
+	public IPersistentPossibleCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse() {
+		return new PossibleCurricularCourseForOptionalCurricularCourseOJB();
 	}
 
 	public IPersistentStudentKind getIPersistentStudentKind() {

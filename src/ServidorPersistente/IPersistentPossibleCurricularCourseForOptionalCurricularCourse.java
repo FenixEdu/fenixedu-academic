@@ -8,6 +8,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 
 
@@ -17,7 +18,7 @@ import Dominio.IDegreeCurricularPlan;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public interface IPersistentChosenCurricularCourseForOptionalCurricularCourse extends IPersistentObject {
+public interface IPersistentPossibleCurricularCourseForOptionalCurricularCourse extends IPersistentObject {
 	public List readAllByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
-
+	public List readAllByOptionalCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
 }

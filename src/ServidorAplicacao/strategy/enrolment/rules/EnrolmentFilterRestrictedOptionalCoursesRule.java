@@ -10,10 +10,9 @@ import org.apache.commons.collections.Transformer;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IPossibleCurricularCourseForOptionalCurricularCourse;
-import Dominio.PossibleCurricularCourseForOptionalCurricularCourse;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
+import ServidorPersistente.IPersistentPossibleCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -30,10 +29,8 @@ public class EnrolmentFilterRestrictedOptionalCoursesRule
 		try {
 			ICurricularCourse chosenOptionalCurricularCourse =	enrolmentContext.getChosenOptionalCurricularCourseScope().getCurricularCourse();
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentChosenCurricularCourseForOptionalCurricularCourse persistentChosenCurricularCourseForOptionalCurricularCourse =	sp.getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
-			IPossibleCurricularCourseForOptionalCurricularCourse chosenCurricularCourseForOptionalCurricularCourse =new PossibleCurricularCourseForOptionalCurricularCourse();
-			chosenCurricularCourseForOptionalCurricularCourse.setOptionalCurricularCourse(chosenOptionalCurricularCourse);
-			List possibleCurricularCourseForOptionalCurricularCourseList = persistentChosenCurricularCourseForOptionalCurricularCourse.readByCriteria(chosenCurricularCourseForOptionalCurricularCourse);
+			IPersistentPossibleCurricularCourseForOptionalCurricularCourse persistentPossibleCurricularCourseForOptionalCurricularCourse = sp.getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
+			List possibleCurricularCourseForOptionalCurricularCourseList = persistentPossibleCurricularCourseForOptionalCurricularCourse.readAllByOptionalCurricularCourse(chosenOptionalCurricularCourse);
 
 			List opionalCurricularCoursesEnrolmentsList = (List) CollectionUtils.collect(enrolmentContext.getOptionalCurricularCoursesEnrolments(), new Transformer() {
 				public Object transform(Object obj) {

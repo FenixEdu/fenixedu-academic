@@ -14,7 +14,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IPossibleCurricularCourseForOptionalCurricularCourse;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
+import ServidorPersistente.IPersistentPossibleCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -84,9 +84,9 @@ public abstract class EnrolmentStrategy implements IEnrolmentStrategy {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentChosenCurricularCourseForOptionalCurricularCourse persistentChosenCurricularCourseForOptionalCurricularCourse = sp.getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
+			IPersistentPossibleCurricularCourseForOptionalCurricularCourse persistentPossibleCurricularCourseForOptionalCurricularCourse = sp.getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
 
-			List possibleCurricularCoursesForOptionalCurricularCourseList = persistentChosenCurricularCourseForOptionalCurricularCourse.readAllByDegreeCurricularPlan(enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan());
+			List possibleCurricularCoursesForOptionalCurricularCourseList = persistentPossibleCurricularCourseForOptionalCurricularCourse.readAllByDegreeCurricularPlan(enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan());
 			List possibleCurricularCourses = (List) CollectionUtils.collect(possibleCurricularCoursesForOptionalCurricularCourseList, new Transformer() {
 				public Object transform(Object obj) {
 					IPossibleCurricularCourseForOptionalCurricularCourse possibleCurricularCourseForOptionalCurricularCourse = (IPossibleCurricularCourseForOptionalCurricularCourse) obj;
@@ -112,6 +112,8 @@ public abstract class EnrolmentStrategy implements IEnrolmentStrategy {
 
 		return enrolmentContext;
 	}
+
+	public abstract EnrolmentContext getAvailableCurricularCourses();
 
 	public abstract EnrolmentContext validateEnrolment();
 
