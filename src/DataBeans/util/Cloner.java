@@ -17,9 +17,11 @@ import DataBeans.InfoPerson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
+import DataBeans.gesdis.InfoAnnouncement;
 import DataBeans.gesdis.InfoItem;
 import DataBeans.gesdis.InfoSection;
 import DataBeans.gesdis.InfoSite;
+import Dominio.Announcement;
 import Dominio.Aula;
 import Dominio.Country;
 import Dominio.CurricularCourse;
@@ -28,6 +30,7 @@ import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
+import Dominio.IAnnouncement;
 import Dominio.IAula;
 import Dominio.ICountry;
 import Dominio.ICurricularCourse;
@@ -626,5 +629,52 @@ public abstract class Cloner {
 		
 		}
 
-	
+	/**
+	 * Method copyInfoAnnouncement2IAnnouncement.
+	 * @param infoAnnouncement
+	 * @return IAnnouncement
+	 */
+	public static IAnnouncement copyInfoAnnouncement2IAnnouncement(InfoAnnouncement infoAnnouncement) {
+		IAnnouncement announcement = new Announcement();
+
+		ISite site = Cloner.copyInfoSite2ISite(infoAnnouncement.getSite());
+
+		copyObjectProperties(announcement, infoAnnouncement);
+		announcement.setSite(site);
+
+		return announcement;
+	}
+
+	/**
+	 * Method copyIAnnouncement2InfoAnnouncement.
+	 * @param announcement
+	 * @return InfoAnnouncement
+	 */
+	public static InfoAnnouncement copyIAnnouncement2InfoAnnouncement(IAnnouncement announcement) {
+		InfoAnnouncement infoAnnouncement = new InfoAnnouncement();
+
+		InfoSite infoSite = Cloner.copyISite2InfoSite(announcement.getSite());
+
+		copyObjectProperties(infoAnnouncement, announcement);
+		infoAnnouncement.setSite(infoSite);
+
+		return infoAnnouncement;
+	}
+
+	/**
+	 * Method copyISite2InfoSite.
+	 * @param site
+	 * @return InfoSite
+	 */
+	public static InfoSite copyISite2InfoSite(ISite site) {
+		InfoSite infoSite = new InfoSite();
+		
+		InfoExecutionCourse infoExecutionCourse = 
+			Cloner.copyIExecutionCourse2InfoExecutionCourse(site.getExecutionCourse());
+
+		copyObjectProperties(infoSite, site);
+		infoSite.setInfoExecutionCourse(infoExecutionCourse);
+
+		return infoSite;
+	}
 }
