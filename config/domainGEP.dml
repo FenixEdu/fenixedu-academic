@@ -199,10 +199,13 @@ class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.inquiries.OldInqu
 }
 
 
-
-
-
-
+/* 
+ * THE FOLLOWING CLASSES DO NOT BELONG 
+ * TO THE GEP DOMAIN MODEL, 
+ * BUT ARE NEEDED FOR THE 
+ * RELATION DEFINITION BELOW 
+ *
+ */
 
 class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer teacherNumber;
