@@ -35,23 +35,19 @@
 
 	<logic:present name="<%= SessionConstants.ENROLMENT%>">
 	  	<jsp:include page="./certificateTemplate2.jsp" flush="true" />
-		<tr>
-		<td>
-		nas seguintes disciplinas:
-		</td>
-	    </tr>
 		<jsp:include page="./certificateTemplate4.jsp" flush="true" />
 	</logic:present>
 	
 	<logic:present name="<%= SessionConstants.APROVMENT%>">
 	  	<jsp:include page="./certificateTemplate5.jsp" flush="true" />
-		<tr>
-		<td>
-		nas seguintes disciplinas:
-		</td>
-	    </tr>
+		<jsp:include page="./certificateTemplate4.jsp" flush="true" />		
+	</logic:present>
+	
+	<logic:present name="<%= SessionConstants.EXTRA_CURRICULAR_APROVMENT%>">
+	  	<jsp:include page="./certificateTemplate6.jsp" flush="true" />
 		<jsp:include page="./certificateTemplate4.jsp" flush="true" />
 	</logic:present>
+	
 	
 	<logic:present name="<%= SessionConstants.DOCUMENT_REASON_LIST%>">
 		<jsp:include page="./templateDocumentReason.jsp" flush="true" />

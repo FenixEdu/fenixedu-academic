@@ -2,7 +2,9 @@
 package ServidorApresentacao.Action.certificate;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,6 +22,7 @@ import org.apache.struts.actions.DispatchAction;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentInExtraCurricularCourse;
 import DataBeans.InfoPerson;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
@@ -64,6 +67,8 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 			session.removeAttribute(SessionConstants.ENROLMENT);	
 			session.removeAttribute(SessionConstants.ENROLMENT_LIST);	
 			session.removeAttribute(SessionConstants.APROVMENT);
+			session.removeAttribute(SessionConstants.EXTRA_CURRICULAR_APROVMENT);
+			session.removeAttribute(SessionConstants.EXTRA_ENROLMENT_LIST);
 			
 			InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) session.getAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
 			
@@ -98,11 +103,26 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 						saveErrors(request, errors);
 						return new ActionForward(mapping.getInput());
 					}
-System.out.println("............" + enrolmentList.get(0));
-					session.setAttribute(SessionConstants.ENROLMENT, certificate.toUpperCase());
-					session.setAttribute(SessionConstants.ENROLMENT_LIST, enrolmentList);	
+		
+					List normalEnrolment = new ArrayList();
+					List extraEnrolment = new ArrayList();
+					Object result = null;
+					Iterator iterator = enrolmentList.iterator();
+					while(iterator.hasNext()) {	
+						result = (InfoEnrolment) iterator.next();
+						if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
+							extraEnrolment.add(result);		
+						else
+							normalEnrolment.add(result);							 
+					}
+					if (normalEnrolment.size() != 0)
+							session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
+					if (extraEnrolment.size() != 0)
+							session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);		
+					session.setAttribute(SessionConstants.ENROLMENT, certificate.toUpperCase());			
+
 				}
-				if (certificate.equals("Aproveitamento")){
+				if ((certificate.equals("Aproveitamento")) || (certificate.equals("Aproveitamento de Disciplinas Extra Curricular"))) {
 					Object args[] = {infoStudentCurricularPlan, new EnrolmentState(EnrolmentState.APROVED)};
 					try {
 						enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
@@ -117,9 +137,27 @@ System.out.println("............" + enrolmentList.get(0));
 						saveErrors(request, errors);
 						return new ActionForward(mapping.getInput());
 					}
-					session.setAttribute(SessionConstants.APROVMENT, certificate.toUpperCase());
-					session.setAttribute(SessionConstants.ENROLMENT_LIST, enrolmentList);	
-			
+					List normalEnrolment = new ArrayList();
+					List extraEnrolment = new ArrayList();
+					Object result = null;
+					Iterator iterator = enrolmentList.iterator();
+					while(iterator.hasNext()) {	
+						result = (InfoEnrolment) iterator.next();
+						if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
+							extraEnrolment.add(result);		
+						else
+							normalEnrolment.add(result);							 
+					}
+					
+					session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
+					session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);	
+					
+					if (certificate.equals("Aproveitamento"))
+						session.setAttribute(SessionConstants.APROVMENT, certificate.toUpperCase());
+				    else
+						if (certificate.equals("Aproveitamento de Disciplinas Extra Curricular"))
+							session.setAttribute(SessionConstants.EXTRA_CURRICULAR_APROVMENT, certificate.toUpperCase());
+						
 				}
 			}	
 			

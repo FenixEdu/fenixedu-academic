@@ -15,6 +15,7 @@ public class StudentCurricularPlanState {
 	public static final int ACTIVE = 1;
 	public static final int CONCLUDED = 2;
 	public static final int INCOMPLETE = 3;
+	public static final int SCHOOLPARTCONCLUDED = 4;
 
 	private Integer state;
 
@@ -62,6 +63,9 @@ public class StudentCurricularPlanState {
 				break;
 			case INCOMPLETE :
 				valueS = "INCOMPLETE";
+				break;
+			case SCHOOLPARTCONCLUDED :
+				valueS = "SCHOOLPARTCONCLUDED";
 				break;
 			default:
 				break;

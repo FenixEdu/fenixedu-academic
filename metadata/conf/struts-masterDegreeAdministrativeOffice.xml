@@ -657,20 +657,23 @@
    		 <forward name="ChooseSuccess" path="/printDeclaration.do?method=prepare"/>
       </action>
       
-      	<!-- Action to prepare the chooseCertificateInfoForm -->
-      <action path="/chooseFinalApuramentoInfoAction"
+      	<!-- Action to prepare the chooseFinalResultInfoForm -->
+      <action path="/chooseFinalResultInfoAction"
 	          attribute="chooseCertificateInfoForm"
 	          name="chooseCertificateInfoForm"
-	          input="/certificate/chooseFinalApuramento.jsp"
+	          input="/certificate/chooseFinalResult.jsp"
 	      	  validate="true"
 			  parameter="method"
   	          scope="request"
-      	      type="ServidorApresentacao.Action.certificate.ChooseFinalApuramentoInfoAction">
+      	      type="ServidorApresentacao.Action.certificate.ChooseFinalResultInfoAction">
    		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-      	 <forward name="PrepareReady" path="/certificate/chooseFinalApuramento.jsp"/>
-   		 <forward name="ChooseSuccess" path="/printDeclaration.do?method=prepare"/>
+         <exception type="ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException"
+            key="ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+      	 <forward name="PrepareReady" path="/certificate/chooseFinalResult.jsp"/>
+   		 <forward name="ChooseSuccess" path="/certificate/finalResultPage.jsp"/>
       </action>
     
   

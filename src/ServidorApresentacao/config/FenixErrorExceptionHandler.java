@@ -79,7 +79,6 @@ public class FenixErrorExceptionHandler extends ExceptionHandler {
 		// Store the exception
 		request.setAttribute(Globals.EXCEPTION_KEY, ex);
 		super.storeException(request, property, error, forward, ae.getScope());
-		System.out.println("================================= AQUI");
 		return forward;
 	}
 
