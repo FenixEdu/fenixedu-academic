@@ -68,7 +68,7 @@ public class EditExamAction extends FenixAction {
 			try {
 				ServiceUtils.executeService(userView, "EditExam", argsCreateExam);
 			} catch (ExistingServiceException ex) {
-				throw new ExistingActionException("O exame", ex);
+				throw new ExistingActionException("O exame de " + season, ex);
 			}
 
 			String input = (String) session.getAttribute("input");
