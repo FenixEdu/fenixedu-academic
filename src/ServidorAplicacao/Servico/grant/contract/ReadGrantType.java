@@ -19,13 +19,9 @@ import ServidorPersistente.ISuportePersistente;
  * @author Pica
  *  
  */
-public class ReadGrantType extends ReadDomainObjectService implements IService
-{
-    /**
-     * The constructor of this class.
-     */
-    public ReadGrantType()
-    {
+public class ReadGrantType extends ReadDomainObjectService implements IService {
+
+    public ReadGrantType() {
     }
 
     /*
@@ -33,8 +29,7 @@ public class ReadGrantType extends ReadDomainObjectService implements IService
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantType();
     }
 
@@ -43,8 +38,7 @@ public class ReadGrantType extends ReadDomainObjectService implements IService
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
      */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject)
-    {
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
         return InfoGrantType.newInfoFromDomain((IGrantType) domainObject);
     }
 
@@ -53,8 +47,7 @@ public class ReadGrantType extends ReadDomainObjectService implements IService
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
      */
-    protected Class getDomainObjectClass()
-    {
+    protected Class getDomainObjectClass() {
         return GrantType.class;
     }
 }

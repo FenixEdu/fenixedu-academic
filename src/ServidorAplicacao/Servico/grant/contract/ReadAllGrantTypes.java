@@ -24,38 +24,27 @@ import ServidorPersistente.grant.IPersistentGrantType;
  * @author Pica
  *  
  */
-public class ReadAllGrantTypes implements IService
-{
-    /**
-	 * The constructor of this class.
-	 */
-    public ReadAllGrantTypes()
-    {
+public class ReadAllGrantTypes implements IService {
+    public ReadAllGrantTypes() {
     }
-    
-    public List run() throws FenixServiceException
-    {
+
+    public List run() throws FenixServiceException {
         List grantTypes = null;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentGrantType pgt = sp.getIPersistentGrantType();
             grantTypes = pgt.readAll();
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e.getMessage());
         }
 
-        if(grantTypes == null)
+        if (grantTypes == null)
             return new ArrayList();
-        
-        ArrayList grantTypeList = (ArrayList) CollectionUtils.collect(grantTypes, new Transformer()
-        {
-            public Object transform(Object input)
-            {
+
+        ArrayList grantTypeList = (ArrayList) CollectionUtils.collect(grantTypes, new Transformer() {
+            public Object transform(Object input) {
                 IGrantType grantType = (IGrantType) input;
-                InfoGrantType infoGrantType =
-                    InfoGrantType.newInfoFromDomain(grantType);
+                InfoGrantType infoGrantType = InfoGrantType.newInfoFromDomain(grantType);
                 return infoGrantType;
             }
         });

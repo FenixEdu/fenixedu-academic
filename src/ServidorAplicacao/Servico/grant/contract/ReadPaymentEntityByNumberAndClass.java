@@ -16,27 +16,24 @@ import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
  * @author pica
  * @author barbosa
  */
-public class ReadPaymentEntityByNumberAndClass implements IService
-{
-	public ReadPaymentEntityByNumberAndClass()
-	{
-	}
+public class ReadPaymentEntityByNumberAndClass implements IService {
+    
+    public ReadPaymentEntityByNumberAndClass() {
+    }
 
-    public InfoGrantPaymentEntity run(String paymentEntityNumber, String className) throws FenixServiceException
-    {
+    public InfoGrantPaymentEntity run(String paymentEntityNumber, String className)
+            throws FenixServiceException {
         IGrantPaymentEntity grantPaymentEntity = null;
         InfoGrantPaymentEntity result = null;
         IPersistentGrantPaymentEntity pgpe = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             pgpe = sp.getIPersistentGrantPaymentEntity();
             grantPaymentEntity = pgpe.readByNumberAndClass(paymentEntityNumber, className);
             result = InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
-            
-        } catch (ExcepcaoPersistencia e)
-        {
+
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e.getMessage());
         }
         return result;

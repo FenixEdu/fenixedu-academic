@@ -16,43 +16,39 @@ import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
+
 /**
  * @author Barbosa
  * @author Pica
  */
-public class EditGrantPaymentEntity extends EditDomainObjectService implements IService
-{
+public class EditGrantPaymentEntity extends EditDomainObjectService implements IService {
 
-	/**
-	 * The constructor of this class.
-	 */
-	public EditGrantPaymentEntity()
-	{
-	}
-	
-	public void run(InfoGrantCostCenter infoObject) throws FenixServiceException
-	{
-		super.run(new Integer(0), infoObject);
-	}
-	
-	public void run(InfoGrantProject infoObject) throws FenixServiceException
-	{
-		super.run(new Integer(0), infoObject);
-	}
+    public EditGrantPaymentEntity() {
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
-	 */
-	protected IDomainObject clone2DomainObject(InfoObject infoObject)
-	{
-	    return InfoGrantPaymentEntity.newDomainFromInfo((InfoGrantPaymentEntity)infoObject);
-	}
+    public void run(InfoGrantCostCenter infoObject) throws FenixServiceException {
+        super.run(new Integer(0), infoObject);
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-	 */
-	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-	{
-		return sp.getIPersistentGrantPaymentEntity();
-	}
+    public void run(InfoGrantProject infoObject) throws FenixServiceException {
+        super.run(new Integer(0), infoObject);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
+     */
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+        return InfoGrantPaymentEntity.newDomainFromInfo((InfoGrantPaymentEntity) infoObject);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
+     */
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
+        return sp.getIPersistentGrantPaymentEntity();
+    }
 }

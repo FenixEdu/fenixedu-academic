@@ -26,9 +26,6 @@ import ServidorPersistente.grant.IPersistentGrantSubsidy;
  *  
  */
 public class ReadAllGrantSubsidiesByGrantContractAndState implements IService {
-    /**
-     * The constructor of this class.
-     */
     public ReadAllGrantSubsidiesByGrantContractAndState() {
     }
 

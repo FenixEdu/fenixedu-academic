@@ -7,12 +7,11 @@ import Dominio.grant.contract.IGrantInsurance;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 
-
 /**
  * @author Barbosa
  * @author Pica
  */
-public interface IPersistentGrantInsurance extends IPersistentObject
-{
-    public IGrantInsurance readGrantInsuranceByGrantContract(Integer key_contract) throws ExcepcaoPersistencia;
+public interface IPersistentGrantInsurance extends IPersistentObject {
+    public IGrantInsurance readGrantInsuranceByGrantContract(Integer key_contract)
+            throws ExcepcaoPersistencia;
 }

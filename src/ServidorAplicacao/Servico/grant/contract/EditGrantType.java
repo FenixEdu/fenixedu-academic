@@ -20,9 +20,6 @@ import ServidorPersistente.grant.IPersistentGrantType;
  */
 public class EditGrantType extends EditDomainObjectService {
 
-    /**
-     * The constructor of this class.
-     */
     public EditGrantType() {
     }
 

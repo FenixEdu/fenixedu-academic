@@ -7,6 +7,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.grant.contract.GrantType;
 import Dominio.grant.contract.IGrantType;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.OJB.ObjectFenixOJB;
 import ServidorPersistente.grant.IPersistentGrantType;
 
 /**
@@ -14,14 +15,12 @@ import ServidorPersistente.grant.IPersistentGrantType;
  * @author Pica
  */
 
-public class GrantTypeOJB extends ServidorPersistente.OJB.ObjectFenixOJB
-        implements IPersistentGrantType {
+public class GrantTypeOJB extends ObjectFenixOJB implements IPersistentGrantType {
 
     public GrantTypeOJB() {
     }
 
-    public IGrantType readGrantTypeBySigla(String sigla)
-            throws ExcepcaoPersistencia {
+    public IGrantType readGrantTypeBySigla(String sigla) throws ExcepcaoPersistencia {
         IGrantType grantType = null;
 
         Criteria criteria = new Criteria();
@@ -31,7 +30,7 @@ public class GrantTypeOJB extends ServidorPersistente.OJB.ObjectFenixOJB
     }
 
     public List readAll() throws ExcepcaoPersistencia {
-        List grantTypes = queryList(GrantType.class, null,"sigla",true);
+        List grantTypes = queryList(GrantType.class, null, "sigla", true);
         return grantTypes;
     }
 }

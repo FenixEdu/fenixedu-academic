@@ -33,14 +33,12 @@ import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
  */
 public class EditGrantContractRegime extends EditDomainObjectService {
 
-    /**
-     * The constructor of this class.
-     */
     public EditGrantContractRegime() {
     }
 
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        return InfoGrantContractRegimeWithTeacherAndContract.newDomainFromInfo((InfoGrantContractRegime) infoObject);
+        return InfoGrantContractRegimeWithTeacherAndContract
+                .newDomainFromInfo((InfoGrantContractRegime) infoObject);
     }
 
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
@@ -68,10 +66,10 @@ public class EditGrantContractRegime extends EditDomainObjectService {
      */
     protected void doAfterLock(IDomainObject domainObjectLocked, InfoObject infoObject,
             ISuportePersistente sp) throws FenixServiceException {
-        
+
         InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
-        if (infoGrantContractRegime.getState().equals(InfoGrantContractRegime.getActiveState())) { 
-            //Active Contract Regime 
+        if (infoGrantContractRegime.getState().equals(InfoGrantContractRegime.getActiveState())) {
+            //Active Contract Regime
 
             IGrantContractRegime grantContractRegime = (IGrantContractRegime) domainObjectLocked;
             //Set the correct grant orientation teacher
@@ -87,11 +85,14 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                 //If grantOrientationTeacher is filled in grantContractRegime
                 if (infoGrantContractRegime.getInfoTeacher() != null) {
                     //Update grant orientation teacher of contract
-                    grantOrientationTeacher.setOrientationTeacher(InfoTeacherWithPerson.newDomainFromInfo(infoGrantContractRegime.getInfoTeacher()));
+                    grantOrientationTeacher.setOrientationTeacher(InfoTeacherWithPerson
+                            .newDomainFromInfo(infoGrantContractRegime.getInfoTeacher()));
                 } else
-                //if grantOrientationTeacher is not filled in grantContractRegime
+                //if grantOrientationTeacher is not filled in
+                // grantContractRegime
                 {
-                    //Copy old values from grant orientation teacher do grant contract regime
+                    //Copy old values from grant orientation teacher do grant
+                    // contract regime
                     grantContractRegime.setTeacher(grantOrientationTeacher.getOrientationTeacher());
                 }
                 grantOrientationTeacher.setBeginDate(infoGrantContractRegime.getDateBeginContract());
@@ -100,7 +101,8 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                 throw new FenixServiceException(persistentException.getMessage());
             }
 
-            //Set all the others GrantContractRegime that are active to state inactive
+            //Set all the others GrantContractRegime that are active to state
+            // inactive
             try {
                 IPersistentGrantContractRegime persistentGrantContractRegime = sp
                         .getIPersistentGrantContractRegime();

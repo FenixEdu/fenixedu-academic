@@ -6,15 +6,14 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.grant.contract.GrantContractRegime;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.OJB.ObjectFenixOJB;
 import ServidorPersistente.grant.IPersistentGrantContractRegime;
 
 /**
  * @author Barbosa
  * @author Pica
  */
-public class GrantContractRegimeOJB extends
-        ServidorPersistente.OJB.ObjectFenixOJB implements
-        IPersistentGrantContractRegime {
+public class GrantContractRegimeOJB extends ObjectFenixOJB implements IPersistentGrantContractRegime {
 
     public GrantContractRegimeOJB() {
     }
@@ -28,8 +27,8 @@ public class GrantContractRegimeOJB extends
         return grantContractRegimes;
     }
 
-    public List readGrantContractRegimeByGrantContractAndState(
-            Integer grantContractId, Integer state) throws ExcepcaoPersistencia {
+    public List readGrantContractRegimeByGrantContractAndState(Integer grantContractId, Integer state)
+            throws ExcepcaoPersistencia {
         List grantContractRegime = null;
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_contract", grantContractId);

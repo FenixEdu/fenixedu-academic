@@ -14,27 +14,22 @@ import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 
 /**
- * Barbosa
- * Pica
+ * Barbosa Pica
  */
-public class ReadGrantContractMovement extends ReadDomainObjectService
-{
-    public ReadGrantContractMovement()
-    {
+public class ReadGrantContractMovement extends ReadDomainObjectService {
+    public ReadGrantContractMovement() {
     }
-    
-    protected Class getDomainObjectClass()
-    {
+
+    protected Class getDomainObjectClass() {
         return GrantContractMovement.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantContractMovement();
     }
 
-    protected InfoObject clone2InfoObject(IDomainObject domainObject)
-    {
-        return InfoGrantContractMovementWithContract.newInfoFromDomain((IGrantContractMovement) domainObject);
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+        return InfoGrantContractMovementWithContract
+                .newInfoFromDomain((IGrantContractMovement) domainObject);
     }
 }

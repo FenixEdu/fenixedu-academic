@@ -27,71 +27,62 @@ import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
  * @author Pica
  *  
  */
-public class ReadGrantContract extends ReadDomainObjectService implements IService
-{
-	/**
-	 * The constructor of this class.
-	 */
-	public ReadGrantContract()
-	{
-	}
+public class ReadGrantContract extends ReadDomainObjectService implements IService {
+    public ReadGrantContract() {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-	 */
-	protected IPersistentObject getIPersistentObject(ISuportePersistente sp)   
-	{
-		return sp.getIPersistentGrantContract();
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
+     */
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
+        return sp.getIPersistentGrantContract();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-	 */
-	protected InfoObject clone2InfoObject(IDomainObject domainObject)
-	{
-		return InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain((IGrantContract) domainObject);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
+     */
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+        return InfoGrantContractWithGrantOwnerAndGrantType
+                .newInfoFromDomain((IGrantContract) domainObject);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-	 */
-	protected Class getDomainObjectClass()
-	{
-		return GrantContract.class;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
+     */
+    protected Class getDomainObjectClass() {
+        return GrantContract.class;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#run(java.lang.Integer)
-	 */
-	public InfoObject run(Integer objectId) throws FenixServiceException
-	{
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentGrantOrientationTeacher pgot = sp.getIPersistentGrantOrientationTeacher();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#run(java.lang.Integer)
+     */
+    public InfoObject run(Integer objectId) throws FenixServiceException {
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentGrantOrientationTeacher pgot = sp.getIPersistentGrantOrientationTeacher();
 
-			InfoGrantContract infoGrantContract = (InfoGrantContract) super.run(objectId);
-			IGrantContract contract = InfoGrantContractWithGrantOwnerAndGrantType.newDomainFromInfo(infoGrantContract);
-			
-			//get the GrantOrientationTeacher for the contract
-			IGrantOrientationTeacher orientationTeacher =
-				pgot.readActualGrantOrientationTeacherByContract(contract, new Integer(0));
-			InfoGrantOrientationTeacher infoOrientationTeacher =
-				InfoGrantOrientationTeacherWithTeacherAndGrantContract.newInfoFromDomain(orientationTeacher);
-			infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
-			
-			return infoGrantContract;
-		} catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		}
-	}
+            InfoGrantContract infoGrantContract = (InfoGrantContract) super.run(objectId);
+            IGrantContract contract = InfoGrantContractWithGrantOwnerAndGrantType
+                    .newDomainFromInfo(infoGrantContract);
+
+            //get the GrantOrientationTeacher for the contract
+            IGrantOrientationTeacher orientationTeacher = pgot
+                    .readActualGrantOrientationTeacherByContract(contract, new Integer(0));
+            InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
+                    .newInfoFromDomain(orientationTeacher);
+            infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
+
+            return infoGrantContract;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e.getMessage());
+        }
+    }
 }

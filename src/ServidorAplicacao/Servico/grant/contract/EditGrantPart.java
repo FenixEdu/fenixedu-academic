@@ -36,15 +36,12 @@ import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
  */
 public class EditGrantPart extends EditDomainObjectService {
 
-    /**
-     * The constructor of this class.
-     */
     public EditGrantPart() {
     }
 
-    protected IDomainObject clone2DomainObject(InfoObject infoObject) 
-    {
-        return InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity.newDomainFromInfo((InfoGrantPart) infoObject);
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+        return InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity
+                .newDomainFromInfo((InfoGrantPart) infoObject);
     }
 
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {

@@ -33,7 +33,8 @@ public class EditGrantInsurance extends EditDomainObjectService {
     }
 
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        return InfoGrantInsuranceWithContractAndPaymentEntity.newDomainFromInfo((InfoGrantInsurance) infoObject);
+        return InfoGrantInsuranceWithContractAndPaymentEntity
+                .newDomainFromInfo((InfoGrantInsurance) infoObject);
     }
 
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
@@ -73,14 +74,18 @@ public class EditGrantInsurance extends EditDomainObjectService {
          */
         try {
             if (grantInsurance.getDateEndInsurance() == null) {
-                IPersistentGrantContractRegime persistentGrantContractRegime = sp.getIPersistentGrantContractRegime();
+                IPersistentGrantContractRegime persistentGrantContractRegime = sp
+                        .getIPersistentGrantContractRegime();
                 List grantContractRegimeList = persistentGrantContractRegime
                         .readGrantContractRegimeByGrantContractAndState(infoGrantInsurance
-                                .getInfoGrantContract().getIdInternal(), InfoGrantContractRegime.getActiveState());
-                IGrantContractRegime grantContractRegime = (IGrantContractRegime) grantContractRegimeList.get(0);
+                                .getInfoGrantContract().getIdInternal(), InfoGrantContractRegime
+                                .getActiveState());
+                IGrantContractRegime grantContractRegime = (IGrantContractRegime) grantContractRegimeList
+                        .get(0);
                 grantInsurance.setDateEndInsurance(grantContractRegime.getDateEndContract());
             }
-            grantInsurance.setTotalValue(InfoGrantInsurance.calculateTotalValue(grantInsurance.getDateBeginInsurance(), grantInsurance.getDateEndInsurance()));
+            grantInsurance.setTotalValue(InfoGrantInsurance.calculateTotalValue(grantInsurance
+                    .getDateBeginInsurance(), grantInsurance.getDateEndInsurance()));
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException();
         }

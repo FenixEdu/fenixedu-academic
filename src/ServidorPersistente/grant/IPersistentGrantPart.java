@@ -15,11 +15,9 @@ import ServidorPersistente.IPersistentObject;
  * @author Pica
  * @author Barbosa
  */
-public interface IPersistentGrantPart extends IPersistentObject
-{
-	public List readAllGrantPartsByGrantSubsidy(Integer grantSubsidyId) throws ExcepcaoPersistencia;
-	public IGrantPart readGrantPartByUnique(
-		IGrantSubsidy grantSubsidy,
-		IGrantPaymentEntity paymentEntity)
-		throws ExcepcaoPersistencia;
+public interface IPersistentGrantPart extends IPersistentObject {
+    public List readAllGrantPartsByGrantSubsidy(Integer grantSubsidyId) throws ExcepcaoPersistencia;
+
+    public IGrantPart readGrantPartByUnique(IGrantSubsidy grantSubsidy, IGrantPaymentEntity paymentEntity)
+            throws ExcepcaoPersistencia;
 }

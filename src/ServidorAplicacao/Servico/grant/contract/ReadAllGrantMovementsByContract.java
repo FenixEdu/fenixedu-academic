@@ -23,42 +23,30 @@ import ServidorPersistente.grant.IPersistentGrantContractMovement;
  * @author Pica
  *  
  */
-public class ReadAllGrantMovementsByContract implements IService
-{
-	/**
-	 * The constructor of this class.
-	 */
-	public ReadAllGrantMovementsByContract()
-	{
-	}
+public class ReadAllGrantMovementsByContract implements IService {
+    public ReadAllGrantMovementsByContract() {
+    }
 
-	public List run(Integer grantContractId) throws FenixServiceException
-	{
-		List result = null;
-		IPersistentGrantContractMovement pgcm = null;
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			pgcm = sp.getIPersistentGrantContractMovement();
-			List grantMovements = pgcm.readAllMovementsByContract(grantContractId);
+    public List run(Integer grantContractId) throws FenixServiceException {
+        List result = null;
+        IPersistentGrantContractMovement pgcm = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            pgcm = sp.getIPersistentGrantContractMovement();
+            List grantMovements = pgcm.readAllMovementsByContract(grantContractId);
 
-            if(grantMovements != null)
-            {    
-			result = (List) CollectionUtils.collect(grantMovements, new Transformer()
-			{
-				public Object transform(Object o)
-				{
-					IGrantContractMovement grantMovement = (IGrantContractMovement) o;
-					return InfoGrantContractMovementWithContract.newInfoFromDomain(grantMovement);
-				}
-			});
+            if (grantMovements != null) {
+                result = (List) CollectionUtils.collect(grantMovements, new Transformer() {
+                    public Object transform(Object o) {
+                        IGrantContractMovement grantMovement = (IGrantContractMovement) o;
+                        return InfoGrantContractMovementWithContract.newInfoFromDomain(grantMovement);
+                    }
+                });
             }
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		}
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e.getMessage());
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

@@ -11,7 +11,6 @@ import ServidorPersistente.IPersistentObject;
  * @author pica
  * @author barbosa
  */
-public interface IPersistentGrantCostCenter extends IPersistentObject
-{
-	public IGrantCostCenter readGrantCostCenterByNumber(String number) throws ExcepcaoPersistencia;
+public interface IPersistentGrantCostCenter extends IPersistentObject {
+    public IGrantCostCenter readGrantCostCenterByNumber(String number) throws ExcepcaoPersistencia;
 }

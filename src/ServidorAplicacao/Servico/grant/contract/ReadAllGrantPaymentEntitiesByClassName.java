@@ -23,36 +23,26 @@ import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
  * @author Pica
  *  
  */
-public class ReadAllGrantPaymentEntitiesByClassName implements IService
-{
-    /**
-     * The constructor of this class.
-     */
-    public ReadAllGrantPaymentEntitiesByClassName()
-    {
+public class ReadAllGrantPaymentEntitiesByClassName implements IService {
+    public ReadAllGrantPaymentEntitiesByClassName() {
     }
 
-    public List run(String className) throws FenixServiceException
-    {
+    public List run(String className) throws FenixServiceException {
         List result = null;
         IPersistentGrantPaymentEntity pgpe = null;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             pgpe = sp.getIPersistentGrantPaymentEntity();
             List grantPaymentEntities = pgpe.readAllPaymentEntitiesByClassName(className);
-            
-            result = (List) CollectionUtils.collect(grantPaymentEntities, new Transformer()
-                {
-                public Object transform(Object o)
-                {
+
+            result = (List) CollectionUtils.collect(grantPaymentEntities, new Transformer() {
+                public Object transform(Object o) {
                     IGrantPaymentEntity grantPaymentEntity = (IGrantPaymentEntity) o;
                     return InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
                 }
             });
-            
-        } catch (ExcepcaoPersistencia e)
-        {
+
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e.getMessage());
         }
 

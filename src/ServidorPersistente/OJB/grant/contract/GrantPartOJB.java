@@ -19,14 +19,12 @@ import ServidorPersistente.grant.IPersistentGrantPart;
  * @author Pica
  * @author Barbosa
  */
-public class GrantPartOJB extends ObjectFenixOJB implements
-        IPersistentGrantPart {
+public class GrantPartOJB extends ObjectFenixOJB implements IPersistentGrantPart {
 
     public GrantPartOJB() {
     }
 
-    public List readAllGrantPartsByGrantSubsidy(Integer grantSubsidyId)
-            throws ExcepcaoPersistencia {
+    public List readAllGrantPartsByGrantSubsidy(Integer grantSubsidyId) throws ExcepcaoPersistencia {
         List grantPartsList = null;
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_subsidy", grantSubsidyId);
@@ -34,13 +32,12 @@ public class GrantPartOJB extends ObjectFenixOJB implements
         return grantPartsList;
     }
 
-    public IGrantPart readGrantPartByUnique(IGrantSubsidy grantSubsidy,
-            IGrantPaymentEntity paymentEntity) throws ExcepcaoPersistencia {
+    public IGrantPart readGrantPartByUnique(IGrantSubsidy grantSubsidy, IGrantPaymentEntity paymentEntity)
+            throws ExcepcaoPersistencia {
         IGrantPart grantPart = null;
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_subsidy", grantSubsidy.getIdInternal());
-        criteria.addEqualTo("key_grant_payment_entity", paymentEntity
-                .getIdInternal());
+        criteria.addEqualTo("key_grant_payment_entity", paymentEntity.getIdInternal());
         grantPart = (IGrantPart) queryObject(GrantPart.class, criteria);
         return grantPart;
     }

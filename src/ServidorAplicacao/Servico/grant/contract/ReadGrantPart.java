@@ -14,27 +14,22 @@ import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 
 /**
- * João Simas
- * Nuno Barbosa
+ * João Simas Nuno Barbosa
  */
-public class ReadGrantPart extends ReadDomainObjectService
-{
-    public ReadGrantPart()
-    {
+public class ReadGrantPart extends ReadDomainObjectService {
+    public ReadGrantPart() {
     }
-    
-    protected Class getDomainObjectClass()
-    {
+
+    protected Class getDomainObjectClass() {
         return GrantPart.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantPart();
     }
 
-    protected InfoObject clone2InfoObject(IDomainObject domainObject)
-    {
-        return InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity.newInfoFromDomain((IGrantPart) domainObject);
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+        return InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity
+                .newInfoFromDomain((IGrantPart) domainObject);
     }
 }

@@ -15,8 +15,7 @@ import ServidorPersistente.grant.IPersistentGrantInsurance;
  * @author Pica
  * @author Barbosa
  */
-public class GrantInsuranceOJB extends ObjectFenixOJB implements
-        IPersistentGrantInsurance {
+public class GrantInsuranceOJB extends ObjectFenixOJB implements IPersistentGrantInsurance {
 
     public IGrantInsurance readGrantInsuranceByGrantContract(Integer key_contract)
             throws ExcepcaoPersistencia {
@@ -24,7 +23,7 @@ public class GrantInsuranceOJB extends ObjectFenixOJB implements
         IGrantInsurance grantInsurance = null;
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_contract", key_contract);
-        grantInsurance = (IGrantInsurance)queryObject(GrantInsurance.class, criteria);
+        grantInsurance = (IGrantInsurance) queryObject(GrantInsurance.class, criteria);
         return grantInsurance;
     }
 

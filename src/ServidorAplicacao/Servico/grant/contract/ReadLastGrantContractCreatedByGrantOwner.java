@@ -19,46 +19,38 @@ import ServidorPersistente.grant.IPersistentGrantContract;
  * @author Pica
  *  
  */
-public class ReadLastGrantContractCreatedByGrantOwner implements IService
-{
-	/**
-	 * The constructor of this class.
-	 */
-	public ReadLastGrantContractCreatedByGrantOwner()
-	{
+public class ReadLastGrantContractCreatedByGrantOwner implements IService {
+
+    public ReadLastGrantContractCreatedByGrantOwner() {
     }
 
-	public InfoGrantContract run(Integer grantOwnerId) throws FenixServiceException
-	{
-		Integer grantContractNumber = null;
-		IGrantContract grantContract = null;
-		IPersistentGrantContract persistentGrantContract = null;
-		try
-		{	
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			persistentGrantContract = sp.getIPersistentGrantContract();
-			
-			// set the contract number!
-			grantContractNumber = persistentGrantContract.readMaxGrantContractNumberByGrantOwner(grantOwnerId);
-			grantContract = persistentGrantContract.readGrantContractByNumberAndGrantOwner(grantContractNumber, grantOwnerId);
-		} 
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		}
+    public InfoGrantContract run(Integer grantOwnerId) throws FenixServiceException {
+        Integer grantContractNumber = null;
+        IGrantContract grantContract = null;
+        IPersistentGrantContract persistentGrantContract = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            persistentGrantContract = sp.getIPersistentGrantContract();
 
-		if (grantContract == null)
-			return new InfoGrantContract();
+            // set the contract number!
+            grantContractNumber = persistentGrantContract
+                    .readMaxGrantContractNumberByGrantOwner(grantOwnerId);
+            grantContract = persistentGrantContract.readGrantContractByNumberAndGrantOwner(
+                    grantContractNumber, grantOwnerId);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e.getMessage());
+        }
 
-		InfoGrantContract infoGrantContract = null;
-		try
-		{
-			infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantContract);
-		}
-		catch (Exception e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		}
-		return infoGrantContract;
-	}
+        if (grantContract == null)
+            return new InfoGrantContract();
+
+        InfoGrantContract infoGrantContract = null;
+        try {
+            infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType
+                    .newInfoFromDomain(grantContract);
+        } catch (Exception e) {
+            throw new FenixServiceException(e.getMessage());
+        }
+        return infoGrantContract;
+    }
 }

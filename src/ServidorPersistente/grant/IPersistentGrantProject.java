@@ -11,7 +11,6 @@ import ServidorPersistente.IPersistentObject;
  * @author pica
  * @author barbosa
  */
-public interface IPersistentGrantProject extends IPersistentObject
-{
-	public IGrantProject readGrantProjectByNumber(String number) throws ExcepcaoPersistencia;
+public interface IPersistentGrantProject extends IPersistentObject {
+    public IGrantProject readGrantProjectByNumber(String number) throws ExcepcaoPersistencia;
 }

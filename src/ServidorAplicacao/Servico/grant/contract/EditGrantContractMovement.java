@@ -25,29 +25,26 @@ import ServidorPersistente.grant.IPersistentGrantContractMovement;
  */
 public class EditGrantContractMovement extends EditDomainObjectService {
 
-    /**
-     * The constructor of this class.
-     */
     public EditGrantContractMovement() {
     }
 
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        return InfoGrantContractMovementWithContract.newDomainFromInfo((InfoGrantContractMovement) infoObject);
+        return InfoGrantContractMovementWithContract
+                .newDomainFromInfo((InfoGrantContractMovement) infoObject);
     }
 
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantContractMovement();
     }
 
-    protected IDomainObject readObjectByUnique(IDomainObject domainObject,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
         IPersistentGrantContractMovement persistentGrantContractMovement = sp
                 .getIPersistentGrantContractMovement();
         IGrantContractMovement grantContractMovement = (IGrantContractMovement) domainObject;
 
-        return persistentGrantContractMovement.readByOID(
-                GrantContractMovement.class, grantContractMovement
-                        .getIdInternal());
+        return persistentGrantContractMovement.readByOID(GrantContractMovement.class,
+                grantContractMovement.getIdInternal());
     }
 
     /*
@@ -56,23 +53,22 @@ public class EditGrantContractMovement extends EditDomainObjectService {
      * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doAfterLock(Dominio.IDomainObject,
      *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
      */
-    protected void doAfterLock(IDomainObject domainObjectLocked,
-            InfoObject infoObject, ISuportePersistente sp)
-            throws FenixServiceException {
+    protected void doAfterLock(IDomainObject domainObjectLocked, InfoObject infoObject,
+            ISuportePersistente sp) throws FenixServiceException {
 
-        try 
-        {
+        try {
             /*
-    		 * In case of a new Movement, the Contract associated needs to be set.
-    		 */
-    		IGrantContractMovement grantContractMovement = (IGrantContractMovement) domainObjectLocked;
-    		InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
-    		IGrantContract grantContract = new GrantContract();
-    		grantContract.setIdInternal(infoGrantContractMovement.getInfoGrantContract().getIdInternal());
-    		grantContractMovement.setGrantContract(grantContract);
-    		domainObjectLocked = grantContractMovement;
-        } 
-        catch (Exception e) {
+             * In case of a new Movement, the Contract associated needs to be
+             * set.
+             */
+            IGrantContractMovement grantContractMovement = (IGrantContractMovement) domainObjectLocked;
+            InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
+            IGrantContract grantContract = new GrantContract();
+            grantContract
+                    .setIdInternal(infoGrantContractMovement.getInfoGrantContract().getIdInternal());
+            grantContractMovement.setGrantContract(grantContract);
+            domainObjectLocked = grantContractMovement;
+        } catch (Exception e) {
             throw new FenixServiceException(e.getMessage());
         }
     }

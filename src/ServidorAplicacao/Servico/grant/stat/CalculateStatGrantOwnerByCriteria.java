@@ -46,7 +46,8 @@ public class CalculateStatGrantOwnerByCriteria implements IService {
                     infoStatGrantOwner.getDateEndContract(), infoStatGrantOwner.getGrantType());
             //Set the result info
             InfoStatResultGrantOwner infoStatResultGrantOwner = new InfoStatResultGrantOwner();
-            infoStatResultGrantOwner.setNumberOfGrantContractsByCriteria(numberOfGrantContractsByCriteria);
+            infoStatResultGrantOwner
+                    .setNumberOfGrantContractsByCriteria(numberOfGrantContractsByCriteria);
             infoStatResultGrantOwner.setNumberOfGrantOwnerByCriteria(numberOfGrantOwnersByCriteria);
             infoStatResultGrantOwner.setTotalNumberOfGrantContracts(totalNumberOfGrantContracts);
             infoStatResultGrantOwner.setTotalNumberOfGrantOwners(totalNumberOfGrantOwners);

@@ -39,58 +39,48 @@ import ServidorPersistente.grant.IPersistentGrantType;
  * @author Pica
  */
 public class EditGrantContract extends EditDomainObjectService {
-    /**
-     * The constructor of this class.
-     */
+
     public EditGrantContract() {
     }
 
-    protected IDomainObject clone2DomainObject(InfoObject infoObject) 
-    { 
-        return InfoGrantContractWithGrantOwnerAndGrantType.newDomainFromInfo((InfoGrantContract) infoObject);
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+        return InfoGrantContractWithGrantOwnerAndGrantType
+                .newDomainFromInfo((InfoGrantContract) infoObject);
     }
 
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantContract();
     }
 
-    protected void doBeforeLock(IDomainObject domainObjectToLock,
-            InfoObject infoObject, ISuportePersistente sp)
-            throws FenixServiceException {
+    protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
+            ISuportePersistente sp) throws FenixServiceException {
         checkIfGrantTeacherRelationExists(domainObjectToLock, infoObject, sp);
     }
 
-    protected void checkIfGrantTeacherRelationExists(
-            IDomainObject newDomainObject, InfoObject infoObject,
-            ISuportePersistente sp) throws FenixServiceException {
+    protected void checkIfGrantTeacherRelationExists(IDomainObject newDomainObject,
+            InfoObject infoObject, ISuportePersistente sp) throws FenixServiceException {
         try {
-            IPersistentGrantOrientationTeacher ot = sp
-                    .getIPersistentGrantOrientationTeacher();
+            IPersistentGrantOrientationTeacher ot = sp.getIPersistentGrantOrientationTeacher();
             InfoGrantContract infoGrantContract = (InfoGrantContract) infoObject;
             IGrantOrientationTeacher oldGrantOrientationTeacher = null;
             IGrantOrientationTeacher newGrantOrientationTeacher = null;
 
             //check if the GrantOrientation relation exists
-            Integer orientationId = infoGrantContract
-                    .getGrantOrientationTeacherInfo().getIdInternal();
-            if ((orientationId != null)
-                    && !(orientationId.equals(new Integer(0)))) {
+            Integer orientationId = infoGrantContract.getGrantOrientationTeacherInfo().getIdInternal();
+            if ((orientationId != null) && !(orientationId.equals(new Integer(0)))) {
                 //lock the existent object to write (EDIT)
-                newGrantOrientationTeacher = (IGrantOrientationTeacher) ot
-                        .readByOID(GrantOrientationTeacher.class,
-                                infoGrantContract
-                                        .getGrantOrientationTeacherInfo()
-                                        .getIdInternal(), true);
+                newGrantOrientationTeacher = (IGrantOrientationTeacher) ot.readByOID(
+                        GrantOrientationTeacher.class, infoGrantContract
+                                .getGrantOrientationTeacherInfo().getIdInternal(), true);
             } else {
                 newGrantOrientationTeacher = new GrantOrientationTeacher();
                 ot.simpleLockWrite(newGrantOrientationTeacher);
             }
-            oldGrantOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract.newDomainFromInfo(infoGrantContract.getGrantOrientationTeacherInfo());
+            oldGrantOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
+                    .newDomainFromInfo(infoGrantContract.getGrantOrientationTeacherInfo());
             Integer ack_opt_lock = newGrantOrientationTeacher.getAckOptLock();
-            PropertyUtils.copyProperties(newGrantOrientationTeacher,
-                    oldGrantOrientationTeacher);
-            newGrantOrientationTeacher
-                    .setGrantContract((IGrantContract) newDomainObject);
+            PropertyUtils.copyProperties(newGrantOrientationTeacher, oldGrantOrientationTeacher);
+            newGrantOrientationTeacher.setGrantContract((IGrantContract) newDomainObject);
             newGrantOrientationTeacher.setAckOptLock(ack_opt_lock);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
@@ -99,8 +89,8 @@ public class EditGrantContract extends EditDomainObjectService {
         }
     }
 
-    protected InfoGrantType checkIfGrantTypeExists(String sigla,
-            IPersistentGrantType pt) throws FenixServiceException {
+    protected InfoGrantType checkIfGrantTypeExists(String sigla, IPersistentGrantType pt)
+            throws FenixServiceException {
         InfoGrantType infoGrantType = new InfoGrantType();
         IGrantType grantType = new GrantType();
         try {
@@ -114,8 +104,7 @@ public class EditGrantContract extends EditDomainObjectService {
         return infoGrantType;
     }
 
-    private InfoTeacher checkIfGrantOrientationTeacherExists(
-            Integer teacherNumber, IPersistentTeacher pt)
+    private InfoTeacher checkIfGrantOrientationTeacherExists(Integer teacherNumber, IPersistentTeacher pt)
             throws FenixServiceException {
         //When creating a New Contract its needed to verify if the teacher
         //chosen for orientator really exists
@@ -136,32 +125,26 @@ public class EditGrantContract extends EditDomainObjectService {
      * Executes the service.
      *  
      */
-    public void run(InfoGrantContract infoGrantContract)
-            throws FenixServiceException {
+    public void run(InfoGrantContract infoGrantContract) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher pTeacher = sp.getIPersistentTeacher();
             IPersistentGrantType pGrantType = sp.getIPersistentGrantType();
-            IPersistentGrantContract pGrantContract = sp
-                    .getIPersistentGrantContract();
+            IPersistentGrantContract pGrantContract = sp.getIPersistentGrantContract();
 
-            infoGrantContract
-                    .setGrantTypeInfo(checkIfGrantTypeExists(infoGrantContract
-                            .getGrantTypeInfo().getSigla(), pGrantType));
+            infoGrantContract.setGrantTypeInfo(checkIfGrantTypeExists(infoGrantContract
+                    .getGrantTypeInfo().getSigla(), pGrantType));
 
-            infoGrantContract.getGrantOrientationTeacherInfo()
-                    .setOrientationTeacherInfo(
-                            checkIfGrantOrientationTeacherExists(
-                                    infoGrantContract
-                                            .getGrantOrientationTeacherInfo()
-                                            .getOrientationTeacherInfo()
-                                            .getTeacherNumber(), pTeacher));
+            infoGrantContract.getGrantOrientationTeacherInfo().setOrientationTeacherInfo(
+                    checkIfGrantOrientationTeacherExists(infoGrantContract
+                            .getGrantOrientationTeacherInfo().getOrientationTeacherInfo()
+                            .getTeacherNumber(), pTeacher));
 
             if (infoGrantContract.getContractNumber() == null) {
                 // set the contract number!
                 Integer maxNumber = pGrantContract
-                        .readMaxGrantContractNumberByGrantOwner(infoGrantContract
-                                .getGrantOwnerInfo().getIdInternal());
+                        .readMaxGrantContractNumberByGrantOwner(infoGrantContract.getGrantOwnerInfo()
+                                .getIdInternal());
                 int aux = maxNumber.intValue() + 1;
                 Integer newContractNumber = new Integer(aux);
                 infoGrantContract.setContractNumber(newContractNumber);

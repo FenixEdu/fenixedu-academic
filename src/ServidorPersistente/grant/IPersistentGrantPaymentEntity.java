@@ -13,8 +13,9 @@ import ServidorPersistente.IPersistentObject;
  * @author pica
  * @author barbosa
  */
-public interface IPersistentGrantPaymentEntity extends IPersistentObject
-{
-    public IGrantPaymentEntity readByNumberAndClass(String entityNumber, String entityClass) throws ExcepcaoPersistencia;
+public interface IPersistentGrantPaymentEntity extends IPersistentObject {
+    public IGrantPaymentEntity readByNumberAndClass(String entityNumber, String entityClass)
+            throws ExcepcaoPersistencia;
+
     public List readAllPaymentEntitiesByClassName(String className) throws ExcepcaoPersistencia;
 }

@@ -31,9 +31,6 @@ import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
  *  
  */
 public class ReadAllContractsByGrantOwner implements IService {
-    /**
-     * The constructor of this class.
-     */
     public ReadAllContractsByGrantOwner() {
     }
 
@@ -61,28 +58,32 @@ public class ReadAllContractsByGrantOwner implements IService {
         //gather information related to each contract
         while (contractIter.hasNext()) {
             try {
-                IGrantContract grantContract = (IGrantContract) contractIter
-                        .next();
-                InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantContract);
+                IGrantContract grantContract = (IGrantContract) contractIter.next();
+                InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType
+                        .newInfoFromDomain(grantContract);
 
                 //get the GrantOrientationTeacher for each contract
                 IGrantOrientationTeacher orientationTeacher = pgot
                         .readActualGrantOrientationTeacherByContract(grantContract, new Integer(0));
-                InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract.newInfoFromDomain(orientationTeacher);
+                InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
+                        .newInfoFromDomain(orientationTeacher);
                 infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
 
                 /*
                  * Verify if the contract is active or not. The contract is
-                 * active if: 
-                 * 	 1- The end contract motive is not filled
-                 *   2 - The actual grant contract regime is active
+                 * active if: 1- The end contract motive is not filled 2 - The
+                 * actual grant contract regime is active
                  */
                 if (infoGrantContract.getEndContractMotiveSet()) {
                     infoGrantContract.setActive(new Boolean(false));
                 } else {
-                    List grantContractRegimeActual = persistentGrantContractRegime.readGrantContractRegimeByGrantContractAndState(infoGrantContract.getIdInternal(), new Integer(1));
-                    IGrantContractRegime grantContractRegime = (IGrantContractRegime)grantContractRegimeActual.get(0); 
-                    infoGrantContract.setActive(new Boolean(grantContractRegime.getContractRegimeActive()));
+                    List grantContractRegimeActual = persistentGrantContractRegime
+                            .readGrantContractRegimeByGrantContractAndState(infoGrantContract
+                                    .getIdInternal(), new Integer(1));
+                    IGrantContractRegime grantContractRegime = (IGrantContractRegime) grantContractRegimeActual
+                            .get(0);
+                    infoGrantContract.setActive(new Boolean(grantContractRegime
+                            .getContractRegimeActive()));
                 }
                 contractList.add(infoGrantContract);
             } catch (ExcepcaoPersistencia e) {

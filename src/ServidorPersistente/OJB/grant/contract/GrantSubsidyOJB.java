@@ -16,14 +16,12 @@ import ServidorPersistente.grant.IPersistentGrantSubsidy;
  * @author pica
  * @author barbosa
  */
-public class GrantSubsidyOJB extends ObjectFenixOJB implements
-        IPersistentGrantSubsidy {
+public class GrantSubsidyOJB extends ObjectFenixOJB implements IPersistentGrantSubsidy {
 
     public GrantSubsidyOJB() {
     }
 
-    public List readAllSubsidiesByGrantContract(Integer idContract)
-            throws ExcepcaoPersistencia {
+    public List readAllSubsidiesByGrantContract(Integer idContract) throws ExcepcaoPersistencia {
         List subsidyList = null;
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_contract", idContract);
@@ -31,8 +29,8 @@ public class GrantSubsidyOJB extends ObjectFenixOJB implements
         return subsidyList;
     }
 
-    public List readAllSubsidiesByGrantContractAndState(Integer idContract,
-            Integer state) throws ExcepcaoPersistencia {
+    public List readAllSubsidiesByGrantContractAndState(Integer idContract, Integer state)
+            throws ExcepcaoPersistencia {
         List subsidyList = null;
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_contract", idContract);

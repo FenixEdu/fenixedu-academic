@@ -41,7 +41,9 @@ public class ReadAllTeachersNumberAndName implements IService {
             throw new FenixServiceException(e.getMessage());
         }
 
-        if (teachers == null) { return new ArrayList(); }
+        if (teachers == null) {
+            return new ArrayList();
+        }
 
         Iterator teachersIterator = teachers.iterator();
 

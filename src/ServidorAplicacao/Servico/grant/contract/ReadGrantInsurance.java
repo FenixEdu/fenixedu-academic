@@ -20,7 +20,6 @@ import ServidorPersistente.ISuportePersistente;
 public class ReadGrantInsurance extends ReadDomainObjectService {
 
     public ReadGrantInsurance() {
-
     }
 
     /*

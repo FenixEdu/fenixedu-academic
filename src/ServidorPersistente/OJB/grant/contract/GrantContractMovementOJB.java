@@ -1,12 +1,12 @@
 package ServidorPersistente.OJB.grant.contract;
 
-
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.grant.contract.GrantContractMovement;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.OJB.ObjectFenixOJB;
 import ServidorPersistente.grant.IPersistentGrantContractMovement;
 
 /**
@@ -14,18 +14,15 @@ import ServidorPersistente.grant.IPersistentGrantContractMovement;
  * @author Pica
  */
 
-public class GrantContractMovementOJB extends ServidorPersistente.OJB.ObjectFenixOJB
-		implements IPersistentGrantContractMovement {
+public class GrantContractMovementOJB extends ObjectFenixOJB implements IPersistentGrantContractMovement {
 
-	public GrantContractMovementOJB() 
-	{
-	    
-	}
+    public GrantContractMovementOJB() {
 
-	public List readAllMovementsByContract(Integer contractId) throws ExcepcaoPersistencia
-	{
-	    Criteria criteria = new Criteria();
-	    criteria.addEqualTo("keyGrantContract", contractId);
-	    return queryList(GrantContractMovement.class,criteria);   
-	}
+    }
+
+    public List readAllMovementsByContract(Integer contractId) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("keyGrantContract", contractId);
+        return queryList(GrantContractMovement.class, criteria);
+    }
 }

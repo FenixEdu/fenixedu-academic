@@ -71,12 +71,15 @@ public class SearchGrantOwner implements IService {
             //Search by name IF search by ID has failed
             if (person == null && grantOwner == null) {
                 if (name != null) {
-                    Integer tempNumberOfElementInSpan = new Integer(SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1); 
+                    Integer tempNumberOfElementInSpan = new Integer(
+                            SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1);
                     if (onlyGrantOwner.booleanValue()) {
-                        grantOwnerList = persistentGrantOwner.readGrantOwnerByPersonName(name,startIndex, tempNumberOfElementInSpan);
+                        grantOwnerList = persistentGrantOwner.readGrantOwnerByPersonName(name,
+                                startIndex, tempNumberOfElementInSpan);
                         numberOfResultsByName = persistentGrantOwner.countAllGrantOwnerByName(name);
                     } else {
-                        personList = persistentPerson.findPersonByName(name,startIndex,tempNumberOfElementInSpan);
+                        personList = persistentPerson.findPersonByName(name, startIndex,
+                                tempNumberOfElementInSpan);
                         numberOfResultsByName = persistentPerson.countAllPersonByName(name);
                     }
                 }
@@ -95,7 +98,8 @@ public class SearchGrantOwner implements IService {
                         infoGrantOwner = InfoGrantOwnerWithPerson.newInfoFromDomain(grantOwner);
                     else {
                         //The person is NOT a GrantOwner
-                        infoGrantOwner.setPersonInfo(InfoPersonWithInfoCountry.newInfoFromDomain(person));
+                        infoGrantOwner
+                                .setPersonInfo(InfoPersonWithInfoCountry.newInfoFromDomain(person));
                     }
                     infoGrantOwnerList.add(infoGrantOwner);
                 }
@@ -109,10 +113,8 @@ public class SearchGrantOwner implements IService {
 
             if (numberOfResultsByName != null) {
                 /**
-                 * Set an arraylist with:
-                 * 	position 0: result size
-                 *  position 1: start index used
-                 *  position 2: list with results
+                 * Set an arraylist with: position 0: result size position 1:
+                 * start index used position 2: list with results
                  */
                 List result = new ArrayList();
                 result.add(0, numberOfResultsByName);

@@ -27,61 +27,53 @@ import ServidorPersistente.grant.IPersistentGrantContract;
  * @author Pica
  * @author Barbosa
  */
-public class ReadGrantSubsidy extends ReadDomainObjectService
-{
-	public ReadGrantSubsidy()
-	{
-	}
+public class ReadGrantSubsidy extends ReadDomainObjectService {
+    public ReadGrantSubsidy() {
+    }
 
-	protected Class getDomainObjectClass()
-	{
-		return GrantSubsidy.class;
-	}
+    protected Class getDomainObjectClass() {
+        return GrantSubsidy.class;
+    }
 
-	protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-	{
-		return sp.getIPersistentGrantSubsidy();
-	}
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
+        return sp.getIPersistentGrantSubsidy();
+    }
 
-	protected InfoObject clone2InfoObject(IDomainObject domainObject)
-	{
-		return InfoGrantSubsidyWithContract.newInfoFromDomain((IGrantSubsidy) domainObject);
-	}
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+        return InfoGrantSubsidyWithContract.newInfoFromDomain((IGrantSubsidy) domainObject);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#run(java.lang.Integer)
-	 */
-	public InfoObject run(Integer objectId) throws FenixServiceException
-	{
-		InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) super.run(objectId);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#run(java.lang.Integer)
+     */
+    public InfoObject run(Integer objectId) throws FenixServiceException {
+        InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) super.run(objectId);
 
-		//TODO The ReadDomainObjectService only reads 2level depth of references to other objects.
-		//In this case we have InfoGrantSubsidy and its reference to InfoGrantContract.
-		//Now we need to get the references of InfoGrantContract, e.g., InfoGrantOwner
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentGrantContract pgc = sp.getIPersistentGrantContract();
+        //TODO The ReadDomainObjectService only reads 2level depth of
+        // references to other objects.
+        //In this case we have InfoGrantSubsidy and its reference to
+        // InfoGrantContract.
+        //Now we need to get the references of InfoGrantContract, e.g.,
+        // InfoGrantOwner
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentGrantContract pgc = sp.getIPersistentGrantContract();
 
-			InfoGrantContract infoGrantContract =
-				InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(
-					(IGrantContract) pgc.readByOID(
-						GrantContract.class,
-						infoGrantSubsidy.getInfoGrantContract().getIdInternal()));
+            InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType
+                    .newInfoFromDomain((IGrantContract) pgc.readByOID(GrantContract.class,
+                            infoGrantSubsidy.getInfoGrantContract().getIdInternal()));
 
-			//this section of code is temporary!!!! (see above the reason)
-			if(infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo() == null)
-				infoGrantSubsidy.getInfoGrantContract().setGrantOwnerInfo(new InfoGrantOwner());
-			
-			infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo().setIdInternal(
-				infoGrantContract.getGrantOwnerInfo().getIdInternal());
-		}
-		catch (ExcepcaoPersistencia e)
-		{
+            //this section of code is temporary!!!! (see above the reason)
+            if (infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo() == null)
+                infoGrantSubsidy.getInfoGrantContract().setGrantOwnerInfo(new InfoGrantOwner());
+
+            infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo().setIdInternal(
+                    infoGrantContract.getGrantOwnerInfo().getIdInternal());
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e.getMessage());
-		}
-		return infoGrantSubsidy;
-	}
+        }
+        return infoGrantSubsidy;
+    }
 }

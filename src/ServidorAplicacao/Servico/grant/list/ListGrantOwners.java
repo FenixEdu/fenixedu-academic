@@ -29,30 +29,28 @@ public class ListGrantOwners implements IService {
     public ListGrantOwners() {
     }
 
-	/**
-	 * Query the grant owner by criteria of grant contract
-	 * @returns an array of objects
-	 *    object[0] List of result
-	 *    object[1] IndoSpanListGrantOwner
-	 */
+    /**
+     * Query the grant owner by criteria of grant contract
+     * 
+     * @returns an array of objects object[0] List of result object[1]
+     *          IndoSpanListGrantOwner
+     */
 
-    public Object[] run(InfoSpanListGrantOwner infoSpanListGrantOwner)
-            throws FenixServiceException {
+    public Object[] run(InfoSpanListGrantOwner infoSpanListGrantOwner) throws FenixServiceException {
         //Read the grant owners ordered by span
         List grantOwnerBySpan = null;
         IPersistentGrantOwner persistentGrantOwner = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             persistentGrantOwner = sp.getIPersistentGrantOwner();
-            grantOwnerBySpan = persistentGrantOwner.readAllGrantOwnersBySpan(
-                    infoSpanListGrantOwner.getSpanNumber(),
-                    SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN,
+            grantOwnerBySpan = persistentGrantOwner.readAllGrantOwnersBySpan(infoSpanListGrantOwner
+                    .getSpanNumber(), SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN,
                     propertyOrderBy(infoSpanListGrantOwner.getOrderBy()));
 
             List listGrantOwner = null;
             if (grantOwnerBySpan != null && grantOwnerBySpan.size() != 0) {
                 listGrantOwner = new ArrayList();
-                
+
                 //For each Grant Owner construct the info list object.
                 for (int i = 0; i < grantOwnerBySpan.size(); i++) {
                     IGrantOwner grantOwner = (IGrantOwner) grantOwnerBySpan.get(i);
@@ -60,7 +58,7 @@ public class ListGrantOwners implements IService {
                 }
             }
 
-            if(infoSpanListGrantOwner.getTotalElements() == null) {
+            if (infoSpanListGrantOwner.getTotalElements() == null) {
                 //Setting the search attributes
                 infoSpanListGrantOwner.setTotalElements(persistentGrantOwner.countAll());
             }
@@ -84,30 +82,15 @@ public class ListGrantOwners implements IService {
         return result;
     }
 
-    private InfoListGrantOwnerByOrder convertToInfoListGrantOwnerByOrder(
-            IGrantOwner grantOwner) {
+    private InfoListGrantOwnerByOrder convertToInfoListGrantOwnerByOrder(IGrantOwner grantOwner) {
         InfoListGrantOwnerByOrder infoListGrantOwnerByOrder = new InfoListGrantOwnerByOrder();
 
         infoListGrantOwnerByOrder.setGrantOwnerId(grantOwner.getIdInternal());
         infoListGrantOwnerByOrder.setGrantOwnerNumber(grantOwner.getNumber());
 
-        infoListGrantOwnerByOrder.setFirstName(NameUtils
-                .getFirstName(grantOwner.getPerson().getNome()));
-        infoListGrantOwnerByOrder.setLastName(NameUtils.getLastName(grantOwner
-                .getPerson().getNome()));
+        infoListGrantOwnerByOrder.setFirstName(NameUtils.getFirstName(grantOwner.getPerson().getNome()));
+        infoListGrantOwnerByOrder.setLastName(NameUtils.getLastName(grantOwner.getPerson().getNome()));
 
         return infoListGrantOwnerByOrder;
     }
-
-    //TODO: ordenacao por ultimo nome!
-    //			Collections.sort(infoGrantOwnerList, new Comparator() {
-    //
-    //				public int compare(Object arg0, Object arg1)
-    //				{
-    //					InfoGrantOwner grantOwner0 = (InfoGrantOwner) arg0;
-    //					InfoGrantOwner grantOwner1 = (InfoGrantOwner) arg1;
-    //					
-    //					return
-    // grantOwner0.getPersonInfo().getPersonLastName().compareTo(grantOwner1.getPersonInfo().getPersonLastName());
-    //				}});
 }
