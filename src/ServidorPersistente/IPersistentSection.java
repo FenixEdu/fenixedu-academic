@@ -14,9 +14,11 @@ import Dominio.ISite;
 /**
  *
  * @author  ars
+ * @author lmac1
  */
 public interface IPersistentSection {
     ISection readBySiteAndSectionAndName(ISite site, ISection superiorSection, String name) throws ExcepcaoPersistencia;
+	List readBySiteAndSection(ISite site,ISection superiorSection)throws ExcepcaoPersistencia;
     void lockWrite(ISection section) throws ExcepcaoPersistencia;
     void delete(ISection section) throws ExcepcaoPersistencia;
     void deleteAll() throws ExcepcaoPersistencia;

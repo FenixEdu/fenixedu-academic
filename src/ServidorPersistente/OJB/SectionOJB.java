@@ -9,14 +9,18 @@ package ServidorPersistente.OJB;
 /**
  *
  * @author  ars
+ * @author  lmac1
  */
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.odmg.QueryException;
 
+import Dominio.IItem;
 import Dominio.ISection;
 import Dominio.ISite;
+import Dominio.Item;
 import Dominio.Section;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSection;
@@ -58,7 +62,6 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 			query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 			
 			if (section != null) {
-				System.out.println("Estou Aqui");
 				System.out.println(oqlQuery);
 				query.bind(section.getInternalCode());			
 			}
@@ -73,13 +76,130 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 		}
 	}
 
+	public List readBySiteAndSection(ISite site,ISection superiorSection)
+		throws ExcepcaoPersistencia {
+	try {
+			
+		Section section = (Section) superiorSection;
+		String oqlQuery = "select all from " + Section.class.getName();
+		oqlQuery +=	" and site.executionCourse.sigla = $1";
+		oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
+		oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
+		if (section == null) {
+				
+			oqlQuery += " and is_undefined(keySuperiorSection) " ;
+				
+		} else {
+				
+			oqlQuery += " and keySuperiorSection = $4";
+			}
+
+		query.create(oqlQuery);
+			
+		query.bind(site.getExecutionCourse().getSigla());
+		query.bind(site.getExecutionCourse().getExecutionPeriod().getName());
+		query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+			
+		if (section != null) {
+			System.out.println(oqlQuery);
+			query.bind(section.getInternalCode());			
+		}
+
+		List result = (List) query.execute();
+		lockRead(result);
+		
+		return result;
+	} catch (QueryException queryEx) {
+		throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, queryEx);
+	}
+}
+
 	public void lockWrite(ISection section) throws ExcepcaoPersistencia {
 		super.lockWrite(section);
 	}
 
+
+
+	public List getImediatlyInferiorSections(ISection section) throws ExcepcaoPersistencia {
+
+      try{
+      
+		
+		String oqlQuery = "select all from " + Section.class.getName();
+		oqlQuery
+		+= " where superiorSection.nome = $1 and section.site.disciplinaExecucao.sigla = $2 "
+		+ "and  section.site.disciplinaExecucao.executionPeriod.name = $3  "
+		+ "and  section.disciplinaExecucao.executionPeriod.executionYear.year = $4  ";
+		query.create(oqlQuery);
+		query.bind(section.getName());
+			
+		query.bind(section.getSite().getExecutionCourse().getSigla());
+		query.bind(
+		section.getSite().getExecutionCourse().getExecutionPeriod().getName());
+		query.bind(
+		section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+						
+		
+		List result = (List) query.execute();
+		lockRead(result);
+		return result;
+		
+      } catch (QueryException ex) {
+	  throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		
+	 }
+    }
+
+
 	public void delete(ISection section) throws ExcepcaoPersistencia {
+					
+		ISection inferiorSection = section;
+		SectionOJB inferiorSectionOJB = new SectionOJB();			
+				
+		List imediatlyInferiorSections = getImediatlyInferiorSections(section);
+		Iterator iterator = imediatlyInferiorSections.iterator();
+			
+		while(iterator.hasNext()){
+		    	
+		    inferiorSection = (ISection) iterator.next();
+	  		delete(inferiorSection);
+		}
+		    
+	  		super.delete(inferiorSection);
+	
+
+
+		try {
+
+			IItem item = null;
+			ItemOJB itemOJB = new ItemOJB();
+			String oqlQuery = "select all from " + Item.class.getName();
+			oqlQuery
+			+= " where section.nome = $1 and section.site.disciplinaExecucao.sigla = $2 "
+			+ "and  section.site.disciplinaExecucao.executionPeriod.name = $3  "
+			+ "and  section.disciplinaExecucao.executionPeriod.executionYear.year = $4  ";
+			query.create(oqlQuery);
+			query.bind(section.getName());
+			query.bind(section.getSite().getExecutionCourse().getSigla());
+			query.bind(section.getSite().getExecutionCourse().getExecutionPeriod().getName());
+			query.bind(section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+						
+			List result = (List) query.execute();
+			lockRead(result);
+			
+			Iterator iterador = result.iterator();
+			while (iterador.hasNext()) {
+				item = (IItem) iterador.next();
+				itemOJB.delete(item);
+			}
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+		
+		
 		super.delete(section);
 	}
+
 
 	public void deleteAll() throws ExcepcaoPersistencia {
 		String oqlQuery = "select all from " + Section.class.getName();
