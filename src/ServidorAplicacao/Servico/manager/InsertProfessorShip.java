@@ -3,18 +3,21 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoProfessorship;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
+import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
 import Dominio.Professorship;
-import ServidorAplicacao.IServico;
+import Dominio.ResponsibleFor;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
+import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -23,54 +26,69 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author lmac1
  */
+public class InsertProfessorShip implements IService
+{
+    public InsertProfessorShip()
+    {
+    }
 
-public class InsertProfessorShip implements IServico {
+    public void run(InfoProfessorship infoProfessorShip, Boolean responsibleFor)
+            throws FenixServiceException
+    {
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-	private static InsertProfessorShip service = new InsertProfessorShip();
+            Integer executionCourseId = infoProfessorShip.getInfoExecutionCourse().getIdInternal();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
+                    new ExecutionCourse(executionCourseId), false);
 
-	public static InsertProfessorShip getService() {
-		return service;
-	}
+            if (executionCourse == null)
+            {
+                throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
+            }
 
-	private InsertProfessorShip() {
-	}
+            Integer teacherNumber = infoProfessorShip.getInfoTeacher().getTeacherNumber();
+            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
 
-	public final String getNome() {
-		return "InsertProfessorShip";
-	}
-	
+            if (teacher == null)
+            {
+                throw new NonExistingServiceException("message.non.existing.teacher", null);
+            }
 
-	public void run(InfoProfessorship infoProfessorShip) throws FenixServiceException {
-	
-		try {
-				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-				
-				Integer executionCourseId = infoProfessorShip.getInfoExecutionCourse().getIdInternal();
-				IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
-				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseId), false);
-				
-				if(executionCourse == null)
-					throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
-				
-				Integer teacherNumber = infoProfessorShip.getInfoTeacher().getTeacherNumber();
-				IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-				ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
-				
-				if(teacher == null)
-					throw new NonExistingServiceException("message.non.existing.teacher", null);
-				
-				IPersistentProfessorship persistentProfessorShip = persistentSuport.getIPersistentProfessorship();
-				
-				IProfessorship professorShip = new Professorship();
-				professorShip.setExecutionCourse(executionCourse);
-				professorShip.setTeacher(teacher);						
+            IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
 
-				persistentProfessorShip.lockWrite(professorShip);
-					
-		} catch (ExistingPersistentException e) {
-			return;
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-	}
+            IProfessorship professorShip = new Professorship();
+            professorShip.setExecutionCourse(executionCourse);
+            professorShip.setTeacher(teacher);
+
+            persistentProfessorShip.lockWrite(professorShip);
+
+            if (responsibleFor.booleanValue())
+            {
+                IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
+
+                IResponsibleFor responsibleForTeacher = responsibleForDAO
+                        .readByTeacherAndExecutionCoursePB(teacher, executionCourse);
+                if (responsibleForTeacher == null)
+                {
+                    responsibleForTeacher = new ResponsibleFor();
+                    responsibleForDAO.simpleLockWrite(responsibleForTeacher);
+                    responsibleForTeacher.setExecutionCourse(executionCourse);
+                    responsibleForTeacher.setTeacher(teacher);
+                }
+            }
+
+        }
+        catch (ExistingPersistentException e)
+        {
+            return;
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+    }
 }
