@@ -101,7 +101,9 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 
 		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 		Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
-
+		if(associateForm.get("executionCourseId")==null)
+			return mapping.findForward("viewExecutionCoursesToAssociate");
+			
 		Integer executionCourseId =
 			new Integer((String) associateForm.get("executionCourseId"));
 

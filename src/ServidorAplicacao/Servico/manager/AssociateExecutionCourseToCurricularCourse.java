@@ -43,6 +43,7 @@ public class AssociateExecutionCourseToCurricularCourse implements IServico {
 	public void run(Integer executionCourseId, Integer curricularCourseId, Integer executionPeriodId) throws FenixServiceException {
 	
 		try {
+			
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				
 				IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();

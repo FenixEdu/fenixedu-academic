@@ -45,16 +45,15 @@ public class ReadTeacherInChargeAction extends FenixAction {
 					throw new FenixActionException(fenixServiceException.getMessage());
 				}
 				
-				
 		List infoTeachersList = null;
-
+		
 		try {
 			infoTeachersList = (List) ServiceUtils.executeService(userView, "ReadExecutionCourseTeachers", args);
 			
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
-	
+		
 		if(infoTeachersList != null) {
 			List teachersIds = new ArrayList();
 			Integer teacherId;
@@ -69,7 +68,7 @@ public class ReadTeacherInChargeAction extends FenixAction {
 			newForm.set("professorShipTeachersIds", professorShipTeachersIds);
 		
 			List responsiblesIds = null;
-		
+			
 			try {
 					responsiblesIds = (List) ServiceUtils.executeService(userView, "ReadExecutionCourseResponsiblesIds", args);
 			
@@ -80,10 +79,10 @@ public class ReadTeacherInChargeAction extends FenixAction {
 			Integer[] responsibleTeachersIds = (Integer[]) responsiblesIds.toArray(new Integer[]{});
 			newForm.set("responsibleTeachersIds", responsibleTeachersIds);
 			request.setAttribute("infoTeachersList", infoTeachersList);
-			request.setAttribute("executionCourseName", infoExecutionCourse.getNome());
+			
 
 		}
-		
+		request.setAttribute("executionCourseName", infoExecutionCourse.getNome());
 		return mapping.findForward("readExecutionCourseTeachers");
 	}
 
