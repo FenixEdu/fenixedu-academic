@@ -33,9 +33,9 @@
 
    <logic:equal name="infoStudentCurricularPlan" property="specialization" value="Mestrado">
     	<%-- Candidate Information if necessary --%>
-   		<jsp:include page="./informationTemplate1.jsp" flush="true" />
+   		<jsp:include page="./declarationTemplate2.jsp" flush="true" />
 	</logic:equal >	
 
-	<jsp:include page="./informationTemplate2.jsp" flush="true" />
+	<jsp:include page="./declarationTemplate3.jsp" flush="true" />
 	  	
 	</table>

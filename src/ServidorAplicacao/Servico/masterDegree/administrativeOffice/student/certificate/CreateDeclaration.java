@@ -86,24 +86,6 @@ public class CreateDeclaration implements IServico {
 		else
 			return Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
 			
-		//		try {
-		//			// Give the Master Degree Candidate Role
-		//			IPersonRole personRole = new PersonRole();
-		//			role = sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
-		//			personRole.setPerson(person);
-		//			personRole.setRole(role);
-		//				
-		//			sp.getIPersistentPersonRole().write(personRole);
-		//
-		//		} catch (ExistingPersistentException ex) {
-		//			// This person is already a Candidate. No need to give the role again
-		//		} catch (ExcepcaoPersistencia ex) {
-		//			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-		//			newEx.fillInStackTrace();
-		//			throw newEx;
-		//		} 
-		//		
-		//		// Return the new Candidate
-		
+				
 	}
 }
