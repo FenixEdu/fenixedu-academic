@@ -1,8 +1,7 @@
 /*
  * Created on 2/Abr/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
+ * 
  */
 package ServidorAplicacao.Servico.gesdis.teacher;
 

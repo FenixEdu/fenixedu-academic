@@ -32,8 +32,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author PTRLV
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
  */
 public class ReadBibliographicReference implements IServico {
 
