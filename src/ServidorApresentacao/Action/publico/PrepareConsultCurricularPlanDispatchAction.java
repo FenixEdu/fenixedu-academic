@@ -51,32 +51,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         request.setAttribute("index", index);
         indexForm.set("index", index);
 
-	        DynaActionForm indexForm = (DynaActionForm) form;
-     
-	 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-			request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);   
-			Integer executionYear =  (Integer) indexForm.get("indice");
-
-			Integer semestre = infoExecutionPeriod.getSemester();
-			Integer anoCurricular = (Integer) indexForm.get("curYear");
-
-			Integer degreeCurricularPlanId =
-			(Integer)request.getAttribute("degreeCurricularPlanID");
-			if (degreeCurricularPlanId == null)
-				degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
-			request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
-
-			Integer degreeId = (Integer)request.getAttribute("degreeID");
-			if (degreeId == null)
-				degreeId = Integer.valueOf(request.getParameter("degreeID"));
-			request.setAttribute("degreeID", degreeId);
-
-			Integer index =  (Integer) indexForm.get("index");
-			Integer curricularYear = (Integer) indexForm.get("curYear");
-			request.setAttribute("index", index);
-			indexForm.set("index", index);
-			   
-	 		 /*	------------------------------------*/
+	 		request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);   
 
 		   /* Criar o bean de anos curricutares */
 			 List anosCurriculares = new ArrayList();
@@ -137,7 +112,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 
 				 if (selectedExecutionPeriod != null) {
  
-					 indexForm.set("indice", (Integer)selectedExecutionPeriod.getInfoExecutionYear().getIdInternal());
+					 indexForm.set("indice", selectedExecutionPeriod.getInfoExecutionYear().getIdInternal());
 					 indexForm.set("curYear",new Integer(anosCurriculares.indexOf(anosCurriculares.get(0))));
 		//)
 					 request.setAttribute(SessionConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
@@ -161,7 +136,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 		
 							if (infoExecutionDegrees.size() >= 1) {
 								infoExecutionDegree= (InfoExecutionDegree) infoExecutionDegrees.get(infoExecutionDegrees.size()-1);
-								indexForm.set("indice", (Integer)infoExecutionDegree.getInfoExecutionYear().getIdInternal());
+								indexForm.set("indice", infoExecutionDegree.getInfoExecutionYear().getIdInternal());
 							}   	
 								
 						
@@ -235,7 +210,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         }
 
         request.setAttribute(SessionConstants.EXECUTION_PERIOD,
-                (InfoExecutionPeriod) infoExecutionPeriodList.get(0));
+                infoExecutionPeriodList.get(0));
         request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID,
                 ((InfoExecutionPeriod) infoExecutionPeriodList.get(0)).getIdInternal().toString());
         RequestUtils.setExecutionPeriodToRequest(request, (InfoExecutionPeriod) infoExecutionPeriodList
