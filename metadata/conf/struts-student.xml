@@ -176,6 +176,14 @@
       </action>
       
       <action 
+        type="ServidorApresentacao.Action.student.ViewStudentTimeTable"
+        path="/studentTimeTable"  
+        >
+        <forward name="sucess" path="/classTimeTable.jsp"/>
+      </action>
+      
+      
+      <action 
         type="ServidorApresentacao.Action.commons.VoidAction"
         path="/studentShiftEnrolmentOptions"
         scope="request">

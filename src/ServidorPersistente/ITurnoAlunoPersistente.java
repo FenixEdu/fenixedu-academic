@@ -13,6 +13,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
@@ -21,6 +22,8 @@ import Util.TipoAula;
 
 
 public interface ITurnoAlunoPersistente extends IPersistentObject {
+	
+	public List readByStudentAndExecutionPeriod(IStudent student,IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
     public ITurnoAluno readByTurnoAndAluno(ITurno turno, IStudent aluno)
                throws ExcepcaoPersistencia;
     public void lockWrite(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia, ExistingPersistentException;

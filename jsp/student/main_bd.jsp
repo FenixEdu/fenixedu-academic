@@ -11,13 +11,13 @@
 			<bean:message key="group.enrolment"/>
 		</th>
 	</tr>
-	<tr>
+	<%--<tr>
 		<td>
 			<html:link page="/curricularCourseEnrolmentManager.do?method=start">
 				<bean:message key="link.curricular.course.enrolment"/>
 			</html:link>
 		</td> 
-	</tr>
+	</tr>--%>
 	<tr>
 		<td>
 			<html:link page="/studentShiftEnrolmentManager.do?method=enrollCourses&amp;firstTime=yes">
@@ -35,6 +35,21 @@
 </table>
 <br />
 <br />
+
+
+<table cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<th>
+			<html:link page="/studentTimeTable.do" target="_blank" >
+				O Meu Horário
+			</html:link>
+		</th>
+	</tr>
+</table>
+<br />
+<br />
+
+
 <table cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<th>
