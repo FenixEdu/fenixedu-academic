@@ -241,9 +241,13 @@
 		input="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning" 
 		parameter="method"
         scope="request"
-        validate="false">                           
+        validate="false">
 			<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
 					key="error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+			/>
+			<exception type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+					key="error.transaction.enrolment"
 					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
 			/>
         <forward name="beginTransaction" path="/studentShiftEnrollmentManager.do?method=start&amp;firstTime=true"/>
