@@ -107,20 +107,38 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 	 */
 	private static void makeEquivalences(IStudent student, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
-		IStudentCurricularPlan pastStudentCurricularPlan = MakeEquivalencesForAllStudentsPastEnrolments.getStudentCurricularPlan(student, StudentCurricularPlanState.PAST_OBJ, fenixPersistentSuport);
-		if (pastStudentCurricularPlan == null) {
-			System.out.println("[ERROR 302] Could not obtain past StudentCurricularPlan for Student with number: [" + student.getNumber() + "]!");
-			return;
-		}
-		
-		IStudentCurricularPlan currentStudentCurricularPlan = MakeEquivalencesForAllStudentsPastEnrolments.getStudentCurricularPlan(student, StudentCurricularPlanState.ACTIVE_OBJ, fenixPersistentSuport);
-		if (pastStudentCurricularPlan == null) {
-			System.out.println("[ERROR 303] Could not obtain current StudentCurricularPlan for Student with number: [" + student.getNumber() + "]!");
-			return;
-		}
-		if(currentStudentCurricularPlan.getDegreeCurricularPlan().getIdInternal().equals(Integer.valueOf("48")))
+		IStudentCurricularPlan pastStudentCurricularPlan =
+			MakeEquivalencesForAllStudentsPastEnrolments.getStudentCurricularPlan(
+				student,
+				StudentCurricularPlanState.PAST_OBJ,
+				fenixPersistentSuport);
+		if (pastStudentCurricularPlan == null)
 		{
-			MakeEquivalencesForAllStudentsPastEnrolments.writeAndUpdateEnrolments(student, pastStudentCurricularPlan, currentStudentCurricularPlan, fenixPersistentSuport);
+			System.out.println(
+				"[ERROR 302] Could not obtain past StudentCurricularPlan for Student with number: [" + student.getNumber() + "]!");
+			return;
+		}
+
+		IStudentCurricularPlan currentStudentCurricularPlan =
+			MakeEquivalencesForAllStudentsPastEnrolments.getStudentCurricularPlan(
+				student,
+				StudentCurricularPlanState.ACTIVE_OBJ,
+				fenixPersistentSuport);
+		if (currentStudentCurricularPlan == null)
+		{
+			System.out.println(
+				"[ERROR 303] Could not obtain current StudentCurricularPlan for Student with number: ["
+					+ student.getNumber()
+					+ "]!");
+			return;
+		}
+		if (currentStudentCurricularPlan.getDegreeCurricularPlan().getIdInternal().equals(Integer.valueOf("48")))
+		{
+			MakeEquivalencesForAllStudentsPastEnrolments.writeAndUpdateEnrolments(
+				student,
+				pastStudentCurricularPlan,
+				currentStudentCurricularPlan,
+				fenixPersistentSuport);
 		}
 	}
 
@@ -131,14 +149,21 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 	 * @return
 	 * @throws Throwable
 	 */
-	private static IStudentCurricularPlan getStudentCurricularPlan(IStudent student, StudentCurricularPlanState studentCurricularPlanState,ISuportePersistente fenixPersistentSuport) throws Throwable
+	private static IStudentCurricularPlan getStudentCurricularPlan(
+		IStudent student,
+		StudentCurricularPlanState studentCurricularPlanState,
+		ISuportePersistente fenixPersistentSuport)
+		throws Throwable
 	{
-		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = fenixPersistentSuport.getIStudentCurricularPlanPersistente();
+		IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
+			fenixPersistentSuport.getIStudentCurricularPlanPersistente();
 
 		List result = persistentStudentCurricularPlan.readAllByStudentAntState(student, studentCurricularPlanState);
-		if ((result != null) && (!result.isEmpty())) {
+		if ((result != null) && (!result.isEmpty()))
+		{
 			return (IStudentCurricularPlan) result.get(0);
-		} else {
+		} else
+		{
 			return null;
 		}
 	}
@@ -150,7 +175,12 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 	 * @param fenixPersistentSuport
 	 * @throws Throwable
 	 */
-	private static void writeAndUpdateEnrolments(IStudent student, IStudentCurricularPlan pastStudentCurricularPlan, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+	private static void writeAndUpdateEnrolments(
+		IStudent student,
+		IStudentCurricularPlan pastStudentCurricularPlan,
+		IStudentCurricularPlan currentStudentCurricularPlan,
+		ISuportePersistente fenixPersistentSuport)
+		throws Throwable
 	{
 		List realPastEnrolments = pastStudentCurricularPlan.getEnrolments();
 		List pastEnrolments = MakeEquivalencesForILEECStudents.keepOnlyImprovments(realPastEnrolments, fenixPersistentSuport);
@@ -164,23 +194,20 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 				ICurricularCourse curricularCourse = enrolment.getCurricularCourse();
 				IDegreeCurricularPlan currentDegreeCurricularPlan = currentStudentCurricularPlan.getDegreeCurricularPlan();
 
-				ICurricularCourse curricularCourseFromCurrentDegreeCurricularPlan = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseFromCurrentDegreeCurricularPlan(curricularCourse, currentDegreeCurricularPlan, fenixPersistentSuport);
+				ICurricularCourse curricularCourseFromCurrentDegreeCurricularPlan =
+					MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseFromCurrentDegreeCurricularPlan(
+						curricularCourse,
+						currentDegreeCurricularPlan,
+						fenixPersistentSuport);
 				
-				if (curricularCourseFromCurrentDegreeCurricularPlan == null)
+				if (curricularCourseFromCurrentDegreeCurricularPlan != null)
 				{
-					continue;
+					MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(
+						enrolment,
+						curricularCourseFromCurrentDegreeCurricularPlan,
+						currentStudentCurricularPlan,
+						fenixPersistentSuport);
 				}
-
-//				ICurricularCourseScope curricularCourseScope = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseScope(enrolment, curricularCourseFromCurrentDegreeCurricularPlan);
-//				if (curricularCourseScope == null)
-//				{
-//					System.out.println("[ERROR 304] Cannot find Fenix CurricularCourseScope for CurricularCourse with code [" + curricularCourse.getCode() + "] and name [" + curricularCourse.getName() + "] in period [year: " + enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear().toString() + " semester: " + enrolment.getCurricularCourseScope().getCurricularSemester().getSemester().toString() + "] in Degree: [" + currentDegreeCurricularPlan.getDegree().getNome() + "] for student: [" + student.getNumber().toString() + "]!");
-//					continue;
-//				}
-//
-//				MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(enrolment, curricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
-
-				MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(enrolment, curricularCourse, currentStudentCurricularPlan, fenixPersistentSuport);
 			}
 		}
 	}
@@ -237,21 +264,27 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 	 * @return
 	 * @throws Throwable
 	 */
-//	private static IEnrolment writeEnrollment(IEnrolment enrolment, ICurricularCourseScope curricularCourseScope, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
-	private static IEnrolment writeEnrollment(IEnrolment enrolment, ICurricularCourse curricularCourse, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+	private static IEnrolment writeEnrollment(
+		IEnrolment enrolment,
+		ICurricularCourse curricularCourse,
+		IStudentCurricularPlan currentStudentCurricularPlan,
+		ISuportePersistente fenixPersistentSuport)
+		throws Throwable
 	{
 		IPersistentEnrolment persistentEnrolment = fenixPersistentSuport.getIPersistentEnrolment();
 
 		IExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
 
-//		IEnrolment enrolmentToWrite = persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(currentStudentCurricularPlan, curricularCourseScope, executionPeriod);
-		IEnrolment enrolmentToWrite = persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(currentStudentCurricularPlan, curricularCourse, executionPeriod);
+		IEnrolment enrolmentToWrite =
+			persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+				currentStudentCurricularPlan,
+				curricularCourse,
+				executionPeriod);
 
 		if (enrolmentToWrite == null)
 		{
 			IEnrolment enrolmentToObtainKey = new Enrolment();
 			enrolmentToObtainKey.setStudentCurricularPlan(currentStudentCurricularPlan);
-//			enrolmentToObtainKey.setCurricularCourseScope(curricularCourseScope);
 			enrolmentToObtainKey.setCurricularCourse(curricularCourse);
 			enrolmentToObtainKey.setExecutionPeriod(executionPeriod);
 			String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentKey(enrolmentToObtainKey);
@@ -264,14 +297,13 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 
 				fenixPersistentSuport.getIPersistentEnrolment().simpleLockWrite(enrolmentToWrite);
 
-//				enrolmentToWrite.setCurricularCourseScope(curricularCourseScope);
 				enrolmentToWrite.setCurricularCourse(curricularCourse);
 				enrolmentToWrite.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
 				enrolmentToWrite.setEnrolmentState(enrolment.getEnrolmentState());
 				enrolmentToWrite.setExecutionPeriod(executionPeriod);
 				enrolmentToWrite.setStudentCurricularPlan(currentStudentCurricularPlan);
 
-				MakeEquivalencesForAllStudentsPastEnrolments.enrollmentsCreated.put(key, enrolment);
+				MakeEquivalencesForAllStudentsPastEnrolments.enrollmentsCreated.put(key, enrolmentToWrite);
 				MakeEquivalencesForAllStudentsPastEnrolments.totalEnrollmentsCreated++;
 			}
 		}
@@ -281,7 +313,10 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 		while (iterator.hasNext())
 		{
 			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-			MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollmentEvaluation(enrolmentEvaluation, enrolmentToWrite, fenixPersistentSuport);
+			MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollmentEvaluation(
+				enrolmentEvaluation,
+				enrolmentToWrite,
+				fenixPersistentSuport);
 		}
 
 		return enrolmentToWrite;

@@ -1072,12 +1072,15 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentScientificArea scientificAreaDAO = persistentSuport.getIPersistentScientificArea();
-		IScientificArea scientificArea = curricularCourse.getScientificArea();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
 
-		List specializationScientificAreas = scientificAreaDAO.readAllByBranch(studentCurricularPlan.getBranch());
-
-		return specializationScientificAreas.contains(scientificArea);
+		ICurricularCourseGroup curricularCourseGroup =
+			curricularCourseGroupDAO.readByBranchAndCurricularCourseAndAreaType(
+				studentCurricularPlan.getBranch(),
+				curricularCourse,
+				AreaType.SPECIALIZATION_OBJ);
+		
+		return curricularCourseGroup != null;
 	}
 
 	/**
@@ -1092,12 +1095,15 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentScientificArea scientificAreaDAO = persistentSuport.getIPersistentScientificArea();
-		IScientificArea scientificArea = curricularCourse.getScientificArea();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
 
-		List secundaryScientificAreas = scientificAreaDAO.readAllByBranch(studentCurricularPlan.getSecundaryBranch());
-
-		return secundaryScientificAreas.contains(scientificArea);
+		ICurricularCourseGroup curricularCourseGroup =
+		curricularCourseGroupDAO.readByBranchAndCurricularCourseAndAreaType(
+				studentCurricularPlan.getSecundaryBranch(),
+				curricularCourse,
+				AreaType.SECONDARY_OBJ);
+		
+		return curricularCourseGroup != null;
 	}
 
 	/**
