@@ -7,7 +7,6 @@ package ServidorAplicacao.Filtro.teacher;
 import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
 import ServidorAplicacao.Filtro.AuthorizationUtils;

@@ -24,6 +24,8 @@ abstract public class Filtro extends AccessControlFilter /* implements IFilter *
 	 * 
 	 * @throws FenixServiceException
 	 * @throws NotAuthorizedException
+	 * 
+	 * @deprecated use execute(ServiceRequest arg0, ServiceResponse arg1) instead
 	 */
 	abstract public void preFiltragem(IUserView requester, Object arguments[]) throws Exception;
 

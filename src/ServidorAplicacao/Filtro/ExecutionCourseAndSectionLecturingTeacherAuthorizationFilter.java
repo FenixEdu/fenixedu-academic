@@ -14,7 +14,6 @@ import Dominio.IProfessorship;
 import Dominio.ISection;
 import Dominio.ITeacher;
 import Dominio.Section;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.IPersistentExecutionCourse;
@@ -54,7 +53,6 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter
 
 	public void preFiltragem(
 		IUserView id,
-		IServico servico,
 		Object[] argumentos)
 		throws Exception {
 		if ((id == null)

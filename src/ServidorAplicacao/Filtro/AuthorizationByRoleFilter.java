@@ -16,6 +16,8 @@ public abstract class AuthorizationByRoleFilter extends Filtro {
 	/**
 	 * @see ServidorAplicacao.Filtro.Filtro#preFiltragem(IUserView, IServico, Object[])
 	 * @throws ServidorAplicacao.NotAuthorizedException if the user doesn't contains role returned by getRoleType() function
+	 * 
+	 * @deprecated use execute(ServiceRequest arg0, ServiceResponse arg1) instead
 	 */
 	public void preFiltragem(
 		IUserView id,

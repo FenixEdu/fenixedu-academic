@@ -7,17 +7,16 @@ package ServidorAplicacao.Filtro;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.ExecutionCourse;
 import Dominio.Exam;
-import Dominio.IExecutionCourse;
+import Dominio.ExecutionCourse;
 import Dominio.IExam;
+import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExam;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -54,7 +53,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
         return RoleType.TEACHER;
     }
 
-    public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
+    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
     {
         try
         {

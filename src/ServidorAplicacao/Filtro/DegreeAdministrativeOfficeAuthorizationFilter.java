@@ -1,6 +1,5 @@
 package ServidorAplicacao.Filtro;
 
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import Util.RoleType;
 
@@ -34,7 +33,7 @@ public class DegreeAdministrativeOfficeAuthorizationFilter extends Authorization
     /* (non-Javadoc)
      * @see ServidorAplicacao.Filtro.Filtro#preFiltragem(ServidorAplicacao.IUserView, ServidorAplicacao.IServico, java.lang.Object[])
      */
-    public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
+    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
     {
 
         if (!AuthorizationUtils

@@ -13,10 +13,9 @@ import org.apache.commons.collections.CollectionUtils;
 import DataBeans.InfoExam;
 import DataBeans.util.Cloner;
 import Dominio.Exam;
-import Dominio.IExecutionCourse;
 import Dominio.IExam;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.IFrequentaPersistente;
@@ -44,7 +43,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter
         return instance;
     }
 
-    public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
+    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
     {
         try
         {

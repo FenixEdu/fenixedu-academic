@@ -14,11 +14,10 @@ import Dominio.IAnnouncement;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentAnnouncement;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -54,7 +53,6 @@ public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter
 
 	public void preFiltragem(
 		IUserView id,
-		IServico servico,
 		Object[] argumentos)
 		throws NotAuthorizedException {
 		try {

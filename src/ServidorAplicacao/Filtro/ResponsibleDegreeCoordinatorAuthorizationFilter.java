@@ -7,7 +7,6 @@ package ServidorAplicacao.Filtro;
 
 import Dominio.ICoordinator;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.IPersistentCoordinator;
@@ -42,7 +41,7 @@ public class ResponsibleDegreeCoordinatorAuthorizationFilter extends Authorizati
 		return RoleType.COORDINATOR;
 	}
 
-	public void preFiltragem(IUserView id, IServico servico, Object[] argumentos)
+	public void preFiltragem(IUserView id, Object[] argumentos)
 		throws NotAuthorizedException {
 		try {
 			if ((id == null)

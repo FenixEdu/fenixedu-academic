@@ -10,7 +10,6 @@ import Dominio.ICoordinator;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -47,7 +46,7 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
 		return RoleType.COORDINATOR;
 	}
 
-	public void preFiltragem(IUserView id, IServico servico, Object[] argumentos)
+	public void preFiltragem(IUserView id, Object[] argumentos)
 		throws NotAuthorizedException {
 		try {
 			if ((id == null)

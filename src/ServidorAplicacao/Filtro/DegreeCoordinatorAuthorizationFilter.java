@@ -46,7 +46,7 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
         return RoleType.COORDINATOR;
     }
 
-    public void preFiltragem(IUserView id, IServico servico, Object[] argumentos)
+    public void preFiltragem(IUserView id, Object[] argumentos)
         throws NotAuthorizedException
     {
         try

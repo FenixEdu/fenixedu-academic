@@ -11,7 +11,6 @@ import Dominio.IExecutionCourse;
 import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
 import Dominio.ResponsibleFor;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
@@ -56,7 +55,7 @@ public class ReadCourseInformationAuthorizationFilter extends AuthorizationByRol
         return RoleType.TEACHER;
     }
 
-    public void preFiltragem(IUserView id, IServico service, Object[] arguments)
+    public void preFiltragem(IUserView id, Object[] arguments)
         throws NotAuthorizedException
     {
         try

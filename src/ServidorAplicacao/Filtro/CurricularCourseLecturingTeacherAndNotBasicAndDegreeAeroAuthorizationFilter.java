@@ -15,11 +15,10 @@ import Dominio.ICurso;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -58,7 +57,7 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
         return RoleType.TEACHER;
     }
 
-    public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
+    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
     {
         System.out.println("CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizationFilter-->PreFiltragem");
         
