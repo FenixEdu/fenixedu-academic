@@ -91,7 +91,6 @@ public class ReadTeachersByExecutionCourseProfessorshipTest
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
 	 */
 	protected int getNumberOfItemsToRetrieve() {
-		
 		return 2;
 	}
 
