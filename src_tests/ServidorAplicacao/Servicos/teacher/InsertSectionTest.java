@@ -31,7 +31,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/dbContentsSection.xml";
+		return "etc/datasets/servicos/teacher/testInsertSectionDataSet.xml";
 	}
 
 	protected String[] getAuthorizedUser() {
@@ -64,25 +64,23 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 	}
 
 	protected Object[] getTestSectionUnsuccessfullArguments() {
-		Object[] args = { new Integer(27), new Integer(7), "novaSubSeccao", new Integer(0) };
+		Object[] args = { new Integer(27), new Integer(9), "novaSubSeccao", new Integer(0) };
 		return args;
 	}
 
 	public void testInsertExistingSection() {
 
 		Object[] args = { new Integer(27), null, "Seccao1dePO", new Integer(0) };
-		Object result = null;
 
 		try {
-			result =
-				gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 			System.out.println(
 				"testInsertExistingSection was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 			fail("testInsertExistingSection");
 
 		} catch (ExistingServiceException e) {
-			compareDataSet(getDataSetFilePath());
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertExistingSectionDataSet.xml");
 			System.out.println(
 				"testInsertExistingSection was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -95,16 +93,16 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 		}
 	}
 
-	public void testInsertNonExistingSection() {
+	public void testInsertNonExistingSectionBeforeFirst() {
 		
 		Object[] args = { new Integer(27), null, "novaSeccao", new Integer(0)};
-		Object result = null;
 
 		try {
-			result =
-				gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 			
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			persistentSuport.iniciarTransaccao();
+			
 			ISite iSite = new Site();
 			iSite.setIdInternal(new Integer(4));
 			iSite = (ISite) persistentSuport.getIPersistentSite().readByOId(iSite, false);
@@ -115,36 +113,107 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 			assertEquals(infoSection.getSectionOrder(), new Integer(0));
 			assertEquals(infoSection.getSuperiorInfoSection(), null);
 
-			
 			persistentSection.delete(iSection);
-			compareDataSet("etc/datasets/dbContentsInsertSection.xml");
+			persistentSuport.confirmarTransaccao();			
+			
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertSectionBeforeFirstDataSet.xml");
 			System.out.println(
-				"testInsertNonExistingSection was SUCCESSFULY runned by class: "
+				"testInsertNonExistingSectionBeforeFirst was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println(
-				"testInsertNonExistingSection was UNSUCCESSFULY runned by class: "
+				"testInsertNonExistingSectionBeforeFirst was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-			fail("testInsertNonExistingSection");
+			fail("testInsertNonExistingSectionBeforeFirst");
 		}
 	}
-	
+
+	public void testInsertNonExistingSectionInMiddle() {
+		
+		Object[] args = { new Integer(27), null, "novaSeccao", new Integer(1)};
+
+		try {
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			persistentSuport.iniciarTransaccao();
+			
+			ISite iSite = new Site();
+			iSite.setIdInternal(new Integer(4));
+			iSite = (ISite) persistentSuport.getIPersistentSite().readByOId(iSite, false);
+			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
+			ISection iSection = persistentSection.readBySiteAndSectionAndName(iSite, null, "novaSeccao");
+			InfoSection infoSection = Cloner.copyISection2InfoSection(iSection);
+			assertEquals(infoSection.getName(), "novaSeccao");
+			assertEquals(infoSection.getSectionOrder(), new Integer(1));
+			assertEquals(infoSection.getSuperiorInfoSection(), null);
+
+			persistentSection.delete(iSection);
+			persistentSuport.confirmarTransaccao();
+
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertSectionInMiddleDataSet.xml");
+			System.out.println(
+				"testInsertNonExistingSectionInMiddle was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testInsertNonExistingSectionInMiddle was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testInsertNonExistingSectionInMiddle");
+		}
+	}
+
+	public void testInsertNonExistingSectionBeforeEnd() {
+		
+		Object[] args = { new Integer(27), null, "novaSeccao", new Integer(2)};
+
+		try {
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			persistentSuport.iniciarTransaccao();
+			
+			ISite iSite = new Site();
+			iSite.setIdInternal(new Integer(4));
+			iSite = (ISite) persistentSuport.getIPersistentSite().readByOId(iSite, false);
+			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
+			ISection iSection = persistentSection.readBySiteAndSectionAndName(iSite, null, "novaSeccao");
+			InfoSection infoSection = Cloner.copyISection2InfoSection(iSection);
+			assertEquals(infoSection.getName(), "novaSeccao");
+			assertEquals(infoSection.getSectionOrder(), new Integer(2));
+			assertEquals(infoSection.getSuperiorInfoSection(), null);
+
+			persistentSection.delete(iSection);
+			persistentSuport.confirmarTransaccao();
+
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertSectionBeforeEndDataSet.xml");
+			System.out.println(
+				"testInsertNonExistingSectionBeforeEnd was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testInsertNonExistingSectionBeforeEnd was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testInsertNonExistingSectionBeforeEnd");
+		}
+	}
+
 	public void testInsertExistingSubSection() {
 
 		Object[] args = { new Integer(27), new Integer(6), "SubSeccao1dePO", new Integer(0) };
-		Object result = null;
 
 		try {
-			result =
-				gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 			System.out.println(
 				"testInsertExistingSubSection was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 			fail("testInsertExistingSubSection");
 
 		} catch (ExistingServiceException e) {
-			compareDataSet(getDataSetFilePath());
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertExistingSubSectionDataSet.xml");
 			System.out.println(
 				"testInsertExistingSubSection was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -160,37 +229,43 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 	public void testInsertNonExistingSubSection() {
 		
 		Object[] args = { new Integer(27), new Integer(6), "novaSubSeccao", new Integer(0)};
-		Object result = null;
 
 		try {
-			result =
-				gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 			
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			persistentSuport.iniciarTransaccao();		
+
 			ISite iSite = new Site();
 			iSite.setIdInternal(new Integer(4));
 			iSite = (ISite) persistentSuport.getIPersistentSite().readByOId(iSite, false);
+
 			ISection iSection = new Section();
 			iSection.setIdInternal(new Integer(6));
 			iSection = (ISection) persistentSuport.getIPersistentSection().readByOId(iSection, false);
+			InfoSection infoSuperiorSection = Cloner.copyISection2InfoSection(iSection);
+			
 			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
-			ISection newISection = persistentSection.readBySiteAndSectionAndName(iSite, iSection, "novaSeccao");
+			ISection newISection = persistentSection.readBySiteAndSectionAndName(iSite, iSection, "novaSubSeccao");
 			InfoSection infoSection = Cloner.copyISection2InfoSection(newISection);
+
 			assertEquals(infoSection.getName(), "novaSubSeccao");
 			assertEquals(infoSection.getSectionOrder(), new Integer(0));
-			assertEquals(infoSection.getSuperiorInfoSection(), iSection);
+			assertEquals(infoSection.getSuperiorInfoSection(), infoSuperiorSection);
 	
-			persistentSection.delete(iSection);
-			compareDataSet("etc/datasets/dbContentsInsertSubSection.xml");
+			persistentSection.delete(newISection);
+			persistentSuport.confirmarTransaccao();
+
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertSubSectionDataSet.xml");
 			System.out.println(
-				"testInsertNonExistingSection was SUCCESSFULY runned by class: "
+				"testInsertNonExistingSubSection was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println(
-				"testInsertNonExistingSection was UNSUCCESSFULY runned by class: "
+				"testInsertNonExistingSubSection was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-			fail("testInsertNonExistingSection");
+			fail("testInsertNonExistingSubSection");
 		}
 	}
 
