@@ -95,6 +95,8 @@ import DataBeans.Seminaries.InfoTheme;
 import DataBeans.degree.finalProject.InfoDegreeFinalProject;
 import DataBeans.degree.finalProject.InfoOrientation;
 import DataBeans.gesdis.InfoCourseReport;
+import DataBeans.grant.contract.InfoGrantContract;
+import DataBeans.grant.contract.InfoGrantType;
 import DataBeans.grant.owner.InfoGrantOwner;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuide;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideSituation;
@@ -123,6 +125,10 @@ import Dominio.degree.finalProject.IDegreeFinalProject;
 import Dominio.degree.finalProject.IDegreeFinalProjectOrientation;
 import Dominio.gesdis.CourseReport;
 import Dominio.gesdis.ICourseReport;
+import Dominio.grant.contract.GrantContract;
+import Dominio.grant.contract.GrantType;
+import Dominio.grant.contract.IGrantContract;
+import Dominio.grant.contract.IGrantType;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 import Dominio.reimbursementGuide.IReimbursementGuide;
@@ -720,51 +726,137 @@ public abstract class Cloner
 		return infoPerson;
 	}
 
-	/**
-	 * Method copyInfoGrantOwner2IGrantOwner.
-	 * 
-	 * @param infoGrantOwner
-	 * @return IGrantOwner
-	 */
-	public static IGrantOwner copyInfoGrantOwner2IGrantOwner(InfoGrantOwner infoGrantOwner)
-	{
-		IGrantOwner grantOwner = null;
+	 /**
+     * Method copyInfoGrantOwner2IGrantOwner.
+     * 
+     * @param infoGrantOwner
+     * @return IGrantOwner
+     */
+    public static IGrantOwner copyInfoGrantOwner2IGrantOwner(InfoGrantOwner infoGrantOwner)
+    {
+        IGrantOwner grantOwner = null;
 
-		if (infoGrantOwner != null)
-		{
-			grantOwner = new GrantOwner();
-			grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
-			copyObjectProperties(grantOwner, infoGrantOwner);
-			IPessoa person = null;
-			person = Cloner.copyInfoPerson2IPerson(infoGrantOwner.getPersonInfo());
-			grantOwner.setPerson(person);
+        if (infoGrantOwner != null)
+        {
+            grantOwner = new GrantOwner();
+            grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
+            copyObjectProperties(grantOwner, infoGrantOwner);
+            IPessoa person = null;
+            person = Cloner.copyInfoPerson2IPerson(infoGrantOwner.getPersonInfo());
+            grantOwner.setPerson(person);
+        }
+        return grantOwner;
+    }
 
-		}
-		return grantOwner;
-	}
+    /**
+     * Method copyIGrantOwner2InfoGrantOwner.
+     * 
+     * @param grantOwner
+     * @return InfoGrantOwner
+     */
+    public static InfoGrantOwner copyIGrantOwner2InfoGrantOwner(IGrantOwner grantOwner)
+    {
+        InfoGrantOwner infoGrantOwner = null;
+        if (grantOwner != null)
+        {
+            infoGrantOwner = new InfoGrantOwner();
+            InfoPerson infoPerson = null;
+            if (grantOwner.getPerson() != null)
+                infoPerson = Cloner.copyIPerson2InfoPerson(grantOwner.getPerson());
 
-	/**
-	 * Method copyIGrantOwner2InfoGrantOwner.
-	 * 
-	 * @param grantOwner
-	 * @return InfoGrantOwner
-	 */
-	public static InfoGrantOwner copyIGrantOwner2InfoGrantOwner(IGrantOwner grantOwner)
-	{
-		InfoGrantOwner infoGrantOwner = null;
-		if (grantOwner != null)
-		{
-			infoGrantOwner = new InfoGrantOwner();
-			InfoPerson infoPerson = null;
-			if (grantOwner.getPerson() != null)
-				infoPerson = Cloner.copyIPerson2InfoPerson(grantOwner.getPerson());
+            infoGrantOwner.setGrantOwnerNumber(grantOwner.getNumber());
+            copyObjectProperties(infoGrantOwner, grantOwner);
+            infoGrantOwner.setPersonInfo(infoPerson);
+        }
+        return infoGrantOwner;
+    }
 
-			infoGrantOwner.setGrantOwnerNumber(grantOwner.getNumber());
-			copyObjectProperties(infoGrantOwner, grantOwner);
-			infoGrantOwner.setPersonInfo(infoPerson);
-		}
-		return infoGrantOwner;
-	}
+    /**
+     * Method copyInfoGrantContract2IGrantContract.
+     * 
+     * @param infoGrantContract
+     * @return IGrantContract
+     */
+    public static IGrantContract copyInfoGrantContract2IGrantContract(InfoGrantContract infoGrantContract)
+    {
+        IGrantContract grantContract = null;
+
+        if (infoGrantContract != null)
+        {
+            grantContract = new GrantContract();
+            copyObjectProperties(grantContract, infoGrantContract);
+            IGrantOwner grantOwner = null;
+            grantOwner = Cloner.copyInfoGrantOwner2IGrantOwner(infoGrantContract.getGrantOwnerInfo());
+            grantContract.setGrantOwner(grantOwner);
+			IGrantType grantType = null;
+			grantType = Cloner.copyInfoGrantType2IGrantType(infoGrantContract.getGrantTypeInfo());
+			grantContract.setGrantType(grantType);
+        }
+        return grantContract;
+    }
+
+    /**
+     * Method copyIGrantContract2InfoGrantContract.
+     * 
+     * @param grantContract
+     * @return InfoGrantContract
+     */
+    public static InfoGrantContract copyIGrantContract2InfoGrantContract(IGrantContract grantContract)
+    {
+        InfoGrantContract infoGrantContract = null;
+
+        if (grantContract != null)
+        {
+            infoGrantContract = new InfoGrantContract();
+            InfoGrantOwner infoGrantOwner = null;
+            if (grantContract.getGrantOwner() != null)
+                infoGrantOwner = Cloner.copyIGrantOwner2InfoGrantOwner(grantContract.getGrantOwner());
+			InfoGrantType infoGrantType = null;
+			if (grantContract.getGrantType() != null)
+				infoGrantType = Cloner.copyIGrantType2InfoGrantType(grantContract.getGrantType());
+
+            copyObjectProperties(infoGrantContract, grantContract);
+            infoGrantContract.setGrantOwnerInfo(infoGrantOwner);
+			infoGrantContract.setGrantTypeInfo(infoGrantType);
+        }
+        return infoGrantContract;
+    }
+
+    /**
+    	 * Method copyInfoGrantType2IGrantType.
+    	 * 
+    	 * @param infoGrantType
+    	 * @return IGrantType
+    	 */
+    public static IGrantType copyInfoGrantType2IGrantType(InfoGrantType infoGrantType)
+    {
+        IGrantType grantType = null;
+
+        if (infoGrantType != null)
+        {
+            grantType = new GrantType();
+            copyObjectProperties(grantType, infoGrantType);
+        }
+        return grantType;
+    }
+
+    /**
+     * Method copyIGrantType2InfoGrantType.
+     * 
+     * @param grantType
+     * @return InfoGrantType
+     */
+    public static InfoGrantType copyIGrantType2InfoGrantType(IGrantType grantType)
+    {
+        InfoGrantType infoGrantType = null;
+
+        if (grantType != null)
+        {
+            infoGrantType = new InfoGrantType();
+            copyObjectProperties(infoGrantType, grantType);
+        }
+        return infoGrantType;
+    }
 
 	/**
 	 * @param advisory
