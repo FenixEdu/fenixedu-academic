@@ -9,12 +9,13 @@ public class EnrolmentEvaluationState {
 	public static final int NORMAL = 1;
 	public static final int RECTIFIED = 2;
 	public static final int RECTIFICATION = 3;
+	public static final int FINAL = 5;
 	public static final int TEMPORARY = 4;
 
 	public static final EnrolmentEvaluationState NORMAL_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.NORMAL);
 	public static final EnrolmentEvaluationState RECTIFIED_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED);
-	public static final EnrolmentEvaluationState RECTIFICATION_OBJ =
-		new EnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFICATION);
+	public static final EnrolmentEvaluationState RECTIFICATION_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFICATION);
+	public static final EnrolmentEvaluationState FINAL_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL);
 	public static final EnrolmentEvaluationState TEMPORARY_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY);
 
 

@@ -74,10 +74,9 @@ import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
 import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
+import Dominio.EnrolmentEquivalence;
 import Dominio.EnrolmentEvaluation;
 import Dominio.EnrolmentInOptionalCurricularCourse;
-import Dominio.EnrolmentEquivalence;
-import Dominio.Evaluation;
 import Dominio.EvaluationMethod;
 import Dominio.Exam;
 import Dominio.ExecutionPeriod;
@@ -105,10 +104,10 @@ import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
+import Dominio.IEnrolmentEquivalence;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEnrolmentInExtraCurricularCourse;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
-import Dominio.IEnrolmentEquivalence;
 import Dominio.IEvaluation;
 import Dominio.IEvaluationMethod;
 import Dominio.IExam;
@@ -1528,7 +1527,7 @@ public abstract class Cloner {
 			Iterator iterator = enrolmentEvaluationsList.iterator();
 			while (iterator.hasNext()) {
 				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-				InfoEnrolmentEvaluation infoEnrolmentEvaluation = copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
+				InfoEnrolmentEvaluation infoEnrolmentEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
 				infoEnrolmentEvaluationsList.add(infoEnrolmentEvaluation);
 			}
 		}

@@ -96,6 +96,8 @@ INSERT INTO ENROLMENT VALUES (13, 6, 12, 3, 3, 'Dominio.EnrolmentInExtraCurricul
 INSERT INTO ENROLMENT VALUES (16, 1, 3, 1, 1, 'Dominio.Enrolment', null, 1);
 INSERT INTO ENROLMENT VALUES (17, 3, 3, 1, 1, 'Dominio.Enrolment', null, 1);
 INSERT INTO ENROLMENT VALUES (18, 5, 3, 1, 1, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (19, 7, 10, 1, 3, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (20, 7, 10, 2, 3, 'Dominio.Enrolment', null, 1);
 #-----------------------------
 #Angela
 #-----------------------------
@@ -103,9 +105,12 @@ INSERT INTO ENROLMENT VALUES (18, 5, 3, 1, 1, 'Dominio.Enrolment', null, 1);
 ;
 DELETE FROM ENROLMENT_EVALUATION;
 INSERT INTO ENROLMENT_EVALUATION VALUES (1, '15', 1, '2003-02-12', '2003-03-20', 1, 1, 10, null, null, null, null);
-INSERT INTO ENROLMENT_EVALUATION VALUES (2, '18', 1, '2003-02-13', '2003-03-20', 1, 1, 7, null, null, null, null);
+#INSERT INTO ENROLMENT_EVALUATION VALUES (2, '18', 1, '2003-02-13', '2003-03-20', 1, 1, 7, null, null, null, null);
 INSERT INTO ENROLMENT_EVALUATION VALUES (3, '14', 1, '2003-02-12', '2003-03-20', 1, 1, 8, null, null, null, null);
 #INSERT INTO ENROLMENT_EVALUATION VALUES (4, '12', 1, '2003-02-12', '2003-03-20', 1, 1, 12, null, null, null, null);
+INSERT INTO ENROLMENT_EVALUATION VALUES (4, '15', 1, '2003-02-12', '2003-03-20', 1, 5, 9, null, null, null, null);
+INSERT INTO ENROLMENT_EVALUATION VALUES (5, '18', 1, '2003-02-13', '2003-03-20', 1, 5, 20, null, null, null, null);
+INSERT INTO ENROLMENT_EVALUATION VALUES (6, '14', 1, '2003-02-12', '2003-03-20', 1, 5, 19, null, null, null, null);
 
 
 

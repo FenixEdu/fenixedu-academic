@@ -84,6 +84,7 @@ public class EnrolmentEvaluationType {
 				break;
 		}
 
-		return "[" + this.getClass().getName() + ": " + valueS + "]\n";
+//		return "[" + this.getClass().getName() + ": " + valueS + "]\n";
+		return valueS;
 	}
 }

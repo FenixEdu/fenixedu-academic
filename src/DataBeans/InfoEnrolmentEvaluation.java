@@ -12,11 +12,12 @@ import Util.EnrolmentEvaluationType;
  *
  * 22/Abr/2003
  */
-public class InfoEnrolmentEvaluation implements Serializable {
+public class InfoEnrolmentEvaluation extends InfoObject implements Serializable {
 	private String grade;
-	private EnrolmentEvaluationType evaluationType;
+	private EnrolmentEvaluationType enrolmentEvaluationType;
 	private Date examDate;
 	private Date gradeAvailableDate;
+	private String observation;
 	private EnrolmentEvaluationState state;
 	private InfoEnrolment infoEnrolment;
 	private InfoPerson infoPersonResponsibleForGrade;
@@ -31,7 +32,7 @@ public class InfoEnrolmentEvaluation implements Serializable {
 			InfoEnrolmentEvaluation InfoEnrolmentEvaluation = (InfoEnrolmentEvaluation) obj;
 
 			resultado =	this.getInfoEnrolment().equals(InfoEnrolmentEvaluation.getInfoEnrolment())
-					&& this.getEvaluationType().equals(InfoEnrolmentEvaluation.getEvaluationType());
+					&& this.getEnrolmentEvaluationType().equals(InfoEnrolmentEvaluation.getEnrolmentEvaluationType());
 		}
 		return resultado;
 	}
@@ -39,7 +40,7 @@ public class InfoEnrolmentEvaluation implements Serializable {
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "grade = " + this.grade + "; ";
-		result += "evaluationType = " + this.evaluationType + "; ";
+		result += "evaluationType = " + this.enrolmentEvaluationType + "; ";
 		result += "examDate = " + this.examDate + "; ";
 		result += "infoPersonResponsibleForGrade = " + this.infoPersonResponsibleForGrade + "; ";
 		result += "state = " + this.state + "; ";
@@ -49,8 +50,8 @@ public class InfoEnrolmentEvaluation implements Serializable {
 	}
 
 
-	public EnrolmentEvaluationType getEvaluationType() {
-		return evaluationType;
+	public EnrolmentEvaluationType getEnrolmentEvaluationType() {
+		return enrolmentEvaluationType;
 	}
 
 	public Date getExamDate() {
@@ -70,8 +71,8 @@ public class InfoEnrolmentEvaluation implements Serializable {
 	}
 
 
-	public void setEvaluationType(EnrolmentEvaluationType type) {
-		evaluationType = type;
+	public void setEnrolmentEvaluationType(EnrolmentEvaluationType type) {
+		enrolmentEvaluationType = type;
 	}
 
 	public void setExamDate(Date date) {
@@ -104,6 +105,20 @@ public class InfoEnrolmentEvaluation implements Serializable {
 
 	public void setInfoPersonResponsibleForGrade(InfoPerson person) {
 		infoPersonResponsibleForGrade = person;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getObservation() {
+		return observation;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setObservation(String string) {
+		observation = string;
 	}
 
 }

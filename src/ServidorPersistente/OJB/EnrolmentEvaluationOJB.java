@@ -12,6 +12,7 @@ import Dominio.IEnrolmentEvaluation;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 
 /**
@@ -100,9 +101,20 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
 		criteria.addEqualTo("enrolment.curricularCourseScope.branch.code", enrolment.getCurricularCourseScope().getBranch().getCode());
 		criteria.addEqualTo("enrolmentEvaluationType",evaluationType.getType());
 		criteria.addEqualTo("grade",grade);
-System.out.println("criteria " + criteria);
 	
-	IEnrolmentEvaluation examsWithRepetition = (IEnrolmentEvaluation)queryObject(EnrolmentEvaluation.class, criteria);
-	return (IEnrolmentEvaluation) examsWithRepetition;
+		IEnrolmentEvaluation examsWithRepetition = (IEnrolmentEvaluation)queryObject(EnrolmentEvaluation.class, criteria);
+		return (IEnrolmentEvaluation) examsWithRepetition;
 	}
+	
+	public List readEnrolmentEvaluationByEnrolmentEvaluationState(
+			IEnrolment enrolment,
+			EnrolmentEvaluationState evaluationState)
+			throws ExcepcaoPersistencia {
+			Criteria criteria = new Criteria();
+			criteria.addEqualTo("enrolmentKey", enrolment.getInternalID());
+			criteria.addEqualTo("enrolmentEvaluationState",evaluationState.getState());
+	
+			List examsWithRepetition = (List) queryList(EnrolmentEvaluation.class, criteria);
+			return  examsWithRepetition;
+		}
 }

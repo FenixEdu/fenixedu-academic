@@ -6,6 +6,7 @@
  */
 package Dominio;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import Util.EnrolmentEvaluationState;
@@ -16,7 +17,7 @@ import Util.EnrolmentEvaluationType;
  *
  * 21/Mai/2003
  */
-public interface IEnrolmentEvaluation {
+public interface IEnrolmentEvaluation extends Serializable, IDomainObject {
 
 	public abstract IEnrolment getEnrolment();
 	public abstract EnrolmentEvaluationType getEnrolmentEvaluationType();
