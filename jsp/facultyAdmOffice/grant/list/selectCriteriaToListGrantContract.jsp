@@ -72,6 +72,16 @@
 				<html:text property="endContract" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
 			</td>
 		</tr>
+		<tr>
+			<td align="left">
+				<bean:message key="label.list.byCriteria.grant.owner.grantType"/>:&nbsp;
+			</td>
+			<td>
+				<html:select property="grantTypeId">
+					<html:options collection="grantTypeList" property="idInternal" labelProperty="sigla"/>
+				</html:select>
+			</td>
+		</tr>
 		
 	</table>
 

@@ -16,6 +16,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.grant.list.InfoListGrantOwnerComplete;
 import DataBeans.grant.list.InfoSpanByCriteriaListGrantContract;
+import Dominio.grant.contract.GrantType;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -30,10 +31,22 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
 
     public ActionForward actionStart(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        DynaValidatorForm listForm = (DynaValidatorForm) form;
-        listForm.set("filterType", new Integer(1));
-        return mapping.findForward("select-criteria");
 
+        DynaValidatorForm listForm = (DynaValidatorForm) form;
+        IUserView userView = SessionUtils.getUserView(request);
+
+        //Read grant types for the contract
+		Object[] args = { };
+		List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);			
+		//Adding a select country line to the list (presentation reasons)
+		GrantType grantType = new GrantType();
+		grantType.setIdInternal(null);
+		grantType.setSigla("[Escolha um tipo de bolsa]");
+		grantTypeList.add(0, grantType);
+		request.setAttribute("grantTypeList", grantTypeList);
+        
+        listForm.set("filterType", new Integer(1)); 
+        return mapping.findForward("select-criteria");
     }
 
     public ActionForward prepareListGrantContractByCriteria(ActionMapping mapping, ActionForm form,
@@ -156,7 +169,10 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
             form.set("beginContract", sdf.format(infoSpanByCriteriaListGrantOwner.getBeginContract()));
         if (infoSpanByCriteriaListGrantOwner.getEndContract() != null)
             form.set("endContract", sdf.format(infoSpanByCriteriaListGrantOwner.getEndContract()));
-
+        if(infoSpanByCriteriaListGrantOwner.getGrantTypeId() != null) 
+            form.set("grantTypeId", infoSpanByCriteriaListGrantOwner.getGrantTypeId());
+        else
+            form.set("grantTypeId", new Integer(0));
     }
 
     private InfoSpanByCriteriaListGrantContract populateInfoFromForm(DynaValidatorForm form)
@@ -185,6 +201,10 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
         }
         if (verifyStringParameterInForm(form, "endContract")) {
             infoSpanByCriteriaListGrantOwner.setEndContract(sdf.parse((String) form.get("endContract")));
+        }
+        Integer grantTypeId = (Integer)form.get("grantTypeId");
+        if(!grantTypeId.equals(new Integer(0))) {
+            infoSpanByCriteriaListGrantOwner.setGrantTypeId(grantTypeId);
         }
         return infoSpanByCriteriaListGrantOwner;
     }
@@ -216,6 +236,11 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
         if (verifyParameterInRequest(request, "endContract")) {
             infoSpanByCriteriaListGrantOwner.setEndContract(sdf.parse(request
                     .getParameter("endContract")));
+        }
+        
+        Integer grantType = new Integer(request.getParameter("grantTypeId"));
+        if(!grantType.equals(new Integer(0))) {
+            infoSpanByCriteriaListGrantOwner.setGrantTypeId(grantType);
         }
         return infoSpanByCriteriaListGrantOwner;
     }

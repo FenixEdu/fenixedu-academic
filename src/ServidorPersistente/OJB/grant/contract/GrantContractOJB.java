@@ -77,7 +77,7 @@ public class GrantContractOJB extends ServidorPersistente.OJB.ObjectFenixOJB
 	public List readAllContractsByCriteria(String orderBy,
 			Boolean justActiveContracts, Boolean justDesactiveContracts,
 			Date dateBeginContract, Date dateEndContract, Integer spanNumber,
-			Integer numberOfElementsInSpan) throws ExcepcaoPersistencia {
+			Integer numberOfElementsInSpan, Integer grantTypeId) throws ExcepcaoPersistencia {
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("contractRegimes.state", new Integer(1));
@@ -102,6 +102,11 @@ public class GrantContractOJB extends ServidorPersistente.OJB.ObjectFenixOJB
 			criteria.addLessOrEqualThan("contractRegimes.dateEndContract",
 					dateEndContract);
 		}
+		
+		if (grantTypeId != null) {
+			criteria.addEqualTo("grantType.idInternal",grantTypeId);
+		}
+
 		return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan, criteria, orderBy, true);
 	}
 

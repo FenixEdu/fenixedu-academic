@@ -16,6 +16,7 @@ public class InfoSpanByCriteriaListGrantContract extends InfoSpanListGrantOwner 
     private Boolean justDesactiveContract;
     private Date beginContract;
     private Date endContract;
+    private Integer grantTypeId;
     
     
     /**
@@ -65,5 +66,17 @@ public class InfoSpanByCriteriaListGrantContract extends InfoSpanListGrantOwner 
      */
     public void setJustDesactiveContract(Boolean justDesactiveContract) {
         this.justDesactiveContract = justDesactiveContract;
+    }
+    /**
+     * @return Returns the grantTypeId.
+     */
+    public Integer getGrantTypeId() {
+        return grantTypeId;
+    }
+    /**
+     * @param grantTypeId The grantTypeId to set.
+     */
+    public void setGrantTypeId(Integer grantTypeId) {
+        this.grantTypeId = grantTypeId;
     }
 }

@@ -56,7 +56,8 @@ public class ListGrantContractByCriteria implements IService {
 							infoSpanByCriteriaListGrantOwner.getBeginContract(),
 							infoSpanByCriteriaListGrantOwner.getEndContract(),
 							infoSpanByCriteriaListGrantOwner.getSpanNumber(),
-							SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN);
+							SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN,
+							infoSpanByCriteriaListGrantOwner.getGrantTypeId());
 
 			List listGrantContract = null;
 			if (grantContractBySpanAndCriteria != null
@@ -78,7 +79,8 @@ public class ListGrantContractByCriteria implements IService {
 	            infoSpanByCriteriaListGrantOwner.setTotalElements(persistentGrantContract.countAllByCriteria(infoSpanByCriteriaListGrantOwner.getJustActiveContract(),
 						infoSpanByCriteriaListGrantOwner.getJustDesactiveContract(),
 						infoSpanByCriteriaListGrantOwner.getBeginContract(),
-						infoSpanByCriteriaListGrantOwner.getEndContract(), null, null));
+						infoSpanByCriteriaListGrantOwner.getEndContract(),
+						infoSpanByCriteriaListGrantOwner.getGrantTypeId()));
 			}
 
 			Object[] result = {listGrantContract , infoSpanByCriteriaListGrantOwner};
