@@ -139,7 +139,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 				}
 				else {	
 					try {
-						Object args[] = {infoStudentCurricularPlan, new EnrolmentState(EnrolmentState.APROVED)};
+						Object args[] = {infoStudentCurricularPlan, EnrolmentState.APROVED};
 						enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
 	
 					} catch (NonExistingServiceException e) {

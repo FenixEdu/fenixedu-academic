@@ -72,7 +72,7 @@ public class GetEnrolmentListTest extends TestCaseReadServicesIntranet {
 		fail("Error !");  		
 	}
 
-	Object[] args = { infoStudentCurricularPlan, new EnrolmentState(EnrolmentState.ENROLED) };
+	Object[] args = { infoStudentCurricularPlan, EnrolmentState.ENROLED };
 
 	return args;
  

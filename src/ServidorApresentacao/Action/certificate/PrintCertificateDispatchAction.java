@@ -108,7 +108,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 				//get informations
 				List enrolmentList = null;				
 				if (certificate.equals("Inscrição")){
-					Object args[] = {infoStudentCurricularPlan, new EnrolmentState(EnrolmentState.ENROLED)};
+					Object args[] = {infoStudentCurricularPlan, EnrolmentState.ENROLED};
 					try {
 						enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
 
@@ -142,7 +142,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 
 				}
 				if ((certificate.equals("Aproveitamento")) || (certificate.equals("Aproveitamento de Disciplinas Extra Curricular"))) {
-					Object args[] = {infoStudentCurricularPlan, new EnrolmentState(EnrolmentState.APROVED)};
+					Object args[] = {infoStudentCurricularPlan, EnrolmentState.APROVED };
 					try {
 						enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
 
@@ -211,7 +211,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 							if (infoFinalResult == null){
 								throw new FinalResulUnreachedActionException("");
 							}
-							Object args[] = {infoStudentCurricularPlan, new EnrolmentState(EnrolmentState.APROVED)};
+							Object args[] = {infoStudentCurricularPlan, EnrolmentState.APROVED };
 							try {
 								enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
 			

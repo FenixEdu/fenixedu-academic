@@ -382,16 +382,14 @@
 	         <forward name="CurricularPlanReady" path="/student/displayStudentListByDegree.jsp"/> 
 	  </action>
 
-<!-- TO DO -->
+
         <!-- List Student Curriculum -->
         <action path="/studentCurriculum"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.CurriculumDispatchAction"
+              type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction"
 			  >
-	         <forward name="DisplayMasterDegreeList" path="/student/displayMasterDegrees.jsp"/>
-	         <forward name="MasterDegreeReady" path="/student/displayCurricularPlanByChosenMasterDegree.jsp"/> 
-	         <forward name="CurricularPlanReady" path="/student/displayStudentListByDegree.jsp"/> 
+	         <forward name="ShowStudentCurriculum" path="/student/displayStudentCurriculum.jsp"/>
 	  </action>
 
 <!-- ////////////////// CHECK UTILITY ON STUDENTS LISTINGS BEFORE DELETING ///////////////////// -->
@@ -940,7 +938,7 @@
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
-    <message-resources parameter="ServidorApresentacao.ApplicationResources" />
+    
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

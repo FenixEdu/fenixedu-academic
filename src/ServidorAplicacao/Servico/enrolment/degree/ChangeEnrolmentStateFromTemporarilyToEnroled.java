@@ -63,12 +63,12 @@ public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 
 			IStudent student = studentDAO.readByUsername(((UserView) userView).getUtilizador());
 			IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(),student.getDegreeType());
-			List TemporarilyEnrolemts = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentActiveCurricularPlan, EnrolmentState.TEMPORARILY_ENROLED_OBJ);
+			List TemporarilyEnrolemts = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentActiveCurricularPlan, EnrolmentState.TEMPORARILY_ENROLED);
 			
 			Iterator iterator = TemporarilyEnrolemts.iterator();
 			while (iterator.hasNext()) {
 				IEnrolment enrolment = (IEnrolment)iterator.next();
-				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
+				enrolment.setEnrolmentState(EnrolmentState.ENROLED);
 				persistentEnrolment.lockWrite(enrolment);
 			}
 		} catch (ExcepcaoPersistencia ex) {

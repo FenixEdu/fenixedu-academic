@@ -77,7 +77,7 @@ public abstract class EnrolmentContextManager {
 		final List studentEnrolmentsWithStateApproved = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return enrolment.getEnrolmentState().equals(EnrolmentState.APROVED_OBJ);
+				return enrolment.getEnrolmentState().equals(EnrolmentState.APROVED);
 			}
 		});
 
@@ -91,7 +91,7 @@ public abstract class EnrolmentContextManager {
 		final List studentEnrolmentsWithStateEnroled = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED_OBJ);
+				return enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED);
 			}
 		});
 
@@ -113,7 +113,7 @@ public abstract class EnrolmentContextManager {
 				IEnrolment enrolment = (IEnrolment) obj;
 				ICurricularCourse curricularCourse = enrolment.getCurricularCourseScope().getCurricularCourse();
 				return !studentDoneCurricularCourses.contains(curricularCourse)
-					&& enrolment.getEnrolmentState().equals(EnrolmentState.NOT_APROVED_OBJ);
+					&& enrolment.getEnrolmentState().equals(EnrolmentState.NOT_APROVED);
 			}
 		});
 
@@ -558,9 +558,9 @@ public abstract class EnrolmentContextManager {
 		List invalidStudentEnrolments = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return	enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED_OBJ) ||
-						enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED_OBJ) ||
-						enrolment.getEnrolmentState().equals(EnrolmentState.APROVED_OBJ);
+				return	enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED) ||
+						enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED) ||
+						enrolment.getEnrolmentState().equals(EnrolmentState.APROVED);
 			}
 		});
 
@@ -607,8 +607,8 @@ public abstract class EnrolmentContextManager {
 		List studentEnrolmentsWithStateEnroled = (List) CollectionUtils.select(invalidStudentEnrolmentsForSelectedDegree, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return	enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED_OBJ) ||
-						enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED_OBJ);
+				return	enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED) ||
+						enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED);
 			}
 		});
 
@@ -733,7 +733,7 @@ public abstract class EnrolmentContextManager {
 		List studentAprovedOptionalEnrolments = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return	enrolment.getEnrolmentState().equals(EnrolmentState.APROVED_OBJ) &&
+				return	enrolment.getEnrolmentState().equals(EnrolmentState.APROVED) &&
 						enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ) &&
 						enrolment.getCurricularCourseScope().getCurricularSemester().getSemester().equals(currentSemester) &&
 						enrolment.getCurricularCourseScope().getBranch().equals(studentBranch);
@@ -743,7 +743,7 @@ public abstract class EnrolmentContextManager {
 		List studentEnroledAndTemporarilyEnroledOptionalEnrolments = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return (enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED_OBJ) || enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED_OBJ)) &&
+				return (enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED) || enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED)) &&
 						enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ) &&
 						enrolment.getCurricularCourseScope().getCurricularSemester().getSemester().equals(currentSemester) &&
 						enrolment.getCurricularCourseScope().getBranch().equals(studentBranch);

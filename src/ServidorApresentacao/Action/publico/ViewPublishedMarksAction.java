@@ -13,7 +13,6 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
-import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;

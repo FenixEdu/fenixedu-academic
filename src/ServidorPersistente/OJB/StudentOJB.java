@@ -16,8 +16,6 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
-import Dominio.ICursoExecucao;
-import Dominio.IExecutionYear;
 import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.Student;

@@ -29,7 +29,6 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
-import Util.EnrolmentEquivalenceType;
 import Util.TipoCurso;
 
 /**
@@ -368,7 +367,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 				assertNotNull(curricularSemester);
 				assertNotNull(curricularCourseScope);
 
-				this.enrolment = new Enrolment(studentCurricularPlan, curricularCourseScope, EnrolmentState.APROVED_OBJ);
+				this.enrolment = new Enrolment(studentCurricularPlan, curricularCourseScope, EnrolmentState.APROVED);
 				this.enrolment.setExecutionPeriod(executionPeriod);
 				this.enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.CLOSED_OBJ);
 
@@ -383,7 +382,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 				assertNotNull(curricularCourse);
 				assertNotNull(curricularCourseScope);
 
-				this.equivalentEnrolment = new Enrolment(studentCurricularPlan, curricularCourseScope, EnrolmentState.APROVED_OBJ);
+				this.equivalentEnrolment = new Enrolment(studentCurricularPlan, curricularCourseScope, EnrolmentState.APROVED);
 				this.equivalentEnrolment.setExecutionPeriod(executionPeriod);
 				this.enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.CLOSED_OBJ);
 

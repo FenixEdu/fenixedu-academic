@@ -189,8 +189,8 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 				query.bind(curricularCourseScope.getBranch().getDegreeCurricularPlan().getDegree().getNome());
 				query.bind(curricularCourseScope.getBranch().getDegreeCurricularPlan().getDegree().getSigla());
 				query.bind(curricularCourseScope.getBranch().getCode());
-				EnrolmentState state = new EnrolmentState(EnrolmentState.ENROLED);	
-				query.bind(state.getState());
+				EnrolmentState state = EnrolmentState.ENROLED;	
+				query.bind(state);
 
 				List result = (List) query.execute();
 				lockRead(result);
@@ -230,7 +230,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 			query.bind(studentCurricularPlan.getStudent().getNumber());
 			query.bind(studentCurricularPlan.getStudent().getDegreeType());
 			query.bind(studentCurricularPlan.getCurrentState());
-			query.bind(enrolmentState.getState());
+			query.bind(enrolmentState);
 
 			List result = (List) query.execute();
 			lockRead(result);

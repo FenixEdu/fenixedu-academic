@@ -1,17 +1,21 @@
 package ServidorApresentacao.Action.commons.student;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -40,20 +44,41 @@ public class CurriculumDispatchAction extends DispatchAction {
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		
 
-		Integer studentID = Integer.valueOf(request.getParameter("studentID"));
+		Integer studentCurricularPlanID = Integer.valueOf(request.getParameter("studentCPID"));
 
 		List result = null;
-		Object args[] = { studentID };
+		
 		
 		try {
+			Object args[] = { userView, studentCurricularPlanID };
 			result = (ArrayList) serviceManager.executar(userView, "ReadStudentCurriculum", args);
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e);
 		}
 
-		request.setAttribute(SessionConstants.CURRICULUM, result);
+		BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
+		BeanComparator courseName = new BeanComparator("infoCurricularCourseScope.infoCurricularCourse.name");
+		ComparatorChain chainComparator = new ComparatorChain();
+		chainComparator.addComparator(executionYear);
+		chainComparator.addComparator(courseName);
+		
+		Collections.sort(result, chainComparator);
 
-		return mapping.findForward("PrepareSuccess");
+
+		
+		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+		try {
+			Object args[] = { studentCurricularPlanID };
+			infoStudentCurricularPlan = (InfoStudentCurricularPlan) serviceManager.executar(userView, "ReadStudentCurricularPlan", args);
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e);
+		}
+
+		request.setAttribute(SessionConstants.CURRICULUM, result);
+		request.setAttribute(SessionConstants.STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
+		
+
+		return mapping.findForward("ShowStudentCurriculum");
 	}
 
 }

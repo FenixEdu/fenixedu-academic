@@ -10,7 +10,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.ISiteComponent;
-import DataBeans.InfoEvaluation;
 import DataBeans.InfoSiteCommon;
 import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.Servico.UserView;

@@ -17,7 +17,6 @@ import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.PersonRole;
-import Dominio.Pessoa;
 import Dominio.Role;
 import Util.RoleType;
 

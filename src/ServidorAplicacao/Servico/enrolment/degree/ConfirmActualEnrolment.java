@@ -105,12 +105,12 @@ public class ConfirmActualEnrolment implements IServico {
 			// list of all temporarily enrolments.
 			final List temporarilyEnrolmentsRead = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
 					enrolmentContext.getStudentActiveCurricularPlan(),
-					EnrolmentState.TEMPORARILY_ENROLED_OBJ);
+					EnrolmentState.TEMPORARILY_ENROLED);
 			
 			// enrolments in (anual) curricular courses that the student is doing.
 			final List doingEnrolmentsRead = 
 				persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
-				enrolmentContext.getStudentActiveCurricularPlan(), EnrolmentState.ENROLED_OBJ);
+				enrolmentContext.getStudentActiveCurricularPlan(), EnrolmentState.ENROLED);
 			List doingCurricularCoursesRead = (List) CollectionUtils.collect(doingEnrolmentsRead, new Transformer() {
 				public Object transform(Object obj) {
 					IEnrolment enrolment = (IEnrolment) obj;
@@ -133,7 +133,7 @@ public class ConfirmActualEnrolment implements IServico {
 					enrolmentToWrite.setCurricularCourseScope(curricularCourseScope2);
 					enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 					enrolmentToWrite.setExecutionPeriod(executionPeriod);
-					enrolmentToWrite.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
+					enrolmentToWrite.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED);
 					enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
 					temporarilyEnrolmentsToWrite.add(enrolmentToWrite);
 				}
@@ -183,7 +183,7 @@ public class ConfirmActualEnrolment implements IServico {
 					enrolmentInOptionalCurricularCourse.setExecutionPeriod(executionPeriod);
 					enrolmentInOptionalCurricularCourse.setStudentCurricularPlan(studentCurricularPlan);
 					enrolmentInOptionalCurricularCourse.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-					enrolmentInOptionalCurricularCourse.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
+					enrolmentInOptionalCurricularCourse.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED);
 					persistentEnrolment.lockWrite(enrolmentInOptionalCurricularCourse);
 				} else {
 					enrolment.setCurricularCourseForOption(curricularCourseForOption);

@@ -101,7 +101,7 @@ public class ShowAvailableCurricularCourses implements IServico {
 		
 		final List temporarilyEnrolments = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
 				enrolmentContext.getStudentActiveCurricularPlan(),
-				EnrolmentState.TEMPORARILY_ENROLED_OBJ);
+				EnrolmentState.TEMPORARILY_ENROLED);
 
 		final List enrolmentsInOptionalCurricularCourses = (List) CollectionUtils.select(temporarilyEnrolments, new Predicate() {
 			public boolean evaluate(Object obj) {

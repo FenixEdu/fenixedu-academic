@@ -9,19 +9,11 @@
 
 package ServidorAplicacao.Servico.commons.student;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import DataBeans.InfoEnrolment;
-import DataBeans.InfoEnrolmentEvaluation;
+import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
-import Dominio.IEnrolment;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -29,32 +21,32 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadStudentCurriculum implements IServico {
+public class ReadStudentCurricularPlan implements IServico {
     
-    private static ReadStudentCurriculum servico = new ReadStudentCurriculum();
+    private static ReadStudentCurricularPlan servico = new ReadStudentCurricularPlan();
     
     /**
      * The singleton access method of this class.
      **/
-    public static ReadStudentCurriculum getService() {
+    public static ReadStudentCurricularPlan getService() {
         return servico;
     }
     
     /**
      * The actor of this class.
      **/
-    private ReadStudentCurriculum() { 
+    private ReadStudentCurricularPlan() { 
     }
     
     /**
      * Returns The Service Name */
     
     public final String getNome() {
-        return "ReadStudentCurriculum";
+        return "ReadStudentCurricularPlan";
     }
     
     
-    public List run(IUserView userView, Integer studentCurricularPlanID) throws ExcepcaoInexistente, FenixServiceException {
+    public InfoStudentCurricularPlan run(Integer studentCurricularPlanID) throws ExcepcaoInexistente, FenixServiceException {
         ISuportePersistente sp = null;
         
 		IStudentCurricularPlan studentCurricularPlan = null;
@@ -79,25 +71,6 @@ public class ReadStudentCurriculum implements IServico {
 			throw new NonExistingServiceException();
 		}
 
-				
-		Iterator iterator = studentCurricularPlan.getEnrolments().iterator();
-		List result = new ArrayList();
-		
-		GestorServicos serviceManager = GestorServicos.manager();
-		
-		
-		while(iterator.hasNext()){
-			IEnrolment enrolmentTemp = (IEnrolment) iterator.next();
-			Object args[] = { enrolmentTemp };
-			 
-			InfoEnrolmentEvaluation infoEnrolmentEvaluation =(InfoEnrolmentEvaluation) serviceManager.executar(userView, "GetEnrolmentGrade", args); 
-			
-			InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolmentTemp);
-			infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
-			
-			result.add(infoEnrolment);			
-		}
-
-		return result;
+		return Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
     }
 }

@@ -1,13 +1,8 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.marksManagement;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolmentEvaluation;
@@ -23,12 +18,10 @@ import Dominio.IEnrolmentEvaluation;
 import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
-import Dominio.ITeacher;
 import Dominio.Student;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
@@ -36,7 +29,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;

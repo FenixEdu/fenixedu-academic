@@ -371,7 +371,7 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 		// Enrolment ja existente
 		try {
 			persistentSupport.iniciarTransaccao();
-			list = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlan, EnrolmentState.APROVED_OBJ);
+			list = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlan, EnrolmentState.APROVED);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Existing Enrolment");
