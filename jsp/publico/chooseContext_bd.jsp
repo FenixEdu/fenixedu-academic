@@ -14,7 +14,7 @@
          <table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td bgcolor="#FFFFFF" class="infoop">Por favor, proceda &agrave; escolha
-              da licenciatura pretendida.</td>
+              do curso pretendido.</td>
           </tr>
         </table>
 	<br />
