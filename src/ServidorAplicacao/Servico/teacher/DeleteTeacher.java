@@ -19,11 +19,19 @@ import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 /**
  *@author Fernanda Quitério
  *
  */
 public class DeleteTeacher implements IServico {
+    /**
+     * @author jpvl
+     */
+    public class ExistingSupportLesson extends FenixServiceException
+    {
+
+    }
     /**
      * @author jpvl
      */
@@ -59,6 +67,7 @@ public class DeleteTeacher implements IServico {
 			IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 			IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
 			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+			IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
 			
 			IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentShiftProfessorship();
 
@@ -90,11 +99,17 @@ public class DeleteTeacher implements IServico {
 			IProfessorship professorshipToDelete = persistentProfessorship.readByTeacherAndExecutionCourse(iTeacher, iExecutionCourse);
 			
 			List shiftProfessorshipList = shiftProfessorshipDAO.readByProfessorship(professorshipToDelete);
-						
-			if (shiftProfessorshipList.isEmpty()) {
+			List supportLessonList = supportLessonDAO.readByProfessorship(professorshipToDelete);
+			
+			if (shiftProfessorshipList.isEmpty() && supportLessonList.isEmpty()) {
 				persistentProfessorship.delete(professorshipToDelete);
 			}else {
-			    throw new ExistingShiftProfessorship();
+			    if (!shiftProfessorshipList.isEmpty()) {
+			        throw new ExistingShiftProfessorship();
+			    }else {
+			        throw new ExistingSupportLesson();
+			    }
+			    
 			}
 			
 			return Boolean.TRUE;

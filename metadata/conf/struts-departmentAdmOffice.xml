@@ -366,6 +366,10 @@
             <exception type="ServidorAplicacao.Servico.teacher.DeleteTeacher$ExistingShiftProfessorship" 
                 key="message.existing.shiftProfessorship" 
                 path="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1"/>
+            <exception type="ServidorAplicacao.Servico.teacher.DeleteTeacher$ExistingSupportLesson" 
+                key="message.existing.supportLesson" 
+                path="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1"/>
+                
             <exception type="ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException" 
                 key="message.professorship.isResponsibleFor" 
                 path="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1"/>
