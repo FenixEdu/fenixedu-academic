@@ -164,8 +164,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlan implements 
     private boolean checkCredits(int specAreaCredits, int specCredits, int secAreaCredits, int secCredits) {
         if((specCredits > specAreaCredits) || (secCredits > secAreaCredits))
             return false;
-        else 
-            return true;
+        return true;
     }
 
     protected List getCurricularCoursesFromArea(IBranch specializationArea, AreaType areaType) {

@@ -51,7 +51,6 @@ public class InfoCoordinatorReport extends DataTranferObject {
     public void getReportToExcel(IUserView userView, HSSFWorkbook wb, ReportType reportType) {
         HSSFSheet sheet = wb.createSheet(infoCoordinator.getCode());
         sheet.setGridsPrinted(false);
-        ExcelStyle excelStyle = new ExcelStyle(wb);
 
         HSSFRow row = sheet.createRow((short) 0);
         HSSFCell cell = row.createCell((short) 0);

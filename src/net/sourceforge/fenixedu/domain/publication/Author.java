@@ -142,23 +142,19 @@ public class Author extends DomainObject implements IAuthor{
 	        if (this.keyPerson != null && author.getKeyPerson() != null){
 	            return this.keyPerson == author.getKeyPerson();
 	        }
-	        else {
-	            if (this.keyPerson == null || author.getKeyPerson() == null){
-	                return false;
-	            }
-	            else {
-		            if (this.getOrganization() == null && author.getOrganization() == null) {
-		                return this.getAuthor().equals(author.getAuthor());
-		            }
-		            else
-		                if (this.getOrganization() == null || author.getOrganization() == null)
-		                    return false;
-		                else return ( this.getAuthor().equals(author.getAuthor()) &&
-		                        	  this.getOrganization().equals(author.getOrganization()));
-	            }
-	        }
+            if (this.keyPerson == null || author.getKeyPerson() == null){
+                return false;
+            }
+            if (this.getOrganization() == null && author.getOrganization() == null) {
+                return this.getAuthor().equals(author.getAuthor());
+            }
+            else
+                if (this.getOrganization() == null || author.getOrganization() == null)
+                    return false;
+                else return ( this.getAuthor().equals(author.getAuthor()) &&
+                        	  this.getOrganization().equals(author.getOrganization()));
 	    }
-	    else return false;
+        return false;
 	}
 
 }

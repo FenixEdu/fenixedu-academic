@@ -71,8 +71,7 @@ public class ReadStudentsAndGroupsWithoutShift implements IService
 				
 				studentGroupAttendList = sp.getIPersistentStudentGroupAttend()
                 .readAllByStudentGroup(studentGroup);
-				
-				List infoSiteInformationList = new ArrayList();
+
 				Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
 				InfoSiteStudentInformation infoSiteStudentInformation = null;
 				InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;

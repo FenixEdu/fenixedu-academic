@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administra
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -308,7 +307,6 @@ public class StudentsGratuityListAction extends DispatchAction {
         }
         
         
-        Date executionDegreeDate = infoExecutionDegree.getInfoExecutionYear().getBeginDate();
         String year1 = ((InfoExecutionYear)executionYearList.get(0)).getYear();
         String year2 = ((InfoExecutionYear)executionYearList.get(1)).getYear();
         

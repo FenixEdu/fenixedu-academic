@@ -70,7 +70,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
             
             //Execution period
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = (IExecutionPeriod)persistentExecutionPeriod.readBySemesterAndExecutionYear(
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
             		semester, executionYear);
 
             //Departement

@@ -116,7 +116,6 @@ public class ProjectReportsDispatchAction extends FenixDispatchAction {
             if (lastSpan.booleanValue() && (rubric == null || rubric.equals(""))) {
                 infoExpensesReport = (InfoProjectReport) ServiceUtils.executeService(userView, "ReadExpensesReport", new Object[] {
                         infoExpensesReport, userView, ReportType.EXPENSES, projectCode, rubric });
-                int i = 0;
             }
             request.setAttribute("lastSpan", lastSpan);
         }
@@ -133,7 +132,6 @@ public class ProjectReportsDispatchAction extends FenixDispatchAction {
         final IUserView userView = SessionUtils.getUserView(request);
         final String reportTypeStr = request.getParameter("reportType");
         final ReportType reportType = new ReportType(reportTypeStr);
-        String report = new String();
 
         HSSFWorkbook wb = new HSSFWorkbook();
         String fileName = new String("listagem");

@@ -42,7 +42,7 @@ public class EvaluationExecutionCourseOJB extends PersistentObjectOJB implements
         if (evaluation instanceof IExam) {
             Criteria crit = new Criteria();
             crit.addEqualTo("exam.idInternal", ((IExam) evaluation).getIdInternal());
-            return (List) queryList(ExamExecutionCourse.class, crit);
+            return queryList(ExamExecutionCourse.class, crit);
 
         }
         return null;

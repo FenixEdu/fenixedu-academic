@@ -12,15 +12,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import java.util.ArrayList;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
@@ -42,15 +39,6 @@ public class CriarTurno implements IService {
         if (existingShift != null) {
             throw new ExistingServiceException("Duplicate Entry: " + infoTurno.getNome());
         }
-
-        IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-
-        IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoTurno
-                .getInfoDisciplinaExecucao().getInfoExecutionPeriod());
-
-        IExecutionCourse executionCourse = executionCourseDAO
-                .readByExecutionCourseInitialsAndExecutionPeriod(infoTurno.getInfoDisciplinaExecucao()
-                        .getSigla(), executionPeriod);
 
         sp.getITurnoPersistente().simpleLockWrite(newShift);
         Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * newShift.getLotacao()

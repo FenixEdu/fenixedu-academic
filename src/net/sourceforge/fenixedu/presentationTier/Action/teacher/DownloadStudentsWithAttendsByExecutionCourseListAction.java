@@ -117,9 +117,8 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
             if (enrollmentType[i].equals(AttendacyStateSelectionType.ALL.toString())) {
                 enrollmentTypeList = null;
                 break;
-            } else {
-                enrollmentTypeList.add(new AttendacyStateSelectionType(enrollmentType[i]));
             }
+            enrollmentTypeList.add(new AttendacyStateSelectionType(enrollmentType[i]));
         }
 
         coursesIDs = new ArrayList();
@@ -127,10 +126,9 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
             if (checkedCoursesIds[i].equals("0")) {
                 coursesIDs = null;
                 break;
-            } else {
-                Integer courseID = new Integer(Integer.parseInt(checkedCoursesIds[i]));
-                coursesIDs.add(courseID);
             }
+            Integer courseID = new Integer(Integer.parseInt(checkedCoursesIds[i]));
+            coursesIDs.add(courseID);
         }
 
         shiftIDs = new ArrayList();
@@ -138,10 +136,9 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
             if (checkedShiftIds[i].equals("0")) {
                 shiftIDs = null;
                 break;
-            } else {
-                Integer shiftID = new Integer(Integer.parseInt(checkedShiftIds[i]));
-                shiftIDs.add(shiftID);
             }
+            Integer shiftID = new Integer(Integer.parseInt(checkedShiftIds[i]));
+            shiftIDs.add(shiftID);
         }
 
         Object args[] = { executionCourseID, coursesIDs, enrollmentTypeList, shiftIDs };

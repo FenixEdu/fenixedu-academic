@@ -69,7 +69,7 @@ abstract public class ManageWebSiteItem implements IService {
             IWebSiteSection webSiteSection, IWebSiteItem webSiteItem) throws FenixServiceException {
         try {
 
-            IPerson person = (IPerson) persistentPerson.lerPessoaPorUsername(user);
+            IPerson person = persistentPerson.lerPessoaPorUsername(user);
             webSiteItem.setEditor(person);
 
             // treat author of item

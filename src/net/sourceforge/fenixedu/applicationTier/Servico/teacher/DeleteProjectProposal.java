@@ -83,7 +83,7 @@ public class DeleteProjectProposal implements IServico {
             persistentGroupPropertiesExecutionCourse = persistentSupport.getIPersistentGroupPropertiesExecutionCourse();
             IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-			IPerson withdrawalPerson = ((ITeacher) persistentTeacher.readTeacherByUsername(withdrawalPersonUsername)).getPerson();
+			IPerson withdrawalPerson = persistentTeacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
             IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(GroupProperties.class,groupPropertiesCode);
             IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,executionCourseCode);
             IExecutionCourse startExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,objectCode);
@@ -95,7 +95,7 @@ public class DeleteProjectProposal implements IServico {
 				throw new InvalidArgumentsServiceException("error.noExecutionCourse");
 			}
 			
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) persistentGroupPropertiesExecutionCourse.readBy(groupProperties,executionCourse);
+            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = persistentGroupPropertiesExecutionCourse.readBy(groupProperties,executionCourse);
 			
             if(groupPropertiesExecutionCourse==null){
 				throw new InvalidArgumentsServiceException("error.noProjectProposal");

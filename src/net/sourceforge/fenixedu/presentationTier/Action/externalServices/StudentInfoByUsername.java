@@ -46,8 +46,8 @@ public class StudentInfoByUsername extends FenixAction
 
         String result = new String();
         try
-        {            
-            IUserView userView = authenticate(this.studentUsername, this.studentPassword);
+        {
+            authenticate(this.studentUsername, this.studentPassword);
             Collection students = this.readInformation(this.studentUsername);
             result = this.buildInfo(students);
             if (result.equals(""))

@@ -124,7 +124,7 @@ public class SaveTeachersBody implements IService {
                     if (!professorShipTeachersIds.contains(id) && !responsibleTeachersIds.contains(id)) {
 
                         IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-                        IProfessorship professorship2 = (IProfessorship) persistentProfessorShip
+                        IProfessorship professorship2 = persistentProfessorShip
                                 .readByTeacherIDandExecutionCourseID(id, executionCourseId);
                         List summaryList = persistentSummary.readByTeacher(professorship2
                                 .getExecutionCourse(), professorship2.getTeacher());

@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.domain.Advisory;
@@ -26,8 +28,6 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentTestQuestion;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.OnlineTest;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -83,7 +83,6 @@ public class EditDistributedTest implements IService {
                     || dateComparator.compare(distributedTest.getEndDate(), endDate) != 0
                     || hourComparator.compare(distributedTest.getEndHour(), endHour) != 0) {
 
-                List students = persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(distributedTest);
                 distributedTest.setBeginDate(beginDate);
                 distributedTest.setBeginHour(beginHour);
                 distributedTest.setEndDate(endDate);

@@ -81,13 +81,13 @@ public class AcceptNewProjectProposal implements IService
 				throw new NotAuthorizedException();
 			}
 			
-			IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) persistentGroupPropertiesExecutionCourse.readByIDs(groupPropertiesId,executionCourseId);
+			IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = persistentGroupPropertiesExecutionCourse.readByIDs(groupPropertiesId,executionCourseId);
 			
 			if(groupPropertiesExecutionCourse==null){
 				throw new ExistingServiceException();
 			}
 			
-			IPerson receiverPerson = ((ITeacher) persistentTeacher.readTeacherByUsername(acceptancePersonUserName)).getPerson();
+			IPerson receiverPerson = persistentTeacher.readTeacherByUsername(acceptancePersonUserName).getPerson();
 			
 			IExecutionCourse executionCourseAux = groupPropertiesExecutionCourse.getExecutionCourse();
 			if(executionCourseAux.getGroupPropertiesByName(groupPropertiesExecutionCourse.getGroupProperties().getName())!=null){
@@ -129,7 +129,7 @@ public class AcceptNewProjectProposal implements IService
 				IGroupPropertiesExecutionCourse groupPropertiesExecutionCourseAux = (IGroupPropertiesExecutionCourse)iterGroupPropertiesExecutionCourseList.next();
 				if(groupPropertiesExecutionCourseAux.getProposalState().getState().intValue()==1 
 					|| groupPropertiesExecutionCourseAux.getProposalState().getState().intValue()==2){
-					IExecutionCourse personExecutionCourse = (IExecutionCourse)groupPropertiesExecutionCourseAux.getExecutionCourse();
+					IExecutionCourse personExecutionCourse = groupPropertiesExecutionCourseAux.getExecutionCourse();
 					List professorships = persistentExecutionCourse.readExecutionCourseTeachers(groupPropertiesExecutionCourseAux.getExecutionCourse().getIdInternal());
 					Iterator iterProfessorship = professorships.iterator();
 					while(iterProfessorship.hasNext()){

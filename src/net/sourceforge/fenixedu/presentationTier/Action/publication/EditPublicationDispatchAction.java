@@ -299,7 +299,6 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 		request.setAttribute("scopeList", scopeList);
 		
 		Integer[] authorsId = (Integer[]) insertPublicationForm.get("authorsId");
-		String[] authorsName = (String[]) insertPublicationForm.get("authorsName");
 		if (authorsId.length == 0) {
 			InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPersonByUsername", new Object[] { userView });
 			InfoAuthor infoAuthor = (InfoAuthor) ServiceUtils.executeService(userView, "ReadAuthorByPersonId", new Object[] { userView.getUtilizador() });
@@ -602,7 +601,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
         Iterator iteratorIds = authorsIds.iterator();
 
         while (iteratorIds.hasNext()) {
-            newAuthorsIds.add((Integer) iteratorIds.next());
+            newAuthorsIds.add(iteratorIds.next());
         }
 
         Object[] args = { newAuthorsIds };
@@ -654,7 +653,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 		Iterator iteratorIds = authorsIds.iterator();
 		
 		while (iteratorIds.hasNext()) {
-		    newAuthorsIds.add((Integer) iteratorIds.next());
+		    newAuthorsIds.add(iteratorIds.next());
 		}
 		
 		Object[] args = { newAuthorsIds };

@@ -37,10 +37,6 @@ public class RequestWrapperFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        HttpServletRequest httpRrequest = (HttpServletRequest) request;
-        String uri = httpRrequest.getRequestURI();
-        String queryString = constructQueryString(httpRrequest);
-
         chain.doFilter(new FenixHttpServletRequestWrapper((HttpServletRequest) request), response);
         setSessionTimeout((HttpServletRequest) request);
     }

@@ -132,9 +132,8 @@ public class CoordinatedDegreeInfo extends FenixAction {
                 if (infoExecutionDegree1.getInfoExecutionYear().getBeginDate().before(
                         infoExecutionDegree2.getInfoExecutionYear().getBeginDate())) {
                     return -1;
-                } else {
-                    return 1;
                 }
+                return 1;
             }
         });
 
@@ -151,8 +150,8 @@ public class CoordinatedDegreeInfo extends FenixAction {
         if (it.hasNext()) {
             //((InfoExecutionDegree) it.next()).toString();
             return (InfoExecutionDegree) it.next();
-        } else
-            return null;
+        }
+        return null;
     }
 
 }

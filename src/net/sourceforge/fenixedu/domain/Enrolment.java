@@ -5,9 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.log.IEnrolmentLog;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentLog;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.util.EnrollmentState;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
@@ -322,12 +319,6 @@ public class Enrolment extends DomainObject implements IEnrollment,
 
     private void createNewEnrolmentLog(EnrolmentAction action, PersistenceBroker arg0)
             throws PersistenceBrokerException {
-        try {
-            IPersistentEnrolmentLog persistentEnrolmentLog = SuportePersistenteOJB
-                    .getInstance().getIPersistentEnrolmentLog();
-        } catch (ExcepcaoPersistencia e) {
-            throw new PersistenceBrokerException(e);
-        }
         IEnrolmentLog enrolmentLog = new EnrolmentLog();
         //persistentEnrolmentLog.simpleLockWrite(enrolmentLog);
         enrolmentLog.setDate(new Date());

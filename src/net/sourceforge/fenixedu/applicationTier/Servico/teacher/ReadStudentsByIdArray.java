@@ -78,8 +78,8 @@ public class ReadStudentsByIdArray implements IService {
                 LabelValueBean lvb = (LabelValueBean) lavelValueBeanList.get(i);
                 if (!lvb.getLabel().equals(" (Ficha Fechada)")) {
                     Integer number = new Integer(lvb.getValue());
-                    studentList.add(InfoStudent.newInfoFromDomain((IStudent) ((List) persistentSuport
-                            .getIPersistentStudent().readAllBetweenNumbers(number, number)).get(0)));
+                    studentList.add(InfoStudent.newInfoFromDomain((IStudent) persistentSuport
+                            .getIPersistentStudent().readAllBetweenNumbers(number, number).get(0)));
                 }
             }
 
@@ -130,7 +130,7 @@ public class ReadStudentsByIdArray implements IService {
                     Iterator iterStudent = attendList.listIterator();
                     while (iterStudent.hasNext()) {
                         IAttends attend = (Attends) iterStudent.next();
-                        InfoStudent infoStudent = InfoStudent.newInfoFromDomain((Student) attend
+                        InfoStudent infoStudent = InfoStudent.newInfoFromDomain(attend
                                 .getAluno());
                         studentsList.add(infoStudent);
                     }

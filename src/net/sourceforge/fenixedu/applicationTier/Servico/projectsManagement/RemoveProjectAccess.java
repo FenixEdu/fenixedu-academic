@@ -33,13 +33,13 @@ public class RemoveProjectAccess implements IService {
     public void run(IUserView userView, String personUsername, Integer projectCode) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
-        IPerson person = (IPerson) sp.getIPessoaPersistente().lerPessoaPorUsername(personUsername);
+        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(personUsername);
         if (persistentProjectAccess.countByPerson(person) == 1) {
             IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
             if (persistentSuportOracle.getIPersistentProject().countUserProject(getUserNumber(sp, person)) == 0) {
-                IRole role = (IRole) sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
+                IRole role = sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
                 role.setRoleType(RoleType.PROJECTS_MANAGER);
-                IPersonRole personRole = (IPersonRole) sp.getIPersistentPersonRole().readByPersonAndRole(person, role);
+                IPersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(person, role);
                 sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
             }
         }
@@ -49,11 +49,11 @@ public class RemoveProjectAccess implements IService {
 
     private Integer getUserNumber(ISuportePersistente sp, IPerson person) throws ExcepcaoPersistencia {
         Integer userNumber = null;
-        ITeacher teacher = (ITeacher) sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
+        ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
-            IEmployee employee = (IEmployee) sp.getIPersistentEmployee().readByPerson(person);
+            IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();
         }

@@ -45,7 +45,7 @@ public class PublicationAuthorOJB extends ObjectFenixOJB implements IPersistentP
         List deleteList = queryList(PublicationAuthor.class,criteria);
         Iterator it = deleteList.iterator();
         while (it.hasNext()){
-            delete((IPublicationAuthor)it.next());
+            delete(it.next());
         }
     }
     

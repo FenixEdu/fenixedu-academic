@@ -7,6 +7,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IAttendsSet;
@@ -16,13 +20,7 @@ import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.StudentGroupAttend;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
@@ -80,9 +78,7 @@ public class CreateStudentGroupWithoutShift implements IService {
         IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
         IPersistentGroupProperties persistentGroupProperites = null;
         IPersistentStudent persistentStudent = null;
-        IFrequentaPersistente persistentAttend = null;
         IPersistentStudentGroup persistentStudentGroup = null;
-        IPersistentAttendsSet persistentAttendsSet = null;
         
         try {
 
@@ -94,8 +90,6 @@ public class CreateStudentGroupWithoutShift implements IService {
             IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperites
                     .readByOID(GroupProperties.class, groupPropertiesCode);
 
-            persistentAttendsSet = persistentSupport.getIPersistentAttendsSet();
-            
             checkIfStudentGroupExists(groupNumber, groupProperties);
 
             persistentStudentGroup = persistentSupport
@@ -106,7 +100,6 @@ public class CreateStudentGroupWithoutShift implements IService {
             //persistentAttendsSet.simpleLockWrite(attendsSet);
             attendsSet.addStudentGroup(newStudentGroup);
             persistentStudent = persistentSupport.getIPersistentStudent();
-            persistentAttend = persistentSupport.getIFrequentaPersistente();
             persistentStudentGroupAttend = persistentSupport
                     .getIPersistentStudentGroupAttend();
 

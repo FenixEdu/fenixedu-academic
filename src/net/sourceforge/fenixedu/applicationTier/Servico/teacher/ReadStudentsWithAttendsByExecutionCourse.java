@@ -137,8 +137,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 	                        
 	                        return dcpIds.contains(lastDCPId);
                         }
-                        else
-                            return false;
+                        return false;
                     }
                 };
                 
@@ -317,8 +316,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
     {
         if (attendance.getEnrolment() == null)
             return GetActiveCurricularPlan(attendance.getAluno().getStudentCurricularPlans());
-        else
-            return attendance.getEnrolment().getStudentCurricularPlan();
+        return attendance.getEnrolment().getStudentCurricularPlan();
     }
     
     List getDegreeCurricularPlansFromAttends(List attends)

@@ -56,8 +56,6 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         String studentGroupCodeString = request.getParameter("studentGroupCode");
-        String shiftCodeString = request.getParameter("shiftCode");
-        Integer shiftCode = new Integer(shiftCodeString);
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 

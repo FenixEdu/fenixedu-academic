@@ -39,8 +39,6 @@ public class EditarTurno implements IService {
     public Object run(InfoShift infoShiftOld, InfoShift infoShiftNew) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        InfoShift infoShift = null;
-
         try {
             newShiftIsValid(infoShiftOld, infoShiftNew.getTipo(), infoShiftNew
                     .getInfoDisciplinaExecucao(), infoShiftNew.getLotacao());

@@ -56,12 +56,9 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
 		{
 		    throw new NotAuthorizedFilterException();
 		}
-		else
-		{
-		    messageException = authorizedCoordinator(id, request.getServiceParameters().parametersArray());
-		    if (messageException != null)
-		        throw new NotAuthorizedFilterException(messageException);
-		}	
+        messageException = authorizedCoordinator(id, request.getServiceParameters().parametersArray());
+        if (messageException != null)
+            throw new NotAuthorizedFilterException(messageException);	
 	}
     
     /*

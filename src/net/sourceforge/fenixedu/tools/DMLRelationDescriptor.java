@@ -67,32 +67,25 @@ public class DMLRelationDescriptor
 
     protected String generateKey()
     {
-        final String tableName1 = classDescriptor1.getFullTableName();
-        final String keyToClass2;
-
         if (objectReferenceDescriptor1 != null)
         {
-            keyToClass2 = getKeyToOtherClass(classDescriptor1, objectReferenceDescriptor1);
+            getKeyToOtherClass(classDescriptor1, objectReferenceDescriptor1);
         } else if (collectionDescriptor1 != null)
         {
-            keyToClass2 = getKeyToOtherClass(classDescriptor1, collectionDescriptor1);
+            getKeyToOtherClass(classDescriptor1, collectionDescriptor1);
         } else
         {
             throw new RuntimeException("Class was not properly initialized.");
         }
 
-        final String tableName2 = classDescriptor2.getFullTableName();
-        final String keyToClass1;
-
         if (objectReferenceDescriptor2 != null)
         {
-            keyToClass1 = getKeyToOtherClass(classDescriptor2, objectReferenceDescriptor2);
+            getKeyToOtherClass(classDescriptor2, objectReferenceDescriptor2);
         } else if (collectionDescriptor2 != null)
         {
-            keyToClass1 = getKeyToOtherClass(classDescriptor2, collectionDescriptor2);
+            getKeyToOtherClass(classDescriptor2, collectionDescriptor2);
         } else
         {
-            keyToClass1 = null;
             //throw new RuntimeException("Class was not properly initialized.");
         }
 

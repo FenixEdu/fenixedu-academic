@@ -68,7 +68,7 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
             }
 
             // decide which is the execution year which we want to edit
-            IExecutionDegree executionDegree = (IExecutionDegree) getActiveExecutionYear(executionDegrees);
+            IExecutionDegree executionDegree = getActiveExecutionYear(executionDegrees);
             if (executionDegree != null) {
 
                 infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus

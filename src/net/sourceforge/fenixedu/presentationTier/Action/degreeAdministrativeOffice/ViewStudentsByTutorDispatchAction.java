@@ -41,7 +41,7 @@ public class ViewStudentsByTutorDispatchAction extends FenixAction {
 		
 		if (infoStudents.size() > 1) {
             //order list by number
-            Collections.sort((List) infoStudents, new BeanComparator(
+            Collections.sort(infoStudents, new BeanComparator(
                     "infoStudent.number"));
             request.setAttribute("studentsOfTutor", infoStudents);
         }

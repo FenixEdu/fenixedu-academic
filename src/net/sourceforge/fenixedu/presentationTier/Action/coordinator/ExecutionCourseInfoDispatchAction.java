@@ -81,7 +81,6 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
     
     public ActionForward prepareChoiceForCoordinator(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
         
         Integer degreeCurricularPlanID = null;
@@ -89,9 +88,6 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
             degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
-
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-                .getAttribute(SessionConstants.MASTER_DEGREE);
 
         Object argsReadExecutionPeriods[] = {degreeCurricularPlanID};
         List executionPeriods = (List) ServiceManagerServiceFactory.executeService(userView,

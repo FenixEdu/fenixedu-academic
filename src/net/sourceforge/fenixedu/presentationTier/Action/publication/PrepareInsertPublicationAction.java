@@ -61,9 +61,7 @@ public class PrepareInsertPublicationAction extends FenixDispatchAction {
 
     public ActionForward moveAuthorDown(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
 
-        IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaActionForm) actionForm;
 
         ArrayList authors = (ArrayList) dynaForm.get("authors");
@@ -93,9 +91,6 @@ public class PrepareInsertPublicationAction extends FenixDispatchAction {
 
     public ActionForward moveAuthorUp(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-
-        IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaActionForm) actionForm;
 
         ArrayList authors = (ArrayList) dynaForm.get("authors");

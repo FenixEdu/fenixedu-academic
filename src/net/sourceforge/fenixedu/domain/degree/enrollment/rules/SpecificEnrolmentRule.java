@@ -78,9 +78,7 @@ public abstract class SpecificEnrolmentRule {
                 throw new RuntimeException(e);
             }
         }
-        else {
-            curricularCoursesToBeEnrolledIn = removeAreaCurricularCourses(curricularCoursesToBeEnrolledIn);
-        }
+        curricularCoursesToBeEnrolledIn = removeAreaCurricularCourses(curricularCoursesToBeEnrolledIn);
 
         return curricularCoursesToBeEnrolledIn;
     }

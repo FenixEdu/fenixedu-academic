@@ -7,25 +7,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkRequests;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkRequestsWithAll;
 import net.sourceforge.fenixedu.domain.CostCenter;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ICostCenter;
 import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -44,17 +43,7 @@ public class ReadAndDeleteExtraWorkRequests implements IService {
         try {
             sp = SuportePersistenteOJB.getInstance();
 
-            // Read employee logged
-            IEmployee employeeWho = null;
-
-            IPessoaPersistente personDAO = sp.getIPessoaPersistente();
             IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
-
-            IPerson personWho = personDAO.lerPessoaPorUsername(usernameWho);
-            if (personWho != null) {
-                employeeWho = employeeDAO.readByPerson(personWho
-                        .getIdInternal().intValue());
-            }
 
             Iterator iterator = infoExtraWorkRequestsList.listIterator();
             extraWorkRequestsList = new ArrayList();

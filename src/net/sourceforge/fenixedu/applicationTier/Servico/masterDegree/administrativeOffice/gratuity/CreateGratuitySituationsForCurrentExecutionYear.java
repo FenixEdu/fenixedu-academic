@@ -48,7 +48,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
             IExecutionYear executionYear = null;
             
             if(year == null || year.equals("")){
-                executionYear = (IExecutionYear) sp.getIPersistentExecutionYear()
+                executionYear = sp.getIPersistentExecutionYear()
                 .readCurrentExecutionYear(); 
             }else{
                 executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(year);                

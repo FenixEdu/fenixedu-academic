@@ -6,7 +6,18 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -17,21 +28,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteClasses;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 /**
  * @author João Mota
@@ -52,7 +48,6 @@ public class ViewClassesActionNew extends FenixContextAction {
             e.printStackTrace();
         }
 		DynaActionForm escolherContextoForm = (DynaActionForm) form;
-        HttpSession session = request.getSession(true);
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
@@ -69,8 +64,6 @@ public class ViewClassesActionNew extends FenixContextAction {
 
         Integer degreeId = (Integer) request.getAttribute("degreeID");
         request.setAttribute("degreeID", degreeId);
-        
-        Integer curricularYear = (Integer) request.getAttribute("curYear");
 
 		List executionPeriodsLabelValueList = new ArrayList();
 		try {
@@ -92,7 +85,6 @@ public class ViewClassesActionNew extends FenixContextAction {
 
         RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
 
-        ISiteComponent component = new InfoSiteClasses();
         List classList = new ArrayList();
         Object[] args = { infoExecutionDegree,infoExecutionPeriod,
                 null};
@@ -111,7 +103,6 @@ public class ViewClassesActionNew extends FenixContextAction {
         request.setAttribute("classList", classList);
 		request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree
 			   .getInfoDegreeCurricularPlan());
-	   InfoDegreeCurricularPlan infoDegreeCurricularPlan = (InfoDegreeCurricularPlan)request.getAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN);
 		request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
 		request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal()
 			   .toString());

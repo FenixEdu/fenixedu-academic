@@ -119,9 +119,9 @@ public class ChangeStudentTestQuestion implements IService {
                             Student.class, studentId);
                     if (student == null)
                         throw new InvalidArgumentsServiceException();
-                    Integer order = ((IStudentTestQuestion) persistentStudentTestQuestion
+                    Integer order = persistentStudentTestQuestion
                             .readByQuestionAndStudentAndDistributedTest(oldQuestion, student,
-                                    distributedTest)).getTestQuestionOrder();
+                                    distributedTest).getTestQuestionOrder();
                     studentsTestQuestionList = persistentStudentTestQuestion
                             .readByOrderAndDistributedTest(order, distributedTest);
                 } else

@@ -118,14 +118,12 @@ public class ReadImprovmentsToEnroll implements IService  {
                         IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
                         if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
                             return true;
-                        else
-                            return false;
+                        return false;
                     }
                     
                 })!= null)
                     return true;
-                else 
-                    return false;
+                return false;
             }
         });
         enrolments.removeAll(improvments);
@@ -141,16 +139,14 @@ public class ReadImprovmentsToEnroll implements IService  {
                         IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
                         if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
                             return true;
-                        else
-                            return false;
+                        return false;
                     }
                     
                 });
                 
                 if(enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ))
                     return true;
-                else
-                    return false;
+                return false;
             }
             
         });
@@ -196,8 +192,7 @@ public class ReadImprovmentsToEnroll implements IService  {
                 if (enrollment.getEnrolmentEvaluationType().equals(
                         EnrolmentEvaluationType.EQUIVALENCE_OBJ))
                     return false;
-                else
-                    return true;
+                return true;
             }
         });
     }
@@ -219,8 +214,7 @@ public class ReadImprovmentsToEnroll implements IService  {
                     if(curricularCourseScope.getCurricularSemester().getSemester().equals(currentExecutionPeriod.getSemester())
                             && curricularCourseScope.getEndDate() == null)
                         return true;
-                    else
-                        return false;
+                    return false;
                 }                   
                });
                

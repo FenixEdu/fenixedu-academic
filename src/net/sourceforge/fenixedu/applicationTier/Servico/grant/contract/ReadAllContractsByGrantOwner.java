@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
@@ -16,15 +17,12 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrien
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantOrientationTeacher;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -41,7 +39,6 @@ public class ReadAllContractsByGrantOwner implements IService {
         List contracts = null;
         IPersistentGrantOrientationTeacher pgot = null;
         IPersistentGrantContractRegime persistentGrantContractRegime = null;
-        IPersistentGrantCostCenter persistentGrantCostCenter = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentGrantContract pgc = sp.getIPersistentGrantContract();
@@ -79,7 +76,7 @@ public class ReadAllContractsByGrantOwner implements IService {
                 if (grantContract.getGrantCostCenter()!= null){
    
                 InfoGrantCostCenter infoGrantCostCenter = InfoGrantCostCenter
-                        .newInfoFromDomain((IGrantCostCenter) grantContract.getGrantCostCenter());
+                        .newInfoFromDomain(grantContract.getGrantCostCenter());
                 infoGrantContract.setGrantCostCenterInfo(infoGrantCostCenter);
                 }
  

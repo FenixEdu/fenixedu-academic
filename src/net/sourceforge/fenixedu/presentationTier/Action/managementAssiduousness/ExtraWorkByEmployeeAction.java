@@ -13,14 +13,13 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWork;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWork;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -46,10 +45,8 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
     public ActionForward extraWorkSheetByEmployeeAndMoth(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors actionErrors = new ActionErrors();
-        HttpSession session = request.getSession();
 
         IUserView userView = SessionUtils.getUserView(request);
-        String usernameWhoKey = userView.getUtilizador();
 
         DynaActionForm extraWorkByEmployeeFormBean = (DynaActionForm) form;
         Integer employeeNumber = (Integer) extraWorkByEmployeeFormBean.get("employeeNumber");
@@ -107,7 +104,6 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             ActionErrors actionErrors = new ActionErrors();
-            HttpSession session = request.getSession();
 
             IUserView userView = SessionUtils.getUserView(request);
             String usernameWhoKey = userView.getUtilizador();
@@ -320,7 +316,6 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
     private InfoExtraWork getIDExtraWork(HttpServletRequest request, int index) {
         try {
             Integer idInternal = null;
-            Boolean forDelete = new Boolean(false);
 
             if (request.getParameter("infoExtraWork[" + index + "].idInternal") != null
                     && request.getParameter("infoExtraWork[" + index + "].idInternal").length() > 0) {

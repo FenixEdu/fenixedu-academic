@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.domain.AttendInAttendsSet;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAttendInAttendsSet;
@@ -18,13 +21,9 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendInAttendsSet;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -54,7 +53,6 @@ public class InsertStudentsInAttendsSet implements IService {
         IPersistentGroupProperties persistentGroupProperties = null;
         IFrequentaPersistente persistentAttend = null;
         IPersistentStudent persistentStudent = null;
-        IPersistentAttendsSet persistentAttendsSet = null;
         IPersistentAttendInAttendsSet persistentAttendInAttendsSet = null;
         List students = new ArrayList();
         
@@ -67,7 +65,6 @@ public class InsertStudentsInAttendsSet implements IService {
                     .getIPersistentGroupProperties();
             persistentStudent = persistentSupport.getIPersistentStudent();
             persistentAttend = persistentSupport.getIFrequentaPersistente();
-            persistentAttendsSet = persistentSupport.getIPersistentAttendsSet();
             persistentAttendInAttendsSet = persistentSupport.getIPersistentAttendInAttendsSet();
 
             

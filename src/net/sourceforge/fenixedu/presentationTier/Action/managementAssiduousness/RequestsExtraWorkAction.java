@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -41,8 +40,6 @@ public class RequestsExtraWorkAction extends FenixDispatchAction {
     public ActionForward prepareRequests(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        ActionErrors actionErrors = new ActionErrors();
-        HttpSession session = request.getSession();
         try {
             IUserView userView = SessionUtils.getUserView(request);
             String usernameWhoKey = userView.getUtilizador();
@@ -101,7 +98,6 @@ public class RequestsExtraWorkAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             ActionErrors actionErrors = new ActionErrors();
-            HttpSession session = request.getSession();
 
             IUserView userView = SessionUtils.getUserView(request);
             String usernameWhoKey = userView.getUtilizador();
@@ -166,7 +162,6 @@ public class RequestsExtraWorkAction extends FenixDispatchAction {
     public ActionForward readAndDeleteRequests(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors actionErrors = new ActionErrors();
-        HttpSession session = request.getSession();
         DynaActionForm requestsExtraWorkFormBean = (DynaActionForm) form;
 
         try {

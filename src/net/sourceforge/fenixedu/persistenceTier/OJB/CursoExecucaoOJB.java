@@ -277,7 +277,7 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         Criteria criteria = new Criteria();
         criteria.addEqualTo("academicYear", executionYear.getIdInternal());
         criteria.addLike("curricularPlan.degree.nome", name);
-        return (List) queryList(ExecutionDegree.class, criteria);
+        return queryList(ExecutionDegree.class, criteria);
 
     }
 
@@ -293,7 +293,7 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         criteria.addEqualTo("academicYear", executionYear.getIdInternal());
         criteria.addLike("curricularPlan.degree.nome", name);
         criteria.addEqualTo("curricularPlan.degree.tipoCurso", degreeType);
-        return (List) queryList(ExecutionDegree.class, criteria);
+        return queryList(ExecutionDegree.class, criteria);
     }
 
     public List readByExecutionYearOID(Integer executionYearOID) throws ExcepcaoPersistencia {

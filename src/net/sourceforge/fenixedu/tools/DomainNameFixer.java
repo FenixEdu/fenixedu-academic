@@ -26,7 +26,6 @@ public class DomainNameFixer {
         for (final Iterator iterator = descriptorTable.entrySet().iterator(); iterator.hasNext();)
         {
             final Entry entry = (Entry) iterator.next();
-            final String className = (String) entry.getKey();
             final ClassDescriptor classDescriptor = (ClassDescriptor) entry.getValue();
 
 			final FieldDescriptor concreteClassField = classDescriptor.getOjbConcreteClassField();

@@ -49,8 +49,6 @@ public class UnEnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
-		String shiftCodeString = request.getParameter("shiftCode");
-		Integer shiftCode = new Integer(shiftCodeString);
 		
 		Object args[] = { studentGroupCode, groupPropertiesCode, userView.getUtilizador()};
 		

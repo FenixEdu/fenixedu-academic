@@ -38,7 +38,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 /**
  * @author Pedro Santos & Rita Carvalho
- *  
+ * 
  */
 public class ExecutionCourseForwardFilter implements Filter {
 
@@ -172,59 +172,60 @@ public class ExecutionCourseForwardFilter implements Filter {
                             i = 3;
                         }
 
-                        if (infoCurricularCourse != null ) {
+                        if (infoCurricularCourse != null) {
                             InfoExecutionCourse infoExecutionCourse;
-                            if ( i >= tokens.length ){
+                            if (i >= tokens.length) {
                                 infoExecutionCourse = getExecutionCourseRecent(infoCurricularCourse);
                                 constructForwardExecutionCourseURI(forwardURI, infoExecutionCourse);
+                            } else {
+                                String nextToken = tokens[i++];
+                                if (isExecutionYear(nextToken.replaceFirst("-", "/"))) {
+                                    if (i < tokens.length) {
+                                        String semestre = tokens[i++];
+                                        if (isExecutionPeriod(semestre.replaceFirst("-", " "))) {
+                                            infoExecutionCourse = getExecutionCourse(
+                                                    infoCurricularCourse, nextToken.replaceFirst("-",
+                                                            "/"), semestre.replaceFirst("-", " "));
+                                            if (infoExecutionCourse != null) {
+                                                constructForwardExecutionCourseURI(forwardURI,
+                                                        infoExecutionCourse);
+                                            } else {
+                                                forwardURI.append(notFoundURI);
+                                            }
+                                        } else {
+                                            infoExecutionCourse = getExecutionCourseByExecutionYear(
+                                                    infoCurricularCourse, nextToken.replaceFirst("-",
+                                                            "/"));
+                                            if (infoExecutionCourse != null) {
+                                                constructForwardExecutionCourseURI(forwardURI,
+                                                        infoExecutionCourse);
+                                            } else {
+                                                forwardURI.append(notFoundURI);
+                                            }
+                                        }
+                                    } else {
+                                        infoExecutionCourse = getExecutionCourseByExecutionYear(
+                                                infoCurricularCourse, nextToken.replaceFirst("-", "/"));
+                                        if (infoExecutionCourse != null) {
+                                            constructForwardExecutionCourseURI(forwardURI,
+                                                    infoExecutionCourse);
+                                        } else {
+                                            forwardURI.append(notFoundURI);
+                                        }
+                                    }
+                                } else if (isExecutionPeriod(nextToken.replaceFirst("-", " "))) {
+                                    infoExecutionCourse = getExecutionCourseByExecutionPeriod(
+                                            infoCurricularCourse, nextToken.replaceFirst("-", " "));
+                                    if (infoExecutionCourse != null) {
+                                        constructForwardExecutionCourseURI(forwardURI,
+                                                infoExecutionCourse);
+                                    } else {
+                                        forwardURI.append(notFoundURI);
+                                    }
+                                } else {
+                                    forwardURI.append(notFoundURI);
+                                }
                             }
-                            else{
-	                            String nextToken = tokens[i++];
-	                            if (isExecutionYear(nextToken.replaceFirst("-", "/"))) {
-	                                if (i < tokens.length) {
-	                                    String semestre = tokens[i++];
-	                                    if (isExecutionPeriod(semestre.replaceFirst("-", " "))) {
-	                                        infoExecutionCourse = getExecutionCourse(infoCurricularCourse,
-	                                                nextToken.replaceFirst("-", "/"), semestre.replaceFirst(
-	                                                        "-", " "));
-	                                        if (infoExecutionCourse != null) {
-	                                            constructForwardExecutionCourseURI(forwardURI,
-	                                                    infoExecutionCourse);
-	                                        } else {
-	                                            forwardURI.append(notFoundURI);
-	                                        }
-	                                    } else {
-	                                        infoExecutionCourse = getExecutionCourseByExecutionYear(
-	                                                infoCurricularCourse, nextToken.replaceFirst("-", "/"));
-	                                        if (infoExecutionCourse != null) {
-	                                            constructForwardExecutionCourseURI(forwardURI,
-	                                                    infoExecutionCourse);
-	                                        } else {
-	                                            forwardURI.append(notFoundURI);
-	                                        }
-	                                    }
-	                                } else {
-	                                    infoExecutionCourse = getExecutionCourseByExecutionYear(
-	                                            infoCurricularCourse, nextToken.replaceFirst("-", "/"));
-	                                    if (infoExecutionCourse != null) {
-	                                        constructForwardExecutionCourseURI(forwardURI,
-	                                                infoExecutionCourse);
-	                                    } else {
-	                                        forwardURI.append(notFoundURI);
-	                                    }
-	                                }
-	                            } else if (isExecutionPeriod(nextToken.replaceFirst("-", " "))) {
-	                                infoExecutionCourse = getExecutionCourseByExecutionPeriod(
-	                                        infoCurricularCourse, nextToken.replaceFirst("-", " "));
-	                                if (infoExecutionCourse != null) {
-	                                    constructForwardExecutionCourseURI(forwardURI, infoExecutionCourse);
-	                                } else {
-	                                    forwardURI.append(notFoundURI);
-	                                }
-	                            } else {
-	                                forwardURI.append(notFoundURI);
-	                            }	
-	                        }
                         }
 
                     } catch (FenixServiceException e3) {
@@ -244,7 +245,8 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param idInternal
      * @param token_3
      * @return
-     * @throws FenixServiceException, FenixFilterException
+     * @throws FenixServiceException,
+     *             FenixFilterException
      */
     private InfoCurricularCourse getExecutionCourseByDegreeCurricularPlan(Integer idInternal,
             final String token_3) throws FenixServiceException, FenixFilterException {
@@ -264,21 +266,22 @@ public class ExecutionCourseForwardFilter implements Filter {
                     });
             return infoCurricularCourse;
 
-        } else
-            return null;
+        }
+        return null;
     }
 
     /**
      * @param token_2
      * @param degreeId
      * @return
-     * @throws FenixServiceException, FenixFilterException
+     * @throws FenixServiceException,
+     *             FenixFilterException
      */
     private InfoDegreeCurricularPlan getDegreeCurricularPlan(String token_2, Integer degreeId)
             throws FenixServiceException, FenixFilterException {
         try {
             String[] tokens = token_2.split("-");
-            
+
             final Integer year = new Integer(tokens[0]);
             Object args[] = { degreeId };
             List listDegreeCurricularPlans = (List) ServiceUtils.executeService(null,
@@ -300,8 +303,8 @@ public class ExecutionCourseForwardFilter implements Filter {
                 InfoDegreeCurricularPlan infoDegreCurricularPlan = (InfoDegreeCurricularPlan) listDegreeCurricularPlans
                         .get(0);
                 return infoDegreCurricularPlan;
-            } else
-                return null;
+            }
+            return null;
         } catch (NumberFormatException e) {
             return null;
         }
@@ -322,14 +325,15 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param token_3
      * @param degreeId
      * @return
-     * @throws FenixServiceException, FenixFilterException
+     * @throws FenixServiceException,
+     *             FenixFilterException
      */
     private boolean isDegreeCurricularPlanYear(String token_3, Integer degreeId)
             throws FenixServiceException, FenixFilterException {
         try {
-            
+
             String[] tokens = token_3.split("-");
-            
+
             final Integer year = new Integer(tokens[0]);
             Object args[] = { degreeId };
             List listDegreeCurricularPlans = (List) ServiceUtils.executeService(null,
@@ -346,8 +350,8 @@ public class ExecutionCourseForwardFilter implements Filter {
 
                 });
                 return !listDegreeCurricularPlans.isEmpty();
-            } else
-                return false;
+            }
+            return false;
         } catch (NumberFormatException e) {
             return false;
         }
@@ -356,9 +360,11 @@ public class ExecutionCourseForwardFilter implements Filter {
     /**
      * @param string
      * @return
-     * @throws FenixServiceException, FenixFilterException
+     * @throws FenixServiceException,
+     *             FenixFilterException
      */
-    private boolean isExecutionPeriod(final String newToken) throws FenixServiceException, FenixFilterException {
+    private boolean isExecutionPeriod(final String newToken) throws FenixServiceException,
+            FenixFilterException {
         List listInfoExecutionPeriods = (List) ServiceUtils.executeService(null, "ReadExecutionPeriods",
                 null);
         if (listInfoExecutionPeriods != null) {
@@ -372,14 +378,15 @@ public class ExecutionCourseForwardFilter implements Filter {
 
             });
             return !listInfoExecutionPeriods.isEmpty();
-        } else
-            return false;
+        }
+        return false;
     }
 
     /**
      * @param newToken
      * @return
-     * @throws FenixServiceException, FenixFilterException
+     * @throws FenixServiceException,
+     *             FenixFilterException
      */
     private boolean isExecutionYear(String newToken) throws FenixServiceException, FenixFilterException {
         Object args[] = { newToken };
@@ -392,7 +399,8 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param infoCurricularCourseRecent
      * @param string
      * @return
-     * @throws FenixServiceException, FenixFilterException
+     * @throws FenixServiceException,
+     *             FenixFilterException
      */
     private InfoExecutionCourse getExecutionCourseByExecutionPeriod(
             InfoCurricularCourse infoCurricularCourseRecent, final String string)
@@ -414,10 +422,10 @@ public class ExecutionCourseForwardFilter implements Filter {
             });
 
             Collections.sort(listExecutionCourses, new BeanComparator("infoExecutionPeriod.beginDate"));
-            if(listExecutionCourses.isEmpty()){
+            if (listExecutionCourses.isEmpty()) {
                 return null;
             }
-            else return (InfoExecutionCourse) listExecutionCourses.get(listExecutionCourses.size() - 1);
+            return (InfoExecutionCourse) listExecutionCourses.get(listExecutionCourses.size() - 1);
         }
         return null;
     }
@@ -426,7 +434,8 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param infoCurricularCourseRecent
      * @param newToken
      * @return
-     * @throws FenixServiceException, FenixFilterException
+     * @throws FenixServiceException,
+     *             FenixFilterException
      */
     private InfoExecutionCourse getExecutionCourseByExecutionYear(
             InfoCurricularCourse infoCurricularCourseRecent, final String newToken)
@@ -448,10 +457,11 @@ public class ExecutionCourseForwardFilter implements Filter {
             });
 
             Collections.sort(listExecutionCourses, new BeanComparator("infoExecutionPeriod.beginDate"));
-            
-            if(listExecutionCourses.isEmpty()){
-                return null;  
-            } else return (InfoExecutionCourse) listExecutionCourses.get(listExecutionCourses.size() - 1);
+
+            if (listExecutionCourses.isEmpty()) {
+                return null;
+            }
+            return (InfoExecutionCourse) listExecutionCourses.get(listExecutionCourses.size() - 1);
         }
         return null;
     }
@@ -461,10 +471,12 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param executionYear
      * @param executionPeriod
      * @return
-     * @throws FenixServiceException, FenixFilterException
+     * @throws FenixServiceException,
+     *             FenixFilterException
      */
     private InfoExecutionCourse getExecutionCourse(InfoCurricularCourse infoCurricularCourseRecent,
-            String executionYear, String executionPeriod) throws FenixServiceException, FenixFilterException {
+            String executionYear, String executionPeriod) throws FenixServiceException,
+            FenixFilterException {
         Object args1[] = { infoCurricularCourseRecent.getIdInternal() };
         List listExecutionCourses = (List) ServiceUtils.executeService(null,
                 "ReadExecutionCoursesByCurricularCourse", args1);
@@ -497,7 +509,8 @@ public class ExecutionCourseForwardFilter implements Filter {
 
     /**
      * @return
-     * @throws FenixServiceException, FenixFilterException
+     * @throws FenixServiceException,
+     *             FenixFilterException
      */
     private InfoExecutionCourse getExecutionCourseRecent(InfoCurricularCourse infoCurricularCourseRecent)
             throws FenixServiceException, FenixFilterException {
@@ -517,7 +530,8 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param degreeId
      * @param acronym
      * @return
-     * @throws FenixServiceException, FenixFilterException
+     * @throws FenixServiceException,
+     *             FenixFilterException
      */
     private InfoCurricularCourse getCurricularCourseRecent(Integer degreeId, String acronym)
             throws FenixServiceException, FenixFilterException {
@@ -552,7 +566,8 @@ public class ExecutionCourseForwardFilter implements Filter {
     /**
      * @param degreeCode
      * @return
-     * @throws FenixServiceException, FenixFilterException
+     * @throws FenixServiceException,
+     *             FenixFilterException
      */
     private Integer getDegreeId(String degreeCode) throws FenixServiceException, FenixFilterException {
         Object args[] = { degreeCode };

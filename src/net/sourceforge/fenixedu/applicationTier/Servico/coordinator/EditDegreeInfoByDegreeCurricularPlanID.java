@@ -79,7 +79,7 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
                     infoDegreeInfoId, true);
 
             //decide which is the execution year which we want to edit
-            IExecutionDegree executionDegree = (IExecutionDegree) getActiveExecutionYear(executionDegrees);
+            IExecutionDegree executionDegree = getActiveExecutionYear(executionDegrees);
             if (executionDegree == null) {
                 throw new FenixServiceException("error.impossibleEditDegreeInfo");
             }

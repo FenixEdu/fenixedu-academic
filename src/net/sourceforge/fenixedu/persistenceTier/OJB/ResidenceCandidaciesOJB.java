@@ -33,7 +33,7 @@ public class ResidenceCandidaciesOJB extends PersistentObjectOJB implements
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyStudent", student.getIdInternal());
-        return (List) queryList(ResidenceCandidacies.class, criteria);
+        return queryList(ResidenceCandidacies.class, criteria);
     }
 
 }

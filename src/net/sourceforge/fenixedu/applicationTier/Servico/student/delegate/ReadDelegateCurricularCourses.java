@@ -7,19 +7,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.delegate;
 import java.util.HashMap;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.framework.SearchService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.student.IDelegate;
-import net.sourceforge.fenixedu.applicationTier.Servico.framework.SearchService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
@@ -75,13 +73,11 @@ public class ReadDelegateCurricularCourses extends SearchService {
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
         IPersistentDelegate persistentDelegate = sp.getIPersistentDelegate();
         IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 
         String user = (String) searchParameters.get("user");
 
         IStudent student = persistentStudent.readByUsername(user);
         IDelegate delegate = persistentDelegate.readByStudent(student);
-        IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
         // if he's a degree delegate then he can read all curricular courses
         // report
         if (delegate.getType().booleanValue()) {

@@ -82,7 +82,7 @@ public class ReadProjectAccesses implements IService {
     public InfoProjectAccess run(Integer personCode, Integer projectCode) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         IPersistentSuportOracle spOracle = PersistentSuportOracle.getInstance();
-        InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain((IProjectAccess) sp.getIPersistentProjectAccess()
+        InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(sp.getIPersistentProjectAccess()
                 .readByPersonIdAndProjectAndDate(personCode, projectCode));
         infoProjectAccess.setInfoProject(InfoProject.newInfoFromDomain(spOracle.getIPersistentProject()
                 .readProject(infoProjectAccess.getKeyProject())));

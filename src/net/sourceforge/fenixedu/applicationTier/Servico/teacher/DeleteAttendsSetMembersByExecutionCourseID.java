@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.domain.AttendsSet;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttendInAttendsSet;
@@ -17,12 +21,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendInAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -64,9 +63,6 @@ public class DeleteAttendsSetMembersByExecutionCourseID implements IServico {
      */
 
     public boolean run(Integer executionCourseCode, Integer attendsSetCode) throws FenixServiceException {
-
-        
-        IFrequentaPersistente persistentAttend = null;
         IPersistentAttendsSet persistentAttendsSet = null;
         IPersistentAttendInAttendsSet persistentAttendInAttendsSet = null;
         IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
@@ -78,7 +74,6 @@ public class DeleteAttendsSetMembersByExecutionCourseID implements IServico {
             ISuportePersistente persistentSupport = SuportePersistenteOJB
                     .getInstance();
 
-            persistentAttend = persistentSupport.getIFrequentaPersistente();
             persistentAttendsSet = persistentSupport.getIPersistentAttendsSet();
             persistentAttendInAttendsSet = persistentSupport.getIPersistentAttendInAttendsSet();
             persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
@@ -111,7 +106,7 @@ public class DeleteAttendsSetMembersByExecutionCourseID implements IServico {
             Iterator iterator = attendsSetElements.iterator();
             while (iterator.hasNext()) {
             	IAttendInAttendsSet attendInAttendsSet = (IAttendInAttendsSet)iterator.next();
-            	IAttends frequenta = (IAttends)attendInAttendsSet.getAttend();
+            	IAttends frequenta = attendInAttendsSet.getAttend();
             	if(executionCourseStudentNumbers.contains(frequenta.getAluno().getNumber())){
             		boolean found = false;
                     Iterator iterStudentsGroups = attendsSet.getStudentGroups().iterator();

@@ -79,7 +79,7 @@ public class NewProjectProposal implements IService
 			IExecutionCourse goalExecutionCourse = (IExecutionCourse)persistentExecutionCourse.readByOID(ExecutionCourse.class,goalExecutionCourseId);
 			IExecutionCourse startExecutionCourse = (IExecutionCourse)persistentExecutionCourse.readByOID(ExecutionCourse.class,objectCode);
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-			IPerson senderPerson = ((ITeacher) persistentTeacher.readTeacherByUsername(senderPersonUsername)).getPerson();
+			IPerson senderPerson = persistentTeacher.readTeacherByUsername(senderPersonUsername).getPerson();
 			
 			if(groupProperties==null){
 				throw new InvalidArgumentsServiceException("error.noGroupProperties");

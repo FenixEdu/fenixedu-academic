@@ -89,7 +89,6 @@ public class ReadAuthorByPersonId implements IServico {
         try {
             sp = SuportePersistenteOJB.getInstance();
 
-            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
 
             IAuthor iauthor = persistentAuthor.readAuthorByKeyPerson(personId);

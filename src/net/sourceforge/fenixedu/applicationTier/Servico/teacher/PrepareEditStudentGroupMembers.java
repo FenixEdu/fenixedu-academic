@@ -8,16 +8,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
@@ -58,7 +57,6 @@ public class PrepareEditStudentGroupMembers implements IServico {
     public List run(Integer executionCourseCode, Integer studentGroupCode)
             throws FenixServiceException {
 
-        IFrequentaPersistente persistentAttend = null;
         IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
         List frequentas = new ArrayList();
         List infoStudentList = new ArrayList();
@@ -66,7 +64,6 @@ public class PrepareEditStudentGroupMembers implements IServico {
         try {
 
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-            persistentAttend = ps.getIFrequentaPersistente();
             persistentStudentGroupAttend = ps
                     .getIPersistentStudentGroupAttend();
 

@@ -1699,11 +1699,10 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
                         // anular
                         if (resultado3.getInt("chaveParamRegularizacao") == marcacaoAnular) {
                             continue;
-                        } else {
-                            marcacaoPonto.setEstado("regularizada");
-                            marcacaoPonto.setSiglaUnidade("");
-                            marcacaoPonto.setNumCartao(0);
                         }
+                        marcacaoPonto.setEstado("regularizada");
+                        marcacaoPonto.setSiglaUnidade("");
+                        marcacaoPonto.setNumCartao(0);
                     }
                     marcacoesPonto.add(marcacaoPonto);
                 }

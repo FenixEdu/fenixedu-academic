@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -15,11 +17,8 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
@@ -60,7 +59,6 @@ public class PrepareEditAttendsSetMembers implements IServico{
             throws FenixServiceException {
 
         IFrequentaPersistente persistentAttend = null;
-        IPersistentAttendsSet persistentAttendsSet = null;
         IPersistentGroupProperties persistentGroupProperties = null;
         List frequentasPossiveis = new ArrayList();
         List infoStudentList = new ArrayList();
@@ -71,7 +69,6 @@ public class PrepareEditAttendsSetMembers implements IServico{
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
             persistentAttend = ps.getIFrequentaPersistente();
             persistentGroupProperties = ps.getIPersistentGroupProperties();
-            persistentAttendsSet = ps.getIPersistentAttendsSet();
 
             IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.
 													readByOID(GroupProperties.class,groupPropertiesCode);

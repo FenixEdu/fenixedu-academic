@@ -69,13 +69,13 @@ public class RejectNewProjectProposal implements IService
 				throw new NotAuthorizedException();
 			}
 			
-			IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) persistentGroupPropertiesExecutionCourse.readByIDs(groupPropertiesId,executionCourseId);
+			IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = persistentGroupPropertiesExecutionCourse.readByIDs(groupPropertiesId,executionCourseId);
 			
 			if(groupPropertiesExecutionCourse==null){
 				throw new ExistingServiceException();
 			}
 			
-			IPerson receiverPerson = ((ITeacher) persistentTeacher.readTeacherByUsername(rejectorUserName)).getPerson();
+			IPerson receiverPerson = persistentTeacher.readTeacherByUsername(rejectorUserName).getPerson();
 			
 			IExecutionCourse executionCourse =  groupPropertiesExecutionCourse.getExecutionCourse();
 			groupPropertiesExecutionCourse.setReceiverPerson(receiverPerson);

@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -225,15 +224,6 @@ public class ReadFilteredExamsMapList implements IServico {
 							   boolean isCurricularYearEqual = infoCurricularYear.getYear().equals(
 									   curricularYears.get(i));
 
-							   //obter o curricular plan a partir do curricular
-							   // course scope
-							   InfoDegreeCurricularPlan degreeCurricularPlanFromScope = infoCurricularCourseScope
-									   .getInfoCurricularCourse().getInfoDegreeCurricularPlan();
-
-//							   obter o curricular plan a partir do info degree
-							   InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree
-									   .getInfoDegreeCurricularPlan();
-//
 //							   boolean isCurricularPlanEqual = degreeCurricularPlanFromScope
 //									   .equals(infoDegreeCurricularPlan);
 							   boolean isCurricularPlanEqual = true;

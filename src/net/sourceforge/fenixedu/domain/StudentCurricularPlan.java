@@ -689,8 +689,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
                 if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)
                         && enrollment.getExecutionPeriod().equals(executionPeriod))
                     return true;
-                else
-                    return false;
+                return false;
             }
         });
     }
@@ -1022,7 +1021,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
         int size = curricularCoursesEnrollments.size();
         for (int i = 0; i < size; i++) {
-            ICurricularCourse tempCurricularCourse = (ICurricularCourse) ((IEnrollment) curricularCoursesEnrollments
+            ICurricularCourse tempCurricularCourse = ((IEnrollment) curricularCoursesEnrollments
                     .get(i)).getCurricularCourse();
             List curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(tempCurricularCourse);
             if (curricularCourseEquivalences.contains(curricularCourse)) {

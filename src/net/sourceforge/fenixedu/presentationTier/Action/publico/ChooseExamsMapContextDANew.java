@@ -51,9 +51,6 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         HttpSession session = request.getSession(true);
         if (session != null) {
 
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                    .getAttribute(SessionConstants.EXECUTION_PERIOD);
-
             Integer degreeId = getFromRequest("degreeID", request);
             request.setAttribute("degreeID", degreeId);
 
@@ -67,10 +64,6 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
             request.setAttribute("inEnglish", inEnglish);
     		request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
     		
-    		Integer indice = getFromRequest("indice",request);
-
-
-
 			List executionPeriodsLabelValueList = new ArrayList();
 			executionPeriodsLabelValueList = getList(degreeCurricularPlanId);
 			if (executionPeriodsLabelValueList.size() > 1) {			

@@ -62,9 +62,7 @@ public class EditGroupShift implements IService {
         try {
             ISuportePersistente persistentSupport = SuportePersistenteOJB
                     .getInstance();
-            IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSupport
-                    .getIPersistentStudentGroupAttend();
-            
+
             persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
             
             IGroupProperties groupProperties = (IGroupProperties)persistentGroupProperties.readByOID(

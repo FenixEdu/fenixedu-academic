@@ -41,7 +41,6 @@ public class PersistentProject implements IPersistentProject {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int i = 1;
                 IProject project = new Project();
                 project.setProjectCode(rs.getString("projectCode"));
                 project.setTitle(rs.getString("title"));
@@ -83,7 +82,6 @@ public class PersistentProject implements IPersistentProject {
                 ResultSet rs = stmt.executeQuery();
 
                 while (rs.next()) {
-                    int i = 1;
                     IProject project = new Project();
                     project.setProjectCode(rs.getString("projectCode"));
                     project.setTitle(rs.getString("title"));
@@ -131,7 +129,6 @@ public class PersistentProject implements IPersistentProject {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int i = 1;
                 IProject project = new Project();
                 project.setProjectCode(rs.getString("projectCode"));
                 project.setTitle(rs.getString("title"));
@@ -161,7 +158,6 @@ public class PersistentProject implements IPersistentProject {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                int i = 1;
                 project.setProjectCode(projectCode.toString());
                 project.setTitle(rs.getString(1));
                 project.setCoordinatorName(rs.getString(2));

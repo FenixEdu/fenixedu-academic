@@ -29,7 +29,7 @@ public class VerifyIfGroupPropertiesHasProjectProposal implements IService
 		try{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = sp.getIPersistentGroupPropertiesExecutionCourse();
-			IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) persistentGroupPropertiesExecutionCourse.readByIDs(groupPropertiesId,executionCourseId);
+			IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = persistentGroupPropertiesExecutionCourse.readByIDs(groupPropertiesId,executionCourseId);
 			if(groupPropertiesExecutionCourse==null){
 				result = false;
 			}

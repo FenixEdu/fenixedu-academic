@@ -197,8 +197,6 @@ public class ReadTeacherInformation implements IService {
             infoSiteTeacherInformation.setInfoCientificPublications(getInfoPublications(sp, teacher,
                     PublicationConstants.CIENTIFIC));
 
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
             //CLONER
             //infoSiteTeacherInformation.setInfoExecutionPeriod(
             //(InfoExecutionPeriod) Cloner.get(executionPeriod));

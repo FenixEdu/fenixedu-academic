@@ -70,10 +70,8 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
           InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                 .getAttribute(SessionConstants.EXECUTION_DEGREE);
           InfoExamsMap infoExamsMap = new InfoExamsMap();
-		  InfoExamsMap infoExamsMapFirst = new InfoExamsMap();
 			
-			
-            List infoExamsMapList = new ArrayList();
+
             if (infoExecutionDegree == null) {
 				List infoExecutionDegreeList = (List)request.getAttribute(SessionConstants.EXECUTION_DEGREE_LIST);
 				

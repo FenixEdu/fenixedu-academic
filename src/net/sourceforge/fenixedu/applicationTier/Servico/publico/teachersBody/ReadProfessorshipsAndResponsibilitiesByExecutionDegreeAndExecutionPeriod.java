@@ -68,7 +68,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
             if(semester.intValue() == 0)
             	professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
             else {
-                IExecutionPeriod executionPeriod = (IExecutionPeriod)persistentExecutionPeriod.readBySemesterAndExecutionYear(
+                IExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
                 		semester, executionDegree.getExecutionYear());
             	professorships = persistentProfessorship.readByExecutionDegreeAndExecutionPeriod(
             			executionDegree, executionPeriod);

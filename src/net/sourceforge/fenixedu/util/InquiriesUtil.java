@@ -40,18 +40,16 @@ public class InquiriesUtil extends FenixUtil {
         if(repQuota.doubleValue() > minRepQuota.doubleValue()) {
             return formatAnswer(answer);
 
-        } else {
-            return "-";
         }
+        return "-";
     }
     
     public static String formatAnswer(String answer, Double repQuota, Double minRepQuota) {
         if(repQuota.doubleValue() > minRepQuota.doubleValue()) {
             return formatAnswer(answer);
 
-        } else {
-            return "-";
         }
+        return "-";
     }
     
     
@@ -99,9 +97,8 @@ public class InquiriesUtil extends FenixUtil {
         if(repQuota.doubleValue() > minRepQuota.doubleValue()) {
             return getTdClass(val, classes, defaultClass, values);
 
-        } else {
-            return defaultClass;
         }
+        return defaultClass;
     }
 
     public static String getTdClass(String val, final String[] classes, final String defaultClass,
@@ -110,9 +107,8 @@ public class InquiriesUtil extends FenixUtil {
 		if(repQuota.doubleValue() > minRepQuota.doubleValue()) {
 		    return getTdClass(val, classes, defaultClass, values);
 		
-		} else {
-		    return defaultClass;
 		}
+        return defaultClass;
 }
 
 }

@@ -75,9 +75,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             if (nextPage != null)
                 request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
 
-            IUserView userView = SessionUtils.getUserView(request);
-
-            InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
+            setExecutionContext(request);
 
 			Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
 			request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
@@ -273,7 +271,6 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
-        Integer index = null;
    /*  if (escolherContextoForm.get("index") != null
                 && !escolherContextoForm.get("index").equals("null")) {
 
@@ -291,7 +288,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         request.setAttribute("semester", semestre);
         		Integer indice = (Integer)escolherContextoForm.get("indice");
 		if (indice==null)
-			indice = (Integer)getFromRequest("indice", request);
+			indice = getFromRequest("indice", request);
 		request.setAttribute("indice",indice);
 		escolherContextoForm.set("indice",indice);
 		Object argsLerLicenciaturas[] =null;

@@ -46,7 +46,7 @@ public class InsertNewProjectAccess implements IService {
         IPersistentSuportOracle po = PersistentSuportOracle.getInstance();
         Integer coordinatorCode = po.getIPersistentProjectUser().getUserCoordId(getUserNumber(sp, userView));
         if (!hasProjectsManagerRole(person)) {
-            IRole role = (IRole) sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
+            IRole role = sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
             role.setRoleType(RoleType.PROJECTS_MANAGER);
             IPersonRole personRole = new PersonRole();
             personRole.setPerson(person);
@@ -79,7 +79,7 @@ public class InsertNewProjectAccess implements IService {
             throw new IllegalArgumentException();
         sp.getIPersistentProjectAccess().deleteByPersonAndDate(person);
         if (!hasProjectsManagerRole(person)) {
-            IRole role = (IRole) sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
+            IRole role = sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
             role.setRoleType(RoleType.PROJECTS_MANAGER);
             IPersonRole personRole = new PersonRole();
             personRole.setPerson(person);
@@ -114,12 +114,12 @@ public class InsertNewProjectAccess implements IService {
 
     private Integer getUserNumber(ISuportePersistente sp, IUserView userView) throws ExcepcaoPersistencia {
         Integer userNumber = null;
-        ITeacher teacher = (ITeacher) sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
+        ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
             IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
-            IEmployee employee = (IEmployee) sp.getIPersistentEmployee().readByPerson(person);
+            IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();
         }

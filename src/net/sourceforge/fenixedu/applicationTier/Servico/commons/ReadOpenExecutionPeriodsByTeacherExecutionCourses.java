@@ -7,15 +7,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -34,7 +33,6 @@ public class ReadOpenExecutionPeriodsByTeacherExecutionCourses implements IServi
         List result = new ArrayList();
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
             IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
@@ -48,7 +46,7 @@ public class ReadOpenExecutionPeriodsByTeacherExecutionCourses implements IServi
             while(iterProfessorships.hasNext()){
                 IProfessorship professorship = (IProfessorship)iterProfessorships.next();
                 IExecutionPeriod executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
-                PeriodState periodState = (PeriodState)executionPeriod.getState();
+                PeriodState periodState = executionPeriod.getState();
                 if(!executionPeriods.contains(executionPeriod) && 
                         (periodState.getStateCode().equals("C") || periodState.getStateCode().equals("O"))){
                     executionPeriods.add(executionPeriod);
@@ -61,7 +59,7 @@ public class ReadOpenExecutionPeriodsByTeacherExecutionCourses implements IServi
             while(iterResponsibleFors.hasNext()){
                 IResponsibleFor responsibleFor = (IResponsibleFor)iterResponsibleFors.next();
                 IExecutionPeriod executionPeriod = responsibleFor.getExecutionCourse().getExecutionPeriod();
-                PeriodState periodState = (PeriodState)executionPeriod.getState();
+                PeriodState periodState = executionPeriod.getState();
                 if(!executionPeriods.contains(executionPeriod) && 
                         (periodState.getStateCode().equals("C") || periodState.getStateCode().equals("O"))){
                     executionPeriods.add(executionPeriod);

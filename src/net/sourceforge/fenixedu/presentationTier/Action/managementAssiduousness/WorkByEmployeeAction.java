@@ -57,7 +57,6 @@ public class WorkByEmployeeAction extends FenixDispatchAction {
         HttpSession session = request.getSession();
 
         IUserView userView = SessionUtils.getUserView(request);
-        String usernameWhoKey = userView.getUtilizador();
 
         DynaActionForm workByEmployeeFormBean = (DynaActionForm) form;
         Integer employeeNumber = (Integer) workByEmployeeFormBean
@@ -222,12 +221,12 @@ public class WorkByEmployeeAction extends FenixDispatchAction {
         listagem.add(listaHeadersTrabExtra);
         listagem.add(listaTrabExtra);
 
-        request.setAttribute("headers", (ArrayList) (listagem.get(0)));
-        request.setAttribute("body", (ArrayList) (listagem.get(1)));
-        request.setAttribute("headers2", (ArrayList) (listagem.get(2)));
-        request.setAttribute("body2", (ArrayList) (listagem.get(3)));
-        request.setAttribute("headers3", (ArrayList) (listagem.get(4)));
-        request.setAttribute("body3", (ArrayList) (listagem.get(5)));
+        request.setAttribute("headers", (listagem.get(0)));
+        request.setAttribute("body", (listagem.get(1)));
+        request.setAttribute("headers2", (listagem.get(2)));
+        request.setAttribute("body2", (listagem.get(3)));
+        request.setAttribute("headers3", (listagem.get(4)));
+        request.setAttribute("body3", (listagem.get(5)));
 
         } catch(Exception e) {
             e.printStackTrace();

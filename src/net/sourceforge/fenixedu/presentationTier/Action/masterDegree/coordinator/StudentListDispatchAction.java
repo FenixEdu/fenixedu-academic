@@ -79,7 +79,7 @@ public class StudentListDispatchAction extends DispatchAction {
                 request.setAttribute("infoExecutionDegree", infoExecutionDegreeForRequest);
             }
 
-            String value = (String) request.getParameter("viewPhoto");
+            String value = request.getParameter("viewPhoto");
             if (value != null && value.equals("true")) {
                 request.setAttribute("viewPhoto", Boolean.TRUE);
             } else {
@@ -121,7 +121,6 @@ public class StudentListDispatchAction extends DispatchAction {
 
         InfoExecutionDegree infoExecutionDegree = null;
         try {
-            Object args1[] = { degreeCurricularPlanID };
             infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory
                     .executeService(userView, "ReadExecutionDegreeByDCPID", args);
         } catch (NonExistingServiceException e) {

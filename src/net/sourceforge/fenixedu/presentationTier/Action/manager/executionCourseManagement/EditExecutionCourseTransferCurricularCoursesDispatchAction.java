@@ -81,8 +81,8 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        Integer executionCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionCourseId"));
-        Integer curricularCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "curricularCourseId"));
+        RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+        RequestUtils.getAndSetStringToRequest(request, "curricularCourseId");
         Integer executionPeriodId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionPeriodId"));
 
         //String destinationExecutionDegreeIdString = RequestUtils.getAndSetStringToRequest(request, "destinationExecutionDegreeId");
@@ -119,7 +119,7 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 
         Integer executionCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionCourseId"));
         Integer curricularCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "curricularCourseId"));
-        Integer executionPeriodId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionPeriodId"));
+        RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");
 
         String destinationExecutionDegreeIdString = (String) dynaActionForm.get("destinationExecutionDegreeId");
         String curricularYearString = (String) dynaActionForm.get("curricularYear");
@@ -134,8 +134,6 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
                 && StringUtils.isNumeric(destinationExecutionDegreeIdString)
                 && StringUtils.isNumeric(curricularYearString)
                 && StringUtils.isNumeric(destinationExecutionCourseIdString)) {
-            Integer destinationExecutionDegreeId = new Integer(destinationExecutionDegreeIdString);
-            Integer curricularYear = new Integer(curricularYearString);
             Integer destinationExecutionCourseId = new Integer(destinationExecutionCourseIdString);
 
             Object[] args = { executionCourseId, curricularCourseId, destinationExecutionCourseId };

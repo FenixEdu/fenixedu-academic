@@ -62,8 +62,6 @@ public class EnrollGroupShift implements IService {
         try {
             ISuportePersistente persistentSupport = SuportePersistenteOJB
                     .getInstance();
-            IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSupport
-                    .getIPersistentStudentGroupAttend();
             
             persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
             

@@ -7,6 +7,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IAttendsSet;
@@ -18,14 +23,7 @@ import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.StudentGroupAttend;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
@@ -74,16 +72,12 @@ public class CreateStudentGroup implements IService {
 
     private void checkStudentsForCreation(List studentCodes,IGroupProperties groupProperties) throws FenixServiceException {
     	IPersistentStudent persistentStudent = null;
-    	IPersistentStudentGroup persistentStudentGroup = null;
-    	IPersistentAttendsSet persistentAttendsSet = null;
-    	IFrequentaPersistente persistentAttend = null;
     	IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
     	try {
     		ISuportePersistente persistentSupport = SuportePersistenteOJB
 			.getInstance();
 
     		persistentStudent = persistentSupport.getIPersistentStudent();
-    		persistentAttend = persistentSupport.getIFrequentaPersistente();
     		persistentStudentGroupAttend = persistentSupport
 			.getIPersistentStudentGroupAttend();
     		
@@ -134,8 +128,6 @@ public class CreateStudentGroup implements IService {
         IPersistentGroupProperties persistentGroupProperites = null;
         IPersistentStudent persistentStudent = null;
         ITurnoPersistente persistentShift = null;
-        IFrequentaPersistente persistentAttend = null;
-        IPersistentAttendsSet persistentAttendsSet = null;
         
         try {
 
@@ -150,8 +142,6 @@ public class CreateStudentGroup implements IService {
             if(groupProperties == null){
             	throw new NotAuthorizedException();
             }
-            
-            persistentAttendsSet = persistentSupport.getIPersistentAttendsSet();
             
             checkIfStudentGroupExists(groupNumber, groupProperties);
             checkStudentsForCreation(studentCodes,groupProperties);
@@ -172,12 +162,9 @@ public class CreateStudentGroup implements IService {
             persistentStudentGroup.simpleLockWrite(newStudentGroup);
             attendsSet.addStudentGroup(newStudentGroup);
             persistentStudent = persistentSupport.getIPersistentStudent();
-            persistentAttend = persistentSupport.getIFrequentaPersistente();
             persistentStudentGroupAttend = persistentSupport
                     .getIPersistentStudentGroupAttend();
 
-            List allStudentGroup = groupProperties.getAttendsSet().getStudentGroups();
-            
             Iterator iter = studentCodes.iterator();
 
             while (iter.hasNext()) {

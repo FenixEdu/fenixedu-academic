@@ -65,9 +65,8 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
             if(enrollmentType[i].equals(AttendacyStateSelectionType.ALL.toString())){
                 enrollmentTypeList = null;
                 break;
-            } else {
-                enrollmentTypeList.add(new AttendacyStateSelectionType(enrollmentType[i]));
             }
+            enrollmentTypeList.add(new AttendacyStateSelectionType(enrollmentType[i]));
         }
         
         coursesIDs = new ArrayList();
@@ -76,9 +75,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
                 coursesIDs=null;
                 break;
             }
-            else{
-                coursesIDs.add(checkedCoursesIds[i]);
-            }
+            coursesIDs.add(checkedCoursesIds[i]);
         }
         
         shiftIDs = new ArrayList();
@@ -87,9 +84,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
                 shiftIDs=null;
                 break;
             }
-            else{
-                shiftIDs.add(checkedShiftIds[i]);
-            }
+            shiftIDs.add(checkedShiftIds[i]);
         }
 
        

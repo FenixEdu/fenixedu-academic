@@ -159,7 +159,7 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 
         request.setAttribute("enrolment_list", studentList);
 
-        String value = (String) request.getParameter("viewPhoto");
+        String value = request.getParameter("viewPhoto");
         if (value != null && value.equals("true")) {
             request.setAttribute("viewPhoto", Boolean.TRUE);
         } else {

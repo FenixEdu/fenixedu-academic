@@ -41,10 +41,11 @@ public class InsertPublicationAuthors implements IService {
     public void run(final List infoAuthorsList) throws FenixServiceException, ExcepcaoPersistencia {
         insertAuthors(infoAuthorsList);
     }
-    
-    public List insertAuthors(final List infoAuthorsList) throws FenixServiceException, ExcepcaoPersistencia {
+
+    public List insertAuthors(final List infoAuthorsList) throws FenixServiceException,
+            ExcepcaoPersistencia {
         final List authors = new ArrayList(infoAuthorsList.size());
-        for (final Iterator iterator = infoAuthorsList.iterator(); iterator.hasNext(); ) {
+        for (final Iterator iterator = infoAuthorsList.iterator(); iterator.hasNext();) {
             final InfoAuthor infoAuthor = (InfoAuthor) iterator.next();
             final IAuthor author = insertAuthor(infoAuthor);
             authors.add(author);
@@ -52,7 +53,7 @@ public class InsertPublicationAuthors implements IService {
         return authors;
     }
 
-    //Method that is responsible for inserting a single author in the DB
+    // Method that is responsible for inserting a single author in the DB
     private IAuthor insertAuthor(final InfoAuthor infoAuthor) throws ExcepcaoPersistencia {
         IAuthor author = null;
         ISuportePersistente sp = null;
@@ -60,24 +61,24 @@ public class InsertPublicationAuthors implements IService {
 
         sp = SuportePersistenteOJB.getInstance();
         persistentAuthor = sp.getIPersistentAuthor();
-        //We have to be aware if the author is a known person or not,
-        //because if he isn't then, the keyperson fiel will be NULL
+        // We have to be aware if the author is a known person or not,
+        // because if he isn't then, the keyperson fiel will be NULL
         if (infoAuthor.getKeyPerson() == null) {
-            //The author is an external person
+            // The author is an external person
             List authorsList = persistentAuthor.readAuthorsBySubName(infoAuthor.getAuthor());
             Iterator it1 = authorsList.iterator();
             while (it1.hasNext()) {
                 IAuthor tempAuthor = (Author) it1.next();
-                //Where we'll consider that the set (Author,Organization) is
+                // Where we'll consider that the set (Author,Organization) is
                 // unique
-                //althought it isn't that way in the database
+                // althought it isn't that way in the database
                 if (identicalAuthors(tempAuthor, infoAuthor)) {
                     author = tempAuthor;
                     break;
                 }
             }
         } else {
-            //The author is an internal person
+            // The author is an internal person
             author = persistentAuthor.readAuthorByKeyPerson(infoAuthor.getKeyPerson());
         }
 
@@ -89,24 +90,20 @@ public class InsertPublicationAuthors implements IService {
         return author;
     }
 
-    //Method that checks if an IAuthor and an InfoAuthor are identical, that
+    // Method that checks if an IAuthor and an InfoAuthor are identical, that
     // is,
-    //have the same name and organization
+    // have the same name and organization
     private boolean identicalAuthors(IAuthor author, InfoAuthor infoAuthor) {
         if (author.getOrganization() != null && infoAuthor.getOrganization() != null) {
             if (author.getAuthor().equals(infoAuthor.getAuthor())
                     && author.getOrganization().equals(infoAuthor.getOrganization()))
                 return true;
             return false;
-        } else {
-            if (author.getOrganization() == null && infoAuthor.getOrganization() == null)
-                if (author.getAuthor().equals(infoAuthor.getAuthor()))
-                    return true;
-                else
-                    return false;
-            else
-                return false;
         }
+        if (author.getOrganization() == null && infoAuthor.getOrganization() == null)
+            if (author.getAuthor().equals(infoAuthor.getAuthor()))
+                return true;
+        return false;
     }
 
 }

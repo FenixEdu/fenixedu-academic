@@ -341,7 +341,7 @@ public class ExtraWorkSheet implements IService {
 
                 // ==================================== Inicio da construcao da
                 // lista a mostrar no jsp =======================================
-                while (_dataConsulta.before((Timestamp) _dataFimEscolha)) {
+                while (_dataConsulta.before(_dataFimEscolha)) {
                     System.out.println("-------------->" + _dataConsulta);
 
                     calendario.clear();
@@ -680,11 +680,11 @@ public class ExtraWorkSheet implements IService {
         ServicoAutorizacao servicoAutorizacao = new ServicoAutorizacao();
 
         ServicoSeguroLerMarcacoesPonto servicoSeguroLerMarcacoesPonto = new ServicoSeguroLerMarcacoesPonto(
-                servicoAutorizacao, (ArrayList) _listaFuncionarios, (ArrayList) _listaCartoes,
+                servicoAutorizacao, _listaFuncionarios, _listaCartoes,
                 null, new Timestamp(calendarioInicio.getTimeInMillis()), new Timestamp(
                         calendarioFim.getTimeInMillis()), _oracleDB);
         servicoSeguroLerMarcacoesPonto.execute();
-        ArrayList lista = (ArrayList) servicoSeguroLerMarcacoesPonto.getListaMarcacoesPonto();
+        ArrayList lista = servicoSeguroLerMarcacoesPonto.getListaMarcacoesPonto();
 
         if ((lista == null) || (lista.size() <= 0)) {
             ServicoSeguroLerJustificacoesComValidade servicoSeguroLerJustificacoes = new ServicoSeguroLerJustificacoesComValidade(
@@ -922,7 +922,7 @@ public class ExtraWorkSheet implements IService {
                 servicoAutorizacao, _listaFuncionarios, _listaCartoes, _listaEstados, _dataInicio,
                 _dataFim, _oracleDB);
         servicoSeguro.execute();
-        _listaMarcacoesPonto = (ArrayList) servicoSeguro.getListaMarcacoesPonto();
+        _listaMarcacoesPonto = servicoSeguro.getListaMarcacoesPonto();
     } /* consultarMarcacaoPonto */
 
     private String formataMarcacoes() {

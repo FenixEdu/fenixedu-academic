@@ -55,7 +55,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
                 .length() > 0) ? new Integer(selectedExecutionPeriodOIDString) : null;
         request.removeAttribute(SessionConstants.INFO_SECTION);
 
-        IUserView userView = (IUserView) SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
         setListOfExecutionPeriods(request, userView);
 

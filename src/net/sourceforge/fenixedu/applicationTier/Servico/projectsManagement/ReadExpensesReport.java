@@ -98,12 +98,12 @@ public class ReadExpensesReport implements IService {
 
     private Integer getUserNumber(ISuportePersistente sp, IUserView userView) throws ExcepcaoPersistencia {
         Integer userNumber = null;
-        ITeacher teacher = (ITeacher) sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
+        ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
             IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
-            IEmployee employee = (IEmployee) sp.getIPersistentEmployee().readByPerson(person);
+            IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();
         }

@@ -13,16 +13,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublications;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -53,13 +51,6 @@ public class PublicationManagementAction extends FenixAction{
 			(SiteView) ServiceUtils.executeService(userView, "ReadAuthorPublications", args);
 		InfoSitePublications infoSitePublications = (InfoSitePublications)siteView.getComponent();
 		
-		List listaOthers = (List) CollectionUtils.select(infoSitePublications.getInfoPublications(), new Predicate() {
-		    public boolean evaluate(Object obj) {
-		        InfoPublication infoPublication = (InfoPublication)obj;
-		        if (Integer.parseInt(infoPublication.getYear()) == 0) return true;
-		        else return false;
-		    }
-		}) ;
 		List listaPub = infoSitePublications.getInfoPublications();
 		
 		/** this class is a mere comparator to sort publications */
@@ -78,11 +69,10 @@ public class PublicationManagementAction extends FenixAction{
 		                return 1;
 		            if (year1 == year2)
 		                return 0;
-		            else
-		                return -1;
+                    return -1;
 /*		        } catch (NumberFormatException nfe) {
-		            throw nfe;
-		        }*/
+         throw nfe;
+      }*/
 		    }
 		}
 		

@@ -103,7 +103,7 @@ public class CurriculumDispatchAction extends DispatchAction {
 	    	    
 	    String criterioStr = (String)request.getAttribute("select");
 	    if (criterioStr == null)
-	        criterioStr = (String)request.getParameter("select");
+	        criterioStr = request.getParameter("select");
 		
 		String scpIDStr = request.getParameter("studentCPID");
         if (scpIDStr == null)

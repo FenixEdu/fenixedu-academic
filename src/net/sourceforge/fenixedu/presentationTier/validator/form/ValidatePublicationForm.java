@@ -28,9 +28,6 @@ public class ValidatePublicationForm implements Serializable {
      */
     public static boolean validate(Object bean, ValidatorAction va, Field field, ActionErrors errors,
             HttpServletRequest request, ServletContext application) {
-
-        Object object = request.getAttribute("publicationManagementForm");
-
         return (errors.isEmpty());
     }
 

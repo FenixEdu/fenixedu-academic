@@ -9,6 +9,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
@@ -19,15 +22,7 @@ import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
@@ -69,11 +64,8 @@ public class PrepareCreateStudentGroup implements IServico {
     public ISiteComponent run(Integer executionCourseCode,
             Integer groupPropertiesCode) throws FenixServiceException {
 
-        IFrequentaPersistente persistentAttend = null;
         IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
 
-        IPersistentStudentGroup persistentStudentGroup = null;
-        
         List frequentas = new ArrayList();
 
         List infoStudentInformationList = new ArrayList();
@@ -84,8 +76,6 @@ public class PrepareCreateStudentGroup implements IServico {
 
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
         
-            persistentAttend = ps.getIFrequentaPersistente();
-            persistentStudentGroup = ps.getIPersistentStudentGroup();
             persistentStudentGroupAttend = ps
                     .getIPersistentStudentGroupAttend();
 
@@ -100,7 +90,7 @@ public class PrepareCreateStudentGroup implements IServico {
             frequentas.addAll(groupProperties.getAttendsSet().getAttends());
             
             
-            IAttendsSet attendsSet = (IAttendsSet)groupProperties.getAttendsSet();
+            IAttendsSet attendsSet = groupProperties.getAttendsSet();
             
 
             List allStudentsGroups = attendsSet.getStudentGroups();
@@ -163,11 +153,6 @@ public class PrepareCreateStudentGroup implements IServico {
         infoSiteStudentGroup
                 .setInfoSiteStudentInformationList(infoStudentInformationList);
         infoSiteStudentGroup.setNrOfElements(groupNumber);
-        
-        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-		.getInstance();
-        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-		.getGroupEnrolmentStrategyInstance(groupProperties);
         
         return infoSiteStudentGroup;
 

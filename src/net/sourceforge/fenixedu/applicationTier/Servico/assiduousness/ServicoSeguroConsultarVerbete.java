@@ -156,7 +156,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 
             //==================================== Inicio da construcao da
             // lista a mostrar no jsp =======================================
-            while (_dataConsulta.before((Timestamp) _dataFimEscolha)) {
+            while (_dataConsulta.before(_dataFimEscolha)) {
                 calendario.clear();
                 calendario.setTimeInMillis(_dataConsulta.getTime());
 
@@ -489,11 +489,11 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
         ServicoAutorizacao servicoAutorizacao = new ServicoAutorizacao();
 
         ServicoSeguroLerMarcacoesPonto servicoSeguroLerMarcacoesPonto = new ServicoSeguroLerMarcacoesPonto(
-                servicoAutorizacao, (ArrayList)_listaFuncionarios, (ArrayList)_listaCartoes, null,
+                servicoAutorizacao, _listaFuncionarios, _listaCartoes, null,
                 new Timestamp(calendarioInicio.getTimeInMillis()),
                 new Timestamp(calendarioFim.getTimeInMillis()), _oracleDB);
         servicoSeguroLerMarcacoesPonto.execute();
-        ArrayList lista = (ArrayList) servicoSeguroLerMarcacoesPonto
+        ArrayList lista = servicoSeguroLerMarcacoesPonto
                 .getListaMarcacoesPonto();
 
         if ((lista == null) || (lista.size() <= 0)) {
@@ -515,7 +515,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
             throws NotExecuteException {
         Calendar calendario = Calendar.getInstance();
         calendario.setLenient(false);
-        while (_dataConsulta.before((Timestamp) dataFim)) {
+        while (_dataConsulta.before(dataFim)) {
             calendario.clear();
             calendario.setTimeInMillis(_dataConsulta.getTime());
             _listaVerbeteDiaria.add(0, FormataCalendar.data(calendario));
@@ -633,7 +633,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
             Timestamp dataFim) throws NotExecuteException {
         Calendar calendario = Calendar.getInstance();
         calendario.setLenient(false);
-        while (!_dataConsulta.after((Timestamp) dataFim)) {
+        while (!_dataConsulta.after(dataFim)) {
             calendario.clear();
             calendario.setTimeInMillis(_dataConsulta.getTime());
             _listaVerbeteDiaria.add(0, FormataCalendar.data(calendario));
@@ -782,7 +782,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
                 servicoAutorizacao, _listaFuncionarios, _listaCartoes,
                 _listaEstados, _dataInicio, _dataFim, _oracleDB);
         servicoSeguro.execute();
-        _listaMarcacoesPonto = (ArrayList) servicoSeguro.getListaMarcacoesPonto();
+        _listaMarcacoesPonto = servicoSeguro.getListaMarcacoesPonto();
     } /* consultarMarcacaoPonto */
 
     private String formataMarcacoes() {

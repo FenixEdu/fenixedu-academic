@@ -148,7 +148,6 @@ public class SubmitMarks implements IServico {
             Date evaluationDate, IEmployee employee, ITeacher teacher) throws FenixServiceException {
 
         try {
-            MultiHashMap enrolmentEvaluationsByDegree = new MultiHashMap();
             int submited = 0;
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentMark persistentMark = sp.getIPersistentMark();

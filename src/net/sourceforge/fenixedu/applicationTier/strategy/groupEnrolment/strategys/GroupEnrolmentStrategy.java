@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IAttendsSet;
 import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
@@ -126,7 +124,8 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
                 allShifts.add(shift);
         }
         return allShifts;
-    	}else return null;
+    	}
+        return null;
     }
 
     public boolean checkAlreadyEnroled(IGroupProperties groupProperties, String username)
@@ -136,7 +135,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
             IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
             IPersistentStudentGroupAttend persistentStudentGroupAttend =
                 sp.getIPersistentStudentGroupAttend();
@@ -158,7 +156,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
             }
 
             List allStudentGroup =
-            	persistentStudentGroup.readAllStudentGroupByAttendsSet((IAttendsSet)groupProperties.getAttendsSet());
+            	persistentStudentGroup.readAllStudentGroupByAttendsSet(groupProperties.getAttendsSet());
             Iterator iterStudentGroup = allStudentGroup.iterator();
             IStudentGroup group = null;
             List allStudentGroupAttendByGroup = new ArrayList();
@@ -194,7 +192,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
             IPersistentStudentGroupAttend persistentStudentGroupAttend =
                 sp.getIPersistentStudentGroupAttend();
 
@@ -369,7 +366,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     		Iterator iterator = studentUsernames.iterator();
     		while (iterator.hasNext()) {
     			String userName = (String) iterator.next();
-    			IStudent student = (IStudent) persistentStudent.readByUsername(userName);
+    			IStudent student = persistentStudent.readByUsername(userName);
     			if(!students.contains(student))return false;
     		}           		
     	} catch (ExcepcaoPersistencia ex)
@@ -383,9 +380,8 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     public boolean checkHasShift(IGroupProperties groupProperties){
     	if(groupProperties.getShiftType()!=null){
     		return true;
-    	}else{
-    		return false;
     	}
+        return false;
     }
 
     public abstract Integer enrolmentPolicyNewGroup(

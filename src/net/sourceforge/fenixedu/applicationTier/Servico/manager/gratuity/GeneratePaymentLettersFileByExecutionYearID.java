@@ -295,7 +295,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
                     IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator
                             .next();
 
-                    IStudent student = (IStudent) (studentCurricularPlan.getStudent());
+                    IStudent student = (studentCurricularPlan.getStudent());
 
                     GratuityLetterFileEntry gratuityLetterFileEntryInsurancePart = null;
 

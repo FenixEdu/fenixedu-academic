@@ -57,7 +57,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
 
-        HttpSession session = request.getSession(false);
 //        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
 //                .getAttribute(SessionConstants.MASTER_DEGREE);
         Integer degreeCurricularPlanID = null;
@@ -628,9 +627,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 saveErrors(request, actionErrors);
                 return mapping.getInputForward();
             }
-            else{
-                throw new FenixActionException(e);
-            }
+            throw new FenixActionException(e);
         }
 
         return mapping.findForward("show-final-degree-work-list");

@@ -6,7 +6,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
-import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPublicationAuthor;
@@ -34,7 +33,6 @@ public class DeletePublicationAuthors implements IService {
      * @throws ExcepcaoPersistencia
      */
 	public void run(Integer publicationId) throws FenixServiceException, ExcepcaoPersistencia {
-	    IPublicationAuthor publicationAuthor = null;
 	    ISuportePersistente sp = null;
 	    IPersistentPublicationAuthor persistentPublicationAuthor = null;
 	    

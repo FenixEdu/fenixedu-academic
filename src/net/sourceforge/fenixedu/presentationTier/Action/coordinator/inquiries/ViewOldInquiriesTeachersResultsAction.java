@@ -13,23 +13,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparableComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 
 
@@ -45,8 +44,6 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 
         IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 
-        ActionErrors errors = new ActionErrors();
-        
         HttpSession session = request.getSession();
         
         Integer degreeCurricularPlanID = null;
@@ -130,7 +127,6 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         
         IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
-        Integer oldInquiryId = getIntegerFromRequest("oldInquiryId", request);
         Integer executionPeriodId = getIntegerFromRequest("executionPeriodId", request);
         Integer degreeId = getIntegerFromRequest("degreeId", request);
         Integer curricularYear = getIntegerFromRequest("curricularYear", request);

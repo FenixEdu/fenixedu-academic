@@ -1854,11 +1854,6 @@ public class TeacherAdministrationSiteComponentBuilder {
         //component.setInfoStudentGroup(Cloner
                 //.copyIStudentGroup2InfoStudentGroup(studentGroup));
         
-        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-		.getInstance();
-        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-		.getGroupEnrolmentStrategyInstance(groupProperties);
-        
         if(studentGroup.getShift() != null){
         	component.setInfoStudentGroup(InfoStudentGroupWithAllUntilLessons.newInfoFromDomain(studentGroup));
         }else{
@@ -1908,7 +1903,6 @@ public class TeacherAdministrationSiteComponentBuilder {
     	try {
     		
     		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-    		ITurnoPersistente persistentShift = sp.getITurnoPersistente();
     		IPersistentStudentGroup persistentStudentGroup = sp
 			.getIPersistentStudentGroup();
 
@@ -1974,9 +1968,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 
     	try {
     		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-    		ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-    		IPersistentStudentGroup persistentStudentGroup = sp
-			.getIPersistentStudentGroup();
 
     		IGroupProperties groupProperties = (IGroupProperties) sp
 			.getIPersistentGroupProperties().readByOID(

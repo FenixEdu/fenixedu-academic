@@ -170,9 +170,6 @@ public class GroupEnrolment implements IService {
     throws FenixServiceException {
     	
     	try {
-    		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-    		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-        
     		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
 			.getInstance();
     		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory

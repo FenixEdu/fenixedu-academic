@@ -43,7 +43,7 @@ public class ExamExecutionCourseOJB extends PersistentObjectOJB implements
         Criteria crit = new Criteria();
         crit.addEqualTo("exam.idInternal", exam.getIdInternal());
 
-        return (List) queryList(ExamExecutionCourse.class, crit);
+        return queryList(ExamExecutionCourse.class, crit);
 
     }
 

@@ -97,7 +97,6 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      * @throws ExcepcaoPersistencia
      */
     private List getExecutionCourseTeachers(Object[] arguments, ServiceRequest request) throws ExcepcaoPersistencia {
-        IUserView userView = getRemoteUser(request);
               
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();

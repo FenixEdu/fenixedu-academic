@@ -125,10 +125,8 @@ public class RowMarksFile {
             return new Integer(0);
         if(enrolmentEvaluation.isImprovment())
             return new Integer(4);
-        else {
-            //TODO : there are other types, for now the default is 0
-            return new Integer(0);
-        }
+        //TODO : there are other types, for now the default is 0
+        return new Integer(0);
     }
 
     /**

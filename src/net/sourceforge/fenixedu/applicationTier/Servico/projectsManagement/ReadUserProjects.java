@@ -35,12 +35,12 @@ public class ReadUserProjects implements IService {
 
         Integer userNumber = null;
 
-        ITeacher teacher = (ITeacher) persistentSuport.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
+        ITeacher teacher = persistentSuport.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
             IPerson person = persistentSuport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
-            IEmployee employee = (IEmployee) persistentSuport.getIPersistentEmployee().readByPerson(person);
+            IEmployee employee = persistentSuport.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();
         }

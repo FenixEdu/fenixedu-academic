@@ -48,12 +48,9 @@ public class StudentCurricularPlanOwnerAuthorizationFilter extends
         {
             throw new NotAuthorizedFilterException();
         }
-        else
-        {
-            messageException = curricularPlanOwner(id, request.getServiceParameters().parametersArray());
-            if (messageException != null)
-                throw new NotAuthorizedFilterException(messageException);
-        }
+        messageException = curricularPlanOwner(id, request.getServiceParameters().parametersArray());
+        if (messageException != null)
+            throw new NotAuthorizedFilterException(messageException);
     }
 
     /*
@@ -71,8 +68,7 @@ public class StudentCurricularPlanOwnerAuthorizationFilter extends
 	    // permitir ler se o ID nao tiver sido especificado
 	    if (scpId.isAll() || scpId.isNewest())
 	        return null;
-	    else
-	        studentCurricularPlanID = scpId.getId();
+	    studentCurricularPlanID = scpId.getId();
 	    
 	    
 	    try {

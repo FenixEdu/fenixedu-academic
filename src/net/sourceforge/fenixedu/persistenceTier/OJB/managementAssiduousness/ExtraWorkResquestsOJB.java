@@ -33,7 +33,7 @@ public class ExtraWorkResquestsOJB extends PersistentObjectOJB implements IPersi
         criteria.addBetween("beginDate", beginDay, lastDay);
         criteria.addBetween("endDate", beginDay, lastDay);
         
-        return (List) queryList(ExtraWorkRequests.class, criteria);
+        return queryList(ExtraWorkRequests.class, criteria);
     }   
     
     public List readExtraWorkRequestBetweenDaysAndByCC(Date beginDay, Date lastDay, Integer costCenterId, Integer costCenterMoneyId) throws Exception {
@@ -44,6 +44,6 @@ public class ExtraWorkResquestsOJB extends PersistentObjectOJB implements IPersi
         criteria.addEqualTo("costCenterMoneyKey", costCenterMoneyId);
         
         
-        return (List) queryList(ExtraWorkRequests.class, criteria);
+        return queryList(ExtraWorkRequests.class, criteria);
     }
 }

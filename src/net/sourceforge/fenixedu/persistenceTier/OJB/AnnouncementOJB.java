@@ -69,13 +69,9 @@ public class AnnouncementOJB extends PersistentObjectOJB implements IPersistentA
     			if (result.size() < n) {	
     				return result.subList(1,result.size());
     			}
-    			else {	
-    				return result.subList(1,n);
-    			}
+                return result.subList(1,n);
     		}
-    		else {
-    			return null;
-    		}
+            return null;
     }
 
 }
