@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.gesdis.InfoSection;
-import DataBeans.gesdis.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.ISection;
 import Dominio.ISite;
@@ -31,7 +30,7 @@ public class DeleteSection implements IServico {
 		return "DeleteSection";
 	}
 
-public InfoSite run(InfoSection infoSection) throws FenixServiceException {
+public Boolean run(InfoSection infoSection) throws FenixServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -80,10 +79,9 @@ public InfoSite run(InfoSection infoSection) throws FenixServiceException {
 				}
 			}
 			
-		InfoSite infoSite = (Cloner.copyISection2InfoSection(section)).getInfoSite();
 				
 				
-			return infoSite;	
+			return new Boolean(true);	
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
    }

@@ -20,7 +20,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.gesdis.InfoSection;
-import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
@@ -47,29 +46,28 @@ public class DeleteSectionFormAction extends FenixAction{
 			  return mapping.findForward("AccessSectionManagement");
 		
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-	
-	//tv seja SessionConstants.SECTIONS
+		
 		InfoSection infoSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 		InfoSection infoSuperiorSection = infoSection.getSuperiorInfoSection();
+		
 		
 		try{
 			Object deleteSectionArguments[] = { infoSection };
 			GestorServicos manager = GestorServicos.manager();
-			InfoSite newInfoSite =(InfoSite) manager.executar(userView, "ServidorAplicacao.Servico.gesdis.teacher.DeleteSection", deleteSectionArguments);
+			Boolean result =(Boolean) manager.executar(userView, "ServidorAplicacao.Servico.gesdis.teacher.DeleteSection", deleteSectionArguments);
 		
         	if(infoSuperiorSection ==null){ 
     
 
-//			   Object ReadTeacherSiteArguments[] = { infoSite.getInfoExecutionCourse() };//ACHO
+//			   Object ReadTeacherSiteArguments[] = { infoSite.getInfoExecutionCourse() };
 //			   infoSite = (InfoSite) manager.executar(userView,  "ServidorAplicacao.Servico.gesdis.teacher.ReadTeacherSite", ReadTeacherSiteArguments);
 
-		   session.setAttribute("Site", infoSite);
+//	           session.setAttribute("Site", infoSite);
 
 			return mapping.findForward("AccessSiteManagement");		
 		   }
 		   else{
-			   session.setAttribute("superiorSection", null);
+//			   session.setAttribute("superiorSection", null);
 			   return mapping.findForward("AccessSectionManagement");
 		   }
 			  
