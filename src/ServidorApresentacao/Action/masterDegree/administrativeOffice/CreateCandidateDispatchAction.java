@@ -68,7 +68,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 			ArrayList temp = new ArrayList();
 			if (!degreeList.isEmpty()){
 				Iterator iterator = degreeList.iterator();
-				temp.add(new LabelValueBean("[Escolha um curso]", "-1"));
+				temp.add(new LabelValueBean("[Escolha um curso]", null));
 				while(iterator.hasNext()){
 					String degreeName = (String) iterator.next();
 					temp.add(new LabelValueBean(degreeName, degreeName)); 

@@ -65,14 +65,15 @@ public interface IPersistentMasterDegreeCandidate {
 	
 	/**
 	 * 
-	 * @param identificationDocumentNumber
-	 * @param IdentificationDocumentType
+	 * @param idDocumentNumber
+	 * @param idDocumentType
 	 * @param executionDegree
+	 * @param specialization
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegree(String idDocumentNumber, 
-			Integer idDocumentType, ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(String idDocumentNumber, 
+			Integer idDocumentType, ICursoExecucao executionDegree, Specialization specialization) throws ExcepcaoPersistencia;
 
 	
 	/**

@@ -480,10 +480,11 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 			assertNotNull(masterDegreeCandidateTemp1);
 			
 			
-			masterDegreeCandidateTemp2 = persistentMasterDegreeCandidate.readByIdentificationDocNumberAndTypeAndExecutionDegree(
+			masterDegreeCandidateTemp2 = persistentMasterDegreeCandidate.readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
 				masterDegreeCandidateTemp1.getPerson().getNumeroDocumentoIdentificacao(), 
 				masterDegreeCandidateTemp1.getPerson().getTipoDocumentoIdentificacao().getTipo(), 
-				masterDegreeCandidateTemp1.getExecutionDegree());
+				masterDegreeCandidateTemp1.getExecutionDegree(),
+				masterDegreeCandidateTemp1.getSpecialization());
 			assertNotNull(masterDegreeCandidateTemp2);
 			
 			assertEquals(masterDegreeCandidateTemp1, masterDegreeCandidateTemp2);

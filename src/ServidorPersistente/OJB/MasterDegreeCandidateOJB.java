@@ -156,8 +156,8 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
     }
     
     
-	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegree(String idDocumentNumber, Integer idDocumentType, 
-				 ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
+	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(String idDocumentNumber, Integer idDocumentType, 
+				 ICursoExecucao executionDegree, Specialization specialization) throws ExcepcaoPersistencia {
 		try {
 			IMasterDegreeCandidate candidate = null;
 			String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
@@ -165,14 +165,16 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 					+ " and person.tipoDocumentoIdentificacao = $2"
 					+ " and executionDegree.executionYear.year = $3" 
 					+ " and executionDegree.curricularPlan.name = $4" 
-					+ " and executionDegree.curricularPlan.degree.nome = $5" ;
-	
+					+ " and executionDegree.curricularPlan.degree.nome = $5 " 
+					+ " and specialization = $6 "; 
+			
 			query.create(oqlQuery);
 			query.bind(idDocumentNumber);
 			query.bind(idDocumentType);
 			query.bind(executionDegree.getExecutionYear().getYear());
 			query.bind(executionDegree.getCurricularPlan().getName());
 			query.bind(executionDegree.getCurricularPlan().getDegree().getNome());
+			query.bind(specialization.getSpecialization());
 	
 			List result = (List) query.execute();
 	
