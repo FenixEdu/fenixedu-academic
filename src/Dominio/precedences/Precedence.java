@@ -4,7 +4,6 @@ import java.util.List;
 
 import Dominio.DomainObject;
 import Dominio.ICurricularCourse;
-import Util.PrecedenceScopeToApply;
 import Util.enrollment.CurricularCourseEnrollmentType;
 
 /**
@@ -16,7 +15,6 @@ public class Precedence extends DomainObject implements IPrecedence
 	private Integer keyCurricularCourse;
 	private ICurricularCourse curricularCourse;
 	private List restrictions;
-	private PrecedenceScopeToApply precedenceScopeToApply;
 
 	public Precedence()
 	{
@@ -43,16 +41,6 @@ public class Precedence extends DomainObject implements IPrecedence
 		this.keyCurricularCourse = keyCurricularCourse;
 	}
 
-	public PrecedenceScopeToApply getPrecedenceScopeToApply()
-	{
-		return precedenceScopeToApply;
-	}
-
-	public void setPrecedenceScopeToApply(PrecedenceScopeToApply precedenceScopeToApply)
-	{
-		this.precedenceScopeToApply = precedenceScopeToApply;
-	}
-
 	public List getRestrictions()
 	{
 		return restrictions;
@@ -62,19 +50,6 @@ public class Precedence extends DomainObject implements IPrecedence
 	{
 		this.restrictions = restrictions;
 	}
-
-//	public boolean evaluate(PrecedenceContext precedenceContext)
-//	{
-//		List restrictions = getRestrictions();
-//		boolean evaluate = true;
-//
-//		for (int i = 0; i < restrictions.size() && evaluate; i++)
-//		{
-//			IRestriction restriction = (IRestriction) restrictions.get(i);
-//			evaluate = restriction.evaluate(precedenceContext);
-//		}
-//		return evaluate;
-//	}
 
 	public boolean equals(Object obj)
 	{

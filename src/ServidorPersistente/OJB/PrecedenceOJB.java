@@ -13,7 +13,6 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.precedences.Precedence;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentPrecedence;
-import Util.PrecedenceScopeToApply;
 
 /**
  * @author jpvl
@@ -26,7 +25,7 @@ public class PrecedenceOJB extends ObjectFenixOJB implements IPersistentPreceden
 	 * 
 	 * @see ServidorPersistente.IPersistentPrecedence#readByDegreeCurricularPlan(Dominio.IDegreeCurricularPlan)
 	 */
-    public List readByDegreeCurricularPlan(IDegreeCurricularPlan plan, PrecedenceScopeToApply scope)
+    public List readByDegreeCurricularPlan(IDegreeCurricularPlan plan)
         throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
@@ -34,7 +33,6 @@ public class PrecedenceOJB extends ObjectFenixOJB implements IPersistentPreceden
         crit.addEqualTo(
             "curricularCourse.degreeCurricularPlan.degree.sigla",
             plan.getDegree().getSigla());
-        crit.addEqualTo("precedenceScopeToApply", scope);
         return queryList(Precedence.class, crit);
 
     }
@@ -44,7 +42,7 @@ public class PrecedenceOJB extends ObjectFenixOJB implements IPersistentPreceden
 	 * 
 	 * @see ServidorPersistente.IPersistentPrecedence#readByCurricularCourse(Dominio.ICurricularCourse)
 	 */
-    public List readByCurricularCourse(ICurricularCourse curricularCourse, PrecedenceScopeToApply scope)
+    public List readByCurricularCourse(ICurricularCourse curricularCourse)
         throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
@@ -56,7 +54,6 @@ public class PrecedenceOJB extends ObjectFenixOJB implements IPersistentPreceden
         crit.addEqualTo(
             "curricularCourse.degreeCurricularPlan.degree.sigla",
             curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
-        crit.addEqualTo("precedenceScopeToApply", scope);
         return queryList(Precedence.class, crit);
 
     }

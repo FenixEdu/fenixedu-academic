@@ -4,7 +4,6 @@ import java.util.List;
 
 import Dominio.ICurricularCourse;
 import Dominio.IDomainObject;
-import Util.PrecedenceScopeToApply;
 import Util.enrollment.CurricularCourseEnrollmentType;
 
 /**
@@ -17,15 +16,9 @@ public interface IPrecedence extends IDomainObject
 
 	public void setCurricularCourse(ICurricularCourse curricularCourse);
 
-	public PrecedenceScopeToApply getPrecedenceScopeToApply();
-
-	public void setPrecedenceScopeToApply(PrecedenceScopeToApply precedenceScopeToApply);
-
 	public List getRestrictions();
 
 	public void setRestrictions(List restrictions);
-
-//	public boolean evaluate(PrecedenceContext precedenceContext);
 
 	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext);
 }

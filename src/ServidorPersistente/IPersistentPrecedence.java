@@ -8,7 +8,6 @@ import java.util.List;
 
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
-import Util.PrecedenceScopeToApply;
 
 /**
  * @author jpvl
@@ -20,12 +19,12 @@ public interface IPersistentPrecedence extends IPersistentObject {
 	 * @param plan
 	 * @return
 	 */
-	List readByDegreeCurricularPlan(IDegreeCurricularPlan plan, PrecedenceScopeToApply scope) throws ExcepcaoPersistencia;
+	List readByDegreeCurricularPlan(IDegreeCurricularPlan plan) throws ExcepcaoPersistencia;
 
 	/**
 	 * @param curricularCourse
 	 * @return
 	 */
-	List readByCurricularCourse(ICurricularCourse curricularCourse, PrecedenceScopeToApply scope) throws ExcepcaoPersistencia;
+	List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
 
 }

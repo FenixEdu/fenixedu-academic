@@ -1,7 +1,6 @@
 <class-descriptor class="Dominio.precedences.Precedence" table="PRECEDENCE">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 	<field-descriptor name="keyCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
-	<field-descriptor name="precedenceScopeToApply" column="SCOPE_TO_APPLY" jdbc-type="VARCHAR" nullable="false" conversion="ServidorPersistente.Conversores.PrecedenceScopeToApplyJava2SqlConversion"/>
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
     <reference-descriptor name="curricularCourse" class-ref="Dominio.CurricularCourse">
 	    <foreignkey field-ref="keyCurricularCourse"/>

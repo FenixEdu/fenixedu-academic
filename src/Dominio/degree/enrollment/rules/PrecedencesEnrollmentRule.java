@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import Dominio.IExecutionPeriod;
+import Dominio.IStudentCurricularPlan;
 import Dominio.degree.enrollment.CurricularCourse2Enroll;
 import Dominio.precedences.IPrecedence;
 import Dominio.precedences.PrecedenceContext;
@@ -13,19 +15,24 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentPrecedence;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.PrecedenceScopeToApply;
 import Util.enrollment.CurricularCourseEnrollmentType;
 
 /**
  * @author David Santos in Jun 9, 2004
  */
 
-public abstract class PrecedencesEnrollmentRule implements IEnrollmentRule
+public class PrecedencesEnrollmentRule implements IEnrollmentRule
 {
 	protected PrecedenceContext precedenceContext;
 
-	public List apply(List curricularCoursesWhereToApply)
-	{
+	public PrecedencesEnrollmentRule(IStudentCurricularPlan studentCurricularPlan,
+            IExecutionPeriod executionPeriod) {
+        this.precedenceContext = new PrecedenceContext();
+        this.precedenceContext.setStudentCurricularPlan(studentCurricularPlan);
+        this.precedenceContext.setExecutionPeriod(executionPeriod);
+    }
+
+    public List apply(List curricularCoursesWhereToApply) {
 	    precedenceContext.setCurricularCourses2Enroll(curricularCoursesWhereToApply);
 
 	    List curricularCourses2Enroll = new ArrayList();
@@ -41,7 +48,7 @@ public abstract class PrecedencesEnrollmentRule implements IEnrollmentRule
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
 				precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse2Enroll
-                        .getCurricularCourse(), getScopeToApply());
+                        .getCurricularCourse());
 			} catch (ExcepcaoPersistencia e)
 			{
 				e.printStackTrace(System.out);
@@ -85,65 +92,4 @@ public abstract class PrecedencesEnrollmentRule implements IEnrollmentRule
 		return curricularCoursesWhereToApply;
 	}
 
-//	public List apply(List curricularCoursesWhereToApply)
-//	{
-//	    precedenceContext.setCurricularCoursesWhereStudentCanBeEnrolled(curricularCoursesWhereToApply);
-//
-//	    List curricularCoursesToKeep = new ArrayList();
-//
-//		for (int i = 0; i < curricularCoursesWhereToApply.size(); i++)
-//		{
-//			ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesWhereToApply.get(i);
-//
-//			List precedenceList = null;
-//			
-//			try
-//			{
-//				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-//				IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
-//				precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse, getScopeToApply());
-//			} catch (ExcepcaoPersistencia e)
-//			{
-//				e.printStackTrace(System.out);
-//				throw new IllegalStateException("Cannot read from database");
-//			}
-//			
-//			if (precedenceList == null || precedenceList.isEmpty())
-//			{
-//				if (!curricularCoursesToKeep.contains(curricularCourse))
-//				{
-//					curricularCoursesToKeep.add(curricularCourse);
-//				}
-//			} else
-//			{
-//				boolean evaluate = false;
-//
-//				for (int j = 0; j < precedenceList.size() && !evaluate; j++)
-//				{
-//					IPrecedence precedence = (IPrecedence) precedenceList.get(j);
-//					if (precedence.evaluate(precedenceContext))
-//					{
-//						evaluate = true;
-//						ICurricularCourse curricularCourseFromPrecedence = precedence.getCurricularCourse();
-//						if (!curricularCoursesToKeep.contains(curricularCourseFromPrecedence))
-//						{
-//							curricularCoursesToKeep.add(curricularCourseFromPrecedence);
-//						}
-//					}
-//				}
-//			}
-//		}
-//
-//		curricularCoursesWhereToApply.clear();
-//		curricularCoursesWhereToApply.addAll(curricularCoursesToKeep);
-//
-//		return curricularCoursesWhereToApply;
-//	}
-
-	/**
-	 * Tells what PrecedenceScopeToAplly
-	 * @see PrecedenceScopeToApply
-	 * @return PrecedenceScopeToApply
-	 */
-	abstract protected PrecedenceScopeToApply getScopeToApply();
 }

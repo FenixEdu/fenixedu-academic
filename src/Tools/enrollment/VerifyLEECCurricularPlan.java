@@ -30,7 +30,6 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.AreaType;
 import Util.BranchType;
-import Util.PrecedenceScopeToApply;
 
 /**
  * @author David Santos in Jan 29, 2004
@@ -271,7 +270,7 @@ public class VerifyLEECCurricularPlan
 		while (iterator1.hasNext())
 		{
 			ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
-			List precedences = precedenceDAO.readByCurricularCourse(curricularCourse, PrecedenceScopeToApply.TO_APPLY_TO_SPAN);
+			List precedences = precedenceDAO.readByCurricularCourse(curricularCourse);
 			if (precedences != null && !precedences.isEmpty())
 			{
 				System.out.print("\t");
