@@ -36,7 +36,12 @@
 				</html:link></dd>	
   </dl>
 <logic:present name="<%= SessionConstants.SECTIONS %>" >
-<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" />
+	<logic:present name="<%= SessionConstants.INFO_SECTION %>" >
+	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" activeSectionName="<%= SessionConstants.INFO_SECTION %>" />
+	</logic:present>
+	<logic:notPresent name="<%= SessionConstants.INFO_SECTION %>" >
+	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" />
+	</logic:notPresent>		
 </logic:present>	
 	
 </div>

@@ -15,18 +15,9 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.struts.util.MessageResources;
 
-import ServidorApresentacao
-	.TagLib
-	.publico
-	.sectionMenu
-	.renderers
-	.SectionMenuContentRenderer;
-import ServidorApresentacao
-	.TagLib
-	.publico
-	.sectionMenu
-	.renderers
-	.SectionMenuSlotContentRenderer;
+import DataBeans.gesdis.InfoSection;
+import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuContentRenderer;
+import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuSlotContentRenderer;
 
 /**
  * @author jmota
@@ -37,16 +28,27 @@ import ServidorApresentacao
 public class RenderSectionMenuTag extends TagSupport {
 
 	private String name;
+	private String activeSectionName;
 	private SectionMenuSlotContentRenderer sectionMenuSlotContentRenderer =
 		new SectionMenuContentRenderer();
 
 	public int doStartTag() throws JspException {
 		//		Obtain InfoSection
 		List sections = null;
+		InfoSection activeSection = null;
 		try {
 			sections = (List) pageContext.findAttribute(name);
 		} catch (ClassCastException e) {
 			sections = null;
+		}
+		if (getActiveSectionName()!=null) {
+		
+		try {
+			activeSection = (InfoSection) pageContext.findAttribute(getActiveSectionName());
+		}
+		catch (ClassCastException e) {
+			activeSection = null;
+		}
 		}
 		//TODO: change the message
 		if (sections == null) {
@@ -58,7 +60,13 @@ public class RenderSectionMenuTag extends TagSupport {
 
 		//		Generate Map from sections
 		JspWriter writer = pageContext.getOut();
-		SectionMenuMap sectionMenuMap = new SectionMenuMap(sections);
+		SectionMenuMap sectionMenuMap=null;
+		if (activeSection == null) {
+			System.out.println("até aqui tudo bem");	
+		 sectionMenuMap = new SectionMenuMap(sections);}
+		else {
+		 sectionMenuMap = new SectionMenuMap(sections,activeSection);	
+		}
 
 		SectionMenuMapRenderer renderer =
 			new SectionMenuMapRenderer(
@@ -93,4 +101,18 @@ public class RenderSectionMenuTag extends TagSupport {
 	//	Error Messages
 	protected static MessageResources messages =
 		MessageResources.getMessageResources("ApplicationResources");
+	/**
+	 * @return
+	 */
+	public String getActiveSectionName() {
+		return activeSectionName;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setActiveSectionName(String string) {
+		activeSectionName = string;
+	}
+
 }

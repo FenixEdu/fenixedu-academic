@@ -8,6 +8,8 @@ package ServidorApresentacao.TagLib.publico.sectionMenu;
 
 import java.util.List;
 
+import DataBeans.gesdis.InfoSection;
+
 /**
  * @author jmota
  *
@@ -16,13 +18,18 @@ import java.util.List;
  */
 public class SectionMenuMap {
 	private List sections;
+	private InfoSection activeSection;
 	/**
 	 * 
 	 */
-	public SectionMenuMap(List infoSections) {
+	public SectionMenuMap(List infoSections,InfoSection activeSection) {
 		setSections(infoSections);
+		setActiveSection(activeSection);
 	}
 
+	public SectionMenuMap(List infoSections){
+		setSections(infoSections);
+	}
 	/**
 	 * @return List
 	 */
@@ -36,6 +43,24 @@ public class SectionMenuMap {
 	 */
 	public void setSections(List sections) {
 		this.sections = sections;
+	}
+
+	/**
+	 * @return
+	 */
+	public InfoSection getActiveSection() {
+		return activeSection;
+	}
+
+	/**
+	 * @param section
+	 */
+	public void setActiveSection(InfoSection section) {
+		InfoSection tempSection= section;
+		while (tempSection.calculateDepth().intValue()!=0){
+			tempSection = tempSection.getSuperiorInfoSection();
+		}
+		activeSection = tempSection;
 	}
 
 }

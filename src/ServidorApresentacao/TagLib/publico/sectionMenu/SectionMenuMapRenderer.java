@@ -110,7 +110,7 @@ public class SectionMenuMapRenderer {
 				}
 				if (((InfoSection) sections.get(iterator+1)).getSectionDepth().intValue() != 0
 				&& ((InfoSection) sections.get(iterator)).getSectionDepth().intValue() == 0) {				
-				strBuffer.append("<dl id='seccao' style=display: none;>\n");
+				strBuffer.append("<dl id=\""+((InfoSection) sections.get(iterator)).getName()+"\" style=\"display:"+getStyle(sections,iterator)+";\">\n");
 				}}}
 				
 			
@@ -118,4 +118,11 @@ public class SectionMenuMapRenderer {
 		return strBuffer;
 	}
 
+	private StringBuffer getStyle(List sections,int iterator) {
+		StringBuffer strBuffer = new StringBuffer("");
+		if (getSectionMenuMap().getActiveSection()==null || !((InfoSection) sections.get(iterator)).equals(getSectionMenuMap().getActiveSection())) {
+			strBuffer.append("none");
+		}	
+		return strBuffer;
+	}
 }

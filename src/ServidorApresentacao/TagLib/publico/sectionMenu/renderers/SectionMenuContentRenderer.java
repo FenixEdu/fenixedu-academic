@@ -30,9 +30,6 @@ public class SectionMenuContentRenderer
 	 */
 	public StringBuffer renderSectionLabel(int i) {
 		StringBuffer strBuffer = new StringBuffer();
-		//idents the menu slot content according to depth
-		
-		//adds the info
 		strBuffer.append(renderDepthContent(getInfoSection(),i));
 		return strBuffer;
 	}
@@ -52,7 +49,7 @@ public class SectionMenuContentRenderer
 			if (depth == 0){
 				//adds the info
 			strBuffer.append("<ul><li>\n");
-			strBuffer.append("<a href=\"/ciapl/publico/viewSection.do?index="+i+"\""+ " onclick=\"houdini('"+infoSection.getName()+"');return false;\">\n");
+			strBuffer.append("<a href=\"/ciapl/publico/viewSection.do?index="+i+"\""+ " onclick=\"houdini('"+infoSection.getName()+"');\">\n");
 			//falta o index 
 			strBuffer.append(renderDepthIdent(getInfoSection()));
 			strBuffer.append(infoSection.getName());
@@ -61,7 +58,7 @@ public class SectionMenuContentRenderer
 			else {
 				//adds the info
 			strBuffer.append("<dd>");
-			strBuffer.append("<a href=<a href=\"/ciapl/publico/viewSection.do?index="+i+"\" >");
+			strBuffer.append("<a href=\"/ciapl/publico/viewSection.do?index="+i+"\" >");
 			//falta o index 
 			strBuffer.append(renderDepthIdent(getInfoSection()));
 			strBuffer.append(infoSection.getName());
