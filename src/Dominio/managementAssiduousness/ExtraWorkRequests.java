@@ -16,6 +16,7 @@ import Dominio.IEmployee;
 public class ExtraWorkRequests extends DomainObject implements
         IExtraWorkRequests {
     private IEmployee employee;
+    private ICostCenter costCenter;
     private ICostCenter costCenterExtraWork;
     private ICostCenter costCenterMoney;
 
@@ -357,5 +358,13 @@ public class ExtraWorkRequests extends DomainObject implements
         string = string.concat("]");        
         
         return string;
+    }
+    public ICostCenter getCostCenter()
+    {
+        return costCenter;
+    }
+    public void setCostCenter(ICostCenter costCenter)
+    {
+        this.costCenter = costCenter;
     }
 }
