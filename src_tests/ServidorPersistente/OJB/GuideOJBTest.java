@@ -237,7 +237,7 @@ public class GuideOJBTest extends TestCaseOJB {
 		try {
 			persistentSupport.iniciarTransaccao();
 			Integer guideNumber = persistentGuide.generateGuideNumber(new Integer(2003));
-			assertEquals(guideNumber, new Integer(3));
+			assertEquals(guideNumber, new Integer(4));
 									
 			persistentSupport.confirmarTransaccao();
 		} catch(ExistingPersistentException ex) {

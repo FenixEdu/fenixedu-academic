@@ -140,7 +140,7 @@ public class CreateGuideTest extends TestCaseServicos {
 		
 		assertNotNull(result);
 		assertEquals(result.getVersion(), new Integer(1));
-		assertEquals(result.getNumber(), new Integer(3));
+		assertEquals(result.getNumber(), new Integer(4));
 		assertEquals(result.getYear(), new Integer(2003));
 		assertEquals(result.getInfoGuideEntries().size(), 2);
 		assertEquals(result.getTotal(), new Double(price.getPrice().intValue() + 10));

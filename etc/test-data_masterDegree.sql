@@ -34,6 +34,7 @@ INSERT INTO GUIDE values (1, 1, 2003, 1, 6, 50.02, 'guia1', 1, 10, 1, '2003-4-4'
 INSERT INTO GUIDE values (2, 2, 2003, 1, 6, 25, 'guia2', 1, 10, 2, '2003-4-3', 1, '2003-4-4');
 INSERT INTO GUIDE values (3, 1, 2002, 2, 6, 45, 'guia3', 1, 10, 1, '2003-4-1', 1, '2003-4-4');
 INSERT INTO GUIDE values (4, 1, 2002, 1, 6, 66, 'guia1', 1, 10, 1, '2003-4-5', 2, '2003-4-4');
+INSERT INTO GUIDE values (5, 3, 2003, 1, 6, 66, 'guia3', 1, 10, 1, '2003-4-5', 2, '2003-4-4');
 
 
 #-----------------------------
@@ -55,6 +56,7 @@ INSERT INTO GUIDE_ENTRY values (7, 3, 2, 5, 'desc5', 4, 3);
 
 INSERT INTO GUIDE_ENTRY values (8, 4, 2, 3, 'desc3', 33, 2);
 
+INSERT INTO GUIDE_ENTRY values (9, 5, 2, 3, 'desc3', 33, 2);
 
 
 #-----------------------------
@@ -67,6 +69,9 @@ INSERT INTO GUIDE_SITUATION values (2, 1, 2, '2003-10-6', 'pago', 1);
 INSERT INTO GUIDE_SITUATION values (3, 2, 3, '2003-5-4', 'anulado', 1);
 INSERT INTO GUIDE_SITUATION values (4, 4, 3, '2003-5-4', 'anulado', 1);
 INSERT INTO GUIDE_SITUATION values (5, 3, 1, '2003-5-4', 'Ainda nao foi pago', 1);
+INSERT INTO GUIDE_SITUATION values (6, 5, 1, '2003-5-4', 'Ainda nao foi pago', 1);
+
+
 
 
 #-----------------------------
