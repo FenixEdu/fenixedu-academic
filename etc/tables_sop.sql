@@ -199,7 +199,7 @@ create table EXAM_STUDENT_ROOM (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_EXAM int(11) not null,
    KEY_STUDENT int(11) not null,
-   KEY_ROOM int(11) not null,   
+   KEY_ROOM int(11) ,   
    primary key (ID_INTERNAL),
    unique U1 (KEY_EXAM, KEY_STUDENT))
    type=InnoDB;
