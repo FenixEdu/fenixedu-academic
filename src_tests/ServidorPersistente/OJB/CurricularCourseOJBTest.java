@@ -10,17 +10,27 @@ import java.util.ArrayList;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.IDisciplinaDepartamento;
 import Dominio.IPlanoCurricularCurso;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IDisciplinaDepartamentoPersistente;
+import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPlanoCurricularCursoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 
 public class CurricularCourseOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null; 
+	IDisciplinaDepartamentoPersistente persistentDepartmentCourse = null;
+	ICursoPersistente persistentDegree = null;
+	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+	IPersistentCurricularCourse persistentCurricularCourse = null;
+	
     public CurricularCourseOJBTest(java.lang.String testName) {
         super(testName);
     }
@@ -37,6 +47,16 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
     
     protected void setUp() {
         super.setUp();
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Error");
+		}
+		persistentDepartmentCourse = persistentSupport.getIDisciplinaDepartamentoPersistente();	
+		persistentDegree = persistentSupport.getICursoPersistente();
+		persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
+		persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
     }
     
     protected void tearDown() {
@@ -68,7 +88,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 
         try {
             persistentSupport.iniciarTransaccao();
-            persistantCurricularCourse.writeCurricularCourse(curricularCourse);
+            persistentCurricularCourse.writeCurricularCourse(curricularCourse);
             persistentSupport.confirmarTransaccao();
             fail("testWriteCurricularCourse: confirmarTransaccao_1");
         } catch(ExistingPersistentException ex) {
@@ -81,7 +101,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 
         try {
             persistentSupport.iniciarTransaccao();
-            persistantCurricularCourse.writeCurricularCourse(curricularCourse);
+            persistentCurricularCourse.writeCurricularCourse(curricularCourse);
             persistentSupport.confirmarTransaccao();
             assertTrue("testWriteCurricularCourse: Unexisting Object", true);
         } catch(ExcepcaoPersistencia ex2) {
@@ -92,7 +112,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 
         try {
             persistentSupport.iniciarTransaccao();
-            dc2 = persistantCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso IX", "TFCIX");
+            dc2 = persistentCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso IX", "TFCIX");
             persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testWriteCurricularCourse: confirmarTransaccao_3");
@@ -117,7 +137,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-            persistantCurricularCourse.deleteAllCurricularCourse();
+            persistentCurricularCourse.deleteAllCurricularCourse();
             persistentSupport.confirmarTransaccao();
             assertTrue("testApagarTodasAsDisciplinasCurriculares: Disciplinas Curriculares apagadas", true);
         } catch(ExcepcaoPersistencia ex2) {
@@ -128,7 +148,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-            result = persistantCurricularCourse.readAllCurricularCourses();
+            result = persistentCurricularCourse.readAllCurricularCourses();
             persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testApagarTodasAsDisciplinasCurriculares: confirmarTransaccao_2");
@@ -144,7 +164,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-            dc = persistantCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso I", "TFCI");
+            dc = persistentCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso I", "TFCI");
             persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex2) {
             fail("testLerDisciplinaCurricular: confirmarTransaccao_1");
@@ -164,7 +184,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
         dc = null;
         try {
             persistentSupport.iniciarTransaccao();
-            dc = persistantCurricularCourse.readCurricularCourseByNameCode("Unknown", "unk");
+            dc = persistentCurricularCourse.readCurricularCourseByNameCode("Unknown", "unk");
             persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex2) {
             fail("testLerDisciplinaCurricular: confirmarTransaccao_2");
@@ -178,7 +198,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-    		curricularCourse = persistantCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso I", "TFCI");
+    		curricularCourse = persistentCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso I", "TFCI");
             persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testApagarDisciplinaCurricular: iniciarTransaccao_1");
@@ -187,7 +207,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 
         try {
             persistentSupport.iniciarTransaccao();
-            persistantCurricularCourse.deleteCurricularCourse(curricularCourse);
+            persistentCurricularCourse.deleteCurricularCourse(curricularCourse);
             persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex3) {
             fail("testApagarDisciplinaCurricular: confirmarTransaccao_1");
@@ -196,7 +216,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
         ICurricularCourse dc = null;
         try {
             persistentSupport.iniciarTransaccao();
-            dc = persistantCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso", "TFCI");
+            dc = persistentCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso", "TFCI");
             persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testApagarDisciplinaCurricular: lerDisciplinaCurricularPorDisciplinaESigla");
@@ -205,7 +225,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 
         try {
             persistentSupport.iniciarTransaccao();
-            persistantCurricularCourse.deleteCurricularCourse(new CurricularCourse());
+            persistentCurricularCourse.deleteCurricularCourse(new CurricularCourse());
             persistentSupport.confirmarTransaccao();
             assertTrue("testApagarDisciplinaCurricular: Disciplina Curricular apagada", true);
         } catch(ExcepcaoPersistencia ex2) {
@@ -219,7 +239,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 
         try {
             persistentSupport.iniciarTransaccao();
-            list = persistantCurricularCourse.readAllCurricularCourses();
+            list = persistentCurricularCourse.readAllCurricularCourses();
             persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex2) {
             fail("testLerTodasDisciplinasCurriculares: confirmarTransaccao_1");

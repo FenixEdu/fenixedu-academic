@@ -20,6 +20,7 @@ import org.odmg.QueryException;
 import Dominio.Curso;
 import Dominio.ICurso;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
@@ -30,6 +31,9 @@ import Util.TipoCurso;
  * @author rpfi
  */
 public class CursoOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null; 
+	ICursoPersistente persistentDegree = null;
     
     public CursoOJBTest(java.lang.String testName) {
         super(testName);
@@ -46,6 +50,13 @@ public class CursoOJBTest extends TestCaseOJB {
     }    
   protected void setUp() {
     super.setUp();
+	try {
+		persistentSupport = SuportePersistenteOJB.getInstance();
+	} catch (ExcepcaoPersistencia e) {
+		e.printStackTrace();
+		fail("Error");
+	}
+	persistentDegree = persistentSupport.getICursoPersistente();
   }
     
   protected void tearDown() {

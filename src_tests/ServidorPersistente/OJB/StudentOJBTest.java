@@ -26,6 +26,9 @@ import Dominio.Pessoa;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentStudent;
+import ServidorPersistente.IPessoaPersistente;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.EstadoCivil;
 import Util.Sexo;
 import Util.TipoCurso;
@@ -39,6 +42,10 @@ import Util.TipoDocumentoIdentificacao;
 
 
 public class StudentOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null; 
+	IPersistentStudent persistentStudent = null;
+	IPessoaPersistente persistentPerson = null;
 	
     public StudentOJBTest(java.lang.String testName) {
         super(testName);
@@ -56,6 +63,14 @@ public class StudentOJBTest extends TestCaseOJB {
     
     protected void setUp() {
         super.setUp();
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Error");
+		}
+		persistentStudent = persistentSupport.getIPersistentStudent();
+		persistentPerson = persistentSupport.getIPessoaPersistente();
     }
     
     protected void tearDown() {
@@ -203,8 +218,11 @@ public class StudentOJBTest extends TestCaseOJB {
       persistentStudent.lockWrite(student);
       persistentSupport.confirmarTransaccao();
       fail("testCreateExistingAluno");
+	} catch (ExistingPersistentException eex) {
+		// all is ok
+		System.out.println("Caught ExistingPersistentException" + eex);
     } catch (ExcepcaoPersistencia ex) {
-      // all is ok
+		fail("Caught ExcepcaoPersistencia" + ex);
     }
   }
  

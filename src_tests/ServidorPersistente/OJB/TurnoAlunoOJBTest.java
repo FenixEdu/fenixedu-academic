@@ -31,10 +31,29 @@ import Dominio.ITurno;
 import Dominio.ITurnoAluno;
 import Dominio.TurnoAluno;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPersistentStudent;
+import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.ITurnoAlunoPersistente;
+import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
 public class TurnoAlunoOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null;
+	IPersistentExecutionYear persistentExecutionYear = null; 
+	ICursoPersistente persistentDegree = null;
+	ICursoExecucaoPersistente persistentExecutionDegree = null;
+	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+	IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+	ITurnoPersistente persistentShift = null;
+	IPersistentStudent persistentStudent = null;
+	ITurnoAlunoPersistente persistentStudentShift = null;
+
     public TurnoAlunoOJBTest(java.lang.String testName) {
     super(testName);
   }
@@ -51,6 +70,21 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
     
   protected void setUp() {
     super.setUp();
+	try {
+		persistentSupport = SuportePersistenteOJB.getInstance();
+	} catch (ExcepcaoPersistencia e) {
+		e.printStackTrace();
+		fail("Error");
+	}
+	persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+	persistentDegree = persistentSupport.getICursoPersistente();
+	persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
+	persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
+	persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+	persistentShift = persistentSupport.getITurnoPersistente();
+	persistentStudent = persistentSupport.getIPersistentStudent();
+	persistentStudentShift = persistentSupport.getITurnoAlunoPersistente();
+
   }
     
   protected void tearDown() {

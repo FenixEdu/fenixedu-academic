@@ -6,15 +6,27 @@
 
 package ServidorPersistente.OJB;
 
-import junit.framework.*;
 import java.util.List;
-import org.odmg.QueryException;
-import org.odmg.OQLQuery;
-import ServidorPersistente.*;
-import ServidorPersistente.exceptions.ExistingPersistentException;
-import Dominio.*;
-import org.odmg.Implementation;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.apache.ojb.odmg.OJB;
+import org.odmg.Implementation;
+import org.odmg.OQLQuery;
+import org.odmg.QueryException;
+
+import Dominio.CursoExecucao;
+import Dominio.ICurso;
+import Dominio.ICursoExecucao;
+import Dominio.IExecutionYear;
+import Dominio.IPlanoCurricularCurso;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 
 /**
@@ -22,6 +34,12 @@ import org.apache.ojb.odmg.OJB;
  * @author rpfi
  */
 public class CursoExecucaoOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null; 
+	IPersistentExecutionYear persistentExecutionYear = null;
+	ICursoExecucaoPersistente persistentExecutionDegree = null;
+	ICursoPersistente persistentDegree = null;
+	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
     
     public CursoExecucaoOJBTest(java.lang.String testName) {
         super(testName);
@@ -39,6 +57,16 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
     
   protected void setUp() {
     super.setUp();
+	try {
+		persistentSupport = SuportePersistenteOJB.getInstance();
+	} catch (ExcepcaoPersistencia e) {
+		e.printStackTrace();
+		fail("Error");
+	}
+	persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
+	persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+	persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
+	persistentDegree = persistentSupport.getICursoPersistente();
   }
     
   protected void tearDown() {

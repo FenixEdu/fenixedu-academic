@@ -18,10 +18,15 @@ import junit.framework.TestSuite;
 import Dominio.ISala;
 import Dominio.Sala;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoSala;
 
 public class SalaOJBTest extends TestCaseOJB {
+	SuportePersistenteOJB persistentSupport = null; 
+	ISalaPersistente persistentRoom = null;
+
+	
     public SalaOJBTest(java.lang.String testName) {
     super(testName);
   }
@@ -38,6 +43,13 @@ public class SalaOJBTest extends TestCaseOJB {
     
   protected void setUp() {
     super.setUp();
+	try {
+		persistentSupport = SuportePersistenteOJB.getInstance();
+	} catch (ExcepcaoPersistencia e) {
+		e.printStackTrace();
+		fail("Error");
+	}
+	persistentRoom = persistentSupport.getISalaPersistente();
   }
     
   protected void tearDown() {

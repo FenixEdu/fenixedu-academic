@@ -32,9 +32,31 @@ import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.TurmaTurno;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.ITurmaPersistente;
+import ServidorPersistente.ITurmaTurnoPersistente;
+import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class TurmaTurnoOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null;
+	IPersistentExecutionPeriod persistentExecutionPeriod = null;
+	IPersistentExecutionYear persistentExecutionYear = null; 
+	ICursoPersistente persistentDegree = null;
+	ITurmaPersistente persistentClass = null;
+	ICursoExecucaoPersistente persistentExecutionDegree = null;
+	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+	IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+	ITurnoPersistente persistentShift = null;
+	ITurmaTurnoPersistente persistentClassShift = null;
+
+	
     public TurmaTurnoOJBTest(java.lang.String testName) {
     super(testName);
   }
@@ -51,6 +73,21 @@ public class TurmaTurnoOJBTest extends TestCaseOJB {
     
   protected void setUp() {
     super.setUp();
+	try {
+		persistentSupport = SuportePersistenteOJB.getInstance();
+	} catch (ExcepcaoPersistencia e) {
+		e.printStackTrace();
+		fail("Error");
+	}
+	persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+	persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+	persistentDegree = persistentSupport.getICursoPersistente();
+	persistentClass = persistentSupport.getITurmaPersistente();
+	persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
+	persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
+	persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+	persistentShift = persistentSupport.getITurnoPersistente();
+	persistentClassShift = persistentSupport.getITurmaTurnoPersistente();
   }
     
   protected void tearDown() {

@@ -30,9 +30,28 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IFrequentaPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null; 
+	IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+	IPersistentExecutionPeriod persistentExecutionPeriod = null;
+	IPersistentExecutionYear persistentExecutionYear = null;
+	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+	ICursoPersistente persistentDegree = null;
+	ICursoExecucaoPersistente persistentExecutionDegree = null;
+	IFrequentaPersistente persistentAttend = null;
+	ITurnoPersistente persistentShift = null;
+	
     public DisciplinaExecucaoOJBTest(java.lang.String testName) {
     super(testName);
   }
@@ -49,6 +68,20 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
     
   protected void setUp() {
     super.setUp();
+	try {
+		persistentSupport = SuportePersistenteOJB.getInstance();
+	} catch (ExcepcaoPersistencia e) {
+		e.printStackTrace();
+		fail("Error");
+	}
+	persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+	persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+	persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+	persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
+	persistentDegree = persistentSupport.getICursoPersistente();
+	persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
+	persistentAttend = persistentSupport.getIFrequentaPersistente();
+	persistentShift = persistentSupport.getITurnoPersistente();
   }
     
   protected void tearDown() {

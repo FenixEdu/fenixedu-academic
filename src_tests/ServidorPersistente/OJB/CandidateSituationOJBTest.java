@@ -33,10 +33,16 @@ import Dominio.CandidateSituation;
 import Dominio.ICandidateSituation;
 import Dominio.IMasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentCandidateSituation;
+import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import Util.CandidateSituationValidation;
 import Util.SituationName;
 
 public class CandidateSituationOJBTest extends TestCaseOJB {
+    
+	SuportePersistenteOJB persistentSupport = null;
+	IPersistentCandidateSituation persistentCandidateSituation = null; 
+	IPersistentMasterDegreeCandidate persistentMasterDegreeCandidate = null;
     
     public CandidateSituationOJBTest(java.lang.String testName) {
         super(testName);
@@ -55,6 +61,15 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
      
     protected void setUp(){
         super.setUp();
+        
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Error");
+		}
+		persistentCandidateSituation = persistentSupport.getIPersistentCandidateSituation();
+		persistentMasterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate();
     }
     
     protected void tearDown(){

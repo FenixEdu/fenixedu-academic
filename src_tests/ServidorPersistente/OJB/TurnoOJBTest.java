@@ -25,10 +25,17 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
 import Dominio.Turno;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoAula;
 
 public class TurnoOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null;
+	ITurnoPersistente persistentShift = null;
+	IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+	
     public TurnoOJBTest(java.lang.String testName) {
     super(testName);
   }
@@ -45,6 +52,14 @@ public class TurnoOJBTest extends TestCaseOJB {
     
   protected void setUp() {
     super.setUp();
+	try {
+		persistentSupport = SuportePersistenteOJB.getInstance();
+	} catch (ExcepcaoPersistencia e) {
+		e.printStackTrace();
+		fail("Error");
+	}
+	persistentShift = persistentSupport.getITurnoPersistente();
+	persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
   }
     
   protected void tearDown() {

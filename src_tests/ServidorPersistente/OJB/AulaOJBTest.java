@@ -29,11 +29,22 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IAulaPersistente;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.DiaSemana;
 import Util.TipoAula;
 
 public class AulaOJBTest extends TestCaseOJB {
+  
+  SuportePersistenteOJB persistentSupport = null; 
+  ISalaPersistente persistentRoom = null;
+  IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+  IAulaPersistente persistentLesson = null;
+  IPersistentExecutionPeriod persistentExecutionPeriod = null;
+
   public AulaOJBTest(java.lang.String testName) {
     super(testName);
   }
@@ -49,7 +60,19 @@ public class AulaOJBTest extends TestCaseOJB {
   }
     
   protected void setUp() {
-    super.setUp();
+    super.setUp();    
+
+    try {
+		persistentSupport = SuportePersistenteOJB.getInstance();
+	} catch (ExcepcaoPersistencia e) {
+		e.printStackTrace();
+		fail("Error");
+	}
+	persistentRoom = persistentSupport.getISalaPersistente();
+	persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+	persistentLesson = persistentSupport.getIAulaPersistente();
+	persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+	
   }
     
   protected void tearDown() {

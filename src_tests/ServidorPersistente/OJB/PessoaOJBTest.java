@@ -18,6 +18,7 @@ import org.odmg.QueryException;
 import Dominio.IPessoa;
 import Dominio.Pessoa;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoDocumentoIdentificacao;
 
@@ -27,6 +28,11 @@ import Util.TipoDocumentoIdentificacao;
  * @author jorge
  */
 public class PessoaOJBTest extends TestCaseOJB {
+	
+  SuportePersistenteOJB persistentSupport = null;
+  IPessoaPersistente persistentPerson = null;
+   
+	
   public PessoaOJBTest(java.lang.String testName) {
     super(testName);
   }
@@ -43,6 +49,13 @@ public class PessoaOJBTest extends TestCaseOJB {
     
   protected void setUp() {
     super.setUp();
+	try {
+		persistentSupport = SuportePersistenteOJB.getInstance();
+	} catch (ExcepcaoPersistencia e) {
+		e.printStackTrace();
+		fail("Error");
+	}
+	persistentPerson = persistentSupport.getIPessoaPersistente();
   }
     
   protected void tearDown() {

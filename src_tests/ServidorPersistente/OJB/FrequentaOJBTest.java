@@ -26,10 +26,19 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IFrequentaPersistente;
+import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
 public class FrequentaOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null; 
+	IPersistentStudent persistentStudent = null;
+	IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+	IFrequentaPersistente persistentAttend = null;
+	
     public FrequentaOJBTest(java.lang.String testName) {
     super(testName);
   }
@@ -46,6 +55,15 @@ public class FrequentaOJBTest extends TestCaseOJB {
     
   protected void setUp() {
     super.setUp();
+	try {
+		persistentSupport = SuportePersistenteOJB.getInstance();
+	} catch (ExcepcaoPersistencia e) {
+		e.printStackTrace();
+		fail("Error");
+	}
+	persistentStudent = persistentSupport.getIPersistentStudent();
+	persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+	persistentAttend = persistentSupport.getIFrequentaPersistente();
   }
     
   protected void tearDown() {

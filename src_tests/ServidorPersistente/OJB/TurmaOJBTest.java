@@ -30,9 +30,25 @@ import Dominio.ITurma;
 import Dominio.Turma;
 import Dominio.TurmaTurno;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class TurmaOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null; 
+	IPersistentExecutionPeriod persistentExecutionPeriod = null;
+	IPersistentExecutionYear persistentExecutionYear = null;
+	ICursoPersistente persistentDegree = null;
+	ITurmaPersistente persistentClass = null;
+	ICursoExecucaoPersistente persistentExecutionDegree = null;
+	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+
+	
 	public TurmaOJBTest(java.lang.String testName) {
 		super(testName);
 	}
@@ -49,6 +65,18 @@ public class TurmaOJBTest extends TestCaseOJB {
 
 	protected void setUp() {
 		super.setUp();
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Error");
+		}
+		persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+		persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+		persistentDegree = persistentSupport.getICursoPersistente();
+		persistentClass = persistentSupport.getITurmaPersistente();
+		persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
+		persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
 	}
 
 	protected void tearDown() {

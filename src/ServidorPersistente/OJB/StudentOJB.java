@@ -27,6 +27,7 @@ import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
 public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
@@ -106,8 +107,19 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
         }
     }
     
-    public void lockWrite(IStudent aluno) throws ExcepcaoPersistencia {
-        super.lockWrite(aluno);
+    public void lockWrite(IStudent aluno) throws ExcepcaoPersistencia, ExistingPersistentException {
+    	IStudent studentInDB = null;
+    	if (aluno == null) return;
+    	
+    	studentInDB = this.readByNumero(aluno.getNumber(), aluno.getDegreeType());
+    	
+    	if (studentInDB == null) super.lockWrite(aluno);
+    	else if ((aluno instanceof Student) &&
+				 ((Student) studentInDB).getInternalCode().equals(
+		 		 ((Student) aluno).getInternalCode())) {
+					super.lockWrite(aluno);
+		 } else
+			 throw new ExistingPersistentException();
     }
     
     

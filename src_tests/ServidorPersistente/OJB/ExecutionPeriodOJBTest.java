@@ -21,9 +21,17 @@ import Dominio.ExecutionPeriod;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class ExecutionPeriodOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null; 
+	IPersistentExecutionPeriod persistentExecutionPeriod = null;
+	IPersistentExecutionYear persistentExecutionYear = null;
+	
+
 	public ExecutionPeriodOJBTest(java.lang.String testName) {
 		super(testName);
 	}
@@ -40,6 +48,14 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
     
 	protected void setUp() {
 		super.setUp();
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Error");
+		}
+		persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+		persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 	}
     
 	protected void tearDown() {

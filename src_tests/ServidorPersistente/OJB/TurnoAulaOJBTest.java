@@ -36,10 +36,22 @@ import Dominio.Sala;
 import Dominio.Turno;
 import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IAulaPersistente;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.ISalaPersistente;
+import ServidorPersistente.ITurnoAulaPersistente;
+import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.DiaSemana;
 
 public class TurnoAulaOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null;
+	ITurnoAulaPersistente persistentShiftLesson = null;
+	IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+	ITurnoPersistente persistentShift = null;
+	ISalaPersistente persistentRoom = null;
+	IAulaPersistente persistentLesson = null;
 
 	
 	public TurnoAulaOJBTest(java.lang.String testName) {
@@ -58,7 +70,17 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 
 	protected void setUp() {
 		super.setUp();
-
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Error");
+		}
+		persistentShiftLesson = persistentSupport.getITurnoAulaPersistente();
+		persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+		persistentShift = persistentSupport.getITurnoPersistente();
+		persistentRoom = persistentSupport.getISalaPersistente();
+		persistentLesson = persistentSupport.getIAulaPersistente();
 	}
 
 	protected void tearDown() {

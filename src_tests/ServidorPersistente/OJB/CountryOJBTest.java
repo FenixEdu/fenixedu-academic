@@ -22,9 +22,14 @@ import junit.framework.TestSuite;
 import Dominio.Country;
 import Dominio.ICountry;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CountryOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null; 
+	IPersistentCountry persistentCountry = null;
+	
     public CountryOJBTest(java.lang.String testName) {
         super(testName);
     }
@@ -41,6 +46,13 @@ public class CountryOJBTest extends TestCaseOJB {
     
     protected void setUp() {
         super.setUp();
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Error");
+		}
+		persistentCountry = persistentSupport.getIPersistentCountry();
     }
     
     protected void tearDown() {

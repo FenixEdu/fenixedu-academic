@@ -20,9 +20,15 @@ import junit.framework.TestSuite;
 import Dominio.ExecutionYear;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class ExecutionYearOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null; 
+	IPersistentExecutionYear persistentExecutionYear = null;
+
+	
 	public ExecutionYearOJBTest(java.lang.String testName) {
 		super(testName);
 	}
@@ -39,6 +45,14 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
     
 	protected void setUp() {
 		super.setUp();
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Error");
+		}
+		persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+
 	}
     
 	protected void tearDown() {

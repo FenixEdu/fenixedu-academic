@@ -31,18 +31,25 @@ import java.util.Calendar;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import Dominio.ICountry;
 import Dominio.ICurso;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.MasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPersistentCountry;
+import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import Util.EstadoCivil;
 import Util.Sexo;
 import Util.Specialization;
 import Util.TipoDocumentoIdentificacao;
 
 public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
+    
+	SuportePersistenteOJB persistentSupport = null; 
+	IPersistentMasterDegreeCandidate persistentMasterDegreeCandidate = null;
+	IPersistentCountry persistentCountry = null;
+	ICursoPersistente persistentDegree = null;
     
     public MasterDegreeCandidateOJBTest(java.lang.String testName) {
         super(testName);
@@ -62,10 +69,19 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
     
     protected void setUp(){
         super.setUp();
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Error");
+		}
+		persistentMasterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate();
+		persistentDegree = persistentSupport.getICursoPersistente();
+		persistentCountry = persistentSupport.getIPersistentCountry();
     }
     
     protected void tearDown(){
-//        super.tearDown();
+        super.tearDown();
     }
     
     public void testReadExistingMasterDegreeCandidate() {

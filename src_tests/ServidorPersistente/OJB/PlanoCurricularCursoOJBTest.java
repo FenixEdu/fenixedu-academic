@@ -24,9 +24,16 @@ import Dominio.ICurso;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.PlanoCurricularCurso;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPlanoCurricularCursoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
+	
+	SuportePersistenteOJB persistentSupport = null; 
+	ICursoPersistente persistentDegree = null;
+	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+	
     public PlanoCurricularCursoOJBTest(java.lang.String testName) {
         super(testName);
     }
@@ -43,6 +50,15 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
     
     protected void setUp() {
         super.setUp();
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Error");
+		}
+		persistentDegree = persistentSupport.getICursoPersistente();
+		persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
+		
     }
     
     protected void tearDown() {

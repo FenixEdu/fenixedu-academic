@@ -11,14 +11,19 @@ import java.util.ArrayList;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import Dominio.DisciplinaDepartamento;
 import Dominio.IDepartamento;
 import Dominio.IDisciplinaDepartamento;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDepartamentoPersistente;
+import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
+	SuportePersistenteOJB persistentSupport = null; 
+	IDepartamentoPersistente persistentDepartment = null;
+	IDisciplinaDepartamentoPersistente persistentDepartmentCourse = null;
+	
     public DisciplinaDepartamentoOJBTest(java.lang.String testName) {
         super(testName);
     }
@@ -35,6 +40,14 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
     
     protected void setUp() {
         super.setUp();
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Error");
+		}
+		persistentDepartment = persistentSupport.getIDepartamentoPersistente();
+		persistentDepartmentCourse = persistentSupport.getIDisciplinaDepartamentoPersistente();
     }
     
     protected void tearDown() {
