@@ -255,15 +255,12 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 					
 			if(infoGroupPropertiesList.size()==1)
 			{
-				//Vai para a accao ViewProjectStudentGroups
-				System.out.println("NA ACCAO ANTERIOR_GROUP_PROPERTIES"+((InfoGroupProperties)infoGroupPropertiesList.get(0)).getIdInternal());
 				request.setAttribute("groupProperties",((InfoGroupProperties)infoGroupPropertiesList.get(0)).getIdInternal());
 				return viewProjectStudentGroupsAction(mapping,form,request,response);
 				
 			}
 			else
 			{
-				//request.setAttribute("infoGroupPropertiesList",infoGroupPropertiesList);
 				return mapping.findForward("sucess");
 		
 			}	
@@ -289,19 +286,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 			ISiteComponent viewAllGroups = new InfoSiteAllGroups();
 			ExecutionCourseSiteView siteView = (ExecutionCourseSiteView)readGroupView(request, viewAllGroups,null,null, null, null,groupPropertiesCode);
 			request.setAttribute("groupProperties",groupPropertiesCode);
-			
-//			InfoSiteAllGroups allGroups= (InfoSiteAllGroups) siteView.getComponent();
-//			List list = (List) allGroups.getInfoSiteGroupsByShiftList();
-//			List shiftsInternalList = new ArrayList();
-//			Iterator iterator = list.iterator();
-//			InfoShift infoShift=null;
-//			while (iterator.hasNext()) 
-//			{
-//				infoShift = ((InfoSiteGroupsByShift) iterator.next()).getInfoShift();
-//				shiftsInternalList.add(infoShift.getIdInternal());
-//			}
-//			request.setAttribute("shiftsIdList",shiftsInternalList);
-//			
+					
 			return mapping.findForward("sucess");	
 		}
 	
@@ -474,7 +459,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 				curricularCourseId,
 				studentGroupCode,
 				groupPropertiesCode};
-		System.out.println("NO READ_SITE_GROUP_VIEWER-OBJECT_CODE"+objectCode);
 		ExecutionCourseSiteView siteView = null;
 		try 
 		{

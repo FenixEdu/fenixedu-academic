@@ -196,8 +196,6 @@ public class GroupSiteComponentBuilder {
 				e.printStackTrace();
 				throw new FenixServiceException("error.impossibleReadAllShiftsByProject");
 			}
-			System.out.println("-----------------------NO SERVICO-infoSiteGroupsByShiftList"+infoSiteGroupsByShiftList.size());
-			System.out.println("NO SERVICO-infoSiteGroupsByShiftList"+infoSiteGroupsByShiftList);
 			return infoSiteGroupsByShiftList;
 		}
 		
