@@ -3,6 +3,13 @@
 <form-validation>
   <formset>
    
+   <!-- validation for the evaluation form -->
+   <form name="evaluationForm">
+   	<field property="evaluationElements" depends="required">
+   		<arg0 key="message.evaluation" resource="true"/>
+   	</field>
+   	
+   </form>
    <!-- Validacao para o formulario de executionCourseCurriculumForm -->
     <form name="executionCourseCurriculumForm">
       <field property="generalObjectives" depends="required" page="1">

@@ -9,7 +9,11 @@
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
 	
-	  
+	 <!-- evaluation form--> 
+	 <form-bean name="evaluationForm" 
+	 	type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	 	<form-property name="evaluationElements" type="java.lang.String"/>
+	 </form-bean>
      <!--curriculum forms --> 
      <form-bean name="executionCourseCurriculumForm"
 		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">		
@@ -383,8 +387,31 @@
        <forward name="viewSection" path="/viewSection.jsp"/>
 	</action>
 		
+	<!-- start of evaluation mappings -->
 	
-	
+	<action 
+		input="/viewSite.jsp"
+		path="/viewEvaluation"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.EditEvaluationDispatchAction"
+        >
+       <forward name="viewEvaluation" path="/viewEvaluation.jsp"/>
+       <forward name="editEvaluation" path="/editEvaluation.jsp"/>
+	</action>
+	<action 
+		name="evaluationForm"
+		input="/editEvaluation.jsp"
+		path="/editEvaluation"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.EditEvaluationDispatchAction"
+		validate="true"
+        >
+       <forward name="viewEvaluation" path="/viewEvaluation.jsp"/>
+       
+	</action>
+	<!-- start of evaluation mappings -->
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
