@@ -85,6 +85,9 @@ public class EnrollmentAuthorizationFilter extends
                 if (student == null) {
                     return "noAuthorization";
                 }
+                if(student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)){
+                    return "noAuthorization";
+                }
                 if (!curriculumOwner(student, id)) {
                     return "noAuthorization";
                 }
@@ -148,6 +151,15 @@ public class EnrollmentAuthorizationFilter extends
             return "noAuthorization";
         }
         return null;
+    }
+
+    /**
+     * @param student
+     * @return
+     */
+    private boolean payedTuition(IStudent student) {
+        // TODO Auto-generated method stub
+        return false;
     }
 
     /**
