@@ -74,7 +74,7 @@ public class Authenticate implements IService, Serializable {
 		}
 	}
 
-	public class UserView implements IUserView {
+	private class UserView implements IUserView {
 
 		final private String utilizador;
 
@@ -84,7 +84,7 @@ public class Authenticate implements IService, Serializable {
 
 		private String fullName;
 
-		protected UserView(final String utilizador, final Collection roles) {
+		private UserView(final String utilizador, final Collection roles) {
 			super();
 			this.utilizador = utilizador;
 			if (roles != null) {
