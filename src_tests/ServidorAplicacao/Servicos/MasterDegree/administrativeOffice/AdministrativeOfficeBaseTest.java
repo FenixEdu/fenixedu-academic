@@ -71,7 +71,9 @@ public abstract class AdministrativeOfficeBaseTest extends ServiceTestCase
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
             sp.clearCache();
+            sp.confirmarTransaccao();
         }
         catch (ExcepcaoPersistencia ex)
         {
