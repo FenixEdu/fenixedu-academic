@@ -251,8 +251,9 @@
 			<form-property name="evaluationCode"  type="java.lang.String"/>
 			<form-property name="objectCode"  type="java.lang.String"/>
 			<form-property name="rooms"  type="java.lang.Integer[]"/>			
-			<form-property name="method" type="java.lang.String"></form-property>       
-			<form-property name="page" type="java.lang.Integer"></form-property>               
+			<form-property name="method" type="java.lang.String"/>       
+			<form-property name="page" type="java.lang.Integer"/>               
+			<form-property name="enroll" type="java.lang.String" initial="true"/>     
 		</form-bean> 		          
 	
 		<!-- Form for marks list -->
@@ -933,7 +934,7 @@
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.ShowStudentsEnrolledInExamAction"
 		  >
-       <forward name="showStudents" path="showStudentsEnrolledInExam.jsp"/>
+       <forward name="showStudents" path="/showStudentsEnrolledInExam.jsp"/>
 	</action>	
 	
 	<action path="/distributeStudentsByRoom"
