@@ -13,7 +13,6 @@ package ServidorAplicacao.Servicos.sop;
  */
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import junit.framework.Test;
@@ -36,7 +35,6 @@ public class ReadExamsByDayAndBeginningServiceTest
 	extends TestCaseReadServices {
 
 	Calendar beginning = null;
-	Date day = null;
 
 	public ReadExamsByDayAndBeginningServiceTest(java.lang.String testName) {
 		super(testName);
@@ -86,9 +84,8 @@ public class ReadExamsByDayAndBeginningServiceTest
 		beginning.set(Calendar.HOUR_OF_DAY, 9);
 		beginning.set(Calendar.MINUTE, 0);
 		beginning.set(Calendar.SECOND, 0);
-		day = beginning.getTime();
 
-		Object[] result = { day, beginning };
+		Object[] result = { beginning, beginning };
 		return result;
 	}
 
@@ -111,7 +108,7 @@ public class ReadExamsByDayAndBeginningServiceTest
 			
 			sp.iniciarTransaccao();
 
-			List exams = sp.getIPersistentExam().readBy(day, beginning);
+			List exams = sp.getIPersistentExam().readBy(beginning, beginning);
 			
 			IExam tempExam = null;
 			InfoExam tempInfoExam = null;

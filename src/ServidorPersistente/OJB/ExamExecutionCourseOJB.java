@@ -11,7 +11,6 @@ package ServidorPersistente.OJB;
  * @author  Luis Cruz & Sara Ribeiro
  */
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.odmg.QueryException;
@@ -72,8 +71,7 @@ public class ExamExecutionCourseOJB
 		}
 	}
 
-	// TODO : method not yet tested
-	public List readBy(Date day, Calendar beginning)
+	public List readBy(Calendar day, Calendar beginning)
 		throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select examexecutioncourse from " + ExamExecutionCourse.class.getName();

@@ -1,7 +1,6 @@
 package Dominio;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import Util.Season;
@@ -13,13 +12,13 @@ import Util.Season;
 public interface IExam {
 
 	public Calendar getBeginning();
-	public Date getDay();
+	public Calendar getDay();
 	public Calendar getEnd();
 	public Season getSeason();	
 	public List getAssociatedExecutionCourses();
 
 	public void setBeginning(Calendar beginning);
-	public void setDay(Date day);
+	public void setDay(Calendar day);
 	public void setEnd(Calendar end);
 	public void setSeason(Season epoca);
 	public void setAssociatedExecutionCourses(List list);

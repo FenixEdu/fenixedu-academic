@@ -11,12 +11,11 @@ package DataBeans;
  * @author  Luis Cruz & Sara Ribeiro
  */
 import java.util.Calendar;
-import java.util.Date;
 
 import Util.Season;
 
 public class InfoExam {
-	protected Date day;
+	protected Calendar day;
 	protected Calendar beginning;
 	protected Calendar end;
 	protected Season season;
@@ -31,7 +30,7 @@ public class InfoExam {
 	public InfoExam() {
 	}
 
-	public InfoExam(Date day, Calendar beginning, Calendar end, Season season) {
+	public InfoExam(Calendar day, Calendar beginning, Calendar end, Season season) {
 		this.setDay(day);
 		this.setBeginning(beginning);
 		this.setEnd(end);
@@ -59,7 +58,7 @@ public class InfoExam {
 	/**
 	 * @return Date
 	 */
-	public Date getDay() {
+	public Calendar getDay() {
 		return day;
 	}
 
@@ -82,7 +81,7 @@ public class InfoExam {
 	 * Sets the day.
 	 * @param day The day to set
 	 */
-	public void setDay(Date day) {
+	public void setDay(Calendar day) {
 		this.day = day;
 	}
 

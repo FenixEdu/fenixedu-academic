@@ -48,7 +48,7 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		Calendar examDateAndTime =
 			(Calendar) session.getAttribute(SessionConstants.EXAM_DATEANDTIME);
 
-		Object args[] = { examDateAndTime.getTime(), examDateAndTime };
+		Object args[] = { examDateAndTime, examDateAndTime };
 		InfoViewExam infoViewExams = 
 			(InfoViewExam) ServiceUtils.executeService(
 				userView,
@@ -118,7 +118,7 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		session.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
 
 		Calendar date = Calendar.getInstance();
-		date.setTime(infoViewExam.getInfoExam().getDay());
+		date = infoViewExam.getInfoExam().getDay();
 
 		editExamForm.set("day", new Integer(date.get(Calendar.DAY_OF_MONTH)).toString());
 		editExamForm.set("month", new Integer(date.get(Calendar.MONTH)).toString());

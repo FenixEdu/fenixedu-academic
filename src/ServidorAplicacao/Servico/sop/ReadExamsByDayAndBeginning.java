@@ -12,7 +12,6 @@ package ServidorAplicacao.Servico.sop;
  **/
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import DataBeans.InfoExam;
@@ -53,7 +52,7 @@ public class ReadExamsByDayAndBeginning implements IServico {
 		return "ReadExamsByDayAndBeginning";
 	}
 
-	public InfoViewExam run(Date day, Calendar beginning) {
+	public InfoViewExam run(Calendar day, Calendar beginning) {
 		InfoViewExam infoViewExam = new InfoViewExam();
 		ArrayList infoViewExams = new ArrayList();
 

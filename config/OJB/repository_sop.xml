@@ -370,6 +370,7 @@
          name="day"
          column="DAY"
          jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor
          name="beginning"

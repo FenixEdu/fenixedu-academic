@@ -131,7 +131,7 @@ public class ExamExecutionCourseOJBTest extends TestCaseOJB {
 		
 		try {
 			ps.iniciarTransaccao();
-			List result = ps.getIPersistentExamExecutionCourse().readBy(beginning.getTime(), beginning);
+			List result = ps.getIPersistentExamExecutionCourse().readBy(beginning, beginning);
 			ps.confirmarTransaccao();
 			assertNotNull("result list is null", result);
 			assertEquals("result list size not expected", 7, result.size());

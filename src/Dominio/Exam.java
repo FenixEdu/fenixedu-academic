@@ -5,7 +5,6 @@
 package Dominio;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import Util.Season;
@@ -15,7 +14,7 @@ import Util.Season;
  */
 public class Exam extends DomainObject implements IExam {
 
-	protected Date day;
+	protected Calendar day;
 	protected Calendar beginning;
 	protected Calendar end;
 	protected Season season;
@@ -43,7 +42,7 @@ public class Exam extends DomainObject implements IExam {
 	}
 
 
-	public Exam(Date day, Calendar beginning, Calendar end, Season season) {
+	public Exam(Calendar day, Calendar beginning, Calendar end, Season season) {
 		this.setDay(day);
 		this.setBeginning(beginning);
 		this.setEnd(end);
@@ -61,7 +60,7 @@ public class Exam extends DomainObject implements IExam {
 	/**
 	 * @return Calendar
 	 */
-	public Date getDay() {
+	public Calendar getDay() {
 		return day;
 	}
 
@@ -84,7 +83,7 @@ public class Exam extends DomainObject implements IExam {
 	 * Sets the day.
 	 * @param day The day to set
 	 */
-	public void setDay(Date day) {
+	public void setDay(Calendar day) {
 		this.day = day;
 	}
 

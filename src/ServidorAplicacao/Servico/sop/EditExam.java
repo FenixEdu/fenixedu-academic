@@ -95,7 +95,7 @@ public class EditExam implements IServico {
 			}
 
 			examFromDBToBeEdited.setBeginning(examTime);
-			examFromDBToBeEdited.setDay(examDate.getTime());
+			examFromDBToBeEdited.setDay(examDate);
 			examFromDBToBeEdited.setEnd(null);
 			examFromDBToBeEdited.setSeason(season);
 

@@ -11,7 +11,6 @@ package ServidorPersistente.OJB;
  * @author  Luis Cruz & Sara Ribeiro
  */
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.odmg.QueryException;
@@ -24,7 +23,7 @@ import ServidorPersistente.IPersistentExam;
 public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
 
-	public List readBy(Date day, Calendar beginning) throws ExcepcaoPersistencia{
+	public List readBy(Calendar day, Calendar beginning) throws ExcepcaoPersistencia{
 		try {
 			String oqlQuery = "select exams from " + Exam.class.getName();
 			oqlQuery += " where day = $1";

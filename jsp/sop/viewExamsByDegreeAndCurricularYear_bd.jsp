@@ -54,7 +54,9 @@
 						<td>
 						  <logic:present name="infoExecutionCourseAndExams" property="infoExam1">
 							<logic:notEmpty name="infoExecutionCourseAndExams" property="infoExam1.day">
-								<bean:write name="infoExecutionCourseAndExams" property="infoExam1.day"/>
+								<%= ((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam1().getDay().get(Calendar.YEAR) %> -
+								<%= ((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam1().getDay().get(Calendar.MONTH) + 1 %> -
+								<%= ((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam1().getDay().get(Calendar.DAY_OF_MONTH) %>
 								<logic:notEmpty name="infoExecutionCourseAndExams" property="infoExam1.beginning">
 			                    	<% Integer iH = new Integer(((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam1().getBeginning().get(Calendar.HOUR_OF_DAY)); %>
 			                    	<% Integer iM = new Integer(((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam1().getBeginning().get(Calendar.MINUTE)); %>
@@ -73,7 +75,9 @@
 						<td>
 						  <logic:present name="infoExecutionCourseAndExams" property="infoExam2">
 							<logic:notEmpty name="infoExecutionCourseAndExams" property="infoExam2.day">
-								<bean:write name="infoExecutionCourseAndExams" property="infoExam2.day"/>
+								<%= ((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam2().getDay().get(Calendar.YEAR) %> -
+								<%= ((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam2().getDay().get(Calendar.MONTH) + 1 %> -
+								<%= ((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam2().getDay().get(Calendar.DAY_OF_MONTH) %>
 								<logic:notEmpty name="infoExecutionCourseAndExams" property="infoExam2.beginning">
 			                    	<% Integer iH = new Integer(((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam2().getBeginning().get(Calendar.HOUR_OF_DAY)); %>
 			                    	<% Integer iM = new Integer(((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam2().getBeginning().get(Calendar.MINUTE)); %>
