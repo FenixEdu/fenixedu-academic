@@ -19,7 +19,7 @@
 	<table align="center" cellspacing="0" width="90%">
         <tr>
           <td class="citation">
-            <p>&quot;<bean:write name="<%= SessionConstants.INFO_SITE %>" property="initialStatement" />&quot;</p>
+            <p><bean:write name="<%= SessionConstants.INFO_SITE %>" property="initialStatement" /></p>
           </td>
         </tr>
       </table>		
@@ -38,7 +38,7 @@
            		<td class="ultAnuncio">
            			<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_anuncio.gif"  />
            			<html:link  page="/accessAnnouncements.do">
-            		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="title"/>
+            		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="information"/>
             		</html:link>	
            		</td>
            </tr>
