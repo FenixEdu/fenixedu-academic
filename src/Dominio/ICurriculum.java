@@ -11,22 +11,30 @@ package Dominio;
  * @author  EP 15 - fjgc
  * @author João Mota
  */
-public interface ICurriculum extends IDomainObject{
-	String getGeneralObjectives();
-	String getOperacionalObjectives();
-	String getProgram();
-	String getGeneralObjectivesEn();
-	String getOperacionalObjectivesEn();
-	String getProgramEn();
+public interface ICurriculum extends IDomainObject {
+	public String getGeneralObjectives();
+	public String getOperacionalObjectives();
+	public String getProgram();
+	public String getGeneralObjectivesEn();
+	public String getOperacionalObjectivesEn();
+	public String getProgramEn();
+	public String getEvaluationElementsEn();
+	public String getEvaluationElements();
+	public ICurricularCourse getCurricularCourse();
 
-	ICurricularCourse getCurricularCourse();
+	
 
-	void setGeneralObjectives(String generalObjectives);
-	void setOperacionalObjectives(String operacionalObjectives);
-	void setProgram(String program);
-	void setGeneralObjectivesEn(String generalObjectivesEn);
-	void setOperacionalObjectivesEn(String operacionalObjectivesEn);
-	void setProgramEn(String programEn);
-	void setCurricularCourse(ICurricularCourse CurricularCourse);
+	
+
+	
+	public void setEvaluationElementsEn(String evaluationElementsEn);
+	public void setEvaluationElements(String evaluationElements);
+	public void setGeneralObjectives(String generalObjectives);
+	public void setOperacionalObjectives(String operacionalObjectives);
+	public void setProgram(String program);
+	public void setGeneralObjectivesEn(String generalObjectivesEn);
+	public void setOperacionalObjectivesEn(String operacionalObjectivesEn);
+	public void setProgramEn(String programEn);
+	public void setCurricularCourse(ICurricularCourse CurricularCourse);
 
 }
