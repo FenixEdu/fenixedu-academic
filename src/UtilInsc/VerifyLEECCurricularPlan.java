@@ -60,9 +60,8 @@ public class VerifyLEECCurricularPlan
 				IBranch branch = (IBranch) iterator.next();
 				if (branch.getBranchType().equals(BranchType.COMMON_BRANCH))
 				{
-					System.out.println("TRONCO COMUM ESPECIAL: [" + branch.getName() + "]");					
+					System.out.println("BASES: [" + branch.getName() + "]");
 					printItForThisArea(branch, AreaType.BASE_OBJ);
-					//printItForCommonArea(branch);
 				} else
 				{
 					System.out.println("ÁREA DE ESPECIALIZAÇÃO: [" + branch.getName() + "]");
