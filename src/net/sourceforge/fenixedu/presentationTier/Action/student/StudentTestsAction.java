@@ -15,22 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.util.Base64;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentDistributedTests;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentTestFeedback;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.NotAuthorizedStudentToDoTestException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentDistributedTests;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentTestFeedback;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -42,6 +36,13 @@ import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseLID;
 import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
+
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.util.Base64;
 
 /**
  * @author Susana Fernandes
@@ -105,7 +106,7 @@ public class StudentTestsAction extends FenixDispatchAction {
             infoStudentTestQuestionList = (List) ServiceUtils.executeService(userView,
                     "ReadStudentTestToDo", new Object[] { userView.getUtilizador(), testCode,
                             new Boolean(true), path });
-        } catch (NotAuthorizedException e) {
+        } catch (NotAuthorizedFilterException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
         } catch (InvalidArgumentsServiceException e) {
