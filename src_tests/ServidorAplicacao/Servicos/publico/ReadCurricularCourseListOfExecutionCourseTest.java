@@ -11,7 +11,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -19,7 +19,7 @@ import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -111,9 +111,9 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 			ICursoPersistente cursoPersistente = sp.getICursoPersistente();
 			ICurso degree = cursoPersistente.readBySigla("LEIC");
 			assertNotNull(degree);
-			IPlanoCurricularCursoPersistente planoCurricularCursoPersistente =
-				sp.getIPlanoCurricularCursoPersistente();
-			IPlanoCurricularCurso degreeCurricularPlan =
+			IPersistentDegreeCurricularPlan planoCurricularCursoPersistente =
+				sp.getIPersistentDegreeCurricularPlan();
+			IDegreeCurricularPlan degreeCurricularPlan =
 				planoCurricularCursoPersistente.readByNameAndDegree(
 					"plano1",
 					degree);

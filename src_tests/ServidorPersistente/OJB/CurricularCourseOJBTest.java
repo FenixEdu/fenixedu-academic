@@ -14,12 +14,12 @@ import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.IDisciplinaDepartamento;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 
@@ -28,7 +28,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 	SuportePersistenteOJB persistentSupport = null; 
 	IDisciplinaDepartamentoPersistente persistentDepartmentCourse = null;
 	ICursoPersistente persistentDegree = null;
-	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+	IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
 	IPersistentCurricularCourse persistentCurricularCourse = null;
 	
     public CurricularCourseOJBTest(java.lang.String testName) {
@@ -55,7 +55,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		}
 		persistentDepartmentCourse = persistentSupport.getIDisciplinaDepartamentoPersistente();	
 		persistentDegree = persistentSupport.getICursoPersistente();
-		persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
+		persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 		persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
     }
     
@@ -66,7 +66,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 // -------------------------------------------------------------------------------------------------------------------------------------------
     public void testWriteCurricularCourse() {
 		IDisciplinaDepartamento departmentCourse = null;
-        IPlanoCurricularCurso degreeCurricularPlan = null;
+        IDegreeCurricularPlan degreeCurricularPlan = null;
 
         try {
             persistentSupport.iniciarTransaccao();

@@ -30,7 +30,7 @@ public interface ICurricularCourse {
     public void setName(java.lang.String name);
     public void setCode(java.lang.String code);
 	public void setDepartmentCourse(IDisciplinaDepartamento departmentCourse);
-	public void setDegreeCurricularPlan(IPlanoCurricularCurso degreeCurricularPlan);
+	public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan);
 	public void setAssociatedExecutionCourses(List associatedExecutionCourses);
 
 	/**
@@ -56,6 +56,6 @@ public interface ICurricularCourse {
     public java.lang.String getName();
     public java.lang.String getCode();
     public IDisciplinaDepartamento getDepartmentCourse();
-    public IPlanoCurricularCurso getDegreeCurricularPlan();
+    public IDegreeCurricularPlan getDegreeCurricularPlan();
     public List getAssociatedExecutionCourses();
 }

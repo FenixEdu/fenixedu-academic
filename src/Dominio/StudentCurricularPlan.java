@@ -22,7 +22,7 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
   protected Integer courseCurricularPlanKey;
 
   protected IStudent student;
-  protected IPlanoCurricularCurso courseCurricularPlan;
+  protected IDegreeCurricularPlan courseCurricularPlan;
   protected Date startDate;
   protected StudentCurricularPlanState currentState;
     
@@ -30,7 +30,7 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
   /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
   public StudentCurricularPlan() { }
     
-  public StudentCurricularPlan(IStudent student, IPlanoCurricularCurso courseCurricularPlan, 
+  public StudentCurricularPlan(IStudent student, IDegreeCurricularPlan courseCurricularPlan, 
   			Date startDate, StudentCurricularPlanState currentState) {
 
 	this.student = student;
@@ -46,7 +46,7 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
       IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan)obj;
       resultado = 
       ((getStudent().getNumber() == studentCurricularPlan.getStudent().getNumber()) &&
-       (getCourseCurricularPlan().getCurso().getSigla().equals(studentCurricularPlan.getCourseCurricularPlan().getCurso().getSigla())) &&
+       (getCourseCurricularPlan().getDegree().getSigla().equals(studentCurricularPlan.getCourseCurricularPlan().getDegree().getSigla())) &&
        (getCurrentState().getState().intValue() == studentCurricularPlan.getCurrentState().getState().intValue()));
     } 
     return resultado;
@@ -67,9 +67,9 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
     
 	/**
 	 * Returns the courseCurricularPlan.
-	 * @return IPlanoCurricularCurso
+	 * @return IDegreeCurricularPlan
 	 */
-	public IPlanoCurricularCurso getCourseCurricularPlan() {
+	public IDegreeCurricularPlan getCourseCurricularPlan() {
 		return courseCurricularPlan;
 	}
 	
@@ -125,7 +125,7 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 	 * Sets the courseCurricularPlan.
 	 * @param courseCurricularPlan The courseCurricularPlan to set
 	 */
-	public void setCourseCurricularPlan(IPlanoCurricularCurso courseCurricularPlan) {
+	public void setCourseCurricularPlan(IDegreeCurricularPlan courseCurricularPlan) {
 		this.courseCurricularPlan = courseCurricularPlan;
 	}
 	

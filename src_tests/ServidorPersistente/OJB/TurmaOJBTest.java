@@ -27,7 +27,7 @@ import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.ITurma;
 import Dominio.Turma;
 import Dominio.TurmaTurno;
@@ -36,7 +36,7 @@ import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
@@ -48,7 +48,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 	ICursoPersistente persistentDegree = null;
 	ITurmaPersistente persistentClass = null;
 	ICursoExecucaoPersistente persistentExecutionDegree = null;
-	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+	IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
 
 	
 	public TurmaOJBTest(java.lang.String testName) {
@@ -78,7 +78,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		persistentDegree = persistentSupport.getICursoPersistente();
 		persistentClass = persistentSupport.getITurmaPersistente();
 		persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
-		persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
+		persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 	}
 
 	protected void tearDown() {
@@ -90,7 +90,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		ITurma classTemp = null;
 		ICursoExecucao executionDegree = null;
 		IExecutionPeriod executionPeriod = null;
-		IPlanoCurricularCurso degreeCurricularPlan = null;
+		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IExecutionYear executionYear = null;
 		ICurso degree = null;
 		try {
@@ -137,7 +137,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		ITurma classTemp = null;
 		ICursoExecucao executionDegree = null;
 		IExecutionPeriod executionPeriod = null;
-		IPlanoCurricularCurso degreeCurricularPlan = null;
+		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IExecutionYear executionYear = null;
 		ICurso degree = null;
 		try {
@@ -175,7 +175,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		ITurma classTemp = null;
 		ICursoExecucao executionDegree = null;
 		IExecutionPeriod executionPeriod = null;
-		IPlanoCurricularCurso degreeCurricularPlan = null;
+		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IExecutionYear executionYear = null;
 		ICurso degree = null;
 		try {
@@ -224,7 +224,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		ITurma classTemp = null;
 		ICursoExecucao executionDegree = null;
 		IExecutionPeriod executionPeriod = null;
-		IPlanoCurricularCurso degreeCurricularPlan = null;
+		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IExecutionYear executionYear = null;
 		ICurso degree = null;
 		try {
@@ -277,7 +277,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		ITurma classTemp = null;
 		ICursoExecucao executionDegree = null;
 		IExecutionPeriod executionPeriod = null;
-		IPlanoCurricularCurso degreeCurricularPlan = null;
+		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IExecutionYear executionYear = null;
 		ICurso degree = null;
 			
@@ -336,7 +336,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 				oqlQuery += " and turma.executionPeriod.executionYear.year = $3 ";
 				oqlQuery += " and turma.executionDegree.executionYear.year = $4 ";
 				oqlQuery += " and turma.executionDegree.curricularPlan.name = $5 ";
-				oqlQuery += " and turma.executionDegree.curricularPlan.curso.sigla = $6 ";
+				oqlQuery += " and turma.executionDegree.curricularPlan.degree.sigla = $6 ";
 	
 				query.create(oqlQuery);
 				query.bind(classTemp.getNome());
@@ -344,7 +344,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 				query.bind(classTemp.getExecutionPeriod().getExecutionYear().getYear());
 				query.bind(classTemp.getExecutionDegree().getExecutionYear().getYear());
 				query.bind(classTemp.getExecutionDegree().getCurricularPlan().getName());
-				query.bind(classTemp.getExecutionDegree().getCurricularPlan().getCurso().getSigla());			
+				query.bind(classTemp.getExecutionDegree().getCurricularPlan().getDegree().getSigla());			
 				result = (List) query.execute();
 			} catch (QueryException ex) {
 				  throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
@@ -371,7 +371,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 				oqlQuery += " and turma.executionPeriod.executionYear.year = $3 ";
 				oqlQuery += " and turma.executionDegree.executionYear.year = $4 ";
 				oqlQuery += " and turma.executionDegree.curricularPlan.name = $5 ";
-				oqlQuery += " and turma.executionDegree.curricularPlan.curso.sigla = $6 ";
+				oqlQuery += " and turma.executionDegree.curricularPlan.degree.sigla = $6 ";
 	
 				query.create(oqlQuery);
 				query.bind(classTemp.getNome());
@@ -379,7 +379,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 				query.bind(classTemp.getExecutionPeriod().getExecutionYear().getYear());
 				query.bind(classTemp.getExecutionDegree().getExecutionYear().getYear());
 				query.bind(classTemp.getExecutionDegree().getCurricularPlan().getName());
-				query.bind(classTemp.getExecutionDegree().getCurricularPlan().getCurso().getSigla());			
+				query.bind(classTemp.getExecutionDegree().getCurricularPlan().getDegree().getSigla());			
 				result = (List) query.execute();
 			} catch (QueryException ex) {
 				  throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
@@ -461,7 +461,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		List classesList = null;
 		ICursoExecucao executionDegree = null;
 		IExecutionPeriod executionPeriod = null;
-		IPlanoCurricularCurso degreeCurricularPlan = null;
+		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IExecutionYear executionYear = null;
 		ICurso degree = null;
 		try {
@@ -551,7 +551,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		List classesList = null;
 		ICursoExecucao executionDegree = null;
 		IExecutionPeriod executionPeriod = null;
-		IPlanoCurricularCurso degreeCurricularPlan = null;
+		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IExecutionYear executionYear = null;
 		ICurso degree = null;
 		try {

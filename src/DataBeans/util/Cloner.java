@@ -55,7 +55,7 @@ import Dominio.IExecutionYear;
 import Dominio.IItem;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IRole;
 import Dominio.ISala;
 import Dominio.ISection;
@@ -66,7 +66,7 @@ import Dominio.ITurno;
 import Dominio.Item;
 import Dominio.MasterDegreeCandidate;
 import Dominio.Pessoa;
-import Dominio.PlanoCurricularCurso;
+import Dominio.DegreeCurricularPlan;
 import Dominio.Sala;
 import Dominio.Section;
 import Dominio.Site;
@@ -128,7 +128,7 @@ public abstract class Cloner {
 	 */
 	public static ICurricularCourse copyInfoCurricularCourse2ExecutionCourse(InfoCurricularCourse infoCurricularCourse) {
 		ICurricularCourse curricularCourse = new CurricularCourse();
-		IPlanoCurricularCurso planoCurricularCurso =
+		IDegreeCurricularPlan planoCurricularCurso =
 			copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
 				infoCurricularCourse.getInfoDegreeCurricularPlan());
 
@@ -306,7 +306,7 @@ public abstract class Cloner {
 	public static ICursoExecucao copyInfoExecutionDegree2ExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
 
 		ICursoExecucao executionDegree = new CursoExecucao();
-		IPlanoCurricularCurso degreeCurricularPlan =
+		IDegreeCurricularPlan degreeCurricularPlan =
 			Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
 				infoExecutionDegree.getInfoDegreeCurricularPlan());
 
@@ -325,10 +325,10 @@ public abstract class Cloner {
 	/**
 	 * Method copyInfoDegreeCurricularPlan2IDegreeCurricularPlan.
 	 * @param infoDegreeCurricularPlan
-	 * @return IPlanoCurricularCurso
+	 * @return IDegreeCurricularPlan
 	 */
-	public static IPlanoCurricularCurso copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-		IPlanoCurricularCurso degreeCurricularPlan = new PlanoCurricularCurso();
+	public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
 
 		ICurso degree =
 			Cloner.copyInfoDegree2IDegree(
@@ -341,7 +341,7 @@ public abstract class Cloner {
 			throw new RuntimeException(e);
 		}
 
-		degreeCurricularPlan.setCurso(degree);
+		degreeCurricularPlan.setDegree(degree);
 
 		return degreeCurricularPlan;
 
@@ -398,12 +398,12 @@ public abstract class Cloner {
 		return infoExecutionYear;
 	}
 
-	public static InfoDegreeCurricularPlan copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(IPlanoCurricularCurso degreeCurricularPlan) {
+	public static InfoDegreeCurricularPlan copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 			new InfoDegreeCurricularPlan();
 
 		InfoDegree infoDegree =
-			Cloner.copyIDegree2InfoDegree(degreeCurricularPlan.getCurso());
+			Cloner.copyIDegree2InfoDegree(degreeCurricularPlan.getDegree());
 		try {
 			BeanUtils.copyProperties(
 				infoDegreeCurricularPlan,

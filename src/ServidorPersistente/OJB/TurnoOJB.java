@@ -299,7 +299,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 			String oqlQuery = "select turnos from " + Turno.class.getName();
 			oqlQuery += " where disciplinaExecucao.sigla = $1"
 				+ " and disciplinaExecucao.executionPeriod.executionYear.year = $2"
-				+ " and disciplinaExecucao.associatedCurricularCourses.degreeCurricularPlan.curso.sigla = $3";
+				+ " and disciplinaExecucao.associatedCurricularCourses.degreeCurricularPlan.degree.sigla = $3";
 			query.create(oqlQuery);
 			query.bind(sigla);
 			query.bind(anoLectivo);

@@ -30,7 +30,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -38,7 +38,7 @@ import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
@@ -48,7 +48,7 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 	IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 	IPersistentExecutionPeriod persistentExecutionPeriod = null;
 	IPersistentExecutionYear persistentExecutionYear = null;
-	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+	IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
 	ICursoPersistente persistentDegree = null;
 	ICursoExecucaoPersistente persistentExecutionDegree = null;
 	IFrequentaPersistente persistentAttend = null;
@@ -79,7 +79,7 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 	persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
 	persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 	persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-	persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
+	persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 	persistentDegree = persistentSupport.getICursoPersistente();
 	persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
 	persistentAttend = persistentSupport.getIFrequentaPersistente();
@@ -141,7 +141,7 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 		ICurso degree = persistentDegree.readBySigla("LEIC");
 		assertNotNull(degree);
 
-		IPlanoCurricularCurso degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+		IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 		assertNotNull(degreeCurricularPlan);
 		ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 		assertNotNull(executionDegree);

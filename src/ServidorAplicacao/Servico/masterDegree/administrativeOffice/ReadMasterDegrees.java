@@ -69,7 +69,7 @@ public class ReadMasterDegrees implements IServico {
 		if (!result.isEmpty()){
 			Iterator iterador = result.iterator();
 			while (iterador.hasNext()) {
-				degreeNames.add(((ICursoExecucao) iterador.next()).getCurricularPlan().getCurso().getNome());
+				degreeNames.add(((ICursoExecucao) iterador.next()).getCurricularPlan().getDegree().getNome());
 			}
 		}
 		return degreeNames;

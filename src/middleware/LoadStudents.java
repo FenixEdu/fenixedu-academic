@@ -9,18 +9,18 @@ import java.util.StringTokenizer;
 import Dominio.Curso;
 import Dominio.ICurso;
 import Dominio.IPessoa;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.Pessoa;
-import Dominio.PlanoCurricularCurso;
+import Dominio.DegreeCurricularPlan;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.StudentCurricularPlanState;
@@ -104,8 +104,8 @@ public class LoadStudents extends DataFileLoader {
 		IPessoaPersistente iPessoaPersistente = sp.getIPessoaPersistente();
 		IPersistentStudent iAlunoPersistente = sp.getIPersistentStudent();
 
-		IPlanoCurricularCursoPersistente curricularDegreePlanDAO =
-			sp.getIPlanoCurricularCursoPersistente();
+		IPersistentDegreeCurricularPlan curricularDegreePlanDAO =
+			sp.getIPersistentDegreeCurricularPlan();
 		IStudentCurricularPlanPersistente studentCurricularPlanDAO =
 			sp.getIStudentCurricularPlanPersistente();
 
@@ -166,14 +166,14 @@ public class LoadStudents extends DataFileLoader {
 		/* FIX : BRONCA TEMOS QUE TER ESTA INFORMAÇÂO*/
 		studentCurricularPlan.setStartDate(new Date());
 
-		IPlanoCurricularCurso planoCurricularCursoTemp =
-			new PlanoCurricularCurso();
+		IDegreeCurricularPlan planoCurricularCursoTemp =
+			new DegreeCurricularPlan();
 		ICurso curso = new Curso();
 		curso.setSigla(MiddlewareUtil.gerarSiglaDeLicenciatura(Integer.parseInt(chaveLicenciatura)));
-		planoCurricularCursoTemp.setCurso(curso);
-		IPlanoCurricularCurso planoCurricularCurso =
+		planoCurricularCursoTemp.setDegree(curso);
+		IDegreeCurricularPlan planoCurricularCurso =
 			(
-				IPlanoCurricularCurso) curricularDegreePlanDAO
+				IDegreeCurricularPlan) curricularDegreePlanDAO
 					.readDomainObjectByCriteria(
 				planoCurricularCursoTemp);
 

@@ -41,7 +41,7 @@ public interface ISuportePersistente {
     
     public IDepartamentoPersistente getIDepartamentoPersistente();
     public IDisciplinaDepartamentoPersistente getIDisciplinaDepartamentoPersistente();
-    public IPlanoCurricularCursoPersistente getIPlanoCurricularCursoPersistente();
+    public IPersistentDegreeCurricularPlan getIPersistentDegreeCurricularPlan();
     public IStudentCurricularPlanPersistente getIStudentCurricularPlanPersistente();
 
 	public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate();

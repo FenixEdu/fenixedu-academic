@@ -28,7 +28,7 @@ public class CurricularCourse implements ICurricularCourse{
     private String name;
     private String code;
     private IDisciplinaDepartamento departmentCourse;
-    private IPlanoCurricularCurso degreeCurricularPlan;
+    private IDegreeCurricularPlan degreeCurricularPlan;
     
     private List associatedExecutionCourses = null;
     
@@ -40,7 +40,7 @@ public class CurricularCourse implements ICurricularCourse{
 
     public CurricularCourse(Double credits, Double theoreticalHours, Double praticalHours,
      Double theoPratHours, Double labHours, Integer curricularYear, Integer semester, String name,
-     String code, IDisciplinaDepartamento departmentCourse, IPlanoCurricularCurso degreeCurricularPlan) {
+     String code, IDisciplinaDepartamento departmentCourse, IDegreeCurricularPlan degreeCurricularPlan) {
         this();
         this.credits = credits;
         this.theoreticalHours = theoreticalHours;
@@ -121,9 +121,9 @@ public class CurricularCourse implements ICurricularCourse{
 
 	/**
 	 * Returns the degreeCurricularPlan.
-	 * @return IPlanoCurricularCurso
+	 * @return IDegreeCurricularPlan
 	 */
-	public IPlanoCurricularCurso getDegreeCurricularPlan() {
+	public IDegreeCurricularPlan getDegreeCurricularPlan() {
 		return degreeCurricularPlan;
 	}
 
@@ -237,7 +237,7 @@ public class CurricularCourse implements ICurricularCourse{
 	 * Sets the degreeCurricularPlan.
 	 * @param degreeCurricularPlan The degreeCurricularPlan to set
 	 */
-	public void setDegreeCurricularPlan(IPlanoCurricularCurso degreeCurricularPlan) {
+	public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
 		this.degreeCurricularPlan = degreeCurricularPlan;
 	}
 

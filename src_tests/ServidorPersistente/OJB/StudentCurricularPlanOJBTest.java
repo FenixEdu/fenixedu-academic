@@ -33,14 +33,14 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.ICurso;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.StudentCurricularPlanState;
@@ -52,7 +52,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 	IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
 	IPersistentStudent persistentStudent = null;
 	ICursoPersistente persistentDegree = null;
-	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+	IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
 	
     public StudentCurricularPlanOJBTest(java.lang.String testName) {
         super(testName);
@@ -78,7 +78,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 			fail("Error");
 		}
 		persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
-		persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
+		persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 		persistentStudent = persistentSupport.getIPersistentStudent();
 		persistentDegree = persistentSupport.getICursoPersistente();
     }
@@ -101,7 +101,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 
 		assertNotNull(studentCurricularPlanTemp);
 		assertTrue(studentCurricularPlanTemp.getStudent().getNumber().intValue() == 600);
-		assertTrue(studentCurricularPlanTemp.getCourseCurricularPlan().getCurso().getSigla().equals("LEIC"));
+		assertTrue(studentCurricularPlanTemp.getCourseCurricularPlan().getDegree().getSigla().equals("LEIC"));
 		assertTrue(studentCurricularPlanTemp.getCurrentState().getState().intValue() == StudentCurricularPlanState.ACTIVE);
         assertTrue(studentCurricularPlanTemp.getStartDate().toString().equals("2002-12-21"));
     }
@@ -127,7 +127,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
         IStudentCurricularPlan studentCurricularPlan = null;
         IStudent studentTemp = null;
         ICurso degree = null;
-        IPlanoCurricularCurso degreeCurricularPlan;
+        IDegreeCurricularPlan degreeCurricularPlan;
         
         Calendar data = Calendar.getInstance();
         data.set(2002, Calendar.NOVEMBER, 17);
@@ -166,7 +166,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 		IStudentCurricularPlan studentCurricularPlan = null;
 		IStudent studentTemp = null;
 		ICurso degree = null;
-		IPlanoCurricularCurso degreeCurricularPlan;
+		IDegreeCurricularPlan degreeCurricularPlan;
         
 		Calendar data = Calendar.getInstance();
 		data.set(2002, Calendar.NOVEMBER, 17);
@@ -220,7 +220,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 		IStudentCurricularPlan studentCurricularPlan = null;
 		IStudent studentTemp = null;
 		ICurso degree = null;
-		IPlanoCurricularCurso degreeCurricularPlan;
+		IDegreeCurricularPlan degreeCurricularPlan;
         
 		Calendar data = Calendar.getInstance();
 		data.set(2002, Calendar.NOVEMBER, 17);

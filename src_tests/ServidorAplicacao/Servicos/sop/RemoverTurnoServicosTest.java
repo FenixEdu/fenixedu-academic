@@ -21,7 +21,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.Turma;
@@ -33,7 +33,7 @@ import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.ITurnoPersistente;
@@ -102,8 +102,8 @@ public class RemoverTurnoServicosTest extends TestCaseDeleteAndEditServices {
 			ICursoPersistente icp = sp.getICursoPersistente();
 			ICurso ic = icp.readBySigla("LEIC");
 
-			IPlanoCurricularCursoPersistente ipccp = sp.getIPlanoCurricularCursoPersistente();
-			IPlanoCurricularCurso ipcc = ipccp.readByNameAndDegree("plano1", ic);
+			IPersistentDegreeCurricularPlan ipccp = sp.getIPersistentDegreeCurricularPlan();
+			IDegreeCurricularPlan ipcc = ipccp.readByNameAndDegree("plano1", ic);
 
 			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
 			IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");

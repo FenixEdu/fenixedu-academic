@@ -27,7 +27,7 @@ import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionYear;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudent;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
@@ -38,7 +38,7 @@ import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -50,7 +50,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	IPersistentExecutionYear persistentExecutionYear = null; 
 	ICursoPersistente persistentDegree = null;
 	ICursoExecucaoPersistente persistentExecutionDegree = null;
-	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+	IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
 	IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 	ITurnoPersistente persistentShift = null;
 	IPersistentStudent persistentStudent = null;
@@ -81,7 +81,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 	persistentDegree = persistentSupport.getICursoPersistente();
 	persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
-	persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
+	persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 	persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
 	persistentShift = persistentSupport.getITurnoPersistente();
 	persistentStudent = persistentSupport.getIPersistentStudent();
@@ -104,7 +104,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  ICurso degree = persistentDegree.readBySigla("LEIC");
 	  assertNotNull(degree);
       
-	  IPlanoCurricularCurso degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+	  IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 	  assertNotNull(degreeCurricularPlan);
       
 	  ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
@@ -158,7 +158,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  ICurso degree = persistentDegree.readBySigla("LEIC");
 	  assertNotNull(degree);
       
-	  IPlanoCurricularCurso degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+	  IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 	  assertNotNull(degreeCurricularPlan);
       
 	  ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
@@ -208,7 +208,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  ICurso degree = persistentDegree.readBySigla("LEIC");
 	  assertNotNull(degree);
       
-	  IPlanoCurricularCurso degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+	  IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 	  assertNotNull(degreeCurricularPlan);
       
 	  ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
@@ -249,7 +249,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  ICurso degree = persistentDegree.readBySigla("LEIC");
 	  assertNotNull(degree);
       
-	  IPlanoCurricularCurso degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+	  IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 	  assertNotNull(degreeCurricularPlan);
       
 	  ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
@@ -299,7 +299,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  ICurso degree = persistentDegree.readBySigla("LEIC");
 	  assertNotNull(degree);
       
-	  IPlanoCurricularCurso degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+	  IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 	  assertNotNull(degreeCurricularPlan);
       
 	  ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
@@ -356,7 +356,7 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 	  ICurso degree = persistentDegree.readBySigla("LEIC");
 	  assertNotNull(degree);
       
-	  IPlanoCurricularCurso degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+	  IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 	  assertNotNull(degreeCurricularPlan);
       
 	  ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);

@@ -19,7 +19,7 @@ import org.odmg.QueryException;
 import Dominio.CursoExecucao;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.ITurma;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -137,7 +137,7 @@ public class CursoExecucaoOJB
 	 * @see ServidorPersistente.ICursoExecucaoPersistente#readByDegreeAndExecutionYear(Dominio.ICurso, Dominio.IExecutionYear)
 	 */
 	public ICursoExecucao readByDegreeCurricularPlanAndExecutionYear(
-		IPlanoCurricularCurso degreeCurricularPlan,
+		IDegreeCurricularPlan degreeCurricularPlan,
 		IExecutionYear executionYear)
 		throws ExcepcaoPersistencia {
 		try {
@@ -146,12 +146,12 @@ public class CursoExecucaoOJB
 				"select all from " + CursoExecucao.class.getName();
 			oqlQuery += " where executionYear.year = $1"
 				+ " and curricularPlan.name = $2 "
-				+ " and curricularPlan.curso.sigla = $3";
+				+ " and curricularPlan.degree.sigla = $3";
 			query.create(oqlQuery);
 
 			query.bind(executionYear.getYear());
 			query.bind(degreeCurricularPlan.getName());
-			query.bind(degreeCurricularPlan.getCurso().getSigla());
+			query.bind(degreeCurricularPlan.getDegree().getSigla());
 
 			List result = (List) query.execute();
 			lockRead(result);
@@ -178,7 +178,7 @@ public class CursoExecucaoOJB
 				"select all from " + CursoExecucao.class.getName();
 			oqlQuery += " where executionYear.year = $1"
 				+ " and curricularPlan.name = $2 "
-				+ " and curricularPlan.curso.sigla = $3";
+				+ " and curricularPlan.degree.sigla = $3";
 			query.create(oqlQuery);
 
 			query.bind(executionYear.getYear());
@@ -202,9 +202,9 @@ public class CursoExecucaoOJB
 			String oqlQuery =
 				"select all from " + CursoExecucao.class.getName();
 			oqlQuery += " where executionYear.year = $1"
-			+ " and ( curricularPlan.curso.tipoCurso = $2"
-			+ " or curricularPlan.curso.tipoCurso = $3"
-			+ " or curricularPlan.curso.tipoCurso = $4 )";
+			+ " and ( curricularPlan.degree.tipoCurso = $2"
+			+ " or curricularPlan.degree.tipoCurso = $3"
+			+ " or curricularPlan.degree.tipoCurso = $4 )";
 			query.create(oqlQuery);
 
 			query.bind(executionYear);
@@ -225,7 +225,7 @@ public class CursoExecucaoOJB
 		try {
 			String oqlQuery = "select all from " + CursoExecucao.class.getName()
 							+ " where executionYear.year = $1"
-							+ " and curricularPlan.curso.nome = $2";
+							+ " and curricularPlan.degree.nome = $2";
 			query.create(oqlQuery);
 
 			query.bind(executionYear.getYear());

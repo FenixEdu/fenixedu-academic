@@ -247,7 +247,7 @@ public class TurnoAulaOJB
 					+ " and turno.disciplinaExecucao.sigla = $4";
 
 //					+ " and turno.disciplinaExecucao.licenciaturaExecucao.anoLectivo = $2"
-//					+ " and turno.disciplinaExecucao.licenciaturaExecucao.curso.sigla = $3"
+//					+ " and turno.disciplinaExecucao.licenciaturaExecucao.degree.sigla = $3"
 //					+ " and turno.disciplinaExecucao.sigla = $4";
 
 			query.create(oqlQuery);

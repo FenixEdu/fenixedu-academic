@@ -26,7 +26,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IFrequenta;
 import Dominio.IPessoa;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITurma;
@@ -34,7 +34,7 @@ import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
 import Dominio.Pessoa;
-import Dominio.PlanoCurricularCurso;
+import Dominio.DegreeCurricularPlan;
 import Dominio.Privilegio;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
@@ -53,7 +53,7 @@ import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaTurnoPersistente;
@@ -82,7 +82,7 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
   protected ITurnoPersistente _turnoPersistente = null;
   protected ITurnoAlunoPersistente _turnoAlunoPersistente = null;
   protected ITurmaTurnoPersistente _turmaTurnoPersistente = null;
-  protected IPlanoCurricularCursoPersistente _persistentDegreeCurricularPlan =	null;
+  protected IPersistentDegreeCurricularPlan _persistentDegreeCurricularPlan =	null;
   protected IStudentCurricularPlanPersistente _persistentStudentCurricularPlan = null;
   protected IDisciplinaDepartamentoPersistente _persistentDepartmentCourse = null;
   protected IDepartamentoPersistente _persistentDepartment = null;
@@ -116,7 +116,7 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 
 	ICurso _curso1 = new Curso("LEIC", "Informatica", new TipoCurso(TipoCurso.LICENCIATURA));
 
-	IPlanoCurricularCurso degreeCurricularPlan = new PlanoCurricularCurso("plano1", _curso1);
+	IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan("plano1", _curso1);
 	
 	IExecutionYear executionYear = new ExecutionYear();
 	executionYear.setYear("2002/03");
@@ -297,10 +297,10 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 	Calendar someDate = Calendar.getInstance();
 	someDate.set(2002, Calendar.NOVEMBER, 17);
 
-	IPlanoCurricularCurso pCC = new PlanoCurricularCurso();
+	IDegreeCurricularPlan pCC = new DegreeCurricularPlan();
 	pCC.setName("nome");
 
-	pCC.setCurso(_cursoExecucao1.getCurricularPlan().getCurso());
+	pCC.setDegree(_cursoExecucao1.getCurricularPlan().getDegree());
 
 	IStudentCurricularPlan sCP = new StudentCurricularPlan();
 	sCP.setStudent(student);
@@ -418,7 +418,7 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 	_turnoAlunoPersistente =_suportePersistente.getITurnoAlunoPersistente();
 	_turmaTurnoPersistente =_suportePersistente.getITurmaTurnoPersistente();
 	_persistentDepartmentCourse = _suportePersistente.getIDisciplinaDepartamentoPersistente();
-	_persistentDegreeCurricularPlan = _suportePersistente.getIPlanoCurricularCursoPersistente();
+	_persistentDegreeCurricularPlan = _suportePersistente.getIPersistentDegreeCurricularPlan();
 	_persistentDepartment = _suportePersistente.getIDepartamentoPersistente();
 	_persistentStudentCurricularPlan = _suportePersistente.getIStudentCurricularPlanPersistente();
   }
@@ -427,7 +427,7 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
     try {
       _suportePersistente.iniciarTransaccao();
 	  _persistentStudentCurricularPlan.deleteAll();
-	  _persistentDegreeCurricularPlan.apagarTodosOsPlanosCurriculares();
+	  _persistentDegreeCurricularPlan.deleteAll();
 	  _turmaTurnoPersistente.deleteAll();      
 	  _turnoAlunoPersistente.deleteAll();	  
 	  _frequentaPersistente.deleteAll();

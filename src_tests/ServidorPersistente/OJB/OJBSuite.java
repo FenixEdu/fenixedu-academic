@@ -50,7 +50,7 @@ public class OJBSuite extends TestCase {
 		suite.addTest(ServidorPersistente.OJB.MasterDegreeCandidateOJBTest.suite());
 
 		suite.addTest(ServidorPersistente.OJB.PessoaOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.PlanoCurricularCursoOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.DegreeCurricularPlanOJBTest.suite());
 		
 		suite.addTest(ServidorPersistente.OJB.SalaOJBTest.suite());
 		suite.addTest(ServidorPersistente.OJB.StudentCurricularPlanOJBTest.suite());

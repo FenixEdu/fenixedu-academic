@@ -62,7 +62,7 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
             String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
 		            + " where candidateNumber = $1"
 		            + " and executionDegree.executionYear.year = $2"
-					+ " and executionDegree.curricularPlan.curso.sigla = $3" 
+					+ " and executionDegree.curricularPlan.degree.sigla = $3" 
 					+ " and specialization = $4" ;
 
             query.create(oqlQuery);
@@ -123,7 +123,7 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 			int number = 0;
 			String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
 							+ " where executionDegree.executionYear.year = $1"
-							+ " and executionDegree.curricularPlan.curso.nome = $2"
+							+ " and executionDegree.curricularPlan.degree.nome = $2"
 							+ " order by candidateNumber desc";
 			query.create(oqlQuery);
 			query.bind(executionYear);
@@ -159,14 +159,14 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 					+ " and person.tipoDocumentoIdentificacao = $2"
 					+ " and executionDegree.executionYear.year = $3" 
 					+ " and executionDegree.curricularPlan.name = $4" 
-					+ " and executionDegree.curricularPlan.curso.nome = $5" ;
+					+ " and executionDegree.curricularPlan.degree.nome = $5" ;
 	
 			query.create(oqlQuery);
 			query.bind(idDocumentNumber);
 			query.bind(idDocumentType);
 			query.bind(executionDegree.getExecutionYear().getYear());
 			query.bind(executionDegree.getCurricularPlan().getName());
-			query.bind(executionDegree.getCurricularPlan().getCurso().getNome());
+			query.bind(executionDegree.getCurricularPlan().getDegree().getNome());
 	
 			List result = (List) query.execute();
 	

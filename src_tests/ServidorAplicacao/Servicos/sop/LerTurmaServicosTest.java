@@ -24,14 +24,14 @@ import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -116,8 +116,8 @@ public class LerTurmaServicosTest extends TestCaseReadServices {
 			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
 	
-			IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = sp.getIPlanoCurricularCursoPersistente();
-			IPlanoCurricularCurso degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
+			IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 			assertNotNull(degreeCurricularPlan);
 	
 			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();

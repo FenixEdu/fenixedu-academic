@@ -9,12 +9,12 @@ import Dominio.CurricularCourse;
 import Dominio.Curso;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
-import Dominio.IPlanoCurricularCurso;
-import Dominio.PlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
+import Dominio.DegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class LoadCourses extends DataFileLoader {
@@ -93,9 +93,9 @@ public class LoadCourses extends DataFileLoader {
 		IPersistentCurricularCourse iDisciplinaCurricularPersistente =
 			sp
 				.getIPersistentCurricularCourse();
-		IPlanoCurricularCursoPersistente curricularDegreePlanDAO =
+		IPersistentDegreeCurricularPlan curricularDegreePlanDAO =
 			sp
-				.getIPlanoCurricularCursoPersistente();
+				.getIPersistentDegreeCurricularPlan();
 		//        IDisciplinaExecucaoPersistente iDisciplinaExecucaoPersistente = SuportePersistente.getInstance().iDisciplinaExecucaoPersistente();
 
 		// Criar a disciplina curricular.
@@ -118,17 +118,17 @@ public class LoadCourses extends DataFileLoader {
 			MiddlewareUtil.gerarSiglaDeLicenciatura(
 				Integer.parseInt(chaveLicenciatura));
 
-		IPlanoCurricularCurso planoCurricularCursoTemp =
-			new PlanoCurricularCurso();
+		IDegreeCurricularPlan planoCurricularCursoTemp =
+			new DegreeCurricularPlan();
 		ICurso curso = new Curso();
 		curso.setSigla(degreeCode);
-		planoCurricularCursoTemp.setCurso(curso);
+		planoCurricularCursoTemp.setDegree(curso);
 		
 		sp.iniciarTransaccao();
 		
-		IPlanoCurricularCurso planoCurricularCurso =
+		IDegreeCurricularPlan planoCurricularCurso =
 			(
-				IPlanoCurricularCurso) curricularDegreePlanDAO
+				IDegreeCurricularPlan) curricularDegreePlanDAO
 					.readDomainObjectByCriteria(
 				planoCurricularCursoTemp);
 

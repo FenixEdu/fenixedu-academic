@@ -45,7 +45,7 @@ import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -233,8 +233,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IDisciplinaDepartamentoPersistente getIDisciplinaDepartamentoPersistente() {
 		return new DisciplinaDepartamentoOJB();
 	}
-	public IPlanoCurricularCursoPersistente getIPlanoCurricularCursoPersistente() {
-		return new PlanoCurricularCursoOJB();
+	public IPersistentDegreeCurricularPlan getIPersistentDegreeCurricularPlan() {
+		return new DegreeCurricularPlanOJB();
 	}
 	public IStudentCurricularPlanPersistente getIStudentCurricularPlanPersistente() {
 		return new StudentCurricularPlanOJB();
@@ -308,10 +308,6 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	 */
 	public IPersistentTeacher getIPersistentTeacher() {
 		return new TeacherOJB();
-	}
-
-	public IPersistentExam getIPersistentExam() {
-		return new ExamOJB();
 	}
 
 }

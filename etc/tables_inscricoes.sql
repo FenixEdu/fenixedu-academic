@@ -16,14 +16,16 @@ create table DEGREE (
 # Table structure for degree_curricular_plan
 #----------------------------------
 DROP TABLE IF EXISTS DEGREE_CURRICULAR_PLAN;
-CREATE TABLE DEGREE_CURRICULAR_PLAN (
+CREATE TABLE IF NOT EXISTS DEGREE_CURRICULAR_PLAN (
   ID_INTERNAL int(11) NOT NULL auto_increment,
-  NAME varchar(10) NOT NULL default '',
-  KEY_DEGREE int(11) NOT NULL default '0',
-  PRIMARY KEY  (ID_INTERNAL),
+  NAME varchar(10) NOT NULL DEFAULT '' ,
+  KEY_DEGREE int(11) NOT NULL DEFAULT '0' ,
+  STATE int(11) DEFAULT '1' ,
+  INITIAL_DATE date DEFAULT '0000-00-00' ,
+  END_DATE date DEFAULT '0000-00-00' ,
+  PRIMARY KEY (ID_INTERNAL),
   UNIQUE KEY U1 (NAME,KEY_DEGREE)
 ) TYPE=InnoDB;
-   
    
 #------------------------------------------
 # Table structure for STUDENT_CURRICULAR_PLAN

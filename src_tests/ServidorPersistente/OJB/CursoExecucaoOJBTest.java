@@ -22,12 +22,12 @@ import Dominio.CursoExecucao;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
@@ -40,7 +40,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 	IPersistentExecutionYear persistentExecutionYear = null;
 	ICursoExecucaoPersistente persistentExecutionDegree = null;
 	ICursoPersistente persistentDegree = null;
-	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+	IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
 
 	public CursoExecucaoOJBTest(java.lang.String testName) {
 		super(testName);
@@ -69,7 +69,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 		persistentExecutionYear =
 			persistentSupport.getIPersistentExecutionYear();
 		persistentDegreeCurricularPlan =
-			persistentSupport.getIPlanoCurricularCursoPersistente();
+			persistentSupport.getIPersistentDegreeCurricularPlan();
 		persistentDegree = persistentSupport.getICursoPersistente();
 	}
 
@@ -106,7 +106,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			ICurso degree = persistentDegree.readBySigla("LEEC");
 			assertNotNull(degree);
-			IPlanoCurricularCurso degreeCurricularPlan =
+			IDegreeCurricularPlan degreeCurricularPlan =
 				persistentDegreeCurricularPlan.readByNameAndDegree(
 					"plano2",
 					degree);
@@ -134,7 +134,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 			ICurso degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
 
-			IPlanoCurricularCurso degreeCurricularPlan =
+			IDegreeCurricularPlan degreeCurricularPlan =
 				persistentDegreeCurricularPlan.readByNameAndDegree(
 					"plano1",
 					degree);
@@ -165,7 +165,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 
 	/** Test of write method, of class ServidorPersistente.OJB.ItemOJB. */
 	public void testWriteExistingChangedObject() {
-		IPlanoCurricularCurso degreeCurricularPlan1 = null;
+		IDegreeCurricularPlan degreeCurricularPlan1 = null;
 		IExecutionYear executionYear1 = null;
 		IExecutionYear executionYear2 = null;
 		ICursoExecucao executionDegree = null;
@@ -215,7 +215,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 
 	/** Test of delete method, of class ServidorPersistente.OJB.CursoExecucaoOJB. */
 	public void testDeleteCursoExecucao() {
-		IPlanoCurricularCurso degreeCurricularPlan = null;
+		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IExecutionYear executionYear = null;
 		ICursoExecucao executionDegree = null;
 

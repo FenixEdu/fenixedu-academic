@@ -160,7 +160,7 @@ public class ConversorSOP {
 						+ CurricularCourse.class.getName()
 						+ " where name = $1 and "
 						+ " curricularYear = $2 and "
-						+ " degreeCurricularPlan.curso.sigla = $3 ";
+						+ " degreeCurricularPlan.degree.sigla = $3 ";
 				query.create(strQuery);
 				query.bind(courseName);
 				query.bind(curricularYear);
@@ -524,7 +524,7 @@ public class ConversorSOP {
 								curricularCourse.getName().toUpperCase()
 									+ curricularCourse
 										.getDegreeCurricularPlan()
-										.getCurso()
+										.getDegree()
 										.getSigla());
 						if (load != null) {
 
@@ -1032,7 +1032,7 @@ public class ConversorSOP {
 				ICursoExecucao executionDegree =
 					(ICursoExecucao) iterator.next();
 				licenciaturasExecucao.put(
-					executionDegree.getCurricularPlan().getCurso().getSigla(),
+					executionDegree.getCurricularPlan().getDegree().getSigla(),
 					executionDegree);
 			}
 			sp.confirmarTransaccao();

@@ -95,65 +95,40 @@
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.PlanoCurricularCurso -->
+<!-- Definitions for Dominio.DegreeCurricularPlan -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.PlanoCurricularCurso" table="DEGREE_CURRICULAR_PLAN">
-	<field-descriptor id="1"
-		name="codigoInterno"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor id="2"
-		name="name"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor id="3"
-		name="chaveCurso"
-		column="KEY_DEGREE"
-		jdbc-type="INTEGER"
-	/>
-	<reference-descriptor
-			name="curso"
-			class-ref="Dominio.Curso"
-			proxy="true">
-		<foreignkey field-id-ref="3"/>
-	</reference-descriptor>
-</class-descriptor>
-<!-- SUBSTITUIR O MAPING ACIMA POR ESTE NOVO
 <class-descriptor class="Dominio.DegreeCurricularPlan" table="DEGREE_CURRICULAR_PLAN">
-	<field-descriptor id="1"
+	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"
 		autoincrement="true"
 	/>
-	<field-descriptor id="2"
+	<field-descriptor
 		name="name"
 		column="NAME"
 		jdbc-type="VARCHAR"
 	/>
-	<field-descriptor id="3"
+	<field-descriptor
 		name="state"
 		column="STATE"
 		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaDegreeState2SqlDegreeStateFieldConversion"
 	/>
-	<field-descriptor id="4"
+	<field-descriptor
 		name="initialDate"
 		column="INITIAL_DATE"
 		jdbc-type="DATE"
 		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
 	/>
-	<field-descriptor id="5"
+	<field-descriptor
 		name="endDate"
 		column="END_DATE"
 		jdbc-type="DATE"
 		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
 	/>
-	<field-descriptor id="6"
+	<field-descriptor
 		name="keyDegree"
 		column="KEY_DEGREE"
 		jdbc-type="INTEGER"
@@ -162,10 +137,9 @@
 			name="degree"
 			class-ref="Dominio.Curso"
 			proxy="true">
-		<foreignkey field-id-ref="6"/>
+		<foreignkey field-ref="keyDegree"/>
 	</reference-descriptor>
 </class-descriptor>
--->
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CurricularCourse -->
@@ -243,7 +217,7 @@
 	</reference-descriptor> 
 	<reference-descriptor
 			name="degreeCurricularPlan"
-			class-ref="Dominio.PlanoCurricularCurso"
+			class-ref="Dominio.DegreeCurricularPlan"
 			proxy="true">
 		<foreignkey field-id-ref="3"/>
 	</reference-descriptor>
@@ -323,14 +297,14 @@
 <!-- MUDANCAS DE NOMES
 	<reference-descriptor
 			name="degreeCurricularPlan"
-			class-ref="Dominio.PlanoCurricularCurso"
+			class-ref="Dominio.DegreeCurricularPlan"
 			proxy="false">
 		<foreignkey field-id-ref="3"/>
 	</reference-descriptor>
 -->
 	<reference-descriptor
 			name="courseCurricularPlan"
-			class-ref="Dominio.PlanoCurricularCurso"
+			class-ref="Dominio.DegreeCurricularPlan"
 			proxy="false">
 		<foreignkey field-id-ref="3"/>
 	</reference-descriptor>

@@ -18,6 +18,6 @@ public interface ICursoExecucao extends Serializable{
   IExecutionYear getExecutionYear();
   void setExecutionYear(IExecutionYear newExecutionYear);
   
-  IPlanoCurricularCurso getCurricularPlan();
-  void setCurricularPlan (IPlanoCurricularCurso curricularPlan);
+  IDegreeCurricularPlan getCurricularPlan();
+  void setCurricularPlan (IDegreeCurricularPlan curricularPlan);
 }

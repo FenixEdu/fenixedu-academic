@@ -18,12 +18,12 @@ import Util.StudentCurricularPlanState;
 
 public interface IStudentCurricularPlan {
   public IStudent getStudent();
-  public IPlanoCurricularCurso getCourseCurricularPlan();
+  public IDegreeCurricularPlan getCourseCurricularPlan();
   public StudentCurricularPlanState getCurrentState();
   public Date getStartDate();
 
   public void setStudent(IStudent student);
-  public void setCourseCurricularPlan(IPlanoCurricularCurso courseCurricularPlan);
+  public void setCourseCurricularPlan(IDegreeCurricularPlan courseCurricularPlan);
   public void setCurrentState(StudentCurricularPlanState state);
   public void setStartDate(Date startDate);
 }

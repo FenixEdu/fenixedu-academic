@@ -70,7 +70,7 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			oqlQuery += " and turma.executionDegree.executionYear.year = $4 ";
 			oqlQuery += " and turma.executionDegree.curricularPlan.name = $5 ";
 			oqlQuery
-				+= " and turma.executionDegree.curricularPlan.curso.sigla = $6 ";
+				+= " and turma.executionDegree.curricularPlan.degree.sigla = $6 ";
 
 			query.create(oqlQuery);
 			query.bind(turma.getNome());
@@ -83,7 +83,7 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 				turma
 					.getExecutionDegree()
 					.getCurricularPlan()
-					.getCurso()
+					.getDegree()
 					.getSigla());
 			List result = (List) query.execute();
 			Iterator iterador = result.iterator();
@@ -140,7 +140,7 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 				+ " and anoCurricular = $3"
 				+ " and executionDegree.executionYear.year = $4"
 				+ " and executionDegree.curricularPlan.name = $5"
-				+ " and executionDegree.curricularPlan.curso.sigla = $6";
+				+ " and executionDegree.curricularPlan.degree.sigla = $6";
 
 			query.create(oqlQuery);
 
@@ -152,7 +152,7 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			query.bind(executionDegree.getExecutionYear().getYear());
 			query.bind(executionDegree.getCurricularPlan().getName());
 			query.bind(
-				executionDegree.getCurricularPlan().getCurso().getSigla());
+				executionDegree.getCurricularPlan().getDegree().getSigla());
 
 			List result = (List) query.execute();
 			lockRead(result);
@@ -177,14 +177,14 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			//					+ " and nome = $3"
 			//					+ " and executionDegree.executionYear.year = $4"
 			//					+ " and executionDegree.curricularPlan.name = $5"
-			//					+ " and executionDegree.curricularPlan.curso.sigla = $6";
+			//					+ " and executionDegree.curricularPlan.degree.sigla = $6";
 
 			oqlQuery += " where nome = $1 ";
 			oqlQuery += " and executionPeriod.name = $2 ";
 			oqlQuery += " and executionPeriod.executionYear.year = $3 ";
 			oqlQuery += " and executionDegree.executionYear.year = $4 ";
 			oqlQuery += " and executionDegree.curricularPlan.name = $5 ";
-			oqlQuery += " and executionDegree.curricularPlan.curso.sigla = $6 ";
+			oqlQuery += " and executionDegree.curricularPlan.degree.sigla = $6 ";
 			query.create(oqlQuery);
 			query.bind(className);
 			query.bind(executionPeriod.getName());
@@ -193,7 +193,7 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			query.bind(executionDegree.getExecutionYear().getYear());
 			query.bind(executionDegree.getCurricularPlan().getName());
 			query.bind(
-				executionDegree.getCurricularPlan().getCurso().getSigla());
+				executionDegree.getCurricularPlan().getDegree().getSigla());
 
 			List result = (List) query.execute();
 			lockRead(result);
@@ -210,8 +210,8 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 		throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select turmas from " + Turma.class.getName();
-			oqlQuery += " where executionDegree.curricularPlan.curso.nome = $1"
-				+ " and executionDegree.curricularPlan.curso.sigla = $2";
+			oqlQuery += " where executionDegree.curricularPlan.degree.nome = $1"
+				+ " and executionDegree.curricularPlan.degree.sigla = $2";
 
 			query.create(oqlQuery);
 			query.bind(name);
@@ -256,14 +256,14 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			String oqlQuery = "select turmas from " + Turma.class.getName();
 			oqlQuery += " where executionDegree.executionYear.year = $1"
 				+ " and executionDegree.curricularPlan.name = $2"
-				+ " and executionDegree.curricularPlan.curso.sigla = $3";
+				+ " and executionDegree.curricularPlan.degree.sigla = $3";
 
 			query.create(oqlQuery);
 
 			query.bind(executionDegree.getExecutionYear().getYear());
 			query.bind(executionDegree.getCurricularPlan().getName());
 			query.bind(
-				executionDegree.getCurricularPlan().getCurso().getSigla());
+				executionDegree.getCurricularPlan().getDegree().getSigla());
 
 			List result = (List) query.execute();
 			lockRead(result);

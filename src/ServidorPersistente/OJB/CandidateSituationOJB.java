@@ -38,14 +38,14 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
             
             String oqlQuery = "select all from " + CandidateSituation.class.getName()
 				            + " where masterDegreeCandidate.candidateNumber = $1"
-				            + " and masterDegreeCandidate.executionDegree.curricularPlan.curso.sigla = $2"
+				            + " and masterDegreeCandidate.executionDegree.curricularPlan.degree.sigla = $2"
 				            + " and masterDegreeCandidate.executionDegree.executionYear.year = $3"
 							+ " and validation = $4"
 							+ " and masterDegreeCandidate.specialization = $5";
             
             query.create(oqlQuery);
 			query.bind(masterDegreeCandidate.getCandidateNumber());
-			query.bind(masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getCurso().getSigla());
+			query.bind(masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
 			query.bind(masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear());
 			query.bind(new Integer(CandidateSituationValidation.ACTIVE));
 			query.bind(masterDegreeCandidate.getSpecialization().getSpecialization());
@@ -64,13 +64,13 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
 		try {
 			String oqlQuery = "select all from " + CandidateSituation.class.getName()
 							+ " where masterDegreeCandidate.candidateNumber = $1"
-							+ " and masterDegreeCandidate.executionDegree.curricularPlan.curso.sigla = $2"
+							+ " and masterDegreeCandidate.executionDegree.curricularPlan.degree.sigla = $2"
 							+ " and masterDegreeCandidate.executionDegree.executionYear.year = $3"
 							+ " and masterDegreeCandidate.specialization = $4";
             
 			query.create(oqlQuery);
 			query.bind(masterDegreeCandidate.getCandidateNumber());
-			query.bind(masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getCurso().getSigla());
+			query.bind(masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
 			query.bind(masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear());
 			query.bind(masterDegreeCandidate.getSpecialization().getSpecialization());
             

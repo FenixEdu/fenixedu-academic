@@ -48,9 +48,9 @@ import Dominio.IDepartamento;
 import Dominio.IDisciplinaDepartamento;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IPessoa;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.Pessoa;
-import Dominio.PlanoCurricularCurso;
+import Dominio.DegreeCurricularPlan;
 import Dominio.Privilegio;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
@@ -62,7 +62,7 @@ import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
@@ -91,7 +91,7 @@ public class SessionUtilsTest extends TestCase {
 	protected ICursoPersistente _degreeDAO;
 	protected IDisciplinaExecucaoPersistente _executionCourseDAO;
 	protected IPersistentCurricularCourse _curricularCourseDAO;
-	protected IPlanoCurricularCursoPersistente _degreeCurriculumDAO;
+	protected IPersistentDegreeCurricularPlan _degreeCurriculumDAO;
 
 	protected ICursoExecucao _executionDegree;
 	protected ICurso _degree;
@@ -147,10 +147,10 @@ public class SessionUtilsTest extends TestCase {
 		_executionDegree =
 			new CursoExecucao(
 				new ExecutionYear(_schoolYear),
-				new PlanoCurricularCurso("plano1", _degree));
+				new DegreeCurricularPlan("plano1", _degree));
 
-		IPlanoCurricularCurso degreeCurriculum =
-			new PlanoCurricularCurso("Plano 1", _degree);
+		IDegreeCurricularPlan degreeCurriculum =
+			new DegreeCurricularPlan("Plano 1", _degree);
 
 		IDisciplinaExecucao _executionCourse = null;
 		ICurricularCourse _curricularCourse = null;
@@ -256,7 +256,7 @@ public class SessionUtilsTest extends TestCase {
 		_degreeDAO = _sp.getICursoPersistente();
 		_executionCourseDAO = _sp.getIDisciplinaExecucaoPersistente();
 		_curricularCourseDAO = _sp.getIPersistentCurricularCourse();
-		_degreeCurriculumDAO = _sp.getIPlanoCurricularCursoPersistente();
+		_degreeCurriculumDAO = _sp.getIPersistentDegreeCurricularPlan();
 		_personDAO = _sp.getIPessoaPersistente();
 		cleanData();
 	}
@@ -269,7 +269,7 @@ public class SessionUtilsTest extends TestCase {
 			_degreeDAO.deleteAll();
 			_executionCourseDAO.apagarTodasAsDisciplinasExecucao();
 			_curricularCourseDAO.deleteAllCurricularCourse();
-			_degreeCurriculumDAO.apagarTodosOsPlanosCurriculares();
+			_degreeCurriculumDAO.deleteAll();
 			_personDAO.apagarTodasAsPessoas();
 			_sp.getIDepartamentoPersistente().apagarTodosOsDepartamentos();
 			_sp

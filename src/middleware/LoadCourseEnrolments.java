@@ -17,12 +17,12 @@ import Dominio.ICurso;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IFrequenta;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
-import Dominio.PlanoCurricularCurso;
+import Dominio.DegreeCurricularPlan;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import Dominio.Turno;
@@ -227,7 +227,7 @@ public class LoadCourseEnrolments extends DataFileLoader {
 							"2002/2003",
 							curricularCourse
 								.getDegreeCurricularPlan()
-								.getCurso()
+								.getDegree()
 								.getSigla());
 					if (executionCourse != null) {
 						attendCriteria.setAluno(
@@ -326,11 +326,11 @@ public class LoadCourseEnrolments extends DataFileLoader {
 			new Integer(anoCurricular.trim()));
 		disciplinaCurricularTemp.setSemester(new Integer(semestre.trim()));
 		disciplinaCurricularTemp.setCode(codigoDisciplinaCurricular.trim());
-		IPlanoCurricularCurso planoCurricularCursoTemp =
-			new PlanoCurricularCurso();
+		IDegreeCurricularPlan planoCurricularCursoTemp =
+			new DegreeCurricularPlan();
 		ICurso curso = new Curso();
 		curso.setSigla(chaveLicenciatura.trim());
-		planoCurricularCursoTemp.setCurso(curso);
+		planoCurricularCursoTemp.setDegree(curso);
 		disciplinaCurricularTemp.setDegreeCurricularPlan(
 			planoCurricularCursoTemp);
 		sp.iniciarTransaccao();

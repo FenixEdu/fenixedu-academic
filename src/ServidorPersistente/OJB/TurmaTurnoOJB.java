@@ -41,7 +41,7 @@ public class TurmaTurnoOJB
 				+ " and turma.executionPeriod.executionYear.year = $3"
 				+ " and turma.executionDegree.executionYear.year = $4"
 				+ " and turma.executionDegree.curricularPlan.name = $5"
-				+ " and turma.executionDegree.curricularPlan.curso.nome = $6"
+				+ " and turma.executionDegree.curricularPlan.degree.nome = $6"
 				// Unique from Shift
 				+ " and turno.nome = $7"
 				+ " and turno.disciplinaExecucao.sigla = $8"
@@ -54,7 +54,7 @@ public class TurmaTurnoOJB
 			query.bind(turma.getExecutionPeriod().getExecutionYear().getYear());
 			query.bind(turma.getExecutionDegree().getExecutionYear().getYear());
 			query.bind(turma.getExecutionDegree().getCurricularPlan().getName());
-			query.bind(turma.getExecutionDegree().getCurricularPlan().getCurso().getNome());
+			query.bind(turma.getExecutionDegree().getCurricularPlan().getDegree().getNome());
 			
 			query.bind(turno.getNome());
 			query.bind(turno.getDisciplinaExecucao().getSigla());
@@ -121,7 +121,7 @@ public class TurmaTurnoOJB
 				+ " and turma.executionPeriod.executionYear.year = $3"
 				+ " and turma.executionDegree.executionYear.year = $4"
 				+ " and turma.executionDegree.curricularPlan.name = $5"
-				+ " and turma.executionDegree.curricularPlan.curso.sigla = $6 ";
+				+ " and turma.executionDegree.curricularPlan.degree.sigla = $6 ";
 			query.create(oqlQuery);
 
 			query.bind(group.getNome());
@@ -134,7 +134,7 @@ public class TurmaTurnoOJB
 			
 			query.bind(executionDegree.getCurricularPlan().getName());
 			
-			query.bind(executionDegree.getCurricularPlan().getCurso().getSigla());
+			query.bind(executionDegree.getCurricularPlan().getDegree().getSigla());
 
 			List result = (List) query.execute();
 			lockRead(result);

@@ -24,7 +24,7 @@ import Dominio.CursoExecucao;
 import Dominio.ExecutionYear;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
-import Dominio.PlanoCurricularCurso;
+import Dominio.DegreeCurricularPlan;
 import ServidorApresentacao.ScopeConstants;
 import ServidorApresentacao.TestCaseActionExecution;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -89,7 +89,7 @@ public class ChooseContextDispatchActionTest2 extends TestCaseActionExecution {
 				_executionDegree =
 					new CursoExecucao(
 						new ExecutionYear("2003/2004"),
-						new PlanoCurricularCurso("plano1", _degree));
+						new DegreeCurricularPlan("plano1", _degree));
 
 				_degreeDAO.lockWrite(_degree);
 				_executionDegreeDAO.lockWrite(_executionDegree);

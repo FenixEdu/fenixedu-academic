@@ -18,11 +18,11 @@ import org.odmg.QueryException;
 
 import Dominio.Curso;
 import Dominio.ICurso;
-import Dominio.IPlanoCurricularCurso;
-import Dominio.PlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
+import Dominio.DegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
@@ -80,18 +80,18 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
     
     public void delete(ICurso licenciatura) throws ExcepcaoPersistencia {
 		try {
-			IPlanoCurricularCurso degreeCurricularPlan = null;
-			IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
-			PlanoCurricularCursoOJB degreeCurricularPlanOJB = new PlanoCurricularCursoOJB();
-			String oqlQuery = "select all from " + PlanoCurricularCurso.class.getName();
-			oqlQuery += " where curso.nome = $1 ";
+			IDegreeCurricularPlan degreeCurricularPlan = null;
+			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
+			DegreeCurricularPlanOJB degreeCurricularPlanOJB = new DegreeCurricularPlanOJB();
+			String oqlQuery = "select all from " + DegreeCurricularPlan.class.getName();
+			oqlQuery += " where degree.nome = $1 ";
 
 			query.create(oqlQuery);
 			query.bind(licenciatura.getNome());
 			List result = (List) query.execute();
 			Iterator iterador = result.iterator();
 			while (iterador.hasNext()) {
-				degreeCurricularPlan = (IPlanoCurricularCurso) iterador.next();
+				degreeCurricularPlan = (IDegreeCurricularPlan) iterador.next();
 				degreeCurricularPlanOJB.delete(degreeCurricularPlan);
 			}
 			super.delete(licenciatura);

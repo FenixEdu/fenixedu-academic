@@ -127,7 +127,7 @@ public class CreateMasterDegreeCandidate implements IServico {
 			// Generate the Candidate's number	
 			Integer number = sp.getIPersistentMasterDegreeCandidate().generateCandidateNumber(
 								executionYear.getYear(),
-								masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getCurso().getNome());
+								masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getNome());
 
 			masterDegreeCandidate.setCandidateNumber(number);
 			

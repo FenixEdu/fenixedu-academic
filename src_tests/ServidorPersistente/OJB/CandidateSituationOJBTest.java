@@ -201,6 +201,7 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         try {
             persistentSupport.iniciarTransaccao();
 	        candidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("nmsn");
+	        assertNotNull(candidateTemp);
             persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");

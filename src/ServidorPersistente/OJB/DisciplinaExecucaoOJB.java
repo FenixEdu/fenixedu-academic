@@ -100,7 +100,7 @@ public class DisciplinaExecucaoOJB
 			oqlQuery += " where sigla = $1";
 			oqlQuery += " and executionPeriod.executionYear.year = $2";
 			oqlQuery
-				+= " and associatedCurricularCourses.degreeCurricularPlan.curso.sigla = $3";
+				+= " and associatedCurricularCourses.degreeCurricularPlan.degree.sigla = $3";
 			query.create(oqlQuery);
 			query.bind(sigla);
 			query.bind(anoLectivo);
@@ -143,14 +143,14 @@ public class DisciplinaExecucaoOJB
 					+ CurricularCourse.class.getName()
 					+ " where curricularYear = $1 "
 					+ " and degreeCurricularPlan.name = $2 "
-					+ " and degreeCurricularPlan.curso.sigla = $3";
+					+ " and degreeCurricularPlan.degree.sigla = $3";
 
 			query.create(oqlQuery);
 
 			query.bind(curricularYear);
 			query.bind(executionDegree.getCurricularPlan().getName());
 			query.bind(
-				executionDegree.getCurricularPlan().getCurso().getSigla());
+				executionDegree.getCurricularPlan().getDegree().getSigla());
 
 			List result = (List) query.execute();
 			lockRead(result);

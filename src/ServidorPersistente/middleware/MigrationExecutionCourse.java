@@ -306,7 +306,7 @@ public class MigrationExecutionCourse {
 					.append(
 						curricularCourse
 							.getDegreeCurricularPlan()
-							.getCurso()
+							.getDegree()
 							.getSigla())
 					.append(",Ano:")
 					.append(curricularCourse.getCurricularYear())

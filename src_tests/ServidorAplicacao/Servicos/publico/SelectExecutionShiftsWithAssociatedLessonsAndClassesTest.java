@@ -15,7 +15,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.ISala;
 import Dominio.ITurma;
 import Dominio.ITurno;
@@ -28,7 +28,7 @@ import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
@@ -186,9 +186,9 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 			ICurso degree = cursoPersistente.readBySigla("LEIC");
 			assertNotNull(degree);
 
-			IPlanoCurricularCursoPersistente planoCurricularCursoPersistente =
-				sp.getIPlanoCurricularCursoPersistente();
-			IPlanoCurricularCurso degreeCurricularPlan =
+			IPersistentDegreeCurricularPlan planoCurricularCursoPersistente =
+				sp.getIPersistentDegreeCurricularPlan();
+			IDegreeCurricularPlan degreeCurricularPlan =
 				planoCurricularCursoPersistente.readByNameAndDegree(
 					"plano1",
 					degree);

@@ -36,7 +36,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.MasterDegreeCandidate;
 import Dominio.Pessoa;
 import ServidorAplicacao.security.PasswordEncryptor;
@@ -47,7 +47,7 @@ import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.EstadoCivil;
 import Util.Sexo;
@@ -62,7 +62,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 	ICursoPersistente persistentDegree = null;
 	IPersistentExecutionYear persistentExecutionYear = null;
 	ICursoExecucaoPersistente persistentExecutionDegree = null;
-	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+	IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
 	IPessoaPersistente persistentPerson = null;
     
     public MasterDegreeCandidateOJBTest(java.lang.String testName) {
@@ -94,7 +94,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		persistentCountry = persistentSupport.getIPersistentCountry();
 		persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 		persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
-		persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
+		persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 		persistentPerson = persistentSupport.getIPessoaPersistente();
     }
     
@@ -187,7 +187,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		ICountry countryTemp = null;
         IExecutionYear executionYear = null;
         ICursoExecucao executionDegree = null;
-        IPlanoCurricularCurso degreeCurricularPlan = null;
+        IDegreeCurricularPlan degreeCurricularPlan = null;
         IPessoa person = null;
         try {
             persistentSupport.iniciarTransaccao();
@@ -241,7 +241,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		ICountry countryTemp = null;
 		IExecutionYear executionYear = null;
 		ICursoExecucao executionDegree = null;
-		IPlanoCurricularCurso degreeCurricularPlan = null;
+		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IPessoa person = new Pessoa();
 		person.setNumeroDocumentoIdentificacao("9786541230");
 		person.setCodigoFiscal("0312645978");

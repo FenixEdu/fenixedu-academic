@@ -14,7 +14,7 @@ import java.util.List;
 
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
-import Dominio.IPlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
 
 public interface ICursoExecucaoPersistente extends IPersistentObject {
 	/**
@@ -52,7 +52,7 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	* @return ICursoExecucao
 	*/
 	public ICursoExecucao readByDegreeCurricularPlanAndExecutionYear(
-		IPlanoCurricularCurso degreeCurricularPlan,
+		IDegreeCurricularPlan degreeCurricularPlan,
 		IExecutionYear executionYear)
 		throws ExcepcaoPersistencia;
 

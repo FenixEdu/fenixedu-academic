@@ -11,12 +11,12 @@ import Dominio.ExecutionYear;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
-import Dominio.IPlanoCurricularCurso;
-import Dominio.PlanoCurricularCurso;
+import Dominio.IDegreeCurricularPlan;
+import Dominio.DegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
 
@@ -74,7 +74,7 @@ public class LoadDegrees extends DataFileLoader{
 			sp.getICursoPersistente();
 		ICursoExecucaoPersistente iLicenciaturaExecucaoPersistente =
 			sp.getICursoExecucaoPersistente();
-		IPlanoCurricularCursoPersistente degreeCurricularPlanDAO = sp.getIPlanoCurricularCursoPersistente(); 
+		IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = sp.getIPersistentDegreeCurricularPlan(); 
 		
 		//IRamoPersistente iRamoPersistente = SuportePersistente.getInstance().iRamoPersistente();       
 
@@ -90,7 +90,7 @@ public class LoadDegrees extends DataFileLoader{
 					nome,
 					new TipoCurso(TipoCurso.LICENCIATURA));
 
-			IPlanoCurricularCurso degreeCurricularPlan = new PlanoCurricularCurso(nome, degree);
+			IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan(nome, degree);
 			sp.iniciarTransaccao();
 
 			//iLicenciaturaPersistente.lockWrite(degree);
@@ -98,7 +98,7 @@ public class LoadDegrees extends DataFileLoader{
 
 			// Criar licenciaturas execução.
 			IExecutionYear executionYear = new ExecutionYear("2002/03");
-			IPlanoCurricularCurso curricularPlan = new PlanoCurricularCurso("planoCurricular",degree);
+			IDegreeCurricularPlan curricularPlan = new DegreeCurricularPlan("planoCurricular",degree);
 			ICursoExecucao executionDegree = null;
 				new CursoExecucao(executionYear,curricularPlan);
 
