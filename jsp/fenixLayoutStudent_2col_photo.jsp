@@ -11,7 +11,7 @@
 <body>
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>
 <!-- Header -->
-<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td class="header" width="25%"><img alt="" height="60" src="<%= request.getContextPath() %>/images/dotist_student.gif" width="192" />
 	</td>
@@ -35,6 +35,7 @@
      	<tiles:insert attribute="photos" />
      </td>
      <td width="100%" align="left" valign="top" bgcolor="#FFFFFF" class="bodycontent">
+     	<tiles:insert attribute="contextBody" />     
      	<tiles:insert attribute="body" />
 	</td>
   </tr>
