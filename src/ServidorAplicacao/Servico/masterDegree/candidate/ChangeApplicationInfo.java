@@ -19,76 +19,205 @@
 package ServidorAplicacao.Servico.masterDegree.candidate;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import DataBeans.InfoMasterDegreeCandidate;
+import DataBeans.InfoPerson;
 import DataBeans.util.Cloner;
+import Dominio.CandidateSituation;
+import Dominio.ICandidateSituation;
 import Dominio.ICursoExecucao;
 import Dominio.IMasterDegreeCandidate;
+import ServidorAplicacao.ICandidateView;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.CandidateView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
+import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.person.ChangePersonalInfo;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.SituationName;
 import Util.Specialization;
 
 public class ChangeApplicationInfo implements IServico {
-    
-    private static ChangeApplicationInfo servico = new ChangeApplicationInfo();
-    
-    /**
-     * The singleton access method of this class.
-     **/
-    public static ChangeApplicationInfo getService() {
-        return servico;
-    }
-    
-    /**
-     * The actor of this class.
-     **/
-    private ChangeApplicationInfo() { 
-    }
-    
-    /**
-     * Returns the service name
-     **/
-    
-    public final String getNome() {
-        return "ChangeApplicationInfo";
-    }
-    
-    
-    public void run(InfoMasterDegreeCandidate newMasterDegreeCandidate) 
-	    throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException {
 
-        ISuportePersistente sp = null;
-        IMasterDegreeCandidate existingMasterDegreeCandidate = null;
+	private static ChangeApplicationInfo servico = new ChangeApplicationInfo();
 
-        try {
-	        sp = SuportePersistenteOJB.getInstance();
-	        ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(newMasterDegreeCandidate.getInfoExecutionDegree());
-			existingMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
-			                                newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(),
-											newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao().getTipo(),
-											executionDegree,
-											new Specialization(newMasterDegreeCandidate.getSpecialization()));
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx; 
-        } 
-        
-		if (existingMasterDegreeCandidate == null)
-			throw new ExcepcaoInexistente("Unknown Candidate !!");	
+	/**
+	 * The singleton access method of this class.
+	 **/
+	public static ChangeApplicationInfo getService() {
+		return servico;
+	}
+
+	/**
+	 * The actor of this class.
+	 **/
+	private ChangeApplicationInfo() {
+	}
+
+	/**
+	 * Returns the service name
+	 **/
+
+	public final String getNome() {
+		return "ChangeApplicationInfo";
+	}
+
+	public InfoMasterDegreeCandidate run(
+		InfoMasterDegreeCandidate newMasterDegreeCandidate,
+		InfoPerson infoPerson,
+		UserView userView)
+		throws
+			FenixServiceException,
+			ExcepcaoPersistencia,
+			IllegalAccessException,
+			InvocationTargetException {
+
+		ISuportePersistente sp = null;
+		IMasterDegreeCandidate existingMasterDegreeCandidate = null;
+
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			ICursoExecucao executionDegree =
+				Cloner.copyInfoExecutionDegree2ExecutionDegree(
+					newMasterDegreeCandidate.getInfoExecutionDegree());
+			existingMasterDegreeCandidate =
+				sp
+					.getIPersistentMasterDegreeCandidate()
+					.readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
+						newMasterDegreeCandidate
+							.getInfoPerson()
+							.getNumeroDocumentoIdentificacao(),
+						newMasterDegreeCandidate
+							.getInfoPerson()
+							.getTipoDocumentoIdentificacao()
+							.getTipo(),
+						executionDegree,
+						new Specialization(
+							newMasterDegreeCandidate.getSpecialization()));
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx =
+				new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		}
+
+		if (existingMasterDegreeCandidate == null) {
+			throw new ExcepcaoInexistente("Unknown Candidate !!");
+		}
+
+		try {
+			ChangePersonalInfo.getService().run(infoPerson, userView);
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx =
+				new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		}
 
 		// Change the Information
-		
-		sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(existingMasterDegreeCandidate);
-		
-		existingMasterDegreeCandidate.setAverage(newMasterDegreeCandidate.getAverage());
-		existingMasterDegreeCandidate.setMajorDegree(newMasterDegreeCandidate.getMajorDegree());
-		existingMasterDegreeCandidate.setMajorDegreeSchool(newMasterDegreeCandidate.getMajorDegreeSchool());
-		existingMasterDegreeCandidate.setMajorDegreeYear(newMasterDegreeCandidate.getMajorDegreeYear());
-		
-    }
+
+		sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(
+			existingMasterDegreeCandidate);
+
+		existingMasterDegreeCandidate.setAverage(
+			newMasterDegreeCandidate.getAverage());
+		existingMasterDegreeCandidate.setMajorDegree(
+			newMasterDegreeCandidate.getMajorDegree());
+		existingMasterDegreeCandidate.setMajorDegreeSchool(
+			newMasterDegreeCandidate.getMajorDegreeSchool());
+		existingMasterDegreeCandidate.setMajorDegreeYear(
+			newMasterDegreeCandidate.getMajorDegreeYear());
+		existingMasterDegreeCandidate.setSpecializationArea(
+			newMasterDegreeCandidate.getSpecializationArea());
+
+		// Change the Candidate Situation
+		InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
+
+		try {
+			IPersistentCandidateSituation candidateSituationDAO =
+				sp.getIPersistentCandidateSituation();
+
+			infoMasterDegreeCandidate =
+				Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(
+					existingMasterDegreeCandidate);
+
+			Set situationsFromBD =
+				existingMasterDegreeCandidate.getSituations();
+
+			Iterator situationIterator = situationsFromBD.iterator();
+			List situations = new ArrayList();
+			ICandidateView candidateView = null;
+
+			while (situationIterator.hasNext()) {
+				ICandidateSituation candidateSituation =
+					(ICandidateSituation) situationIterator.next();
+
+				// Check if this is the Active Situation
+				if (candidateSituation
+					.getValidation()
+					.equals(new Util.State(Util.State.ACTIVE))) {
+
+					candidateSituationDAO.writeCandidateSituation(
+						candidateSituation);
+
+					candidateSituation.setValidation(
+						new Util.State(Util.State.INACTIVE));
+					break;
+				}
+			}
+
+			//Create the New Candidate Situation
+			ICandidateSituation activeCandidateSituation =
+				createActiveSituation(
+					existingMasterDegreeCandidate,
+					candidateSituationDAO);
+
+			situations.add(
+				Cloner.copyICandidateSituation2InfoCandidateSituation(
+					activeCandidateSituation));
+			candidateView = new CandidateView(situations);
+			userView.setCandidateView(candidateView);
+
+			infoMasterDegreeCandidate.setInfoCandidateSituation(
+				Cloner.copyICandidateSituation2InfoCandidateSituation(
+					activeCandidateSituation));
+			infoMasterDegreeCandidate.setInfoPerson(infoPerson);
+
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx =
+				new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		}
+
+		return infoMasterDegreeCandidate;
+	}
+
+	private ICandidateSituation createActiveSituation(
+		IMasterDegreeCandidate existingMasterDegreeCandidate,
+		IPersistentCandidateSituation candidateSituationDAO)
+		throws ExcepcaoPersistencia {
+		ICandidateSituation activeCandidateSituation = new CandidateSituation();
+		candidateSituationDAO.writeCandidateSituation(activeCandidateSituation);
+
+		Calendar calendar = Calendar.getInstance();
+		activeCandidateSituation.setDate(calendar.getTime());
+		activeCandidateSituation.setSituation(
+			new SituationName(SituationName.PENDENT_COM_DADOS));
+		activeCandidateSituation.setValidation(
+			new Util.State(Util.State.ACTIVE));
+
+		activeCandidateSituation.setMasterDegreeCandidate(
+			existingMasterDegreeCandidate);
+		return activeCandidateSituation;
+	}
 }

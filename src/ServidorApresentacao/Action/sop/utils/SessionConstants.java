@@ -108,7 +108,9 @@ public abstract class SessionConstants {
 	public static final String GUIDE_SITUATION_LIST = "guide_situation_list";
 	public static final String PAYMENT_TYPE = "payment_type";
 	public static final String REQUESTER_TYPE = "requester_type";
+	public static final String REQUESTER_NUMBER = "requester_number";
 	public static final String PRINT_PASSWORD = "print_password";
+	public static final String PRINT_INFORMATION = "print_information";
 	public static final String DATE = "date";
 	public static final String EXECUTION_YEAR_LIST = "execution_year_list";
 	public static final String EXECUTION_YEAR = "execution_year";

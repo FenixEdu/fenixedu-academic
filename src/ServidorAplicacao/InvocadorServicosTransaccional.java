@@ -38,6 +38,12 @@ public class InvocadorServicosTransaccional extends InvocadorServicos {
 				sp.confirmarTransaccao();
 				System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + servico.getNome() + " finished sucessfully.");
 			} catch (Exception ex) {
+					if (ex instanceof RuntimeException) {
+						System.out.println("*************************** CACHE CLEARED");
+						sp.clearCache();
+					}
+						
+				
 					System.out.println("LOGTIME= " + new Date());
 					if (user != null)  {
 						System.out.println("USERVIEW= " + user.getUtilizador());
