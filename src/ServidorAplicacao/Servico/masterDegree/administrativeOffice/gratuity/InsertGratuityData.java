@@ -105,7 +105,6 @@ public class InsertGratuityData implements IService
 					(ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
 				gratuityValues.setExecutionDegree(executionDegree);
 
-				persistentGratuityValues.simpleLockWrite(gratuityValues);
 			}
 
 			validatePaymentPhasesWithTransaction(sp, gratuityValues);
@@ -128,6 +127,8 @@ public class InsertGratuityData implements IService
 			//update gratuity values in all student curricular plan that belong to this execution
 			// degree
 			updateStudentsGratuitySituation(sp, gratuityValues, gratuityValue);
+		
+			persistentGratuityValues.simpleLockWrite(gratuityValues);
 		}
 		catch (ExcepcaoPersistencia e)
 		{

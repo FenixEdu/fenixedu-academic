@@ -115,7 +115,7 @@ public class EditGratuitySituationById implements IServico
 						false);
 				gratuitySituation.setStudentCurricularPlan(studentCurricularPlan);
 
-				persistentGratuitySituation.simpleLockWrite(gratuitySituation);
+//				persistentGratuitySituation.simpleLockWrite(gratuitySituation);
 
 			}
 
@@ -140,6 +140,8 @@ public class EditGratuitySituationById implements IServico
 
 			infoGratuitySituation =
 				Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
+		
+			persistentGratuitySituation.simpleLockWrite(gratuitySituation);
 		}
 		catch (ExcepcaoPersistencia e)
 		{
