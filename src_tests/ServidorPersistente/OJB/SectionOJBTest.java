@@ -13,16 +13,12 @@ package ServidorPersistente.OJB;
  * @author lmac1
  */
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ISection;
 import Dominio.ISite;
+import Dominio.Section;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentSection;
@@ -69,32 +65,63 @@ public class SectionOJBTest extends TestCaseOJB {
   
   /** Test of readBySiteAndSectionAndName() method, of class ServidorPersistente.OJB.SectionOJB.*/
 
-  // read existing section
+  
   
     public void testReadBySiteAndSectionAndName() {
 	
 	ISection section = null;
 	ISite site = null;
 	ISection superiorSection = null;
-	List inferiorSections = new ArrayList();
-	List itens = new ArrayList(); 
 	IDisciplinaExecucao executionCourse = null;
 	
-	Calendar calendar = Calendar.getInstance();
-	calendar.set(Calendar.DAY_OF_MONTH,22);
-	calendar.set(Calendar.MONTH,Calendar.JANUARY);
-	calendar.set(Calendar.YEAR,2003);
+	//	read existing section with superiorSection
+	
 
- 
+	try {
+		 persistentSupport.iniciarTransaccao();
+		 executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		 assertNotNull(executionCourse);
+	    
+		 site = persistentSite.readByExecutionCourse(executionCourse);
+		 assertNotNull(site);
+		
+	    
+		 section = persistentSection.readBySiteAndSectionAndName(site, superiorSection,"Seccao1deTFCI");
+
+		 persistentSupport.confirmarTransaccao();
+		 }
+	
+	 catch (ExcepcaoPersistencia ex) 
+		 {
+		   fail("testReadBySiteAndSectionAndName:fail read existing section ");
+		 }
+		
+		 assertNotNull(section);
+		
+		 assertEquals(section.getName(), "Seccao1deTFCI");
+		 assertEquals(section.getSite(), site);
+		 assertEquals(section.getSuperiorSection(), null);
+	
+	
+	
+	
+	
+	//	read existing section with superiorSection
+   
    try {
 		persistentSupport.iniciarTransaccao();
-		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO", "2002/2003", "LEEC");
 		assertNotNull(executionCourse);
 	    
 	    site = persistentSite.readByExecutionCourse(executionCourse);
 		assertNotNull(site);
 	
-		section = persistentSection.readBySiteAndSectionAndName(site, null,"Seccao1deTFCI");
+		superiorSection = persistentSection.readBySiteAndSectionAndName(site, null,"Seccao1dePO");	
+		assertNotNull(superiorSection);
+		System.out.println("superiorSection: " +superiorSection);
+		System.out.println("superiorSection internal Code: " + ((Section) superiorSection).getInternalCode());
+	    section = persistentSection.readBySiteAndSectionAndName(site, superiorSection,"SubSeccao2dePO");
+
 		persistentSupport.confirmarTransaccao();
 		}
 	
@@ -102,19 +129,15 @@ public class SectionOJBTest extends TestCaseOJB {
 	    {
 	      fail("testReadBySiteAndSectionAndName:fail read existing section ");
 	    }
-	
-	assertNotNull(section);
 		
-	assertEquals(section.getName(), "Seccao1deTFCI");
-	assertEquals(section.getSectionOrder().intValue(), 0);
-	assertEquals(section.getLastModifiedDate(), Date.valueOf("2003-01-22"));
-	assertEquals(section.getSite(), site);
-	assertEquals(section.getSuperiorSection(), null);
-	assertEquals(section.getInferiorSections(), inferiorSections);
-	assertEquals(section.getItems(),itens);
+	    assertNotNull(section);
+		
+		assertEquals(section.getName(), "SubSeccao1dePO");
+		assertEquals(section.getSite(), site);
+		assertEquals(section.getSuperiorSection(), superiorSection);
 	
 	
-//		//read existing section 2
+     //read existing subSection with superiorSection and without inferiorSections
 //
 //
 //		
@@ -128,12 +151,7 @@ public class SectionOJBTest extends TestCaseOJB {
 //	
 //		 superiorSection = persistentSection.readBySiteAndSectionAndName(site, null,"Seccao1dePO");
 //		 
-//		 inferiorSection = 
-//		 
-//		 inferiorSections
-//		 
-//		 
-//		section = new Section("SubSeccao1dePO", 0, Date.valueOf("2003-01-23"), site, superiorSection, inferiorSections, null);
+//		 section = persistentSection.readBySiteAndSectionAndName(site, superiorSection,"SubSeccao2dePO");
 //		 
 //		 persistentSupport.confirmarTransaccao();
 //		}
@@ -145,29 +163,31 @@ public class SectionOJBTest extends TestCaseOJB {
 //	
 //		assertNotNull(section);
 //		
-//		assertEquals(section.getName(), "Seccao1deTFCI");
-//		assertEquals(section.getSectionOrder().intValue(), 0);
-//		assertEquals(section.getLastModifiedDate(), date);
+//		assertEquals(section.getName(), "SubSeccao2dePO");
+//		assertEquals(section.getSectionOrder().intValue(), 1);
+//		assertEquals(section.getLastModifiedDate(), Date.valueOf("2003-01-25"));
 //		assertEquals(section.getSite(), site);
-//		assertEquals(section.getSuperiorSection(), null);
+//		assertEquals(section.getSuperiorSection(), superiorSection);
 //		assertEquals(section.getInferiorSections(), inferiorSections);
 //		assertEquals(section.getItems(),itens);
-////	inferiorSections.add("subSection1");
-////	inferiorSections.add("subSection2");
-////	
-////	itens.add("item11");
-////	itens.add("item12");
-////	itens.add("item21");
+//
+//
+
+//	inferiorSections.add("subSection1");
+//	inferiorSections.add("subSection2");
 //	
-//
-//
-//
-//
-//
-//
-//
-//
-//
+//	itens.add("item11");
+//	itens.add("item12");
+//	itens.add("item21");
+	
+
+
+
+
+
+
+
+
 
     
 	    
@@ -192,3 +212,9 @@ public class SectionOJBTest extends TestCaseOJB {
 
 
 }
+
+//Calendar calendar = Calendar.getInstance();
+//calendar.set(Calendar.DAY_OF_MONTH,22);
+//calendar.set(Calendar.MONTH,Calendar.JANUARY);
+//calendar.set(Calendar.YEAR,2003);
+	

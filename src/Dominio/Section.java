@@ -29,6 +29,17 @@ public class Section implements ISection {
 	public Section() {}
 
 	/** 
+		 * Construtor
+		 */
+		public Section(String name, ISite site, ISection superiorSection) {
+
+			setName(name);
+			setSite(site);
+			setSuperiorSection(superiorSection);
+			
+		}
+
+	/** 
 	 * Construtor
 	 */
 	public Section(String name, Integer order, Date lastModifiedDate, 
@@ -185,7 +196,7 @@ public class Section implements ISection {
 		boolean result = false;
 		if (arg0 instanceof ISection) {
 			result = (getName().equals(((ISection) arg0).getName()))&&
-		//		(getSectionOrder().equals(((ISection) arg0).getSectionOrder()))&&
+				(getSectionOrder().equals(((ISection) arg0).getSectionOrder()))&&
 				(getSite().equals(((ISection) arg0).getSite()))&&				
 				(getSuperiorSection().equals(((ISection) arg0).getSuperiorSection()));
 		} 

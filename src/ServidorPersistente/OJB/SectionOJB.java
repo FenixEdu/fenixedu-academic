@@ -33,45 +33,34 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 		String name)
 		throws ExcepcaoPersistencia {
 		try {
+			
 			ISection resultSection = null;
 			Section section = (Section) superiorSection;
 			String oqlQuery = "select section from " + Section.class.getName();
 			oqlQuery += " where name = $1 ";
+			oqlQuery +=	" and site.executionCourse.nome = $2";
+			oqlQuery += " and site.executionCourse.executionPeriod.name = $3";
+			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $4";
 			if (section == null) {
 				
-				oqlQuery += " and site.executionCourse.nome = $2";
-				oqlQuery += " and site.executionCourse.executionPeriod.name = $3";
-				oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $4";
+				oqlQuery += " and is_undefined(keySuperiorSection) " ;
+				
 			} else {
 				
-			
-				oqlQuery += " and superiorSection.name = $2";
-				oqlQuery += " and superiorSection.site.executionCourse.nome = $3";
-				oqlQuery += " and superiorSection.site.executionCourse.executionPeriod.name = $4";
-				oqlQuery += " and superiorSection.site.executionCourse.executionPeriod.executionYear.year = $5";}
+				oqlQuery += " and keySuperiorSection = $5";
+				}
 
 			query.create(oqlQuery);
+			
 			query.bind(name);
-
-			if (section == null) {
-				query.bind(site.getExecutionCourse().getNome());
-				query.bind(
-					site.getExecutionCourse().getExecutionPeriod().getName());
-				query.bind(
-					site
-						.getExecutionCourse()
-						.getExecutionPeriod()
-						.getExecutionYear()
-						.getYear());
-			} else {
-				query.bind(section.getName());
-				query.bind(section.getSite().getExecutionCourse().getNome());
-								query.bind(section.getSite().getExecutionCourse().getExecutionPeriod().getName());
-								query.bind(section.getSite()
-										.getExecutionCourse()
-										.getExecutionPeriod()
-										.getExecutionYear()
-										.getYear());
+			query.bind(site.getExecutionCourse().getNome());
+			query.bind(site.getExecutionCourse().getExecutionPeriod().getName());
+			query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+			
+			if (section != null) {
+				System.out.println("Estou Aqui");
+				System.out.println(oqlQuery);
+				query.bind(section.getInternalCode());			
 			}
 
 			List result = (List) query.execute();
