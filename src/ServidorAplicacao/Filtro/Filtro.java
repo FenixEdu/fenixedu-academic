@@ -18,16 +18,20 @@ package ServidorAplicacao.Filtro;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 
-public class Filtro {
+abstract public class Filtro {
+	private static Filtro instance;
 
-    /**
-     * The preFilter method is called before the service is
-     * invoked. It should throw an exception if the service should
-     * not be called
-     *
-     * @throws FenixServiceException
-     * @throws NotAuthorizedException
-     **/
-    public void preFiltragem(IUserView id, IServico servico, Object argumentos[])
-        throws Exception {}
+	/**
+	 * The preFilter method is called before the service is
+	 * invoked. It should throw an exception if the service should
+	 * not be called
+	 *
+	 * @throws FenixServiceException
+	 * @throws NotAuthorizedException
+	 **/
+	abstract public void preFiltragem(
+		IUserView id,
+		IServico servico,
+		Object argumentos[])
+		throws Exception;
 }
