@@ -51,8 +51,8 @@ public class CountryOJB extends ObjectFenixOJB implements IPersistentCountry {
 		// else If the country is mapped to the database, then write any existing changes.
 		else if (
 			(countryToWrite instanceof Country)
-				&& ((Country) countryFromDB).getInternalCode().equals(
-					((Country) countryToWrite).getInternalCode())) {
+				&& ((Country) countryFromDB).getIdInternal().equals(
+					((Country) countryToWrite).getIdInternal())) {
 
 			countryFromDB.setCode(countryToWrite.getCode());
 			countryFromDB.setNationality(countryToWrite.getNationality());

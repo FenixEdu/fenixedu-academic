@@ -11,7 +11,7 @@
 
 package Dominio;
 
-public interface ICountry {
+public interface ICountry extends IDomainObject {
     public java.lang.String getName();
     public java.lang.String getNationality();
     public java.lang.String getCode();

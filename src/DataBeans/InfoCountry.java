@@ -25,14 +25,6 @@ public class InfoCountry  extends InfoObject {
 		setNationality(nationality);
     }
     
-    
-    public InfoCountry(ICountry country) {
-		this.code = country.getCode();
-		this.name = country.getName();
-		this.nationality = country.getNationality();
-		
-    }
-    
     public boolean equals(Object obj) {
     	boolean result = false;
     	if (obj instanceof InfoCountry ) {
