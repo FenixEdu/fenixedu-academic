@@ -20,127 +20,129 @@ import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuCont
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
 public class RenderSectionMenuTag extends TagSupport {
 
-	private String name;
-	private String path;
-	private String activeSectionName;
-	private String renderer;
-	private ISectionMenuSlotContentRenderer sectionMenuSlotContentRenderer =
-		new SectionMenuContentRenderer();
+    private String name;
 
-	public int doStartTag() throws JspException {
-		//		Obtain InfoSection
-		List sections = null;
-		InfoSection activeSection = null;
-		try {
-			sections = (List) pageContext.findAttribute(name);
-		} catch (ClassCastException e) {
-			sections = null;
-		}
-		if (getActiveSectionName()!=null) {
-		
-		try {
-			activeSection = (InfoSection) pageContext.findAttribute(getActiveSectionName());
-		}
-		catch (ClassCastException e) {
-			activeSection = null;
-		}
-		}
-		//TODO: change the message
-		if (sections == null) {
-			throw new JspException(
-				messages.getMessage(
-					"generateExamsMap.infoExamsMap.notFound",
-					name));
-		}
+    private String path;
 
-		//		Generate Map from sections
-		JspWriter writer = pageContext.getOut();
-		SectionMenuMap sectionMenuMap=null;
-		if (activeSection == null) {
-			
-		 sectionMenuMap = new SectionMenuMap(sections);}
-		else {
-		 sectionMenuMap = new SectionMenuMap(sections,activeSection);	
-		}
+    private String activeSectionName;
 
-		SectionMenuMapRenderer renderer =
-			new SectionMenuMapRenderer(
-				sectionMenuMap,
-				this.sectionMenuSlotContentRenderer,getPath(),getRenderer());
+    private String renderer;
 
-		try {
-			writer.print(renderer.render());
-		} catch (IOException e) {
-			throw new JspException(
-				messages.getMessage("generateExamsMap.io", e.toString()));
-		}
+    private ISectionMenuSlotContentRenderer sectionMenuSlotContentRenderer = new SectionMenuContentRenderer();
 
-		return (SKIP_BODY);
-	}
+    public int doStartTag() throws JspException {
+        //		Obtain InfoSection
+        List sections = null;
+        InfoSection activeSection = null;
+        try {
+            sections = (List) pageContext.findAttribute(name);
+        } catch (ClassCastException e) {
+            sections = null;
+        }
+        if (getActiveSectionName() != null) {
 
-	public int doEndTag() throws JspException {
-		return (EVAL_PAGE);
-	}
+            try {
+                activeSection = (InfoSection) pageContext
+                        .findAttribute(getActiveSectionName());
+            } catch (ClassCastException e) {
+                activeSection = null;
+            }
+        }
+        //TODO: change the message
+        if (sections == null) {
+            throw new JspException(messages.getMessage(
+                    "generateExamsMap.infoExamsMap.notFound", name));
+        }
 
-	public void release() {
-		super.release();
-	}
+        //		Generate Map from sections
+        JspWriter writer = pageContext.getOut();
+        SectionMenuMap sectionMenuMap = null;
+        if (activeSection == null) {
+            sectionMenuMap = new SectionMenuMap(sections);
+        } else {
+            sectionMenuMap = new SectionMenuMap(sections, activeSection);
+        }
 
-	public String getName() {
-		return (this.name);
-	}
+        SectionMenuMapRenderer renderer = new SectionMenuMapRenderer(
+                sectionMenuMap, this.sectionMenuSlotContentRenderer, getPath(),
+                getRenderer());
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	//	Error Messages
-	protected static MessageResources messages =
-		MessageResources.getMessageResources("ApplicationResources");
-	/**
-	 * @return
-	 */
-	public String getActiveSectionName() {
-		return activeSectionName;
-	}
+        try {
+            writer.print(renderer.render());
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new JspException(messages.getMessage("generateExamsMap.io", e
+                    .toString()));
+        }
 
-	/**
-	 * @param string
-	 */
-	public void setActiveSectionName(String string) {
-		activeSectionName = string;
-	}
+        return (SKIP_BODY);
+    }
 
-	/**
-	 * @return
-	 */
-	public String getPath() {
-		return path;
-	}
+    public int doEndTag() throws JspException {
+        return (EVAL_PAGE);
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setPath(String string) {
-		path = string;
-	}
+    public void release() {
+        super.release();
+    }
 
-	/**
-	 * @return
-	 */
-	public String getRenderer() {
-		return renderer;
-	}
+    public String getName() {
+        return (this.name);
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setRenderer(String string) {
-		renderer = string;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    //	Error Messages
+    protected static MessageResources messages = MessageResources
+            .getMessageResources("ApplicationResources");
+
+    /**
+     * @return
+     */
+    public String getActiveSectionName() {
+        return activeSectionName;
+    }
+
+    /**
+     * @param string
+     */
+    public void setActiveSectionName(String string) {
+        activeSectionName = string;
+    }
+
+    /**
+     * @return
+     */
+    public String getPath() {
+        return path;
+    }
+
+    /**
+     * @param string
+     */
+    public void setPath(String string) {
+        path = string;
+    }
+
+    /**
+     * @return
+     */
+    public String getRenderer() {
+        return renderer;
+    }
+
+    /**
+     * @param string
+     */
+    public void setRenderer(String string) {
+        renderer = string;
+    }
 
 }

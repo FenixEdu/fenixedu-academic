@@ -16,7 +16,7 @@
 	<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="infoSection" renderer="teacher"/>
 	</logic:present>
 	<logic:notPresent name="infoSection" >
-	<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" renderer="teacher"/>
+		<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" renderer="teacher"/>
 	</logic:notPresent>		
 </logic:notEmpty>
 </ul>

@@ -17,14 +17,18 @@ import DataBeans.ISiteComponent;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularCourseWithInfoDegree;
 import DataBeans.InfoCurriculum;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionCourseWithExecutionPeriod;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
 import DataBeans.InfoSection;
+import DataBeans.InfoSectionWithAll;
+import DataBeans.InfoSectionWithSuperiorSection;
 import DataBeans.InfoShift;
 import DataBeans.InfoSite;
 import DataBeans.InfoSiteAnnouncement;
@@ -240,18 +244,21 @@ public class TeacherAdministrationSiteComponentBuilder {
             // build the result of this service
             Iterator iterator = allSections.iterator();
             infoSectionsList = new ArrayList(allSections.size());
-
-            while (iterator.hasNext())
-                infoSectionsList.add(Cloner
-                        .copyISection2InfoSection((ISection) iterator.next()));
-
+            while (iterator.hasNext()) {
+                //CLONER
+                //infoSectionsList.add(Cloner
+                        //.copyISection2InfoSection((ISection) iterator.next()));
+                infoSectionsList.add(InfoSectionWithAll.newInfoFromDomain((ISection) iterator.next()));                
+            }
             Collections.sort(infoSectionsList);
 
             component.setTitle(site.getExecutionCourse().getNome());
             component.setMail(site.getMail());
             component.setSections(infoSectionsList);
-            InfoExecutionCourse executionCourse = (InfoExecutionCourse) Cloner
-                    .get(site.getExecutionCourse());
+            //CLONER
+            //InfoExecutionCourse executionCourse = (InfoExecutionCourse) Cloner
+                    //.get(site.getExecutionCourse());
+            InfoExecutionCourse executionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(site.getExecutionCourse());
             component.setExecutionCourse(executionCourse);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
@@ -264,8 +271,10 @@ public class TeacherAdministrationSiteComponentBuilder {
 
                     public Object transform(Object input) {
                         ICurricularCourse curricularCourse = (ICurricularCourse) input;
-                        InfoCurricularCourse infoCurricularCourse = Cloner
-                                .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                        //CLONER
+                        //InfoCurricularCourse infoCurricularCourse = Cloner
+                                //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
                         return infoCurricularCourse;
                     }
                 }));
@@ -296,8 +305,10 @@ public class TeacherAdministrationSiteComponentBuilder {
         component.setInitialStatement(site.getInitialStatement());
         component.setIntroduction(site.getIntroduction());
         component.setIdInternal(site.getIdInternal());
-        component.setInfoExecutionCourse((InfoExecutionCourse) Cloner.get(site
-                .getExecutionCourse()));
+        //CLONER
+        //component.setInfoExecutionCourse((InfoExecutionCourse) Cloner.get(site
+                //.getExecutionCourse()));
+        component.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(site.getExecutionCourse()));
         component.setStyle(site.getStyle());
 
         return component;
@@ -320,8 +331,10 @@ public class TeacherAdministrationSiteComponentBuilder {
                 while (iterAnnouncements.hasNext()) {
                     IAnnouncement announcement = (IAnnouncement) iterAnnouncements
                             .next();
-                    infoAnnouncementsList.add(Cloner
-                            .copyIAnnouncement2InfoAnnouncement(announcement));
+                    //CLONER
+                    //infoAnnouncementsList.add(Cloner
+                            //.copyIAnnouncement2InfoAnnouncement(announcement));
+                    infoAnnouncementsList.add(InfoAnnouncement.newInfoFromDomain(announcement));                    
                 }
             }
 
@@ -918,7 +931,9 @@ public class TeacherAdministrationSiteComponentBuilder {
             fileSuport.beginTransaction();
             while (iter.hasNext()) {
                 IItem item = (IItem) iter.next();
-                InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
+                //CLONER
+                //InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
+                InfoItem infoItem = InfoItem.newInfoFromDomain(item);
                 try {
                     infoItem.setLinks(CMSUtils.getItemLinks(fileSuport, item
                             .getSlideName()));
@@ -935,7 +950,9 @@ public class TeacherAdministrationSiteComponentBuilder {
                 throw new FenixServiceException(e2);
             }
         }
-        component.setSection(Cloner.copyISection2InfoSection(iSection));
+        //CLONER
+        //component.setSection(Cloner.copyISection2InfoSection(iSection));
+        component.setSection(InfoSectionWithAll.newInfoFromDomain(iSection));
         Collections.sort(infoItemsList);
         component.setItems(infoItemsList);
 

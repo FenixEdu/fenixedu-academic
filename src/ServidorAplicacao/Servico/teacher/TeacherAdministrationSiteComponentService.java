@@ -56,10 +56,10 @@ public class TeacherAdministrationSiteComponentService implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+                    .getIPersistentExecutionCourse();            
             IPersistentSite persistentSite = sp.getIPersistentSite();
+            
             ISite site = null;
-
             IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
                     .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
             site = persistentSite.readByExecutionCourse(executionCourse);

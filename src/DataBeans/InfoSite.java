@@ -1,5 +1,7 @@
 package DataBeans;
 
+import Dominio.ISite;
+
 
 /**
  * This is the view class that contains information about the site domain objects.
@@ -196,4 +198,27 @@ public class InfoSite extends InfoObject implements ISiteComponent {
 		this.style = style;
 	}
 
+	
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(ISite site) {
+        super.copyFromDomain(site);
+        if(site != null) {
+            setAlternativeSite(site.getAlternativeSite());
+            setMail(site.getMail());
+            setInitialStatement(site.getInitialStatement());
+            setIntroduction(site.getIntroduction());
+            setStyle(site.getStyle());
+        }
+    }
+    
+    public static InfoSite newInfoFromDomain (ISite site) {
+        InfoSite infoSite = null;
+        if(site != null) {
+            infoSite = new InfoSite();
+            infoSite.copyFromDomain(site);
+        }
+        return infoSite;
+    }
 }

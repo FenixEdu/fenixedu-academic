@@ -12,7 +12,8 @@
 		<bean:message key="label.notAuthorized.courseInformation" />
 	</span>	
 </logic:messagesPresent>
+
 <logic:messagesNotPresent property="error.exception.notAuthorized">
-<img alt="Administração de disciplina" src="<%= request.getContextPath() %>/images/title_adminDisc.gif" />
-<p><bean:message key="label.instructions" /></p>
+	<img alt="Administração de disciplina" src="<%= request.getContextPath() %>/images/title_adminDisc.gif" />
+	<p><bean:message key="label.instructions" /></p>
 </logic:messagesNotPresent>
