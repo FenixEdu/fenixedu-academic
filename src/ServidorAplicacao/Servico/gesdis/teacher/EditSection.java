@@ -77,7 +77,6 @@ public class EditSection implements IServico {
 				iterOldSectionOrder = oldSection.getSectionOrder().intValue();
 			
 				if (iterOldSectionOrder > oldOrder) {
-			
 					oldSection.setSectionOrder(new Integer(iterOldSectionOrder-1));		
 					persistentSection.lockWrite(oldSection);
 				}
@@ -93,23 +92,18 @@ public class EditSection implements IServico {
 				iterNewSectionOrder = newSection.getSectionOrder().intValue();
 			
 				if (iterNewSectionOrder >= newOrder) {
-			
 					newSection.setSectionOrder(new Integer(iterNewSectionOrder+1));
 					persistentSection.lockWrite(newSection);
-					}
 				}
+			}
 			
-			} catch (ExistingPersistentException excepcaoPersistencia) {
-
-		throw new ExistingServiceException(excepcaoPersistencia);
+		} catch (ExistingPersistentException excepcaoPersistencia) {
+			throw new ExistingServiceException(excepcaoPersistencia);
+		}
+		catch (ExcepcaoPersistencia excepcaoPersistencia) {
+			throw new FenixServiceException(excepcaoPersistencia);
+		}
 	}
-			
-			catch (ExcepcaoPersistencia excepcaoPersistencia) {
-						throw new FenixServiceException(excepcaoPersistencia);
-					}
-			
-	}
-	
 	
 //	this method reorders some sections but not the section that we are editing
 	private void organizeSectionsOrder(int newOrder, int oldOrder, ISection superiorSection, ISite site) throws FenixServiceException {
@@ -208,9 +202,14 @@ public class EditSection implements IServico {
 			{
 				if(newSuperiorInfoSection != null){ 
 					newSuperiorSection = Cloner.copyInfoSection2ISection(newSuperiorInfoSection);
+					ISection parentSuperiorSection = null;
+					if (newSuperiorInfoSection.getSuperiorInfoSection()!=null){
+						parentSuperiorSection = Cloner.copyInfoSection2ISection(newSuperiorInfoSection.getSuperiorInfoSection());
+					}
+					newSuperiorSection = persistentSection.readBySiteAndSectionAndName(site, parentSuperiorSection, newSuperiorInfoSection.getName());
 					newSuperiorSection.setSite(site);
 				}
-					
+				
 				organizeSections(newOrder,oldOrder,newSuperiorSection,superiorSection,site);
 				section.setSectionOrder(new Integer(newOrder));						
 				section.setSuperiorSection(newSuperiorSection);
@@ -220,20 +219,16 @@ public class EditSection implements IServico {
 				if(newOrder!=oldOrder)
 				{
 					organizeSectionsOrder(newOrder,oldOrder,superiorSection,site);
-					section.setSectionOrder(new Integer(newOrder));						
-
+					section.setSectionOrder(new Integer(newOrder));
 				}
-		
-		
-			persistentSection.lockWrite(section);					
+			persistentSection.lockWrite(section);
 			}
 		catch (ExistingPersistentException excepcaoPersistencia) {
-
-							throw new ExistingServiceException(excepcaoPersistencia);
-						}
-			catch (ExcepcaoPersistencia e) {
-				throw new FenixServiceException(e);
-			}
+			throw new ExistingServiceException(excepcaoPersistencia);
+		}
+		catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
 				
 		return new Boolean(true);
 	}	

@@ -37,7 +37,7 @@ public class SectionChooserRenderer
 		StringBuffer strBuffer = new StringBuffer();
 		
 		strBuffer.append(renderDepthIdent(getInfoSection()));
-		strBuffer.append("<a href=\"editSection.do?method=changeParent&amp;index="+i+"\" >");
+		strBuffer.append("<a href=\"editSection.do?method=changeParent&amp;sectionIndex="+i+"\" >");
 			
 		strBuffer.append(infoSection.getName());
 		

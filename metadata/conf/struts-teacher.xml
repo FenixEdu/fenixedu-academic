@@ -87,7 +87,7 @@
         <form-property name="sectionOrder" type="java.lang.Integer" />    
         <!-- to remove -->
         <form-property name="parentSection" type="java.lang.String" />         
-        <form-property name="index" type="java.lang.Integer" />         
+        <form-property name="sectionIndex" type="java.lang.Integer" />         
         
         <form-property name="page" type="java.lang.Integer" initial="0" />           
 	</form-bean>    			

@@ -155,9 +155,7 @@ public List readBySite(ISite site) throws ExcepcaoPersistencia {
 		 }
 	 }
 	 
-	public void lockWrite(ISection section) 
-	throws ExcepcaoPersistencia, ExistingPersistentException {
-	 
+	public void lockWrite(ISection section) throws ExcepcaoPersistencia, ExistingPersistentException {
 
 		// If there is nothing to write, simply return.
 		if (section == null) { return;}
@@ -166,26 +164,19 @@ public List readBySite(ISite site) throws ExcepcaoPersistencia {
 		
 		// If section is not in database, then write it.
 		if (sectionFromDB == null){
-		
 			super.lockWrite(section);
-			
 		}
 		// else If the section is mapped to the database, then write any existing changes.
-		else if (
-					(section instanceof Section)
-						&& ((Section) sectionFromDB).getInternalCode().equals(
-							((Section) section).getInternalCode())) {
+		else if ((section instanceof Section) && ((Section) sectionFromDB).getInternalCode().equals(
+			((Section) section).getInternalCode())) {
 										
 					super.lockWrite(section);
 					
 					// else Throw an already existing exception
 				} else{
-					
 					throw new ExistingPersistentException();
 				}
-					
-				}
-		
+	}
 
 	public void delete(ISection section) throws ExcepcaoPersistencia {
 					

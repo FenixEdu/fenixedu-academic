@@ -56,7 +56,6 @@ public class ReadSite extends FenixAction {
 		InfoSite site = null;
 		String index = (String) request.getParameter("index");
 		if (index != null) {
-
 			site = (InfoSite) infoSites.get((new Integer(index)).intValue());
 		} else {
 			site = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
