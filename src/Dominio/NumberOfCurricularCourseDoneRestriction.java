@@ -44,4 +44,16 @@ public class NumberOfCurricularCourseDoneRestriction extends Restriction impleme
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object obj) {
+		boolean result = super.equals(obj); 
+		if ((result) && (obj instanceof INumberOfCurricularCourseDoneRestriction)){
+			INumberOfCurricularCourseDoneRestriction numberOfCurricularCourseDoneRestriction = (INumberOfCurricularCourseDoneRestriction) obj;
+			result = numberOfCurricularCourseDoneRestriction.getNumberOfCurricularCourseDone().equals(this.getNumberOfCurricularCourseDone());
+		}
+		return result;
+	}
+
 }

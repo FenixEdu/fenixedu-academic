@@ -76,5 +76,42 @@ public class Precedence extends DomainObject implements IPrecedence {
 		}
 		return evaluate;
 	}
+	
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if ((obj != null) && (this.getClass().equals(obj.getClass()))){
+			IPrecedence precedence = (IPrecedence) obj;
+			result = this.getCurricularCourse().equals(precedence.getCurricularCourse());
+			if (result){
+				List precedenceRestrictions = precedence.getRestrictions();
+				if (precedenceRestrictions != null){
+					for (int i = 0; i < precedenceRestrictions.size() || !result; i++){
+						IRestriction restriction = (IRestriction) precedenceRestrictions.get(i);
+						result = this.getRestrictions().contains(restriction);
+					}
+				}else{
+					result = this.getRestrictions() == null;
+				}
+				
+			}
+		}
+		return result;
+	}
 
+	public String toString(){
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("Precedence:\n");
+		stringBuffer.append(this.getCurricularCourse()).append("\n");
+		List restrictions = this.getRestrictions();
+		for (int i = 0; i < restrictions.size(); i++) {
+			IRestriction restriction = (IRestriction) restrictions.get(i);
+			stringBuffer.append(restriction).append("\n");			
+		}
+		stringBuffer.append("---------\n");
+		return stringBuffer.toString();
+	}
 }
