@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?> 
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -15,8 +15,6 @@
 <logic:notPresent name="<%=SessionConstants.INFO_SITE %>" property="style">
 <link href="<%= request.getContextPath() %>/CSS/gesdis-web.css" rel="stylesheet" type="text/css" />	
 </logic:notPresent>		
-
-
 <link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/script/gesdis-scripting.js"></script>
 </head>
@@ -26,10 +24,11 @@
 <table width="100%"  height="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
      <td  align="left" valign="top" bgcolor="#B5BED6"  class="barraist">
-     <img alt="" border="0"  src="<%= request.getContextPath() %>/images/LogoIST.gif"  />
+     <img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="" border="0" />
 	</td>
     <td id="principal" bgcolor="#FFFFFF">
-      <div id="header"><h4><tiles:getAsString name="institutionName" ignore="true"/></h4></div>
+      <div id="header"><img src="<%= request.getContextPath() %>/images/ist_header.gif" width="324 height="42" ""alt="Instituto Superior T&eacute;cnico"></div>
+	  <h4><tiles:getAsString name="institutionName" ignore="true"/></h4>
       <h1><tiles:getAsString name="executionCourseName"  ignore="true"/></h1>
       <br />
 	  <tiles:insert attribute="body" ignore="true"/>      
@@ -40,7 +39,6 @@
       </div>
       <div id="nav">
       <tiles:insert attribute="navbarGeral" ignore="true"/>	
-    
       <tiles:insert attribute="navbar" ignore="true"/>	
       </div>
     </td>
