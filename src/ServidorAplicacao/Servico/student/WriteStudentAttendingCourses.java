@@ -26,135 +26,120 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class WriteStudentAttendingCourses implements IServico {
 
-  private static WriteStudentAttendingCourses _servico =
-    new WriteStudentAttendingCourses();
+	private static WriteStudentAttendingCourses _servico = new WriteStudentAttendingCourses();
 
-  /**
-   * The actor of this class.
-   **/
+	/**
+	 * The actor of this class.
+	 **/
 
-  private WriteStudentAttendingCourses() {
+	private WriteStudentAttendingCourses() {
 
-  }
+	}
 
-  /**
-   * Returns Service Name
-   */
-  public String getNome() {
-    return "WriteStudentAttendingCourses";
-  }
+	/**
+	 * Returns Service Name
+	 */
+	public String getNome() {
+		return "WriteStudentAttendingCourses";
+	}
 
-  /**
-   * Returns the _servico.
-   * @return WriteStudentAttendingCourses
-   */
-  public static WriteStudentAttendingCourses getService() {
-    return _servico;
-  }
+	/**
+	 * Returns the _servico.
+	 * @return WriteStudentAttendingCourses
+	 */
+	public static WriteStudentAttendingCourses getService() {
+		return _servico;
+	}
 
-  /**
-   * Describe <code>run</code> method here.
-   *
-   * @param infoStudent an <code>InfoStudent</code>,
-   * @param infoExecutionCourses a <code>List</code> with the wanted executionCourse.idInternal's of the ATTEND table.
-   * @return a <code>Boolean</code> to indicate if all went fine.
-   * @exception FenixServiceException if an error occurs.
-   */
-  public Boolean run(InfoStudent infoStudent, List infoExecutionCourses)
-    throws FenixServiceException {
+	/**
+	 * Describe <code>run</code> method here.
+	 *
+	 * @param infoStudent an <code>InfoStudent</code>,
+	 * @param infoExecutionCourses a <code>List</code> with the wanted executionCourse.idInternal's of the ATTEND table.
+	 * @return a <code>Boolean</code> to indicate if all went fine.
+	 * @exception FenixServiceException if an error occurs.
+	 */
+	public Boolean run(InfoStudent infoStudent, List infoExecutionCourses) throws FenixServiceException {
 
-    if (infoExecutionCourses == null
-	|| infoExecutionCourses.size() == 0
-	|| infoStudent == null) {
-      return new Boolean(false);
-    } // end of if ()
+		if (infoExecutionCourses == null || infoStudent == null) {
+			return new Boolean(false);
+		} // end of if ()
 
+		//TODO: tdi-dev (edgar.goncalves) -> remove system.out.println's
+		boolean result = false;
 
-    //TODO: tdi-dev (edgar.goncalves) -> remove system.out.println's
-    boolean result = false;
+		try {
 
-    try {
-      List executionCourseList = null;
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			//Reads the student from the database
+			IStudent student = sp.getIPersistentStudent().readByNumero(infoStudent.getNumber(), infoStudent.getDegreeType());
 
-      //Reads the student from the database
-      IStudent student =
-        sp.getIPersistentStudent().readByNumero(
-						infoStudent.getNumber(),
-						infoStudent.getDegreeType());
+			IFrequentaPersistente attendsDAO = sp.getIFrequentaPersistente();
 
-      IFrequentaPersistente attendsDAO = sp.getIFrequentaPersistente();
+			//Read every course the student attends to:
+			List attendingCourses = attendsDAO.readByStudentId(student.getNumber());
 
-      //Read every course the student attends to:
-      List attendingCourses = attendsDAO.readByStudentId(student.getNumber());
+			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
 
-      IDisciplinaExecucaoPersistente executionCourseDAO =
-        sp.getIDisciplinaExecucaoPersistente();
+			//Gets the database objects for the wanted courses
+			List wantedAttends = new ArrayList();
+			Iterator i = infoExecutionCourses.iterator();
+			while (i.hasNext()) {
+				Integer executionCourseId = new Integer((String) i.next());
+				IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
+				executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
 
-      //Gets the database objects for the wanted courses
-      List wantedAttends = new ArrayList();
-      Iterator i = infoExecutionCourses.iterator();
-      while (i.hasNext()) {
-        Integer executionCourseId = new Integer((String) i.next());
-        IDisciplinaExecucao executionCourse =
-          new DisciplinaExecucao(executionCourseId);
-        executionCourse =
-          (IDisciplinaExecucao) executionCourseDAO.readByOId(
-							     executionCourse,
-							     false);
+				if (executionCourse == null) {
+					System.out.println("Execution course with ID=" + executionCourseId + " does not exist in the database!");
+					throw new FenixServiceException();
+				} // end of if ()
+				else {
+					wantedAttends.add(executionCourse);
+					System.out.println("Adding to the wantedAttends: " + executionCourse.getNome());
+				}
+			}
 
-        if (executionCourse == null) {
-          System.out.println(
-			     "Execution course with ID="
-			     + executionCourseId
-			     + " does not exist in the database!");
-          throw new FenixServiceException();
-        } // end of if ()
-        else {
-          wantedAttends.add(executionCourse);
-          System.out.println("Adding to the wantedAttends: " + executionCourse.toString());
-        }
-      }
+			//Delete all courses the student is currently attendin to that he/she doesn't want to:
+			i = attendingCourses.iterator();
+			while (i.hasNext()) {
+				IFrequenta attendEntry = (IFrequenta) i.next();
+			
+				// FIXME SO REMOVES UM ELEMENTO.... DELETE SHIFT-STUDENT ASSOCIATIONS...
+				if (!wantedAttends.contains(attendEntry.getDisciplinaExecucao())) {
+					System.out.println("Deleting: " + attendEntry.getIdInternal());
+					attendsDAO.delete(attendEntry);
+					i.remove();
+				}
+				wantedAttends.remove(attendEntry.getDisciplinaExecucao());
+			}
 
-      //Delete all courses the student is currently attendin to that he/she doesn't want to:
-      i = attendingCourses.iterator();
-      while (i.hasNext()) {
-        IFrequenta attendEntry = (IFrequenta) i.next();
-        if (!wantedAttends.contains(attendEntry.getDisciplinaExecucao())) {
-          System.out.println("Deleting: " + attendEntry.toString());
-          attendsDAO.delete(attendEntry);
-	i.remove();
-        }
-        wantedAttends.remove(attendEntry.getDisciplinaExecucao());
-      }
+			//Add new courses (without duplicates)
+			i = wantedAttends.iterator();
+			while (i.hasNext()) {
 
-      //Add new courses (without duplicates)
-      i = wantedAttends.iterator();
-      while (i.hasNext()) {
+				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) i.next();
 
-        IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) i.next();
+				System.out.println("Adding: " + executionCourse.getIdInternal() + ";" + executionCourse.getNome());
 
-        System.out.println("Adding: " + executionCourse.toString());
+				IFrequenta attendsEntry = new Frequenta();
+				//FIXME: (tdi-dev:edgar.goncalves) - lockWrite ain't working...
+				attendsDAO.simpleLockWrite(attendsEntry);
+				attendsEntry.setAluno(student);
+				attendsEntry.setDisciplinaExecucao(executionCourse);
 
-        IFrequenta attendsEntry = new Frequenta();
-        //FIXME: (tdi-dev:edgar.goncalves) - lockWrite ain't working...
+			} // end of while ()
 
-        attendsEntry.setAluno(student);
-        attendsEntry.setDisciplinaExecucao(executionCourse);
-        attendsDAO.simpleLockWrite(attendsEntry);
-      } // end of while ()
+			result = true;
 
-      result = true;
+		} catch (ExcepcaoPersistencia e) {
 
-    } catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			throw new FenixServiceException();
+		}
 
-      e.printStackTrace();
-      throw new FenixServiceException();
-    }
+		return new Boolean(result);
 
-    return new Boolean(result);
-
-  }
+	}
 
 }
