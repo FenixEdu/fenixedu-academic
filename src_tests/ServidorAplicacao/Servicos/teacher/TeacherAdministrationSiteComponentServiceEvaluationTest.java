@@ -100,7 +100,7 @@ public class TeacherAdministrationSiteComponentServiceEvaluationTest extends Tes
 			infoSections.add(infoSection);
 		}
 
-		InfoEvaluationMethod infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+		InfoEvaluationMethod infoEvaluation = Cloner.copyIEvaluationMethod2InfoEvaluationMethod(evaluation);
 
 		InfoSite infoSite = Cloner.copyISite2InfoSite(site);
 

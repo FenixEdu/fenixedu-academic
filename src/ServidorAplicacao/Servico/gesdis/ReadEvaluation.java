@@ -52,7 +52,7 @@ public class ReadEvaluation implements IServico {
 			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
 			IEvaluationMethod  evaluation = sp.getIPersistentEvaluationMethod().readByExecutionCourse(executionCourse);
 			if (evaluation != null) {
-				infoEvaluation=Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+				infoEvaluation=Cloner.copyIEvaluationMethod2InfoEvaluationMethod(evaluation);
 			}
 		
 			return infoEvaluation;

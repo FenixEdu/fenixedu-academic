@@ -480,7 +480,7 @@ public class ExecutionCourseSiteComponentBuilder {
 				sp.getIPersistentEvaluationMethod().readByExecutionCourse(
 					executionCourse);
 			if (evaluation != null) {
-				component = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+				component = Cloner.copyIEvaluationMethod2InfoEvaluationMethod(evaluation);
 			}
 
 		} catch (ExcepcaoPersistencia e) {

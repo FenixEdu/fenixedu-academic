@@ -298,7 +298,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 			IEvaluationMethod evaluation = sp.getIPersistentEvaluationMethod().readByExecutionCourse(executionCourse);
 			if (evaluation != null) {
-				InfoEvaluationMethod infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+				InfoEvaluationMethod infoEvaluation = Cloner.copyIEvaluationMethod2InfoEvaluationMethod(evaluation);
 				component.setEvaluationElements(infoEvaluation.getEvaluationElements());
 				component.setEvaluationElementsEn(infoEvaluation.getEvaluationElementsEn());
 				component.setInfoExecutionCourse(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
