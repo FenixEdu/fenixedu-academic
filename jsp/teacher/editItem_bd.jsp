@@ -23,6 +23,10 @@
 		<bean:message key="message.itemOrder"/>
 	</td>
 	<td>
+		<html:select property="itemOrder" size="1">
+			<bean:define id="items" name="<%= SessionConstants.INFO_SECTION_ITEMS_LIST %>" />
+			<html:options name="items" property="" />
+		</html:select>
 		<html:text name="item" property="itemOrder"/>
 	</td>
 </tr>
