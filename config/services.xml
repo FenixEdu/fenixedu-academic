@@ -5145,4 +5145,39 @@
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
+	<service>
+		<name>CourseOfTheExpectedDegree</name>
+		<description>This service verify if the execution course belongs to one definitive degree</description>
+		<implementationClass>ServidorAplicacao.Servico.teacher.CourseOfTheExpectedDegree</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains></filterChains>
+	</service>
+	<service>
+		<name>AddCoordinatorByManager</name>
+		<implementationClass>ServidorAplicacao.Servico.coordinator.AddCoordinator</implementationClass>
+		<description>This service add a coordinator to a execution degree in manager operations</description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>	
+	<service>
+		<name>RemoveCoordinatorsByManager</name>
+		<implementationClass>ServidorAplicacao.Servico.coordinator.RemoveCoordinators</implementationClass>
+		<description>This service remove one or more coordinators to a execution degree in manager operations</description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>ResponsibleCoordinatorsByManager</name>
+		<implementationClass>ServidorAplicacao.Servico.coordinator.ResponsibleCoordinators</implementationClass>
+		<description>This service associate a coordinator to a execution degree with responsible functions in manager operations</description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>
+    
 </serviceDefinitions>

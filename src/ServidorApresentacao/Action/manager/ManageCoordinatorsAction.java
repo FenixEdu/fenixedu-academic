@@ -163,7 +163,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		try {
 			ServiceManagerServiceFactory.executeService(
 				userView,
-				"AddCoordinator",
+				"AddCoordinatorByManager",
 				args);
 		} catch (FenixServiceException e) {
 			e.printStackTrace();
@@ -214,7 +214,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 			try {
 				ServiceManagerServiceFactory.executeService(
 					userView,
-					"ResponsibleCoordinators",
+					"ResponsibleCoordinatorsByManager",
 					args);
 			} catch (FenixServiceException e) {
 				e.printStackTrace();
@@ -238,7 +238,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 			try {
 				ServiceManagerServiceFactory.executeService(
 					userView,
-					"RemoveCoordinators",
+					"RemoveCoordinatorsByManager",
 					args);
 			} catch (FenixServiceException e) {
 				e.printStackTrace();
