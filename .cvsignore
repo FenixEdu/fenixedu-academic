@@ -18,3 +18,6 @@ unitTestReports
 *.log*
 report
 output/*
+build.properties.david
+build2.xml
+buildDavid.xml
