@@ -17,4 +17,5 @@ public abstract class TimeTableType {
 	
 	public static final int SOP_ROOM_TIMETABLE = 6;
 
+	public static final int CLASS_TIMETABLE_WITHOUT_LINKS = 7;
 }

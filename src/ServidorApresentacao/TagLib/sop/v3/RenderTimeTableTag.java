@@ -18,6 +18,7 @@ import ServidorApresentacao.TagLib.sop.v3.colorPickers.ClassTimeTableColorPicker
 import ServidorApresentacao.TagLib.sop.v3.colorPickers.ExecutionCourseTimeTableColorPicker;
 import ServidorApresentacao.TagLib.sop.v3.colorPickers.RoomTimeTableColorPicker;
 import ServidorApresentacao.TagLib.sop.v3.renderers.ClassTimeTableLessonContentRenderer;
+import ServidorApresentacao.TagLib.sop.v3.renderers.ClassTimeTableWithoutLinksLessonContentRenderer;
 import ServidorApresentacao.TagLib.sop.v3.renderers.ExecutionCourseTimeTableLessonContentRenderer;
 import ServidorApresentacao.TagLib.sop.v3.renderers.RoomTimeTableLessonContentRenderer;
 import ServidorApresentacao.TagLib.sop.v3.renderers.ShiftTimeTableLessonContentRenderer;
@@ -227,6 +228,11 @@ public final class RenderTimeTableTag extends TagSupport {
 				this.colorPicker = new ClassTimeTableColorPicker();
 				break;
 
+			case TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS :
+				this.lessonSlotContentRenderer =
+					new ClassTimeTableWithoutLinksLessonContentRenderer();
+				this.colorPicker = new ClassTimeTableColorPicker();
+				break;
 			
 			default :
 				this.lessonSlotContentRenderer =
