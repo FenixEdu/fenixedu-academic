@@ -193,7 +193,6 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 					{
 						return "noAuthorization";
 					}
-					System.out.println("executiondegree : " + executionDegree.getIdInternal());
 					//				List executionDegrees =
 					//					persistentExecutionDegree.readByDegreeCurricularPlan(
 					//						studentCurricularPlan.getDegreeCurricularPlan());
@@ -213,11 +212,8 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 							(executionDegree));
 					if (coordinatorsList == null)
 					{
-						System.out.println("sem autorizacao: coordinators a null");
 						return "noAuthorization";
 					}
-					System.out.println(
-						"leu os coordenadores do executiondegree: " + coordinatorsList.size());
 
 					final String username = id.getUtilizador();
 					ICoordinator coordinator =
@@ -235,7 +231,6 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 					});
 					if (coordinator == null)
 					{
-						System.out.println("coordenador inexistente");
 						return "noAuthorization";
 					}
 
@@ -250,7 +245,6 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 								.getDegree()
 								.getIdInternal()))
 					{
-						System.out.println("curso nao e igual");
 						return "noAuthorization";
 					}
 					IStudentCurricularPlan activeStudentCurricularPlan =
@@ -260,9 +254,6 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 							.readActiveStudentCurricularPlan(
 								studentCurricularPlan.getStudent().getNumber(),
 								TipoCurso.LICENCIATURA_OBJ);
-					System.out.println(
-						"plano curricular activo: "
-							+ activeStudentCurricularPlan.getDegreeCurricularPlan().getIdInternal());
 
 					if (!coordinator
 						.getExecutionDegree()
@@ -270,11 +261,6 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 						.getIdInternal()
 						.equals(activeStudentCurricularPlan.getDegreeCurricularPlan().getIdInternal()))
 					{
-						System.out.println(
-							"executiondegree nao é igual: "
-								+ coordinator.getTeacher().getTeacherNumber()
-								+ " "
-								+ coordinator.getExecutionDegree().getIdInternal());
 						return "noAuthorization";
 					}
 
@@ -303,8 +289,6 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 				}
 				catch (Exception e)
 				{
-					System.out.println("sem autorizacao: excepcao");
-
 					return "noAuthorization";
 				}
 				return null;
