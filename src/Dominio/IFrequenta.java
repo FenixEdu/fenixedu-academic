@@ -19,4 +19,11 @@ public interface IFrequenta extends IDomainObject {
 	public void setDisciplinaExecucao(IExecutionCourse disciplinaExecucao);
 	public void setEnrolment(IEnrolment enrolment);
 
+	public Integer getChaveAluno();
+	public Integer getChaveDisciplinaExecucao();
+	public Integer getKeyEnrolment();
+	
+	public void setChaveAluno(Integer keyAluno);
+	public void setChaveDisciplinaExecucao(Integer keyDisciplinaExecucao);
+	public void setKeyEnrolment(Integer keyEnrolment);
 }
