@@ -6,7 +6,9 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolmentEvaluation;
-import DataBeans.util.Cloner;
+import DataBeans.InfoEnrolmentEvaluationWithResponsibleForGrade;
+import DataBeans.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudent;
 import Dominio.Enrolment;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEquivalence;
@@ -56,10 +58,19 @@ public class GetEnrollmentEvaluationWithEquivalence extends EnrollmentEquivalenc
 		{
 			IEnrolmentEvaluation enrollmentEvaluation = (IEnrolmentEvaluation) input.get(i);
 			
-			InfoEnrolmentEvaluation infoEnrollmentEvaluation = Cloner
-				.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrollmentEvaluation);
-			infoEnrollmentEvaluation.setInfoEnrolment(Cloner.copyIEnrolment2InfoEnrolment(enrollmentEvaluation.getEnrolment()));
-
+			//CLONER
+			//InfoEnrolmentEvaluation infoEnrollmentEvaluation = Cloner
+			//	.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrollmentEvaluation);
+			//infoEnrollmentEvaluation.setInfoEnrolment(Cloner.copyIEnrolment2InfoEnrolment(enrollmentEvaluation.getEnrolment()));
+			InfoEnrolmentEvaluation infoEnrollmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
+                    .newInfoFromDomain(enrollmentEvaluation);
+            infoEnrollmentEvaluation
+                    .setInfoEnrolment(InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
+                            .newInfoFromDomain(enrollmentEvaluation.getEnrolment()));
+            infoEnrollmentEvaluation.getInfoEnrolment().setInfoStudentCurricularPlan(
+                    InfoStudentCurricularPlanWithInfoStudent.newInfoFromDomain(enrollmentEvaluation
+                            .getEnrolment().getStudentCurricularPlan()));
+			
 			output.add(i, infoEnrollmentEvaluation);
 		}
 		

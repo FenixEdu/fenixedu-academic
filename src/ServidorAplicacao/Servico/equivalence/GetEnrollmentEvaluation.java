@@ -2,7 +2,7 @@ package ServidorAplicacao.Servico.equivalence;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolmentEvaluation;
-import DataBeans.util.Cloner;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import Dominio.Enrolment;
 import Dominio.IEnrollment;
 import ServidorAplicacao.Servico.commons.student.GetEnrolmentGrade;
@@ -66,7 +66,9 @@ public class GetEnrollmentEvaluation extends EnrollmentEquivalenceServiceUtils i
 		}
 
 		InfoEnrolmentEvaluation infoEnrolmentEvaluation = service.run(enrollment);
-		infoEnrolmentEvaluation.setInfoEnrolment(Cloner.copyIEnrolment2InfoEnrolment(enrollment));
+		//CLONER
+		//infoEnrolmentEvaluation.setInfoEnrolment(Cloner.copyIEnrolment2InfoEnrolment(enrollment));
+		infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrollment));
 
 		return infoEnrolmentEvaluation;
 	}

@@ -8,8 +8,8 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndDegree;
 import DataBeans.equivalence.InfoEquivalenceContext;
-import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
 import Dominio.IStudentCurricularPlan;
@@ -80,8 +80,12 @@ public class ReadListsOfCurricularCoursesForEnrollmentEquivalence extends Enroll
 			.setInfoCurricularCoursesToGetEquivalence(cloneCurricularCoursesToInfoCurricularCourses(
 				curricularCoursesThatMayGetEquivalences));
 
-		infoEquivalenceContext.setInfoStudentCurricularPlan(Cloner
-			.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+		//CLONER
+		//infoEquivalenceContext.setInfoStudentCurricularPlan(Cloner
+		//	.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+		infoEquivalenceContext
+                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree
+                        .newInfoFromDomain(studentCurricularPlan));
 
 		return infoEquivalenceContext;
 	}

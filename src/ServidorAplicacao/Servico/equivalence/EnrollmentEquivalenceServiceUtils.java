@@ -6,7 +6,7 @@ import java.util.List;
 
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoEnrolment;
-import DataBeans.util.Cloner;
+import DataBeans.InfoEnrolmentWithInfoCurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrollment;
@@ -140,7 +140,9 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service
 		for (int i = 0; i < curricularCourses.size(); i++)
 		{
 			ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(i);
-			InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+			//CLONER
+			//InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 			infoCurricularCourses.add(infoCurricularCourse);
 		}
 		return infoCurricularCourses;
@@ -156,7 +158,9 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service
 		for (int i = 0; i < enrollments.size(); i++)
 		{
 			IEnrollment enrollment = (IEnrollment) enrollments.get(i);
-			InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrollment);
+			//CLONER
+			//InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrollment);
+			InfoEnrolment infoEnrolment = InfoEnrolmentWithInfoCurricularCourse.newInfoFromDomain(enrollment);
 			infoEnrolments.add(infoEnrolment);
 		}
 		return infoEnrolments;

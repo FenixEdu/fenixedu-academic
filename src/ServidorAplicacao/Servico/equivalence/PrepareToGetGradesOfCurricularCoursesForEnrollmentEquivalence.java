@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoEnrolmentWithInfoCurricularCourse;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndDegree;
 import DataBeans.equivalence.InfoCurricularCourseGrade;
 import DataBeans.equivalence.InfoEnrollmentGrade;
 import DataBeans.equivalence.InfoEquivalenceContext;
-import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
 import Dominio.Enrolment;
 import Dominio.ICurricularCourse;
@@ -78,7 +80,10 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
 		{
 			IEnrollment enrollment = (IEnrollment) enrollmentsToGiveEquivalences.get(i);
 			InfoEnrollmentGrade infoEnrollmentGrade = new InfoEnrollmentGrade();
-			infoEnrollmentGrade.setInfoEnrollment(Cloner.copyIEnrolment2InfoEnrolment(enrollment));
+			//CLONER
+			//infoEnrollmentGrade.setInfoEnrollment(Cloner.copyIEnrolment2InfoEnrolment(enrollment));
+			infoEnrollmentGrade.setInfoEnrollment(InfoEnrolmentWithInfoCurricularCourse.newInfoFromDomain(enrollment));
+			
 			infoEnrollmentGrade.setGrade(getEnrollmentGrade(enrollment));
 			infoEnrollmentGradesToGiveEquivalences.add(infoEnrollmentGrade);
 		}
@@ -87,7 +92,10 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
 		{
 			ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesToGetEquivalences.get(i);
 			InfoCurricularCourseGrade infoCurricularCourseGrade = new InfoCurricularCourseGrade();
-			infoCurricularCourseGrade.setInfoCurricularCourse(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+			//CLONER
+			//infoCurricularCourseGrade.setInfoCurricularCourse(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+			infoCurricularCourseGrade.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+			
 			infoCurricularCourseGrade.setGrade("");
 			infoCurricularCourseGradesToGetEquivalences.add(infoCurricularCourseGrade);
 		}
@@ -96,9 +104,13 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
 
 		infoEquivalenceContext.setChosenInfoEnrollmentGradesToGiveEquivalence(infoEnrollmentGradesToGiveEquivalences);
 		infoEquivalenceContext.setChosenInfoCurricularCourseGradesToGetEquivalence(infoCurricularCourseGradesToGetEquivalences);
-		infoEquivalenceContext.setInfoStudentCurricularPlan(Cloner
-			.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
-
+		//CLONER
+		//infoEquivalenceContext.setInfoStudentCurricularPlan(Cloner
+		//	.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+		infoEquivalenceContext
+                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree
+                        .newInfoFromDomain(studentCurricularPlan));
+				
 		return infoEquivalenceContext;
 	}
 
