@@ -6,6 +6,9 @@
  */
 package ServidorAplicacao.Servico.publico;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ISiteComponent;
 import DataBeans.SiteView;
@@ -77,7 +80,6 @@ public class ClassSiteComponentService implements IService {
             }
             bodyComponent = componentBuilder.getComponent(bodyComponent,
                     domainClass);
-
             siteView = new SiteView(bodyComponent);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
@@ -90,21 +92,30 @@ public class ClassSiteComponentService implements IService {
             IExecutionPeriod executionPeriod, ICursoExecucao executionDegree,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
 
-        ITurmaPersistente persistentClass = sp.getITurmaPersistente();
-        ITurma domainClass = null;
+				ITurmaPersistente persistentClass = sp.getITurmaPersistente();
+				   ITurma domainClass = null;
+				   List domainList = new ArrayList();
+				   if (curricularYear == null && className != null ) {
+					   domainClass = persistentClass
+							   .readByNameAndExecutionDegreeAndExecutionPeriod(className,
+									   executionDegree, executionPeriod);
 
-        if (curricularYear == null) {
-            domainClass = persistentClass
-                    .readByNameAndExecutionDegreeAndExecutionPeriod(className,
-                            executionDegree, executionPeriod);
+				   } else {
 
-        } else {
-            domainClass = new Turma();
-            domainClass.setAnoCurricular(curricularYear);
-            domainClass.setExecutionDegree(executionDegree);
-            domainClass.setExecutionPeriod(executionPeriod);
-
-        }
-        return domainClass;
+						   	if (className == null && curricularYear == null) {					
+							  domainList = persistentClass
+									  .readByExecutionDegreeAndDegreeAndExecutionPeriod(
+											  executionDegree,executionDegree.getCurricularPlan()
+											  .getDegree(), executionPeriod);									
+							  domainClass = (ITurma) domainList.get(0);
+				   			}else {
+							   domainClass = new Turma();
+							   domainClass.setAnoCurricular(curricularYear);
+							   domainClass.setExecutionDegree(executionDegree);
+							   domainClass.setExecutionPeriod(executionPeriod);
+		
+						   }
+				   }
+				   return domainClass;
     }
 }

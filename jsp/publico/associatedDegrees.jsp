@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-
+***************************************
 <logic:present name="siteView" >
 	<bean:define id="component" name="siteView" property="commonComponent" />
 	<bean:define id="curricularCourses" name="component" property="associatedDegrees" />

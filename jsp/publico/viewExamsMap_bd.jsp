@@ -25,13 +25,13 @@
 		</html:link>&gt;&nbsp; 
 		<bean:message key="label.exams"/> 
 </div>	
-
+<%--
 <!-- PÁGINA EM INGLÊS -->
 	<div class="version">
 		<span class="px10">
 			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;inEnglish=true&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") + "&amp;index=" + request.getAttribute("index") %>" >english version</html:link> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
 	</span>	
-	</div>
+	</div> --%>
 	<div class="clear"></div> 
 <h1><bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />&nbsp;<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" /></h1>
 

@@ -8,11 +8,13 @@ package ServidorApresentacao.Action.publico;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteTimetable;
 import DataBeans.SiteView;
@@ -45,7 +47,20 @@ public class ViewClassTimeTableAction extends FenixContextAction {
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
+		request.setAttribute(
+					SessionConstants.EXECUTION_PERIOD_OID,
+					infoExecutionPeriod.getIdInternal().toString());
+
         String classIdString = request.getParameter("classId");
+        request.setAttribute("classId",classIdString);
+        String degreeInitials = request.getParameter("degreeInitials");
+		request.setAttribute("degreeInitials",degreeInitials);
+        String nameDegreeCurricularPlan = request.getParameter("nameDegreeCurricularPlan");
+        request.setAttribute("nameDegreeCurricularPlan",nameDegreeCurricularPlan);
+		Integer degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+		Integer degreeId = Integer.valueOf( request.getParameter ("degreeID"));
+		request.setAttribute("degreeID", degreeId);
         Integer classId = null;
         if (classIdString != null) {
             classId = new Integer(classIdString);
@@ -53,9 +68,23 @@ public class ViewClassTimeTableAction extends FenixContextAction {
             return mapping.getInputForward();
 
         }
+		Object[] args = { infoExecutionPeriod.getInfoExecutionYear(),
+			 degreeInitials, nameDegreeCurricularPlan};
+		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+		try {
+		    infoExecutionDegree = (InfoExecutionDegree) ServiceUtils
+				 .executeService(null,
+						 "ReadExecutionDegreesByExecutionYearAndDegreeInitials",
+					 args);
+		} catch (FenixServiceException e1) {
+				throw new FenixActionException(e1);
+		}
+
+	    request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree.getInfoDegreeCurricularPlan());	 
+  
         InfoSiteTimetable component = new InfoSiteTimetable();
 
-        Object[] args = { component,
+        Object[] args1 = { component,
                 infoExecutionPeriod.getInfoExecutionYear().getYear(),
                 infoExecutionPeriod.getName(), null, null, className, null,
                 classId};
@@ -63,12 +92,13 @@ public class ViewClassTimeTableAction extends FenixContextAction {
         
         try {
             siteView = (SiteView) ServiceUtils.executeService(null,
-                    "ClassSiteComponentService", args);
+                    "ClassSiteComponentService", args1);
         } catch (FenixServiceException e1) {
             throw new FenixActionException(e1);
         }
         request.setAttribute("siteView", siteView);
         request.setAttribute("className", className);
         return mapping.findForward("Sucess");
+       
     }
 }

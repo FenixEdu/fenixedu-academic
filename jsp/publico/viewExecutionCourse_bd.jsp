@@ -44,6 +44,7 @@
 		<logic:iterate id="curricularCourse" name="curricularCourses" >
 			<bean:define id="infoDegreeCurricularPlan" name="curricularCourse" property="infoDegreeCurricularPlan"/>
 			<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
+			<bean:define id="shift" name="shift"/>
 	   		<logic:equal name="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>" >
 			<br/>
 			<div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > 
@@ -61,18 +62,25 @@
 			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  + "&amp;index=" + request.getAttribute("index")  %>" >
 			<bean:message key="label.curricularPlan"/>
 			</html:link>&gt;&nbsp; 
-			<html:link page="<%= "/chooseExamsMapContextDA.do?executionPeriodOID=" +  request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID="+ request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID="+ pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;page=1&method=choose&selectAllCurricularYears=on" + "&amp;index=" + request.getAttribute("index") %>" >
-				<bean:message key="label.exams"/> 
-			</html:link>&gt;&nbsp; 
+			<logic:equal name="shift" value="false"> 
+				<html:link page="<%= "/chooseExamsMapContextDA.do?executionPeriodOID=" +  request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID="+ request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID="+ pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;page=1&method=choose&selectAllCurricularYears=on" + "&amp;index=" + request.getAttribute("index") %>" >
+					<bean:message key="label.exams"/> 
+				</html:link>&gt;&nbsp; 
+			</logic:equal>
+			<logic:equal name="shift" value="true"> 	
+				<html:link page="<%= "/chooseContextDA.do?method=nextPagePublic&nextPage=classSearch&inputPage=chooseContext&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)+ "&amp;degreeID=" + request.getAttribute("degreeID")+ "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() %>" >
+					<bean:message key="label.turmas" />
+				</html:link>&gt;&nbsp; 
+			</logic:equal>
 			<%= request.getAttribute("sigla").toString() %>
 </div>	
-
+<%--
 <!-- PÁGINA EM INGLÊS -->
 	<div class="version">
 		<span class="px10">
 			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;inEnglish=true&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") + "&amp;index=" + request.getAttribute("index") %>" >english version</html:link> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
 	</span>	
-	</div>
+	</div>--%>
 	<div class="clear"></div> 
 <h1><bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />&nbsp;<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" /></h1>
 
