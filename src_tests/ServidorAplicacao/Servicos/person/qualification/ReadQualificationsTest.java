@@ -80,12 +80,9 @@ public class ReadQualificationsTest extends QualificationServiceNeedsAuthenticat
 	{
 		//Grant Owner qualification
 		InfoQualification info = new InfoQualification();
-		info.setIdInternal(new Integer(1));
 		info.setInfoPerson(getInfoPersonGO());
 
-		Integer infoManagerPersonCode = new Integer(17);
-
-		Object[] args = { infoManagerPersonCode, info };
+		Object[] args = { null, info };
 		return args;
 	}
 	/*
@@ -95,12 +92,9 @@ public class ReadQualificationsTest extends QualificationServiceNeedsAuthenticat
 	{
 		//Teacher qualification
 		InfoQualification info = new InfoQualification();
-		info.setIdInternal(new Integer(4));
 		info.setInfoPerson(getInfoPersonT());
 
-		Integer infoManagerPersonCode = new Integer(18);
-
-		Object[] args = { infoManagerPersonCode, info };
+		Object[] args = { null, info };
 		return args;
 	}
 

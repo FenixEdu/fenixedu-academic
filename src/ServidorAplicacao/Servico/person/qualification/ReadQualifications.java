@@ -52,7 +52,7 @@ public class ReadQualifications implements IServico
 	/**
 	 * Executes the service
 	 */
-	public Collection run(Integer managerPersonkey, InfoQualification infoQualification)
+	public Collection run(Integer qualificationKey, InfoQualification infoQualification)
 		throws FenixServiceException
 	{
 		ISuportePersistente persistentSupport = null;
@@ -61,23 +61,14 @@ public class ReadQualifications implements IServico
 		try
 		{
 			persistentSupport = SuportePersistenteOJB.getInstance();
-		} catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace();
-			throw new FenixServiceException("Unable to dao factory!", e);
-		}
-
-		try
-		{
 			persistentQualification = persistentSupport.getIPersistentQualification();
-			persistentSupport.iniciarTransaccao();
 
 			//Reads the qualifications
 			List qualifications = null;
 			qualifications =
 				persistentQualification.readQualificationsByPerson(
 					Cloner.copyInfoPerson2IPerson(infoQualification.getInfoPerson()));
-			
+
 			return qualifications;
 
 		} catch (ExcepcaoPersistencia e)
