@@ -41,6 +41,7 @@ public final class RoleType extends FenixValuedEnum
 	public static final int GEP_TYPE = 25;
 	public static final int DIRECTIVE_COUNCIL_TYPE = 26;
     public static final int DELEGATE_TYPE = 27;
+    public static final int FIRST_TIME_STUDENT_TYPE = 28;
 
 	public static final RoleType PERSON = new RoleType("person", RoleType.PERSON_TYPE);
 	public static final RoleType STUDENT = new RoleType("student", RoleType.STUDENT_TYPE);
@@ -88,6 +89,9 @@ public final class RoleType extends FenixValuedEnum
 		new RoleType("role.directiveCouncil", RoleType.DIRECTIVE_COUNCIL_TYPE);
     public static final RoleType DELEGATE =
             new RoleType("role.delegate", RoleType.DELEGATE_TYPE);
+    
+    public static final RoleType FIRST_TIME_STUDENT = 
+    		new RoleType("firstTimeStudent", RoleType.FIRST_TIME_STUDENT_TYPE);
 
 	/**
 	 * @param name
