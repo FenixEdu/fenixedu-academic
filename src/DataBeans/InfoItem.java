@@ -4,6 +4,8 @@
  */
 package DataBeans;
 
+import java.util.List;
+
 
 
 /**
@@ -16,6 +18,7 @@ public class InfoItem extends InfoObject implements Comparable {
 	private Integer itemOrder;
 	private InfoSection infoSection;
 	private Boolean urgent;
+	private List links;
 
 	/**
 	 * Constructor
@@ -149,4 +152,18 @@ public class InfoItem extends InfoObject implements Comparable {
 			
 		return this.getItemOrder().intValue()-((InfoItem)arg0).getItemOrder().intValue();}	
 	
+	/**
+	 * @return
+	 */
+	public List getLinks() {
+		return links;
+	}
+
+	/**
+	 * @param links
+	 */
+	public void setLinks(List links) {
+		this.links = links;
+	}
+
 }
