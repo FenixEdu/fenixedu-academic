@@ -5,6 +5,7 @@
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="examsToEnroll" name="component" property="examsToEnroll" />
 <bean:define id="examsEnrolled" name="component" property="examsEnrolled" />
+<logic:notEmpty name="examsToEnroll" >
 <h2><bean:message key="label.examsToEnroll"/></h2>
 <table width="90%" align="center">
 <tr>
@@ -32,8 +33,13 @@
 	</tr>
 </logic:iterate>
 </table>
+</logic:notEmpty>
+<logic:empty name="examsToEnroll" >
+	<h2><bean:message key="message.no.exams.to.enroll"/></h2>
+</logic:empty>
 <br/>
 <br/>
+<logic:notEmpty name="examsEnrolled" >
 <h2><bean:message key="label.examsEnrolled"/></h2>
 <table width="90%" align="center">
 <tr>
@@ -62,3 +68,4 @@
 	</tr>
 </logic:iterate>
 </table>
+</logic:notEmpty>
