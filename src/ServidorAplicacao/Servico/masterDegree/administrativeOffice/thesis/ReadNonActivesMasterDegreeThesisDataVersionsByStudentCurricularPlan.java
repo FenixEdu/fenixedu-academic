@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.thesis;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoStudentCurricularPlan;
@@ -7,7 +8,6 @@ import DataBeans.util.Cloner;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -49,7 +49,7 @@ public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan
 
 	public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException
 	{
-		List infoMasterDegreeThesisDataVersions = null;
+		List infoMasterDegreeThesisDataVersions = new ArrayList();
 
 		try
 		{
@@ -62,14 +62,15 @@ public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan
 					.readNotActivesVersionsByStudentCurricularPlan(
 					studentCurricularPlan);
 
-			if (masterDegreeThesisDataVersions.isEmpty())
-				throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesis");
+			if (masterDegreeThesisDataVersions.isEmpty() == false)
+			{
+				infoMasterDegreeThesisDataVersions =
+					Cloner.copyListIMasterDegreeThesisDataVersion2ListInfoMasterDegreeThesisDataVersion(
+						masterDegreeThesisDataVersions);
+			}
 
-			infoMasterDegreeThesisDataVersions =
-				Cloner.copyListIMasterDegreeThesisDataVersion2ListInfoMasterDegreeThesisDataVersion(
-					masterDegreeThesisDataVersions);
-
-		} catch (ExcepcaoPersistencia ex)
+		}
+		catch (ExcepcaoPersistencia ex)
 		{
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();

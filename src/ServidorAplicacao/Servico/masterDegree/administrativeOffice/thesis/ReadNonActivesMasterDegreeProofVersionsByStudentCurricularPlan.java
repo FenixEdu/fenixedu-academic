@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.thesis;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoStudentCurricularPlan;
@@ -7,7 +8,6 @@ import DataBeans.util.Cloner;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -49,7 +49,7 @@ public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan impl
 
 	public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException
 	{
-		List infoMasterDegreeProofVersions = null;
+		List infoMasterDegreeProofVersions = new ArrayList();
 
 		try
 		{
@@ -61,14 +61,15 @@ public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan impl
 				sp.getIPersistentMasterDegreeProofVersion().readNotActiveByStudentCurricularPlan(
 					studentCurricularPlan);
 
-			if (masterDegreeProofVersions.isEmpty())
-				throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeProofVersion");
+			if (masterDegreeProofVersions.isEmpty() == false)
+			{
+				infoMasterDegreeProofVersions =
+					Cloner.copyListIMasterDegreeProofVersion2ListInfoMasterDegreeProofVersion(
+						masterDegreeProofVersions);
+			}
 
-			infoMasterDegreeProofVersions =
-				Cloner.copyListIMasterDegreeProofVersion2ListInfoMasterDegreeProofVersion(
-					masterDegreeProofVersions);
-
-		} catch (ExcepcaoPersistencia ex)
+		}
+		catch (ExcepcaoPersistencia ex)
 		{
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
