@@ -296,7 +296,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService
 			return executionDegree;
 		}
 
-		final String degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome();
+		final Integer degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree().getIdInternal();
 		List infoExecutionDegreeListWithDegreeCode =
 			(List) CollectionUtils.select(infoExecutionDegreeList, new Predicate()
 		{
@@ -306,7 +306,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService
 				return infoExecutionDegree
 					.getInfoDegreeCurricularPlan()
 					.getInfoDegree()
-					.getSigla()
+					.getIdInternal()
 					.equals(
 					degreeCode);
 			}
