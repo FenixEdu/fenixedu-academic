@@ -40,4 +40,9 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
 
 	public List readByStudent(IStudent student) throws ExcepcaoPersistencia;
     public ITurnoAluno readByStudentAndExecutionCourseAndLessonTypeAndGroup(IStudent student, IExecutionCourse executionCourse, TipoAula lessonType, ITurma group) throws ExcepcaoPersistencia;
+    /**
+     * @param shift
+     * @return
+     */
+    public int readNumberOfStudentsByShift(ITurno shift);
 }

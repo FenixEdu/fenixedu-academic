@@ -200,4 +200,14 @@ public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersiste
         criteria.addEqualTo("shift.associatedClasses.idInternal", group.getIdInternal());
         return (ITurnoAluno) queryObject(ShiftStudent.class, criteria);
     }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.ITurnoAlunoPersistente#readNumberOfStudentsByShift(Dominio.ITurno)
+     */
+    public int readNumberOfStudentsByShift(ITurno shift)
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("shift.idInternal", shift.getIdInternal());        
+        return count(ShiftStudent.class, criteria);
+    }
 }
