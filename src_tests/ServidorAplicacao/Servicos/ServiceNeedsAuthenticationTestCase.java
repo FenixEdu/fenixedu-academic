@@ -33,7 +33,6 @@ public abstract class ServiceNeedsAuthenticationTestCase
 	}
 
 	public void testAuthorizedUser() {
-
 		Object serviceArguments[] = getAuthorizeArguments();
 
 		try {
@@ -46,9 +45,17 @@ public abstract class ServiceNeedsAuthenticationTestCase
 					+ getNameOfServiceToBeTested());
 
 		} catch (NotAuthorizedException ex) {
-			fail(getNameOfServiceToBeTested() + "fail testAuthorizedUser");
+			ex.printStackTrace();
+			System.out.println(
+				"testAuthorizedUser was UNSUCCESSFULY runned by service: "
+					+ getNameOfServiceToBeTested());
+			fail(getNameOfServiceToBeTested() + ": fail testAuthorizedUser");
 
 		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testAuthorizedUser was UNSUCCESSFULY runned by service: "
+					+ getNameOfServiceToBeTested());
 			fail("Unable to run service: " + getNameOfServiceToBeTested());
 		}
 	}
@@ -61,21 +68,27 @@ public abstract class ServiceNeedsAuthenticationTestCase
 				userView2,
 				getNameOfServiceToBeTested(),
 				serviceArguments);
-			fail(getNameOfServiceToBeTested() + "fail testUnauthorizedUser");
+			System.out.println(
+				"testUnauthorizedUser was UNSUCCESSFULY runned by service: "
+					+ getNameOfServiceToBeTested());
+			fail(getNameOfServiceToBeTested() + ": fail testUnauthorizedUser");
 
 		} catch (NotAuthorizedException ex) {
-
+			ex.printStackTrace();
 			System.out.println(
 				"testUnauthorizedUser was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 
 		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testUnauthorizedUser was UNSUCCESSFULY runned by service: "
+					+ getNameOfServiceToBeTested());
 			fail("Unable to run service: " + getNameOfServiceToBeTested());
 		}
 	}
 
 	public void testNonAuthenticatedUser() {
-
 		Object serviceArguments[] = getAuthorizeArguments();
 
 		try {
@@ -83,16 +96,23 @@ public abstract class ServiceNeedsAuthenticationTestCase
 				userView3,
 				getNameOfServiceToBeTested(),
 				serviceArguments);
+			System.out.println(
+				"testNonAuthenticatedUser was UNSUCCESSFULY runned by service: "
+					+ getNameOfServiceToBeTested());
 			fail(
 				getNameOfServiceToBeTested() + "fail testNonAuthenticatedUser");
 
 		} catch (NotAuthorizedException ex) {
-
+			ex.printStackTrace();
 			System.out.println(
 				"testNonAuthenticatedUser was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 
 		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testNonAuthenticatedUser was UNSUCCESSFULY runned by service: "
+					+ getNameOfServiceToBeTested());
 			fail("Unable to run service: " + getNameOfServiceToBeTested());
 		}
 	}
@@ -104,17 +124,19 @@ public abstract class ServiceNeedsAuthenticationTestCase
 		try {
 			return (IUserView) gestor.executar(null, "Autenticacao", args);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			fail("Authenticating User!" + ex);
 			return null;
 		}
 	}
 
+	protected abstract String getNameOfServiceToBeTested();
+	protected abstract String getDataSetFilePath();
+
 	protected abstract String[] getAuthenticatedAndAuthorizedUser();
 	protected abstract String[] getAuthenticatedAndUnauthorizedUser();
 	protected abstract String[] getNotAuthenticatedUser();
-	protected abstract String getNameOfServiceToBeTested();
-	protected abstract Object[] getAuthorizeArguments();
-	protected abstract String getDataSetFilePath();
-	protected abstract String getApplication();
 
+	protected abstract Object[] getAuthorizeArguments();
+	protected abstract String getApplication();
 }
