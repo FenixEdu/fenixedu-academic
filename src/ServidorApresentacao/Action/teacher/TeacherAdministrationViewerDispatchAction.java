@@ -29,6 +29,7 @@ import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteEvaluation;
+import DataBeans.InfoSiteEvaluationMethods;
 import DataBeans.InfoSiteInstructions;
 import DataBeans.InfoSiteItems;
 import DataBeans.InfoSiteObjectives;
@@ -357,8 +358,8 @@ public class TeacherAdministrationViewerDispatchAction
 
 		ISiteComponent objectivesComponent = new InfoSiteObjectives();
 		readSiteView(request, objectivesComponent, null, null, null);
-
 		return mapping.findForward("viewObjectives");
+
 	}
 
 	public ActionForward prepareEditObjectives(
@@ -371,7 +372,18 @@ public class TeacherAdministrationViewerDispatchAction
 		ISiteComponent objectivesComponent = new InfoSiteObjectives();
 		String curriculumIdString =
 			(String) request.getParameter("curriculumCode");
-		Integer curriculumId = new Integer(curriculumIdString);
+		Integer curriculumId = null;
+		if (curriculumIdString != null) {
+			curriculumId = new Integer(curriculumIdString);
+		}
+
+		String curricularCourseCodeString =
+			request.getParameter("curricularCourseCode");
+		Integer curricularCourseCode = null;
+		if (curricularCourseCodeString != null) {
+			curricularCourseCode = new Integer(curricularCourseCodeString);
+			request.setAttribute("curricularCourseCode", curricularCourseCode);
+		}
 		readSiteView(request, objectivesComponent, null, curriculumId, null);
 
 		TeacherAdministrationSiteView siteView =
@@ -419,7 +431,15 @@ public class TeacherAdministrationViewerDispatchAction
 		infoSiteObjectivesNew.setOperacionalObjectivesEn(
 			(String) objectivesForm.get("operacionalObjectivesEn"));
 
-		Object args[] = { objectCode, infoSiteObjectivesNew };
+		String curricularCourseCodeString =
+			request.getParameter("curricularCourseCode");
+		Integer curricularCourseCode = null;
+		if (curricularCourseCodeString != null) {
+			curricularCourseCode = new Integer(curricularCourseCodeString);
+		}
+
+		Object args[] =
+			{ objectCode, curricularCourseCode, infoSiteObjectivesNew };
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos serviceManager = GestorServicos.manager();
@@ -454,7 +474,16 @@ public class TeacherAdministrationViewerDispatchAction
 		ISiteComponent programComponent = new InfoSiteProgram();
 		String curriculumIdString =
 			(String) request.getParameter("curriculumCode");
-		Integer curriculumId = new Integer(curriculumIdString);
+		Integer curriculumId = null;
+		if (curriculumIdString != null) {
+			curriculumId = new Integer(curriculumIdString);
+		}
+		String curricularCourseCodeString =
+			request.getParameter("curricularCourseCode");
+		Integer curricularCourseCode = null;
+		if (curricularCourseCodeString != null) {
+			curricularCourseCode = new Integer(curricularCourseCodeString);
+		}
 		readSiteView(request, programComponent, null, curriculumId, null);
 
 		TeacherAdministrationSiteView siteView =
@@ -467,7 +496,7 @@ public class TeacherAdministrationViewerDispatchAction
 		programForm.set(
 			"programEn",
 			((InfoSiteProgram) siteView.getComponent()).getProgramEn());
-
+		request.setAttribute("curricularCourseCode", curricularCourseCode);
 		return mapping.findForward("editProgram");
 	}
 
@@ -485,8 +514,14 @@ public class TeacherAdministrationViewerDispatchAction
 		InfoSiteProgram infoSiteProgramNew = new InfoSiteProgram();
 		infoSiteProgramNew.setProgram((String) programForm.get("program"));
 		infoSiteProgramNew.setProgramEn((String) programForm.get("programEn"));
-
-		Object args[] = { objectCode, infoSiteProgramNew };
+		String curricularCourseCodeString =
+			request.getParameter("curricularCourseCode");
+		Integer curricularCourseCode = null;
+		if (curricularCourseCodeString != null) {
+			curricularCourseCode = new Integer(curricularCourseCodeString);
+		}
+		Object args[] =
+			{ objectCode, curricularCourseCode, infoSiteProgramNew };
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos serviceManager = GestorServicos.manager();
@@ -507,7 +542,8 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		ISiteComponent evaluationComponent = new InfoEvaluationMethod();
+		ISiteComponent evaluationComponent = new InfoSiteEvaluationMethods();
+
 		readSiteView(request, evaluationComponent, null, null, null);
 
 		return mapping.findForward("viewEvaluationMethod");
@@ -521,11 +557,21 @@ public class TeacherAdministrationViewerDispatchAction
 		throws FenixActionException {
 
 		ISiteComponent evaluationComponent = new InfoEvaluationMethod();
-		readSiteView(request, evaluationComponent, null, null, null);
+		String curricularCourseCodeString =
+			request.getParameter("curricularCourseCode");
+		Integer curricularCourseCode = new Integer(curricularCourseCodeString);
+		readSiteView(
+			request,
+			evaluationComponent,
+			null,
+			curricularCourseCode,
+			null);
 
 		TeacherAdministrationSiteView siteView =
 			(TeacherAdministrationSiteView) request.getAttribute("siteView");
-
+		if (siteView.getComponent()!=null){
+			
+	
 		DynaActionForm evaluationForm = (DynaActionForm) form;
 		evaluationForm.set(
 			"evaluationElements",
@@ -535,7 +581,8 @@ public class TeacherAdministrationViewerDispatchAction
 			"evaluationElementsEn",
 			((InfoEvaluationMethod) siteView.getComponent())
 				.getEvaluationElementsEn());
-
+		}		
+		request.setAttribute("curricularCourseCode",curricularCourseCode);
 		return mapping.findForward("editEvaluationMethod");
 	}
 
@@ -548,7 +595,9 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpSession session = request.getSession(false);
 
 		Integer objectCode = getObjectCode(request);
-
+		String curricularCourseCodeString =
+			request.getParameter("curricularCourseCode");
+		Integer curricularCourseCode = new Integer(curricularCourseCodeString);
 		DynaActionForm evaluationForm = (DynaActionForm) form;
 		InfoEvaluationMethod infoEvaluationNew = new InfoEvaluationMethod();
 		infoEvaluationNew.setEvaluationElements(
@@ -556,7 +605,7 @@ public class TeacherAdministrationViewerDispatchAction
 		infoEvaluationNew.setEvaluationElementsEn(
 			(String) evaluationForm.get("evaluationElementsEn"));
 
-		Object args[] = { objectCode, infoEvaluationNew };
+		Object args[] = { objectCode, curricularCourseCode, infoEvaluationNew };
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos serviceManager = GestorServicos.manager();
@@ -1340,7 +1389,7 @@ public class TeacherAdministrationViewerDispatchAction
 		return objectCode;
 	}
 
-	private void readSiteView(
+	private SiteView readSiteView(
 		HttpServletRequest request,
 		ISiteComponent firstPageComponent,
 		Integer infoExecutionCourseCode,
@@ -1387,7 +1436,7 @@ public class TeacherAdministrationViewerDispatchAction
 					"infoSection",
 					((InfoSiteSection) siteView.getComponent()).getSection());
 			}
-
+			return siteView;
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

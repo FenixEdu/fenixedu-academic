@@ -131,11 +131,11 @@ create table BIBLIOGRAPHIC_REFERENCE (
 drop table if exists EVALUATION_METHOD;
 create table EVALUATION_METHOD (
    ID_INTERNAL int(11) unsigned not null auto_increment,   
-   KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
+   KEY_CURRICULAR_COURSE int(11) unsigned not null default '0',
    EVALUATION_ELEMENTS text,
    EVALUATION_ELEMENTS_EN text,
    primary key (ID_INTERNAL),
-   unique ID_INTERNAL (KEY_EXECUTION_COURSE))
+   unique ID_INTERNAL (KEY_CURRICULAR_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
 
 #----------------------------

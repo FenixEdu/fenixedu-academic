@@ -10,12 +10,42 @@ package Dominio;
  *
  * 
  */
-public class EvaluationMethod extends DomainObject implements IEvaluationMethod {
+public class EvaluationMethod
+	extends DomainObject
+	implements IEvaluationMethod {
 
 	private String evaluationElements;
 	private String evaluationElementsEn;
-	private Integer keyExecutionCourse;
-	private IDisciplinaExecucao executionCourse;
+	private Integer keyCurricularCourse;
+	private ICurricularCourse curricularCourse;
+
+	/**
+	 * @return
+	 */
+	public ICurricularCourse getCurricularCourse() {
+		return curricularCourse;
+	}
+
+	/**
+	 * @param curricularCourse
+	 */
+	public void setCurricularCourse(ICurricularCourse curricularCourse) {
+		this.curricularCourse = curricularCourse;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getKeyCurricularCourse() {
+		return keyCurricularCourse;
+	}
+
+	/**
+	 * @param keyCurricularCourse
+	 */
+	public void setKeyCurricularCourse(Integer keyCurricularCourse) {
+		this.keyCurricularCourse = keyCurricularCourse;
+	}
 
 	/**
 	 * 
@@ -23,19 +53,24 @@ public class EvaluationMethod extends DomainObject implements IEvaluationMethod 
 	public EvaluationMethod() {
 	}
 
-	public EvaluationMethod(IDisciplinaExecucao executionCourse) {
-		setExecutionCourse(executionCourse);
+	public EvaluationMethod(Integer idInternal) {
+		setIdInternal(idInternal);
 	}
 
-	public EvaluationMethod(IDisciplinaExecucao executionCourse, String evaluationElements) {
-		setExecutionCourse(executionCourse);
-		setEvaluationElements(evaluationElements);
-	}
-	public EvaluationMethod(IDisciplinaExecucao executionCourse, String evaluationElements, String evaluationElementsEn) {
-		setExecutionCourse(executionCourse);
+	/**
+	 * @param curricularCourse2
+	 * @param string
+	 * @param string2
+	 */
+	public EvaluationMethod(
+		ICurricularCourse curricularCourse2,
+		String evaluationElements,
+		String evaluationElementsEn) {
+		setCurricularCourse(curricularCourse2);
 		setEvaluationElements(evaluationElements);
 		setEvaluationElementsEn(evaluationElementsEn);
 	}
+
 	/**
 	 * @return
 	 */
@@ -50,39 +85,11 @@ public class EvaluationMethod extends DomainObject implements IEvaluationMethod 
 		evaluationElements = string;
 	}
 
-	/**
-	 * @return
-	 */
-	public IDisciplinaExecucao getExecutionCourse() {
-		return executionCourse;
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer getKeyExecutionCourse() {
-		return keyExecutionCourse;
-	}
-
-	/**
-	 * @param execucao
-	 */
-	public void setExecutionCourse(IDisciplinaExecucao execucao) {
-		executionCourse = execucao;
-	}
-
-	/**
-	 * @param integer
-	 */
-	public void setKeyExecutionCourse(Integer integer) {
-		keyExecutionCourse = integer;
-	}
-
 	public String toString() {
 		String result = "[EvaluationMethod";
 		result += ", codInt=" + getIdInternal();
 		result += ", evaluationElements =" + getEvaluationElements();
-		result += ", executionCourse =" + getExecutionCourse();
+		result += ", executionCourse =" + getCurricularCourse();
 		result += "]";
 		return result;
 	}
@@ -90,7 +97,9 @@ public class EvaluationMethod extends DomainObject implements IEvaluationMethod 
 	public boolean equals(Object arg0) {
 		boolean result = false;
 		if (arg0 instanceof IEvaluationMethod) {
-			result = getExecutionCourse().equals(((IEvaluationMethod) arg0).getExecutionCourse());
+			result =
+				getCurricularCourse().equals(
+					((IEvaluationMethod) arg0).getCurricularCourse());
 		}
 		return result;
 	}

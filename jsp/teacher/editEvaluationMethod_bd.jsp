@@ -4,9 +4,23 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <span class="error"><html:errors /></span> 
 <logic:present name="siteView">
-	<bean:define id="evaluation" name="siteView" property="component"/>
+	
 	<h2><bean:message key="label.evaluation"/></h2> 
 	<html:form action="/editEvaluationMethod">
+	<logic:present name="siteView" property="component">
+	<bean:define id="evaluation" name="siteView" property="component"/>
+	<bean:define id="curricularCourseCode" name="evaluation" property="infoCurricularCourse.idInternal"/>
+		<html:hidden property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"/>
+	
+	</logic:present>
+	
+	<logic:notPresent name="siteView" property="component">
+	
+	<bean:define id="curricularCourseCode" name="curricularCourseCode"/>
+	<html:hidden property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"/>
+	</logic:notPresent> 
+	
+	
 		<html:hidden property="page" value="1"/>
 		<table>	
 			<tr>
@@ -34,5 +48,7 @@
 		</table>   
 		<html:hidden property="method" value="editEvaluationMethod" />
 		<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		
+		
 	</html:form>
 </logic:present>

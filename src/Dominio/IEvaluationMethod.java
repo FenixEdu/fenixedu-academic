@@ -16,9 +16,9 @@ public interface IEvaluationMethod {
 	public String getEvaluationElementsEn();
 	public void setEvaluationElements(String string);
 	public void setEvaluationElementsEn(String string);
-	public Integer getKeyExecutionCourse();
-	public void setKeyExecutionCourse(Integer integer);
-	public IDisciplinaExecucao getExecutionCourse();
-	public void setExecutionCourse(IDisciplinaExecucao execucao);
+	public Integer getKeyCurricularCourse();
+	public void setKeyCurricularCourse(Integer integer);
+	public ICurricularCourse getCurricularCourse();
+	public void setCurricularCourse(ICurricularCourse execucao);
 
 }

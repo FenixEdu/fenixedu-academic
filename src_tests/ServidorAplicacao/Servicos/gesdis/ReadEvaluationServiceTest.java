@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Servicos.gesdis;
 
-import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
@@ -161,8 +160,9 @@ public class ReadEvaluationServiceTest extends TestCaseReadServices {
 
 			InfoExecutionCourse infoExecutionCourse =
 				Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-		InfoEvaluationMethod infoEvaluation = new InfoEvaluationMethod(infoExecutionCourse,"bla",null);	
-		return infoEvaluation;
+		//InfoEvaluationMethod infoEvaluation = new InfoEvaluationMethod(infoExecutionCourse,"bla",null);	
+		//return infoEvaluation;
+		return null;
 	}
 
 }

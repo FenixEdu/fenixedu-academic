@@ -70,8 +70,8 @@
         autoincrement="true"
     />
     <field-descriptor id="2"
-        name="keyExecutionCourse"
-        column="KEY_EXECUTION_COURSE"
+        name="keyCurricularCourse"
+        column="KEY_CURRICULAR_COURSE"
         jdbc-type="INTEGER"
 	/>
          
@@ -90,8 +90,8 @@
         />
         
     <reference-descriptor
-         name="executionCourse"
-         class-ref="Dominio.DisciplinaExecucao"
+         name="curricularCourse"
+         class-ref="Dominio.CurricularCourse"
          proxy="true"
     >
 	<foreignkey field-id-ref="2"/>

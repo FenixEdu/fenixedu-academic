@@ -21,7 +21,6 @@ import Dominio.BibliographicReference;
 import Dominio.Curriculum;
 import Dominio.DisciplinaExecucao;
 import Dominio.Evaluation;
-import Dominio.EvaluationMethod;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -290,7 +289,7 @@ public class SiglaDataLoader {
 					siglaCurricularCoursesEng,
 					broker);
 			if (evaluation == null) {
-				evaluation = new EvaluationMethod(executionCourse);
+				//evaluation = new EvaluationMethod(executionCourse);
 			}
 			evaluation =
 				updateEvaluation(evaluation, siglaCurricularCourses, broker);

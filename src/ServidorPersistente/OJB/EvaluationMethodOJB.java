@@ -8,9 +8,11 @@ package ServidorPersistente.OJB;
 
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.EvaluationMethod;
+import Dominio.ICurricularCourse;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEvaluationMethod;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -29,6 +31,9 @@ public class EvaluationMethodOJB
 	/* (non-Javadoc)
 	 * @see ServidorPersistente.IPersistentEvaluationMethod#readByExecutionCourse(Dominio.IDisciplinaExecucao)
 	 */
+	 /**
+	  * @deprecated
+	  */
 	public IEvaluationMethod readByExecutionCourse(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
 			try {
@@ -52,6 +57,16 @@ public class EvaluationMethodOJB
 				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
 	}
+
+	public IEvaluationMethod readByCurricularCourse(ICurricularCourse curricularCourse)
+			throws ExcepcaoPersistencia {
+				
+					Criteria criteria = new Criteria();
+					criteria.addEqualTo("keyCurricularCourse",curricularCourse.getIdInternal());
+					return (IEvaluationMethod) queryObject(EvaluationMethod.class,criteria);
+					
+				
+		}	
 
 	/* (non-Javadoc)
 	 * @see ServidorPersistente.IPersistentEvaluationMethod#readAll()
@@ -94,8 +109,8 @@ public class EvaluationMethodOJB
 
 					// Read professorship from database.
 				evaluationFromDB =
-						this.readByExecutionCourse(
-						evaluation.getExecutionCourse());
+						this.readByCurricularCourse(
+						evaluation.getCurricularCourse());
 
 					// If professorship is not in database, then write it.
 					if (evaluationFromDB == null)

@@ -62,7 +62,7 @@ public class EditEvaluationTest extends TestCaseDeleteAndEditServices {
 		InfoEvaluationMethod infoEvaluation = new InfoEvaluationMethod();
 		infoEvaluation.setEvaluationElements("evaluationElements");
 		infoEvaluation.setEvaluationElementsEn("evaluationElementsEn");
-		infoEvaluation.setInfoExecutionCourse(infoExecutionCourse);
+		//infoEvaluation.setInfoExecutionCourse(infoExecutionCourse);
 
 		Object[] args = { new Integer(26), infoEvaluation };
 		return args;

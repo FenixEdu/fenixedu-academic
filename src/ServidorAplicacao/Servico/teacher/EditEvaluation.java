@@ -1,14 +1,14 @@
 package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.InfoEvaluationMethod;
-import Dominio.DisciplinaExecucao;
+import Dominio.CurricularCourse;
 import Dominio.EvaluationMethod;
-import Dominio.IDisciplinaExecucao;
+import Dominio.ICurricularCourse;
 import Dominio.IEvaluationMethod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -31,31 +31,44 @@ public class EditEvaluation implements IServico {
 		return "EditEvaluation";
 	}
 
-	public boolean run(Integer infoExecutionCourseCode, InfoEvaluationMethod infoEvaluationNew) throws FenixServiceException {
+	public boolean run(
+		Integer infoExecutionCourseCode,
+		Integer infoCurricularCourseCode,
+		InfoEvaluationMethod infoEvaluationNew)
+		throws FenixServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
-			IPersistentEvaluationMethod persistentEvaluation = sp.getIPersistentEvaluationMethod();
+			IPersistentCurricularCourse persistentCurricularCourse =
+				sp.getIPersistentCurricularCourse();
+			IPersistentEvaluationMethod persistentEvaluation =
+				sp.getIPersistentEvaluationMethod();
 
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
+			ICurricularCourse curricularCourse =
+				(ICurricularCourse) persistentCurricularCourse.readByOId(
+						new CurricularCourse(infoCurricularCourseCode),
+						false);
 
 			IEvaluationMethod evaluation = null;
-			evaluation = persistentEvaluation.readByExecutionCourse(executionCourse);
+			evaluation =
+				persistentEvaluation.readByCurricularCourse(curricularCourse);
 
-			persistentEvaluation.lockWrite(evaluation);
+		
 
 			if (evaluation != null) {
-				evaluation.setExecutionCourse(executionCourse);
-				evaluation.setEvaluationElements(infoEvaluationNew.getEvaluationElements());
-				evaluation.setEvaluationElementsEn(infoEvaluationNew.getEvaluationElementsEn());
+				persistentEvaluation.lockWrite(evaluation);
+				evaluation.setCurricularCourse(curricularCourse);
+				evaluation.setEvaluationElements(
+					infoEvaluationNew.getEvaluationElements());
+				evaluation.setEvaluationElementsEn(
+					infoEvaluationNew.getEvaluationElementsEn());
 			} else {
 				evaluation =
 					new EvaluationMethod(
-						executionCourse,
+						curricularCourse,
 						infoEvaluationNew.getEvaluationElements(),
 						infoEvaluationNew.getEvaluationElementsEn());
+				persistentEvaluation.lockWrite(evaluation);
 			}
 
 		} catch (ExcepcaoPersistencia e) {

@@ -73,8 +73,6 @@ import Util.State;
 public abstract class Cloner {
 
 	public static ITurno copyInfoShift2Shift(InfoShift infoShift) {
-		
-		
 		ITurno shift = new Turno();
 		IDisciplinaExecucao executionCourse =
 			Cloner.copyInfoExecutionCourse2ExecutionCourse(
@@ -208,7 +206,6 @@ public abstract class Cloner {
 	 * @return ITurno
 	 */
 	public static InfoShift copyShift2InfoShift(ITurno shift) {
-		
 		InfoShift infoShift = new InfoShift();
 
 		InfoExecutionCourse infoExecutionCourse =
@@ -1809,13 +1806,12 @@ public abstract class Cloner {
 	public static IEvaluationMethod copyInfoEvaluationMethod2IEvaluationMethod(InfoEvaluationMethod infoEvaluationMethod) {
 
 		IEvaluationMethod evaluationMethod = new EvaluationMethod();
-		IDisciplinaExecucao executionCourse =
-			Cloner.copyInfoExecutionCourse2ExecutionCourse(
-				infoEvaluationMethod.getInfoExecutionCourse());
+		ICurricularCourse curricularCourse = Cloner.copyInfoCurricularCourse2CurricularCourse(infoEvaluationMethod.getInfoCurricularCourse());
+		
 
 		copyObjectProperties(evaluationMethod, infoEvaluationMethod);
 
-		evaluationMethod.setExecutionCourse(executionCourse);
+		evaluationMethod.setCurricularCourse(curricularCourse);
 
 		return evaluationMethod;
 	}
@@ -1823,13 +1819,12 @@ public abstract class Cloner {
 	public static InfoEvaluationMethod copyIEvaluationMethod2InfoEvaluationMethod(IEvaluationMethod evaluationMethod) {
 
 		InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(
-				evaluationMethod.getExecutionCourse());
+		InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(evaluationMethod.getCurricularCourse());
+		
 
 		copyObjectProperties(infoEvaluationMethod, evaluationMethod);
 
-		infoEvaluationMethod.setInfoExecutionCourse(infoExecutionCourse);
+		infoEvaluationMethod.setInfoCurricularCourse(infoCurricularCourse);
 
 		return infoEvaluationMethod;
 	}
