@@ -252,7 +252,7 @@
             <form-property name="studentName" type="java.lang.String" />
             <form-property name="studentNumber" type="java.lang.Integer" />
             <form-property name="grade" type="java.lang.String" />
-            <form-property name="teacherNumber" type="java.lang.Integer" />
+            <form-property name="teacherNumber" type="java.lang.String" />
       </form-bean>
 
    </form-beans>
@@ -805,7 +805,7 @@
       </action>
       
       <action path="/marksSubmission"
-      		  input="/marksManagement/marksSubmission.jsp"
+      		  input="/marksSubmission.do?method=prepare&amp;page=0"
       	      name="marksSubmissionForm"
 		      parameter="method"
 		      scope="request"
