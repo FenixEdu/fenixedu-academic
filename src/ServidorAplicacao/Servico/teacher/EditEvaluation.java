@@ -1,15 +1,15 @@
 package ServidorAplicacao.Servico.teacher;
 
-import DataBeans.InfoCurriculum;
-import Dominio.CurricularCourse;
-import Dominio.Curriculum;
-import Dominio.ICurricularCourse;
-import Dominio.ICurriculum;
+import DataBeans.InfoEvaluationMethod;
+import Dominio.DisciplinaExecucao;
+import Dominio.EvaluationMethod;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IEvaluationMethod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentCurriculum;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -33,40 +33,75 @@ public class EditEvaluation implements IServico {
 
 	public boolean run(
 		Integer infoExecutionCourseCode,
-		Integer infoCurricularCourseCode,
-		InfoCurriculum infoCurriculumNew)
+		Integer infoEvaluationMethodCode,
+		InfoEvaluationMethod infoEvaluationMethod)
 		throws FenixServiceException{
 
+		System.err.println("--->Vou escrever o elemento de avaliação!");
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentCurricularCourse persistentCurricularCourse =
-				sp.getIPersistentCurricularCourse();
+			
+			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+			executionCourse.setIdInternal(infoExecutionCourseCode); 
+				
+			IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
+			IEvaluationMethod evaluationMethod = persistentEvaluationMethod.readByIdExecutionCourse(executionCourse);
 
-			ICurricularCourse curricularCourse =
-				(ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(infoCurricularCourseCode),false);
-
-			IPersistentCurriculum persistentCurriculum =
-				sp.getIPersistentCurriculum();
-
-			ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
-		
-			if (curriculum != null) {		
-				curriculum.setCurricularCourse(curricularCourse);
-				curriculum.setEvaluationElements(infoCurriculumNew.getEvaluationElements());
-				curriculum.setEvaluationElementsEn(infoCurriculumNew.getEvaluationElementsEn());
-				persistentCurriculum.lockWrite(curriculum);
-					
-			} else {
-				curriculum = new Curriculum();
-				curriculum.setCurricularCourse(curricularCourse);
-				curriculum.setEvaluationElements(infoCurriculumNew.getEvaluationElements());
-				curriculum.setEvaluationElementsEn(infoCurriculumNew.getEvaluationElementsEn());
-				persistentCurriculum.lockWrite(curriculum);
-			}
+			if(evaluationMethod == null) {
+				evaluationMethod = new EvaluationMethod();
+				
+				evaluationMethod.setKeyExecutionCourse(infoExecutionCourseCode);
+								
+				IDisciplinaExecucaoPersistente persistenteExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+				evaluationMethod.setExecutionCourse((IDisciplinaExecucao) persistenteExecutionCourse.readByOId(executionCourse, false));				
+			} 
+			
+			evaluationMethod.setEvaluationElements(infoEvaluationMethod.getEvaluationElements());
+			evaluationMethod.setEvaluationElementsEn(infoEvaluationMethod.getEvaluationElementsEn());
+			persistentEvaluationMethod.lockWrite(evaluationMethod);					
 			
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
 		return true;
 	}
+	
+//	public boolean run(
+//		Integer infoExecutionCourseCode,
+//		Integer infoCurricularCourseCode,
+//		InfoCurriculum infoCurriculumNew)
+//		throws FenixServiceException{
+//
+//		try {
+//			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+//			IPersistentCurricularCourse persistentCurricularCourse =
+//				sp.getIPersistentCurricularCourse();
+//
+//			ICurricularCourse curricularCourse =
+//				(ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(infoCurricularCourseCode),false);
+//
+//			IPersistentCurriculum persistentCurriculum =
+//				sp.getIPersistentCurriculum();
+//
+//			ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+//		
+//			if (curriculum != null) {		
+//				curriculum.setCurricularCourse(curricularCourse);
+//				curriculum.setEvaluationElements(infoCurriculumNew.getEvaluationElements());
+//				curriculum.setEvaluationElementsEn(infoCurriculumNew.getEvaluationElementsEn());
+//				persistentCurriculum.lockWrite(curriculum);
+//					
+//			} else {
+//				curriculum = new Curriculum();
+//				curriculum.setCurricularCourse(curricularCourse);
+//				curriculum.setEvaluationElements(infoCurriculumNew.getEvaluationElements());
+//				curriculum.setEvaluationElementsEn(infoCurriculumNew.getEvaluationElementsEn());
+//				persistentCurriculum.lockWrite(curriculum);
+//			}
+//			
+//		} catch (ExcepcaoPersistencia e) {
+//			throw new FenixServiceException(e);
+//		}
+//		return true;
+//	}
 }

@@ -4,6 +4,9 @@
  * Created on 6 de Janeiro de 2003, 20:29
  */
 package Dominio;
+
+import java.util.Date;
+
 /**
  *
  * @author  EP 15 - fjgc
@@ -16,8 +19,11 @@ public class Curriculum extends DomainObject implements ICurriculum {
 	protected String generalObjectivesEn;
 	protected String operacionalObjectivesEn;
 	protected String programEn;
-	protected String evaluationElements;
-	protected String evaluationElementsEn;
+	protected String evaluationElements;//TODO: to delete
+	protected String evaluationElementsEn;//TODO: to delete
+	
+	protected Date lastModificationDate;
+	
 	protected ICurricularCourse curricularCourse;
 	private Integer keyCurricularCourse;
 	/**
@@ -177,5 +183,13 @@ public class Curriculum extends DomainObject implements ICurriculum {
 	 */
 	public void setProgramEn(String string) {
 		programEn = string;
+	}
+	
+	public Date getLastModificationDate() {
+		return lastModificationDate;
+	}
+
+	public void setLastModificationDate(Date lastModificationDate) {
+		this.lastModificationDate = lastModificationDate;
 	}
 }

@@ -48,6 +48,7 @@ import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentDegreeCurricularPlanEnrolmentInfo;
+import ServidorPersistente.IPersistentDegreeInfo;
 import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IPersistentDistributedTest;
 import ServidorPersistente.IPersistentEmployee;
@@ -58,6 +59,7 @@ import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentEvaluationExecutionCourse;
+import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExamExecutionCourse;
 import ServidorPersistente.IPersistentExamStudentRoom;
@@ -77,8 +79,7 @@ import ServidorPersistente.IPersistentMasterDegreeThesis;
 import ServidorPersistente.IPersistentMasterDegreeThesisDataVersion;
 import ServidorPersistente.IPersistentMetadata;
 import ServidorPersistente.IPersistentPersonRole;
-import ServidorPersistente
-	.IPersistentPossibleCurricularCourseForOptionalCurricularCourse;
+import ServidorPersistente.IPersistentPossibleCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.IPersistentPrecedence;
 import ServidorPersistente.IPersistentPrice;
 import ServidorPersistente.IPersistentProfessorship;
@@ -122,9 +123,7 @@ import ServidorPersistente.Seminaries.IPersistentSeminary;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCandidacy;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudy;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudyChoice;
-import ServidorPersistente
-	.Seminaries
-	.IPersistentSeminaryCurricularCourseEquivalency;
+import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
 
@@ -159,29 +158,17 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			if (hasBroker != null) {
 				PersistenceBroker broker = hasBroker.getBroker();
 
-				System.out.println(
-					"###########################################33");
-				System.out.println(
-					"broker.serviceObjectCache().class= "
-						+ broker.serviceObjectCache().getClass());
+				System.out.println("###########################################33");
+				System.out.println("broker.serviceObjectCache().class= " + broker.serviceObjectCache().getClass());
 
-				CacheFilterRegistry cacheFilter =
-					(CacheFilterRegistry) broker.serviceObjectCache();
+				CacheFilterRegistry cacheFilter = (CacheFilterRegistry) broker.serviceObjectCache();
 
+				System.out.println("###########################################33");
 				System.out.println(
-					"###########################################33");
-				System.out.println(
-					"broker.serviceObjectCache().class= "
-						+ cacheFilter.getCache(
-							null,
-							null,
-							CacheFilterRegistry.METHOD_LOOKUP));
+					"broker.serviceObjectCache().class= " + cacheFilter.getCache(null, null, CacheFilterRegistry.METHOD_LOOKUP));
 
 				FenixObjectCacheDefaultImpl cache =
-					(FenixObjectCacheDefaultImpl) cacheFilter.getCache(
-						null,
-						null,
-						CacheFilterRegistry.METHOD_LOOKUP);
+					(FenixObjectCacheDefaultImpl) cacheFilter.getCache(null, null, CacheFilterRegistry.METHOD_LOOKUP);
 
 				numberCachedObjects = cache.getNumberOfCachedObjects();
 			}
@@ -190,8 +177,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return numberCachedObjects;
 	}
 
-	public static synchronized SuportePersistenteOJB getInstance()
-		throws ExcepcaoPersistencia {
+	public static synchronized SuportePersistenteOJB getInstance() throws ExcepcaoPersistencia {
 		if (_instance == null) {
 			_instance = new SuportePersistenteOJB();
 		}
@@ -200,8 +186,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public static synchronized void resetInstance() {
 		if (_instance != null) {
-			PersistenceBroker broker =
-				PersistenceBrokerFactory.defaultPersistenceBroker();
+			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 			broker.clearCache();
 			_instance = null;
 		}
@@ -231,13 +216,9 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			Transaction tx = _odmg.newTransaction();
 			tx.begin();
 		} catch (ODMGException ex1) {
-			throw new ExcepcaoPersistencia(
-				ExcepcaoPersistencia.OPEN_DATABASE,
-				ex1);
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.OPEN_DATABASE, ex1);
 		} catch (ODMGRuntimeException ex) {
-			throw new ExcepcaoPersistencia(
-				ExcepcaoPersistencia.BEGIN_TRANSACTION,
-				ex);
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.BEGIN_TRANSACTION, ex);
 		}
 	}
 
@@ -255,21 +236,16 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			Transaction tx = _odmg.currentTransaction();
 
 			if (tx == null)
-				System.out.println(
-					"SuportePersistente.OJB - Nao ha transaccao activa");
+				System.out.println("SuportePersistente.OJB - Nao ha transaccao activa");
 			else {
 				tx.commit();
 				//				Database db =_odmg.getDatabase(null); 
 				//				if (db!= null) db.close();
 			}
 		} catch (ODMGException ex1) {
-			throw new ExcepcaoPersistencia(
-				ExcepcaoPersistencia.CLOSE_DATABASE,
-				ex1);
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.CLOSE_DATABASE, ex1);
 		} catch (ODMGRuntimeException ex) {
-			throw new ExcepcaoPersistencia(
-				ExcepcaoPersistencia.COMMIT_TRANSACTION,
-				ex);
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.COMMIT_TRANSACTION, ex);
 		}
 	}
 
@@ -284,13 +260,9 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			}
 
 		} catch (ODMGException ex1) {
-			throw new ExcepcaoPersistencia(
-				ExcepcaoPersistencia.CLOSE_DATABASE,
-				ex1);
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.CLOSE_DATABASE, ex1);
 		} catch (ODMGRuntimeException ex) {
-			throw new ExcepcaoPersistencia(
-				ExcepcaoPersistencia.ABORT_TRANSACTION,
-				ex);
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.ABORT_TRANSACTION, ex);
 		}
 	}
 
@@ -691,8 +663,15 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new ExternalPersonOJB();
 	}
 
+	public IPersistentEvaluationMethod getIPersistentEvaluationMethod() {
+		return new EvaluationMethodOJB();
+	}
+
 	public IPersistentCoordinator getIPersistentCoordinator() {
 		return new CoordinatorOJB();
 	}
 
+	public IPersistentDegreeInfo getIPersistentDegreeInfo() {
+		return new DegreeInfoOJB();
+	}
 }

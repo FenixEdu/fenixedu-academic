@@ -11,13 +11,13 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
+import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteCurricularCourse;
 import DataBeans.InfoSiteEvaluation;
-import DataBeans.InfoSiteEvaluationMethods;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSiteProgram;
@@ -55,12 +55,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		}
 		Integer infoExecutionCourseCode = new Integer(objectCodeString);
 
-		readSiteView(
-			request,
-			firstPageComponent,
-			infoExecutionCourseCode,
-			null,
-			null);
+		readSiteView(request, firstPageComponent, infoExecutionCourseCode, null, null);
 		return mapping.findForward("sucess");
 	}
 
@@ -90,11 +85,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		return mapping.findForward("sucess");
 	}
 
-	public ActionForward program(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
+	public ActionForward program(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
 		ISiteComponent programComponent = new InfoSiteProgram();
@@ -109,11 +100,15 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-
-		ISiteComponent evaluationComponent = new InfoSiteEvaluationMethods();
+		ISiteComponent evaluationComponent = new InfoEvaluationMethod();
 		readSiteView(request, evaluationComponent, null, null, null);
 
 		return mapping.findForward("sucess");
+
+		//		ISiteComponent evaluationComponent = new InfoSiteEvaluationMethods();
+		//		readSiteView(request, evaluationComponent, null, null, null);
+		//
+		//		return mapping.findForward("sucess");
 	}
 
 	public ActionForward bibliography(
@@ -136,8 +131,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		ISiteComponent curricularCoursesComponent =
-			new InfoSiteAssociatedCurricularCourses();
+		ISiteComponent curricularCoursesComponent = new InfoSiteAssociatedCurricularCourses();
 		readSiteView(request, curricularCoursesComponent, null, null, null);
 
 		return mapping.findForward("sucess");
@@ -156,11 +150,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		return mapping.findForward("sucess");
 	}
 
-	public ActionForward shifts(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
+	public ActionForward shifts(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
 		ISiteComponent shiftsComponent = new InfoSiteShifts();
@@ -182,11 +172,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		return mapping.findForward("sucess");
 	}
 
-	public ActionForward section(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
+	public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
 		String indexString = (String) request.getParameter("index");
@@ -207,18 +193,18 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
 		ISiteComponent summariesComponent = new InfoSiteSummaries();
 		String typeFilter = request.getParameter("typeFilter");
-		TipoAula summaryType=null;
-		if (typeFilter!=null) {
-				summaryType=mapFromStringToLessonType(typeFilter);
-			}
-		((InfoSiteSummaries)summariesComponent).setSummaryType(summaryType);
-		SiteView siteView= readSiteView(request, summariesComponent, null, null, null);
-		
-		Collections.sort(((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
-				.getComponent())
-				.getInfoSummaries(),Collections.reverseOrder());
-		request.setAttribute("siteView",siteView);
-		
+		TipoAula summaryType = null;
+		if (typeFilter != null) {
+			summaryType = mapFromStringToLessonType(typeFilter);
+		}
+		((InfoSiteSummaries) summariesComponent).setSummaryType(summaryType);
+		SiteView siteView = readSiteView(request, summariesComponent, null, null, null);
+
+		Collections.sort(
+			((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView).getComponent()).getInfoSummaries(),
+			Collections.reverseOrder());
+		request.setAttribute("siteView", siteView);
+
 		return mapping.findForward("sucess");
 
 	}
@@ -226,20 +212,20 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		 * @param typeFilter
 		 * @return
 		 */
-		private TipoAula mapFromStringToLessonType(String typeFilter) {
-			TipoAula result = null;
-			if (typeFilter.equals("T")) {
-				result= new TipoAula(TipoAula.TEORICA);
-			} else if (typeFilter.equals("P")) {
-				result= new TipoAula(TipoAula.PRATICA);
-			}else if (typeFilter.equals("TP")) {
-				result= new TipoAula(TipoAula.TEORICO_PRATICA);
-			} else if (typeFilter.equals("L")) {
-				result= new TipoAula(TipoAula.LABORATORIAL);
-			}
-		
-			return result;
+	private TipoAula mapFromStringToLessonType(String typeFilter) {
+		TipoAula result = null;
+		if (typeFilter.equals("T")) {
+			result = new TipoAula(TipoAula.TEORICA);
+		} else if (typeFilter.equals("P")) {
+			result = new TipoAula(TipoAula.PRATICA);
+		} else if (typeFilter.equals("TP")) {
+			result = new TipoAula(TipoAula.TEORICO_PRATICA);
+		} else if (typeFilter.equals("L")) {
+			result = new TipoAula(TipoAula.LABORATORIAL);
 		}
+
+		return result;
+	}
 	public ActionForward curricularCourse(
 		ActionMapping mapping,
 		ActionForm form,
@@ -247,26 +233,18 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		String curricularCourseIdString =
-			(String) request.getParameter("ccCode");
+		String curricularCourseIdString = (String) request.getParameter("ccCode");
 		if (curricularCourseIdString == null) {
 			curricularCourseIdString = (String) request.getAttribute("ccCode");
 		}
 		Integer curricularCourseId = new Integer(curricularCourseIdString);
-		ISiteComponent curricularCourseComponent =
-			new InfoSiteCurricularCourse();
-		readSiteView(
-			request,
-			curricularCourseComponent,
-			null,
-			null,
-			curricularCourseId);
+		ISiteComponent curricularCourseComponent = new InfoSiteCurricularCourse();
+		readSiteView(request, curricularCourseComponent, null, null, curricularCourseId);
 
 		return mapping.findForward("sucess");
 
 	}
 
-	
 	public ActionForward viewExecutionCourseProjects(
 		ActionMapping mapping,
 		ActionForm form,
@@ -303,7 +281,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		return mapping.findForward("sucess");
 	}
 
-	
 	public ActionForward viewStudentGroupInformationAction(
 		ActionMapping mapping,
 		ActionForm form,
@@ -330,7 +307,8 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		Integer sectionIndex,
 		Integer curricularCourseId)
 		throws FenixActionException {
-
+			System.out.println("Read site!");
+			
 		Integer objectCode = null;
 		if (infoExecutionCourseCode == null) {
 			String objectCodeString = request.getParameter("objectCode");
@@ -339,51 +317,32 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
 			}
 			objectCode = new Integer(objectCodeString);
-
 		}
 
 		ISiteComponent commonComponent = new InfoSiteCommon();
 
 		Object[] args =
-			{
-				commonComponent,
-				firstPageComponent,
-				objectCode,
-				infoExecutionCourseCode,
-				sectionIndex,
-				curricularCourseId };
+			{ commonComponent, firstPageComponent, objectCode, infoExecutionCourseCode, sectionIndex, curricularCourseId };
 
 		try {
 			ExecutionCourseSiteView siteView =
-				(ExecutionCourseSiteView) ServiceUtils.executeService(
-					null,
-					"ExecutionCourseSiteComponentService",
-					args);
+				(ExecutionCourseSiteView) ServiceUtils.executeService(null, "ExecutionCourseSiteComponentService", args);
 			if (infoExecutionCourseCode != null) {
-				request.setAttribute(
-					"objectCode",
-					((InfoSiteFirstPage) siteView.getComponent())
-						.getSiteIdInternal());
+				request.setAttribute("objectCode", ((InfoSiteFirstPage) siteView.getComponent()).getSiteIdInternal());
 			} else {
 				request.setAttribute("objectCode", objectCode);
 			}
 			request.setAttribute("siteView", siteView);
 			request.setAttribute(
 				"executionCourseCode",
-				((InfoSiteCommon) siteView.getCommonComponent())
-					.getExecutionCourse()
-					.getIdInternal());
+				((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
 			request.setAttribute(
 				"executionPeriodCode",
-				((InfoSiteCommon) siteView.getCommonComponent())
-					.getExecutionCourse()
-					.getInfoExecutionPeriod()
-					.getIdInternal());
+				((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getInfoExecutionPeriod().getIdInternal());
 			if (siteView.getComponent() instanceof InfoSiteSection) {
-				request.setAttribute(
-					"infoSection",
-					((InfoSiteSection) siteView.getComponent()).getSection());
+				request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
 			}
+			
 			return siteView;
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("A disciplina", e);
@@ -413,7 +372,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 			Integer objectCode = null;
 			String objectCodeString = request.getParameter("objectCode");
 			if (objectCodeString == null) {
-					objectCodeString = (String) request.getAttribute("objectCode");
+				objectCodeString = (String) request.getAttribute("objectCode");
 			}
 			objectCode = new Integer(objectCodeString);
 			ISiteComponent bodyComponent = new InfoSiteRoomTimeTable();
@@ -421,16 +380,12 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 			Object[] args = { bodyComponent, roomKey, objectCode };
 
 			try {
-				SiteView siteView =
-					(SiteView) ServiceUtils.executeService(
-						null,
-						"RoomSiteComponentService",
-						args);
+				SiteView siteView = (SiteView) ServiceUtils.executeService(null, "RoomSiteComponentService", args);
 
 				request.setAttribute("siteView", siteView);
-				request.setAttribute("objectCode", objectCode);				
+				request.setAttribute("objectCode", objectCode);
 
-		} catch (NonExistingServiceException e) {
+			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException(e);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
@@ -440,7 +395,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 			throw new FenixActionException();
 		}
 	}
-	
+
 	private ExecutionCourseSiteView readGroupView(
 		HttpServletRequest request,
 		ISiteComponent firstPageComponent,
@@ -460,55 +415,34 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
 		ISiteComponent commonComponent = new InfoSiteCommon();
 
-		Object[] args =
-			{	commonComponent,
-				firstPageComponent,
-				objectCode,
-				groupPropertiesCode,
-				studentGroupCode
-				};
+		Object[] args = { commonComponent, firstPageComponent, objectCode, groupPropertiesCode, studentGroupCode };
 		ExecutionCourseSiteView siteView = null;
-		try 
-		{
-			siteView =
-				(ExecutionCourseSiteView) ServiceUtils.executeService(
-					null,
-					"GroupSiteComponentService",
-					args);
+		try {
+			siteView = (ExecutionCourseSiteView) ServiceUtils.executeService(null, "GroupSiteComponentService", args);
 
 			if (infoExecutionCourseCode != null) {
-				request.setAttribute(
-					"objectCode",
-					((InfoSiteFirstPage) siteView.getComponent())
-						.getSiteIdInternal());
+				request.setAttribute("objectCode", ((InfoSiteFirstPage) siteView.getComponent()).getSiteIdInternal());
 			} else {
 				request.setAttribute("objectCode", objectCode);
 			}
 			request.setAttribute("siteView", siteView);
 			request.setAttribute(
 				"executionCourseCode",
-				((InfoSiteCommon) siteView.getCommonComponent())
-					.getExecutionCourse()
-					.getIdInternal());
-			
+				((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+
 			request.setAttribute(
 				"executionPeriodCode",
-				((InfoSiteCommon) siteView.getCommonComponent())
-					.getExecutionCourse()
-					.getInfoExecutionPeriod()
-					.getIdInternal());
+				((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getInfoExecutionPeriod().getIdInternal());
 			if (siteView.getComponent() instanceof InfoSiteSection) {
-				request.setAttribute(
-					"infoSection",
-					((InfoSiteSection) siteView.getComponent()).getSection());
+				request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
 			}
-		
+
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("A disciplina", e);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 		return siteView;
-	}	
+	}
 
 }

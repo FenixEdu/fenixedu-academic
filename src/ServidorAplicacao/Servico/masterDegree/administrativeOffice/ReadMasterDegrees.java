@@ -15,6 +15,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -25,7 +26,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public class ReadMasterDegrees implements IServico {
 
 	private static ReadMasterDegrees servico = new ReadMasterDegrees();
-    
+
 	/**
 	 * The singleton access method of this class.
 	 **/
@@ -36,7 +37,7 @@ public class ReadMasterDegrees implements IServico {
 	/**
 	 * The actor of this class.
 	 **/
-	private ReadMasterDegrees() { 
+	private ReadMasterDegrees() {
 	}
 
 	/**
@@ -52,15 +53,19 @@ public class ReadMasterDegrees implements IServico {
 		List result = new ArrayList();
 		try {
 			sp = SuportePersistenteOJB.getInstance();
-			
+
 			// Get the Actual Execution Year
 			IExecutionYear executionYear = null;
+			if (executionYearString != null) {
+				executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
+			} else {
+				IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+				executionYear = executionYearDAO.readCurrentExecutionYear();
+			}
 
-			executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
-			
 			// Read the degrees
-			result = sp.getICursoExecucaoPersistente().readMasterDegrees(executionYear.getYear());	
-			if(result == null || result.size() == 0){
+			result = sp.getICursoExecucaoPersistente().readMasterDegrees(executionYear.getYear());
+			if (result == null || result.size() == 0) {
 				throw new NonExistingServiceException();
 			}
 
@@ -68,14 +73,14 @@ public class ReadMasterDegrees implements IServico {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;
-		} 
+		}
 
 		ArrayList degrees = new ArrayList();
 		Iterator iterator = result.iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 			degrees.add(Cloner.copyIExecutionDegree2InfoExecutionDegree((ICursoExecucao) iterator.next()));
-			
+
 		return degrees;
-		
+
 	}
 }

@@ -67,6 +67,7 @@ public interface ISuportePersistente {
 	public IPersistentItem getIPersistentItem();
 	public IPersistentAnnouncement getIPersistentAnnouncement();
 	public IPersistentCurriculum getIPersistentCurriculum();
+	public IPersistentEvaluationMethod getIPersistentEvaluationMethod();
 
 	public IPersistentTeacher getIPersistentTeacher();
 

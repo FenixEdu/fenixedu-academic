@@ -66,10 +66,8 @@ public class ReadNonMasterExecutionDegreesByExecutionYear implements IServico {
 			} else {
 				executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
 			}
-			ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
-
 			
-
+			ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
 			List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear, new TipoCurso(1));
 
 			Iterator iterator = executionDegrees.iterator();
@@ -85,5 +83,4 @@ public class ReadNonMasterExecutionDegreesByExecutionYear implements IServico {
 		}
 		return infoExecutionDegreeList;
 	}
-
 }

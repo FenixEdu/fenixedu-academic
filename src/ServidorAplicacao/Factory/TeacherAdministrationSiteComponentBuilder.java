@@ -18,6 +18,7 @@ import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurriculum;
 import DataBeans.InfoEvaluation;
+import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoGroupProperties;
@@ -68,6 +69,7 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEvaluation;
+import Dominio.IEvaluationMethod;
 import Dominio.IEvalutionExecutionCourse;
 import Dominio.IExam;
 import Dominio.IFinalEvaluation;
@@ -96,6 +98,7 @@ import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentEvaluationExecutionCourse;
+import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
@@ -127,7 +130,12 @@ public class TeacherAdministrationSiteComponentBuilder {
 		return instance;
 	}
 
-	public ISiteComponent getComponent(ISiteComponent component, ISite site, ISiteComponent commonComponent, Object obj1, Object obj2)
+	public ISiteComponent getComponent(
+		ISiteComponent component,
+		ISite site,
+		ISiteComponent commonComponent,
+		Object obj1,
+		Object obj2)
 		throws FenixServiceException {
 
 		if (component instanceof InfoSiteCommon) {
@@ -148,6 +156,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 			return getInfoCurriculum((InfoCurriculum) component, site, (Integer) obj1);
 		} else if (component instanceof InfoSiteEvaluationMethods) {
 			return getInfoEvaluationMethods((InfoSiteEvaluationMethods) component, site);
+		} else if (component instanceof InfoEvaluationMethod) {
+			return getInfoEvaluationMethod((InfoEvaluationMethod) component, site);
 			//} else if (component instanceof InfoCurriculum) {
 			//	return getInfoEvaluationMethod((InfoCurriculum) component, site, (Integer) obj1);
 		} else if (component instanceof InfoSiteBibliography) {
@@ -403,6 +413,26 @@ public class TeacherAdministrationSiteComponentBuilder {
 		return component;
 	}
 
+	private ISiteComponent getInfoEvaluationMethod(InfoEvaluationMethod component, ISite site)
+		throws FenixServiceException {
+
+		try {
+			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
+			IEvaluationMethod evaluationMethod = persistentEvaluationMethod.readByIdExecutionCourse(executionCourse);
+
+			if (evaluationMethod != null) {
+				component = Cloner.copyIEvaluationMethod2InfoEvaluationMethod(evaluationMethod);				
+			}
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+
+		return component;
+	}
+	
 	/**
 	* @param methods
 	* @param site
@@ -539,7 +569,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @param username
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteTeachers(InfoSiteTeachers component, ISite site, String username) throws FenixServiceException {
+	private ISiteComponent getInfoSiteTeachers(InfoSiteTeachers component, ISite site, String username)
+		throws FenixServiceException {
 		try {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -575,12 +606,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 					}
 
 					ITeacher teacher = persistentTeacher.readTeacherByUsername(username);
-					IResponsibleFor responsibleFor =
-						persistentResponsibleFor.readByTeacherAndExecutionCourse(teacher, executionCourse);
+					IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(teacher, executionCourse);
 					if (teacher != null) {
-						if (responsibleTeachers != null
-							&& !responsibleTeachers.isEmpty()
-							&& responsibleTeachers.contains(responsibleFor)) {
+						if (responsibleTeachers != null && !responsibleTeachers.isEmpty() && responsibleTeachers.contains(responsibleFor)) {
 							isResponsible = true;
 						}
 					}
@@ -633,8 +661,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 				persistentEvaluation.lockWrite(finalEvaluation);
 
 				//associate final evaluation to execution course				
-				IPersistentEvaluationExecutionCourse persistentEvaluationExecutionCourse =
-					sp.getIPersistentEvaluationExecutionCourse();
+				IPersistentEvaluationExecutionCourse persistentEvaluationExecutionCourse = sp.getIPersistentEvaluationExecutionCourse();
 				IEvalutionExecutionCourse evalutionExecutionCourse = new EvaluationExecutionCourse();
 				evalutionExecutionCourse.setEvaluation(finalEvaluation);
 				evalutionExecutionCourse.setExecutionCourse(executionCourse);
@@ -791,16 +818,16 @@ public class TeacherAdministrationSiteComponentBuilder {
 						FileSuportObject file = (FileSuportObject) iterFiles.next();
 						InfoLink infoLink = new InfoLink();
 						try {
-							infoLink.setLink(new String(file.getFileName().getBytes("ISO-8859-1"),"ISO-8859-1"));
+							infoLink.setLink(new String(file.getFileName().getBytes("ISO-8859-1"), "ISO-8859-1"));
 						} catch (UnsupportedEncodingException e2) {
 							infoLink.setLink(file.getFileName());
 						}
 						infoLink.setLinkName(file.getLinkName());
 						links.add(infoLink);
 					}
-					Collections.sort(links,new BeanComparator("linkName"));
+					Collections.sort(links, new BeanComparator("linkName"));
 					infoItem.setLinks(links);
-					
+
 				}
 			} catch (SlideException e1) {
 				//the item does not have a folder associated
@@ -1065,8 +1092,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 				while (iter.hasNext()) {
 
 					ITurno shift = (ITurno) iter.next();
-					List allStudentGroups =
-						persistentStudentGroup.readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
+					List allStudentGroups = persistentStudentGroup.readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
 
 					infoSiteShift = new InfoSiteShift();
 					infoSiteShift.setInfoShift(Cloner.copyIShift2InfoShift(shift));
@@ -1251,8 +1277,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 			} else {
 				IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-				IGroupEnrolmentStrategy strategy =
-					enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+				IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
 
 				for (int i = 0; i < shifts.size(); i++) {
 					ITurno shift = (ITurno) shifts.get(i);

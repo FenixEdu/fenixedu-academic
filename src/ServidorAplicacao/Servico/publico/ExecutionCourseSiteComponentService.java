@@ -57,13 +57,11 @@ public class ExecutionCourseSiteComponentService implements IServico {
 	public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex, Integer curricularCourseId)
 		throws FenixServiceException, NonExistingAssociatedCurricularCoursesServiceException {
 		ExecutionCourseSiteView siteView = null;
-
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 			
-
 			ISite site = null;
 		
 			if (infoSiteCode != null) {
@@ -79,6 +77,7 @@ public class ExecutionCourseSiteComponentService implements IServico {
 				}
 				site = persistentSite.readByExecutionCourse(executionCourse);
 			}
+			
 			if (site != null) {
 				ExecutionCourseSiteComponentBuilder componentBuilder = ExecutionCourseSiteComponentBuilder.getInstance();
 				commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
