@@ -14,7 +14,7 @@
 		<bean:message key="message.degreeName"/>
 	</td>
 	<td>
-		<html:text property="nome" /><span class="error"><html:errors property="nome"/></span>
+		<html:text property="nome" />
 	</td>
 </tr>
 <tr>
@@ -22,28 +22,9 @@
 		<bean:message key="message.degreeCode"/>
 	</td>
 	<td>
-		<html:text property="sigla" /><span class="error"><html:errors property="sigla"/></span>
+		<html:text property="sigla" />
 	</td>
 </tr>
-<tr>
-	<%--<logic:present name="degrees">
-	<td>		
-		<bean:message key="message.DegreeType"/>		
-	</td>
-	<td>
-		<html:select name="insertDegreeForm" property="tipoCurso">
-			<html:option value="-1"><bean:message key="label.end"/></html:option>
-			<html:options collection="degreesCodeList" labelProperty="nome" property="tipoCurso"/>
-			
-		</html:select>
-		<span class="error"><html:errors property="tipoCurso"/></span>
-	</td>
-	</logic:present>
-	<logic:notPresent name="sections">
-		<html:hidden property="sectionOrder" value="0"/>
-	</logic:notPresent>--%>
-</tr>
-
 
 </table>
 <br />

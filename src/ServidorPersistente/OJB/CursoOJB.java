@@ -94,7 +94,7 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 	}
 
 
-	public String delete(ICurso degree) throws ExcepcaoPersistencia{
+	public Boolean delete(ICurso degree) throws ExcepcaoPersistencia{
 			try{
 			
 
@@ -107,13 +107,14 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 				query.create(oqlQuery);
 				query.bind(degree.getNome());
 				List result = (List) query.execute();
+				Boolean bool = new Boolean(true); 	
 					
 				if (result.isEmpty())
-					{super.delete(degree);
-					 return "null";} 
+					super.delete(degree);
 				else
-				    return degree.getNome();
-			
+					bool = new Boolean(false);
+				
+				return bool ;			
 			} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}

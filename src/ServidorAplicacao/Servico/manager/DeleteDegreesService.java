@@ -39,7 +39,8 @@ public class DeleteDegreesService implements IServico {
 			ICursoPersistente persistentDegree = sp.getICursoPersistente();
 
 			Iterator iter = degreesInternalIds.iterator();
-			String undeletedDegreeName = "null";
+//			String undeletedDegreeName = "null";
+            Boolean result= new Boolean(true);
 			List undeletedDegreesNames = new ArrayList();
 
 			while (iter.hasNext()) {
@@ -48,9 +49,10 @@ public class DeleteDegreesService implements IServico {
 					ICurso degree =
 						persistentDegree.readByIdInternal(internalId);
 					if (degree != null)
-						undeletedDegreeName = persistentDegree.delete(degree);
-				
-					undeletedDegreesNames.add((String) undeletedDegreeName);
+						result = persistentDegree.delete(degree);
+						
+					if(result.equals(new Boolean(false)))				
+					undeletedDegreesNames.add((String) degree.getNome());
 				
 			}
 			

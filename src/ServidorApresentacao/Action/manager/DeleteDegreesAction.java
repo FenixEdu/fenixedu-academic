@@ -27,95 +27,60 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author lmac1
  */
-public class DeleteDegreesAction extends FenixAction{
-	
-	public ActionForward execute(
-				ActionMapping mapping,
-				ActionForm form,
-				HttpServletRequest request,
-				HttpServletResponse response)
-				throws FenixActionException {
-					
+public class DeleteDegreesAction extends FenixAction {
+
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws FenixActionException {
+
 		HttpSession session = request.getSession(false);
 		DynaActionForm deleteDegreesForm = (DynaActionForm) form;
-		
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		List infoDegrees =(List) session.getAttribute(
-								SessionConstants.INFO_DEGREES_LIST);
-		
-		List degreesInternalIds = Arrays.asList((Integer [])deleteDegreesForm.get("internalIds"));
 
-		
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		List infoDegrees = (List) session.getAttribute(SessionConstants.INFO_DEGREES_LIST);
+
+		List degreesInternalIds = Arrays.asList((Integer[]) deleteDegreesForm.get("internalIds"));
+
 		Object args[] = { degreesInternalIds };
 		GestorServicos manager = GestorServicos.manager();
-		List result = new ArrayList();
-		
+		List errorNames = new ArrayList();
+
 		try {
-			result = (List) manager.executar(userView, "DeleteDegreesService", args);
-		    session.removeAttribute(SessionConstants.INFO_DEGREES_LIST);	
-			
-		} 
-		catch (FenixServiceException fenixServiceException) {
-	    	throw new FenixActionException(fenixServiceException.getMessage());
-			}
-			
-	
-			List allInfoDegrees;
-		try{
-			
-			allInfoDegrees = (List) manager.executar(userView, "ReadDegreesService",null);
-			
-			//AQUI PARA PODER ACTUALIZAR,CASO TENHA APAGADO ALGUM
-			
-			Iterator iter = result.iterator();
-			List errorNames = new ArrayList();
-			String name;
-			
-			
-			
-			
-			while(iter.hasNext()){System.out.println("NOMES"+(String)iter.next());}
-			
-			
-			iter = result.iterator();
-			while(iter.hasNext())
-			{
-				name = (String)iter.next();
-				System.out.println("NOME DOS DEGREES QUE EU QUIS APAGAR"+name);
-				System.out.println("VALOR DO IF"+name.compareTo("null"));
-				if(name.compareTo("null")!=0) errorNames.add((String) name);
-			}
-			
-				if(!errorNames.isEmpty())
-				{
-					ActionErrors actionErrors = new ActionErrors();
-					Iterator namesIter = errorNames.iterator();
-					ActionError error = null;
-					
-					while(namesIter.hasNext())
-					{
-//						CRIO UM ACTION ERROR PARA CADA DEGREE
-						error = new ActionError("errors.invalid.delete.not.empty", (String)namesIter.next());
-						actionErrors.add("errors.invalid.delete.not.empty", error);
-						
-					}   
-					saveErrors(request, actionErrors);                                          
-					
+			errorNames = (List) manager.executar(userView, "DeleteDegreesService", args);
+			session.removeAttribute(SessionConstants.INFO_DEGREES_LIST);
+
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+
+		List allInfoDegrees;
+		try {
+
+			allInfoDegrees = (List) manager.executar(userView, "ReadDegreesService", null);
+
+			if (!errorNames.isEmpty()) {
+				ActionErrors actionErrors = new ActionErrors();
+				Iterator namesIter = errorNames.iterator();
+				ActionError error = null;
+
+				while (namesIter.hasNext()) {
+					//						CRIO UM ACTION ERROR PARA CADA DEGREE
+					error = new ActionError("errors.invalid.delete.not.empty", (String) namesIter.next());
+					actionErrors.add("errors.invalid.delete.not.empty", error);
+
 				}
-		   }
-			catch (FenixServiceException fenixServiceException){
-			   throw new FenixActionException(fenixServiceException.getMessage());
-		   }
-		     
-		    Collections.sort(allInfoDegrees);
-	        session.setAttribute(SessionConstants.INFO_DEGREES_LIST, allInfoDegrees);
-		    
-		    
-        	
-		 return mapping.findForward("readDegrees");
+				deleteDegreesForm.set("internalIds", new Integer[] {});//COM O RESET NAO DAVA/POR ISSO FACO UM SET COM NADAPA LIMPARO"internalIds" DO FORM
+				saveErrors(request, actionErrors);
 
-			
-		}			
-			
+			}
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+
+		Collections.sort(allInfoDegrees);
+		session.setAttribute(SessionConstants.INFO_DEGREES_LIST, allInfoDegrees);
+
+		return mapping.findForward("readDegrees");
+
+	}
+
 }
-

@@ -8,8 +8,11 @@
 
 		<h2><bean:message key="label.manager.degrees" /></h2>
 		
-	<html:link page="/insertDegree.do"><b><bean:message key="label.manager.insert.degree" /></b></html:link>
-	<br>
+	
+	<ul style="list-style-type: square;">
+	<li><html:link page="/insertDegree.do"><bean:message key="label.manager.insert.degree" /></html:link></li>			
+</ul>
+		<br>
 	<br>
  	     
  	    <html:form action="/deleteDegrees" method="get">
@@ -39,15 +42,13 @@
 	 		</tr>
 	 				
 				</logic:iterate>
-				<span class="error"><html:errors/></span>
-			
 				
-				
+					<span class="error"><html:errors/></span>
 				
 	 	</table>
 	<br>
 	 <br>	
-	<html:submit styleClass="inputbutton"><bean:message key="label.manager.delete.selected.degrees"/></html:submit>
+	<html:submit><bean:message key="label.manager.delete.selected.degrees"/></html:submit>
 
 </html:form> 
 </logic:notEmpty>	 	

@@ -20,7 +20,7 @@ public interface ICursoPersistente extends IPersistentObject {
     ICurso readBySigla(String sigla) throws ExcepcaoPersistencia;
 	ICurso readByIdInternal(Integer idInternal) throws ExcepcaoPersistencia;
     void lockWrite(ICurso degree) throws ExcepcaoPersistencia, ExistingPersistentException;
-    String delete(ICurso degree) throws ExcepcaoPersistencia;
+    Boolean delete(ICurso degree) throws ExcepcaoPersistencia;
     void deleteAll() throws ExcepcaoPersistencia;
     public List readAll() throws ExcepcaoPersistencia;
 }

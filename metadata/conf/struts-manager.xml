@@ -19,12 +19,19 @@
 	
 		<form-bean name="insertDegreeForm"
 					type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-					dynamic="true">        
+					dynamic="true"> 
+				<form-property name="name" type="java.lang.String" />       
 				<form-property name="code" type="java.lang.String" />
-				<form-property name="name" type="java.lang.String" />
-				<form-property name="tipoCurso" type="java.lang.Integer" />
+				<form-property name="tipoCurso" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			
 		</form-bean>  
+
+<!--isto é do form bean de cima	
+	<form-property name="tipoCurso" type="java.lang.Integer" />
+				-->
+
+
 
 		<form-bean name="readDegreeForm"
 					type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -53,6 +60,7 @@
 			       path="/naoExistente.do"
 			       handler="ServidorApresentacao.config.FenixExceptionHandler" /> 
 	</global-exceptions>
+	<!--nao sei s a excepção inexistente é precisa mas pronto-->
 
 	<!-- ========== Global Forward Definitions =============================== -->
 	<global-forwards type="org.apache.struts.action.ActionForward">
@@ -66,16 +74,11 @@
     <!-- page fronting actions  -->
     <action path="/index" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="df.page.main-page"/>
   
-    <!--<action	path="/index"
-            type="ServidorApresentacao.Action.manager.ReadDegreesAction">    
-            <forward name="readDegrees" path="/readDegrees.jsp"/>          
-	</action>-->
-     
    
 	 <!-- Action for reading all degrees  -->
       <action path="/readDegrees"
              input="mainPageInput.do"
-      	      type="ServidorApresentacao.Action.manager.ReadDegreesAction">
+      	     type="ServidorApresentacao.Action.manager.ReadDegreesAction">
       	  <forward name="readDegrees" path="df.page.read-degrees"/>      	      
       </action>
       
@@ -104,43 +107,31 @@
                /> 
 		<forward name="sectionsFirstPage" path="/sectionsFirstPage.jsp"/>               
        <forward name="createSection" path="/createSection.jsp"/>
-	</action>-->
-      
-	<action path="/insertDegree"
+	</action>
+	
+	input="readDegreesInput.do"-->
+ 
+	<action
+		path="/insertDegree"
 		name="insertDegreeForm"
-		input="readDegreesInput.do"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.manager.InsertDegreeDispatchAction"
         validate="true"  >
        <forward name="insertDegree" path="df.page.insert-degree"/>
        <forward name="readDegrees" path="df.page.read-degrees"/>
-	</action>		
-      			
-      				
-      					
-      						
-     <!--
-     	 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
-         	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-               /> 
-     	
-     	
-     	 <action path="/insertDegree"
-      	      name="insertDegreeForm"
-              input="readDegreesInput.do"
-      	      type="ServidorApresentacao.Action.manager.InsertDegreeAction">
-      	  <forward name="readDegrees" path="df.page.read-degrees"/>      	      
-      </action>-->
+	</action>			
+      
+     				
+     
 	<!-- Action for deleting degrees --> 
      
       <action 
       		 path="/deleteDegrees"
       		 name="deleteDegreesForm"
       		 input="readDegreesInput.do"
-      	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction"
-      	     scope="request">
+      		 scope="request"
+      	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction">
              
 	<exception type="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
          	   key="ServidorApresentacao.Action.exceptions.CantDeleteActionException"

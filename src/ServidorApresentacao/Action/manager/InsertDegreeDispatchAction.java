@@ -21,7 +21,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -30,7 +30,7 @@ import Util.TipoCurso;
 /**
  * @author lmac1
  */
-public class InsertDegreeDispatchAction extends FenixAction {
+public class InsertDegreeDispatchAction extends FenixDispatchAction {
 
 
 	public ActionForward prepareInsert(
@@ -51,7 +51,11 @@ public class InsertDegreeDispatchAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-
+			
+			
+		HttpSession session = request.getSession(false);
+    	UserView userView =
+						(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		String code = (String) dynaForm.get("code");
 		String name = (String) dynaForm.get("name");
@@ -63,11 +67,7 @@ public class InsertDegreeDispatchAction extends FenixAction {
 		
 		System.out.println("TIPO DE CURSO"+tipoCursoInt);
 		
-		HttpSession session = request.getSession(false);
-
-		UserView userView =
-			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-
+		
 
     	InfoDegree infoDegree =
 				new InfoDegree(
