@@ -92,8 +92,7 @@ public interface ISuportePersistente {
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
 	public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo();
 	public IPersistentChosenCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
-	
-	
+
 	
 	public IPersistentStudentKind getIPersistentStudentKind();
 	
@@ -107,4 +106,6 @@ public interface ISuportePersistente {
 	public IPersistentEvaluationExecutionCourse getIPersistentEvaluationExecutionCourse();
 	
 	public IPersistentEmployee getIPersistentEmployee();
+	
+	public IPersistentEnrolmentEquivalenceRestriction getIPersistentEnrolmentEquivalenceRestriction();	
 }
