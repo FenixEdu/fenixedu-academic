@@ -23,17 +23,6 @@
 
 <h2><bean:message key="property.executionCourse.curricularHours"/></h2>
 	
-		
-
-		
-
-			
-		
-		
-			
-			
-		
-
 <table cellspacing="0" cellpadding="0" width="90%">
        <tr class="timeTable_line">
           <logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="theoreticalHours" value="0">

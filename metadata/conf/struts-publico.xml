@@ -220,6 +220,8 @@
       </action>
 
 	<!-- Start of Gesdis-->
+	<action path="/curricularCourses" forward="/curricularCourses.jsp"/>
+	
 	<action path="/viewTimeTable" forward="/viewTimeTable.jsp"/>
 
 	<action     

@@ -3,30 +3,36 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<div id="nav">
+<ul>	
+<li><html:link page="/viewSite.do">
+	<bean:message key="link.home"/>
+</html:link></li>
+<li><html:link  page="/accessAnnouncements.do">
+	<bean:message key="link.announcements"/>
+</html:link></li>
+<li><html:link page="/accessTeachers.do">
+	<bean:message key="link.teachers"/>
+</html:link></li>
+<li><html:link page="/viewTimeTable.do">
+		<bean:message key="link.executionCourse.timeTable"/>
+</html:link></li>
 
-<html:link page="/viewSite.do">
-	<li><bean:message key="link.home"/></li>
-</html:link>
-<logic:present name="<%=SessionConstants.INFO_SITE%>" property="alternativeSite" >
-	<html:link page="/accessAlternativeSite.do">
-		<li><bean:message key="link.alternative"/></li>
-	</html:link>
-</logic:present>
-<html:link  page="/accessAnnouncements.do">
-	<li><bean:message key="link.announcements"/></li>
-</html:link>
-<html:link page="/accessObjectives.do?method=acessObjectives">
-	<li><bean:message key="link.objectives"/></li>
-</html:link>
-<html:link page="/accessProgram.do?method=acessProgram">
-	<li><bean:message key="link.program"/></li>
-</html:link>
-<html:link page="/accessBibliographicReferences.do?method=viewBibliographicReference">
-	<li><bean:message key="link.bibliography"/></li>
-</html:link>
-	<html:link page="/accessTeachers.do">
-	<li><bean:message key="link.teachers"/></li>
-</html:link>
-<html:link page="/viewTimeTable.do">
-		<li><bean:message key="link.executionCourse.timeTable"/></li>
-</html:link>
+<li> <a href="/" onclick="houdini('seccao');return false;">Informa&ccedil;&atilde;o Curricular</a></li>
+</ul>
+ <dl id="seccao" style="display: none;">
+            <dd><html:link page="/accessObjectives.do?method=acessObjectives">
+				<bean:message key="link.objectives"/>
+				</html:link></dd>
+            <dd><html:link page="/accessProgram.do?method=acessProgram">
+				<bean:message key="link.program"/>
+				</html:link></dd>
+            <dd><html:link page="/accessBibliographicReferences.do?method=viewBibliographicReference">
+				<bean:message key="link.bibliography"/>
+				</html:link></dd>
+			<dd><html:link page="/curricularCourses.do">
+				<bean:message key="property.executionCourse.associatedCurricularCourses"/>
+				</html:link></dd>	
+  </dl>
+		
+</div>

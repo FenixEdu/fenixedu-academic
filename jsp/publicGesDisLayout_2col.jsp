@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="<%= request.getContextPath() %>/CSS/gesdis-alt.css" rel="stylesheet" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<%= request.getContextPath() %>/script/gesdis-scripting.js"></script>
 </head>
 <body>
 <%-- Layout component parameters : header, navLocal, body --%>
