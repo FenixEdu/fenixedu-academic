@@ -140,6 +140,7 @@
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
    
+   
 
 	<action     path="/bibliographicReferenceManager"
 				parameter="method"      			
