@@ -11,6 +11,7 @@ import Dominio.CurricularCourse;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IScientificArea;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -477,6 +478,14 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		criteria.addEqualTo("name", curricularCourseName);
 		criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
 
+		return queryList(CurricularCourse.class, criteria);
+	}
+	
+	public List readByScientificArea(IScientificArea scientificArea) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyScientificArea",scientificArea.getIdInternal());
+		
 		return queryList(CurricularCourse.class, criteria);
 	}
 }
