@@ -743,10 +743,13 @@ public abstract class ObjectFenixOJB implements IPersistentObject
         }
         PersistenceBroker pb = getCurrentPersistenceBroker();
         Query query = getQuery(classToQuery, criteria);
-
-        int startIndex = spanNumber.intValue() * numberOfElementsInSpan.intValue();
+        int startIndex = 1;
+        if (spanNumber.intValue()!= 0)
+        {
+        	startIndex = spanNumber.intValue() * numberOfElementsInSpan.intValue();
+        }
         query.setStartAtIndex(startIndex);
-        query.setEndAtIndex(startIndex + numberOfElementsInSpan.intValue());
+        query.setEndAtIndex(startIndex + numberOfElementsInSpan.intValue() - 1);
         List list = (List) pb.getCollectionByQuery(query);
         lockRead(list);
         return list;

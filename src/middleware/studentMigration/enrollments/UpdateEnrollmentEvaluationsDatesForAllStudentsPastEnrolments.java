@@ -55,6 +55,9 @@ import Util.TipoCurso;
 
 public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 {
+	private static int NUMBER_OF_ELEMENTS_IN_SPAN = 500;
+	private static int alteredDates = 0;
+
 	public static void main(String args[])
 	{
 		MWAluno mwStudent = null;
@@ -73,7 +76,7 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 			
 			System.out.println("[INFO] Total number of student curriculums to update [" + numberOfStudents + "].");
 
-			int numberOfElementsInSpan = 100;
+			int numberOfElementsInSpan = UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.NUMBER_OF_ELEMENTS_IN_SPAN;
 			int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
 			numberOfSpans =  numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
 			
@@ -106,6 +109,8 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 			System.out.println("[ERROR 501] Branch: [" + mwStudent.getBranchcode() + "]");
 			e.printStackTrace(System.out);
 		}
+		System.out.println("[INFO] DONE!");
+		System.out.println("[INFO] Total EnrolmentEvaluations updated: [" + UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.alteredDates + "].");
 	}
 
 	/**
@@ -227,7 +232,7 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 		List mwEnrolments = mwStudent.getEnrolments();
 		Iterator iterator = mwEnrolments.iterator();
 		while (iterator.hasNext()) {
-			final MWEnrolment mwEnrolment = (MWEnrolment) iterator.next();
+			MWEnrolment mwEnrolment = (MWEnrolment) iterator.next();
 			
 			IDegreeCurricularPlan degreeCurricularPlan = UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.getDegreeCurricularPlan(mwEnrolment.getDegreecode(), fenixPersistentSuport);
 			if (degreeCurricularPlan == null) {
@@ -291,6 +296,9 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 			Date newDate = new Date(dateInLongFormat);
 			enrolmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
 			enrolmentEvaluation.setWhen(newDate);
+
+			UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.alteredDates++;
+			System.out.println("[INFO] Number of EnrolmentEvaluations dates yet updated: [" + UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.alteredDates + "]");
 		}
 	}
 

@@ -5,7 +5,7 @@ package Dominio;
  * @author  Fernanda Quitério & Tania Pousão
  */
 
-public class CentroCusto implements ICostCenter {
+public class CentroCusto extends DomainObject implements ICostCenter {
 	private int codigoInterno;
 	private String sigla;
 	private String departamento;

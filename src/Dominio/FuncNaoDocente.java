@@ -9,7 +9,7 @@ package Dominio;
  *
  * @author  Ivo Brandão
  */
-public class FuncNaoDocente {
+public class FuncNaoDocente extends DomainObject {
 
 	private int codigoInterno = 0;
 	private int chaveFuncionario = 0;

@@ -5,7 +5,7 @@ import java.sql.Timestamp;
  *
  * @author Fernanda Quitério & Tânia Pousão
  */
-public class StatusAssiduidade {
+public class StatusAssiduidade extends DomainObject {
 	private int _codigoInterno;
 	private String _sigla;
 	private String _designacao;
