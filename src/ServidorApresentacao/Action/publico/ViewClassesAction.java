@@ -10,7 +10,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -41,25 +40,22 @@ public class ViewClassesAction extends FenixAction {
 			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY); 
 			
+			Integer curricularYear=(Integer) session.getAttribute(SessionConstants.CURRICULAR_YEAR_KEY);
 			
-			CurricularYearAndSemesterAndInfoExecutionDegree ctx =
-				(CurricularYearAndSemesterAndInfoExecutionDegree) request
-					.getSession()
-					.getAttribute(SessionConstants.CONTEXT_KEY);
-			infoClass.setAnoCurricular(ctx.getAnoCurricular());
+			infoClass.setAnoCurricular(curricularYear);
 			
 			infoClass.setInfoExecutionDegree(infoExecutionDegree);
 			infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
-
+			
 			Object argsSelectClasses[] = { infoClass };
 			List infoClasses =
 				(List) gestor.executar(
 					null,
 					"SelectClasses",
 					argsSelectClasses);
-
+			
 			if (infoClasses != null && infoClasses.isEmpty()) {
-				session.setAttribute("publico.infoClasses", null);
+				session.removeAttribute("publico.infoClasses");
 			} else {
 				session.setAttribute("publico.infoClasses", infoClasses);
 			}
