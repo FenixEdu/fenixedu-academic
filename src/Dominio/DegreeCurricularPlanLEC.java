@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.degree.enrollment.rules.LECEvenAndOddNumbersEnrollmentRule;
+import Dominio.degree.enrollment.rules.LECOptionalPairGroupsEnrollmentRule;
 
 /**
  * @author David Santos in Jun 25, 2004
@@ -21,6 +22,7 @@ public class DegreeCurricularPlanLEC extends DegreeCurricularPlan implements IDe
         List result = new ArrayList();
         result.add(new LECEvenAndOddNumbersEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.addAll(super.getListOfEnrollmentRules(studentCurricularPlan, executionPeriod));
+        result.add(new LECOptionalPairGroupsEnrollmentRule(studentCurricularPlan));
         return result;
     }
 
