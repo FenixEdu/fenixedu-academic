@@ -307,6 +307,8 @@ public class ExecutionCourseSiteComponentBuilder {
 			throw new FenixServiceException(e);
 		}
 		component.setShifts(shiftsWithAssociatedClassesAndLessons);
+		component.setInfoExecutionPeriodName(site.getExecutionCourse().getExecutionPeriod().getName());
+		component.setInfoExecutionYearName(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 		return component;
 	}
 
@@ -586,7 +588,7 @@ public class ExecutionCourseSiteComponentBuilder {
 			component.setAlternativeSite(site.getAlternativeSite());
 			component.setInitialStatement(site.getInitialStatement());
 			component.setIntroduction(site.getIntroduction());
-
+			component.setSiteIdInternal(site.getIdInternal());
 			if (!responsibleInfoTeachersList.isEmpty()) {
 				component.setResponsibleTeachers(responsibleInfoTeachersList);
 			}

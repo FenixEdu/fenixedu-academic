@@ -50,7 +50,13 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent firstPageComponent = new InfoSiteFirstPage();
-		readSiteView(request, firstPageComponent,null);
+		String objectCodeString = request.getParameter("objectCode");
+		if (objectCodeString==null) {
+			objectCodeString = (String) request.getAttribute("objectCode");
+		}
+		Integer infoExecutionCourseCode = new Integer(objectCodeString);
+		
+		readSiteView(request, firstPageComponent,infoExecutionCourseCode,null);
 		return mapping.findForward("sucess");
 	}
 
@@ -62,7 +68,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
-		readSiteView(request, announcementsComponent,null);
+		readSiteView(request, announcementsComponent,null,null);
 		return mapping.findForward("sucess");
 	}
 
@@ -74,7 +80,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent objectivesComponent = new InfoSiteObjectives();
-		readSiteView(request, objectivesComponent,null);
+		readSiteView(request, objectivesComponent,null,null);
 		return mapping.findForward("sucess");
 	}
 
@@ -86,7 +92,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent programComponent = new InfoSiteProgram();
-		readSiteView(request, programComponent,null);
+		readSiteView(request, programComponent,null,null);
 		return mapping.findForward("sucess");
 	}
 
@@ -98,7 +104,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent evaluationComponent = new InfoEvaluation();
-		readSiteView(request, evaluationComponent,null);
+		readSiteView(request, evaluationComponent,null,null);
 		return mapping.findForward("sucess");
 	}
 
@@ -110,7 +116,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent bibliographyComponent = new InfoSiteBibliography();
-		readSiteView(request, bibliographyComponent,null);
+		readSiteView(request, bibliographyComponent,null,null);
 		return mapping.findForward("sucess");
 	}
 
@@ -123,7 +129,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent curricularCoursesComponent =
 			new InfoSiteAssociatedCurricularCourses();
-		readSiteView(request, curricularCoursesComponent,null);
+		readSiteView(request, curricularCoursesComponent,null,null);
 		return mapping.findForward("sucess");
 	}
 
@@ -135,7 +141,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent timeTableComponent = new InfoSiteTimetable();
-		readSiteView(request, timeTableComponent,null);
+		readSiteView(request, timeTableComponent,null,null);
 		return mapping.findForward("sucess");
 	}
 
@@ -147,7 +153,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent shiftsComponent = new InfoSiteShifts();
-		readSiteView(request, shiftsComponent,null);
+		readSiteView(request, shiftsComponent,null,null);
 		return mapping.findForward("sucess");
 	}
 	
@@ -159,7 +165,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			throws FenixActionException {
 
 			ISiteComponent examComponent = new InfoSiteExam();
-			readSiteView(request, examComponent,null);
+			readSiteView(request, examComponent,null,null);
 			return mapping.findForward("sucess");
 		}
 	
@@ -174,7 +180,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			Integer sectionIndex = new Integer(indexString);
 			
 			ISiteComponent sectionComponent = new InfoSiteSection();
-			readSiteView(request, sectionComponent,sectionIndex);
+			readSiteView(request, sectionComponent,null,sectionIndex);
 			
 			return mapping.findForward("sucess");
 		}
@@ -182,30 +188,30 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 	private void readSiteView(
 		HttpServletRequest request,
 		ISiteComponent firstPageComponent,
+		Integer infoExecutionCourseCode,
 		Integer sectionIndex
 		)
 		throws FenixActionException {
-		String year = request.getParameter("eYName");
-		String period = request.getParameter("ePName");
-		String executionCourseCode = request.getParameter("exeCode");
-		if (executionCourseCode == null) {
-			executionCourseCode = (String) request.getAttribute("exeCode");
-		}
-		if (period == null) {
-			period = (String) request.getAttribute("ePName");
-		}
-		if (year == null) {
-			year = (String) request.getAttribute("eYName");
-		}
+			InfoSite infoSite =null;
+			Integer objectCode = null;
+		if (infoExecutionCourseCode == null) {
+			String objectCodeString = request.getParameter("objectCode");
+			if (objectCodeString==null) {
+				objectCodeString = (String) request.getAttribute("objectCode");
+				
+			}
+		 objectCode = new Integer(objectCodeString);
+		 
+		} 
+		
 		ISiteComponent commonComponent = new InfoSiteCommon();
 
 		Object[] args =
 			{
 				commonComponent,
 				firstPageComponent,
-				year,
-				period,
-				executionCourseCode,
+				objectCode,
+				infoExecutionCourseCode,
 				sectionIndex
 				 };
 
@@ -215,11 +221,14 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 					null,
 					"ExecutionCourseSiteComponentService",
 					args);
-
+		
+		if(infoExecutionCourseCode != null){
+			request.setAttribute("objectCode",((InfoSiteFirstPage)siteView.getComponent()).getSiteIdInternal());
+		} else {
+			request.setAttribute("objectCode",objectCode);
+		}
 			request.setAttribute("siteView", siteView);
-			request.setAttribute("exeCode", executionCourseCode);
-			request.setAttribute("ePName", period);
-			request.setAttribute("eYName", year);
+		
 			if (siteView.getComponent() instanceof InfoSiteSection) {			
 			request.setAttribute("infoSection", ((InfoSiteSection)siteView.getComponent()).getSection());}
 		} catch (FenixServiceException e) {

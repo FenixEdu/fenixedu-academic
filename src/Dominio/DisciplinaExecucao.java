@@ -25,6 +25,11 @@ public class DisciplinaExecucao extends DomainObject implements IDisciplinaExecu
 	public DisciplinaExecucao() {
 	}
 
+	public DisciplinaExecucao(Integer idInternal) {
+		setIdInternal(idInternal);
+		}
+
+
 	public DisciplinaExecucao(
 		String nome,
 		String sigla,

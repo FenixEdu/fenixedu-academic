@@ -26,6 +26,9 @@ public class Site extends DomainObject implements ISite {
 	public Site() {
 	}
 
+	public Site(Integer idInternal) {
+		setIdInternal(idInternal);
+		}
 	/** 
 	 * Construtor
 	 */

@@ -117,12 +117,8 @@ public class ExamsMapRenderer {
 
 				if (user.equals("public")) {
 					strBuffer.append(
-						"<a href='viewSite.do?method=firstPage&amp;exeCode="
-							+ infoExecutionCourse.getSigla()
-							+"&amp;ePName="
-							+ infoExecutionCourse.getInfoExecutionPeriod().getName()
-							+"&amp;eYName="
-							+ infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear()
+						"<a href='viewSite.do?method=firstPage&amp;objectCode="
+							+ infoExecutionCourse.getIdInternal()
 							+ "'>");
 				} else if (showCreateExamLink && user.equals("sop")) {
 					strBuffer.append(

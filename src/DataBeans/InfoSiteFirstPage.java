@@ -21,7 +21,7 @@ public class InfoSiteFirstPage implements ISiteComponent {
 	private InfoAnnouncement lastAnnouncement;
 	private List responsibleTeachers;
 	private List lecturingTeachers;
-	
+	private Integer siteIdInternal;
 	
 
 	/**
@@ -106,6 +106,20 @@ public class InfoSiteFirstPage implements ISiteComponent {
 	 */
 	public void setResponsibleTeachers(List list) {
 		responsibleTeachers = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getSiteIdInternal() {
+		return siteIdInternal;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setSiteIdInternal(Integer integer) {
+		siteIdInternal = integer;
 	}
 
 }

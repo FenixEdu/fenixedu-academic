@@ -9,11 +9,12 @@
 <%@ page import="java.util.Calendar" %>
 </br>
 	</br>
-		<bean:parameter id="ePName" name="ePName" />
-		<bean:parameter id="eYName" name="eYName" />
-
+		
 <logic:present name="siteView" property="component" >
 	<bean:define id="component" name="siteView" property="component"/>
+	<bean:define id="ePName" name="component" property="infoExecutionPeriodName"/>
+	<bean:define id="eYName" name="component" property="infoExecutionYearName" />
+	
 			<table align="center" cellspacing='0' cellpadding='10'>
 					<tr class="timeTable_line" align="center">
 						<td class="degreetablestd" rowspan="2">

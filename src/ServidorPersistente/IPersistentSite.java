@@ -16,7 +16,7 @@ import java.util.List;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ISite;
 
-public interface IPersistentSite {
+public interface IPersistentSite extends IPersistentObject{
     
 //	List readAnnouncementsByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
 	ISite readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;

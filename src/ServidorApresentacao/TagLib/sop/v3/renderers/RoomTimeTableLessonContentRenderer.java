@@ -18,10 +18,8 @@ public class RoomTimeTableLessonContentRenderer
 		StringBuffer strBuffer = new StringBuffer();
 		InfoLesson lesson = lessonSlot.getInfoLessonWrapper().getInfoLesson();
 		InfoExecutionCourse infoExecutionCourse = lesson.getInfoDisciplinaExecucao();
-		strBuffer.append("<a class='timetable' href='viewSite.do?method=firstPage&amp;exeCode=");
-		strBuffer.append(infoExecutionCourse.getSigla());
-		strBuffer.append("&amp;ePName=").append(infoExecutionCourse.getInfoExecutionPeriod().getName());
-		strBuffer.append("&amp;eYName=").append(infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear());
+		strBuffer.append("<a class='timetable' href='viewSite.do?method=firstPage&amp;objectCode=");
+		strBuffer.append(infoExecutionCourse.getIdInternal());
 		strBuffer.append("'>").append(lesson.getInfoDisciplinaExecucao().getSigla()).append("</a>");
 		strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")");		
 

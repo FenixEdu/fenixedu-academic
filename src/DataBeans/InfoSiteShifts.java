@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class InfoSiteShifts implements ISiteComponent {
 
+private String infoExecutionPeriodName;
+private String infoExecutionYearName;
 private List shifts;
 
 /**
@@ -28,6 +30,36 @@ public List getShifts() {
  */
 public void setShifts(List list) {
 	shifts = list;
+}
+
+
+/**
+ * @return
+ */
+public String getInfoExecutionPeriodName() {
+	return infoExecutionPeriodName;
+}
+
+/**
+ * @return
+ */
+public String getInfoExecutionYearName() {
+	return infoExecutionYearName;
+}
+
+
+/**
+ * @param string
+ */
+public void setInfoExecutionPeriodName(String string) {
+	infoExecutionPeriodName = string;
+}
+
+/**
+ * @param string
+ */
+public void setInfoExecutionYearName(String string) {
+	infoExecutionYearName = string;
 }
 
 }

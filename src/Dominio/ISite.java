@@ -8,7 +8,7 @@ package Dominio;
 /**
  * @author Ivo Brandão
  */
-public interface ISite {
+public interface ISite extends IDomainObject {
 
 	public IDisciplinaExecucao getExecutionCourse();
 	public void setExecutionCourse(IDisciplinaExecucao executionCourse);

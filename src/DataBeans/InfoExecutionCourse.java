@@ -43,6 +43,9 @@ public class InfoExecutionCourse extends InfoObject implements Serializable  {
 
 	public InfoExecutionCourse() {
 	}
+	public InfoExecutionCourse(Integer idInternal) {
+		setIdInternal(idInternal);
+		}
 
 /**
  * 

@@ -61,24 +61,10 @@ public class SectionMenuContentRenderer
 					+ path
 					+ "/viewSite.do?method=section&amp;index="
 					+ i
-					+ "&amp;exeCode="
+					+ "&amp;objectCode="
 					+ getInfoSection()
 						.getInfoSite()
-						.getInfoExecutionCourse()
-						.getSigla()
-					+ "&amp;ePName="
-					+ getInfoSection()
-						.getInfoSite()
-						.getInfoExecutionCourse()
-						.getInfoExecutionPeriod()
-						.getName()
-					+ "&amp;eYName="
-					+ getInfoSection()
-						.getInfoSite()
-						.getInfoExecutionCourse()
-						.getInfoExecutionPeriod()
-						.getInfoExecutionYear()
-						.getYear()
+						.getIdInternal()
 					+ "\""
 					+ " onclick=\"houdini('"
 					+ infoSection.getName()
@@ -96,24 +82,10 @@ public class SectionMenuContentRenderer
 			strBuffer.append(
 				"<a href=\"viewSite.do?method=section&amp;index="
 					+ i
-					+ "&amp;exeCode="
+					+ "&amp;objectCode="
 					+ getInfoSection()
 						.getInfoSite()
-						.getInfoExecutionCourse()
-						.getSigla()
-					+ "&amp;ePName="
-					+ getInfoSection()
-						.getInfoSite()
-						.getInfoExecutionCourse()
-						.getInfoExecutionPeriod()
-						.getName()
-					+ "&amp;eYName="
-					+ getInfoSection()
-						.getInfoSite()
-						.getInfoExecutionCourse()
-						.getInfoExecutionPeriod()
-						.getInfoExecutionYear()
-						.getYear()
+						.getIdInternal()
 					+ "\" >");
 			//falta o index 
 

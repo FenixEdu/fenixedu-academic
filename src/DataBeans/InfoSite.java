@@ -9,7 +9,7 @@ package DataBeans;
  * @author Ivo Brandão
  **/
 
-public class InfoSite {
+public class InfoSite extends InfoObject{
 
 	private InfoSection initialInfoSection;
 	private InfoExecutionCourse infoExecutionCourse;
@@ -24,6 +24,9 @@ public class InfoSite {
 
 	public InfoSite() {
 	}
+	public InfoSite(Integer idInternal) {
+		setIdInternal(idInternal);
+		}
 
 	/** 
 	* Construtor

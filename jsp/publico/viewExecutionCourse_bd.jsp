@@ -43,7 +43,7 @@
            <tr>
            		<td class="ultAnuncio">
            			<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_anuncio.gif"  />
-           			<html:link  page="<%="/viewSite.do"+"?method=announcements&amp;exeCode=" + pageContext.findAttribute("exeCode") + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" + pageContext.findAttribute("eYName") %>">
+           			<html:link  page="<%="/viewSite.do"+"?method=announcements&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
             		<bean:write name="announcement" property="title"/>:
             		</html:link>	
             		<br>

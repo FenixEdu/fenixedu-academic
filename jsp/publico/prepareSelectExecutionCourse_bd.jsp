@@ -8,9 +8,7 @@
         <span class="error"><html:errors/></span>        
         <html:form action="/viewSite" method="GET">
        		<input type="hidden" name="method" value="firstPage">
-       		<html:hidden  property="ePName" value="<%= pageContext.findAttribute("ePName").toString() %>" />
-			<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
-		
+       				
         	<html:hidden property="page" value="1"/>
         	<table width="100%" align="center" border="0" cellpadding='0' cellspacing='0'>
         		<tr>
@@ -26,9 +24,9 @@
 	                    <br/>
 	                </td>
 	                <td>    
-     					<html:select property="exeCode" size="1">
+     					<html:select property="objectCode" size="1">
   	 						<option value=""><bean:message key="label.choose.executionCourse"/></option>
-     						<html:options	property="sigla" labelProperty="nome" collection="exeCourseList" />
+     						<html:options	property="idInternal" labelProperty="nome" collection="exeCourseList" />
   	 					</html:select>             
                     </td>
                 </tr>

@@ -73,10 +73,8 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 					
 				} else if (typeUser.equals("public")) {
 					strBuffer.append(
-						"<a href='viewSite.do?method=firstPage&amp;exeCode="
-							+ infoExecutionCourse.getSigla()
-							+ "&amp;ePName="+infoExecutionCourse.getInfoExecutionPeriod().getName()
-							+ "&amp;eYName="+infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear()
+						"<a href='viewSite.do?method=firstPage&amp;objectCode="
+							+ infoExecutionCourse.getIdInternal()
 							+ "'>");
 					strBuffer.append(courseInitials);
 				}

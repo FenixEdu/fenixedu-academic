@@ -7,17 +7,15 @@ package ServidorAplicacao.Servico.publico;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
+import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
 import Dominio.ISite;
+import Dominio.Site;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.ExecutionCourseSiteComponentBuilder;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -57,47 +55,45 @@ public class ExecutionCourseSiteComponentService implements IServico {
 
 	public Object run(
 		ISiteComponent commonComponent,
-		ISiteComponent bodyComponent,		
-		String executionYearName,
-		String executionPeriodName,
-		String executionCourseCode,
+		ISiteComponent bodyComponent,
+		Integer infoSiteCode,
+		Integer infoExecutionCourseCode,
 		Integer sectionIndex)
 		throws FenixServiceException {
-			ExecutionCourseSiteView siteView = null;
-			
+		ExecutionCourseSiteView siteView = null;
+
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
-			IPersistentExecutionPeriod persistentExecutionPeriod =
-				sp.getIPersistentExecutionPeriod();
-			IPersistentExecutionYear persistentExecutionYear =
-				sp.getIPersistentExecutionYear();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
+			ISite site = null;
+			if (infoSiteCode != null) {
 
-			IExecutionYear executionYear =
-				persistentExecutionYear.readExecutionYearByName(
-					executionYearName);
-			
-			IExecutionPeriod executionPeriod =
-				persistentExecutionPeriod.readByNameAndExecutionYear(
-					executionPeriodName,
-					executionYear);
-
-			IDisciplinaExecucao executionCourse =
-				persistentExecutionCourse
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					executionCourseCode,
-					executionPeriod);
-
-			ISite site = persistentSite.readByExecutionCourse(executionCourse);
-
+				
+					site =(ISite) persistentSite.readByOId(new Site(infoSiteCode));
+			} else {
+				IDisciplinaExecucao executionCourse =
+					(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode));
+				 site = persistentSite.readByExecutionCourse(executionCourse); 					
+			}
 			ExecutionCourseSiteComponentBuilder componentBuilder =
 				ExecutionCourseSiteComponentBuilder.getInstance();
-			commonComponent = componentBuilder.getComponent(commonComponent,site,null,null);
-			bodyComponent = componentBuilder.getComponent(bodyComponent,site,commonComponent,sectionIndex);
-			
-			siteView = new ExecutionCourseSiteView(commonComponent,bodyComponent);
+			commonComponent =
+				componentBuilder.getComponent(
+					commonComponent,
+					site,
+					null,
+					null);
+			bodyComponent =
+				componentBuilder.getComponent(
+					bodyComponent,
+					site,
+					commonComponent,
+					sectionIndex);
+
+			siteView =
+				new ExecutionCourseSiteView(commonComponent, bodyComponent);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
