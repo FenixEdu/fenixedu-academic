@@ -435,4 +435,5 @@ public interface ISuportePersistente {
 
     public IPersistentGroupPropertiesExecutionCourse getIPersistentGroupPropertiesExecutionCourse();
 
+    public IPersistentPublicationAuthor getIPersistentPublicationAuthor();
 }

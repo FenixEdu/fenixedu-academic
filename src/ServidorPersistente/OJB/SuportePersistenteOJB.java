@@ -62,6 +62,7 @@ import ServidorPersistente.OJB.person.qualification.QualificationOJB;
 import ServidorPersistente.OJB.places.campus.CampusOJB;
 import ServidorPersistente.OJB.publication.AuthorOJB;
 import ServidorPersistente.OJB.publication.PublicationAttributeOJB;
+import ServidorPersistente.OJB.publication.PublicationAuthorOJB;
 import ServidorPersistente.OJB.publication.PublicationFormatOJB;
 import ServidorPersistente.OJB.publication.PublicationOJB;
 import ServidorPersistente.OJB.publication.PublicationTypeOJB;
@@ -1228,6 +1229,10 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentAttendsSet getIPersistentAttendsSet() {
     	return new AttendsSetOJB();
+    }
+    
+    public IPersistentPublicationAuthor getIPersistentPublicationAuthor() {
+    	return new PublicationAuthorOJB();
     }
 
 }

@@ -1,7 +1,7 @@
 /*
  * Created on 27/Out/2004
  */
-package ServidorPersistente.OJB.publication;
+package ServidorPersistente;
 
 import java.util.List;
 
