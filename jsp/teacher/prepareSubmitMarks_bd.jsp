@@ -20,7 +20,7 @@
 <table>
 <tr>
 	<td>
-		<bean:message key="label.data.avalicao"/>:
+		<bean:message key="label.data.avaliacao"/>:
 	</td>
 	<td> 
 		<html:text property="day" size="2" maxlength="2" />&nbsp;/&nbsp;
