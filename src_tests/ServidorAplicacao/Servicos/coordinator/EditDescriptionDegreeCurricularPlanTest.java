@@ -115,11 +115,10 @@ public class EditDescriptionDegreeCurricularPlanTest extends ServiceTestCase
             SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
             IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
             
-            IDegreeCurricularPlan degreeCurricularPlanAck = new DegreeCurricularPlan();
-			degreeCurricularPlanAck.setIdInternal(infoDegreeCurricularPlanCode);
+            IDegreeCurricularPlan degreeCurricularPlanAck;
             
             sp.iniciarTransaccao();
-			degreeCurricularPlanAck = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(degreeCurricularPlanAck, false);
+			degreeCurricularPlanAck = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(DegreeCurricularPlan.class, infoDegreeCurricularPlanCode);
             sp.confirmarTransaccao();
 
             assertEquals(degreeCurricularPlanAck.getDescription(), infoDegreeCurricularPlan.getDescription());

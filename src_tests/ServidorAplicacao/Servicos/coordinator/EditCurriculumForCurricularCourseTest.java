@@ -123,10 +123,8 @@ public class EditCurriculumForCurricularCourseTest extends ServiceTestCase
 			IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
 
 			sp.iniciarTransaccao();
-			ICurriculum curriculumAck = new Curriculum();
-			curriculumAck.setIdInternal(infoCurriculumCode);
-
-			curriculumAck = (ICurriculum) persistentCurriculum.readByOId(curriculumAck, false);
+			ICurriculum curriculumAck;	
+			curriculumAck = (ICurriculum) persistentCurriculum.readByOID(Curriculum.class, infoCurriculumCode);
 			sp.confirmarTransaccao();
 
 			assertEquals(infoCurriculum.getGeneralObjectives(), curriculumAck.getGeneralObjectives());
@@ -190,11 +188,9 @@ public class EditCurriculumForCurricularCourseTest extends ServiceTestCase
 			IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
 
 			sp.iniciarTransaccao();
-			ICurricularCourse curricularCourseAck = new CurricularCourse();
-			curricularCourseAck.setIdInternal(infoCurricularCourseCode);
-
+			ICurricularCourse curricularCourseAck;			
 			curricularCourseAck =
-				(ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourseAck, false);
+				(ICurricularCourse) persistentCurricularCourse.readByOID(CurricularCourse.class, infoCurricularCourseCode);
 			ICurriculum curriculumAck =
 				persistentCurriculum.readCurriculumByCurricularCourse(curricularCourseAck);
 			sp.confirmarTransaccao();

@@ -45,9 +45,8 @@ public class AddItem extends ManageWebSiteItem implements IService{
 			IPersistentWebSiteItem persistentWebSiteItem = persistentSuport.getIPersistentWebSiteItem();
 			IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
 			
-			IWebSiteSection webSiteSection = new WebSiteSection();
-			webSiteSection.setIdInternal(sectionCode);
-			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOId(webSiteSection, false);
+			IWebSiteSection webSiteSection;
+			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class, sectionCode);
 			infoWebSiteSection = Cloner.copyIWebSiteSection2InfoWebSiteSection(webSiteSection);
 
 			checkData(infoWebSiteItem, webSiteSection);

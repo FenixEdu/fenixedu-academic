@@ -324,10 +324,9 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 			SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 			IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
 			
-			IGratuityValues gratuityValues = new GratuityValues();
-			gratuityValues.setIdInternal(new Integer(222));
+			IGratuityValues gratuityValues;
 			
-			gratuityValues = (IGratuityValues) persistentGratuityValues.readByOId(gratuityValues, false);
+			gratuityValues = (IGratuityValues) persistentGratuityValues.readByOID(GratuityValues.class, new Integer(222));
 
 			InfoGratuityValues infoGratuityValuesDB = cloneGratuityValues(gratuityValues);
 			

@@ -155,9 +155,7 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             sp.iniciarTransaccao();
             IDegreeInfo degreeInfoAck = new DegreeInfo();
-            degreeInfoAck.setIdInternal(infoDegreeInfoCode);
-
-            degreeInfoAck = (IDegreeInfo) persistentDegreeInfo.readByOId(degreeInfoAck, false);
+            degreeInfoAck = (IDegreeInfo) persistentDegreeInfo.readByOID(DegreeInfo.class, infoDegreeInfoCode);
             sp.confirmarTransaccao();
 
             assertEquals(infoDegreeInfo.getObjectives(), degreeInfoAck.getObjectives());
@@ -220,12 +218,11 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
             ICursoExecucaoPersistente persistenExecutionDegree = sp.getICursoExecucaoPersistente();
 
             //read executionDegree for find degree
-            ICursoExecucao executionDegree = new CursoExecucao();
-            executionDegree.setIdInternal(infoExecutionDegreeCode);
-
+            ICursoExecucao executionDegree ;
+         
             sp.iniciarTransaccao();
             executionDegree =
-                (ICursoExecucao) persistenExecutionDegree.readByOId(executionDegree, false);
+                (ICursoExecucao) persistenExecutionDegree.readByOID(CursoExecucao.class, infoExecutionDegreeCode);
             sp.confirmarTransaccao();
 
             assertNotNull(executionDegree);
@@ -310,12 +307,11 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 			ICursoExecucaoPersistente persistenExecutionDegree = sp.getICursoExecucaoPersistente();
 
 			//read executionDegree for find degree
-			ICursoExecucao executionDegree = new CursoExecucao();
-			executionDegree.setIdInternal(infoExecutionDegreeCode);
+			ICursoExecucao executionDegree ;
 
 			sp.iniciarTransaccao();
 			executionDegree =
-				(ICursoExecucao) persistenExecutionDegree.readByOId(executionDegree, false);
+				(ICursoExecucao) persistenExecutionDegree.readByOID(CursoExecucao.class, infoExecutionDegreeCode);
 			sp.confirmarTransaccao();
 
 			assertNotNull(executionDegree);
