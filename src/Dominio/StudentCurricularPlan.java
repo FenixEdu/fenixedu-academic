@@ -19,6 +19,7 @@ import Util.AreaType;
 import Util.EnrolmentState;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
+import Util.enrollment.CurricularCourseEnrollmentType;
 import Util.enrollment.EnrollmentCondition;
 import Util.enrollment.EnrollmentRuleType;
 
@@ -68,7 +69,6 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
     // For enrollment purposes only
     protected Map acumulatedEnrollments;
-
     protected List notNeedToEnrollCurricularCourses;
 
     public StudentCurricularPlan() {
@@ -440,6 +440,12 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
                         EnrollmentCondition.TEMPORARY));
             }
         });
+    }
+
+    public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType() {
+
+		// TODO [DAVID] Auto-generated method stub
+        return null;
     }
 
     protected List getAllStudentApprovedEnrollments() {
