@@ -36,7 +36,7 @@ public class InfoBranch extends InfoObject {
 		boolean resultado = false;
 		if (obj instanceof InfoBranch) {
 			InfoBranch branch = (InfoBranch) obj;
-			resultado = this.getName().equals(branch.getName()) && this.getCode().equals(branch.getCode());
+			resultado = this.getInfoDegreeCurricularPlan().equals(branch.getInfoDegreeCurricularPlan()) && this.getCode().equals(branch.getCode());
 		}
 		return resultado;
 	}

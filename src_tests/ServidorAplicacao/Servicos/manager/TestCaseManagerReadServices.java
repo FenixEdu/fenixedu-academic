@@ -40,10 +40,31 @@ public abstract class TestCaseManagerReadServices extends TestCaseReadServices {
 	}
 	
 	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+		return null;
+	}
+	
+	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
 	 */
 	protected int getNumberOfItemsToRetrieve() {
 		return 0;
+	}
+	
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
+	 */	 
+	protected Object getObjectToCompare() {			
+		return null;
 	}
 	
 	/* (non-Javadoc)

@@ -46,13 +46,13 @@ public class DeleteDegrees implements IServico {
 
 			while (iter.hasNext()) {
 
-					Integer internalId = (Integer) iter.next();
-					ICurso degree =
-						persistentDegree.readByIdInternal(internalId);
-					if (degree != null)
-						result = persistentDegree.delete(degree);			
-					if(result.equals(new Boolean(false)))				
-					undeletedDegreesNames.add((String) degree.getNome());	
+				Integer internalId = (Integer) iter.next();
+				ICurso degree = persistentDegree.readByIdInternal(internalId);
+				if (degree != null)
+					result = persistentDegree.delete(degree);			
+				if(result.equals(new Boolean(false)))				
+					undeletedDegreesNames.add((String) degree.getNome());
+				result = new Boolean(true);	
 			}
 			
 			return undeletedDegreesNames;

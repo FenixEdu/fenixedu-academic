@@ -25,11 +25,9 @@
 	<li><html:link page="<%= "/insertDegreeCurricularPlan.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") %>"><bean:message key="label.manager.insert.degreeCurricularPlan"/></html:link></li>			
 </ul>
 
-<h3><bean:message key="label.manager.degreeCurricularPlans"/></h3>
-
 <span class="error"><html:errors/></span>
 
-<br>
+<h3><bean:message key="label.manager.degreeCurricularPlans"/></h3>
 
 <logic:empty name="lista de planos curriculares">
 <i><bean:message key="label.manager.degreeCurricularPlans.nonExisting"/></i>

@@ -35,9 +35,7 @@ public class Branch extends DomainObject implements IBranch {
 		boolean resultado = false;
 		if (obj instanceof IBranch) {
 			IBranch branch = (IBranch) obj;
-			resultado = this.getCode().equals(branch.getCode());
-//			 &&
-//						this.getDegreeCurricularPlan().equals(branch.getDegreeCurricularPlan());
+			resultado = this.getCode().equals(branch.getCode()) && this.getDegreeCurricularPlan().equals(branch.getDegreeCurricularPlan());
 		}
 		return resultado;
 	}

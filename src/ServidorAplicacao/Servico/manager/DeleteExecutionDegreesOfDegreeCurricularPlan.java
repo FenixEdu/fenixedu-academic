@@ -60,6 +60,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IServico {
 				if(result.equals(new Boolean(false))) {
 					undeletedExecutionDegreesYears.add((String) executionDegree.getExecutionYear().getYear());	
 				}
+				result = new Boolean(true);
 			}	
 			return undeletedExecutionDegreesYears;
 

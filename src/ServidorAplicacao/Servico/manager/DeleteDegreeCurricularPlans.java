@@ -56,7 +56,8 @@ public class DeleteDegreeCurricularPlans implements IServico {
 				if (degreeCurricularPlan != null)
 					result = persistentDegreeCurricularPlan.deleteDegreeCurricularPlan(degreeCurricularPlan);			
 				if(result.equals(new Boolean(false)))				
-					undeletedDegreeCurricularPlansNames.add((String) degreeCurricularPlan.getName());	
+					undeletedDegreeCurricularPlansNames.add((String) degreeCurricularPlan.getName());
+				result = new Boolean(true);
 			}	
 			return undeletedDegreeCurricularPlansNames;
 

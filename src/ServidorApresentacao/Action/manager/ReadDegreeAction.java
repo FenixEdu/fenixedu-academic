@@ -47,7 +47,7 @@ public class ReadDegreeAction extends FenixAction {
 				degree = (InfoDegree) manager.executar(userView, "ReadDegree", args);
 				
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("O curso", e);
+			throw new NonExistingActionException("message.nonExistingDegree", "", e);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

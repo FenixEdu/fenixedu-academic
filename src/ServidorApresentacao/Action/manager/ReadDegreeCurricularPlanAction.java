@@ -48,7 +48,7 @@ public class ReadDegreeCurricularPlanAction extends FenixAction {
 				infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlan", args);
 				
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("O plano curricular", e);
+			throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", "", e);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

@@ -48,7 +48,7 @@ public class ReadCurricularCourseAction extends FenixAction {
 				infoCurricularCourse = (InfoCurricularCourse) manager.executar(userView, "ReadCurricularCourse", args);
 				
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("A disciplina curricular", e);
+			throw new NonExistingActionException("message.nonExistingCurricularCourse", "", e);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
