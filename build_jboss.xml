@@ -200,7 +200,7 @@
     		description="Compile application server"
     		depends="prepare-app-server">
 		<javac destdir="${build.app-server}"
-               extdirs="${lib}"
+               extdirs="${lib};${env.JBOSS_HOME}/client"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
