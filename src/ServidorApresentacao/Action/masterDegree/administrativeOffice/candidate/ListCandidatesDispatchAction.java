@@ -627,7 +627,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 		editCandidateForm.set("occupation", infoPerson.getProfissao());
 		editCandidateForm.set("username", infoPerson.getUsername());
 		editCandidateForm.set("areaOfAreaCode",infoPerson.getLocalidadeCodigoPostal());
-		editCandidateForm.set("situation",infoMasterDegreeCandidate.getInfoCandidateSituation().getSituation());
+		editCandidateForm.set("situation",infoMasterDegreeCandidate.getInfoCandidateSituation().getSituation().toString());
 		editCandidateForm.set("specializationArea",infoMasterDegreeCandidate.getSpecializationArea());
 		editCandidateForm.set("average", infoMasterDegreeCandidate.getAverage().toString());
 		editCandidateForm.set("majorDegree", infoMasterDegreeCandidate.getMajorDegree());
