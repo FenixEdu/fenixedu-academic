@@ -69,6 +69,7 @@ import DataBeans.InfoQuestion;
 import DataBeans.InfoResponsibleFor;
 import DataBeans.InfoRole;
 import DataBeans.InfoRoom;
+import DataBeans.InfoScientificArea;
 import DataBeans.InfoSection;
 import DataBeans.InfoShift;
 import DataBeans.InfoSite;
@@ -189,11 +190,11 @@ public abstract class Cloner
         return shift;
     }
     /**
-	 * Method copyInfoExecutionCourse2ExecutionCourse.
-	 * 
-	 * @param infoExecutionCourse
-	 * @return IDisciplinaExecucao
-	 */
+     * Method copyInfoExecutionCourse2ExecutionCourse.
+     * 
+     * @param infoExecutionCourse
+     * @return IDisciplinaExecucao
+     */
     public static IExecutionCourse copyInfoExecutionCourse2ExecutionCourse(InfoExecutionCourse infoExecutionCourse)
     {
         IExecutionCourse executionCourse = new ExecutionCourse();
@@ -430,9 +431,9 @@ public abstract class Cloner
 
         IExecutionYear executionYear =
             Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionDegree.getInfoExecutionYear());
-//        ITeacher coordinator = null;
-//        if (infoExecutionDegree.getInfoCoordinator() != null)
-//            coordinator = Cloner.copyInfoTeacher2Teacher(infoExecutionDegree.getInfoCoordinator());
+        //        ITeacher coordinator = null;
+        //        if (infoExecutionDegree.getInfoCoordinator() != null)
+        //            coordinator = Cloner.copyInfoTeacher2Teacher(infoExecutionDegree.getInfoCoordinator());
 
         copyObjectProperties(executionDegree, infoExecutionDegree);
 
@@ -462,10 +463,10 @@ public abstract class Cloner
             Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
                 executionDegree.getCurricularPlan());
         InfoTeacher infoCoordinator = null;
-//        if (executionDegree.getCoordinator() != null)
-//        {
-//            infoCoordinator = Cloner.copyITeacher2InfoTeacher(executionDegree.getCoordinator());
-//        }
+        //        if (executionDegree.getCoordinator() != null)
+        //        {
+        //            infoCoordinator = Cloner.copyITeacher2InfoTeacher(executionDegree.getCoordinator());
+        //        }
 
         InfoExecutionYear infoExecutionYear =
             Cloner.copyIExecutionYear2InfoExecutionYear(executionDegree.getExecutionYear());
@@ -3603,9 +3604,9 @@ public abstract class Cloner
         copyObjectProperties(externalPerson, infoExternalPerson);
         IPessoa person = Cloner.copyInfoPerson2IPerson(infoExternalPerson.getInfoPerson());
         externalPerson.setPerson(person);
-		IWorkLocation workLocation =
-			Cloner.copyInfoWorkLocation2IWorkLocation(infoExternalPerson.getInfoWorkLocation());
-		externalPerson.setWorkLocation(workLocation);
+        IWorkLocation workLocation =
+            Cloner.copyInfoWorkLocation2IWorkLocation(infoExternalPerson.getInfoWorkLocation());
+        externalPerson.setWorkLocation(workLocation);
 
         return externalPerson;
     }
@@ -3616,9 +3617,9 @@ public abstract class Cloner
         copyObjectProperties(infoExternalPerson, externalPerson);
         InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(externalPerson.getPerson());
         infoExternalPerson.setInfoPerson(infoPerson);
-		InfoWorkLocation infoWorkLocation =
-			Cloner.copyIWorkLocation2InfoWorkLocation(externalPerson.getWorkLocation());
-		infoExternalPerson.setInfoWorkLocation(infoWorkLocation);
+        InfoWorkLocation infoWorkLocation =
+            Cloner.copyIWorkLocation2InfoWorkLocation(externalPerson.getWorkLocation());
+        infoExternalPerson.setInfoWorkLocation(infoWorkLocation);
 
         return infoExternalPerson;
     }
@@ -4220,84 +4221,89 @@ public abstract class Cloner
         return infoCCGroup;
     }
 
-	public static IWorkLocation copyInfoWorkLocation2IWorkLocation(InfoWorkLocation infoWorkLocation)
-	{
-		IWorkLocation workLocation = new WorkLocation();
-		copyObjectProperties(workLocation, infoWorkLocation);
+    public static IWorkLocation copyInfoWorkLocation2IWorkLocation(InfoWorkLocation infoWorkLocation)
+    {
+        IWorkLocation workLocation = new WorkLocation();
+        copyObjectProperties(workLocation, infoWorkLocation);
 
-		return workLocation;
+        return workLocation;
     }
 
-	public static InfoWorkLocation copyIWorkLocation2InfoWorkLocation(IWorkLocation workLocation)
-	{
-		InfoWorkLocation infoWorkLocation = new InfoWorkLocation();
-		copyObjectProperties(infoWorkLocation, workLocation);
+    public static InfoWorkLocation copyIWorkLocation2InfoWorkLocation(IWorkLocation workLocation)
+    {
+        InfoWorkLocation infoWorkLocation = new InfoWorkLocation();
+        copyObjectProperties(infoWorkLocation, workLocation);
 
-		return infoWorkLocation;
-	}
+        return infoWorkLocation;
+    }
 
-	public static InfoResponsibleFor copyIResponsibleFor2InfoResponsibleFor(IResponsibleFor responsibleFor)
-	{
-		IExecutionCourse executionCourse = responsibleFor.getExecutionCourse();
-		ITeacher teacher = responsibleFor.getTeacher();
+    public static InfoResponsibleFor copyIResponsibleFor2InfoResponsibleFor(IResponsibleFor responsibleFor)
+    {
+        IExecutionCourse executionCourse = responsibleFor.getExecutionCourse();
+        ITeacher teacher = responsibleFor.getTeacher();
 
-		InfoResponsibleFor infoResponsibleFor = new InfoResponsibleFor();
-		copyObjectProperties(infoResponsibleFor, responsibleFor);
-		
-		InfoExecutionCourse infoExecutionCourse = null;
-		if (executionCourse != null) {
-			infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-		} else
-		{
-			copyObjectProperties(infoExecutionCourse, executionCourse);
-		}
-		infoResponsibleFor.setInfoExecutionCourse(infoExecutionCourse);
+        InfoResponsibleFor infoResponsibleFor = new InfoResponsibleFor();
+        copyObjectProperties(infoResponsibleFor, responsibleFor);
 
-		InfoTeacher infoTeacher = null;
-		if (teacher != null) {
-			infoTeacher =
-				Cloner.copyITeacher2InfoTeacher(teacher);
-		} else
-		{
-			copyObjectProperties(infoTeacher, teacher);
-		}
-		infoResponsibleFor.setInfoTeacher(infoTeacher);
-	
-		return infoResponsibleFor;
-	}
+        InfoExecutionCourse infoExecutionCourse = null;
+        if (executionCourse != null)
+        {
+            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+        }
+        else
+        {
+            copyObjectProperties(infoExecutionCourse, executionCourse);
+        }
+        infoResponsibleFor.setInfoExecutionCourse(infoExecutionCourse);
 
-	public static IResponsibleFor copyInfoResponsibleFor2IResponsibleFor(InfoResponsibleFor infoResponsibleFor)
-	{
-		InfoExecutionCourse infoExecutionCourse = infoResponsibleFor.getInfoExecutionCourse();
-		InfoTeacher infoTeacher = infoResponsibleFor.getInfoTeacher();
-	
-		IResponsibleFor responsibleFor = new ResponsibleFor();
-	
-		copyObjectProperties(responsibleFor, infoResponsibleFor);
-		IExecutionCourse executionCourse = null;
-		if (infoExecutionCourse != null)
-		{
-			executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-		} else
-		{
-			copyObjectProperties(executionCourse, infoExecutionCourse);
-		}
-		responsibleFor.setExecutionCourse(executionCourse);
-	
-		ITeacher teacher = null;
-	
-		if (infoTeacher != null)
-		{
-			teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
-		} else
-		{
-			copyObjectProperties(teacher, infoTeacher);
-		}
-		responsibleFor.setTeacher(teacher);
-	
-		return responsibleFor;
-	}
+        InfoTeacher infoTeacher = null;
+        if (teacher != null)
+        {
+            infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+        }
+        else
+        {
+            copyObjectProperties(infoTeacher, teacher);
+        }
+        infoResponsibleFor.setInfoTeacher(infoTeacher);
+
+        return infoResponsibleFor;
+    }
+
+    public static IResponsibleFor copyInfoResponsibleFor2IResponsibleFor(InfoResponsibleFor infoResponsibleFor)
+    {
+        InfoExecutionCourse infoExecutionCourse = infoResponsibleFor.getInfoExecutionCourse();
+        InfoTeacher infoTeacher = infoResponsibleFor.getInfoTeacher();
+
+        IResponsibleFor responsibleFor = new ResponsibleFor();
+
+        copyObjectProperties(responsibleFor, infoResponsibleFor);
+        IExecutionCourse executionCourse = null;
+        if (infoExecutionCourse != null)
+        {
+            executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+        }
+        else
+        {
+            copyObjectProperties(executionCourse, infoExecutionCourse);
+        }
+        responsibleFor.setExecutionCourse(executionCourse);
+
+        ITeacher teacher = null;
+
+        if (infoTeacher != null)
+        {
+            teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
+        }
+        else
+        {
+            copyObjectProperties(teacher, infoTeacher);
+        }
+        responsibleFor.setTeacher(teacher);
+
+        return responsibleFor;
+    }
+    
     public static List copyListIWorkLocation2ListInfoWorkLocation(List workLocations)
     {
         List listInfoWorkLocations = new ArrayList();
@@ -4311,4 +4317,21 @@ public abstract class Cloner
         }
 
         return listInfoWorkLocations;
-    }}
+    }
+    
+	public static IScientificArea copyInfoScientificArea2IScientificArea(InfoWorkLocation infoScientificArea)
+	{
+		IScientificArea scientificArea = new ScientificArea();
+		copyObjectProperties(scientificArea, infoScientificArea);
+
+		return scientificArea;
+	}
+
+	public static InfoScientificArea copyIScientificArea2InfoScientificArea(IScientificArea scientificArea)
+	{
+		InfoScientificArea infoScientificArea = new InfoScientificArea();
+		copyObjectProperties(infoScientificArea, scientificArea);
+
+		return infoScientificArea;
+	}
+}
