@@ -12,7 +12,7 @@ body {
 	}
 
 table {
-	font. 11px Verdana, Arial, Helvetica, sans-serif;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
 	color: #333;
 	background-color: transparent;
 	}
@@ -24,13 +24,13 @@ h1	{
 	}
 
 h2	{
-	font: 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color: #036;
 	background-color: transparent;
 	}
 
 h3 {
-	font: 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color: #666;
 	background-color: transparent;
 	}
@@ -228,9 +228,15 @@ a:hover {
 	border: 1px solid #ccc;
 	}
 	
+.verbete-td {
+	background-color: #EBECED;   
+	border: 1px solid #ccc;                
+	height: 25px;                
+	}                            
+
 .bottomborder {
 	border-bottom: 1px solid #ccc;
-	}
+	}  
 	
 .formTD	{
 	text-align: left;

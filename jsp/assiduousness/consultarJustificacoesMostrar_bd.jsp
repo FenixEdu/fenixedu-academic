@@ -21,13 +21,6 @@
       <br>
       </td>
     </tr>
-    <%-- <tr>
-      <td  colspan='2' align="center">
-        <font size="2" face="Arial, Helvetica, sans-serif">
-          <b><bean:message key="prompt.listaJustificacoes" /></b>
-        </font>
-      </td>
-    </tr> --%>
     <tr>
       <td  colspan='2'>
       	<bean:define id="headers" name="MostrarListaForm" property="headers" />      	
@@ -38,7 +31,6 @@
 			<tiles:put name="headers" beanName="headers" />
 			<tiles:put name="rows" beanName="body" />
 		</tiles:insert>      	
-        <%-- <app:listagem name="MostrarListaForm" headers="headers" border="1" tabAlign="center" body="body" scope="session" />         --%>
       </td>
     </tr>
     <tr>
@@ -54,12 +46,6 @@
           </html:submit>
     	</html:form>		   			
       </td>
-      <%--
-      <td align="left">
-        &nbsp;&nbsp;&nbsp;
-        <html:link forward="PortalAssiduidadeAction"><bean:message key="link.menu"/></html:link> 
-      </td>
-      --%>
     </tr>
   </table>
 </div>

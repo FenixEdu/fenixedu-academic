@@ -99,13 +99,7 @@
                   <bean:write name="ConsultarFuncionarioMostrarForm" property="email" filter="true"/>
               </td>
             </tr>
-            <%--
-            <tr>
-              <td colspan="2" align="right">
-                <br>
-                <html:link forward="PortalAssiduidadeAction"><bean:message key="link.menu"/></html:link>&nbsp;&nbsp;
-              </td>
-            </tr>--%>
+
             <tr>
               <td colspan="2"><br></td>       
             </tr>      
@@ -235,14 +229,6 @@
                 </td>
               </tr>
             </logic:iterate>          
-			<%--
-            <tr>
-              <td colspan="2" align="right">
-                <br>
-                <html:link forward="PortalAssiduidadeAction"><bean:message key="link.menu"/></html:link>&nbsp;&nbsp;
-              </td>
-            </tr>        
-            --%>
       </table>
     <br />
     <br />

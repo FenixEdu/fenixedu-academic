@@ -11,19 +11,13 @@
 </logic:equal>	
 <logic:notEqual name="rowSize" value="0">
 <bean:size id="headerSize" name="headers" />	
-<table>		
-	<tr>
-	  <td colspan="<%= headerSize %>" align="center">
-	 	<h3>
-	  	<bean:define id="title" >
+	<h3 style="text-align: center;">
+		<bean:define id="title" >
 		  	<tiles:getAsString name="title" />
 		</bean:define>	
 		<bean:message name="title" />
-		</h3>
-		<br />
-		<br />
-	  </td>
-	</tr>
+	</h3>	
+<table>	
 	<tr>
 		<logic:iterate id="header" name="headers">
 			<th style="text-align: center; background-color: #ccc; padding: 5px; border: 1px solid #999;"><bean:write name="header" /></th>	
@@ -48,7 +42,7 @@
 			</logic:notEqual>
 		</logic:equal>
 		<bean:write name="startTr" filter="false"></bean:write>
-			<td class="listClasses"><bean:write name="row" filter="false"/></td>
+			<td class="verbete-td"><bean:write name="row" filter="false"/></td>
 		<bean:write name="closeTr" filter="false"></bean:write>
 	</logic:iterate>
 </table> 
