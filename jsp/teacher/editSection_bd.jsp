@@ -26,7 +26,7 @@
 	<td>
 		<html:select name="sectionForm" property="sectionOrder">
 			<html:options collection="<%= SessionConstants.CHILDREN_SECTIONS %>" property="name"/>
-			<html:option value="(Fim)"/>
+			<html:option value="-1">(Fim)</html:option>
 		</html:select>
 			<span class="error"><html:errors property="sectionOrder"/></span>
 	</td>
