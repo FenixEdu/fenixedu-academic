@@ -32,6 +32,9 @@
     >
 	<foreignkey field-id-ref="2"/>
 	</reference-descriptor>
+	<attribute
+		attribute-name="cacheable"
+     	attribute-value="false" />
 </class-descriptor>
 
 <!-- ******************************** -->
@@ -73,6 +76,9 @@
     > 
 	<foreignkey field-id-ref="4"/>
 	</reference-descriptor>
+	<attribute
+		attribute-name="cacheable"
+     	attribute-value="false" />
 </class-descriptor>
 
 <!-- **************************** -->
