@@ -60,7 +60,7 @@ public class ReadDegreeAction extends FenixAction {
 		}
 		Collections.sort(degreeCurricularPlans);
 		request.setAttribute("infoDegree", degree);
-		request.setAttribute("lista de planos curriculares", degreeCurricularPlans);
+		request.setAttribute("curricularPlansList", degreeCurricularPlans);
 		return mapping.findForward("viewDegree");
 	}
 }

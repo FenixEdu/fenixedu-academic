@@ -29,12 +29,12 @@
 
 <h3><bean:message key="label.manager.degreeCurricularPlans"/></h3>
 
-<logic:empty name="lista de planos curriculares">
+<logic:empty name="curricularPlansList">
 <i><bean:message key="label.manager.degreeCurricularPlans.nonExisting"/></i>
 </logic:empty>
 
-<logic:present name="lista de planos curriculares" scope="request">
-<logic:notEmpty name="lista de planos curriculares">
+<logic:present name="curricularPlansList" scope="request">
+<logic:notEmpty name="curricularPlansList">
 	
 <html:form action="/deleteDegreeCurricularPlans" method="get">
 
@@ -55,7 +55,7 @@
 		</td>
 	</tr>
 	<tr>	 
-		<logic:iterate id="degreeCurricularPlan" name="lista de planos curriculares">			
+		<logic:iterate id="degreeCurricularPlan" name="curricularPlansList">			
 		<td class="listClasses">
 		<html:multibox property="internalIds">
 		<bean:write name="degreeCurricularPlan" property="idInternal"/>
