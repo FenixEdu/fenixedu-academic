@@ -111,11 +111,13 @@ public class CreateUpdateEnrollmentsInPastStudentCurricularPlans
 			}
 		} catch (Throwable e)
 		{
-			super.out.println("[ERROR 201.1] Exception migrating student [" + mwStudent.getNumber() + "] enrolments!");
-			super.out.println("[ERROR 201.1] Number: [" + mwStudent.getNumber() + "]");
-			super.out.println("[ERROR 201.1] Degree: [" + mwStudent.getDegreecode() + "]");
-			super.out.println("[ERROR 201.1] Branch: [" + mwStudent.getBranchcode() + "]");
-			e.fillInStackTrace();
+			if (mwStudent != null)
+			{
+				super.out.println("[ERROR 201.1] Exception migrating student [" + mwStudent.getNumber() + "] enrolments!");
+				super.out.println("[ERROR 201.1] Number: [" + mwStudent.getNumber() + "]");
+				super.out.println("[ERROR 201.1] Degree: [" + mwStudent.getDegreecode() + "]");
+				super.out.println("[ERROR 201.1] Branch: [" + mwStudent.getBranchcode() + "]");
+			}
 			e.printStackTrace(super.out);
 			throw new FenixServiceException(e);
 		}

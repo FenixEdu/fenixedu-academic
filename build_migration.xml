@@ -269,4 +269,208 @@
 		</java>
 	</target>
 
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+
+	<target name="select-only-what-is-new-from-old-system">
+		<echo message=""/>
+		<echo message="Loading file [selectOnlyWhatIsNewFromOldSystem.sql]"/>
+		<echo message=""/>
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+	        <fileset dir="${sql}">
+				<include name="selectOnlyWhatIsNewFromOldSystem.sql"/>
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</sql>
+	</target>
+
+	<target name="select-only-what-is-new-from-old-system-for-this-semester">
+		<echo message=""/>
+		<echo message="Loading file [selectOnlyWhatIsNewFromOldSystemForThisSemester.sql]"/>
+		<echo message=""/>
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+	        <fileset dir="${sql}">
+				<include name="selectOnlyWhatIsNewFromOldSystemForThisSemester.sql"/>
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+	</target>
+
+	<target name="recalculate-NEW-MWEnrollments-to-be-treated-next-time">
+		<echo message=""/>
+		<echo message="Loading file [recalculateNewMWEnrollmentsToBeTreatedNextTime.sql]"/>
+		<echo message=""/>
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+	        <fileset dir="${sql}">
+				<include name="recalculateNewMWEnrollmentsToBeTreatedNextTime.sql"/>
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+	</target>
+
+
+	<target name="select-only-what-is-no-longer-in-old-system">
+		<echo message=""/>
+		<echo message="Loading file [selectOnlyWhatIsNoLongerInOldSystem.sql]"/>
+		<echo message=""/>
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+	        <fileset dir="${sql}">
+				<include name="selectOnlyWhatIsNoLongerInOldSystem.sql"/>
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+	</target>
+
+	<target name="select-only-what-is-no-longer-in-old-system-for-this-semester">
+		<echo message=""/>
+		<echo message="Loading file [selectOnlyWhatIsNoLongerInOldSystemForThisSemester.sql]"/>
+		<echo message=""/>
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+	        <fileset dir="${sql}">
+				<include name="selectOnlyWhatIsNoLongerInOldSystemForThisSemester.sql"/>
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+	</target>
+
+	<target name="recalculate-OLD-MWEnrollments-to-be-treated-next-time">
+		<echo message=""/>
+		<echo message="Loading file [recalculateOldMWEnrollmentsToBeTreatedNextTime.sql]"/>
+		<echo message=""/>
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+	        <fileset dir="${sql}">
+				<include name="recalculateOldMWEnrollmentsToBeTreatedNextTime.sql"/>
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+	</target>
+
+	<target name="fixe-problems" depends="">
+		<exec executable="${sql}/fixes/run.sh" os="Linux, Unix">
+			<arg value="stop"/>
+		</exec>
+		<exec executable="${sql}/fixes/run.bat" vmlauncher="true" os="Windows, Windows 2000, Windows XP">
+		</exec>
+	</target>
+
+	<target name="run-migration-process-for-past-curriculums-write" depends="compile-proj">
+		<java classname="middleware.studentMigration.enrollments.RunMigrationProcess" fork="no" failonerror="false" maxmemory="896m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<arg line="past write"/>
+		</java>
+	</target>
+
+	<target name="run-migration-process-for-current-curriculums-write" depends="compile-proj">
+		<java classname="middleware.studentMigration.enrollments.RunMigrationProcess" fork="no" failonerror="false" maxmemory="896m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<arg line="current write"/>
+		</java>
+	</target>
+
+	<target name="run-migration-process-for-past-curriculums-delete" depends="compile-proj">
+		<java classname="middleware.studentMigration.enrollments.RunMigrationProcess" fork="no" failonerror="false" maxmemory="896m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<arg line="past delete"/>
+		</java>
+	</target>
+
+	<target name="run-migration-process-for-current-curriculums-delete" depends="compile-proj">
+		<java classname="middleware.studentMigration.enrollments.RunMigrationProcess" fork="no" failonerror="false" maxmemory="896m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<arg line="current delete"/>
+		</java>
+	</target>
+
+	<target name="process-new-incoming-enrolments-script"
+		depends="compile-proj,
+				 select-only-what-is-new-from-old-system,
+				 run-migration-process-for-past-curriculums-write,
+				 select-only-what-is-new-from-old-system-for-this-semester,
+				 run-migration-process-for-current-curriculums-write,
+				 recalculate-NEW-MWEnrollments-to-be-treated-next-time">
+	</target>
+
+	<target name="process-enrolments-no-longer-coming-script"
+		depends="compile-proj,
+				 select-only-what-is-no-longer-in-old-system,
+				 run-migration-process-for-past-curriculums-delete,
+				 select-only-what-is-no-longer-in-old-system-for-this-semester,
+				 run-migration-process-for-current-curriculums-delete,
+				 recalculate-OLD-MWEnrollments-to-be-treated-next-time">
+	</target>
+
+	<target name="process-all-enrolments-script"
+		depends="load-data-from-old-system,
+				 process-new-incoming-enrolments-script,
+				 process-enrolments-no-longer-coming-script,
+				 fixe-problems">
+	</target>
+
 </project>
