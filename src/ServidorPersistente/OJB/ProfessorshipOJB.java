@@ -45,6 +45,17 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentProfessorship#readByTeacherIDAndExecutionCourseID(Dominio.ITeacher, Dominio.IDisciplinaExecucao)
+	 */
+	public IProfessorship readByTeacherIDAndExecutionCourseID(ITeacher teacher, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia
+	{
+	    Criteria criteria = new Criteria();
+	    criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
+	    criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
+		return (IProfessorship) queryObject(Professorship.class, criteria);
+	}
+
 	public IProfessorship readByTeacherAndExecutionCourse(ITeacher teacher, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
 		try {
 			IProfessorship professorship = null;
@@ -134,5 +145,6 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 		} else
 			throw new ExistingPersistentException();
 	}
+
 
 }
