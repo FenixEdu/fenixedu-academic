@@ -1226,7 +1226,6 @@
 
 
 	<!-- ========== PRECEDENCES MANAGEMENT ========== -->
-	<!--<action path="/managePrecedences" forward="df.page.manage.precedences"/>-->
 	<action path="/makeSimplePrecedence" 
 		input="/managePrecedences.do"
 		type="ServidorApresentacao.Action.manager.precedences.MakeSimplePrecedenceAction"
@@ -1237,7 +1236,8 @@
 	</action>	
 	
 	<action path="/makePrecedenceConjunction" forward="df.page.manage.precedences"/>
-	<action path="/makePrecedenceDijunction" forward="df.page.manage.precedences"/>
+	<action path="/deletePrecedence" forward="df.page.manage.precedences"/>
+	<action path="/deleteRestriction" forward="df.page.manage.precedences"/>
 
 	<action
 			path="/managePrecedences"

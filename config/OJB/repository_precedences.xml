@@ -5,7 +5,7 @@
     <reference-descriptor name="curricularCourse" class-ref="Dominio.CurricularCourse">
 	    <foreignkey field-ref="keyCurricularCourse"/>
     </reference-descriptor>
-    <collection-descriptor name="restrictions" element-class-ref="Dominio.precedences.Restriction" proxy="true">
+    <collection-descriptor name="restrictions" element-class-ref="Dominio.precedences.Restriction" refresh="true" proxy="true">
        <inverse-foreignkey field-ref="keyPrecedence"/>
     </collection-descriptor>
 </class-descriptor>
