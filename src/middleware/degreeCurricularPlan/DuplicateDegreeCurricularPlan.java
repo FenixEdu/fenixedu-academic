@@ -26,6 +26,7 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
+import Dominio.Site;
 import Util.DegreeCurricularPlanState;
 
 /**
@@ -45,83 +46,79 @@ public class DuplicateDegreeCurricularPlan {
 		String originalDCPNames[] = new String[15];
 		String newDCPNames[] = new String[15];
 
-		originalDCPNames[0] = "MC02/03";
-		newDCPNames[0] = "MC03/05";
+//		originalDCPNames[0] = "MC02/03";
+//		newDCPNames[0] = "MC03/05";
+//		
+//		originalDCPNames[1] = "MEGMTRM02/03";
+//		newDCPNames[1] = "MEGMTRM03/05";
+//		
+//		originalDCPNames[2] = "MEE02/03";
+//		newDCPNames[2] = "MEE03/05";
+//		
+//		originalDCPNames[3] = "MEGT02/03";
+//		newDCPNames[3] = "MEGT03/05";
+//		
+//		originalDCPNames[4] = "MEEC02/03";
+//		newDCPNames[4] = "MEEC03/05";
+//		
+//		originalDCPNames[5] = "MEIC02/03";
+//		newDCPNames[5] = "MEIC03/05";
+//		
+//		originalDCPNames[6] = "MEM02/03";
+//		newDCPNames[6] = "MEM03/05";
+//		
+//		originalDCPNames[7] = "MF02/03";
+//		newDCPNames[7] = "MF03/05";
+//		
+//		originalDCPNames[8] = "MG02/03";
+//		newDCPNames[8] = "MG03/05";
+//		
+//		originalDCPNames[9] = "MHRH02/03";
+//		newDCPNames[9] = "MHRH03/05";
+//		
+//		originalDCPNames[10] = "MMA02/03";
+//		newDCPNames[10] = "MMA03/05";
+//		
+//		originalDCPNames[11] = "MT02/03";
+//		newDCPNames[11] = "MT03/05";
+//		
+//		originalDCPNames[12] = "MUGT02/03";
+//		newDCPNames[12] = "MUGT03/05";
+//
+//		originalDCPNames[13] = "ML02/03";
+//		newDCPNames[13] = "ML03/05";
+//
+//		originalDCPNames[14] = "MB02/03";
+//		newDCPNames[14] = "MB03/05";
+//
+//
+//		for(int i = 0; i < originalDCPNames.length ; i++){
+//
+//			IDegreeCurricularPlan degreeCurricularPlan = DuplicateDegreeCurricularPlan.createDegreeCurricularPlan(originalDCPNames[i], newDCPNames[i], DuplicateDegreeCurricularPlan.broker);
+//
+//			// Specific Code
+//			updateExecutionDegrees(originalDCPNames[i], "2003/2004", degreeCurricularPlan, DuplicateDegreeCurricularPlan.broker);
+//
+//			DuplicateDegreeCurricularPlan.duplicateBranchs(originalDCPNames[i], degreeCurricularPlan, DuplicateDegreeCurricularPlan.broker);
+//
+//			DuplicateDegreeCurricularPlan.duplicateCurricularCoursesAndScopes(originalDCPNames[i], degreeCurricularPlan, DuplicateDegreeCurricularPlan.broker);
+//			
+//			IExecutionYear executionYear = new ExecutionYear();
+//			executionYear.setYear("2003/2004");
+//			
+//			IExecutionPeriod executionPeriod = new ExecutionPeriod();
+//			executionPeriod.setName("1 Semestre");
+//			executionPeriod.setExecutionYear(executionYear);
+//			
+//			DuplicateDegreeCurricularPlan.createExecutionCourses(degreeCurricularPlan, executionPeriod, new Integer(1), DuplicateDegreeCurricularPlan.broker);
+//			
+//		}
+//		
 		
-		originalDCPNames[1] = "MEGMTRM02/03";
-		newDCPNames[1] = "MEGMTRM03/05";
 		
-		originalDCPNames[2] = "MEE02/03";
-		newDCPNames[2] = "MEE03/05";
-		
-		originalDCPNames[3] = "MEGT02/03";
-		newDCPNames[3] = "MEGT03/05";
-		
-		originalDCPNames[4] = "MEEC02/03";
-		newDCPNames[4] = "MEEC03/05";
-		
-		originalDCPNames[5] = "MEIC02/03";
-		newDCPNames[5] = "MEIC03/05";
-		
-		originalDCPNames[6] = "MEM02/03";
-		newDCPNames[6] = "MEM03/05";
-		
-		originalDCPNames[7] = "MF02/03";
-		newDCPNames[7] = "MF03/05";
-		
-		originalDCPNames[8] = "MG02/03";
-		newDCPNames[8] = "MG03/05";
-		
-		originalDCPNames[9] = "MHRH02/03";
-		newDCPNames[9] = "MHRH03/05";
-		
-		originalDCPNames[10] = "MMA02/03";
-		newDCPNames[10] = "MMA03/05";
-		
-		originalDCPNames[11] = "MT02/03";
-		newDCPNames[11] = "MT03/05";
-		
-		originalDCPNames[12] = "MUGT02/03";
-		newDCPNames[12] = "MUGT03/05";
+		String dcps[] = new String[1];
 
-		originalDCPNames[13] = "ML02/03";
-		newDCPNames[13] = "ML03/05";
-
-		originalDCPNames[14] = "MB02/03";
-		newDCPNames[14] = "MB03/05";
-
-
-		for(int i = 0; i < originalDCPNames.length ; i++){
-
-			IDegreeCurricularPlan degreeCurricularPlan = DuplicateDegreeCurricularPlan.createDegreeCurricularPlan(originalDCPNames[i], newDCPNames[i], DuplicateDegreeCurricularPlan.broker);
-
-			// Specific Code
-			updateExecutionDegrees(originalDCPNames[i], "2003/2004", degreeCurricularPlan, DuplicateDegreeCurricularPlan.broker);
-
-			DuplicateDegreeCurricularPlan.duplicateBranchs(originalDCPNames[i], degreeCurricularPlan, DuplicateDegreeCurricularPlan.broker);
-
-			DuplicateDegreeCurricularPlan.duplicateCurricularCoursesAndScopes(originalDCPNames[i], degreeCurricularPlan, DuplicateDegreeCurricularPlan.broker);
-			
-			IExecutionYear executionYear = new ExecutionYear();
-			executionYear.setYear("2003/2004");
-			
-			IExecutionPeriod executionPeriod = new ExecutionPeriod();
-			executionPeriod.setName("1 Semestre");
-			executionPeriod.setExecutionYear(executionYear);
-			
-			DuplicateDegreeCurricularPlan.createExecutionCourses(degreeCurricularPlan, executionPeriod, new Integer(1), DuplicateDegreeCurricularPlan.broker);
-			
-		}
-		
-		
-		
-		String dcps[] = new String[5];
-
-		dcps[0] = "MGEDT03/04";
-		dcps[1] = "ML03/05";
-		dcps[2] = "MCEM03/04";
-		dcps[3] = "MEQ03/04";
-		dcps[4] = "MCO03/04";
+		dcps[0] = "MEIC03/05";
 
 
 		for(int i = 0; i < dcps.length ; i++){
@@ -168,7 +165,7 @@ public class DuplicateDegreeCurricularPlan {
 	 * @param broker
 	 * 
 	 * This method creates Execution Courses for all CurricularCourses for this Degree Curricular Plan
-	 * It also creates the Association Between them
+	 * It also creates the Association Between them and the Sites
 	 * 
 	 */
 	public static void createExecutionCourses(IDegreeCurricularPlan degreeCurricularPlan, IExecutionPeriod executionPeriod, Integer semester, PersistenceBroker broker) throws Exception {
@@ -209,6 +206,10 @@ public class DuplicateDegreeCurricularPlan {
 		Iterator iterator = result.iterator();
 		while(iterator.hasNext()){
 			ICurricularCourse  curricularCourse = (ICurricularCourse) iterator.next();
+			
+			if (curricularCourse.getIdInternal().equals(new Integer(4630))){
+				continue;
+			}
 			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
 			executionCourse.setAssociatedCurricularCourses(new ArrayList());
 			executionCourse.getAssociatedCurricularCourses().add(curricularCourse);
@@ -225,6 +226,9 @@ public class DuplicateDegreeCurricularPlan {
 			executionCourse.setTheoreticalHours(curricularCourse.getTheoreticalHours());
 
 			broker.store(executionCourse);
+			Site site = new Site();
+			site.setExecutionCourse(executionCourse);
+			broker.store(site);
 		}		
 		
 		System.out.println("Done !");
