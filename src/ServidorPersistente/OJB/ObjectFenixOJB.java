@@ -708,6 +708,13 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
     public int count(Class classToQuery, Criteria criteria) {
         return count(getCurrentPersistenceBroker(), getQuery(classToQuery, criteria));
     }
+    
+    /**
+     * @see ObjectFenixOJB#count(PersistenceBroker, Query)
+     */
+    public int count(Class classToQuery, Criteria criteria, Boolean distinct) {
+        return count(getCurrentPersistenceBroker(), getQuery(classToQuery, criteria, distinct));
+    }
 
     /**
      * @see ObjectFenixOJB#count(PersistenceBroker, Query, GroupBy)
@@ -751,6 +758,16 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
      */
     private Query getQuery(Class classToQuery, Criteria criteria) {
         return new QueryByCriteria(classToQuery, criteria);
+    }
+    
+    /**
+     * Returns a QueryByCriteria instance with distinct.
+     * 
+     * @see Query and
+     * @see QueryByCriteria
+     */
+    private Query getQuery(Class classToQuery, Criteria criteria, Boolean distinct) {
+        return new QueryByCriteria(classToQuery, criteria, distinct.booleanValue());
     }
 
     /**

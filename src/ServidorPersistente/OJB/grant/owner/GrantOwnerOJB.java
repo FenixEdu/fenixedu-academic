@@ -157,7 +157,7 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB implem
 		if(grantTypeId != null) {
 		    criteria.addEqualTo("grantContracts.grantType.idInternal", grantTypeId);
 		}
-		return new Integer(count(GrantOwner.class, criteria));
+		return new Integer(count(GrantOwner.class, criteria, new Boolean(true)));
 	}
 
 }
