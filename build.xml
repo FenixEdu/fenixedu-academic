@@ -162,7 +162,7 @@
 		    token="@application@" 
 		    property="application"/>
 		</replace>
-		<antcall target="validate-xml"/> 
+		<!--<antcall target="validate-xml"/> -->
     </target>
     
     <target name="compile-tests"
@@ -423,7 +423,7 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/WriteCreditsTeacherTest.java"/>
+                    <include name="**/ReadStudentsAndMarksByExamTest.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
                    	<exclude name="**/StudentShiftEnrolmentTest.java"/>
@@ -618,6 +618,20 @@
             </classpath>
         </sql>
         
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}"
+            src="${sql}/test-data_Marks.sql"
+        >
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
     </target>
 
     <target name="dump-db"

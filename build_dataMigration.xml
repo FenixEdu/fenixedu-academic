@@ -23,7 +23,7 @@
     <property name="webapp.metadata" value="${webapp}/WEB-INF"/>
     <property name="webapp.classes"  value="${webapp.metadata}/classes"/>
     <property name="webapp.lib"      value="${webapp.metadata}/lib"/>    
-
+ 
     
 	<!-- Directorys for deploy -->
 	<property name="deploy.home" location="deploy"/>	
