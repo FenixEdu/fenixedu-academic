@@ -1,7 +1,6 @@
 package ServidorAplicacao.Servico.teacher;
 
-import DataBeans.InfoTeacher;
-import DataBeans.util.Cloner;
+import DataBeans.teacher.credits.InfoCredits;
 import Dominio.Credits;
 import Dominio.ICredits;
 import Dominio.IExecutionPeriod;
@@ -37,7 +36,7 @@ public class WriteCreditsTeacher implements IServico {
 		return "WriteCreditsTeacher";
 	}
 
-	public Boolean run(Integer teacherOID, Integer tfcStudentNumber)
+	public Boolean run(Integer teacherOID, InfoCredits infoCredits)
 		throws FenixServiceException {
 
 		try {
@@ -60,8 +59,9 @@ public class WriteCreditsTeacher implements IServico {
 			// mark teacher's credits for write
 			IPersistentCreditsTeacher creditsTeacherDAO =
 				sp.getIPersistentCreditsTeacher();
-
-			if (tfcStudentNumber.intValue() == 0) {
+			Integer tfcStudentNumber = infoCredits.getTfcStudentsNumber();
+			
+			if (tfcStudentNumber == null || tfcStudentNumber.intValue() == 0) {
 				//delete credits because is zero
 				creditsTeacher =
 					(ICredits) creditsTeacherDAO.readByUnique(
@@ -82,6 +82,8 @@ public class WriteCreditsTeacher implements IServico {
 
 			}
 			creditsTeacher.setTfcStudentsNumber(tfcStudentNumber);
+			creditsTeacher.setAdditionalCredits(infoCredits.getAdditionalCredits());
+			creditsTeacher.setAdditionalCreditsJustification(infoCredits.getAdditionalCreditsJustification());
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			throw new FenixServiceException();
