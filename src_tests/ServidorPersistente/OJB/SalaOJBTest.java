@@ -11,6 +11,8 @@ package ServidorPersistente.OJB;
  *
  * @author tfc130
  */
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.ISala;
@@ -136,30 +138,50 @@ public class SalaOJBTest extends TestCaseOJB {
   }
 
   /** Test of delete method, of class ServidorPersistente.OJB.SalaOJB. */
-//  public void testDeleteSala() {
-//    try {
-//    	_suportePersistente.iniciarTransaccao();
-//    	ISala room = _salaPersistente.readByName("Ga1");
-//    	assertNotNull(room);
-//    	_suportePersistente.confirmarTransaccao();
-//
-//    	_suportePersistente.iniciarTransaccao();
-//    	_salaPersistente.delete(room);
-//    	_suportePersistente.confirmarTransaccao();
-//    	
-//    	_suportePersistente.iniciarTransaccao();
-//    	room = _salaPersistente.readByName("Ga1");
-//		assertNull(room);
-//    	_suportePersistente.confirmarTransaccao();
-//
-//    } catch (ExcepcaoPersistencia ex) {
-//    	fail("testDeleteSala");
-//    }
-//  }
+  public void testDeleteSalaWithLessons() {
+    try {
+    	_suportePersistente.iniciarTransaccao();
+    	ISala room = _salaPersistente.readByName("Ga1");
+    	assertNotNull(room);
+    	_suportePersistente.confirmarTransaccao();
+
+    	_suportePersistente.iniciarTransaccao();
+    	_salaPersistente.delete(room);
+		fail("testDeleteSala");
+    	_suportePersistente.confirmarTransaccao();
+
+    } catch (ExcepcaoPersistencia ex) {
+    	// All is OK
+    }
+  }
+
+  public void testDeleteSalaWithNoLessons() {
+	try {
+		
+	  ISala room = new Sala("GaXPTO", "Pavilhão Central", new Integer(1), new TipoSala(TipoSala.LABORATORIO), new Integer(100), new Integer(50));
+	  _suportePersistente.iniciarTransaccao();
+	  _salaPersistente.lockWrite(room);
+	  _suportePersistente.confirmarTransaccao();
+  
+	  _suportePersistente.iniciarTransaccao();
+	  _salaPersistente.delete(room);
+	  _suportePersistente.confirmarTransaccao();
+
+	  _suportePersistente.iniciarTransaccao();
+	  room = null;
+	  room = _salaPersistente.readByName("GaXPTO");
+	  assertNull(room);
+	  _suportePersistente.confirmarTransaccao();
+
+	} catch (ExcepcaoPersistencia ex) {
+		fail("testDeleteSala");
+	}
+   }
+
 
   /** Test of deleteAll method, of class ServidorPersistente.OJB.SalaOJB. */
   public void testDeleteAll() {
-	//	FIXME: can we delete room ??
+	//	FIXME: can we delete all rooms ??
 
 
 //    try {
@@ -188,27 +210,19 @@ public class SalaOJBTest extends TestCaseOJB {
   }
 
   
-  public void testReadAllNonExisting() {
-
-//	FIXME: can we delete room ??
-
-
-//    try {
-//      List salas = null;
-//        /* Testa metodo qdo nao ha salas na BD */
-//
-//      _suportePersistente.iniciarTransaccao();
-//      _salaPersistente.deleteAll();
-//      _suportePersistente.confirmarTransaccao();
-//      
-//      _suportePersistente.iniciarTransaccao();
-//      salas = _salaPersistente.readAll();
-//      _suportePersistente.confirmarTransaccao();
-//      assertEquals("testReadAll: qdo nao ha salas na BD", salas.size(),0);
-    }
+  public void testReadAllExisting() {
+    try {
+      List salas = null;
+      _suportePersistente.iniciarTransaccao();
+      salas = _salaPersistente.readAll();
+      _suportePersistente.confirmarTransaccao();
+      assertEquals(salas.size(), 2);
+	} catch (ExcepcaoPersistencia ex) {
+		fail("testDeleteSala");
+	}
+  }
     
 	public void testReadSalas() {
-		
 			// FIXME: Too many combinations :)
     }  
 
