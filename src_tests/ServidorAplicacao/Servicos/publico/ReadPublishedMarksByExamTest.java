@@ -110,7 +110,7 @@ public class ReadPublishedMarksByExamTest extends ServiceTestCase {
 			
 			assertEquals(marksList.size(), 0);
 			
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/publico/testExpectedReadPublishedMarksByExamDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/publico/testReadPublishedMarksByExamExpectedDataSet.xml");
 			
 			System.out.println(
 				"testExistingSiteAndEvaluationWithoutMarks was SUCCESSFULY runned by class: "
@@ -150,7 +150,7 @@ public class ReadPublishedMarksByExamTest extends ServiceTestCase {
 			
 			assertTrue(UtilsTestCase.readTestList(marksList, values, "idInternal", InfoMark.class));
 			
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/publico/testExpectedReadPublishedMarksByExamDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/publico/testReadPublishedMarksByExamExpectedDataSet.xml");
 			
 			System.out.println(
 				"testExistingSiteAndEvaluationWithoutMarks was SUCCESSFULY runned by class: "
