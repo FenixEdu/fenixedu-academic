@@ -1,8 +1,6 @@
 /*
  * Created on 7/Out/2003
  *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 package ServidorAplicacao.Servicos.teacher;
 
@@ -10,10 +8,9 @@ import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
- * @author Luis
+ * @author  Luis Egidio, lmre@mega.ist.utl.pt
+ * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
  *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public abstract class ItemBelongsExecutionCourseTest
 	extends ServiceNeedsAuthenticationTestCase {
@@ -26,26 +23,26 @@ public abstract class ItemBelongsExecutionCourseTest
 
 		Object serviceArguments[] = getTestItemSuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result =
-				gestor.executar(
-					userView,
-					getNameOfServiceToBeTested(),
-					serviceArguments);
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				serviceArguments);
 			System.out.println(
 				"testItemBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 
 		} catch (NotAuthorizedException ex) {
-			fail(getNameOfServiceToBeTested() + "fail testItemBelongsExecutionCourse");
+			fail(
+				getNameOfServiceToBeTested()
+					+ "fail testItemBelongsExecutionCourse"
+					+ ex);
 
 		} catch (Exception ex) {
 			fail(
-				"Não foi possivel correr o servico"
-					+ getNameOfServiceToBeTested());
-
+				getNameOfServiceToBeTested()
+					+ " testItemBelongsExecutionCourse "
+					+ ex);
 		}
 
 	}
@@ -54,29 +51,26 @@ public abstract class ItemBelongsExecutionCourseTest
 
 		Object serviceArguments[] = getTestItemUnsuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result =
-				gestor.executar(
-					userView,
-					getNameOfServiceToBeTested(),
-					serviceArguments);
-			fail(getNameOfServiceToBeTested() + "fail testItemNotBelongsExecutionCourse");
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				serviceArguments);
+			fail(
+				getNameOfServiceToBeTested()
+					+ "testItemNotBelongsExecutionCourse");
 
 		} catch (NotAuthorizedException ex) {
-
 			System.out.println(
 				"testItemNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 
 		} catch (Exception ex) {
 			fail(
-				"Não foi possivel correr o serviço"
-					+ getNameOfServiceToBeTested());
-
+				getNameOfServiceToBeTested()
+					+ " testItemNotBelongsExecutionCourse "
+					+ ex);
 		}
-
 	}
 
 	protected abstract Object[] getAuthorizeArguments();
