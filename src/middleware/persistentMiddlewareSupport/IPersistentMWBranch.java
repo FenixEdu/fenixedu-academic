@@ -20,6 +20,7 @@ public interface IPersistentMWBranch  {
      * @return The corresponding Branch
      * @throws PersistentMiddlewareSupportException
      */
-    public MWBranch readByDegreeCodeAndBranchCode(Integer degreeCode, Integer branchCode)throws PersistentMiddlewareSupportException, ExcepcaoPersistencia; 
+    public MWBranch readByDegreeCodeAndBranchCode(Integer degreeCode, Integer branchCode)throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
+	public MWBranch readByDegreeCodeAndBranchName(Integer degreeCode, String branchName) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia; 
 	
 }
