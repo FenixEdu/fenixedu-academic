@@ -40,7 +40,7 @@
 					<td><bean:write name="curricularCourseElem" property="name"/></td>
 				</tr>		
 				   <!-- CurricularCourseScope -->
-				<logic:iterate id="scopeElem" name="curricularCourseElem">
+				<logic:iterate id="scopeElem" name="curricularCourseElem" property="infoScopes">
 				<tr>
 					<td>
 						<bean:define id="scopeCode" name="scopeElem" property="idInternal"/>
