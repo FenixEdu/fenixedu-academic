@@ -19,6 +19,9 @@ public interface IPessoa extends IDomainObject {
 	public List getManageableDepartmentCredits();
 	public void setManageableDepartmentCredits(List manageableDepartmentCredits);
 
+	public List getAdvisories();
+	public void setAdvisories(List advisories);
+
 
 	public String getCodigoFiscal();
 	public String getCodigoPostal();

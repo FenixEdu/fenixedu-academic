@@ -64,6 +64,7 @@ public class ReadPersonByUsername implements IServico {
         try {
             sp = SuportePersistenteOJB.getInstance();
             person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+            System.out.println("number advisories= " + person.getAdvisories().size());
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();

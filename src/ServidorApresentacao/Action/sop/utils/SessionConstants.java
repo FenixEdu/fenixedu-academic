@@ -199,6 +199,8 @@ public abstract class SessionConstants {
 	public static final String SEX_LIST_KEY ="SEX_LIST_KEY";	
 	public static final String ENROLMENT_EVALUATION_TYPE_LIST ="ENROLMENT_EVALUATION_TYPE_LIST";
 	
+	public static final String LIST_ADVISORY = "LIST_ADVISORY";
+	
 
 	// -------------------------------------------------------------------------------
 	//    SOP Constants - For Context

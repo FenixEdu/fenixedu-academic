@@ -1,0 +1,52 @@
+<!-- Please keep user defined mappings in this file only
+     to avoid mixing user defined and system mappings. -->   
+<!-- Mapping of User defined classes starts here -->
+<!-- Definitions for Dominio.Advisory -->
+   <class-descriptor
+   	  class="Dominio.Advisory"
+   	  table="ADVISORY"
+   >
+      <field-descriptor id="1"
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor id="2"
+         name="sender"
+         column="SENDER"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor id="3"
+         name="created"
+         column="CREATED"
+         jdbc-type="TIMESTAMP"
+         conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+      />      
+      <field-descriptor id="4"
+         name="subject"
+         column="SUBJECT"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor id="5"
+         name="message"
+         column="MESSAGE"
+    	 jdbc-type="CLOB"
+    	 conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+      />
+      <field-descriptor id="6"
+         name="expires"
+         column="EXPIRES"
+         jdbc-type="DATE"
+      />
+      <field-descriptor id="7"
+         name="onlyShowOnce"
+         column="ONLY_SHOW_ONCE"
+         jdbc-type="BIT"
+      />
+	<attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
+   </class-descriptor>
+<!-- Mapping of User defined classses ends here -->

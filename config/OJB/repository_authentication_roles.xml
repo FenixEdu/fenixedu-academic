@@ -207,6 +207,23 @@
     	<fk-pointing-to-this-class  column="KEY_PERSON" />
     	<fk-pointing-to-element-class column="KEY_DEPARTMENT" />
       </collection-descriptor>    
+
+    <collection-descriptor
+         name="advisories"
+         element-class-ref="Dominio.Advisory"
+         proxy="true"
+         indirection-table = "PERSON_ADVISORY"
+         auto-retrieve="true"
+         refresh="true"
+         auto-update="false"
+         auto-delete="false"
+      >
+    	<fk-pointing-to-this-class  column="KEY_PERSON" />
+    	<fk-pointing-to-element-class column="KEY_ADVISORY" />
+    	<query-customizer
+	    	class="ServidorPersistente.customQueries.AdvisoryFilter">
+	    </query-customizer>
+      </collection-descriptor>    
       
 	<attribute
      	attribute-name="cacheable"

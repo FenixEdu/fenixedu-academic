@@ -27,6 +27,7 @@
 <!ENTITY almeida_coddis SYSTEM "repository_almeida_coddis.xml">
 <!ENTITY tests SYSTEM "repository_tests.xml">
 <!ENTITY scientific_council SYSTEM "repository_scientificCouncil.xml">
+<!ENTITY advisory SYSTEM "repository_advisory.xml">
 ]>
 
 
@@ -59,5 +60,6 @@
     &almeida_coddis;
 	&tests;
     &scientific_council;
+    &advisory;
 	
 </descriptor-repository>

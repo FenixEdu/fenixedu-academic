@@ -74,7 +74,7 @@
 
       <action path="/home" 
       		  type="ServidorApresentacao.Action.base.FenixForwardAction" 
-      		  parameter="/mainPortalPage.jsp"/>
+      		  parameter="/person/index.do"/>
 
 	  <action path="/login"
 			  type="ServidorApresentacao.Action.AuthenticationAction"

@@ -6,6 +6,8 @@
 
 <bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 
+Hello World
+
 <logic:iterate id="role" name="userView" property="roles">
 <%--	<bean:write name="role" property="page"/><br/>
 	<bean:write name="role" property="portalSubApplication"/><br/>

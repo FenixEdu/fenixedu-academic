@@ -7,6 +7,7 @@
 package DataBeans;
 
 import java.util.Date;
+import java.util.List;
 
 import Util.EstadoCivil;
 import Util.Sexo;
@@ -51,6 +52,8 @@ public class InfoPerson extends InfoObject{
     private Sexo sexo;
     private EstadoCivil estadoCivil;
     private InfoCountry infoPais;
+
+	private List infoAdvisories;
     
     /* Construtores */
     public InfoPerson() { }
@@ -648,6 +651,20 @@ public class InfoPerson extends InfoObject{
 	 */
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getInfoAdvisories() {
+		return infoAdvisories;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setInfoAdvisories(List list) {
+		infoAdvisories = list;
 	}
 
 }

@@ -50,6 +50,8 @@ public class Pessoa extends DomainObject implements IPessoa {
 
 	private List manageableDepartmentCredits;
 
+	private List advisories;
+
 	/**
 	 * @return
 	 */
@@ -913,6 +915,20 @@ public class Pessoa extends DomainObject implements IPessoa {
 		result += "\n  - Pais : " + pais;
 		result += "\n  - Codigo Fiscal : " + codigoFiscal;
 		return result;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getAdvisories() {
+		return advisories;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setAdvisories(List list) {
+		advisories = list;
 	}
 
 }
