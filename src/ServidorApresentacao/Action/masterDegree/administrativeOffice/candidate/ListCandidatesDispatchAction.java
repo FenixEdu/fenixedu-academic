@@ -202,15 +202,9 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			
-			DynaActionForm listCandidatesForm = (DynaActionForm) form;
-
-
 			GestorServicos serviceManager = GestorServicos.manager();
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			List candidateList = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
-			
-
 			Integer personID = Integer.valueOf(request.getParameter("personID"));
 			request.setAttribute("candidateID", new Integer(request.getParameter("candidateID")));
 			
@@ -225,9 +219,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			} catch (Exception e) {
 				throw new Exception(e);
 			}
-			
-			InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
-//			request.setAttribute("candidateID", infoMasterDegreeCandidate.getIdInternal());
 			
 			request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
 			
@@ -249,9 +240,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			
-			DynaActionForm listCandidatesForm = (DynaActionForm) form;
-
-
 			GestorServicos serviceManager = GestorServicos.manager();
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -530,8 +518,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			
-			DynaActionForm editCandidateForm = (DynaActionForm) form;
-
 			GestorServicos serviceManager = GestorServicos.manager();
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -618,7 +604,12 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 		editCandidateForm.set("fatherName", infoPerson.getNomePai());
 		editCandidateForm.set("motherName", infoPerson.getNomeMae());
 		
-		editCandidateForm.set("nationality", infoPerson.getInfoPais().getNationality());
+		if (infoPerson.getInfoPais() == null) {
+			editCandidateForm.set("nationality", null);
+		} else {
+			editCandidateForm.set("nationality", infoPerson.getInfoPais().getNationality());
+		}
+		
 		editCandidateForm.set("birthPlaceParish", infoPerson.getFreguesiaNaturalidade());
 		editCandidateForm.set("birthPlaceMunicipality", infoPerson.getConcelhoNaturalidade());
 		editCandidateForm.set("birthPlaceDistrict", infoPerson.getDistritoNaturalidade());

@@ -346,9 +346,14 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 
 		changePersonalInfoForm.set("fatherName", infoPerson.getNomePai());
 		changePersonalInfoForm.set("motherName", infoPerson.getNomeMae());
-		changePersonalInfoForm.set(
-			"nationality",
-			infoPerson.getInfoPais().getNationality());
+		
+		if (infoPerson.getInfoPais() == null) {
+			changePersonalInfoForm.set("nationality", null);
+		} else {
+			changePersonalInfoForm.set(
+				"nationality",
+				infoPerson.getInfoPais().getNationality());
+		}
 		changePersonalInfoForm.set(
 			"birthPlaceParish",
 			infoPerson.getFreguesiaNaturalidade());
