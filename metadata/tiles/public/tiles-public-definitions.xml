@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
@@ -6,7 +7,7 @@
 		controllerClass="ServidorApresentacao.tiles.controller.PublicTilesComponentController" 
 		page="/publicGesDisLayout_2col.jsp" >
 		<put name="title" value="" />	
-	  	<put name="serviceName" value="Instituto Superior TÃ©cnico" />
+	  	<put name="serviceName" value="Instituto Superior Técnico" />
 	 	<put name="executionCourseName" value=""  />
  		<put name="degrees" value="/publico/associatedDegrees.jsp" />
 	 	<put name="body" value=""/>
@@ -17,8 +18,8 @@
 
 	<definition name="definition.public.mainPage" 
 		page="/publicGesDisLayout_2col.jsp" >
-  		<put name="title" value=".Instituto Superior T&eacute;cnico" /> 
-		<put name="serviceName" value="Instituto Superior T&eacute;cnico" />
+  		<put name="title" value=".Instituto Superior Técnico" /> 
+		<put name="serviceName" value="Instituto Superior Técnico" />
 	    <put name="navGeral" value="" />
 		<put name="navbarGeral" value="/publico/commonNavLocalPub.jsp" />
 		<put name="body" value="" />
@@ -27,8 +28,8 @@
 	
 	<definition name="definition.public.mainPageWithPeriodSelection" 
 		page="/publicGesDisLayout_2col.jsp" >
-  		<put name="title" value=".Instituto Superior T&eacute;cnico" /> 
-		<put name="serviceName" value="Instituto Superior T&eacute;cnico" />
+  		<put name="title" value=".Instituto Superior Técnico" /> 
+		<put name="serviceName" value="Instituto Superior Técnico" />
 	    <put name="navGeral" value="" />
 		<put name="navbarGeral" value="/publico/commonNavLocalPubWithExecutionPeriodSelection.jsp" />
 		<put name="body" value="" />
