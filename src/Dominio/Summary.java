@@ -32,9 +32,7 @@ public class Summary extends DomainObject implements ISummary {
 	/**
 	 * 
 	 */
-	public Summary() {
-
-	}
+	public Summary() {}
 	/**
 	 * 
 	 */
@@ -155,4 +153,23 @@ public class Summary extends DomainObject implements ISummary {
 		this.summaryText = summaryText;
 	}
 
+	/**
+	 * @param obj
+	 */
+	public boolean compareTo(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof ISummary) {
+			ISummary summary = (ISummary) obj;
+
+			resultado =
+				(summary != null)
+					&& this.getExecutionCourse().equals(
+						summary.getExecutionCourse())
+					&& this.getSummaryDate().equals(summary.getSummaryDate())
+					&& this.getSummaryHour().equals(summary.getSummaryHour())
+					&& this.getSummaryText().equals(summary.getSummaryText())
+					&& this.getTitle().equals(summary.getTitle());
+		}
+		return resultado;
+	}
 }

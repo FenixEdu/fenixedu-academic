@@ -82,4 +82,9 @@ public interface ISummary extends IDomainObject {
 	 * @param summaryHour
 	 */
 	public void setSummaryHour(Calendar summaryHour);
+	
+	/**
+	 *  @param summary
+	 */
+	public boolean compareTo(Object obj);
 }
