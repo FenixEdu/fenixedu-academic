@@ -60,7 +60,7 @@ public class ExamsMapRenderer {
 			strBuffer.append("<tr>");
 
 			// Generate Exam Map
-			strBuffer.append("<td width='75%'>");
+			strBuffer.append("<td width='100%'>");
 			strBuffer.append("Mapa de Exames para o ");
 			if (year2 == null) {
 				strBuffer.append("<strong>" + year1 + "º<strong> ano");
@@ -71,6 +71,8 @@ public class ExamsMapRenderer {
 
 			renderExamsMapForFilteredYears(strBuffer, year1, year2);
 			strBuffer.append("</td>");
+
+			strBuffer.append("<tr>");
 
 			// Generate Exam Map Side Lable
 			strBuffer.append("<td class='courseList'>");
@@ -83,7 +85,14 @@ public class ExamsMapRenderer {
 			strBuffer.append("</td>");
 
 			strBuffer.append("</tr>");
+
+			strBuffer.append("</tr>");
 			strBuffer.append("</table>");
+			
+			if (i < numberOfCurricularYearsToDisplay - 1) {
+				strBuffer.append("<br/>");
+				strBuffer.append("<br/>");
+			}
 		}
 
 		return strBuffer;
