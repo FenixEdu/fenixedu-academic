@@ -12,7 +12,6 @@ import Util.TipoCurso;
 public class Student implements IStudent {
 
 	protected Integer number;
-//	FIXME: DAVID-RICARDO: Criar um tipo enumerado para este atributo.
 	protected StudentState state;
 	protected TipoCurso degreeType;
 

@@ -66,9 +66,7 @@ public class BranchOJBTest extends TestCaseOJB {
 		} catch (ExistingPersistentException ex) {
 			// All Is OK
 			try {
-//				FIXME: Porque raios e' que da erro quando cancelamos a transaccao aqui e nao da esse mesmo erro quando a confirmamos.
 				persistentSupport.cancelarTransaccao();
-//				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia e) {
 				e.printStackTrace();
 				fail("cancelarTransaccao() in Write Existing Branch");

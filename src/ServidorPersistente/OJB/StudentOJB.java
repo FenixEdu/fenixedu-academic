@@ -100,7 +100,6 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
 //
 //	public void delete(IStudent student) throws ExcepcaoPersistencia {
 //		// Delete all Attends
-//		// FIXME : Taken out temporaraly because it's provoking a concurrent modification exception
 //		//		try {
 //		//			String oqlQuery = "select all from " + Frequenta.class.getName();
 //		//			oqlQuery += " where aluno.number = $1"

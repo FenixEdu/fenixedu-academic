@@ -35,12 +35,12 @@ import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCurricularCourse;
-//import ServidorPersistente.IPersistentCurricularSemester;
+import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentEnrolment;
-//import ServidorPersistente.IPersistentEquivalence;
+import ServidorPersistente.IPersistentEquivalence;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -331,12 +331,12 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new ContributorOJB();
 	}
 
-//	public IPersistentCurricularSemester getIPersistentCurricularSemester() {
-//		return new CurricularSemesterOJB();
-//	}
+	public IPersistentCurricularSemester getIPersistentCurricularSemester() {
+		return new CurricularSemesterOJB();
+	}
 
-//	public IPersistentEquivalence getIPersistentEquivalence() {
-//		return new EquivalenceOJB();
-//	}
+	public IPersistentEquivalence getIPersistentEquivalence() {
+		return new EquivalenceOJB();
+	}
 
 }

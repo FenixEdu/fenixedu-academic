@@ -1,9 +1,3 @@
-/*
- * CurricularCourseOJBTest.java
- *
- * Created on 28 of December 2002, 12:08
- */
-
 package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
@@ -21,6 +15,12 @@ import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+
+/**
+ * @author dcs-rjao
+ *
+ * 26/Mar/2003
+ */
 
 public class CurricularCourseOJBTest extends TestCaseOJB {
 
@@ -67,6 +67,8 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		IDisciplinaDepartamento departmentCourse = null;
 		IDegreeCurricularPlan degreeCurricularPlan = null;
 
+		System.out.println("\n- Test 1.1 : Write Existing CurricularCourse\n");
+
 		try {
 			persistentSupport.iniciarTransaccao();
 			departmentCourse = persistentDepartmentCourse.lerDisciplinaDepartamentoPorNomeESigla("Engenharia da Programacao", "ep");
@@ -77,11 +79,13 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
-			fail("testWriteCurricularCourse");
+			fail("Reading departmentCourse & degreeCurricularPlan");
 		}
 
 		assertNotNull(departmentCourse);
 		assertNotNull(degreeCurricularPlan);
+
+		// CurricularCourse ja existente
 
 		ICurricularCourse curricularCourse =
 			new CurricularCourse(
@@ -101,17 +105,20 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			persistentCurricularCourse.lockWrite(curricularCourse);
 			persistentSupport.confirmarTransaccao();
-			fail("testWriteCurricularCourse: confirmarTransaccao_1");
+			fail("Write Existing curricularCourse");
 		} catch (ExistingPersistentException ex) {
 			// All Is OK
 			try {
 				persistentSupport.cancelarTransaccao();
 			} catch (ExcepcaoPersistencia e) {
 				e.printStackTrace();
+				fail("cancelarTransaccao() in Write Existing CurricularCourse");
 			}
 		} catch (ExcepcaoPersistencia ex) {
-			fail("testWriteCurricularCourse: unexpected exception");
+			fail("Unexpected exception in Write Existing CurricularCourse");
 		}
+
+		// CurricularCourse inexistente
 
 		curricularCourse =
 			new CurricularCourse(
@@ -127,53 +134,42 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 				departmentCourse,
 				degreeCurricularPlan);
 
+		System.out.println("\n- Test 1.2 : Write Non Existing CurricularCourse\n");
 		try {
 			persistentSupport.iniciarTransaccao();
 			persistentCurricularCourse.lockWrite(curricularCourse);
 			persistentSupport.confirmarTransaccao();
-			assertTrue("testWriteCurricularCourse: Unexisting Object", true);
 		} catch (ExcepcaoPersistencia ex2) {
-			fail("testWriteCurricularCourse: confirmarTransaccao_2");
+			fail("Write Non Existing CurricularCourse");
 		}
 
-		ICurricularCourse dc2 = null;
+		ICurricularCourse curricularCourse2 = null;
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			dc2 = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso IX", "TFCIX");
+			curricularCourse2 = persistentCurricularCourse.readCurricularCourseByNameAndCode(curricularCourse.getName(), curricularCourse.getCode());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
-			fail("testWriteCurricularCourse: confirmarTransaccao_3");
+			fail("Reading Non Existing CurricularCourse Just Writen Before");
 		}
 
-		assertNotNull(dc2);
+		assertNotNull(curricularCourse2);
 
-		assertTrue(dc2.getCode().equals(curricularCourse.getCode()));
-		assertTrue(dc2.getName().equals(curricularCourse.getName()));
-		assertTrue(dc2.getCredits().equals(curricularCourse.getCredits()));
-		assertTrue(dc2.getCurricularYear().equals(curricularCourse.getCurricularYear()));
-		assertTrue(dc2.getLabHours().equals(curricularCourse.getLabHours()));
-		assertTrue(dc2.getPraticalHours().equals(curricularCourse.getPraticalHours()));
-		assertTrue(dc2.getTheoPratHours().equals(curricularCourse.getTheoPratHours()));
-		assertTrue(dc2.getTheoreticalHours().equals(curricularCourse.getTheoreticalHours()));
-		assertTrue(dc2.getSemester().equals(curricularCourse.getSemester()));
-		//////////////////////////////////////////////////////////////
-		// With as of version rc1 of OJB list is null when empty
-		//assertNotNull(dc2.getAssociatedExecutionCourses());
-		//assertTrue(dc2.getAssociatedExecutionCourses().size() == 0);
-		assertNull(dc2.getAssociatedExecutionCourses());
-		//////////////////////////////////////////////////////////////
+		assertTrue(curricularCourse2.getDegreeCurricularPlan().equals(curricularCourse.getDegreeCurricularPlan()));
+
+		assertTrue(curricularCourse2.getDepartmentCourse().equals(curricularCourse.getDepartmentCourse()));
+
 	}
 	// -------------------------------------------------------------------------------------------------------------------------------------------
 	public void testDeleteAllCurricularCourses() {
 
+		System.out.println("\n- Test 2 : Delete All CurricularCourses");
 		try {
 			persistentSupport.iniciarTransaccao();
 			persistentCurricularCourse.deleteAll();
 			persistentSupport.confirmarTransaccao();
-			assertTrue("testApagarTodasAsDisciplinasCurriculares: Disciplinas Curriculares apagadas", true);
-		} catch (ExcepcaoPersistencia ex2) {
-			fail("testApagarTodasAsDisciplinasCurriculares: confirmarTransaccao_1");
+		} catch (ExcepcaoPersistencia ex) {
+			fail("Delete All CurricularCourses");
 		}
 
 		ArrayList result = null;
@@ -183,57 +179,56 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			result = persistentCurricularCourse.readAll();
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
-			fail("testApagarTodasAsDisciplinasCurriculares: confirmarTransaccao_2");
+			fail("Reading Result Of Deleting All CurricularCourses");
 		}
 
 		assertNotNull(result);
 		assertTrue(result.isEmpty());
 	}
+
 	//// -------------------------------------------------------------------------------------------------------------------------------------------
 	public void testReadCurricularCourse() {
 
-		ICurricularCourse dc = null;
+		ICurricularCourse curricularCourse = null;
+
+		//		CurricularCourse existente
+		System.out.println("\n- Test 3.1 : Read Existing CurricularCourse\n");
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			dc = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
+			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
-			fail("testLerDisciplinaCurricular: confirmarTransaccao_1");
+			fail("Read Existing CurricularCourse");
 		}
-		assertNotNull(dc);
-		assertTrue(dc.getName().equals("Trabalho Final de Curso I"));
-		assertTrue(dc.getCode().equals("TFCI"));
-		assertTrue(dc.getCredits().doubleValue() == 0);
-		assertTrue(dc.getCurricularYear().intValue() == 2);
-		assertTrue(dc.getLabHours().doubleValue() == 0);
-		assertTrue(dc.getPraticalHours().doubleValue() == 0);
-		assertTrue(dc.getTheoPratHours().doubleValue() == 0);
-		assertTrue(dc.getTheoreticalHours().doubleValue() == 0);
-		assertTrue(dc.getSemester().intValue() == 1);
-		assertNotNull(dc.getAssociatedExecutionCourses());
+		assertNotNull(curricularCourse);
 
-		dc = null;
+		// CurricularCourse inexistente
+
+		System.out.println("\n- Test 3.2 : Read Not Existing CurricularCourse\n");
 		try {
 			persistentSupport.iniciarTransaccao();
-			dc = persistentCurricularCourse.readCurricularCourseByNameAndCode("Unknown", "unk");
+			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Unknown", "unk");
 			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia ex2) {
-			fail("testLerDisciplinaCurricular: confirmarTransaccao_2");
+		} catch (ExcepcaoPersistencia ex) {
+			fail("Read Not Existing CurricularCourse");
 		}
-		assertNull(dc);
+		assertNull(curricularCourse);
 	}
 	//// -------------------------------------------------------------------------------------------------------------------------------------------
 	public void testDeleteCurricularCourse() {
 
 		ICurricularCourse curricularCourse = null;
 
+		//		CurricularCourse existente
+		System.out.println("\n- Test 4.1 : Delete Existing CurricularCourse\n");
+
 		try {
 			persistentSupport.iniciarTransaccao();
 			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
-			fail("testApagarDisciplinaCurricular: iniciarTransaccao_1");
+			fail("Reading Existing CurricularCourse To Delete");
 		}
 		assertNotNull(curricularCourse);
 
@@ -242,38 +237,41 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			persistentCurricularCourse.delete(curricularCourse);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex3) {
-			fail("testApagarDisciplinaCurricular: confirmarTransaccao_1");
+			fail("Delete Existing CurricularCourse");
 		}
 
-		ICurricularCourse dc = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			dc = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso", "TFCI");
+			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
-			fail("testApagarDisciplinaCurricular: lerDisciplinaCurricularPorDisciplinaESigla");
+			fail("Reading Just Deleted CurricularCourse");
 		}
-		assertNull(dc);
+		assertNull(curricularCourse);
 
+		// CurricularCourse inexistente
+		System.out.println("\n- Test 4.2 : Delete Non Existing CurricularCourse\n");
 		try {
 			persistentSupport.iniciarTransaccao();
 			persistentCurricularCourse.delete(new CurricularCourse());
 			persistentSupport.confirmarTransaccao();
-			assertTrue("testApagarDisciplinaCurricular: Disciplina Curricular apagada", true);
 		} catch (ExcepcaoPersistencia ex2) {
-			fail("testApagarDisciplinaCurricular: confirmarTransaccao_2");
+			fail("Delete Existing CurricularCourse");
 		}
+
 	}
+
 	//// -------------------------------------------------------------------------------------------------------------------------------------------
 	public void testReadAllCurricularCourses() {
 		ArrayList list = null;
 
+		System.out.println("\n- Test 5 : Read All Existing CurricularCourses\n");
 		try {
 			persistentSupport.iniciarTransaccao();
 			list = persistentCurricularCourse.readAll();
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
-			fail("testLerTodasDisciplinasCurriculares: confirmarTransaccao_1");
+			fail("Read All CurricularCourses");
 		}
 		assertNotNull(list);
 		assertEquals(list.size(), 10);

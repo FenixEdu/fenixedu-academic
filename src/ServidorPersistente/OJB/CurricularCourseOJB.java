@@ -49,7 +49,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 				throw ex;
 			}
 
-			if( (result != null) && (result.size() != 0) ) {
+			if ((result != null) && (result.size() != 0)) {
 				curricularCourse = (ICurricularCourse) result.get(0);
 			}
 			return curricularCourse;
@@ -74,8 +74,11 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		// If branch is not in database, then write it.
 		if (curricularCourseFromBD == null) {
 			super.lockWrite(curricularCourseToWrite);
-		// else If the branch is mapped to the database, then write any existing changes.
-		} else if ((curricularCourseToWrite instanceof CurricularCourse) && ((CurricularCourse) curricularCourseFromBD).getInternalCode().equals(((CurricularCourse) curricularCourseToWrite).getInternalCode())) {
+			// else If the branch is mapped to the database, then write any existing changes.
+		} else if (
+			(curricularCourseToWrite instanceof CurricularCourse)
+				&& ((CurricularCourse) curricularCourseFromBD).getInternalCode().equals(
+					((CurricularCourse) curricularCourseToWrite).getInternalCode())) {
 			super.lockWrite(curricularCourseToWrite);
 			// else Throw an already existing exception
 		} else
@@ -104,7 +107,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 				throw ex;
 			}
 
-			if( (result != null) && (result.size() != 0) ) {
+			if ((result != null) && (result.size() != 0)) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
 					list.add((ICurricularCourse) iterator.next());
@@ -114,4 +117,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+	
+	
+	
 }

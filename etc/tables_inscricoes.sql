@@ -1,46 +1,66 @@
-#----------------------------------
-# Table structure for degree
-#----------------------------------
+#==================================================================================
+# ZONA DEPARTAMENTAL
+#==================================================================================
+
+#----------------------------
+# Table structure for DEPARTMENT
+#----------------------------
+drop table if exists DEPARTMENT;
+create table DEPARTMENT (
+   ID_INTERNAL int(11) not null auto_increment,
+   NAME varchar(50) not null,
+   CODE varchar(50) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (NAME),
+   unique U2 (CODE)
+) type=InnoDB;
+
+#----------------------------
+# Table structure for DEPARTMENT_COURSE
+#----------------------------
+drop table if exists DEPARTMENT_COURSE;
+create table DEPARTMENT_COURSE (
+   ID_INTERNAL int(11) not null auto_increment,
+   NAME varchar(50) not null,
+   CODE varchar(50) not null,
+   KEY_DEPARTMENT int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (NAME, CODE)
+)type=InnoDB;
+
+
+#==================================================================================
+# ZONA CURRICULAR
+#==================================================================================
+
+#----------------------------
+# Table structure for DEGREE
+#----------------------------
 drop table if exists DEGREE;
 create table DEGREE (
-   ID_INTERNAL int(11) not null,
+   ID_INTERNAL int(11) not null auto_increment,
    CODE varchar(100) not null,
    NAME varchar(100) not null,
-   TYPE_DEGREE integer(11) not null,
+   TYPE_DEGREE int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (CODE), 
-   unique U2 (NAME))
-   type=InnoDB;
+   unique U1 (CODE),
+   unique U2 (NAME)
+)type=InnoDB;
 
-#----------------------------------
-# Table structure for degree_curricular_plan
-#----------------------------------
-DROP TABLE IF EXISTS DEGREE_CURRICULAR_PLAN;
-CREATE TABLE IF NOT EXISTS DEGREE_CURRICULAR_PLAN (
-  ID_INTERNAL int(11) NOT NULL auto_increment,
-  NAME varchar(10) NOT NULL DEFAULT '' ,
-  KEY_DEGREE int(11) NOT NULL DEFAULT '0' ,
-  STATE int(11) DEFAULT '1' ,
-  INITIAL_DATE date DEFAULT '0000-00-00' ,
-  END_DATE date DEFAULT '0000-00-00' ,
-  PRIMARY KEY (ID_INTERNAL),
-  UNIQUE KEY U1 (NAME,KEY_DEGREE)
-) TYPE=InnoDB;
-   
-#------------------------------------------
-# Table structure for STUDENT_CURRICULAR_PLAN
-# FIXME : The current state should not belong the the unique of the class, should it?
-#------------------------------------------
-drop table if exists STUDENT_CURRICULAR_PLAN;
-create table STUDENT_CURRICULAR_PLAN (
-   ID_INTERNAL integer(11) not null auto_increment,
-   KEY_STUDENT integer(11) not null,
-   KEY_DEGREE_CURRICULAR_PLAN integer(11) not null,
-   CURRENT_STATE integer(11) not null,
-   START_DATE date not null,
+#----------------------------
+# Table structure for DEGREE_CURRICULAR_PLAN
+#----------------------------
+drop table if exists DEGREE_CURRICULAR_PLAN;
+create table DEGREE_CURRICULAR_PLAN (
+   ID_INTERNAL int(11) not null auto_increment,
+   NAME varchar(50) not null,
+   KEY_DEGREE int(11) not null,
+   STATE int(11),
+   INITIAL_DATE date,
+   END_DATE date,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE))
-   type=InnoDB;
+   unique U1 (NAME, KEY_DEGREE)
+)type=InnoDB;
 
 #------------------------------------------
 # Table structure for curricular_course
@@ -62,40 +82,49 @@ create table CURRICULAR_COURSE (
    NAME varchar(100),
    CODE varchar(50) not null,
    primary key (ID_INTERNAL ),
-   unique U1 (CODE, NAME,SEMESTER, CURRICULAR_YEAR,  KEY_DEGREE_CURRICULAR_PLAN))
+   unique U1 (CODE, NAME, SEMESTER, CURRICULAR_YEAR,  KEY_DEGREE_CURRICULAR_PLAN))
    type=InnoDB;
-
-#------------------------------------------
-# Table structure for department
-#------------------------------------------
-drop table if exists DEPARTMENT;
-create table DEPARTMENT (
-   ID_INTERNAL int(11) not null auto_increment,
-   NAME varchar(50) not null,
-   CODE varchar(50) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (NAME), 
-   unique U2 (CODE))
-   type=InnoDB;
-
-#------------------------------------------
-# Table structure for DEPARTMENT_COURSE
-#------------------------------------------
-drop table if exists DEPARTMENT_COURSE;
-create table DEPARTMENT_COURSE (
-   ID_INTERNAL int(11) not null auto_increment,
-   NAME varchar(50) not null,
-   CODE varchar(50) not null,
-   KEY_DEPARTMENT integer(11) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (NAME, CODE))
-   type=InnoDB;
-
 
 #----------------------------
-# Table structure for enrolment
-# FIXME : This should associate students with execution courses, not with curricular courses.
-#               The curricular course can be reached through the students curricular plan.
+# Table structure for CURRICULAR_COURSE
+#----------------------------
+#drop table if exists CURRICULAR_COURSE;
+#create table CURRICULAR_COURSE (
+#   ID_INTERNAL int(11) not null auto_increment,
+#   KEY_DEPARTMENT_COURSE int(11) not null default '0',
+#   KEY_DEGREE_CURRICULAR_PLAN int(11) not null default '0',
+#   CREDITS double,
+#   THEORETICAL_HOURS double,
+#   PRATICAL_HOURS double,
+#   THEO_PRAT_HOURS double,
+#   LAB_HOURS double,
+#   NAME varchar(100) not null,
+#   CODE varchar(50) not null,
+#   PRIMARY KEY  (ID_INTERNAL),
+#   UNIQUE KEY U1 (CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN)
+#)type=InnoDB;
+
+#----------------------------
+# Table structure for STUDENT_CURRICULAR_PLAN
+#----------------------------
+drop table if exists STUDENT_CURRICULAR_PLAN;
+create table STUDENT_CURRICULAR_PLAN (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_STUDENT int(11) not null,
+   KEY_DEGREE_CURRICULAR_PLAN int(11) not null,
+   CURRENT_STATE int(11) not null,
+   START_DATE date not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE)
+)type=InnoDB;
+#  KEY_COURSE_CURRICULAR_PLAN int(11) not null,
+
+#==================================================================================
+# ZONA INSCRICAO
+#==================================================================================
+
+#----------------------------
+# Table structure for ENROLMENT
 #----------------------------
 drop table if exists ENROLMENT;
 create table ENROLMENT (
@@ -103,21 +132,12 @@ create table ENROLMENT (
    KEY_STUDENT_CURRICULAR_PLAN int(11) not null,
    KEY_CURRICULAR_COURSE int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE))
-   type=InnoDB;
+   unique U1 (KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE)
+)type=InnoDB;
 
-
-
-
-
-
-
-
-
-
-
-
-
+#==================================================================================
+# ZONA TABELAS NOVAS
+#==================================================================================
 
 #----------------------------
 # Table structure for CURRICULAR_YEAR
