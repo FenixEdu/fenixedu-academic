@@ -221,21 +221,20 @@ public class MigrateDisciplinaArea2FenixScopes {
 				
 				// Get the Curricular Semesters
 				criteria = new Criteria();
-				Criteria criteria2 = new Criteria();
 				criteria.addEqualTo("curricularYearKey", new Integer(1));
-				criteria2.addEqualTo("curricularYearKey", new Integer(2));
+				criteria.addEqualTo("semester", new Integer(1));
 				
-				criteria.addOrCriteria(criteria2);
+//				criteria.addOrCriteria(criteria2);
 				
 				query = new QueryByCriteria(CurricularSemester.class,criteria);
 				result = (List) broker.getCollectionByQuery(query);
 
-				if (result.size() != 4){
+				if (result.size() != 1){
 					throw new Exception("Error Reading Curricular Semester");
 				}
-				Iterator iteratorCurricularSemester = result.iterator();
-				while(iteratorCurricularSemester.hasNext()) {
-					// Create the Scopes
+//				Iterator iteratorCurricularSemester = result.iterator();
+//				while(iteratorCurricularSemester.hasNext()) {
+					// Create the Scope
 				
 					ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
 					curricularCourseScope.setBranch(branch);
@@ -243,7 +242,7 @@ public class MigrateDisciplinaArea2FenixScopes {
 					curricularCourseScope.setMaxIncrementNac(new Integer(2));
 					curricularCourseScope.setMinIncrementNac(new Integer(1));
 					curricularCourseScope.setWeigth(new Integer(1));
-					curricularCourseScope.setCurricularSemester((ICurricularSemester) iteratorCurricularSemester.next());
+					curricularCourseScope.setCurricularSemester((ICurricularSemester) result);
 					curricularCourseScope.setPraticalHours(new Double(0));
 					curricularCourseScope.setTheoPratHours(new Double(0));
 					curricularCourseScope.setTheoreticalHours(new Double(0));
@@ -251,7 +250,7 @@ public class MigrateDisciplinaArea2FenixScopes {
 					
 					scopesWritten++;
 					broker.store(curricularCourseScope);
-				}
+//				}
 				broker.commitTransaction();
 			}
 			System.out.println(scopesWritten + " Scopes written for " + discAreasPG.size() + " Disciplina Area PG");

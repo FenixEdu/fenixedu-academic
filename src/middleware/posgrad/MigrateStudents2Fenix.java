@@ -258,7 +258,15 @@ public class MigrateStudents2Fenix {
 
 				if (result.size() == 0){
 					// Update The Username
-					person.setUsername("M" + student2Convert.getNumero());
+					
+					
+					if ((student2Convert.getEspecializacao().equalsIgnoreCase("Mestrado")) || 
+						(student2Convert.getEspecializacao().equalsIgnoreCase("Integrado"))){
+							person.setUsername("M" + student2Convert.getNumero());
+					} else {
+						person.setUsername("E" + student2Convert.getNumero());
+					}
+					
 					broker.store(person);
 				} 
 				broker.commitTransaction();

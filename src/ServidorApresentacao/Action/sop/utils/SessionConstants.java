@@ -139,6 +139,8 @@ public abstract class SessionConstants {
 	public static final String DISCRIMINATED_WITHOUT_AVERAGE = "fimParteEscolarDiscriminadaSemMedia";
 	public static final String DISCRIMINATED_WITH_AVERAGE = "fimParteEscolarDiscriminadaComMedia";
 	public static final String DIPLOMA = "Diploma";
+	public static final String STUDENT_LIST = "student_list";
+	
 	
 	
 	

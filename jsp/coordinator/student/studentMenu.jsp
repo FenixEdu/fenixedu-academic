@@ -7,7 +7,6 @@
 	<br>
   
   	<bean:message key="label.coordinator.student" /><br>
-        &nbsp;&nbsp;- <html:link page="/visualizeStudents.do?method=prepare&action=visualize&page=0"><bean:message key="link.coordinator.visualizeStudent" /></html:link><br>
-        &nbsp;&nbsp;- <html:link page="/setEvaluations.do?method=prepare&action=edit&page=0"><bean:message key="link.coordinator.setEvaluations" /></html:link><br>
+        &nbsp;&nbsp;- <html:link page="/studentListByDegree.do?method=getList&page=0"><bean:message key="link.coordinator.studentListByDegree" /></html:link><br>
 	<br>
 	

@@ -91,6 +91,21 @@
       	  <forward name="ViewList" path="/candidate/selectCandidateFromList.jsp"/>
       	  <forward name="ActionReady" path="/candidate/visualizeCandidate.jsp"/>
       </action>
+      
+      
+      
+      <!-- Dispatch Action to get the student list of the degree -->
+      <action path="/studentListByDegree"
+          input="/student/indexStudent.jsp"
+	      validate="true"
+		 parameter="method"
+      	      type="ServidorApresentacao.Action.masterDegree.coordinator.StudentListDispatchAction">
+     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
+      	  <forward name="ViewList" path="/candidate/selectCandidateFromList.jsp"/>
+      	  <forward name="ActionReady" path="/candidate/visualizeCandidate.jsp"/>
+      </action>
 
 
     </action-mappings>

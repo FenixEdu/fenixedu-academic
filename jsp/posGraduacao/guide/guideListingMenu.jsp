@@ -12,7 +12,7 @@
 <dd><html:link page="/guideListingByYear.do?method=prepareChooseYear"><bean:message key="link.masterDegree.administrativeOffice.guideListingByYear" /></html:link></dd>
 </ul>
 <ul>
-	<li><html:link page="/certificateSection.do"><bean:message key="label.coordinator.student" /></html:link></li>
+	<li><html:link page="/studentSection.do"><bean:message key="label.coordinator.student" /></html:link></li>
 	<li><html:link page="/chooseExecutionYearToManageMarks.do?method=prepareChooseExecutionYear&jspTitle=title.masterDegree.administrativeOffice.marksManagement"><bean:message key="link.masterDegree.administrativeOffice.marksManagement" /></html:link></li>
 </ul>
    

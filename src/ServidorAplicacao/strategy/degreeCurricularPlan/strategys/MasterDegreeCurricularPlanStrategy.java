@@ -8,6 +8,7 @@ import java.util.List;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
+import Dominio.IEnrolmentInExtraCurricularCourse;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -49,7 +50,8 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 		
 		while(iterator.hasNext()){
 			IEnrolment enrolment = (IEnrolment) iterator.next();
-			if (enrolment.getEnrolmentState().equals(EnrolmentState.APROVED_OBJ)){
+			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED_OBJ))&&
+				(!(enrolment instanceof IEnrolmentInExtraCurricularCourse))){
 				studentCredits += enrolment.getCurricularCourseScope().getCurricularCourse().getCredits().floatValue(); 
 			}
 		}
