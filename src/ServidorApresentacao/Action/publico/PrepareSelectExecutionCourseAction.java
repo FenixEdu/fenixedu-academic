@@ -49,13 +49,7 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 		Integer curricularYear =
 			(Integer) request.getAttribute("curYear");
 		
-			System.out.println("##################");
-			System.out.println("infoExecutionDegree"+infoExecutionDegree);
-			System.out.println("##################");
-			System.out.println("infoExecutionPeriod"+infoExecutionPeriod);
-			System.out.println("##################");
-			System.out.println("curricularYear"+curricularYear);
-			System.out.println("##################");
+		
 		Object argsSelectExecutionCourse[] =
 			{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
 
@@ -69,9 +63,7 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		System.out.println("##################");
-		System.out.println(infoExecutionCourses);
-		System.out.println("##################");
+		
 		RequestUtils.setExecutionPeriodToRequest(request,infoExecutionPeriod);
 		request.setAttribute("exeCourseList", infoExecutionCourses);
 		return mapping.findForward("sucess");
