@@ -4,7 +4,7 @@
   <tiles:put name="serviceName" value="&Aacute;rea de Pessoa" />
   <tiles:put name="navLocal" value="/person/mainMenu.jsp" />
   <tiles:put name="navGeral" value="/person/commonNavGeralPerson.jsp" />
-  <tiles:put name="body" value="/person/changePersonalInfo_body.jsp" />
-  <tiles:put name="footer" value="/person/copyrightDefault.jsp" />
+  <tiles:put name="body" value="/person/changePersonalInfo_bd.jsp" />
+  <tiles:put name="footer" value="/person/commonFooter.jsp" />
 </tiles:insert>
 

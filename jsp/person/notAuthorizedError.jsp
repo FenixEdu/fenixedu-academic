@@ -5,5 +5,5 @@
   <tiles:put name="navGeral" value="/person/commonNavGeralPerson.jsp" />
   <tiles:put name="navLocal" value="" />
   <tiles:put name="body" value="/person/notAuthorizedError_bd.jsp" />
-  <tiles:put name="footer" value="/person/copyrightDefault.jsp" />
+  <tiles:put name="footer" value="/person/commonFooter.jsp" />
 </tiles:insert>

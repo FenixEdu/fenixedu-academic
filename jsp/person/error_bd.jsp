@@ -2,7 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-
 <html>
   <head>
     <title><bean:message key="title.error"/></title>
@@ -30,7 +29,6 @@
    		<bean:message key="property.message"/></td><td>
     	<html:textarea property="body" value=""/></td>
     	</tr>
-    	
       </table>	
       <center>
     	<html:submit >

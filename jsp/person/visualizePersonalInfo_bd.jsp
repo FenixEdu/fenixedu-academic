@@ -1,16 +1,20 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-
 <html>
   <head>
     <title><bean:message key="label.person.visualizeInformation" /></title>
   </head>
   <body>
-  
     <table>
-    
+    	<tr>
+    		<td><h2><bean:message key="label.person.title.personalConsult" /></h2><br /></td>
+    	</tr>
         <logic:present name="personalInfo">
+          <!-- Dados Pessoais -->
+          <tr>
+            <td><strong><bean:message key="label.person.title.personal.info" /></strong></td>
+          </tr>
           <!-- Nome -->
           <tr>
             <td><bean:message key="label.person.name" /></td>
@@ -19,15 +23,8 @@
           <!-- Username -->
           <tr>
             <td><bean:message key="label.person.username" /></td>
-            <td><bean:write name="personalInfo" property="username"/></td>
-          
+            <td><bean:write name="personalInfo" property="username"/></td> 
           </tr>
-
-          <!-- Dados Pessoais -->
-          <tr>
-            <td><h2><bean:message key="label.person.title.personal.info" /><h2></td>
-          </tr>
-          
           <!-- Sexo -->
           <tr>
             <td><bean:message key="label.person.sex" /></td>
@@ -63,10 +60,19 @@
             <td><bean:message key="label.person.contributorNumber" /></td>
             <td><bean:write name="personalInfo" property="numContribuinte"/></td>
           </tr>
+          <!-- Profissao -->
+          <tr>
+            <td><bean:message key="label.person.occupation" /></td>
+            <td><bean:write name="personalInfo" property="profissao"/></td>
+          </tr>
           <!-- Estado Civil -->
           <tr>
             <td><bean:message key="label.person.maritalStatus" /></td>
             <td><bean:write name="personalInfo" property="estadoCivil"/></td>
+          </tr>
+          <!-- Filiação -->
+          <tr>
+          	<td><br /><strong><bean:message key="label.person.title.filiation" /></strong></td>
           </tr>
           <!-- Data de Nascimento -->
           <tr>
@@ -77,8 +83,7 @@
           <tr>
             <td><bean:message key="label.person.country" /></td>
             <td><bean:write name="personalInfo" property="infoPais.nationality"/></td>
-          </tr>
-          
+          </tr>   
           <!-- Freguesia de Naturalidade -->
           <tr>
             <td><bean:message key="label.person.birthPlaceParish" /></td>
@@ -104,18 +109,10 @@
             <td><bean:message key="label.person.motherName" /></td>
             <td><bean:write name="personalInfo" property="nomeMae"/></td>
           </tr>
-          <!-- Profissao -->
-          <tr>
-            <td><bean:message key="label.person.occupation" /></td>
-            <td><bean:write name="personalInfo" property="profissao"/></td>
-          </tr>
-          
-          
-          
 
           <!-- Dados de Residencia -->
           <tr>
-            <td><h2><bean:message key="label.person.title.addressInfo" /><h2></td>
+            <td><br /><strong><bean:message key="label.person.title.addressInfo" /></strong></td>
           </tr>
           <!-- Morada -->
           <tr>
@@ -152,11 +149,9 @@
             <td><bean:message key="label.person.addressDistrict" /></td>
             <td><bean:write name="personalInfo" property="distritoMorada"/></td>
           </tr>
-
-
           <!-- Contactos -->
           <tr>
-            <td><h2><bean:message key="label.person.title.contactInfo" /><h2></td>
+            <td><br /><strong><bean:message key="label.person.title.contactInfo" /></strong></td>
           </tr>
           <!-- Telefone -->
           <tr>

@@ -5,6 +5,6 @@
   <tiles:put name="navLocal" value="/person/mainMenu.jsp" />
   <tiles:put name="navGeral" value="/person/commonNavGeralPerson.jsp" />
   <tiles:put name="body" value="/person/changeSuccess_body.jsp" />
-  <tiles:put name="footer" value="/person/copyrightDefault.jsp" />
+  <tiles:put name="footer" value="/person/commonFooter.jsp" />
 </tiles:insert>
 
