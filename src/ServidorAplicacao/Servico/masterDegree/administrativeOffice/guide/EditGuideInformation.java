@@ -75,7 +75,7 @@ public class EditGuideInformation implements IServico {
 		boolean change = false;
 
 		IContributor contributor = null;
-		IGuide guide = null;
+		IGuide guide = new Guide();
 		IGuideEntry othersGuideEntry = null;
 		
 		// Safety check to see if the Guide can be changed
@@ -117,7 +117,8 @@ public class EditGuideInformation implements IServico {
 			
 			
 		infoGuide.setInfoContributor(Cloner.copyIContributor2InfoContributor(contributor));
-		
+	
+
 		// Check the quantities of the Guide Entries
 		// The items without a quantity or with a 0 quantity will be deleted if the guide is NON PAYED or
 		// they won't appear in the new guide version if the guide has been payed 
@@ -155,8 +156,7 @@ public class EditGuideInformation implements IServico {
 				othersGuideEntry.setPrice(othersPrice);
 				othersGuideEntry.setQuantity(othersQuantity);
 	    }
-
-
+		
 		
 		if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.NON_PAYED_TYPE)){
 			// If there's a change ...
@@ -167,7 +167,7 @@ public class EditGuideInformation implements IServico {
 					othersGuideEntry.setGuide(guide);
 
 				// Remove the Guide entries wich have been deleted
-				Iterator entryIterator = guideEntriesToRemove.iterator();
+				Iterator entryIterator = guideEntriesToRemove.iterator();			
 				while(entryIterator.hasNext()){
 					InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
 					try {
@@ -197,9 +197,11 @@ public class EditGuideInformation implements IServico {
 						throw newEx;
 					}
 				}
-
+				guide.setContributor(contributor);			
 				sp.getIPersistentGuide().write(guide);
-				guide.setContributor(contributor);
+				guide.setContributor(contributor);	
+				
+				
 			}
 						
 		} else if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE)){
@@ -274,7 +276,6 @@ public class EditGuideInformation implements IServico {
 			sp.iniciarTransaccao();
 
 			newGuide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(), infoGuide.getYear(), infoGuide.getVersion());
-
 			// Update the Guide Total
 			InfoGuide infoGuideTemp = new InfoGuide();
 			infoGuideTemp.setInfoGuideEntries(newInfoGuideEntries);

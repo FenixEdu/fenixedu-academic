@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
+import org.apache.tools.ant.taskdefs.optional.IContract;
 import org.odmg.QueryException;
 
+import Dominio.Contributor;
 import Dominio.Guide;
+import Dominio.IContributor;
 import Dominio.IGuide;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGuide;
@@ -25,7 +28,9 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 	public GuideOJB() {}
 
 	public void write(IGuide guideToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
-		IGuide guideBD = null;
+		IGuide guideBD = new Guide();	
+        IContributor contributor = new Contributor();
+        contributor = guideToWrite.getContributor();
 		if (guideToWrite == null)
 			// Should we throw an exception saying nothing to write or
 			// something of the sort?
@@ -46,7 +51,8 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 
 			guideBD.setTotal(guideToWrite.getTotal());
 			guideBD.setRemarks(guideToWrite.getRemarks());
-			guideBD.setContributor(guideToWrite.getContributor());
+			guideBD.setContributor(contributor);
+			
 //			guideBD.setCreationDate(guideToWrite.getCreationDate());
 //			guideBD.setVersion(guideToWrite.getVersion());
 			
@@ -79,6 +85,7 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 
 	public Integer generateGuideNumber(Integer year)  throws ExcepcaoPersistencia {
 		try {
+
 			Integer guideNumber = new Integer(0);
 			String oqlQuery = "select all from " + Guide.class.getName()
 			                + " where year = $1"
