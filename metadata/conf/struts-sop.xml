@@ -270,11 +270,11 @@
       
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
-
+<!--
       <action path="/principalSalas" 
               type="ServidorApresentacao.Action.base.FenixForwardAction" 
               parameter="/sop/principalSalas.jsp"/>
-
+-->
     
 
      
@@ -414,7 +414,19 @@
 	 </action>
 
       <!-- Gestao de Salas -->
-      
+
+	<action path="/principalSalas"
+			name="pagedIndexForm"
+			input="/principalSalas.do?method=prepare"
+    		type="ServidorApresentacao.Action.sop.ExecutionPeriodDA"
+    		parameter="method"
+    		validate="true"
+    		scope="request"
+    		>
+  		<forward name="showForm" path="/principalSalas.jsp"/>
+  		<forward name="choose" path="/principalSalas.do?method=prepare"/>
+	</action>
+	      
       <action path="/prepararSalaForm"
               type="ServidorApresentacao.Action.sop.PrepararCriarSalaFormAction"
               scope="request"
@@ -435,7 +447,7 @@
          	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                />
-        <forward name="Sucesso" path="/principalSalas.do"/>
+        <forward name="Sucesso" path="/principalSalas.do?method=prepare"/>
       </action>
 
       <action attribute="searchEmptyRoomsForm"
@@ -500,7 +512,7 @@
               scope="request"
               type="ServidorApresentacao.Action.publico.SelectRoomsFormAction">
         <forward name="Sucesso" path="/manipularSalas.jsp" />
-        <forward name="Voltar" path="/principalSalas.do"/>
+        <forward name="Voltar" path="/principalSalas.do?method=prepare"/>
       </action>
       
       <action path="/prepareViewRoomOcupation"
