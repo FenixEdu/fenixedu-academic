@@ -3,6 +3,11 @@ package Dominio;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
+
+import Util.EnrolmentState;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
 import Util.enrollment.EnrollmentRuleType;
@@ -383,17 +388,32 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
 	public List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType)
 	{
+		// To be delegated to DegreeCurricularPlan.
 		return null;
 	}
 	
 	public List getStudentApprovedEnrollments()
 	{
-		return null;
+		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+				return enrollment.getEnrolmentState().equals(EnrolmentState.APROVED);
+			}
+		});
 	}
 
 	public List getStudentEnrolledEnrollments()
 	{
-		return null;
+		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+				return enrollment.getEnrolmentState().equals(EnrolmentState.ENROLED);
+			}
+		});
 	}
 
 	public List getStudentTemporarilyEnrolledEnrollments()
@@ -408,6 +428,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
 	public List getCommonBranchCourses()
 	{
+		// To be delegated to DegreeCurricularPlan.
 		return null;
 	}
 
@@ -418,7 +439,31 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
 	public List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment()
 	{
-		return null;
+		List studentEnrolledEnrollments = this.getStudentEnrolledEnrollments();
+
+		final List result = (List) CollectionUtils.collect(studentEnrolledEnrollments, new Transformer()
+		{
+			public Object transform(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+				String key = enrollment.getCurricularCourse().getCode() + enrollment.getCurricularCourse().getName()
+					+ enrollment.getCurricularCourse().getDegreeCurricularPlan().getDegree().getNome()
+					+ enrollment.getCurricularCourse().getDegreeCurricularPlan().getDegree().getTipoCurso();
+				return (key);
+			}
+		});
+
+		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+				String key = enrollment.getCurricularCourse().getCode() + enrollment.getCurricularCourse().getName()
+					+ enrollment.getCurricularCourse().getDegreeCurricularPlan().getDegree().getNome()
+					+ enrollment.getCurricularCourse().getDegreeCurricularPlan().getDegree().getTipoCurso();
+				return result.contains(key);
+			}
+		});
 	}
 
 	// -------------------------------------------------------------
