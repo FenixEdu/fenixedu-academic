@@ -26,6 +26,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
+import ServidorPersistente.exceptions.notAuthorizedPersistentDeleteException;
 
 public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
@@ -52,11 +53,14 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
 	public void delete(IExam exam) throws ExcepcaoPersistencia {
 
-		// TODO : Return indication if exam can be romoved or not.
+		
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("exam.idInternal", exam.getIdInternal());
+		criteria.addEqualTo("keyExam", exam.getIdInternal());
 		List examEnrollments = queryList(ExamStudentRoom.class, criteria);
 		if (examEnrollments != null || !examEnrollments.isEmpty()) {
+		throw new notAuthorizedPersistentDeleteException();
+		}
+		else{
 
 			List associatedExecutionCourses =
 				exam.getAssociatedExecutionCourses();

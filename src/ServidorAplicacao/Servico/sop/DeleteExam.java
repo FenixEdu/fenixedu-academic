@@ -7,7 +7,7 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
- * Servi�o ApagarAula.
+ * Service DeleteExam.
  *
  * @author tfc130
  **/
@@ -16,9 +16,11 @@ import DataBeans.util.Cloner;
 import Dominio.IExam;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.notAuthorizedPersistentDeleteException;
 
 public class DeleteExam implements IServico {
 
@@ -53,13 +55,15 @@ public class DeleteExam implements IServico {
 
 			IExam examToDelete =
 				(IExam) sp.getIPersistentExam().readByOId(
-					Cloner.copyInfoExam2IExam(
-						infoViewExam.getInfoExam()), false);
+					Cloner.copyInfoExam2IExam(infoViewExam.getInfoExam()),
+					false);
 
 			sp.getIPersistentExam().delete(examToDelete);
 			result = true;
+		} catch (notAuthorizedPersistentDeleteException ex) {
+			throw new notAuthorizedServiceDeleteException(ex);
 		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException("Errer deleteing exam");
+			throw new FenixServiceException("Error deleting exam");
 		}
 
 		return new Boolean(result);

@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -25,6 +27,9 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoViewExam;
 import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -89,7 +94,7 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
@@ -99,7 +104,20 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		Integer indexExam = new Integer(request.getParameter("indexExam"));
 
 		Object args[] = { (InfoViewExamByDayAndShift) infoExams.get(indexExam.intValue()) };
-		ServiceUtils.executeService(userView, "DeleteExam",	args);
+		try {
+			ServiceUtils.executeService(userView, "DeleteExam",	args);
+		}catch (notAuthorizedServiceDeleteException e) {
+			ActionErrors actionErrors = new ActionErrors();
+				actionErrors.add(
+					"notAuthorizedExamDelete",
+					new ActionError("error.notAuthorizedExamDelete"));
+				saveErrors(request, actionErrors);
+		
+	} 
+		
+		catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 		
 		return mapping.findForward("Deleted Exam");
 	}
