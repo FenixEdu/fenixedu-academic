@@ -64,15 +64,12 @@ public class StrategyFactoryTest extends TestCaseServicos {
 
 		enrolmentContext.setSemester(new Integer(2));
 		enrolmentContext.setStudent(studentCurricularPlan.getStudent());
-		enrolmentContext.setDegree(
-			studentCurricularPlan.getDegreeCurricularPlan().getDegree());
 		IEnrolmentStrategy enrolmentStrategy = null;
 		try {
 			sp.iniciarTransaccao();
 			
 			enrolmentStrategy =
 				EnrolmentStrategyFactory.getEnrolmentStrategyInstance(
-					EnrolmentStrategyFactory.LERCI,
 					enrolmentContext);
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
@@ -89,10 +86,6 @@ public class StrategyFactoryTest extends TestCaseServicos {
 			"Semester not equal!",
 			enrolmentContext.getSemester(),
 			strategyEnrolmentContext.getSemester());
-		assertEquals(
-			"Degree not equal!",
-			enrolmentContext.getDegree(),
-			strategyEnrolmentContext.getDegree());
 
 		HashMap acumulatedEnrolments =
 			(HashMap) strategyEnrolmentContext.getAcumulatedEnrolments();

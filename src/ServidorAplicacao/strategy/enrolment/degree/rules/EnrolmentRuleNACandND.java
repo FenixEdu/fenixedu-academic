@@ -27,7 +27,7 @@ public class EnrolmentRuleNACandND implements IEnrolmentRule {
 
 		HashMap acumulatedEnrolments = (HashMap) enrolmentContext.getAcumulatedEnrolments();
 
-		// TODO: David-Ricardo: Parametrizar possibleND, possibleNAC e year
+		// FIXME: David-Ricardo: Parametrizar possibleND, possibleNAC e year
 		while ( (possibleND < 7) && (possibleNAC < 10) && (year < 6)) {
 			
 			Iterator iterator = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import Dominio.ICurso;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 
@@ -16,7 +15,6 @@ import Dominio.IStudentCurricularPlan;
  * @author jpvl
  */
 public final class EnrolmentContext {
-	private ICurso degree;
 	private IStudent student;
 	private List curricularCoursesDoneByStudent;
 	private Map acumulatedEnrolments;
@@ -50,13 +48,6 @@ public final class EnrolmentContext {
 	/**
 	 * @return
 	 */
-	public ICurso getDegree() {
-		return degree;
-	}
-
-	/**
-	 * @return
-	 */
 	public Integer getSemester() {
 		return semester;
 	}
@@ -73,13 +64,6 @@ public final class EnrolmentContext {
 	 */
 	public void setCurricularCoursesDoneByStudent(List list) {
 		curricularCoursesDoneByStudent = list;
-	}
-
-	/**
-	 * @param curso
-	 */
-	public void setDegree(ICurso degree) {
-		this.degree = degree;
 	}
 
 	/**

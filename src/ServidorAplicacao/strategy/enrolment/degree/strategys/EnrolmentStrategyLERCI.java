@@ -25,11 +25,9 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		enrolmentRule = new EnrolmentRuleBranch();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 		
-		
 		enrolmentRule = new EnrolmentRuleSemester();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 		
-
 		enrolmentRule = new EnrolmentRuleNACandND();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 

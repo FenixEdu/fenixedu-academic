@@ -12,7 +12,6 @@ import org.apache.commons.collections.CollectionUtils;
 
 import Dominio.CurricularCourseDoneRestriction;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
 import Dominio.IPrecedence;
 import Dominio.IRestriction;
 import Dominio.IStudent;
@@ -161,7 +160,7 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 		
 		Integer semester = new Integer(2);
 		IStudent student = null;
-		ICurso degree = null; 
+
 		try {
 			sp.iniciarTransaccao();
 			IStudentCurricularPlan studentCurricularPlan = studentCurricularPlanDAO.readActiveStudentCurricularPlan(new Integer(1), new TipoCurso(TipoCurso.LICENCIATURA));
@@ -169,15 +168,12 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 			assertNotNull(studentCurricularPlan);
 
 			student = studentCurricularPlan.getStudent();
-			degree = studentCurricularPlan.getDegreeCurricularPlan().getDegree();
 
 			assertNotNull(student);
-			assertNotNull(degree);
 			enrolmentContext.setSemester(semester);
 			enrolmentContext.setStudent(student);
-			enrolmentContext.setDegree(degree);
 
-			IEnrolmentStrategy enrolmentStrategy = EnrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentStrategyFactory.LERCI, enrolmentContext);
+			IEnrolmentStrategy enrolmentStrategy = EnrolmentStrategyFactory.getEnrolmentStrategyInstance(enrolmentContext);
 			enrolmentContext = enrolmentStrategy.getEnrolmentContext();
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {

@@ -6,7 +6,6 @@ package ServidorAplicacao.Servicos.strategy.enrolment.degree.rules;
 
 import junit.framework.TestCase;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
@@ -60,7 +59,7 @@ abstract public class BaseEnrolmentRuleTest extends TestCase {
 		IStudentCurricularPlanPersistente studentCurricularPlanDAO = sp.getIStudentCurricularPlanPersistente();
 		
 		IStudent student = null;
-		ICurso degree = null; 
+ 
 		try {
 			sp.iniciarTransaccao();
 			IStudentCurricularPlan studentCurricularPlan = studentCurricularPlanDAO.readActiveStudentCurricularPlan(studentNumber, degreeType);
@@ -68,19 +67,16 @@ abstract public class BaseEnrolmentRuleTest extends TestCase {
 			assertNotNull(studentCurricularPlan);
 
 			student = studentCurricularPlan.getStudent();
-			degree = studentCurricularPlan.getDegreeCurricularPlan().getDegree();
 
 			assertNotNull(student);
-			assertNotNull(degree);
 			enrolmentContext.setSemester(semester);
 			enrolmentContext.setStudent(student);
-			enrolmentContext.setDegree(degree);
 
-			IEnrolmentStrategy enrolmentStrategy = EnrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentStrategyFactory.LERCI, enrolmentContext);
+			IEnrolmentStrategy enrolmentStrategy = EnrolmentStrategyFactory.getEnrolmentStrategyInstance(enrolmentContext);
 			enrolmentContext = enrolmentStrategy.getEnrolmentContext();
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace(System.out);
+			e.printStackTrace();
 			fail("Getting enrolment context!");
 		}	
 		return enrolmentContext;

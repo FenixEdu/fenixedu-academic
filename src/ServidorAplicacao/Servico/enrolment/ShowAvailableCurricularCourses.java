@@ -1,71 +1,100 @@
-package ServidorAplicacao.strategy.enrolment.degree;
+package ServidorAplicacao.Servico.enrolment;
 
-import ServidorAplicacao.strategy.enrolment.degree.strategys.EnrolmentStrategyLERCI;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
+
+import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
+import Dominio.IEnrolment;
+import Dominio.IStudent;
+import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.degree.EnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.EnrolmentState;
 
 /**
  * @author dcs-rjao
  *
- * 3/Abr/2003
+ * 9/Abr/2003
  */
-public class EnrolmentStrategyFactory {
+public class ShowAvailableCurricularCourses implements IServico {
 
-	public static final int LERCI = 1;
-
-	private static IEnrolmentStrategy strategyInstance = null;
-
-	private static SuportePersistenteOJB persistentSupport = null;
-	private static IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
-	private static IPersistentCurricularCourse persistentCurricularCourse = null;
-	private static IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
-
-	private static IPersistentEnrolment persistentEnrolment = null;
-
-	public static synchronized IEnrolmentStrategy getEnrolmentStrategyInstance(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
-		if (enrolmentContext.getStudent() == null)
-			throw new IllegalArgumentException("Must initialize student in context!");
-
-		if (enrolmentContext.getSemester() == null)
-			throw new IllegalArgumentException("Must initialize semester in context!");
-			
-		if (enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled() == null)
-			throw new IllegalArgumentException("Must initialize FinalCurricularCoursesScopesSpanToBeEnrolled in context!");
-
-		if (enrolmentContext.getStudentActiveCurricularPlan() == null)
-			throw new IllegalArgumentException("Must initialize StudentActiveCurricularPlan in context!");
-
-		if (strategyInstance == null) {
-			String degree = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getDegree().getSigla();
-			
-			if (degree.equals("LERCI")) {
-				strategyInstance = new EnrolmentStrategyLERCI();
-				strategyInstance.setEnrolmentContext(enrolmentContext);
-			}
-		}
-		return strategyInstance;
+	private static ShowAvailableCurricularCourses _servico = new ShowAvailableCurricularCourses();
+	/**
+	 * The singleton access method of this class.
+	 **/
+	public static ShowAvailableCurricularCourses getService() {
+		return _servico;
 	}
 
-	public static synchronized void resetInstance() {
-		if (strategyInstance != null) {
-			strategyInstance = null;
+	/**
+	 * The actor of this class.
+	 **/
+	private ShowAvailableCurricularCourses() {
+	}
+
+	/**
+	 * Devolve o nome do servico
+	 **/
+	public final String getNome() {
+		return "ShowAvailableCurricularCourses";
+	}
+
+	/**
+	 * @param infoStudent
+	 * @param infoDegree
+	 * @return EnrolmentContext
+	 * @throws FenixServiceException
+	 */
+	public EnrolmentContext run(UserView userView) throws FenixServiceException {
+
+		EnrolmentContext enrolmentContext = null;
+		IEnrolmentStrategy strategy = null;
+		
+		try {
+
+			enrolmentContext = prepareEnrolmentContext(userView);
+
+			strategy = EnrolmentStrategyFactory.getEnrolmentStrategyInstance(enrolmentContext);
+			enrolmentContext = strategy.getAvailableCurricularCourses();
+
+			return enrolmentContext;
+
+		} catch (ExcepcaoPersistencia ex) {
+			throw new FenixServiceException(ex.getMessage());
 		}
 	}
 
-/*	private static EnrolmentContext prepareEnrolmentContext(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
-		persistentSupport = SuportePersistenteOJB.getInstance();
-		persistentCurricularCourseScope = persistentSupport.getIPersistentCurricularCourseScope();
-		persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
-		persistentEnrolment = persistentSupport.getIPersistentEnrolment();
+	private static EnrolmentContext prepareEnrolmentContext(UserView userView) throws ExcepcaoPersistencia {
+		
+		ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+		IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
+		ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
+		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();;
+		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();;
+		IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport.getIPersistentCurricularCourseScope();
+		IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-		IStudent student = enrolmentContext.getStudent();
+		IStudent student = persistentStudent.readByUsername(userView.getUtilizador());
 
-		// gets actual student curricular plan 
 		IStudentCurricularPlan studentActiveCurricularPlan =
 			persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 
@@ -106,14 +135,21 @@ public class EnrolmentStrategyFactory {
 			}
 		});
 
+		EnrolmentContext enrolmentContext = new EnrolmentContext();
+
+		enrolmentContext.setStudent(student);
+		// FIXME: David-Ricardo: ler o semestre do execution Period quando este tiver esta informacao
+		enrolmentContext.setSemester(new Integer(1));		
 		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(
 			computeCurricularCoursesScopesNotYetDoneByStudent(studentCurricularPlanCurricularCourses, studentDoneCurricularCourses));
 		enrolmentContext.setCurricularCoursesDoneByStudent(studentDoneCurricularCourses);
 		enrolmentContext.setAcumulatedEnrolments(CollectionUtils.getCardinalityMap(curricularCoursesEnrolled));
 		enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
+
 		return enrolmentContext;
 	}
-
+	
+	
 	private static List computeCurricularCoursesScopesNotYetDoneByStudent(
 		List curricularCoursesFromStudentDegreeCurricularPlan,
 		List aprovedCurricularCoursesFromStudent)
@@ -136,5 +172,4 @@ public class EnrolmentStrategyFactory {
 
 		return scopesNotDone;
 	}
-*/
 }
