@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project basedir="." default="deploy-tests" name="CIAPL">
+
+	<taskdef name="scp"
+             classname="org.apache.tools.ant.taskdefs.optional.ssh.Scp"
+             />
+
+    <taskdef name="sshexec"
+             classname="org.apache.tools.ant.taskdefs.optional.ssh.SSHExec"
+             />
+
+    <!-- ########## PROPERTIES ########## -->
+
+    <property environment="env"/>
+	<property name="encoding" value="ISO-8859-15"/>
+
+
+    <!-- ########## TARGETS ########## -->
+
+    <target name="deploy-tests"
+            description="Deploys application to test server"
+            >
+		<property name="server.hostname"
+				  value="fenix-tests.ist.utl.pt"
+				  />
+		<property name="server.deployDirectory"
+				  value="/var/tomcat4/webapps"
+				  />
+		<property name="server.restartCommand"
+				  value="/etc/init.d/tomcat4 restart"
+				  />
+
+		<!-- Prompt for username & password -->
+		<input message="Enter username for ${server.hostname}:"
+			   addproperty="server.username"
+			   />
+		<input message="Enter password for ${server.hostname}:"
+			   addproperty="server.password"
+			   />
+
+		<!-- Obtain propper build.properties -->
+		<move file="build.properties"
+			  tofile="build.properties_backup"
+			  />
+		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-tests.properties"
+			 todir="./"
+			 />
+		<move file="build_fenix-tests.properties"
+			  tofile="build.properties"
+			  />
+		<property file="build.properties"/>
+
+		<!-- Deploy the application-->
+		<antcall target="deploy"/>
+
+		<!-- Restore original build.properties -->
+		<move file="build.properties_backup"
+			  tofile="build.properties"
+			  overwrite="true"
+			  />
+    </target>
+
+
+    <target name="deploy-fenix"
+            description="Deploys application to test server"
+            >
+		<property name="server.hostname"
+				  value="fenix.ist.utl.pt"
+				  />
+		<property name="server.deployDirectory"
+				  value="/opt/jakarta/tomcat/webapps"
+				  />
+		<property name="server.restartCommand"
+				  value="rctomcat restart"
+				  />
+
+		<!-- Prompt for username & password -->
+		<input message="Enter username for ${server.hostname}:"
+			   addproperty="server.username"
+			   />
+		<input message="Enter password for ${server.hostname}:"
+			   addproperty="server.password"
+			   />
+
+		<!-- Obtain propper build.properties -->
+		<move file="build.properties"
+			  tofile="build.properties_backup"
+			  />
+		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix.properties"
+			 todir="./"
+			 />
+		<move file="build_fenix.properties"
+			  tofile="build.properties"
+			  />
+		<property file="build.properties"/>
+
+		<!-- Deploy the application-->
+		<antcall target="deploy"/>
+
+		<!-- Restore original build.properties -->
+		<move file="build.properties_backup"
+			  tofile="build.properties"
+			  overwrite="true"
+			  />
+    </target>
+
+
+    <target name="deploy"
+            description="Deploys application"
+            >
+		<!-- Clean-all -->
+        <ant antfile="build.xml"
+        	 target="clean-all"
+        	 />
+
+		<!-- Create WAR's -->
+        <ant antfile="build.xml"
+        	 target="deploy-webapp"
+        	 />
+
+		<!-- Transfer WAR's to server -->
+        <scp todir="${server.username}:${server.password}@${server.hostname}:${server.deployDirectory}"
+        	 file="deploy/${app.name}.war"
+        	 />
+
+		<!-- Decompress WAR'S -->
+		<!-- Delete WAR'S -->
+		<!-- Restart Server -->
+        <sshexec host="${server.hostname}"
+        		 username="${server.username}"
+        		 password="${server.password}"
+        		 command="cd ${server.deployDirectory}; rm -rf ${app.name}; unzip ${app.name}.war -d ${app.name} ; rm -f ${app.name}.war; ${server.restartCommand}"
+        		 />
+
+		<!-- Clean-all -->
+        <ant antfile="build.xml"
+        	 target="clean-all"
+        	 />
+    </target>
+
+</project>
