@@ -24,13 +24,19 @@ de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 								+ semester %>" >
 			<bean:message key="link.publish.working.area"/>
 		</html:link> 
+		
+		<bean:define id="deleteConfirm">
+			return confirm('<bean:message key="message.confirm.delete.workingArea"/>')
+		</bean:define>
 		<html:link page="<%= "/manageWorkingArea.do?method=deleteWorkingArea"
 								+ "&amp;year="
 								+ year
 								+ "&amp;semester="
-								+ semester %>" >
-			<bean:message key="link.delete.to.working.area"/>
+								+ semester %>"
+				   onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
+				   <bean:message key="link.delete.to.working.area"/>
 		</html:link>
+		
 		<br />
 	</logic:iterate>
 </logic:present>

@@ -703,6 +703,7 @@ public class ExecutionPeriodOJB
 		shiftToCreate.setLotacao(shiftToTransfer.getLotacao());
 		shiftToCreate.setNome(shiftToTransfer.getNome());
 		shiftToCreate.setTipo(shiftToTransfer.getTipo());
+		shiftToCreate.setAvailabilityFinal(new Integer(0));
 
 		try {
 			// It's Ok to just write it with no verification because:
