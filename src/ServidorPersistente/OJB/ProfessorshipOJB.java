@@ -7,6 +7,7 @@ package ServidorPersistente.OJB;
 
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.IDisciplinaExecucao;
@@ -72,12 +73,11 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 	}
 
 	public IProfessorship readByTeacherAndExecutionCoursePB(ITeacher teacher, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
-
-		IProfessorship professorship = new Professorship();
-		professorship.setExecutionCourse(executionCourse);
-		professorship.setTeacher(teacher);
-		professorship = (IProfessorship) readDomainObjectByCriteria(professorship);
-		return professorship;
+		Criteria criteria = new Criteria();
+		
+		criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
+		criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
+		return (IProfessorship) queryObject(Professorship.class, criteria);
 
 	}
 
