@@ -24,6 +24,7 @@ public class InfoExecutionCourseWithExecutionPeriod extends InfoExecutionCourse 
             IExecutionCourse executionCourse) {
         InfoExecutionCourseWithExecutionPeriod infoExecutionCourse = null;
         if (executionCourse != null) {
+        	infoExecutionCourse = new InfoExecutionCourseWithExecutionPeriod();
             infoExecutionCourse.copyFromDomain(executionCourse);
         }
         return infoExecutionCourse;
