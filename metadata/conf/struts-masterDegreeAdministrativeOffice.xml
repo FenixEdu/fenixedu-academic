@@ -555,7 +555,7 @@
 	  		<form-property name="page" type="java.lang.Integer"/>
 	  		<form-property name="guideId" type="java.lang.Integer"/>
 	  </form-bean>
-	  
+
 	  <form-bean name="insertExternalPersonForm"  
 	  			 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -568,7 +568,7 @@
 	  		<form-property name="email" type="java.lang.String"/>
 	  		<form-property name="page" type="java.lang.Integer"/>
 	  </form-bean>
-	  
+
 	  <!-- Bean to Insert Work Location  -->
 	  <form-bean name="insertWorkLocationForm"
 	  			 type="org.apache.struts.validator.DynaValidatorForm"
@@ -1978,14 +1978,18 @@
 	<action		name="insertExternalPersonForm"
 				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.InsertExternalPersonDispatchAction"
 				path="/insertExternalPerson"
+				input="/insertExternalPerson.do?page=0&amp;method=prepare"
 				parameter="method"
 				scope="request">
 			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="df.page.insertExternalPerson"/>
-			<forward name="error" path="df.page.insertExternalPerson"/>			
-	</action>
+			<forward name="error" path="df.page.insertExternalPerson_Error"/>
+			<forward name="success" path="df.page.insertExternalPerson_Success"/>			
+	</action>	
+	
+	
 	
 	<!-- insert work location -->
 	<action		name="insertWorkLocationForm"
@@ -2009,7 +2013,7 @@
 				path="/editWorkLocation"
 				parameter="method"
 				scope="request"
-				input="df.page.editWorkLocation"
+				input="/editWorkLocation.do?page=0&amp;method=prepare"
 				validate="true">
 		<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 					key="ServidorApresentacao.Action.exceptions.ExistingActionException"
@@ -2025,12 +2029,10 @@
 			parameter="method"
 			scope="request"	
 	>
-		<forward name="createReimbursementGuide" path="df.page.createReimbursementGuide"/>
-		<forward name="viewReimbursementGuide" path="df.page.viewReimbursementGuide"/>
-		<forward name="viewGuide" path="/chooseGuideDispatchAction.do?method=choose"/>  
+	<forward name="createReimbursementGuide" path="df.page.createReimbursementGuide"/>
+	<forward name="viewReimbursementGuide" path="df.page.viewReimbursementGuide"/>
+	<forward name="viewGuide" path="/chooseGuideDispatchAction.do?method=choose"/>  
 	</action>
-    
-       
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

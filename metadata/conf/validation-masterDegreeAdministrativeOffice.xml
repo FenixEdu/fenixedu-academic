@@ -705,6 +705,16 @@
 		</field>
 	</form>
 	
+	<!-- insert external person form bean validation -->
+	<form name="insertExternalPersonForm">
+			<field property="name" depends="required" page="1">
+				<arg0 key="label.masterDegree.administrativeOffice.name" />
+			</field>
+			<field property="address" depends="required" page="1">
+			 	<arg0 key="label.masterDegree.administrativeOffice.address" />
+			</field>
+	</form>
+	
 	<form name="insertWorkLocationForm">
 		<field property="name" depends="required" page="1">
 			<arg0 key="label.masterDegree.administrativeOffice.workLocationName" />
