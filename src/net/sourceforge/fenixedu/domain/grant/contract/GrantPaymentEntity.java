@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.domain.ITeacher;
  */
 public abstract class GrantPaymentEntity extends DomainObject implements IGrantPaymentEntity {
 
-    private static final String grantCostCenterOjbConcreteClass = "Dominio.grant.contract.GrantCostCenter";
+    private static final String grantCostCenterOjbConcreteClass = GrantCostCenter.class.getName();
 
-    private static final String grantProjectOjbConcreteClass = "Dominio.grant.contract.GrantProject";
+    private static final String grantProjectOjbConcreteClass = GrantProject.class.getName();
 
     protected String number;
 

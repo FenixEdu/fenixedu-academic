@@ -79,7 +79,7 @@ public class ReadPaymentEntityByNumberAndClassTest extends ServiceNeedsAuthentic
      */
     protected Object[] getAuthorizeArguments() {
 
-        String classname = "Dominio.grant.contract.GrantCostCenter";
+        String classname = GrantCostCenter.class.getName();
         String number = "1";
         Object[] args = { number, classname };
         return args;
@@ -87,7 +87,7 @@ public class ReadPaymentEntityByNumberAndClassTest extends ServiceNeedsAuthentic
 
     protected Object[] getAuthorizeArgumentsGrantProject() {
 
-        String classname = "Dominio.grant.contract.GrantProject";
+        String classname = GrantProject.class.getName();
         String number = "2";
         Object[] args = { number, classname };
         return args;
@@ -95,7 +95,7 @@ public class ReadPaymentEntityByNumberAndClassTest extends ServiceNeedsAuthentic
 
     protected Object[] getUnauthorizeArgumentsProject() {
 
-        String classname = "Dominio.grant.contract.GrantProject";
+        String classname = GrantProject.class.getName();
         String number = "666";
         Object[] args = { number, classname };
         return args;
@@ -103,7 +103,7 @@ public class ReadPaymentEntityByNumberAndClassTest extends ServiceNeedsAuthentic
 
     protected Object[] getUnauthorizeArgumentsCostCenter() {
 
-        String classname = "Dominio.grant.contract.GrantCostCenter";
+        String classname = GrantCostCenter.class.getName();
         String number = "666";
         Object[] args = { number, classname };
         return args;
@@ -147,7 +147,7 @@ public class ReadPaymentEntityByNumberAndClassTest extends ServiceNeedsAuthentic
 
             //Check the read result
             if (!(result.getNumber().equals("1") && result.getOjbConcreteClass().equals(
-                    "Dominio.grant.contract.GrantCostCenter")))
+                    GrantCostCenter.class.getName())))
                 fail("Reading a GrantPaymentEntity Successfull: invalid grant payment entity read!");
 
             //Verify unchanged database
@@ -175,7 +175,7 @@ public class ReadPaymentEntityByNumberAndClassTest extends ServiceNeedsAuthentic
 
             //Check the read result
             if (!result.getNumber().equals("2")
-                    || !result.getOjbConcreteClass().equals("Dominio.grant.contract.GrantProject"))
+                    || !result.getOjbConcreteClass().equals(GrantProject.class.getName()))
                 fail("Reading a GrantPaymentEntity Successfull: invalid grant payment entity read!");
 
             //Verify unchanged database

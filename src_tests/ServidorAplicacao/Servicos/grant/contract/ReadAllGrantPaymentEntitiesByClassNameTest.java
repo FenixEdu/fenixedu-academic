@@ -80,14 +80,14 @@ public class ReadAllGrantPaymentEntitiesByClassNameTest extends ServiceNeedsAuth
      */
     protected Object[] getAuthorizeArguments() {
 
-        String classname = "Dominio.grant.contract.GrantCostCenter";
+        String classname = GrantCostCenter.class.getName();
         Object[] args = { classname };
         return args;
     }
 
     protected Object[] getAuthorizeArgumentsGrantProject() {
 
-        String classname = "Dominio.grant.contract.GrantProject";
+        String classname = GrantProject.class.getName();
         Object[] args = { classname };
         return args;
     }

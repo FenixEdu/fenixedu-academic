@@ -94,7 +94,7 @@ public class EditGrantPaymentEntityTest extends ServiceNeedsAuthenticationTestCa
         infoGrantPaymentEntity = new InfoGrantCostCenter();
         infoGrantPaymentEntity.setDesignation("Hello");
         infoGrantPaymentEntity.setNumber("10");
-        infoGrantPaymentEntity.setOjbConcreteClass("Dominio.grant.contract.GrantCostCenter");
+        infoGrantPaymentEntity.setOjbConcreteClass(GrantCostCenter.class.getName());
         InfoTeacher infoTeacher = new InfoTeacher();
         infoTeacher.setIdInternal(new Integer(2));
         infoGrantPaymentEntity.setInfoResponsibleTeacher(infoTeacher);
@@ -107,7 +107,7 @@ public class EditGrantPaymentEntityTest extends ServiceNeedsAuthenticationTestCa
         infoGrantCostCenter.setIdInternal(new Integer(1));
         infoGrantCostCenter.setDesignation("Cost Center 70");
         infoGrantCostCenter.setNumber("70");
-        infoGrantCostCenter.setOjbConcreteClass("Dominio.grant.contract.GrantCostCenter");
+        infoGrantCostCenter.setOjbConcreteClass(GrantCostCenter.class.getName());
         InfoTeacher infoTeacher = new InfoTeacher();
         infoTeacher.setIdInternal(new Integer(1));
         infoGrantCostCenter.setInfoResponsibleTeacher(infoTeacher);
@@ -120,7 +120,7 @@ public class EditGrantPaymentEntityTest extends ServiceNeedsAuthenticationTestCa
         infoGrantPaymentEntity = new InfoGrantCostCenter();
         infoGrantPaymentEntity.setDesignation("Hello");
         infoGrantPaymentEntity.setNumber("70");
-        infoGrantPaymentEntity.setOjbConcreteClass("Dominio.grant.contract.GrantCostCenter");
+        infoGrantPaymentEntity.setOjbConcreteClass(GrantCostCenter.class.getName());
         InfoTeacher infoTeacher = new InfoTeacher();
         infoTeacher.setIdInternal(new Integer(10000));
         infoGrantPaymentEntity.setInfoResponsibleTeacher(infoTeacher);
@@ -134,7 +134,7 @@ public class EditGrantPaymentEntityTest extends ServiceNeedsAuthenticationTestCa
         infoGrantPaymentEntity.setDesignation("Hello");
         infoGrantPaymentEntity.setIdInternal(new Integer(666));
         infoGrantPaymentEntity.setNumber("666");
-        infoGrantPaymentEntity.setOjbConcreteClass("Dominio.grant.contract.GrantCostCenter");
+        infoGrantPaymentEntity.setOjbConcreteClass(GrantCostCenter.class.getName());
         InfoTeacher infoTeacher = new InfoTeacher();
         infoTeacher.setIdInternal(new Integer(666));
         infoGrantPaymentEntity.setInfoResponsibleTeacher(infoTeacher);

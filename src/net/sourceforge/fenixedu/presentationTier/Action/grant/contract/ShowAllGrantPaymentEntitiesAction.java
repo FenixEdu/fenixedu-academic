@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -31,10 +33,10 @@ public class ShowAllGrantPaymentEntitiesAction extends FenixDispatchAction {
             String grantPaymentEntity = null;
 
             if (verifyParameterInRequest(request, "project")) {
-                grantPaymentEntity = "Dominio.grant.contract.GrantProject";
+                grantPaymentEntity = GrantProject.class.getName();
                 request.setAttribute("project", "yes");
             } else if (verifyParameterInRequest(request, "costcenter")) {
-                grantPaymentEntity = "Dominio.grant.contract.GrantCostCenter";
+                grantPaymentEntity = GrantCostCenter.class.getName();
                 request.setAttribute("costcenter", "yes");
             } else {
                 throw new Exception();

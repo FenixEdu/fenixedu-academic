@@ -83,7 +83,7 @@ abstract public class DomainObject implements IDomainObject {
 
         public boolean evaluate(Object arg0) {
             Class class1 = (Class) arg0;
-            if (class1.getName().equals("Dominio.IDomainObject")) {
+            if (class1.getName().equals(IDomainObject.class.getName())) {
                 return false;
             }
             return true;

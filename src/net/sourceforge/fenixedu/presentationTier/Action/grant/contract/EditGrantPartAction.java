@@ -7,16 +7,18 @@ package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidPartResponsibleTeacherException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPart;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidPartResponsibleTeacherException;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -112,9 +114,9 @@ public class EditGrantPartAction extends FenixDispatchAction {
             if (infoGrantPart.getInfoGrantPaymentEntity().getNumber() != null) {
                 String paymentEntityClass = null;
                 if (verifyStringParameterInForm(editGrantPartForm, "project")) {
-                    paymentEntityClass = "Dominio.grant.contract.GrantProject";
+                    paymentEntityClass = GrantProject.class.getName();
                 } else if (verifyStringParameterInForm(editGrantPartForm, "costCenter")) {
-                    paymentEntityClass = "Dominio.grant.contract.GrantCostCenter";
+                    paymentEntityClass = GrantCostCenter.class.getName();
                 }
 
                 Object[] args = { infoGrantPart.getInfoGrantPaymentEntity().getNumber(),

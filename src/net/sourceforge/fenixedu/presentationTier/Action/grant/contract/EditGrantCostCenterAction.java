@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -110,7 +111,7 @@ public class EditGrantCostCenterAction extends FenixDispatchAction {
         InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
         BeanUtils.copyProperties(infoGrantCostCenter, editGrantCostCenterForm);
 
-        infoGrantCostCenter.setOjbConcreteClass("Dominio.grant.contract.GrantCostCenter");
+        infoGrantCostCenter.setOjbConcreteClass(GrantCostCenter.class.getName());
 
         //Build the teacher Number
         InfoTeacher infoTeacher = new InfoTeacher();

@@ -10,14 +10,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoAreaCurricularCourseGroup;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseGroup;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoOptionalCurricularCourseGroup;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoAreaCurricularCourseGroup;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseGroup;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoOptionalCurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -327,8 +329,8 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
      */
     private Object getClassName(String type) {
         if (type.equals("area")) {
-            return "Dominio.AreaCurricularCourseGroup";
+            return AreaCurricularCourseGroup.class.getName();
         }
-        return "Dominio.OptionalCurricularCourseGroup";
+        return OptionalCurricularCourseGroup.class.getName();
     }
 }

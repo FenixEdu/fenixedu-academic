@@ -5,6 +5,8 @@ package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantProject;
@@ -15,9 +17,9 @@ import net.sourceforge.fenixedu.domain.grant.contract.IGrantProject;
  */
 public abstract class InfoGrantPaymentEntity extends InfoObject {
 
-    private static final String grantCostCenterOjbConcreteClass = "Dominio.grant.contract.GrantCostCenter";
+    private static final String grantCostCenterOjbConcreteClass = GrantCostCenter.class.getName();
 
-    private static final String grantProjectOjbConcreteClass = "Dominio.grant.contract.GrantProject";
+    private static final String grantProjectOjbConcreteClass = GrantProject.class.getName();
 
     protected String number;
 
