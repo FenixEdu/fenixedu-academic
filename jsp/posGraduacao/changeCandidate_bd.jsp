@@ -10,7 +10,6 @@
 <%@ page import="net.sourceforge.fenixedu.util.SituationName" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoRole" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate" %>
-<%@ page import="net.sourceforge.fenixedu.applicationTier.Servico.UserView" %>
 <html:form action="/editCandidate?method=change">
 <html:hidden property="page" value="1"/>  
    	  <html:hidden property="candidateID" />  
