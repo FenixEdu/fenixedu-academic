@@ -381,13 +381,13 @@ public class MigrateInscricoes2FenixEnrolments {
 
 					if (result.size() != 1) {
 
-	System.out.println("TEMPORARIO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 [" + inscricao.getCreditos() + "]");
-	broker.commitTransaction();
-	continue;
+//	System.out.println("TEMPORARIO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 [" + inscricao.getCreditos() + "]");
+//	broker.commitTransaction();
+//	continue;
 
 
 
-//							throw new Exception("Error Reading Funcionario [" + inscricao.getCreditos() + "]");
+							throw new Exception("Error Reading Funcionario [" + inscricao.getCreditos() + "]");
 					
 					}
 
