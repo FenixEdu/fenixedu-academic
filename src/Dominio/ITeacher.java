@@ -1,12 +1,11 @@
 /*
- * IDocente.java
- *
- * Created on 26 de Novembro de 2002, 23:02
+ * ITeacher.java
  */
 package Dominio;
 /**
  *
  * @author  EP15
+ * @author Ivo Brandão
  */
 import java.util.List;
 public interface ITeacher extends IPessoa{
@@ -21,7 +20,3 @@ public interface ITeacher extends IPessoa{
 	public void setResponsableForExecutionCourses(List executionCourses);
 	public void setProfessorShipsExecutionCourses(List executionCourses);
 }
-
-
-//
-//TODO:FIXME teacher does not own sites neither lectures sites. The teacher is responsible for or lectures  execution courses  

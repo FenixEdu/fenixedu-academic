@@ -5,6 +5,7 @@ package ServidorPersistente;
 /**
  *
  * @author  EP 15
+ * @author Ivo Brandão
  */
 import java.util.List;
 
