@@ -75,3 +75,39 @@ create table site (
    type=MyISAM;
 
 
+#
+# Table structure for table 'OWNS'
+#
+
+CREATE TABLE `OWNS` (
+  `ID_TEACHER` int(11) unsigned NOT NULL default '0',
+  `ID_SITE` int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`ID_TEACHER`,`ID_SITE`)
+) TYPE=InnoDB;
+
+
+
+#
+# Table structure for table 'PROFESSORSHIPS'
+#
+
+CREATE TABLE `PROFESSORSHIPS` (
+  `ID_TEACHER` int(11) unsigned NOT NULL default '0',
+  `ID_SITE` int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`ID_TEACHER`,`ID_SITE`)
+) TYPE=InnoDB;
+
+
+
+#
+# Table structure for table 'TEACHER'
+#
+
+CREATE TABLE `TEACHER` (
+  `ID_INTERNAL` int(11) unsigned NOT NULL auto_increment,
+  `USERNAME` varchar(20) default NULL,
+  `PASSWORD` varchar(16) default NULL,
+  `TEACHER_NUMBER` int(10) unsigned default NULL,
+  PRIMARY KEY  (`ID_INTERNAL`)
+) TYPE=InnoDB;
+
