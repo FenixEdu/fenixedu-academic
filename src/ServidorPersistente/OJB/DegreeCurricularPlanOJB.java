@@ -106,7 +106,7 @@ public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersiste
 				if (!result.isEmpty())
 					return new Boolean(false);
 					
-//				//Check for related StudentCurricularPlans
+				//Check for related StudentCurricularPlans
 				Criteria criteria = new Criteria();
 				criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
 				result = queryList(StudentCurricularPlan.class, criteria);

@@ -41,7 +41,7 @@
 <logic:present name="curricularCoursesList" scope="request">
 <logic:notEmpty name="curricularCoursesList">
 	
-	<html:form action="/deleteDegreeCurricularPlans" method="get">
+	<html:form action="/deleteCurricularCourses" method="get">
 		<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
 			<table width="50%" cellpadding="0" border="0">
 				<tr>
@@ -65,8 +65,8 @@
 					<td class="listClasses"><html:link page="/readCurricularCourse.do" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="code"/></html:link>
 					</td>
 	 			</tr>
-	 			</logic:iterate>				
-				<span class="error"><html:errors/></span>		
+	 			</logic:iterate>			
+				<span class="error"><html:errors property="curricularCourse"/></span>		
 			</table>
 			
 <br>	
@@ -78,11 +78,11 @@
 
 <br>
 
+<h3><bean:message key="label.manager.executionDegrees"/></h3>
+
 <logic:empty name="curricularCoursesList">
 <i><bean:message key="label.manager.executionDegrees.nonExisting"/></i>
 </logic:empty>
-
-<h3><bean:message key="label.manager.executionDegrees"/></h3>
 
 <logic:present name="executionDegreesList" scope="request">
 <logic:notEmpty name="executionDegreesList">
@@ -115,7 +115,7 @@
 					</td>
 	 			</tr>
 	 			</logic:iterate>				
-				<span class="error"><html:errors/></span>		
+				<span class="error"><html:errors property="executionDegree"/></span>		
 			</table>
 			
 <br>	

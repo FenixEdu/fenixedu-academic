@@ -194,7 +194,17 @@
         validate="true">  
        <forward name="insertDegree" path="df.page.insert-degree"/>
        <forward name="readDegrees" path="df.page.read-degrees"/>      	      
-	</action>	-->		  
+	</action>	-->	
+	
+	<!-- Action for deleting curricularCourses --> 
+      <action 
+      		 path="/deleteCurricularCourses"
+      		 name="degreeCurricularPlanForm"
+      		 input="/readDegreeCurricularPlanInput.do"
+      		 scope="request"
+      	     type="ServidorApresentacao.Action.manager.DeleteCurricularCoursesAction">
+      	  <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
+      </action>	  
     
       <!--Input actions-->
       <action path="/insertDegreeInput"
@@ -227,6 +237,12 @@
       <action path="/mainPageInput"
       	      type="ServidorApresentacao.Action.commons.VoidAction">
       	  <forward name="Success" path="df.page.main-page"/>      	      
+      </action>
+      
+      <action path="/readDegreeCurricularPlanInput"
+     		scope="request"
+      	      type="ServidorApresentacao.Action.commons.VoidAction">
+      	  <forward name="Success" path="df.page.read-degree-curricular-plan"/>      	      
       </action>
       
 	</action-mappings>

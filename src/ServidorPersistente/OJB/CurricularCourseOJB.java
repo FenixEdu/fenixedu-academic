@@ -8,6 +8,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.CurricularCourse;
+import Dominio.Enrolment;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
@@ -88,12 +89,23 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			throw new ExistingPersistentException();
 	}
 
-	public void delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
-		try {
-			super.delete(curricularCourse);
-		} catch (ExcepcaoPersistencia ex) {
-			throw ex;
-		}
+	public Boolean delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
+				// Check for related ExecutionCourses
+//				Criteria crit = new Criteria();
+//				crit.addEqualTo("keyCurricularPlan", degreeCurricularPlan.getIdInternal());
+//				List result = queryList(CursoExecucao.class, crit);
+//				if (!result.isEmpty())
+//					return new Boolean(false);
+					
+				//Check for related StudentCurricularPlans
+				Criteria criteria = new Criteria();
+				criteria.addEqualTo("curricularCourseScope.curricularCourseKey", curricularCourse.getIdInternal());
+				List result = queryList(Enrolment.class, criteria);
+				if (!result.isEmpty())
+					return new Boolean(false);
+
+				super.delete(curricularCourse);
+				return new Boolean(true);
 	}
 
 	public List readAll() throws ExcepcaoPersistencia {
