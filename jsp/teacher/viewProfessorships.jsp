@@ -5,5 +5,5 @@
   <tiles:put name="institutionName" value="Instituto Superior T&eacute;cnico" />
   <tiles:put name="body" value="/teacher/viewProfessorships_bd.jsp" />
   <tiles:put name="navLocal" value="/teacher/professorshipnavbar.jsp" type="page"/>
-   <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
+  <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
 </tiles:insert>
