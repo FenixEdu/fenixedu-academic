@@ -41,7 +41,7 @@ import framework.factory.ServiceManagerServiceFactory;
  */
 public class DownloadStudentList extends FenixAction
 {
-	static final String COLUMNS_HEADERS = "Nº\tInscrito\tCurso\tNome\tE-mail";
+	static final String COLUMNS_HEADERS = "Nº\tNúmero de Inscrições\tCurso\tNome\tE-mail";
 	public ActionForward execute(
 		ActionMapping mapping,
 		ActionForm form,
@@ -145,10 +145,12 @@ public class DownloadStudentList extends FenixAction
 				(InfoAttendWithEnrollment) attendaciesIterator.next();
 			result += infoFrequenta.getAluno().getNumber();
 			result += "\t";
-			if (infoFrequenta.getInfoEnrolment() == null)
-				result += "Não";
-			else
-				result += "Sim";
+			
+			result += infoFrequenta.getEnrollments();
+			//			if (infoFrequenta.getInfoEnrolment() == null)
+			//				result += "Não";
+			//			else
+			//				result += "Sim";
 			result += "\t";
 			if (infoFrequenta.getInfoEnrolment() == null)
 				result += "N/A";
