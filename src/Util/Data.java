@@ -124,7 +124,7 @@ public class Data implements Serializable {
 
 		result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
 
-		for (int i = date.get(Calendar.YEAR); i < (date.get(Calendar.YEAR) + 20); i++)
+		for (int i = date.get(Calendar.YEAR)-1; i < (date.get(Calendar.YEAR) + 20); i++)
 			result.add(new LabelValueBean(new Integer(i).toString(), new Integer(i).toString()));
 		return result;
 	}
