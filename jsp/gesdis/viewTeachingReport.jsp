@@ -113,7 +113,7 @@
 		
 		<logic:present name="infoCoursesHistoric">
 			<bean:define id="curricularCourse" name="siteEvaluationInformation" property="infoCurricularCourse"/>
-			<%--<logic:iterate id="siteCourseHistoric" name="infoCoursesHistoric">
+			<logic:iterate id="siteCourseHistoric" name="infoCoursesHistoric">
 				<logic:iterate id="courseHistoric" name="siteCourseHistoric" property="infoCourseHistorics">
 					<bean:define id="curricularCourseId" name="courseHistoric" property="infoCurricularCourse.idInternal"/>
 					<logic:equal name="curricularCourse" property="idInternal" value="<%= curricularCourseId.toString() %>">
@@ -131,7 +131,7 @@
 						</tr>
 					</logic:equal>
 				</logic:iterate>
-			</logic:iterate>--%>
+			</logic:iterate>
 		</logic:present>		
 	</table>
 	<br/>
