@@ -173,13 +173,15 @@
         				<bean:message key="link.masterDegree.administrativeOffice.changeGuideSituation" />
         			</html:link>
         		</td>
-        		<td width="20%">
-        			<bean:define id="linkChangeInformation">/editGuideInformation.do?method=prepareEditInformation<bean:write name="arguments"/>
-                	</bean:define>
-        			<html:link page='<%= pageContext.findAttribute("linkChangeInformation").toString() %>'>
-        				<bean:message key="link.masterDegree.administrativeOffice.changeGuideInformation" />
-        			</html:link>
-        		</td>
+        		<% if (guide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.NON_PAYED_TYPE)) { %>
+					<td width="20%">
+						<bean:define id="linkChangeInformation">/editGuideInformation.do?method=prepareEditInformation<bean:write name="arguments"/>
+						</bean:define>
+						<html:link page='<%= pageContext.findAttribute("linkChangeInformation").toString() %>'>
+							<bean:message key="link.masterDegree.administrativeOffice.changeGuideInformation" />
+						</html:link>
+					</td>
+        		<% } %>
         		<td width="20%">
         			<bean:define id="linkCreateReimbursementGuide">/createReimbursementGuide.do?method=prepare<bean:write name="arguments"/>
                 	</bean:define>
