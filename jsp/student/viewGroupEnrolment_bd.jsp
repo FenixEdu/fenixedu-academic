@@ -29,26 +29,32 @@
 	<tr>
 		<td>
 			<b><bean:message key="label.GroupNumber"/> </b><bean:write name="groupNumber"/>
+			<br/><br/>
+			<b><bean:message key="label.infoStudents.studentsWithoutGroup" /></b>
 		</td>
-		
 	</tr>
-
 </table>
-
-
+<br/>
 <logic:present name="infoUserStudent"> 
 	
-	<br>
-	<table width="50%" cellpadding="0" border="0">	
+	<table width="70%" cellpadding="0" border="0">	
 		<tr>
-		<td class="listClasses-header"><bean:message key="label.numberWord" />
+		
+		<td width="5%" class="listClasses-header">
 		</td>
-		<td class="listClasses-header"><bean:message key="label.nameWord" />
+		<td width="10%" class="listClasses-header"><bean:message key="label.numberWord" />
 		</td>
-		<td class="listClasses-header"><bean:message key="label.emailWord" />
+		<td width="35%" class="listClasses-header"><bean:message key="label.nameWord" />
+		</td>
+		<td width="20%" class="listClasses-header"><bean:message key="label.emailWord" />
 		</td>
 		</tr>
 			<tr>	
+			
+				<td class="listClasses">
+				<input type="checkbox" name="studentsAutomaticallyEnroled" checked disabled>
+				</td>	
+				
 				<td class="listClasses"><bean:write name="infoUserStudent" property="number"/>
 				</td>	
 				<bean:define id="infoPerson" name="infoUserStudent" property="infoPerson"/>		
@@ -59,11 +65,7 @@
 	 		</tr>	
 		</table>
 	</logic:present>
-	<br>
-<bean:message key="label.student.viewGroupEnrolment.user.description" />
-
-<br/>
-<br/>
+	
 <logic:present name="infoStudents"> 
 	<logic:empty name="infoStudents">
 	<h2>
@@ -72,34 +74,24 @@
 	</logic:empty>
 	
 	<logic:notEmpty name="infoStudents">
-	<b><bean:message key="label.infoStudents.studentsWithoutGroup" /></b>
+	
 	<br>
-	<br>
-	<table width="50%" cellpadding="0" border="0">	
-		<tr>
-		<td class="listClasses-header">
-		</td>
-		<td class="listClasses-header"><bean:message key="label.numberWord" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.nameWord" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.emailWord" />
-		</td>
-		</tr>
+	<table width="70%" cellpadding="0" border="0">	
+		
 	
 		<logic:iterate id="infoStudent" name="infoStudents">			
 			<tr>	
-				<td class="listClasses">
+				<td width="5%" class="listClasses">
 				<html:multibox property="studentsNotEnroled">
 				<bean:write name="infoStudent" property="idInternal"/>
 				</html:multibox>
 				</td>	
-				<td class="listClasses"><bean:write name="infoStudent" property="number"/>
+				<td width="10%" class="listClasses"><bean:write name="infoStudent" property="number"/>
 				</td>	
 				<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>		
-				<td class="listClasses"><bean:write name="infoPerson" property="nome"/>
+				<td width="35%" class="listClasses"><bean:write name="infoPerson" property="nome"/>
 				</td>
-				<td class="listClasses"><bean:write name="infoPerson" property="email"/>
+				<td width="20%" class="listClasses"><bean:write name="infoPerson" property="email"/>
 				</td>
 	 		</tr>	
 	 	</logic:iterate>
@@ -109,6 +101,7 @@
 		<br>
 	</logic:notEmpty>
 	</logic:present>
+
 
 <html:hidden property="method" value="enrolment"/>
 <html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
