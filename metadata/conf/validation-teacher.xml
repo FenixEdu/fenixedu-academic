@@ -89,6 +89,17 @@
         <arg0 key="message.announcementInformation" resource="true"/>
       </field>
     </form>
+
+	<!-- validation for sectionForm -->
+    <form name="sectionForm">
+      <field property="name" depends="required" page="1">
+        <arg0 key="message.sectionName" resource="true"/>
+      </field>
+
+      <field property="order" depends="required" page="1">
+        <arg0 key="message.sectionOrder" resource="true"/>
+      </field>
+    </form>
 	    
   </formset>
 </form-validation>
