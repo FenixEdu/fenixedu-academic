@@ -239,14 +239,15 @@ a:hover {
 	background-color: #EBECED;
 	border: 1px solid #ccc;
 	text-align: center;
-	height: 30px;
+	height: 20px;
+	padding: 0.5em;
 	}
 	
 .listClasses-header	{
 	background-color: #ccc;
 	font-weight: bold;
 	text-align: center;
-	padding: 5px;
+	padding: 0.5em;
 	}
 
 .tall-td {
@@ -307,7 +308,6 @@ a:hover {
 ******************************************************************/
 
 .greytxt {
-	font: 11px  Arial, Helvetica, sans-serif;
 	color: #666;
 	}
 
