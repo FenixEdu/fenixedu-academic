@@ -27,50 +27,50 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class ManageGrantContractAction extends FenixDispatchAction
 {
 
-	public ActionForward prepareManageGrantContractForm(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		try
-		{
-			Integer idInternal = null;
-			if (request.getParameter("idInternal") != null)
-			{
-				idInternal = new Integer(request.getParameter("idInternal"));
-			}
-			else if ((Integer) request.getAttribute("idInternal") != null)
-			{
-				idInternal = (Integer) request.getAttribute("idInternal");
-			}
-			
-			//Run the service
-			Object[] args = { idInternal };
-			IUserView userView = SessionUtils.getUserView(request);
-			List infoGrantContractList =
-				(List) ServiceUtils.executeService(userView, "ReadAllContractsByGrantOwner", args);
+    public ActionForward prepareManageGrantContractForm(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
+        try
+        {
+            Integer idInternal = null;
+            if (request.getParameter("idInternal") != null)
+            {
+                idInternal = new Integer(request.getParameter("idInternal"));
+            }
+            else if ((Integer) request.getAttribute("idInternal") != null)
+            {
+                idInternal = (Integer) request.getAttribute("idInternal");
+            }
+            
+            //Run the service
+            Object[] args = { idInternal };
+            IUserView userView = SessionUtils.getUserView(request);
+            List infoGrantContractList =
+                (List) ServiceUtils.executeService(userView, "ReadAllContractsByGrantOwner", args);
 
-			if (infoGrantContractList != null && !infoGrantContractList.isEmpty())
-				request.setAttribute("infoGrantContractList", infoGrantContractList);
+            if (infoGrantContractList != null && !infoGrantContractList.isEmpty())
+                request.setAttribute("infoGrantContractList", infoGrantContractList);
 
-			//Needed for return to manage contracts
-			request.setAttribute("idGrantOwner", idInternal);
+            //Needed for return to manage contracts
+            request.setAttribute("idInternal", idInternal);
 
-			InfoGrantOwner infoGrantOwner = 
-				(InfoGrantOwner) ServiceUtils.executeService(userView, "ReadGrantOwner", args);
-			request.setAttribute("grantOwnerNumber", infoGrantOwner.getGrantOwnerNumber());
-			request.setAttribute("grantOwnerName", infoGrantOwner.getPersonInfo().getNome());
-		}
-		catch (FenixServiceException e)
-		{
-			return setError(request,mapping,"errors.grant.unrecoverable","manage-grant-contract",null);
-		}
+            InfoGrantOwner infoGrantOwner = 
+                (InfoGrantOwner) ServiceUtils.executeService(userView, "ReadGrantOwner", args);
+            request.setAttribute("grantOwnerNumber", infoGrantOwner.getGrantOwnerNumber());
+            request.setAttribute("grantOwnerName", infoGrantOwner.getPersonInfo().getNome());
+        }
+        catch (FenixServiceException e)
+        {
+            return setError(request,mapping,"errors.grant.unrecoverable","manage-grant-contract",null);
+        }
         catch (Exception e)
         {
             return setError(request,mapping,"errors.grant.unrecoverable","manage-grant-contract",null);
         }
-		return mapping.findForward("manage-grant-contract");
-	}
+        return mapping.findForward("manage-grant-contract");
+    }
 }
