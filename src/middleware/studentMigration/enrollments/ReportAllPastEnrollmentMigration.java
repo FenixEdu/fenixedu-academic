@@ -173,7 +173,8 @@ public class ReportAllPastEnrollmentMigration
 	private static void printUnknownCurricularCourses(PrintWriter out)
 	{
 		if(!ReportAllPastEnrollmentMigration.unknownCurricularCourses.entrySet().isEmpty()) {
-			out.println("\nERROR TYPE 1 - UNKNOWN CURRICULAR COURSES");
+			out.println("");
+			out.println("ERROR TYPE 1 - UNKNOWN CURRICULAR COURSES");
 			Iterator iterator = ReportAllPastEnrollmentMigration.unknownCurricularCourses.entrySet().iterator();
 			while (iterator.hasNext())
 			{
@@ -199,7 +200,8 @@ public class ReportAllPastEnrollmentMigration
 	private static void printNotFoundCurricularCourseScopes(PrintWriter out)
 	{
 		if(!ReportAllPastEnrollmentMigration.unknownTeachersAndEmployees.entrySet().isEmpty()) {
-			out.println("\nERROR TYPE 2 - UNKNOWN TEACHERS AND EMPLOYEES");
+			out.println("");
+			out.println("ERROR TYPE 2 - UNKNOWN TEACHERS AND EMPLOYEES");
 			Iterator iterator = ReportAllPastEnrollmentMigration.unknownTeachersAndEmployees.entrySet().iterator();
 			while (iterator.hasNext())
 			{
@@ -225,7 +227,8 @@ public class ReportAllPastEnrollmentMigration
 	private static void printClassCastExceptions(PrintWriter out)
 	{
 		if(!ReportAllPastEnrollmentMigration.classCastExceptions.isEmpty()) {
-			out.println("\nERROR TYPE 3 - CLASS CAST EXCEPTIONS");
+			out.println("");
+			out.println("ERROR TYPE 3 - CLASS CAST EXCEPTIONS");
 			Iterator iterator = ReportAllPastEnrollmentMigration.classCastExceptions.iterator();
 			while (iterator.hasNext())
 			{
@@ -243,7 +246,8 @@ public class ReportAllPastEnrollmentMigration
 	private static void printNotCreatedEnrolmentEvaluations(PrintWriter out)
 	{
 		if(!ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluations.entrySet().isEmpty()) {
-			out.println("\nWARNING TYPE 1 - ENROLLMENT EVALUATIONS NOT CREATED");
+			out.println("");
+			out.println("WARNING TYPE 1 - ENROLLMENT EVALUATIONS NOT CREATED");
 			out.println("\tCases:");
 			Iterator iterator = ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluations.entrySet().iterator();
 			while (iterator.hasNext())
@@ -281,9 +285,12 @@ public class ReportAllPastEnrollmentMigration
 	 */
 	public static void report(PrintWriter out)
 	{
-		out.println("\n---------------------------------------------------------------------------");
-		out.println("\n------------------------------ ERROR CASES --------------------------------");
-		out.println("\n---------------------------------------------------------------------------");
+		out.println("");
+		out.println("---------------------------------------------------------------------------");
+		out.println("");
+		out.println("------------------------------ ERROR CASES --------------------------------");
+		out.println("");
+		out.println("---------------------------------------------------------------------------");
 
 		ReportAllPastEnrollmentMigration.printUnknownCurricularCourses(out);
 		ReportAllPastEnrollmentMigration.printNotFoundCurricularCourseScopes(out);
@@ -298,15 +305,21 @@ public class ReportAllPastEnrollmentMigration
 			out.println("[INFO] TOTAL ENROLMENTS NOT MIGRADTED: " + totalEnrolmentsNotMigrated);
 		}
 
-		out.println("\n---------------------------------------------------------------------------");
-		out.println("\n----------------------------- WARNING CASES -------------------------------");
-		out.println("\n---------------------------------------------------------------------------");
+		out.println("");
+		out.println("---------------------------------------------------------------------------");
+		out.println("");
+		out.println("----------------------------- WARNING CASES -------------------------------");
+		out.println("");
+		out.println("---------------------------------------------------------------------------");
 
 		ReportAllPastEnrollmentMigration.printNotCreatedEnrolmentEvaluations(out);
 
-		out.println("\n---------------------------------------------------------------------------");
-		out.println("\n----------------------------- INFORMATIONS --------------------------------");
-		out.println("\n---------------------------------------------------------------------------");
+		out.println("");
+		out.println("---------------------------------------------------------------------------");
+		out.println("");
+		out.println("----------------------------- INFORMATIONS --------------------------------");
+		out.println("");
+		out.println("---------------------------------------------------------------------------");
 		
 		out.println("[INFO] DONE!");
 		out.println("[INFO] Total StudentCurricularPlans created: [" + ReportAllPastEnrollmentMigration.totalStudentCurricularPlansCreated + "].");

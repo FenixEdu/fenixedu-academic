@@ -322,13 +322,17 @@ public class ReportEnrolment
 		out.println("[INFO] Total Enrolments deleted: [" + ReportEnrolment.enrolmentsDeleted + "]");
 		out.println("[INFO] Total EnrolmentEvaluations deleted: [" + ReportEnrolment.enrolmentEvaluationsDeleted + "]");
 		
-		out.println("\n---------------------------------------------------------------------------");
-		out.println("\n------------------------------ CASOS DE ERRO ------------------------------");
-		out.println("\n---------------------------------------------------------------------------");
+		out.println("");
+		out.println("---------------------------------------------------------------------------");
+		out.println("");
+		out.println("------------------------------ CASOS DE ERRO ------------------------------");
+		out.println("");
+		out.println("---------------------------------------------------------------------------");
 
 		int totalCurricularCoursesFoundInOtherDegree = 0;
 		if(!curricularCoursesFoundInOtherDegree.entrySet().isEmpty()) {
-			out.println("\nCASO 1 - DISCIPLINAS ENCONTRADAS NUM CURSO DIFERENTE DO CURSO DO ALUNO SOBRE AS QUAIS NÃO É POSSIVEL INFERIR QUAL A DISCIPLINA A ESCOLHER");
+			out.println("");
+			out.println("CASO 1 - DISCIPLINAS ENCONTRADAS NUM CURSO DIFERENTE DO CURSO DO ALUNO SOBRE AS QUAIS NÃO É POSSIVEL INFERIR QUAL A DISCIPLINA A ESCOLHER");
 			Iterator iterator1 = curricularCoursesFoundInOtherDegree.entrySet().iterator();
 			while (iterator1.hasNext())
 			{
@@ -345,7 +349,8 @@ public class ReportEnrolment
 
 		int totalExecutionCoursesNotFound = 0;
 		if(!notFoundExecutionCourse.entrySet().isEmpty()) {
-			out.println("\nCASO 2 - EXECUÇÕES NÃO ENCONTRADAS");
+			out.println("");
+			out.println("CASO 2 - EXECUÇÕES NÃO ENCONTRADAS");
 			Iterator iterator2 = notFoundExecutionCourse.entrySet().iterator();
 			while (iterator2.hasNext())
 			{
@@ -362,7 +367,8 @@ public class ReportEnrolment
 		
 		int totalCurricularCourseScopesNotFound = 0;
 		if(!notFoundCurricularCourseScopes.entrySet().isEmpty()) {
-			out.println("\nCASO 3 - SCOPES NÃO ENCONTRADOS");
+			out.println("");
+			out.println("CASO 3 - SCOPES NÃO ENCONTRADOS");
 			Iterator iterator3 = notFoundCurricularCourseScopes.entrySet().iterator();
 			while (iterator3.hasNext())
 			{
@@ -379,7 +385,8 @@ public class ReportEnrolment
 		
 		int totalCurricularCoursesNotFound = 0;
 		if(!notFoundCurricularCourses.entrySet().isEmpty()) {
-			out.println("\nCASO 4 - CURRICULARES NÃO ENCONTRADAS");
+			out.println("");
+			out.println("CASO 4 - CURRICULARES NÃO ENCONTRADAS");
 			Iterator iterator4 = notFoundCurricularCourses.entrySet().iterator();
 			while (iterator4.hasNext())
 			{
@@ -396,7 +403,8 @@ public class ReportEnrolment
 		
 		int totalAttendsNotFound = 0;
 		if(!notFoundAttends.entrySet().isEmpty()) {
-			out.println("\nCASO 5 - ATTENDS NÃO ENCONTRADOS");
+			out.println("");
+			out.println("CASO 5 - ATTENDS NÃO ENCONTRADOS");
 			Iterator iterator5 = notFoundAttends.entrySet().iterator();
 			while (iterator5.hasNext())
 			{
@@ -414,20 +422,26 @@ public class ReportEnrolment
 		}
 
 		if(enrolmentsMigrated > 0) {
-			out.println("\nTOTAL ENROLMENTS MIGRADOS: " + enrolmentsMigrated);
+			out.println("");
+			out.println("TOTAL ENROLMENTS MIGRADOS: " + enrolmentsMigrated);
 		}
 
 		int totalEnrolmentsNotMigrated = totalCurricularCoursesFoundInOtherDegree + totalExecutionCoursesNotFound + totalCurricularCourseScopesNotFound + totalCurricularCoursesNotFound;
 		if(totalEnrolmentsNotMigrated > 0) {
-			out.println("\nTOTAL ENROLMENTS NÃO MIGRADOS: " + totalEnrolmentsNotMigrated);
+			out.println("");
+			out.println("TOTAL ENROLMENTS NÃO MIGRADOS: " + totalEnrolmentsNotMigrated);
 		}
 
-		out.println("\n---------------------------------------------------------------------------");
-		out.println("\n-------------------------- LEGENDAS E INFORMAÇÃO --------------------------");
-		out.println("\n---------------------------------------------------------------------------");
+		out.println("");
+		out.println("---------------------------------------------------------------------------");
+		out.println("");
+		out.println("-------------------------- LEGENDAS E INFORMAÇÃO --------------------------");
+		out.println("");
+		out.println("---------------------------------------------------------------------------");
 		
 		if(!replicatedCurricularCourses.entrySet().isEmpty()) {
-			out.println("\nDISCIPLINAS REPLICADAS");
+			out.println("");
+			out.println("DISCIPLINAS REPLICADAS");
 			Iterator iterator6 = replicatedCurricularCourses.entrySet().iterator();
 			while (iterator6.hasNext())
 			{
@@ -446,7 +460,8 @@ public class ReportEnrolment
 		}
 
 		if(!createdAttends.entrySet().isEmpty()) {
-			out.println("\nATTENDS CRIADOS");
+			out.println("");
+			out.println("ATTENDS CRIADOS");
 			int totalCreatedAttends = 0;
 			Iterator iterator8 = createdAttends.entrySet().iterator();
 			while (iterator8.hasNext())
@@ -464,7 +479,8 @@ public class ReportEnrolment
 		}
 		
 		if((!curricularCourses.entrySet().isEmpty()) && (totalEnrolmentsNotMigrated > 0)) {
-			out.println("\nDISCIPLINAS");
+			out.println("");
+			out.println("DISCIPLINAS");
 			Iterator iterator9 = curricularCourses.entrySet().iterator();
 			while (iterator9.hasNext())
 			{
@@ -476,7 +492,8 @@ public class ReportEnrolment
 		}
 		
 		if((!degrees.entrySet().isEmpty()) && (totalEnrolmentsNotMigrated > 0)) {
-			out.println("\nCURSOS");
+			out.println("");
+			out.println("CURSOS");
 			Iterator iterator10 = degrees.entrySet().iterator();
 			while (iterator10.hasNext())
 			{

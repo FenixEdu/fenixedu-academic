@@ -2,12 +2,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 	<field-descriptor name="keyCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
 	<field-descriptor name="precedenceScopeToApply" column="SCOPE_TO_APPLY" jdbc-type="VARCHAR" nullable="false" conversion="ServidorPersistente.Conversores.PrecedenceScopeToApplyJava2SqlConversion"/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
     <reference-descriptor name="curricularCourse" class-ref="Dominio.CurricularCourse">
 	    <foreignkey field-ref="keyCurricularCourse"/>
     </reference-descriptor>
@@ -17,36 +12,28 @@
 </class-descriptor>
 
 <class-descriptor class="Dominio.Restriction">
-<!--
-    <extent-class class-ref="Dominio.RestrictionByCurricularCourse"/>
-    <extent-class class-ref="Dominio.RestrictionByNumberOfCurricularCourses"/>
--->
+    <extent-class class-ref="Dominio.RestrictionPeriodToApply"/>
     <extent-class class-ref="Dominio.RestrictionByNumberOfDoneCurricularCourses"/>
     <extent-class class-ref="Dominio.RestrictionNotDoneCurricularCourse"/>
     <extent-class class-ref="Dominio.RestrictionDoneCurricularCourse"/>
 </class-descriptor>
 
-<!--
-<class-descriptor class="Dominio.RestrictionByNumberOfCurricularCourses">
-    <extent-class class-ref="Dominio.RestrictionByNumberOfDoneCurricularCourses"/>
+<class-descriptor class="Dominio.RestrictionPeriodToApply" table="RESTRICTION">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+    <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
+    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+    <reference-descriptor name="precedence" class-ref="Dominio.Precedence" proxy="true">
+	    <foreignkey field-ref="keyPrecedence"/>
+    </reference-descriptor>
+	<field-descriptor name="periodToApplyRestriction" column="PERIOD_TO_APPLY" jdbc-type="INTEGER" nullable="false" conversion="ServidorPersistente.Conversores.JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConversion"/>
 </class-descriptor>
-
-<class-descriptor class="Dominio.RestrictionByCurricularCourse">
-    <extent-class class-ref="Dominio.RestrictionNotDoneCurricularCourse"/>
-    <extent-class class-ref="Dominio.RestrictionDoneCurricularCourse"/>
-</class-descriptor>
--->
 
 <class-descriptor class="Dominio.RestrictionByNumberOfDoneCurricularCourses" table="RESTRICTION">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
     <reference-descriptor name="precedence" class-ref="Dominio.Precedence" proxy="true">
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
@@ -57,12 +44,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
     <reference-descriptor name="precedence" class-ref="Dominio.Precedence" proxy="true">
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
@@ -77,12 +59,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
     <reference-descriptor name="precedence" class-ref="Dominio.Precedence" proxy="true">
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
@@ -98,12 +75,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
     <reference-descriptor name="precedence" class-ref="Dominio.Precedence" proxy="true">
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
@@ -117,12 +89,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
     <reference-descriptor name="precedence" class-ref="Dominio.Precedence" proxy="true">
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
@@ -136,12 +103,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
     <reference-descriptor name="precedence" class-ref="Dominio.Precedence" proxy="true">
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>

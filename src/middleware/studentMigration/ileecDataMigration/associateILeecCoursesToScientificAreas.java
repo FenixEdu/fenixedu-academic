@@ -55,7 +55,7 @@ public class associateILeecCoursesToScientificAreas
                 ICurricularCourse cc = (ICurricularCourse) iterator.next();
                 pcc.simpleLockWrite(cc);
 
-                if (!cc.getName().equalsIgnoreCase("Opção Livre"))
+                if (!cc.getName().equalsIgnoreCase("Opção Livre") && !cc.getCode().equalsIgnoreCase("##13"))
                 {
                     IScientificArea scientificArea = getScientificArea(cc, sp);
                     cc.setScientificArea(scientificArea);

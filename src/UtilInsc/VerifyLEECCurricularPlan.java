@@ -19,6 +19,7 @@ import Dominio.IRestriction;
 import Dominio.IScientificArea;
 import Dominio.RestrictionByNumberOfDoneCurricularCourses;
 import Dominio.RestrictionDoneCurricularCourse;
+import Dominio.RestrictionPeriodToApply;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -286,6 +287,14 @@ public class VerifyLEECCurricularPlan
                             System.out.print("\t\t");
                             System.out.println(
                                 actualRestriction.getPrecedentCurricularCourse().getName() + " feita");
+                        }
+                        else if (restriction instanceof RestrictionPeriodToApply)
+                        {
+                        	RestrictionPeriodToApply actualRestriction =
+                        	(RestrictionPeriodToApply) restriction;
+                        	System.out.print("\t\t");
+                        	System.out.println("no " + 
+                        			actualRestriction.getPeriodToApplyRestriction().getPeriod() + "º semestre");
                         }
                         else
                         {

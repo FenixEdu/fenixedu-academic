@@ -7,7 +7,6 @@ package middleware.middlewareDomain;
 
 public class MWEnrolment extends MWDomainObject
 {
-
   private Integer branchcode;
   private String coursecode;
   private Integer curricularcoursesemester;

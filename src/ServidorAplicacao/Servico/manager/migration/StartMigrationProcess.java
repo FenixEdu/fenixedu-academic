@@ -45,10 +45,19 @@ public class StartMigrationProcess implements IService
 				int day = calendar.get(Calendar.DAY_OF_MONTH);
 				int month = calendar.get(Calendar.MONTH);
 				int year = calendar.get(Calendar.YEAR);
-				String fileName1 = fileNameTemp1 + "_" + day + "-" + month + "-" + year + ".txt";
-				String fileName2 = fileNameTemp2 + "_" + day + "-" + month + "-" + year + ".txt";
-//				String fileName3 = fileNameTemp3 + "_" + day + "-" + month + "-" + year + ".txt";
-//				String fileName4 = fileNameTemp4 + "_" + day + "-" + month + "-" + year + ".txt";
+				String action = null;
+				if (Boolean.valueOf(flag).booleanValue())
+				{
+					action = "recordsToAdd";
+				} else
+				{
+					action = "recordsToRemove";
+				}
+
+				String fileName1 = fileNameTemp1 + "_" + day + "-" + month + "-" + year + "_" + action + ".txt";
+				String fileName2 = fileNameTemp2 + "_" + day + "-" + month + "-" + year + "_" + action + ".txt";
+//				String fileName3 = fileNameTemp3 + "_" + day + "-" + month + "-" + year + "_" + action + ".txt";
+//				String fileName4 = fileNameTemp4 + "_" + day + "-" + month + "-" + year + "_" + action + ".txt";
 				
 				if (method.equals("pastCurriculum"))
 				{
