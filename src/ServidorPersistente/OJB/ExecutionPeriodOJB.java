@@ -291,6 +291,8 @@ public class ExecutionPeriodOJB
 			executionPeriodToImportDataTo,
 			executionPeriodToExportDataFrom);
 
+		System.out.println("Finished creating execution courses.");
+
 		System.out.println("Confirming transaction.");
 		SuportePersistenteOJB.getInstance().confirmarTransaccao();
 		System.out.println("Starting transaction.");
@@ -302,8 +304,6 @@ public class ExecutionPeriodOJB
 		System.out.println("Starting transaction.");
 		SuportePersistenteOJB.getInstance().iniciarTransaccao();
 		
-		System.out.println("Finished creating execution courses.");
-
 		transferClasses(
 			executionPeriodToImportDataTo,
 			executionPeriodToExportDataFrom);
@@ -333,9 +333,76 @@ public class ExecutionPeriodOJB
 			executionPeriodToExportDataFrom);
 
 		System.out.println("Finished creating classLessons.");
-		//		} catch (Exception e) {
-		//			throw new ExcepcaoPersistencia(e.getMessage());
-		//		}
+
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		System.out.println("Clearing cache.");
+		SuportePersistenteOJB.getInstance().clearCache();
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+
+		cleanUpLessons(executionPeriodToImportDataTo);
+		cleanUpShifts(executionPeriodToImportDataTo);
+		System.out.println("Completed cleanup.");
+	}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 */
+	private void cleanUpShifts(IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"disciplinaExecucao.executionPeriod.idInternal",
+			executionPeriod.getIdInternal());
+
+		int numberOfShifts = count(Turno.class, criteria);
+		for (int i = 0; i < numberOfShifts; i++) {
+			ITurno shift =
+				(ITurno) readSpan(
+					Turno.class,
+					criteria,
+					new Integer(1),
+					new Integer(i + 1)).get(
+					0);
+			if (shift.getAssociatedLessons() == null
+				|| shift.getAssociatedLessons().isEmpty()) {
+				delete(shift);
+			}
+		}
+	}
+
+	/**
+	 * 
+	 */
+	private void cleanUpLessons(IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"disciplinaExecucao.executionPeriod.idInternal",
+			executionPeriod.getIdInternal());
+
+		int numberOfLessons = count(Aula.class, criteria);
+		for (int i = 0; i < numberOfLessons; i++) {
+			IAula lesson =
+				(IAula) readSpan(
+					Aula.class,
+					criteria,
+					new Integer(1),
+					new Integer(i + 1)).get(
+					0);
+			Criteria criteriaShifts = new Criteria();
+			criteriaShifts.addEqualTo(
+				"associatedLessons.idInternal",
+				lesson.getIdInternal());
+			if (count(Turno.class, criteriaShifts) == 0) {
+				delete(lesson);
+			}
+		}
 	}
 
 	/**
@@ -359,7 +426,7 @@ public class ExecutionPeriodOJB
 					TurmaTurno.class,
 					criteria,
 					new Integer(1),
-					new Integer(i)).get(
+					new Integer(i+1)).get(
 					0);
 
 			createClassShift(
@@ -389,7 +456,7 @@ public class ExecutionPeriodOJB
 					TurnoAula.class,
 					criteria,
 					new Integer(1),
-					new Integer(i)).get(
+					new Integer(i+1)).get(
 					0);
 
 			createShiftLesson(
@@ -419,7 +486,7 @@ public class ExecutionPeriodOJB
 					Turno.class,
 					criteria,
 					new Integer(1),
-					new Integer(i)).get(
+					new Integer(i+1)).get(
 					0);
 
 			createShift(shiftToTransfer, executionPeriodToImportDataTo);
@@ -447,7 +514,7 @@ public class ExecutionPeriodOJB
 					Aula.class,
 					criteria,
 					new Integer(1),
-					new Integer(i)).get(
+					new Integer(i+1)).get(
 					0);
 
 			createLesson(lessonToTransfer, executionPeriodToImportDataTo);
@@ -475,7 +542,7 @@ public class ExecutionPeriodOJB
 					Turma.class,
 					criteria,
 					new Integer(1),
-					new Integer(i)).get(
+					new Integer(i+1)).get(
 					0);
 
 			createClass(schoolClassToTransfer, executionPeriodToImportDataTo);
@@ -504,7 +571,7 @@ public class ExecutionPeriodOJB
 					DisciplinaExecucao.class,
 					criteria,
 					new Integer(1),
-					new Integer(i)).get(
+					new Integer(i+1)).get(
 					0);
 
 			createExecutionCourse(
@@ -530,7 +597,6 @@ public class ExecutionPeriodOJB
 			"curricularPlan.degree.tipoCurso",
 			new TipoCurso(TipoCurso.LICENCIATURA));
 
-		
 		int numberOfExecutionDegreesToTransfer =
 			count(CursoExecucao.class, criteria);
 
@@ -540,7 +606,7 @@ public class ExecutionPeriodOJB
 					CursoExecucao.class,
 					criteria,
 					new Integer(1),
-					new Integer(i)).get(
+					new Integer(i+1)).get(
 					0);
 
 			createExecutionDegree(
@@ -754,26 +820,31 @@ public class ExecutionPeriodOJB
 			}
 		}
 
-		executionCourseToCreate.setAssociatedCurricularCourses(
-			curricularCourses);
-		executionCourseToCreate.setAssociatedEvaluations(new ArrayList());
-		executionCourseToCreate.setAssociatedExams(new ArrayList());
-		executionCourseToCreate.setComment(" ");
-		executionCourseToCreate.setExecutionPeriod(
-			executionPeriodToImportDataTo);
-		executionCourseToCreate.setIdInternal(null);
-		executionCourseToCreate.setLabHours(
-			executionCourseToTransfer.getLabHours());
-		executionCourseToCreate.setNome(executionCourseToTransfer.getNome());
-		executionCourseToCreate.setPraticalHours(
-			executionCourseToTransfer.getPraticalHours());
-		executionCourseToCreate.setSigla(executionCourseToTransfer.getSigla());
-		executionCourseToCreate.setTheoPratHours(
-			executionCourseToTransfer.getTheoPratHours());
-		executionCourseToCreate.setTheoreticalHours(
-			executionCourseToTransfer.getTheoreticalHours());
+		if (curricularCourses != null && !curricularCourses.isEmpty()) {
 
-		store(executionCourseToCreate);
+			executionCourseToCreate.setAssociatedCurricularCourses(
+				curricularCourses);
+			executionCourseToCreate.setAssociatedEvaluations(new ArrayList());
+			executionCourseToCreate.setAssociatedExams(new ArrayList());
+			executionCourseToCreate.setComment(" ");
+			executionCourseToCreate.setExecutionPeriod(
+				executionPeriodToImportDataTo);
+			executionCourseToCreate.setIdInternal(null);
+			executionCourseToCreate.setLabHours(
+				executionCourseToTransfer.getLabHours());
+			executionCourseToCreate.setNome(
+				executionCourseToTransfer.getNome());
+			executionCourseToCreate.setPraticalHours(
+				executionCourseToTransfer.getPraticalHours());
+			executionCourseToCreate.setSigla(
+				executionCourseToTransfer.getSigla());
+			executionCourseToCreate.setTheoPratHours(
+				executionCourseToTransfer.getTheoPratHours());
+			executionCourseToCreate.setTheoreticalHours(
+				executionCourseToTransfer.getTheoreticalHours());
+
+			store(executionCourseToCreate);
+		}
 
 		return executionCourseToCreate;
 	}
@@ -785,24 +856,10 @@ public class ExecutionPeriodOJB
 		Turma classToTransfer = (Turma) arg0;
 		Turma classToCreate = new Turma();
 
-//		System.out.println("Creating Class: " + classToTransfer.getNome());
-//		System.out.println(
-//			"   old execution degree id: "
-//				+ classToTransfer.getExecutionDegree().getIdInternal());
-//		System.out.println(
-//			"   old execution period id: "
-//				+ classToTransfer.getExecutionPeriod().getIdInternal());
-
 		CursoExecucao executionDegree =
 			findCorrespondingExecutionDegree(
 				executionPeriodToImportDataTo,
 				classToTransfer);
-
-//		System.out.println(
-//			"   new execution degree id: " + executionDegree.getIdInternal());
-//		System.out.println(
-//			"   new execution period id: "
-//				+ executionPeriodToImportDataTo.getIdInternal());
 
 		classToCreate.setAnoCurricular(classToTransfer.getAnoCurricular());
 		classToCreate.setExecutionDegree(executionDegree);
@@ -854,25 +911,23 @@ public class ExecutionPeriodOJB
 				executionPeriodToImportDataTo,
 				lessonToTransfer.getDisciplinaExecucao());
 
-//		System.out.println(
-//			"old execution course: "
-//				+ lessonToTransfer.getDisciplinaExecucao().getIdInternal());
-		
-		lessonToCreate.setDiaSemana(lessonToTransfer.getDiaSemana());
-		lessonToCreate.setDisciplinaExecucao(executionCourse);
-		lessonToCreate.setExecutionPeriod(executionPeriodToImportDataTo);
-		lessonToCreate.setFim(lessonToTransfer.getFim());
-		lessonToCreate.setIdInternal(null);
-		lessonToCreate.setInicio(lessonToTransfer.getInicio());
-		lessonToCreate.setSala(lessonToTransfer.getSala());
-		lessonToCreate.setTipo(lessonToTransfer.getTipo());
+		if (executionCourse != null) {
+			lessonToCreate.setDiaSemana(lessonToTransfer.getDiaSemana());
+			lessonToCreate.setDisciplinaExecucao(executionCourse);
+			lessonToCreate.setExecutionPeriod(executionPeriodToImportDataTo);
+			lessonToCreate.setFim(lessonToTransfer.getFim());
+			lessonToCreate.setIdInternal(null);
+			lessonToCreate.setInicio(lessonToTransfer.getInicio());
+			lessonToCreate.setSala(lessonToTransfer.getSala());
+			lessonToCreate.setTipo(lessonToTransfer.getTipo());
 
-		try {
-			store(lessonToCreate);
-		} catch (Exception e) {
+			try {
+				store(lessonToCreate);
+			} catch (Exception e) {
 			e.printStackTrace();
+			}
 		}
-		
+
 		return lessonToCreate;
 	}
 
@@ -907,20 +962,22 @@ public class ExecutionPeriodOJB
 				executionPeriodToImportDataTo,
 				shiftToTransfer.getDisciplinaExecucao());
 
-		shiftToCreate.setAssociatedLessons(new ArrayList());
-		shiftToCreate.setAssociatedTeacherProfessorShipPercentage(
-			new ArrayList());
-		shiftToCreate.setDisciplinaExecucao(executionCourse);
-		shiftToCreate.setIdInternal(null);
-		shiftToCreate.setLotacao(shiftToTransfer.getLotacao());
-		shiftToCreate.setNome(shiftToTransfer.getNome());
-		shiftToCreate.setTipo(shiftToTransfer.getTipo());
-		shiftToCreate.setAvailabilityFinal(new Integer(0));
+		if (executionCourse != null) {
+			shiftToCreate.setAssociatedLessons(new ArrayList());
+			shiftToCreate.setAssociatedTeacherProfessorShipPercentage(
+				new ArrayList());
+			shiftToCreate.setDisciplinaExecucao(executionCourse);
+			shiftToCreate.setIdInternal(null);
+			shiftToCreate.setLotacao(shiftToTransfer.getLotacao());
+			shiftToCreate.setNome(shiftToTransfer.getNome());
+			shiftToCreate.setTipo(shiftToTransfer.getTipo());
+			shiftToCreate.setAvailabilityFinal(new Integer(0));
 
-		try {
-			store(shiftToCreate);
-		} catch (Exception e) {
-			e.printStackTrace();
+			try {
+				store(shiftToCreate);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return shiftToCreate;
@@ -943,14 +1000,16 @@ public class ExecutionPeriodOJB
 				executionPeriodToImportDataTo,
 				shiftLessonToTransfer.getAula());
 
-		shiftLessonToCreate.setAula(lesson);
-		shiftLessonToCreate.setIdInternal(null);
-		shiftLessonToCreate.setTurno(shift);
+		if (shift != null && lesson != null) {
+			shiftLessonToCreate.setAula(lesson);
+			shiftLessonToCreate.setIdInternal(null);
+			shiftLessonToCreate.setTurno(shift);
 
-		try {
-			store(shiftLessonToCreate);
-		} catch (Exception e) {
-			e.printStackTrace();
+			try {
+				store(shiftLessonToCreate);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return shiftLessonToCreate;
@@ -1016,14 +1075,16 @@ public class ExecutionPeriodOJB
 				executionPeriodToImportDataTo,
 				classShiftToTransfer.getTurno());
 
-		classShiftToCreate.setIdInternal(null);
-		classShiftToCreate.setTurma(ourClass);
-		classShiftToCreate.setTurno(shift);
+		if (ourClass != null && shift != null) {
+			classShiftToCreate.setIdInternal(null);
+			classShiftToCreate.setTurma(ourClass);
+			classShiftToCreate.setTurno(shift);
 
-		try {
-			store(classShiftToCreate);
-		} catch (Exception e) {
-			e.printStackTrace();
+			try {
+				store(classShiftToCreate);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return classShiftToCreate;
@@ -1083,24 +1144,6 @@ public class ExecutionPeriodOJB
 				executionCourse.getSigla());
 		}
 	}
-
-	//	private class PREDICATE_ANY_EXECUTION_COURSE implements Predicate {
-	//
-	//		private List executionCourses;
-	//
-	//		public PREDICATE_ANY_EXECUTION_COURSE(List executionCourses) {
-	//			this.executionCourses = executionCourses;
-	//		}
-	//
-	//		public boolean evaluate(Object arg0) {
-	//			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) arg0;
-	//
-	//			return CollectionUtils.find(
-	//				this.executionCourses,
-	//				new PREDICATE_EXECUTION_COURSE(executionCourse))
-	//				!= null;
-	//		}
-	//	}
 
 	private class PREDICATE_LESSON implements Predicate {
 
