@@ -5511,7 +5511,7 @@
         <description>Returns information about student enrollments in curricular courses testing 
             enrollment period</description>
         <implementationClass>
-            ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCourses</implementationClass>
+            ServidorAplicacao.Servico.enrollment.ShowAvailableCurricularCourses</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentLEECAuthorization"/>
@@ -5520,7 +5520,7 @@
     <service>
         <name>DeleteEnrolment</name>
         <description>Deletes enrolment of student in a curricular course</description>
-        <implementationClass>ServidorAplicacao.Servico.enrolment.DeleteEnrolment</implementationClass>
+        <implementationClass>ServidorAplicacao.Servico.enrollment.DeleteEnrolment</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentLEECAuthorization"/>
@@ -5529,7 +5529,7 @@
     <service>
         <name>WriteStudentAreas</name>
         <description>Modifies areas belonging to student curricular plan</description>
-        <implementationClass>ServidorAplicacao.Servico.enrolment.WriteStudentAreas</implementationClass>
+        <implementationClass>ServidorAplicacao.Servico.enrollment.WriteStudentAreas</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentLEECAuthorization"/>
@@ -5538,7 +5538,7 @@
     <service>
         <name>WriteEnrolment</name>
         <description>Enrolls student in curricular course</description>
-        <implementationClass>ServidorAplicacao.Servico.enrolment.WriteEnrolment</implementationClass>
+        <implementationClass>ServidorAplicacao.Servico.enrollment.WriteEnrolment</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentLEECAuthorization"/>
@@ -5548,7 +5548,7 @@
         <name>ReadSpecializationAndSecundaryAreasByStudent</name>
         <description>Reads areas corrresponding to student curricular plan</description>
         <implementationClass>
-            ServidorAplicacao.Servico.enrolment.ReadSpecializationAndSecundaryAreasByStudent</implementationClass>
+            ServidorAplicacao.Servico.enrollment.ReadSpecializationAndSecundaryAreasByStudent</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentLEECAuthorization"/>
@@ -5623,7 +5623,7 @@
         <name>PrepareInfoShiftEnrollmentByStudentNumber</name>
         <description>Read all information needed for shift enrollment</description>
         <implementationClass>
-            ServidorAplicacao.Servico.enrolment.shift.PrepareInfoShiftEnrollmentByStudentNumber</implementationClass>
+            ServidorAplicacao.Servico.enrollment.shift.PrepareInfoShiftEnrollmentByStudentNumber</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="StudentAuthorization"/>
@@ -5633,7 +5633,7 @@
         <name>WriteStudentAttendingCourse</name>
         <description>Writes the attending of a student in an execution course</description>
         <implementationClass>
-            ServidorAplicacao.Servico.enrolment.shift.WriteStudentAttendingCourse</implementationClass>
+            ServidorAplicacao.Servico.enrollment.shift.WriteStudentAttendingCourse</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="StudentShiftEnrollmentAuthorization"/>
@@ -5643,7 +5643,7 @@
         <name>DeleteStudentAttendingCourse</name>
         <description>Deletes the attending of a student in an execution course</description>
         <implementationClass>
-            ServidorAplicacao.Servico.enrolment.shift.DeleteStudentAttendingCourse</implementationClass>
+            ServidorAplicacao.Servico.enrollment.shift.DeleteStudentAttendingCourse</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains/>
     </service>
@@ -5652,7 +5652,7 @@
         <description>Read all data, include schedule, shift, class and lessons, from student shift 
             enrollment</description>
         <implementationClass>
-            ServidorAplicacao.Servico.enrolment.shift.ReadClassShiftEnrollmentDetails</implementationClass>
+            ServidorAplicacao.Servico.enrollment.shift.ReadClassShiftEnrollmentDetails</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains/>
     </service>
@@ -5660,7 +5660,7 @@
         <name>ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</name>
         <description>Returns information about student enrollments in curricular courses</description>
         <implementationClass>
-            ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</implementationClass>
+            ServidorAplicacao.Servico.enrollment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentLEECAuthorization"/>
@@ -5670,7 +5670,7 @@
         <name>UnEnrollStudentFromShift</name>
         <description>Deletes a students enrolment in a shift</description>
         <implementationClass>
-            ServidorAplicacao.Servico.enrolment.shift.UnEnrollStudentFromShift</implementationClass>
+            ServidorAplicacao.Servico.enrollment.shift.UnEnrollStudentFromShift</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="StudentIsUserAndHasStudentRoleFilter"/>
@@ -5680,7 +5680,7 @@
         <name>EnrollStudentInShifts</name>
         <description>Enrolls a student in a List of shifts</description>
         <implementationClass>
-            ServidorAplicacao.Servico.enrolment.shift.EnrollStudentInShifts</implementationClass>
+            ServidorAplicacao.Servico.enrollment.shift.EnrollStudentInShifts</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="StudentIsUserAndHasStudentRoleFilter"/>
@@ -5719,7 +5719,7 @@
         <name>DeleteEnrollmentsList</name>
         <description>Deletes enrolment of student in a curricular course</description>
         <implementationClass>
-            ServidorAplicacao.Servico.enrolment.DeleteEnrollmentsList</implementationClass>
+            ServidorAplicacao.Servico.enrollment.DeleteEnrollmentsList</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentWithoutRulesAuthorization"/>
@@ -5739,7 +5739,7 @@
         <name>WriteEnrollmentsList</name>
         <description>Deletes enrolment of student in a curricular course</description>
         <implementationClass>
-            ServidorAplicacao.Servico.enrolment.WriteEnrollmentsList</implementationClass>
+            ServidorAplicacao.Servico.enrollment.WriteEnrollmentsList</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentWithoutRulesAuthorization"/>
@@ -6218,7 +6218,7 @@
     <service>
         <name>WriteEnrolmentInOptionalCourse</name>
         <description>Enrolls student in curricular course</description>
-        <implementationClass>ServidorAplicacao.Servico.enrolment.WriteEnrolmentInOptionalCourse</implementationClass>
+        <implementationClass>ServidorAplicacao.Servico.enrollment.WriteEnrolmentInOptionalCourse</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentLEECAuthorization"/>

@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.enrolment;
+package ServidorAplicacao.Servico.enrollment;
 
 import java.util.Iterator;
 import java.util.List;

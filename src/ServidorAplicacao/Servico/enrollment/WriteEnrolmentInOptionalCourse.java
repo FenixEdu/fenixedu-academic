@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.enrolment;
+package ServidorAplicacao.Servico.enrollment;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.CurricularCourse;

@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.enrolment;
+package ServidorAplicacao.Servico.enrollment;
 
 import java.util.Date;
 import java.util.HashMap;

@@ -2,7 +2,7 @@
  * Created on 18/Fev/2004
  *  
  */
-package ServidorAplicacao.Servico.enrolment;
+package ServidorAplicacao.Servico.enrollment;
 
 import java.util.List;
 import java.util.ListIterator;
