@@ -145,7 +145,7 @@ public class SiglaDataLoader {
 			Integer numMec = (Integer) iter2.next();
 			Criteria crit = new Criteria();
 
-			crit.addEqualTo("person.username", "F" + numMec);
+			crit.addEqualTo("person.username", "D" + numMec);
 			query = new QueryByCriteria(Teacher.class, crit);
 			ITeacher teacher = (ITeacher) broker.getObjectByQuery(query);
 			if (teacher == null) {
