@@ -5603,7 +5603,7 @@
         </filterChains>
     </service>          
 	<service>
-    	<name>ShowAvailableCurricularCourses</name>
+    	<name>ShowAvailableCurricularCoursesNew</name>
     	<description>Returns information about student enrollments in curricular courses</description>
     	<implementationClass>ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCourses</implementationClass>
     	<isTransactional>True</isTransactional>

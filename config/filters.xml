@@ -568,6 +568,6 @@
         <implementationClass> 
             ServidorAplicacao.Filtro.EnrollmentLEECAuthorizationFilter</implementationClass>
         <description/>
-        <isTransactional>false</isTransactional>
+        <isTransactional>true</isTransactional>
     </filter>         
 </filterDefinitions>

@@ -78,7 +78,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		HttpServletResponse response)
 		throws Exception
 	{
-		System.out.println("-->ja no outro action");
 		super.createToken(request);
 		return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
 	}
@@ -103,7 +102,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			infoStudentEnrolmentContext =
 				(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
 					userView,
-					"ShowAvailableCurricularCourses",
+					"ShowAvailableCurricularCoursesNew",
 					args);
 		}
 		catch (NotAuthorizedException e)
@@ -128,7 +127,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE))
 				|| userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))))
 			{
-				errors.add("enrolment", new ActionError(e.getMessage()));
+				System.out.println("vai lançar mensagem de erro: " +e.getMessage() + " " + e);
+				errors.add("enrolment", new ActionError(e.getMessageKey(), e.getStartDate(), e.getEndDate()));
 			}
 		}
 		catch (FenixServiceException e)
@@ -234,12 +234,14 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 					"studentCurricularPlan",
 					new ActionError("error.student.curricularPlan.nonExistent"));
 			}
-			saveErrors(request, errors);
-			return mapping.findForward("beginTransaction");
 		}
 		catch (FenixServiceException e)
 		{
 			throw new FenixActionException();
+		}
+		if(!errors.isEmpty()) {
+			saveErrors(request, errors);
+			return mapping.findForward("beginTransaction");
 		}
 		if (specialization != null
 			&& specialization.length() > 0
@@ -439,7 +441,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			infoStudentEnrolmentContext =
 				(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
 					userView,
-					"ShowAvailableCurricularCourses",
+					"ShowAvailableCurricularCoursesNew",
 					args);
 		}
 		catch (NotAuthorizedException e)
