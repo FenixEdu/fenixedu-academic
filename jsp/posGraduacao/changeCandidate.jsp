@@ -14,7 +14,7 @@
   <body>
 
    <table>
-   		<bean:define id="infoCandidate" name="<%= SessionConstants.MASTERDEGREECANDIDATE %>" scope="session"/>
+   		<bean:define id="infoCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session"/>
    		<bean:define id="personalInfo" name="infoCandidate" property="infoPerson" />
    		
   	  <html:form action="/changePersonalInfoDispatchAction?method=change">
