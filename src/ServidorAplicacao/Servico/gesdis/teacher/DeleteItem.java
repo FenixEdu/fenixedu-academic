@@ -54,10 +54,10 @@ public class DeleteItem implements IServico {
 					section,
 					infoItem.getName());
 
-			Integer orderOfDeletedItem = deletedItem.getItemOrder();
-
 			if (deletedItem == null)
 				throw new FenixServiceException("non existing item");
+				
+			Integer orderOfDeletedItem = deletedItem.getItemOrder();
 
 			persistentItem.delete(deletedItem);
 
