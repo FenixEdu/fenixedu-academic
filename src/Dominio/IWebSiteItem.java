@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 /**
- * @author Fernanda Quitério 23/09/2003
+ * @author Fernanda Quiterio 23/09/2003
  *  
  */
 public interface IWebSiteItem extends IDomainObject {
@@ -59,7 +59,7 @@ public interface IWebSiteItem extends IDomainObject {
 
     public Date getOnlineEndDay();
 
-    public void setOnlineEndDay(Date onlineÊndDay);
+    public void setOnlineEndDay(Date onlinendDay);
 
     public Boolean getPublished();
 
