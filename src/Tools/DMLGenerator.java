@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
+import org.apache.commons.collections.MultiHashMap;
 import org.apache.log4j.Logger;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
@@ -31,6 +33,7 @@ public class DMLGenerator
 
         final Map descriptorTable = getDescriptorTable();
         final Map dmlDescriptorTable = new HashMap(descriptorTable.size());
+        final Map relationsTable = new MultiHashMap();
 
         logger.info("Repository contains " + descriptorTable.size() + " mapped classes.");
 
@@ -44,6 +47,26 @@ public class DMLGenerator
                     classDescriptor);
             dmlDescriptorTable.put(className, dmlClassDescriptor);
         }
+
+        for (final Iterator iterator = dmlDescriptorTable.values().iterator(); iterator.hasNext(); ) {
+            final DMLClassDescriptor dmlClassDescriptor = (DMLClassDescriptor) iterator.next();
+            final Set clasDescriptorRelations = dmlClassDescriptor.getRelations();
+            for (final Iterator relationsInterator = clasDescriptorRelations.iterator(); relationsInterator.hasNext(); ) {
+                final DMLRelationDescriptor dMLRelationDescriptor = (DMLRelationDescriptor) relationsInterator.next();
+                final String key = dMLRelationDescriptor.getKey();
+                if (key != null) {
+                    if (!relationsTable.containsKey(key)) {
+                        relationsTable.put(key, dMLRelationDescriptor);
+                    } else {
+                        System.out.println("Relations table already contains value for key: " + key);
+                    }
+                } else {
+                    //System.out.println("Key is null.");
+                }
+            }
+        }
+
+        System.out.println("Found a total of " + relationsTable.size() + " relations.");
 
         try
         {
