@@ -1,11 +1,9 @@
 package framework.delegate;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.rmi.RemoteException;
-import java.rmi.ServerException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,13 +11,9 @@ import javax.ejb.CreateException;
 import javax.ejb.EJBException;
 import javax.naming.NamingException;
 
-import org.apache.commons.lang.StringUtils;
-
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.FilterChainFailedException;
 import ServidorAplicacao.IServiceManagerWrapper;
 import ServidorAplicacao.ServiceManagerHome;
-import ServidorAplicacao.Servico.exceptions.FenixRemoteServiceException;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import framework.ejb.EJBHomeFactory;
 
@@ -118,12 +112,13 @@ public class DynamicServiceManagerEJBDelegate implements InvocationHandler
 		}
 		catch (InvocationTargetException e)
 		{
-			if (e.getTargetException() instanceof RemoteException) {
-//				System.out.println("DynamicServiceManagerEJBDelegate - RemoteException");
-//				System.out.println("DynamicServiceManagerEJBDelegate - class= " + e.getTargetException().getClass().getName());
-//				System.out.println("DynamicServiceManagerEJBDelegate - cause= " + e.getTargetException().getCause().getClass().getName());
-//				System.out.println("DynamicServiceManagerEJBDelegate - cause= " + e.getTargetException().getCause().getCause().getClass().getName());
-//				System.out.println("DynamicServiceManagerEJBDelegate - cause= " + e.getTargetException().getCause().getCause().getCause().getClass().getName());
+			if (e.getTargetException() instanceof EJBException)
+			{
+				// This case is when calls to the ServiceManager are.
+				throw e.getTargetException().getCause();
+			}
+			else if (e.getTargetException() instanceof RemoteException) {
+				// This case is when calls to the ServiceManager are remote.
 				if (e.getTargetException().getCause() == null)
 				{
 					throw e.getTargetException();

@@ -13,7 +13,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.ServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedFilterException;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedServiceException;
-import ServidorAplicacao.Servico.exceptions.FenixRemoteServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.logging.ServiceExecutionLog;
 import ServidorAplicacao.logging.SystemInfo;
@@ -140,12 +139,6 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 		}
 		catch (Exception e)
 		{
-//			e.printStackTrace();
-//			FenixRemoteServiceException fenixRemoteServiceException = new FenixRemoteServiceException();
-//			fenixRemoteServiceException.setCausePackageName(e.getClass().getPackage().getName());
-//			fenixRemoteServiceException.setCauseClassName(e.getClass().getName());
-//			throw fenixRemoteServiceException;
-
 			throw (EJBException) new EJBException(e).initCause(e);
 		}
 	}
