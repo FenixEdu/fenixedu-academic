@@ -16,10 +16,12 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExam;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
+import Dominio.ExecutionPeriod;
 import Dominio.IAula;
 import Dominio.ICursoExecucao;
 import Dominio.IExam;
@@ -47,7 +49,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
         return "ReadLessonsAndExamsInWeekAndRoom";
     }
 
-    public List run(InfoRoom infoRoom, Calendar day) {
+    public List run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) {
         List infoShowOccupations = new ArrayList();
 
         try {
@@ -56,7 +58,8 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
             IAulaPersistente lessonDAO = sp.getIAulaPersistente();
             IPersistentExam examDAO = sp.getIPersistentExam();
 
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+            //IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
             Calendar startDay = Calendar.getInstance();
             startDay.setTimeInMillis(day.getTimeInMillis());
