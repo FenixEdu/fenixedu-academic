@@ -11,6 +11,8 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
+import java.util.HashMap;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoShift;
@@ -86,6 +88,14 @@ public class CriarTurnoServicosTest extends TestCaseCreateServices {
 
 		return argsCriarTurno;
 	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
+		return null;
+	}
+
 /*
 	// write existing turno
 	public void testCreateExistingTurno() {

@@ -40,16 +40,10 @@ public class ApagarSalaServicosTest extends TestCaseDeleteAndEditServices {
 		super.tearDown();
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "ApagarSala";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
 		Object argsDeleteSala[] = new Object[1];
@@ -58,9 +52,6 @@ public class ApagarSalaServicosTest extends TestCaseDeleteAndEditServices {
 		return argsDeleteSala;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
 		Object argsDeleteSala[] = new Object[1];
@@ -68,37 +59,7 @@ public class ApagarSalaServicosTest extends TestCaseDeleteAndEditServices {
 
 		return argsDeleteSala;
 	}
-/*
-	// delete existing sala
-	public void testDeleteExistingSala() {
 
-		Object argsDeleteSala[] = new Object[1];
-		argsDeleteSala[0] = new RoomKey(new String("Ga3"));
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteSala);
-			assertEquals("testDeleteExistingSala", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testDeleteExistingSala");
-		}
-	}
-
-	// delete non-existing sala
-	public void testDeleteNonExistingSala() {
-
-		Object argsDeleteSala[] = new Object[1];
-		argsDeleteSala[0] = new RoomKey(new String("Ga4"));
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteSala);
-			assertEquals("testDeleteNonExistingSala", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testDeleteNonExistingSala");
-		}
-	}
-*/
 	// delete existing sala with associations
 	public void testDeleteExistingSalaWithAssociations() {
 

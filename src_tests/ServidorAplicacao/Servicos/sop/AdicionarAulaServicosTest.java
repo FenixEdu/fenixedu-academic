@@ -64,22 +64,15 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 		super.tearDown();
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "AdicionarAula";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices
-	 */
 	// TODO This class must extend class TestCaseCreateServices so this method will be gonne
 	protected boolean needsAuthorization() {
 		return true;
 	}
 
-	
 	// write new non-existing turnoAula
 	public void testCreateNonExistingTurnoAula() {
 
@@ -194,8 +187,9 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 	      	fail("testCreateNonExistingTurnoAula_HourLimitExceeded:" + ex);
 	      }
 	}
+
 //	write existing turnoAula
-	 public void testCreateExistingTurnoAula() {
+	public void testCreateExistingTurnoAula() {
 
 		 DiaSemana diaSemana = null;
 		 Calendar inicio = null;

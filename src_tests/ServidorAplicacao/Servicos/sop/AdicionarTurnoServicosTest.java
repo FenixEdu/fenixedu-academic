@@ -11,6 +11,8 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
+import java.util.HashMap;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoClass;
@@ -64,16 +66,10 @@ public class AdicionarTurnoServicosTest extends TestCaseCreateServices {
 		super.tearDown();
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "AdicionarTurno";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
 		this.ligarSuportePersistente(false);
@@ -82,9 +78,6 @@ public class AdicionarTurnoServicosTest extends TestCaseCreateServices {
 		return argsCriarTurmaTurno;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
 		this.ligarSuportePersistente(true);
@@ -92,39 +85,11 @@ public class AdicionarTurnoServicosTest extends TestCaseCreateServices {
 		
 		return argsCriarTurmaTurno;
 	}
-/*
-	// write existing turmaTurno
-	public void testCreateExistingTurmaTurno() {
 
-		this.ligarSuportePersistente(true);
-
-		Object argsCriarTurmaTurno[] = { this.infoClass, this.infoShift };
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurmaTurno);
-			fail("testCreateExistingTurmaTurno");
-		} catch (Exception ex) {
-			assertNull("testCreateExistingTurmaTurno", result);
-		}
+	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
+		return null;
 	}
 
-	// write new non-existing turmaTurno
-	public void testCreateNonExistingTurmaTurno() {
-
-		this.ligarSuportePersistente(false);
-
-		Object argsCriarTurmaTurno[] = { this.infoClass, this.infoShift };
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurmaTurno);
-			assertEquals("testCreateNonExistingTurmaTurno", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testCreateNonExistingTurmaTurno");
-		}
-	}
-*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

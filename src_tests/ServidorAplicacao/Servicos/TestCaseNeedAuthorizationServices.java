@@ -37,6 +37,13 @@ abstract public class TestCaseNeedAuthorizationServices extends TestCaseServicos
 		}
 	}
 	
+	/**
+	 * This method must return a String with the name of the service to be tested.
+	 */
 	protected abstract String getNameOfServiceToBeTested();
+
+	/**
+	 * This method must return 'true' if the service needs authorization to be runned and 'false' otherwise.
+	 */
 	protected abstract boolean needsAuthorization();
 }

@@ -12,6 +12,8 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
+import java.util.HashMap;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoRoom;
@@ -42,16 +44,10 @@ public class CriarSalaServicosTest extends TestCaseCreateServices {
 		super.tearDown();
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "CriarSala";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
 		Object argsCriarSala[] = new Object[1];
@@ -60,9 +56,6 @@ public class CriarSalaServicosTest extends TestCaseCreateServices {
 		return argsCriarSala;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
 		Object argsCriarSala[] = new Object[1];
@@ -70,33 +63,8 @@ public class CriarSalaServicosTest extends TestCaseCreateServices {
 
 		return argsCriarSala;
 	}
-/*
-	// write existing sala
-	public void testCreateExistingSala() {
-		Object argsCriarSala[] = new Object[1];
-		argsCriarSala[0] = new InfoRoom(new String("Ga1"), new String("Pavilhilhão Central"), new Integer(0), new TipoSala(TipoSala.ANFITEATRO), new Integer(100), new Integer(50));
 
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarSala);
-			fail("testCreateExistingSala");
-		} catch (Exception ex) {
-			assertNull("testCreateExistingSala", result);
-		}
+	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
+		return null;
 	}
-
-	// write new non-existing sala
-	public void testCreateNonExistingSala() {
-		Object argsCriarSala[] = new Object[1];
-		argsCriarSala[0] = new InfoRoom(new String("Ga4"), new String("Pavilhilhão Central"), new Integer(1), new TipoSala(TipoSala.ANFITEATRO), new Integer(100), new Integer(50));
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarSala);
-			assertEquals("testCreateNonExistingSala", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testCreateNonExistingSala");
-		}
-	}
-*/
 }
