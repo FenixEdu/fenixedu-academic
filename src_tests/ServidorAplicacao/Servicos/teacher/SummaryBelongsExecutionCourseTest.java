@@ -1,8 +1,6 @@
 /*
  * Created on 8/Out/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package ServidorAplicacao.Servicos.teacher;
 
@@ -13,8 +11,6 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * @author Leonor Almeida
  * @author Sérgio Montelobo 
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public abstract class SummaryBelongsExecutionCourseTest
 	extends ServiceNeedsAuthenticationTestCase {
