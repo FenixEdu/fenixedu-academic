@@ -59,7 +59,7 @@ public class UpdateStudentEnrolments
 	private static int enrolmentWritten = 0;
 	private static int curricularCoursesNotFound = 0;
 	private static int curricularCourseScopesNotFound = 0;
-	private static int executionCoursesNotFound = 0;
+//	private static int executionCoursesNotFound = 0;
 	private static int attendsNotFound = 0;
 	private static int attendsUpdated = 0;
 
@@ -243,12 +243,16 @@ public class UpdateStudentEnrolments
 						}
 					} else
 					{
-						System.out.println(
-							"No Curricular Courses Found in others degrees. Curricular Course ["
-								+ mwEnrolment.getCoursecode()
-								+ "] Enrolment Degree ["
-								+ mwEnrolment.getDegreecode()
-								+ "]");
+
+						ReportEnrolment.addCurricularCourseNotFound(mwEnrolment.getCoursecode(),
+							mwEnrolment.getDegreecode().toString(),
+							mwEnrolment.getNumber().toString());
+//						System.out.println(
+//							"No Curricular Courses Found in others degrees. Curricular Course ["
+//								+ mwEnrolment.getCoursecode()
+//								+ "] Enrolment Degree ["
+//								+ mwEnrolment.getDegreecode()
+//								+ "]");
 						curricularCoursesNotFound++;
 						enrolmentNotWritten++;
 
@@ -415,7 +419,7 @@ public class UpdateStudentEnrolments
 			//								System.out.println("\t"+aux);
 		} else
 		{
-			ReportEnrolment.addNotFoundCurricularCourse(
+			ReportEnrolment.addFoundCurricularCourseInOtherDegrees(
 				mwEnrolment.getCoursecode(),
 				String.valueOf(mwEnrolment.getDegreecode().intValue()),
 				new ArrayList());
@@ -482,16 +486,22 @@ public class UpdateStudentEnrolments
 					curricularCourseScope = (ICurricularCourseScope) curricularCourseScopes.get(0);
 				} else
 				{
-					System.out.println(
-						"Error Reading Curricular Course Scope !! No Scopes found for this Curricular Course and Year and then by Course and Semester.");
-					System.out.println("Numero do Aluno " + mwEnrolment.getNumber());
-					System.out.println("Codigo Curso " + mwEnrolment.getDegreecode());
-					System.out.println("Codigo Disciplina " + mwEnrolment.getCoursecode());
-					System.out.println("Codigo Ramo " + mwEnrolment.getBranchcode());
-					System.out.println("Ano Curricular " + mwEnrolment.getCurricularcourseyear());
-					System.out.println("Semestre Disciplina " + mwEnrolment.getCurricularcoursesemester());
-					System.out.println("Curricular Course ID " + curricularCourse.getIdInternal());
-					System.out.println("---------");
+					ReportEnrolment.addCurricularCourseScopeNotFound(mwEnrolment.getCoursecode(),
+						String.valueOf(mwEnrolment.getDegreecode().intValue()),
+						String.valueOf(mwEnrolment.getNumber().intValue()),
+						String.valueOf(mwEnrolment.getCurricularcourseyear().intValue()),
+						String.valueOf(mwEnrolment.getCurricularcoursesemester().intValue()),
+						String.valueOf(mwEnrolment.getBranchcode().intValue()));
+//					System.out.println(
+//						"Error Reading Curricular Course Scope !! No Scopes found for this Curricular Course and Year and then by Course and Semester.");
+//					System.out.println("Numero do Aluno " + mwEnrolment.getNumber());
+//					System.out.println("Codigo Curso " + mwEnrolment.getDegreecode());
+//					System.out.println("Codigo Disciplina " + mwEnrolment.getCoursecode());
+//					System.out.println("Codigo Ramo " + mwEnrolment.getBranchcode());
+//					System.out.println("Ano Curricular " + mwEnrolment.getCurricularcourseyear());
+//					System.out.println("Semestre Disciplina " + mwEnrolment.getCurricularcoursesemester());
+//					System.out.println("Curricular Course ID " + curricularCourse.getIdInternal());
+//					System.out.println("---------");
 
 					curricularCourseScopesNotFound++;
 					enrolmentNotWritten++;
