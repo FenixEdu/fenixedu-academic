@@ -86,6 +86,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 
 		newInfoCurricularCourse.setName(name);
 		newInfoCurricularCourse.setCode(code);
+		newInfoCurricularCourse.setIdInternal(oldCurricularCourseId);
 
 		if (typeString.compareTo("") != 0) {
 			CurricularCourseType type = new CurricularCourseType(new Integer(typeString));
@@ -102,8 +103,9 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 			newInfoCurricularCourse.setBasic(basic);
 		}
 
-		Object args[] = { oldCurricularCourseId, newInfoCurricularCourse };
+		Object args[] = { newInfoCurricularCourse };
 		GestorServicos manager = GestorServicos.manager();
+		
 		try {
 			manager.executar(userView, "EditCurricularCourse", args);
 		} catch (NonExistingServiceException ex) {
@@ -112,7 +114,6 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
-		
 		}
 
 		return mapping.findForward("readDegreeCP");

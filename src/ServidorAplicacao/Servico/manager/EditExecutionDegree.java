@@ -42,7 +42,7 @@ public class EditExecutionDegree implements IServico {
 		return "EditExecutionDegree";
 	}
 
-	public void run(InfoExecutionDegree infoExecutionDegree, Integer executionDegreeId) throws FenixServiceException {
+	public void run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException {
 
 		ICursoExecucaoPersistente persistentExecutionDegree = null;
 		String executionYearString = "";
@@ -51,7 +51,7 @@ public class EditExecutionDegree implements IServico {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				persistentExecutionDegree = persistentSuport.getICursoExecucaoPersistente();
 				CursoExecucao execDegree = new CursoExecucao();
-				execDegree.setIdInternal(executionDegreeId);
+				execDegree.setIdInternal(infoExecutionDegree.getIdInternal());
 				ICursoExecucao oldExecutionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(execDegree, false);
 		
 				if(oldExecutionDegree != null) {

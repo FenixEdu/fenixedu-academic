@@ -147,6 +147,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		InfoBranch infoBranch = new InfoBranch();
 		infoBranch.setIdInternal(branchId);
 		newInfoCurricularCourseScope.setInfoBranch(infoBranch);
+		newInfoCurricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
 
 		if (theoreticalHoursString.compareTo("") != 0) {
 			Double theoreticalHours = new Double(theoreticalHoursString);
@@ -190,7 +191,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			newInfoCurricularCourseScope.setCredits(credits);
 		}
 
-		Object args[] = { oldCurricularCourseScopeId, newInfoCurricularCourseScope };
+		Object args[] = { newInfoCurricularCourseScope };
 		GestorServicos manager = GestorServicos.manager();
 
 		try {
@@ -202,6 +203,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
+		
 		request.setAttribute("infoCurricularCourseScope", newInfoCurricularCourseScope);
 
 		return mapping.findForward("readCurricularCourse");

@@ -51,6 +51,7 @@ public class ReadExecutionDegree implements IServico {
 			CursoExecucao execDegree = new CursoExecucao();
 			execDegree.setIdInternal(idInternal);
 			executionDegree = (ICursoExecucao) sp.getICursoExecucaoPersistente().readByOId(execDegree, false);
+			
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
 	}

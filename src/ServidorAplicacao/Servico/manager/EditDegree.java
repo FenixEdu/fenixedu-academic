@@ -3,8 +3,6 @@
  */
 package ServidorAplicacao.Servico.manager;
 
-import java.util.List;
-
 import DataBeans.InfoDegree;
 import Dominio.ICurso;
 import ServidorAplicacao.IServico;
@@ -16,7 +14,6 @@ import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
-import Util.TipoCurso;
 
 /**
  * @author lmac1
@@ -49,39 +46,32 @@ public class EditDegree implements IServico {
 	 * Executes the service. Returns the current infodegree.
 	 */
 
-	public void run(Integer oldDegreeId, InfoDegree newInfoDegree) throws FenixServiceException {
+	public void run(InfoDegree newInfoDegree) throws FenixServiceException {
 
 		ISuportePersistente persistentSuport = null;
 		ICursoPersistente persistentDegree = null;
 		ICurso oldDegree = null;
-		String newCode = null;
-		String newName = null;
-		TipoCurso newType = null;
 
 		try {
+			
 			persistentSuport = SuportePersistenteOJB.getInstance();
 			persistentDegree = persistentSuport.getICursoPersistente();
-			oldDegree = persistentDegree.readByIdInternal(oldDegreeId);
+			oldDegree = persistentDegree.readByIdInternal(newInfoDegree.getIdInternal());
+			
+			if(oldDegree != null) {
+			
+				oldDegree.setNome(newInfoDegree.getNome());
+				oldDegree.setSigla(newInfoDegree.getSigla());
+				oldDegree.setTipoCurso(newInfoDegree.getTipoCurso());
 
-			List degrees = persistentDegree.readAll();
-			degrees.remove((ICurso) oldDegree);
-
-			newCode = newInfoDegree.getSigla();
-			newName = newInfoDegree.getNome();
-			newType = newInfoDegree.getTipoCurso();
-			if (oldDegree != null) {
-				oldDegree.setNome(newName);
-				oldDegree.setSigla(newCode);
-				oldDegree.setTipoCurso(newType);
-
-				try {
-					persistentDegree.lockWrite(oldDegree);
-				} catch (ExistingPersistentException ex) {
-					throw new ExistingServiceException("O curso com esses dados", ex);
-				}
-			}else
-			throw new NonExistingServiceException();
-
+				persistentDegree.lockWrite(oldDegree);
+				
+			}
+			else
+				throw new NonExistingServiceException();
+				
+		} catch (ExistingPersistentException ex) {
+			throw new ExistingServiceException("O curso com esses dados", ex);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

@@ -35,7 +35,7 @@ public class EditCurricularCourse implements IServico {
 	}
 	
 
-	public void run(Integer oldCurricularCourseId,InfoCurricularCourse  newInfoCurricularCourse) throws FenixServiceException {
+	public void run(InfoCurricularCourse  newInfoCurricularCourse) throws FenixServiceException {
 	
 		IPersistentCurricularCourse persistentCurricularCourse = null;
 		ICurricularCourse oldCurricularCourse = null;
@@ -43,7 +43,7 @@ public class EditCurricularCourse implements IServico {
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
-			oldCurricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(oldCurricularCourseId), false);
+			oldCurricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(newInfoCurricularCourse.getIdInternal()), false);
 			
 			String newName = newInfoCurricularCourse.getName();
 			String newCode = newInfoCurricularCourse.getCode();

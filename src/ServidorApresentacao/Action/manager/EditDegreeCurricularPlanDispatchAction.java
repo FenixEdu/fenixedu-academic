@@ -22,9 +22,11 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorPersistente.Conversores.Calendar2DateFieldConversion;
 import Util.DegreeCurricularPlanState;
@@ -50,7 +52,10 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 		GestorServicos manager = GestorServicos.manager();
 
 		try {
-			oldInfoDegreeCP = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlan", args);
+				oldInfoDegreeCP = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlan", args);
+			
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("O plano curricular", mapping.findForward("readDegree"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -172,13 +177,18 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 		newInfoDegreeCP.setState(state);
 		newInfoDegreeCP.setDegreeDuration(degreeDuration);
 		newInfoDegreeCP.setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
+		newInfoDegreeCP.setIdInternal(oldDegreeCPId);
 
-		Object args[] = { oldDegreeCPId, newInfoDegreeCP };
+		Object args[] = { newInfoDegreeCP };
 		GestorServicos manager = GestorServicos.manager();
+		
 		try {
-			manager.executar(userView, "EditDegreeCurricularPlan", args);
+				manager.executar(userView, "EditDegreeCurricularPlan", args);
+			
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("O plano curricular", mapping.findForward("readDegree"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

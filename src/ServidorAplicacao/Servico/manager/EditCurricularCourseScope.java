@@ -40,7 +40,7 @@ public class EditCurricularCourseScope implements IServico {
 		return "EditCurricularCourseScope";
 	}
 
-	public void run(Integer oldCurricularCourseScopeId, InfoCurricularCourseScope newInfoCurricularCourseScope) throws FenixServiceException {
+	public void run(InfoCurricularCourseScope newInfoCurricularCourseScope) throws FenixServiceException {
 
 		IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
 		ICurricularCourseScope oldCurricularCourseScope = null;
@@ -52,7 +52,7 @@ public class EditCurricularCourseScope implements IServico {
 			persistentCurricularCourseScope = ps.getIPersistentCurricularCourseScope();
 
 			ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
-			curricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
+			curricularCourseScope.setIdInternal(newInfoCurricularCourseScope.getIdInternal());
 
 			oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
 

@@ -34,6 +34,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
+		
 		DynaActionForm readDegreeForm = (DynaActionForm) form;
 
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -46,15 +47,14 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 		GestorServicos manager = GestorServicos.manager();
 
 		try {
-			oldInfoDegree = (InfoDegree) manager.executar(userView, "ReadDegree", args);
+				oldInfoDegree = (InfoDegree) manager.executar(userView, "ReadDegree", args);
 		
-		} catch (NonExistingServiceException ex) {
+		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("O curso", mapping.findForward("readDegrees"));
-				}  catch (FenixServiceException fenixServiceException) {
-	throw new FenixActionException(fenixServiceException.getMessage());
+		}  catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
 		}
-
-
+				
 		TipoCurso degreeType = (TipoCurso) oldInfoDegree.getTipoCurso();
 
 		readDegreeForm.set("name", (String) oldInfoDegree.getNome());
@@ -77,13 +77,15 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 
 		TipoCurso degreeType = new TipoCurso(degreeTypeInt);
 		InfoDegree newInfoDegree = new InfoDegree(code, name, degreeType);
+		newInfoDegree.setIdInternal(oldDegreeId);
 
-		Object args[] = { oldDegreeId, newInfoDegree };
+		Object args[] = { newInfoDegree };
 		GestorServicos manager = GestorServicos.manager();
 
 		try {
-			manager.executar(userView, "EditDegree", args);
-		} catch (NonExistingServiceException ex) {
+				manager.executar(userView, "EditDegree", args);
+			
+		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("O curso", mapping.findForward("readDegrees"));
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);

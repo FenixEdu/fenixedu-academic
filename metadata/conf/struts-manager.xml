@@ -18,7 +18,7 @@
 				<form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>  
-		
+		 
 		<form-bean name="degreeCurricularPlanForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                 dynamic="true">
@@ -197,7 +197,7 @@
        <forward name="editDegree" path="df.page.edit-degree"/>
        <forward name="readDegrees" path="/readDegrees.do"/>      	      
 	</action>
-       
+      
       
     
       

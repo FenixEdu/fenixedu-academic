@@ -143,8 +143,9 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
 		infoDegreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
 		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+		infoExecutionDegree.setIdInternal(executionDegreeId);
 
-		Object args[] = { infoExecutionDegree, executionDegreeId };
+		Object args[] = { infoExecutionDegree };
 
 		GestorServicos manager = GestorServicos.manager();
 
