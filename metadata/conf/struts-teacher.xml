@@ -361,7 +361,18 @@
 			<form-property name="objectCode" type="java.lang.Integer" />
 			<form-property name="method" type="java.lang.String" />
 		</form-bean>
+
+		<form-bean name="selectCandidaciesForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">  
+			<form-property name="selectedStudents" type="java.lang.Integer[]" />      
+			<form-property name="previousSelected" type="java.lang.Integer[]" />    
+			<form-property name="previousUnselected" type="java.lang.Integer[]" />    
+			<form-property name="method" type="java.lang.String" />    
+		</form-bean>
     </form-beans>
+
+
 
 
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -1238,6 +1249,16 @@
         <forward name="showEmailForm" path="showEmailForm"/>
         <forward name="mailSent" path="/studentsByCurricularCourse.do?method=readStudents"/>
 		 <forward name="mailCandidaciesSent" path="/showCandidacies.do"/>
+      </action>
+
+		<!--- by gedl, 25-9-2003 -->
+  	  <action type="ServidorApresentacao.Action.Seminaries.SelectCandidacies"
+              path="/selectCandidacies"
+			  name="selectCandidaciesForm"
+			  parameter="method"
+              scope="request">
+        <forward name="showSelectCandidacies" path="showSelectCandidacies"/>
+        <forward name="prepareForm" path="/selectCandidacies.do?method=prepare"/>
       </action>
 	</action-mappings>
 

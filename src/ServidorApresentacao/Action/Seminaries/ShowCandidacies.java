@@ -4,16 +4,23 @@
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorApresentacao.Action.Seminaries;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.SiteView;
@@ -30,6 +37,7 @@ import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.TipoCurso;
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *
@@ -51,6 +59,15 @@ public class ShowCandidacies extends FenixAction
 		Integer curricularCourseID;
 		Integer degreeID;
 		Integer seminaryID;
+        Boolean approved;
+        try
+        {
+            approved = new Boolean ((String)request.getParameter("approved")); 
+        }
+        catch (Exception ex)
+        {
+            //the boolean is null (high impedance :) )
+        }
 		try
 		{
 			themeID= new Integer((String) request.getParameter("themeID"));
@@ -216,17 +233,17 @@ public class ShowCandidacies extends FenixAction
 				infoCandidacyDetails.setSeminary(seminary);
 				infoCandidacyDetails.setStudent(student);
 				infoCandidacyDetails.setTheme(theme);
+				infoCandidacyDetails.setApproved(candidacy.getApproved());
 				if (studentCurricularPlan != null)
 				{
 					infoCandidacyDetails.setClassification(studentCurricularPlan.getClassification());
 					infoCandidacyDetails.setCompletedCourses(studentCurricularPlan.getCompletedCourses());
 				}
-                else
-                {
-                    System.out.println("Isto e null !!");
-                    infoCandidacyDetails.setClassification(null);
-                    infoCandidacyDetails.setCompletedCourses(null);                    
-                }
+				else
+				{
+					infoCandidacyDetails.setClassification(null);
+					infoCandidacyDetails.setCompletedCourses(null);
+				}
 				infoCandidacyDetails.setMotivation(candidacy.getMotivation());
 				infoCandidacyDetails.setCurricularCourse(curricularCourse);
 				candidaciesExtendedInfo.add(infoCandidacyDetails);
@@ -251,6 +268,7 @@ public class ShowCandidacies extends FenixAction
 		List equivalencies= null;
 		List themes= null;
 		List curricularCoursesWithEquivalency= new LinkedList();
+		InfoExecutionPeriod executionPeriod= null;
 		try
 		{
 			Object[] argsReadSeminaries= {
@@ -265,6 +283,8 @@ public class ShowCandidacies extends FenixAction
 			};
 			Object[] argsReadEquivalencies= {
 			};
+			Object[] argsReadCurrentExecutionPeriod= {
+			};
 			GestorServicos gestor= GestorServicos.manager();
 			seminaries= (List) gestor.executar(userView, "Seminaries.GetAllSeminaries", argsReadSeminaries);
 			cases= (List) gestor.executar(userView, "Seminaries.GetAllCasesStudy", argsReadCasesStudy);
@@ -273,6 +293,11 @@ public class ShowCandidacies extends FenixAction
 			themes= (List) gestor.executar(userView, "Seminaries.GetAllThemes", argsReadThemes);
 			equivalencies=
 				(List) gestor.executar(userView, "Seminaries.GetAllEquivalencies", argsReadEquivalencies);
+			executionPeriod=
+				(InfoExecutionPeriod) gestor.executar(
+					userView,
+					"ReadCurrentExecutionPeriod",
+					argsReadCurrentExecutionPeriod);
 			//
 			//
 			for (Iterator iterator= equivalencies.iterator(); iterator.hasNext();)
@@ -289,11 +314,30 @@ public class ShowCandidacies extends FenixAction
 		}
 		catch (Exception e)
 		{
-			throw new FenixActionException();
+			e.printStackTrace();
+			throw new FenixActionException(e);
 		}
+		//this is very ugly, but the boss asked for it :)
+		//we will display only the Master Curricular Plans and the actual (current execution period) curricular plans for other degree types
+		List avaliableCurricularPlans= new LinkedList();
+		for (Iterator iter= degrees.iterator(); iter.hasNext();)
+		{
+			InfoDegreeCurricularPlan infoDegreeCurricularPlan= (InfoDegreeCurricularPlan) iter.next();
+			if (infoDegreeCurricularPlan.getInfoDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ))
+				avaliableCurricularPlans.add(infoDegreeCurricularPlan);
+			else
+				if (infoDegreeCurricularPlan.getName().endsWith("2003/2004"))
+				{
+                    String newName = new String();
+                    newName = infoDegreeCurricularPlan.getName().replaceAll("2003/2004","");
+                    infoDegreeCurricularPlan.setName(newName);
+                    avaliableCurricularPlans.add(infoDegreeCurricularPlan);
+				}
+		}
+        Collections.sort(avaliableCurricularPlans, new BeanComparator("name"));
 		request.setAttribute("seminaries", seminaries);
 		request.setAttribute("cases", cases);
-		request.setAttribute("degrees", degrees);
+		request.setAttribute("degrees", avaliableCurricularPlans);
 		request.setAttribute("modalities", modalities);
 		request.setAttribute("courses", curricularCoursesWithEquivalency);
 		request.setAttribute("themes", themes);

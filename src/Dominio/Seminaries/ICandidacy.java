@@ -60,6 +60,9 @@ public interface ICandidacy extends IDomainObject
     
     public abstract String getMotivation();
     public abstract void setMotivation(String motivation); 
+    
+    public abstract Boolean getApproved();
+    public abstract void setApproved(Boolean approved);    
 
     
 

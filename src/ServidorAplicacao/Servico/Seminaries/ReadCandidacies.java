@@ -48,7 +48,7 @@ public class ReadCandidacies implements IServico
 	public List run(
 		Integer modalityID,
 		Integer seminaryID,
-        Integer themeID,
+		Integer themeID,
 		Integer case1Id,
 		Integer case2Id,
 		Integer case3Id,
@@ -67,7 +67,7 @@ public class ReadCandidacies implements IServico
 				persistentCandidacy.readByUserInput(
 					modalityID,
 					seminaryID,
-                    themeID,
+					themeID,
 					case1Id,
 					case2Id,
 					case3Id,

@@ -270,6 +270,12 @@
         jdbc-type="VARCHAR"
     />
 
+	<field-descriptor id="7"
+        name="approved"
+        column="APPROVED"
+        jdbc-type="BIT"
+    />
+
 	<!-- Choosen case studies -->
       <collection-descriptor
          name="caseStudyChoices"

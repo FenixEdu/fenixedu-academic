@@ -40,4 +40,7 @@
 	    <put name="footer" value="/sop/commonFooterSop.jsp" />
 		<put name="body" value="/teacher/sendEmailForm.jsp"/>
 	</definition>
+	<definition name="showSelectCandidacies" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/showSelectCandidacies.jsp"/>
+	</definition>
 </tiles-definitions>

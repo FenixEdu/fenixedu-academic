@@ -27,6 +27,7 @@ public class Candidacy extends DomainObject implements ICandidacy {
     private Integer seminaryIdInternal;
     private Integer studentIdInternal;
     private Integer curricularCourseIdInternal;
+    private Boolean approved;
     
    
     public Candidacy()
@@ -174,6 +175,22 @@ public class Candidacy extends DomainObject implements ICandidacy {
 	public void setMotivation(String string)
 	{
 		motivation= string;
+	}
+
+	/**
+	 * @return
+	 */
+	public Boolean getApproved()
+	{
+		return approved;
+	}
+
+	/**
+	 * @param boolean1
+	 */
+	public void setApproved(Boolean boolean1)
+	{
+		approved= boolean1;
 	}
 
 }

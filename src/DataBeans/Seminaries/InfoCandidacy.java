@@ -26,6 +26,7 @@ public class InfoCandidacy
     private Integer seminaryIdInternal;
     private Integer studentIdInternal;
     private Integer curricularCourseIdInternal;
+    private Boolean approved;
 	/**
 	 * @return
 	 */
@@ -183,6 +184,22 @@ public class InfoCandidacy
 	public void setSeminaryName(String string)
 	{
 		seminaryName= string;
+	}
+
+	/**
+	 * @return
+	 */
+	public Boolean getApproved()
+	{
+		return approved;
+	}
+
+	/**
+	 * @param boolean1
+	 */
+	public void setApproved(Boolean boolean1)
+	{
+		approved= boolean1;
 	}
 
 }

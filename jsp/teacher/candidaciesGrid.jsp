@@ -173,6 +173,19 @@
 										</html:select>
 									</td>
 								</tr>
+								<%--
+								<tr>
+									<td>
+									</td>
+									<td>
+										<html:select property="approved">
+											<html:option value="-1" key="label.approved.all">
+											<html:option value="true" key="label.approved.yes">
+											<html:option value="false" key="label.approved.no">
+										</html:select>
+									</td>
+								</tr>
+								--%>
 								<tr>
 									<td>
 										<html:submit style="width:50%" styleClass="button" value="OK" property="submition"/>
@@ -217,6 +230,9 @@
 									</td>
 									<td class="listClasses-header">
 										Cadeiras Feitas
+									</td>
+									<td class="listClasses-header">
+										Aprovado
 									</td>
 									<td class="listClasses-header">
 										E-Mail
@@ -284,6 +300,14 @@
 									</td>
 									<td class="listClasses">
 										<bean:write name="candidacy" property="completedCourses"/>
+									</td>
+									<td class="listClasses">
+										<logic:equal name="candidacy" property="approved" value="true">
+											Sim
+										</logic:equal>
+										<logic:notEqual name="candidacy" property="approved" value="true">
+											Não
+										</logic:notEqual>
 									</td>
 									<td class="listClasses">
 										<a href=mailto:<%=candidacy.getStudent().getInfoPerson().getEmail()%>>

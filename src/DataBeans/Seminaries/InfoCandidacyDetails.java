@@ -29,6 +29,7 @@ public class InfoCandidacyDetails
     private Integer idInternal;
     private Double classification;
     private Integer completedCourses;
+    private Boolean approved;
 
 	/**
 	 * @return
@@ -188,6 +189,22 @@ public class InfoCandidacyDetails
 	public void setCompletedCourses(Integer integer)
 	{
 		completedCourses= integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public Boolean getApproved()
+	{
+		return approved;
+	}
+
+	/**
+	 * @param boolean1
+	 */
+	public void setApproved(Boolean boolean1)
+	{
+		approved= boolean1;
 	}
 
 }

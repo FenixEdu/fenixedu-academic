@@ -2665,6 +2665,7 @@ public abstract class Cloner {
 			infoCandidacy.setSeminaryIdInternal(
 				candidacy.getSeminaryIdInternal());
 			infoCandidacy.setIdInternal(candidacy.getIdInternal());
+            infoCandidacy.setApproved(candidacy.getApproved());
 		}
 		return infoCandidacy;
 	}
