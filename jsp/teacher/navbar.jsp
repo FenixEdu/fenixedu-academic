@@ -25,10 +25,7 @@
 </html:link>
 	<html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship">
 	<li><bean:message key="link.teachers"/></li>
-</html:link>
-	<html:link forward="logoff">
-	<li><bean:message key="link.logout"/></li>
-</html:link>
+
 
 <logic:present name="<%= SessionConstants.SECTIONS %>" >
 	<logic:present name="<%= SessionConstants.INFO_SECTION %>" >
@@ -38,3 +35,7 @@
 	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" renderer="teacher" />
 	</logic:notPresent>		
 </logic:present>	
+</html:link>
+	<html:link forward="logoff">
+	<li><bean:message key="link.logout"/></li>
+</html:link>

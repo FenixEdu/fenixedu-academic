@@ -5,7 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 
-	<html:link page="/logoff.do">
+	</html:link>
+	<html:link forward="logoff">
 	<li><bean:message key="link.logout"/></li>
 </html:link>
 
