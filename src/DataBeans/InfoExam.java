@@ -15,7 +15,7 @@ import java.util.List;
 
 import Util.Season;
 
-public class InfoExam {
+public class InfoExam extends InfoObject{
 	protected Calendar day;
 	protected Calendar beginning;
 	protected Calendar end;
@@ -26,7 +26,7 @@ public class InfoExam {
 	protected Calendar enrollmentEndTime;
 	protected List associatedRooms;
 
-	private Integer idInternal;
+	
 
 	/**
 	 * The following variable serves the purpose of indicating the
@@ -155,20 +155,6 @@ public class InfoExam {
 		associatedRooms = rooms;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal() {
-		return idInternal;
-	}
-
-	/**
-	 * @param internal
-	 */
-	public void setIdInternal(Integer internal) {
-		idInternal = internal;
-	}
-
 	public String getDate() {
 		if (getDay() == null) {
 			return "0/0/0";
@@ -198,14 +184,6 @@ public class InfoExam {
 	 */
 	private String format(String string) {
 		if (string.length() == 1) {
-			string = "0" + string;
-		}
-		return string;
-	}
-
-	private String format(int i) {
-		String string = "" + i;
-		if (i < 10 && 0 <= i) {
 			string = "0" + string;
 		}
 		return string;
