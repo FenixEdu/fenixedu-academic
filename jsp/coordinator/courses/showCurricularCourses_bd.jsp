@@ -30,9 +30,9 @@
 				<td class="listClasses-header">
 					<bean:message key="label.courseInformation"/>	
 				</td>
-				<%--<td class="listClasses-header">
-					<bean:message key="label.teachingReport"/>	
-				</td>--%>
+				<td class="listClasses-header">
+					Alunos	
+				</td>
 			</tr>
 
 			<logic:iterate id="executionCourse" name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>">
@@ -81,11 +81,11 @@
 							<bean:message key ="label.courseInformation.view" />
 						</html:link>
 					</td>
-					<%--<td class="listClasses">
-						<html:link page="/viewTeachingReport.do?method=read" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
-							<bean:message key ="label.courseInformation.view" />
+					<td class="listClasses">
+						<html:link page="/studentsByCurricularCourse.do?method=readStudents" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+							Ver Alunos
 						</html:link>
-					</td>--%>
+					</td>
 				</tr>
 			</logic:iterate>
 		</table>

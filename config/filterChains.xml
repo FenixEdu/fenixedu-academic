@@ -106,6 +106,13 @@
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization</name>
+        <expression>ExecutionCourseLecturingTeacherAuthorization || ExecutionCourseCoordinatorAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
         <name>StudentListByDegreeAuthorization</name>
         <expression>StudentListByDegreeAuthorization</expression>
         <description/>

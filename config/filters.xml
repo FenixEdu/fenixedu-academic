@@ -98,6 +98,13 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
+        <name>ExecutionCourseCoordinatorAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.ExecutionCourseCoordinatorAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>
+    <filter>
         <name>StudentListByDegreeAuthorization</name>
         <implementationClass> 
             ServidorAplicacao.Filtro.StudentListByDegreeAuthorizationFilter</implementationClass>

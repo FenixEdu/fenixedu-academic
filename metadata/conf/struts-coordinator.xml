@@ -9,6 +9,13 @@
     
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
+    	
+    	<form-bean name="studentsByCurricularCourseForm" 
+            type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+            <form-property name="shiftCode" type="java.lang.Integer" />
+            <form-property name="objectCode" type="java.lang.Integer" />
+            <form-property name="method" type="java.lang.String" />
+        </form-bean>
 
 		<form-bean name="removeCoordinators"
 			type="org.apache.struts.validator.DynaValidatorForm" 
@@ -566,6 +573,12 @@
 				/>
 			<forward name="successfull-read" path="view-teaching-report"/>
 	</action>
+	
+	<action path="/studentsByCurricularCourse" input="/teacherAdministrationViewerError.jsp" 
+            name="studentsByCurricularCourseForm" scope="request" parameter="method" 
+            type="ServidorApresentacao.Action.teacher.StudentsByCurricularCourseListAction">
+            <forward name="success" path="/viewStudents.jsp" />
+        </action>
 		
     </action-mappings>
     

@@ -3715,7 +3715,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+            <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -4729,7 +4729,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+            <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -4739,7 +4739,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+            <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -4749,7 +4749,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+            <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -4759,7 +4759,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+            <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -4769,7 +4769,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+            <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
         </filterChains>
     </service>
     <service>
