@@ -52,11 +52,8 @@ public class Announcement implements IAnnouncement {
 	public boolean equals(Object arg0) {
 		boolean result = false;
 		if (arg0 instanceof IAnnouncement) {
-			result = (getTitle().equals(((IAnnouncement) arg0).getTitle()))&&
-				(getCreationDate().equals(((IAnnouncement) arg0).getCreationDate()))&&
-				(getLastModifiedDate().equals(((IAnnouncement) arg0).getLastModifiedDate()))&&
-				(getSite().equals(((IAnnouncement) arg0).getSite()))&&				
-				(getInformation().equals(((IAnnouncement) arg0).getInformation()));
+			result = (getCreationDate().equals(((IAnnouncement) arg0).getCreationDate()))&&
+					 (getSite().equals(((IAnnouncement) arg0).getSite()));
 		} 
 		return result;		
 	}
@@ -70,7 +67,7 @@ public class Announcement implements IAnnouncement {
 		result += ", creationDate=" + getCreationDate();
 		result += ", lastModifiedDate=" + getLastModifiedDate();
 		result += ", information=" + getInformation();
-//		result += ", site=" + getSite();
+		result += ", site=" + getSite();
 		result += "]";
 		return result;
 	}
