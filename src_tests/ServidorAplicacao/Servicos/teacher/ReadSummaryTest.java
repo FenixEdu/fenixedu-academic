@@ -84,7 +84,7 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTest {
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			ISummary newSummary = (ISummary) new Summary(new Integer(261));
+			ISummary newSummary = new Summary(new Integer(261));
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 			IPersistentSummary persistentSummary = sp.getIPersistentSummary();

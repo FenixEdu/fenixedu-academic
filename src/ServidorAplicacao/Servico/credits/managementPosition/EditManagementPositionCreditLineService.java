@@ -37,7 +37,7 @@ public class EditManagementPositionCreditLineService extends EditDomainObjectSer
      */
     protected IDomainObject clone2DomainObject(InfoObject infoObject)
     {
-        return (IDomainObject) Cloner.copyInfoManagementPositionCreditLine2IManagementPositionCreditLine((InfoManagementPositionCreditLine) infoObject);
+        return Cloner.copyInfoManagementPositionCreditLine2IManagementPositionCreditLine((InfoManagementPositionCreditLine) infoObject);
     }
 
     /*

@@ -4,7 +4,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.PersistenceBroker;
@@ -173,7 +172,7 @@ public class InsertDistributedTestTest extends
             broker.close();
 
             assertEquals(studentTestQuestionList.size(), 2);
-            Iterator it = studentTestQuestionList.iterator();
+            //Iterator it = studentTestQuestionList.iterator();
 
             //			if (distributedTest.getTestType().getType().intValue() ==
             // (TestType.EVALUATION))

@@ -98,7 +98,7 @@ public class InsertDistributedTest implements IService {
 			distributedTest.setImsFeedback(imsFeedback);
 			distributedTest.setNumberOfQuestions(test.getNumberOfQuestions());
 
-			ITestScope testScope = (ITestScope) persistentSuport
+			ITestScope testScope = persistentSuport
 					.getIPersistentTestScope().readByDomainObject(
 							executionCourse);
 

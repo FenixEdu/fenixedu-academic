@@ -20,13 +20,13 @@ public class WrittenEvaluationCurricularCourseScopeOJB extends ObjectFenixOJB im
     {
         Criteria crit = new Criteria();
         crit.addEqualTo("curricularCourseScope.idInternal", curricularCourseScope.getIdInternal());
-        return (List) queryList(WrittenEvaluationCurricularCourseScope.class, crit);
+        return queryList(WrittenEvaluationCurricularCourseScope.class, crit);
     }
     
     public List readByCurricularCourseScopeList(List scopes) throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
         crit.addIn("curricularCourseScope.idInternal", scopes);
-        return (List) queryList(WrittenEvaluationCurricularCourseScope.class, crit);
+        return queryList(WrittenEvaluationCurricularCourseScope.class, crit);
     }
 }

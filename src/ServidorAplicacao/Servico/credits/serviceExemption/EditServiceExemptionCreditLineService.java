@@ -37,7 +37,7 @@ public class EditServiceExemptionCreditLineService extends EditDomainObjectServi
      */
     protected IDomainObject clone2DomainObject(InfoObject infoObject)
     {
-        return (IDomainObject) Cloner.copyInfoServiceExemptionCreditLine2IServiceExemptionCreditLine(
+        return Cloner.copyInfoServiceExemptionCreditLine2IServiceExemptionCreditLine(
             (InfoServiceExemptionCreditLine) infoObject);
     }
 

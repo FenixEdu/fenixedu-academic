@@ -39,7 +39,7 @@ public class DeleteGroupProperties implements IService
 		try
 		{
 
-			ISuportePersistente sp = (ISuportePersistente) SuportePersistenteOJB.getInstance();
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
 
 			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(GroupProperties.class,

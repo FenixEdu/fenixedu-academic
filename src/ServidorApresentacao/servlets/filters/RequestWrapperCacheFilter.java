@@ -57,7 +57,7 @@ public class RequestWrapperCacheFilter implements Filter {
         // check if was a resource that shouldn't be cached.
         String uri = request.getRequestURI();
         if ((uri == null) || (uri.indexOf("/publico/") == -1)) {
-            chain.doFilter(new FenixHttpServletRequestWrapper((HttpServletRequest) request), response);
+            chain.doFilter(new FenixHttpServletRequestWrapper(request), response);
             return;
         }
 

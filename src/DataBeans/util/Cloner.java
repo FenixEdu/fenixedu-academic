@@ -5201,7 +5201,7 @@ public abstract class Cloner
 
     public static IDelegate copyInfoDelegate2IDelegate(InfoDelegate infoDelegate)
     {
-        IDelegate delegate = (IDelegate) new Delegate();
+        IDelegate delegate = new Delegate();
         copyObjectProperties(delegate, infoDelegate);
         ICurso degree = Cloner.copyInfoDegree2IDegree(infoDelegate.getInfoDegree());
         IStudent student = Cloner.copyInfoStudent2IStudent(infoDelegate.getInfoStudent());

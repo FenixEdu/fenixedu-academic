@@ -162,7 +162,7 @@ public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase
             IQuestion question = (IQuestion) it.next();
             xmlNames.add(new LabelValueBean(question.getXmlFileName(), question.getIdInternal()
                     .toString()));
-            if ((question.getIdInternal().equals((Integer)args[2])) || ((Integer)args[2]).equals(new Integer(-2)))
+            if ((question.getIdInternal().equals(args[2])) || ((Integer)args[2]).equals(new Integer(-2)))
             {
                 InfoQuestion infoQuestion = Cloner.copyIQuestion2InfoQuestion(question);
                 ParseQuestion parse = new ParseQuestion();

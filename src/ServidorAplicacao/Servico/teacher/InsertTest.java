@@ -42,7 +42,7 @@ public class InsertTest implements IService {
 			if (executionCourse == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			ITestScope testScope = (ITestScope) persistentSuport
+			ITestScope testScope = persistentSuport
 					.getIPersistentTestScope().readByDomainObject(
 							executionCourse);
 			if (testScope == null) {

@@ -193,7 +193,7 @@ public class StudentTestsAction extends FenixDispatchAction
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        Response[] userResponse = (Response[]) ((TestForm) form).getQuestion();
+        Response[] userResponse = ((TestForm) form).getQuestion();
         String testCode = request.getParameter("testCode");
         String objectCode = request.getParameter("objectCode");
         String path = getServlet().getServletContext().getRealPath("/");

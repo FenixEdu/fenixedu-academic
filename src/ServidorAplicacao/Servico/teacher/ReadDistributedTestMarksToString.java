@@ -150,7 +150,7 @@ public class ReadDistributedTestMarksToString implements IService {
 			List distributedTestIdsList = new ArrayList();
 			CollectionUtils
 					.addAll(distributedTestIdsList, distributedTestCodes);
-			List studentsFromTestsList = (List) persistentStudentTestQuestion
+			List studentsFromTestsList = persistentStudentTestQuestion
 					.readStudentsByDistributedTests(distributedTestIdsList);
 			List studentList = concatStudentsLists(studentsFromAttendsList,
 					studentsFromTestsList);

@@ -80,7 +80,6 @@ public class ReadStudentTestTest extends TestCaseReadServices {
         List infoStudentTestQuestionList = new ArrayList();
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            List distributedTestList = new ArrayList();
             sp.iniciarTransaccao();
             IStudent student = sp.getIPersistentStudent().readByUsername(
                     (String) args[0]);

@@ -33,7 +33,7 @@ public class EditOtherTypeCreditLineService extends EditDomainObjectService
      */
     protected IDomainObject clone2DomainObject(InfoObject infoObject)
     {
-        return (IDomainObject) Cloner.copyInfoOtherTypeCreditLine2IOtherCreditLine(
+        return Cloner.copyInfoOtherTypeCreditLine2IOtherCreditLine(
             (InfoOtherTypeCreditLine) infoObject);
     }
 

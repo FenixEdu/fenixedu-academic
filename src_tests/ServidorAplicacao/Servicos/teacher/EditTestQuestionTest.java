@@ -94,7 +94,7 @@ public class EditTestQuestionTest extends ServiceNeedsAuthenticationTestCase {
             Iterator it = testQuestionList.iterator();
             while (it.hasNext()) {
                 ITestQuestion testQuestion = (ITestQuestion) it.next();
-                if (testQuestion.getIdInternal().equals((Integer) args[2])) {
+                if (testQuestion.getIdInternal().equals(args[2])) {
                     int order = ((Integer) args[3]).intValue();
                     if (order != -2 && order != -1)
                             assertEquals(testQuestion.getTestQuestionOrder(),

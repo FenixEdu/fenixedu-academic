@@ -149,8 +149,7 @@ public class ReadGrantSubsidyTest extends ServiceNeedsAuthenticationTestCase
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            InfoGrantSubsidy result = (InfoGrantSubsidy) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             fail("Reading a GrantSubsidy Unsuccessfull: grant Subsidy should not exist!");
 

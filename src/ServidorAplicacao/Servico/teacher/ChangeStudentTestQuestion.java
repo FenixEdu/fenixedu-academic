@@ -361,7 +361,7 @@ public class ChangeStudentTestQuestion implements IService {
 			IDistributedTest dt, IStudent s, double mark2Remove)
 			throws ExcepcaoPersistencia {
 		double totalMark = 0;
-		List studentTestQuestionList = (List) sp
+		List studentTestQuestionList = sp
 				.getIPersistentStudentTestQuestion()
 				.readByStudentAndDistributedTest(s, dt);
 
