@@ -234,16 +234,6 @@
 			<form-property name="studentGuideList" type="java.lang.String"/>
       </form-bean>
 
-	  <!-- Bean to Choose Curricular Course and Master Degree  -->
-      <form-bean name="marksManagementForm" 
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-                 dynamic="true">
-
-            <form-property name="page" type="java.lang.Integer" />
-            <form-property name="degree" type="java.lang.String" />
-            <form-property name="curricularCourseCode" type="java.lang.Integer" />
-      </form-bean>
-
 	  <!-- Bean for The Choosing of a Student -->
       <form-bean name="studentNumberForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"

@@ -50,7 +50,7 @@
 	<html:text property="teacherNumber" size="4"/>
 	<br /><br />
 	
-	<html:hidden property="page" value="1"/>	
+	<html:hidden property="page" value="0"/>	
 	<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
 	<html:hidden property="degree" value="<%= pageContext.findAttribute("degree").toString() %>" />
 	<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />
