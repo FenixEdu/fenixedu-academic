@@ -62,7 +62,7 @@ public class InsertItemActionTest extends TestCasePresentationTeacherPortal {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
 	 */
 	protected String getSuccessfulForward() {
-		return "AccessSectionManagement";
+		return "viewSection";
 	}
 
 
