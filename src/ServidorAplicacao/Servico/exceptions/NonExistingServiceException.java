@@ -12,6 +12,10 @@ public class NonExistingServiceException extends FenixServiceException {
     public NonExistingServiceException() {
     }
     
+	public NonExistingServiceException(String message){
+		super(message);
+	}
+    
 	public NonExistingServiceException(Throwable cause) {
 		super(cause);
 	}

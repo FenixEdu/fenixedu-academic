@@ -16,6 +16,10 @@ public class ExistingServiceException extends FenixServiceException {
     public ExistingServiceException() {
     }
     
+    public ExistingServiceException(String message){
+    	super(message);
+    }
+    
 	public ExistingServiceException(Throwable cause) {
 		super(cause);
 	}
