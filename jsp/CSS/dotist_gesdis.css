@@ -45,9 +45,9 @@ h4 {
 	background-color: transparent;	
 	}
 	
-.px10 {
+.px9 {
 	font: 9px Verdana, Arial, Helvetica, sans-serif;
-	color: #333;
+	color: #999;
 	background-color: transparent;
 	}
 
@@ -289,11 +289,6 @@ a:hover {
 
 .tall-td {
 	height: 50px;
-	}
-
-.bckgr-blue {
-	background-color: #EBEFFA;
-	padding: 10px;
 	}
 	
 /* logout orange span */

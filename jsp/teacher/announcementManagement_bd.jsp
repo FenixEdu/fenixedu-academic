@@ -12,7 +12,7 @@
 </tr>
 </table>
 <br />
-<table width="50%">
+<table width="100%">
     <html:form action="/announcementManagementAction">
             <tr>
                 <td>
@@ -27,33 +27,27 @@
             <logic:iterate id="announcement" name="<%= SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST %>" scope="session" >
                 <tr>
                     <td>
-                        <h4><bean:write name="announcement" property="title"/></h4>
+                        <strong><bean:write name="announcement" property="title"/></strong>
                     </td>
                 </tr>
                	<tr>
                     <td>
-						<span class="px10"><bean:write name="announcement" property="creationDate"/></span>
+						<span class="px9"><bean:write name="announcement" property="creationDate"/> | <bean:message key="label.lastModificationDate" /><bean:write name="announcement" property="lastModifiedDate"/></span>
                     </td>
                 </tr>
                 <tr>
-                    <td class="bckgr-blue">
+                    <td>
 						<bean:write name="announcement" property="information" filter="false"/>
                         <br />
                         <br />
                     </td>
                 </tr>
                 <tr>
-                	<td>
-                		<span class="px10"><bean:message key="label.lastModificationDate" /><bean:write name="announcement" property="lastModifiedDate"/></span>
-                	</td>
-            	</tr>
-                <tr>
                     <td>
 						<div class="gen-button"><html:link page="/announcementManagementAction.do?method=prepareEditAnnouncement" indexId="index" indexed="true"><bean:message key="button.edit" />
 						</html:link></div>
 						<div class="gen-button"><html:link page="/announcementManagementAction.do?method=deleteAnnouncement" indexId="index" indexed="true"><bean:message key="button.delete" />
 						</html:link></div>
-    	                <br />
     	                <br />
     	                <br />
                     </td>
