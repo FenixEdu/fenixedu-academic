@@ -36,7 +36,13 @@
 			element-class-ref="Dominio.DegreeInfo"
 			proxy="true">
 		<inverse-foreignkey field-ref="degreeKey"/>
-	</collection-descriptor>     
+	</collection-descriptor> 
+	<collection-descriptor
+			name="campus"
+			element-class-ref="Dominio.Campus"
+			proxy="true">
+		<inverse-foreignkey field-ref="degreeKey"/>
+	</collection-descriptor> 	    
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->

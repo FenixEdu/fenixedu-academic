@@ -8,8 +8,8 @@ import ServidorAplicacao.Servicos.ServiceTestCase;
 /**
  * @author Tânia Pousão Create on 11/Nov/2003
  */
-public class ReadDegreeInfoTest extends ServiceTestCase {
-	public ReadDegreeInfoTest(String name) {
+public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCase {
+	public ReadDegreeInfoByDegreeAndExecutionPeriodTest(String name) {
 		super(name);
 	}
 
@@ -22,7 +22,7 @@ public class ReadDegreeInfoTest extends ServiceTestCase {
 	}
 
 	protected String getNameOfServiceToBeTested() {
-		return "ReadDegreeInfo";
+		return "ReadDegreeInfoByDegreeAndExecutionPeriod";
 	}
 
 	public void testSuccessfull() {
@@ -132,11 +132,12 @@ public class ReadDegreeInfoTest extends ServiceTestCase {
 			try {
 				infoDegreeInfo = (InfoDegreeInfo) gestor.executar(null, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e) {
-				e.printStackTrace();
-				fail("Reading a degree information" + e);
+				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 21);
+				if (!msg.equals(new String("impossibleDegreeSite"))) {
+					e.printStackTrace();
+					fail("Reading a degree information");
+				}
 			}
-
-			assertNull(infoDegreeInfo);
 
 			System.out.println(
 				"ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithDegreeInfoLastYear");
@@ -300,12 +301,12 @@ public class ReadDegreeInfoTest extends ServiceTestCase {
 			try {
 				infoDegreeInfo = (InfoDegreeInfo) gestor.executar(null, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e) {
-				e.printStackTrace();
-				fail("Reading a degree information" + e);
+				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 21);
+				if (!msg.equals(new String("impossibleDegreeSite"))) {
+					e.printStackTrace();
+					fail("Reading a degree information");
+				}
 			}
-
-			assertNull(infoDegreeInfo);
-
 			System.out.println(
 				"ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoDegreeInfo");
 

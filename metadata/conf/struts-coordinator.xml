@@ -75,6 +75,7 @@
       <!-- Dynamic-FormBean for searchExecutionCourse -->
       <form-bean name="degreeInfoForm"
 								 type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">		
+				<form-property name="description" type="java.lang.String" />				 
 				<form-property name="objectives" type="java.lang.String" />
 				<form-property name="history" type="java.lang.String" />
 				<form-property name="professionalExits" type="java.lang.String" />
@@ -89,6 +90,7 @@
 				<form-property name="markMax" type="java.lang.Double" />
 				<form-property name="markAverage" type="java.lang.Double" />
 				<form-property name="lastModificationDate" type="java.lang.String" />
+				<form-property name="descriptionEn" type="java.lang.String" />				
 				<form-property name="objectivesEn" type="java.lang.String" />
 				<form-property name="historyEn" type="java.lang.String" />
 				<form-property name="professionalExitsEn" type="java.lang.String" />

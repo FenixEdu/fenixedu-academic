@@ -23,25 +23,25 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Tânia Pousão Create on 11/Nov/2003
  */
-public class ReadDegreeInfo implements IServico {
-	private static ReadDegreeInfo service = new ReadDegreeInfo();
+public class ReadDegreeInfoByDegreeAndExecutionPeriod implements IServico {
+	private static ReadDegreeInfoByDegreeAndExecutionPeriod service = new ReadDegreeInfoByDegreeAndExecutionPeriod();
 
-	public ReadDegreeInfo() {
+	public ReadDegreeInfoByDegreeAndExecutionPeriod() {
 	}
 
 	public String getNome() {
-		return "ReadDegreeInfo";
+		return "ReadDegreeInfoByDegreeAndExecutionPeriod";
 	}
 
-	public static ReadDegreeInfo getService() {
+	public static ReadDegreeInfoByDegreeAndExecutionPeriod getService() {
 		return service;
 	}
 
-	public InfoDegreeInfo run(Integer executionPeriodOId, Integer degreeId) throws FenixServiceException {
+	public InfoDegreeInfo run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException {
 		InfoDegreeInfo infoDegreeInfo = null;
 
 		try {
-			if (executionPeriodOId == null) {
+			if (executionPeriodId == null) {
 				throw new FenixServiceException("error.impossibleDegreeSite");
 			}
 
@@ -54,7 +54,7 @@ public class ReadDegreeInfo implements IServico {
 
 			//Execution Period
 			IExecutionPeriod executionPeriod = new ExecutionPeriod();
-			executionPeriod.setIdInternal(executionPeriodOId);
+			executionPeriod.setIdInternal(executionPeriodId);
 
 			executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriod, false);
 			if (executionPeriod == null) {
@@ -65,7 +65,8 @@ public class ReadDegreeInfo implements IServico {
 			if (executionYear == null) {
 				throw new FenixServiceException("error.impossibleDegreeSite");
 			}
-
+			System.out.println(executionYear);
+			
 			//Degree
 			ICursoPersistente persistentDegree = sp.getICursoPersistente();
 			ICurso degree = new Curso();

@@ -64,6 +64,8 @@ public class ExecutionYear extends DomainObject implements IExecutionYear {
 		String result = "[EXECUTION_YEAR";
 		result += ", internalCode=" + getIdInternal();
 		result += ", year=" + year;
+		result += ", begin=" + beginDate;
+		result += ", end=" + endDate;
 		result += "]";
 		return result;
 	}

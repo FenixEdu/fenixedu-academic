@@ -62,37 +62,37 @@
    		<field-descriptor
    			name="description"
    			column="DESCRIPTION"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>				    
    		<field-descriptor
    			name="objectives"
    			column="OBJECTIVES"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>
    		<field-descriptor
    			name="history"
    			column="HISTORY"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>
    		<field-descriptor
    			name="professionalExits"
    			column="PROFESSIONAL_EXITS"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>
    		<field-descriptor
    			name="additionalInfo"
    			column="ADDITIONAL_INFO"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>
    		<field-descriptor
    			name="links"
    			column="LINKS"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>
    		<field-descriptor
    			name="testIngression"
    			column="TEST_INGRESSION"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>
    		<field-descriptor
    			name="driftsInitial"
@@ -112,7 +112,7 @@
    		<field-descriptor
    			name="classifications"
    			column="CLASSIFICATIONS"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>   		
    		<field-descriptor
    			name="markMin"
@@ -132,42 +132,42 @@
    		<field-descriptor
    			name="descriptionEn"
    			column="DESCRIPTION_EN"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>	   		
   		<field-descriptor
    			name="objectivesEn"
    			column="OBJECTIVES_EN"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>
    		<field-descriptor
    			name="historyEn"
    			column="HISTORY_EN"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>
    		<field-descriptor
    			name="professionalExitsEn"
    			column="PROFESSIONAL_EXITS_EN"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>
    		<field-descriptor
    			name="additionalInfoEn"
    			column="ADDITIONAL_INFO_EN"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>
    		<field-descriptor
    			name="linksEn"
    			column="LINKS_EN"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>
    		<field-descriptor
    			name="testIngressionEn"
    			column="TEST_INGRESSION_EN"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>   		
    		<field-descriptor
    			name="classificationsEn"
    			column="CLASSIFICATIONS_EN"
-   			jdbc-type="LONGVARCHAR"
+        jdbc-type="LONGVARCHAR"
    		/>      		
    		<field-descriptor
    			name="lastModificationDate"

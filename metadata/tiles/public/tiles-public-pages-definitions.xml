@@ -3,19 +3,22 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 
-	<definition name="showDegrees" extends="definition.public.mainPage">
-		<put name="body" value="/publico/showDegrees.jsp"/>
+	<definition name="showDegrees" extends="definition.public.mainPageIST">
+		<put name="body" value="/publico/degreeSite/showDegrees.jsp"/>
 	</definition>
-	<definition name="showDegreeCurricularPlan" extends="definition.public.mainPage">
+	
+	<!--<definition name="showDegreeCurricularPlan" extends="definition.public.mainPage">
 		<put name="body" value="/publico/showDegreeCurricularPlan.jsp"/>
+	</definition> -->
+	
+	<definition name="showDescription" extends="definition.public.mainPageIST">
+		<put name="" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+		<put name="body" value="/publico/degreeSite/showDegreeSiteDescription.jsp" />
 	</definition>
-		<definition name="showDescription" extends="definition.public.mainPage">
-		<put name="body" value="/publico/showDescriptionDegreeSite.jsp"/>
+	<definition name="showAccessRequirements" extends="definition.public.mainPageIST">
+		<put name="body" value="/publico/showDegreeSiteAccessRequirements.jsp" />
 	</definition>
-	<definition name="showAccessRequirements" extends="definition.public.mainPage">
-		<put name="body" value="/publico/showAccessRequirementsDegreeSite.jsp"/>
-	</definition>
-	<definition name="showCurricularPlan" extends="definition.public.mainPage">
-		<put name="body" value="/publico/showCurricularPlanDegreeSite.jsp"/>
+	<definition name="showCurricularPlan" extends="definition.public.mainPageIST">
+		<put name="body" value="/publico/showDegreeSiteCurricularPlan.jsp" />
 	</definition>
 </tiles-definitions>

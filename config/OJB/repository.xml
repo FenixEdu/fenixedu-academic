@@ -32,6 +32,7 @@
 <!ENTITY middleware SYSTEM "repository_middleware.xml">
 <!ENTITY website SYSTEM "repository_website.xml">
 <!ENTITY coordinator SYSTEM "repository_coordinator.xml">
+<!ENTITY places SYSTEM "repository_places.xml">
 <!ENTITY grant_owner_management SYSTEM "repository_grant_owner_management.xml">
 ]>
 
@@ -70,5 +71,6 @@
 	&middleware;
     &website;
 	&coordinator;
+	&places;
     &grant_owner_management;
 </descriptor-repository>

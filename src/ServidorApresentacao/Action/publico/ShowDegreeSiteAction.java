@@ -26,7 +26,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		HttpSession httpSession = request.getSession();
+			HttpSession session = request.getSession(true);
 
 		Integer executionPeriodOId = getFromRequest("executionPeriodOId", request);
 		Integer degreeId = getFromRequest("degreeId", request);
@@ -36,11 +36,13 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
 		InfoDegreeInfo infoDegreeInfo = null;
 		try {
-			infoDegreeInfo = (InfoDegreeInfo) gestorServicos.executar(null, "ReadDegreeInfo", args);
+			infoDegreeInfo = (InfoDegreeInfo) gestorServicos.executar(null, "ReadDegreeInfoByDegreeAndExecutionPeriod", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 
+		System.out.println(infoDegreeInfo);
+		
 		request.setAttribute(SessionConstants.EXECUTION_PERIOD, executionPeriodOId);
 		request.setAttribute("degreeId", degreeId);
 		request.setAttribute("infoDegreeInfo", infoDegreeInfo);

@@ -28,11 +28,21 @@
 	
 	<definition name="definition.public.mainPageWithPeriodSelection" 
 		page="/publicGesDisLayout_2col.jsp" >
-  		<put name="title" value=".Instituto Superior Técnico" /> 
+  	<put name="title" value=".Instituto Superior Técnico" /> 
 		<put name="serviceName" value="Instituto Superior Técnico" />
-	    <put name="navGeral" value="" />
+	   <put name="navGeral" value="" />
 		<put name="navbarGeral" value="/publico/commonNavLocalPubWithExecutionPeriodSelection.jsp" />
 		<put name="body" value="" />
+  	<put name="footer" value="/publico/commonFooterPub.jsp" />
+	</definition>	
+	
+		<definition name="definition.public.mainPageIST" 
+		page="/ISTLayout_3space.jsp" >
+  		<put name="title" value="Instituto Superior Técnico" /> 
+			<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
+	    <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+			<put name="main_navigation" value="/publico/degreeSite/mainNavigation.jsp" />
+			<put name="body" value="" />
   		<put name="footer" value="/publico/commonFooterPub.jsp" />
 	</definition>	
 	
