@@ -1,13 +1,11 @@
 package ServidorPersistente.OJB;
 
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.CurricularCourseScope;
-import Dominio.Enrolment;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
