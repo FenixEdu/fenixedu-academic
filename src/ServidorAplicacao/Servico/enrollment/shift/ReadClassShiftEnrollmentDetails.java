@@ -16,6 +16,7 @@ import DataBeans.InfoClass;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseWithExecutionPeriod;
 import DataBeans.InfoShift;
+import DataBeans.InfoShiftWithInfoExecutionCourse;
 import DataBeans.InfoShiftWithInfoLessons;
 import DataBeans.InfoStudent;
 import DataBeans.enrollment.shift.ExecutionCourseShiftEnrollmentDetails;
@@ -133,7 +134,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 
                     public Object transform(Object input) {
                         ITurno shift = (ITurno) input;
-                        InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+                        InfoShift infoShift = InfoShiftWithInfoExecutionCourse.newInfoFromDomain(shift);
                         return infoShift;
                     }
                 });
