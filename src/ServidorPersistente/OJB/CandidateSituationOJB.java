@@ -23,7 +23,7 @@ import Dominio.ICandidateSituation;
 import Dominio.IMasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCandidateSituation;
-import Util.CandidateSituationValidation;
+import Util.State;
 
 public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistentCandidateSituation{
     
@@ -47,7 +47,7 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
 			query.bind(masterDegreeCandidate.getCandidateNumber());
 			query.bind(masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
 			query.bind(masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear());
-			query.bind(new Integer(CandidateSituationValidation.ACTIVE));
+			query.bind(new Integer(State.ACTIVE));
 			query.bind(masterDegreeCandidate.getSpecialization().getSpecialization());
             
             List result = (List) query.execute();

@@ -44,7 +44,7 @@ import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.IPessoaPersistente;
-import Util.CandidateSituationValidation;
+import Util.State;
 import Util.SituationName;
 import Util.Specialization;
 import Util.TipoDocumentoIdentificacao;
@@ -115,7 +115,7 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         assertNotNull(candidateSituationTemp);
         assertTrue(candidateSituationTemp.getDate().toString().equals("2002-11-20"));
         assertTrue(candidateSituationTemp.getRemarks().equals("Nothing"));
-        assertTrue(candidateSituationTemp.getValidation().equals(new CandidateSituationValidation(CandidateSituationValidation.ACTIVE)));
+        assertTrue(candidateSituationTemp.getValidation().equals(new State(State.ACTIVE)));
         
     }
     
@@ -179,7 +179,7 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         }
         
         
-		ICandidateSituation candidateSituation = new CandidateSituation(data.getTime(), "Nenhuma", new CandidateSituationValidation(CandidateSituationValidation.ACTIVE), candidateTemp, new SituationName(SituationName.EXTRAORDINARIO));
+		ICandidateSituation candidateSituation = new CandidateSituation(data.getTime(), "Nenhuma", new State(State.ACTIVE), candidateTemp, new SituationName(SituationName.EXTRAORDINARIO));
 
         try {
             persistentSupport.iniciarTransaccao();
@@ -207,7 +207,7 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
             fail("    -> Error on test");
         }
 
-		ICandidateSituation candidateSituation1 = new CandidateSituation(data.getTime(), "Nenhuma", new CandidateSituationValidation(CandidateSituationValidation.ACTIVE), candidateTemp, new SituationName(SituationName.PENDENTE));        
+		ICandidateSituation candidateSituation1 = new CandidateSituation(data.getTime(), "Nenhuma", new State(State.ACTIVE), candidateTemp, new SituationName(SituationName.PENDENTE));        
 
         try {
             persistentSupport.iniciarTransaccao();
@@ -338,8 +338,8 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
             fail("    -> Error on test");
         }
 
-		ICandidateSituation candidateSituation1 = new CandidateSituation(data.getTime(), "Nenhuma", new CandidateSituationValidation(CandidateSituationValidation.ACTIVE), candidateTemp, new SituationName(SituationName.EXTRAORDINARIO));        
-		ICandidateSituation candidateSituation2 = new CandidateSituation(data.getTime(), "Nenhuma", new CandidateSituationValidation(CandidateSituationValidation.ACTIVE), candidateTemp, new SituationName(SituationName.EXTRAORDINARIO));        
+		ICandidateSituation candidateSituation1 = new CandidateSituation(data.getTime(), "Nenhuma", new State(State.ACTIVE), candidateTemp, new SituationName(SituationName.EXTRAORDINARIO));        
+		ICandidateSituation candidateSituation2 = new CandidateSituation(data.getTime(), "Nenhuma", new State(State.ACTIVE), candidateTemp, new SituationName(SituationName.EXTRAORDINARIO));        
         
         
         assertTrue(candidateSituation1.equals(candidateSituation2));  
@@ -352,9 +352,9 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         assertEquals(candidateSituation1.equals(candidateSituation2), false);  
         candidateSituation1.setRemarks("Nenhuma");
         
-        candidateSituation1.setValidation(new CandidateSituationValidation(CandidateSituationValidation.INACTIVE));
+        candidateSituation1.setValidation(new State(State.INACTIVE));
         assertEquals(candidateSituation1.equals(candidateSituation2), false);  
-        candidateSituation1.setValidation(new CandidateSituationValidation(CandidateSituationValidation.ACTIVE));
+        candidateSituation1.setValidation(new State(State.ACTIVE));
 
     }
     

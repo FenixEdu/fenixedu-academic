@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="Util.CandidateSituationValidation" %>
-<%@ page import="Dominio.ICandidateSituation" %>
+<%@ page import="Util.State" %>
+<%@ page import="DataBeans.InfoCandidateSituation" %>
 
 
 
@@ -30,6 +30,11 @@
             <td><bean:message key="label.person.username" /></td>
             <td><bean:write name="personalInfo" property="username"/></td>
           </tr>
+
+          <tr></tr>
+          <tr></tr>      
+          <tr></tr>
+          <tr></tr>      
 
           <!-- Dados Pessoais -->
           <tr>
@@ -118,9 +123,11 @@
             <td><bean:write name="personalInfo" property="profissao"/></td>
           </tr>
           
-          
-          
-
+          <tr></tr>
+          <tr></tr>      
+          <tr></tr>
+          <tr></tr>      
+     
           <!-- Dados de Residencia -->
           <tr>
             <td><h2><bean:message key="label.person.title.addressInfo" /><h2></td>
@@ -161,6 +168,10 @@
             <td><bean:write name="personalInfo" property="distritoMorada"/></td>
           </tr>
 
+          <tr></tr>
+          <tr></tr>      
+          <tr></tr>
+          <tr></tr>      
 
           <!-- Contactos -->
           <tr>
@@ -191,7 +202,13 @@
           <tr></tr>      
           <tr></tr>
           <tr></tr>      
+          <tr>
+            <td><h2><bean:message key="label.masterDegree.administrativeOffice.situationHistory" /><h2></td>
+          </tr>
          <logic:iterate id="situation" name="masterDegreeCandidate" property="situationList">
+         	<% if (((InfoCandidateSituation) situation).getValidation().equals(new State(State.ACTIVE))) { %>
+         		<td><center><bean:message key="label.masterDegree.administrativeOffice.activeSituation" /></center></td>
+         	<% } %>
            <tr>
             <td><bean:message key="label.masterDegree.administrativeOffice.situation" /></td>
             <td><bean:write name="situation" property="situation"/></td>

@@ -25,7 +25,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
-import Util.CandidateSituationValidation;
+import Util.State;
 import Util.SituationName;
 import Util.Specialization;
 /**
@@ -86,7 +86,7 @@ public class CreateMasterDegreeCandidate implements IServico {
 			candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
 			candidateSituation.setRemarks("Pré-Candidatura. Pagamento da candidatura por efectuar.");
 			candidateSituation.setSituation(new SituationName(SituationName.PRE_CANDIDATO));
-			candidateSituation.setValidation(new CandidateSituationValidation(CandidateSituationValidation.ACTIVE));
+			candidateSituation.setValidation(new State(State.ACTIVE));
 			
 			Calendar actualDate = Calendar.getInstance();
 			candidateSituation.setDate(actualDate.getTime());

@@ -70,6 +70,8 @@
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       <action path="/index" forward="/index.jsp"/>
+      <action path="/candidateSection" forward="/candidateIndex.jsp"/>
+      
       
             
       <action path="/naoExecutado" forward="/error.jsp"/>
@@ -91,7 +93,7 @@
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       </action>
 
-      <!-- action to create a candidate -->
+      <!-- action to visualize candidates -->
       <action attribute="listCandidatesForm"
       		  input="/chooseCandidateList.jsp"
       	      name="listCandidatesForm"
@@ -107,6 +109,22 @@
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       </action>
 
+      <!-- action to edit candidates -->
+      <action attribute="listCandidatesForm"
+      		  input="/chooseCandidateList.jsp"
+      	      name="listCandidatesForm"
+		      path="/editCandidates"
+		      parameter="method"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.ListCandidatesDispatchAction"
+              validate="true">
+	         <forward name="PrepareReady" path="/chooseCandidateList.jsp"/>  
+	         <forward name="ActionReady" path="/editCandidates.do?method=prepareEdit"/>  
+	         <forward name="ChooseCandidate" path="/candidateList.jsp"/>  
+     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+      </action>
+      
       <!-- Action For LogOff -->
       <action path="/logoff"
       	      type="ServidorApresentacao.Action.commons.LogOffAction">

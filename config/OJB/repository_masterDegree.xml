@@ -119,7 +119,7 @@
 	     name="validation"
 	     column="VALIDATION"
 	     jdbc-type="INTEGER"
-	     conversion="ServidorPersistente.Conversores.JavaSituationValidation2SQLSituationValidationFieldConversion"
+	     conversion="ServidorPersistente.Conversores.JavaState2SQLStateFieldConversion"
 	  />
 	  
 	  <field-descriptor id="5"

@@ -8,24 +8,26 @@ package ServidorPersistente.Conversores;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-import Util.CandidateSituationValidation;
-
-
+import Util.State;
 /**
+ * 
+ * @author Nuno & Joana
  *
- * @author  Nuno Nunes & Joana Mota
+ * To change the template for this generated type comment go to
+ * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class JavaSituationValidation2SQLSituationValidationFieldConversion implements FieldConversion {
+
+public class JavaState2SQLStateFieldConversion implements FieldConversion {
     
 	/*
 	 * @see FieldConversion#javaToSql(Object)
 	 */
 	public Object javaToSql(Object source)
 	{
-		if (source instanceof CandidateSituationValidation)
+		if (source instanceof State)
 		{
-			CandidateSituationValidation s = (CandidateSituationValidation) source;
-			return s.getCandidateSituationValidation();
+			State s = (State) source;
+			return s.getState();
 		}
 		else {
 			return source;
@@ -40,7 +42,7 @@ public class JavaSituationValidation2SQLSituationValidationFieldConversion imple
 		if (source instanceof Integer)
 		{
 			Integer src = (Integer) source;
-			return new CandidateSituationValidation(src);
+			return new State(src);
 		}
 		else
 		{

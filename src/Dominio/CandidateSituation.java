@@ -16,14 +16,14 @@ package Dominio;
 
 import java.util.Date;
 
-import Util.CandidateSituationValidation;
+import Util.State;
 import Util.SituationName;
 
 public class CandidateSituation implements ICandidateSituation {
  
     private Date date = null;                        // Candidate Situation Date
     private String remarks = null;              // Candidate Situation Remarks
-    private CandidateSituationValidation validation = null;               // Candidate Situation Validation
+    private State validation = null;               // Candidate Situation Validation
 	private SituationName situation = null;    // Candidate Situation  
 
     private IMasterDegreeCandidate masterDegreeCandidate = null;    // Instance from MasterDegreeCandidate
@@ -41,7 +41,7 @@ public class CandidateSituation implements ICandidateSituation {
         validation = null; 
     } 
     
-    public CandidateSituation(Date date, String remarks, CandidateSituationValidation validation,
+    public CandidateSituation(Date date, String remarks, State validation,
            IMasterDegreeCandidate masterDegreeCandidate, SituationName situation) {
         setMasterDegreeCandidate(masterDegreeCandidate);
         setSituation(situation);
@@ -131,9 +131,9 @@ public class CandidateSituation implements ICandidateSituation {
 
 	/**
 	 * Returns the validation.
-	 * @return CandidateSituationValidation
+	 * @return State
 	 */
-	public CandidateSituationValidation getValidation() {
+	public State getValidation() {
 		return validation;
 	}
 
@@ -197,7 +197,7 @@ public class CandidateSituation implements ICandidateSituation {
 	 * Sets the validation.
 	 * @param validation The validation to set
 	 */
-	public void setValidation(CandidateSituationValidation validation) {
+	public void setValidation(State validation) {
 		this.validation = validation;
 	}
 

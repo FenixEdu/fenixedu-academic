@@ -15,7 +15,7 @@ package Dominio;
 
 import java.util.Date;
 
-import Util.CandidateSituationValidation;
+import Util.State;
 import Util.SituationName;
 
 public interface ICandidateSituation {
@@ -23,7 +23,7 @@ public interface ICandidateSituation {
     // Set Methods
     void setDate(Date date);
     void setRemarks(String remarks);
-    void setValidation(CandidateSituationValidation validation);
+    void setValidation(State validation);
     void setMasterDegreeCandidate (IMasterDegreeCandidate masterDegreeCandidate);
     void setSituation(SituationName situation);
     
@@ -31,7 +31,7 @@ public interface ICandidateSituation {
     // Get Methods
     Date getDate();
     String getRemarks();
-    CandidateSituationValidation getValidation();
+    State getValidation();
     IMasterDegreeCandidate getMasterDegreeCandidate();    
     SituationName getSituation();
 

@@ -25,7 +25,7 @@ import Dominio.MasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.exceptions.ExistingPersistentException;
-import Util.CandidateSituationValidation;
+import Util.State;
 import Util.SituationName;
 import Util.Specialization;
 
@@ -257,7 +257,7 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 
 			if (candidateSituation != null) {
 				oqlQuery += " and situations.situation = \"" + candidateSituation.getSituationName() + "\"" + 
-				            " and situations.validation = " + CandidateSituationValidation.ACTIVE ; 
+				            " and situations.validation = " + State.ACTIVE ; 
 			}
 			
 			query.create(oqlQuery);

@@ -31,7 +31,7 @@ import ServidorAplicacao.Servico.UserView;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.CandidateSituationValidation;
+import Util.State;
 
 public class ReadActiveCandidateSituation implements IServico {
     
@@ -87,7 +87,7 @@ public class ReadActiveCandidateSituation implements IServico {
 		while(iterator.hasNext()){
 			ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
 			
-			if ((candidateSituationTemp.getValidation().getCandidateSituationValidation()).equals(new Integer(CandidateSituationValidation.ACTIVE))) {
+			if ((candidateSituationTemp.getValidation().getState()).equals(new Integer(State.ACTIVE))) {
 				InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation(candidateSituationTemp);
 				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
 				return infoMasterDegreeCandidate; 
