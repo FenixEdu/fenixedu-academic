@@ -60,8 +60,7 @@ import Util.TipoCurso;
 /**
  * @author Tânia Pousão
  * 
- * This class read and prepare all information usefull for shift enrollment use
- * case
+ * This class read and prepare all information usefull for shift enrollment use case
  *  
  */
 public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
@@ -79,39 +78,33 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
 
             //read student to enroll
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IStudent student = persistentStudent
-                    .readStudentByNumberAndDegreeType(studentNumber,
-                            TipoCurso.LICENCIATURA_OBJ);
+            IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                    TipoCurso.LICENCIATURA_OBJ);
             if (student == null) {
-                student = persistentStudent.readStudentByNumberAndDegreeType(
-                        studentNumber, TipoCurso.MESTRADO_OBJ);
+                student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                        TipoCurso.MESTRADO_OBJ);
             }
             if (student == null) {
                 throw new FenixServiceException("errors.impossible.operation");
             }
-            infoShiftEnrollment
-                    .setInfoStudent(copyIStudent2InfoStudent(student));
+            infoShiftEnrollment.setInfoStudent(copyIStudent2InfoStudent(student));
 
             //retrieve all courses that student is currently attended in
-            infoShiftEnrollment.setInfoAttendingCourses(readAttendingCourses(
-                    sp, student.getNumber()));
+            infoShiftEnrollment.setInfoAttendingCourses(readAttendingCourses(sp, student.getNumber()));
 
             //retrieve all shifts that student is currently enrollment
             //it will be shift associated with all or some attending courses
-            infoShiftEnrollment.setInfoShiftEnrollment(readShiftEnrollment(sp,
-                    student, infoShiftEnrollment.getInfoAttendingCourses()));
+            infoShiftEnrollment.setInfoShiftEnrollment(readShiftEnrollment(sp, student,
+                    infoShiftEnrollment.getInfoAttendingCourses()));
 
             //calculate the number of courses that have shift enrollment
-            infoShiftEnrollment
-                    .setNumberCourseWithShiftEnrollment(calculeNumberCoursesWithEnrollment(
-                            infoShiftEnrollment.getInfoAttendingCourses(),
-                            infoShiftEnrollment.getInfoShiftEnrollment()));
+            infoShiftEnrollment.setNumberCourseWithShiftEnrollment(calculeNumberCoursesWithEnrollment(
+                    infoShiftEnrollment.getInfoAttendingCourses(), infoShiftEnrollment
+                            .getInfoShiftEnrollment()));
 
             //read current execution period
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                    .getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod
-                    .readActualExecutionPeriod();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
             if (executionPeriod == null) {
                 throw new FenixServiceException("errors.impossible.operation");
             }
@@ -123,21 +116,18 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             }
 
             //retrieve the list of existing degrees
-            List infoExecutionDegreeList = readInfoExecutionDegrees(sp,
-                    executionYear);
-            infoShiftEnrollment
-                    .setInfoExecutionDegreesList(infoExecutionDegreeList);
+            List infoExecutionDegreeList = readInfoExecutionDegrees(sp, executionYear);
+            infoShiftEnrollment.setInfoExecutionDegreesList(infoExecutionDegreeList);
 
             //select the first execution degree or the execution degree of the
             // student logged
-            InfoExecutionDegree infoExecutionDegree = selectExecutionDegree(sp,
-                    infoExecutionDegreeList, executionDegreeIdChosen, student);
+            InfoExecutionDegree infoExecutionDegree = selectExecutionDegree(sp, infoExecutionDegreeList,
+                    executionDegreeIdChosen, student);
             infoShiftEnrollment.setInfoExecutionDegree(infoExecutionDegree);
 
             //retrieve all courses pertaining to the selected degree
-            infoShiftEnrollment
-                    .setInfoExecutionCoursesList(readInfoExecutionCoursesOfdegree(
-                            sp, executionPeriod, infoExecutionDegree));
+            infoShiftEnrollment.setInfoExecutionCoursesList(readInfoExecutionCoursesOfdegree(sp,
+                    executionPeriod, infoExecutionDegree));
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
@@ -151,8 +141,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
      * @param executionDegree
      * @return
      */
-    private InfoExecutionDegree copyIExecutionDegree2InfoExecutionDegree(
-            ICursoExecucao executionDegree) {
+    private InfoExecutionDegree copyIExecutionDegree2InfoExecutionDegree(ICursoExecucao executionDegree) {
         InfoExecutionDegree infoExecutionDegree = null;
         if (executionDegree != null) {
             infoExecutionDegree = new InfoExecutionDegree();
@@ -178,8 +167,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
             infoDegreeCurricularPlan.setIdInternal(plan.getIdInternal());
             infoDegreeCurricularPlan.setName(plan.getName());
-            infoDegreeCurricularPlan.setInfoDegree(copyIDegree2InfoDegree(plan
-                    .getDegree()));
+            infoDegreeCurricularPlan.setInfoDegree(copyIDegree2InfoDegree(plan.getDegree()));
         }
         return infoDegreeCurricularPlan;
     }
@@ -214,28 +202,24 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         return infoStudent;
     }
 
-    private List readAttendingCourses(ISuportePersistente sp,
-            Integer studentNumber) throws ExcepcaoPersistencia {
+    private List readAttendingCourses(ISuportePersistente sp, Integer studentNumber)
+            throws ExcepcaoPersistencia {
         List infoAttendingCourses = null;
 
-        IFrequentaPersistente frequentaPersistente = sp
-                .getIFrequentaPersistente();
-        List attendList = frequentaPersistente
-                .readByStudentNumber(studentNumber);
+        IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
+        List attendList = frequentaPersistente.readByStudentNumber(studentNumber);
         if (attendList != null && attendList.size() > 0) {
             infoAttendingCourses = new ArrayList();
 
             Iterator iterator = attendList.iterator();
             while (iterator.hasNext()) {
                 IFrequenta attend = (Frequenta) iterator.next();
-                IExecutionCourse executionCourse = attend
-                        .getDisciplinaExecucao();
+                IExecutionCourse executionCourse = attend.getDisciplinaExecucao();
                 if (executionCourse != null
                         && executionCourse.getExecutionPeriod() != null
-                        && executionCourse.getExecutionPeriod().getState()
-                                .equals(new PeriodState(PeriodState.CURRENT))) {
-                    infoAttendingCourses
-                            .add(copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+                        && executionCourse.getExecutionPeriod().getState().equals(
+                                new PeriodState(PeriodState.CURRENT))) {
+                    infoAttendingCourses.add(copyIExecutionCourse2InfoExecutionCourse(executionCourse));
                 }
             }
 
@@ -248,8 +232,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
      * @param executionCourse
      * @return
      */
-    private InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(
-            IExecutionCourse executionCourse) {
+    private InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(IExecutionCourse executionCourse) {
         InfoExecutionCourse infoExecutionCourse = null;
         if (executionCourse != null) {
             infoExecutionCourse = new InfoExecutionCourse();
@@ -267,16 +250,14 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
      * @param period
      * @return
      */
-    private InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(
-            IExecutionPeriod period) {
+    private InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(IExecutionPeriod period) {
         InfoExecutionPeriod infoExecutionPeriod = null;
         if (period != null) {
             infoExecutionPeriod = new InfoExecutionPeriod();
             infoExecutionPeriod.setIdInternal(period.getIdInternal());
             infoExecutionPeriod.setName(period.getName());
-            infoExecutionPeriod
-                    .setInfoExecutionYear(copyIExecutionYear2InfoExecutionYear(period
-                            .getExecutionYear()));
+            infoExecutionPeriod.setInfoExecutionYear(copyIExecutionYear2InfoExecutionYear(period
+                    .getExecutionYear()));
         }
         return infoExecutionPeriod;
     }
@@ -285,8 +266,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
      * @param year
      * @return
      */
-    private InfoExecutionYear copyIExecutionYear2InfoExecutionYear(
-            IExecutionYear year) {
+    private InfoExecutionYear copyIExecutionYear2InfoExecutionYear(IExecutionYear year) {
         InfoExecutionYear infoExecutionYear = null;
         if (year != null) {
             infoExecutionYear = new InfoExecutionYear();
@@ -296,32 +276,28 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         return infoExecutionYear;
     }
 
-    private List readShiftEnrollment(ISuportePersistente sp, IStudent student,
-            List infoAttendingCourses) throws ExcepcaoPersistencia {
+    private List readShiftEnrollment(ISuportePersistente sp, IStudent student, List infoAttendingCourses)
+            throws ExcepcaoPersistencia {
         List infoShiftEnrollment = null;
 
         if (infoAttendingCourses != null && infoAttendingCourses.size() > 0) {
             IExecutionPeriod executionPeriod = new ExecutionPeriod();
-            executionPeriod
-                    .setIdInternal(((InfoExecutionCourse) infoAttendingCourses
-                            .get(0)).getInfoExecutionPeriod().getIdInternal());
+            executionPeriod.setIdInternal(((InfoExecutionCourse) infoAttendingCourses.get(0))
+                    .getInfoExecutionPeriod().getIdInternal());
 
-            ITurnoAlunoPersistente persistentShiftStudent = sp
-                    .getITurnoAlunoPersistente();
-            List studentShifts = persistentShiftStudent
-                    .readByStudentAndExecutionPeriod(student, executionPeriod);
+            ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
+            List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(student,
+                    executionPeriod);
 
-            infoShiftEnrollment = (List) CollectionUtils.collect(studentShifts,
-                    new Transformer() {
+            infoShiftEnrollment = (List) CollectionUtils.collect(studentShifts, new Transformer() {
 
-                        public Object transform(Object input) {
-                            ITurnoAluno shiftStudent = (ITurnoAluno) input;
-                            InfoShift infoShift = copyShift2InfoShift(shiftStudent
-                                    .getShift());
-                            return infoShift;
-                        }
+                public Object transform(Object input) {
+                    ITurnoAluno shiftStudent = (ITurnoAluno) input;
+                    InfoShift infoShift = copyShift2InfoShift(shiftStudent.getShift());
+                    return infoShift;
+                }
 
-                    });
+            });
         }
 
         return infoShiftEnrollment;
@@ -333,17 +309,14 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             infoShift = new InfoShift();
             infoShift.setIdInternal(shift.getIdInternal());
             infoShift.setNome(shift.getNome());
-            infoShift
-                    .setInfoDisciplinaExecucao(copyIExecutionCourse2InfoExecutionCourse(shift
-                            .getDisciplinaExecucao()));
-            infoShift.setInfoLessons(copyILessons2InfoLessons(shift
-                    .getAssociatedLessons()));
+            infoShift.setInfoDisciplinaExecucao(copyIExecutionCourse2InfoExecutionCourse(shift
+                    .getDisciplinaExecucao()));
+            infoShift.setInfoLessons(copyILessons2InfoLessons(shift.getAssociatedLessons()));
             infoShift.setTipo(shift.getTipo());
             infoShift.setLotacao(shift.getLotacao());
             infoShift.setOcupation(shift.getOcupation());
             infoShift.setPercentage(shift.getPercentage());
-            infoShift.setInfoClasses(copyIClasses2InfoClasses(shift
-                    .getAssociatedClasses()));
+            infoShift.setInfoClasses(copyIClasses2InfoClasses(shift.getAssociatedClasses()));
         }
         return infoShift;
     }
@@ -355,15 +328,14 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
     private List copyIClasses2InfoClasses(List list) {
         List infoClasses = null;
         if (list != null) {
-            infoClasses = (List) CollectionUtils.collect(list,
-                    new Transformer() {
+            infoClasses = (List) CollectionUtils.collect(list, new Transformer() {
 
-                        public Object transform(Object arg0) {
+                public Object transform(Object arg0) {
 
-                            return copyIClass2InfoClass((ITurma) arg0);
-                        }
+                    return copyIClass2InfoClass((ITurma) arg0);
+                }
 
-                    });
+            });
         }
         return infoClasses;
     }
@@ -374,9 +346,8 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             infoClass = new InfoClass();
             infoClass.setIdInternal(turma.getIdInternal());
             infoClass.setNome(turma.getNome());
-            infoClass
-                    .setInfoExecutionDegree(copyIExecutionDegree2InfoExecutionDegree(turma
-                            .getExecutionDegree()));
+            infoClass.setInfoExecutionDegree(copyIExecutionDegree2InfoExecutionDegree(turma
+                    .getExecutionDegree()));
 
         }
         return infoClass;
@@ -389,15 +360,14 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
     private List copyILessons2InfoLessons(List list) {
         List infoLessons = null;
         if (list != null) {
-            infoLessons = (List) CollectionUtils.collect(list,
-                    new Transformer() {
+            infoLessons = (List) CollectionUtils.collect(list, new Transformer() {
 
-                        public Object transform(Object arg0) {
+                public Object transform(Object arg0) {
 
-                            return copyILesson2InfoLesson((IAula) arg0);
-                        }
+                    return copyILesson2InfoLesson((IAula) arg0);
+                }
 
-                    });
+            });
         }
         return infoLessons;
     }
@@ -430,8 +400,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         return infoRoom;
     }
 
-    private Integer calculeNumberCoursesWithEnrollment(List attendingList,
-            List shiftEnrollmentList) {
+    private Integer calculeNumberCoursesWithEnrollment(List attendingList, List shiftEnrollmentList) {
         Integer result = null;
 
         if (attendingList == null) {
@@ -446,29 +415,23 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             while (iterator.hasNext()) {
                 InfoShift infoShift = (InfoShift) iterator.next();
 
-                if (!infoCoursesWithShiftEnrollment.contains(infoShift
-                        .getInfoDisciplinaExecucao())) {
+                if (!infoCoursesWithShiftEnrollment.contains(infoShift.getInfoDisciplinaExecucao())) {
 
-                    infoCoursesWithShiftEnrollment.add(infoShift
-                            .getInfoDisciplinaExecucao());
+                    infoCoursesWithShiftEnrollment.add(infoShift.getInfoDisciplinaExecucao());
                 }
             }
         }
 
-        result = new Integer(attendingList.size()
-                - infoCoursesWithShiftEnrollment.size());
+        result = new Integer(attendingList.size() - infoCoursesWithShiftEnrollment.size());
 
         return result;
     }
 
-    private List readInfoExecutionDegrees(ISuportePersistente sp,
-            IExecutionYear executionYear) throws ExcepcaoPersistencia,
-            FenixServiceException {
-        ICursoExecucaoPersistente presistentExecutionDegree = sp
-                .getICursoExecucaoPersistente();
-        List executionDegrees = presistentExecutionDegree
-                .readByExecutionYearAndDegreeType(executionYear,
-                        TipoCurso.LICENCIATURA_OBJ);
+    private List readInfoExecutionDegrees(ISuportePersistente sp, IExecutionYear executionYear)
+            throws ExcepcaoPersistencia, FenixServiceException {
+        ICursoExecucaoPersistente presistentExecutionDegree = sp.getICursoExecucaoPersistente();
+        List executionDegrees = presistentExecutionDegree.readByExecutionYearAndDegreeType(
+                executionYear, TipoCurso.LICENCIATURA_OBJ);
         if (executionDegrees == null || executionDegrees.size() <= 0) {
             throw new FenixServiceException("errors.impossible.operation");
         }
@@ -477,28 +440,22 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         List infoExecutionDegreeList = new ArrayList();
         while (iterator.hasNext()) {
             ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
-            infoExecutionDegreeList
-                    .add(copyIExecutionDegree2InfoExecutionDegree(executionDegree));
+            infoExecutionDegreeList.add(copyIExecutionDegree2InfoExecutionDegree(executionDegree));
         }
 
         return infoExecutionDegreeList;
     }
 
     private List readInfoExecutionCoursesOfdegree(ISuportePersistente sp,
-            IExecutionPeriod executionPeriod,
-            InfoExecutionDegree infoExecutionDegree)
+            IExecutionPeriod executionPeriod, InfoExecutionDegree infoExecutionDegree)
             throws ExcepcaoPersistencia, FenixServiceException {
-        IPersistentExecutionCourse persistentExecutionCourse = sp
-                .getIPersistentExecutionCourse();
-        ICursoExecucaoPersistente persistentExecutionDegree = sp
-                .getICursoExecucaoPersistente();
-        ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree
-                .readByOID(CursoExecucao.class, infoExecutionDegree
-                        .getIdInternal());
+        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+        ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
+                CursoExecucao.class, infoExecutionDegree.getIdInternal());
 
-        List executionCourseList = persistentExecutionCourse
-                .readByExecutionPeriodAndExecutionDegree(executionPeriod,
-                        executionDegree);
+        List executionCourseList = persistentExecutionCourse.readByExecutionPeriodAndExecutionDegree(
+                executionPeriod, executionDegree);
         if (executionCourseList == null || executionCourseList.size() <= 0) {
             throw new FenixServiceException("errors.impossible.operation");
         }
@@ -506,8 +463,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         ListIterator listIterator = executionCourseList.listIterator();
         List infoExecutionCourseList = new ArrayList();
         while (listIterator.hasNext()) {
-            IExecutionCourse executionCourse = (IExecutionCourse) listIterator
-                    .next();
+            IExecutionCourse executionCourse = (IExecutionCourse) listIterator.next();
             InfoExecutionCourse infoExecutionCourse = copyIExecutionCourse2InfoExecutionCourse(executionCourse);
             infoExecutionCourseList.add(infoExecutionCourse);
         }
@@ -520,17 +476,16 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
      * @return
      */
     private InfoExecutionDegree selectExecutionDegree(ISuportePersistente sp,
-            List infoExecutionDegreeList, Integer executionDegreeIdChosen,
-            IStudent student) throws ExcepcaoPersistencia {
+            List infoExecutionDegreeList, Integer executionDegreeIdChosen, IStudent student)
+            throws ExcepcaoPersistencia {
         ICursoExecucao executionDegree = null;
 
         //read the execution degree chosen
         if (executionDegreeIdChosen != null) {
-            ICursoExecucaoPersistente persistentExecutionDegree = sp
-                    .getICursoExecucaoPersistente();
+            ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
 
-            executionDegree = (ICursoExecucao) persistentExecutionDegree
-                    .readByOID(CursoExecucao.class, executionDegreeIdChosen);
+            executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(CursoExecucao.class,
+                    executionDegreeIdChosen);
             if (executionDegree != null) {
                 return copyIExecutionDegree2InfoExecutionDegree(executionDegree);
             }
@@ -539,32 +494,27 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         IStudentCurricularPlanPersistente persistentCurricularPlan = sp
                 .getIStudentCurricularPlanPersistente();
         IStudentCurricularPlan studentCurricularPlan = persistentCurricularPlan
-                .readActiveByStudentNumberAndDegreeType(student.getNumber(),
-                        TipoCurso.LICENCIATURA_OBJ);
-        if (studentCurricularPlan == null
-                || studentCurricularPlan.getDegreeCurricularPlan() == null
+                .readActiveByStudentNumberAndDegreeType(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+        if (studentCurricularPlan == null || studentCurricularPlan.getDegreeCurricularPlan() == null
                 || studentCurricularPlan.getDegreeCurricularPlan().getDegree() == null
-                || studentCurricularPlan.getDegreeCurricularPlan().getDegree()
-                        .getNome() == null) {
+                || studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome() == null) {
 
             return (InfoExecutionDegree) infoExecutionDegreeList.get(0);
         }
 
-        final Integer degreeCode = studentCurricularPlan
-                .getDegreeCurricularPlan().getDegree().getIdInternal();
-        List infoExecutionDegreeListWithDegreeCode = (List) CollectionUtils
-                .select(infoExecutionDegreeList, new Predicate() {
+        final Integer degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree()
+                .getIdInternal();
+        List infoExecutionDegreeListWithDegreeCode = (List) CollectionUtils.select(
+                infoExecutionDegreeList, new Predicate() {
 
                     public boolean evaluate(Object input) {
                         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) input;
-                        return infoExecutionDegree
-                                .getInfoDegreeCurricularPlan().getInfoDegree()
+                        return infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
                                 .getIdInternal().equals(degreeCode);
                     }
                 });
         if (!infoExecutionDegreeListWithDegreeCode.isEmpty()) {
-            return (InfoExecutionDegree) infoExecutionDegreeListWithDegreeCode
-                    .get(0);
+            return (InfoExecutionDegree) infoExecutionDegreeListWithDegreeCode.get(0);
         }
         return (InfoExecutionDegree) infoExecutionDegreeList.get(0);
 

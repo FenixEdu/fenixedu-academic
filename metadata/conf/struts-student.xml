@@ -178,27 +178,22 @@
         scope="request"
         validate="false">                         
         <forward name="prepareEnrollmentViewWarning" path="prepare-enrollment-view-warning"/>
-        <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=start"/>
 		<forward name="selectCourses" path="show-courses-by-degree"/>
 		<forward name="showShiftsEnrollment" path="show-shifts-enrollment"/>
+		<forward name="showEnrollmentPage" path="/studentShiftEnrolmentManagerLoockup.do?method=Escolher Turnos"/>
       </action>
       
    	  <action path="/studentShiftEnrolmentManagerLoockup"
 	  	name="studentShiftEnrolmentForm"
         type="ServidorApresentacao.Action.student.enrollment.ShiftStudentEnrolmentManagerLookupDispatchAction"
-		input="/studentShiftEnrolmentManager.do?method=chooseCourses" 
+		input="/studentShiftEnrolmentManager.do?method=prepareShiftEnrollment" 
 		parameter="method"
         scope="request"
         validate="false">                           
         <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=start&amp;firstTime=true"/>
         <forward name="studentFirstPage" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
-    	<forward name="chooseCourses" path="/studentShiftEnrolmentManager.do?method=chooseCourses" />
+    	<forward name="prepareShiftEnrollment" path="/studentShiftEnrolmentManager.do?method=prepareShiftEnrollment" />
     	<forward name="showShiftsToEnroll" path="show-shifts-to-enroll" />
-    	<!--<forward name="selectCourses" path="show-courses-by-degree"/>
-        <forward name="selectClass" path="show-classes-for-shift-enrolment"/>
-        <forward name="showAvailableShifts" path="show-available-shifts"/>
-        <forward name="validateAndConfirmShiftEnrolment" path="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment"/>
-        <forward name="classTimeTable" path="/classTimeTable.jsp"/>-->
       </action>
       
 	  <action path="/enrollStudentInShifts"
@@ -207,7 +202,7 @@
         scope="request"
         validate="false"
         input="/studentShiftEnrolmentManagerLoockup.do?method=Escolher Turnos&amp;page=0" > 
-        <forward name="enrollmentConfirmation" path="/studentShiftEnrolmentManager.do?method=chooseCourses"/>
+        <forward name="enrollmentConfirmation" path="/studentShiftEnrolmentManager.do?method=prepareShiftEnrollment"/>
       </action>
       
       <action 

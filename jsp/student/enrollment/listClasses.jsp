@@ -13,8 +13,8 @@
 			<logic:present name="classId" >
 				<bean:define id="classIdSelected" name="classId" />
 				<logic:notEqual name="infoClassId" value="<%= classIdSelected.toString() %>">
-					<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=" + classSelected + "&amp;studentId=" + request.getParameter("studentId").toString() + "&amp;classId=" + pageContext.findAttribute("infoClassId").toString()%>">
-						<bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome" />			
+					<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=" + classSelected + "&amp;studentId=" + pageContext.findAttribute("studentId").toString() + "&amp;classId=" + pageContext.findAttribute("infoClassId").toString()%>">
+						<bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome" />		
 					</html:link>
 				</logic:notEqual>
 				<logic:equal name="infoClassId" value="<%= classIdSelected.toString() %>"> 
@@ -22,12 +22,12 @@
 				</logic:equal>
 			</logic:present>			
 			<logic:notPresent name="classId" >
-				<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=" + classSelected + "&amp;studentId=" + request.getParameter("studentId").toString()  + "&amp;classId=" + pageContext.findAttribute("infoClassId").toString() %>">
+				<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=" + classSelected + "&amp;studentId=" + pageContext.findAttribute("studentId").toString()  + "&amp;classId=" + pageContext.findAttribute("infoClassId").toString() %>">
 					<bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome" />						
 				</html:link>
 			</logic:notPresent>						
 		</li>
-	</logic:iterate>
+	</logic:iterate> 
 	
 	<p>
 	<li>

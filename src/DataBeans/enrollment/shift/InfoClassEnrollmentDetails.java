@@ -108,7 +108,7 @@ public class InfoClassEnrollmentDetails extends DataTranferObject
 
     	string.append("[InfoClassEnrollmentDetails ");
     	string.append("\ninfoStudent: ");
-    	string.append(infoStudent.getNumber());
+    	string.append(infoStudent.getIdInternal());
     	
     	string.append("\nclassExecutionCourseShiftEnrollmentDetailsMap: ");		
     	if (classExecutionCourseShiftEnrollmentDetailsMap != null)

@@ -102,16 +102,7 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends
             return mapping.getInputForward();
         }
 
-        return mapping.findForward("chooseCourses");
-    }
-
-    private void checkParameter(HttpServletRequest request)
-    {
-        String selectCourses = request.getParameter("selectCourses");
-        if (selectCourses != null)
-        {
-            request.setAttribute("selectCourses", selectCourses);
-        }
+        return mapping.findForward("prepareShiftEnrollment");
     }
 
     public ActionForward removeCourses(ActionMapping mapping, ActionForm form,
@@ -177,7 +168,7 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends
             return mapping.getInputForward();
         }
 
-        return mapping.findForward("chooseCourses");
+        return mapping.findForward("prepareShiftEnrollment");
     }
 
     public ActionForward proceedToShiftEnrolment(ActionMapping mapping,
@@ -199,6 +190,7 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends
 
         InfoStudent infoStudent = new InfoStudent();
         infoStudent.setIdInternal(studentId);
+        
         Object[] args = {infoStudent, classIdSelected};
         InfoClassEnrollmentDetails infoClassEnrollmentDetails = null;
         try
@@ -225,6 +217,8 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends
         enrollmentForm.set("shiftMap", shiftsMap);
         enrollmentForm.set("studentId", infoClassEnrollmentDetails
                 .getInfoStudent().getIdInternal());
+        request.setAttribute("studentId", infoClassEnrollmentDetails
+                .getInfoStudent().getIdInternal());
 
         if (classIdSelected != null)
         {
@@ -245,6 +239,15 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends
         return mapping.findForward("showShiftsToEnroll");
     }
 
+    private void checkParameter(HttpServletRequest request)
+    {
+        String selectCourses = request.getParameter("selectCourses");
+        if (selectCourses != null)
+        {
+            request.setAttribute("selectCourses", selectCourses);
+        }
+    }
+    
     private Integer readClassSelected(HttpServletRequest request)
     {
         String classIdSelectedString = request.getParameter("classId");

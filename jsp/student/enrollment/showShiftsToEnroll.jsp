@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <h2><bean:message key="link.shift.enrolment" /></h2>
+<span class="error"><html:errors/></span>
 <bean:define id="hoursPattern">HH : mm</bean:define>
 <html:form action="/enrollStudentInShifts" >
 	<html:hidden property="studentId"/>
@@ -85,7 +86,7 @@
 				<td>
 					<html:form action="/studentShiftEnrolmentManagerLoockup">
 						<html:hidden property="classId" value="<%=pageContext.findAttribute("classId").toString()%>"/>
-						<html:hidden property="studentId" value="<%=request.getParameter("studentId").toString()%>"/>
+						<html:hidden property="studentId" value="<%=pageContext.findAttribute("studentId").toString()%>"/>
 						<html:submit property="method" styleClass="inputbutton">
 							<bean:message key="button.clean"/>
 						</html:submit>

@@ -31,16 +31,10 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author jmota Modified by Fernanda Quitério
  */
-public class EnrollStudentInShiftsAction extends FenixAction
-{
+public class EnrollStudentInShiftsAction extends FenixAction {
 
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm actionForm,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors actionErrors = new ActionErrors();
@@ -49,42 +43,37 @@ public class EnrollStudentInShiftsAction extends FenixAction
         Integer studentId = (Integer) enrollmentForm.get("studentId");
         Map shiftsToEnroll = (Map) enrollmentForm.get("shiftMap");
 
-        List shiftList =buildShiftList(shiftsToEnroll);
-
+        List shiftList = buildShiftList(shiftsToEnroll);
 
         Object[] args = { studentId, shiftList };
-        try
-        {
-            ShiftEnrollmentErrorReport errorReport =
-                (ShiftEnrollmentErrorReport) ServiceUtils.executeService(
-                    userView,
-                    "EnrollStudentInShifts",
-                    args);
-            Iterator iter = errorReport.getUnAvailableShifts().iterator();
+        try {
+            ShiftEnrollmentErrorReport errorReport = (ShiftEnrollmentErrorReport) ServiceUtils
+                    .executeService(userView, "EnrollStudentInShifts", args);
 
-            while (iter.hasNext())
-            {
-                InfoShift infoShift = (InfoShift) iter.next();
-                ActionError actionError =
-                    new ActionError("error.shift.enrollment.capacityExceded", infoShift.getNome());
-                actionErrors.add("capacityExceded", actionError);
+            if (errorReport.getUnAvailableShifts() != null
+                    && errorReport.getUnAvailableShifts().size() > 0) {
+                Iterator iter = errorReport.getUnAvailableShifts().iterator();
+                while (iter.hasNext()) {
+                    InfoShift infoShift = (InfoShift) iter.next();
+                    ActionError actionError = new ActionError("error.shift.enrollment.capacityExceded",
+                            infoShift.getNome());
+                    actionErrors.add("capacityExceded", actionError);
+                }
             }
             if (errorReport.getUnExistingShifts() != null
-                && errorReport.getUnExistingShifts().size() > 0)
-            {
+                    && errorReport.getUnExistingShifts().size() > 0) {
                 ActionError actionError = new ActionError("error.shift.enrollment.nonExistingShift");
                 actionErrors.add("nonExisting", actionError);
             }
-        } catch (StudentNotFoundServiceException e)
-        {
+        } catch (StudentNotFoundServiceException e) {
+            e.printStackTrace();
             ActionError actionError = new ActionError("error.shift.enrollment.nonExistingStudent");
             actionErrors.add("nonExisting", actionError);
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
             throw new FenixActionException(e);
         }
-        if (!actionErrors.isEmpty())
-        {
+        if (!actionErrors.isEmpty()) {
             saveErrors(request, actionErrors);
             return mapping.getInputForward();
         }
@@ -95,17 +84,14 @@ public class EnrollStudentInShiftsAction extends FenixAction
      * @param shiftsToEnroll
      * @return
      */
-    private List buildShiftList(Map shiftsToEnroll)
-    {
+    private List buildShiftList(Map shiftsToEnroll) {
         List list = new ArrayList();
         Iterator iterator = shiftsToEnroll.entrySet().iterator();
 
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             Map.Entry entry = (Map.Entry) iterator.next();
             Integer shiftId = Integer.valueOf((String) entry.getValue());
-            if (shiftId != null)
-            {
+            if (shiftId != null) {
                 list.add(shiftId);
             }
         }

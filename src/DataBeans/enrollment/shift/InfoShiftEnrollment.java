@@ -202,7 +202,7 @@ public class InfoShiftEnrollment extends DataTranferObject
 
 		string.append("[InfoShiftEnrollment ");
 		string.append("\ninfoStudent: ");
-		string.append(infoStudent.getNumber());
+		string.append(infoStudent.getIdInternal());
 		
 		string.append("\ninfoExecutionDegreesList: ");		
 		if (infoExecutionDegreesList != null)
@@ -235,6 +235,14 @@ public class InfoShiftEnrollment extends DataTranferObject
 		if (infoAttendingCourses != null)
 		{
 			string.append(infoAttendingCourses.size());
+		} else {
+			string.append("null");			
+		}
+		
+		string.append("\ninfoShiftEnrollment: ");
+		if (infoShiftEnrollment != null)
+		{
+			string.append(infoShiftEnrollment.size());
 		} else {
 			string.append("null");			
 		}

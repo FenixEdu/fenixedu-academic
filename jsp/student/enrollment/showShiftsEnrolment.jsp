@@ -29,7 +29,7 @@
 							<bean:message key="link.shift.enrolement.edit"/>
 						</bean:define>
 						<html:link page="<%="/studentShiftEnrolmentManagerLoockup.do?method=" + link + "&amp;studentId=" + pageContext.findAttribute("studentId").toString()%>">
-					  		<b><bean:write name="link"/></b>
+					  		<b><bean:message key="link.shift.enrolment" />/<bean:write name="link"/></b>
 						</html:link>
 						&nbsp;-&nbsp;<bean:message key="message.shift.enrollment.modifyShifts.help" />
 					</li>

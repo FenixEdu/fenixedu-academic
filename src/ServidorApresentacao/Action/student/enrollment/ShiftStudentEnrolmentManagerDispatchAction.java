@@ -34,189 +34,137 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author tdi-dev (bruno) Modified by Tânia Pousão Modified by Fernanda Quitério
  *  
  */
-public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDispatchAction
-{
-	public ActionForward prepareStartViewWarning(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		return mapping.findForward("prepareEnrollmentViewWarning");
-	}
+public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDispatchAction {
+    public ActionForward prepareStartViewWarning(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return mapping.findForward("prepareEnrollmentViewWarning");
+    }
 
-	public ActionForward start(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		super.createToken(request);
+    public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        super.createToken(request);
 
-		return chooseCourses(mapping, form, request, response);
-	}
+        return prepareShiftEnrollment(mapping, form, request, response);
+    }
 
-	public ActionForward chooseCourses(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		ActionErrors errors = new ActionErrors();
-		IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward prepareShiftEnrollment(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ActionErrors errors = new ActionErrors();
+        IUserView userView = SessionUtils.getUserView(request);
 
-		//TODO:FIXME:THIS IS JUST A TEMPORARY BYPASS TO PREVENT 1ST YEAR STUDENTS FROM ENROLLING IN
-		// SHIFTS
-//		if ((new Integer(userView.getUtilizador().substring(1))).intValue() > 53227)
-//		{
-//			errors.add(
-//				"notAuthorizedShiftEnrollment",
-//				new ActionError("error.notAuthorized.ShiftEnrollment"));
-//			saveErrors(request, errors);
-//			return mapping.findForward("studentFirstPage");
-//		}
+        DynaActionForm enrolmentForm = (DynaActionForm) form;
+        Integer executionDegreeIdChosen = (Integer) enrolmentForm.get("degree");
 
-		DynaActionForm enrolmentForm = (DynaActionForm) form;
-		Integer executionDegreeIdChosen = (Integer) enrolmentForm.get("degree");
+        String studentNumber = obtainStudentNumber(request, userView);
 
-		String studentNumber = obtainStudentNumber(request, userView);
+        InfoShiftEnrollment infoShiftEnrollment = null;
+        Object[] args = { Integer.valueOf(studentNumber), executionDegreeIdChosen };
+        try {
+            infoShiftEnrollment = (InfoShiftEnrollment) ServiceManagerServiceFactory.executeService(
+                    userView, "PrepareInfoShiftEnrollmentByStudentNumber", args);
+        } catch (FenixServiceException serviceException) {
+            errors.add("error", new ActionError(serviceException.getMessage()));
+            saveErrors(request, errors);
+            return mapping.findForward("studentFirstPage");
+        }
 
-		InfoShiftEnrollment infoShiftEnrollment = null;
-		Object[] args = { Integer.valueOf(studentNumber), executionDegreeIdChosen };
-		try
-		{
-			infoShiftEnrollment =
-				(InfoShiftEnrollment) ServiceManagerServiceFactory.executeService(
-					userView,
-					"PrepareInfoShiftEnrollmentByStudentNumber",
-					args);
-		}
-		catch (FenixServiceException serviceException)
-		{
-			errors.add("error", new ActionError(serviceException.getMessage()));
-			saveErrors(request, errors);
-			return mapping.findForward("studentFirstPage");
-		}
+        //inicialize the form with the degree chosen and student number
+        enrolmentForm.set("degree", infoShiftEnrollment.getInfoExecutionDegree().getIdInternal());
+        enrolmentForm.set("studentId", infoShiftEnrollment.getInfoStudent().getIdInternal());
 
-		//inicialize the form with the degree chosen and student number
-		enrolmentForm.set("degree", infoShiftEnrollment.getInfoExecutionDegree().getIdInternal());
-		enrolmentForm.set("studentId", infoShiftEnrollment.getInfoStudent().getIdInternal());
+        request.setAttribute("infoShiftEnrollment", infoShiftEnrollment);
 
-		request.setAttribute("infoShiftEnrollment", infoShiftEnrollment);
+        String selectCourses = checkParameter(request);
+        if (infoShiftEnrollment.getInfoShiftEnrollment() != null
+                && infoShiftEnrollment.getInfoShiftEnrollment().size() > 0 && selectCourses == null) {
+            order(infoShiftEnrollment);
+            return mapping.findForward("showShiftsEnrollment");
+        }
 
-		String selectCourses = checkParameter(request);
-		if (infoShiftEnrollment.getInfoShiftEnrollment() != null
-			&& infoShiftEnrollment.getInfoShiftEnrollment().size() > 0
-			&&  selectCourses == null)
-		{
-			order(infoShiftEnrollment);
-			return mapping.findForward("showShiftsEnrollment");
-		}
-		
-			//order degree's list and format them names
-			if (infoShiftEnrollment.getInfoExecutionDegreesList() != null
-				&& infoShiftEnrollment.getInfoExecutionDegreesList().size() > 0)
-			{
-				Collections.sort(
-					infoShiftEnrollment.getInfoExecutionDegreesList(),
-					new ComparatorByNameForInfoExecutionDegree());
-				infoShiftEnrollment.setInfoExecutionDegreesLabelsList(
-					ExecutionDegreesFormat.buildExecutionDegreeLabelValueBean(
-						infoShiftEnrollment.getInfoExecutionDegreesList()));
-			}
+        if (infoShiftEnrollment.getInfoAttendingCourses() != null
+                && infoShiftEnrollment.getInfoAttendingCourses().size() > 0 && selectCourses == null) {
+            //show enrollment secreen
+            request.setAttribute("studentId", infoShiftEnrollment.getInfoStudent().getIdInternal());
+            return mapping.findForward("showEnrollmentPage");
+        }
 
-			return mapping.findForward("selectCourses");
-		
-	}
+        //order degree's list and format them names
+        if (infoShiftEnrollment.getInfoExecutionDegreesList() != null
+                && infoShiftEnrollment.getInfoExecutionDegreesList().size() > 0) {
+            Collections.sort(infoShiftEnrollment.getInfoExecutionDegreesList(),
+                    new ComparatorByNameForInfoExecutionDegree());
+            infoShiftEnrollment.setInfoExecutionDegreesLabelsList(ExecutionDegreesFormat
+                    .buildExecutionDegreeLabelValueBean(infoShiftEnrollment
+                            .getInfoExecutionDegreesList()));
+        }
 
-	private void order(InfoShiftEnrollment infoShiftEnrollment)
-	{
-		ComparatorChain comparator = new ComparatorChain();
-		comparator.addComparator(new BeanComparator("infoDisciplinaExecucao.nome"));
-		comparator.addComparator(new BeanComparator("tipo"));
-		Collections.sort(infoShiftEnrollment.getInfoShiftEnrollment(), comparator);
-	}
-	
-	private String checkParameter(HttpServletRequest request)
-	{
-		String selectCourses = request.getParameter("selectCourses");
-		if(selectCourses != null) {
-		request.setAttribute("selectCourses", selectCourses);
-		}
-		return selectCourses;
-	}
+        return mapping.findForward("selectCourses");
+    }
 
-	private String obtainStudentNumber(HttpServletRequest request, IUserView userView)
-		throws FenixActionException
-	{
-		String studentNumber = getStudent(request);
-		if (studentNumber == null)
-		{
-			InfoStudent infoStudent = obtainStudent(request, userView);
-			studentNumber = infoStudent.getNumber().toString();
-		}
-		return studentNumber;
-	}
+    private void order(InfoShiftEnrollment infoShiftEnrollment) {
+        ComparatorChain comparator = new ComparatorChain();
+        comparator.addComparator(new BeanComparator("infoDisciplinaExecucao.nome"));
+        comparator.addComparator(new BeanComparator("tipo"));
+        Collections.sort(infoShiftEnrollment.getInfoShiftEnrollment(), comparator);
+    }
 
-	private String getStudent(HttpServletRequest request)
-	{
-		String studentNumber = request.getParameter("studentNumber");
-		if (studentNumber == null)
-		{
-			studentNumber = (String) request.getAttribute("studentNumber");
-		}
-		return studentNumber;
-	}
+    private String checkParameter(HttpServletRequest request) {
+        String selectCourses = request.getParameter("selectCourses");
+        if (selectCourses != null) {
+            request.setAttribute("selectCourses", selectCourses);
+        }
+        return selectCourses;
+    }
 
-	public ActionForward unEnroleStudentFromShift(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		IUserView userView = SessionUtils.getUserView(request);
+    private String obtainStudentNumber(HttpServletRequest request, IUserView userView)
+            throws FenixActionException {
+        String studentNumber = getStudent(request);
+        if (studentNumber == null) {
+            InfoStudent infoStudent = obtainStudent(request, userView);
+            studentNumber = infoStudent.getNumber().toString();
+        }
+        return studentNumber;
+    }
 
-		String studentIDString = request.getParameter("studentId");
-		String shidtIDString = request.getParameter("shiftId");
+    private String getStudent(HttpServletRequest request) {
+        String studentNumber = request.getParameter("studentNumber");
+        if (studentNumber == null) {
+            studentNumber = (String) request.getAttribute("studentNumber");
+        }
+        return studentNumber;
+    }
 
-		Integer studentId = new Integer(studentIDString);
-		Integer shiftId = new Integer(shidtIDString);
+    public ActionForward unEnroleStudentFromShift(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        IUserView userView = SessionUtils.getUserView(request);
 
-		try
-		{
-			Object args[] = { studentId, shiftId };
-			ServiceManagerServiceFactory.executeService(userView, "UnEnrollStudentFromShift", args);
-		}
-		catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
+        String studentIDString = request.getParameter("studentId");
+        String shidtIDString = request.getParameter("shiftId");
 
-		return start(mapping, form, request, response);
-	}
+        Integer studentId = new Integer(studentIDString);
+        Integer shiftId = new Integer(shidtIDString);
 
-	private InfoStudent obtainStudent(HttpServletRequest request, IUserView userView)
-		throws FenixActionException
-	{
-		InfoStudent infoStudent = null;
-		try
-		{
-			Object args[] = { userView.getUtilizador()};
-			infoStudent =
-				(InfoStudent) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadStudentByUsername",
-					args);
-		}
-		catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
-		return infoStudent;
-	}
+        try {
+            Object args[] = { studentId, shiftId };
+            ServiceManagerServiceFactory.executeService(userView, "UnEnrollStudentFromShift", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+
+        return start(mapping, form, request, response);
+    }
+
+    private InfoStudent obtainStudent(HttpServletRequest request, IUserView userView)
+            throws FenixActionException {
+        InfoStudent infoStudent = null;
+        try {
+            Object args[] = { userView.getUtilizador() };
+            infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadStudentByUsername", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        return infoStudent;
+    }
 
 }
