@@ -43,16 +43,21 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumberTest extends TestCa
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/testDataSet.xml";
+		return "etc/testDataForReadStudentsByNameIDnumberIDtypeAndStudentNumberTest.xml";
+	}
+
+	protected String getDBBackupDataSetFilePath() {
+		return "etc/dbBackup.xml";
 	}
 
 	protected void setUp() {
 
 		try {
 			dbAcessPoint = new dbaccess();
+			dbAcessPoint.setDbName("fenix");
 			dbAcessPoint.openConnection();
-			dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
-			dbAcessPoint.loadDataBase(getDataSetFilePath());
+			dbAcessPoint.backUpDataBaseContents(this.getDBBackupDataSetFilePath());
+//			dbAcessPoint.loadDataBase(getDataSetFilePath());
 			dbAcessPoint.closeConnection();
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
@@ -73,6 +78,14 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumberTest extends TestCa
 	}
 
 	protected void tearDown() {
+//		try {
+//			dbAcessPoint.openConnection();
+//			dbAcessPoint.loadDataBase(this.getDBBackupDataSetFilePath());
+//			dbAcessPoint.closeConnection();
+//		} catch (Exception ex) {
+//			System.out.println(ex.toString());
+//			fail("Loading Database With DB Backup Data Set!");
+//		}
 	}
 
 	public void testReadStudentsByNameIDnumberIDtypeAndStudentNumber() {
