@@ -25,6 +25,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IProfessorship;
 import Dominio.IQualification;
+import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
 import Dominio.teacher.ICareer;
 import Dominio.teacher.IExternalActivity;
@@ -40,6 +41,7 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentQualification;
+import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -62,17 +64,7 @@ import Util.PublicationType;
  */
 public class ReadTeacherInformation implements IServico
 {
-    private static ReadTeacherInformation service = new ReadTeacherInformation();
-
-    public static ReadTeacherInformation getService()
-    {
-        return service;
-    }
-
-    /**
-	 *  
-	 */
-    private ReadTeacherInformation()
+    public ReadTeacherInformation()
     {
     }
 
@@ -127,7 +119,8 @@ public class ReadTeacherInformation implements IServico
 
             infoSiteTeacherInformation.setInfoExternalActivities(getInfoExternalActivities(sp, teacher));
 
-            infoSiteTeacherInformation.setInfoExecutionCourses(getInfoExecutionCourses(sp, teacher));
+            infoSiteTeacherInformation.setInfoLecturingExecutionCourses(getInfoLecturingExecutionCourses(sp, teacher));
+            infoSiteTeacherInformation.setInfoResponsibleExecutionCourses(getInfoResponsibleExecutionCourses(sp, teacher));
 
             IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
             IWeeklyOcupation weeklyOcupation = persistentWeeklyOcupation.readByTeacher(teacher);
@@ -155,11 +148,16 @@ public class ReadTeacherInformation implements IServico
             infoSiteTeacherInformation.setInfoPhdOrientation(
                 getInfoOrientation(sp, teacher, OrientationType.PHD));
 
-            infoSiteTeacherInformation.setInfoArticleChapterPublicationsNumber(getInfoPublicationsNumber(sp, teacher, PublicationType.ARTICLES_CHAPTERS));
-            infoSiteTeacherInformation.setInfoEditBookPublicationsNumber(getInfoPublicationsNumber(sp, teacher, PublicationType.EDITOR_BOOK));
-            infoSiteTeacherInformation.setInfoAuthorBookPublicationsNumber(getInfoPublicationsNumber(sp, teacher, PublicationType.AUTHOR_BOOK));
-            infoSiteTeacherInformation.setInfoMagArticlePublicationsNumber(getInfoPublicationsNumber(sp, teacher, PublicationType.MAG_ARTICLE));
-            infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(getInfoPublicationsNumber(sp, teacher, PublicationType.COMUNICATION));
+            infoSiteTeacherInformation.setInfoArticleChapterPublicationsNumber(
+                getInfoPublicationsNumber(sp, teacher, PublicationType.ARTICLES_CHAPTERS));
+            infoSiteTeacherInformation.setInfoEditBookPublicationsNumber(
+                getInfoPublicationsNumber(sp, teacher, PublicationType.EDITOR_BOOK));
+            infoSiteTeacherInformation.setInfoAuthorBookPublicationsNumber(
+                getInfoPublicationsNumber(sp, teacher, PublicationType.AUTHOR_BOOK));
+            infoSiteTeacherInformation.setInfoMagArticlePublicationsNumber(
+                getInfoPublicationsNumber(sp, teacher, PublicationType.MAG_ARTICLE));
+            infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(
+                getInfoPublicationsNumber(sp, teacher, PublicationType.COMUNICATION));
 
             infoSiteTeacherInformation.setInfoOldCientificPublications(
                 getInfoOldPublications(sp, teacher, OldPublicationType.CIENTIFIC));
@@ -176,6 +174,54 @@ public class ReadTeacherInformation implements IServico
         {
             throw new FenixServiceException(e);
         }
+    }
+
+    /**
+     * @param sp
+     * @param teacher
+     * @return
+     */
+    private List getInfoResponsibleExecutionCourses(ISuportePersistente sp, ITeacher teacher) throws ExcepcaoPersistencia
+    {
+        IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+        final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        List responsiblesFor = persistentResponsibleFor.readByTeacher(teacher);
+
+        // filter only the execution courses of the current execution year
+        responsiblesFor = (List) CollectionUtils.select(responsiblesFor, new Predicate()
+        {
+            IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+            public boolean evaluate(Object o)
+            {
+                IResponsibleFor responsibleFor = (IResponsibleFor) o;
+                IExecutionCourse executionCourse = responsibleFor.getExecutionCourse();
+                IExecutionYear executionYear = executionCourse.getExecutionPeriod().getExecutionYear();
+                return executionYear.equals(this.executionYear);
+            }
+        });
+        List infoExecutionCourses = (List) CollectionUtils.collect(responsiblesFor, new Transformer()
+        {
+            public Object transform(Object o)
+            {
+                IResponsibleFor responsibleFor = (IResponsibleFor) o;
+                IExecutionCourse executionCourse = responsibleFor.getExecutionCourse();
+                List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+                List infoCurricularCourses =
+                    (List) CollectionUtils.collect(curricularCourses, new Transformer()
+                {
+                    public Object transform(Object o)
+                    {
+                        ICurricularCourse curricularCourse = (ICurricularCourse) o;
+                        return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                    }
+                });
+                InfoExecutionCourse infoExecutionCourse =
+                    Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
+                return infoExecutionCourse;
+            }
+        });
+        return infoExecutionCourses;
     }
 
     private List getInfoExternalActivities(ISuportePersistente sp, ITeacher teacher)
@@ -196,26 +242,26 @@ public class ReadTeacherInformation implements IServico
         return infoExternalActivities;
     }
 
-    private List getInfoExecutionCourses(ISuportePersistente sp, ITeacher teacher)
+    private List getInfoLecturingExecutionCourses(ISuportePersistente sp, ITeacher teacher)
         throws ExcepcaoPersistencia
     {
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
         final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-        List professorShips = persistentProfessorship.readByTeacher(teacher);
+        List professorships = persistentProfessorship.readByTeacher(teacher);
 
         // filter only the execution courses of the current execution year
-        professorShips = (List) CollectionUtils.select(professorShips, new Predicate()
+        professorships = (List) CollectionUtils.select(professorships, new Predicate()
         {
             IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
             public boolean evaluate(Object o)
             {
-                IProfessorship professorShip = (IProfessorship) o;
-                IExecutionCourse executionCourse = professorShip.getExecutionCourse();
+                IProfessorship professorship = (IProfessorship) o;
+                IExecutionCourse executionCourse = professorship.getExecutionCourse();
                 IExecutionYear executionYear = executionCourse.getExecutionPeriod().getExecutionYear();
                 return executionYear.equals(this.executionYear);
             }
         });
-        List infoExecutionCourses = (List) CollectionUtils.collect(professorShips, new Transformer()
+        List infoExecutionCourses = (List) CollectionUtils.collect(professorships, new Transformer()
         {
             public Object transform(Object o)
             {
