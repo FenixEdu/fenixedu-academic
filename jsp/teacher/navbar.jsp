@@ -7,7 +7,7 @@
 <html:link page="/firstPage.do">
 	<bean:message key="link.home"/>
 </html:link>
-<html:link page="/accessAnouncementManagement">
+<html:link page="/accessAnnouncementManagementAction.do">
 	<bean:message key="link.announcements"/>
 </html:link>
 <html:link page="/objectivesManagerDA.do?method=acessObjectives">

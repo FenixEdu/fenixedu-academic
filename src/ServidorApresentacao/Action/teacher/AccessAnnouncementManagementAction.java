@@ -27,24 +27,14 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 
 		HttpSession session = getSession(request);
 
-		session.removeAttribute("Section");
-		session.removeAttribute("Announcement");
-		session.removeAttribute("Announcements");
-		session.removeAttribute("BibliographicReference");
-		session.removeAttribute("Curriculum");
-
+		
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		
-//FIXME: 1 - is this correct ? 
-//		  userView.setSeccaoNome(null);
-//		  userView.setAnunciosNome(null);
-//		  userView.setCurriculumNome(null);
 
-		session.removeAttribute("SectionName");
-		session.removeAttribute("AnnouncementsName");
-		session.removeAttribute("CurriculumName");
 
-		InfoSite infoSite = (InfoSite) session.getAttribute("Site");
+		
+
+		InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
 		Object args[] = new Object[1];
 		args[0] = infoSite;
