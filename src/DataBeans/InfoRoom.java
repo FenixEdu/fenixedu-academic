@@ -20,8 +20,6 @@ public class InfoRoom  extends InfoObject implements Comparable {
 	protected Integer _capacidadeExame;
 	protected TipoSala _tipo;
 	
-	private Integer idInternal;
-
 	public InfoRoom() { }
     
 	public InfoRoom(String nome, String edificio, Integer piso, TipoSala tipo, Integer capacidadeNormal, Integer capacidadeExame) {
@@ -105,18 +103,4 @@ public class InfoRoom  extends InfoObject implements Comparable {
 	public int compareTo(Object obj) {
 	  return getNome().compareTo(((InfoRoom)obj).getNome());
 	}
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal() {
-		return idInternal;
-	}
-
-	/**
-	 * @param internal
-	 */
-	public void setIdInternal(Integer internal) {
-		idInternal = internal;
-	}
-
 }
