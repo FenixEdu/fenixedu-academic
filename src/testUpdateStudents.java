@@ -42,49 +42,42 @@ public class testUpdateStudents
 		Iterator studentsTestQuestionIt = studentsTestQuestionList.iterator();
 
 		ParseQuestion parse = new ParseQuestion();
+		System.out.println(studentsTestQuestionList.size() + " questions...");
+		persistentSuport.confirmarTransaccao();
 		while (studentsTestQuestionIt.hasNext())
 		{
-			IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) studentsTestQuestionIt.next();
-			if (studentTestQuestion.getStudent().getIdInternal().intValue() == 5171)
-			{
-				System.out.println("Student question="+ studentTestQuestion.getIdInternal());
-				System.out.println("Dominio TestQuestionMark="+ studentTestQuestion.getTestQuestionMark());
-				InfoStudentTestQuestion infoStudentTestQuestion = Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
-				try
-				{
-					infoStudentTestQuestion.setQuestion(
-						parse.parseQuestion(infoStudentTestQuestion.getQuestion().getXmlFile(), infoStudentTestQuestion.getQuestion()));
-					infoStudentTestQuestion = parse.getOptionsShuffle(infoStudentTestQuestion);
-				} catch (Exception e)
-				{
-					throw new FenixServiceException(e);
-				}
-				System.out.println("Dominio TestQuestionMark="+ infoStudentTestQuestion.getTestQuestionMark());
-				System.out.println("Response="+infoStudentTestQuestion.getResponse().intValue());
-				
-				if (infoStudentTestQuestion.getResponse().intValue() != 0)
-				{
-					System.out.println("Aqui");
-					persistentStudentTestQuestion.lockWrite(studentTestQuestion);
-					if (infoStudentTestQuestion.getQuestion().getCorrectResponse().contains(studentTestQuestion.getResponse())) {
-						studentTestQuestion.setTestQuestionMark(new Double(studentTestQuestion.getTestQuestionValue().doubleValue()));
-						System.out.println("AQUI 2" + new Double(studentTestQuestion.getTestQuestionValue().doubleValue()));
-					}
-					
-					else {
-						System.out.println("AQUI");
-						studentTestQuestion.setTestQuestionMark(
-							new Double(
-								- (
-									infoStudentTestQuestion.getTestQuestionValue().intValue()
-										* (java.lang.Math.pow(infoStudentTestQuestion.getQuestion().getOptionNumber().intValue() - 1, -1)))));
-					}
-					
-				}
 
+			IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) studentsTestQuestionIt.next();
+			InfoStudentTestQuestion infoStudentTestQuestion = Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
+			try
+			{
+				infoStudentTestQuestion.setQuestion(
+					parse.parseQuestion(infoStudentTestQuestion.getQuestion().getXmlFile(), infoStudentTestQuestion.getQuestion()));
+				infoStudentTestQuestion = parse.getOptionsShuffle(infoStudentTestQuestion);
+			} catch (Exception e)
+			{
+				throw new FenixServiceException(e);
 			}
+
+			if (infoStudentTestQuestion.getResponse().intValue() != 0)
+			{
+				persistentSuport.iniciarTransaccao();
+				persistentStudentTestQuestion.lockWrite(studentTestQuestion);
+				if (infoStudentTestQuestion.getQuestion().getCorrectResponse().contains(studentTestQuestion.getResponse()))
+				{
+					studentTestQuestion.setTestQuestionMark(new Double(studentTestQuestion.getTestQuestionValue().doubleValue()));
+				} else
+				{
+					studentTestQuestion.setTestQuestionMark(
+						new Double(
+							- (
+								infoStudentTestQuestion.getTestQuestionValue().intValue()
+									* (java.lang.Math.pow(infoStudentTestQuestion.getQuestion().getOptionNumber().intValue() - 1, -1)))));
+				}
+				persistentSuport.confirmarTransaccao();
+			}
+			
 		}
-		persistentSuport.confirmarTransaccao();
 
 	}
 }
