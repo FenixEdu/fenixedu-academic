@@ -8,6 +8,8 @@ package middleware.almeida;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -73,6 +75,8 @@ public abstract class LoadDataFile {
 	
 	abstract protected String getFilename();
 	
+	abstract protected String getFilenameOutput();
+	
 	abstract protected String getFieldSeperator();
 
 	protected void writeElement(Object persistentObject) {
@@ -108,6 +112,18 @@ public abstract class LoadDataFile {
 
 	private void shutdownDAO() {
 		persistentObjectOJB.commitTransaction();
+	}
+
+	protected void writeToFile(String bufferToWrite) {
+		try {
+			FileWriter outFile = new FileWriter(getFilenameOutput());
+			outFile.write(bufferToWrite);
+			outFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(
+				"Failed to obtain a file writer for " + getFilenameOutput());
+		}
 	}
 
 	private void report() {

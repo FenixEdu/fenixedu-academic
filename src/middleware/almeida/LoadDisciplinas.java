@@ -66,8 +66,16 @@ public class LoadDisciplinas extends LoadDataFile {
 		ICurricularCourse curricularCourse =
 			persistentObjectOJB.readCurricularCourse(
 				almeida_disc.getNomedis(),
-				new Integer("" + almeida_disc.getCodcur()));
+				new Integer("" + almeida_disc.getCodcur()),
+				almeida_disc.getCoddis());
 		if (curricularCourse == null) {
+			System.out.println(
+				"codigo: "
+					+ almeida_disc.getCoddis()
+					+ "  name: "
+					+ almeida_disc.getNomedis()
+					+ "  degreeId: "
+					+ almeida_disc.getCodcur());
 			numberUntreatableElements++;
 		}
 	}

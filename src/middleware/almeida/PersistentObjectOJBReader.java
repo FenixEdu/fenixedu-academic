@@ -12,12 +12,17 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.CurricularCourse;
 import Dominio.DegreeCurricularPlan;
+import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
+import Util.PeriodState;
 import Util.TipoCurso;
 
 /**
@@ -60,33 +65,57 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 	}
 
-	public ICurricularCourse readCurricularCourse(String code) {
+	private ICurricularCourse readCurricularCourse(
+		String code,
+		Integer degreeID) {
+		// Delete blank space in the beggining of code1
+		if (code.charAt(0) == ' ') {
+			code = code.substring(1);
+		} else if (code.equals("ALG") && degreeID.intValue() == 5) {
+			code = "AP9";
+		} else if (code.equals("AWX") && degreeID.intValue() == 21) {
+			code = "AXK";
+		}
+
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("code", code);
+		criteria.addEqualTo("degreeCurricularPlan", degreeID);
 		List result = query(CurricularCourse.class, criteria);
 		if (result.size() == 1) {
 			return (ICurricularCourse) result.get(0);
-		} //else if (result.size() > 1) {
-			//System.out.println("code: " + code + " result.size=" + result.size());
-		//} else /* if (result.size() == 0) */ {
-		//	System.out.println("code: " + code + " result.size=" + result.size());
-		//}
+		} else if (result.size() > 1) {
+			System.out.println(
+				"code: "
+					+ code
+					+ "  degreeID: "
+					+ degreeID
+					+ " result.size="
+					+ result.size());
+		} else /* if (result.size() == 0) */ {
+			System.out.println(
+				"code: "
+					+ code
+					+ "  degreeID: "
+					+ degreeID
+					+ " result.size="
+					+ result.size());
+		}
 		return null;
 	}
 
-	public ICurricularCourse readCurricularCourse(String name, Integer degreeID) {
+	public ICurricularCourse readCurricularCourse(
+		String name,
+		Integer degreeID,
+		String code) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("name", name);
 		criteria.addEqualTo("degreeCurricularPlan", degreeID);
 		List result = query(CurricularCourse.class, criteria);
 		if (result.size() == 1) {
 			return (ICurricularCourse) result.get(0);
-		} else if (result.size() > 1) {
-			System.out.println("name: " + name + "  degreeId: " + degreeID + "  found: " + result.size());
-		} else /* if (result.size() == 0) */ {
-			System.out.println("name: " + name + "  degreeId: " + degreeID + "  found: " + result.size());
+		} else {
+			return readCurricularCourse(code, degreeID);
 		}
-		return null;
 	}
 
 	public Almeida_disc readAlmeidaCurricularCourse(String code) {
@@ -96,6 +125,50 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		//System.out.println("result.size" + result.size());
 		if (result.size() > 0) {
 			return (Almeida_disc) result.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * @param curricularCourse
+	 * @param executionPeriod
+	 * @return
+	 */
+	public IDisciplinaExecucao readExecutionCourse(
+		ICurricularCourse curricularCourse,
+		IExecutionPeriod executionPeriod) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"associatedCurricularCourses.name",
+			curricularCourse.getName());
+		criteria.addEqualTo(
+			"associatedCurricularCourses.degreeCurricularPlan.degree.nome",
+			curricularCourse.getDegreeCurricularPlan().getDegree().getNome());
+		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
+		criteria.addEqualTo(
+			"executionPeriod.name.executionYear.year",
+			executionPeriod.getExecutionYear().getYear());
+		List result = query(DisciplinaExecucao.class, criteria);
+		//System.out.println("result.size" + result.size());
+		if (result.size() == 1) {
+			return (IDisciplinaExecucao) result.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * @param curricularCourse
+	 * @param executionPeriod
+	 * @return
+	 */
+	public IExecutionPeriod readActiveExecutionPeriod() {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("state", PeriodState.ACTUAL_CODE);
+		List result = query(ExecutionPeriod.class, criteria);
+		if (result.size() == 1) {
+			return (IExecutionPeriod) result.get(0);
 		} else {
 			return null;
 		}

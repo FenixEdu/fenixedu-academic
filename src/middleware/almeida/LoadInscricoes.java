@@ -8,8 +8,8 @@ package middleware.almeida;
 
 import java.util.StringTokenizer;
 
-import org.apache.log4j.helpers.CyclicBuffer;
-
+import Dominio.Enrolment;
+import Dominio.Frequenta;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IDisciplinaExecucao;
@@ -17,6 +17,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
+import Util.EnrolmentState;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
@@ -28,12 +29,16 @@ public class LoadInscricoes extends LoadDataFile {
 
 	private static LoadInscricoes loader = null;
 
+	static String executionCoursesNotFound = "";
+
 	private LoadInscricoes() {
 	}
 
 	public static void main(String[] args) {
 		loader = new LoadInscricoes();
 		loader.load();
+
+		loader.writeToFile(executionCoursesNotFound);
 	}
 
 	protected void processLine(String line) {
@@ -64,28 +69,44 @@ public class LoadInscricoes extends LoadDataFile {
 	}
 
 	private void processEnrolement(Almeida_inscricoes almeida_inscricoes) {
-		//IStudentCurricularPlan studentCurricularPlan =
-		//	readStudentCurricularPlan(almeida_inscricoes);
+		IStudentCurricularPlan studentCurricularPlan =
+			readStudentCurricularPlan(almeida_inscricoes);
 		ICurricularCourse curricularCourse =
 			readCurricularCourse(almeida_inscricoes);
-		//		IExecutionPeriod executionPeriod = readActiveExecutionPeriod();
-		//		IDisciplinaExecucao disciplinaExecucao =
-		//			readExecutionCourse(curricularCourse, executionPeriod);
+		IExecutionPeriod executionPeriod = null;
+		IDisciplinaExecucao disciplinaExecucao = null;
+		if (curricularCourse != null) {
+			executionPeriod = readActiveExecutionPeriod();
+			disciplinaExecucao =
+				readExecutionCourse(curricularCourse, executionPeriod);
 
-		//		Enrolment enrolment =
-		//			new Enrolment(
-		//				studentCurricularPlan,
-		//				curricularCourse,
-		//				new EnrolmentState(EnrolmentState.ENROLED),
-		//				executionPeriod);
-		//
-		//		Frequenta frequenta =
-		//			new Frequenta(
-		//				studentCurricularPlan.getStudent(),
-		//				disciplinaExecucao);
-		//
-		//		writeElement(enrolment);
-		//		writeElement(frequenta);
+			if (disciplinaExecucao == null) {
+				executionCoursesNotFound += "Curricular: code= "
+					+ curricularCourse.getCode()
+					+ "  name= "
+					+ curricularCourse.getName()
+					+ "  curso= "
+					+ almeida_inscricoes.getCurso()
+					+ "\n";
+				//writeElement(almeida_inscricoes);
+				numberUntreatableElements++;
+			}
+		}
+
+		Enrolment enrolment =
+			new Enrolment(
+				studentCurricularPlan,
+				curricularCourse,
+				new EnrolmentState(EnrolmentState.ENROLED),
+				executionPeriod);
+
+		Frequenta frequenta =
+			new Frequenta(
+				studentCurricularPlan.getStudent(),
+				disciplinaExecucao);
+
+		writeElement(enrolment);
+		writeElement(frequenta);
 	}
 
 	/**
@@ -96,16 +117,17 @@ public class LoadInscricoes extends LoadDataFile {
 	private IDisciplinaExecucao readExecutionCourse(
 		ICurricularCourse curricularCourse,
 		IExecutionPeriod executionPeriod) {
-		// TODO Auto-generated method stub
-		return null;
+		return persistentObjectOJB.readExecutionCourse(
+			curricularCourse,
+			executionPeriod);
+
 	}
 
 	/**
 	 * @return
 	 */
 	private IExecutionPeriod readActiveExecutionPeriod() {
-		// TODO Auto-generated method stub
-		return null;
+		return persistentObjectOJB.readActiveExecutionPeriod();
 	}
 
 	/**
@@ -122,31 +144,21 @@ public class LoadInscricoes extends LoadDataFile {
 
 		// Log the ones that don't exist in his database!
 		if (almeida_disc == null) {
-			System.out.println(
-				"Failed to read Almeidas curricular course: "
-					+ almeida_inscricoes.getCoddis());
-			writeElement(almeida_inscricoes);
+			//writeElement(almeida_inscricoes);
 			numberUntreatableElements++;
 		} else {
-
+			// Read our corresponding curricular couse
 			curricularCourse =
 				persistentObjectOJB.readCurricularCourse(
 					almeida_disc.getNomedis(),
-					new Integer("" + almeida_disc.getCodcur()));
+					new Integer("" + almeida_disc.getCodcur()),
+					almeida_disc.getCoddis());
 			if (curricularCourse == null) {
+				// Log the ones we can't match
+				writeElement(almeida_inscricoes);
 				numberUntreatableElements++;
 			}
 		}
-
-		//					persistentObjectOJB.readCurricularCourse(
-		//						almeida_inscricoes.getCoddis());
-		//
-		//		if (curricularCourse == null) {
-		//			untreatableCurricularCourses++;
-		////			System.out.println(
-		////				"Failed to read curricular course: "
-		////					+ almeida_inscricoes.getCoddis());
-		//		}
 
 		return curricularCourse;
 	}
@@ -194,6 +206,13 @@ public class LoadInscricoes extends LoadDataFile {
 
 	protected String getFieldSeperator() {
 		return "\t";
+	}
+
+	/* (non-Javadoc)
+	 * @see middleware.almeida.LoadDataFile#getFilenameOutput()
+	 */
+	protected String getFilenameOutput() {
+		return "ExecutionCoursesNotFound.txt";
 	}
 
 }
