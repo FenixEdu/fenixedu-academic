@@ -31,14 +31,14 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
     public CandidateSituationOJB() {
     }
     
-    public ICandidateSituation readActiveCandidateSituation(Integer candidateNumber, String degreeCode, Integer applicationYear) throws ExcepcaoPersistencia {
+    public ICandidateSituation readActiveCandidateSituation(Integer candidateNumber, String degreeCode, String applicationYear) throws ExcepcaoPersistencia {
         try {
             ICandidateSituation candidate = null;
             
             String oqlQuery = "select all from " + CandidateSituation.class.getName()
             + " where masterDegreeCandidate.candidateNumber = $1"
             + " and masterDegreeCandidate.degree.sigla = $2"
-            + " and masterDegreeCandidate.applicationYear = $3"
+            + " and masterDegreeCandidate.executionYear.year = $3"
             + " and validation = $4";
             
             query.create(oqlQuery);
@@ -57,12 +57,12 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
         }
     }
     
-	public List readCandidateSituations(Integer candidateNumber, String degreeCode, Integer applicationYear) throws ExcepcaoPersistencia {
+	public List readCandidateSituations(Integer candidateNumber, String degreeCode, String applicationYear) throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select all from " + CandidateSituation.class.getName()
 			+ " where masterDegreeCandidate.candidateNumber = $1"
 			+ " and masterDegreeCandidate.degree.sigla = $2"
-			+ " and masterDegreeCandidate.applicationYear = $3";
+			+ " and masterDegreeCandidate.executionYear.year = $3";
             
 			query.create(oqlQuery);
 			query.bind(candidateNumber);

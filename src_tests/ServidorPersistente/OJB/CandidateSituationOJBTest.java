@@ -82,7 +82,7 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-            candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(new Integer(1), "MIC", new Integer(2002));
+            candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(new Integer(1), "MIC", "2003/2004");
             persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
@@ -103,7 +103,7 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-            candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(new Integer(3), "2", new Integer(2003));
+            candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(new Integer(3), "2", "2003/2004");
             assertNull(candidateSituationTemp);
             persistentSupport.confirmarTransaccao();
             
@@ -174,7 +174,7 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         ICandidateSituation candidateSituationTemp = null;
         try {
             persistentSupport.iniciarTransaccao();
-            candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(new Integer(1), "MIC", new Integer(2002));
+            candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(new Integer(1), "MIC", "2003/2004");
             persistentCandidateSituation.delete(candidateSituationTemp);
             persistentSupport.confirmarTransaccao();
             
@@ -185,7 +185,7 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
          //Test if it was really deleted
         try {
             persistentSupport.iniciarTransaccao();
-            candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(new Integer(1), "MIC", new Integer(2002));
+            candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(new Integer(1), "MIC", "2003/2004");
             
             assertNull(candidateSituationTemp);
             persistentSupport.confirmarTransaccao();
@@ -205,7 +205,7 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
 
         try {
             persistentSupport.iniciarTransaccao();
-	        candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(new Integer(1), "MIC", new Integer(2002));
+	        candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(new Integer(1), "MIC", "2003/2004");
             persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
@@ -245,7 +245,7 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
          //Test if it was really deleted
         try {
             persistentSupport.iniciarTransaccao();
-            candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(new Integer(1), "MIC", new Integer(200));
+            candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(new Integer(1), "MIC", "2003/2004");
             assertNull(candidateSituationTemp);
             persistentSupport.confirmarTransaccao();
             
