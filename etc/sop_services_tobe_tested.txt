@@ -1,5 +1,12 @@
-. EditarAulaServicosTest.java
-. LerAulasDeDisciplinaExecucaoETipoServicosTest.java
+MANHOSOS:
+=========
+. AdicionarAulaServicosTest
+. CriarAulaServicosTest
+. EditarAulaServicosTest
+
+POR FAZER:
+==========
+. LerAulasDeDisciplinaExecucaoETipoServicosTest
 
 
 FIQUEI NO TESTE "LerAulasDeSalaEmSemestreServicosTest" (FEITO)

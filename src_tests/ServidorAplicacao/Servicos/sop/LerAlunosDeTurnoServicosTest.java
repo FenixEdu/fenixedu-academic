@@ -11,8 +11,6 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoShift;
@@ -22,7 +20,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ITurno;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -31,7 +29,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerAlunosDeTurnoServicosTest extends TestCaseNeedAuthorizationServices {
+public class LerAlunosDeTurnoServicosTest extends TestCaseReadServices {
 	
 	private InfoShift infoShift = null;
 
@@ -64,6 +62,51 @@ public class LerAlunosDeTurnoServicosTest extends TestCaseNeedAuthorizationServi
 		return "LerAlunosDeTurno";
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+		this.ligarSuportePersistente(true);
+
+		Object argsLerAlunos[] = new Object[1];
+		argsLerAlunos[0] = new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao());
+
+		return argsLerAlunos;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+		this.ligarSuportePersistente(false);
+
+		Object argsLerAlunos[] = new Object[1];
+		argsLerAlunos[0] = new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao());
+
+		return argsLerAlunos;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+	 */
+	protected int getNumberOfItemsToRetrieve() {
+		return 1;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
+	 */
+	protected Object getObjectToCompare() {
+		return null;
+	}
+
+	protected boolean needsAuthorization() {
+		return true;
+	}
+
+/*
 	// read existing alunos
 	public void testReadExistingAlunos() {
 
@@ -97,7 +140,7 @@ public class LerAlunosDeTurnoServicosTest extends TestCaseNeedAuthorizationServi
 			fail("testLerExistingAlunos");
 		}
 	}
-
+*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;
