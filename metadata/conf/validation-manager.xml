@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- @validation.doctype@ -->
 <form-validation>
-  
+    <formset>
+    	<!--validation to the form to insert a Degree-->
+    <form name="insertDegreeForm">
+      <field property="name" depends="required" page="1" >
+        <arg0 key="message.manager.name" resource="true"/>
+      </field>
+
+      <field property="code" depends="required" page="1">
+        <arg0 key="message.manager.code" resource="true" />
+      </field>
+    </form>
+    
+    </formset>
 </form-validation>
+

@@ -10,7 +10,7 @@
 		
 	
 	<ul style="list-style-type: square;">
-	<li><html:link page="/insertDegree.do"><bean:message key="label.manager.insert.degree" /></html:link></li>			
+	<li><html:link page="/insertDegree.do?method=prepareInsert"><bean:message key="label.manager.insert.degree" /></html:link></li>			
 </ul>
 		<br>
 	<br>

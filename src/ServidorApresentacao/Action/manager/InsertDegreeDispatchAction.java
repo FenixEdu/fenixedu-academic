@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
@@ -51,21 +53,20 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-			
-			
+	
 		HttpSession session = request.getSession(false);
     	UserView userView =
 						(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		String code = (String) dynaForm.get("code");
 		String name = (String) dynaForm.get("name");
-		String tipoCursoString = (String) dynaForm.get("tipoCurso");
+		Integer degreeTypeInt = (Integer) dynaForm.get("degreeType");
 		
-		Integer tipoCursoInt = new Integer(tipoCursoString);
+	//	Integer tipoCursoInt = new Integer(tipoCursoString);
 		
-		TipoCurso tipoCurso =new TipoCurso(tipoCursoInt);
+		TipoCurso degreeType = new TipoCurso(degreeTypeInt);
 		
-		System.out.println("TIPO DE CURSO"+tipoCursoInt);
+	//	System.out.println("TIPO DE CURSO"+degreeTypeInt);
 		
 		
 
@@ -73,12 +74,13 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 				new InfoDegree(
 					code,
 					name,
-					tipoCurso);
+			        degreeType);
 
 		Object args[] = { infoDegree };
 		GestorServicos manager = GestorServicos.manager();
+		List serviceResult = null;
 		try {
-			manager.executar(userView, "InsertDegreeService", args);
+			serviceResult = (List) manager.executar(userView, "InsertDegreeService", args);
 		}
 		//FAZER TB PARA JAH EXISTE COM ESSA SIGLA 
 		catch (ExistingServiceException e) {
@@ -90,13 +92,33 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 
 		try {
 		
-		List degrees = null;
+			List degrees = null;
 				//Object args1[]={};
 				GestorServicos serviceManager = GestorServicos.manager();
 				degrees = (List) serviceManager.executar(
 				userView,
 				"ReadDegreesService",
 				null);
+				
+			if (serviceResult!=null)
+			{
+				ActionErrors actionErrors = new ActionErrors();
+				ActionError error = null;
+				if(serviceResult.get(0)!=null)
+				{
+					error = new ActionError("message.existingDegreeCode",  serviceResult.get(0));
+					actionErrors.add("message.existingDegreeCode", error);
+				}	
+			    
+				if(serviceResult.get(1)!=null)
+				{
+					error = new ActionError("message.existingDegreeName",  serviceResult.get(1));
+					actionErrors.add("message.existingDegreeName", error);
+				}
+								
+				saveErrors(request, actionErrors);
+			
+			}
 		
 				Collections.sort(degrees);
 				session.setAttribute(SessionConstants.INFO_DEGREES_LIST,degrees);
@@ -106,7 +128,5 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 
 			return mapping.findForward("readDegrees");
 	}
-	
-	
 			
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE struts-config PUBLIC
 	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
@@ -10,24 +10,29 @@
 		<form-beans type="org.apache.struts.action.ActionFormBean">
 	 
 		<form-bean name="deleteDegreesForm"
-					type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-					dynamic="true">        
+				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+					dynamic="true">  	      
 				<form-property name="idInternal" type="java.lang.Integer" />
 				 <form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>  
 	
 		<form-bean name="insertDegreeForm"
-					type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-					dynamic="true"> 
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">
 				<form-property name="name" type="java.lang.String" />       
 				<form-property name="code" type="java.lang.String" />
-				<form-property name="tipoCurso" type="java.lang.String" />
+				<form-property name="degreeType" type="java.lang.Integer" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			
 		</form-bean>  
 
-<!--isto é do form bean de cima	
+<!-- type="org.apache.struts.validator.DynaValidatorForm"
+	<form-property name="page" type="java.lang.Integer" initial="0"/>
+	
+	
+	type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+					dynamic="true"> 
+	isto do form bean de cima	
 	<form-property name="tipoCurso" type="java.lang.Integer" />
 				-->
 
@@ -85,51 +90,34 @@
 	 <!-- Action for reading a degree -->
       <action path="/readDegree"
       	      name="readDegreeForm"
-              input="readDegreesInput.do"
+              input="/readDegreesInput.do"
       	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">
       	  <forward name="viewDegree" path="df.page.read-degree"/>      	      
       </action>
          
      <!-- Action for inserting a degree -->
-      
-    <!-- 	<action name="sectionForm"
-		path="/createSection"
-		parameter="method"
-		scope="request"
-		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-        validate="true"
-        className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
-			<set-property property="componentClassName" value="DataBeans.InfoSiteRootSections"/>
-			<set-property property="inputForwardName" value="createSection"/>
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
-         	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-               /> 
-		<forward name="sectionsFirstPage" path="/sectionsFirstPage.jsp"/>               
-       <forward name="createSection" path="/createSection.jsp"/>
-	</action>
-	
-	input="readDegreesInput.do"-->
- 
+  
+
 	<action
 		path="/insertDegree"
 		name="insertDegreeForm"
+		input="/insertDegreeInput.do"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.manager.InsertDegreeDispatchAction"
-        validate="true"  >
+        validate="true">  
        <forward name="insertDegree" path="df.page.insert-degree"/>
-       <forward name="readDegrees" path="df.page.read-degrees"/>
-	</action>			
-      
-     				
+      <forward name="readDegrees" path="df.page.read-degrees"/>      	      
+	</action>			     
+    
+
      
 	<!-- Action for deleting degrees --> 
      
       <action 
       		 path="/deleteDegrees"
       		 name="deleteDegreesForm"
-      		 input="readDegreesInput.do"
+      		 input="/readDegreesInput.do"
       		 scope="request"
       	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction">
              
@@ -143,6 +131,10 @@
       
      
       <!--Input actions-->
+      <action path="/insertDegreeInput"
+      	      type="ServidorApresentacao.Action.commons.VoidAction">
+      	  <forward name="Success" path="df.page.insert-degree"/>      	      
+      </action>
       
      <action path="/readDegreesInput"
       	      type="ServidorApresentacao.Action.commons.VoidAction">
@@ -163,11 +155,12 @@
 	<message-resources parameter="ServidorApresentacao.ApplicationResources" />
 
 	<!-- ========== Plug Ins Configuration ================================= -->
+			
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 
 		value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-manager.xml"/>
 	</plug-in>
-	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
+	    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
 					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/manager/tiles-manager-definitions.xml,/WEB-INF/tiles/manager/tiles-manager-pages-definitions.xml" />
 		<set-property property="moduleAware" value="true" />

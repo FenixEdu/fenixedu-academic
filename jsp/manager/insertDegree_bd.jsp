@@ -3,18 +3,22 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<span class="error"><html:errors property="error.default" /></span>
+
 <h2><bean:message key="message.insertDegree" /></h2>
 <br/>
 <table>
 <html:form action="/insertDegree">
-<html:hidden property="page" value="1"/>
+	    
+		<html:hidden property="page" value="1"/>
 <tr>
 	<td>
 		<bean:message key="message.degreeName"/>
 	</td>
 	<td>
-		<html:text property="nome" />
+		<html:text property="name" />
+	</td>
+	<td>
+		<span class="error"><html:errors property="name"  /></span>
 	</td>
 </tr>
 <tr>
@@ -22,10 +26,25 @@
 		<bean:message key="message.degreeCode"/>
 	</td>
 	<td>
-		<html:text property="sigla" />
+		<html:text property="code" />
+	</td>
+	<td>
+		<span class="error"><html:errors property="code" /></span>
 	</td>
 </tr>
-
+				
+<tr>
+	<td>
+		<bean:message key="message.degreeType"/>
+	</td>
+	<td>
+		<html:select property="degreeType">
+		<option value="1"selected>Licenciatura
+		<option value="2">Mestrado
+		</html:select>
+		
+	</td>
+</tr>
 </table>
 <br />
 <html:submit styleClass="inputbutton">
