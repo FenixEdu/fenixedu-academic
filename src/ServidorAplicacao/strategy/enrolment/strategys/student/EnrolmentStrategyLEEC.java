@@ -227,10 +227,10 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia
 	{
-		HashMap creditsInScientificAreas = new HashMap(); // CACx
-		HashMap creditsInSpecializationAreaGroups = new HashMap(); // CGAEy
-		HashMap creditsInSecundaryAreaGroups = new HashMap(); // CGASz
-		int creditsInAnySecundaryArea = 0; // CAS
+		HashMap creditsInScientificAreas = new HashMap();
+		HashMap creditsInSpecializationAreaGroups = new HashMap();
+		HashMap creditsInSecundaryAreaGroups = new HashMap();
+		int creditsInAnySecundaryArea = 0;
 
 		getGivenCreditsInScientificArea(studentCurricularPlan, creditsInScientificAreas);
 
@@ -264,9 +264,11 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			studentCurricularPlan,
 			creditsInScientificAreas,
 			creditsInSpecializationAreaGroups,
-			creditsInSecundaryAreaGroups);
+			creditsInSecundaryAreaGroups,
+			creditsInAnySecundaryArea);
 
-		Integer creditsInSecundaryArea = calculateCreditsInSecundaryArea(studentCurricularPlan, creditsInSecundaryAreaGroups);
+		Integer creditsInSecundaryArea =
+			calculateCreditsInSecundaryArea(studentCurricularPlan, creditsInSecundaryAreaGroups, creditsInAnySecundaryArea);
 		Integer creditsInSpecializationArea =
 			calculateCreditsInSpecializationArea(studentCurricularPlan, creditsInSpecializationAreaGroups);
 		
@@ -517,13 +519,15 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	 * @param creditsInScientificAreas
 	 * @param creditsInSpecializationAreaGroups
 	 * @param creditsInSecundaryAreaGroups
+	 * @param creditsInAnySecundaryArea
 	 * @throws ExcepcaoPersistencia
 	 */
 	private void calculateGroupsCreditsFromScientificAreas(
 		IStudentCurricularPlan studentCurricularPlan,
 		HashMap creditsInScientificAreas,
 		HashMap creditsInSpecializationAreaGroups,
-		HashMap creditsInSecundaryAreaGroups)
+		HashMap creditsInSecundaryAreaGroups,
+		int creditsInAnySecundaryArea)
 		throws ExcepcaoPersistencia
 	{
 		HashMap clashingGroups = new HashMap();
@@ -539,6 +543,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			creditsInScientificAreas,
 			creditsInSpecializationAreaGroups,
 			creditsInSecundaryAreaGroups,
+			creditsInAnySecundaryArea,
 			clashingGroups);
 	}
 
@@ -546,12 +551,14 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	 * @param creditsInScientificAreas
 	 * @param creditsInSpecializationAreaGroups
 	 * @param creditsInSecundaryAreaGroups
+	 * @param creditsInAnySecundaryArea
 	 * @param clashingGroups
 	 */
 	private void calculateClashingScientificAreas(
 		HashMap creditsInScientificAreas,
 		HashMap creditsInSpecializationAreaGroups,
 		HashMap creditsInSecundaryAreaGroups,
+		int creditsInAnySecundaryArea,
 		HashMap clashingGroups)
 	{
 		if (!clashingGroups.entrySet().isEmpty())
@@ -566,58 +573,71 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 				ICurricularCourseGroup specializationGroup = (ICurricularCourseGroup) objects.get(0);
 				ICurricularCourseGroup secundaryGroup = (ICurricularCourseGroup) objects.get(1);
 
-				Integer creditsInSpecializationGroup =
-					(Integer) creditsInSpecializationAreaGroups.get(specializationGroup.getIdInternal());
-				Integer creditsInSecundaryGroup = (Integer) creditsInSecundaryAreaGroups.get(secundaryGroup.getIdInternal());
-				Integer creditsInScientificArea = (Integer) creditsInScientificAreas.get(scientificAreaID);
-				
-				if (creditsInSpecializationGroup == null)
-				{
-					creditsInSpecializationGroup = new Integer(0);
-				}
+//				Integer creditsInSpecializationGroup =
+//					(Integer) creditsInSpecializationAreaGroups.get(specializationGroup.getIdInternal());
+//				Integer creditsInSecundaryGroup = (Integer) creditsInSecundaryAreaGroups.get(secundaryGroup.getIdInternal());
+//				Integer creditsInScientificArea = (Integer) creditsInScientificAreas.get(scientificAreaID);
+//				
+//				if (creditsInSpecializationGroup == null)
+//				{
+//					creditsInSpecializationGroup = new Integer(0);
+//				}
+//
+//				if (creditsInSecundaryGroup == null)
+//				{
+//					creditsInSecundaryGroup = new Integer(0);
+//				}
+//
+//				if (creditsInScientificArea == null)
+//				{
+//					creditsInScientificArea = new Integer(0);
+//				}
+//
+//				int sumOfGroupsCredits =
+//					creditsInSpecializationGroup.intValue()
+//						+ creditsInSecundaryGroup.intValue()
+//						+ creditsInScientificArea.intValue();
+//
+//				int sumOfMinimumGroupsCredits =
+//					specializationGroup.getMinimumCredits().intValue() + secundaryGroup.getMinimumCredits().intValue();
+//
+//				if (sumOfGroupsCredits < sumOfMinimumGroupsCredits)
+//				{
+//					distributeCreditsInScientificAreaByTheTwoGroups(
+//						creditsInSpecializationAreaGroups,
+//						creditsInSecundaryAreaGroups,
+//						creditsInScientificAreas,
+//						creditsInAnySecundaryArea,
+//						specializationGroup,
+//						secundaryGroup,
+//						scientificAreaID,
+//						specializationGroup.getMinimumCredits(),
+//						secundaryGroup.getMinimumCredits());
+//				} else // if (sumOfGroupsCredits < sumOfMaximumGroupsCredits) AND if (sumOfGroupsCredits >=
+//					   // sumOfMaximumGroupsCredits)
+//				{
+//					distributeCreditsInScientificAreaByTheTwoGroups(
+//						creditsInSpecializationAreaGroups,
+//						creditsInSecundaryAreaGroups,
+//						creditsInScientificAreas,
+//						creditsInAnySecundaryArea,
+//						specializationGroup,
+//						secundaryGroup,
+//						scientificAreaID,
+//						specializationGroup.getMaximumCredits(),
+//						secundaryGroup.getMaximumCredits());
+//				}
 
-				if (creditsInSecundaryGroup == null)
-				{
-					creditsInSecundaryGroup = new Integer(0);
-				}
 
-				if (creditsInScientificArea == null)
-				{
-					creditsInScientificArea = new Integer(0);
-				}
 
-				int sumOfGroupsCredits =
-					creditsInSpecializationGroup.intValue()
-						+ creditsInSecundaryGroup.intValue()
-						+ creditsInScientificArea.intValue();
-
-				int sumOfMinimumGroupsCredits =
-					specializationGroup.getMinimumCredits().intValue() + secundaryGroup.getMinimumCredits().intValue();
-
-				if (sumOfGroupsCredits < sumOfMinimumGroupsCredits)
-				{
-					distributeCreditsInScientificAreaByTheTowGroups(
-						creditsInSpecializationAreaGroups,
-						creditsInSecundaryAreaGroups,
-						creditsInScientificAreas,
-						specializationGroup,
-						secundaryGroup,
-						scientificAreaID,
-						specializationGroup.getMinimumCredits(),
-						secundaryGroup.getMinimumCredits());
-				} else // if (sumOfGroupsCredits < sumOfMaximumGroupsCredits) AND if (sumOfGroupsCredits >=
-					   // sumOfMaximumGroupsCredits)
-				{
-					distributeCreditsInScientificAreaByTheTowGroups(
-						creditsInSpecializationAreaGroups,
-						creditsInSecundaryAreaGroups,
-						creditsInScientificAreas,
-						specializationGroup,
-						secundaryGroup,
-						scientificAreaID,
-						specializationGroup.getMaximumCredits(),
-						secundaryGroup.getMaximumCredits());
-				}
+				distributeCreditsInScientificAreaByTheTwoGroups(
+					creditsInSpecializationAreaGroups,
+					creditsInSecundaryAreaGroups,
+					creditsInScientificAreas,
+					creditsInAnySecundaryArea,
+					specializationGroup,
+					secundaryGroup,
+					scientificAreaID);
 			}
 		}
 	}
@@ -626,15 +646,17 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	 * @param creditsInSpecializationAreaGroups
 	 * @param creditsInSecundaryAreaGroups
 	 * @param creditsInScientificAreas
+	 * @param creditsInAnySecundaryArea
 	 * @param specializationGroup
 	 * @param secundaryGroup
 	 * @param scientificAreaID
 	 * @param maximumLevelToConsider
 	 */
-	private void distributeCreditsInScientificAreaByTheTowGroups(
+	private void distributeCreditsInScientificAreaByTheTwoGroups(
 		HashMap creditsInSpecializationAreaGroups,
 		HashMap creditsInSecundaryAreaGroups,
 		HashMap creditsInScientificAreas,
+		int creditsInAnySecundaryArea,
 		ICurricularCourseGroup specializationGroup,
 		ICurricularCourseGroup secundaryGroup,
 		Integer scientificAreaID,
@@ -661,7 +683,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		}
 		
 		int creditsInSpecializationGroup = aux.intValue();
-		int creditsInSecundaryGroup = bux.intValue();
+		int creditsInSecundaryGroup = bux.intValue() + creditsInAnySecundaryArea;
 		int creditsInScientificArea = cux.intValue();
 
 		int factor = 0;
@@ -676,28 +698,155 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		int alreadyGivenCredits = 0;
 		for (int i = 0; i < x && alreadyGivenCredits < creditsInScientificArea; i++)
 		{
-			if (creditsInSpecializationGroup < maximumLevelToConsiderForSpecializationGroup.longValue())
+			int dux = creditsInSpecializationGroup + factor;
+			int eux = creditsInSecundaryGroup + factor;
+			
+			if (creditsInSpecializationGroup < maximumLevelToConsiderForSpecializationGroup.intValue()
+				&& alreadyGivenCredits < creditsInScientificArea)
 			{
-				creditsInSpecializationGroup += factor;
-				alreadyGivenCredits += factor;
+				if (eux >= maximumLevelToConsiderForSecundaryGroup.intValue())
+				{
+					creditsInSpecializationGroup += (factor * 2);
+					alreadyGivenCredits += (factor * 2);
+				} else
+				{
+					creditsInSpecializationGroup += factor;
+					alreadyGivenCredits += factor;
+				}
 			}
 
-			if (creditsInSecundaryGroup < maximumLevelToConsiderForSecundaryGroup.longValue())
+			if (creditsInSecundaryGroup < maximumLevelToConsiderForSecundaryGroup.intValue()
+				&& alreadyGivenCredits < creditsInScientificArea)
 			{
-				creditsInSecundaryGroup += factor;
-				alreadyGivenCredits += factor;
+				if (dux >= maximumLevelToConsiderForSpecializationGroup.intValue())
+				{
+					creditsInSecundaryGroup += (factor * 2);
+					alreadyGivenCredits += (factor * 2);
+				} else
+				{
+					creditsInSecundaryGroup += factor;
+					alreadyGivenCredits += factor;
+				}
 			}
 		}
 
+//		if (creditsInSpecializationGroup > maximumLevelToConsiderForSpecializationGroup.intValue())
+//		{
+//			creditsInSpecializationGroup = maximumLevelToConsiderForSpecializationGroup.intValue();
+//		}
+//
+//		if (creditsInSecundaryGroup > maximumLevelToConsiderForSecundaryGroup.intValue())
+//		{
+//			creditsInSecundaryGroup = maximumLevelToConsiderForSecundaryGroup.intValue();
+//		}
+		
 		sumInHashMap(
 			creditsInSpecializationAreaGroups,
 			specializationGroup.getIdInternal(),
-			new Integer(String.valueOf(creditsInSpecializationGroup)));
+			new Integer(String.valueOf(creditsInSpecializationGroup - aux.intValue())));
 		
 		sumInHashMap(
 			creditsInSecundaryAreaGroups,
 			secundaryGroup.getIdInternal(),
-			new Integer(String.valueOf(creditsInSecundaryGroup)));
+			new Integer(String.valueOf(creditsInSecundaryGroup - creditsInAnySecundaryArea - bux.intValue())));
+	}
+
+	/**
+	 * @param creditsInSpecializationAreaGroups
+	 * @param creditsInSecundaryAreaGroups
+	 * @param creditsInScientificAreas
+	 * @param creditsInAnySecundaryArea
+	 * @param specializationGroup
+	 * @param secundaryGroup
+	 * @param scientificAreaID
+	 */
+	private void distributeCreditsInScientificAreaByTheTwoGroups(
+			HashMap creditsInSpecializationAreaGroups,
+			HashMap creditsInSecundaryAreaGroups,
+			HashMap creditsInScientificAreas,
+			int creditsInAnySecundaryArea,
+			ICurricularCourseGroup specializationGroup,
+			ICurricularCourseGroup secundaryGroup,
+			Integer scientificAreaID)
+	{
+		Integer aux = (Integer) creditsInSpecializationAreaGroups.get(specializationGroup.getIdInternal());
+		Integer bux = (Integer) creditsInSecundaryAreaGroups.get(secundaryGroup.getIdInternal());
+		Integer cux = (Integer) creditsInScientificAreas.get(scientificAreaID);
+
+		if (aux == null)
+		{
+			aux = new Integer(0);
+		}
+
+		if (bux == null)
+		{
+			bux = new Integer(0);
+		}
+		
+		if (cux == null)
+		{
+			cux = new Integer(0);
+		}
+		
+		int creditsInSpecializationGroup = aux.intValue();
+		int creditsInSecundaryGroup = bux.intValue() + creditsInAnySecundaryArea;
+		int creditsInScientificArea = cux.intValue();
+		int maxCreditsInSpecializationGroup = specializationGroup.getMaximumCredits().intValue();
+		int minCreditsInSpecializationGroup = specializationGroup.getMinimumCredits().intValue();
+		int maxCreditsInSecundaryGroup = secundaryGroup.getMaximumCredits().intValue();
+		int minCreditsInSecundaryGroup = secundaryGroup.getMinimumCredits().intValue();
+
+		while (creditsInScientificArea > 0)
+		{
+			if (creditsInSpecializationGroup < (minCreditsInSpecializationGroup - 1))
+			{
+				creditsInSpecializationGroup++;
+				creditsInScientificArea--;
+			} else if (creditsInSecundaryGroup < (minCreditsInSecundaryGroup - 1))
+			{
+				creditsInSecundaryGroup++;
+				creditsInScientificArea--;
+			} else if ((creditsInSpecializationGroup == (minCreditsInSpecializationGroup - 1))
+				&& (maxCreditsInSpecializationGroup != minCreditsInSpecializationGroup))
+			{
+				creditsInSpecializationGroup++;
+				creditsInScientificArea--;
+			} else if ((creditsInSecundaryGroup == (minCreditsInSpecializationGroup - 1))
+					&& (maxCreditsInSecundaryGroup != minCreditsInSecundaryGroup))
+			{
+				creditsInSecundaryGroup++;
+				creditsInScientificArea--;
+			} else if (creditsInSpecializationGroup < (maxCreditsInSpecializationGroup - 1))
+			{
+				creditsInSpecializationGroup++;
+				creditsInScientificArea--;
+			} else if (creditsInSecundaryGroup < (maxCreditsInSecundaryGroup - 1))
+			{
+				creditsInSecundaryGroup++;
+				creditsInScientificArea--;
+			} else if (creditsInSpecializationGroup == (maxCreditsInSpecializationGroup - 1))
+			{
+				creditsInSpecializationGroup++;
+				creditsInScientificArea--;
+			} else if (creditsInSecundaryGroup == (maxCreditsInSecundaryGroup - 1))
+			{
+				creditsInSecundaryGroup++;
+				creditsInScientificArea--;
+			} else
+			{
+				creditsInSpecializationGroup += creditsInScientificArea;
+			}
+		}
+		
+		sumInHashMap(
+			creditsInSpecializationAreaGroups,
+			specializationGroup.getIdInternal(),
+			new Integer(String.valueOf(creditsInSpecializationGroup - aux.intValue())));
+		
+		sumInHashMap(
+			creditsInSecundaryAreaGroups,
+			secundaryGroup.getIdInternal(),
+			new Integer(String.valueOf(creditsInSecundaryGroup - creditsInAnySecundaryArea - bux.intValue())));
 	}
 
 	/**
@@ -1389,11 +1538,13 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	/**
 	 * @param studentCurricularPlan
 	 * @param creditsInSecundaryAreaGroups
+	 * @param creditsInAnySecundaryArea
 	 * @return Integer
 	 */
 	private Integer calculateCreditsInSecundaryArea(
 		IStudentCurricularPlan studentCurricularPlan,
-		HashMap creditsInSecundaryAreaGroups)
+		HashMap creditsInSecundaryAreaGroups,
+		int creditsInAnySecundaryArea)
 	{
 		int areaCredits = 0;
 
@@ -1407,13 +1558,14 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 
 				areaCredits += credits.intValue();
 			}
-
-			if (areaCredits >= studentCurricularPlan.getSecundaryBranch().getSecondaryCredits().intValue())
-			{
-				areaCredits = studentCurricularPlan.getSecundaryBranch().getSecondaryCredits().intValue();
-			}
 		}
 
+		areaCredits += creditsInAnySecundaryArea;
+		if (areaCredits >= studentCurricularPlan.getSecundaryBranch().getSecondaryCredits().intValue())
+		{
+			areaCredits = studentCurricularPlan.getSecundaryBranch().getSecondaryCredits().intValue();
+		}
+		
 		return new Integer(areaCredits);
 	}
 
