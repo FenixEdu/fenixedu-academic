@@ -25,6 +25,7 @@
   		</tr>
 	</table>
 <br />
+<%--
 <p>
 <bean:message key="message.public.index.degree.nonMaster.consult"/>
 </p>
@@ -57,6 +58,7 @@
   		</tr>
 	</table>
 <br />
+--%>
 <p>
 <bean:message key="message.public.index.room.consult"/>
 </p>
