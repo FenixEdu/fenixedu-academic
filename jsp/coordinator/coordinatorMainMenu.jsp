@@ -49,11 +49,10 @@
 		</html:link> 
 		<br/>
 	<br/>
-
-	<html:link page="/viewCoordinationTeam.do?method=viewTeam" 
-		paramId="infoExecutionDegreeId"
-		paramName="infoExecutionDegree"
-		paramProperty="idInternal"
+	<bean:define id="infoExecutionDegreeId" name="infoExecutionDegree" property="idInternal"/>
+	<html:link 
+	page="<%= "/viewCoordinationTeam.do?method=viewTeam&infoExecutionDegreeId="+ 
+	infoExecutionDegreeId.toString()  %>" 
 		>
 		Equipa de Coordenação
 		</html:link> 

@@ -303,7 +303,7 @@
     	     <forward name="showLoads" path="/courses/showLoads.jsp"/>
 		</action>		
 
-		<!-- ======== coordination team mappings -->
+		<!-- ======== coordination team mappings ======= -->
 		 <action path="/viewCoordinationTeam"
   		      parameter="method"
 		      scope="request"

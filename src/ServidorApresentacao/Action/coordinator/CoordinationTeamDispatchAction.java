@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoCoordinator;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -35,20 +36,36 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		String infoExecutionDegreeIdString =(String) request.getAttribute("infoExecutionDegreeId");
-		Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);	
-		Object[] args = {infoExecutionDegreeId};
+		String infoExecutionDegreeIdString =
+			(String) request.getParameter("infoExecutionDegreeId");
+		Integer infoExecutionDegreeId =
+			new Integer(infoExecutionDegreeIdString);
+		Object[] args = { infoExecutionDegreeId };
 		List coordinators = new ArrayList();
 		try {
-			coordinators =(List) ServiceUtils.executeService(
-				userView,
-				"ReadCoordinationTeam",
-				args);
+			coordinators =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadCoordinationTeam",
+					args);
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		request.setAttribute("coordinators",coordinators);
+		InfoCoordinator coordinator = null;
+		try {
+			coordinator =
+				(InfoCoordinator) ServiceUtils.executeService(
+					userView,
+					"ReadResponsibleCoordinator",
+					args);
+
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		
+		request.setAttribute("responsibleCoordinator",coordinator);
+		request.setAttribute("coordinators", coordinators);
 		return mapping.findForward("sucess");
 	}
 
