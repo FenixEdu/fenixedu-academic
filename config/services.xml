@@ -3526,8 +3526,8 @@
 	</service>
 	<service>
 		<idInternal>393</idInternal>
-		<name>ReadProfessorshipsByTeacherAndExecutionPeriodOIDs</name>
-		<implementationClass>ServidorAplicacao.Servico.teacher.professorship.ReadProfessorshipsByTeacherAndExecutionPeriodOIDs</implementationClass>
+		<name>ReadDetailedTeacherProfessorshipsByExecutionPeriod</name>
+		<implementationClass>ServidorAplicacao.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsByExecutionPeriod</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
