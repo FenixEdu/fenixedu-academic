@@ -70,12 +70,7 @@
             	</logic:iterate>
             </tbody>
 			</table>   
-   
-            
-    
-                
-                
-                
+  
             </td>
             </tr>
             </logic:iterate>
@@ -83,6 +78,19 @@
             <span class="error"><html:errors/></span>
         </tbody>
 </table>
+
+
+	<html:form action="/viewProjectStudentGroups" method="get">
+
+	<html:submit styleClass="inputbutton"><bean:message key="button.refresh"/>                    		         	
+	</html:submit>
+	
+	<html:hidden property="method" value="viewProjectStudentGroups"/>
+	<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
+	<html:hidden  property="objectCode" value="<%= request.getParameter("objectCode")%>"/>
+	</html:form>
+	
+	
 </logic:present>
 
 <logic:notPresent name="siteView" property="component">

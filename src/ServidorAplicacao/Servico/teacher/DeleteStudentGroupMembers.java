@@ -16,6 +16,7 @@ import Dominio.IStudentGroupAttend;
 import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
@@ -79,6 +80,9 @@ public class DeleteStudentGroupMembers implements IServico {
 		
 			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode),false);
 			IStudentGroup studentGroup =(IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
+			
+			if(studentGroup==null)
+				throw new NonExistingServiceException();
 			
 			Iterator iterator = studentUsernames.iterator();
 			

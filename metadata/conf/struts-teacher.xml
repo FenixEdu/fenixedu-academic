@@ -947,6 +947,7 @@
 		path="/viewProjectStudentGroups"
 		parameter="method"
 		scope="request"
+		name="studentGroupForm"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
        <forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
 	</action>
@@ -955,8 +956,13 @@
 		path="/viewStudentGroupInformation"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">	
+		<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+        /> 			
        <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
+       <forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
 	</action>
 	   
 	   
@@ -1041,8 +1047,13 @@
 		name="editStudentGroupForm"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+		<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+        />             
        	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
+       	<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
 	</action>
 	
 	<action     
@@ -1050,8 +1061,13 @@
 		name="editStudentGroupForm"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"> 
+		<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+        />              
        	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
+       	<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
 	</action>
 	</action-mappings>
 

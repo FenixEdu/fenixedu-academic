@@ -1183,7 +1183,7 @@ public class TeacherAdministrationViewerDispatchAction
 				objectCode,
 				obj1,
 				obj2 };
-
+				
 		try {
 			TeacherAdministrationSiteView siteView =
 				(TeacherAdministrationSiteView) ServiceUtils.executeService(
@@ -1448,7 +1448,11 @@ public class TeacherAdministrationViewerDispatchAction
 		}
 		return showSummaries(mapping, form, request, response);
 	}
+	
+	
 	//	========================  GROUPS MANAGEMENT  ========================
+	
+	
 	public ActionForward viewExecutionCourseProjects(
 		ActionMapping mapping,
 		ActionForm form,
@@ -1479,7 +1483,7 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 		String studentGroupCodeString =
-			(String) request.getParameter("studentGroupCode");
+		(String) request.getParameter("studentGroupCode");
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
 		ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
 		readSiteView(request, viewStudentGroup, null, studentGroupCode, null);
@@ -2110,9 +2114,12 @@ public class TeacherAdministrationViewerDispatchAction
 		Boolean result;
 		try {
 			gestor.executar(userView, "InsertStudentGroupMembers", args);
-		} catch (FenixServiceException e) {
+		}catch(NonExistingServiceException ex){ 
+			throw new NonExistingActionException("message.editStudentGroupMembers.NoGroup", viewProjectStudentGroups(mapping,form,request,response));
+		  }
+		 catch (FenixServiceException e) {
 			throw new FenixActionException(e);
-		}
+		 }
 		return prepareEditStudentGroupMembers(mapping, form, request, response);
 	}
 
@@ -2139,9 +2146,12 @@ public class TeacherAdministrationViewerDispatchAction
 				Boolean result;
 				try {
 					gestor.executar(userView, "DeleteStudentGroupMembers", args);
-				} catch (FenixServiceException e) {
+				}catch(NonExistingServiceException ex){ 
+					throw new NonExistingActionException("message.editStudentGroupMembers.NoGroup", viewProjectStudentGroups(mapping,form,request,response));
+		  		 }
+				 catch (FenixServiceException e) {
 					throw new FenixActionException(e);
-				}
+				 }
 				return prepareEditStudentGroupMembers(mapping, form, request, response);
 			}
 		}
