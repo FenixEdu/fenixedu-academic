@@ -54,7 +54,10 @@ public class ReadLastAnnouncement implements IServico {
 			ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse);
 
 			IAnnouncement announcement = persistentSupport.getIPersistentAnnouncement().readLastAnnouncementForSite(site);
-			InfoAnnouncement infoAnnouncement = Cloner.copyIAnnouncement2InfoAnnouncement(announcement);
+			
+			InfoAnnouncement infoAnnouncement = null;
+			if (announcement!=null)
+				infoAnnouncement = Cloner.copyIAnnouncement2InfoAnnouncement(announcement);
 
 			return infoAnnouncement;
 		} catch (ExcepcaoPersistencia e) {
