@@ -47,7 +47,7 @@ public class DeleteDegreesAction extends FenixAction {
 
 		try {
 			errorNames = (List) manager.executar(userView, "DeleteDegreesService", args);
-			session.removeAttribute(SessionConstants.INFO_DEGREES_LIST);
+//			session.removeAttribute(SessionConstants.INFO_DEGREES_LIST);
 
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
@@ -69,7 +69,7 @@ public class DeleteDegreesAction extends FenixAction {
 					actionErrors.add("errors.invalid.delete.not.empty", error);
 
 				}
-				deleteDegreesForm.set("internalIds", new Integer[] {});//COM O RESET NAO DAVA/POR ISSO FACO UM SET COM NADAPA LIMPARO"internalIds" DO FORM
+//				deleteDegreesForm.set("internalIds", new Integer[] {});//COM O RESET NAO DAVA/POR ISSO FACO UM SET COM NADAPA LIMPARO"internalIds" DO FORM
 				saveErrors(request, actionErrors);
 
 			}
