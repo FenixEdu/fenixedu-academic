@@ -24,6 +24,8 @@ public class CursoExecucao implements ICursoExecucao {
 
 	private IDegreeCurricularPlan degreeCurricularPlan;
 	private ITeacher coordinator;
+	
+	private Boolean temporaryExamMap;
 
 	/** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
 	public CursoExecucao() {
@@ -171,6 +173,20 @@ public class CursoExecucao implements ICursoExecucao {
 	 */
 	public void setKeyCoordinator(Integer integer) {
 		keyCoordinator = integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public Boolean getTemporaryExamMap() {
+		return temporaryExamMap;
+	}
+
+	/**
+	 * @param boolean1
+	 */
+	public void setTemporaryExamMap(Boolean temporary) {
+		temporaryExamMap = temporary;
 	}
 
 }

@@ -1,3 +1,4 @@
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <p><img height="36" src="<%= request.getContextPath() %>/images/intranetSOP.gif" width="239" /></p>
 
   A aplica&ccedil;&atilde;o online SOP, exclusivamente dispon&iacute;vel para
@@ -12,7 +13,7 @@ dispon&iacute;veis.</p>
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
     </td>
-    <td class="infoop"><strong>Gest&atilde;o de Hor&aacute;rios</strong></td>
+    <td class="infoop"><html:link page="/prepararEscolherContexto.do"><strong>Gest&atilde;o de Hor&aacute;rios</strong></html:link></td>
   </tr>
 </table>
 <p>Na &aacute;rea da Gest&atilde;o de Hor&aacute;rios pode proceder &agrave; gest&atilde;o
@@ -24,7 +25,7 @@ e alterar aulas).</p>
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
     </td>
-    <td class="infoop"><strong>Gest&atilde;o de Salas</strong></td>
+    <td class="infoop"><html:link page="/principalSalas.do"><strong>Gest&atilde;o de Salas</strong></html:link></td>
   </tr>
 </table>
 <p>Este m&oacute;dulo visa uma gest&atilde;o eficiente das <strong>salas de aulas</strong> dispon&iacute;veis
@@ -34,7 +35,7 @@ e alterar aulas).</p>
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
     </td>
-    <td class="infoop"><strong>Gest&atilde;o de Exames</strong></td>
+    <td class="infoop"><html:link page="/mainExams.do"><strong>Gest&atilde;o de Exames</strong></html:link></td>
   </tr>
 </table>
 <p>Este m&oacute;dulo visa uma gest&atilde;o eficiente da calendariza&ccedil;&atilde;o dos <strong>exames</strong>.</p>

@@ -20,6 +20,8 @@ public class DisciplinaExecucao implements IDisciplinaExecucao {
 	private IExecutionPeriod executionPeriod;
 	private Integer keyExecutionPeriod;
 
+	protected String comment;
+
 	/* Construtores */
 
 	public DisciplinaExecucao() {
@@ -41,6 +43,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao {
 		setTheoPratHours(theoPratHours);
 		setLabHours(labHours);
 		setExecutionPeriod(executionPeriod);
+		setComment(new String());
 	}
 	
 	public boolean equals(Object obj) {
@@ -238,6 +241,20 @@ public class DisciplinaExecucao implements IDisciplinaExecucao {
 	 */
 	public void setAssociatedExams(List list) {
 		associatedExams = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setComment(String string) {
+		comment = string;
 	}
 
 }

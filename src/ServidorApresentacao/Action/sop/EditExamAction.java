@@ -62,7 +62,7 @@ public class EditExamAction extends FenixAction {
 			InfoViewExamByDayAndShift infoViewOldExam =  (InfoViewExamByDayAndShift) session.getAttribute(SessionConstants.INFO_EXAMS_KEY);
 
 			// Create an exam with season, examDateAndTime and executionCourse
-			Object argsCreateExam[] = { examDate, examTime, season, infoViewOldExam };
+			Object argsCreateExam[] = { examDate, examTime, season, infoViewOldExam};
 			try {
 				ServiceUtils.executeService(userView, "EditExam", argsCreateExam);
 			} catch (ExistingServiceException ex) {

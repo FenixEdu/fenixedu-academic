@@ -25,6 +25,8 @@ public class InfoExecutionCourse implements Serializable {
 	protected List associatedInfoCurricularCourses;
 	protected List associatedInfoExams;
 	
+	protected String comment;
+	
 	// A chave do responsavel falta ainda porque ainda nao existe a respeciva ligacao
 	// na base de dados.
 
@@ -269,6 +271,20 @@ public class InfoExecutionCourse implements Serializable {
 	 */
 	public void setCurricularYear(Integer integer) {
 		curricularYear = integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setComment(String string) {
+		comment = string;
 	}
 
 }

@@ -135,6 +135,63 @@ public class ExamsMapRenderer {
 					strBuffer.append("</a>");
 				}
 
+				if (infoExecutionCourse.getComment() != null
+					&& infoExecutionCourse.getComment().length() > 0) {
+
+					strBuffer.append(" : ");
+					if (user.equals("sop")) {
+						strBuffer.append(
+							"<a href='defineExamComment.do?executionCourseCode=");
+						strBuffer.append(infoExecutionCourse.getSigla());
+						strBuffer.append(
+							"&amp;executionPeriodName="
+								+ infoExecutionCourse
+									.getInfoExecutionPeriod()
+									.getName());
+						strBuffer.append(
+							"&amp;executionYear="
+								+ infoExecutionCourse
+									.getInfoExecutionPeriod()
+									.getInfoExecutionYear()
+									.getYear());
+						strBuffer.append(
+							"&amp;comment=" + infoExecutionCourse.getComment());
+						strBuffer.append("&amp;method=prepare");
+						strBuffer.append("&amp;indexExecutionCourse=" + i);
+						strBuffer.append("'>");
+					}
+
+					strBuffer.append(infoExecutionCourse.getComment());
+
+					if (user.equals("sop")) {
+						strBuffer.append("</a>");
+					}
+
+				} else {
+					if (user.equals("sop")) {
+						strBuffer.append(" : ");
+						strBuffer.append(
+							"<a href='defineExamComment.do?executionCourseCode=");
+						strBuffer.append(infoExecutionCourse.getSigla());
+						strBuffer.append(
+							"&amp;executionPeriodName="
+								+ infoExecutionCourse
+									.getInfoExecutionPeriod()
+									.getName());
+						strBuffer.append(
+							"&amp;executionYear="
+								+ infoExecutionCourse
+									.getInfoExecutionPeriod()
+									.getInfoExecutionYear()
+									.getYear());
+						strBuffer.append("&amp;method=prepare");
+						strBuffer.append("&amp;indexExecutionCourse=" + i);
+						strBuffer.append("'>");
+						strBuffer.append("Definir comentário");
+						strBuffer.append("</a>");
+					}
+				}
+
 				strBuffer.append("<br/>");
 			}
 		}

@@ -58,10 +58,10 @@ public class ReadExamsMap implements IServico {
 		InfoExecutionDegree infoExecutionDegree,
 		List curricularYears,
 		InfoExecutionPeriod infoExecutionPeriod) {
-		
+
 		// Object to be returned
 		InfoExamsMap infoExamsMap = new InfoExamsMap();
-		
+
 		// Set List of Curricular Years
 		infoExamsMap.setCurricularYears(curricularYears);
 
@@ -71,18 +71,27 @@ public class ReadExamsMap implements IServico {
 		startSeason1.set(Calendar.YEAR, 2003);
 		startSeason1.set(Calendar.MONTH, Calendar.JUNE);
 		startSeason1.set(Calendar.DAY_OF_MONTH, 23);
-		startSeason1.set(Calendar.HOUR_OF_DAY,0);
-		startSeason1.set(Calendar.MINUTE,0);
-		startSeason1.set(Calendar.SECOND,0);
-		startSeason1.set(Calendar.MILLISECOND,0);
+		startSeason1.set(Calendar.HOUR_OF_DAY, 0);
+		startSeason1.set(Calendar.MINUTE, 0);
+		startSeason1.set(Calendar.SECOND, 0);
+		startSeason1.set(Calendar.MILLISECOND, 0);
 		Calendar endSeason2 = Calendar.getInstance();
 		endSeason2.set(Calendar.YEAR, 2003);
 		endSeason2.set(Calendar.MONTH, Calendar.JULY);
 		endSeason2.set(Calendar.DAY_OF_MONTH, 26);
-		endSeason2.set(Calendar.HOUR_OF_DAY,0);
-		endSeason2.set(Calendar.MINUTE,0);
-		endSeason2.set(Calendar.SECOND,0);
-		endSeason2.set(Calendar.MILLISECOND,0);
+		endSeason2.set(Calendar.HOUR_OF_DAY, 0);
+		endSeason2.set(Calendar.MINUTE, 0);
+		endSeason2.set(Calendar.SECOND, 0);
+		endSeason2.set(Calendar.MILLISECOND, 0);
+
+		if (infoExecutionDegree
+			.getInfoDegreeCurricularPlan()
+			.getInfoDegree()
+			.getSigla()
+			.equals("LEEC")) {
+			startSeason1.set(Calendar.DAY_OF_MONTH, 16);
+			endSeason2.set(Calendar.DAY_OF_MONTH, 19);
+		}
 
 		// Set Exam Season info
 		infoExamsMap.setStartSeason1(startSeason1);
@@ -102,12 +111,13 @@ public class ReadExamsMap implements IServico {
 
 			// List of execution courses
 			List infoExecutionCourses = new ArrayList();
-			
+
 			// Obtain execution courses and associated information
 			// of the given execution degree for each curricular year specified
 			for (int i = 0; i < curricularYears.size(); i++) {
 				// Obtain list os execution courses
-				List executionCourses =	sp
+				List executionCourses =
+					sp
 						.getIDisciplinaExecucaoPersistente()
 						.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
 							(Integer) curricularYears.get(i),
@@ -120,21 +130,28 @@ public class ReadExamsMap implements IServico {
 						Cloner.copyIExecutionCourse2InfoExecutionCourse(
 							(IDisciplinaExecucao) executionCourses.get(j));
 
-					infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
+					infoExecutionCourse.setCurricularYear(
+						(Integer) curricularYears.get(i));
 
 					List associatedInfoCurricularCourses = new ArrayList();
 					List associatedCurricularCourses =
 						((IDisciplinaExecucao) executionCourses.get(j))
 							.getAssociatedCurricularCourses();
 					// Curricular courses
-					for (int k = 0; k < associatedCurricularCourses.size(); k++) {
+					for (int k = 0;
+						k < associatedCurricularCourses.size();
+						k++) {
 						InfoCurricularCourse infoCurricularCourse =
-							Cloner.copyCurricularCourse2InfoCurricularCourse((
+							Cloner.copyCurricularCourse2InfoCurricularCourse(
+								(
 									ICurricularCourse) associatedCurricularCourses
-										.get(k));
-						associatedInfoCurricularCourses.add(infoCurricularCourse);
+										.get(
+									k));
+						associatedInfoCurricularCourses.add(
+							infoCurricularCourse);
 					}
-					infoExecutionCourse.setAssociatedInfoCurricularCourses(associatedInfoCurricularCourses);
+					infoExecutionCourse.setAssociatedInfoCurricularCourses(
+						associatedInfoCurricularCourses);
 
 					List associatedInfoExams = new ArrayList();
 					List associatedExams =
@@ -143,10 +160,12 @@ public class ReadExamsMap implements IServico {
 					// Exams
 					for (int k = 0; k < associatedExams.size(); k++) {
 						InfoExam infoExam =
-							Cloner.copyIExam2InfoExam((IExam) associatedExams.get(k));
+							Cloner.copyIExam2InfoExam(
+								(IExam) associatedExams.get(k));
 						associatedInfoExams.add(infoExam);
 					}
-					infoExecutionCourse.setAssociatedInfoExams(associatedInfoExams);
+					infoExecutionCourse.setAssociatedInfoExams(
+						associatedInfoExams);
 
 					infoExecutionCourses.add(infoExecutionCourse);
 				}

@@ -43,23 +43,26 @@
 			</tr>
 			<logic:iterate id="curricularCourse" name="publico.infoCurricularCourses" scope="session">
 				<logic:iterate id="infoCurricularCourseScope" name="curricularCourse" property="infoScopes">
-					<tr class="timeTable_line" align="center">
-						<td class="degreetablestd">
-							<bean:write name="curricularCourse" property="name"/>
-						</td>
-						<td class="degreetablestd">
-							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>
-						</td>
-						<td class="degreetablestd">
-							<bean:write name="infoCurricularCourseScope" property="infoBranch.name"/>&nbsp;
-						</td>
-						<td class="degreetablestd">
-							<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>&nbsp;
-						</td>
-						<td class="degreetablestd">
-							<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>&nbsp;
-						</td>
-					</tr>
+					<%-- FIXME: hardcoded semester 2 --%>
+					<logic:equal name="infoCurricularCourseScope" property="infoCurricularSemester.semester" value="2">
+						<tr class="timeTable_line" align="center">
+							<td class="degreetablestd">
+								<bean:write name="curricularCourse" property="name"/>
+							</td>
+							<td class="degreetablestd">
+								<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>
+							</td>
+							<td class="degreetablestd">
+								<bean:write name="infoCurricularCourseScope" property="infoBranch.name"/>&nbsp;
+							</td>
+							<td class="degreetablestd">
+								<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>&nbsp;
+							</td>
+							<td class="degreetablestd">
+								<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>&nbsp;
+							</td>
+						</tr>
+					</logic:equal>
 				</logic:iterate>
 			</logic:iterate>
 		</table>

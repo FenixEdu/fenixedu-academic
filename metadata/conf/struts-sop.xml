@@ -201,6 +201,15 @@
         <form-property name="page" type="java.lang.Integer"/>
      </form-bean>
 
+     <form-bean name="examCommentForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true"
+                >
+        <form-property name="comment" type="java.lang.String"/>
+        <form-property name="executionCourseCode" type="java.lang.String"/>
+        <form-property name="executionPeriodName" type="java.lang.String"/>
+        <form-property name="executionYear" type="java.lang.String"/>
+     </form-bean>
 
       <!-- Dynamic-FormBean for Choose Context-->
       <form-bean name="chooseExamsMapContextForm"
@@ -253,6 +262,7 @@
       <action path="/criarTurno" forward="/criarTurno.jsp"/>
       <action path="/escolherDisciplinaETipo" forward="/escolherDisciplinaETipo.jsp"/>
       <action path="/manipularTurnos" forward="/manipularTurnos.jsp"/>
+      <action path="/createExamComment" forward="/defineExamComment.jsp"/>
       
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
@@ -859,6 +869,18 @@
         <forward name="createExam" path="/createExam.do?method=prepare&amp;page=0&amp;nextPage=viewExamsMap"/>
         <forward name="editExam" path="/editExam.jsp"/>
     </action>
+
+	<action path="/defineExamComment"
+			name="examCommentForm"
+			input="/defineExamComment.jsp"
+    		type="ServidorApresentacao.Action.sop.DefineExamCommentActionDA"
+    		parameter="method"
+    		validate="false"
+    		scope="request"
+    		>
+  		<forward name="defineExamComment" path="/defineExamComment.jsp"/>
+        <forward name="showExamsMap" path="/viewExamsMap.do?method=view"/>
+	</action>
 
       
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->

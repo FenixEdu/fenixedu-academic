@@ -16,5 +16,12 @@
 </table>
 <br/>
 
+<bean:define id="infoExecutionDegree" name="<%= SessionConstants.INFO_EXECUTION_DEGREE_KEY %>" scope="session" />
+<logic:equal name="infoExecutionDegree" property="temporaryExamMap" value="true">
+	<center>
+	<font color="red" size="12"><bean:message key="label.temporary.exam.map"/><font>
+	<center/>
+</logic:equal>
+
 <br/>
 <app:generateExamsMap name="<%= SessionConstants.INFO_EXAMS_MAP %>" user="public"/>

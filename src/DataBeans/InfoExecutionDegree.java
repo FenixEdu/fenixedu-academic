@@ -18,6 +18,8 @@ public class InfoExecutionDegree implements Serializable {
 	private InfoExecutionYear infoExecutionYear;
 	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 	private InfoTeacher infoCoordinator;
+	
+	private Boolean temporaryExamMap;
 
 	public InfoExecutionDegree() {
 	}
@@ -111,6 +113,20 @@ public class InfoExecutionDegree implements Serializable {
 	 */
 	public void setInfoCoordinator(InfoTeacher teacher) {
 		infoCoordinator = teacher;
+	}
+	
+	/**
+	 * @return
+	 */
+	public Boolean getTemporaryExamMap() {
+		return temporaryExamMap;
+	}
+
+	/**
+	 * @param boolean1
+	 */
+	public void setTemporaryExamMap(Boolean temporary) {
+		temporaryExamMap = temporary;
 	}
 
 }

@@ -35,4 +35,8 @@ public interface IDisciplinaExecucao extends Serializable{
     
     IExecutionPeriod getExecutionPeriod();
     void setExecutionPeriod(IExecutionPeriod executionPeriod);
+    
+	public String getComment();
+	public void setComment(String string);
+    
 }

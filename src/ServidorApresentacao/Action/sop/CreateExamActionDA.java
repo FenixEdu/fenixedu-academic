@@ -97,7 +97,7 @@ public class CreateExamActionDA extends DispatchAction {
 			examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
 
 			// Create an exam with season, examDateAndTime and executionCourse
-			Object argsCreateExam[] = { examDate, examTime, season, executionCourse };
+			Object argsCreateExam[] = { examDate, examTime, season, executionCourse};
 			try {
 				ServiceUtils.executeService(userView, "CreateExam", argsCreateExam);
 			} catch (ExistingServiceException ex) {

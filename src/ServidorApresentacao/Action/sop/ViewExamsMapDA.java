@@ -92,13 +92,15 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 		Integer indexExecutionCourse =
 			new Integer(request.getParameter("indexExecutionCourse"));
 
-		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) infoExamsMap
-				.getExecutionCourses()
-				.get(indexExecutionCourse.intValue());
+		InfoExecutionCourse infoExecutionCourse =
+			(InfoExecutionCourse) infoExamsMap.getExecutionCourses().get(
+				indexExecutionCourse.intValue());
 
 		Integer curricularYear = infoExecutionCourse.getCurricularYear();
 
-		session.setAttribute(SessionConstants.CURRICULAR_YEAR_KEY, curricularYear);
+		session.setAttribute(
+			SessionConstants.CURRICULAR_YEAR_KEY,
+			curricularYear);
 
 		session.setAttribute(
 			SessionConstants.EXECUTION_COURSE_KEY,
@@ -124,11 +126,13 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 			(InfoExecutionPeriod) session.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
-		String executionCourseInitials = request.getParameter("executionCourseInitials");
+		String executionCourseInitials =
+			request.getParameter("executionCourseInitials");
 		Season season = new Season(new Integer(request.getParameter("season")));
 
-		Object args[] = { executionCourseInitials, season, infoExecutionPeriod };
-		InfoViewExamByDayAndShift infoViewExamByDayAndShift = 
+		Object args[] =
+			{ executionCourseInitials, season, infoExecutionPeriod };
+		InfoViewExamByDayAndShift infoViewExamByDayAndShift =
 			(InfoViewExamByDayAndShift) ServiceUtils.executeService(
 				userView,
 				"ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod",
@@ -166,19 +170,58 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 			editExamForm.set(
 				"beginning",
 				new Integer(
-			infoViewExamByDayAndShift.getInfoExam().getBeginning().get(
+					infoViewExamByDayAndShift.getInfoExam().getBeginning().get(
 						Calendar.HOUR_OF_DAY))
 					.toString());
 		}
 		editExamForm.set(
 			"season",
-			infoViewExamByDayAndShift.getInfoExam().getSeason().getseason().toString());
+			infoViewExamByDayAndShift
+				.getInfoExam()
+				.getSeason()
+				.getseason()
+				.toString());
 
-		session.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExamByDayAndShift);
+		session.setAttribute(
+			SessionConstants.INFO_EXAMS_KEY,
+			infoViewExamByDayAndShift);
 
 		session.setAttribute("input", "viewExamsMap");
 
 		return mapping.findForward("editExam");
+	}
+
+	public ActionForward comment(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		HttpSession session = request.getSession(false);
+
+		InfoExamsMap infoExamsMap =
+			(InfoExamsMap) session.getAttribute(
+				SessionConstants.INFO_EXAMS_MAP);
+
+		Integer indexExecutionCourse =
+			new Integer(request.getParameter("indexExecutionCourse"));
+
+		InfoExecutionCourse infoExecutionCourse =
+			(InfoExecutionCourse) infoExamsMap.getExecutionCourses().get(
+				indexExecutionCourse.intValue());
+
+		Integer curricularYear = infoExecutionCourse.getCurricularYear();
+
+		session.setAttribute(
+			SessionConstants.CURRICULAR_YEAR_KEY,
+			curricularYear);
+
+		session.setAttribute(
+			SessionConstants.EXECUTION_COURSE_KEY,
+			infoExecutionCourse);
+
+		return mapping.findForward("comment");
 	}
 
 }
