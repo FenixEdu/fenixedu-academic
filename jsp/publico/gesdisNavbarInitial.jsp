@@ -43,7 +43,9 @@
 <ul><li><html:link page="/viewSection.do" indexed="true" >
 	 <bean:write name="infoSection" property="name"/> 	
 </html:link></li></ul>	
+
 </logic:iterate>
 </ul>	
-</logic:present>		
+</logic:present>	
+	
 </div>

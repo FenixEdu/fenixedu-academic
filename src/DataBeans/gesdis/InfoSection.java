@@ -2,7 +2,6 @@ package DataBeans.gesdis;
 
 import java.util.Date;
 
-
 /**
  * This is the view class that contains information about the seccao
  * domain object.
@@ -26,6 +25,7 @@ public class InfoSection implements Comparable {
 	*/
 	
 	public InfoSection(){
+		setSectionDepth(calculateDepth());
 		}
 	
 	/** 
@@ -37,7 +37,7 @@ public class InfoSection implements Comparable {
 		this.name =name;
 		this.sectionOrder= sectionOrder;
 		this.infoSite = infoSite;
-		
+		setSectionDepth(calculateDepth());
 	}
 	
 	
@@ -50,27 +50,10 @@ public class InfoSection implements Comparable {
         this.sectionOrder = sectionOrder;        
         this.infoSite = infoSite;
         this.infoSuperiorSection =infoSuperiorSection;
-        this.sectionDepth = calculateDepth();
+        setSectionDepth(calculateDepth());
 		
         
-//        if ((inferiorInfoSections != null) &&
-//        !inferiorInfoSections.isEmpty()) {
-//            this.inferiorInfoSections =
-//            ViewUtils.buildSectionsList(inferiorInfoSections,
-//            new ArrayList());
-//        } else
-//            this.inferiorInfoSections = new ArrayList();
-//        
-//        this.infoItems = new ArrayList();
-//        if ((infoItems != null) &&
-//        !infoItems.isEmpty()) {
-//            
-//            Iterator iter = infoItems.iterator();
-//            while (iter.hasNext()) {
-//                InfoItem item = (InfoItem) iter.next();
-//                infoItems.add(item);
-//            }
-//        }
+
     }
     
 
@@ -80,7 +63,7 @@ public class InfoSection implements Comparable {
 	*/
 	public Integer getInternalCode() {
 		return internalCode;
-	}
+			}
 
 	
 
@@ -90,6 +73,7 @@ public class InfoSection implements Comparable {
 	*/
 	public void setInternalCode(Integer internalCode) {
 		this.internalCode=internalCode;
+		setSectionDepth(calculateDepth());
 	}
 	
 	
@@ -107,6 +91,7 @@ public class InfoSection implements Comparable {
 	*/
 	public void setName(String name) {
 		  this.name = name;
+		setSectionDepth(calculateDepth());
 	}
 	  
 	
@@ -124,7 +109,7 @@ public class InfoSection implements Comparable {
 	*/
 	public void setSectionOrder(Integer sectionOrder) {
 		this.sectionOrder=sectionOrder;
-		this.sectionDepth = calculateDepth();
+		setSectionDepth(calculateDepth());
 		}
     
 	
@@ -142,6 +127,7 @@ public class InfoSection implements Comparable {
 	*/
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
+		setSectionDepth(calculateDepth());
 	}
     
     
@@ -159,6 +145,7 @@ public class InfoSection implements Comparable {
 	*/
 	public void setInfoSite(InfoSite infoSite) {
 		this.infoSite = infoSite;
+		setSectionDepth(calculateDepth());
 	}
     
     
@@ -176,49 +163,10 @@ public class InfoSection implements Comparable {
 	*/
 	public void setSuperiorInfoSection(InfoSection infoSuperiorSection) {
 		this.infoSuperiorSection = infoSuperiorSection;
+		setSectionDepth(calculateDepth());
 	}
     
-    
-	
-	
-	
-	
-	
-//
-//	/**
-//	 * @return List
-//	 */	
-//    public List getInferiorInfoSections() {
-//        return inferiorInfoSections;
-//    }
-//
-//
-//	/**
-//	* Sets the inferiorInfoSections.
-//	* @param inferiorInfoSections The inferiorInfoSections to set
-//	*/
-//	public void setInferiorInfoSections(List inferiorInfoSections) {
-//		this.inferiorInfoSections = inferiorInfoSections;
-//	}
-//
-//
-//	/**
-//	 * @return List
-//	 */	    
-//    public List getInfoItems() {
-//        return infoItems;
-//    }
-//
-//
-//	/**
-//	* Sets the infoItems.
-//	* @param infoItems The infoItems to set
-//	*/
-//	public void setInfoItems(List infoItems) {
-//		this.infoItems = infoItems;
-//	}
-
-
+  
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -227,9 +175,9 @@ public class InfoSection implements Comparable {
 		result += ", internalCode=" + getInternalCode();
 		result += ", name=" + getName();
 		result += ", sectionOrder=" + getSectionOrder();
-		result += ", infoSite=" + getInfoSite();
-		result += ", superiorInfoSection=" + getSuperiorInfoSection();
 		result += ", sectionDepth=" + getSectionDepth();
+		result += ", superiorInfoSection=" + getSuperiorInfoSection();
+		result += ", infoSite=" + getInfoSite();
 		result += "]";
 		return result;
 	}
@@ -279,18 +227,37 @@ public class InfoSection implements Comparable {
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(Object arg0) {	
+	
+		InfoSection section =(InfoSection) arg0;
+		System.out.println("this: "+this);
+		System.out.println("arg0: "+section);
+		if (getSectionDepth().intValue()== section.getSectionDepth().intValue()) {
+			if (getSuperiorInfoSection()==null)  {
+				 if (section.getSuperiorInfoSection()==null) {
+				 	
+				 	return getSectionOrder().intValue()-section.getSectionOrder().intValue();
+					 }
+				 else {return compareTo(section.getSuperiorInfoSection());
+					}}
+			else {
+				if (getSuperiorInfoSection().equals(section.getSuperiorInfoSection())) {
+					return getSectionOrder().intValue()-section.getSectionOrder().intValue();
+				}
+				else {
+					return getSuperiorInfoSection().compareTo(section.getSuperiorInfoSection());
+				}		
+			}}
+		else {
+			if (getSectionDepth().intValue()>section.getSectionDepth().intValue()) {
+				return getSuperiorInfoSection().compareTo(section);
+			}
+			else {
+				return compareTo(section.getSuperiorInfoSection());	
+			}
+		}
 		
-		return naturalOrder()-((InfoSection)arg0).naturalOrder();
 	}
 
-	public int naturalOrder(){
-		if (getSuperiorInfoSection()==null) {
-			return getSectionOrder().intValue();
-		}
-		else {
-			return getSectionOrder().intValue() + getSuperiorInfoSection().naturalOrder();
-		}
-		
-	}
+	
 
 }
