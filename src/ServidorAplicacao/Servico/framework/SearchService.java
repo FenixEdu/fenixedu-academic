@@ -35,29 +35,23 @@ public abstract class SearchService implements IServico
     public List run(HashMap searchParameters) throws FenixServiceException
     {
         ISuportePersistente sp;
-        try
-        {
-            sp = SuportePersistenteOJB.getInstance();
-        } catch (ExcepcaoPersistencia e)
-        {
-            throw new FenixServiceException("Cannot get persistent support!", e);
-        }
-
         List domainList;
         try
         {
+            sp = SuportePersistenteOJB.getInstance();
             domainList = doSearch(searchParameters, sp);
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             e.printStackTrace(System.out);
             throw new FenixServiceException("Problems with database!", e);
         }
-        
+
         List infoList = (List) CollectionUtils.collect(domainList, new Transformer()
         {
             public Object transform(Object input)
             {
-                InfoObject infoObject = cloneDomainObject((IDomainObject) input); 
+                InfoObject infoObject = cloneDomainObject((IDomainObject) input);
                 return infoObject;
             }
         });
@@ -75,9 +69,10 @@ public abstract class SearchService implements IServico
 
     /**
 	 * Do the search using search using the search parameters.
+	 * 
 	 * @param searchParameters
-	 * @return 
-	 * 	A list of IDomainObject.
+	 * @return A list of IDomainObject.
 	 */
-    abstract protected List doSearch(HashMap searchParameters, ISuportePersistente sp)  throws ExcepcaoPersistencia;
+    abstract protected List doSearch(HashMap searchParameters, ISuportePersistente sp)
+            throws ExcepcaoPersistencia;
 }
