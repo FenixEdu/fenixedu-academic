@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Servico.credits.calcutation;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,6 +16,7 @@ import Dominio.ITeacher;
 import Dominio.ITurno;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
+import Dominio.util.TransformationUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.ISuportePersistente;
@@ -59,28 +59,31 @@ public class CreditsCalculator
         ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
+
         IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentShiftProfessorship();
 
-        List shiftProfessorshipList = shiftProfessorshipDAO.readByProfessorship(professorship);
+        List shiftProfessorshipList = null;
+        if (shiftProfessorshipDeleted.isEmpty())
+        {
+            shiftProfessorshipList = shiftProfessorshipDAO.readByProfessorship(professorship);
+        } else
+        {
+            List shiftProfessorshipsIds = TransformationUtils.transformToIds(shiftProfessorshipDeleted);
+            shiftProfessorshipList =
+                shiftProfessorshipDAO.readByProfessorshipWithDifferentIds(
+                    professorship,
+                    shiftProfessorshipsIds);
+        }
 
-        List shiftProfessorshipToAnalyse = new ArrayList();
-        shiftProfessorshipToAnalyse.addAll(shiftProfessorshipList);
-        shiftProfessorshipToAnalyse.removeAll(shiftProfessorshipAdded);
-        shiftProfessorshipToAnalyse.addAll(shiftProfessorshipAdded);
-
-        Iterator iterator = shiftProfessorshipToAnalyse.iterator();
+        Iterator iterator = shiftProfessorshipList.iterator();
 
         double hours = 0;
 
         while (iterator.hasNext())
         {
             IShiftProfessorship shiftProfessorship = (IShiftProfessorship) iterator.next();
-
-            if (!shiftProfessorshipDeleted.contains(shiftProfessorship))
-            {
-                double shiftHours = calcuteShiftHours(shiftProfessorship.getShift());
-                hours += shiftHours * shiftProfessorship.getPercentage().doubleValue() / 100;
-            }
+            double shiftHours = calcuteShiftHours(shiftProfessorship.getShift());
+            hours += shiftHours * shiftProfessorship.getPercentage().doubleValue() / 100;
         }
 
         return new Double(hours);
@@ -165,7 +168,10 @@ public class CreditsCalculator
      * @param numberOfStudents
      * @return
      */
-    private double calculeDFPSCredits(ITeacherDegreeFinalProjectStudent degreeFinalProjectStudent, Iterator iterator, double numberOfStudents)
+    private double calculeDFPSCredits(
+        ITeacherDegreeFinalProjectStudent degreeFinalProjectStudent,
+        Iterator iterator,
+        double numberOfStudents)
     {
         while (iterator.hasNext())
         {
@@ -207,9 +213,9 @@ public class CreditsCalculator
         Iterator iterator = teacherDegreeFinalProjectStudents.iterator();
 
         double numberOfStudents = 0;
-        
+
         numberOfStudents = calculeDFPSCredits(degreeFinalProjectStudent, iterator, numberOfStudents);
-        
+
         return new Double(numberOfStudents);
     }
 
@@ -239,7 +245,7 @@ public class CreditsCalculator
         Iterator iterator = teacherDegreeFinalProjectStudents.iterator();
 
         double numberOfStudents = degreeFinalProjectStudent.getPercentage().doubleValue() / 100;
-        
+
         numberOfStudents = calculeDFPSCredits(degreeFinalProjectStudent, iterator, numberOfStudents);
 
         return new Double(numberOfStudents);
