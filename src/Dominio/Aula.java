@@ -166,15 +166,16 @@ public class Aula extends DomainObject implements IAula {
         boolean resultado = false;
         if (obj instanceof IAula) {
             IAula aula = (IAula) obj;
-            resultado = getDiaSemana().equals(aula.getDiaSemana())
-                    && (getInicio().get(Calendar.HOUR_OF_DAY) == aula.getInicio().get(
-                            Calendar.HOUR_OF_DAY))
-                    && (getInicio().get(Calendar.MINUTE) == aula.getInicio().get(Calendar.MINUTE))
-                    && (getFim().get(Calendar.HOUR_OF_DAY) == aula.getFim().get(Calendar.HOUR_OF_DAY))
-                    && (getFim().get(Calendar.MINUTE) == aula.getFim().get(Calendar.MINUTE))
-                    && getSala().getNome().equals(aula.getSala().getNome())
-                    && getRoomOccupation().getRoom().getNome().equals(
-                            aula.getRoomOccupation().getRoom().getNome());
+            resultado = getIdInternal().equals(aula.getIdInternal());
+//            resultado = getDiaSemana().equals(aula.getDiaSemana())
+//                    && (getInicio().get(Calendar.HOUR_OF_DAY) == aula.getInicio().get(
+//                            Calendar.HOUR_OF_DAY))
+//                    && (getInicio().get(Calendar.MINUTE) == aula.getInicio().get(Calendar.MINUTE))
+//                    && (getFim().get(Calendar.HOUR_OF_DAY) == aula.getFim().get(Calendar.HOUR_OF_DAY))
+//                    && (getFim().get(Calendar.MINUTE) == aula.getFim().get(Calendar.MINUTE))
+//                    && getSala().getNome().equals(aula.getSala().getNome())
+//                    && getRoomOccupation().getRoom().getNome().equals(
+//                            aula.getRoomOccupation().getRoom().getNome());
         }
 
         return resultado;
