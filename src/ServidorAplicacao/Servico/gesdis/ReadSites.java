@@ -55,7 +55,7 @@ public class ReadSites implements IServico {
     	sp = SuportePersistenteOJB.getInstance();
     	allSites = sp.getIPersistentSite().readAll();
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
-		throw new FenixServiceException(excepcaoPersistencia.getMessage());
+		throw new FenixServiceException(excepcaoPersistencia);
 	}
 
     if (allSites == null || allSites.isEmpty()) throw new InvalidArgumentsServiceException();
