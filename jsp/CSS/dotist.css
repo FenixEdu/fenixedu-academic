@@ -45,13 +45,6 @@ a:link {
 	text-decoration: underline;
 	}
 
-a:active {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #00427b;
-	background-color: transparent;
-	}
-
 a:visited {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -136,12 +129,6 @@ a:hover {
 *******************************************/
 	
 .navopgeral-td a:link {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-	text-decoration: none;
-	}
-
-.navopgeral-td a:active {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
 	text-decoration: none;
