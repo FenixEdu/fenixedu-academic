@@ -26,6 +26,7 @@ import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentState;
+import Util.MarkType;
 
 /**
  * @author Fernanda Quitério
@@ -95,20 +96,11 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 					Calendar calendar = Calendar.getInstance();
 					enrolmentEvaluationElem.setWhen(calendar.getTime());
 					enrolmentEvaluationElem.setEmployee(employee);
-//					TODO: checksum
+					//					TODO: checksum
 					enrolmentEvaluationElem.setCheckSum("");
-					
-					// update state of enrolment: aproved or notAproved
-					IEnrolment enrolmentToEdit = enrolmentEvaluationElem.getEnrolment();
-					persistentEnrolment.simpleLockWrite(enrolmentToEdit);
-					
-					EnrolmentState newEnrolmentState = EnrolmentState.APROVED;
-					try{
-						Integer grade = new Integer(enrolmentEvaluationElem.getGrade()); 
-					} catch(NumberFormatException e){
-						newEnrolmentState = EnrolmentState.NOT_APROVED;
-					}
-					enrolmentToEdit.setEnrolmentState(newEnrolmentState);
+
+					// update state of enrolment: aproved, notAproved or notEvaluated
+					updateEnrolmentState(persistentEnrolment, enrolmentEvaluationElem);
 				}
 			}
 		} catch (ExcepcaoPersistencia ex) {
@@ -119,6 +111,21 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 		}
 
 		return Boolean.TRUE;
+	}
+
+	private void updateEnrolmentState(IPersistentEnrolment persistentEnrolment, IEnrolmentEvaluation enrolmentEvaluationElem)
+		throws ExcepcaoPersistencia {
+		IEnrolment enrolmentToEdit = enrolmentEvaluationElem.getEnrolment();
+		persistentEnrolment.simpleLockWrite(enrolmentToEdit);
+
+		EnrolmentState newEnrolmentState = EnrolmentState.APROVED;
+		
+		if(MarkType.getRepMarks().contains(enrolmentEvaluationElem.getGrade())){
+			newEnrolmentState = EnrolmentState.NOT_APROVED;
+		} else if(MarkType.getNaMarks().contains(enrolmentEvaluationElem.getGrade())){
+			newEnrolmentState = EnrolmentState.NOT_EVALUATED;
+		}		
+		enrolmentToEdit.setEnrolmentState(newEnrolmentState);
 	}
 
 	private Funcionario readEmployee(IPessoa person) {

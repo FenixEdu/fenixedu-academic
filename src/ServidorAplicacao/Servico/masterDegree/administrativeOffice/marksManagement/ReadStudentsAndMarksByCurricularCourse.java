@@ -13,20 +13,16 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import DataBeans.InfoCurricularCourse;
-import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoSiteEnrolmentEvaluation;
-import DataBeans.InfoStudent;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
-import Dominio.CurricularCourseScope;
 import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseScope;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
@@ -43,12 +39,10 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentTeacher;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationState;
@@ -105,10 +99,17 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 			Iterator iterEnrolment = enrolments.listIterator();
 			while (iterEnrolment.hasNext()) {
 				IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
-				List allEnrolmentEvaluations = (List) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolment);
-				IEnrolmentEvaluation enrolmentEvaluation =
-					(IEnrolmentEvaluation) allEnrolmentEvaluations.get(allEnrolmentEvaluations.size() - 1);
-				enrolmentEvaluations.add(enrolmentEvaluation);
+				if(enrolment.getStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)){
+					List allEnrolmentEvaluations = (List) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolment);
+					IEnrolmentEvaluation enrolmentEvaluation =
+						(IEnrolmentEvaluation) allEnrolmentEvaluations.get(allEnrolmentEvaluations.size() - 1);
+					enrolmentEvaluations.add(enrolmentEvaluation);
+					
+				}
+//				List allEnrolmentEvaluations = (List) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolment);
+//				IEnrolmentEvaluation enrolmentEvaluation =
+//					(IEnrolmentEvaluation) allEnrolmentEvaluations.get(allEnrolmentEvaluations.size() - 1);
+//				enrolmentEvaluations.add(enrolmentEvaluation);
 			}
 
 			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
@@ -168,7 +169,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 		IPersistentExecutionYear persistentExecutionYear,
 		IPersistentCurricularCourse persistentCurricularCourse,
 		ICurricularCourse curricularCourse)
-		throws ExcepcaoPersistencia {
+		throws ExcepcaoPersistencia, NonExistingServiceException{
 		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(yearString);
 
 		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
@@ -183,6 +184,9 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 		executionCourse.setAssociatedCurricularCourses(curricularCourses);
 		executionCourse = (IDisciplinaExecucao) persistentCurricularCourse.readDomainObjectByCriteria(executionCourse);
 
+		if(executionCourse == null){
+			throw new NonExistingServiceException();
+		}
 		List evaluationsWithoutFinal = (List) CollectionUtils.select(executionCourse.getAssociatedEvaluations(), new Predicate() {
 			public boolean evaluate(Object input) {
 					//for now returns only exams
@@ -210,7 +214,6 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 		
 		List enrolmentEvaluations = null;
 		InfoTeacher infoTeacher = null;
-		InfoStudent infoStudent = null;
 		List infoSiteEnrolmentEvaluations = new ArrayList();
 		ICurricularCourse curricularCourse = null;
 		IEnrolment enrolment = new Enrolment();
@@ -221,12 +224,8 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 			
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 			IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
-			IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
-			IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente();
 			
 			//read curricularCourse by ID
 			ICurricularCourse curricularCourseTemp = new CurricularCourse();
