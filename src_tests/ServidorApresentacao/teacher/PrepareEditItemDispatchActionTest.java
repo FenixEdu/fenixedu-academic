@@ -1,8 +1,8 @@
 /*
- * Created on 9/Abr/2003
+ * Created on 14/Abr/2003
  *
  * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * Window>Preferences>Java>Code Generation>Code Template
  */
 package ServidorApresentacao.teacher;
 
@@ -33,18 +33,12 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author lmac2
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
-
-// TODO Failing
-
-public class EditItemDispatchActionTest extends TestCasePresentationTeacherPortal {
+public class PrepareEditItemDispatchActionTest extends TestCasePresentationTeacherPortal {
 
 	private InfoSection infoSection = null;
 	private List infoItemsList = null;
-	private InfoItem infoItem = null;
+	private String index = null;
 	private InfoItem newInfoItemTestSuc =null;
 	private String itemOrder = null;
 	private String urgent = null;
@@ -52,7 +46,7 @@ public class EditItemDispatchActionTest extends TestCasePresentationTeacherPorta
 	/**
 	 * @param testName
 	 */
-	public EditItemDispatchActionTest(String testName) {
+	public PrepareEditItemDispatchActionTest(String testName) {
 		super(testName);
 	}
 
@@ -81,7 +75,7 @@ public class EditItemDispatchActionTest extends TestCasePresentationTeacherPorta
 	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
 	 */
 	protected String getSuccessfulForward() {
-		return "viewSection";
+		return "editItem";
 	}
 
 
@@ -92,8 +86,7 @@ public class EditItemDispatchActionTest extends TestCasePresentationTeacherPorta
 	
 		Map result = new Hashtable();
 		
-		result.put(SessionConstants.INFO_SECTION,infoSection);
-		result.put(SessionConstants.INFO_ITEM, infoItem);
+		result.put(SessionConstants.INFO_SECTION_ITEMS_LIST, infoItemsList);
 		
 		return result;
 	}
@@ -112,14 +105,8 @@ public class EditItemDispatchActionTest extends TestCasePresentationTeacherPorta
 		
 		Map result = new Hashtable();
 		
-		urgent = new String ("false");
-		itemOrder = new String("1");
-		
-		result.put("method","edit");
-		result.put("information","newInformation");
-		result.put("itemName","newItemName");
-		result.put("itemOrder",itemOrder);
-		result.put("urgent",urgent);
+		result.put("index", index);
+		result.put("method","prepareEdit");
 		return result;
 	}
 
@@ -139,7 +126,6 @@ public class EditItemDispatchActionTest extends TestCasePresentationTeacherPorta
 		ArrayList teste = new ArrayList(2);
 		
 		teste.add(SessionConstants.INFO_ITEM);
-		teste.add(SessionConstants.INFO_SECTION_ITEMS_LIST);
 		result.put(new Integer(1),teste);
 		
 		return result;
@@ -204,9 +190,9 @@ public class EditItemDispatchActionTest extends TestCasePresentationTeacherPorta
 		List itemsList = persistentItem.readAllItemsBySection(section);
 		
 		
-		infoSection = Cloner.copyISection2InfoSection(section);
 		infoItemsList=Cloner.copyListIItems2ListInfoItems(itemsList);
-		infoItem = (InfoItem)infoItemsList.get(0);
+		index = new String("0");
+		
 		
 		//newInfoItemTestSuc = (InfoItem) infoItemsList.get(0);
 		
