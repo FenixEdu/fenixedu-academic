@@ -6,7 +6,10 @@ package ServidorAplicacao.strategy.enrolment.degree.rules;
 
 import java.util.List;
 
+import Dominio.ICurricularCourse;
+import Dominio.IPrecedence;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.degree.EnrolmentValidationResult;
 import Util.PrecedenceScopeToApply;
 
 /**
@@ -22,7 +25,16 @@ public class EnrolmentValidatePrecedenceDuringEnrolmentRule extends PrecedenceRu
 	}
 
 	protected void doApply(EnrolmentContext enrolmentContext, List precedenceList, List curricularCourseToApply) {
-		throw new IllegalStateException("method not implemented!");
+		EnrolmentValidationResult enrolmentValidationResult = enrolmentContext.getEnrolmentValidationResult();
+		for (int precedenceIndex = 0; precedenceIndex < precedenceList.size(); precedenceIndex ++){
+			IPrecedence precedence = (IPrecedence) precedenceList.get(precedenceIndex);
+			ICurricularCourse precedenceCurricularCourse =precedence.getCurricularCourse();
+			if (curricularCourseToApply.contains(precedenceCurricularCourse)){
+				if (!precedence.evaluate(enrolmentContext)){
+					enrolmentValidationResult.setErrorMessage(EnrolmentValidationResult.PRECEDENCE_DURING_ENROLMENT, precedenceCurricularCourse.getName());
+				}
+			}
+		}
 	}
 
 	/**
