@@ -49,8 +49,22 @@ INSERT INTO PERSON VALUES (5, 3333333333, 'Lisboa', null, null,'Nome da Pessoa',
                            'distrito morada', '214443523', '96546321', 's@h.c','http',
                            '3333333333', 'Profissao', '45498','pass', 63,
                            '3333333333', 1, 0, 0);
+#-----------------------------
+# Data for table 'ROLE'
+#-----------------------------
+delete from ROLE;
+insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_ACTION, PORTAL_ACTION_NAME_PROPERTY) values (1,1,'personPortal','portal.person.name');
+insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_ACTION, PORTAL_ACTION_NAME_PROPERTY) values (2,2,'studentPortal','portal.student.name');
+insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_ACTION, PORTAL_ACTION_NAME_PROPERTY) values (3,3,'teacherPortal','portal.teacher.name');
+insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_ACTION, PORTAL_ACTION_NAME_PROPERTY) values (4,4,'timeTableManagerPortal','portal.timeTableManager.name');
 
-   
+#-----------------------------
+# Data for table 'ROLE'
+#-----------------------------
+delete from PERSON_ROLE;
+insert into PERSON_ROLE (ID_INTERNAL, KEY_ROLE, KEY_PERSON) values (1,1,1);
+insert into PERSON_ROLE (ID_INTERNAL, KEY_ROLE, KEY_PERSON) values (2,4,1);
+
 #
 # Data for table 'PRIVILEGIO'
 #
@@ -114,12 +128,6 @@ INSERT INTO PRIVILEGIO VALUES (1, 'StudentShiftEnrolment',55);
 INSERT INTO PRIVILEGIO VALUES (1, 'ReadClassesWithShiftService', 56);
 INSERT INTO PRIVILEGIO VALUES (1, 'RemoveTeacher', 57);
 INSERT INTO PRIVILEGIO VALUES (1, 'AssociateTeacher', 58);
-INSERT INTO PRIVILEGIO VALUES (1, 'InsertAnnouncement', 59);
-INSERT INTO PRIVILEGIO VALUES (1, 'InsertBibliographicReference', 60);
-INSERT INTO PRIVILEGIO VALUES (1, 'EditAnnouncement', 61);
-INSERT INTO PRIVILEGIO VALUES (1, 'DeleteAnnouncement', 62);
-INSERT INTO PRIVILEGIO VALUES (1, 'ReadSites', 63);
-
 #
 # Data for table 'DEGREE'
 #
