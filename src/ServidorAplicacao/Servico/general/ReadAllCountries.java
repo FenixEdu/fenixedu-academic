@@ -20,16 +20,16 @@ package ServidorAplicacao.Servico.general;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCountry;
 import Dominio.ICountry;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadAllCountries implements IServico {
+public class ReadAllCountries implements IService {
     
     private static ReadAllCountries servico = new ReadAllCountries();
     

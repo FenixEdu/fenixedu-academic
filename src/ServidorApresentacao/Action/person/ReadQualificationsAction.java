@@ -21,8 +21,8 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 
 /**
- * @author João Simas
- * @author Nuno Barbosa
+ * @author  Barbosa
+ * @author  Pica
  */
 public class ReadQualificationsAction extends FenixAction
 {

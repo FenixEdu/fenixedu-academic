@@ -64,7 +64,7 @@ public class UpdateStudentTestQuestionMark implements IServico
 
             Iterator studentsTestQuestionIt = studentsTestQuestionList.iterator();
 
-            ParseQuestion parse = new ParseQuestion();
+			            ParseQuestion parse = new ParseQuestion();
             while (studentsTestQuestionIt.hasNext())
             {
                 IStudentTestQuestion studentTestQuestion =
@@ -85,6 +85,7 @@ public class UpdateStudentTestQuestionMark implements IServico
                 if (infoStudentTestQuestion.getResponse().intValue() != 0)
                 {
 
+					
                     if (infoStudentTestQuestion
                         .getQuestion()
                         .getCorrectResponse()

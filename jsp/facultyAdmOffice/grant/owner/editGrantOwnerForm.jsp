@@ -164,7 +164,9 @@
 				<bean:message key="label.grant.owner.infoperson.country"/>
 			</td>
 			<td>
-				<html:text property="country"/>
+				<html:select property="country">
+					<html:options collection="countryList" property="idInternal" labelProperty="name"/>
+				</html:select>
 			</td>
 		</tr>
 		<tr>

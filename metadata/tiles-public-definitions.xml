@@ -1,0 +1,19 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="definition.publico.executionCourseSitePage" 
+		controllerClass="ServidorApresentacao.tiles.controller.PublicTilesComponentController" 
+		page="/publicGesDisLayout_2col.jsp" >
+	<put name="title" value="" />	
+  	<put name="serviceName" value="Instituto Superior Técnico" />
+ 	<put name="executionCourseName" value=""  />
+ 	<put name="degrees" value="/publico/associatedDegrees.jsp" />
+ 	<put name="body" value=""/>
+  	<put name="navbarGeral" value="/publico/commonNavLocalPub.jsp" />
+  	<put name="navbar" value="/publico/gesdisNavbar.jsp"/>
+  	<put name="footer" value="/publico/commonFooterPub.jsp" />
+
+	</definition>
+	
+</tiles-definitions>
