@@ -67,10 +67,13 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	
 		EMail email =null;
 		
-		if (!request.getServerName().equals("localhost")) { email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
+		if (!request.getServerName().equals("localhost")) { 
+			email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
+			email.send("suporte@dot.ist.utl.pt","Fenix Error Report",stackTrace.toString());
 		}
 		
 		else{ email = new EMail("mail.rnl.ist.utl.pt", "erro@dot.ist.utl.pt");
+			email.send("suporte@dot.ist.utl.pt","Localhost Error Report",stackTrace.toString());
 		}
 			
 		email.send("suporte@dot.ist.utl.pt","Error Report",stackTrace.toString());
