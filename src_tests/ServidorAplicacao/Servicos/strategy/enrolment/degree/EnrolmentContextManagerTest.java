@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Servicos.strategy.enrolment.degree;
 
-import java.util.HashMap;
 import java.util.List;
 
 import junit.framework.Test;
@@ -66,20 +65,24 @@ public class EnrolmentContextManagerTest extends TestCaseServicos {
 
 		try {
 			sp.iniciarTransaccao();
-			enrolmentContext = EnrolmentContextManager.initialEnrolmentContext(studentCurricularPlan.getStudent(), new Integer(2));
+			enrolmentContext =
+				EnrolmentContextManager.initialEnrolmentContext(
+					studentCurricularPlan.getStudent(),
+					new Integer(2));
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e2) {
 			e2.printStackTrace(System.out);
-			fail("Getting initial enrolment Context");			
+			fail("Getting initial enrolment Context");
 		}
 
-		IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
+		IEnrolmentStrategyFactory enrolmentStrategyFactory =
+			EnrolmentStrategyFactory.getInstance();
 		IEnrolmentStrategy enrolmentStrategy = null;
 		try {
 			sp.iniciarTransaccao();
-			
+
 			enrolmentStrategy =
-			enrolmentStrategyFactory.getEnrolmentStrategyInstance(
+				enrolmentStrategyFactory.getEnrolmentStrategyInstance(
 					enrolmentContext);
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
@@ -97,13 +100,6 @@ public class EnrolmentContextManagerTest extends TestCaseServicos {
 			enrolmentContext.getSemester(),
 			strategyEnrolmentContext.getSemester());
 
-		HashMap acumulatedEnrolments =
-			(HashMap) strategyEnrolmentContext.getAcumulatedEnrolments();
-
-		assertNotNull("Acumulated enrolments is null!", acumulatedEnrolments);
-
-		assertEquals(3, acumulatedEnrolments.size());
-
 		CurricularCourse curricularCourse = new CurricularCourse();
 		curricularCourse.setDegreeCurricularPlan(
 			studentCurricularPlan.getDegreeCurricularPlan());
@@ -112,7 +108,8 @@ public class EnrolmentContextManagerTest extends TestCaseServicos {
 		assertEquals(
 			"AMII",
 			new Integer(2),
-			acumulatedEnrolments.get(curricularCourse));
+			strategyEnrolmentContext.getCurricularCourseAcumulatedEnrolments(
+				curricularCourse));
 
 		curricularCourse = new CurricularCourse();
 		curricularCourse.setDegreeCurricularPlan(
@@ -122,7 +119,8 @@ public class EnrolmentContextManagerTest extends TestCaseServicos {
 		assertEquals(
 			"TFCI",
 			new Integer(1),
-			acumulatedEnrolments.get(curricularCourse));
+			strategyEnrolmentContext.getCurricularCourseAcumulatedEnrolments(
+				curricularCourse));
 
 		curricularCourse = new CurricularCourse();
 		curricularCourse.setDegreeCurricularPlan(
@@ -132,7 +130,8 @@ public class EnrolmentContextManagerTest extends TestCaseServicos {
 		assertEquals(
 			"AMI",
 			new Integer(1),
-			acumulatedEnrolments.get(curricularCourse));
+			strategyEnrolmentContext.getCurricularCourseAcumulatedEnrolments(
+				curricularCourse));
 
 		List doneCourses = enrolmentContext.getCurricularCoursesDoneByStudent();
 		assertNotNull("curricular courses done is null!", doneCourses);
@@ -142,9 +141,14 @@ public class EnrolmentContextManagerTest extends TestCaseServicos {
 			enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 		assertNotNull("Final span is null!", finalSpan);
 		assertEquals("Final span size!", 8, finalSpan.size());
-		assertEquals("Final span is wrong!",
-		true,
-		CollectionUtils.isEqualCollection(studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourses(), finalSpan));
+		assertEquals(
+			"Final span is wrong!",
+			true,
+			CollectionUtils.isEqualCollection(
+				studentCurricularPlan
+					.getDegreeCurricularPlan()
+					.getCurricularCourses(),
+				finalSpan));
 		assertNotNull(enrolmentContext.getStudentActiveCurricularPlan());
 	}
 
