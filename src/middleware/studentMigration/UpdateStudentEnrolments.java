@@ -421,8 +421,8 @@ public class UpdateStudentEnrolments
 		{
 			ReportEnrolment.addFoundCurricularCourseInOtherDegrees(
 				mwEnrolment.getCoursecode(),
-				String.valueOf(mwEnrolment.getDegreecode().intValue()),
-				new ArrayList());
+				mwEnrolment.getDegreecode().toString(),
+				mwEnrolment.getNumber().toString());
 		}
 		return curricularCourse;
 	}
@@ -487,11 +487,11 @@ public class UpdateStudentEnrolments
 				} else
 				{
 					ReportEnrolment.addCurricularCourseScopeNotFound(mwEnrolment.getCoursecode(),
-						String.valueOf(mwEnrolment.getDegreecode().intValue()),
-						String.valueOf(mwEnrolment.getNumber().intValue()),
-						String.valueOf(mwEnrolment.getCurricularcourseyear().intValue()),
-						String.valueOf(mwEnrolment.getCurricularcoursesemester().intValue()),
-						String.valueOf(mwEnrolment.getBranchcode().intValue()));
+						mwEnrolment.getDegreecode().toString(),
+						mwEnrolment.getNumber().toString(),
+						mwEnrolment.getCurricularcourseyear().toString(),
+						mwEnrolment.getCurricularcoursesemester().toString(),
+						mwEnrolment.getBranchcode().toString());
 //					System.out.println(
 //						"Error Reading Curricular Course Scope !! No Scopes found for this Curricular Course and Year and then by Course and Semester.");
 //					System.out.println("Numero do Aluno " + mwEnrolment.getNumber());

@@ -57,19 +57,25 @@ public class ReportEnrolment
 		notFoundExecutionCourse.put(key.toString(), studentList);
 	}
 
-	/**
-	 * 
-	 * @param courseCode course enrolled by student
-	 * @param degreeCode student degree
-	 * @param foundHere list of @link Dominio.CurricularCourseScope
-	 */
-	public static void addFoundCurricularCourseInOtherDegrees(String courseCode, String degreeCode, List foundHere)
+	public static void addFoundCurricularCourseInOtherDegrees(String courseCode, String degreeCode, String studentNumber)
 	{
 		StringBuffer key = new StringBuffer(courseCode).append(" - ").append(degreeCode);
 		Integer times = new Integer(1);
+
 		if (!curricularCoursesFoundInOtherDegree.containsKey(key.toString()))
 		{
-			curricularCoursesFoundInOtherDegree.put(key.toString(), foundHere);
+			List studentList = (List) curricularCoursesFoundInOtherDegree.get(key.toString());
+			if (studentList == null)
+			{
+				studentList = new ArrayList();
+				studentList.add(studentNumber);
+			} else
+			{
+				if (!studentList.contains(studentNumber)) {
+					studentList.add(studentNumber);
+				}
+			}
+			curricularCoursesFoundInOtherDegree.put(key.toString(), studentList);
 		} else
 		{
 			Integer timesBefore = (Integer) curricularCoursesFoundInOtherDegreeCardinality.get(key.toString());
@@ -77,33 +83,6 @@ public class ReportEnrolment
 		}
 		curricularCoursesFoundInOtherDegreeCardinality.put(key.toString(), times);
 	}
-
-//	public static void addFoundCurricularCourseInOtherDegrees(String courseCode, String degreeCode, String studentNumber)
-//	{
-//		StringBuffer key = new StringBuffer(courseCode).append(" - ").append(degreeCode);
-//		Integer times = new Integer(1);
-//
-//		if (!curricularCoursesFoundInOtherDegree.containsKey(key.toString()))
-//		{
-//			List studentList = (List) curricularCoursesFoundInOtherDegree.get(key.toString());
-//			if (studentList == null)
-//			{
-//				studentList = new ArrayList();
-//				studentList.add(studentNumber);
-//			} else
-//			{
-//				if (!studentList.contains(studentNumber)) {
-//					studentList.add(studentNumber);
-//				}
-//			}
-//			curricularCoursesFoundInOtherDegree.put(key.toString(), studentList);
-//		} else
-//		{
-//			Integer timesBefore = (Integer) curricularCoursesFoundInOtherDegreeCardinality.get(key.toString());
-//			times = new Integer(timesBefore.intValue() + 1);
-//		}
-//		curricularCoursesFoundInOtherDegreeCardinality.put(key.toString(), times);
-//	}
 
 	public static void addCurricularCourseScopeNotFound(String courseCode, String degreeCode, String studentNumber, String year, String semester, String branchCode)
 	{
@@ -155,11 +134,10 @@ public class ReportEnrolment
 		{
 			Map.Entry mapEntry = (Map.Entry) iterator.next();
 			String key = (String) mapEntry.getKey();
-
+			List studentList = (List) mapEntry.getValue();
 			out.print("\t\t Cadeira - Curso = " + key);
 			out.println(" Aconteceu " + curricularCoursesFoundInOtherDegreeCardinality.get(key) + " veze(s)...");
-			List foundHere = (List) mapEntry.getValue();
-			// TODO [DAVID] print list here
+			out.println("\t\t\tAlunos ="+ studentList.toString());
 
 		}
 		
