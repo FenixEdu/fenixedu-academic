@@ -15,4 +15,5 @@ public interface IPersistentObject {
 	Object readDomainObjectByCriteria(Object obj) throws ExcepcaoPersistencia;
 	void deleteByCriteria(Object obj) throws ExcepcaoPersistencia;
 	void lockWrite(Object obj) throws ExcepcaoPersistencia;	
+	public Object readByOId(Object obj) throws ExcepcaoPersistencia;
 }
