@@ -14,11 +14,14 @@
 	<property name="src.tests" location="src_tests"/>
 	<property name="src.tests.cache" location="${src.tests}/ServidorPersistente/cache"/>
 	<property name="src.tests.cloner" location="${src.tests}/DataBeans/util"/>
+	<property name="src.tests.jboss" location="${src.tests}/framework"/>
 
 	<property name="build.home" location="build"/>
 	<property name="build.app-server" value="${build.home}/app-server"/>
+	<property name="build.web-client-classes" value="${build.home}/web-client/WEB-INF/classes"/>
 	<property name="build.tests" value="${build.home}/tests"/>
 	<property name="build.tests.cache" value="${build.tests}/cache"/>
+	<property name="build.tests.jboss" value="${build.tests}/jboss"/>
 	
 	<property name="sshtools.home" location="lib"/>
 
@@ -53,6 +56,21 @@
 
 	<property name="encoding" value="ISO-8859-15"/>	
 	
+	<target name="compile-tests-jboss"
+            description="Compiles tests to verify correct jboss integration.">
+		<ant antfile="build_jboss.xml" target="compile-web-client"/>
+		<mkdir dir="${build.tests.jboss}"/>
+		<javac classpath="${build.web-client-classes}"
+               destdir="${build.tests.jboss}"
+               extdirs="${lib}" 
+               srcdir="${src.tests.jboss}"
+               debug="true"
+               optimize="true"
+               deprecation="true"
+               encoding="${encoding}"
+               fork="yes"
+               />
+	</target>
 
 	<target name="compile-tests-cache"
             description="Compiles tests to verify correct cache distribution.">
@@ -84,6 +102,24 @@
                encoding="${encoding}"
                fork="yes"
                />
+	</target>
+
+
+	<target name="run-tests-jboss"
+			depends="compile-tests-jboss"
+            description="Verifies correct integration with jboss.">
+		<java classname="framework.JBossIntegrationTest">
+			<classpath>
+				<pathelement path="${build.tests.jboss}"/>
+				<pathelement path="${build.web-client-classes}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="/usr/local/jboss/client">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
 	</target>
 
 	<target name="run-tests-cache-concurrency"

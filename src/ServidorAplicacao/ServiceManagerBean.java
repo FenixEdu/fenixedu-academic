@@ -13,6 +13,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.ServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedFilterException;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixRemoteServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.logging.ServiceExecutionLog;
 import ServidorAplicacao.logging.SystemInfo;
@@ -76,56 +77,73 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	{
 		try
 		{
-			Calendar serviceStartTime = null;
-			Calendar serviceEndTime = null;
+			try
+			{
+				Calendar serviceStartTime = null;
+				Calendar serviceEndTime = null;
 
-			IServiceManager manager = ServiceManager.getInstance();
-			if (serviceLoggingIsOn || (userLoggingIsOn && id != null))
-			{
-				serviceStartTime = Calendar.getInstance();
-			}
-			Object serviceResult = manager.execute(id, service, method, args);
-			if (serviceLoggingIsOn || (userLoggingIsOn && id != null))
-			{
-				serviceEndTime = Calendar.getInstance();
-			}
-			if (serviceLoggingIsOn)
-			{
-				registerServiceExecutionTime(service, method, args, serviceStartTime, serviceEndTime);
-			}
-			if (userLoggingIsOn && id != null)
-			{
-				registerUserExecutionOfService(id, service, method, args, serviceStartTime, serviceEndTime);
-			}
+				IServiceManager manager = ServiceManager.getInstance();
+				if (serviceLoggingIsOn || (userLoggingIsOn && id != null))
+				{
+					serviceStartTime = Calendar.getInstance();
+				}
+				Object serviceResult = manager.execute(id, service, method, args);
+				if (serviceLoggingIsOn || (userLoggingIsOn && id != null))
+				{
+					serviceEndTime = Calendar.getInstance();
+				}
+				if (serviceLoggingIsOn)
+				{
+					registerServiceExecutionTime(
+						service,
+						method,
+						args,
+						serviceStartTime,
+						serviceEndTime);
+				}
+				if (userLoggingIsOn && id != null)
+				{
+					registerUserExecutionOfService(
+						id,
+						service,
+						method,
+						args,
+						serviceStartTime,
+						serviceEndTime);
+				}
 
-			return serviceResult;
-		}
-		catch (ExecutedServiceException ex)
-		{
-			if (ex.getServiceThrownException() instanceof FenixServiceException)
-			{
-				throw (FenixServiceException) ex.getServiceThrownException();
+				return serviceResult;
 			}
-			else
+			catch (ExecutedServiceException ex)
 			{
-				throw new FenixServiceException(ex);
-			}
+				if (ex.getServiceThrownException() instanceof FenixServiceException)
+				{
+					throw (FenixServiceException) ex.getServiceThrownException();
+				}
+				else
+				{
+					throw ex;
+				}
 
-		}
-		catch (ExecutedFilterException ex)
-		{
-			if (ex.getCause() instanceof FenixServiceException)
-			{
-				throw (FenixServiceException) ex.getCause();
 			}
-			else
+			catch (ExecutedFilterException ex)
 			{
-				throw new FenixServiceException(ex);
+				if (ex.getCause() instanceof FenixServiceException)
+				{
+					throw (FenixServiceException) ex.getCause();
+				}
+				else
+				{
+					throw ex;
+				}
 			}
 		}
 		catch (Exception e)
 		{
-			throw new FenixServiceException(e);
+			FenixRemoteServiceException fenixRemoteServiceException = new FenixRemoteServiceException();
+			fenixRemoteServiceException.setCausePackageName(e.getClass().getPackage().getName());
+			fenixRemoteServiceException.setCauseClassName(e.getClass().getName());
+			throw fenixRemoteServiceException;
 		}
 	}
 
@@ -238,7 +256,13 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	 * @param serviceStartTime
 	 * @param serviceEndTime
 	 */
-	private void registerUserExecutionOfService(IUserView id, String service, String method, Object[] args, Calendar serviceStartTime, Calendar serviceEndTime)
+	private void registerUserExecutionOfService(
+		IUserView id,
+		String service,
+		String method,
+		Object[] args,
+		Calendar serviceStartTime,
+		Calendar serviceEndTime)
 	{
 		UserExecutionLog userExecutionLog = (UserExecutionLog) mapUsersToWatch.get(id.getUtilizador());
 		if (userExecutionLog == null)
@@ -273,9 +297,12 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 		{
 			for (int i = 0; i < args.length; i++)
 			{
-				if (args[i] != null) {
+				if (args[i] != null)
+				{
 					hashKey += args[i].getClass().getName();
-				} else {
+				}
+				else
+				{
 					hashKey += "null";
 				}
 				if (i + 1 < args.length)
@@ -324,7 +351,8 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 		return new Boolean(userLoggingIsOn);
 	}
 
-	public SystemInfo getSystemInfo(IUserView id) {
+	public SystemInfo getSystemInfo(IUserView id)
+	{
 		return new SystemInfo();
 	}
 

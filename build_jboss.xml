@@ -326,6 +326,16 @@
 -->
 			</fileset>
 		</copy>
+		<copy todir="${build.web-client.webinf.classes}">
+			<fileset dir="${build.app-server}" >
+				<include name="**/$*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.web-client.webinf.classes}">
+			<fileset dir="${build.app-server}" >
+				<include name="**/*Exception*"/>
+			</fileset>
+		</copy>
 		<!-- Replace tokens in configuration files with local config -->
 		<antcall target="replace-web-client-property-values"/>
 	</target>
