@@ -95,7 +95,8 @@ public class InfoLessonWrapper implements Comparable {
 	 * @param numberOfCollisions The numberOfCollisions to set
 	 */
 	public void setNumberOfCollisions(Integer numberOfCollisions) {
-		this.numberOfCollisions = numberOfCollisions;
+		if (numberOfCollisions.intValue() > this.numberOfCollisions.intValue())
+			this.numberOfCollisions = numberOfCollisions;
 	}
 
 }
