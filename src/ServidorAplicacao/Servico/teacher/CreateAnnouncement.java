@@ -46,14 +46,21 @@ public class CreateAnnouncement implements IServico {
 		return "CreateAnnouncement";
 	}
 
-	private void checkIfAnnouncementExists(String announcementTitle, ISite announcementSite, Timestamp currentDate)
+	private void checkIfAnnouncementExists(
+		String announcementTitle,
+		ISite announcementSite,
+		Timestamp currentDate)
 		throws FenixServiceException {
 		IAnnouncement announcement = null;
 		persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
 
 		try {
 			announcement =
-				persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite(announcementTitle, currentDate, announcementSite);
+				persistentAnnouncement
+					.readAnnouncementByTitleAndCreationDateAndSite(
+					announcementTitle,
+					currentDate,
+					announcementSite);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
@@ -73,21 +80,33 @@ public class CreateAnnouncement implements IServico {
 
 		//retrieve current date
 		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR_OF_DAY,0);
+		calendar.set(Calendar.MINUTE,0);
+		calendar.set(Calendar.SECOND,0);
+		calendar.set(Calendar.MILLISECOND,0);
+		
 
 		try {
 			persistentSupport = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
-			IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
+			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+				persistentSupport.getIDisciplinaExecucaoPersistente();
+			IPersistentSite persistentSite =
+				persistentSupport.getIPersistentSite();
 
 			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
+				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+					new DisciplinaExecucao(infoExecutionCourseCode),
+					false);
 			site = persistentSite.readByExecutionCourse(executionCourse);
 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
 
-		checkIfAnnouncementExists(newAnnouncementTitle, site, new Timestamp(calendar.getTime().getTime()));
+		checkIfAnnouncementExists(
+			newAnnouncementTitle,
+			site,
+			new Timestamp(calendar.getTime().getTime()));
 
 		try {
 			IAnnouncement newAnnouncement =
@@ -98,7 +117,7 @@ public class CreateAnnouncement implements IServico {
 					newAnnouncementInformation,
 					site);
 			persistentAnnouncement.lockWrite(newAnnouncement);
-			
+
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}

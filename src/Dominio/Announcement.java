@@ -33,7 +33,12 @@ public class Announcement extends DomainObject implements IAnnouncement {
 	/** 
 	 * Construtor
 	 */
-	public Announcement(String title, Timestamp date, Timestamp lastModifiedDate, String information, ISite site) {
+	public Announcement(
+		String title,
+		Timestamp date,
+		Timestamp lastModifiedDate,
+		String information,
+		ISite site) {
 
 		this.title = title;
 		this.creationDate = date;
@@ -55,23 +60,27 @@ public class Announcement extends DomainObject implements IAnnouncement {
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public boolean equals(Object arg0) {
-		boolean result = false;
-		if (arg0 instanceof IAnnouncement
-			&& (((((Announcement) arg0).getCreationDate() != null
-				&& this.getCreationDate() != null
-				&& ((Announcement) arg0).getCreationDate().equals(this.getCreationDate()))
-				|| ((Announcement) arg0).getCreationDate() == null
-				&& this.getCreationDate() == null))
-			&& (((((Announcement) arg0).getSite() != null
-				&& this.getSite() != null
-				&& ((Announcement) arg0).getSite().equals(this.getSite()))
-				|| ((Announcement) arg0).getSite() == null
-				&& this.getSite() == null))) {
-			result = true;
-		}
-		return result;
-	}
+//	public boolean equals(Object arg0) {
+//		boolean result = false;
+//		if (arg0 instanceof IAnnouncement
+//			&& (((((Announcement) arg0).getCreationDate() != null
+//				&& this.getCreationDate() != null
+//				&& ((Announcement) arg0).getCreationDate().equals(
+//					this.getCreationDate()))
+//				|| ((Announcement) arg0).getCreationDate() == null
+//				&& this.getCreationDate() == null))
+//			&& (((((Announcement) arg0).getSite() != null
+//				&& this.getSite() != null
+//				&& ((Announcement) arg0).getSite().equals(this.getSite()))
+//				|| ((Announcement) arg0).getSite() == null
+//				&& this.getSite() == null))
+//			&& (((Announcement) arg0).getTitle() != null
+//				&& this.getTitle() != null
+//				&& this.getTitle().equals(((Announcement) arg0).getTitle()))) {
+//			result = true;
+//		}
+//		return result;
+//	}
 
 	/**
 	 * @see java.lang.Object#toString()

@@ -1,8 +1,6 @@
 /*
  * Created on 26/Fev/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
  */
 package ServidorApresentacao.config;
 
