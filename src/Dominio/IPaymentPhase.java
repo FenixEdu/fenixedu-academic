@@ -14,11 +14,11 @@ public interface IPaymentPhase extends IDomainObject
 {
 	public Date getStartDate();
 	public Date getEndDate();
-	public Float getValue();
+	public Double getValue();
 	public String getDescription();
 	public IGratuityValues getGratuityValues();	
 
-	public void setValue(Float value);
+	public void setValue(Double value);
 	public void setStartDate(Date startDate);
 	public void setEndDate(Date endDate);
 	public void setDescription(String description);

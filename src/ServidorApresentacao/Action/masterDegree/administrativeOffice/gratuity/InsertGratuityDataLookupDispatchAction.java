@@ -107,7 +107,7 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
 			newInfoPaymentPhase.setStartDate(Data.convertStringDate(initialDate, "/"));
 		}
 		newInfoPaymentPhase.setEndDate(Data.convertStringDate(finalDate, "/"));
-		newInfoPaymentPhase.setValue(new Float(phaseValue));
+		newInfoPaymentPhase.setValue(new Double(phaseValue));
 		infoPaymentPhases.add(newInfoPaymentPhase);
 	}
 

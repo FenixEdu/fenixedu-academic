@@ -11,7 +11,7 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 {
 	private Date startDate;
 	private Date endDate;
-	private Float value;
+	private Double value;
 	private String description;
 
 	private InfoGratuityValues infoGratuityValues;
@@ -107,7 +107,7 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 	/**
 	 * @return Returns the value.
 	 */
-	public Float getValue()
+	public Double getValue()
 	{
 		return value;
 	}
@@ -116,7 +116,7 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 	 * @param value
 	 *            The value to set.
 	 */
-	public void setValue(Float value)
+	public void setValue(Double value)
 	{
 		this.value = value;
 	}

@@ -14,7 +14,7 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 {
 	private Date startDate;
 	private Date endDate;
-	private Float value;
+	private Double value;
 	private String description;
 
 	private IGratuityValues gratuityValues;
@@ -72,7 +72,7 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	/**
 	 * @return Returns the value.
 	 */
-	public Float getValue()
+	public Double getValue()
 	{
 		return value;
 	}
@@ -80,7 +80,7 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	/**
 	 * @param value The value to set.
 	 */
-	public void setValue(Float value)
+	public void setValue(Double value)
 	{
 		this.value = value;
 	}

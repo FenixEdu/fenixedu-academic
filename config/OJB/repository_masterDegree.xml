@@ -1279,27 +1279,27 @@
    	<field-descriptor
    		name="anualValue"
    		column="ANUAL_VALUE"
-   		jdbc-type="FLOAT"
+   		jdbc-type="DOUBLE"
    	/>
    	<field-descriptor
    		name="scholarShipValue"
    		column="SCHOLARSHIP_VALUE"
-   		jdbc-type="FLOAT"
+   		jdbc-type="DOUBLE"
    	/>
    	<field-descriptor
    		name="finalProofValue"
    		column="FINAL_PROOF_VALUE"
-   		jdbc-type="FLOAT"
+   		jdbc-type="DOUBLE"
    	/>
    	<field-descriptor
    		name="courseValue"
    		column="COURSE_VALUE"
-   		jdbc-type="FLOAT"
+   		jdbc-type="DOUBLE"
    	/>
    	<field-descriptor
    		name="creditValue"
    		column="CREDIT_VALUE"
-   		jdbc-type="FLOAT"
+   		jdbc-type="DOUBLE"
    	/>
    	<field-descriptor
    		name="proofRequestPayment"
@@ -1378,12 +1378,12 @@
    	<field-descriptor
    		name="payedValue"
    		column="PAYED_VALUE"
-   		jdbc-type="FLOAT"   		
+   		jdbc-type="DOUBLE"   		
    	/>
    	<field-descriptor
    		name="remainingValue"
    		column="REMAINING_VALUE"
-   		jdbc-type="FLOAT"   		
+   		jdbc-type="DOUBLE"   		
    	/>
    	<field-descriptor
    		name="exemptionPercentage"
@@ -1458,11 +1458,6 @@
         autoincrement="true"
    	/> 
    	<field-descriptor
-   		name="EnrollmentPaymentValue"
-   		column="ENROLLMENT_PAYMENT_VALUE"
-   		jdbc-type="FLOAT"
-   	/>
-   	<field-descriptor
    		name="startDate"
    		column="START_DATE"
    		jdbc-type="DATE"
@@ -1477,7 +1472,7 @@
    	<field-descriptor
    		name="value"
    		column="VALUE"
-   		jdbc-type="INTEGER"   		   		
+   		jdbc-type="DOUBLE"   		   		
    	/>
    	<field-descriptor
    		name="description"

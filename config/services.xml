@@ -5474,4 +5474,13 @@
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
+    <service>
+    	<name>InsertGratuityData</name>
+    	<description>This service create a gratuity data about a execution degree, but if already exists only change it</description>
+    	<implementation>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.InsertGratuityData</implementation>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>
