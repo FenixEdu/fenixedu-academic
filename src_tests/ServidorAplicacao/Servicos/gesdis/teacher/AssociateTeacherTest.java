@@ -40,7 +40,8 @@ public class AssociateTeacherTest extends TestCaseCreateServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
-		return "gesdis.teacher.AssociateTeacher";
+		return "AssociateTeacher";
+		
 
 	}
 
@@ -48,7 +49,7 @@ public class AssociateTeacherTest extends TestCaseCreateServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		//		TODO Auto-generated method stub
+		
 		return null;
 
 	}
@@ -69,18 +70,20 @@ public class AssociateTeacherTest extends TestCaseCreateServices {
 			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
 			executionYear =
 				ieyp.readExecutionYearByName("2002/2003");
-
+			
 			IPersistentExecutionPeriod iepp =
 				sp.getIPersistentExecutionPeriod();
+			
 			executionPeriod =
 				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
-
+			
 			IDisciplinaExecucaoPersistente idep =
 				sp.getIDisciplinaExecucaoPersistente();
 			executionCourse =
 				idep.readByExecutionCourseInitialsAndExecutionPeriod(
 					"TFCI",
 					executionPeriod);
+			
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("failed setting up the test data");
@@ -88,10 +91,11 @@ public class AssociateTeacherTest extends TestCaseCreateServices {
 		}
 
 		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-		Integer teacherNumber = new Integer(2);
+			
+		Integer teacherNumber = new Integer(5);
 		Object[] testArgs ={infoExecutionCourse,teacherNumber};
 		 
-		return null;
+		return testArgs;
 
 	}
 
