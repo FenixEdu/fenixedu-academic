@@ -12,6 +12,15 @@
      <bean:define id="personalInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" property="infoPerson"/>
      <bean:define id="masterDegreeCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session"/>
 
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    	<tr align="center">
+    		<td bgcolor="#FFFFFF" class="infoselected"><p>
+    			<strong><jsp:include page="../context.jsp"/></strong>
+             </td>
+        </tr>
+    </table>
+	<br />
+	<br />
      <table>
 
         <logic:present name="personalInfo">
