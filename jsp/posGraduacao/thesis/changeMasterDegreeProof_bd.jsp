@@ -23,6 +23,7 @@
 <html:form action="/changeMasterDegreeProofLookup.do">
 	<html:hidden property="studentNumber" />
 	<html:hidden property="degreeType" />
+	<html:hidden property="page" value="1" />
 
 
 	<html:hidden property="dissertationTitle" />

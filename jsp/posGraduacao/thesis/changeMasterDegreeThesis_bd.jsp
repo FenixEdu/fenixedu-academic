@@ -18,6 +18,7 @@
 <html:form action="/changeMasterDegreeThesisLookup.do">
 	<html:hidden property="studentNumber" value="<%= ((InfoStudent)student).getNumber().toString()%>" />
 	<html:hidden property="degreeType" value="2"/>
+	<html:hidden property="page" value="1"/>
 
 	<table border="0" width="100%" cellspacing="3" cellpadding="10">
 		<tr>
