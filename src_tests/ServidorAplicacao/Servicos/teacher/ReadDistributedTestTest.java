@@ -4,9 +4,6 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoDistributedTest;
 import DataBeans.InfoExecutionCourse;

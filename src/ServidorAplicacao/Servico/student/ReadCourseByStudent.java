@@ -1,7 +1,5 @@
 package ServidorAplicacao.Servico.student;
 
-import java.util.ArrayList;
-
 import DataBeans.InfoDegree;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;

@@ -12,12 +12,10 @@ package ServidorAplicacao.Servico.sop;
  * @author Luis Cruz & Sara Ribeiro
  **/
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.ojb.broker.accesslayer.ListProxy;
 
 import DataBeans.InfoLesson;
 import DataBeans.InfoLessonServiceResult;
@@ -32,7 +30,6 @@ import Dominio.ISala;
 import Dominio.ITurno;
 import Dominio.ITurnoAula;
 import Dominio.Turno;
-import Dominio.TurnoAula;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
