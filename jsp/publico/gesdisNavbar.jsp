@@ -7,48 +7,48 @@
 <div id="nav">
 <h3><bean:message key="title.navigation.local"/></h3>	
 <ul>
-<li><html:link page="<%= "/viewSite.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseCode") %>">
+<li><html:link page="<%= "/viewSite.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
 	<bean:message key="link.inicialPage"/>
 </html:link></li>
 <li>
-	<html:link page="<%= "/viewSite.do" + "?method=announcements&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+	<html:link page="<%= "/viewSite.do" + "?method=announcements&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
 		<bean:message key="link.announcements"/>
 	</html:link>
 </li>
 <li>
-	<html:link page="<%= "/viewSite.do" + "?method=summaries&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+	<html:link page="<%= "/viewSite.do" + "?method=summaries&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
 		<bean:message key="link.summaries.public"/>
 	</html:link>
 </li>
 <li> <a href="/" onclick="houdini('seccao');return false;"><bean:message key="label.curricular.information"/></a></li>
 </ul>
  <dl id="seccao" style="display: none;">
-            <dd><html:link page="<%= "/viewSite.do?method=objectives" + "&amp;objectCode=" + pageContext.findAttribute("objectCode")%>">
+            <dd><html:link page="<%= "/viewSite.do?method=objectives" + "&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
 				<bean:message key="link.objectives"/>
 				</html:link></dd>
-            <dd><html:link page="<%= "/viewSite.do?method=program" + "&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+            <dd><html:link page="<%= "/viewSite.do?method=program" + "&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
 				<bean:message key="link.program"/>
 				</html:link></dd>
-		    	 <dd><html:link page="<%= "/viewSite.do?method=evaluationMethod&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+		    	 <dd><html:link page="<%= "/viewSite.do?method=evaluationMethod&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
 				<bean:message key="link.evaluationMethod"/>
 				</html:link></dd>	
 			
-            <dd><html:link page="<%= "/viewSite.do?method=bibliography&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+            <dd><html:link page="<%= "/viewSite.do?method=bibliography&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
 				<bean:message key="link.bibliography"/>
 				</html:link></dd>
-			<dd><html:link page="<%= "/viewSite.do?method=curricularCourses&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+			<dd><html:link page="<%= "/viewSite.do?method=curricularCourses&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
 				<bean:message key="link.associatedCurricularCourses"/>
 				</html:link></dd>	
   </dl>
  <ul> 
 
-<li><html:link page="<%= "/viewSite.do" + "?method=timeTable&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+<li><html:link page="<%= "/viewSite.do" + "?method=timeTable&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
 		<bean:message key="link.executionCourse.timeTable"/>
 </html:link></li>
-<li><html:link page="<%= "/viewSite.do" + "?method=shifts&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+<li><html:link page="<%= "/viewSite.do" + "?method=shifts&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
 		<bean:message key="link.executionCourse.shifts"/>
 </html:link></li>
-<li><html:link page="<%= "/viewSite.do" + "?method=evaluation&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+<li><html:link page="<%= "/viewSite.do" + "?method=evaluation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName")  %>">
 		<bean:message key="link.evaluation"/>
 </html:link></li>
 </ul>

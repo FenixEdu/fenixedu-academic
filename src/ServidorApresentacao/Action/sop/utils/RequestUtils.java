@@ -83,7 +83,7 @@ public abstract class RequestUtils {
 			String year = (String) request.getAttribute("eYName");
 			if (year == null) {
 				year = request.getParameter("eYName");
-			}			
+			}
 			Object[] args = { year };
 			infoExecutionYear =
 				(InfoExecutionYear) ServiceUtils.executeService(
@@ -95,7 +95,12 @@ public abstract class RequestUtils {
 			throw new FenixActionException(e);
 		}
 		if (infoExecutionYear == null) {
-			System.out.println("ERROR: There is a link missing the eYName parameter: from("+request.getHeader("Referer")+") to("+request.getRequestURI()+")");
+			System.out.println(
+				"ERROR: There is a link missing the eYName parameter: from("
+					+ request.getHeader("Referer")
+					+ ") to("
+					+ request.getRequestURI()
+					+ ")");
 		}
 		return infoExecutionYear;
 	}
@@ -121,7 +126,12 @@ public abstract class RequestUtils {
 			throw new FenixActionException(e);
 		}
 		if (infoExecutionPeriod == null) {
-			System.out.println("ERROR: There is a link missing the ePName parameter! from("+request.getHeader("Referer")+") to("+request.getRequestURI()+")");
+			System.out.println(
+				"ERROR: There is a link missing the ePName parameter! from("
+					+ request.getHeader("Referer")
+					+ ") to("
+					+ request.getRequestURI()
+					+ ")");
 		}
 		return infoExecutionPeriod;
 	}
@@ -191,21 +201,20 @@ public abstract class RequestUtils {
 		throws FenixActionException {
 
 		String degreeInitials = (String) request.getAttribute("degreeInitials");
-		String nameDegreeCurricularPlan = (String) request.getAttribute("nameDegreeCurricularPlan");;
-		if (degreeInitials==null) {
-			degreeInitials =  request.getParameter("degreeInitials");
+		String nameDegreeCurricularPlan =
+			(String) request.getAttribute("nameDegreeCurricularPlan");
+		;
+		if (degreeInitials == null) {
+			degreeInitials = request.getParameter("degreeInitials");
 		}
-		if (nameDegreeCurricularPlan==null) {
-			nameDegreeCurricularPlan =  request.getParameter("nameDegreeCurricularPlan");
-		}				
-		
+		if (nameDegreeCurricularPlan == null) {
+			nameDegreeCurricularPlan =
+				request.getParameter("nameDegreeCurricularPlan");
+		}
+
 		Object[] args1 =
-			{	infoExecutionYear,
-				degreeInitials,
-				nameDegreeCurricularPlan};
-		
-			
-				
+			{ infoExecutionYear, degreeInitials, nameDegreeCurricularPlan };
+
 		InfoExecutionDegree infoExecutionDegree;
 		try {
 			infoExecutionDegree =
@@ -216,7 +225,7 @@ public abstract class RequestUtils {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		
+
 		return infoExecutionDegree;
 	}
 
@@ -318,8 +327,14 @@ public abstract class RequestUtils {
 					.getInfoDegreeCurricularPlan()
 					.getInfoDegree()
 					.getSigla());
-		
+
 		}
 
 	}
+
+	public static final void keepExecutionPeriodInRequest(HttpServletRequest request) {
+		request.setAttribute("ePName", request.getParameter("ePName"));
+		request.setAttribute("eYName", request.getParameter("eYName"));
+	}
+	
 }

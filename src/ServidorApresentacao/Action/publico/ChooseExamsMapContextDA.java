@@ -320,27 +320,51 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 	 * Method setExecutionContext.
 	 * @param request
 	 */
+//	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
+//		throws Exception {
+//
+//		HttpSession session = request.getSession(false);
+//		InfoExecutionPeriod infoExecutionPeriod = 
+//			(InfoExecutionPeriod) session.getAttribute(
+//				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+//		if (infoExecutionPeriod == null) {
+//			IUserView userView = SessionUtils.getUserView(request);
+//			 infoExecutionPeriod =
+//				(InfoExecutionPeriod) ServiceUtils.executeService(
+//					userView,
+//					"ReadCurrentExecutionPeriod",
+//					new Object[0]);
+//
+//			session.setAttribute(
+//				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+//				infoExecutionPeriod);
+//		}
+//		RequestUtils.setExecutionPeriodToRequest(request,infoExecutionPeriod);		
+//		return infoExecutionPeriod;
+//	}	
 	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
 		throws Exception {
 
 		HttpSession session = request.getSession(false);
-		InfoExecutionPeriod infoExecutionPeriod = 
-			(InfoExecutionPeriod) session.getAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		IUserView userView = SessionUtils.getUserView(request);
+
+		// Read executionPeriod from request
+		InfoExecutionPeriod infoExecutionPeriod =
+			RequestUtils.getExecutionPeriodFromRequest(request);
+
+		// If executionPeriod not in request nor in DB, read current
 		if (infoExecutionPeriod == null) {
-			IUserView userView = SessionUtils.getUserView(request);
-			 infoExecutionPeriod =
+			userView = SessionUtils.getUserView(request);
+			infoExecutionPeriod =
 				(InfoExecutionPeriod) ServiceUtils.executeService(
 					userView,
 					"ReadCurrentExecutionPeriod",
 					new Object[0]);
-
-			session.setAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-				infoExecutionPeriod);
 		}
-		RequestUtils.setExecutionPeriodToRequest(request,infoExecutionPeriod);		
-		return infoExecutionPeriod;
-	}	
 
+		// Keep executionPeriod in request
+		RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
+
+		return infoExecutionPeriod;
+	}
 }

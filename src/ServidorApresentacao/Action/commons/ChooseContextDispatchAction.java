@@ -28,7 +28,6 @@ import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -178,7 +177,6 @@ public class ChooseContextDispatchAction extends DispatchAction {
 
 		InfoExecutionPeriod infoExecutionPeriod =
 			setExecutionContextPublic(request);
-		System.out.println("### ChooseContextDispatchAction.preparePublic-" +infoExecutionPeriod);
 		//RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
 
 		//TODO: this semester and  curricular year list needs to be refactored in order to incorporate masters
@@ -341,7 +339,6 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			InfoExecutionPeriod infoExecutionPeriod = null;
 			try {
 				infoExecutionPeriod = setExecutionContextPublic(request);
-				System.out.println("### ChooseContextDispatchAction.nextPagePublic-" +infoExecutionPeriod);				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -522,6 +519,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 	 * Method setExecutionContext.
 	 * @param request
 	 */
+	// TODO Merge with method setExecutionContextPublic when executionPeriod disapears from SOP portal
 	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
 		throws Exception {
 
