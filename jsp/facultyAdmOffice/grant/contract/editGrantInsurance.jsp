@@ -40,7 +40,7 @@
 				<bean:message key="label.grant.insurance.totalValue"/>:&nbsp;
 			</td>
 			<td>
-				<p><bean:write name="editGrantInsuranceForm" property="totalValue"/>€</p>
+				<p><bean:write name="editGrantInsuranceForm" property="totalValue"/>â‚¬</p>
 			</td>
 		</tr>
 		<tr>
@@ -115,3 +115,10 @@
 		</tr>
 	</table>	
 <br/><br/>
+
+<bean:message key="message.grant.contract.movement.manage"/>:&nbsp;
+<bean:define id="idContract" name="editGrantInsuranceForm" property="idContract"/>
+<bean:define id="idGrantOwner" name="editGrantInsuranceForm" property="idGrantOwner"/>
+<html:link page='<%= "/manageGrantContractMovement.do?method=prepareManageGrantContractMovement&amp;idContract=" + idContract + "&amp;idGrantOwner=" + idGrantOwner %>'>
+	<bean:message key="link.grant.contract.movement.manage"/>
+</html:link>

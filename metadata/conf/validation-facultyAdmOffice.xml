@@ -379,6 +379,39 @@
 				<arg0 key="label.grant.part.responsibleTeacher.number" resource="true"/>
 		    </field>
 		</form>
+        
+        <!-- Edit Grant Contract Movement Form -->
+        <form name="editGrantContractMovementForm">
+            <field property="location" depends="required" page="1">
+				<arg0 key="label.grant.contract.movement.location" resource="true"/>
+		    </field>
+            <field property="departureDate" depends="required, mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.contract.movement.departureDate" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+				</var>
+			</field>
+            <field property="arrivalDate" depends="required, mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.contract.movement.arrivalDate" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+				</var>
+			</field>
+		</form>
 		
      	<!-- Edit Grant Cost Center Form -->
         <form name="editGrantCostCenterForm">

@@ -401,20 +401,14 @@
 	<html:hidden property="idGrantOwner" value="<%= idGrantOwner.toString() %>"/>
 	<html:hidden property="method" value="prepareEditGrantOwnerForm"/>				
 	<html:hidden property="loaddb" value="1"/>
-	<table>
-		<tr>
-			<td width=100>
-				<html:submit styleClass="inputbutton">
-					<bean:message key="button.edit"/>
-	            </html:submit>
-			</td>
-			<td>
-            	<html:link page='<%= "/listGrantOwner.do?method=showGrantOwner&amp;grantOwnerId=" + idGrantOwner.toString() %>' > 
-                	<bean:message key="link.grant.owner.show" />
-				</html:link>    
-			</td>
-		</tr>
-	</table>
+
+	<html:submit styleClass="inputbutton">
+		<bean:message key="button.edit"/>
+    </html:submit>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+  	<html:link page='<%= "/listGrantOwner.do?method=showGrantOwner&amp;grantOwnerId=" + idGrantOwner.toString() %>' > 
+       	<bean:message key="link.grant.owner.show" />
+	</html:link>    
 </html:form>
 
 
@@ -430,7 +424,7 @@
 	
 <br/><br/>
 
-<%-- Gerir qualificações --%>
+<%-- Gerir qualificaï¿½ï¿½es --%>
 <strong><p align='center'><bean:message key="label.grant.qualification.manage"/></p></strong>
 <bean:message key="message.grant.qualification.manage" />:&nbsp;
 <bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>

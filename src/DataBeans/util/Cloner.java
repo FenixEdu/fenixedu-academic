@@ -121,6 +121,7 @@ import DataBeans.gaugingTests.physics.InfoGaugingTestResult;
 import DataBeans.gesdis.InfoCourseHistoric;
 import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.grant.contract.InfoGrantContract;
+import DataBeans.grant.contract.InfoGrantContractMovement;
 import DataBeans.grant.contract.InfoGrantCostCenter;
 import DataBeans.grant.contract.InfoGrantCostCenterWithTeacher;
 import DataBeans.grant.contract.InfoGrantOrientationTeacher;
@@ -176,6 +177,7 @@ import Dominio.gesdis.ICourseReport;
 import Dominio.gesdis.IStudentCourseReport;
 import Dominio.gesdis.StudentCourseReport;
 import Dominio.grant.contract.GrantContract;
+import Dominio.grant.contract.GrantContractMovement;
 import Dominio.grant.contract.GrantCostCenter;
 import Dominio.grant.contract.GrantOrientationTeacher;
 import Dominio.grant.contract.GrantPart;
@@ -183,6 +185,7 @@ import Dominio.grant.contract.GrantProject;
 import Dominio.grant.contract.GrantSubsidy;
 import Dominio.grant.contract.GrantType;
 import Dominio.grant.contract.IGrantContract;
+import Dominio.grant.contract.IGrantContractMovement;
 import Dominio.grant.contract.IGrantCostCenter;
 import Dominio.grant.contract.IGrantOrientationTeacher;
 import Dominio.grant.contract.IGrantPart;
@@ -1351,6 +1354,30 @@ public abstract class Cloner
         return grantPart;
     }
 
+    
+    /**
+     * Method copyInfoGrantContractMovement2IGrantContractMovement.
+     * 
+     * @param infoGrantContractMovement
+     * @return IGrantContractMovement
+     */
+    public static IGrantContractMovement copyInfoGrantContractMovement2IGrantContractMovement(InfoGrantContractMovement infoGrantContractMovement)
+    {
+        IGrantContractMovement grantContractMovement = null;
+
+        if (infoGrantContractMovement != null)
+        {
+            grantContractMovement = new GrantContractMovement();
+            copyObjectProperties(grantContractMovement, infoGrantContractMovement);
+
+            IGrantContract grantContract = Cloner.copyInfoGrantContract2IGrantContract(infoGrantContractMovement.getInfoGrantContract());
+            grantContractMovement.setGrantContract(grantContract);
+        }
+
+        return grantContractMovement;
+    }
+    
+    
     /**
      * Method copyIGrantSubsidy2InfoGrantSubsidy.
      * 

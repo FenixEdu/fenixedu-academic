@@ -241,6 +241,17 @@
 			</form-bean>
 
 
+			<form-bean name="editGrantContractMovementForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="idInternal" type="java.lang.Integer"/>
+				<form-property name="location" type="java.lang.String"/>
+				<form-property name="grantContractId" type="java.lang.Integer"/>
+				<form-property name="departureDate" type="java.lang.String"/>
+				<form-property name="arrivalDate" type="java.lang.String"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
+
+
 			<form-bean name="listGrantOwnerForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="spanNumber" type="java.lang.Integer"/>
@@ -616,6 +627,28 @@
    			type="ServidorApresentacao.Action.grant.contract.EditGrantInsuranceAction">
   			<forward name="edit-grant-insurance" path="editGrantInsuranceForm"/>
   			<forward name="manage-grant-contract" path="/manageGrantContract.do?method=prepareManageGrantContractForm"/>
+    </action>
+
+    <!-- ===================== USE CASE: MANAGE GRANT CONTRACT MOVEMENT  ===================== -->
+	<action path="/manageGrantContractMovement" 
+			input="/manageGrantContractMovement.do?page=0&amp;method=prepareManageGrantContractMovement" 
+			name="voidForm"
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.contract.ManageGrantContractMovementAction">
+  			<forward name="manage-grant-contract-movement" path="manageGrantContractMovement"/> 
+    </action>
+
+    <!-- ===================== USE CASE: EDIT GRANT CONTRACT MOVEMENT  ======================= -->
+	<action path="/editGrantContractMovement" 
+			input="/editGrantContractMovement.do?page=0&amp;method=prepareEditGrantContractMovementForm" 
+			name="editGrantContractMovementForm"
+			scope="request"
+   			parameter="method"
+     		validate="true"
+   			type="ServidorApresentacao.Action.grant.contract.EditGrantContractMovementAction">
+  			<forward name="edit-grant-contract-movement" path="editGrantContractMovementForm"/>
+  			<forward name="manage-grant-contract-movement" path="/manageGrantContractMovement.do?method=prepareManageGrantContractMovement"/>
     </action>
 
     <!-- ===================== USE CASE: SHOW TEACHERS LIST ============================== -->

@@ -58,5 +58,13 @@ public abstract class InfoObject extends DataTranferObject
         }
     }
     
+    public void copyToDomain(IDomainObject domainObject)
+    {
+        if(domainObject != null)
+        {
+            domainObject.setIdInternal(getIdInternal());
+        }
+    }
+    
     
 }

@@ -2297,6 +2297,50 @@
             <chain name="GrantOwnerManagerAuthorization"/>
         </filterChains>
     </service>
+    
+    
+    <service>
+        <name>ReadAllGrantMovementsByContract</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.ReadAllGrantMovementsByContract</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadGrantContractMovement</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.ReadGrantContractMovement</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>DeleteGrantContractMovement</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.DeleteGrantContractMovement</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>EditGrantContractMovement</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.EditGrantContractMovement</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    
+    
     <service>
         <name>EditGrantType</name>
         <implementationClass> 

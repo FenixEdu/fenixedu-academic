@@ -47,6 +47,13 @@
 	<definition name="manageGrantInsurance" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantInsurance.jsp"></put>
 	</definition>
+    <!-- GRANT CONTRACT MOVEMENT -->
+	<definition name="manageGrantContractMovement" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantMovement.jsp"></put>
+	</definition>
+		<definition name="editGrantContractMovementForm" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantContractMovement.jsp"></put>
+	</definition>
 	<!-- GRANT QUALIFICATION -->
 	<definition name="manageGrantQualification" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/qualification/manageGrantQualification.jsp"></put>

@@ -43,6 +43,7 @@ import ServidorPersistente.OJB.gaugingTests.physics.IPersistentGaugingTestResult
 import ServidorPersistente.OJB.gesdis.CourseHistoricOJB;
 import ServidorPersistente.OJB.gesdis.CourseReportOJB;
 import ServidorPersistente.OJB.gesdis.StudentCourseReportOJB;
+import ServidorPersistente.OJB.grant.contract.GrantContractMovementOJB;
 import ServidorPersistente.OJB.grant.contract.GrantContractOJB;
 import ServidorPersistente.OJB.grant.contract.GrantContractRegimeOJB;
 import ServidorPersistente.OJB.grant.contract.GrantCostCenterOJB;
@@ -89,6 +90,7 @@ import ServidorPersistente.gesdis.IPersistentCourseHistoric;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.gesdis.IPersistentStudentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantContract;
+import ServidorPersistente.grant.IPersistentGrantContractMovement;
 import ServidorPersistente.grant.IPersistentGrantContractRegime;
 import ServidorPersistente.grant.IPersistentGrantCostCenter;
 import ServidorPersistente.grant.IPersistentGrantInsurance;
@@ -1175,6 +1177,11 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentGrantInsurance getIPersistentGrantInsurance()
 	{
 		return new GrantInsuranceOJB();
+	}
+	
+	public IPersistentGrantContractMovement getIPersistentGrantContractMovement()
+	{
+	    return new GrantContractMovementOJB();
 	}
 	
     /*

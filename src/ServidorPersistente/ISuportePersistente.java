@@ -23,6 +23,7 @@ import ServidorPersistente.gesdis.IPersistentCourseHistoric;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.gesdis.IPersistentStudentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantContract;
+import ServidorPersistente.grant.IPersistentGrantContractMovement;
 import ServidorPersistente.grant.IPersistentGrantContractRegime;
 import ServidorPersistente.grant.IPersistentGrantCostCenter;
 import ServidorPersistente.grant.IPersistentGrantInsurance;
@@ -209,6 +210,7 @@ public interface ISuportePersistente
     public IPersistentGrantSubsidy getIPersistentGrantSubsidy();
     public IPersistentGrantContractRegime getIPersistentGrantContractRegime();
     public IPersistentGrantInsurance getIPersistentGrantInsurance();
+    public IPersistentGrantContractMovement getIPersistentGrantContractMovement();
     
     public IPersistentAdvisory getIPersistentAdvisory();
 

@@ -127,6 +127,58 @@
    
    
 
+<!-- ************************************************************ -->
+<!-- Definitions for Dominio.grant.contract.GrantContractMovement -->
+<!-- ************************************************************ -->
+
+  <class-descriptor
+   	  class="Dominio.grant.contract.GrantContractMovement"
+   	  table="GRANT_CONTRACT_MOVEMENT"
+   >
+      <field-descriptor 
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+	 <field-descriptor
+		name="location"
+		column="LOCATION"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="departureDate"
+		column="DATE_DEPARTURE"
+		jdbc-type="DATE"
+	/>
+	 <field-descriptor
+		name="arrivalDate"
+		column="DATE_ARRIVAL"
+		jdbc-type="DATE"
+	/>
+	<field-descriptor
+		name="keyGrantContract"
+		column="KEY_GRANT_CONTRACT"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+		name="grantContract"
+		class-ref="Dominio.grant.contract.GrantContract"
+		proxy="true">
+		<foreignkey field-ref="keyGrantContract"/>
+	</reference-descriptor> 
+	
+   </class-descriptor>
+   
+
+    
 <!-- ********************************************************** -->
 <!-- Definitions for Dominio.grant.contract.GrantContractRegime -->
 <!-- ********************************************************** -->
