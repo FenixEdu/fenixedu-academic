@@ -123,7 +123,7 @@ public class MigrateHabilitcoes2Qualifications
                 qualification.setPerson(person);
                 qualification.setSchool(candidato.getEscolalicenciatura());
                 qualification.setTitle(candidato.getLicenciatura());
-                qualification.setYear(new Integer(String.valueOf(candidato.getAnolicenciatura())));
+//                qualification.setYear(new Integer(String.valueOf(candidato.getAnolicenciatura())));
 
                 try
                 {
