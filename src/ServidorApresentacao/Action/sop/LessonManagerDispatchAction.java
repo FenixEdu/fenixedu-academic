@@ -78,9 +78,6 @@ public class LessonManagerDispatchAction
 		HttpServletResponse response)
 		throws Exception {
 
-		System.out.println(
-			"################## Start if Create Room ###################");
-
 		DynaActionForm criarAulaForm = (DynaActionForm) form;
 		HttpSession sessao = request.getSession(false);
 		ContextUtils.setExecutionPeriodContext(request);
@@ -200,16 +197,6 @@ public class LessonManagerDispatchAction
 		HttpServletResponse response)
 		throws Exception {
 
-		System.out.println(
-			"################## Start if Store Changes ###################");
-
-		System.out.println(
-			"Parameter InfoLesson OID= "
-				+ request.getParameter("infoAula_oid"));
-		System.out.println(
-			"Attribute InfoLesson OID= "
-				+ request.getAttribute("infoAula_oid"));
-
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
@@ -326,14 +313,10 @@ public class LessonManagerDispatchAction
 			if (actionErrors.isEmpty()) {
 				//sessao.removeAttribute("infoAula");
 
-				System.out.println("Store Changes, if...................");
-
 				String parameter =
 					request.getParameter(new String("operation"));
 				return mapping.findForward(parameter);
 			} else {
-				System.out.println("Store Changes, else...................");
-
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
@@ -347,9 +330,6 @@ public class LessonManagerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
-		System.out.println(
-			"################## Start of Change Room ###################");
 
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
@@ -455,15 +435,10 @@ public class LessonManagerDispatchAction
 				request.setAttribute("listaSalas", listaSalas);
 				request.setAttribute("listaInfoSalas", emptyRoomsList);
 
-				System.out.println("Change Room, if...................");
-
 				String parameter =
 					request.getParameter(new String("operation"));
 				return mapping.findForward(parameter);
 			} else {
-
-				System.out.println("Change Room, else...................");
-
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
@@ -477,9 +452,6 @@ public class LessonManagerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
-		System.out.println(
-			"################## Start of Choose Room ###################");
 
 		//super.execute(mapping, form, request, response);
 		ContextUtils.setExecutionPeriodContext(request);

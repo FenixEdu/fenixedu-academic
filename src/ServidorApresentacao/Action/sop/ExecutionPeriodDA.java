@@ -113,7 +113,6 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 			InfoExecutionPeriod infoExecutionPeriod =
 				(InfoExecutionPeriod) infoExecutionPeriodList.get(
 					index.intValue());
-			System.out.println("Setting request attributes...");
 			//			request.setAttribute(
 			//				"executionYearName",
 			//				infoExecutionPeriod.getInfoExecutionYear().getYear());
@@ -138,8 +137,6 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		throws Exception {
 		HttpSession session = request.getSession(false);
 		DynaActionForm indexForm = (DynaActionForm) form;
-
-//		System.out.println("### ExecutionPeriod-chooseForViewRoom - IN");
 
 		IUserView userView = (IUserView) session.getAttribute("UserView");
 		GestorServicos gestor = GestorServicos.manager();
@@ -231,7 +228,6 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException();
 		}
-//		System.out.println("### ExecutionPeriod-chooseForViewRoom - OUT");
 		return mapping.findForward("viewRoom");
 	}
 

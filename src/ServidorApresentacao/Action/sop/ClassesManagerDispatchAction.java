@@ -61,14 +61,11 @@ public class ClassesManagerDispatchAction
 			{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
 
 
-		System.out.println("### Calling service: ReadClasses");
 		List classesList =
 			(List) ServiceUtils.executeService(
 				SessionUtils.getUserView(request),
 				"LerTurmas",
 				argsLerTurmas);
-
-		System.out.println("### Classes List size = " + classesList.size());
 
 		if (classesList != null && !classesList.isEmpty())
 			request.setAttribute(CLASS_LIST_KEY, classesList);

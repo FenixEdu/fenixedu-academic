@@ -109,7 +109,6 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
 						"selectedDegrees");
 				selectedInfoExecutionDegrees = new ArrayList();						
 				for (int i = 0; i < selectedDegreesIndexes.length; i++) {
-					//System.out.println("### "+selectedDegreesIndexes[i]);
 					Integer index = new Integer("" + selectedDegreesIndexes[i]);
 					selectedInfoExecutionDegrees.add(
 						(InfoExecutionDegree) infoExecutionDegreeList.get(

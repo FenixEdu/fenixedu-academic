@@ -41,7 +41,6 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 			e2.printStackTrace();
 		}
 
-//		System.out.println("### ViewRoomFormAction - IN");
 		HttpSession session = request.getSession();
 		DynaActionForm indexForm = (DynaActionForm) form;
 		request.removeAttribute(SessionConstants.INFO_SECTION);
@@ -114,7 +113,6 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 				executionPeriodsLabelValueList);
 			//--------------------
 
-//			System.out.println("### ViewRoomFormAction - OUT");
 			return mapping.findForward("Sucess");
 
 		} else {

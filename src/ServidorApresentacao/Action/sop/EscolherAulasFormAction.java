@@ -41,8 +41,6 @@ public class EscolherAulasFormAction
 
 		super.execute(mapping, form, request, response);
 
-		System.out.println("Escolher Aulas.....................");
-
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
 			ArrayList diasSemana = new ArrayList();

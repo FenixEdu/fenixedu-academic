@@ -40,8 +40,6 @@ public class ViewClassesWithShift extends FenixShiftAndExecutionCourseAndExecuti
 			//String name = request.getParameter("name");
 			InfoShift infoShift = getInfoShift(request);
 			
-			System.out.println("InfoShift= " + infoShift);
-			
 			Object[] args = { infoShift };
 			List infoClasses =
 				(List) ServiceUtils.executeService(

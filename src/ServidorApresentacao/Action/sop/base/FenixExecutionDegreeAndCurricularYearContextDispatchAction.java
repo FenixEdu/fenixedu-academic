@@ -31,7 +31,6 @@ public abstract class FenixExecutionDegreeAndCurricularYearContextDispatchAction
 		HttpServletResponse response)
 		throws Exception {
 
-		System.out.println("###################### Setting degree in request...");
 		ContextUtils.setExecutionDegreeContext(request);
 		ContextUtils.setCurricularYearContext(request);
 

@@ -66,9 +66,6 @@ public class ClassShiftManagerDispatchAction
 
 			Object[] argsAdicionarTurno = { classView, infoShift };
 
-			System.out.println("classView= " + classView);
-			System.out.println("infoShift= " + infoShift);
-
 			try {
 				ServiceUtils.executeService(
 					userView,

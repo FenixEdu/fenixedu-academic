@@ -65,9 +65,6 @@ public class RemoverAulaDeTurnoFormAction
 
 			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
 
-			System.out.println("infoTurno: " + infoTurno);
-			System.out.println("infoExecutionCourse: " + infoExecutionCourse);
-
 			//	(InfoShift) infoTurnos.get(indexTurno.intValue());
 
 			Integer indexAula =
@@ -86,12 +83,8 @@ public class RemoverAulaDeTurnoFormAction
 					"LerAulasDeTurno",
 					argsLerAulasDeTurno);
 
-			System.out.println("infoAulas.size=" + infoAulas.size());
-
 			InfoLesson infoLesson =
 				(InfoLesson) infoAulas.get(indexAula.intValue());
-
-			System.out.println("infoLesson=" + infoLesson);
 
 			//request.removeAttribute("indexAula");
 			Object argsRemoverAula[] = { infoLesson, infoTurno };

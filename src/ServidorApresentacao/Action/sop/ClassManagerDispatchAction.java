@@ -57,12 +57,6 @@ public class ClassManagerDispatchAction
 		//ContextUtils.setExecutionDegreeContext(request);
 		//ContextUtils.setCurricularYearContext(request);
 
-			System.out.println("In Function1: infoExecutionDegree= " + request.getAttribute(
-				SessionConstants.EXECUTION_DEGREE));
-
-			System.out.println("In Function1: infoExecutionDegreeOID= " + request.getAttribute(
-				SessionConstants.EXECUTION_DEGREE_OID));
-
 		//HttpSession session = request.getSession(false);
 
 		request.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
@@ -73,9 +67,6 @@ public class ClassManagerDispatchAction
 		IUserView userView = SessionUtils.getUserView(request);
 
 		if (className != null && !className.equals("")) {
-
-			System.out.println("In Function2: infoExecutionDegree= " + request.getAttribute(
-				SessionConstants.EXECUTION_DEGREE));
 
 			InfoClass classView = getInfoTurma(userView, className, request);
 
@@ -218,8 +209,6 @@ public class ClassManagerDispatchAction
 		setLessonListToSession(request, userView, infoClass.getNome());
 		//request.setAttribute(SessionConstants.CLASS_VIEW, classView);
 
-		System.out.println("CLASS_VIEW= " + infoClass);
-
 		return mapping.getInputForward();
 	}
 
@@ -277,9 +266,6 @@ public class ClassManagerDispatchAction
 		InfoExecutionDegree infoExecutionDegree =
 			(InfoExecutionDegree) request.getAttribute(
 				SessionConstants.EXECUTION_DEGREE);
-
-		System.out.println("degree_oid" + request.getParameter(SessionConstants.EXECUTION_DEGREE_OID));
-		System.out.println("infoExecutionDegree=" + infoExecutionDegree);
 
 		Object argsLerTurma[] =
 			{ className, infoExecutionDegree, infoExecutionPeriod };
