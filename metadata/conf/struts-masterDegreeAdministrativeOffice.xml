@@ -637,6 +637,14 @@
             <form-property name="removedPhases" type="java.lang.String[]"/>
             <form-property name="paymentPhases" type="java.lang.String[]"/>
        </form-bean>
+       
+       <form-bean name="studentGratuityListForm" 
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+            <form-property name="executionYear" type="java.lang.String"/>
+            <form-property name="specialization" type="java.lang.String"/>
+            <form-property name="degree" type="java.lang.String"/>
+       </form-bean>
    </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -2116,18 +2124,19 @@
 	input="/manageExemptionGratuity.do?method=readExemptionGratuity&amp;page=0"
 	>
 		<forward name="manageExemptionGratuity" path="manageExemptionGratuity"/>
-		<forward name="chooseStudent" path="/readStudent.do?method=PrepareReadStudent"/>
+		<forward name="chooseStudent" path="/readStudent.do?method=prepareReadStudent"/>
 		<forward name="confirmationExemptionGratuity" path="confirmationExemptionGratuity"/>
 	</action>
-		<action path="/insertGratuityDataDA"
+	
+	<action path="/insertGratuityDataDA"
 		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.InsertGratuityDataDispatchAction"
 		name="insertGratuityDataForm"	 	
 		parameter="method"
 		scope="request"	
 		input="/insertGratuityDataDA.do?method=prepareInsertGratuityDataChooseDegree&amp;page=0"
 	>
-	<forward name="prepareInsertGratuityData" path="df.page.prepareInsertGratuityData"/>
-	<forward name="insertGratuityData" path="df.page.insertGratuityData"/>  
+		<forward name="prepareInsertGratuityData" path="df.page.prepareInsertGratuityData"/>
+		<forward name="insertGratuityData" path="df.page.insertGratuityData"/>  
 	</action>
 
 	<action path="/insertGratuityDataLA"
@@ -2137,9 +2146,19 @@
 		scope="request"	
 		input="/insertGratuityDataDA.do?method=prepareInsertGratuityData&amp;page=0"
 	>
-	<forward name="insertGratuityData" path="df.page.insertGratuityData"/>  
-	<forward name="cancel" path="/insertGratuityDataDA.do?method=prepareInsertChooseExecutionYear&amp;page=0"/>  
-	<forward name="pgMainMenu" path="/gratuitySection.do"/>  
+		<forward name="insertGratuityData" path="df.page.insertGratuityData"/>  
+		<forward name="cancel" path="/insertGratuityDataDA.do?method=prepareInsertChooseExecutionYear&amp;page=0"/>  
+		<forward name="pgMainMenu" path="/gratuitySection.do"/>  
+	</action>
+	
+	<action path="/studentsGratuityList"
+		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.StudentsGratuityListAction"
+		parameter="method"
+		name="studentGratuityListForm"
+		scope="request"
+		input="/studentsGratuityList.do?method=chooseStudentList&amp;page=0"
+	>
+		<forward name="chooseStudentList" path="chooseStudentList"/>
 	</action>
     </action-mappings>
     

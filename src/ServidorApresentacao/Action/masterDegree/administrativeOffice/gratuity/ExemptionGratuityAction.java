@@ -4,12 +4,18 @@
  */
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -17,8 +23,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoEmployee;
+import DataBeans.InfoExecutionYear;
 import DataBeans.InfoGratuitySituation;
 import DataBeans.InfoGratuityValues;
 import DataBeans.InfoPerson;
@@ -45,9 +53,6 @@ public class ExemptionGratuityAction extends DispatchAction
 		throws Exception
 	{
 		ActionErrors errors = new ActionErrors();
-		HttpSession session = request.getSession();
-
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		//execution years
 		List executionYears = null;
@@ -56,7 +61,10 @@ public class ExemptionGratuityAction extends DispatchAction
 		try
 		{
 			executionYears =
-				(List) ServiceManagerServiceFactory.executeService(null, "ReadExecutionYears", args);
+				(List) ServiceManagerServiceFactory.executeService(
+					null,
+					"ReadNotClosedExecutionYears",
+					args);
 		}
 		catch (FenixServiceException e)
 		{
@@ -70,11 +78,34 @@ public class ExemptionGratuityAction extends DispatchAction
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
-		request.setAttribute("executionYears", executionYears);
+
+		ComparatorChain comparator = new ComparatorChain();
+		comparator.addComparator(new BeanComparator("year"), true);
+		Collections.sort(executionYears, comparator);
+
+		List executionYearLabels = buildLabelValueBeanForJsp(executionYears);
+		request.setAttribute("executionYears", executionYearLabels);
 
 		return mapping.findForward("chooseStudent");
 	}
-	
+
+	private List buildLabelValueBeanForJsp(List infoExecutionYears)
+	{
+		List executionYearLabels = new ArrayList();
+		CollectionUtils.collect(infoExecutionYears, new Transformer()
+		{
+			public Object transform(Object arg0)
+			{
+				InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
+
+				LabelValueBean executionYear =
+					new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getYear());
+				return executionYear;
+			}
+		}, executionYearLabels);
+		return executionYearLabels;
+	}
+
 	public ActionForward readStudent(
 		ActionMapping mapping,
 		ActionForm actionForm,
@@ -91,7 +122,7 @@ public class ExemptionGratuityAction extends DispatchAction
 		String executionYear = request.getParameter("executionYear");
 		request.setAttribute("executionYear", executionYear);
 
-		String parameter = (String) request.getParameter("studentNumber");
+		String parameter = request.getParameter("studentNumber");
 		Integer studentNumber = null;
 		if (parameter != null)
 		{
@@ -148,11 +179,12 @@ public class ExemptionGratuityAction extends DispatchAction
 
 		//Read executionYear
 		String executionYear = (String) request.getAttribute("executionYear");
-		if(executionYear == null) {
-			executionYear = request.getParameter("executionYear"); 
+		if (executionYear == null)
+		{
+			executionYear = request.getParameter("executionYear");
 		}
 		request.setAttribute("executionYear", executionYear);
-		
+
 		Integer studentCurricularPlanID = getFromRequest("studentCurricularPlanID", request);
 		request.setAttribute("studentCurricularPlanID", studentCurricularPlanID);
 
@@ -202,7 +234,6 @@ public class ExemptionGratuityAction extends DispatchAction
 			request.setAttribute("gratuitySituationID", infoGratuitySituation.getIdInternal());
 		}
 
-
 		//read gratuity values of the execution course
 		InfoGratuityValues infoGratuityValues = null;
 		Object args3[] =
@@ -219,12 +250,15 @@ public class ExemptionGratuityAction extends DispatchAction
 		{
 			fenixServiceException.printStackTrace();
 			errors.add(
+					"noGratuitySituation",
+					new ActionError("error.impossible.insertExemptionGratuity"));
+			errors.add(
 				"noGratuityValues",
 				new ActionError(
-					"error.impossible.noGratuityValues",
+					"error.impossible.problemsWithDegree",
 					infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInfoDegree().getNome()));
 			saveErrors(request, errors);
-			return mapping.getInputForward();
+			return mapping.findForward("chooseStudent");
 		}
 		//if infoGratuityValues is null than it will be informed to the user
 		//that this degree hasn't gratuity values defined
@@ -243,23 +277,35 @@ public class ExemptionGratuityAction extends DispatchAction
 		return mapping.findForward("manageExemptionGratuity");
 	}
 
-	private void fillForm(InfoGratuitySituation infoGratuitySituation, HttpServletRequest request, DynaActionForm exemptionGrauityForm){
-		if(infoGratuitySituation != null){
+	private void fillForm(
+		InfoGratuitySituation infoGratuitySituation,
+		HttpServletRequest request,
+		DynaActionForm exemptionGrauityForm)
+	{
+		if (infoGratuitySituation != null)
+		{
 			Integer exemptionPercentage = infoGratuitySituation.getExemptionPercentage();
-			if(ExemptionGratuityType.percentageOfExemption().contains(exemptionPercentage))
+			if (ExemptionGratuityType.percentageOfExemption().contains(exemptionPercentage))
 			{
-				exemptionGrauityForm.set("valueExemptionGratuity", String.valueOf(exemptionPercentage));					
-			}else
-			{
-				exemptionGrauityForm.set("valueExemptionGratuity", "-1");					
-				exemptionGrauityForm.set("otherValueExemptionGratuity", String.valueOf(exemptionPercentage));					
+				exemptionGrauityForm.set("valueExemptionGratuity", String.valueOf(exemptionPercentage));
 			}
-			
-			exemptionGrauityForm.set("justificationExemptionGratuity", String.valueOf(infoGratuitySituation.getExemptionType().getValue()));				
-			exemptionGrauityForm.set("otherJustificationExemptionGratuity", infoGratuitySituation.getExemptionDescription());											
-		}		 
+			else
+			{
+				exemptionGrauityForm.set("valueExemptionGratuity", "-1");
+				exemptionGrauityForm.set(
+					"otherValueExemptionGratuity",
+					String.valueOf(exemptionPercentage));
+			}
+
+			exemptionGrauityForm.set(
+				"justificationExemptionGratuity",
+				String.valueOf(infoGratuitySituation.getExemptionType().getValue()));
+			exemptionGrauityForm.set(
+				"otherJustificationExemptionGratuity",
+				infoGratuitySituation.getExemptionDescription());
+		}
 	}
-	
+
 	public ActionForward insertExemptionGratuity(
 		ActionMapping mapping,
 		ActionForm actionForm,
@@ -274,7 +320,8 @@ public class ExemptionGratuityAction extends DispatchAction
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		DynaActionForm exemptionForm = (DynaActionForm) actionForm;
-		InfoGratuitySituation infoGratuitySituation = fillInfoGratuityValues(userView, request, exemptionForm);
+		InfoGratuitySituation infoGratuitySituation =
+			fillInfoGratuityValues(userView, request, exemptionForm);
 
 		Object[] args = { infoGratuitySituation };
 		try
@@ -301,7 +348,8 @@ public class ExemptionGratuityAction extends DispatchAction
 	}
 
 	private InfoGratuitySituation fillInfoGratuityValues(
-		IUserView userView, HttpServletRequest request,
+		IUserView userView,
+		HttpServletRequest request,
 		DynaActionForm exemptionForm)
 	{
 		Integer valueExemptionGratuity =
@@ -326,7 +374,6 @@ public class ExemptionGratuityAction extends DispatchAction
 		request.setAttribute("executionYear", executionYear);
 		String gratuitySituationID = request.getParameter("gratuitySituationID");
 		String gratuityValuesID = request.getParameter("gratuityValuesID");
-
 
 		InfoGratuitySituation infoGratuitySituation = new InfoGratuitySituation();
 		if (gratuitySituationID != null)
@@ -357,7 +404,7 @@ public class ExemptionGratuityAction extends DispatchAction
 		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
 		infoStudentCurricularPlan.setIdInternal(Integer.valueOf(studentCurricularPlanID));
 		infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-		
+
 		//Gratuity Values
 		if (gratuityValuesID != null)
 		{
@@ -365,16 +412,16 @@ public class ExemptionGratuityAction extends DispatchAction
 			infoGratuityValues.setIdInternal(Integer.valueOf(gratuityValuesID));
 			infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
 		}
-		
+
 		//employee who made register
 		InfoPerson infoPerson = new InfoPerson();
 		infoPerson.setUsername(userView.getUtilizador());
-		
+
 		InfoEmployee infoEmployee = new InfoEmployee();
 		infoEmployee.setPerson(infoPerson);
-				
+
 		infoGratuitySituation.setInfoEmployee(infoEmployee);
-		
+
 		return infoGratuitySituation;
 	}
 
@@ -451,7 +498,7 @@ public class ExemptionGratuityAction extends DispatchAction
 			}
 		}
 		else //request
-		{
+			{
 			if (request.getAttribute(parameter) instanceof String)
 			{
 				try

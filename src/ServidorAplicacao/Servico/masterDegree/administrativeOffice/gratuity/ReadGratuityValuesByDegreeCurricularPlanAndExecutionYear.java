@@ -82,8 +82,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
 			degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(degreeCurricularPlan, false);
 			
 			IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
-						
+			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);				
 			if (degreeCurricularPlan == null || executionYear == null)
 			{
 				throw new FenixServiceException("error.impossible.noGratuityValues");
