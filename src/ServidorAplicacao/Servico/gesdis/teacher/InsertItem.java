@@ -85,8 +85,7 @@ public class InsertItem implements IServico {
 	
 	public void run (
 	 	InfoSection infoSection,
-	 	InfoItem infoItem,
-	 	InfoExecutionCourse infoExecutionCourse) 
+	 	InfoItem infoItem) 
 	 	throws FenixServiceException {
 	 	
 	 	try{
