@@ -1,6 +1,7 @@
 package ServidorPersistente.OJB;
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.BibliographicReference;
@@ -72,28 +73,12 @@ public class BibliographicReferenceOJB
 
 	public List readBibliographicReference(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery =
-				"select bibiographicReference from "
-					+ BibliographicReference.class.getName();
-			oqlQuery += " where executionCourse.sigla = $1";
-			oqlQuery += " and executionCourse.executionPeriod.name = $2";
-			oqlQuery
-				+= " and executionCourse.executionPeriod.executionYear.year = $3";
-			query.create(oqlQuery);
-			query.bind(executionCourse.getSigla());
-			query.bind(executionCourse.getExecutionPeriod().getName());
-			query.bind(
-				executionCourse
-					.getExecutionPeriod()
-					.getExecutionYear()
-					.getYear());
-			List result = (List) query.execute();
-			lockRead(result);
+			System.out.println(executionCourse);
+			Criteria crit = new Criteria();
+			crit.addEqualTo("keyExecutionCourse",executionCourse.getIdInternal());
+			List result = queryList(BibliographicReference.class,crit);			
 			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		
 	}
 
 }
