@@ -17,6 +17,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import DataBeans.InfoCampus;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
@@ -35,121 +36,118 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author lmac1
  */
+public class EditExecutionDegreeDispatchAction extends FenixDispatchAction
+{
 
-public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException
+    {
+        IUserView userView = SessionUtils.getUserView(request);
 
-	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
-		IUserView userView = SessionUtils.getUserView(request);
-				
-		DynaActionForm dynaForm = (DynaActionForm) form;
+        DynaActionForm dynaForm = (DynaActionForm) form;
 
-		Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
+        Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
-		InfoExecutionDegree oldInfoExecutionDegree = null;
-		Object args[] = { executionDegreeId };
-		
+        InfoExecutionDegree oldInfoExecutionDegree = null;
+        Object args[] = {executionDegreeId};
 
-		try {
-				oldInfoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(userView, "ReadExecutionDegree", args);
-				
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("message.nonExistingExecutionDegree", mapping.findForward("readDegreeCurricularPlan"));
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        try
+        {
+            oldInfoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(userView,
+                    "ReadExecutionDegree", args);
+        }
+        catch (NonExistingServiceException e)
+        {
+            throw new NonExistingActionException("message.nonExistingExecutionDegree", mapping
+                    .findForward("readDegreeCurricularPlan"));
+        }
+        catch (FenixServiceException fenixServiceException)
+        {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-		String label, value;
-		List result;
-		
-		/*   Needed service and creation of bean of InfoTeachers for use in jsp   */
-		try {
-			result = (List) ServiceUtils.executeService(userView, "ReadAllTeachers", null);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        /* Needed service and creation of bean of InfoExecutionYears for use in jsp */
+        List infoExecutionYearList = null;
+        List infoCampusList;
+        try
+        {
+            infoExecutionYearList = (List) ServiceUtils.executeService(userView,
+                    "ReadAllExecutionYears", null);
+            infoCampusList = (List) ServiceUtils.executeService(userView, "ReadAllCampus", null);
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
 
-		ArrayList infoTeachersList = new ArrayList();
-		if (result != null) {
-			InfoTeacher infoTeacher;
-			Iterator iter = result.iterator();
-			while (iter.hasNext()) {
-				infoTeacher = (InfoTeacher) iter.next();
-				value = infoTeacher.getIdInternal().toString();
-				label = infoTeacher.getTeacherNumber() + " - " + infoTeacher.getInfoPerson().getNome();
-				infoTeachersList.add(new LabelValueBean(label, value));
-			}
-			request.setAttribute("infoTeachersList", infoTeachersList);
-		}
+        request.setAttribute("infoExecutionYearsList", infoExecutionYearList);
+        request.setAttribute("infoCampusList", infoCampusList);
 
-		/*   Needed service and creation of bean of InfoExecutionYears for use in jsp   */
-		try {
-			result = (List) ServiceUtils.executeService(userView, "ReadAllExecutionYears", null);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        dynaForm.set("tempExamMap", oldInfoExecutionDegree.getTemporaryExamMap().toString());
+        dynaForm.set("coordinatorNumber", oldInfoExecutionDegree.getInfoCoordinator().getTeacherNumber()
+                .toString());
+        dynaForm.set("executionYearId", oldInfoExecutionDegree.getInfoExecutionYear().getIdInternal()
+                .toString());
+        dynaForm.set("campusId", oldInfoExecutionDegree.getInfoCampus().getIdInternal().toString());
 
-		ArrayList infoExecutionYearsList = new ArrayList();
-		if (result != null) {
-			InfoExecutionYear infoExecutionYear;
-			Iterator iter = result.iterator();
-			while (iter.hasNext()) {
-				infoExecutionYear = (InfoExecutionYear) iter.next();
-				value = infoExecutionYear.getIdInternal().toString();
-				label = infoExecutionYear.getYear();
-				infoExecutionYearsList.add(new LabelValueBean(label, value));
-			}
-			request.setAttribute("infoExecutionYearsList", infoExecutionYearsList);
-		}
-		
-		dynaForm.set("tempExamMap", oldInfoExecutionDegree.getTemporaryExamMap().toString());
-		dynaForm.set("coordinatorId", oldInfoExecutionDegree.getInfoCoordinator().getIdInternal().toString());
-		dynaForm.set("executionYearId", oldInfoExecutionDegree.getInfoExecutionYear().getIdInternal().toString());
+        return mapping.findForward("editExecutionDegree");
+    }
 
-		return mapping.findForward("editExecutionDegree");
-	}
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException
+    {
+        IUserView userView = SessionUtils.getUserView(request);
 
-	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
-		IUserView userView = SessionUtils.getUserView(request);
+        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+        Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
-		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-		Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
+        DynaActionForm dynaForm = (DynaValidatorForm) form;
+        String executionYearString = (String) dynaForm.get("executionYearId");
+        String coordinatorNumberString = (String) dynaForm.get("coordinatorNumber");
+        String campusIdString = (String) dynaForm.get("campusId");
+        String tempExamMapString = (String) dynaForm.get("tempExamMap");
 
-		DynaActionForm dynaForm = (DynaValidatorForm) form;
-		String executionYearString = (String) dynaForm.get("executionYearId");
-		String coordinatorIdString = (String) dynaForm.get("coordinatorId");
-		String tempExamMapString = (String) dynaForm.get("tempExamMap");
+        InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 
-		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+        InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+        infoExecutionYear.setIdInternal(new Integer(executionYearString));
+        infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 
-		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-		infoExecutionYear.setIdInternal(new Integer(executionYearString));
-		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-		
-		InfoTeacher infoTeacher = new InfoTeacher();
-		infoTeacher.setIdInternal(new Integer(coordinatorIdString));
-		infoExecutionDegree.setInfoCoordinator(infoTeacher);
-		
-		infoExecutionDegree.setTemporaryExamMap(new Boolean(tempExamMapString));
+        InfoTeacher infoTeacher = new InfoTeacher();
+        infoTeacher.setTeacherNumber(new Integer(coordinatorNumberString));
+        infoExecutionDegree.setInfoCoordinator(infoTeacher);
 
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-		infoDegreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
-		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-		infoExecutionDegree.setIdInternal(executionDegreeId);
+        infoExecutionDegree.setTemporaryExamMap(new Boolean(tempExamMapString));
 
-		Object args[] = { infoExecutionDegree };
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+        infoDegreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
+        infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+        infoExecutionDegree.setIdInternal(executionDegreeId);
 
+        InfoCampus infoCampus = new InfoCampus(Integer.valueOf(campusIdString));
+        infoExecutionDegree.setInfoCampus(infoCampus);
 
-		try {
-			ServiceUtils.executeService(userView, "EditExecutionDegree", args);
-				
-		} catch (ExistingServiceException e) {
-			throw new ExistingActionException("message.manager.existing.execution.degree");
-		} catch (NonExistingServiceException ex) {
-			throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readDegreeCurricularPlan"));
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-		
-		return mapping.findForward("readDegreeCurricularPlan");
-	}
+        Object args[] = {infoExecutionDegree};
+
+        try
+        {
+            ServiceUtils.executeService(userView, "EditExecutionDegree", args);
+
+        }
+        catch (ExistingServiceException e)
+        {
+            throw new ExistingActionException("message.manager.existing.execution.degree");
+        }
+        catch (NonExistingServiceException ex)
+        {
+            throw new NonExistingActionException(ex.getMessage(), mapping.findForward(
+                    "readDegreeCurricularPlan"));
+        }
+        catch (FenixServiceException fenixServiceException)
+        {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+
+        return mapping.findForward("readDegreeCurricularPlan");
+    }
 }
