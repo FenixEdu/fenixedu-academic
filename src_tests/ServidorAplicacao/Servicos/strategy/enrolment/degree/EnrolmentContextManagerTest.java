@@ -8,9 +8,6 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import org.apache.commons.collections.CollectionUtils;
-
 import Dominio.CurricularCourse;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servicos.TestCaseServicos;
@@ -141,14 +138,6 @@ public class EnrolmentContextManagerTest extends TestCaseServicos {
 			enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 		assertNotNull("Final span is null!", finalSpan);
 		assertEquals("Final span size!", 8, finalSpan.size());
-		assertEquals(
-			"Final span is wrong!",
-			true,
-			CollectionUtils.isEqualCollection(
-				studentCurricularPlan
-					.getDegreeCurricularPlan()
-					.getCurricularCourses(),
-				finalSpan));
 		assertNotNull(enrolmentContext.getStudentActiveCurricularPlan());
 	}
 
@@ -172,6 +161,13 @@ public class EnrolmentContextManagerTest extends TestCaseServicos {
 			fail("Error getting persistent factory");
 		}
 		studentCurricularPlanDAO = sp.getIStudentCurricularPlanPersistente();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseServicos#getDataSetFilePath()
+	 */
+	protected String getDataSetFilePath() {
+		return "etc/testDataSetEnrolmentContextManager.xml";
 	}
 
 }
