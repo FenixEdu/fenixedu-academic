@@ -13,29 +13,41 @@ manager.url=http://localhost:8080/manager
 manager.username=admin
 
 # Tokens for replace
-db.name=fenix
+db.name=ciapl
 db.user=root
 db.pass=
 db.alias=//localhost:3306/ciapl
 
-db.assiduousness.name=ciapl
-
+db.assiduousness.name=AssiduidadeOracleTeste
 db.assiduousness.platform=MySQL
 db.assiduousness.driver=com.mysql.jdbc.Driver
 db.assiduousness.protocol=jdbc
 db.assiduousness.subprotocol=mysql
 db.assiduousness.user=root
 db.assiduousness.pass=
-db.assiduousness.alias=//localhost:3306/ciapl
+db.assiduousness.alias=//localhost:3306/AssiduidadeOracleTeste
 db.assiduousness.validationQuery=select 1
 
-login.page=https://fenix.ist.utl.pt/loginPage.jsp
+db.personFilter.name=personFilter
+db.personFilter.platform=MySQL
+db.personFilter.driver=com.mysql.jdbc.Driver
+db.personFilter.protocol=jdbc
+db.personFilter.subprotocol=mysql
+db.personFilter.user=root
+db.personFilter.pass=
+db.personFilter.alias=//localhost:3306/personFilter
+db.personFilter.validationQuery=select 1
+db.personFilter.other=-1
+db.personFilter.errorFile=FicheiroErros.txt
+db.personFilter.log=true
 
-#application must be intranet or (extranet = <empty string>)
+db.slide.driver=com.mysql.jdbc.Driver
+db.slide.alias=mysql://localhost:3306/myDB
+db.slide.user=root
+db.slide.pass=
+slide.config=D:\\\\eclipse-M3\\\\workspace\\\\fenix-head\\\\build\\\\app\\\\WEB-INF\\\\classes\\\\Domain.xml
+
+
+login.page=https://fenix.ist.utl.pt/privado
 application=extranet
-validation.doctype=<!DOCTYPE form-validation PUBLIC \n \
-                     "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN" \n \
-                     "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
-
-
-validation.doctype=<!DOCTYPE form-validation SYSTEM "file:///C:/David/Fenix/metadata/conf/validation_1_1.dtd">
+validation.doctype=<!DOCTYPE form-validation SYSTEM "file:///D:/eclipse-M3/workspace/fenix-head/metadata/conf/validator_1_0.dtd">
