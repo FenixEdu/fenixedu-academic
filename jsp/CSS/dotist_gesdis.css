@@ -1,36 +1,54 @@
-/* dotist CSS v.1c - 24.01.2003 */
+/* dotist  Gesdids Administracao CSS - 11.04.2003 */
 
 /**************************************** 
 	Global Text Proprieties 
 *****************************************/
 
 body {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	line-height: 16px;
-	color: #333333;
+	font: 11px/16px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
 	text-align: left;
 	margin: 0px;
 	}
 
 table {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
 	background-color: transparent;
 	}
 
 h1	{
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #FFFFFF;
+	font: 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #fff;
 	background-color: transparent;
 	}
 
 h2	{
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size: 14px;
+	font: 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-weight: bold;
 	color: #003366;
+	background-color: transparent;
+	}
+	
+h3 {
+	font: 11px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #999;
+	background-color: transparent;
+	}
+	
+h4 {
+	font: 11px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #666;
+	background-color: transparent;	
+	}
+	
+.px10 {
+	font: 10px Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #333;
 	background-color: transparent;
 	}
 
@@ -269,4 +287,8 @@ a:hover {
 
 .tall-td {
 	height: 50px;
+	}
+
+.bckgr-blue {
+	background-color: #EBEFFA;
 	}

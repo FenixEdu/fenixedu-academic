@@ -67,16 +67,6 @@ h4	{
 	background-color: transparent;
 	}
 
-/* Header - Departamento */
-
-h5 {
-	font: 12px "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif;
-	color: #EBEFFA;
-	text-align: right;
-	margin: 0;
-	background-color: transparent;
-	} 
-
 /******************************************
 	links - geral
 *******************************************/
@@ -128,6 +118,15 @@ a:hover {
 	border: 0;
 	background-color: transparent;
 	}
+
+#associated-degrees {
+	font: 14px "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #B5BED6;
+	text-align: right;
+	margin: 0;
+	background-color: transparent;
+	} 
 
 #barraist {
 	text-align: center;
