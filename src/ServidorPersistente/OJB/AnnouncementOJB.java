@@ -6,7 +6,6 @@ import org.odmg.QueryException;
 
 import Dominio.Announcement;
 import Dominio.IAnnouncement;
-import Dominio.ISection;
 import Dominio.ISite;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentAnnouncement;
