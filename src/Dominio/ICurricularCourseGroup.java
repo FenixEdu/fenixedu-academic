@@ -23,6 +23,7 @@ public interface ICurricularCourseGroup extends IDomainObject
 	public List getScientificAreas();
 	public Integer getMinimumNumberOfOptionalCourses();
 	public Integer getMaximumNumberOfOptionalCourses();
+	public String getName() ;
 	
 	public void setAreaType(AreaType areaType);
 	public void setMaximumNumberOfOptionalCourses(Integer maximumNumberOfOptionalCourses);
@@ -31,5 +32,6 @@ public interface ICurricularCourseGroup extends IDomainObject
 	public void setMinimumCredits(Integer minimumCredits);
 	public void setCurricularCourses(List curricularCourses);
 	public void setScientificAreas(List scientificAreas);
-	public void setMaximumCredits(Integer maximumCredits);
+	public void setMaximumCredits(Integer maximumCredits);   
+    public void setName(String name) ;
 }

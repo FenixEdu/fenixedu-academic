@@ -49,6 +49,11 @@
 		column="CLASS_NAME"
 		jdbc-type="VARCHAR"
 	/>      
+    <field-descriptor
+		name="name"
+		column="NAME"
+		jdbc-type="VARCHAR"
+	/>
 	<reference-descriptor
 			name="branch"
 			class-ref="Dominio.Branch"
@@ -110,6 +115,11 @@
 		column="CLASS_NAME"
 		jdbc-type="VARCHAR"
 	/>      
+     <field-descriptor
+		name="name"
+		column="NAME"
+		jdbc-type="VARCHAR"
+	/>
 	<reference-descriptor
 			name="branch"
 			class-ref="Dominio.Branch"
