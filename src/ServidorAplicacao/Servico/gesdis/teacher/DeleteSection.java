@@ -5,7 +5,6 @@ package ServidorAplicacao.Servico.gesdis.teacher;
  */
 import java.util.Iterator;
 import java.util.List;
-
 import DataBeans.gesdis.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.ISection;
@@ -17,11 +16,8 @@ import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-
 public class DeleteSection implements IServico {
-
 	private static DeleteSection service = new DeleteSection();
-
 	public static DeleteSection getService() {
 		return service;
 	}
@@ -30,70 +26,73 @@ public class DeleteSection implements IServico {
 	public final String getNome() {
 		return "DeleteSection";
 	}
-
-public Boolean run(InfoSection infoSection) throws FenixServiceException {
-
+	public Boolean run(InfoSection infoSection) throws FenixServiceException {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
 			IPersistentSite persistentSite = sp.getIPersistentSite();
-			site=persistentSite.readByExecutionCourse(site.getExecutionCourse());
-
+			site =
+				persistentSite.readByExecutionCourse(site.getExecutionCourse());
 			/* we may only delete non-initial sections */
-//			ISite completeSite = sp.getIPersistentSite().readByExecutionCourse(site.getExecutionCourse());
-//			InfoSection initialSection = Cloner.copyISection2InfoSection(completeSite.getInitialSection());
-//			if (initialSection.equals(infoSection)){
-//				throw new FenixServiceException("Initial Section");
-//			}
-			
+			//			ISite completeSite = sp.getIPersistentSite().readByExecutionCourse(site.getExecutionCourse());
+			//			InfoSection initialSection = Cloner.copyISection2InfoSection(completeSite.getInitialSection());
+			//			if (initialSection.equals(infoSection)){
+			//				throw new FenixServiceException("Initial Section");
+			//			}
+
 			ISection superiorSection = null;
-						if (infoSection.getSuperiorInfoSection()!=null) {
-							superiorSection = Cloner.copyInfoSection2ISection(infoSection.getSuperiorInfoSection());
-							superiorSection.setSite(site);
-						}
-			
-			
+			if (infoSection.getSuperiorInfoSection() != null) {
+				superiorSection =
+					Cloner.copyInfoSection2ISection(
+						infoSection.getSuperiorInfoSection());
+				superiorSection.setSite(site);
+			}
+
 			IPersistentSection persistentSection = sp.getIPersistentSection();
+
+			ISection deletedSection =
+				persistentSection.readBySiteAndSectionAndName(
+					site,
+					superiorSection,
+					infoSection.getName());
 			
-			ISection deletedSection = Cloner.copyInfoSection2ISection(infoSection);
-			deletedSection.setSite(site);			
-//			if (deletedSection == null) throw new FenixServiceException("non existing section");
-			
+			//			if (deletedSection == null) throw new FenixServiceException("non existing section");
+
 			Integer deletedSectionOrder = deletedSection.getSectionOrder();
-			
-		    persistentSection.delete(deletedSection);
+
+			persistentSection.delete(deletedSection);
 			sp.confirmarTransaccao();
 			sp.iniciarTransaccao();
-			
-			
-			List sectionsReordered = persistentSection.readBySiteAndSection(site, superiorSection);
+
+			List sectionsReordered =
+				persistentSection.readBySiteAndSection(site, superiorSection);
 			// persistentItem.readAllItemsBySection(section);
-			
-		//only necessary if we reomve the open/close transaction from the service
-		//sectionsReordered.remove(deletedSection);
-			
-			Iterator iterSections = sectionsReordered.iterator(); 
-			
+			System.out.println(
+				"contains?=" + sectionsReordered.contains(deletedSection));
+			//only necessary if we reomve the open/close transaction from the service
+			//sectionsReordered.remove(deletedSection);
+
+			Iterator iterSections = sectionsReordered.iterator();
+
 			ISection section = null;
 			Integer sectionOrder = null;
 			while (iterSections.hasNext()) {
-			
+
 				section = (ISection) iterSections.next();
 				sectionOrder = section.getSectionOrder();
-			
+
 				if (sectionOrder.intValue() > deletedSectionOrder.intValue()) {
-			
-					section.setSectionOrder(new Integer(sectionOrder.intValue() - 1));
+
+					section.setSectionOrder(
+						new Integer(sectionOrder.intValue() - 1));
 					persistentSection.lockWrite(section);
 				}
 			}
-			
-				
-				
-			return new Boolean(true);	
+
+			return new Boolean(true);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
-   }
- }
+		}
+	}
 }
