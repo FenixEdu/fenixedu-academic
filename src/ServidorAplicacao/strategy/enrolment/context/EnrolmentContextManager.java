@@ -599,6 +599,8 @@ public abstract class EnrolmentContextManager {
 				enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear().equals(year2);
 			}
 		});
+		// To keep the information about all the curricular courses from the chosen degree in witch
+		// the student has ever been enroled (this includes aproved and still enrolled).
 		enrolmentContext.setEnrolmentsAprovedByStudent(invalidStudentEnrolmentsForSelectedDegree);
 
 		List studentEnrolmentsWithStateEnroled = (List) CollectionUtils.select(invalidStudentEnrolmentsForSelectedDegree, new Predicate() {
@@ -615,6 +617,9 @@ public abstract class EnrolmentContextManager {
 				return enrolment.getCurricularCourseScope();
 			}
 		});
+		// To keep the information about witch curricular courses from the chosen degree
+		// the student is still enrolled (temporarily or not). In this case, all the curricular
+		// courses scopes in this list are to be kept automaticaly enrolled, unless one is removed from the list.
 		enrolmentContext.setCurricularCoursesScopesAutomaticalyEnroled(studentCurricularCoursesScopesFromEnrolmentsWithStateEnroled);
 
 		return enrolmentContext;

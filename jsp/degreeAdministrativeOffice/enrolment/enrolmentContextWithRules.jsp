@@ -14,4 +14,4 @@
   </tr>
 </table>
 <br/>
-<html:errors />
+<html:errors/>

@@ -3,11 +3,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>" />
-<br />
-<bean:message key="label.curricular.courses.choosen" />
-<html:form action="curricularCourseEnrolmentManager">
-	<html:hidden property="method" value="accept" />
+
+<bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>"/>
+
+<br/>
+<b><bean:message key="label.curricular.courses.choosen"/></b>
+<html:form action="/curricularCourseEnrolmentManager.do">
+	<html:hidden property="method" value="accept"/>
 	<html:hidden property="step" value="1"/>	
 	<ul>
 		<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="actualEnrolment" indexId="index">
@@ -26,4 +28,3 @@
 		<bean:message key="button.change.enrolment"/>	
 	</html:cancel>		
 </html:form>
-

@@ -89,6 +89,7 @@
 				validate="false">
 			<forward name="chooseStudentAndDegreeTypeWithRules" path="df.page.chooseStudentAndDegreeTypeWithRules"/>
 			<forward name="chooseStudentAndDegreeTypeWithoutRules" path="df.page.chooseStudentAndDegreeTypeWithoutRules"/>
+			<forward name="chooseStudentAndDegreeTypeOptionalWithoutRules" path="df.page.chooseStudentAndDegreeTypeOptionalWithoutRules"/>
 		</action>
 
 		<action	name="getStudentByNumberAndDegreeTypeForm"

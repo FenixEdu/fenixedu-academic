@@ -32,7 +32,7 @@ public class EnrolmentStrategyLEQ extends EnrolmentStrategy implements IEnrolmen
 
 		super.setEnrolmentContext(super.filterBySemester(super.getEnrolmentContext()));
 
-//		this.enrolmentContext = super.filterByExecutionCourses(this.enrolmentContext);
+		super.setEnrolmentContext(super.filterByExecutionCourses(super.getEnrolmentContext()));
 
 		enrolmentRule = new EnrolmentFilterCurricularYearPrecedence();
 		super.setEnrolmentContext(enrolmentRule.apply(super.getEnrolmentContext()));
@@ -43,11 +43,11 @@ public class EnrolmentStrategyLEQ extends EnrolmentStrategy implements IEnrolmen
 		enrolmentRule = new EnrolmentFilterLEQTrainingCourseRule();
 		super.setEnrolmentContext(enrolmentRule.apply(super.getEnrolmentContext()));		
 
-		//	NOTE DAVID-RICARDO: Esta regra para ser geral para todos os cursos TEM que ser chamada em penultimo
+		// Esta regra para ser geral para todos os cursos TEM que ser chamada em penultimo
 		enrolmentRule = new EnrolmentFilterPrecedenceSpanRule();
 		super.setEnrolmentContext(enrolmentRule.apply(super.getEnrolmentContext()));
 
-		//	NOTE DAVID-RICARDO: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
+		// Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
 		enrolmentRule = new EnrolmentFilterNACandNDRule();
 		super.setEnrolmentContext(enrolmentRule.apply(super.getEnrolmentContext()));
 

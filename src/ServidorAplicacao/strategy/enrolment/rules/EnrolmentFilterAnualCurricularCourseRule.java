@@ -16,9 +16,8 @@ import Util.CurricularCourseExecutionScope;
  *
  * 3/Abr/2003
  * 
- * This rule should be used when the intention is to obtain ALL the degrees,
- * so that one of them can be chosen, with the purpose of obtaining ALL it's curricular courses
- * that can be enrolled as an optional course.
+ * This rule should be used when the intention is to remove from the possible choices, ALL
+ * the curricular courses scopes that are related to an anual curricular course, except the first one.
  */
 
 public class EnrolmentFilterAnualCurricularCourseRule implements IEnrolmentRule {

@@ -17,7 +17,7 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
  * 
  * This rule should be used when the intention is to remove from the
  * list of curricular courses to be chosen for enrollment,
- * the ANUAL curricular courses and put them in the list of curricular
+ * the ANUAL and MANDATORY curricular courses and put them in the list of curricular
  * courses in witch the student will be automatically enrolled.
  */
 

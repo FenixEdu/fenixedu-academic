@@ -8,6 +8,6 @@
 		<html:link page="/setStartMode.do?method=withoutRules"><bean:message key="link.student.enrolment.without.rules"/></html:link>
 	</li>
 	<li>
-		<html:link page=""><bean:message key="link.student.enrolment.in.optional.curricular.course.without.rules"/></html:link>
+		<html:link page="/setStartMode.do?method=optionalWithoutRules"><bean:message key="link.student.enrolment.in.optional.curricular.course.without.rules"/></html:link>
 	</li>
 </ul>     

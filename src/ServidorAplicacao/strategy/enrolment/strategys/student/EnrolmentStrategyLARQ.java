@@ -29,7 +29,7 @@ public class EnrolmentStrategyLARQ extends EnrolmentStrategy implements IEnrolme
 
 		super.setEnrolmentContext(super.filterBySemester(super.getEnrolmentContext()));
 
-//		this.enrolmentContext = super.filterByExecutionCourses(enrolmentContext);
+		super.setEnrolmentContext(super.filterByExecutionCourses(super.getEnrolmentContext()));
 
 //		enrolmentRule = new EnrolmentFilterPrecedenceRule();
 //		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
@@ -43,7 +43,7 @@ public class EnrolmentStrategyLARQ extends EnrolmentStrategy implements IEnrolme
 		enrolmentRule = new EnrolmentFilterTFCRule();
 		super.setEnrolmentContext(enrolmentRule.apply(super.getEnrolmentContext()));
 
-		//	NOTE DAVID-RICARDO: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
+		// Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
 		enrolmentRule = new EnrolmentFilterNACandNDRule();
 		super.setEnrolmentContext(enrolmentRule.apply(super.getEnrolmentContext()));
 

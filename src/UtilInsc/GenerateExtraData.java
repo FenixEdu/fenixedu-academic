@@ -22,6 +22,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
+import Dominio.Teacher;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -64,6 +65,16 @@ public class GenerateExtraData {
 		persistentExecutionCourse.apagarTodasAsDisciplinasExecucao();
 		turnOffPersistentSuport();
 
+// APAGO TODOS OS EXECUTION_DEGREE PORQUE VOU ESCREVELOS DE RAIZ:
+		turnOnPersistentSuport();
+		ICursoExecucaoPersistente persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
+		try {
+			persistentExecutionDegree.deleteAll();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace(System.out);
+		}
+		turnOffPersistentSuport();
+
 		turnOnPersistentSuport();
 		List curricularCoursesList = null;
 		try {
@@ -73,10 +84,24 @@ public class GenerateExtraData {
 			degreeCurricularPlanCriteria.setIdInternal(new Integer(1));
 			IDegreeCurricularPlan oldDegreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlanCriteria);
 			curricularCoursesList = persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(oldDegreeCurricularPlan);
+
+			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+			ITeacher teacherCriteria = new Teacher();
+			teacherCriteria.setIdInternal(new Integer(1));
+			ITeacher teacher = (ITeacher) persistentTeacher.readByOId(teacherCriteria, true);
+			IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+			IExecutionYear executionYear = persistentExecutionYear.readActualExecutionYear();
+			ICursoExecucao executionDegree = new CursoExecucao();
+			executionDegree.setCoordinator(teacher);
+			executionDegree.setCurricularPlan(oldDegreeCurricularPlan);
+			executionDegree.setExecutionYear(executionYear);
+			persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
+			persistentExecutionDegree.lockWrite(executionDegree);
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace(System.out);
 		}
 		turnOffPersistentSuport();
+
 		Iterator iterator = curricularCoursesList.iterator();
 		while(iterator.hasNext()) {
 			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
@@ -154,7 +179,7 @@ public class GenerateExtraData {
 			turnOnPersistentSuport();
 			persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 			IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-			ICursoExecucaoPersistente persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
+			persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
 			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 			try {
 				degreeCurricularPlan2 = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlan);

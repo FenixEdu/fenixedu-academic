@@ -60,16 +60,18 @@
 			</tr>
 		</logic:iterate>
 	</table>
-	<logic:equal name="sizeToBeEnroled" value="0">
-		<logic:notEqual name="sizeAutomaticalyEnroled" value="0">
-			<html:form action="/curricularCourseEnrolmentWithoutRulesManager.do">
-				<html:hidden property="method" value="verifyEnrolment"/>
-				<html:submit styleClass="inputbutton"><bean:message key="button.continue.enrolment"/></html:submit>
-				<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
-			</html:form>
-		</logic:notEqual>
-	</logic:equal>
 </logic:notEqual>
+
+<logic:equal name="sizeToBeEnroled" value="0">
+	<logic:notEqual name="sizeAutomaticalyEnroled" value="0">
+		<html:form action="/curricularCourseEnrolmentWithoutRulesManager.do">
+			<html:hidden property="method" value="verifyEnrolment"/>
+			<html:submit styleClass="inputbutton"><bean:message key="button.continue.enrolment"/></html:submit>
+			<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
+		</html:form>
+	</logic:notEqual>
+</logic:equal>
+
 <logic:notEqual name="sizeToBeEnroled" value="0">
 	<br/>
 	<hr/>

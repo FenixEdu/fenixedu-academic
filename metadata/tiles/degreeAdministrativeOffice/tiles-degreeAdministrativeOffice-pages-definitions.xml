@@ -12,6 +12,9 @@
 	<definition name="df.page.chooseStudentAndDegreeTypeWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseStudentAndDegreeTypeWithoutRules.jsp"/>
 	</definition>
+	<definition name="df.page.chooseStudentAndDegreeTypeOptionalWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseStudentAndDegreeTypeOptionalWithoutRules.jsp"/>
+	</definition>
 	<definition name="df.page.chooseDegreeAndCurricularSemesterAndCurricularYear" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseDegreeAndCurricularSemesterAndCurricularYear.jsp"/>
 	</definition>
