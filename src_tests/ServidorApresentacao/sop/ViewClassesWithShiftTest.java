@@ -18,7 +18,7 @@ import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
 import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.TestCaseActionExecution;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
@@ -31,7 +31,7 @@ import Util.RoleType;
  *
  * 27/Fev/2003
  */
-public class ViewClassesWithShiftTest extends TestCaseActionExecution {
+public class ViewClassesWithShiftTest extends TestCasePresentationSopPortal{
 	
 	private List infoShifts = new ArrayList();
 

@@ -585,8 +585,10 @@
 		path="/CurriculumManagerDA"
         type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
 		>
-     <forward name="viewCurriculum" path="/viewCurriculum.jsp"/>
+     <forward name="viewObjectives" path="/viewObjectives.jsp"/>
+     <forward name="editObjectives" path="/editObjectives.jsp"/>
      <forward name="viewProgram" path="/viewProgram.jsp"/>
+     <forward name="editProgram" path="/editProgram.jsp"/>
      
 	</action>
 	    
@@ -614,3 +616,5 @@
 	-->
 
 </struts-config>
+
+

@@ -13,14 +13,14 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoShift;
 import ServidorAplicacao.GestorServicos;
-import ServidorApresentacao.TestCaseActionExecution;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoAula;
 
 /**
  * @author Ivo Brandão
  */
-public class ApagarTurnoFormActionTest extends TestCaseActionExecution {
+public class ApagarTurnoFormActionTest extends TestCasePresentationSopPortal {
 
 	/**
 	 * @param testName

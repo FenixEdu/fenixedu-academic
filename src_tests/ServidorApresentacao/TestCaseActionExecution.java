@@ -6,14 +6,17 @@
  */
 package ServidorApresentacao;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
-import java.util.Map;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -35,46 +38,54 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 
 		super.setUp();
 
-//		defines struts config file to use
+		//		defines struts config file to use
 		setServletConfigFile(getServletConfigFile());
-		
-		this.gestor = GestorServicos.manager();
-		String argsAutenticacao[] = {"user", "pass"};
-		try {
-			this.userView = (IUserView) this.gestor.executar(null, "Autenticacao", argsAutenticacao);
-			getSession().setAttribute(SessionConstants.U_VIEW, userView);
-		} catch (Exception ex) {
-			System.out.println("Autenticacao nao executada: " + ex);
-			fail("Setting up!");
-		}
+		setAuthorizedUser();
+//		this.gestor = GestorServicos.manager();
+//		String argsAutenticacao[] = { "user", "pass" };
+//		try {
+//			this.userView =
+//				(IUserView) this.gestor.executar(
+//					null,
+//					"Autenticacao",
+//					argsAutenticacao);
+//			getSession().setAttribute(SessionConstants.U_VIEW, userView);
+//		} catch (Exception ex) {
+//			System.out.println("Autenticacao nao executada: " + ex);
+//			fail("Setting up!");
+//		}
 	}
 
 	protected void tearDown() {
 		super.tearDown();
 	}
 
-// -------------------------------------------------------------------------------------------------------
+	// -------------------------------------------------------------------------------------------------------
 
 	public void testSuccessfulExecutionOfAction() {
 
-		doTest(	getItemsToPutInRequestForActionToBeTestedSuccessfuly(),
-				getItemsToPutInSessionForActionToBeTestedSuccessfuly(),
-				getSuccessfulForward(), getSuccessfulForwardPath(),
-				getExistingAttributesListToVerifyInSuccessfulExecution(),
-				getNonExistingAttributesListToVerifyInSuccessfulExecution(),
-				null );
+		doTest(
+			getItemsToPutInRequestForActionToBeTestedSuccessfuly(),
+			getItemsToPutInSessionForActionToBeTestedSuccessfuly(),
+			getSuccessfulForward(),
+			getSuccessfulForwardPath(),
+			getExistingAttributesListToVerifyInSuccessfulExecution(),
+			getNonExistingAttributesListToVerifyInSuccessfulExecution(),
+			null);
 	}
 
 	public void testUnsuccessfulExecutionOfAction() {
 
-		doTest(	(Map) getItemsToPutInRequestForActionToBeTestedUnsuccessfuly(),
-				(Map) getItemsToPutInSessionForActionToBeTestedUnsuccessfuly(),
-				getUnsuccessfulForward(), getUnsuccessfulForwardPath(), 
-				(Map) getExistingAttributesListToVerifyInUnsuccessfulExecution(),
-				(Map) getNonExistingAttributesListToVerifyInUnsuccessfulExecution(),
-				getActionErrors() );
+		doTest(
+			(Map) getItemsToPutInRequestForActionToBeTestedUnsuccessfuly(),
+			(Map) getItemsToPutInSessionForActionToBeTestedUnsuccessfuly(),
+			getUnsuccessfulForward(),
+			getUnsuccessfulForwardPath(),
+			(Map) getExistingAttributesListToVerifyInUnsuccessfulExecution(),
+			(Map) getNonExistingAttributesListToVerifyInUnsuccessfulExecution(),
+			getActionErrors());
 	}
-   
+
 	/**
 	 * @param itemsToPutInRequest
 	 * @param itemsToPutInSession
@@ -82,103 +93,117 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * @param existingAttributesList
 	 * @param nonExistingAttributesList
 	 */
-	protected void doTest(Map itemsToPutInRequest, Map itemsToPutInSession, String forward,
-	String forwardPath, Map existingAttributesList, Map nonExistingAttributesList,
-	String[] actionErrors) {
+	protected void doTest(
+		Map itemsToPutInRequest,
+		Map itemsToPutInSession,
+		String forward,
+		String forwardPath,
+		Map existingAttributesList,
+		Map nonExistingAttributesList,
+		String[] actionErrors) {
 
 		String pathOfAction = getRequestPathInfoPathAction();
 		String nameOfAction = getRequestPathInfoNameAction();
-			
-		if( (pathOfAction != null) && (nameOfAction != null) ) {
-			setRequestPathInfo(getRequestPathInfoPathAction(), getRequestPathInfoNameAction());
+
+		if ((pathOfAction != null) && (nameOfAction != null)) {
+			setRequestPathInfo(
+				getRequestPathInfoPathAction(),
+				getRequestPathInfoNameAction());
 		}
-	
-		if(itemsToPutInRequest != null) {
-	
+
+		if (itemsToPutInRequest != null) {
+
 			Set keys = itemsToPutInRequest.keySet();
 			Iterator keysIterator = keys.iterator();
-					
-			while(keysIterator.hasNext()) {
+
+			while (keysIterator.hasNext()) {
 				String key = (String) keysIterator.next();
 				String item = (String) itemsToPutInRequest.get(key);
 				addRequestParameter(key, item);
 			}
 		}
-	
-		if(itemsToPutInSession != null) {
-		
+
+		if (itemsToPutInSession != null) {
+
 			Set keys = itemsToPutInSession.keySet();
 			Iterator keysIterator = keys.iterator();
-						
-			while(keysIterator.hasNext()) {
+
+			while (keysIterator.hasNext()) {
 				String key = (String) keysIterator.next();
 				Object item = itemsToPutInSession.get(key);
 				getSession().setAttribute(key, item);
 			}
 		}
 
-		if (((pathOfAction != null) && (nameOfAction != null)) &&
-			((forward != null) || (forwardPath != null))) 
-			{
-//			perform
+		if (((pathOfAction != null) && (nameOfAction != null))
+			&& ((forward != null) || (forwardPath != null))) {
+			//			perform
 			actionPerform();
-			
-//			checks for errors
+
+			//			checks for errors
 			if (actionErrors == null)
 				verifyNoActionErrors();
-			else 
+			else
 				verifyActionErrors(actionErrors);
 
-//			checks forward			
-			if (forward != null) 
+			//			checks forward			
+			if (forward != null)
 				verifyForward(forward);
 
-//			checks forward path			
-			if (forwardPath != null) 
+			//			checks forward path			
+			if (forwardPath != null)
 				verifyForwardPath(forwardPath);
 
-//			CurricularYearAndSemesterAndInfoExecutionDegree ctx = SessionUtils.getContext(getRequest());
-//			assertNotNull("Context is null!", ctx);
+			//			CurricularYearAndSemesterAndInfoExecutionDegree ctx = SessionUtils.getContext(getRequest());
+			//			assertNotNull("Context is null!", ctx);
 
 			Set keys = null;
 			Iterator keysIterator = null;
-			if(existingAttributesList != null) {
+			if (existingAttributesList != null) {
 				keys = existingAttributesList.keySet();
 				keysIterator = keys.iterator();
-			} else if(nonExistingAttributesList != null) {
+			} else if (nonExistingAttributesList != null) {
 				keys = nonExistingAttributesList.keySet();
 				keysIterator = keys.iterator();
 			}
-			if(keys != null) {
-				while(keysIterator.hasNext()) {
+			if (keys != null) {
+				while (keysIterator.hasNext()) {
 					Integer key = (Integer) keysIterator.next();
-					verifyScopeAttributes(key.intValue(), (List) existingAttributesList.get(key), (List) nonExistingAttributesList.get(key));
+					verifyScopeAttributes(
+						key.intValue(),
+						(List) existingAttributesList.get(key),
+						(List) nonExistingAttributesList.get(key));
 				}
 			}
 		}
-		
-   }
+
+	}
 
 	/**
 	 * @param scope
 	 * @param existingAttributesList
 	 * @param nonExistingAttributesList
 	 */
-	private void verifyScopeAttributes(int scope, List existingAttributesList, List nonExistingAttributesList) {
+	private void verifyScopeAttributes(
+		int scope,
+		List existingAttributesList,
+		List nonExistingAttributesList) {
 
 		Enumeration attNames = null;
-		switch(scope) {
-			case ScopeConstants.SESSION:
+		switch (scope) {
+			case ScopeConstants.SESSION :
 				attNames = getSession().getAttributeNames();
 				break;
-			case ScopeConstants.REQUEST:
+			case ScopeConstants.REQUEST :
 				attNames = getRequest().getAttributeNames();
 				break;
-			case ScopeConstants.APP_CONTEXT:
-				attNames = getActionServlet().getServletContext().getAttributeNames();
+			case ScopeConstants.APP_CONTEXT :
+				attNames =
+					getActionServlet().getServletContext().getAttributeNames();
 				break;
-			default:
-				throw new IllegalArgumentException("Unknown scope! Use " + ScopeConstants.class.getName());
+			default :
+				throw new IllegalArgumentException(
+					"Unknown scope! Use " + ScopeConstants.class.getName());
 		}
 		verifyAttributes(attNames, existingAttributesList, true);
 		verifyAttributes(attNames, nonExistingAttributesList, false);
@@ -189,13 +214,16 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * @param list
 	 * @param exists
 	 */
-	private void verifyAttributes(Enumeration attNames, List list, boolean contains) {
+	private void verifyAttributes(
+		Enumeration attNames,
+		List list,
+		boolean contains) {
 
-		if( (list != null) && (attNames != null) ) {
-			while(attNames.hasMoreElements()) {
+		if ((list != null) && (attNames != null)) {
+			while (attNames.hasMoreElements()) {
 				String attName = (String) attNames.nextElement();
 				String message = null;
-				if(list.contains(attName) == contains) {
+				if (list.contains(attName) == contains) {
 					message = "Scope contains attribute ";
 				} else {
 					message = "Scope doesn't contain attribute ";
@@ -203,9 +231,9 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 				}
 			}
 		}
-   }
+	}
 
-// -------------------------------------------------------------------------------------------------------
+	// -------------------------------------------------------------------------------------------------------
 
 	/**
 	 * This method must return a Map with all the items that should be in session to execute
@@ -303,12 +331,12 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * This method must return a string identifying the servlet configuration file.
 	 */
 	protected abstract String getServletConfigFile();
-	
+
 	/**
 	 * This method must return a string identifying the action path of the request path.
 	 */
 	protected abstract String getRequestPathInfoPathAction();
-	
+
 	/**
 	 * This method must return a string identifying the action name of the request path.
 	 */
@@ -349,5 +377,25 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	protected String[] getActionErrors() {
 		return null;
 	}
-
+	public void setNotAuthorizedUser() {
+		UserView userView = new UserView("user", null);
+		Collection roles = new ArrayList();
+		userView.setRoles(roles);
+		getSession().setAttribute(SessionConstants.U_VIEW, userView);
+	}
+	
+	abstract public Collection getAuthorizedRolesCollection();
+	
+	/**
+	 * @return Object
+	 */
+	protected void setAuthorizedUser() {
+		getSession().setAttribute(SessionConstants.U_VIEW, getAuthorizedUser());
+	}
+	protected IUserView getAuthorizedUser(){
+		UserView userView = new UserView("user", null);
+		Collection roles = getAuthorizedRolesCollection();
+		userView.setRoles(roles);
+		return userView; 
+	}
 }

@@ -9,6 +9,7 @@
 package ServidorApresentacao.Action.commons;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -239,6 +240,14 @@ public class ChooseContextDispatchActionTest2 extends TestCaseActionExecution {
 	 */
 	protected String getServletConfigFile() {
 		return "/WEB-INF/tests/web-publico.xml";
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getAuthorizedRolesCollection()
+	 */
+	public Collection getAuthorizedRolesCollection() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -580,4 +580,25 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentationSop
 				ClassShiftManagerDispatchAction.AVAILABLE_LIST));
 
 	}
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
+	 */
+	protected String getServletConfigFile() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoPathAction()
+	 */
+	protected String getRequestPathInfoPathAction() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
+	 */
+	protected String getRequestPathInfoNameAction() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

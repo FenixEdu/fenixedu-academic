@@ -11,13 +11,13 @@ import java.util.Map;
 
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.TestCaseActionExecution;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author Ivo Brandão
  */
-public class AutenticacaoSOPFormActionTest extends TestCaseActionExecution {
+public class AutenticacaoSOPFormActionTest extends TestCasePresentationSopPortal {
 
 	/**
 	 * @param testName

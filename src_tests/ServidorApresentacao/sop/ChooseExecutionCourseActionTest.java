@@ -11,7 +11,7 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import ServidorApresentacao.TestCaseActionExecution;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -20,7 +20,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * 
  * @author Ivo Brandão
  */
-public class ChooseExecutionCourseActionTest extends TestCaseActionExecution {
+public class ChooseExecutionCourseActionTest extends TestCasePresentationSopPortal{
 
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());

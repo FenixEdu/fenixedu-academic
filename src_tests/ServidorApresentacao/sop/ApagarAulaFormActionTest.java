@@ -10,14 +10,14 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoLesson;
 import ServidorAplicacao.GestorServicos;
-import ServidorApresentacao.TestCaseActionExecution;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
 author tfc130
 */
 
-public class ApagarAulaFormActionTest extends TestCaseActionExecution {
+public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());
 	}

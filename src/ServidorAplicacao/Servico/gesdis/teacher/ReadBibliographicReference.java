@@ -6,9 +6,14 @@
  */
 package ServidorAplicacao.Servico.gesdis.teacher;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.gesdis.InfoBibliographicReference;
+import DataBeans.util.Cloner;
+import Dominio.IBibliographicReference;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -49,6 +54,7 @@ public class ReadBibliographicReference implements IServico {
 	public List run(InfoExecutionCourse infoExecutionCourse, Boolean optional)
 		throws FenixServiceException {
 		List references = null;
+		List infoBibRefs = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
@@ -73,13 +79,21 @@ public class ReadBibliographicReference implements IServico {
 					executionPeriod);
 			references =
 				persistentBibliographicReference.readBibliographicReference(
-					executionCourse);									
+					executionCourse);
+					
+			Iterator iterator = references.iterator();	
+			infoBibRefs = new ArrayList();
+			while(iterator.hasNext()) {
+				IBibliographicReference bibRef = (IBibliographicReference)iterator.next();
+				InfoBibliographicReference infoBibRef = Cloner.copyIBibliographicReference2InfoBibliographicReference(bibRef);
+				infoBibRefs.add(infoBibRefs);		
+			}										
 
 		} catch (ExistingPersistentException e) {
 			throw new ExistingServiceException(e);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
-		return references;
+		return infoBibRefs;
 	}
 }

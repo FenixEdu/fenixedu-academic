@@ -6,14 +6,13 @@ import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import ServidorAplicacao.GestorServicos;
-import ServidorApresentacao.TestCaseActionExecution;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoAula;
 import Util.TipoSala;
@@ -23,7 +22,7 @@ import Util.TipoSala;
  * 
  * @author Ivo Brandão
  */
-public class AdicionarAulasFormActionTest extends TestCaseActionExecution {
+public class AdicionarAulasFormActionTest extends TestCasePresentationSopPortal {
 
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());
