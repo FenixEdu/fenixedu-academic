@@ -15,7 +15,7 @@ import Util.TipoCurso;
  *
  * @author  tfc130
  */
-public class InfoDegree extends InfoObject implements Serializable,Comparable {
+public class InfoDegree extends InfoObject implements Comparable {
 	protected String sigla;
 	protected String nome;
 	protected TipoCurso tipoCurso;

@@ -1,12 +1,14 @@
 package DataBeans;
 
+import java.io.Serializable;
+
 import Util.PeriodState;
 
 
 /**
  * @author Nuno & Joana
  */
-public class InfoExecutionYear {
+public class InfoExecutionYear implements Serializable{
 	private String year;
 	private PeriodState state;
 	

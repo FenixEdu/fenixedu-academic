@@ -6,6 +6,7 @@
 
 package Util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
@@ -14,7 +15,7 @@ import org.apache.struts.util.LabelValueBean;
  *
  * @author  Nuno Nunes & Joana Mota
  */
-public class TipoCurso {
+public class TipoCurso implements Serializable{
     public static final int LICENCIATURA = 1;
     public static final int MESTRADO = 2;
  

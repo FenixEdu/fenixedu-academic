@@ -6,11 +6,13 @@
 
 package DataBeans;
 
+import java.io.Serializable;
+
 /**
  *
  * @author  tfc130
  */
-public class ClassAndShiftKeys {
+public class ClassAndShiftKeys implements Serializable{
   protected String _nomeTurma;
   protected String _nomeTurno;
 
