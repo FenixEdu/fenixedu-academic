@@ -105,6 +105,7 @@
 	</td>
 	<td>
 		<html:select property="markType">
+		<html:option value=""/>	
 		<html:option key="option.editDegreeCP.5" value="5"/>
     	<html:option key="option.editDegreeCP.20" value="20"/>
     	</html:select>

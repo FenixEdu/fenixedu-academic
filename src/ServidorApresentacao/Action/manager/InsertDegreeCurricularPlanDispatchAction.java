@@ -169,7 +169,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 			throw new FenixActionException(e);
 		}
 		System.out.println("FIM FIM FIMF FIM");
-		return mapping.findForward("g");
+		return mapping.findForward("readDegree");
 	}			
 }
 

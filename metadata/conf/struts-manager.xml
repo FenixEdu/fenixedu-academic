@@ -178,7 +178,7 @@
 		type="ServidorApresentacao.Action.manager.InsertDegreeCurricularPlanDispatchAction"
         validate="true">  
        <forward name="insertDegreeCurricularPlan" path="df.page.insert-degree-curricular-plan"/>
-       <forward name="g" path="/readDegree.do"/>      	      
+       <forward name="readDegree" path="/readDegree.do"/>      	      
 	</action>
 	
 	

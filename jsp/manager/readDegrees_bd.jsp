@@ -12,6 +12,7 @@
 <br>
 <br>
 <html:form action="/deleteDegrees" method="get">
+
 <table width="50%" cellpadding="0" border="0">
 	<tr>
 		<td class="listClasses-header">
@@ -21,21 +22,23 @@
 		<td class="listClasses-header"><bean:message key="label.manager.degree.name" />
 		</td>
 	</tr>
-	<tr>	 
-		<logic:iterate id="degree" name="<%= SessionConstants.INFO_DEGREES_LIST %>">			
-		<td class="listClasses">
-		<html:multibox property="internalIds">
-		<bean:write name="degree" property="idInternal"/>
-		</html:multibox>
-		</td>	
-		<td class="listClasses"><html:link page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="sigla"/></html:link>
-		</td>			
-		<td class="listClasses"><html:link page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="nome"/></html:link>
-		</td>
-	 </tr>	
-</logic:iterate>				
-<span class="error"><html:errors/></span>		
+		 
+	<logic:iterate id="degree" name="<%= SessionConstants.INFO_DEGREES_LIST %>">			
+		<tr>	
+			<td class="listClasses">
+			<html:multibox property="internalIds">
+			<bean:write name="degree" property="idInternal"/>
+			</html:multibox>
+			</td>	
+			<td class="listClasses"><html:link page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="sigla"/></html:link>
+			</td>			
+			<td class="listClasses"><html:link page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="nome"/></html:link>
+			</td>
+	 	</tr>	
+	 </logic:iterate>
+	<span class="error"><html:errors/></span>		
 </table>
+
 <br>
 <br>	
 <html:submit><bean:message key="label.manager.delete.selected.degrees"/></html:submit>
