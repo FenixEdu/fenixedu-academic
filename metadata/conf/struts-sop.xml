@@ -689,15 +689,13 @@
 <!--			<forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
 -->
 		</action>
-      
-      
-      
+
       <!-- Action For LogOff -->
       <action path="/logoff"
-      	      type="ServidorApresentacao.Action.sop.LogOffAction">
-      	  <forward name="Success" path="/index.do"/>      	      
+      	      type="ServidorApresentacao.Action.commons.LogOffAction">
+      	  <forward name="Success" path="/index.do"/>
       </action>
-      
+
       
      </action-mappings>     
 

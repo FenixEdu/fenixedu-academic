@@ -114,7 +114,7 @@
 
       <!-- Action For LogOff -->
       <action path="/logoff"
-      	      type="ServidorApresentacao.Action.masterDegree.candidate.LogOffAction">
+      	      type="ServidorApresentacao.Action.commons.LogOffAction">
       	  <forward name="Success" path="/index.do"/>      	      
       </action>
       

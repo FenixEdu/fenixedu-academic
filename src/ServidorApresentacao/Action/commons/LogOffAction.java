@@ -11,7 +11,7 @@
  *
  */
  
-package ServidorApresentacao.Action.sop;
+package ServidorApresentacao.Action.commons;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
