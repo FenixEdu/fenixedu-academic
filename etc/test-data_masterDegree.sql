@@ -3,8 +3,8 @@
 #-----------------------------
 DELETE FROM MASTER_DEGREE_CANDIDATE;
 DELETE FROM MASTER_DEGREE_CANDIDATE;
-INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (1, 6, 10, 1, 1, 'Informatica', 'IST', 2000, 14.99, null, null);
-INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (2, 7, 10, 2, 2, 'Informatica 2', 'IST 2', 2001, 13.99, null, null);
+INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (1, 6, 10, 1, 1, 'Informatica', 'IST', 2000, 14.99, null, null, null, null);
+INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (2, 7, 10, 2, 2, 'Informatica 2', 'IST 2', 2001, 13.99, null, null, null, null);
 
 
 #-----------------------------

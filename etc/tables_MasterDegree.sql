@@ -14,12 +14,12 @@ create table MASTER_DEGREE_CANDIDATE (
    AVERAGE float,
    SPECIALIZATION_AREA varchar(250),
    SUBSTITUTE_ORDER INT(11) DEFAULT null,
+   GIVEN_CREDITS FLOAT,
+   GIVEN_CREDITS TEXT,
    primary key (ID_INTERNAL),
    unique u1 (PERSON_KEY, EXECUTION_DEGREE_KEY, SPECIALIZATION),
    unique u2 (CANDIDATE_NUMBER, EXECUTION_DEGREE_KEY, SPECIALIZATION))
    type=InnoDB;
-
-
 
 #----------------------------
 # Table structure for CANDIDATE_SITUATION
@@ -120,6 +120,20 @@ create table QUALIFICATION(
    primary key (ID_INTERNAL))
    type=InnoDB;
 
+#----------------------------
+# Table structure for GRATUITY
+#----------------------------
+drop table if exists GRATUITY;
+create table GRATUITY(
+   ID_INTERNAL integer(11) not null auto_increment,
+   KEY_STUDENT_CURRICULAR_PLAN integer(11) not null ,
+   STATE integer(11),
+   GRATUITY_STATE integer(11),
+   DATE date, 
+   REMARKS text,
+   primary key (ID_INTERNAL),
+   unique u1 (KEY_STUDENT_CURRICULAR_PLAN, GRATUITY_STATE))
+   type=InnoDB;
 
 #----------------------------
 # Table structure for CANDIDATE_ENROLMENT
