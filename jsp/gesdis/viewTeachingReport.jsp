@@ -120,7 +120,7 @@
 <h3 class="bluetxt"><bean:message key="message.teachingReport.report"/></h3>
 <p><bean:write name="siteCourseInformation" property="infoCourseReport.report" /></p>
 <strong><bean:message key="message.teachingReport.text1"/>
-dd/mm/YYYY
+20/03/2004
 <bean:message key="message.teachingReport.text2"/></strong>
 <br />
 <ul>
