@@ -301,7 +301,7 @@
 				<msg name="number" key="errors.integer"/>
 				<arg0 key="label.grant.part.percentage" resource="true"/>
 		    </field>
-		    <field property="responsibleTeacherNumber" depends="required, integer" page="1">
+		    <field property="responsibleTeacherNumber" depends="integer" page="1">
 				<msg name="number" key="errors.integer"/>
 				<arg0 key="label.grant.part.responsibleTeacher.number" resource="true"/>
 		    </field>

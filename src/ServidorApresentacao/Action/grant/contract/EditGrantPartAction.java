@@ -211,6 +211,8 @@ public class EditGrantPartAction extends DispatchAction
 
 	private InfoGrantPart populateInfoFromForm(DynaValidatorForm editGrantPartForm) throws Exception
 	{
+        //TODO.. falta a cena do professor associado ao centro de custo ou projecto
+        //Se for null ir le-lo à bd e preencher...
 		InfoGrantPart infoGrantPart = new InfoGrantPart();
 		if (editGrantPartForm.get("idInternal") != null
 			&& !editGrantPartForm.get("idInternal").equals(""))

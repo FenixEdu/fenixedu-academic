@@ -48,7 +48,7 @@
 				<bean:message key="label.grant.part.responsibleTeacher.number"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="responsibleTeacherNumber"/><bean:message key="label.requiredfield"/>
+				<html:text property="responsibleTeacherNumber"/>&nbsp;
 				<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
 					<bean:message key="link.teacher.showList"/>
 				</html:link>
