@@ -8,7 +8,7 @@ package Dominio;
  * 20/Mar/2003
  */
 
-public interface ICurricularCourseScope {
+public interface ICurricularCourseScope extends IDomainObject {
 	public IBranch getBranch();
 	public ICurricularCourse getCurricularCourse();
 	public ICurricularSemester getCurricularSemester();

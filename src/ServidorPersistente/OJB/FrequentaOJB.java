@@ -76,8 +76,8 @@ public class FrequentaOJB
 		// else If the attendance is mapped to the database, then write any existing changes.
 		else if (
 			(attendanceToWrite instanceof Frequenta)
-				&& ((Frequenta) attendanceFromDB).getCodigoInterno().equals(
-					((Frequenta) attendanceToWrite).getCodigoInterno())) {
+				&& ((Frequenta) attendanceFromDB).getIdInternal().equals(
+					((Frequenta) attendanceToWrite).getIdInternal())) {
 			super.lockWrite(attendanceToWrite);
 			// else Throw an already existing exception
 		} else

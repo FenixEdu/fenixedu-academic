@@ -763,7 +763,7 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="Dominio.CurricularCourseScope" table="CURRICULAR_COURSE_SCOPE">
 	<field-descriptor
-		name="internalID"
+		name="idInternal"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"

@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author  tfc130
  */
-public class InfoCurricularCourseScope implements Serializable {
+public class InfoCurricularCourseScope extends InfoObject implements Serializable {
 	private InfoCurricularCourse infoCurricularCourse;
 	private InfoCurricularSemester infoCurricularSemester;
 	private InfoBranch infoBranch;

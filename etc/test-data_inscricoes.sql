@@ -92,6 +92,7 @@ INSERT INTO ENROLMENT VALUES (10, 5, 12, 2, 1, 'Dominio.Enrolment', null, 1);
 INSERT INTO ENROLMENT VALUES (11, 5, 13, 3, 3, 'Dominio.Enrolment', null, 1);
 INSERT INTO ENROLMENT VALUES (12, 5, 1, 3, 3, 'Dominio.EnrolmentInExtraCurricularCourse', null, 1);
 INSERT INTO ENROLMENT VALUES (13, 6, 12, 3, 3, 'Dominio.EnrolmentInExtraCurricularCourse', null, 1);
+INSERT INTO ENROLMENT VALUES (16, 1, 3, 1, 1, 'Dominio.Enrolment', null, 1);
 #-----------------------------
 #Angela
 #-----------------------------

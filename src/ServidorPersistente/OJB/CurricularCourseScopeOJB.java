@@ -54,8 +54,8 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 			// else If the CurricularCourseScope is mapped to the database, then write any existing changes.
 		} else if (
 			(curricularCourseScopeToWrite instanceof CurricularCourseScope)
-				&& ((CurricularCourseScope) curricularCourseScopeFromDB).getInternalID().equals(
-					((CurricularCourseScope) curricularCourseScopeToWrite).getInternalID())) {
+				&& ((CurricularCourseScope) curricularCourseScopeFromDB).getIdInternal().equals(
+					((CurricularCourseScope) curricularCourseScopeToWrite).getIdInternal())) {
 			super.lockWrite(curricularCourseScopeToWrite);
 			// else Throw an already existing exception
 		} else

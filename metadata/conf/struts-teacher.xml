@@ -574,6 +574,26 @@
 		</action>
 
 	<!-- End of Action for Teacher Administration Site -->
+	
+	<!-- Students list -->
+        <action path="/readCurricularCourseList"
+				input="/teacherAdministrationViewerError.jsp"
+				scope="request"
+				parameter="method"
+				type="ServidorApresentacao.Action.teacher.ReadCurricularCourseListAction">
+				
+				<forward name="success" path="/viewCurricularCourseListOfStudents.jsp" />
+		</action>
+        <action path="/studentsByCurricularCourse"
+				input="/teacherAdministrationViewerError.jsp"
+				scope="request"
+				parameter="method"
+				type="ServidorApresentacao.Action.teacher.StudentsByCurricularCourseListAction">
+				
+				<forward name="success" path="/viewStudents.jsp" />
+		</action>				
+	<!-- End Students list -->
+	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

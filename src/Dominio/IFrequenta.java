@@ -10,10 +10,12 @@ package Dominio;
  *
  * @author  tfc130
  */
-public interface IFrequenta {
+public interface IFrequenta extends IDomainObject {
   public IStudent getAluno();
   public IDisciplinaExecucao getDisciplinaExecucao();
+	public IEnrolment getEnrolment();
 
   public void setAluno(IStudent aluno);
   public void setDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao);
+  public void setEnrolment(IEnrolment enrolment);
 }

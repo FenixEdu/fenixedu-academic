@@ -10,82 +10,105 @@ package Dominio;
  *
  * @author  tfc130
  */
-public class Frequenta implements IFrequenta {
-  protected IStudent _aluno;
-  protected IDisciplinaExecucao _disciplinaExecucao;
-    
-  // códigos internos da base de dados
-  private Integer _codigoInterno;
-  private Integer _chaveAluno;
-  private Integer _chaveDisciplinaExecucao;
+public class Frequenta extends DomainObject implements IFrequenta {
+	protected IStudent _aluno;
+	protected IDisciplinaExecucao _disciplinaExecucao;
+	protected IEnrolment _enrolment;
 
-  /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
-  public Frequenta() { }
+	// códigos internos da base de dados
+	private Integer _chaveAluno;
+	private Integer _chaveDisciplinaExecucao;
 
-  public Frequenta(IStudent aluno, IDisciplinaExecucao disciplinaExecucao) {
-  	setAluno(aluno);
-  	setDisciplinaExecucao(disciplinaExecucao);
-  }
+	private Integer _keyEnrolment;
 
-  public Integer getCodigoInterno() {
-    return _codigoInterno;
-  }
-    
-  public void setCodigoInterno(Integer codigoInterno) {
-    _codigoInterno = codigoInterno;
-  }
+	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */
+	public Frequenta() {
+	}
 
-  public IStudent getAluno() {
-    return _aluno;
-  }
+	public Frequenta(IStudent aluno, IDisciplinaExecucao disciplinaExecucao) {
+		setAluno(aluno);
+		setDisciplinaExecucao(disciplinaExecucao);
+	}
 
-  public void setAluno(IStudent aluno) {
-    _aluno = aluno;
-  }
+	public Frequenta(IStudent aluno, IDisciplinaExecucao disciplinaExecucao, IEnrolment enrolment) {
+		setAluno(aluno);
+		setDisciplinaExecucao(disciplinaExecucao);
+		setEnrolment(enrolment);
+	}
 
+	public IStudent getAluno() {
+		return _aluno;
+	}
 
-  public Integer getChaveAluno() {
-    return _chaveAluno;
-  }
+	public void setAluno(IStudent aluno) {
+		_aluno = aluno;
+	}
 
-  public void setChaveAluno(Integer chaveAluno) {
-    _chaveAluno = chaveAluno;
-  }
+	public Integer getChaveAluno() {
+		return _chaveAluno;
+	}
 
-  public IDisciplinaExecucao getDisciplinaExecucao() {
-    return _disciplinaExecucao;
-  }
+	public void setChaveAluno(Integer chaveAluno) {
+		_chaveAluno = chaveAluno;
+	}
 
-  public void setDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao) {
-    _disciplinaExecucao = disciplinaExecucao;
-  }
+	public IDisciplinaExecucao getDisciplinaExecucao() {
+		return _disciplinaExecucao;
+	}
 
-  public Integer getChaveDisciplinaExecucao() {
-    return _chaveDisciplinaExecucao;
-  }
+	public void setDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao) {
+		_disciplinaExecucao = disciplinaExecucao;
+	}
 
-  public void setChaveDisciplinaExecucao(Integer chaveDisciplinaExecucao) {
-    _chaveDisciplinaExecucao = chaveDisciplinaExecucao;
-  }
-  
-  public boolean equals(Object obj) {
-    boolean resultado = false;
-    if (obj instanceof IFrequenta) {
-      IFrequenta frequenta = (IFrequenta)obj;
-      resultado = //getCodigoInterno().equals(((Frequenta)obj).getCodigoInterno());
-      			  getAluno().equals(frequenta.getAluno()) &&
-                  getDisciplinaExecucao().equals(getDisciplinaExecucao());
-    }
-    return resultado;
-  }
-  
-  public String toString() {
-    String result = "[ATTEND";
-    result += ", codigoInterno=" + _codigoInterno;
-    result += ", Student=" + _aluno;
-	result += ", ExecutionCourse=" + _disciplinaExecucao;
-    result += "]";
-    return result;
-  }
+	public Integer getChaveDisciplinaExecucao() {
+		return _chaveDisciplinaExecucao;
+	}
+
+	public void setChaveDisciplinaExecucao(Integer chaveDisciplinaExecucao) {
+		_chaveDisciplinaExecucao = chaveDisciplinaExecucao;
+	}
+
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof IFrequenta) {
+			IFrequenta frequenta = (IFrequenta) obj;
+				resultado = //getCodigoInterno().equals(((Frequenta)obj).getCodigoInterno());
+	getAluno().equals(frequenta.getAluno()) && getDisciplinaExecucao().equals(getDisciplinaExecucao());
+		}
+		return resultado;
+	}
+
+	public String toString() {
+		String result = "[ATTEND";
+		result += ", codigoInterno=" + getIdInternal();
+		result += ", Student=" + _aluno;
+		result += ", ExecutionCourse=" + _disciplinaExecucao;
+		result += ", Enrolment=" + _enrolment;
+		result += "]";
+		return result;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getKeyEnrolment() {
+		return _keyEnrolment;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setKeyEnrolment(Integer integer) {
+		_keyEnrolment = integer;
+	}
+
+	public IEnrolment getEnrolment() {
+		return _enrolment;
+	}
+
+	public void setEnrolment(IEnrolment enrolment) {
+		this._enrolment = enrolment;
+		
+	}
 
 }

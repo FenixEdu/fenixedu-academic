@@ -8,9 +8,8 @@ package Dominio;
  * 20/Mar/2003
  */
 
-public class CurricularCourseScope implements ICurricularCourseScope {
+public class CurricularCourseScope extends DomainObject implements ICurricularCourseScope {
 
-	private Integer internalID;
 	private Integer curricularCourseKey;
 	private Integer curricularSemesterKey;
 	private Integer branchKey;
@@ -29,7 +28,7 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 	private Double labHours;
 
 	public CurricularCourseScope() {
-		setInternalID(null);
+		setIdInternal(null);
 
 		setBranch(null);
 		setCurricularCourse(null);
@@ -38,6 +37,10 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 		setBranchKey(null);
 		setCurricularCourseKey(null);
 		setCurricularSemesterKey(null);
+	}
+	
+	public CurricularCourseScope(Integer idInternal){
+		setIdInternal(idInternal);
 	}
 
 	public CurricularCourseScope(ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch) {
@@ -64,7 +67,7 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
-		result += "idInternal = " + this.internalID + "; ";
+		result += "idInternal = " + this.getIdInternal() + "; ";
 		result += "curricularCourse = " + this.curricularCourse + "; ";
 		result += "curricularSemester = " + this.curricularSemester + "; ";
 		result += "branch = " + this.branch + "]\n";
@@ -116,13 +119,6 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 	}
 
 	/**
-	 * @return Integer
-	 */
-	public Integer getInternalID() {
-		return internalID;
-	}
-
-	/**
 	 * Sets the branch.
 	 * @param branch The branch to set
 	 */
@@ -168,14 +164,6 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 	 */
 	public void setCurricularSemesterKey(Integer curricularSemesterKey) {
 		this.curricularSemesterKey = curricularSemesterKey;
-	}
-
-	/**
-	 * Sets the internalID.
-	 * @param internalID The internalID to set
-	 */
-	public void setInternalID(Integer internalID) {
-		this.internalID = internalID;
 	}
 
 	public Integer getMaxIncrementNac() {

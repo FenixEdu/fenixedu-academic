@@ -104,6 +104,7 @@ create table ATTEND (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_STUDENT int(11) not null,
    KEY_EXECUTION_COURSE int(11) not null,
+   KEY_ENROLMENT int(11),
    primary key (ID_INTERNAL),
    unique U1 (KEY_STUDENT, KEY_EXECUTION_COURSE))
    type=InnoDB;

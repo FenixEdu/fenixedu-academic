@@ -342,7 +342,7 @@
    	  table="ATTEND"
    >
       <field-descriptor id="1"
-         name="codigoInterno"
+         name="idInternal"
          column="ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
@@ -358,6 +358,11 @@
          column="KEY_EXECUTION_COURSE"
          jdbc-type="INTEGER"
       />
+      <field-descriptor id="4"
+         name="keyEnrolment"
+         column="KEY_ENROLMENT"
+         jdbc-type="INTEGER"
+      />
       <reference-descriptor
          name="aluno"
          class-ref="Dominio.Student"
@@ -371,6 +376,13 @@
          proxy="true"
       >
          <foreignkey field-id-ref="3"/>
+      </reference-descriptor> 
+      <reference-descriptor
+         name="enrolment"
+         class-ref="Dominio.Enrolment"
+         proxy="true"
+      >
+         <foreignkey field-id-ref="4"/>
       </reference-descriptor> 
    </class-descriptor>   
 
