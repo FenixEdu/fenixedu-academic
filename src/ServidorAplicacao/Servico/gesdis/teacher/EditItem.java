@@ -6,6 +6,9 @@
  */
 package ServidorAplicacao.Servico.gesdis.teacher;
 
+import java.util.Iterator;
+import java.util.List;
+
 import DataBeans.gesdis.InfoItem;
 import DataBeans.util.Cloner;
 import Dominio.IItem;
@@ -46,7 +49,60 @@ public class EditItem implements IServico {
 
 	}
 
-    
+	private void organizeItemsOrder(
+		int newOrder,
+		int oldOrder,
+		ISection section)
+		throws FenixServiceException {
+
+		IPersistentItem persistentItem = null;
+		try {
+
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+			persistentItem = persistentSuport.getIPersistentItem();
+
+			List itemsList = null;
+
+			itemsList = persistentItem.readAllItemsBySection(section);
+
+			Iterator iterItems = itemsList.iterator();
+
+			if (newOrder - oldOrder > 0)
+				while (iterItems.hasNext()) {
+
+					IItem iterItem = (IItem) iterItems.next();
+
+					int iterItemOrder = iterItem.getItemOrder().intValue();
+
+					if (iterItemOrder > oldOrder) {
+
+						iterItem.setItemOrder(new Integer(iterItemOrder - 1));
+
+						persistentItem.lockWrite(iterItem);
+					}
+				} else
+				while (iterItems.hasNext()) {
+
+					IItem iterItem = (IItem) iterItems.next();
+
+					int iterItemOrder = iterItem.getItemOrder().intValue();
+
+					if (iterItemOrder >= newOrder) {
+
+						iterItem.setItemOrder(new Integer(iterItemOrder + 1));
+
+						persistentItem.lockWrite(iterItem);
+
+					}
+				}
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+
+			throw new FenixServiceException(excepcaoPersistencia);
+		}
+	}
+		
+		  
 
 	/**
 	 * Executes the service.
@@ -69,7 +125,13 @@ public Boolean run(InfoItem oldInfoItem, InfoItem newInfoItem)
 			persistentItem.readBySectionAndName(section, oldInfoItem.getName());
 
 		item.setInformation(newInfoItem.getInformation());
-		item.setItemOrder(newInfoItem.getItemOrder());
+		int newOrder = newInfoItem.getItemOrder().intValue();
+		int oldOrder = oldInfoItem.getItemOrder().intValue();
+
+		if (newOrder != oldOrder) {
+			organizeItemsOrder(newOrder, oldOrder, section);
+			item.setItemOrder(newInfoItem.getItemOrder());
+		}
 		item.setName(newInfoItem.getName());
 		item.setUrgent(newInfoItem.getUrgent());
 		persistentItem.lockWrite(item);
@@ -78,5 +140,5 @@ public Boolean run(InfoItem oldInfoItem, InfoItem newInfoItem)
 	}
 	return new Boolean(true);
 }
-}
 
+}

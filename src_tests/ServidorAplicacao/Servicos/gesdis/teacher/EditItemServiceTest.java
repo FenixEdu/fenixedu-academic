@@ -104,6 +104,7 @@ public class EditItemServiceTest extends TestCaseDeleteAndEditServices {
 			oldInfoItem= Cloner.copyIItem2InfoItem(item);
 			newInfoItem= Cloner.copyIItem2InfoItem(item);
 			newInfoItem.setName("NewItemName");
+			newInfoItem.setItemOrder(new Integer(1));
 			
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("failed setting up the test data");
