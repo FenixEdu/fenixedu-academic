@@ -80,8 +80,8 @@ public class InfoSiteTeacherExamEnrollment implements ISiteComponent {
 
 		List years = new ArrayList();
 		Calendar calendar = Calendar.getInstance();
-		years.add(new Integer(calendar.getTime().getYear()+ 1900));
-		years.add(new Integer(calendar.getTime().getYear() + 1901));
+		years.add(new Integer(calendar.get(Calendar.YEAR)));
+		years.add(new Integer(calendar.get(Calendar.YEAR)+ 1));
 		return years;
 	}
 	public List getHours() {

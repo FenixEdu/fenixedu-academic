@@ -101,7 +101,7 @@ public class InfoExamEnrollment extends InfoObject {
 		return new Integer(getBeginDate().get(Calendar.MONTH) + 1).toString();
 	}
 	public String getBeginYear() {
-		return new Integer(getBeginDate().get(Calendar.YEAR) + 1900)
+		return new Integer(getBeginDate().get(Calendar.YEAR))
 			.toString();
 	}
 	public String getBeginHour() {
@@ -120,7 +120,7 @@ public class InfoExamEnrollment extends InfoObject {
 		return new Integer(getEndDate().get(Calendar.MONTH) + 1).toString();
 	}
 	public String getEndYear() {
-		return new Integer(getEndDate().get(Calendar.YEAR) + 1900).toString();
+		return new Integer(getEndDate().get(Calendar.YEAR)).toString();
 	}
 	public String getEndHour() {
 		return new Integer(getEndDate().get(Calendar.HOUR_OF_DAY)).toString();

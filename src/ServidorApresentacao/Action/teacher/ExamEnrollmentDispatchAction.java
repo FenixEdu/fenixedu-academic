@@ -104,7 +104,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
 		Calendar beginDate = Calendar.getInstance();
 		beginDate.set(
-			beginYear.intValue()-1900,
+			beginYear.intValue(),
 			beginMonth.intValue() - 1,
 			beginDay.intValue(),
 			beginHour.intValue(),
@@ -112,7 +112,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
 		Calendar endDate = Calendar.getInstance();
 		endDate.set(
-			endYear.intValue()-1900,
+			endYear.intValue(),
 			endMonth.intValue() - 1,
 			endDay.intValue(),
 			endHour.intValue(),
@@ -185,7 +185,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
 		Calendar beginDate = Calendar.getInstance();
 		beginDate.set(
-			beginYear.intValue()-1900,
+			beginYear.intValue(),
 			beginMonth.intValue() - 1,
 			beginDay.intValue(),
 			beginHour.intValue(),
@@ -193,7 +193,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
 		Calendar endDate = Calendar.getInstance();
 		endDate.set(
-			endYear.intValue()-1900,
+			endYear.intValue(),
 			endMonth.intValue() - 1,
 			endDay.intValue(),
 			endHour.intValue(),
