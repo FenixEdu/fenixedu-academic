@@ -131,7 +131,7 @@
 	<action-mappings type="org.apache.struts.action.ActionMapping">
      <action path="/naoExecutado" forward="/error.jsp"/>
 	 <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
-
+ 
 	<action     path="/bibliographicReferenceManager"
 				parameter="method"      			
 				scope="session"
@@ -205,6 +205,7 @@
 		      type="ServidorApresentacao.Action.base.FenixForwardAction"
 		      forward="/switchAction.do?prefix=&amp;page=/logoff.do"/>
 	
+	<action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
 	<!-- Actions For Teachers  -->
 	<action 
 		input="/viewTeachers.jsp"
