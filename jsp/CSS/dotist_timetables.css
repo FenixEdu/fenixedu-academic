@@ -89,7 +89,7 @@
 
 .timeTable_line{
 	font-size: 9px;
-	color: #C9C933;
+	color: #003333;
 	font-weight:bold;
 	background-color: #E1E1E1;
 	text-align: left;
@@ -179,6 +179,13 @@
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
 }
+.slot_empty_lessonAfter_lesson{
+	border-color: #000000;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
 
 .slot_empty_lessonAfter_last{
 	border-color: #000000;
@@ -215,6 +222,14 @@
 	border-color: #000000;
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
+}
+
+.slot_empty_right_lessonAfter_lesson{
+	border-color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-right-width: 1px;
+	border-right-style: solid;
 }
 
 .slot_empty_right_lesson{
@@ -323,25 +338,25 @@
 }
 
 a.timetable:link{
-	color: #C9C933;
+	color: #003333;
 	font-weight: bold;
 	font-size: 9px;
 }
 
 a.timetable:hover{
-	color: #C9C933;
+	color: #003333;
 	font-weight: bold;
 	font-size: 9px;	
 }
 
 a.timetable:visited{
-	color: #C9C933;
+	color: #003333;
 	font-weight: bold;
 	font-size: 9px;
 }
 
 a.timetable:active{
-	color: #C9C933;
+	color: #003333;
 	font-weight: bold;
 	font-size: 9px;	
 }
