@@ -81,20 +81,19 @@ public class AssociateExecutionCourseToCurricularCourse implements IServico {
             if (executionCourse == null) {
                 throw new NonExistingServiceException(
                         "message.nonExisting.executionCourse", null);
-            } else {
-                List curricularCourses = executionCourse
-                        .getAssociatedCurricularCourses();
-                if (!executionCourses.contains(executionCourse)
-                        && !curricularCourses.contains(curricularCourse)) {
-                    persistentCurricularCourse
-                            .simpleLockWrite(curricularCourse);
-                    executionCourses.add(executionCourse);
-                    curricularCourses.add(curricularCourse);
-                    curricularCourse
-                            .setAssociatedExecutionCourses(executionCourses);
-                    executionCourse
-                            .setAssociatedCurricularCourses(curricularCourses);
-                }
+            }
+            List curricularCourses = executionCourse
+                    .getAssociatedCurricularCourses();
+            if (!executionCourses.contains(executionCourse)
+                    && !curricularCourses.contains(curricularCourse)) {
+                persistentCurricularCourse.simpleLockWrite(curricularCourse);
+                executionCourses.add(executionCourse);
+                curricularCourses.add(curricularCourse);
+                curricularCourse
+                        .setAssociatedExecutionCourses(executionCourses);
+                executionCourse
+                        .setAssociatedCurricularCourses(curricularCourses);
+
             }
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

@@ -326,9 +326,9 @@ public class MergeExecutionCourses implements IServico {
                                 if (reference.getTitle() == bibliographicReference2Compare
                                         .getTitle()) {
                                     return true;
-                                } else {
-                                    return false;
                                 }
+                                return false;
+
                             }
                         }) == null) {
                     persistentBibliographicReference
@@ -396,9 +396,9 @@ public class MergeExecutionCourses implements IServico {
                         IFrequenta frequenta = (IFrequenta) arg0;
                         if (frequenta.getAluno() == attend2Compare.getAluno()) {
                             return true;
-                        } else {
-                            return false;
                         }
+                        return false;
+
                     }
                 }) == null) {
                     persistentAttend.simpleLockWrite(attend);
@@ -463,9 +463,9 @@ public class MergeExecutionCourses implements IServico {
                                 if (prof.getTeacher() == professorship2Compare
                                         .getTeacher()) {
                                     return true;
-                                } else {
-                                    return false;
                                 }
+                                return false;
+
                             }
                         }) == null) {
                     persistentProfessorship.simpleLockWrite(professorship);
@@ -518,9 +518,9 @@ public class MergeExecutionCourses implements IServico {
                                 if (respons.getTeacher() == responsibleFor2Compare
                                         .getTeacher()) {
                                     return true;
-                                } else {
-                                    return false;
                                 }
+                                return false;
+
                             }
                         }) == null) {
                     persistentResponsibleFor.simpleLockWrite(responsibleFor);

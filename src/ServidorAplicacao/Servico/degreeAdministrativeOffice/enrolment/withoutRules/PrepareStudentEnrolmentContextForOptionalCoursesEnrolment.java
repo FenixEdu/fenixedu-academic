@@ -37,151 +37,163 @@ import Util.TipoCurso;
  * @author David Santos in Mar 19, 2004
  */
 
-public class PrepareStudentEnrolmentContextForOptionalCoursesEnrolment implements IService
-{
+public class PrepareStudentEnrolmentContextForOptionalCoursesEnrolment
+        implements IService {
 
-	public PrepareStudentEnrolmentContextForOptionalCoursesEnrolment()
-	{
-	}
+    public PrepareStudentEnrolmentContextForOptionalCoursesEnrolment() {
+    }
 
-	public Object run(InfoStudent infoStudent, TipoCurso degreeType, String year)
-		throws FenixServiceException
-	{
-		InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    public Object run(InfoStudent infoStudent, TipoCurso degreeType, String year)
+            throws FenixServiceException {
+        InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IStudentCurricularPlanPersistente studentCurricularPlanDAO = sp.getIStudentCurricularPlanPersistente();
+            IStudentCurricularPlanPersistente studentCurricularPlanDAO = sp
+                    .getIStudentCurricularPlanPersistente();
 
-			IStudentCurricularPlan studentCurricularPlan = null;
-			if (infoStudent != null && infoStudent.getNumber() != null)
-			{
-				studentCurricularPlan = studentCurricularPlanDAO.readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(),
-					degreeType);
-			}
+            IStudentCurricularPlan studentCurricularPlan = null;
+            if (infoStudent != null && infoStudent.getNumber() != null) {
+                studentCurricularPlan = studentCurricularPlanDAO
+                        .readActiveByStudentNumberAndDegreeType(infoStudent
+                                .getNumber(), degreeType);
+            }
 
-			if (studentCurricularPlan == null)
-			{
-				throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
-			}
+            if (studentCurricularPlan == null) {
+                throw new FenixServiceException(
+                        "error.student.curriculum.noCurricularPlans");
+            }
 
-			IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
-			IExecutionYear executionYear = executionYearDAO.readExecutionYearByName(year);
+            IPersistentExecutionYear executionYearDAO = sp
+                    .getIPersistentExecutionYear();
+            IExecutionYear executionYear = executionYearDAO
+                    .readExecutionYearByName(year);
 
-			if (isStudentCurricularPlanFromChosenExecutionYear(studentCurricularPlan, executionYear))
-			{
-				IPersistentEnrolment enrolmentDAO = sp.getIPersistentEnrolment();
-				IPersistentCurricularCourse curricularCourseDAO = sp.getIPersistentCurricularCourse();
+            if (isStudentCurricularPlanFromChosenExecutionYear(
+                    studentCurricularPlan, executionYear)) {
+                IPersistentEnrolment enrolmentDAO = sp
+                        .getIPersistentEnrolment();
+                IPersistentCurricularCourse curricularCourseDAO = sp
+                        .getIPersistentCurricularCourse();
 
-				List enrollmentsEnrolled = enrolmentDAO
-					.readEnrolmentsByStudentCurricularPlanAndEnrolmentStateAndCurricularCourseType(studentCurricularPlan,
-						EnrolmentState.ENROLED, CurricularCourseType.OPTIONAL_COURSE_OBJ);
+                List enrollmentsEnrolled = enrolmentDAO
+                        .readEnrolmentsByStudentCurricularPlanAndEnrolmentStateAndCurricularCourseType(
+                                studentCurricularPlan, EnrolmentState.ENROLED,
+                                CurricularCourseType.OPTIONAL_COURSE_OBJ);
 
-				List enrollments = studentCurricularPlan.getEnrolments();
+                List enrollments = studentCurricularPlan.getEnrolments();
 
-				List coursesFromEnrollments = (List) CollectionUtils.collect(enrollments, new Transformer()
-				{
-					public Object transform(Object input)
-					{
-						IEnrollment enrolment = (IEnrollment) input;
-						return enrolment.getCurricularCourse();
-					}
-				});
+                List coursesFromEnrollments = (List) CollectionUtils.collect(
+                        enrollments, new Transformer() {
+                            public Object transform(Object input) {
+                                IEnrollment enrolment = (IEnrollment) input;
+                                return enrolment.getCurricularCourse();
+                            }
+                        });
 
-				List coursesFromStudentCurricularPlan = curricularCourseDAO.readAllByDegreeCurricularPlanAndType(
-					studentCurricularPlan.getDegreeCurricularPlan(), CurricularCourseType.OPTIONAL_COURSE_OBJ);
+                List coursesFromStudentCurricularPlan = curricularCourseDAO
+                        .readAllByDegreeCurricularPlanAndType(
+                                studentCurricularPlan.getDegreeCurricularPlan(),
+                                CurricularCourseType.OPTIONAL_COURSE_OBJ);
 
-				List courses = (List) CollectionUtils.subtract(coursesFromStudentCurricularPlan, coursesFromEnrollments);
+                List courses = (List) CollectionUtils.subtract(
+                        coursesFromStudentCurricularPlan,
+                        coursesFromEnrollments);
 
-				infoStudentEnrolmentContext = buildResult(studentCurricularPlan, enrollmentsEnrolled, courses, executionYear);
-			} else
-			{
-				throw new FenixServiceException("error.student.curriculum.not.from.chosen.execution.year");
-			}
+                infoStudentEnrolmentContext = buildResult(
+                        studentCurricularPlan, enrollmentsEnrolled, courses,
+                        executionYear);
+            } else {
+                throw new FenixServiceException(
+                        "error.student.curriculum.not.from.chosen.execution.year");
+            }
 
-		} catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace();
-			throw new FenixServiceException(e);
-		}
+        } catch (ExcepcaoPersistencia e) {
+            e.printStackTrace();
+            throw new FenixServiceException(e);
+        }
 
-		return infoStudentEnrolmentContext;
-	}
+        return infoStudentEnrolmentContext;
+    }
 
-	/**
-	 * @param studentCurricularPlan
-	 * @param year
-	 * @return true/false
-	 * @throws ExcepcaoPersistencia
-	 */
-	private boolean isStudentCurricularPlanFromChosenExecutionYear(IStudentCurricularPlan studentCurricularPlan,
-		IExecutionYear executionYear) throws ExcepcaoPersistencia
-	{
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
+    /**
+     * @param studentCurricularPlan
+     * @param year
+     * @return true/false
+     * @throws ExcepcaoPersistencia
+     */
+    private boolean isStudentCurricularPlanFromChosenExecutionYear(
+            IStudentCurricularPlan studentCurricularPlan,
+            IExecutionYear executionYear) throws ExcepcaoPersistencia {
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ICursoExecucaoPersistente executionDegreeDAO = sp
+                .getICursoExecucaoPersistente();
 
-		if (executionYear != null)
-		{
-			ICursoExecucao executionDegree = executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(studentCurricularPlan
-				.getDegreeCurricularPlan(), executionYear);
-			return executionDegree != null;
-		} else
-		{
-			return false;
-		}
-	}
+        if (executionYear != null) {
+            ICursoExecucao executionDegree = executionDegreeDAO
+                    .readByDegreeCurricularPlanAndExecutionYear(
+                            studentCurricularPlan.getDegreeCurricularPlan(),
+                            executionYear);
+            return executionDegree != null;
+        }
+        return false;
 
-	/**
-	 * @param studentCurricularPlan
-	 * @param enrollments
-	 * @param courses
-	 * @return InfoStudentEnrolmentContext
-	 */
-	private InfoStudentEnrollmentContext buildResult(IStudentCurricularPlan studentCurricularPlan, List enrollments, List courses,
-		IExecutionYear executionYear)
-	{
-		InfoStudentCurricularPlan infoStudentCurricularPlan = Cloner
-			.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
+    }
 
-		List infoEnrollments = new ArrayList();
-		if (enrollments != null && enrollments.size() > 0)
-		{
-			infoEnrollments = (List) CollectionUtils.collect(enrollments, new Transformer()
-			{
-				public Object transform(Object input)
-				{
-					IEnrollment enrolment = (IEnrollment) input;
-					return Cloner.copyIEnrolment2InfoEnrolment(enrolment);
-				}
-			});
-			Collections.sort(infoEnrollments, new BeanComparator(("infoCurricularCourse.name")));
-		}
+    /**
+     * @param studentCurricularPlan
+     * @param enrollments
+     * @param courses
+     * @return InfoStudentEnrolmentContext
+     */
+    private InfoStudentEnrollmentContext buildResult(
+            IStudentCurricularPlan studentCurricularPlan, List enrollments,
+            List courses, IExecutionYear executionYear) {
+        InfoStudentCurricularPlan infoStudentCurricularPlan = Cloner
+                .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
 
-		List infoCurricularCourses = new ArrayList();
-		if (courses != null && courses.size() > 0)
-		{
-			infoCurricularCourses = (List) CollectionUtils.collect(courses, new Transformer()
-			{
-				public Object transform(Object input)
-				{
-					ICurricularCourse curricularCourse = (ICurricularCourse) input;
-					return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-				}
-			});
-			Collections.sort(infoCurricularCourses, new BeanComparator(("name")));
-		}
+        List infoEnrollments = new ArrayList();
+        if (enrollments != null && enrollments.size() > 0) {
+            infoEnrollments = (List) CollectionUtils.collect(enrollments,
+                    new Transformer() {
+                        public Object transform(Object input) {
+                            IEnrollment enrolment = (IEnrollment) input;
+                            return Cloner
+                                    .copyIEnrolment2InfoEnrolment(enrolment);
+                        }
+                    });
+            Collections.sort(infoEnrollments, new BeanComparator(
+                    ("infoCurricularCourse.name")));
+        }
 
-		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) Cloner.get(executionYear);
-		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-		infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
+        List infoCurricularCourses = new ArrayList();
+        if (courses != null && courses.size() > 0) {
+            infoCurricularCourses = (List) CollectionUtils.collect(courses,
+                    new Transformer() {
+                        public Object transform(Object input) {
+                            ICurricularCourse curricularCourse = (ICurricularCourse) input;
+                            return Cloner
+                                    .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                        }
+                    });
+            Collections.sort(infoCurricularCourses,
+                    new BeanComparator(("name")));
+        }
 
-		InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
-		infoStudentEnrolmentContext.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-		infoStudentEnrolmentContext.setStudentInfoEnrollmentsWithStateEnrolled(infoEnrollments);
-		infoStudentEnrolmentContext.setFinalInfoCurricularCoursesWhereStudentCanBeEnrolled(infoCurricularCourses);
-		infoStudentEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);
+        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) Cloner
+                .get(executionYear);
+        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
+        infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
 
-		return infoStudentEnrolmentContext;
-	}
+        InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
+        infoStudentEnrolmentContext
+                .setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+        infoStudentEnrolmentContext
+                .setStudentInfoEnrollmentsWithStateEnrolled(infoEnrollments);
+        infoStudentEnrolmentContext
+                .setFinalInfoCurricularCoursesWhereStudentCanBeEnrolled(infoCurricularCourses);
+        infoStudentEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);
+
+        return infoStudentEnrolmentContext;
+    }
 }

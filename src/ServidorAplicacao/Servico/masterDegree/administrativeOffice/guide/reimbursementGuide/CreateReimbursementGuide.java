@@ -216,10 +216,10 @@ public class CreateReimbursementGuide implements IService {
         Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue()
                 * guideEntry.getQuantity().intValue());
 
-        if (sum.doubleValue() > guideEntryValue.doubleValue())
+        if (sum.doubleValue() > guideEntryValue.doubleValue()) {
             return false;
-        else
-            return true;
+        }
+        return true;
 
     }
 

@@ -34,7 +34,8 @@ import Util.TipoCurso;
  * @author João Mota
  *  
  */
-public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilter {
+public class EnrollmentAuthorizationFilter extends
+        AuthorizationByManyRolesFilter {
 
     /*
      * (non-Javadoc)
@@ -271,9 +272,9 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
                 arguments, sp);
         if (studentCurricularPlan == null) {
             return false;
-        } else {
-            return studentCurricularPlan.getDegreeCurricularPlan().equals(
-                    coordinator.getExecutionDegree().getCurricularPlan());
         }
+        return studentCurricularPlan.getDegreeCurricularPlan().equals(
+                coordinator.getExecutionDegree().getCurricularPlan());
+
     }
 }

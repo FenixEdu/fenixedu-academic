@@ -46,16 +46,9 @@
 				<bean:message key="label.branch.credits" />:&nbsp;
 			</td>
 			<td>
-			<%--
-				<logic:notEmpty name="creditsInSpecializationArea">
-			--%>
+			
 					<bean:write name="infoStudentEnrolmentContext" property="creditsInSpecializationArea" />
-			<%--
-				</logic:notEmpty>
-				<logic:empty name="creditsInSpecializationArea">
-					0
-				</logic:empty>
-			--%>
+			
 				&nbsp;<bean:message key="label.student.enrollment.from"/>&nbsp;
 				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.specializationCredits" />
 			</td>
@@ -99,15 +92,19 @@
 		</tr>
 	</logic:notPresent>
 	<tr>
-		<td colspan="5">
+		<td class="listClasses-header">
 			<br />
 			<b><bean:message key="message.student.enrolled.curricularCourses" /></b>
 		</td>
+		<td class="listClasses-header">Estado da Inscrição</td>
 	</tr>
 	<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="DataBeans.InfoEnrolment">
 		<tr>
-			<td colspan='5'>
+			<td class="listClasses">
 				<bean:write name="enrollmentElem" property="infoCurricularCourse.name"/>
+			</td>
+			<td class="listClasses">
+			&nbsp;
 			</td>
 		</tr>
 	</logic:iterate>

@@ -111,9 +111,9 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
             if (e.getMessage() == null) {
                 throw new FenixServiceException(
                         "error.tutor.associateManyStudent");
-            } else {
-                throw new FenixServiceException(e.getMessage());
             }
+            throw new FenixServiceException(e.getMessage());
+
         }
 
         //return student's number list that unchained an error

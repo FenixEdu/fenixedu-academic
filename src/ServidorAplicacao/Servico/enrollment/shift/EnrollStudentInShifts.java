@@ -415,10 +415,10 @@ public class EnrollStudentInShifts implements IService {
 
             return (List) CollectionUtils.subtract(shiftIdsToEnroll,
                     shiftIdsToIgnore);
-        } else {
-
-            return shiftIdsToEnroll;
         }
+
+        return shiftIdsToEnroll;
+
     }
 
     /**

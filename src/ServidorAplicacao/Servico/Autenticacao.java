@@ -113,9 +113,9 @@ public class Autenticacao implements IServico {
                                 .next();
                         if (candidateSituation.getValidation().equals(
                                 new State(State.ACTIVE)))
-                                situations
-                                        .add(Cloner
-                                                .copyICandidateSituation2InfoCandidateSituation(candidateSituation));
+                            situations
+                                    .add(Cloner
+                                            .copyICandidateSituation2InfoCandidateSituation(candidateSituation));
                     }
                 }
                 candidateView = new CandidateView(situations);
@@ -127,8 +127,8 @@ public class Autenticacao implements IServico {
 
             filterEmployeeRoleFromTeacher(userView);
             return filterUserView(userView, application);
-        } else
-            throw new ExcepcaoAutenticacao("Autenticacao incorrecta");
+        }
+        throw new ExcepcaoAutenticacao("Autenticacao incorrecta");
     }
 
     /**
@@ -143,9 +143,9 @@ public class Autenticacao implements IServico {
                     InfoRole role = (InfoRole) arg0;
                     if (role.getRoleType().getValue() == RoleType.EMPLOYEE_TYPE) {
                         return false;
-                    } else {
-                        return true;
                     }
+                    return true;
+
                 }
             });
         }
@@ -200,7 +200,8 @@ public class Autenticacao implements IServico {
                 rolesIntranet.remove(manager);
             }
             userView.getRoles().removeAll(rolesIntranet);
-            //XXX:[SIMAS-BARBOSA] remove this lines once the portal grant_owner is working
+            //XXX:[SIMAS-BARBOSA] remove this lines once the portal grant_owner
+            // is working! The role already exists, but the portal is not done yet.
             InfoRole grantOwner = new InfoRole();
             grantOwner.setRoleType(RoleType.GRANT_OWNER);
             userView.getRoles().remove(grantOwner);

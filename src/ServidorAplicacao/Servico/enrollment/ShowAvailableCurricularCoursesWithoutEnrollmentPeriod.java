@@ -61,12 +61,12 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                         throw new FenixServiceException("degree");
                     }
 
-                } else {
-                    throw new ExistingServiceException("studentCurricularPlan");
                 }
-            } else {
-                throw new ExistingServiceException("student");
+                throw new ExistingServiceException("studentCurricularPlan");
+
             }
+            throw new ExistingServiceException("student");
+
         } catch (ExcepcaoPersistencia e) {
 
             throw new FenixServiceException(e);
@@ -93,9 +93,9 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                             return new CurricularCourse2Enroll(
                                     curricularCourse,
                                     CurricularCourseEnrollmentType.TEMPORARY);
-                        } else {
-                            return arg0;
                         }
+                        return arg0;
+
                     }
                 });
 

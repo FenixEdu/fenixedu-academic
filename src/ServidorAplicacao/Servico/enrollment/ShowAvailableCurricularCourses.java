@@ -40,21 +40,19 @@ public class ShowAvailableCurricularCourses extends
                         } catch (IllegalArgumentException e) {
                             throw new FenixServiceException("degree");
                         }
-                    } else {
-                        throw new FenixServiceException("enrolmentPeriod");
                     }
-                } else {
-                    throw new ExistingServiceException("studentCurricularPlan");
+                    throw new FenixServiceException("enrolmentPeriod");
+
                 }
-            } else {
-                throw new ExistingServiceException("student");
+                throw new ExistingServiceException("studentCurricularPlan");
+
             }
+            throw new ExistingServiceException("student");
+
         } catch (ExcepcaoPersistencia e) {
 
             throw new FenixServiceException(e);
         }
     }
-
-
 
 }

@@ -565,9 +565,8 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         if (!infoExecutionDegreeListWithDegreeCode.isEmpty()) {
             return (InfoExecutionDegree) infoExecutionDegreeListWithDegreeCode
                     .get(0);
-        } else {
-            return (InfoExecutionDegree) infoExecutionDegreeList.get(0);
         }
+        return (InfoExecutionDegree) infoExecutionDegreeList.get(0);
 
     }
 

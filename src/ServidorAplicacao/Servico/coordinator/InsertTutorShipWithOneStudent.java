@@ -96,13 +96,13 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip {
 
             result = Boolean.TRUE;
         } catch (Exception e) {
-            e.printStackTrace();
+
             if (e.getMessage() == null) {
                 throw new FenixServiceException(
                         "error.tutor.associateOneStudent");
-            } else {
-                throw new FenixServiceException(e.getMessage());
             }
+            throw new FenixServiceException(e.getMessage());
+
         }
 
         return result;
