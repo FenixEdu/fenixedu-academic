@@ -11,6 +11,7 @@ package ServidorAplicacao.Servico.student;
 import DataBeans.InfoEnrolmentServiceResult;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
+import DataBeans.util.Cloner;
 import Dominio.Frequenta;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
@@ -130,8 +131,10 @@ public class StudentShiftEnrolment implements IServico {
 		EMail email = new EMail("localhost", "sop_fenix@ist.utl.pt");
 		double percentage = 0.80;
 			
-		ITurno shift =
-			sp.getITurnoPersistente().readByNome(infoNewShift.getNome());
+			
+		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoNewShift.getInfoDisciplinaExecucao());
+		ITurno shift = sp.getITurnoPersistente().readByNameAndExecutionCourse(infoNewShift.getNome(), executionCourse);
+			//sp.getITurnoPersistente().readByNome(infoNewShift.getNome());
 
 		if (shift == null) {
 			throw new MessageException(
