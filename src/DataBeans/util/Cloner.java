@@ -14,6 +14,7 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoLesson;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
+import DataBeans.InfoRole;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
@@ -612,6 +613,15 @@ public abstract class Cloner {
 		InfoCountry infoCountry = new InfoCountry();
 		copyObjectProperties(infoCountry, country);
 		return infoCountry;
+	}
+	/**
+	 * @param role
+	 * @return InfoRole
+	 */
+	public static InfoRole copyIRole2InfoRole(IRole role) {
+		InfoRole infoRole = new InfoRole();
+		copyObjectProperties(infoRole, role);
+		return infoRole;
 	}
 
 	public static IBibliographicReference copyInfoBibliographicReference2IBibliographicReference(InfoBibliographicReference infoBibliographicReference) {
