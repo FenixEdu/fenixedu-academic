@@ -25,7 +25,9 @@ import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -85,7 +87,11 @@ public class InsertSectionAction extends FenixAction {
 		GestorServicos manager = GestorServicos.manager();
 		try {
 			manager.executar(userView, "InsertSection", args);
-		} catch (FenixServiceException fenixServiceException) {
+		} 
+		catch (ExistingServiceException e) {
+						   throw new ExistingActionException("Uma secção com esse nome",e);
+					   }
+		catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
 
