@@ -101,4 +101,7 @@ public interface IStudentCurricularPlanPersistente extends IPersistentObject {
 
 	public List readAllByDegreeCurricularPlanAndState(IDegreeCurricularPlan degreeCurricularPlan, StudentCurricularPlanState state)
 		throws ExcepcaoPersistencia;
+		
+	public List readEnrolmentByCurricularCourse(Integer curricularCourseId) throws ExcepcaoPersistencia; 
+
 }

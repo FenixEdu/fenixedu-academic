@@ -31,7 +31,7 @@ public class InfoExecutionCourse extends InfoObject implements Serializable {
 	// A chave do responsavel falta ainda porque ainda nao existe a respeciva ligacao
 	// na base de dados.
 
-	private InfoExecutionPeriod infoExecutionPeriod;
+	protected InfoExecutionPeriod infoExecutionPeriod;
 
 	// The following variable serves the purpose of indicating the
 	// the curricular year in which the execution course is given

@@ -42,6 +42,7 @@
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                 dynamic="true">
                 <form-property name="degreeId" type="java.lang.Integer" />
+                <form-property name="curricularCourseId" type="java.lang.Integer" />
                 <form-property name="degreeCurricularPlanId" type="java.lang.Integer" />
                 <form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="name" type="java.lang.String" />
@@ -70,6 +71,27 @@
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>    
 
+
+		<!--<form-bean name="curricularCourseForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">
+                <form-property name="curricularCourseId" type="java.lang.Integer" />
+                <form-property name="degreeCurricularPlanId" type="java.lang.Integer" />
+				<form-property name="name" type="java.lang.String" />
+				<form-property name="code" type="java.lang.String" />
+				<form-property name="credits" type="java.lang.String" />
+				<form-property name="theoreticalHours" type="java.lang.String" />
+				<form-property name="praticalHours" type="java.lang.String" />
+				<form-property name="theoPratHours" type="java.lang.String" />
+				<form-property name="labHours" type="java.lang.String" />
+				<form-property name="type" type="java.lang.String" />
+				<form-property name="mandatory" type="java.lang.String" />
+				<form-property name="basic" type="java.lang.String" />
+				<form-property name="internalIds" type="java.lang.Integer[]" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>    
+
+-->
 	  <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 
       <!-- Dynamic-FormBean para Day And Shift Context -->
@@ -268,6 +290,31 @@
        <forward name="insertExecutionDegree" path="df.page.insert-execution-degree"/>
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
 	</action>
+	
+	<!-- Action for reading a CurricularCourse -->
+      	
+      <action path="/readCurricularCourse"
+      	      name="curricularCourseForm"
+              input="/readDegreeInput.do"
+              scope="request"
+      	      type="ServidorApresentacao.Action.manager.ReadCurricularCourseAction">
+      	  <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>  
+      	  <forward name="viewCurricularCourse" path="df.page.read-curricularCourse"/> 	      
+      </action>	
+    
+     <!-- Action for editing a CurricularCourse  -->
+	<action
+		path="/editCurricularCourse"
+		name="curricularCourseForm"
+		input="/readDegreeInput.do"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.EditCurricularCourseDA"
+        validate="true">  
+       <forward name="editCurricularCourse" path="df.page.edit-curricular-course"/>
+       <forward name="readDegreeCP" path="/readDegreeCurricularPlan.do"/>      	      
+	</action>
+    
     
       <!--Input actions-->
       <action path="/insertDegreeInput"
