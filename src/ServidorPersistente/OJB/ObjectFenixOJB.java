@@ -167,10 +167,9 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", oid);
-        List objectsToDelete = queryList(classToQuery, criteria);
-        for (int i = 0; i < objectsToDelete.size(); i++) {
-            delete(objectsToDelete.get(i));
-        }
+        Object object = queryObject(classToQuery, criteria);
+        delete(object);
+
     }
 
     public void deleteAll(String oqlQuery) throws ExcepcaoPersistencia {
@@ -473,7 +472,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
             String orderByString, boolean reverseOrder) throws ExcepcaoPersistencia {
 
         QueryByCriteria queryCriteria = new QueryByCriteria(classToQuery, criteria, distinct);
-        if (orderByString != null) {        	
+        if (orderByString != null) {
             queryCriteria.addOrderBy(orderByString, reverseOrder);
         }
 
@@ -654,23 +653,22 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         lockRead(list);
         return list;
     }
-    
-    public List readInterval(Class classToQuery, Criteria criteria, Integer numberOfElementsInSpan,
-    		Integer startIndex,	String orderByString, boolean reverseOrder) throws ExcepcaoPersistencia {
-    	if (numberOfElementsInSpan == null || numberOfElementsInSpan.intValue() == 0) {
-    		throw new IllegalArgumentException("Invalid numberOfElementsInSpan!");
-    	}
-    	
-    	QueryByCriteria queryCriteria = new QueryByCriteria(classToQuery, criteria);
-    	if (orderByString != null) {        	
-    		queryCriteria.addOrderBy(orderByString, reverseOrder);
-    	}
-    	
-    	queryCriteria.setStartAtIndex(startIndex.intValue());
-    	queryCriteria.setEndAtIndex(startIndex.intValue() + numberOfElementsInSpan.intValue());
-    	
 
-    	return queryList(queryCriteria);
+    public List readInterval(Class classToQuery, Criteria criteria, Integer numberOfElementsInSpan,
+            Integer startIndex, String orderByString, boolean reverseOrder) throws ExcepcaoPersistencia {
+        if (numberOfElementsInSpan == null || numberOfElementsInSpan.intValue() == 0) {
+            throw new IllegalArgumentException("Invalid numberOfElementsInSpan!");
+        }
+
+        QueryByCriteria queryCriteria = new QueryByCriteria(classToQuery, criteria);
+        if (orderByString != null) {
+            queryCriteria.addOrderBy(orderByString, reverseOrder);
+        }
+
+        queryCriteria.setStartAtIndex(startIndex.intValue());
+        queryCriteria.setEndAtIndex(startIndex.intValue() + numberOfElementsInSpan.intValue());
+
+        return queryList(queryCriteria);
 
     }
 
@@ -727,7 +725,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
     public int count(Class classToQuery, Criteria criteria) {
         return count(getCurrentPersistenceBroker(), getQuery(classToQuery, criteria));
     }
-    
+
     /**
      * @see ObjectFenixOJB#count(PersistenceBroker, Query)
      */
@@ -778,7 +776,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
     private Query getQuery(Class classToQuery, Criteria criteria) {
         return new QueryByCriteria(classToQuery, criteria);
     }
-    
+
     /**
      * Returns a QueryByCriteria instance with distinct.
      * 
