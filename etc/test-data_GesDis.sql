@@ -30,13 +30,15 @@ INSERT INTO SECTION VALUES (3, 'SubSeccao1dePO',0,4,1,'2003-01-23');
 INSERT INTO SECTION VALUES (4, 'SubSeccao2dePO',1,4,1,'2003-01-25');
 INSERT INTO SECTION VALUES (5, 'SubSubSeccao1dePO',0,4,3,'2003-01-26');
 
+
 #
 # Data for table 'ITEM'
 #
 #---------
 DELETE FROM ITEM;
-INSERT INTO ITEM VALUES (1,'Item1',0,'item1 da seccao1dePO',1,1);
-
+INSERT INTO ITEM VALUES (1,'Item1dePO',0,'item1 da seccao1dePO',1,1);
+INSERT INTO ITEM VALUES (2,'Item1deTFCI',0,'item1 da seccao1deTFCI',1,2);
+INSERT INTO ITEM VALUES (3,'Item2deTFCI',1,'item2 da seccao1deTFCI',0,2);
 #
 # Data for table 'CURRICULUM'
 #
