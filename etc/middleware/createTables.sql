@@ -146,6 +146,7 @@ create table mw_STUDENT_CLASS(
 	CLASS_NAME varchar(20)
 )type=InnoDB;
 
+drop table if exists mw_COURSE;
 CREATE TABLE mw_COURSE (
   courseCode varchar(10) NOT NULL default '',
   courseName varchar(250) default NULL,
