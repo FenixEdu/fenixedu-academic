@@ -17,28 +17,28 @@ import Util.State;
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class ReadGratuityByStudentCurricularPlanID implements IServico {
+public class ReadActiveGratuityByStudentCurricularPlanID implements IServico {
 
-	private static ReadGratuityByStudentCurricularPlanID servico = new ReadGratuityByStudentCurricularPlanID();
+	private static ReadActiveGratuityByStudentCurricularPlanID servico = new ReadActiveGratuityByStudentCurricularPlanID();
 
 	/**
 	 * The singleton access method of this class.
 	 **/
-	public static ReadGratuityByStudentCurricularPlanID getService() {
+	public static ReadActiveGratuityByStudentCurricularPlanID getService() {
 		return servico;
 	}
 
 	/**
 	 * The actor of this class.
 	 **/
-	private ReadGratuityByStudentCurricularPlanID() {
+	private ReadActiveGratuityByStudentCurricularPlanID() {
 	}
 
 	/**
 	 * Returns The Service Name */
 
 	public final String getNome() {
-		return "ReadGratuityByStudentCurricularPlanID";
+		return "ReadActiveGratuityByStudentCurricularPlanID";
 	}
 
 	public InfoGratuity run(Integer studentCurricularPlanID) throws FenixServiceException {

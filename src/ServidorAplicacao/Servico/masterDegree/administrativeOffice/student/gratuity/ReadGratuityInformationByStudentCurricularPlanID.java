@@ -1,9 +1,13 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.student.gratuity;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.InfoGuideEntry;
+import DataBeans.util.Cloner;
 import Dominio.IGuide;
+import Dominio.IGuideEntry;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IServico;
@@ -12,6 +16,8 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.DocumentType;
+import Util.SituationOfGuide;
 
 /**
  * 
@@ -69,13 +75,28 @@ public class ReadGratuityInformationByStudentCurricularPlanID implements IServic
 			throw new NonExistingServiceException();
 		}
 
+		List result = new ArrayList();
 		Iterator guidesIterator = guides.iterator();
 		while(guidesIterator.hasNext()){
 			IGuide guide = (IGuide) guidesIterator.next();
-//			Iterator guideEntryIterator = guide.get
+			if (guide.getActiveSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE)){
+				Iterator guideEntryIterator = guide.getGuideEntries().iterator();
+				while(guideEntryIterator.hasNext()) {
+					IGuideEntry guideEntry = (IGuideEntry) guideEntryIterator.next();
+					if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY_TYPE)){
+						InfoGuideEntry infoGuideEntry = Cloner.copyIGuideEntry2InfoGuideEntry(guideEntry);
+						infoGuideEntry.setInfoGuide(Cloner.copyIGuide2InfoGuide(guide));  
+						result.add(infoGuideEntry);
+						
+					}
+				}
+			}
+		}
+		
+		if (result.size() == 0){
+			throw new NonExistingServiceException();
 		}
 
-
-		return null;
+		return result;
 	}
 }

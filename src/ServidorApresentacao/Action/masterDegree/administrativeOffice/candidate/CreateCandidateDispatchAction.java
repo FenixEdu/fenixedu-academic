@@ -5,12 +5,14 @@
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -124,6 +126,9 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException(e);
 			}
+
+			BeanComparator nameComparator = new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
+			Collections.sort(degreeList, nameComparator);
 
 			session.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
 

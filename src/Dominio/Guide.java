@@ -1,10 +1,12 @@
 package Dominio;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import Util.GuideRequester;
 import Util.PaymentType;
+import Util.State;
 
 /**
  * 
@@ -82,6 +84,20 @@ public class Guide extends DomainObject implements IGuide  {
     result += "]";
     return result;
   }
+
+
+  public IGuideSituation getActiveSituation() {
+	Iterator iterator = this.getGuideSituations().iterator();
+	while(iterator.hasNext()){
+		IGuideSituation guideSituation = (IGuideSituation) iterator.next();
+		if (guideSituation.getState().equals(new State(State.ACTIVE))){
+			return guideSituation; 
+		}
+	}
+	return null;
+
+  }
+
 
 		
 	

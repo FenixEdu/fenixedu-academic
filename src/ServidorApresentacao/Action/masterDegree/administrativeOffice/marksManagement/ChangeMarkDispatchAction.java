@@ -25,8 +25,6 @@ import DataBeans.InfoSiteEnrolmentEvaluation;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoTeacher;
-import DataBeans.util.Cloner;
-import Dominio.IEnrolment;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -127,7 +125,7 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		request.setAttribute("courseID", curricularCourseCode);
 		request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
 		try{
-		studentNumber = Integer.valueOf(getFromRequest("studentNumber", request));
+			studentNumber = Integer.valueOf(getFromRequest("studentNumber", request));
 		}catch (NumberFormatException e){
 			ActionErrors actionErrors = new ActionErrors();
 			actionErrors.add(
@@ -156,6 +154,11 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		if (getFromRequest("showMarks", request) != null){
 			request.setAttribute("showMarks","showMarks");
 		}
+		
+		System.out.println("-------------- " + curricularCourseCode);		
+		System.out.println("------------- " + studentNumber);		
+		System.out.println("------------- " + executionYear);		
+		
 		try {
 			Object args[] = {curricularCourseCode,studentNumber,executionYear };
 			infoSiteEnrolmentEvaluations =
@@ -170,6 +173,9 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 			return mapping.findForward("editStudentNumber");
 			
 		}
+	
+	
+		System.out.println("------------------- " + ((InfoSiteEnrolmentEvaluation) infoSiteEnrolmentEvaluations.get(0)).getEnrolmentEvaluations().size());
 	
 		
 		if (infoSiteEnrolmentEvaluations.size() == 0){
@@ -205,22 +211,18 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		request.setAttribute("curricularCourseCode", curricularCourseCode);
 		request.setAttribute("courseID", curricularCourseCode);
 		request.setAttribute("name",((InfoEnrolmentEvaluation)(((InfoSiteEnrolmentEvaluation) infoSiteEnrolmentEvaluations.get(0)).getEnrolmentEvaluations()).get(0)).getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getInfoPerson().getNome());
-		
-		InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation)((InfoSiteEnrolmentEvaluation) infoSiteEnrolmentEvaluations.get(0)).getEnrolmentEvaluations().get(0);
-		InfoEnrolment infoEnrolment = (InfoEnrolment) infoEnrolmentEvaluation.getInfoEnrolment();		
-		IEnrolment newInfoEnrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEnrolment);
+
+		InfoEnrolment infoEnrolmentTemp = ((InfoEnrolmentEvaluation) ((InfoSiteEnrolmentEvaluation) infoSiteEnrolmentEvaluations.get(0)).getEnrolmentEvaluations().get(0)).getInfoEnrolment();
+
+
 		InfoEnrolmentEvaluation newEnrolmentEvaluation = null;
-
-
 		try {
-			Object args[] = {newInfoEnrolment};
-			 newEnrolmentEvaluation =
-				(InfoEnrolmentEvaluation) serviceManager.executar(userView, "GetEnrolmentGrade", args);
+			Object args[] = {userView, infoEnrolmentTemp.getIdInternal()};
+			newEnrolmentEvaluation = (InfoEnrolmentEvaluation) serviceManager.executar(userView, "ReadInfoEnrolmentEvaluationByEvaluationOID", args);
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e);
 		}
 
-		
 		Locale locale = new Locale("pt", "PT");
 		
 		String examDay = FormataData.getDay(DateFormat.getDateInstance(DateFormat.SHORT, locale).format(newEnrolmentEvaluation.getExamDate()));
@@ -235,12 +237,12 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		studentNumberForm.set("examDateYear" , examYear);
 		int month = Integer.valueOf(examMonth).intValue() - 1;
 		studentNumberForm.set("examDateMonth" ,String.valueOf(month));
-		studentNumberForm.set("examDateDay" , examDay);
+		studentNumberForm.set("examDateDay" , new Integer(Integer.parseInt(examDay)).toString());
 
 		studentNumberForm.set("gradeAvailableDateYear" , gradeAvailableYear);
 		month = Integer.valueOf(gradeAvailableMonth).intValue() - 1;
 		studentNumberForm.set("gradeAvailableDateMonth", String.valueOf(month));
-		studentNumberForm.set("gradeAvailableDateDay" , gradeAvailableDay);
+		studentNumberForm.set("gradeAvailableDateDay" , new Integer(Integer.parseInt(gradeAvailableDay)).toString());
 		studentNumberForm.set("grade", newEnrolmentEvaluation.getGrade());
 		studentNumberForm.set("observation", newEnrolmentEvaluation.getObservation());
 		studentNumberForm.set("enrolmentEvaluationType", String.valueOf(newEnrolmentEvaluation.getEnrolmentEvaluationType().getType()));

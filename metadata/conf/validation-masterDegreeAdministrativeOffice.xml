@@ -453,7 +453,14 @@
 	</form>
   
   
-  
+   <form name="gratuityChangeForm">
+      <field property="situation" depends="required" page="1">
+        <arg0 key="label.masterDegree.administrativeOffice.newGratuitySituation" />
+      </field>
+	</form>
+
+
+
   
   </formset>
 

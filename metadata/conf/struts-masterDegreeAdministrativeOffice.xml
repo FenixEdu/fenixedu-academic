@@ -354,6 +354,20 @@
         	<form-property name="attributedCredits" type="java.lang.String"/>
       </form-bean>
       
+      <!-- Bean to Choose the Course List for Study Plan  -->
+      <form-bean name="gratuityChangeForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+   	        <form-property name="studentCPID" type="java.lang.Integer"/>
+   	        <form-property name="situation" type="java.lang.String"/>
+        	<form-property name="othersRemarks" type="java.lang.String"/>
+      </form-bean>
+
+
+
+
    </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1297,13 +1311,29 @@
 		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
               
-	         <forward name="ShowCurricularPlans" path="/student/showCurricularPlans.jsp"/> 
-	         <forward name="StudentCurricularPlanChosen" path="/gratuityOperations.do?method=getInformation&amp;page=0"/> 
+	         <forward name="ShowGratuityInformation" path="/gratuityChange.do?method=prepareChange&amp;page=0"/> 
       </action>
       
       
-      
-      
+        <action path="/gratuityChange"
+      		  input="/gratuityChange.do?method=getInformation&amp;page=0"
+      	      name="gratuityChangeForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.GratuityOperationsDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+     		 <exception type="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+		                key="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+              
+	         <forward name="ShowGratuityInformationReady" path="/student/showGratuityInformation.jsp"/> 
+	         <forward name="ShowGratuityInformation" path="/gratuityChange.do?method=prepareChange&amp;page=0"/> 	         
+	         <forward name="ChangeSuccess" path="/student/gratuityChangeSuccess.jsp"/> 	         
+	         
+      </action>
       
       
       

@@ -27,6 +27,7 @@ public interface IGuide extends IDomainObject {
   public Integer getVersion();
   public List getGuideSituations();
   public Date getPaymentDate();
+  public IGuideSituation getActiveSituation();
   
 
   public void setNumber(Integer number);

@@ -23,6 +23,10 @@ public class InvalidChangeActionException extends FenixActionException {
 	public InvalidChangeActionException(Object value, Throwable cause) {
 		super(key, value, cause);
 	}	
+
+	public InvalidChangeActionException(String key, Throwable cause) {
+		super(key, cause);
+	}	
 	
 	public InvalidChangeActionException(Object[] values, Throwable cause) {
 		super(key, values, cause);

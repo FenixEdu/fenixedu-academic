@@ -38,12 +38,12 @@ public final class GratuityState extends ValuedEnum {
 		super(name, value);
 	}
 
-	public static GratuityState getEnum(String roleType) {
-	  return (GratuityState) getEnum(GratuityState.class, roleType);
+	public static GratuityState getEnum(String name) {
+	  return (GratuityState) getEnum(GratuityState.class, name);
 	}
  
-	public static GratuityState getEnum(int roleType) {
-	  return (GratuityState) getEnum(GratuityState.class, roleType);
+	public static GratuityState getEnum(int value) {
+	  return (GratuityState) getEnum(GratuityState.class, value);
 	}
  
 	public static Map getEnumMap() {
