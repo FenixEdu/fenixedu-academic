@@ -6,8 +6,8 @@
 
 <div id="logoist">
 	<a href="<%= institutionUrl %>">
-		<img alt="[Logo] Instituto Superior T�écnico" width="234" height="51" border="0"
-				src="<%= request.getContextPath() %>/images/wwwist.gif" />
+		<img alt="[Logo] <bean:message key="institution.name" bundle="GLOBAL_RESOURCES"/>" width="234" height="51" border="0"
+			src="<bean:message key="university.logo.public" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/
 	</a>
 </div>
 <div id="header_links">

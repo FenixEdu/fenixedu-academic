@@ -11,7 +11,7 @@
 		<div id="container">
 			<div id="dotist_id">
 				<img alt="Logo <bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/>"
-						src="<%= request.getContextPath() %>/images/dotist-id.gif"/>
+						src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
 			</div>
 			<div id="txt">
 				<h1>Login</h1>

@@ -12,7 +12,7 @@
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>
 <!-- Header -->
 <div id="header">	
-	<img alt="Logo dot ist" src="<%= request.getContextPath() %>/images/dotist-id.gif" />
+	<img alt="Logo <bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/>" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
     <p><tiles:getAsString name="serviceName" /></p>
 </div>
 <div id="hdr-nav">
