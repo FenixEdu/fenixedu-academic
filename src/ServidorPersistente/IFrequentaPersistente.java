@@ -9,11 +9,13 @@ package ServidorPersistente;
  * @author  tfc130
  */
 import java.util.List;
-import Dominio.IExecutionCourse;
+
 import Dominio.IEnrolment;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+
 public interface IFrequentaPersistente extends IPersistentObject
 {
 	public IFrequenta readByAlunoIdAndDisciplinaExecucaoId(Integer alunoId, Integer disciplinaExecucaoId)
