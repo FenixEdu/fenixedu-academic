@@ -38,8 +38,6 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
-
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
@@ -54,6 +52,51 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 				args);
 
 		List infoExams = infoViewExams.getInfoViewExamsByDayAndShift();
+
+		if (infoExams != null && infoExams.size() == 0)
+			infoExams = null;
+
+		session.setAttribute(SessionConstants.AVAILABLE_ROOM_OCCUPATION, infoViewExams.getAvailableRoomOccupation());
+		session.removeAttribute(SessionConstants.LIST_EXAMSANDINFO);
+		session.setAttribute(SessionConstants.LIST_EXAMSANDINFO, infoExams);
+
+		return mapping.findForward("View Exams");
+	}
+
+	public ActionForward delete(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		HttpSession session = request.getSession(false);
+		IUserView userView = SessionUtils.getUserView(request);
+	
+		List infoExams = (List) session.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
+
+		System.out.println("######### index= " + request.getParameter("indexExam"));
+		Integer indexExam = new Integer(request.getParameter("indexExam"));
+
+		Object args[] = { infoExams.get(indexExam.intValue()) };
+		ServiceUtils.executeService(userView, "DeleteExam",	args);
+		
+
+	// -------------------------------------------------------------------------
+	//    Instead should forward to view... for now... just repeat the code.
+	// -------------------------------------------------------------------------
+
+		Calendar examDateAndTime =
+			(Calendar) session.getAttribute(SessionConstants.EXAM_DATEANDTIME);
+
+		Object args2[] = { examDateAndTime.getTime(), examDateAndTime };
+		InfoViewExam infoViewExams = 
+			(InfoViewExam) ServiceUtils.executeService(
+				userView,
+				"ReadExamsByDayAndBeginning",
+				args2);
+
+		infoExams = infoViewExams.getInfoViewExamsByDayAndShift();
 
 		if (infoExams != null && infoExams.size() == 0)
 			infoExams = null;

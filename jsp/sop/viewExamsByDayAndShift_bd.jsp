@@ -43,7 +43,7 @@
 				manipular
 			</td>
 		</tr>
-		<logic:iterate id="infoViewExam" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
+		<logic:iterate id="infoViewExam" indexId="index" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
 			<tr align="center">
 				<td>
 					<bean:write name="infoViewExam" property="infoExam.infoExecutionCourse.nome"/>
@@ -57,7 +57,10 @@
 					<bean:write name="infoViewExam" property="numberStudentesAttendingCourse"/>
 				</td>
 				<td>
-					link.editar ; link.apagar
+					link.editar ;
+					<html:link page="/viewExamsDayAndShiftForm.do?method=delete&amp;indexExam=<%= index %>">
+						<bean:message key="label.delete"/>
+					</html:link>
 				</td>
 			</tr>
 		</logic:iterate>
