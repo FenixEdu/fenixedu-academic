@@ -858,7 +858,7 @@
     		propertiesFile="${webapp.classes}/OJB.properties"
         	repositoryFile="${webapp.classes}/OJB/repository.xml"
         	ignoreFieldNameCase="false"
-        	useStrictTypeChecking="true"
+        	useStrictTypeChecking="false"
         	verifyclasspath="${runtime.classpath}"
         	useXMLValidation="true"
         	failonerror="true"
