@@ -113,7 +113,7 @@
 	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
 	    	<include name="**/**/slide.properties"/>
 		  <replacefilter 
-		    token="@validation.doctype@" property="validation.doctype"/>
+		    token="&lt;!-- @validation.doctype@ -->" property="validation.doctype"/>
 		  <replacefilter 
 		    token="@login.page@" 
 		    property="login.page"/>
@@ -198,7 +198,7 @@
 		  <replacefilter 
 		    token="@application@" 
 		    property="application"/>
-		    <replacefilter 
+<!--		    <replacefilter 
 		    token="@db.slide.driver@" 
 		    property="db.slide.driver"/>
 		    <replacefilter 
@@ -212,7 +212,7 @@
 		    property="db.slide.pass"/>
 		    <replacefilter 
 		    token="@slide.config@" 
-		    property="slide.config"/>
+		    property="slide.config"/> -->
 		</replace>
 		
 <!--		<antcall target="validate-xml"/>-->
@@ -762,7 +762,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
     
     <target name="tomcat-stop"
             description="Stops tomcat">
-      <parallel>
+<!--      <parallel>
 	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.sh"
 	  	      os="Linux, Unix">
 		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
@@ -775,7 +775,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
 		  <arg value="stop"/>
 	  	</exec>
-     </parallel>
+     </parallel>-->
     </target>
 
 <!--    <target name="tomcat-start"
