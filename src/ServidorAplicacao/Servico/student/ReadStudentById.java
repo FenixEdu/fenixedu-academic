@@ -5,7 +5,7 @@
  */
 package ServidorAplicacao.Servico.student;
 import DataBeans.InfoStudent;
-import DataBeans.util.Cloner;
+import DataBeans.InfoStudentWithInfoPerson;
 import Dominio.IStudent;
 import Dominio.Student;
 import ServidorAplicacao.IServico;
@@ -51,7 +51,9 @@ public class ReadStudentById implements IServico
 			IStudent student= (IStudent) sp.getIPersistentStudent().readByOID(Student.class, id);
 			if (student != null)
 			{
-				infoStudent= Cloner.copyIStudent2InfoStudent(student);
+			    //CLONER
+			    //infoStudent= Cloner.copyIStudent2InfoStudent(student);
+			    infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
 			}
 		}
 		catch (ExcepcaoPersistencia ex)

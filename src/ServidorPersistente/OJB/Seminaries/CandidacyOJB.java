@@ -109,31 +109,31 @@ public class CandidacyOJB extends ObjectFenixOJB implements IPersistentSeminaryC
         {
             boolean case1 = true, case2 = true, case3 = true, case4 = true, case5 = true;
             ICandidacy candidacy = (ICandidacy) iterator.next();
-            if (case1Id.intValue() != -1)
+            if (case1Id.intValue() != -1 && candidacy.getCaseStudyChoices().size() > 0)
                 case1 =
                     ((ICaseStudyChoice) candidacy.getCaseStudyChoices().get(0))
                         .getCaseStudyIdInternal()
                         .intValue()
                         == case1Id.intValue();
-            if (case2Id.intValue() != -1)
+            if (case2Id.intValue() != -1 && candidacy.getCaseStudyChoices().size() > 1)
                 case2 =
                     ((ICaseStudyChoice) candidacy.getCaseStudyChoices().get(1))
                         .getCaseStudyIdInternal()
                         .intValue()
                         == case2Id.intValue();
-            if (case3Id.intValue() != -1)
+            if (case3Id.intValue() != -1 && candidacy.getCaseStudyChoices().size() > 2)
                 case3 =
                     ((ICaseStudyChoice) candidacy.getCaseStudyChoices().get(2))
                         .getCaseStudyIdInternal()
                         .intValue()
                         == case3Id.intValue();
-            if (case4Id.intValue() != -1)
+            if (case4Id.intValue() != -1 && candidacy.getCaseStudyChoices().size() > 3)
                 case4 =
                     ((ICaseStudyChoice) candidacy.getCaseStudyChoices().get(3))
                         .getCaseStudyIdInternal()
                         .intValue()
                         == case4Id.intValue();
-            if (case5Id.intValue() != -1)
+            if (case5Id.intValue() != -1 && candidacy.getCaseStudyChoices().size() > 4)
                 case5 =
                     ((ICaseStudyChoice) candidacy.getCaseStudyChoices().get(4))
                         .getCaseStudyIdInternal()

@@ -7,6 +7,7 @@ package DataBeans.Seminaries;
 import java.util.List;
 
 import DataBeans.InfoObject;
+import Dominio.Seminaries.ICandidacy;
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *
@@ -167,4 +168,26 @@ public class InfoCandidacy extends InfoObject
 	{
 		approved = boolean1;
 	}
+	
+    public void copyFromDomain(ICandidacy candidacy) {
+        super.copyFromDomain(candidacy);
+        if (candidacy != null) {
+        	setApproved(candidacy.getApproved());
+        	setCurricularCourseIdInternal(candidacy.getCurricularCourseIdInternal());
+        	setModalityIdInternal(candidacy.getModalityIdInternal());
+        	setMotivation(candidacy.getMotivation());
+        	setSeminaryIdInternal(candidacy.getSeminaryIdInternal());
+        	setStudentIdInternal(candidacy.getStudentIdInternal());
+        	setThemeIdInternal(candidacy.getThemeIdInternal());
+        }
+    }
+
+    public static InfoCandidacy newInfoFromDomain(ICandidacy candidacy) {
+    	InfoCandidacy infoCandidacy = null;
+        if (candidacy != null) {
+        	infoCandidacy = new InfoCandidacy();
+        	infoCandidacy.copyFromDomain(candidacy);
+        }
+        return infoCandidacy;
+    }
 }

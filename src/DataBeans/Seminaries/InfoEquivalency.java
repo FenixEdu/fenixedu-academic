@@ -9,6 +9,7 @@ import java.util.List;
 
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoObject;
+import Dominio.Seminaries.ICourseEquivalency;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -188,5 +189,29 @@ public class InfoEquivalency extends InfoObject
 	{
 		hasTheme = boolean1;
 	}
+
+    public void copyFromDomain(ICourseEquivalency courseEquivalency) {
+        super.copyFromDomain(courseEquivalency);
+        if (courseEquivalency != null) {
+        	setCurricularCourseIdInternal(courseEquivalency.getCurricularCourseIdInternal());
+        	setModalityIdInternal(courseEquivalency.getModalityIdInternal());
+        	setSeminaryIdInternal(courseEquivalency.getSeminaryIdInternal());
+        	
+        	if(courseEquivalency.getSeminary() != null) {
+        		setSeminaryName(courseEquivalency.getSeminary().getName());
+        		setHasTheme(courseEquivalency.getSeminary().getHasTheme());
+        		setHasCaseStudy(courseEquivalency.getSeminary().getHasCaseStudy());
+        	}
+        }
+    }
+
+    public static InfoEquivalency newInfoFromDomain(ICourseEquivalency courseEquivalency) {
+    	InfoEquivalency infoEquivalency = null;
+        if (courseEquivalency != null) {
+        	infoEquivalency = new InfoEquivalency();
+        	infoEquivalency.copyFromDomain(courseEquivalency);
+        }
+        return infoEquivalency;
+    }
 
 }

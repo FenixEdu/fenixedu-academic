@@ -6,8 +6,8 @@
 package ServidorAplicacao.Servico.scientificCouncil;
 
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularCourseWithInfoDegree;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import ServidorAplicacao.IServico;
@@ -58,8 +58,12 @@ public class ReadCurricularCourseByOIdService implements IServico{
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 				IPersistentCurricularCourse persistentCurricularCourse= sp.getIPersistentCurricularCourse();                
 				ICurricularCourse curricularCourse = new CurricularCourse(curricularCourseId);
-				curricularCourse= (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse,false);                
-				InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+				curricularCourse= (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse,false); 
+				
+				//CLONER
+				//InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+				InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
+				
 				SiteView siteView = new SiteView(infoCurricularCourse);
 				
 				return siteView;

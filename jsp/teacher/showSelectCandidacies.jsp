@@ -81,6 +81,7 @@
 								<bean:write name="candidacy" property="infoClassification.completedCourses"/>
 							</td>
 							<td class="listClasses">
+								&nbsp;
 								<a href=mailto:<%=candidacy.getStudent().getInfoPerson().getEmail()%>>
 									<bean:write name="candidacy" property="student.infoPerson.email"/>
 								</a>

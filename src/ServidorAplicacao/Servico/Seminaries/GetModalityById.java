@@ -6,7 +6,6 @@
 package ServidorAplicacao.Servico.Seminaries;
 
 import DataBeans.Seminaries.InfoModality;
-import DataBeans.util.Cloner;
 import Dominio.Seminaries.Modality;
 import ServidorAplicacao.IServico;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
@@ -52,7 +51,11 @@ public class GetModalityById implements IServico
                 ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();
                 IPersistentSeminaryCaseStudy persistentCaseStudy= persistenceSupport.getIPersistentSeminaryCaseStudy();
                 Modality modality = (Modality) persistentCaseStudy.readByOID(Modality.class,id);
-                infoModality = Cloner.copyIModality2InfoModality(modality);
+                
+                //CLONER
+                //infoModality = Cloner.copyIModality2InfoModality(modality);
+                infoModality = InfoModality.newInfoFromDomain(modality);
+                
             }
             catch (ExcepcaoPersistencia ex)
             {

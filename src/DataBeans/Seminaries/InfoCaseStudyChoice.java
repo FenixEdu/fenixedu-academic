@@ -5,7 +5,8 @@
  */
 package DataBeans.Seminaries;
 
-import DataBeans.DataTranferObject;
+import DataBeans.InfoObject;
+import Dominio.Seminaries.ICaseStudyChoice;
 
 
 /**
@@ -15,7 +16,7 @@ import DataBeans.DataTranferObject;
  * Created at 5/Ago/2003, 17:12:20
  * 
  */
-public class InfoCaseStudyChoice extends DataTranferObject
+public class InfoCaseStudyChoice extends /*DataTranferObject*/ InfoObject
 {
     private Integer order;
     
@@ -68,4 +69,22 @@ public class InfoCaseStudyChoice extends DataTranferObject
 	{
 		order= integer;
 	}
+
+    public void copyFromDomain(ICaseStudyChoice caseStudyChoice) {
+        super.copyFromDomain(caseStudyChoice);
+        if (caseStudyChoice != null) {
+        	setCandidacyIdInternal(caseStudyChoice.getCandidacyIdInternal());
+        	setCaseStudyIdInternal(caseStudyChoice.getCaseStudyIdInternal());
+        	setOrder(caseStudyChoice.getOrder());
+        }
+    }
+
+    public static InfoCaseStudyChoice newInfoFromDomain(ICaseStudyChoice caseStudyChoice) {
+    	InfoCaseStudyChoice infoCaseStudyChoice = null;
+        if (caseStudyChoice != null) {
+        	infoCaseStudyChoice = new InfoCaseStudyChoice();
+        	infoCaseStudyChoice.copyFromDomain(caseStudyChoice);
+        }
+        return infoCaseStudyChoice;
+    }
 }

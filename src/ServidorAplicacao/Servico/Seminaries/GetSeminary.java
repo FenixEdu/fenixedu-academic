@@ -5,7 +5,7 @@
  */
 package ServidorAplicacao.Servico.Seminaries;
 import DataBeans.Seminaries.InfoSeminary;
-import DataBeans.util.Cloner;
+import DataBeans.Seminaries.InfoSeminaryWithEquivalenciesWithAll;
 import Dominio.Seminaries.ISeminary;
 import Dominio.Seminaries.Seminary;
 import ServidorAplicacao.IServico;
@@ -54,7 +54,10 @@ public class GetSeminary implements IServico
             seminary.setIdInternal(seminaryID);
 			seminary = (ISeminary) persistentSeminary.readByOId(seminary,false);
             if (seminary != null)
-			 infoSeminary= Cloner.copyISeminary2InfoSeminary(seminary);
+
+                //CLONER
+                //infoSeminary= Cloner.copyISeminary2InfoSeminary(seminary);
+            	infoSeminary = InfoSeminaryWithEquivalenciesWithAll.newInfoFromDomain(seminary);
 		}
 		catch (ExcepcaoPersistencia ex)
 		{

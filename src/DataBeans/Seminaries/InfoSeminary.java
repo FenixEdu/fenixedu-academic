@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import DataBeans.InfoObject;
+import Dominio.Seminaries.ISeminary;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -210,5 +211,29 @@ public class InfoSeminary extends InfoObject
 	{
 		hasThemes = boolean1;
 	}
+	
+    public void copyFromDomain(ISeminary seminary) {
+        super.copyFromDomain(seminary);
+        if (seminary != null) {
+        	setAllowedCandidaciesPerStudent(seminary.getAllowedCandidaciesPerStudent());
+        	setDescription(seminary.getDescription());
+        	setEnrollmentBeginDate(seminary.getEnrollmentBeginDate());
+        	setEnrollmentBeginTime(seminary.getEnrollmentBeginTime());
+        	setEnrollmentEndDate(seminary.getEnrollmentEndDate());
+        	setEnrollmentEndTime(seminary.getEnrollmentEndTime());
+        	setHasCaseStudy(seminary.getHasCaseStudy());
+        	setHasThemes(seminary.getHasTheme());
+        	setName(seminary.getName());
+        }
+    }
+
+    public static InfoSeminary newInfoFromDomain(ISeminary seminary) {
+    	InfoSeminary infoSeminary = null;
+        if (seminary != null) {
+        	infoSeminary = new InfoSeminary();
+        	infoSeminary.copyFromDomain(seminary);
+        }
+        return infoSeminary;
+    }
 
 }

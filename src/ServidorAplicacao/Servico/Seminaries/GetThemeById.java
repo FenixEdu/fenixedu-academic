@@ -5,7 +5,6 @@
  */
 package ServidorAplicacao.Servico.Seminaries;
 import DataBeans.Seminaries.InfoTheme;
-import DataBeans.util.Cloner;
 import Dominio.Seminaries.ITheme;
 import Dominio.Seminaries.Theme;
 import ServidorAplicacao.IServico;
@@ -53,7 +52,10 @@ public class GetThemeById implements IServico
 				ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();
 				IPersistentSeminaryTheme persistentTheme= persistenceSupport.getIPersistentSeminaryTheme();
 				ITheme theme= (ITheme) persistentTheme.readByOID(Theme.class, themeID);
-				infoTheme= Cloner.copyITheme2InfoTheme(theme);
+				
+				//CLONER
+				//infoTheme= Cloner.copyITheme2InfoTheme(theme);
+				infoTheme = InfoTheme.newInfoFromDomain(theme);
 			}
 			catch (ExcepcaoPersistencia ex)
 			{

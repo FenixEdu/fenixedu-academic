@@ -197,12 +197,6 @@ public class DownloadCandidaciesTable extends FenixAction
                         userView,
                         "student.ReadStudentById",
                         argsReadStudent);
-                Object[] argsReadCurricularPlan = { student.getNumber(), student.getDegreeType()};
-                /*studentCurricularPlan =
-                    (InfoStudentCurricularPlan)*/ ServiceManagerServiceFactory.executeService(
-                        userView,
-                        "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-                        argsReadCurricularPlan);
                 curricularCourse =
                     (InfoCurricularCourse) ((SiteView) ServiceManagerServiceFactory
                         .executeService(

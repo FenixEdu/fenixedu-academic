@@ -7,8 +7,9 @@ package ServidorAplicacao.Servico.Seminaries;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import DataBeans.Seminaries.InfoCandidacy;
-import DataBeans.util.Cloner;
+import DataBeans.Seminaries.InfoCandidacyWithCaseStudyChoices;
 import Dominio.Seminaries.ICandidacy;
 import ServidorAplicacao.IServico;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
@@ -80,7 +81,11 @@ public class ReadCandidacies implements IServico
 			for (Iterator iterator= candidacies.iterator(); iterator.hasNext();)
 			{
 				ICandidacy candidacy= (ICandidacy) iterator.next();
-				InfoCandidacy infoCandidacy= Cloner.copyICandicacy2InfoCandidacy(candidacy);
+				
+				//CLONER
+				//InfoCandidacy infoCandidacy= Cloner.copyICandicacy2InfoCandidacy(candidacy);
+				InfoCandidacy infoCandidacy = InfoCandidacyWithCaseStudyChoices.newInfoFromDomain(candidacy);
+				
 				infoCandidacies.add(infoCandidacy);
 			}
 		}

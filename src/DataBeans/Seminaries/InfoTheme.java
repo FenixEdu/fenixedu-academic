@@ -6,6 +6,7 @@
 package DataBeans.Seminaries;
 
 import DataBeans.InfoObject;
+import Dominio.Seminaries.ITheme;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -82,5 +83,24 @@ public class InfoTheme extends InfoObject
         retorno += ",Short Name=" + this.getShortName() + "]";
         return retorno;
     }
+
+	public void copyFromDomain(ITheme theme) {
+		super.copyFromDomain(theme);
+		if(theme!=null) {
+			setDescription(theme.getDescription());
+			setName(theme.getName());
+			setShortName(theme.getShortName());
+		}
+	}
+	
+	public static InfoTheme newInfoFromDomain(ITheme theme) {
+		InfoTheme infoTheme = null;
+		
+		if(theme != null) {
+			infoTheme = new InfoTheme();
+			infoTheme.copyFromDomain(theme);
+		}
+		return infoTheme;
+	}
 
 }

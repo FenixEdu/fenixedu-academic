@@ -11,14 +11,14 @@
 		<logic:present name="cases">
 			<logic:present name="modalities">
 				<logic:present name="cases">
-						<h2>
-							<bean:message key="label.candicaciesGrid.Title"/>
-						</h2>
-						<h3>
-							<bean:message key="message.candidaciesGridHints"/>
-						</h3>
+						<h2><bean:message key="label.candicaciesGrid.Title"/></h2>
 						<html:form action="/showCandidacies.do" method="get">
 							<table>
+								<tr>
+									<td colspan="2" class="infoop">
+										<bean:message key="message.candidaciesGridHints"/>
+									</td>
+								</tr>
 								<tr>
 									<td>
 										<bean:message key="label.seminary.candidaciesGrid"/>
@@ -193,9 +193,9 @@
 									</td>
 								</tr>
 								<tr>
-									<td>
-										<html:submit style="width:50%" styleClass="button" value="OK" property="submition"/>
-										<html:reset style="width:50%" value="Limpar"/>
+									<td colspan="2">
+										<html:submit styleClass="button" value="&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;" property="submition"/>
+										<html:reset styleClass="button" value="Limpar"/>
 									</td>
 								</tr>
 								<tr>
@@ -326,6 +326,7 @@
 										</logic:notEqual>
 									</td>
 									<td class="listClasses">
+										&nbsp;
 										<a href=mailto:<%=candidacy.getStudent().getInfoPerson().getEmail()%>>
 											<bean:write name="candidacy" property="student.infoPerson.email"/>
 										</a>
@@ -376,6 +377,7 @@
 										</logic:empty>
 									</td>
 									<td class="listClasses">
+										&nbsp;
 										<%
                 
 											String motivationDigest = new String();

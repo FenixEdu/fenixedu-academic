@@ -99,11 +99,6 @@ public class SelectCandidacies extends FenixDispatchAction
                         "student.ReadStudentById",
                         argsReadStudent);
                 Object[] argsReadCurricularPlan = { student.getNumber(), student.getDegreeType()};
-                /*studentCurricularPlan =
-                    (InfoStudentCurricularPlan)*/ ServiceManagerServiceFactory.executeService(
-                        userView,
-                        "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-                        argsReadCurricularPlan);
                 //
                 //
                 //

@@ -6,6 +6,7 @@
 package DataBeans.Seminaries;
 
 import DataBeans.InfoObject;
+import Dominio.Seminaries.IModality;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -55,4 +56,22 @@ public class InfoModality extends InfoObject
 		name= string;
 	}
 
+	public void copyFromDomain(IModality modality) {
+		super.copyFromDomain(modality);
+		if(modality!=null) {
+			setDescription(modality.getDescription());
+			setName(modality.getName());
+		}
+	}
+	
+	public static InfoModality newInfoFromDomain(IModality modality) {
+		InfoModality infoModality = null;
+		
+		if(modality != null) {
+			infoModality = new InfoModality();
+			infoModality.copyFromDomain(modality);
+		}
+		return infoModality;
+	}
+	
 }

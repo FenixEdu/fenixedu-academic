@@ -8,6 +8,7 @@ package DataBeans.Seminaries;
 import java.util.List;
 
 import DataBeans.InfoObject;
+import Dominio.Seminaries.ICaseStudy;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -116,5 +117,26 @@ public class InfoCaseStudy extends InfoObject
         result+="Code=" + this.getCode() + ";";
         result+="Description=" + this.getDescription() + "]";        
         return result;
+    }
+    
+    public void copyFromDomain(ICaseStudy caseStudy) {
+        super.copyFromDomain(caseStudy);
+        if (caseStudy != null) {
+        	setCode(caseStudy.getCode());
+        	setDescription(caseStudy.getDescription());
+        	setName(caseStudy.getName());
+        	if(caseStudy.getSeminaryTheme() != null) {
+        	    setThemeName(caseStudy.getSeminaryTheme().getName());
+        	}
+        }
+    }
+
+    public static InfoCaseStudy newInfoFromDomain(ICaseStudy caseStudy) {
+    	InfoCaseStudy infoCaseStudy = null;
+        if (caseStudy != null) {
+        	infoCaseStudy = new InfoCaseStudy();
+        	infoCaseStudy.copyFromDomain(caseStudy);
+        }
+        return infoCaseStudy;
     }
 }

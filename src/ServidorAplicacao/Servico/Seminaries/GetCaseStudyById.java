@@ -5,7 +5,6 @@
  */
 package ServidorAplicacao.Servico.Seminaries;
 import DataBeans.Seminaries.InfoCaseStudy;
-import DataBeans.util.Cloner;
 import Dominio.Seminaries.CaseStudy;
 import ServidorAplicacao.IServico;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
@@ -50,7 +49,9 @@ public class GetCaseStudyById implements IServico
 			ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();
 			IPersistentSeminaryCaseStudy persistentCaseStudy= persistenceSupport.getIPersistentSeminaryCaseStudy();
             CaseStudy caseStudy = (CaseStudy) persistentCaseStudy.readByOID(CaseStudy.class,id);
-            infoCaseStudy = Cloner.copyICaseStudy2InfoCaseStudy(caseStudy);
+            //CLONER
+            //infoCaseStudy = Cloner.copyICaseStudy2InfoCaseStudy(caseStudy);
+            infoCaseStudy=InfoCaseStudy.newInfoFromDomain(caseStudy);
 		}
 		catch (ExcepcaoPersistencia ex)
 		{
