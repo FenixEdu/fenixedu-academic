@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
@@ -14,10 +15,11 @@ import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -25,28 +27,12 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author jpvl
  */
-public class ReadEmptyRoomsService implements IServico {
-	private static ReadEmptyRoomsService serviceInstance =
-		new ReadEmptyRoomsService();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadEmptyRoomsService getService() {
-		return serviceInstance;
+public class ReadEmptyRoomsService implements IService {
+	
+	public ReadEmptyRoomsService() {
 	}
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadEmptyRoomsService() {
-	}
-
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ReadEmptyRoomsService";
-	}
+	
 
 	public Object run(
 		InfoRoom infoRoom,
@@ -97,10 +83,11 @@ public class ReadEmptyRoomsService implements IServico {
 					new RoomLessonPredicate());
 
 			IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
+            
 			IExecutionPeriod executionPeriod =
 				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
 					infoExecutionPeriod);
-
+			
 			//List lessonList = lessonDAO.readLessonsInPeriod(lesson);
 			List lessonList =
 				lessonDAO.readLessonsInBroadPeriodInAnyRoom(lesson,executionPeriod);
@@ -149,8 +136,6 @@ public class ReadEmptyRoomsService implements IServico {
 	}
 
 	/**
-	 * To change the template for this generated type comment go to
-	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
 	 */
 	public class InvalidTimeInterval extends FenixServiceException {
 

@@ -31,7 +31,7 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
 	private CurricularCourseType type;
 	private CurricularCourseExecutionScope curricularCourseExecutionScope;
 	private Boolean mandatory;
-	private InfoUniversity university;
+	private InfoUniversity infoUniversity;
 	private Boolean basic;
 	
 	private String chosen;
@@ -371,14 +371,14 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
         }
         return infoCurricularCourseScope;
     }
-    public InfoUniversity getUniversity()
+    public InfoUniversity getInfoUniversity()
     {
-        return university;
+        return infoUniversity;
     }
 
-    public void setUniversity(InfoUniversity university)
+    public void setInfoUniversity(InfoUniversity university)
     {
-        this.university = university;
+        this.infoUniversity = university;
     }
 
     /* (non-Javadoc)

@@ -1982,7 +1982,7 @@ public abstract class Cloner
 
         ICurricularCourse curricularCourse = new CurricularCourse();
         IUniversity university = new University();
-        university = Cloner.copyInfoUniversity2IUniversity(infoCurricularCourse.getUniversity());
+        university = Cloner.copyInfoUniversity2IUniversity(infoCurricularCourse.getInfoUniversity());
         IDegreeCurricularPlan planoCurricularCurso =
             copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
                 infoCurricularCourse.getInfoDegreeCurricularPlan());
@@ -2027,7 +2027,7 @@ public abstract class Cloner
         }
 
         infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-        infoCurricularCourse.setUniversity(infoUniversity);
+        infoCurricularCourse.setInfoUniversity(infoUniversity);
         return infoCurricularCourse;
     }
 
