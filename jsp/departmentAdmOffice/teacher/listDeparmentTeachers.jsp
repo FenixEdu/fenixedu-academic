@@ -25,7 +25,7 @@
 					<bean:message key="label.departmentTeachersList.teacherName" />
 				</html:link>
 			</td>
-			<td class="listClasses-header" style="text-align:left">
+			<td class="listClasses-header">
 				<html:link href="javascript:void" onclick="document.forms[0].sortBy.value='infoCategory.shortName';document.forms[0].submit();return true;">
 					<bean:message key="label.departmentTeachersList.teacherCategory" />
 				</html:link>
@@ -43,9 +43,9 @@
 				<td class="listClasses" style="text-align:left">
 					<bean:write name="infoTeacher" property="infoPerson.nome"/>			
 				</td>
-				<td class="listClasses" style="text-align:left">
+				<td class="listClasses">
 					<logic:present name="infoTeacher" property="infoCategory">
-						<bean:write name="infoTeacher" property="infoCategory.shortName"/>			
+						<bean:write name="infoTeacher" property="infoCategory.code"/>			
 					</logic:present>
 					<logic:notPresent name="infoTeacher" property="infoCategory">
 						--
