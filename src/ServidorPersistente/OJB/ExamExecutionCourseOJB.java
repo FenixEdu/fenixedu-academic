@@ -33,14 +33,14 @@ public class ExamExecutionCourseOJB
 			IExamExecutionCourse examExecutionCourse = null;
 
 			String oqlQuery = "select examexecutioncourse from " + ExamExecutionCourse.class.getName();
-			oqlQuery += " where exam.day = $1";
-			oqlQuery += " and exam.season = $2";
-			oqlQuery += " and executionCourse.sigla = $3";
-			oqlQuery += " and executionCourse.executionPeriod.name = $4";
-			oqlQuery += " and executionCourse.executionPeriod.executionYear.year = $5";
+			//oqlQuery += " where exam.day = $1";
+			oqlQuery += " where exam.season = $1";
+			oqlQuery += " and executionCourse.sigla = $2";
+			oqlQuery += " and executionCourse.executionPeriod.name = $3";
+			oqlQuery += " and executionCourse.executionPeriod.executionYear.year = $4";
 
 			query.create(oqlQuery);
-			query.bind(exam.getDay());
+			//query.bind(exam.getDay());
 			query.bind(exam.getSeason());
 			query.bind(executionCourse.getSigla());
 			query.bind(executionCourse.getExecutionPeriod().getName());
