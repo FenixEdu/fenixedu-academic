@@ -8331,7 +8331,7 @@
 			<chain name="ExecutionPeriodsEnrollmentFenix"/>
 		</filterChains>
 	</service>
-	<service>
+	<!--<service>
 		<name>ReadCostCenterByNumber</name>
 		<implementationClass> 
             ServidorAplicacao.Servico.grant.contract.ReadCostCenterByNumber
@@ -8351,5 +8351,5 @@
 		<filterChains>
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
-	</service>
+	</service>-->
 </serviceDefinitions>
