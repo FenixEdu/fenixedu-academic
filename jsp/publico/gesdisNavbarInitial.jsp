@@ -18,9 +18,11 @@
 <div id="nav">
    <h3>Navega&ccedil;&atilde;o Local</h3>	
 <ul>	
-<li><html:link  page="/accessAnnouncements.do">
-	<bean:message key="link.announcements"/>
-</html:link></li>
+<li>
+	<html:link page="<%= "/accessAnnouncements.do" + "?executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionYear=" + pageContext.findAttribute("executionYearYear") %>">
+		<bean:message key="link.announcements"/>
+	</html:link>
+</li>
 <li> <a href="/" onclick="houdini('seccao');return false;">Informa&ccedil;&atilde;o Curricular</a></li>
 </ul>
  <dl id="seccao" style="display: none;">
