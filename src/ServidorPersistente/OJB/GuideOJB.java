@@ -56,26 +56,26 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 			throw new ExistingPersistentException();
 	}
 
-	public List readByNumberAndYear(Integer number, Integer year) throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + Guide.class.getName()
-			                + " where number = $1"
-			                + " and year = $2"
-			                + " order by version asc ";
-			query.create(oqlQuery);
-
-			query.bind(number);
-			query.bind(year);
-
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0)
-				return result;
-			return null;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+//	public List readByNumberAndYear(Integer number, Integer year) throws ExcepcaoPersistencia {
+//		try {
+//			String oqlQuery = "select all from " + Guide.class.getName()
+//			                + " where number = $1"
+//			                + " and year = $2"
+//			                + " order by version asc ";
+//			query.create(oqlQuery);
+//
+//			query.bind(number);
+//			query.bind(year);
+//
+//			List result = (List) query.execute();
+//			lockRead(result);
+//			if (result.size() != 0)
+//				return result;
+//			return null;
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
+//	}
 
 	public Integer generateGuideNumber(Integer year)  throws ExcepcaoPersistencia {
 		try {
@@ -210,4 +210,15 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 //		
 //	}
 
+	public List readByNumberAndYear(Integer number, Integer year) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+
+		criteria.addEqualTo("number", number);
+		criteria.addEqualTo("year", year);
+		criteria.addOrderBy("version", true);
+
+		List result = queryList(Guide.class, criteria);
+
+		return result;
+	}
 }
