@@ -51,8 +51,8 @@ public class ReadTeacherProfessorshipsAction extends Action
         List professorshipList =
             (List) ServiceUtils.executeService(
                     userView,
-                    "ReadProfessorshipsByTeacherOID",
-                    new Object[] { teacherIdInternal });
+                    "ReadProfessorshipsByTeacherAndExecutionPeriodOIDs",
+                    new Object[] { teacherIdInternal, null });
         request.setAttribute("infoProfessorshipList", professorshipList);
         return mapping.findForward("list-professorships");
     }
