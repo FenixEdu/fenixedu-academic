@@ -485,13 +485,31 @@
 		<fk-pointing-to-this-class column="KEY_EXAM"/>
 		<fk-pointing-to-element-class column="KEY_STUDENT"/>
 	</collection-descriptor> 
-   </class-descriptor>
+</class-descriptor>
+
+<class-descriptor class="Dominio.ExamStudentRoom"  table="EXAM_STUDENT_ROOM">
+      <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" 
+      					autoincrement="true"/>
+      <field-descriptor name="keyExam" column="KEY_EXAM"  jdbc-type="INTEGER"/>      
+      <field-descriptor name="keyStudent" column="KEY_STUDENT"  jdbc-type="INTEGER"/>      
+      <field-descriptor name="keyRoom" column="KEY_ROOM"  jdbc-type="INTEGER"/>
+      <reference-descriptor name="exam" class-ref="Dominio.Exam" proxy="false">
+         <foreignkey field-ref="keyExam"/>
+      </reference-descriptor> 
+      <reference-descriptor name="student" class-ref="Dominio.Student" proxy="false">
+         <foreignkey field-ref="keyStudent"/>
+      </reference-descriptor> 
+      <reference-descriptor name="room" class-ref="Dominio.Sala" proxy="false">
+         <foreignkey field-ref="keyRoom"/>
+      </reference-descriptor> 
+</class-descriptor>
+	
+
 
 <!-- Definitions for Dominio.Mark -->
    <class-descriptor
    	  class="Dominio.Mark"
-   	  table="MARK"
-   >
+   	  table="MARK">
       <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"
