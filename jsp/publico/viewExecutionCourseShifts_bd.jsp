@@ -90,7 +90,7 @@
 										<bean:define id="degreeInitials" name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla" toScope="request"/>
 										<bean:define id="nameDegreeCurricularPlan" name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.name" toScope="request"/>
 										<a href="viewClassTimeTableWithClassNameAndDegreeInitialsAction.do?className=<%= request.getAttribute("className").toString() %>&amp;degreeInitials=<%= request.getAttribute("degreeInitials").toString() %>&amp;nameDegreeCurricularPlan=<%= request.getAttribute("nameDegreeCurricularPlan").toString() %>">
-											<bean:write name="infoClass" property="nome" />
+											<bean:write name="infoClass" property="nome" /> <br/>
 										</a>
 								</logic:iterate>
 							</td>
