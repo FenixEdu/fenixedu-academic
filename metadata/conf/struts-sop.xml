@@ -278,12 +278,15 @@
               validate="true"
               >
 		<exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+				   key="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />
 		<exception type="ServidorApresentacao.Action.sop.exceptions.InterceptingActionException"
+				   key="ServidorApresentacao.Action.sop.exceptions.InterceptingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />
         <exception type="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
+        		   key="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />           
 		<forward name="Sucesso" path="/gestaoHorarios.do"/>
@@ -329,12 +332,15 @@
              scope="request"
              input="/editarAula.jsp">             
 		<exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+				   key="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />
 		<exception type="ServidorApresentacao.Action.sop.exceptions.InterceptingActionException"
+				   key="ServidorApresentacao.Action.sop.exceptions.InterceptingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />
         <exception type="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
+        		   key="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />           
          <forward name="Sucesso" path="/manipularAulas.jsp"/>
@@ -359,6 +365,7 @@
               type="ServidorApresentacao.Action.sop.CriarSalaFormAction"
               validate="true">
          <exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+         	   key="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                />
         <forward name="Sucesso" path="/principalSalas.do"/>
@@ -405,6 +412,7 @@
               scope="request"
               type="ServidorApresentacao.Action.sop.EditarSalaAction">
          <exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+         		    key="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
                     handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                     />
         <forward name="Sucesso" path="/manipularSalas.jsp" />
@@ -451,6 +459,7 @@
               scope="request"
               type="ServidorApresentacao.Action.sop.CriarTurnoFormAction">
 		<exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+				   key="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />              
         <forward name="Sucesso" path="/gestaoHorarios.do"/> 
@@ -513,6 +522,7 @@
               scope="request"
               type="ServidorApresentacao.Action.sop.EditarTurnoFormAction">
          <exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+         	   key="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                />     
         <forward name="Guardar" path="/manipularTurnos.do"/>
@@ -553,6 +563,7 @@
               scope="session"
               type="ServidorApresentacao.Action.sop.AdicionarAulasFormAction">
           <exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+          	   key="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                />
         <forward name="Sucesso" path="/prepararEditarAulasDeTurno.do"/>
@@ -581,6 +592,7 @@
              validate="true"
              scope="request">
           <exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+          			 key="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
                      handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
            />
              <forward name="viewTimeTable" path="/viewTimeTable.jsp"/>
@@ -594,6 +606,7 @@
               validate="false"
 		>
 		<exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+			   key="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                />
 	         <forward name="viewClassShiftList" path="/viewShiftList.jsp"/>  
