@@ -80,7 +80,7 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
  
 				Criteria criteria = new Criteria();
 				criteria.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
-				criteria.addEqualTo("curricularSemesterKey", curricularSemester.getInternalID());
+				criteria.addEqualTo("curricularSemesterKey", curricularSemester.getIdInternal());
 				criteria.addEqualTo("branchKey", branch.getIdInternal());
 				return (ICurricularCourseScope)queryObject(CurricularCourseScope.class, criteria);
 

@@ -78,10 +78,10 @@ public class EditCurricularCourseScope implements IServico {
 			
 			
 			//so da com o construtor como ta/COM O OUTRO TAVA A VIR A NULL 
-//			ICurricularSemester curricularSemester = new CurricularSemester();
-//			curricularSemester.setIdInternal(curricularSemesterId);
-			ICurricularSemester newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(new CurricularSemester(curricularSemesterId), false);
-			System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd"+ new CurricularSemester(curricularSemesterId)+"DDDDD"+newBranch+"DDDDD"+curricularCourse);
+			ICurricularSemester curricularSemester = new CurricularSemester();
+			curricularSemester.setIdInternal(curricularSemesterId);
+			ICurricularSemester newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(curricularSemester, false);
+//			System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd"+ new CurricularSemester(curricularSemesterId)+"DDDDD"+newBranch+"DDDDD"+curricularCourse);
 				
 			ICurricularCourseScope newCurricularCourseScope = 
 			        persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, newCurricularSemester, newBranch );
