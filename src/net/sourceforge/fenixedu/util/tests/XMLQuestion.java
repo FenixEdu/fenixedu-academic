@@ -15,26 +15,26 @@ import net.sourceforge.fenixedu.util.FenixUtil;
 
 public class XMLQuestion extends FenixUtil {
 
-    private String openTag = "<";
+    private static final String openTag = "<";
 
-    private String openEndTag = "</";
+    private static final String openEndTag = "</";
 
-    private String closeTag = ">\n";
+    private static final String closeTag = ">\n";
 
-    private String presentation = "presentation";
+    private static final String presentation = "presentation";
 
-    private String resprocessing = "resprocessing";
+    private static final String resprocessing = "resprocessing";
 
-    private String flow = "flow";
+    private static final String flow = "flow";
 
-    private String material = "material";
+    private static final String material = "material";
 
-    private String mattext = "mattext";
+    private static final String mattext = "mattext";
 
     //////////////////////////
-    private String start = "<?xml version=\"1.0\" encoding=\"Latin1\"?>\n<!DOCTYPE questestinterop SYSTEM \"file:/qtiasiv1p2.dtd\">\n<questestinterop>\n<item ident=\"xxx\">\n";
+    private static final String start = "<?xml version=\"1.0\" encoding=\"Latin1\"?>\n<!DOCTYPE questestinterop SYSTEM \"file:/qtiasiv1p2.dtd\">\n<questestinterop>\n<item ident=\"xxx\">\n";
 
-    private String end = "</item>\n</questestinterop>";
+    private static final String end = "</item>\n</questestinterop>";
 
     //////////////////////////
     private List allOptions = new ArrayList();

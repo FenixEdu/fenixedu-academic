@@ -41,7 +41,7 @@ import org.apache.commons.collections.CollectionUtils;
  */
 public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilter {
 
-    private int LEIC_OLD_DCP = 10;
+    private static final int LEIC_OLD_DCP = 10;
 
     /*
      * (non-Javadoc)

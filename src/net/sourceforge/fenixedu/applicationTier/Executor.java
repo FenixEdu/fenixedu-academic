@@ -10,6 +10,7 @@ public class Executor {
     private static Executor _instance = new Executor();
 
     private Executor() {
+        super();
     }
 
     public static Executor getInstance() {

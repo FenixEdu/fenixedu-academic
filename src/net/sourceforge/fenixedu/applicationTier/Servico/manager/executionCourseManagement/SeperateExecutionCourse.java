@@ -207,7 +207,7 @@ public class SeperateExecutionCourse implements IService {
     }
 
     private Collection getCurricularCoursesToTransfer(final Integer[] curricularCourseIdsToTransfer,
-            Collection curricularCourses) {
+            final Collection curricularCourses) {
         return CollectionUtils.select(curricularCourses, new Predicate() {
             public boolean evaluate(Object arg0) {
                 ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
@@ -290,7 +290,7 @@ public class SeperateExecutionCourse implements IService {
         }));
     }
 
-    private boolean contains(Integer[] integerArray, Integer integer) {
+    boolean contains(Integer[] integerArray, Integer integer) {
         for (int i = 0; i < integerArray.length; i++) {
             if (integer.equals(integerArray[i])) {
                 return true;

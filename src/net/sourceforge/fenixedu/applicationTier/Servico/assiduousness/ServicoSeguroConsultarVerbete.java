@@ -924,6 +924,8 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
         long saldo = 0;
         boolean limita5Horas = false;
 
+        final Calendar calendarioConsulta = _calendarioConsulta;
+
         // retirar os segundos que nao entram na contabilidade do saldo
         CollectionUtils.transform(_listaMarcacoesPonto, new Transformer() {
 
@@ -932,7 +934,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 
                 Calendar calendario = Calendar.getInstance();
                 calendario.setTimeInMillis(marcacao.getData().getTime()
-                        - _calendarioConsulta.getTimeInMillis());
+                        - calendarioConsulta.getTimeInMillis());
                 calendario.set(Calendar.SECOND, 00);
                 marcacao.setData(new Timestamp(calendario.getTimeInMillis()));
                 return marcacao;

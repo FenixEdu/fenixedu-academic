@@ -332,14 +332,14 @@ public class SmsCommand {
                         .get(SmsCommandExpressionConstants.PASSWORD_VARIABLE);
                 Object[] authenticationArgs = new Object[3];
 
-                authenticationArgs[1] = matcher.group(password.variablePosition);
+                authenticationArgs[1] = matcher.group(password.getVariablePosition());
 
                 if (this.smsCommandAuthenticationType.equals(SmsCommandAuthenticationType.USER_PASS)) {
 
                     VariableInformation username = (VariableInformation) this.variablesInformation
                             .get(SmsCommandExpressionConstants.USERNAME_VARIABLE);
 
-                    authenticationArgs[0] = matcher.group(username.variablePosition);
+                    authenticationArgs[0] = matcher.group(username.getVariablePosition());
 
                 }
                 /*

@@ -16,6 +16,7 @@ public class ExecutorOracle {
     private static ExecutorOracle _instance = new ExecutorOracle();
 
     private ExecutorOracle() {
+        super();
     }
 
     public static ExecutorOracle getInstance() {

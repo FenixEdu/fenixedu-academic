@@ -11,6 +11,7 @@ package net.sourceforge.fenixedu._development;
 public final class DevelopmentMode {
 
     private DevelopmentMode() {
+        super();
     }
 
 }

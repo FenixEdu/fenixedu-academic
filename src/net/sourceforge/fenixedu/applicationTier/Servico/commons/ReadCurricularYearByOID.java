@@ -22,12 +22,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadCurricularYearByOID implements IService {
 
-    /**
-     *  
-     */
-    public ReadCurricularYearByOID() {
-    }
-
     public InfoCurricularYear run(Integer oid) throws FenixServiceException {
 
         InfoCurricularYear result = null;
@@ -50,10 +44,7 @@ public class ReadCurricularYearByOID implements IService {
 
     public class UnexistingCurricularYearException extends FenixServiceException {
 
-        /**
-         *  
-         */
-        private UnexistingCurricularYearException() {
+        public UnexistingCurricularYearException() {
             super();
         }
 

@@ -27,6 +27,7 @@ public class PropertiesManager {
     }
 
     private PropertiesManager() {
+        super();
     }
 
     protected static void loadProperties(final Properties properties, final String fileName) throws IOException {
