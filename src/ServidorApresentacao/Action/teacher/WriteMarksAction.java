@@ -1,5 +1,8 @@
 package ServidorApresentacao.Action.teacher;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -13,7 +16,9 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.upload.FormFile;
 
 import DataBeans.InfoFrequenta;
 import DataBeans.InfoMark;
@@ -32,12 +37,23 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 public class WriteMarksAction extends DispatchAction {
 	public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-		return null;
+		HttpSession session = request.getSession();
+		ActionErrors actionErrors = new ActionErrors();
+
+		DynaActionForm marksForm = (DynaActionForm) form;
+		//Read the uploaded file
+		FormFile formFile = (FormFile) marksForm.get("theFile");
+
+		InputStream inputStream = formFile.getInputStream();
+		InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+
+		BufferedReader leitura = new BufferedReader(inputStreamReader);
+
+		return mapping.findForward("viewExams");
 	}
 
 	public ActionForward writeMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-		System.out.println("-->WriteMarksAction: writeMarks");
 
 		HttpSession session = request.getSession();
 		ActionErrors actionErrors = new ActionErrors();
@@ -45,7 +61,6 @@ public class WriteMarksAction extends DispatchAction {
 		List marksList = new ArrayList();
 
 		Integer sizeList = getSizeList(request);
-		System.out.println("-->WriteMarksAction-writeMarks:  size " + sizeList);
 
 		//transform form into list with student's number and students's mark
 		for (int i = 0; i < sizeList.intValue(); i++) {
@@ -54,7 +69,6 @@ public class WriteMarksAction extends DispatchAction {
 
 			marksList.add(infoMark);
 		}
-		System.out.println("-->WriteMarksAction-writeMarks:  marksList" + marksList);
 
 		Integer objectCode = getObjectCode(request);
 		Integer examCode = getExamCode(request);
@@ -85,7 +99,7 @@ public class WriteMarksAction extends DispatchAction {
 				ListIterator iterator = infoSiteMarks.getMarksListErrors().listIterator();
 				while (iterator.hasNext()) {
 					InfoMark infoMark = (InfoMark) iterator.next();
-					System.out.println("Ocorreu erro: invalidMark");
+
 					actionErrors.add(
 						"invalidMark",
 						new ActionError("errors.invalidMark", infoMark.getMark(), infoMark.getInfoFrequenta().getAluno().getNumber()));
@@ -103,17 +117,6 @@ public class WriteMarksAction extends DispatchAction {
 						new ActionError("errors.student.nonExisting", infoMark.getInfoFrequenta().getAluno().getNumber()));
 				}
 			}
-
-			System.out.println(
-				"Ocorreram erros: "
-					+ infoSiteMarks.getMarksListErrors().size()
-					+ " invalidMark e "
-					+ infoSiteMarks.getMarksListErrors2().size()
-					+ " studentExistence no total de "
-					+ actionErrors.size()
-					+ " erros");
-
-			//System.out.println("-->" + mapping.getInputForward());	
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
 		}
@@ -126,7 +129,6 @@ public class WriteMarksAction extends DispatchAction {
 		Integer studentCode = Integer.valueOf(request.getParameter("markElem[" + index + "].studentCode"));
 
 		if (mark != null && studentCode != null) {
-			System.out.println("-->WriteMarksAction-writeMarks:  mark" + mark + " de " + studentCode);
 			//infoMark with only student code and mark
 			InfoStudent infoStudent = new InfoStudent();
 			infoStudent.setIdInternal(studentCode);
@@ -138,6 +140,7 @@ public class WriteMarksAction extends DispatchAction {
 			infoMark.setInfoFrequenta(infoFrequenta);
 
 			infoMark.setMark(mark);
+			infoMark.setPublishedMark("0");
 
 			return infoMark;
 		}

@@ -15,14 +15,17 @@ import Dominio.DisciplinaExecucao;
 import Dominio.Exam;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
+import Dominio.IFrequenta;
 import Dominio.IMark;
 import Dominio.ISite;
+import Dominio.Mark;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.IPersistentSite;
@@ -59,14 +62,14 @@ public class ReadStudentsAndMarksByExam implements IServico {
 	}
 
 	public Object run(Integer executionCourseCode, Integer examCode) throws ExcepcaoInexistente, FenixServiceException {
-		List marksList = null;
+		List attendList = null;
 		List infoMarksList = null;
 
 		ISite site = null;
 		IDisciplinaExecucao executionCourse = null;
 		IExam exam = null;
 		InfoExam infoExam = null;
-		
+
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
@@ -80,7 +83,7 @@ public class ReadStudentsAndMarksByExam implements IServico {
 			//Site
 			IPersistentSite siteDAO = sp.getIPersistentSite();
 			site = siteDAO.readByExecutionCourse(executionCourse);
-			
+
 			//Exam
 			exam = new Exam();
 			exam.setIdInternal(examCode);
@@ -88,22 +91,36 @@ public class ReadStudentsAndMarksByExam implements IServico {
 			IPersistentExam examDAO = sp.getIPersistentExam();
 			exam = (IExam) examDAO.readByOId(exam, false);
 			infoExam = Cloner.copyIExam2InfoExam(exam);
-			
-			//Marks
-			IPersistentMark markDAO = sp.getIPersistentMark();
-			marksList = markDAO.readBy(exam);
 
-			infoMarksList = new ArrayList();
-			Iterator iterator = marksList.listIterator();
-			IMark mark = null;
-			InfoMark infoMark = null;
-			while (iterator.hasNext()) {
-				mark = (IMark) iterator.next();
+			//Attends
+			IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
+			attendList = frequentaPersistente.readByExecutionCourse(executionCourse);
+			if (attendList != null) {
+				Iterator attendIterador = attendList.listIterator();
+				IFrequenta frequenta = null;
+				
+				IPersistentMark persistentMark = sp.getIPersistentMark();
+				IMark mark = null;
+				InfoMark infoMark = null;
+				infoMarksList = new ArrayList();				
+				while (attendIterador.hasNext()) {
+					frequenta = (IFrequenta) attendIterador.next();
 
-				infoMark = Cloner.copyIMark2InfoMark(mark);
-			
-				infoMarksList.add(infoMark);
-			}			
+					//mark
+					mark = persistentMark.readBy(exam, frequenta);
+					if (mark == null) {
+						//student without mark
+						mark = new Mark();
+						mark.setAttend(frequenta);
+						mark.setExam(exam);
+						mark.setMark(new String(""));
+						mark.setPublishedMark(new String(""));
+					}
+					
+					infoMark = Cloner.copyIMark2InfoMark(mark);
+					infoMarksList.add(infoMark);
+				}
+			}
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			throw new FenixServiceException("error.impossibleReadMarksList");

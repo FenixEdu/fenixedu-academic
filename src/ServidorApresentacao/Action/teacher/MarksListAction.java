@@ -33,19 +33,10 @@ public class MarksListAction extends DispatchAction {
 			HttpSession session = request.getSession();
 
 			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-			Integer executionCourseCode = null;
-			String executionCourseCodeString = request.getParameter("objectCode");
-			if (executionCourseCodeString == null) {
-				executionCourseCodeString = (String) request.getAttribute("objectCode");
-			}
-			executionCourseCode = new Integer(executionCourseCodeString);
 
-			Integer examCode = null;
-			String examCodeString = request.getParameter("examCode");
-			if (examCodeString == null) {
-				examCodeString = (String) request.getAttribute("examCode");
-			}
-			examCode = new Integer(examCodeString);	
+			Integer executionCourseCode = getFromRequest("objectCode", request);
+
+			Integer examCode = getFromRequest("examCode", request);
 			
 			ISiteComponent commonComponent = new InfoSiteCommon();
 			Object[] args = { executionCourseCode, commonComponent, null, null, null, null };
@@ -84,20 +75,6 @@ public class MarksListAction extends DispatchAction {
 
 		Integer examCode = getFromRequest("examCode", request);
 
-		//		Integer executionCourseCode = null;
-		//		String executionCourseCodeString = request.getParameter("objectCode");
-		//		if (executionCourseCodeString == null) {
-		//			executionCourseCodeString = (String) request.getAttribute("objectCode");
-		//		}
-		//		executionCourseCode = new Integer(executionCourseCodeString);
-		//
-		//		Integer examCode = null;
-		//		String examCodeString = request.getParameter("examCode");
-		//		if (examCodeString == null) {
-		//			examCodeString = (String) request.getAttribute("examCode");
-		//		}
-		//		examCode = new Integer(examCodeString);
-
 		Object[] args = { executionCourseCode, examCode };
 
 		GestorServicos gestorServicos = GestorServicos.manager();
@@ -132,22 +109,6 @@ public class MarksListAction extends DispatchAction {
 		Integer examCode = getFromRequest("examCode", request);
 
 		Integer infoExecutionCourseCode = getFromRequest("objectCode", request);
-
-		//		Object[] args = { objectCode, examCode };
-		//		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		//		GestorServicos gestorServicos = GestorServicos.manager();
-		//    TeacherAdministrationSiteView siteView = null;
-		//		try {
-		//			siteView = (TeacherAdministrationSiteView) gestorServicos.executar(userView, "ReadExam", args);
-		//		} catch (FenixServiceException e) {
-		//			e.printStackTrace();
-		//			throw new FenixActionException(e.getMessage());
-		//		}
-		//
-		//		InfoExam infoExam = (InfoExam)siteView.getComponent();
-		//		
-		//		DynaValidatorForm examRevisionForm = (DynaValidatorForm) form;
-		//		examRevisionForm.set("examRevisionInformation", infoExam.getRevisionInformation());
 
 		ISiteComponent commonComponent = new InfoSiteCommon();
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
