@@ -37,21 +37,21 @@ import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadUserManageableDepartaments implements IServico {
+public class ReadUserManageableDepartments implements IServico {
     
-    private static ReadUserManageableDepartaments servico = new ReadUserManageableDepartaments();
+    private static ReadUserManageableDepartments servico = new ReadUserManageableDepartments();
     
     /**
      * The singleton access method of this class.
      **/
-    public static ReadUserManageableDepartaments getService() {
+    public static ReadUserManageableDepartments getService() {
         return servico;
     }
     
     /**
      * The actor of this class.
      **/
-    private ReadUserManageableDepartaments() { 
+    private ReadUserManageableDepartments() { 
     }
     
     public final String getNome() {
