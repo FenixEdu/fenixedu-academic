@@ -48,4 +48,35 @@ public class PersistentEnrolmentPeriod extends ObjectFenixOJB implements IPersis
 	    }
 		return enrolmentPeriod;
 	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.OJB.IPersistentEnrolmentPeriod#readNextEnrolmentPeriodForDegreeCurricularPlan(Dominio.IDegreeCurricularPlan)
+	 */
+	public IEnrolmentPeriod readNextEnrolmentPeriodForDegreeCurricularPlan(IDegreeCurricularPlan plan) throws ExcepcaoPersistencia {
+		String queryString = "select actual from "+EnrolmentPeriod.class.getName()+
+					   " where degreeCurricularPlan.name = $1 "+
+					   " and degreeCurricularPlan.degree.sigla = $2 "+
+					   " and startDate > $3 " +
+					   " order by startDate ";
+		IEnrolmentPeriod enrolmentPeriod = null;
+		try {
+			Date date = new Date();
+			
+			query.create(queryString);
+			query.bind(plan.getName());
+			query.bind(plan.getDegree().getSigla());
+
+			query.bind(date);
+			
+			List list = (List) query.execute();
+			
+			if (!list.isEmpty())
+				enrolmentPeriod = (IEnrolmentPeriod) list.get(0);
+			
+		} catch (QueryException e) {
+			e.printStackTrace();
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
+		}
+		return enrolmentPeriod;
+	}
 }

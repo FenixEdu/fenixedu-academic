@@ -20,5 +20,12 @@ public interface IPersistentEnrolmentPeriod extends IPersistentObject{
 	 */
 	IEnrolmentPeriod readActualEnrolmentPeriodForDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
 
+	/**
+	 *  
+	 * @param plan
+	 * @return IEnrolmentPeriod next enrolment period if any. If doesn't exist other curricular plan then it returns null. 
+	 */
+	IEnrolmentPeriod readNextEnrolmentPeriodForDegreeCurricularPlan(IDegreeCurricularPlan plan) throws ExcepcaoPersistencia;
+
 
 }
