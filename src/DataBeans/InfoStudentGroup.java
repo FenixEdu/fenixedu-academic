@@ -140,12 +140,12 @@ public class InfoStudentGroup extends InfoObject {
     
     public static InfoStudentGroup newInfoFromDomain(IStudentGroup studentGroup) {
         InfoStudentGroup infoStudentGroup = null;
-        System.out.println("InfoStudentGroup newInfoFromDomain-Inicio ");
+        
         if(studentGroup != null) {
             infoStudentGroup = new InfoStudentGroup();
             infoStudentGroup.copyFromDomain(studentGroup);
         }
-        System.out.println("InfoStudentGroup newInfoFromDomain-Fim ");
+        
         return infoStudentGroup;
     }
 }

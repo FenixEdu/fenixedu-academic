@@ -76,70 +76,59 @@ public class CreateGroupProperties implements IService {
             executionCourse = (IExecutionCourse) persistentExecutionCourse
                     .readByOID(ExecutionCourse.class, executionCourseCode);
             
-            System.out.println("CreateGroupProperties- ExecutionCourse:"+executionCourse.getNome());
+            
             
             // Checks if already exists a groupProperties with the same name, related with the executionCourse
-            System.out.println("executionCourse.getGroupPropertiesByName(infoGroupProperties.getName()))"+ executionCourse.getGroupPropertiesByName(infoGroupProperties.getName()));
+            
             if(executionCourse.getGroupPropertiesByName(infoGroupProperties.getName())!=null){
             	throw new ExistingServiceException();
             }
             //
 
-            System.out.println("1");
+            
             List attends = new ArrayList();
             List attendInAttendsSetList = new ArrayList();
             attends=persistentFrequenta.readByExecutionCourse(executionCourse);
             
-            System.out.println("2");
+            
 
 
             IGroupProperties newGroupProperties = Cloner
                     .copyInfoGroupProperties2IGroupProperties(infoGroupProperties);
             persistentGroupProperties.simpleLockWrite(newGroupProperties);
             
-            System.out.println("CreateGroupProperties- GroupProperties:"+newGroupProperties.getName());
             
-            System.out.println("3");
+            
+            
             IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse;
             groupPropertiesExecutionCourse = new GroupPropertiesExecutionCourse(newGroupProperties,executionCourse);
             persistentGroupPropertiesExecutionCourse.simpleLockWrite(groupPropertiesExecutionCourse);
             groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(1)));
-            System.out.println("4");
+            
             IAttendsSet attendsSet;
             attendsSet = new AttendsSet(executionCourse.getNome());
             persistentAttendsSet.simpleLockWrite(attendsSet);
-            System.out.println("5");
+            
             IAttendInAttendsSet attendInAttendsSet;
             Iterator iterAttends = attends.iterator();
             while(iterAttends.hasNext()){
             	IFrequenta frequenta = (IFrequenta)iterAttends.next();
-            	System.out.println("CreateGroupProperties- AttendsSet FIM:"+attendsSet.getName());
+            	
             	attendInAttendsSet = new AttendInAttendsSet(frequenta,attendsSet);
             	persistentAttendInAttendsSet.simpleLockWrite(attendInAttendsSet);
-            	System.out.println("6");
             	attendInAttendsSetList.add(attendInAttendsSet);
-            	System.out.println("7");
             	frequenta.addAttendInAttendsSet(attendInAttendsSet);
             }
             attendsSet.setGroupProperties(newGroupProperties);
             attendsSet.setAttendInAttendsSet(attendInAttendsSetList);
             attendsSet.setStudentGroups(new ArrayList());
-            System.out.println("8");
+            
             
             newGroupProperties.setAttendsSet(attendsSet);
             newGroupProperties.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
             executionCourse.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
 
-            System.out.println("9");
             
-            
-            System.out.println("CreateGroupProperties- ExecutionCourse FIM:"+groupPropertiesExecutionCourse.getExecutionCourse().getNome());
-            System.out.println("CreateGroupProperties- AttendsSet FIM:"+attendsSet.getName());
-            List listaAttends = attendsSet.getAttends();
-            Iterator iterListaAttends = listaAttends.iterator();
-            while(iterListaAttends.hasNext()){
-            System.out.println("CreateGroupProperties- Attends do AttendsSet FINAIS:"+((IFrequenta)iterListaAttends.next()).getAluno().getNumber());
-            }
         }  catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }
