@@ -8,6 +8,7 @@ package ServidorApresentacao.sop;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import junit.framework.Test;
@@ -15,6 +16,8 @@ import junit.framework.TestSuite;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.TestCaseActionExecution;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -70,12 +73,21 @@ public class ViewClassesWithShiftTest extends TestCaseActionExecution {
 	}
 
 	public void testSuccessfulExecution() {
-
-		HashMap itemsInSession = new HashMap();
+		//create new user view with privileges for executing action sucessfully
+		getSession().removeAttribute(SessionConstants.U_VIEW);
+		this.userView = null;
+		HashSet privileges = new HashSet();
+		privileges.add("ReadClassesWithShiftService");
+		this.userView = new UserView("user", privileges);
+		getSession().setAttribute(SessionConstants.U_VIEW, userView);
+		
+		//items in request
 		HashMap itemsInRequest = new HashMap();
 		String forward = "sucess";
-		
 		itemsInRequest.put("name", "turno1");
+		
+		//items in session
+		HashMap itemsInSession = new HashMap();		
 		readShifts();
 		itemsInSession.put(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY, this.infoShifts);
 		
