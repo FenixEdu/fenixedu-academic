@@ -14,6 +14,23 @@ public class ShiftEnrollmentDetails
     
     private Integer vacancies;
     
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object obj)
+    {
+    	boolean resultado = false;
+    	if (obj instanceof ShiftEnrollmentDetails)
+    	{
+    		ShiftEnrollmentDetails details = (ShiftEnrollmentDetails) obj;
+    		resultado = getInfoShift().equals(details.getInfoShift());
+    	}
+
+    	return resultado;
+    }
+    
     /**
      * @return Returns the infoShift.
      */

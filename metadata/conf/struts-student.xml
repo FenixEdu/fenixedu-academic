@@ -22,7 +22,8 @@
 		<form-property name="studentId" type="java.lang.Integer"/>      			
 		<form-property name="degree" type="java.lang.Integer"/>
 		<form-property name="wantedCourse" type="java.lang.Integer"/>
-		<form-property name="removedCourse" type="java.lang.Integer"/>      			
+		<form-property name="removedCourse" type="java.lang.Integer"/>   
+		<form-property name="shiftMap" type="java.util.HashMap" />   			
 	    <form-property name="shifts" type="java.lang.Integer[]"/>
 	    <form-property name="class" type="java.lang.String"/>
       </form-bean>
@@ -226,11 +227,12 @@
         <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=start&amp;firstTime=true"/>
         <forward name="studentFirstPage" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
     	<forward name="chooseCourses" path="/studentShiftEnrolmentManager.do?method=chooseCourses" />
-    	<forward name="selectCourses" path="show-courses-by-degree"/>
+    	<forward name="showShiftsToEnroll" path="show-shifts-to-enroll" />
+    	<!--<forward name="selectCourses" path="show-courses-by-degree"/>
         <forward name="selectClass" path="show-classes-for-shift-enrolment"/>
         <forward name="showAvailableShifts" path="show-available-shifts"/>
         <forward name="validateAndConfirmShiftEnrolment" path="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment"/>
-        <forward name="classTimeTable" path="/classTimeTable.jsp"/>
+        <forward name="classTimeTable" path="/classTimeTable.jsp"/>-->
       </action>
       
 	  <action path="/enrollStudentInShifts"

@@ -4,13 +4,17 @@
  */
 package ServidorApresentacao.Action.student.enrollment;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -18,7 +22,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoClass;
+import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
+import DataBeans.enrollment.shift.ExecutionCourseShiftEnrollmentDetails;
 import DataBeans.enrollment.shift.InfoClassEnrollmentDetails;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.enrolment.shift.DeleteStudentAttendingCourse.AlreadyEnrolledInGroupServiceException;
@@ -208,11 +215,72 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 			return mapping.getInputForward();
 		}
 
+		HashMap shiftsMap = buildDataToForm(infoClassEnrollmentDetails);
+		enrollmentForm.set("shiftMap", shiftsMap);
+
+		order(infoClassEnrollmentDetails);
+
 		request.setAttribute("infoClassEnrollmentDetails", infoClassEnrollmentDetails);
-		System.out.println("---------------------------------------------------");
-		System.out.println(infoClassEnrollmentDetails);
-		System.out.println("---------------------------------------------------");
-		return mapping.findForward("");
+
+		return mapping.findForward("showShiftsToEnroll");
+	}
+
+	/**
+	 * @param infoClassEnrollmentDetails
+	 */
+	private void order(InfoClassEnrollmentDetails infoClassEnrollmentDetails)
+	{
+		Map classExecutionCourseShiftEnrollmentDetailsMap =
+			infoClassEnrollmentDetails.getClassExecutionCourseShiftEnrollmentDetailsMap();
+
+		ListIterator iterator = infoClassEnrollmentDetails.getInfoClassList().listIterator();
+		while (iterator.hasNext())
+		{
+			InfoClass infoClass = (InfoClass) iterator.next();
+
+			List executionCourseDetails =
+				(List) classExecutionCourseShiftEnrollmentDetailsMap.get(infoClass.getIdInternal());
+
+			//order execution course list
+			Collections.sort(executionCourseDetails, new BeanComparator("infoExecutionCourse.nome"));
+
+			ListIterator iterator2 = executionCourseDetails.listIterator();
+			while (iterator2.hasNext())
+			{
+				ExecutionCourseShiftEnrollmentDetails details2 =
+					(ExecutionCourseShiftEnrollmentDetails) iterator2.next();
+				Collections.sort(details2.getShiftEnrollmentDetailsList(), new BeanComparator("infoShift.nome"));
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * @param infoClassEnrollmentDetails
+	 * @return
+	 */
+	private HashMap buildDataToForm(InfoClassEnrollmentDetails infoClassEnrollmentDetails)
+	{
+		HashMap shiftsMap = new HashMap();
+
+		//na lista de turnos e torná-la num Hashmap em que a key do map é
+		//idDisciplina concatenada com o tipo do turno (tipo de aula) e o valor é o id do turno
+		List infoShifts = infoClassEnrollmentDetails.getInfoShiftEnrolledList();
+		ListIterator iterator = infoShifts.listIterator();
+		while (iterator.hasNext())
+		{
+			InfoShift infoShift = (InfoShift) iterator.next();
+
+			String key =
+				infoShift.getInfoDisciplinaExecucao().getIdInternal()
+					+ "-"
+					+ infoShift.getTipo().toString();
+			shiftsMap.put(key, infoShift.getIdInternal());
+		}
+
+		return shiftsMap;
 	}
 
 	private Integer readStudentId(HttpServletRequest request, DynaActionForm enrollmentForm)

@@ -17,6 +17,7 @@ import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
+import Dominio.IStudent;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -69,4 +70,7 @@ public interface ITurnoPersistente extends IPersistentObject {
 	 * @return
 	 */
 	public List readByLesson(IAula lesson) throws ExcepcaoPersistencia;
+	
+	public List readShiftsThatContainsStudentAttendsOnExecutionPeriod(IStudent student, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+	
 }

@@ -19,6 +19,7 @@ import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
+import Dominio.IStudent;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
@@ -281,6 +282,18 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
 		{
 			return null;
 		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ITurmaPersistente#readShiftsThatContainsStudentAttendsOnExecutionPeriod(Dominio.IStudent, Dominio.IExecutionPeriod)
+	 */
+	public List readShiftsThatContainsStudentAttendsOnExecutionPeriod(IStudent student, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
+	{
+		Criteria criteria =new Criteria();
+		
+		criteria.addEqualTo("disciplinaExecucao.attendingStudents.idInternal", student.getIdInternal());
+		criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal", executionPeriod.getIdInternal());
+		return queryList(Turno.class, criteria, true);
 	}
 
 }

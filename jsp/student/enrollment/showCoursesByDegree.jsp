@@ -6,7 +6,7 @@
 	<span class="error"><bean:message key="error.notAuthorized.ShiftEnrollment" /></span>
 </logic:notPresent>
 <logic:present name="infoShiftEnrollment" >
-<div  align="center" >
+<div align="center" >
 	<span class="error"><html:errors/></span>
 	<br />
 	<p align="left">

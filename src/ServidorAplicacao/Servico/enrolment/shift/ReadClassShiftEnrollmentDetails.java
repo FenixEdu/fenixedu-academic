@@ -34,6 +34,7 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
+import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -69,6 +70,7 @@ public class ReadClassShiftEnrollmentDetails implements IService
 			ITurmaPersistente classDAO = sp.getITurmaPersistente();
 			IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 			ITurnoAlunoPersistente shiftStudentDAO = sp.getITurnoAlunoPersistente();
+			ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
 			//Current Execution Period
 			IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
@@ -81,44 +83,63 @@ public class ReadClassShiftEnrollmentDetails implements IService
 				classDAO.readClassesThatContainsStudentAttendsOnExecutionPeriod(
 					student,
 					executionPeriod);
-			if (classList != null) {
-				System.out.println("classList: " + classList.size());
-			} else {
-				System.out.println("classList: " + null);				
-			}
 
-			//Shifts
+			//Shifts correspond to student attends
+			List shiftAttendList =
+				shiftDAO.readShiftsThatContainsStudentAttendsOnExecutionPeriod(student, executionPeriod);
+
+			//Shifts enrolment
 			List studentShifts =
 				shiftStudentDAO.readByStudentAndExecutionPeriod(student, executionPeriod);
-			if (studentShifts != null) {
-				System.out.println("studentShifts: " + studentShifts.size());
-			} else {
-				System.out.println("studentShifts: " + null);				
-			}
 			List shifts = collectShifts(studentShifts);
-			if (shifts != null) {
-				System.out.println("shifts: " + shifts.size());
-			} else {
-				System.out.println("shifts: " + null);				
-			}
 			List infoShifts = collectInfoShifts(shifts);
-			if (infoShifts != null) {
-				System.out.println("infoShifts: " + infoShifts.size());
-			} else {
-				System.out.println("infoShifts: " + null);				
-			}
-			
+
 			List infoClassList = new ArrayList();
 			Map classExecutionCourseShiftEnrollmentDetailsMap =
-				createMapAndPopulateInfoClassList(shiftStudentDAO, classList, shifts, infoClassList);
+				createMapAndPopulateInfoClassList(
+					shiftStudentDAO,
+					classList,
+					shiftAttendList,
+					infoClassList);
 
 			enrollmentDetails = new InfoClassEnrollmentDetails();
 			enrollmentDetails.setInfoStudent(Cloner.copyIStudent2InfoStudent(student));
-			//enrollmentDetails.setInfoShiftEnrolledList(studentShifts);			
+			//enrollmentDetails.setInfoShiftEnrolledList(studentShifts);
 			enrollmentDetails.setInfoShiftEnrolledList(infoShifts);
 			enrollmentDetails.setInfoClassList(infoClassList);
 			enrollmentDetails.setClassExecutionCourseShiftEnrollmentDetailsMap(
 				classExecutionCourseShiftEnrollmentDetailsMap);
+
+//Only prints for test			
+//			ListIterator iterator = infoClassList.listIterator();
+//			while (iterator.hasNext())
+//			{
+//				InfoClass infoClass = (InfoClass) iterator.next();
+//				System.out.println(
+//						"class: " + infoClass.getNome());
+//
+//				List details =
+//					(List) classExecutionCourseShiftEnrollmentDetailsMap.get(infoClass.getIdInternal());
+//
+//				ListIterator iterator2 = details.listIterator();
+//				while (iterator2.hasNext())
+//				{
+//					ExecutionCourseShiftEnrollmentDetails details2 =
+//						(ExecutionCourseShiftEnrollmentDetails) iterator2.next();
+//					System.out.println(
+//						"execution course: " + details2.getInfoExecutionCourse().getNome());
+//					System.out.println("shifts: " + details2.getShiftEnrollmentDetailsList().size());
+//
+//					ListIterator iterator3 = details2.getShiftEnrollmentDetailsList().listIterator();
+//					while (iterator3.hasNext())
+//					{
+//						ShiftEnrollmentDetails details3 = (ShiftEnrollmentDetails) iterator3.next();
+//
+//						System.out.println(
+//							"ShiftEnrollmentDetails: " + details3.getInfoShift().getNome());
+//					}
+//				}
+//			}
 		}
 		catch (ExcepcaoPersistencia e)
 		{
@@ -128,7 +149,6 @@ public class ReadClassShiftEnrollmentDetails implements IService
 
 		return enrollmentDetails;
 	}
-
 
 	/**
 	 * @param shifts
@@ -146,7 +166,7 @@ public class ReadClassShiftEnrollmentDetails implements IService
 				return infoShift;
 			}
 		});
-		
+
 		return infoShifts;
 	}
 
@@ -178,7 +198,7 @@ public class ReadClassShiftEnrollmentDetails implements IService
 	private Map createMapAndPopulateInfoClassList(
 		ITurnoAlunoPersistente shiftStudentDAO,
 		List classList,
-		List shifts,
+		List shiftsAttendList,
 		List infoClassList)
 	{
 		Map classExecutionCourseShiftEnrollmentDetailsMap = new HashMap();
@@ -197,30 +217,41 @@ public class ReadClassShiftEnrollmentDetails implements IService
 			infoClassList.add(infoClass);
 
 			Integer klassId = klass.getIdInternal();
-			//List associatedShifts = klass.getAssociatedShifts();
-			for (int j = 0; j < shifts.size(); j++)
+			List shiftsRequired =
+				(List) CollectionUtils.intersection(klass.getAssociatedShifts(), shiftsAttendList);
+			if (shiftsRequired != null)
 			{
-				ITurno shift = (ITurno) shifts.get(i);
-
-				ShiftEnrollmentDetails shiftEnrollmentDetails =
-					createShiftEnrollmentDetails(shiftStudentDAO, shiftsTreated, shift);
-
-				ExecutionCourseShiftEnrollmentDetails executionCourseShiftEnrollmentDetails =
-					createExecutionCourseShiftEnrollmentDetails(executionCourseTreated, shift);
-
-				executionCourseShiftEnrollmentDetails.addShiftEnrollmentDetails(shiftEnrollmentDetails);
-
-				List executionCourseShiftEnrollmentDetailsList =
-					(List) classExecutionCourseShiftEnrollmentDetailsMap.get(klassId);
-				if (executionCourseShiftEnrollmentDetailsList == null)
+				for (int j = 0; j < shiftsRequired.size(); j++)
 				{
-					executionCourseShiftEnrollmentDetailsList = new ArrayList();
-					classExecutionCourseShiftEnrollmentDetailsMap.put(
-						klassId,
-						executionCourseShiftEnrollmentDetailsList);
+					ITurno shift = (ITurno) shiftsRequired.get(j);
+
+					ShiftEnrollmentDetails shiftEnrollmentDetails =
+						createShiftEnrollmentDetails(shiftStudentDAO, shiftsTreated, shift);
+
+					ExecutionCourseShiftEnrollmentDetails executionCourseShiftEnrollmentDetails =
+						createExecutionCourseShiftEnrollmentDetails(executionCourseTreated, shift);
+					executionCourseShiftEnrollmentDetails.addShiftEnrollmentDetails(
+						shiftEnrollmentDetails);
+
+					List executionCourseShiftEnrollmentDetailsList =
+						(List) classExecutionCourseShiftEnrollmentDetailsMap.get(klassId);
+					if (executionCourseShiftEnrollmentDetailsList == null)
+					{
+						executionCourseShiftEnrollmentDetailsList = new ArrayList();
+						classExecutionCourseShiftEnrollmentDetailsMap.put(
+							klassId,
+							executionCourseShiftEnrollmentDetailsList);
+					}
+					else
+					{
+						if (!executionCourseShiftEnrollmentDetailsList.contains(executionCourseShiftEnrollmentDetails))
+						{
+							executionCourseShiftEnrollmentDetailsList.add(
+								executionCourseShiftEnrollmentDetails);
+						}
+					}
 				}
-				executionCourseShiftEnrollmentDetailsList.add(executionCourseShiftEnrollmentDetails);
-			}
+			}		
 		}
 		return classExecutionCourseShiftEnrollmentDetailsMap;
 	}
@@ -244,7 +275,12 @@ public class ReadClassShiftEnrollmentDetails implements IService
 			executionCourseShiftEnrollmentDetails = new ExecutionCourseShiftEnrollmentDetails();
 			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 			executionCourseShiftEnrollmentDetails.setInfoExecutionCourse(infoExecutionCourse);
+
+			executionCourseTreated.put(
+				executionCourse.getIdInternal(),
+				executionCourseShiftEnrollmentDetails);
 		}
+
 		return executionCourseShiftEnrollmentDetails;
 	}
 
@@ -261,14 +297,15 @@ public class ReadClassShiftEnrollmentDetails implements IService
 	{
 		ShiftEnrollmentDetails shiftEnrollmentDetails =
 			(ShiftEnrollmentDetails) shiftsTreated.get(shift.getIdInternal());
-
 		if (shiftEnrollmentDetails == null)
 		{
-			InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
 			shiftEnrollmentDetails = new ShiftEnrollmentDetails();
+
+			InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
 			int occupation = shiftStudentDAO.readNumberOfStudentsByShift(shift);
 			shiftEnrollmentDetails.setInfoShift(infoShift);
 			shiftEnrollmentDetails.setVacancies(new Integer(shift.getLotacao().intValue() - occupation));
+
 			shiftsTreated.put(shift.getIdInternal(), shiftEnrollmentDetails);
 		}
 		return shiftEnrollmentDetails;
