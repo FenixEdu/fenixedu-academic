@@ -65,7 +65,7 @@
             <td> <bean:write name="guide" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/> </td>
           </tr>
           <tr>
-            <td> <bean:message key="label.candidate.number"/> </td>
+            <td> <bean:message key="label.candidate.candidateNumber"/> </td>
             <td> <bean:write name="candidate" property="candidateNumber"/> </td>
           </tr>
           <tr>

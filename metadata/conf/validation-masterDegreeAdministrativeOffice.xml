@@ -43,7 +43,7 @@
     </form>
     
 
-    <!-- validation for the Create Contributor Form -->
+    <!-- validation for the Create Guide Form -->
     <form name="createGuideForm">
       <field property="degree" depends="required" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.degree" />
@@ -77,6 +77,29 @@
         <arg0 key="label.masterDegree.administrativeOffice.contributorAddress" />
       </field>
     </form>
+
+	<!-- validation for the List of Candidates Form -->
+    <form name="listCandidatesForm">
+      <field property="degree" depends="required" page="1">
+        <arg0 key="label.degree" />
+      </field>
+      
+      <field property="specialization" depends="required" page="1">
+        <arg0 key="label.specialization" />
+      </field>
+
+      <field property="candidateSituation" depends="required" page="1">
+        <arg0 key="label.candidate.candidateSituation" />
+      </field>
+
+	  <field property="candidateNumber" depends="required, integer" page="1">
+        <arg0 key="label.candidate.candidateNumber" />
+      </field>
+     
+    </form>
+
+
+
 
 
 

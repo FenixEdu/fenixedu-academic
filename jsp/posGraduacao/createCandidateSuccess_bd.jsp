@@ -25,7 +25,7 @@
 
           <!-- Candidate Number -->
           <tr>
-            <td><bean:message key="label.candidate.number" /></td>
+            <td><bean:message key="label.candidate.candidateNumber" /></td>
             <td><bean:write name="newCandidate" property="candidateNumber"/></td>
           </tr>
 

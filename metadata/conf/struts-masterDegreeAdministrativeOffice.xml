@@ -11,7 +11,8 @@
     <form-beans type="org.apache.struts.action.ActionFormBean">
       
 
-      <!-- Dynamic-FormBean for Password Change -->
+      
+      <!-- Bean for The Creation of a Candidate -->
       <form-bean name="createCandidateForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
@@ -23,6 +24,7 @@
         <form-property name="identificationDocumentType" type="java.lang.String" />
       </form-bean>
 
+	  <!-- Bean for The List of Candidates -->
       <form-bean name="listCandidatesForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
