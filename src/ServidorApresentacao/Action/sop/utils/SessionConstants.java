@@ -115,6 +115,9 @@ public abstract class SessionConstants {
 	public static final String MATRICULA_ENROLMENT = "matriculaInscricao";
 	public static final String DURATION_DEGREE = "duracaoDoCurso";
 	public static final String ENROLMENT = "inscricao";
+	public static final String ENROLMENT_LIST = "enrolmentList";
+	public static final String APROVMENT = "aproveitamento";	
+	public static final String INFO_EXECUTION_YEAR = "info_execution_year";
 	
 	
 	

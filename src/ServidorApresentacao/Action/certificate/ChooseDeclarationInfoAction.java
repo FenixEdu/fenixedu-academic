@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoExecutionYear;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.GestorServicos;
@@ -109,6 +110,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 	        
 	        // output
 			InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+			InfoExecutionYear infoExecutionYear = null;
 			
 			
 			//get informations
@@ -123,14 +125,19 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 				throw new NonExistingActionException("O aluno");
 			}
 				
-		    else {
+		    else {			
+				try {
+					infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadActualExecutionYear", null);
+
+				} catch (RuntimeException e) {
+					throw new RuntimeException("Error", e);
+				}
 				Locale locale = new Locale("pt", "PT");
 				Date date = new Date();
 				String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
-	
-				session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
-				
-				session.setAttribute(SessionConstants.DATE, formatedDate);	
+				session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);		
+				session.setAttribute(SessionConstants.DATE, formatedDate);			
+				session.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, infoExecutionYear);	
 				return mapping.findForward("ChooseSuccess"); 
 		    }
 			

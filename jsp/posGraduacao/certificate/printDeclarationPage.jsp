@@ -1,43 +1,10 @@
-<%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-
-<bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN %>" scope="session" />
-    <table width="100%">
-	  <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-	  <tr> 
-	  	 <td width="5%">&nbsp;</td>
-	     <td align="right" valign="bottom"> <b>ALUNO Nº: </b> 
-         <bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/> 
-         </td>
-         <td width="5%">&nbsp;</td>
-      </tr>
-      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-	  <tr> <td>&nbsp;</td>
-        <td align="center" > <b>DECLARAÇÃO</b></td>
-           <td>&nbsp;</td>
-      </tr>
- 	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- 	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- 	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-
-	<%-- The Original Declaration --%>
-	<jsp:include page="./declarationTemplate1.jsp" flush="true" />
-
-   <logic:equal name="infoStudentCurricularPlan" property="specialization" value="Mestrado">
-    	<%-- Candidate Information if necessary --%>
-   		<jsp:include page="./declarationTemplate2.jsp" flush="true" />
-	</logic:equal >	
-
-	<jsp:include page="./templateDocumentReason.jsp" flush="true" />
-	
-	<jsp:include page="./templateFinal.jsp" flush="true" />
-	  	
-	</table>
+<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
+<tiles:insert page="/fenixLayout_2col.jsp" flush="true">
+  <tiles:put name="title" value=".IST - Secretaria de Pós-Graduação" />
+  <tiles:put name="serviceName" value="Secretaria de Pós-Graduação" />
+  <tiles:put name="navLocal" value="/posGraduacao/certificate/certificateMenu.jsp" />
+  <tiles:put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp" />
+  <tiles:put name="body-context" value=""/>  
+  <tiles:put name="body" value="/posGraduacao/certificate/printDeclarationPage_bd.jsp" />
+  <tiles:put name="footer" value="/posGraduacao/copyrightDefault.jsp" />
+</tiles:insert>

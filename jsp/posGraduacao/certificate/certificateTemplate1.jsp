@@ -6,7 +6,7 @@
 
 <tr><td>
  <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>" />
- <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/> filho de
+ <b><bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/></b> filho de
  <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nomePai"/> e de
  <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nomeMae"/> natural de
  <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.freguesiaNaturalidade"/> de nacionalidade

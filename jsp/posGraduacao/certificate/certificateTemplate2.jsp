@@ -9,7 +9,7 @@
 <tr><td>
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>" />
 <bean:define id="certificateType" name="<%= SessionConstants.CERTIFICATE_TYPE%>" />
-tem <bean:write name="certificateType"/> no ano lectivo de **2002/2003**, no curso de 
+tem <b><bean:write name="certificateType"/></b> no ano lectivo de **2002/2003**, no curso de 
     <bean:write name="infoStudentCurricularPlan" property="specialization"/> em 
     <bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/> 
 </td></tr>

@@ -6,6 +6,8 @@
 
 
  <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN %>" scope="session" />
+ <bean:define id="infoExecutionYear" name="<%= SessionConstants.INFO_EXECUTION_YEAR %>" scope="session" />
+ 
   <tr><td>&nbsp;</td>
   <td>
   <table width="100%" align='right' height='3%'>
@@ -24,7 +26,7 @@
  
  <tr>
   <td align="left" valign="top">
-  Declaro que está matriculado neste Instituto no ano lectivo.
+  Declaro que está matriculado neste Instituto no ano lectivo de <bean:write name="infoExecutionYear" property="year"/>.
   </td>
  </tr>
  

@@ -624,16 +624,16 @@
       <action path="/chooseCertificateInfoAction"
 	     attribute="chooseCertificateInfoForm"
 	          name="chooseCertificateInfoForm"
-	         input="/certificate/chooseCertificate.jsp"
-	      validate="true"
-		 parameter="method"
-  	         scope="request"
+	          input="/certificate/chooseCertificate.jsp"
+	      	  validate="true"
+		      parameter="method"
+  	          scope="request"
       	      type="ServidorApresentacao.Action.certificate.ChooseCertificateInfoAction">
    		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       	  <forward name="PrepareReady" path="/certificate/chooseCertificate.jsp"/>
-      	  <forward name="ChooseSuccess" path="/certificate/showCertificate.jsp"/>
+      	  <forward name="ChooseSuccess" path="/printCertificate.do?method=prepare"/>
       </action>
 
 		<!-- Action to prepare the chooseCertificateInfoForm -->
@@ -649,7 +649,7 @@
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       	 <forward name="PrepareReady" path="/certificate/chooseDeclaration.jsp"/>
-      	 <forward name="ChooseSuccess" path="/certificate/showDeclaration.jsp"/>   
+   		 <forward name="ChooseSuccess" path="/printDeclaration.do?method=prepare"/>
       </action>
     
   
