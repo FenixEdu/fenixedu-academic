@@ -29,8 +29,22 @@
 					</html:link>
 				</li>
 				<li>
-					<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?keyMethodMap=proceedToShiftEnrolment&amp;studentId=" + pageContext.findAttribute("studentId").toString()%>">
+<%--				<html:form action="/studentShiftEnrolmentManagerLoockup">
+					<html:hidden property="studentId" value="<%=pageContext.findAttribute("studentId").toString()%>"/>--%>
+					
+<%--					<html:link page="<%="/studentShiftEnrolmentManagerLoockup.do?method=proceedToShiftEnrolment&amp;studentId=" + pageContext.findAttribute("studentId").toString()%>" onclick="this.form.submit()">
 						<bean:message key="link.shift.enrolement.edit" />
+					</html:link>
+				</html:form>--%>
+
+					<bean:define id="initCreateForm">
+					  <bean:message key="link.shift.enrolement.edit"/>
+					</bean:define>
+					<html:link page="<%="/studentShiftEnrolmentManagerLoockup.do?method=" + initCreateForm + "&amp;studentId=" + pageContext.findAttribute("studentId").toString()%>">
+					           <%--action="<%="/studentShiftEnrolmentManagerLoockup"%>"
+					           paramId="method"
+					           paramName="initCreateForm"--%>
+					  <bean:write name="initCreateForm"/>
 					</html:link>
 				</li>
 			</ul>
