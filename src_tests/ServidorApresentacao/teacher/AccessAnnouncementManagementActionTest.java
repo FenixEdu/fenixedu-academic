@@ -1,6 +1,5 @@
 package ServidorApresentacao.teacher;
   
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,7 +62,7 @@ public class AccessAnnouncementManagementActionTest extends TestCasePresentation
 				new Double(1.5),
 				new Double(2),
 				infoExecutionPeriod);
-		infoSite = new InfoSite(null, new ArrayList(), infoExecutionCourse, new ArrayList());
+		infoSite = new InfoSite(infoExecutionCourse);
 		infoSection.setInfoSite(infoSite);
 		infoSite.setInitialInfoSection(infoSection);
 
@@ -128,7 +127,7 @@ public class AccessAnnouncementManagementActionTest extends TestCasePresentation
 	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
 	 */
 	protected String getServletConfigFile() {
-		return "/WEB-INF/tests/web-gesdis.xml";
+		return "/WEB-INF/tests/web-teacher.xml";
 	}
 
 	/**
