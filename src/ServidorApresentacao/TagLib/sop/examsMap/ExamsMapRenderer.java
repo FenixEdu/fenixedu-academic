@@ -67,7 +67,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			}
 
 			strBuffer.append(
-				"<table class='examMapContainer' cellspacing='0' cellpadding='3' width='100%'>");
+				"<table class='examMapContainer' cellspacing='0' cellpadding='3' width='95%'>");
 			strBuffer.append("<tr>");
 
 			// Generate Exam Map
@@ -296,7 +296,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		Integer year1,
 		Integer year2) {
 		strBuffer.append(
-			"<table class='examMap' cellspacing='0' cellpadding='3' width='100%'>");
+			"<table class='examMap' cellspacing='0' cellpadding='3' width='95%'>");
 
 		strBuffer.append("<tr>");
 		renderHeader(strBuffer);
