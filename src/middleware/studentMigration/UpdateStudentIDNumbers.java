@@ -3,7 +3,7 @@ package middleware.studentMigration;
 import java.util.Iterator;
 import java.util.List;
 
-import middleware.middlewareDomain.MWAluno;
+import middleware.middlewareDomain.MWStudent;
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
@@ -39,7 +39,7 @@ public class UpdateStudentIDNumbers {
 
 		Iterator iterator = result.iterator();
 		while(iterator.hasNext()) {
-			MWAluno student = (MWAluno) iterator.next();
+			MWStudent student = (MWStudent) iterator.next();
 		
 			sp.iniciarTransaccao();
 			sp.clearCache();
@@ -54,7 +54,7 @@ public class UpdateStudentIDNumbers {
 	 * This method creates new Students 
 	 * 
 	 */ 
-	public static void updateStudentIDNumbers(MWAluno oldStudent, SuportePersistenteOJB sp) throws Exception {
+	public static void updateStudentIDNumbers(MWStudent oldStudent, SuportePersistenteOJB sp) throws Exception {
 		
 		try {
 			

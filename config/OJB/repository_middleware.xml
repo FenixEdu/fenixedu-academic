@@ -5,8 +5,8 @@
 
 <!-- Definitions for . -->
 <class-descriptor 
-  class="middleware.middlewareDomain.MWAluno"
-  table="mw_ALUNO"
+  class="middleware.middlewareDomain.MWStudent"
+  table="mw_STUDENT"
 >
   <field-descriptor
     name="documentidnumber"
@@ -97,15 +97,15 @@
       />
 	<reference-descriptor
 			name="middlewarePerson"
-			class-ref="middleware.middlewareDomain.MWPessoa"
+			class-ref="middleware.middlewareDomain.MWPerson"
 			proxy="false">
 		<foreignkey field-ref="documentidnumber"/>
 	</reference-descriptor>
 </class-descriptor>
 
 <class-descriptor 
-  class="middleware.middlewareDomain.MWPessoa"
-  table="mw_PESSOA"
+  class="middleware.middlewareDomain.MWPerson"
+  table="mw_PERSON"
 >
   <field-descriptor
     name="documentidnumber"

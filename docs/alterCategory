@@ -1,2 +1,0 @@
-alter table CATEGORY add CAN_BE_EXECUTION_COURSE_RESPONSIBLE bit not null default 0;
-update CATEGORY set CAN_BE_EXECUTION_COURSE_RESPONSIBLE = 1 where id_internal >=18;

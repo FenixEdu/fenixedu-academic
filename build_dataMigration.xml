@@ -706,7 +706,7 @@
 	<!-- Database targets -->
     <target name="load-new-students"
     		depends="load-data"
-            description="Carrega os novos alunos para a Tabela MW_ALUNO">
+            description="Carrega os novos alunos para a Tabela mw_STUDENT">
         <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/${db.name}"
@@ -750,7 +750,7 @@
 
     <target name="load-existing-students"
     		depends="load-data"
-            description="Carrega os Alunos que ja existem para a Tabela MW_ALUNO">
+            description="Carrega os Alunos que ja existem para a Tabela mw_STUDENT">
         <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/${db.name}"
@@ -796,7 +796,7 @@
 
     <target name="load-new-ID-Students"
     		depends="load-data"
-            description="Carrega os Alunos com novos BI's para a Tabela MW_ALUNO">
+            description="Carrega os Alunos com novos BI's para a Tabela mw_STUDENT">
         <sql driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/${db.name}"
             userid="${db.user}"
@@ -1046,7 +1046,7 @@
 		</exec>
 	</target>
 
-	<target name="load-mw-tables-with-data-for-all-enrollment-migration" depends="compile-proj, load-data-from-old-system" description="Loads tables mw_ENROLMENT, mw_CURRICULAR_COURSE_SCOPE and mw_ALUNO with data for all enrollment migration">
+	<target name="load-mw-tables-with-data-for-all-enrollment-migration" depends="compile-proj, load-data-from-old-system" description="Loads tables mw_ENROLMENT, mw_CURRICULAR_COURSE_SCOPE and mw_STUDENT with data for all enrollment migration">
 		<sequential>
 			<sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
 				<fileset dir="${sql}">

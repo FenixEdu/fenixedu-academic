@@ -1,1 +1,0 @@
-insert into ROLE (ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY, ACK_OPT_LOCK) values (25, '/gep', '/index.do', 'portal.gep', '1');

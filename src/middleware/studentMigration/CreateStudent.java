@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import middleware.middlewareDomain.MWAluno;
+import middleware.middlewareDomain.MWStudent;
 import middleware.middlewareDomain.MWBranch;
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
@@ -59,7 +59,7 @@ public class CreateStudent {
 
 		Iterator iterator = result.iterator();
 		while(iterator.hasNext()) {
-			MWAluno student = (MWAluno) iterator.next();
+			MWStudent student = (MWStudent) iterator.next();
 		
 			try {
 				sp.iniciarTransaccao();
@@ -81,7 +81,7 @@ public class CreateStudent {
 	 */ 
 	private static IExecutionPeriod executionPeriod = null;
 	
-	public static void createStudent(MWAluno oldStudent, SuportePersistenteOJB sp) throws Exception {
+	public static void createStudent(MWStudent oldStudent, SuportePersistenteOJB sp) throws Exception {
 		
 		try {
 //			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
@@ -113,7 +113,7 @@ public class CreateStudent {
 	}
 
 
-	private static void createStudentCurricularPlan(ISuportePersistente sp, IStudent student, MWAluno oldStudent) throws Exception {
+	private static void createStudentCurricularPlan(ISuportePersistente sp, IStudent student, MWStudent oldStudent) throws Exception {
 		
 		
 		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
@@ -147,7 +147,7 @@ public class CreateStudent {
 	 * @param oldStudent
 	 * @return The Degree Curricular Plan
 	 */
-	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWAluno oldStudent, ISuportePersistente sp) throws Exception {
+	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWStudent oldStudent, ISuportePersistente sp) throws Exception {
 	
 //		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
@@ -185,7 +185,7 @@ public class CreateStudent {
 	 * @param oldStudent
 	 * @return The Student's Branch
 	 */
-	private static IBranch getBranch(MWAluno oldStudent, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	private static IBranch getBranch(MWStudent oldStudent, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
 
 		IBranch branch = null;
 		
@@ -220,7 +220,7 @@ public class CreateStudent {
 	}
 
 
-	private static IStudent createStudent(MWAluno oldStudent, ISuportePersistente sp, IPessoa person) throws ExcepcaoPersistencia {
+	private static IStudent createStudent(MWStudent oldStudent, ISuportePersistente sp, IPessoa person) throws ExcepcaoPersistencia {
 		IStudent student = new Student();
 		sp.getIPersistentStudent().simpleLockWrite(student);
 

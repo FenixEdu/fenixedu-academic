@@ -2,8 +2,8 @@ package middleware.personMigration;
 
 import java.util.List;
 
-import middleware.middlewareDomain.MWAluno;
-import middleware.middlewareDomain.MWPessoa;
+import middleware.middlewareDomain.MWStudent;
+import middleware.middlewareDomain.MWPerson;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
@@ -170,7 +170,7 @@ public class PersonUtils {
 	 * this in Fenix
 	 * 
 	 */
-	public static void updateStudentPerson(IPessoa fenixPersonTemp, MWPessoa oldPerson) throws ExcepcaoPersistencia {
+	public static void updateStudentPerson(IPessoa fenixPersonTemp, MWPerson oldPerson) throws ExcepcaoPersistencia {
 
 		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 		// Get Fenix Person
@@ -248,9 +248,9 @@ public class PersonUtils {
 		return new EstadoCivil(EstadoCivil.SOLTEIRO);
 	}
 
-	public static IPessoa createPersonFromStudent(MWAluno oldStudent, ISuportePersistente sp) throws ExcepcaoPersistencia {
+	public static IPessoa createPersonFromStudent(MWStudent oldStudent, ISuportePersistente sp) throws ExcepcaoPersistencia {
 
-		MWPessoa oldPerson = oldStudent.getMiddlewarePerson();
+		MWPerson oldPerson = oldStudent.getMiddlewarePerson();
 
 		IPessoa person = new Pessoa();
 		sp.getIPessoaPersistente().simpleLockWrite(person);

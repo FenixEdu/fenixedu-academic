@@ -13,7 +13,7 @@ package middleware.persistentMiddlewareSupport;
 
 import java.util.List;
 
-import middleware.middlewareDomain.MWAluno;
+import middleware.middlewareDomain.MWStudent;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 import ServidorPersistente.ExcepcaoPersistencia;
 
@@ -34,7 +34,7 @@ public interface IPersistentMWAluno  {
      * @return The Student corresponding to this number from the Old Database
      * @throws PersistentMiddlewareSupportException
      */
-    public MWAluno readByNumber(Integer number)throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
+    public MWStudent readByNumber(Integer number)throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
 
 
 	

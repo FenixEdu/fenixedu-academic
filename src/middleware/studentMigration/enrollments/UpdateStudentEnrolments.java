@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import middleware.middlewareDomain.MWAluno;
+import middleware.middlewareDomain.MWStudent;
 import middleware.middlewareDomain.MWBranch;
 import middleware.middlewareDomain.MWCurricularCourseOutsideStudentDegree;
 import middleware.middlewareDomain.MWDegreeTranslation;
@@ -94,7 +94,7 @@ public class UpdateStudentEnrolments
 			Iterator iterator = result.iterator();
 			while (iterator.hasNext())
 			{
-				MWAluno oldStudent = (MWAluno) iterator.next();
+				MWStudent oldStudent = (MWStudent) iterator.next();
 				try
 				{
 					sp.iniciarTransaccao();
@@ -116,7 +116,7 @@ public class UpdateStudentEnrolments
 	 * @param sp
 	 * @throws Exception
 	 */
-	private static void updateStudentEnrolment(MWAluno oldStudent, ISuportePersistente sp) throws Exception
+	private static void updateStudentEnrolment(MWStudent oldStudent, ISuportePersistente sp) throws Exception
 	{
 		try
 		{
@@ -172,7 +172,7 @@ public class UpdateStudentEnrolments
 	 * @param sp
 	 * @throws Exception
 	 */
-	private static void writeEnrolments(List enrolments2Write, IStudentCurricularPlan studentCurricularPlan, MWAluno oldStudent, ISuportePersistente sp) throws Exception
+	private static void writeEnrolments(List enrolments2Write, IStudentCurricularPlan studentCurricularPlan, MWStudent oldStudent, ISuportePersistente sp) throws Exception
 	{
 		Iterator iterator = enrolments2Write.iterator();
 		while (iterator.hasNext())
@@ -687,7 +687,7 @@ public class UpdateStudentEnrolments
 	 * @return @throws
 	 *         Exception
 	 */
-	private static List getEnrolments2Annul(MWAluno oldStudent, List studentEnrolments, List oldEnrolments, ISuportePersistente sp) throws Exception
+	private static List getEnrolments2Annul(MWStudent oldStudent, List studentEnrolments, List oldEnrolments, ISuportePersistente sp) throws Exception
 	{
 		List result = new ArrayList();
 

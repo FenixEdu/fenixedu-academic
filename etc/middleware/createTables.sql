@@ -1,5 +1,5 @@
-drop table if exists mw_ALUNO_temp;
-create table mw_ALUNO_temp(
+drop table if exists mw_STUDENT_AUXILIARY_TABLE;
+create table mw_STUDENT_AUXILIARY_TABLE(
   documentIdNumber varchar(250) not null,
   number integer(50),
   degreeCode integer(20),
@@ -21,8 +21,8 @@ create table mw_ALUNO_temp(
 )type= InnoDB;
 
 
-drop table if exists mw_PESSOA;
-create table mw_PESSOA(
+drop table if exists mw_PERSON;
+create table mw_PERSON(
   documentIdNumber varchar(250) not null,
   documentIdType varchar(50),
   documentIdPlace varchar(20),
@@ -83,8 +83,8 @@ create table mw_AVERAGE(
 -- primary key (number, numberOfCoursesEnrolled)
 
 
-drop table if exists mw_ENROLMENT_temp;
-create table mw_ENROLMENT_temp(
+drop table if exists mw_ENROLMENT_AUXILIARY_TABLE_1;
+create table mw_ENROLMENT_AUXILIARY_TABLE_1(
 	number integer(11), 
 	enrolmentYear integer(11), 
 	curricularCourseYear integer(11),
@@ -116,8 +116,8 @@ create table mw_CURRICULAR_COURSE(
 
 
 
-drop table if exists mw_CURRICULAR_COURSE_SCOPE_temp;
-create table mw_CURRICULAR_COURSE_SCOPE_temp(
+drop table if exists mw_CURRICULAR_COURSE_SCOPE_AUXILIARY_TABLE;
+create table mw_CURRICULAR_COURSE_SCOPE_AUXILIARY_TABLE(
 	executionYear integer(11) not null,
 	courseCode varchar(10) not null, 
 	degreeCode integer(11) not null,

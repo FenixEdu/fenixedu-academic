@@ -1,4 +1,4 @@
-package middleware.studentMigration.enrollments;
+package middleware.studentMigration.equivalences;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWEquivalenciaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
+import middleware.studentMigration.enrollments.CreateAndUpdateAllStudentsPastEnrolments;
 
 import org.apache.commons.beanutils.BeanComparator;
 

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import middleware.middlewareDomain.MWAluno;
+import middleware.middlewareDomain.MWStudent;
 import middleware.middlewareDomain.MWBranch;
 import middleware.middlewareDomain.MWCurricularCourseScope;
 import middleware.middlewareDomain.MWDegreeTranslation;
@@ -84,7 +84,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 
 	public static void main(String args[])
 	{
-		MWAluno mwStudent = null;
+		MWStudent mwStudent = null;
 
 		try {
 			ISuportePersistente fenixPersistentSuport = SuportePersistenteOJB.getInstance();
@@ -118,7 +118,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		
 				Iterator iterator = result.iterator();
 				while (iterator.hasNext()) {
-					mwStudent = (MWAluno) iterator.next();
+					mwStudent = (MWStudent) iterator.next();
 	
 					fenixPersistentSuport.iniciarTransaccao();
 	
@@ -157,7 +157,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param fenixPersistentSuport
 	 * @throws Throwable
 	 */
-	private static void createAndUpdateAllStudentPastEnrolments(MWAluno mwStudent, ISuportePersistente fenixPersistentSuport) throws Throwable
+	private static void createAndUpdateAllStudentPastEnrolments(MWStudent mwStudent, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IPersistentStudent persistentStudent = fenixPersistentSuport.getIPersistentStudent();
 
@@ -220,7 +220,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @return
 	 * @throws Throwable
 	 */
-	private static IStudentCurricularPlan getStudentCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan, IStudent student, MWAluno mwStudent, ISuportePersistente fenixPersistentSuport) throws Throwable
+	private static IStudentCurricularPlan getStudentCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan, IStudent student, MWStudent mwStudent, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = fenixPersistentSuport.getIStudentCurricularPlanPersistente();
 
@@ -329,7 +329,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param fenixPersistentSuport
 	 * @throws Throwable
 	 */
-	private static void writeAndUpdateEnrolments(MWAluno mwStudent, IStudentCurricularPlan studentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+	private static void writeAndUpdateEnrolments(MWStudent mwStudent, IStudentCurricularPlan studentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		List mwEnrolments = mwStudent.getEnrolments();
 		Iterator iterator = mwEnrolments.iterator();
@@ -840,7 +840,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param enrolment
 	 * @return
 	 */
-	protected static String getEnrollmentKey(IEnrolment enrolment)
+	public static String getEnrollmentKey(IEnrolment enrolment)
 	{
 		return CreateAndUpdateAllStudentsPastEnrolments.getStudentCurricularPlanKey(enrolment.getStudentCurricularPlan()) +
 			CreateAndUpdateAllStudentsPastEnrolments.getCurricularCourseScopeKey(enrolment.getCurricularCourseScope()) +
@@ -851,7 +851,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param enrolmentEvaluation
 	 * @return
 	 */
-	protected static String getEnrollmentEvaluationKey(IEnrolmentEvaluation enrolmentEvaluation)
+	public static String getEnrollmentEvaluationKey(IEnrolmentEvaluation enrolmentEvaluation)
 	{
 		Calendar calendar = Calendar.getInstance();
 		calendar.clear();

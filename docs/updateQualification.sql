@@ -1,1 +1,0 @@
-alter table QUALIFICATION add LAST_MODIFICATION_DATE timestamp(14) not null;

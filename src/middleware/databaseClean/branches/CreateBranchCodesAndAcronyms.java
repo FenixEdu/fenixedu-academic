@@ -1,7 +1,7 @@
 /*
  * Created on 13/Nov/2003
  */
-package middleware.databaseClean;
+package middleware.databaseClean.branches;
 
 import java.util.Iterator;
 import java.util.List;

@@ -3,7 +3,7 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
 import java.util.List;
 
-import middleware.middlewareDomain.MWAluno;
+import middleware.middlewareDomain.MWStudent;
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -26,15 +26,15 @@ public class MWAlunoOJB extends ObjectFenixOJB implements IPersistentMWAluno {
 		
 		Criteria criteria = new Criteria();
 		
-		return queryList(MWAluno.class, criteria);
+		return queryList(MWStudent.class, criteria);
 	}
 
-	public MWAluno readByNumber(Integer number) throws ExcepcaoPersistencia {
+	public MWStudent readByNumber(Integer number) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		
 		criteria.addEqualTo("number", number);
 		
-		return (MWAluno) queryObject(MWAluno.class, criteria);
+		return (MWStudent) queryObject(MWStudent.class, criteria);
 	}
 
 	/* (non-Javadoc)
@@ -43,7 +43,7 @@ public class MWAlunoOJB extends ObjectFenixOJB implements IPersistentMWAluno {
 	public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
-		return readSpan(MWAluno.class, criteria, numberOfElementsInSpan, spanNumber);
+		return readSpan(MWStudent.class, criteria, numberOfElementsInSpan, spanNumber);
 	}
 	
 	/* (non-Javadoc)
@@ -51,7 +51,7 @@ public class MWAlunoOJB extends ObjectFenixOJB implements IPersistentMWAluno {
 	 */
 	public Integer countAll()
 	{
-		return new Integer(count(MWAluno.class, new Criteria()));
+		return new Integer(count(MWStudent.class, new Criteria()));
 	}
 
     

@@ -1,19 +1,19 @@
-LOAD DATA INFILE '@load.data.infile.root@alunos.txt' into table mw_ALUNO_temp;
-LOAD DATA INFILE '@load.data.infile.root@pessoa.txt' into table mw_PESSOA IGNORE 1 LINES;
+LOAD DATA INFILE '@load.data.infile.root@alunos.txt' into table mw_STUDENT_AUXILIARY_TABLE;
+LOAD DATA INFILE '@load.data.infile.root@pessoa.txt' into table mw_PERSON IGNORE 1 LINES;
 -- LOAD DATA INFILE '@load.data.infile.root@nomedis.txt' into table mw_COURSE;
 LOAD DATA INFILE '@load.data.infile.root@curram.txt' into table mw_BRANCH;
 LOAD DATA INFILE '@load.data.infile.root@medias.txt' into table mw_AVERAGE;
-LOAD DATA INFILE '@load.data.infile.root@curriculo.txt' into table mw_ENROLMENT_temp;
+LOAD DATA INFILE '@load.data.infile.root@curriculo.txt' into table mw_ENROLMENT_AUXILIARY_TABLE_1;
 LOAD DATA INFILE '@load.data.infile.root@nomedis.txt' into table mw_CURRICULAR_COURSE;
-LOAD DATA INFILE '@load.data.infile.root@disciplinas.txt' into table mw_CURRICULAR_COURSE_SCOPE_temp;
+LOAD DATA INFILE '@load.data.infile.root@disciplinas.txt' into table mw_CURRICULAR_COURSE_SCOPE_AUXILIARY_TABLE;
 --LOAD DATA INFILE '@load.data.infile.root@student-class-distribution.txt' into table mw_STUDENT_CLASS IGNORE 1 LINES;
 --LOAD DATA INFILE '@load.data.infile.root@student-class-distribution-2nd-phase.txt' into table mw_STUDENT_CLASS IGNORE 1 LINES (STUDENT_NUMBER, DEGREE_CODE,CLASS_NAME);
 LOAD DATA INFILE '@load.data.infile.root@escolas.txt' into table mw_UNIVERSITY;
 
 
 UPDATE mw_CURRICULAR_COURSE SET courseCode = LTRIM(courseCode);
-UPDATE mw_ENROLMENT_temp SET courseCode = LTRIM(courseCode);
-UPDATE mw_CURRICULAR_COURSE_SCOPE_temp SET courseCode = LTRIM(courseCode);
+UPDATE mw_ENROLMENT_AUXILIARY_TABLE_1 SET courseCode = LTRIM(courseCode);
+UPDATE mw_CURRICULAR_COURSE_SCOPE_AUXILIARY_TABLE SET courseCode = LTRIM(courseCode);
 UPDATE mw_UNIVERSITY SET universityCode = LTRIM(universityCode);
 -- UPDATE mw_COURSE SET courseCode = LTRIM(courseCode);
 -- UPDATE mw_CURRICULAR_COURSE SET courseName = RTRIM(courseName);
@@ -29,27 +29,27 @@ insert into mw_DEGREE_TRANSLATION values (01,1),(02,2),(03,3),(04,4),(05,5),(06,
 
 
 -- Temporary Delete's (Student's that changed degree but the Branch wasn't updated)
-delete from mw_ALUNO_temp where number = 42980;
-delete from mw_ALUNO_temp where number = 51335;
-delete from mw_ALUNO_temp where number = 46896;
-delete from mw_ALUNO_temp where number = 42455;
-delete from mw_ALUNO_temp where number = 45067;
+delete from mw_STUDENT_AUXILIARY_TABLE where number = 42980;
+delete from mw_STUDENT_AUXILIARY_TABLE where number = 51335;
+delete from mw_STUDENT_AUXILIARY_TABLE where number = 46896;
+delete from mw_STUDENT_AUXILIARY_TABLE where number = 42455;
+delete from mw_STUDENT_AUXILIARY_TABLE where number = 45067;
 
-delete from mw_ENROLMENT_temp where number = 42980;
-delete from mw_ENROLMENT_temp where number = 51335;
-delete from mw_ENROLMENT_temp where number = 46896;
-delete from mw_ENROLMENT_temp where number = 42455;
-delete from mw_ENROLMENT_temp where number = 45067;
+delete from mw_ENROLMENT_AUXILIARY_TABLE_1 where number = 42980;
+delete from mw_ENROLMENT_AUXILIARY_TABLE_1 where number = 51335;
+delete from mw_ENROLMENT_AUXILIARY_TABLE_1 where number = 46896;
+delete from mw_ENROLMENT_AUXILIARY_TABLE_1 where number = 42455;
+delete from mw_ENROLMENT_AUXILIARY_TABLE_1 where number = 45067;
 
 
-delete from mw_PESSOA where documentidnumber = 'ERASMUS';
-delete from mw_ALUNO_temp where documentidnumber = 'ERASMUS';
+delete from mw_PERSON where documentidnumber = 'ERASMUS';
+delete from mw_STUDENT_AUXILIARY_TABLE where documentidnumber = 'ERASMUS';
 
 drop table if exists mw_PERSON_WITH_DUPLICATE_ID;
 create table mw_PERSON_WITH_DUPLICATE_ID
-	select documentidnumber, max(idinternal) as maxidinternal, count(1) as total from mw_PESSOA group by documentidnumber having count(1) > 1;
+	select documentidnumber, max(idinternal) as maxidinternal, count(1) as total from mw_PERSON group by documentidnumber having count(1) > 1;
 
 drop table if exists mw_STUDENTS_WITH_VARIOUS_NUMBERS;
 create table mw_STUDENTS_WITH_VARIOUS_NUMBERS
-	select documentidnumber, number, max(number) as maxidinternal, count(1) as total from mw_ALUNO_temp group by documentidnumber having count(1) > 1;
+	select documentidnumber, number, max(number) as maxidinternal, count(1) as total from mw_STUDENT_AUXILIARY_TABLE group by documentidnumber having count(1) > 1;
 

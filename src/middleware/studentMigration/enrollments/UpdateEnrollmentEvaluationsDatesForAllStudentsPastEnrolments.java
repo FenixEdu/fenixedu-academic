@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import middleware.middlewareDomain.MWAluno;
+import middleware.middlewareDomain.MWStudent;
 import middleware.middlewareDomain.MWBranch;
 import middleware.middlewareDomain.MWDegreeTranslation;
 import middleware.middlewareDomain.MWEnrolment;
@@ -61,7 +61,7 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 
 	public static void main(String args[])
 	{
-		MWAluno mwStudent = null;
+		MWStudent mwStudent = null;
 
 		try {
 			ISuportePersistente fenixPersistentSuport = SuportePersistenteOJB.getInstance();
@@ -97,7 +97,7 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 				
 				Iterator iterator = result.iterator();
 				while (iterator.hasNext()) {
-					mwStudent = (MWAluno) iterator.next();
+					mwStudent = (MWStudent) iterator.next();
 
 					fenixPersistentSuport.iniciarTransaccao();
 					mwStudent.setEnrolments(persistentMWEnrolment.readByStudentNumber(mwStudent.getNumber()));
@@ -121,7 +121,7 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 	 * @param fenixPersistentSuport
 	 * @throws Throwable
 	 */
-	private static void updateEnrollmentEvaluationsDatesForThisStudent(MWAluno mwStudent, ISuportePersistente fenixPersistentSuport) throws Throwable
+	private static void updateEnrollmentEvaluationsDatesForThisStudent(MWStudent mwStudent, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IPersistentStudent persistentStudent = fenixPersistentSuport.getIPersistentStudent();
 
@@ -227,7 +227,7 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 	 * @param fenixPersistentSuport
 	 * @throws Throwable
 	 */
-	private static void updateEnrollmentEvaluationsDates(MWAluno mwStudent, IStudentCurricularPlan studentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+	private static void updateEnrollmentEvaluationsDates(MWStudent mwStudent, IStudentCurricularPlan studentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IPersistentEnrolment enrolmentDAO = fenixPersistentSuport.getIPersistentEnrolment();
 		IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = fenixPersistentSuport.getIPersistentEnrolmentEvaluation();

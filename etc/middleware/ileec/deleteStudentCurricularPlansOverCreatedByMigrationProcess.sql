@@ -1,7 +1,7 @@
 -- select concat('delete from STUDENT_CURRICULAR_PLAN where ID_INTERNAL = ', scp.ID_INTERNAL, ');') AS "QQ"
 -- from STUDENT_CURRICULAR_PLAN scp
 -- inner join STUDENT s on scp.KEY_STUDENT = s.ID_INTERNAL
--- inner join mw_ALUNO_temp mws on s.NUMBER = mws.number
+-- inner join mw_STUDENT_AUXILIARY_TABLE mws on s.NUMBER = mws.number
 -- where mws.degreeCode = 24 and scp.CURRENT_STATE = 6;
 
 delete from STUDENT_CURRICULAR_PLAN where ID_INTERNAL = 19769;

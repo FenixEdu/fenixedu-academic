@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import middleware.middlewareDomain.MWAluno;
+import middleware.middlewareDomain.MWStudent;
 import middleware.middlewareDomain.MWBranch;
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
@@ -65,7 +65,7 @@ public class UpdateStudent {
 			sp.confirmarTransaccao();		
 			Iterator iterator = result.iterator();
 			while(iterator.hasNext()) {
-				MWAluno student = (MWAluno) iterator.next();
+				MWStudent student = (MWStudent) iterator.next();
 				try {
 					sp.iniciarTransaccao();
 					UpdateStudent.updateCorrectStudents(student, sp);
@@ -86,7 +86,7 @@ public class UpdateStudent {
 	 * 
 	 */ 
 	
-	public static void updateCorrectStudents(MWAluno oldStudent, SuportePersistenteOJB sp) throws Exception {
+	public static void updateCorrectStudents(MWStudent oldStudent, SuportePersistenteOJB sp) throws Exception {
 		
 		try {
 			
@@ -219,7 +219,7 @@ public class UpdateStudent {
 	 * @param oldStudent
 	 * @return the New Degree Curricular Plan
 	 */
-	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWAluno oldStudent, ISuportePersistente sp) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWStudent oldStudent, ISuportePersistente sp) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
 	
 //		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
@@ -248,7 +248,7 @@ public class UpdateStudent {
 
 
 
-	private static IBranch getBranch(MWAluno oldStudent, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	private static IBranch getBranch(MWStudent oldStudent, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
 
 		IBranch branch = null;
 		

@@ -1,9 +1,11 @@
-package middleware.studentMigration.enrollments;
+package middleware.studentMigration.equivalences;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import middleware.studentMigration.enrollments.CreateAndUpdateAllStudentsPastEnrolments;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
