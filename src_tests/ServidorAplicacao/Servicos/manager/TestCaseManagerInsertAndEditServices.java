@@ -55,7 +55,7 @@ public abstract class TestCaseManagerInsertAndEditServices extends TestCaseNeedA
 		if(args != null) {
 			
 			try {
-				Object result =_gestor.executar(_userView, getNameOfServiceToBeTested(), args);
+				_gestor.executar(_userView, getNameOfServiceToBeTested(), args);
 				System.out.println("testUnsuccessfulExecutionOfService was UNSUCCESSFULY run by class: " + this.getClass().getName());
 				fail("testUnsuccessfulExecutionOfService");
 			} catch (Exception ex) {
