@@ -20,7 +20,9 @@ public class AnnouncementManagementAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form,	
     	HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = getSession(request);
-		DynaActionForm announcementManagementForm = (DynaActionForm) session.getAttribute("teacher.announcementManagementForm");
+		
+		System.out.println("AnnouncementManagementAction" + form);
+		DynaActionForm announcementManagementForm = (DynaActionForm) form;
 		
         String option = (String) announcementManagementForm.get("option");
         int index = ((Integer) announcementManagementForm.get("index")).intValue();

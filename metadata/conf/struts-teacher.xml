@@ -16,7 +16,7 @@
 		<form-property name="generalObjectives" type="java.lang.String" />
 	</form-bean>
 
-	<form-bean name="teacher.announcementManagementForm"
+	<form-bean name="announcementManagementForm"
 		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 		<form-property name="index" type="java.lang.Integer" />
 		<form-property name="option" type="java.lang.String" />
@@ -213,15 +213,54 @@
 
 	<action path="/teacher/announcementManagement" forward="teacher.announcementManagement"/>
 
-	<action name="teacher.announcementManagementAction"
+	<action name="announcementManagementForm"
     	type="ServidorApresentacao.Action.teacher.AnnouncementManagementAction"
-        path="/teacher/announcementManagementAction" input="teacher.announcementManagement"
+        path="/announcementManagementAction" 
+        input="announcementManagement" 
         scope="request">
-        <forward name="InsertAnnouncement" path="/teacher/insertAnnouncement.do" redirect = "true"/>
-		<forward name="EditAnnouncement" path="/teacher/editAnnouncement.do" redirect = "true"/>
-		<forward name="DeleteAnnouncement" path="/teacher/deleteAnnouncement.do" redirect = "true"/>
+        <forward name="InsertAnnouncement" path="/insertAnnouncement.do" />
+		<forward name="EditAnnouncement" path="/editAnnouncement.do" />
+		<forward name="DeleteAnnouncement" path="/deleteAnnouncement.do" />
 	</action>
 
+	<!-- ExceptionHandling -->   
+      <action parameter="method"
+              name="errorMailForm" 
+              path="/exceptionHandling"
+              scope="request"
+              type="ServidorApresentacao.Action.ExceptionHandlingAction"     
+              >
+        
+      </action>
+	 <!-- Action For LogOff -->
+      <action path="/logoff"
+      	      type="ServidorApresentacao.Action.commons.LogOffAction">
+      	  <forward name="Success" path="/index.do"/>
+      </action>
+	
+	<!--attention: this action is incomplete --> 
+	<action 
+		name="executionCourseObjectivesForm"
+		parameter="method"
+		path="/objectivesManagerDA"
+        type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
+		>    
+    <forward name="viewObjectives" path="/viewObjectives.jsp"/>
+    <forward name="editObjectives" path="/editObjectives.jsp"/>
+     
+	</action>
+	
+	<action 
+		name="executionCourseProgramForm"
+		parameter="method"
+		path="/programManagerDA"
+        type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
+		>    
+     <forward name="viewProgram" path="/viewProgram.jsp"/>
+     <forward name="editProgram" path="/editProgram.jsp"/>
+     
+	</action>
+	
 	<!--
 	<action path="/index" forward="/obterSitios.do"/>
 	<action path="/autenticacao" forward="/autenticacao.jsp"/>
@@ -575,43 +614,7 @@
 	</action>
 
 	-->   
-		<!-- ExceptionHandling -->   
-      <action parameter="method"
-              name="errorMailForm" 
-              path="/exceptionHandling"
-              scope="request"
-              type="ServidorApresentacao.Action.ExceptionHandlingAction"     
-              >
-        
-      </action>
-	 <!-- Action For LogOff -->
-      <action path="/logoff"
-      	      type="ServidorApresentacao.Action.commons.LogOffAction">
-      	  <forward name="Success" path="/index.do"/>
-      </action>
 	
-	<!--attention: this action is incomplete --> 
-	<action 
-		name="executionCourseObjectivesForm"
-		parameter="method"
-		path="/objectivesManagerDA"
-        type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
-		>    
-    <forward name="viewObjectives" path="/viewObjectives.jsp"/>
-    <forward name="editObjectives" path="/editObjectives.jsp"/>
-     
-	</action>
-	
-	<action 
-		name="executionCourseProgramForm"
-		parameter="method"
-		path="/programManagerDA"
-        type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
-		>    
-     <forward name="viewProgram" path="/viewProgram.jsp"/>
-     <forward name="editProgram" path="/editProgram.jsp"/>
-     
-	</action>
 	    
 	</action-mappings>
 
