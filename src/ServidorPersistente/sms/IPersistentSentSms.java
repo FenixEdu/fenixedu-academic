@@ -19,6 +19,7 @@ import ServidorPersistente.IPersistentObject;
 public interface IPersistentSentSms extends IPersistentObject
 {
 	public abstract List readByPerson(IPessoa person) throws ExcepcaoPersistencia;
+	public abstract List readByPerson(IPessoa person, Integer interval) throws ExcepcaoPersistencia;
 	public abstract Integer countByPersonAndDatePeriod(Integer personId, Date startDate, Date endDate)
 		throws ExcepcaoPersistencia;
 }

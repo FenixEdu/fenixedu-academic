@@ -33,8 +33,14 @@ public class SentSmsOJB extends ObjectFenixOJB implements IPersistentSentSms
 	{
 		Criteria crit = new Criteria();
 		crit.addEqualTo("person.idInternal", person.getIdInternal());
-		return queryList(SentSms.class, crit);
+		return queryList(SentSms.class, crit, "sendDate", false);
+	}
 
+	public List readByPerson(IPessoa person, Integer interval) throws ExcepcaoPersistencia
+	{
+		Criteria crit = new Criteria();
+		crit.addEqualTo("person.idInternal", person.getIdInternal());
+		return readInterval(SentSms.class, crit, interval, new Integer(0), "sendDate", false);
 	}
 
 	public Integer countByPersonAndDatePeriod(Integer personId, Date startDate, Date endDate)
