@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
-import org.apache.ojb.broker.cache.CacheDistributor;
 import org.apache.ojb.broker.cache.CacheFilterRegistry;
 import org.apache.ojb.odmg.HasBroker;
 import org.apache.ojb.odmg.OJB;

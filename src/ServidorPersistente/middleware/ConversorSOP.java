@@ -211,7 +211,7 @@ public class ConversorSOP {
 			sp.iniciarTransaccao();
 
 			classDAO.deleteAll();
-			shiftDAO.deleteAll();
+			//shiftDAO.deleteAll();
 			shiftLessonDAO.deleteAll();
 			classShiftDAO.deleteAll();
 			lessonDAO.deleteAll();

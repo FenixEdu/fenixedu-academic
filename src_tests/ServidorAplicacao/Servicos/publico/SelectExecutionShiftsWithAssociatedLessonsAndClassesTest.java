@@ -280,7 +280,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 
 			if (testCase == 3) {
 				//System.out.println("###### Nao tem turnos");
-				turnoPersistente.deleteAll();
+				//turnoPersistente.deleteAll();
 			}
 			sp.confirmarTransaccao();
 
