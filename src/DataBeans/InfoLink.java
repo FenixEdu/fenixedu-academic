@@ -5,7 +5,6 @@
 package DataBeans;
 
 import java.io.UnsupportedEncodingException;
-import java.io.Serializable;
 
 /**
  *fenix-head
@@ -14,7 +13,7 @@ import java.io.Serializable;
  *17/Set/2003
  *
  */
-public class InfoLink implements Serializable {
+public class InfoLink extends DataTranferObject {
 	private String linkName;
 	private String link;
 

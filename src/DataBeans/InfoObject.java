@@ -4,12 +4,11 @@
  */
 package DataBeans;
 
-import java.io.Serializable;
 
 /**
  * @author jpvl
  */
-public abstract class InfoObject implements Serializable
+public abstract class InfoObject extends DataTranferObject
 {
     private Integer idInternal;
 

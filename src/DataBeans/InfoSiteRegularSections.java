@@ -8,7 +8,7 @@ import java.util.ListIterator;
  *
  * 
  */
-public class InfoSiteRegularSections implements ISiteComponent {
+public class InfoSiteRegularSections extends DataTranferObject implements ISiteComponent {
 
 	private List regularSections;
 

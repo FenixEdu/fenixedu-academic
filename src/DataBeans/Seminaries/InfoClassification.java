@@ -7,6 +7,9 @@
  */
 package DataBeans.Seminaries;
 
+import DataBeans.DataTranferObject;
+import DataBeans.InfoObject;
+
 /**
  * 
  * Created at Feb 1, 2004 , 6:59:38 PM
@@ -15,7 +18,7 @@ package DataBeans.Seminaries;
  * 
  * 
  */
-public class InfoClassification
+public class InfoClassification extends DataTranferObject
 {
 	private String aritmeticClassification;
 	private String classification;

@@ -6,6 +6,7 @@ package DataBeans.enrollment.shift;
 
 import java.util.List;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoStudent;
 
@@ -13,7 +14,7 @@ import DataBeans.InfoStudent;
  * This class keeps all information usefull for shift enrollment use case
  * @author Tânia Pousão
  */
-public class InfoShiftEnrollment
+public class InfoShiftEnrollment extends DataTranferObject
 {
 	
 	

@@ -6,13 +6,14 @@ package DataBeans.teacher.professorship;
 
 import java.util.List;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoTeacher;
 
 /**
  * @author jpvl
  */
-public class TeacherExecutionCourseProfessorshipShiftsDTO
+public class TeacherExecutionCourseProfessorshipShiftsDTO extends DataTranferObject
 {
     private InfoExecutionCourse infoExecutionCourse;
     private List infoShiftPercentageList;

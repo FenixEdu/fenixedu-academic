@@ -13,7 +13,7 @@ import java.util.ListIterator;
  *
  * 
  */
-public class InfoSiteAnnouncement implements ISiteComponent {
+public class InfoSiteAnnouncement extends DataTranferObject implements ISiteComponent {
 
 	private List announcements;
 

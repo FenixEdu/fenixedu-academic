@@ -1,6 +1,5 @@
 package DataBeans;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +9,7 @@ import org.apache.struts.util.MessageResources;
  * @author Fernanda Quitério 10/Jan/2004
  *  
  */
-public class InfoPaymentPhase extends InfoObject implements Serializable
+public class InfoPaymentPhase extends InfoObject 
 {
 	private Date startDate;
 	private Date endDate;

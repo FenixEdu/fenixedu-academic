@@ -8,7 +8,7 @@ package DataBeans;
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class InfoScientificArea
+public class InfoScientificArea extends InfoObject
 {
     private String name;
 

@@ -6,13 +6,14 @@ package DataBeans.teacher.workTime;
 
 import java.util.List;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoTeacher;
 
 /**
  * @author jpvl
  */
-public class TeacherInstitutionWorkingTimeDTO
+public class TeacherInstitutionWorkingTimeDTO extends DataTranferObject
 {
     private InfoExecutionPeriod infoExecutionPeriod;
     private InfoTeacher infoTeacher;

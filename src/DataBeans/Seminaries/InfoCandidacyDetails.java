@@ -8,6 +8,7 @@ package DataBeans.Seminaries;
 import java.util.List;
 
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoObject;
 import DataBeans.InfoStudent;
 
 /**
@@ -17,7 +18,7 @@ import DataBeans.InfoStudent;
  * Created at 1/Set/2003, 15:30:27
  * 
  */
-public class InfoCandidacyDetails
+public class InfoCandidacyDetails extends InfoObject
 {
     private InfoStudent student;
     private List cases;
@@ -26,7 +27,6 @@ public class InfoCandidacyDetails
     private InfoSeminary seminary;  
     private String motivation; 
     private InfoCurricularCourse curricularCourse;
-    private Integer idInternal;
     private Double classification;
     private Integer completedCourses;
     private Boolean approved;
@@ -144,21 +144,7 @@ public class InfoCandidacyDetails
 		curricularCourse= course;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal()
-	{
-		return idInternal;
-	}
-
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer integer)
-	{
-		idInternal= integer;
-	}
+	
 
 	/**
 	 * @return

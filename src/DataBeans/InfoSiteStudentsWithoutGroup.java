@@ -12,7 +12,7 @@ import java.util.ListIterator;
  *
  */
 
-public class InfoSiteStudentsWithoutGroup implements ISiteComponent {
+public class InfoSiteStudentsWithoutGroup extends DataTranferObject implements ISiteComponent {
 
 	private List infoStudentList;
 	private Integer groupNumber;

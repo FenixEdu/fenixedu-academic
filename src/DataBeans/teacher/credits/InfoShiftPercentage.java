@@ -7,12 +7,13 @@ package DataBeans.teacher.credits;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoShift;
 
 /**
  * @author jpvl
  */
-public class InfoShiftPercentage {
+public class InfoShiftPercentage extends DataTranferObject{
 	private List lessons;
 	private InfoShift shift;
 	private Double availablePercentage;

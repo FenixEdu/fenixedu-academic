@@ -12,7 +12,7 @@ import java.util.List;
  *
  * 
  */
-public class InfoSiteShifts implements ISiteComponent {
+public class InfoSiteShifts extends DataTranferObject implements ISiteComponent {
 
 private String infoExecutionPeriodName;
 private String infoExecutionYearName;

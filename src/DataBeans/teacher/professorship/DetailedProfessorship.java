@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegree;
 import DataBeans.InfoProfessorship;
@@ -15,7 +16,7 @@ import DataBeans.InfoProfessorship;
 /**
  * @author jpvl
  */
-public class DetailedProfessorship
+public class DetailedProfessorship extends DataTranferObject
 {
     private InfoProfessorship infoProfessorship;
     private Boolean responsibleFor;

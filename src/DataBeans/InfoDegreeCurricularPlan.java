@@ -1,6 +1,5 @@
 package DataBeans;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +12,7 @@ import Util.MarkType;
  * 19/Mar/2003
  */
 
-public class InfoDegreeCurricularPlan extends InfoObject implements Serializable, Comparable
+public class InfoDegreeCurricularPlan extends InfoObject implements  Comparable
 {
 
     private InfoDegree infoDegree;

@@ -8,7 +8,7 @@ import java.util.ListIterator;
  *
  * 
  */
-public class InfoSiteStudents implements ISiteComponent {
+public class InfoSiteStudents extends DataTranferObject implements ISiteComponent {
 
 //	private InfoCurricularCourseScope infoCurricularCourseScope;
 	private InfoCurricularCourse infoCurricularCourse;

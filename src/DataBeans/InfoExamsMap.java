@@ -1,8 +1,6 @@
 /*
  * Created on Apr 2, 2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package DataBeans;
 
@@ -12,8 +10,6 @@ import java.util.List;
 /**
  * @author Luis Cruz & Sara Ribeiro
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class InfoExamsMap extends InfoObject {
 

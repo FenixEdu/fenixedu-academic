@@ -6,12 +6,13 @@ package DataBeans.enrollment.shift;
 import java.util.List;
 import java.util.Map;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoStudent;
 
 /**
  * @author jpvl
  */
-public class InfoClassEnrollmentDetails
+public class InfoClassEnrollmentDetails extends DataTranferObject
 {
     /**
      * Map (key - classId; value - List of @see ExecutionCourseShiftEnrollmentDetails

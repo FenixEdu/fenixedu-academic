@@ -17,7 +17,7 @@ import Util.TipoAula;
  * DataBeans
  * 
  */
-public class InfoSiteSummaries implements ISiteComponent {
+public class InfoSiteSummaries extends DataTranferObject implements ISiteComponent {
 
 	private List infoSummaries;
 	private InfoExecutionCourse executionCourse;

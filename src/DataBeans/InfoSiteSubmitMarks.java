@@ -8,7 +8,7 @@ import java.util.ListIterator;
  *
  * 
  */
-public class InfoSiteSubmitMarks implements ISiteComponent {
+public class InfoSiteSubmitMarks extends DataTranferObject implements ISiteComponent {
 	private InfoEvaluation infoEvaluation;
 	private List marksList;
 

@@ -12,7 +12,7 @@ import java.util.ListIterator;
  *
  */
 
-public class InfoSiteGroupsByShift implements ISiteComponent {
+public class InfoSiteGroupsByShift extends DataTranferObject implements ISiteComponent {
 
 	private List infoSiteStudentGroupsList;
 	private InfoSiteShift infoSiteShift;

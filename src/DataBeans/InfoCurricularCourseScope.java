@@ -12,7 +12,7 @@ import java.util.Calendar;
 /**
  * @author tfc130
  */
-public class InfoCurricularCourseScope extends InfoObject implements Serializable
+public class InfoCurricularCourseScope extends InfoObject 
 {
 	private InfoCurricularCourse infoCurricularCourse;
 	private InfoCurricularSemester infoCurricularSemester;

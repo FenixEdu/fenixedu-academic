@@ -11,7 +11,7 @@ import java.util.ListIterator;
  * @author asnr and scpo
  *
  */
-public class InfoSiteShiftsAndGroups implements ISiteComponent {
+public class InfoSiteShiftsAndGroups extends DataTranferObject implements ISiteComponent {
 
 	private List infoSiteGroupsByShiftList;
 	

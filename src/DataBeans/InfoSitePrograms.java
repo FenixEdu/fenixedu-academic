@@ -12,7 +12,7 @@ import DataBeans.ISiteComponent;
  * @author Tânia Nunes
  *
  */
-public class InfoSitePrograms implements ISiteComponent{
+public class InfoSitePrograms extends DataTranferObject implements ISiteComponent{
 	private List infoCurriculums;
 	private List infoCurricularCourses;
 

@@ -6,11 +6,13 @@ package DataBeans.enrollment.shift;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataBeans.DataTranferObject;
+
 /**
  * @author jmota
  *
  */
-public class ShiftEnrollmentErrorReport
+public class ShiftEnrollmentErrorReport extends DataTranferObject
 {
 
     private List unExistingShifts;

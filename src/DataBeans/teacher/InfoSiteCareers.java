@@ -6,6 +6,7 @@ package DataBeans.teacher;
 
 import java.util.List;
 
+import DataBeans.DataTranferObject;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoTeacher;
 import Util.CareerType;
@@ -15,7 +16,7 @@ import Util.CareerType;
  * @author Sergio Montelobo
  *  
  */
-public class InfoSiteCareers implements ISiteComponent
+public class InfoSiteCareers extends DataTranferObject implements ISiteComponent
 {
 
     private List infoCareers;

@@ -13,7 +13,7 @@ import java.util.ListIterator;
  *
  * 
  */
-public class InfoSiteBibliography implements ISiteComponent {
+public class InfoSiteBibliography extends DataTranferObject implements ISiteComponent {
 
 private List bibliographicReferences;
 

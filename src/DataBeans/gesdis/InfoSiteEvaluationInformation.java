@@ -6,6 +6,7 @@ package DataBeans.gesdis;
 
 import java.util.List;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoCurricularCourse;
 
 /**
@@ -13,7 +14,7 @@ import DataBeans.InfoCurricularCourse;
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo</a>
  *
  */
-public class InfoSiteEvaluationInformation
+public class InfoSiteEvaluationInformation extends DataTranferObject
 {
     private InfoCurricularCourse infoCurricularCourse;
     private InfoSiteEvaluationStatistics infoSiteEvaluationStatistics;

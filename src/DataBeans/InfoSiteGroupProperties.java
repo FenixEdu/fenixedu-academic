@@ -8,7 +8,7 @@ package DataBeans;
  * @author asnr and scpo
  *
  */
-public class InfoSiteGroupProperties implements ISiteComponent{
+public class InfoSiteGroupProperties extends DataTranferObject implements ISiteComponent{
 
 	private InfoGroupProperties infoGroupProperties;
 

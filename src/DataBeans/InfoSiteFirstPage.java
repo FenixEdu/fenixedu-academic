@@ -12,7 +12,7 @@ import java.util.List;
  *
  * 
  */
-public class InfoSiteFirstPage implements ISiteComponent {
+public class InfoSiteFirstPage extends DataTranferObject implements ISiteComponent {
 	
 	
 	private String alternativeSite;

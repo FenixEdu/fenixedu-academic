@@ -10,7 +10,7 @@ import java.util.List;
  * @author Susana Fernandes
  */
 
-public class InfoSiteMetadatas implements ISiteComponent {
+public class InfoSiteMetadatas extends DataTranferObject implements ISiteComponent {
 	private List infoMetadatas;
 	private InfoExecutionCourse executionCourse;
 

@@ -8,7 +8,7 @@ import java.util.ListIterator;
  *
  * 
  */
-public class InfoSiteRootSections implements ISiteComponent {
+public class InfoSiteRootSections extends DataTranferObject implements ISiteComponent {
 
 	private List rootSections;
 

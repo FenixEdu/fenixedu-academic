@@ -7,7 +7,7 @@ import java.util.List;
  * 25/06/2003
  *
  */
-public class InfoSiteEvaluation implements ISiteComponent {
+public class InfoSiteEvaluation extends DataTranferObject implements ISiteComponent {
 	
 	private List infoEvaluations;
 

@@ -11,7 +11,7 @@ import java.util.List;
  * @author João Mota
  *
  */
-public class InfoSiteRoomTimeTable implements ISiteComponent {
+public class InfoSiteRoomTimeTable extends DataTranferObject implements ISiteComponent {
 
 	private List infoLessons;
 	private InfoRoom infoRoom;

@@ -15,7 +15,7 @@ import java.util.ListIterator;
  * 
  *  
  */
-public class InfoSiteCommon implements ISiteComponent
+public class InfoSiteCommon extends DataTranferObject implements ISiteComponent
 {
 
     private String title;

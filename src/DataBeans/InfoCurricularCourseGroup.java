@@ -1,12 +1,9 @@
 /*
  * Created on 26/Nov/2003
  *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 package DataBeans;
 
-import java.io.Serializable;
 import java.util.List;
 
 import Util.AreaType;
@@ -16,7 +13,7 @@ import Util.AreaType;
  * @author Ricardo Rodrigues
  */
 
-public class InfoCurricularCourseGroup extends InfoObject implements Serializable
+public class InfoCurricularCourseGroup extends InfoObject 
 {
     private Integer minimumCredits;
     private Integer maximumCredits;

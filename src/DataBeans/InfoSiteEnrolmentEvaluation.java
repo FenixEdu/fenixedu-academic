@@ -9,7 +9,7 @@ import java.util.ListIterator;
  *
  * 
  */
-public class InfoSiteEnrolmentEvaluation implements ISiteComponent {
+public class InfoSiteEnrolmentEvaluation extends DataTranferObject implements ISiteComponent {
 	private List enrolmentEvaluations;
 	private InfoTeacher infoTeacher;
 	private Date lastEvaluationDate;

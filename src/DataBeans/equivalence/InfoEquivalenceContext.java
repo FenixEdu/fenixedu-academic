@@ -3,11 +3,12 @@ package DataBeans.equivalence;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 
-public class InfoEquivalenceContext {
+public class InfoEquivalenceContext extends DataTranferObject {
 	private List infoEnrolmentsToGiveEquivalence;
     private List infoCurricularCoursesToGetEquivalence;   
    

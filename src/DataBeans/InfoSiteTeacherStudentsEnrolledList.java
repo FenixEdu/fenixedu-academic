@@ -11,7 +11,7 @@ import java.util.List;
  * @author João Mota
  *
  */
-public class InfoSiteTeacherStudentsEnrolledList implements ISiteComponent {
+public class InfoSiteTeacherStudentsEnrolledList extends DataTranferObject implements ISiteComponent {
 	private List infoStudents;
 	private InfoExam infoExam;
 	private List infoExamStudentRoomList;

@@ -5,6 +5,8 @@
  */
 package DataBeans.Seminaries;
 import java.util.List;
+
+import DataBeans.InfoObject;
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *
@@ -12,9 +14,9 @@ import java.util.List;
  * Created at 5/Ago/2003, 16:08:50
  * 
  */
-public class InfoCandidacy
+public class InfoCandidacy extends InfoObject
 {
-	private Integer idInternal;
+
 	private List caseStudyChoices;
 	private String motivation;
 	private String seminaryName;
@@ -38,13 +40,7 @@ public class InfoCandidacy
 	{
 		return curricularCourseIdInternal;
 	}
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal()
-	{
-		return idInternal;
-	}
+	
 	/**
 	 * @return
 	 */
@@ -87,13 +83,7 @@ public class InfoCandidacy
 	{
 		curricularCourseIdInternal = integer;
 	}
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer integer)
-	{
-		idInternal = integer;
-	}
+	
 	/**
 	 * @param integer
 	 */
@@ -140,7 +130,7 @@ public class InfoCandidacy
 	{
 		String result = "[InfoCandidacy:";
 		result += "Theme=" + this.themeIdInternal + ";";
-		result += "IdIntenal=" + this.idInternal + ";";
+		result += "IdIntenal=" + super.getIdInternal() + ";";
 		result += "Motivation=" + this.motivation + ";";
 		result += "Student=" + this.studentIdInternal + ";";
 		result += "CaseStudyChoices" + this.caseStudyChoices + ";";

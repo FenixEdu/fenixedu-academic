@@ -11,7 +11,7 @@ import java.util.ListIterator;
  * @author asnr and scpo
  *
  */
-public class InfoSiteStudentGroup implements ISiteComponent {
+public class InfoSiteStudentGroup extends DataTranferObject implements ISiteComponent {
 
 	private List infoSiteStudentInformationList;
 	private InfoStudentGroup infoStudentGroup;

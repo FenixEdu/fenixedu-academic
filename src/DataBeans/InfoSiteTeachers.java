@@ -7,7 +7,7 @@ import java.util.ListIterator;
  * @author Fernanda Quitério
  *
  */
-public class InfoSiteTeachers implements ISiteComponent {
+public class InfoSiteTeachers extends DataTranferObject implements ISiteComponent {
 
 	private List infoTeachers;
 	private Boolean isResponsible;

@@ -1,6 +1,5 @@
 package DataBeans;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import Util.PeriodState;
@@ -8,7 +7,7 @@ import Util.PeriodState;
 /**
  * @author Nuno & Joana
  */
-public class InfoExecutionYear extends InfoObject implements Serializable
+public class InfoExecutionYear extends InfoObject 
 {
     private String year;
     private PeriodState state;

@@ -7,7 +7,7 @@ import java.util.ListIterator;
  * @author Fernanda Quitério
  * 
  */
-public class InfoSiteSections implements ISiteComponent {
+public class InfoSiteSections extends DataTranferObject implements ISiteComponent {
 
 	private InfoSection section;
 	private List sections;

@@ -12,6 +12,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import DataBeans.DataTranferObject;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoCurriculum;
 import DataBeans.InfoEvaluationMethod;
@@ -22,7 +23,7 @@ import DataBeans.InfoExecutionCourse;
  * @author Sergio Montelobo
  *  
  */
-public class InfoSiteCourseInformation implements ISiteComponent
+public class InfoSiteCourseInformation extends DataTranferObject implements ISiteComponent
 {
 
     private InfoExecutionCourse infoExecutionCourse;

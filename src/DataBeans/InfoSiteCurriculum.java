@@ -13,7 +13,7 @@ package DataBeans;
  * DataBeans
  * 
  */
-public class InfoSiteCurriculum implements ISiteComponent {
+public class InfoSiteCurriculum extends DataTranferObject implements ISiteComponent {
 	
 	private InfoCurriculum infoCurriculum;
 	private InfoCurricularCourse infoCurricularCourse;

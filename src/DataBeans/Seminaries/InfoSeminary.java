@@ -8,6 +8,8 @@ package DataBeans.Seminaries;
 import java.util.Calendar;
 import java.util.List;
 
+import DataBeans.InfoObject;
+
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *
@@ -15,9 +17,9 @@ import java.util.List;
  * Created at 31/Jul/2003, 16:59:55
  * 
  */
-public class InfoSeminary
+public class InfoSeminary extends InfoObject
 {
-    private Integer idInternal;
+    
     private String name;
     private String description;
     private List equivalencies;
@@ -44,14 +46,7 @@ public class InfoSeminary
 		return equivalencies;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal()
-	{
-		return idInternal;
-	}
-
+	
 	/**
 	 * @return
 	 */
@@ -76,13 +71,7 @@ public class InfoSeminary
 		equivalencies= list;
 	}
 
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer integer)
-	{
-		idInternal= integer;
-	}
+	
 
 	/**
 	 * @param string

@@ -1,8 +1,6 @@
 /*
  * Created on 7/Nov/2003
  * 
- * To change the template for this generated file go to Window - Preferences -
- * Java - Code Generation - Code and Comments
  */
 package DataBeans.teacher;
 
@@ -16,8 +14,6 @@ import DataBeans.InfoTeacher;
  * @author Leonor Almeida
  * @author Sergio Montelobo
  * 
- * To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Generation - Code and Comments
  */
 public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
 

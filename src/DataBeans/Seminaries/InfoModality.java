@@ -5,6 +5,8 @@
  */
 package DataBeans.Seminaries;
 
+import DataBeans.InfoObject;
+
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *
@@ -12,9 +14,9 @@ package DataBeans.Seminaries;
  * Created at 1/Ago/2003, 21:14:43
  * 
  */
-public class InfoModality
+public class InfoModality extends InfoObject
 {
-    private Integer idInternal;
+    
     private String description;
     private String name;
 	/**
@@ -25,13 +27,7 @@ public class InfoModality
 		return description;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal()
-	{
-		return idInternal;
-	}
+	
 
 	/**
 	 * @return
@@ -49,13 +45,7 @@ public class InfoModality
 		description= string;
 	}
 
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer integer)
-	{
-		idInternal= integer;
-	}
+	
 
 	/**
 	 * @param string

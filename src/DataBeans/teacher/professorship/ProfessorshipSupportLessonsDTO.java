@@ -6,12 +6,13 @@ package DataBeans.teacher.professorship;
 
 import java.util.List;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoProfessorship;
 
 /**
  * @author jpvl
  */
-public class ProfessorshipSupportLessonsDTO
+public class ProfessorshipSupportLessonsDTO extends DataTranferObject
 {
     InfoProfessorship infoProfessorship;
     List infoSupportLessonList;

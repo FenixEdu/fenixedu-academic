@@ -10,7 +10,7 @@ import java.util.List;
  * @author Susana Fernandes
  *
  */
-public class InfoSiteDistributedTestMarks implements ISiteComponent {
+public class InfoSiteDistributedTestMarks extends DataTranferObject implements ISiteComponent {
 	private List infoDistributedTestMarks;
 	private List correctAnswersPercentage;
 	private List wrongAnswersPercentage;

@@ -17,7 +17,7 @@ import java.util.List;
  * DataBeans
  * 
  */
-public class InfoSiteBasicCurricularCourses implements ISiteComponent {
+public class InfoSiteBasicCurricularCourses extends DataTranferObject implements ISiteComponent {
 
 	private List basicCurricularCourses;
 	private List nonBasicCurricularCourses;

@@ -15,7 +15,7 @@ package DataBeans;
  * DataBeans
  * 
  */
-public class InfoSiteSummary implements ISiteComponent {
+public class InfoSiteSummary extends DataTranferObject implements ISiteComponent {
 
 	private InfoSummary infoSummary;
 	private InfoExecutionCourse executionCourse;

@@ -6,6 +6,7 @@ package DataBeans.teacher;
 
 import java.util.List;
 
+import DataBeans.DataTranferObject;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoTeacher;
 
@@ -14,7 +15,7 @@ import DataBeans.InfoTeacher;
  * @author Sergio Montelobo
  *  
  */
-public class InfoSiteExternalActivities implements ISiteComponent
+public class InfoSiteExternalActivities extends DataTranferObject implements ISiteComponent
 {
 
 	private List infoExternalActivities;

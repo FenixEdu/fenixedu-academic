@@ -6,13 +6,14 @@ package DataBeans.degree.finalProject;
 
 import java.util.List;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoTeacher;
 
 /**
  * @author jpvl
  */
-public class TeacherDegreeFinalProjectStudentsDTO
+public class TeacherDegreeFinalProjectStudentsDTO extends DataTranferObject
 {
     private InfoExecutionPeriod infoExecutionPeriod;
     private InfoTeacher infoTeacher;

@@ -11,7 +11,7 @@ import java.util.List;
  * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
  *
  */
-public class InfoSiteEvaluationExecutionCourses implements ISiteComponent
+public class InfoSiteEvaluationExecutionCourses extends DataTranferObject implements ISiteComponent
 {
     protected List infoExecutionCourses;
     

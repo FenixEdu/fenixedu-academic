@@ -15,7 +15,7 @@ import java.util.List;
  * DataBeans
  * 
  */
-public class InfoSiteSCDegrees implements ISiteComponent{
+public class InfoSiteSCDegrees extends DataTranferObject implements ISiteComponent{
 
 private List degrees;
 

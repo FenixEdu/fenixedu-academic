@@ -10,7 +10,7 @@ package DataBeans;
  *
  * 
  */
-public class InfoSiteExamMap implements ISiteComponent {
+public class InfoSiteExamMap extends DataTranferObject implements ISiteComponent {
 	
 	private InfoExamsMap infoExamsMap;
 	private InfoExecutionDegree infoExecutionDegree;

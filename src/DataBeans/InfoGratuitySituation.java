@@ -4,7 +4,6 @@
  */
 package DataBeans;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +15,7 @@ import Util.GratuitySituationType;
  * @author Tânia Pousão
  *
  */
-public class InfoGratuitySituation extends InfoObject implements Serializable
+public class InfoGratuitySituation extends InfoObject 
 {
 	private Integer exemptionPercentage;
 	private ExemptionGratuityType exemptionType;

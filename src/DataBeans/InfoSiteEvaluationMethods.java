@@ -15,7 +15,7 @@ import java.util.List;
  * DataBeans
  * 
  */
-public class InfoSiteEvaluationMethods implements ISiteComponent {
+public class InfoSiteEvaluationMethods extends DataTranferObject implements ISiteComponent {
 	private InfoEvaluationMethod infoEvaluationMethod;
 	private List infoEvaluations; //unnecessary
 	private List infoCurricularCourses; //unnecessary

@@ -4,7 +4,6 @@
  */
 package DataBeans.credits;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoCredits;
@@ -21,7 +21,7 @@ import DataBeans.teacher.professorship.InfoSupportLesson;
 /**
  * @author jpvl
  */
-public class TeacherCreditsSheetDTO implements Serializable
+public class TeacherCreditsSheetDTO extends DataTranferObject
 {
 
     private List infoCreditLineList;

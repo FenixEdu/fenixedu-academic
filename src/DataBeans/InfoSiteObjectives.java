@@ -12,7 +12,7 @@ import java.util.List;
  *
  * 
  */
-public class InfoSiteObjectives implements ISiteComponent {
+public class InfoSiteObjectives extends DataTranferObject implements ISiteComponent {
 
 	private List infoCurricularCourses;
 	private List infoCurriculums;

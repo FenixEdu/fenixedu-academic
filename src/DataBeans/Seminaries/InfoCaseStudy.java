@@ -7,6 +7,8 @@ package DataBeans.Seminaries;
 
 import java.util.List;
 
+import DataBeans.InfoObject;
+
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *
@@ -14,9 +16,9 @@ import java.util.List;
  * Created at 4/Ago/2003, 19:04:21
  * 
  */
-public class InfoCaseStudy
+public class InfoCaseStudy extends InfoObject
 {
-      private Integer idInternal;
+     
       private String themeName;
       private List seminaryCandidacies;
       private String code;
@@ -38,13 +40,7 @@ public class InfoCaseStudy
 		return description;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal()
-	{
-		return idInternal;
-	}
+	
 
 	/**
 	 * @return
@@ -86,13 +82,7 @@ public class InfoCaseStudy
 		description= string;
 	}
 
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer integer)
-	{
-		idInternal= integer;
-	}
+	
 
 	/**
 	 * @param string

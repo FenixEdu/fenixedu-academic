@@ -1,12 +1,9 @@
 /*
  * Created on 21/Mar/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package DataBeans;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +14,7 @@ import Util.PaymentType;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class InfoGuide extends InfoObject implements Serializable{
+public class InfoGuide extends InfoObject {
 	
 	private Integer number;
 	private Integer year;

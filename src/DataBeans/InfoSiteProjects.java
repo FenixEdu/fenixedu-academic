@@ -12,7 +12,7 @@ import java.util.ListIterator;
  *
  */
 
-public class InfoSiteProjects implements ISiteComponent{
+public class InfoSiteProjects extends DataTranferObject implements ISiteComponent{
 
 	private List infoGroupPropertiesList;
 

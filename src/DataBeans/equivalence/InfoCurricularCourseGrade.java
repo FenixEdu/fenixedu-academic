@@ -1,9 +1,10 @@
 package DataBeans.equivalence;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 
-public class InfoCurricularCourseGrade {
+public class InfoCurricularCourseGrade extends DataTranferObject{
 
 	private InfoCurricularCourseScope infoCurricularCourseScope;
 	private InfoCurricularCourse infoCurricularCourse;

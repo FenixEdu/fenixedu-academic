@@ -13,7 +13,7 @@ import java.util.List;
  * 
  *
  */
-public class InfoSiteExam implements ISiteComponent {
+public class InfoSiteExam extends DataTranferObject implements ISiteComponent {
 	
 	private List infoExams;
 

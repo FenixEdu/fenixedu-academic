@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Susana Fernandes
  */
-public class InfoSiteTest implements ISiteComponent {
+public class InfoSiteTest extends DataTranferObject implements ISiteComponent {
 	private InfoTest infoTest;
 	private List infoTestQuestions;
 	private InfoExecutionCourse executionCourse;

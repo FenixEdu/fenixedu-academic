@@ -5,6 +5,8 @@
  */
 package DataBeans.Seminaries;
 
+import DataBeans.DataTranferObject;
+
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -13,7 +15,7 @@ package DataBeans.Seminaries;
  * Created at 5/Ago/2003, 17:12:20
  * 
  */
-public class InfoCaseStudyChoice
+public class InfoCaseStudyChoice extends DataTranferObject
 {
     private Integer order;
     

@@ -5,14 +5,13 @@
  */
 package DataBeans;
 
-import java.io.Serializable;
 
 /**
  * @author João Mota
  * @author Fernanda Quitério
  * 
  */
-public class SiteView implements Serializable {
+public class SiteView extends DataTranferObject {
 	
 	private ISiteComponent bodyComponent;
 	

@@ -8,6 +8,7 @@ package DataBeans.Seminaries;
 import java.util.List;
 
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -16,9 +17,9 @@ import DataBeans.InfoCurricularCourse;
  * Created at 1/Ago/2003, 21:13:05
  * 
  */
-public class InfoEquivalency
+public class InfoEquivalency extends InfoObject
 {
-    private Integer idInternal;
+   
     private InfoCurricularCourse curricularCourse;
     private InfoModality modality;
     private String seminaryName;
@@ -45,13 +46,7 @@ public class InfoEquivalency
 		return curricularCourseIdInternal;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal()
-	{
-		return idInternal;
-	}
+	
 
 	/**
 	 * @return
@@ -93,13 +88,7 @@ public class InfoEquivalency
 		curricularCourseIdInternal= integer;
 	}
 
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer integer)
-	{
-		idInternal= integer;
-	}
+	
 
 	/**
 	 * @param modality

@@ -7,7 +7,7 @@ package DataBeans;
 /**
  * @author Susana Fernandes
  */
-public class InfoSiteDistributedTest implements ISiteComponent {
+public class InfoSiteDistributedTest extends DataTranferObject implements ISiteComponent {
 	private InfoDistributedTest infoDistributedTest;
 	private InfoExecutionCourse executionCourse;
 

@@ -1,6 +1,5 @@
 package DataBeans;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +7,7 @@ import java.util.List;
  * @author Fernanda Quitério 10/Jan/2004
  *  
  */
-public class InfoGratuityValues extends InfoObject implements Serializable
+public class InfoGratuityValues extends InfoObject 
 {
 	private Double anualValue;
 	private Double scholarShipValue;

@@ -6,6 +6,7 @@ package DataBeans.teacher;
 
 import java.util.List;
 
+import DataBeans.DataTranferObject;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoTeacher;
 import Util.OldPublicationType;
@@ -15,7 +16,7 @@ import Util.OldPublicationType;
  * @author Sergio Montelobo
  *  
  */
-public class InfoSiteOldPublications implements ISiteComponent
+public class InfoSiteOldPublications extends DataTranferObject implements ISiteComponent
 {
 
     private List infoOldPublications;

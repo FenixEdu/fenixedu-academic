@@ -3,12 +3,13 @@
  */
 package DataBeans.enrollment.shift;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoShift;
 
 /**
  * @author jpvl
  */
-public class ShiftEnrollmentDetails
+public class ShiftEnrollmentDetails extends DataTranferObject
 {
     private InfoShift infoShift;
     

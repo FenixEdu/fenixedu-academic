@@ -9,7 +9,7 @@ package DataBeans;
  * @author asnr and scpo
  *
  */
-public class InfoSiteStudentInformation implements ISiteComponent{
+public class InfoSiteStudentInformation extends DataTranferObject implements ISiteComponent{
 	private String name;
 	private Integer number;
 	private String email;

@@ -4,6 +4,7 @@
  */
 package DataBeans.gesdis;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoExecutionPeriod;
 
 /**
@@ -11,7 +12,7 @@ import DataBeans.InfoExecutionPeriod;
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo</a>
  *
  */
-public class InfoSiteEvaluationStatistics
+public class InfoSiteEvaluationStatistics extends DataTranferObject
 {
     private Integer enrolled;
     private Integer evaluated;
