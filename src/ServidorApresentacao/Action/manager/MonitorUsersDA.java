@@ -69,4 +69,18 @@ public class MonitorUsersDA extends FenixDispatchAction {
 		return monitor(mapping, form, request, response);
 	}
 
+	public ActionForward clearUserLogs(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		IUserView userView = SessionUtils.getUserView(request);
+
+		ServiceManagerServiceFactory.clearUserLogHistory(userView);
+
+		return monitor(mapping, form, request, response);
+	}
+
 }
