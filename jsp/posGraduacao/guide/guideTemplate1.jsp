@@ -120,7 +120,11 @@
 	   <table align="right">
         	<logic:iterate id="guideEntry" name="guide" property="infoGuideEntries" >
         	  <tr>
-    			<td><bean:write name="guideEntry" property="documentType"/>&nbsp;<bean:write name="guideEntry" property="description"/></td>
+    			<td><bean:write name="guideEntry" property="documentType"/>
+    			<logic:equal name="guideEntry" property="documentType.type" value="10">
+    				(referente ao Ano Lectivo de <bean:write name="guide" property="infoExecutionDegree.infoExecutionYear.year"/>)
+    			</logic:equal>
+    			&nbsp;<bean:write name="guideEntry" property="description"/></td>
     			<td>.........................................</td>&nbsp;
                 <bean:define id="price" name="guideEntry" property="price" />
                 <bean:define id="quantity" name="guideEntry" property="quantity" />
