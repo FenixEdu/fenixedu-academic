@@ -39,84 +39,60 @@ import Util.TipoAula;
 import Util.beanUtils.FenixPropertyUtils;
 
 public class CreateLesson implements IService {
-    
+
     public InfoLessonServiceResult run(InfoLesson infoLesson, InfoShift infoShift)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         InfoLessonServiceResult result = null;
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ISala sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
 
-            IRoomOccupation roomOccupation = Cloner.copyInfoRoomOccupation2RoomOccupation(infoLesson
-                    .getInfoRoomOccupation());
-            roomOccupation.setRoom(sala);
-            InfoPeriod infoPeriod = infoLesson.getInfoRoomOccupation().getInfoPeriod();
-            IPeriod period = Cloner.copyInfoPeriod2IPeriod(infoPeriod);
-            roomOccupation.setPeriod(period);
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISala sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
 
-            ITurno shift = Cloner.copyInfoShift2Shift(infoLesson.getInfoShift());
-            /*
-             * IPersistentExecutionCourse executionCourseDAO =
-             * sp.getIPersistentExecutionCourse();
-             */
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(infoLesson.getInfoShift()
-                            .getInfoDisciplinaExecucao().getInfoExecutionPeriod());
-            /*
-             * IExecutionCourse executionCourse = executionCourseDAO
-             * .readByExecutionCourseInitialsAndExecutionPeriod(
-             * infoLesson.getInfoDisciplinaExecucao().getSigla(),
-             * executionPeriod);
-             */
-            IAula aula = new Aula(infoLesson.getDiaSemana(), infoLesson.getInicio(),
-                    infoLesson.getFim(), infoLesson.getTipo(), sala, roomOccupation, shift /* executionCourse */
-            );
-            result = validTimeInterval(aula);
-            if (result.getMessageType() == 1) {
-                throw new InvalidTimeIntervalServiceException();
-            }
-            boolean resultB = validNoInterceptingLesson(aula.getRoomOccupation());
-            if (result.isSUCESS() && resultB) {
-                try {
-                    /*
-                     * ITurno shift = (ITurno)
-                     * sp.getITurnoPersistente().readByOID( Turno.class,
-                     * infoShift.getIdInternal());
-                     */
-                    InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula);
-                    if (infoShiftServiceResult.isSUCESS()) {
-                        IAula aula2 = new Aula();
-                        sp.getIAulaPersistente().simpleLockWrite(aula2);
+        IRoomOccupation roomOccupation = Cloner.copyInfoRoomOccupation2RoomOccupation(infoLesson
+                .getInfoRoomOccupation());
+        roomOccupation.setRoom(sala);
+        InfoPeriod infoPeriod = infoLesson.getInfoRoomOccupation().getInfoPeriod();
+        IPeriod period = Cloner.copyInfoPeriod2IPeriod(infoPeriod);
+        roomOccupation.setPeriod(period);
 
-                        sp.getIPersistentRoomOccupation().simpleLockWrite(roomOccupation);
+        ITurno shift = Cloner.copyInfoShift2Shift(infoLesson.getInfoShift());
+        IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoLesson
+                .getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod());
 
-                        Integer originalID = aula2.getIdInternal();
-                        try {
-                            FenixPropertyUtils.copyProperties(aula2, aula);
-                        } catch (Exception e) {
-                            throw new FenixServiceException(e);
-                        }
-                        /*
-                         * ITurnoAula shiftLesson = new TurnoAula();
-                         * sp.getITurnoAulaPersistente().simpleLockWrite(shiftLesson);
-                         * shiftLesson.setTurno(shift);
-                         * shiftLesson.setAula(aula2);
-                         */
-                        //sp.getIAulaPersistente().simpleLockWrite(aula2);
-                        aula2.setShift(shift);
-                        aula2.setExecutionPeriod(executionPeriod);
-                    } else {
-                        throw new InvalidLoadException(infoShiftServiceResult.toString());
-                    }
-                } catch (ExistingPersistentException ex) {
-                    throw new ExistingServiceException(ex);
-                }
-            } else {
-                result.setMessageType(2);
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex.getMessage());
+        IAula aula = new Aula(infoLesson.getDiaSemana(), infoLesson.getInicio(), infoLesson.getFim(),
+                infoLesson.getTipo(), sala, roomOccupation, shift);
+        result = validTimeInterval(aula);
+        if (result.getMessageType() == 1) {
+            throw new InvalidTimeIntervalServiceException();
         }
+        boolean resultB = validNoInterceptingLesson(aula.getRoomOccupation());
+        if (result.isSUCESS() && resultB) {
+            try {
+                InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula);
+                if (infoShiftServiceResult.isSUCESS()) {
+                    IAula aula2 = new Aula();
+                    sp.getIAulaPersistente().simpleLockWrite(aula2);
+
+                    sp.getIPersistentRoomOccupation().simpleLockWrite(roomOccupation);
+
+                    try {
+                        FenixPropertyUtils.copyProperties(aula2, aula);
+                    } catch (Exception e) {
+                        throw new FenixServiceException(e);
+                    }
+                    aula2.setShift(shift);
+                    aula2.setExecutionPeriod(executionPeriod);
+                    aula2.setSala(aula.getSala());
+                    aula2.setRoomOccupation(roomOccupation);
+                } else {
+                    throw new InvalidLoadException(infoShiftServiceResult.toString());
+                }
+            } catch (ExistingPersistentException ex) {
+                throw new ExistingServiceException(ex);
+            }
+        } else {
+            result.setMessageType(2);
+        }
+
         return result;
     }
 
@@ -249,7 +225,7 @@ public class CreateLesson implements IService {
      */
     public class InvalidLoadException extends FenixServiceException {
         /**
-         *  
+         * 
          */
         private InvalidLoadException() {
             super();
