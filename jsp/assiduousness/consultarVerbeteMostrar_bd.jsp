@@ -12,7 +12,7 @@
       </td>
     </tr>
     <tr>
-      <td width="325">&nbsp;&nbsp;</td>
+      <td width="325"></td>
       <td width="275" align="left">
           <br>                         
           <bean:write name="numMecanografico" scope="session"/><p style="margin-top: -2px; margin-bottom: -2px">&nbsp;</p>
@@ -65,7 +65,7 @@
       </td>
     </tr>
      </tr>
-      <td colspan='2' align="center">
+      <td colspan="2">
         <html:form action="/consultarFuncionarioMostrar" focus="submit">
     	  <html:submit property="submit" styleClass="inputbutton">
             <bean:message key="link.novaConsulta"/>

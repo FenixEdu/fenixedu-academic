@@ -6,15 +6,14 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
  	<html:form action="/consultarFuncionarioEscolha" focus="diaInicioEscolha">
- 	<br />
-    <br />
-    	<table width="60%" align="center" border="0">
+    	<table>
     		<tr>
     			<td>
     			<h2>
-      				<bean:message key="consultarFuncionario.titulo" />&nbsp;&nbsp;
+      				<bean:message key="consultarFuncionario.titulo" />:
         			<bean:write name="ConsultarFuncionarioMostrarForm" property="numMecanografico" filter="true"/>
    				</h2>
+				<br />
     			</td>
     		</tr>
     		<tr>
@@ -27,7 +26,6 @@
             	    <html:select name="ConsultarFuncionarioMostrarForm" property="escolha">
                    	<app:options name="ConsultarFuncionarioMostrarForm" property="listaEscolhas"/>
                    	</html:select> 
-                   	<br />
                    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                    	<bean:message key="prompt.data" />:
                   	<html:text name="ConsultarFuncionarioMostrarForm" property="diaInicioEscolha" size="2" maxlength="2"/> / 
@@ -51,7 +49,7 @@
             </tr>
        </table>
        <br />
-	   <table width="60%" align="center" class="infotable">
+	   <table class="infotable">
             <tr>
               <td colspan="2" class="bottomborder" align="left">
                 <h2 style="display: inline;"><bean:message key="prompt.dadosPessoais" /></h2>
