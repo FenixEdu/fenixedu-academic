@@ -57,7 +57,7 @@
 	</p>
 	<p>
 			<logic:present name="<%= SessionConstants.DOCUMENT_REASON_LIST%>">
-			<jsp:include page="./templateDocumentReason.jsp" flush="true" />
+			<jsp:include page="./templateCertificateReason.jsp" flush="true" />
    			</logic:present>
 			<%-- Date --%>
 			<jsp:include page="./templateFinal.jsp" flush="true" />

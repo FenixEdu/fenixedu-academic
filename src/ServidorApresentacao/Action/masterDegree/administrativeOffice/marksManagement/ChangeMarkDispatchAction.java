@@ -33,6 +33,7 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.Data;
@@ -169,7 +170,7 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 			return mapping.findForward("editStudentNumber");
 			
 		}
-		
+	
 		
 		if (infoSiteEnrolmentEvaluations.size() == 0){
 
@@ -181,6 +182,7 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 			saveErrors(request, actionErrors);
 			return mapping.findForward("chooseCurricularCourse");
 		}
+		
 		
 		if (((InfoSiteEnrolmentEvaluation)infoSiteEnrolmentEvaluations.get(0)).getEnrolmentEvaluations().size() == 0){
 			ActionErrors actionErrors = new ActionErrors();
@@ -341,7 +343,8 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 							|| (examDay.length() == 0)
 							|| (examMonth.length() == 0)
 							|| (examYear.length() == 0)) {
-				infoEnrolmentEvaluation.setExamDate(null);
+//				infoEnrolmentEvaluation.setExamDate(null);
+					throw new FenixActionException("error.data.exame.inválida");
 			} else {
 				day =
 					new Integer(
@@ -371,7 +374,8 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 							|| (gradeAvailableDateDay.length() == 0)
 							|| (gradeAvailableDateMonth.length() == 0)
 							|| (gradeAvailableDateYear.length() == 0)) {
-				infoEnrolmentEvaluation.setGradeAvailableDate(null);
+//				infoEnrolmentEvaluation.setGradeAvailableDate(null);
+				throw new FenixActionException("error.data.lançamento.inválida");
 			} else {
 				day =
 					new Integer(
