@@ -102,6 +102,7 @@ public class ReadSummaries implements IServico
                 InfoSummary infoSummary = Cloner.copyISummary2InfoSummary(summary);
                 result.add(infoSummary);
             }
+            
             IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
             ISite site = persistentSite.readByExecutionCourse(executionCourse);
 
@@ -115,6 +116,7 @@ public class ReadSummaries implements IServico
             ISiteComponent commonComponent =
                 componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
             SiteView siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
+            
             return siteView;
         }
         catch (ExcepcaoPersistencia e)

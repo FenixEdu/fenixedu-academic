@@ -43,13 +43,19 @@
 		
 	    <tr>
 			<td><bean:message key="message.groupPropertiesEnrolmentBeginDay"/></td>
-			<td>
-			<logic:empty name="groupProperties" property="enrolmentBeginDayFormatted">
-			<html:text size="16" property="enrolmentBeginDayFormatted"/>
+			<td><logic:empty name="groupProperties" property="enrolmentBeginDayFormatted">
+			
+				<html:text size="10" property="enrolmentBeginDayFormatted"/>
+				<i><bean:message key="label.at" /></i>
+				<html:text size="5" property="enrolmentBeginHourFormatted"/>
+				<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />
 			</logic:empty>
 			
 			<logic:notEmpty name="groupProperties" property="enrolmentBeginDayFormatted">
-			<html:text size="16" name="groupProperties" property="enrolmentBeginDayFormatted" />
+				<html:text size="10" name="groupProperties" property="enrolmentBeginDayFormatted" />
+				<i><bean:message key="label.at" /></i>
+				<html:text size="5" name="groupProperties" property="enrolmentBeginHourFormatted"/>
+				<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />
 			</logic:notEmpty>
 			</td>
 			
@@ -60,10 +66,16 @@
 			<td><bean:message key="message.groupPropertiesEnrolmentEndDay"/></td>
 			<td>
 			<logic:empty name="groupProperties" property="enrolmentEndDayFormatted">
-			<html:text size="16" property="enrolmentEndDayFormatted"/>
+				<html:text size="10" property="enrolmentEndDayFormatted"/>
+				<i><bean:message key="label.at" /></i>
+				<html:text size="5" property="enrolmentEndHourFormatted"/>
+				<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />				
 			</logic:empty>
 			<logic:notEmpty name="groupProperties" property="enrolmentEndDayFormatted">
-			<html:text size="16" name="groupProperties" property="enrolmentEndDayFormatted" />
+				<html:text size="10" name="groupProperties" property="enrolmentEndDayFormatted" />
+				<i><bean:message key="label.at" /></i>
+				<html:text size="5" name="groupProperties" property="enrolmentEndHourFormatted"/>
+				<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />			
 			</logic:notEmpty>
 			</td>
 			
@@ -84,7 +96,6 @@
 		<tr>
 			<td><bean:message key="message.groupPropertiesShiftType"/></td>
 			<td><html:select property="shiftType">
-			<html:option value="<%= shiftTypeValue.toString() %>"><bean:write name="shiftTypeName"/></html:option>
 			<html:options name="shiftTypeValues" labelName="shiftTypeNames"/>
 			</html:select></td>
 			

@@ -26,7 +26,7 @@
 	</logic:empty>
 	<logic:notEmpty name="infoGroupPropertiesList">
 	<br>
-<table border="0" style="text-align: left;">
+	<table border="0" style="text-align: left;">
         <tbody>
          <tr>
 			<td class="listClasses-header" width="20%"><bean:message key="label.projectName" />
@@ -38,8 +38,6 @@
 		</tr>
 		
             <logic:iterate id="infoGroupProperties" name="infoGroupPropertiesList">
-            	
-            	
                 <tr>
                 	
                     <td class="listClasses">

@@ -344,7 +344,6 @@ public class TeacherAdministrationSiteComponentBuilder
 	 * @return
 	 */
     private ISiteComponent getInfoSiteCustomizationOptions(InfoSite component, ISite site)
-        throws FenixServiceException
     {
         component.setAlternativeSite(site.getAlternativeSite());
         component.setMail(site.getMail());
@@ -1253,7 +1252,7 @@ public class TeacherAdministrationSiteComponentBuilder
         return component;
     }
 
-    private List readInfoCurricularCourses(ISite site) throws ExcepcaoPersistencia
+    private List readInfoCurricularCourses(ISite site)
     {
 
         IExecutionCourse executionCourse = site.getExecutionCourse();

@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
@@ -22,149 +23,156 @@ import ServidorApresentacao.Action.exceptions.NoChangeMadeActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.DocumentType;
 import Util.GraduationType;
+import Util.PaymentType;
+import Util.SituationOfGuide;
 
 /**
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
- * 
- * 
+ *  
  */
 public class StudentGuideDispatchAction extends DispatchAction
 {
 
-    public ActionForward createReady(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+	public ActionForward createReady(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception
+	{
 
-        HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(false);
 
-        if (session != null)
-        {
-		
-            DynaActionForm studentGuideForm = (DynaActionForm) form;
-            InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
+		if (session != null)
+		{
 
+			DynaActionForm studentGuideForm = (DynaActionForm) form;
+			InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
 
-            List certificateList = (List) session.getAttribute(SessionConstants.CERTIFICATE_LIST);
-			
-            String[] quantityList = request.getParameterValues("quantityList");
+			List certificateList = (List) session.getAttribute(SessionConstants.CERTIFICATE_LIST);
 
-            String specializationGratuityQuantityString =
-                (String) studentGuideForm.get("specializationGratuityQuantity");
-            String specializationGratuityAmountString =
-                (String) studentGuideForm.get("specializationGratuityAmount");
+			String[] quantityList = request.getParameterValues("quantityList");
+
+			String specializationGratuityQuantityString = (String) studentGuideForm
+					.get("specializationGratuityQuantity");
+			String specializationGratuityAmountString = (String) studentGuideForm
+					.get("specializationGratuityAmount");
 			if (specializationGratuityAmountString.equals("0.0"))
-				specializationGratuityAmountString="0";
-			
-            String graduationType = (String) request.getAttribute("graduationType");
-            if (graduationType == null)
-                graduationType = request.getParameter("graduationType");
+				specializationGratuityAmountString = "0";
 
-            request.setAttribute("graduationType", graduationType);
+			String graduationType = (String) request.getAttribute("graduationType");
+			if (graduationType == null)
+				graduationType = request.getParameter("graduationType");
+			request.setAttribute("graduationType", graduationType);
 
-            String othersGratuityAmountString = (String) studentGuideForm.get("othersGratuityAmount");
-            Integer othersGratuityAmount = null;
-            
+			String requester = (String) studentGuideForm.get("requester");
+			if (requester == null)
+				requester = (String) request.getAttribute(SessionConstants.REQUESTER_TYPE);
+			if (requester == null)
+				requester = request.getParameter(SessionConstants.REQUESTER_TYPE);
+			request.setAttribute(SessionConstants.REQUESTER_TYPE, requester);
+
+			String othersGratuityAmountString = (String) studentGuideForm.get("othersGratuityAmount");
+			Integer othersGratuityAmount = null;
+
 			if (othersGratuityAmountString.equals("0.0"))
-				othersGratuityAmountString="0";
-				
-            if ((othersGratuityAmountString != null) && (othersGratuityAmountString.length() > 0))
-            {
-                try
-                {
-                    othersGratuityAmount = new Integer(othersGratuityAmountString);
-                    if (othersGratuityAmount.intValue() < 0)
-                        throw new NumberFormatException();
-                } catch (NumberFormatException e)
-                {	
-                    throw new InvalidInformationInFormActionException(new Throwable());
-                }
-            }
+				othersGratuityAmountString = "0";
 
-            String othersGratuityDescription =
-                (String) studentGuideForm.get("othersGratuityDescription");
+			if ((othersGratuityAmountString != null) && (othersGratuityAmountString.length() > 0))
+			{
+				try
+				{
+					othersGratuityAmount = new Integer(othersGratuityAmountString);
+					if (othersGratuityAmount.intValue() < 0)
+						throw new NumberFormatException();
+				} catch (NumberFormatException e)
+				{
+					throw new InvalidInformationInFormActionException(new Throwable());
+				}
+			}
 
-            Iterator iterator = certificateList.iterator();
+			String othersGratuityDescription = (String) studentGuideForm
+					.get("othersGratuityDescription");
 
-            int position = 0;
-            infoGuide.setInfoGuideEntries(new ArrayList());
+			Iterator iterator = certificateList.iterator();
 
-            while (iterator.hasNext())
-            {
-                iterator.next();
-                Integer quantity = null;
+			int position = 0;
+			infoGuide.setInfoGuideEntries(new ArrayList());
 
-                try
-                {
-                    quantity = new Integer(quantityList[position]);
-                    if (quantity.intValue() < 0)
-                        throw new NumberFormatException();
-                } catch (NumberFormatException e)
-                {
-                    throw new InvalidInformationInFormActionException(new Throwable());
-                }
+			while (iterator.hasNext())
+			{
+				iterator.next();
+				Integer quantity = null;
 
-                if (quantity.intValue() > 0)
-                {
-                    InfoPrice infoPrice = (InfoPrice) certificateList.get(position);
-                    InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
-                    infoGuideEntry.setDescription(infoPrice.getDescription());
-                    infoGuideEntry.setDocumentType(infoPrice.getDocumentType());
-                    infoGuideEntry.setGraduationType(infoPrice.getGraduationType());
-                    infoGuideEntry.setPrice(infoPrice.getPrice());
-                    infoGuideEntry.setQuantity(quantity);
-                    infoGuide.getInfoGuideEntries().add(infoGuideEntry);
-                }
+				try
+				{
+					quantity = new Integer(quantityList[position]);
+					if (quantity.intValue() < 0)
+						throw new NumberFormatException();
+				} catch (NumberFormatException e)
+				{
+					throw new InvalidInformationInFormActionException(new Throwable());
+				}
 
-                position++;
+				if (quantity.intValue() > 0)
+				{
+					InfoPrice infoPrice = (InfoPrice) certificateList.get(position);
+					InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
+					infoGuideEntry.setDescription(infoPrice.getDescription());
+					infoGuideEntry.setDocumentType(infoPrice.getDocumentType());
+					infoGuideEntry.setGraduationType(infoPrice.getGraduationType());
+					infoGuideEntry.setPrice(infoPrice.getPrice());
+					infoGuideEntry.setQuantity(quantity);
+					infoGuide.getInfoGuideEntries().add(infoGuideEntry);
+				}
 
-            }
-			
-            if ((specializationGratuityAmountString != null)
-                && (specializationGratuityAmountString.length() != 0)
-                && (specializationGratuityQuantityString != null)
-                && (specializationGratuityQuantityString.length() != 0))
-            {
-                InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
-                infoGuideEntry.setDescription("Pagamento para Especialização");
-                infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
-                infoGuideEntry.setDocumentType(DocumentType.GRATUITY_TYPE);
-                infoGuideEntry.setPrice(new Double(specializationGratuityAmountString));
+				position++;
 
-                infoGuideEntry.setQuantity(new Integer(specializationGratuityQuantityString));
-                infoGuide.getInfoGuideEntries().add(infoGuideEntry);
-            }
-			
-            if (othersGratuityAmount != null)
-            {
-                InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
-                infoGuideEntry.setDescription(othersGratuityDescription);
-                infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
-                infoGuideEntry.setDocumentType(DocumentType.GRATUITY_TYPE);
-                infoGuideEntry.setPrice(new Double(othersGratuityAmountString));
-                infoGuideEntry.setQuantity(new Integer(1));
-                infoGuide.getInfoGuideEntries().add(infoGuideEntry);
-            }
-			
-            if (infoGuide.getInfoGuideEntries().size() == 0)
-                throw new NoChangeMadeActionException("error.exception.noCertificateChosen");
+			}
 
-            generateToken(request);
-            saveToken(request);
+			if ((specializationGratuityAmountString != null)
+					&& (specializationGratuityAmountString.length() != 0)
+					&& (specializationGratuityQuantityString != null)
+					&& (specializationGratuityQuantityString.length() != 0))
+			{
+				InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
+				infoGuideEntry.setDescription("Pagamento para Especialização");
+				infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
+				infoGuideEntry.setDocumentType(DocumentType.GRATUITY_TYPE);
+				infoGuideEntry.setPrice(new Double(specializationGratuityAmountString));
 
-            request.setAttribute(SessionConstants.GUIDE, infoGuide);
+				infoGuideEntry.setQuantity(new Integer(specializationGratuityQuantityString));
+				infoGuide.getInfoGuideEntries().add(infoGuideEntry);
+			}
 
+			if (othersGratuityAmount != null)
+			{
+				InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
+				infoGuideEntry.setDescription(othersGratuityDescription);
+				infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
+				infoGuideEntry.setDocumentType(DocumentType.GRATUITY_TYPE);
+				infoGuideEntry.setPrice(new Double(othersGratuityAmountString));
+				infoGuideEntry.setQuantity(new Integer(1));
+				infoGuide.getInfoGuideEntries().add(infoGuideEntry);
+			}
 
-            return mapping.findForward("CreateStudentGuideReady");
+			if (infoGuide.getInfoGuideEntries().size() == 0)
+				throw new NoChangeMadeActionException("error.exception.noCertificateChosen");
 
-        } else
-            throw new Exception();
-    }
+			generateToken(request);
+			saveToken(request);
 
+			request.setAttribute(SessionConstants.GUIDE, infoGuide);
+			request.setAttribute(SessionConstants.PAYMENT_TYPE, PaymentType.toArrayList());
+
+			ArrayList guideSituations = new ArrayList();
+			guideSituations.add(new LabelValueBean(SituationOfGuide.NON_PAYED_STRING,
+					SituationOfGuide.NON_PAYED_STRING));
+			guideSituations.add(new LabelValueBean(SituationOfGuide.PAYED_STRING,
+					SituationOfGuide.PAYED_STRING));
+			request.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, guideSituations);
+
+			return mapping.findForward("CreateStudentGuideReady");
+
+		} else
+			throw new Exception();
+	}
 
 }

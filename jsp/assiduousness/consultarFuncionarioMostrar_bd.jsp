@@ -1,10 +1,14 @@
-<%@page contentType="text/html"%>
+<%@ page language="java" %>
+<%@ page contentType="text/html"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-form.tld" prefix="form" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
+
+<p><span class="error"><html:errors/></span></p>
+
  	<html:form action="/consultarFuncionarioEscolha" focus="diaInicioEscolha">
     	<table>
     		<tr>

@@ -16,7 +16,9 @@
     <html:hidden property="page" value="1"/>
     <bean:define id="graduationType" name="graduationType"/>
     <html:hidden property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
-    <bean:define id="certificateList" name="<%= SessionConstants.CERTIFICATE_LIST %>" scope="session" />
+    <html:hidden property="requester" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_TYPE).toString()%>'/>
+    
+    <bean:define id="certificateList" name="<%= SessionConstants.CERTIFICATE_LIST %>"/>
     
     <logic:iterate id="price" name="certificateList" >
     	<tr>

@@ -40,12 +40,19 @@
 		
     	<tr>
 			<td><bean:message key="message.groupPropertiesEnrolmentBeginDay"/></td>
-			<td><html:text size="10" property="enrolmentBeginDay" /></td>
-			
+			<td><html:text size="10" property="enrolmentBeginDay" />
+				<i><bean:message key="label.at" /></i>
+				<html:text size="5" property="enrolmentBeginHour"/>
+				<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />						
+			</td>			
 		</tr>
 		<tr>
 			<td><bean:message key="message.groupPropertiesEnrolmentEndDay"/></td>
-			<td><html:text size="10" property="enrolmentEndDay" /></td>
+			<td><html:text size="10" property="enrolmentEndDay" />
+				<i><bean:message key="label.at" /></i>
+				<html:text size="5" property="enrolmentEndHour"/>
+				<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />	
+			</td>		
 			<%--<td><span class="error"><html:errors property="enrolmentEndDay"/></span></td>--%>
 		</tr>
     

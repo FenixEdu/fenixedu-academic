@@ -1,5 +1,6 @@
+<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<span class="error"><html:errors/></span>
+<p><span class="error"><html:errors/></span></p>
 <br />
 
 Bem vindo à Área de Funcionário <br>

@@ -268,7 +268,9 @@
             <form-property name="shiftType" type="java.lang.String" />
             <form-property name="groupMaximumNumber" type="java.lang.String" />
             <form-property name="enrolmentBeginDay" type="java.lang.String" />
+            <form-property name="enrolmentBeginHour" type="java.lang.String" />
             <form-property name="enrolmentEndDay" type="java.lang.String" />
+            <form-property name="enrolmentEndHour" type="java.lang.String" />
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
         <form-bean name="groupPropertiesForm1" type="org.apache.struts.validator.DynaValidatorForm" 
@@ -282,7 +284,10 @@
             <form-property name="shiftType" type="java.lang.String" />
             <form-property name="groupMaximumNumber" type="java.lang.String" />
             <form-property name="enrolmentBeginDayFormatted" type="java.lang.String" />
+            <form-property name="enrolmentBeginHourFormatted" type="java.lang.String" />
             <form-property name="enrolmentEndDayFormatted" type="java.lang.String" />
+            <form-property name="enrolmentEndHourFormatted" type="java.lang.String" />
+            
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
         <form-bean name="studentGroupForm" type="org.apache.struts.validator.DynaValidatorForm" 
@@ -1011,6 +1016,12 @@
             type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="true">
             <forward name="editGroupProperties" path="/editGroupProperties.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>
+        <action path="/deleteGroupProperties" parameter="method" 
+            input="/editGroupProperties.do?method=prepareEditGroupProperties&amp;page=0" scope="request" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction" 
+            validate="true">
             <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
         </action>
         <action path="/deleteStudentGroup" parameter="method" 

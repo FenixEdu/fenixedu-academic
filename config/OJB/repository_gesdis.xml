@@ -809,17 +809,17 @@
     <field-descriptor id="9"
         name="enrolmentBeginDay"
         column="ENROLMENT_BEGIN_DAY"
-        jdbc-type="DATE"
-        conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+        jdbc-type="TIMESTAMP"
+        conversion="ServidorPersistente.Conversores.Calendar2DateTimeFieldConversion"
     />
 
     <field-descriptor id="10"
         name="enrolmentEndDay"
         column="ENROLMENT_END_DAY"
-        jdbc-type="DATE"
-        conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+        jdbc-type="TIMESTAMP"
+        conversion="ServidorPersistente.Conversores.Calendar2DateTimeFieldConversion"
     /> 
-    
+    		
     <field-descriptor id="11"
          name="projectDescription"
          column="PROJECT_DESCRIPTION"

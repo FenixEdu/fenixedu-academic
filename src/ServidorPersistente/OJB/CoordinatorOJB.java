@@ -30,6 +30,7 @@ public class CoordinatorOJB extends ObjectFenixOJB implements IPersistentCoordin
 		if (coordinators == null) {
 			return null;
 		}
+		
 		Iterator iter = coordinators.iterator();
 		List executionDegrees = new ArrayList();
 		String executionDegreeTmp = null;

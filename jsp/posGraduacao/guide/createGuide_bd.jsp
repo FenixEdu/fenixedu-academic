@@ -3,7 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<h2><bean:message key="title.masterDegree.administraiveOffice.createGuide"/></h2>
 <span class="error"><html:errors/></span>
+<br />
 <logic:present name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request">
    <table>
     <html:form action="/createGuideDispatchAction?method=requesterChosen">
@@ -37,38 +39,47 @@
          </td>
         </tr>
        <!-- Graduation Type -->
-       <tr>
-         <td><bean:message key="label.masterDegree.administrativeOffice.graduationType"/>: </td>
+       	<tr>
+       	 <td><bean:message key="label.masterDegree.administrativeOffice.graduationType"/>: </td>
          <td>
             <html:select property="graduationType">
                 <html:options collection="<%= SessionConstants.SPECIALIZATIONS %>" property="value" labelProperty="label"/>
              </html:select>          
          </td>
-        </tr>
+		</tr>
         
    	   <!-- Execution Degree ID-->
        <html:hidden property="executionDegreeID"/>
        
+       <tr>
+       	<td>&nbsp;&nbsp;&nbsp;</td>
+       </tr>       
+       <tr>
+       	<td colspan='2'><h2><bean:message key="label.masterDegree.administrativeOffice.dataContributor"/></h2></td>
+       </tr>
+       <logic:present name="<%= SessionConstants.UNEXISTING_CONTRIBUTOR %>">     	
+	       <tr>
+	       	<td colspan='2'><strong><bean:message key="error.masterDegree.administrativeOffice.nonExistingContributor"/></strong></td>
+	       </tr>
+		</logic:present >
        <!-- Contributor -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/>: </td>
          <td><html:text property="contributorNumber"/>
          <logic:notPresent name="<%= SessionConstants.UNEXISTING_CONTRIBUTOR %>">
      	  <html:hidden property="page" value="1"/>
-     	  
-                  &nbsp;&nbsp;ou&nbsp;&nbsp; 
-                 <html:select property="contributorList">
-                   <option value="" selected="selected"><bean:message key="label.masterDegree.administrativeOffice.contributor.default"/></option>
-                   <html:options collection="<%= SessionConstants.CONTRIBUTOR_LIST %>" property="value" labelProperty="label"/>
-            	 </html:select>        
-             </td>
+     	  &nbsp;&nbsp;ou&nbsp;&nbsp; 
+	          <html:select property="contributorList">
+        	  	<option value="" selected="selected"><bean:message key="label.masterDegree.administrativeOffice.contributor.default"/></option>
+    	        <html:options collection="<%= SessionConstants.CONTRIBUTOR_LIST %>" property="value" labelProperty="label"/>
+	          </html:select>        
+          	</td>
            </tr> 
 		</logic:notPresent >
 		<logic:present name="<%= SessionConstants.UNEXISTING_CONTRIBUTOR %>">
      	  <html:hidden property="page" value="2"/>
              </td>
            </tr> 
-    		<h2><bean:message key="error.masterDegree.administrativeOffice.nonExistingContributor"/></h2>
 			<tr>		
              <td><bean:message key="label.masterDegree.administrativeOffice.contributorName"/>: </td>
              <td><html:text property="contributorName"/>

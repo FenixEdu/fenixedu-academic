@@ -3183,6 +3183,15 @@
         </filterChains>
     </service>
     <service>
+        <name>DeleteGroupProperties</name>
+        <implementationClass>ServidorAplicacao.Servico.teacher.DeleteGroupProperties</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>    
+    <service>
         <name>PrepareCreateStudentGroup</name>
         <implementationClass> 
             ServidorAplicacao.Servico.teacher.PrepareCreateStudentGroup</implementationClass>

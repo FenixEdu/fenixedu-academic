@@ -7,18 +7,27 @@ NEW FEATURES:
 - task [#178] Publication of Final Degree Work Proposals.
 - task [#177] Public Listing of Final Degree Work Proposals.
 - Added definition of final degree work candidacy period interface to coordinators portal.
-
+ - new operation in teacher area: delete a grouping.
 
 NOTES:
- 
+- updateGroupPropertiesTable.sql do an update in table GROUP_PROPERTIES ao campo ENROLMENT_BEGIN_DAY and ENROLMENT_END_DAY. 
   
  	
 CHANGES:
+ - change the order of the input boxes on searchStudents.jsp
+ - changes in teacher area about group properties. Some details pointed by Prof. Mira da Silva like hours in enrolment date.
+ (Calendar2DateTimeFieldConversion.java(nova classe), repository_gesdis.xml, struts-teacher.xml, validation_teacher.xml, 
+ InfoGroupProperties, TeacherAdministrationViewerDispatchAction groupProperties methods, 
+ editGroupPorperties.jsp, insertGroupPorperties.jsp, services.xml, DeleteGroupProperties(Service))
 
 
 
 BUG FIXES:
 - Bug [#106] The missing error page. Fixed.
+ - fix bug in master degree area at EditPosGradStudentCurricularPlanStateAndCredits Service for update enrolment state.
+ - fix bug in master degree area at create guide.
+ - fix bug in jsp with degree's description about coordinator's names
+
  
 KNOWN ISSUES:
 - Final degree work proposals are associated with the execution degree prior to the one they

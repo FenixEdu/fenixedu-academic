@@ -10,7 +10,7 @@
    <span class="error"><html:errors/><br></span>
 
    <table>
-    <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE%>" scope="session" />
+    <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE%>" />
     <bean:define id="graduationType" name="graduationType"/>
     
        <!-- Requester Name -->
@@ -67,6 +67,7 @@
 
       <html:form action="/createGuideReadyDispatchAction?method=create">
        <html:hidden property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
+       <html:hidden property="requester" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_TYPE).toString()%>'/>
        <html:hidden property="page" value="1"/>
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.others"/> </td>

@@ -468,13 +468,11 @@
     
     <!-- validation for the insertGroupPropertiesForm -->
     
-   	<form name="groupPropertiesForm">
-   	
+   	<form name="groupPropertiesForm">   	
    	<field property="name" depends="required" page="1">
 		<arg0 key="message.groupPropertiesName" resource="true"/>
 	</field>
-   	
-   
+   	   
    	<field property="maximumCapacity" depends="integer" page="1">
 		<arg0 key="message.groupPropertiesMaximumCapacity" resource="true"/>
 	</field>
@@ -504,7 +502,14 @@
            <var-value>^((.||..)/(.||..)/2...)$</var-value>
         </var>
    	</field>
-   	
+   	<field property="enrolmentBeginHour" depends="required,date" page="1" >
+   		<msg name="date" key="error.invalid.hour"/>
+   		<arg0 key="message.enrollmentBeginHour" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>HH:mm</var-value>
+        </var>
+   	</field>   	
 	<field property="enrolmentEndDay" depends="mask,date" page="1" >
    		<msg name="date" key="errors.invalid.date"/>
    		<msg name="mask" key="errors.invalid.date"/>
@@ -518,9 +523,16 @@
            <var-value>^((.||..)/(.||..)/2...)$</var-value>
         </var>
    	</field>	   
-   	
-   		<field property="shiftType" depends="integer" page="1">
-   	<arg0 key="message.groupPropertiesShiftType" resource="true"/>
+   	   	<field property="enrolmentEndHour" depends="required,date" page="1" >
+   		<msg name="date" key="error.invalid.hour"/>
+   		<arg0 key="message.enrollmentEndHour" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>HH:mm</var-value>
+        </var>
+   	</field>
+   	<field property="shiftType" depends="integer" page="1">
+   		<arg0 key="message.groupPropertiesShiftType" resource="true"/>
    	</field> 
     </form>
     
@@ -564,6 +576,14 @@
            <var-name>mask</var-name>
            <var-value>^((.||..)/(.||..)/2...)$</var-value>
         </var>
+   	</field>   
+ 	<field property="enrolmentBeginHourFormatted" depends="required,date" page="1" >
+   		<msg name="date" key="error.invalid.hour"/>
+   		<arg0 key="message.enrollmentBeginHour" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>HH:mm</var-value>
+        </var>
    	</field>
    	
 	<field property="enrolmentEndDayFormatted" depends="mask,date" page="1" >
@@ -578,7 +598,15 @@
            <var-name>mask</var-name>
            <var-value>^((.||..)/(.||..)/2...)$</var-value>
         </var>
-   	</field>	   
+   	</field>   
+ 	<field property="enrolmentEndHourFormatted" depends="required,date" page="1" >
+   		<msg name="date" key="error.invalid.hour"/>
+   		<arg0 key="message.enrollmentEndHour" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>HH:mm</var-value>
+        </var>
+   	</field>
    	
    		<field property="shiftType" depends="integer" page="1">
    	<arg0 key="message.groupPropertiesShiftType" resource="true"/>

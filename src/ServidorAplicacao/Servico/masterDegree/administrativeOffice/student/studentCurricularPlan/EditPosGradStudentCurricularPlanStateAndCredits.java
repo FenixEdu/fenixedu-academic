@@ -58,6 +58,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
 				sp.getIStudentCurricularPlanPersistente();
 			IStudentCurricularPlan studentCurricularPlan =
@@ -67,15 +68,19 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 			if (studentCurricularPlan == null) {
 				throw new InvalidArgumentsServiceException();
 			}
+			
 			StudentCurricularPlanState newState = new StudentCurricularPlanState(currentState);
+			
 			IEmployee employee = null;
 			IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
 			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 			IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+			
 			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 			if (person == null) {
 				throw new InvalidArgumentsServiceException();
 			}
+			
 			employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
 			if (employee == null) {
 				throw new InvalidArgumentsServiceException();
@@ -86,15 +91,17 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 			studentCurricularPlan.setEmployee(employee);
 			studentCurricularPlan.setGivenCredits(credits);
 			studentCurricularPlan.setObservations(observations);
+			
 			List enrollments = studentCurricularPlan.getEnrolments();
 			Iterator iterator = enrollments.iterator();
 			if (newState.getState().intValue() == StudentCurricularPlanState.INACTIVE) {
 				while (iterator.hasNext()) {
 					IEnrolment enrolment = (IEnrolment) iterator.next();
-					if (enrolment.getEnrolmentState().getValue() != EnrolmentState.APROVED_TYPE) {
+					if (enrolment.getEnrolmentState().getValue() ==  EnrolmentState.ENROLED_TYPE
+							|| enrolment.getEnrolmentState().getValue() ==  EnrolmentState.TEMPORARILY_ENROLED_TYPE) {
+						persistentEnrolment.simpleLockWrite(enrolment);
 						enrolment.setEnrolmentState(EnrolmentState.ANNULED);
 					}
-
 				}
 			} else {
 

@@ -48,11 +48,6 @@
 			<bean:define id="campusName" name="executionDegree" property="infoCampus.name"/>
 	  		<logic:notMatch name="campus" value="<%= campusName.toString()%>">
 				<bean:write name="campusName" />&nbsp;&nbsp;&nbsp;&nbsp;			
-				<%--<logic:greaterThan name="campusSize" value="1">
-					<logic:lessThan name="indexCampus" value="<%= String.valueOf(campusSize.intValue() - 1) %>" >
-						&nbsp;&nbsp;
-					</logic:lessThan>						  
-			  	</logic:greaterThan>--%>
 			  	
 			  	<bean:define id="campus" value="<%= campus.toString().concat(campusName.toString()) %>" />	
 	  		</logic:notMatch>
@@ -68,37 +63,43 @@
 
 	 	<br />
 		<bean:size id="executionDegreesSize" name="infoExecutionDegrees" />
+		<bean:define id="coordinators" value="" />
 		<logic:iterate id="infoExecutionDegree" name="infoExecutionDegrees" indexId="executionDegreesSize" >
 			<logic:iterate id="infoCoordinator" name="infoExecutionDegree" property="coordinatorsList">
-				<bean:message key="label.title.coordinator" />&nbsp; 
-						
-				<logic:notEmpty name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb">
-					<bean:define id="homepage" name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb" />						
-	
-					<a href=" <%= homepage %>">
-						<bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome" />						
-					</a>
-				</logic:notEmpty>		
-							
-				<logic:empty name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb">
-					<logic:notEmpty name="infoCoordinator" property="infoTeacher.infoPerson.email">
-						<bean:define id="email" name="infoCoordinator" property="infoTeacher.infoPerson.email" />
-								
-						<a href="mailto: <%= email %>">
+				<bean:define id="coordinatorName" name="infoCoordinator" property="infoTeacher.infoPerson.nome" />
+				<logic:notMatch name="coordinators" value="<%= coordinatorName.toString()%>">
+					<bean:message key="label.title.coordinator" />&nbsp; 
+											
+					<logic:notEmpty name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb">
+						<bean:define id="homepage" name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb" />						
+		
+						<a href=" <%= homepage %>">
 							<bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome" />						
-						</a>											
-					</logic:notEmpty>						
-				</logic:empty>		
-							
-				<logic:empty name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb">
-					<logic:empty name="infoCoordinator" property="infoTeacher.infoPerson.email">
-						<bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome" />											
-					</logic:empty>						
-				</logic:empty>	
-							
-				<logic:lessThan name="executionDegreesSize" value="executionDegreesSize" >
-					<br />
-				</logic:lessThan>
+						</a>
+					</logic:notEmpty>		
+								
+					<logic:empty name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb">
+						<logic:notEmpty name="infoCoordinator" property="infoTeacher.infoPerson.email">
+							<bean:define id="email" name="infoCoordinator" property="infoTeacher.infoPerson.email" />
+									
+							<a href="mailto: <%= email %>">
+								<bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome" />						
+							</a>											
+						</logic:notEmpty>						
+					</logic:empty>		
+								
+					<logic:empty name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb">
+						<logic:empty name="infoCoordinator" property="infoTeacher.infoPerson.email">
+							<bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome" />											
+						</logic:empty>						
+					</logic:empty>	
+								
+					<logic:lessThan name="executionDegreesSize" value="executionDegreesSize" >
+						<br />
+					</logic:lessThan>
+					
+					<bean:define id="coordinators" value="<%= coordinators.toString().concat(coordinatorName.toString()) %>" />
+				</logic:notMatch>
 			 </logic:iterate>
 		</logic:iterate>
 	</logic:present>			

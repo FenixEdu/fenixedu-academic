@@ -35,6 +35,22 @@ h3 {
 	color: black;
 	}
 
+h2.diploma_posGrad	{
+	font: bold 28px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #223d4a;
+	/*color: #036;*/
+	}	
+	
+h3.diploma_posGrad {
+	font: bold 18px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #223d4a;
+	}	
+	
+h4.diploma_posGrad {
+	font: 18px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #223d4a;
+	}
+	
 /******************************************
 	Global Links Proprieties
 *******************************************/

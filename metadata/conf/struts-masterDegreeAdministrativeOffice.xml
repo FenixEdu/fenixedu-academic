@@ -181,6 +181,7 @@
         	<form-property name="contributorAddress" type="java.lang.String" />
         	<form-property name="contributorList" type="java.lang.String" />
         	<form-property name="executionDegreeID" type="java.lang.Integer" />
+        	<form-property name="unexistingContributor" type="java.lang.String" />
       </form-bean>
 
 	  <!-- Bean for ready to create a guide  -->
@@ -194,6 +195,7 @@
         	<form-property name="remarks" type="java.lang.String" />
         	<form-property name="guideSituation" type="java.lang.String" />
         	<form-property name="paymentType" type="java.lang.String" />
+        	<form-property name="requester" type="java.lang.String" />
         	
       </form-bean>
 
@@ -355,6 +357,7 @@
 			<form-property name="specializationGratuityAmount" type="java.lang.String"/>
 			<form-property name="othersGratuityAmount" type="java.lang.String"/>
 			<form-property name="othersGratuityDescription" type="java.lang.String"/>
+			<form-property name="requester" type="java.lang.String" />
 			
       
       </form-bean>
@@ -1174,7 +1177,7 @@
 
       <!-- action to create a guide -->
       <action attribute="createGuideForm"
-      		  input="/guide/createGuide.jsp"
+      		  input="/createGuideDispatchAction.do?method=prepare&amp;page=0"
       	      name="createGuideForm"
 		      path="/createGuideDispatchAction"
 		      parameter="method"

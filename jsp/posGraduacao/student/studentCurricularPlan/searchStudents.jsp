@@ -22,10 +22,16 @@
 <br/><br/>
 <span class="error"><html:errors/></span>
 
-<html:form action="/seeStudentAndCurricularPlans.do">
+<html:form action="/seeStudentAndCurricularPlans.do" focus="studentNumber">
 	<html:hidden property="method" value="read"/>
 	<html:hidden property="page" value="1"/>
 	<table border="0" cellspacing="0" cellpadding="5">
+		<tr>
+			<td align="left"><bean:message key="label.masterDegree.administrativeOffice.studentNumber"/>:&nbsp;</td>
+			<td align="left">
+				<input type="text" name="studentNumber" size="5" value=""/>
+			</td>
+		</tr>	
 		<tr>
 			<td align="left"><bean:message key="label.masterDegree.administrativeOffice.studentName"/>:&nbsp;</td>
 			<td align="left">
@@ -44,12 +50,6 @@
 				<html:select property="idType" size="1">
 					<html:options collection="docIDTypeList" property="value" labelProperty="label"/>
 				</html:select>
-			</td>
-		</tr>
-		<tr>
-			<td align="left"><bean:message key="label.masterDegree.administrativeOffice.studentNumber"/>:&nbsp;</td>
-			<td align="left">
-				<input type="text" name="studentNumber" size="5" value=""/>
 			</td>
 		</tr>
 	</table>
