@@ -132,10 +132,10 @@ public class InfoExamEnrollment extends InfoObject {
 
 
 	public String getBeginHourString() {
-		return formatTime(new Integer(getEndDate().getTime().getHours()).toString());
+		return formatTime(new Integer(getBeginDate().getTime().getHours()).toString());
 	}
 	public String getBeginMinutesString() {
-		return formatTime(new Integer(getEndDate().getTime().getMinutes()).toString());
+		return formatTime(new Integer(getBeginDate().getTime().getMinutes()).toString());
 	}
 	public String getEndHourString() {
 		return formatTime(new Integer(getEndDate().getTime().getHours()).toString());

@@ -13,6 +13,7 @@ import Dominio.IExamEnrollment;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExamEnrollment;
@@ -64,16 +65,21 @@ public class InsertExamEnrollment implements IServico {
 
 			IExam exam = new Exam();
 			exam.setIdInternal(examIdInternal);
+			exam = (IExam) persistentExam.readByOId(exam);
+			
+			if (exam != null){			
+				examEnrollment.setExam(exam);}
 
-			if (persistentExam != null)
-				examEnrollment.setExam(exam);
-
-			else
-				throw new InvalidArgumentsServiceException();
+			else{			
+				throw new InvalidArgumentsServiceException();}
 
 			examEnrollment.setBeginDate(newBeginDate);
 			examEnrollment.setEndDate(newEndDate);
-
+		
+			if (exam.getDay().getTimeInMillis()<examEnrollment.getEndDate().getTimeInMillis()) {
+				throw new InvalidTimeIntervalServiceException();
+			}
+		
 			persistentExamEnrollment.lockWrite(examEnrollment);
 
 		} catch (ExcepcaoPersistencia e) {

@@ -57,20 +57,28 @@ public class ReadExamEnrollment implements IServico {
 		Integer examIdInternal)
 		throws FenixServiceException {
 		try {
-		
+
 			IExam exam = new Exam();
 			exam.setIdInternal(examIdInternal);
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExam persistentExam = sp.getIPersistentExam();
 			exam = (IExam) persistentExam.readByOId(exam);
 
-			ServidorPersistente.IPersistentExamEnrollment persistentExamEnrollment =
+			ServidorPersistente
+				.IPersistentExamEnrollment persistentExamEnrollment =
 				sp.getIPersistentExamEnrollment();
 			IExamEnrollment examEnrollment =
 				persistentExamEnrollment.readIExamEnrollmentByExam(exam);
-			InfoExamEnrollment infoExamEnrollment = Cloner.copyIExamEnrollment2InfoExamEnrollment(examEnrollment);
-			InfoExam infoExam =Cloner.copyIExam2InfoExam(exam);
-			ISiteComponent component = new InfoSiteTeacherExamEnrollment(infoExam,infoExamEnrollment);
+			InfoExamEnrollment infoExamEnrollment = null;
+			if (examEnrollment != null) {
+
+				infoExamEnrollment =
+					Cloner.copyIExamEnrollment2InfoExamEnrollment(
+						examEnrollment);
+			}
+			InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+			ISiteComponent component =
+				new InfoSiteTeacherExamEnrollment(infoExam, infoExamEnrollment);
 			SiteView siteView = new SiteView(component);
 			return siteView;
 		} catch (ExcepcaoPersistencia e) {

@@ -88,7 +88,7 @@ public class InfoSiteTeacherExamEnrollment implements ISiteComponent {
 		List hours = new ArrayList();
 		int i = 0;
 		while (i < 24) {
-			hours.add(new Integer(i));
+			hours.add(formatTime(new Integer(i).toString()));
 			i++;
 		}
 		return hours;
@@ -99,4 +99,12 @@ public class InfoSiteTeacherExamEnrollment implements ISiteComponent {
 		minutes.add("30");
 		return minutes;
 	}
+	
+	private String formatTime(String time){
+			String result= time;
+			if (result.length()==1){
+				result="0"+result;
+			}
+			return result;
+		}
 }

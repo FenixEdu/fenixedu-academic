@@ -69,7 +69,7 @@ public class EditExamEnrollment implements IServico {
 			oldExamEnrollment.setBeginDate(newBeginDate);
 			oldExamEnrollment.setEndDate(newEndDate);
 
-			persistentExamEnrollment.lockWrite(oldExamEnrollment);
+			
 
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
