@@ -96,6 +96,7 @@ import Dominio.IEvaluationMethod;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IFinalEvaluation;
+import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IGroupPropertiesExecutionCourse;
 import Dominio.IItem;
@@ -1423,66 +1424,247 @@ public class TeacherAdministrationSiteComponentBuilder {
     	
     			List executionCourseList= new ArrayList();
     			Iterator iterGroupPropertiesExecutionCourse = groupProperties.getGroupPropertiesExecutionCourse().iterator();
-    	while(iterGroupPropertiesExecutionCourse.hasNext()){
-    		IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse)iterGroupPropertiesExecutionCourse.next();
-    		if(groupPropertiesExecutionCourse.getProposalState().getState().intValue()==1 || 
-    				groupPropertiesExecutionCourse.getProposalState().getState().intValue()==2){
-    			executionCourseList.add(groupPropertiesExecutionCourse.getExecutionCourse());
-    		}
-    	}
+    			while(iterGroupPropertiesExecutionCourse.hasNext()){
+    				IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse)iterGroupPropertiesExecutionCourse.next();
+    				if(groupPropertiesExecutionCourse.getProposalState().getState().intValue()==1 || 
+    						groupPropertiesExecutionCourse.getProposalState().getState().intValue()==2){
+    					executionCourseList.add(groupPropertiesExecutionCourse.getExecutionCourse());
+    				}
+    			}
     
-    	Iterator iterExecutionCourses = executionCourseList.iterator();
+    			Iterator iterExecutionCourses = executionCourseList.iterator();
     
-    	List allShifts=new ArrayList();
+    			List allShifts=new ArrayList();
     
-    	while(iterExecutionCourses.hasNext()){
-    		List someShifts = persistentShift.readByExecutionCourseAndType(
+    			while(iterExecutionCourses.hasNext()){
+    				List someShifts = persistentShift.readByExecutionCourseAndType(
     				(IExecutionCourse)iterExecutionCourses.next(), groupProperties
 					.getShiftType().getTipo());
 
-    		allShifts.addAll(someShifts);
-    	}
+    				allShifts.addAll(someShifts);
+    			}
     
     
-    	List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();
+    			List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();
     
     
-    	if (allStudentsGroup.size() != 0) {
+    			if (allStudentsGroup.size() != 0) {
 
-    		Iterator iterator = allStudentsGroup.iterator();
-    		while (iterator.hasNext()) {
-    			ITurno shift = ((IStudentGroup) iterator.next()).getShift();
-    			if (!allShifts.contains(shift)) {
-    				allShifts.add(shift);
+    				Iterator iterator = allStudentsGroup.iterator();
+    				while (iterator.hasNext()) {
+    					ITurno shift = ((IStudentGroup) iterator.next()).getShift();
+    					if (!allShifts.contains(shift)) {
+    						allShifts.add(shift);
+    					}
+    				}
+    			}
+
+    			if (allShifts.size() != 0) {
+    				Iterator iter = allShifts.iterator();
+    				infoSiteShiftsAndGroups = new ArrayList();
+    				InfoSiteGroupsByShift infoSiteGroupsByShift = null;
+    				InfoSiteShift infoSiteShift = null;
+
+    				while (iter.hasNext()) {
+
+    					ITurno shift = (ITurno) iter.next();
+    					List allStudentGroups = persistentStudentGroup
+						.readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet(), shift);
+
+    					infoSiteShift = new InfoSiteShift();
+    					infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+    					System.out.println(infoSiteShift.getInfoShift().getNome());
+    					List infoLessons = infoSiteShift.getInfoShift().getInfoLessons();
+          
+    					ComparatorChain chainComparator = new ComparatorChain();
+    					chainComparator.addComparator(new BeanComparator("diaSemana.diaSemana"));
+    					chainComparator.addComparator(new BeanComparator("inicio"));
+    					chainComparator.addComparator(new BeanComparator("fim"));
+    					chainComparator.addComparator(new BeanComparator("infoSala.nome"));
+         
+    					Collections.sort(infoLessons, chainComparator);
+          
+    					if (groupProperties.getGroupMaximumNumber() != null) {
+
+    						int vagas = 
+    					groupProperties.getGroupMaximumNumber().intValue()- allStudentGroups.size();
+    						infoSiteShift.setNrOfGroups(new Integer(vagas));
+
+    					} else
+    						infoSiteShift.setNrOfGroups("Sem limite");
+
+    					infoSiteGroupsByShift = new InfoSiteGroupsByShift();
+    					infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
+
+    					List infoSiteStudentGroupsList = null;
+    					if (allStudentGroups.size() != 0) {
+    						infoSiteStudentGroupsList = new ArrayList();
+    						Iterator iterGroups = allStudentGroups.iterator();
+
+    						while (iterGroups.hasNext()) {
+    							InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+    							InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+    							infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups.next());
+    							infoSiteStudentGroup
+								.setInfoStudentGroup(infoStudentGroup);
+    							infoSiteStudentGroupsList.add(infoSiteStudentGroup);
+
+    						}
+    						Collections.sort(infoSiteStudentGroupsList,
+    								new BeanComparator(
+    								"infoStudentGroup.groupNumber"));
+
+    					}
+
+    					infoSiteGroupsByShift
+						.setInfoSiteStudentGroupsList(infoSiteStudentGroupsList);
+
+    					infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
+    				}
+    	
+        /* Sort the list of shifts */
+
+    				ComparatorChain chainComparator = new ComparatorChain();
+    				chainComparator.addComparator(new BeanComparator(
+    				"infoSiteShift.infoShift.tipo"));
+    				chainComparator.addComparator(new BeanComparator(
+    				"infoSiteShift.infoShift.nome"));
+        
+    				Collections.sort(infoSiteShiftsAndGroups, chainComparator);
+    			}
+       
+    			if(!groupProperties.getAttendsSet().getStudentGroupsWithoutShift().isEmpty()){
+    				InfoSiteGroupsByShift infoSiteGroupsByShift = null;
+    				InfoSiteShift infoSiteShift = new InfoSiteShift();
+
+    				infoSiteGroupsByShift = new InfoSiteGroupsByShift();                   
+    				List allStudentGroups = groupProperties.getAttendsSet().getStudentGroupsWithoutShift();
+
+    				if (groupProperties.getGroupMaximumNumber() != null) {
+
+    					int vagas = 
+    						groupProperties.getGroupMaximumNumber().intValue()- allStudentGroups.size();
+    					infoSiteShift.setNrOfGroups(new Integer(vagas));
+
+    				} else
+    				{
+    					infoSiteShift.setNrOfGroups("Sem limite");
+    				}                
+       
+    				infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
+       
+       
+    				List infoSiteStudentGroupsList = null;
+    				if (allStudentGroups.size() != 0) {
+    					infoSiteStudentGroupsList = new ArrayList();
+    					Iterator iterGroups = allStudentGroups.iterator();
+
+    					while (iterGroups.hasNext()) {
+    						InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+    						InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+    						infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups.next());
+    						infoSiteStudentGroup
+							.setInfoStudentGroup(infoStudentGroup);
+    						infoSiteStudentGroupsList.add(infoSiteStudentGroup);
+    					}
+    				}
+       
+           
+    				infoSiteGroupsByShift
+					.setInfoSiteStudentGroupsList(infoSiteStudentGroupsList);
+
+    				infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
+       
     			}
     		}
-    	}
+    		else{
+    			
+    			infoSiteShiftsAndGroups = new ArrayList();
+    			
+    			if(!groupProperties.getAttendsSet().getStudentGroupsWithShift().isEmpty()){
+    				
+    				List allShifts=new ArrayList();
+    				List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();
+    				if (allStudentsGroup.size() != 0) {
+    					Iterator iterator = allStudentsGroup.iterator();
+    					while (iterator.hasNext()) {
+    						ITurno shift = ((IStudentGroup) iterator.next()).getShift();
+    						if (!allShifts.contains(shift)) {
+    							allShifts.add(shift);
+    						}
+    					}
+    				}
 
-    	if (allShifts.size() != 0) {
-    		Iterator iter = allShifts.iterator();
-    		infoSiteShiftsAndGroups = new ArrayList();
-    		InfoSiteGroupsByShift infoSiteGroupsByShift = null;
-    		InfoSiteShift infoSiteShift = null;
+    				if (allShifts.size() != 0) {
+    					Iterator iter = allShifts.iterator();
+    					InfoSiteGroupsByShift infoSiteGroupsByShiftAux = null;
+    					InfoSiteShift infoSiteShiftAux = null;
 
-    		while (iter.hasNext()) {
+    					while (iter.hasNext()) {
+    						ITurno shift = (ITurno) iter.next();
+    						List allStudentGroupsAux = persistentStudentGroup
+							.readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet(), shift);
+    						infoSiteShiftAux = new InfoSiteShift();
+    						infoSiteShiftAux.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+    						List infoLessons = infoSiteShiftAux.getInfoShift().getInfoLessons();
+    						ComparatorChain chainComparator = new ComparatorChain();
+    						chainComparator.addComparator(new BeanComparator("diaSemana.diaSemana"));
+    						chainComparator.addComparator(new BeanComparator("inicio"));
+    						chainComparator.addComparator(new BeanComparator("fim"));
+    						chainComparator.addComparator(new BeanComparator("infoSala.nome"));
+    						Collections.sort(infoLessons, chainComparator);
+    		          
+    						if (groupProperties.getGroupMaximumNumber() != null) {
 
-    			ITurno shift = (ITurno) iter.next();
-    			List allStudentGroups = persistentStudentGroup
-				.readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet(), shift);
+    							int vagas = 
+    								groupProperties.getGroupMaximumNumber().intValue()- allStudentGroupsAux.size();
+    							infoSiteShiftAux.setNrOfGroups(new Integer(vagas));
+    						} else
+    							infoSiteShiftAux.setNrOfGroups("Sem limite");
+    						infoSiteGroupsByShiftAux = new InfoSiteGroupsByShift();
+    						infoSiteGroupsByShiftAux.setInfoSiteShift(infoSiteShiftAux);
+    						List infoSiteStudentGroupsListAux = null;
+    						if (allStudentGroupsAux.size() != 0) {
+    							infoSiteStudentGroupsListAux = new ArrayList();
+    							Iterator iterGroups = allStudentGroupsAux.iterator();
+    							while (iterGroups.hasNext()) {
+    								InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+    								InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+    								infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups.next());
+    								infoSiteStudentGroup
+									.setInfoStudentGroup(infoStudentGroup);
+    								infoSiteStudentGroupsListAux.add(infoSiteStudentGroup);
+    							}
+    							Collections.sort(infoSiteStudentGroupsListAux,
+    									new BeanComparator(
+    									"infoStudentGroup.groupNumber"));
 
-    			infoSiteShift = new InfoSiteShift();
-    			infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
-            System.out.println(infoSiteShift.getInfoShift().getNome());
-    			List infoLessons = infoSiteShift.getInfoShift().getInfoLessons();
-          
-    			ComparatorChain chainComparator = new ComparatorChain();
-    			chainComparator.addComparator(new BeanComparator("diaSemana.diaSemana"));
-    			chainComparator.addComparator(new BeanComparator("inicio"));
-    			chainComparator.addComparator(new BeanComparator("fim"));
-    			chainComparator.addComparator(new BeanComparator("infoSala.nome"));
-         
-    			Collections.sort(infoLessons, chainComparator);
-          
+    						}
+    						infoSiteGroupsByShiftAux
+							.setInfoSiteStudentGroupsList(infoSiteStudentGroupsListAux);
+
+    						infoSiteShiftsAndGroups.add(infoSiteGroupsByShiftAux);
+    					}
+    		    	
+    		        /* Sort the list of shifts */
+
+    					ComparatorChain chainComparator = new ComparatorChain();
+    					chainComparator.addComparator(new BeanComparator(
+    					"infoSiteShift.infoShift.tipo"));
+    					chainComparator.addComparator(new BeanComparator(
+    					"infoSiteShift.infoShift.nome"));
+    					Collections.sort(infoSiteShiftsAndGroups, chainComparator);
+    				}
+    			}
+    			
+    			
+    			InfoSiteGroupsByShift infoSiteGroupsByShift = null;
+    			InfoSiteShift infoSiteShift = new InfoSiteShift();
+
+    			infoSiteGroupsByShift = new InfoSiteGroupsByShift();
+            
+    			List allStudentGroups = groupProperties.getAttendsSet().getStudentGroupsWithoutShift();
+
     			if (groupProperties.getGroupMaximumNumber() != null) {
 
     				int vagas = 
@@ -1490,148 +1672,40 @@ public class TeacherAdministrationSiteComponentBuilder {
     				infoSiteShift.setNrOfGroups(new Integer(vagas));
 
     			} else
+    			{
     				infoSiteShift.setNrOfGroups("Sem limite");
-
-    			infoSiteGroupsByShift = new InfoSiteGroupsByShift();
-            infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
-
-            List infoSiteStudentGroupsList = null;
-            if (allStudentGroups.size() != 0) {
-                infoSiteStudentGroupsList = new ArrayList();
-                Iterator iterGroups = allStudentGroups.iterator();
-
-                while (iterGroups.hasNext()) {
-                    InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-                    InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
-                    infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups.next());
-                    infoSiteStudentGroup
-                            .setInfoStudentGroup(infoStudentGroup);
-                    infoSiteStudentGroupsList.add(infoSiteStudentGroup);
-
-                }
-                Collections.sort(infoSiteStudentGroupsList,
-                        new BeanComparator(
-                                "infoStudentGroup.groupNumber"));
-
-            }
-
-            infoSiteGroupsByShift
-                    .setInfoSiteStudentGroupsList(infoSiteStudentGroupsList);
-
-            infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
-        }
-    	
-        /* Sort the list of shifts */
-
-        ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(new BeanComparator(
-              "infoSiteShift.infoShift.tipo"));
-        chainComparator.addComparator(new BeanComparator(
-               "infoSiteShift.infoShift.nome"));
+    			}                
         
-       Collections.sort(infoSiteShiftsAndGroups, chainComparator);
-    	}
-       
-       if(!groupProperties.getAttendsSet().getStudentGroupsWithoutShift().isEmpty()){
-       	InfoSiteGroupsByShift infoSiteGroupsByShift = null;
-       	InfoSiteShift infoSiteShift = new InfoSiteShift();
+    			infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
+        
+    			List infoSiteStudentGroupsList = null;
+    			if (allStudentGroups.size() != 0) {
+    				infoSiteStudentGroupsList = new ArrayList();
+    				Iterator iterGroups = allStudentGroups.iterator();
 
-       infoSiteGroupsByShift = new InfoSiteGroupsByShift();                   
-       List allStudentGroups = groupProperties.getAttendsSet().getStudentGroupsWithoutShift();
+    				while (iterGroups.hasNext()) {
+    					InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+    					InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+    					infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups.next());
+    					infoSiteStudentGroup
+						.setInfoStudentGroup(infoStudentGroup);
+    					infoSiteStudentGroupsList.add(infoSiteStudentGroup);
 
-       if (groupProperties.getGroupMaximumNumber() != null) {
-
-			int vagas = 
-				groupProperties.getGroupMaximumNumber().intValue()- allStudentGroups.size();
-			infoSiteShift.setNrOfGroups(new Integer(vagas));
-
-		} else
-		{
-			infoSiteShift.setNrOfGroups("Sem limite");
-		}                
-       
-       infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
-       
-       
-       List infoSiteStudentGroupsList = null;
-       if (allStudentGroups.size() != 0) {
-       	infoSiteStudentGroupsList = new ArrayList();
-       	Iterator iterGroups = allStudentGroups.iterator();
-
-        while (iterGroups.hasNext()) {
-            InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-            InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
-            infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups.next());
-            infoSiteStudentGroup
-                    .setInfoStudentGroup(infoStudentGroup);
-            infoSiteStudentGroupsList.add(infoSiteStudentGroup);
-        }
-       }
-       
-           
-       infoSiteGroupsByShift
-	   .setInfoSiteStudentGroupsList(infoSiteStudentGroupsList);
-
-       infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
-       
-    	}
-    }
-    else{
-    	
-    	infoSiteShiftsAndGroups = new ArrayList();
-        InfoSiteGroupsByShift infoSiteGroupsByShift = null;
-        InfoSiteShift infoSiteShift = new InfoSiteShift();
-
-        infoSiteGroupsByShift = new InfoSiteGroupsByShift();
+    				}
+    			}
             
-        List allStudentGroups = groupProperties.getAttendsSet().getStudentGroupsWithoutShift();
+    			infoSiteGroupsByShift
+				.setInfoSiteStudentGroupsList(infoSiteStudentGroupsList);
 
-        if (groupProperties.getGroupMaximumNumber() != null) {
-
-			int vagas = 
-				groupProperties.getGroupMaximumNumber().intValue()- allStudentGroups.size();
-			infoSiteShift.setNrOfGroups(new Integer(vagas));
-
-		} else
-		{
-			infoSiteShift.setNrOfGroups("Sem limite");
-		}                
-        
-        infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
-        
-            List infoSiteStudentGroupsList = null;
-            if (allStudentGroups.size() != 0) {
-                infoSiteStudentGroupsList = new ArrayList();
-                Iterator iterGroups = allStudentGroups.iterator();
-
-                while (iterGroups.hasNext()) {
-                    InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-                    InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
-                    infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups.next());
-                    infoSiteStudentGroup
-                            .setInfoStudentGroup(infoStudentGroup);
-                    infoSiteStudentGroupsList.add(infoSiteStudentGroup);
-
-                }
-            }
-            
-            infoSiteGroupsByShift
-            .setInfoSiteStudentGroupsList(infoSiteStudentGroupsList);
-
-    infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
-    }
-    
-
+    			infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
+    			
+    		}
     	} catch (ExcepcaoPersistencia e) {
     		e.printStackTrace();
     		throw new FenixServiceException("error.impossibleReadProjectShifts");
     	}
-
     	return infoSiteShiftsAndGroups;
     }
-
-
-
 
 
     /**
@@ -1718,12 +1792,10 @@ public class TeacherAdministrationSiteComponentBuilder {
         IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
 		.getGroupEnrolmentStrategyInstance(groupProperties);
         
-        if(strategy.checkHasShift(groupProperties)){
+        if(studentGroup.getShift() != null){
         	component.setInfoStudentGroup(InfoStudentGroupWithAllUntilLessons.newInfoFromDomain(studentGroup));
-        	component.setHasShift(true);
         }else{
         	component.setInfoStudentGroup(InfoStudentGroupWithoutShift.newInfoFromDomain(studentGroup));
-        	component.setHasShift(false);
         }
         
         
