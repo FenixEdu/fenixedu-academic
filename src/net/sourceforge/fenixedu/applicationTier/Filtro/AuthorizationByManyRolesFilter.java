@@ -28,7 +28,7 @@ public abstract class AuthorizationByManyRolesFilter extends Filtro {
     /**
      * @return The Needed Roles to Execute The Service but with InfoObjects
      */
-    protected List getRoleList(List roles) {
+    protected List getRoleList(Collection roles) {
         List result = new ArrayList();
         Iterator iterator = roles.iterator();
         while (iterator.hasNext()) {
