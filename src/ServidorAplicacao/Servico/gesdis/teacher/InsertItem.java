@@ -96,7 +96,7 @@ public class InsertItem implements IServico {
 			
 			persistentItem.lockWrite(item);
 			
-			organizeExistingItemsOrder(section, infoItem.getOrder().intValue());
+			organizeExistingItemsOrder(section, infoItem.getItemOrder().intValue());
 
 	 		}
 

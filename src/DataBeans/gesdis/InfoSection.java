@@ -184,7 +184,7 @@ public class InfoSection {
 	/**
 	* @return InfoSection
 	*/
-    public InfoSection getInfoSuperiorSection() {
+    public InfoSection getSuperiorInfoSection() {
         return infoSuperiorSection;
     }
     
@@ -193,7 +193,7 @@ public class InfoSection {
 	* Sets the infoSite.
 	* @param infoSite The infoSite to set
 	*/
-	public void setInfoSuperiorSection(InfoSection infoSuperiorSection) {
+	public void setSuperiorInfoSection(InfoSection infoSuperiorSection) {
 		this.infoSuperiorSection = infoSuperiorSection;
 	}
     

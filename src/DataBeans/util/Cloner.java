@@ -1,9 +1,9 @@
 package DataBeans.util;
 
-import org.apache.commons.beanutils.BeanUtils;
+import java.util.Iterator;
+import java.util.List;
 
-import Util.TipoCurso;
-import Util.TipoDocumentoIdentificacao;
+import org.apache.commons.beanutils.BeanUtils;
 
 import DataBeans.InfoClass;
 import DataBeans.InfoCountry;
@@ -70,6 +70,8 @@ import Dominio.Site;
 import Dominio.Student;
 import Dominio.Turma;
 import Dominio.Turno;
+import Util.TipoCurso;
+import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author jpvl
@@ -647,20 +649,59 @@ public abstract class Cloner {
 		return infoBibliographicReference;
 	}
 	/**
-			 * Method copyInfoSite2ISite.
-			 * @param infoSite
-			 * @return ISite
-			 */
+	* Method copyInfoSite2ISite.
+	* @param infoSite
+	* @return ISite
+	*/
+	
 	public static ISite copyInfoSite2ISite(InfoSite infoSite) {
 		ISite site = new Site();
 		IDisciplinaExecucao executionCourse =
 			Cloner.copyInfoExecutionCourse2ExecutionCourse(
 				infoSite.getInfoExecutionCourse());
-
+		
+		ISection initialSection = Cloner.copyInfoSection2ISection(
+			infoSite.getInitialInfoSection());
+		
+		List sections = Cloner.copyListInfoSections2ListISections(infoSite.getInfoSections());
+		List announcements = Cloner.copyListInfoAnnouncements2ListIAnnouncements(infoSite.getInfoAnnouncements());
+		
 		copyObjectProperties(site, infoSite);
 		site.setExecutionCourse(executionCourse);
+		site.setInitialSection(initialSection);
+		site.setSections(sections);
+		site.setAnnouncements(announcements);
 
 		return site;
+	}
+	
+	/**
+	 * Method copyISite2InfoSite.
+	 * @param site
+	 * @return InfoSite
+	 */
+	
+	public static InfoSite copyISite2InfoSite(ISite site) {
+		InfoSite infoSite = new InfoSite();
+
+		InfoExecutionCourse infoExecutionCourse =
+			Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				site.getExecutionCourse());
+				
+		InfoSection initialInfoSection = Cloner.copyISection2InfoSection(
+					site.getInitialSection());
+		
+		List infoSections = Cloner.copyListISections2ListInfoSections(site.getSections());
+		List infoAnnouncements = Cloner.copyListIAnnouncements2ListInfoAnnouncements(site.getAnnouncements());
+		
+				
+		copyObjectProperties(infoSite, site);
+		infoSite.setInfoExecutionCourse(infoExecutionCourse);
+		infoSite.setInitialInfoSection(initialInfoSection);
+		infoSite.setInfoSections(infoSections);
+		infoSite.setInfoAnnouncements(infoAnnouncements);
+		
+		return infoSite;
 	}
 
 	/**
@@ -675,25 +716,119 @@ public abstract class Cloner {
 
 		ISection fatherSection = null;
 
-		ISite site = Cloner.copyInfoSite2ISite(infoSection.getSite());
+		ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
 
 		InfoSection infoSuperiorSection =
-			(InfoSection) infoSection.getSuperiorSection();
+			(InfoSection) infoSection.getSuperiorInfoSection();
 
-		while (infoSuperiorSection != null) {
+		if(infoSuperiorSection != null) {
 			fatherSection =
 				Cloner.copyInfoSection2ISection(infoSuperiorSection);
 		}
+
+		List inferiorSections = Cloner.copyListInfoSections2ListISections(infoSection.getInferiorInfoSections());
+
+		List items=Cloner.copyListInfoItems2ListIItems(infoSection.getInfoItems());
 
 		copyObjectProperties(section, infoSection);
 
 		section.setSuperiorSection(fatherSection);
 		section.setSite(site);
-
+		section.setInferiorSections(inferiorSections);
+		section.setItems(items);
+		
 		return section;
 
 	}
 
+
+	/**
+	 * Method copyISection2InfoSection.
+	 * @param section
+	 * @return InfoSection
+	 **/
+	
+
+	public static InfoSection copyISection2InfoSection(ISection section) {
+
+   		InfoSection infoSection = new InfoSection();
+
+		InfoSection fatherInfoSection = null;
+
+		InfoSite infoSite = Cloner.copyISite2InfoSite(section.getSite());
+
+		ISection superiorSection =(ISection) section.getSuperiorSection();
+			
+		if (superiorSection != null) {
+			fatherInfoSection =
+				Cloner.copyISection2InfoSection(superiorSection);
+		}
+
+		List inferiorInfoSections = Cloner.copyListISections2ListInfoSections(section.getInferiorSections());
+
+		List infoItems=Cloner.copyListIItems2ListInfoItems(section.getItems());
+
+		copyObjectProperties(infoSection, section);
+
+		infoSection.setSuperiorInfoSection(fatherInfoSection);
+		infoSection.setInfoSite(infoSite);
+		infoSection.setInferiorInfoSections(inferiorInfoSections);
+		infoSection.setInfoItems(infoItems);
+		
+		return infoSection;
+
+	
+	}
+	
+	
+	/**
+	* 
+	* @param listInfoSections
+	* @return listISections
+	*/
+	
+	private static List copyListInfoSections2ListISections(List listInfoSections){
+			
+		List listSections=null;
+		
+		Iterator iterListInfoSections=listInfoSections.iterator();
+		
+		while(iterListInfoSections.hasNext())
+		{
+			InfoSection infoSection = (InfoSection) iterListInfoSections.next();
+			ISection section=Cloner.copyInfoSection2ISection(infoSection);
+			listSections.add(section);
+		}
+		
+		return listSections;
+	}
+		
+
+	/**
+	* 
+	* @param listISections
+	* @return listInfoSections
+	*/
+	
+	private static List copyListISections2ListInfoSections(List listISections)
+	{			
+		List listInfoSections=null;
+		
+		Iterator iterListISections=listISections.iterator();
+		
+		while(iterListISections.hasNext())
+		{
+			ISection section = (ISection) iterListISections.next();
+			InfoSection infoSection=Cloner.copyISection2InfoSection(section);
+			listInfoSections.add(infoSection);
+		}
+		
+		return listInfoSections;
+	}
+
+	
+	
+	
 	/**
 	 * Method copyInfoItem2IItem.
 	 * @param infoItem
@@ -716,6 +851,76 @@ public abstract class Cloner {
 	}
 
 	/**
+	* Method copyIItem2InfoItem.
+	* @param item
+	* @return InfoItem
+	**/
+	
+
+	public static InfoItem copyIItem2InfoItem(IItem item) {
+
+		InfoItem infoItem =new InfoItem();
+		InfoSection infoSection =
+						Cloner.copyISection2InfoSection(item.getSection());
+
+		copyObjectProperties(infoItem, item);
+
+		infoItem.setInfoSection(infoSection);
+
+			
+			return infoItem;
+	
+		}
+
+
+
+	/**
+	* 
+	* @param listInfoItems
+	* @return listIItems
+	*/
+	
+	private static List copyListInfoItems2ListIItems(List listInfoItems)
+	{
+		List listItems=null;
+		
+		Iterator iterListInfoItems=listInfoItems.iterator();
+		
+		while(iterListInfoItems.hasNext())
+		{
+			InfoItem infoItem = (InfoItem) iterListInfoItems.next();
+			IItem item=Cloner.copyInfoItem2IItem(infoItem);
+			listItems.add(item);
+		}
+		
+		return listItems;
+	}
+	
+	/**
+	* 
+	* @param listIItems
+	* @return listInfoItems
+	*/
+	
+		private static List copyListIItems2ListInfoItems(List listIItems)
+		{			
+			List listInfoItems=null;
+		
+			Iterator iterListIItems=listIItems.iterator();
+		
+			while(iterListIItems.hasNext())
+			{
+				IItem item = (IItem) iterListIItems.next();
+				InfoItem infoItem=Cloner.copyIItem2InfoItem(item);
+				listInfoItems.add(infoItem);
+			}
+		
+			return listInfoItems;
+		}
+
+
+
+/**
 	 * Method copyInfoAnnouncement2IAnnouncement.
 	 * @param infoAnnouncement
 	 * @return IAnnouncement
@@ -748,22 +953,49 @@ public abstract class Cloner {
 	}
 
 	/**
-	 * Method copyISite2InfoSite.
-	 * @param site
-	 * @return InfoSite
-	 */
-	public static InfoSite copyISite2InfoSite(ISite site) {
-		InfoSite infoSite = new InfoSite();
-
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(
-				site.getExecutionCourse());
-
-		copyObjectProperties(infoSite, site);
-		infoSite.setInfoExecutionCourse(infoExecutionCourse);
-
-		return infoSite;
+	* 
+	* @param listInfoAnnouncements
+	* @return listIAnnouncements
+	*/
+		
+	private static List copyListInfoAnnouncements2ListIAnnouncements(List listInfoAnnouncements){
+		List listAnnouncements=null;
+		
+		Iterator iterListInfoAnnouncements=listInfoAnnouncements.iterator();
+		
+		while(iterListInfoAnnouncements.hasNext())
+		{
+			InfoAnnouncement infoAnnouncement = (InfoAnnouncement) iterListInfoAnnouncements.next();
+			IAnnouncement announcement=Cloner.copyInfoAnnouncement2IAnnouncement(infoAnnouncement);				
+			listAnnouncements.add(announcement);
+		}
+		
+		return listAnnouncements;
 	}
+
+	/**
+	* 
+	* @param listIAnnouncements
+	* @return listInfoAnnouncements
+	*/
+	
+	private static List copyListIAnnouncements2ListInfoAnnouncements(List listIAnnouncements)
+	{			
+		List listInfoAnnouncements=null;
+		
+		Iterator iterListIAnnouncements=listIAnnouncements.iterator();
+		
+		while(iterListIAnnouncements.hasNext())
+		{
+			IAnnouncement announcement = (IAnnouncement) iterListIAnnouncements.next();
+			InfoAnnouncement infoAnnouncement=Cloner.copyIAnnouncement2InfoAnnouncement(announcement);
+			listInfoAnnouncements.add(infoAnnouncement);
+		}
+		
+		return listInfoAnnouncements;
+	}
+	
+	
 
 	/**
 	 * 
