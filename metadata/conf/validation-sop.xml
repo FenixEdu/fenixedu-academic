@@ -21,6 +21,23 @@
 		</field>
 	</form>
 
+	<!-- Validation for exam context form -->
+	<form name="examForm">
+		<field property="day" depends="required, integer">
+			<arg0 key="property.exam.day"/>
+		</field>
+		<field property="month" depends="required, integer">
+			<arg0 key="property.exam.month"/>
+		</field>
+		<field property="year" depends="required, integer">
+			<arg0 key="property.exam.year"/>
+		</field>
+		<field property="beginning" depends="required, integer">
+			<arg0 key="property.exam.beginning"/>
+		</field>
+	</form>
+
+
   <!-- Validation for chooseContextForm Form -->
     <form name="chooseContextForm">
       <field property="index" depends="required, integer" page="1">

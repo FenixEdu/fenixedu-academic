@@ -196,6 +196,17 @@
         <form-property name="page" type="java.lang.Integer"/>
      </form-bean>
 
+      <!-- Dynamic-FormBean for Exam -->
+     <form-bean name="examForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true"
+                >
+        <form-property name="day" type="java.lang.String"/>
+        <form-property name="month" type="java.lang.String"/>
+        <form-property name="year" type="java.lang.String"/>
+        <form-property name="beginning" type="java.lang.String"/>
+     </form-bean>
+
       
      </form-beans>
 
@@ -769,6 +780,13 @@
         <forward name="showForm" path="/chooseExecutionCourse.jsp"/>        
     </action>
 
+	<action path="/createExam"
+			name="examForm"
+			input="/createExam.jsp"
+    		type="ServidorApresentacao.Action.sop.CreateExamAction"
+    		>
+    	<forward name="Sucess" path="/mainExams.jsp"/>
+	</action>
 
       
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
