@@ -367,6 +367,30 @@
 			<forward name="list-many" path="listDepartmentTeachers"/>
 		</action> 	   
  	   <!-- =======================================================================  -->
+		<!-- =======  USE CASE : Read Teacher Credits Sheet =================================== --> 	   
+	   	<action path="/teacherSearchForTeacherCreditsSheet" 
+	   			input="search-for-institution-working-time-management" name="teacherSearchForm" 
+	   			scope="request"
+	   			parameter="method"
+	   			type="ServidorApresentacao.Action.framework.SearchAction"
+	   			className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+
+			<set-property property="serviceName" value="FindTeachersService"/>
+  			<set-property property="objectAttribute" value="infoTeacher"/>
+  			<set-property property="listAttribute" value="infoTeacherList"/>
+   			<set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
+
+   			<forward name="search-form" path="searchForTeacherCreditsSheet"/>
+  			<forward name="list-one" path="/showTeacherCreditsSheet.do"/> 
+    		<forward name="list-many" path=""/>
+	   	</action>
+	   	<action path="/showTeacherCreditsSheet" 
+	   			type="ServidorApresentacao.Action.credits.ReadTeacherCreditsSheetAction">
+   			<forward name="successfull-read" path="showTeacherCreditsSheet"/>
+	   	</action>
+
+ 	   <!-- =======================================================================  -->
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

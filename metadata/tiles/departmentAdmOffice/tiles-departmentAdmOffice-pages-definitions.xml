@@ -65,6 +65,16 @@
 		<put name="body" value="/departmentAdmOffice/teacher/listDeparmentTeachers.jsp"/>
 	</definition>
 
+	<definition name="searchForTeacherCreditsSheet" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="searchForTeacherCreditsSheetBody"/>
+	</definition>
+	<definition name="searchForTeacherCreditsSheetBody" extends="teacher-search-form-layout">
+		<put name="searchInfo" value="label.search.for.teacherCreditsSheet"/>
+	</definition>
+	<definition name="showTeacherCreditsSheet" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/credits/showTeacherCreditsSheet.jsp"/>
+	</definition>
+
 
 
 
