@@ -104,8 +104,7 @@ public class TimeTableRenderer {
 							System.out.println("COLISIONS :"+infoLessonWrapper.getNumberOfCollisions().intValue());
 							
 						if (infoLessonWrapper != null && infoLessonWrapper.getNumberOfCollisions().intValue() == 0){
-							System.out.println("*******************************************");
-							strBuffer.append(" colspan ='").append(dayColumn.getMaxColisionSize()).append("'");
+							strBuffer.append(" colspan ='").append(dayColumn.getMaxColisionSize().intValue() - slotIndex).append("'");
 							colspan = lessonSlotListResolved.length;
 						}
 						
@@ -243,9 +242,7 @@ public class TimeTableRenderer {
 		if (hourIndex + 1 == timeTable.getNumberOfHours().intValue()) {
 			strBuffer.append("_bottom");
 		}
-
 		return strBuffer.toString();
-
 	}
 
 	/**
