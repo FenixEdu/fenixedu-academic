@@ -4,7 +4,9 @@
  */
 package ServidorAplicacao.Servicos;
 
+import junit.framework.AssertionFailedError;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -41,10 +43,14 @@ public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
 		{
 			Object result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
 			assertAuthorizedResult(result);
-		} catch (Throwable ex)
+		} catch (FenixServiceException ex)
 		{
-			ex.printStackTrace(System.out);
-			fail(getNameOfServiceToBeTested() + ": fail testAuthorizedUser");
+			ex.printStackTrace();
+			System.out.println("testNonAuthenticatedUser was UNSUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
+			fail("Unable to run service: " + getNameOfServiceToBeTested());
+		} catch (AssertionFailedError ex)
+		{
+			fail(ex.getMessage());
 		}
 	}
 
@@ -53,11 +59,11 @@ public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
 		Object serviceArguments[] = getAuthorizeArguments();
 		try
 		{
-			 gestor.executar(userView2, getNameOfServiceToBeTested(), serviceArguments);
+			gestor.executar(userView2, getNameOfServiceToBeTested(), serviceArguments);
 			fail(this.getClass().getName() + ": Service " + getNameOfServiceToBeTested() + ": fail testUnauthorizedUser");
 		} catch (NotAuthorizedException ex)
 		{
-			ex.printStackTrace(System.out);
+			// sucessfull service execution
 		} catch (Exception ex)
 		{
 			ex.printStackTrace();
@@ -85,13 +91,11 @@ public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
 			fail(this.getClass().getName() + ": Service " + getNameOfServiceToBeTested() + "fail testNonAuthenticatedUser");
 		} catch (NotAuthorizedException ex)
 		{
-			ex.printStackTrace();
-			System.out.println("testNonAuthenticatedUser was SUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
-
-		} catch (Exception ex)
+			// sucessfull service execution
+		} 
+		catch (Exception ex)
 		{
 			ex.printStackTrace();
-			System.out.println("testNonAuthenticatedUser was UNSUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
 			fail("Unable to run service: " + getNameOfServiceToBeTested());
 		}
 	}
