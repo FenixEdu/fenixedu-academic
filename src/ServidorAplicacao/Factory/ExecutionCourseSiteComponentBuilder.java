@@ -8,16 +8,17 @@ package ServidorAplicacao.Factory;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.commons.lang.StringUtils;
 import org.apache.slide.common.SlideException;
 
 import DataBeans.ISiteComponent;
@@ -26,8 +27,6 @@ import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoClassWithInfoExecutionDegree;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
-import DataBeans.InfoDegree;
-import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeCurricularPlanWithDegree;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoEvaluationMethod;
@@ -694,7 +693,6 @@ public class ExecutionCourseSiteComponentBuilder {
 
                 InfoBibliographicReference infoBibRef = copyFromDomain(bibRef);
                 infoBibRefs.add(infoBibRef);
-
             }
             if (!infoBibRefs.isEmpty()) {
                 component.setBibliographicReferences(infoBibRefs);
@@ -916,8 +914,8 @@ public class ExecutionCourseSiteComponentBuilder {
 
                 infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
                 infoCurricularCourseList.add(infoCurricularCourse);
-
             }
+
         return infoCurricularCourseList;
     }
     
@@ -925,46 +923,72 @@ public class ExecutionCourseSiteComponentBuilder {
      * Curricular courses list organized by degree (curricular information in first page).
      */
     private List readCurricularCoursesOrganizedByDegree(IExecutionCourse executionCourse) {
-		List infoCurricularCourseScopeList;
-		List infoCurricularCourseList = new ArrayList();	
-		StringBuffer allSiglas = new StringBuffer();
-		
-		if (executionCourse.getAssociatedCurricularCourses() != null) {
-			for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-				ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse
-				.getAssociatedCurricularCourses().get(i);
-				InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
-				infoCurricularCourseScopeList = new ArrayList();
-				for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
-					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse
-					.getScopes().get(j);
-					InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
-					infoCurricularCourseScopeList.add(infoCurricularCourseScope);
-				}
-				
-				infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
-	
-				String currentSigla = infoCurricularCourse.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();			
-			
-				if (!infoCurricularCourseList.isEmpty() && StringUtils.contains(allSiglas.toString(),currentSigla)) {
-					for (int k = 0; k < infoCurricularCourseList.size(); k++) {
-						String sigla = ((InfoDegree) ((InfoDegreeCurricularPlan) ((InfoCurricularCourse) 
-								((List) infoCurricularCourseList.get(k)).get(0)).getInfoDegreeCurricularPlan()).getInfoDegree()).getSigla();
-						if (sigla.equals(currentSigla)) {
-							((List)infoCurricularCourseList.get(k)).add(infoCurricularCourse);
-							break;
-						}
-					}
-				} else {
-					List infoCurricularCoursesByDegree = new ArrayList();	
-					infoCurricularCoursesByDegree.add(infoCurricularCourse);
-					infoCurricularCourseList.add(infoCurricularCoursesByDegree);
-					allSiglas.append(currentSigla);
-				}
-			}				
-		}
-		
-		return infoCurricularCourseList;
+        final List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        final int estimatedResultSize = curricularCourses.size();
+
+        final List infoCurricularCourses = new ArrayList(estimatedResultSize);
+        final Set degreesCodes = new HashSet(estimatedResultSize);
+        for (final Iterator iterator = curricularCourses.iterator(); iterator.hasNext(); ) {
+            final ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+            final String degreeCode = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
+            if (!degreesCodes.contains(degreeCode)) {
+                final InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
+                //final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+                infoCurricularCourses.add(infoCurricularCourse);
+                infoCurricularCourse.setInfoScopes(new ArrayList());
+
+                for (final Iterator scopeIterator = curricularCourse.getScopes().iterator(); scopeIterator.hasNext(); ) {
+                    final ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopeIterator.next();
+                    final InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
+                    infoCurricularCourse.getInfoScopes().add(infoCurricularCourseScope);
+                }
+
+                degreesCodes.add(degreeCode);
+            }
+        }
+
+        return infoCurricularCourses;
+//
+//		List infoCurricularCourseScopeList;
+//		List infoCurricularCourseList = new ArrayList();	
+//		StringBuffer allSiglas = new StringBuffer();
+//		
+//		if (executionCourse.getAssociatedCurricularCourses() != null) {
+//			for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
+//				ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse
+//				.getAssociatedCurricularCourses().get(i);
+//				InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
+//				infoCurricularCourseScopeList = new ArrayList();
+//				for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
+//					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse
+//					.getScopes().get(j);
+//					InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
+//					infoCurricularCourseScopeList.add(infoCurricularCourseScope);
+//				}
+//				
+//				infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
+//	
+//				String currentSigla = infoCurricularCourse.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();			
+//			
+//				if (!infoCurricularCourseList.isEmpty() && StringUtils.contains(allSiglas.toString(),currentSigla)) {
+//					for (int k = 0; k < infoCurricularCourseList.size(); k++) {
+//						String sigla = ((InfoDegree) ((InfoDegreeCurricularPlan) ((InfoCurricularCourse) 
+//								((List) infoCurricularCourseList.get(k)).get(0)).getInfoDegreeCurricularPlan()).getInfoDegree()).getSigla();
+//						if (sigla.equals(currentSigla)) {
+//							((List)infoCurricularCourseList.get(k)).add(infoCurricularCourse);
+//							break;
+//						}
+//					}
+//				} else {
+//					List infoCurricularCoursesByDegree = new ArrayList();	
+//					infoCurricularCoursesByDegree.add(infoCurricularCourse);
+//					infoCurricularCourseList.add(infoCurricularCoursesByDegree);
+//					allSiglas.append(currentSigla);
+//				}
+//			}				
+//		}
+//		
+//		return infoCurricularCourseList;
 	}
 		
     

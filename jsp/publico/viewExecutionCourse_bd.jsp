@@ -19,11 +19,8 @@
 	<bean:define id="curricularCoursesList" name="component" property="associatedDegreesByDegree" />
 	<div id="contextual_nav">
 		<h2 class="brown"><bean:message key="label.curricular.information"/></h2>
-		<ul>	
-			<logic:iterate id="curricularCourses" name="curricularCoursesList">
-				<bean:size id="size" name="curricularCourses" />
-
-				<logic:iterate id="curricularCourse" name="curricularCourses">
+		<ul>
+				<logic:iterate id="curricularCourse" name="curricularCoursesList">
 					<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal" />
 					<bean:define id="degreeID" name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.idInternal" />
 					<bean:define id="degreeCurricularPlanID" name="curricularCourse" property="infoDegreeCurricularPlan.idInternal" />
@@ -47,7 +44,6 @@
 			
 					</html:link></li>
 				</logic:iterate>
-			</logic:iterate>
 		</ul>
 	</div>
 
