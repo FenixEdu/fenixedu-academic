@@ -12,7 +12,7 @@
 <table align="center"  cellpadding='0' cellspacing='0'>
 			<tr align="center">
 				<td>
-					<span class="error"> <bean:message key="message.public.notfound.executionCourse"/> </span>
+					<span class="error"><bean:message key="message.public.notfound.executionCourse"/> </span>
 				</td>
 			</tr>
 		</table>
