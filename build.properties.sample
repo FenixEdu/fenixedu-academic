@@ -191,7 +191,8 @@ verify_serializable=true
 # FAQ Configuration
 #------------------------------------------------------------------------------
 #
-# enrollment.faq.url: url to the enrollment FAQ
+#   enrollment.faq.url: url to the enrollment FAQ
+#
 enrollment.faq.url=http://fenix-ashes.ist.utl.pt:8080/confluence/display/FAQ/FAQ-Inscri%25E7%25F5es
 #
 #
