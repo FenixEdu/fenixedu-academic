@@ -8,10 +8,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.SortedSet;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
@@ -35,6 +37,8 @@ import Util.renderer.container.RequestEntry;
  * @author Luis Cruz
  */
 public class MonitorRequestLogsDA extends FenixDispatchAction {
+
+	private static String logImageDir = null;
 
 	public ActionForward listFiles(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
@@ -91,6 +95,7 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 
 	private Collection processFile(File file, HttpServletRequest request) {
 		Map profileMap = new HashMap();
+		SortedSet sortedSet = null;
 		String fileContents = readFileContents(file);
 		if (fileContents != null) {
 			StringTokenizer stringTokenizer = new StringTokenizer(fileContents,
@@ -106,16 +111,32 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 				}
 			}
 
-			dumpInfo(file.getName(), profileMap, file.getName());
+			sortedSet = dumpInfo(file.getName(), profileMap, file.getName());
 		}
-		return profileMap.values();
+		return sortedSet;
 	}
 
-	private void dumpInfo(String name, Map profileMap, String filename) {
+	private SortedSet dumpInfo(String name, Map profileMap, String filename) {
+		if (logImageDir == null) {
+			setLogImageDir();
+		}
+
 		SortedSet sortedProfileSet = sortProfileMap(profileMap);
 		BarChart barChart = new BarChart(sortedProfileSet, "Average Execution Time",
-				filename + ".bar.png", 20);
-		System.out.println(filename);
+				logImageDir + "/" + filename + ".bar.png", 20);
+		return sortedProfileSet;
+	}
+
+	private void setLogImageDir() {
+        InputStream inputStream = getClass().getResourceAsStream("/logAnalyser.properties");
+        if (inputStream != null) {
+        	Properties properties = new Properties();
+        	try {
+				properties.load(inputStream);
+				logImageDir = properties.getProperty("log.image.directory");
+			} catch (IOException e) {
+			}
+        }
 	}
 
 	private SortedSet sortProfileMap(Map profileMap) {

@@ -973,7 +973,7 @@
               type="ServidorApresentacao.Action.manager.MonitorRequestLogsDA"
               parameter="method"
 			  name="monitorRequestLogsPathForm"
-			  attribute="monitorRequestLogsPathForm"
+              validate="false"
               >
           <forward name="ShowSelectionForm" path="df.page.monitor-request"/>
 		  <forward name="ShowRequestAnalysisLog" path="df.page.analyseRequestsLog"/>
