@@ -17,7 +17,7 @@
      <img alt="" border="0"  src="<%= request.getContextPath() %>/images/LogoIST.gif"  />
 	</td>
     <td id="principal" bgcolor="#FFFFFF">
-      <div id="header"><tiles:getAsString name="institutionName" /></div>
+      <div id="header"><h4><tiles:getAsString name="institutionName" /></h4></div>
       <h1><tiles:getAsString name="executionCourseName"/></h1>
       <br />
 	  <tiles:insert attribute="body" />      

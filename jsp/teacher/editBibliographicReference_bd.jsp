@@ -1,34 +1,31 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<h3><bean:message key="title.editBibligraphicReference"/></h3>
 <html:form action="/bibliographicReferenceManager">
    	<html:hidden property="page" value="1"/>
     <fieldset style="width: 500; height: 315; padding: 2">
-    <legend>
-    	<b><u>
-    	<font size="4">
-    		<bean:message key="message.insertBibliographyData"/>
-    	</font>
-    	</u></b>
-    </legend>
-    
-    <bean:message key="message.bibliographicReferenceTitle"/>
-	<b><html:errors property="title"/></b>
+      	
+    		<h2><bean:message key="message.insertBibliographyData"/></h2>
+    	
+      
+    <h2><bean:message key="message.bibliographicReferenceTitle"/></h2>
+	<span class="error"><html:errors property="title"/></span>
     <p><html:textarea rows="4" cols="56" property="title"/></p>
     
-    <bean:message key="message.bibliographicReferenceAuthors"/>
-   	<b><html:errors property="authors"/></b>
+    <h2><bean:message key="message.bibliographicReferenceAuthors"/></h2>
+   	<span class="error"><html:errors property="authors"/></span>
     <p><html:textarea rows="4" cols="56" property="authors"/></p>
 
-    <bean:message key="message.bibliographicReferenceReference"/>
-	<b><html:errors property="reference"/></b>
+    <h2><bean:message key="message.bibliographicReferenceReference"/></h2>
+	<span class="error"><html:errors property="reference"/></span>
     <p><html:textarea rows="2" cols="56" property="reference"/></p>
 
-    <bean:message key="message.bibliographicReferenceYear"/>
-    <b><html:errors property="year"/></b>
+    <h2><bean:message key="message.bibliographicReferenceYear"/></h2>
+    <span class="error"><html:errors property="year"/></span>
     <p><html:text property="year"/></p>
     
-    <bean:message key="message.bibliographicReferenceOptional"/>
+    <h2><bean:message key="message.bibliographicReferenceOptional"/></h2>
     <p><html:checkbox property="optional" value="yes"/></p>
     <p>
     
@@ -36,16 +33,16 @@
     
     <logic:notPresent name="edit">
     	<html:hidden property="method" value="createBibliographicReference"/>
-   	 	<html:submit>
+   	 <h3>	<html:submit styleClass="inputbutton">
     	   	<bean:message key="button.confirm"/>                    		         	
-    	</html:submit>       
+    	</html:submit></h3>       
     </logic:notPresent>
     
     <logic:present name="edit">
        	<html:hidden property="method" value="editBibliographicReference"/>
-   	 	<html:submit>
+   	 <h3>	<html:submit styleClass="inputbutton">
     	   	<bean:message key="button.confirm"/>                    		         	
-    	</html:submit>       
+    	</html:submit>  </h3>      
     </logic:present>	
     	
     </center></p>

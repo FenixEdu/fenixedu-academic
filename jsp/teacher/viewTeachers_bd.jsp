@@ -7,18 +7,14 @@
 
 
 
-<logic:notPresent name="<%= SessionConstants.TEACHERS_LIST %>">
 
-</logic:notPresent>
 
-<logic:present name="<%= SessionConstants.TEACHERS_LIST %>" >
-
-<bean:message key="title.teachers"/>
+<h3><bean:message key="title.teachers"/></h3>
 <table>
 <tr>
-<th><bean:message key="label.teacherNumber"/>	
+<th><h2><bean:message key="label.teacherNumber"/></h2>	
 </th>
-<th><bean:message key="label.name"/>	
+<th><h2><bean:message key="label.name"/></h2>	
 </th>
 </tr>	
 <logic:iterate id="infoTeacher" name="<%= SessionConstants.TEACHERS_LIST %>">
@@ -38,7 +34,7 @@
 </tr>
 </logic:iterate>	
 </table>
-</logic:present>
+
 
 <logic:equal name="<%= SessionConstants.IS_RESPONSIBLE %>" value="true">
 <table>

@@ -3,36 +3,40 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<span class="error"><html:errors/></span>
 
+<h3><bean:message key="title.editAnnouncement" /></h3>
 <html:form action="/editAnnouncement" focus="title" >
 	<html:hidden property="page" value="1"/>
 	<table border="0" >
         	<tr>
         		<td>
-					<bean:message key="label.title" />
+					<h2><bean:message key="label.title" /></h2>
 				</td>
 				<td>
 					<html:text name="Announcement" property="title" >
 					</html:text>
 				</td>
+				<td><span class="error" ><html:errors property="title" /></span>
+				</td>
 			</tr>
         	<tr>
         		<td>
-					<bean:message key="label.information" />	
+					<h2><bean:message key="label.information" /></h2>
 				</td>
 				<td>
 					<html:text name="Announcement" property="information" >
 					</html:text>
 				</td>
+				<td><span class="error" ><html:errors property="information" /></span>
+				</td>
 			</tr>
         </table>
 
-	<br>
-	<html:reset ><bean:message key="label.clear"/>
+	<br><h3>
+	<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 	</html:reset>
 	<html:hidden property="method" value="editAnnouncement" />
-	<html:submit> <bean:message key="button.save" />
-	</html:submit>    
+	<html:submit styleClass="inputbutton"> <bean:message key="button.save" />
+	</html:submit> </h3>   
 
 </html:form>
