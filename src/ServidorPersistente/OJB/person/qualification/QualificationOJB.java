@@ -35,11 +35,7 @@ public class QualificationOJB extends ObjectFenixOJB implements IPersistentQuali
 	 * @see ServidorPersistente.IPersistentQualification#readByYearAndSchoolAndDegreeAndPerson(java.lang.String,
 	 *      java.lang.String, java.lang.String, Dominio.IPessoa)
 	 */
-    public IQualification readByYearAndSchoolAndPerson(
-        Integer year,
-        String school,
-        String degree,
-        IPessoa person)
+    public IQualification readByYearAndSchoolAndPerson(Integer year, String school, IPessoa person)
         throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
