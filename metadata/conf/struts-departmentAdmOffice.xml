@@ -132,10 +132,24 @@
    			<forward name="list-professorships" path="show-teacher-professorships"/>
 	   	</action>
 
-	   	<action path="/manageTeacherShiftProfessorships" input="show-teacher-shift-professorships"
+	   	<action path="/manageTeacherShiftProfessorships" input="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm"
 	   			name="teacherExecutionCourseShiftProfessorshipForm" scope="request"
 	   			parameter="method"
 	   			type="ServidorApresentacao.Action.department.ManageShiftProfessorships">
+			<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingInstitutionWorkingPeriod"
+								key="message.overlapping.institution.working.period"
+								path="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm"/>	   			
+			<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingLessonPeriod"
+								key="message.overlapping.lesson.period"
+								path="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm"/>	   			
+			<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingSupportLessonPeriod"
+								key="message.overlapping.support.lesson.period"
+								path="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm"/>	   			
+			<exception type="ServidorAplicacao.Servico.credits.AcceptTeacherExecutionCourseShiftPercentage$InvalidProfessorshipPercentage"
+								key="message.invalid.professorship.percentage"
+								path="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm"/>	   			
+								
+	   			
    			<forward name="show-form" path="show-shift-professorships-percentages"/>
 			<forward name="successfull-edit" path="/teacherSearchForShiftManagement.do?page=0&amp;method=doSearch"/>
 	   	</action>
@@ -189,6 +203,21 @@
   		<set-property property="oidProperty" value="idInternal"/>
     	<set-property property="requestAttribute" value="infoSupportLesson" />
     	<set-property property="infoObjectClassName" value="DataBeans.teacher.professorship.InfoSupportLesson" />
+
+		<exception type="ServidorAplicacao.Servico.teacher.professorship.EditSupportLessonByOID$InvalidPeriodException"
+								key="message.invalidPeriod"
+								path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>	   			
+		<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingInstitutionWorkingPeriod"
+							key="message.overlapping.institution.working.period"
+							path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>	   			
+		<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingLessonPeriod"
+							key="message.overlapping.lesson.period"
+							path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>	   			
+		<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingSupportLessonPeriod"
+							key="message.overlapping.support.lesson.period"
+							path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>	   			
+								
+    	
  		<forward name="show-form" path="edit-support-lesson"/> 
  		<forward name="successfull-edit" path="/manageTeacherExecutionCourseSupportLessons.do?page=0"/> 
    		<forward name="successfull-read" path="/manageTeacherExecutionCourseSupportLessons.do?page=0"/>
@@ -235,6 +264,16 @@
 								key="message.teacher-not-belong-to-department"
 								path="/teacherSearchForDFPStudentManagement.do?method=searchForm&amp;page=0"/>	   			
 
+			<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingInstitutionWorkingPeriod"
+								key="message.overlapping.institution.working.period"
+								path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>	   			
+			<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingLessonPeriod"
+								key="message.overlapping.lesson.period"
+								path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>	   			
+			<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingSupportLessonPeriod"
+								key="message.overlapping.support.lesson.period"
+								path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>	   			
+
 			<forward name="show-form" path="/manageTeacherDFPStudent.do?page=0&amp;method=list"/> 
 			<forward name="successfull-edit" path="/manageTeacherDFPStudent.do?page=0&amp;method=list"/> 
 			<forward name="successfull-read" path=""/>
@@ -279,6 +318,21 @@
 			<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
 								key="message.teacher-not-belong-to-department"
 								path="/teacherSearchForTeacherInstitutionWorkingTimeManagement.do?method=searchForm&amp;page=0"/>	   			
+
+			<exception type="ServidorAplicacao.Servico.teacher.workingTime.EditTeacherInstitutionWorkingTimeByOID$InvalidPeriodException"
+								key="message.invalidPeriod"
+								path="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0"/>	   			
+
+			<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingInstitutionWorkingPeriod"
+								key="message.overlapping.institution.working.period"
+								path="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0"/>	   			
+			<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingLessonPeriod"
+								key="message.overlapping.lesson.period"
+								path="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0"/>	   			
+			<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingSupportLessonPeriod"
+								key="message.overlapping.support.lesson.period"
+								path="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0"/>	   			
+								
 			
 			<forward name="show-form" path="edit-teacher-institution-working-time"/> 
 			<forward name="successfull-edit" path="/manageTeacherInstitutionWorkingTime.do?page=0&amp;method=list"/> 
