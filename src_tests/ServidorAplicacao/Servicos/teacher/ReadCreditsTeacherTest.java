@@ -37,7 +37,7 @@ public class ReadCreditsTeacherTest extends TestCaseServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
-		return "ReadCreditsTeacherTest";
+		return "ReadCreditsTeacher";
 	}
 
 	/* (non-Javadoc)
