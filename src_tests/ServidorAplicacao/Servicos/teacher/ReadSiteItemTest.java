@@ -14,27 +14,47 @@ import DataBeans.util.Cloner;
 import Dominio.IItem;
 import Dominio.Item;
 import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Luis Egidio
- * @author Nuno Ochoa
+ * @author  Luis Egidio, lmre@mega.ist.utl.pt
+ * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
  *
  */
 public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 
 	/**
-	 * 
+	 * @param testName
 	 */
 	public ReadSiteItemTest(String name) {
 		super(name);
 	}
 
-	protected String getApplication() {
-		return Autenticacao.EXTRANET;
+	protected String getNameOfServiceToBeTested() {
+		return "TeacherAdministrationSiteComponentService";
+	}
+
+	protected String getDataSetFilePath() {
+		return "etc/datasets/servicos/teacher/testReadSiteItemDataSet.xml";
+	}
+
+	protected String[] getAuthorizedUser() {
+		String[] args = { "user", "pass", getApplication()};
+		return args;
+	}
+
+	protected String[] getNonTeacherUser() {
+		String[] args = { "13", "pass", getApplication()};
+		return args;
+	}
+
+	protected String[] getUnauthorizedUser() {
+		String[] args = { "3", "pass", getApplication()};
+		return args;
 	}
 
 	protected Object[] getAuthorizeArguments() {
@@ -56,29 +76,8 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 		return args;
 	}
 
-	protected String[] getAuthorizedUser() {
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-
-	}
-
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testReadSiteItemDataSet.xml";
-	}
-
-	protected String getNameOfServiceToBeTested() {
-		return "TeacherAdministrationSiteComponentService";
-	}
-
-	protected String[] getNonTeacherUser() {
-		String[] args = { "13", "pass", getApplication()};
-		return args;
-
-	}
-
-	protected String[] getUnauthorizedUser() {
-		String[] args = { "3", "pass", getApplication()};
-		return args;
+	protected String getApplication() {
+		return Autenticacao.EXTRANET;
 	}
 
 	public void testReadSiteItems() {
@@ -111,19 +110,18 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 			compareDataSet("etc/datasets/servicos/teacher/testExpectedReadSiteItemDataSet.xml");
 
 			System.out.println(
-				"testDeleteExistingItem was SUCCESSFULY runned by class: "
+				"testReadSiteItems was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println(
-				"testDeleteExistingItem was UNSUCCESSFULY runned by class: "
+				"testReadSiteItems was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-			fail("testDeleteExistingItem");
+			fail("testReadSiteItems");
 		}
 	}
 
 	public void testReadNonSiteItem() {
-		TeacherAdministrationSiteView result = null;
 
 		Integer infoExecutionCourseCode = new Integer(27);
 		Integer infoSiteCode = new Integer(4);
@@ -142,26 +140,20 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 				obj2 };
 
 		try {
-
-			result =
-				(TeacherAdministrationSiteView) gestor.executar(
-					userView,
-					getNameOfServiceToBeTested(),
-					args);
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
 			System.out.println(
-				"testDeleteExistingItem was UNSUCCESSFULY runned by class: "
+				"testReadNonSiteItem was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 			fail("testDeleteExistingItem");
 		} catch (Exception ex) {
 			System.out.println(
-				"testDeleteExistingItem was SUCCESSFULY runned by class: "
+				"testReadNonSiteItem was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 		}
 	}
 
 	public void testReadNonExistingItem() {
-
 		Integer infoExecutionCourseCode = new Integer(27);
 		Integer infoSiteCode = new Integer(4);
 		InfoSiteCommon commonComponent = new InfoSiteCommon();
@@ -180,25 +172,23 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 
 		try {
 
-			gestor.executar(
-				userView,
-				getNameOfServiceToBeTested(),
-				args);
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
 			System.out.println(
-				"testDeleteExistingItem was UNSUCCESSFULY runned by class: "
+				"testReadNonExistingItem was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-			fail("testDeleteExistingItem");
-		} catch (NullPointerException ex) {
+			fail("testReadNonExistingItem");
+		} catch (FenixServiceException ex) {
 			System.out.println(
-				"testDeleteExistingItem was SUCCESSFULY runned by class: "
+				"testReadNonExistingItem was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println(
-				"testDeleteExistingItem was UNSUCCESSFULY runned by class: "
+				"testReadNonExistingItem was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
+			fail("testReadNonExistingItem");
 		}
 	}
 }
