@@ -164,31 +164,15 @@ public class EditGrantContractRegime extends EditDomainObjectService
 			{
 				throw new FenixServiceException(persistentException.getMessage());
 			}
-		}
-	}
-		
-		/* @param objectLocked
-	     * @param infoObject
-	     * @param sp
-	     */
-	protected void doBeforeLock(IDomainObject domainObjectToLock,InfoObject infoObject, ISuportePersistente sp) throws FenixServiceException 
-	{
-		//IF grantRegime new endDate != grantRegime old endDate
-		InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
-		
-		if (infoGrantContractRegime.getState().equals(new Integer(1))) //Active Contract Regime
-		{
-			IGrantContractRegime grantContractRegime = (IGrantContractRegime) domainObjectToLock;
 			
 			try
 			{
-				if(!grantContractRegime.getDateEndContract().equals(infoGrantContractRegime.getDateEndContract()))
-				{
-					IPersistentGrantInsurance persistentGrantInsurance = sp.getIPersistentGrantInsurance();
-					IGrantInsurance grantInsurance = persistentGrantInsurance.readGrantInsuranceByGrantContract(grantContractRegime.getGrantContract().getIdInternal());
+				//Change the data from the insurance
+				IPersistentGrantInsurance persistentGrantInsurance = sp.getIPersistentGrantInsurance();
+				IGrantInsurance grantInsurance = persistentGrantInsurance.readGrantInsuranceByGrantContract(grantContractRegime.getGrantContract().getIdInternal());
+				if(grantInsurance != null) {
 					persistentGrantInsurance.simpleLockWrite(grantInsurance);
 					grantInsurance.setDateEndInsurance(infoGrantContractRegime.getDateEndContract());
-					
 					grantInsurance.setTotalValue(InfoGrantInsurance.calculateTotalValue(grantInsurance.getDateBeginInsurance(), grantInsurance.getDateEndInsurance()));
 				}
 			}
@@ -196,8 +180,9 @@ public class EditGrantContractRegime extends EditDomainObjectService
 			{
 				throw new FenixServiceException();
 			}
-		
+			
 		}
 	}
+		
 }
 

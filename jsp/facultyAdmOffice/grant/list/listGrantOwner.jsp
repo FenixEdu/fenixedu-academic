@@ -60,9 +60,9 @@
 			</html:link>
         </td>
         <td class="listClasses-header">
-	        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("spanNumber") + "&amp;numberOfElementsInSpan=" + request.getAttribute("numberOfElementsInSpan") + "&amp;orderBy=orderByFirstName&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
+	        <%-- <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("spanNumber") + "&amp;numberOfElementsInSpan=" + request.getAttribute("numberOfElementsInSpan") + "&amp;orderBy=orderByFirstName&amp;totalElements=" + request.getAttribute("totalElements") %>' > --%> 
 	            <bean:message key="label.list.grant.owner.last.name"/>
-			</html:link>
+			<%-- </html:link> --%>
         </td>
         <td class="listClasses-header">&nbsp;</td>
     </tr>   

@@ -40,8 +40,11 @@
 				<bean:message key="label.grant.insurance.totalValue"/>:&nbsp;
 			</td>
 			<td>
-				<bean:write name="editGrantInsuranceForm" property="totalValue"/>
+				<p><bean:write name="editGrantInsuranceForm" property="totalValue"/></p>
 			</td>
+		</tr>
+		<tr>
+			<td colspan="2">&nbsp;</td>
 		</tr>
 		<tr>
 			<td align="left">
