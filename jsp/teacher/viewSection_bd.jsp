@@ -4,15 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-
-   
-<logic:iterate id="item" name="<%= SessionConstants.INFO_SECTION_ITEMS_LIST %>">
-  <logic:equal name="item" property="urgent" value="true"><font color="red"></logic:equal>
-	  <h3><bean:write name="item" property="name"/></h3>
-  	  <bean:write name="item" property="information"/><br/>
-  <logic:equal name="item" property="urgent" value="true"></font></logic:equal>
-</logic:iterate>
-
 <html:link page="/deleteSection.do">
 	<bean:message key="button.delete"/>
 </html:link>
@@ -21,6 +12,15 @@
 	<bean:message key="button.insert"/>
 </html:link>
 
-<%-- <html:link page="/editSection">
+<html:link page="/editSection.do">
 	<bean:message key="button.edit"/>
-</html:link> --%>
+</html:link>
+<br>   
+<br>
+
+<logic:iterate id="item" name="<%= SessionConstants.INFO_SECTION_ITEMS_LIST %>">
+  <logic:equal name="item" property="urgent" value="true"><font color="red"></logic:equal>
+	  <h2><bean:write name="item" property="name"/></h2>
+  	  <bean:write name="item" property="information"/>
+  <logic:equal name="item" property="urgent" value="true"></font></logic:equal>
+</logic:iterate>

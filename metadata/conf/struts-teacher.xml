@@ -297,8 +297,16 @@
 	<action name="sectionForm"
 		input="/viewSection.jsp"
 		path="/createSection"
-		type="ServidorApresentacao.Action.teacher.InserSectionAction"
+		type="ServidorApresentacao.Action.teacher.InsertSectionAction"
         validate="false"	>    
+       <forward name="viewSite" path="/viewSite.do"/>
+	</action>
+
+	<action name="sectionForm"
+		input="/viewSection.jsp"
+		path="/editSection"
+		type="ServidorApresentacao.Action.teacher.EditSectionAction"
+        validate="false" >    
        <forward name="viewSite" path="/viewSite.do"/>
 	</action>
 	

@@ -25,9 +25,15 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author Ivo Brandão
  */
-public class EditSectionAction extends FenixAction {
+public class EditSectionDispatchAction extends FenixAction {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws FenixActionException {
+	
+			return mapping.findForward("viewSite");
+		} 
+
+	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
