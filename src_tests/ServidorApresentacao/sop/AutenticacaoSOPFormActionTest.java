@@ -118,4 +118,52 @@ public class AutenticacaoSOPFormActionTest extends TestCasePresentationSopPortal
 		return "/autenticacaoSOP.jsp";
 	}
 
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
+	 */
+	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
+	
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedUnsuccessfuly()
+	 */
+	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
+		
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
+	 */
+	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
+		
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
+	 */
+	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
+		
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInUnsuccessfulExecution()
+	 */
+	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInUnsuccessfulExecution()
+	 */
+	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		
+		return null;
+	}
+
 }

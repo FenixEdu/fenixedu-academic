@@ -8,6 +8,7 @@ package ServidorApresentacao.sop;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -47,13 +48,10 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentationSop
 		return suite;
 	}
 
-	public void setUp() {
-		super.setUp();
-		// define ficheiro de configuracao Struts a utilizar
-		setServletConfigFile("/WEB-INF/tests/web-sop.xml");
-
-	}
-
+	
+	protected String getServletConfigFile() {
+			return "/WEB-INF/tests/web-sop.xml";
+		}
 	public void testUnAuthorizedAddClassShift() {
 				
 		//set request path
@@ -580,25 +578,75 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentationSop
 				ClassShiftManagerDispatchAction.AVAILABLE_LIST));
 
 	}
-	/* (non-Javadoc)
-	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
-	 */
-	protected String getServletConfigFile() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoPathAction()
 	 */
 	protected String getRequestPathInfoPathAction() {
-		// TODO Auto-generated method stub
+		// 
 		return null;
 	}
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		// TODO Auto-generated method stub
+		// 
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
+	 */
+	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
+		// 
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedUnsuccessfuly()
+	 */
+	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
+		// 
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
+		// 
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
+		// 
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
+	 */
+	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
+		// 
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
+	 */
+	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
+		// 
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInUnsuccessfulExecution()
+	 */
+	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		// 
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInUnsuccessfulExecution()
+	 */
+	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		// 
 		return null;
 	}
 }

@@ -242,9 +242,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * correspondent to each object to put in session.
 	 * This method must return null if not to be used.
 	 */
-	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
-		return null;
-	}
+	protected abstract Map getItemsToPutInSessionForActionToBeTestedSuccessfuly();
 
 	/**
 	 * This method must return a Map with all the items that should be in session to execute
@@ -253,9 +251,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * correspondent to each object to put in session.
 	 * This method must return null if not to be used.
 	 */
-	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
-		return null;
-	}
+	protected abstract Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() ;
 
 	/**
 	 * This method must return a Map with all the items that should be in request (form) to execute
@@ -264,9 +260,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * correspondent to each property to get out of the request.
 	 * This method must return null if not to be used.
 	 */
-	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
-		return null;
-	}
+	protected abstract Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() ;
 
 	/**
 	 * This method must return a Map with all the items that should be in request (form) to execute
@@ -275,9 +269,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * correspondent to each property to get out of the request.
 	 * This method must return null if not to be used.
 	 */
-	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
-		return null;
-	}
+	protected abstract Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() ;
 
 	/**
 	 * This method must return a List with the attributes that are supose to be present in a specified scope
@@ -285,9 +277,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * The scope is specified by the method getScope().
 	 * This method must return null if not to be used.
 	 */
-	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
-		return null;
-	}
+	protected abstract Map getExistingAttributesListToVerifyInSuccessfulExecution() ;
 
 	/**
 	 * This method must return a List with the attributes that are not supose to be present in a specified scope
@@ -295,9 +285,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * The scope is specified by the method getScope().
 	 * This method must return null if not to be used.
 	 */
-	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
-		return null;
-	}
+	protected abstract Map getNonExistingAttributesListToVerifyInSuccessfulExecution() ;
 
 	/**
 	 * This method must return a List with the attributes that are supose to be present in a specified scope
@@ -305,9 +293,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * The scope is specified by the method getScope().
 	 * This method must return null if not to be used.
 	 */
-	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
-		return null;
-	}
+	protected abstract Map getExistingAttributesListToVerifyInUnsuccessfulExecution();
 
 	/**
 	 * This method must return a List with the attributes that are not supose to be present in a specified scope
@@ -315,9 +301,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * The scope is specified by the method getScope().
 	 * This method must return null if not to be used.
 	 */
-	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
-		return null;
-	}
+	protected abstract Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() ;
 
 	/**
 	 * This method must return one of these 3 constants: ScopeConstants.SESSION;

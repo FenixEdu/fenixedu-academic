@@ -146,7 +146,8 @@ public class ReadTeacherSiteTest extends TestCaseReadServices {
 				null,
 				null,
 				null));
-//		infoSite.setInfoSections(infoSections);
+	//the site no longer knows his sections
+	//	infoSite.setInfoSections(infoSections);
 		return infoSite;
 
 	}

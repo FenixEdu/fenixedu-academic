@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.gesdis.InfoSection;
 import DataBeans.gesdis.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
@@ -139,8 +138,9 @@ public class ReadSiteServiceTest extends TestCaseReadServices {
 			Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
 		List infoSections = new ArrayList();	
 		InfoSite infoSite = new InfoSite( infoExecutionCourse);
-		infoSections.add(new InfoSection( "Seccao1deTFCI", new Integer(0), infoSite, null, null, null));
-//		infoSite.setInfoSections(infoSections);
+	//the site no longer knows his sections	
+	//	infoSections.add(new InfoSection( "Seccao1deTFCI", new Integer(0), infoSite, null, null, null));
+	//	infoSite.setInfoSections(infoSections);
 		return infoSite;
 
 	}

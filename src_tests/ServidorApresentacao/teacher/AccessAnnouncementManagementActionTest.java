@@ -1,5 +1,6 @@
 package ServidorApresentacao.teacher;
   
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,6 +63,7 @@ public class AccessAnnouncementManagementActionTest extends TestCasePresentation
 				new Double(1.5),
 				new Double(2),
 				infoExecutionPeriod);
+	//	infoSite = new InfoSite(null, new ArrayList(), infoExecutionCourse, new ArrayList());
 		infoSite = new InfoSite(infoExecutionCourse);
 		infoSection.setInfoSite(infoSite);
 		infoSite.setInitialInfoSection(infoSection);
@@ -142,6 +144,22 @@ public class AccessAnnouncementManagementActionTest extends TestCasePresentation
 	 */
 	public void testUnsuccessfulExecutionOfAction() {
 		// TODO test
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

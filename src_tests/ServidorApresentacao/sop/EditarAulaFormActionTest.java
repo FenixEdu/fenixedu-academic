@@ -203,5 +203,61 @@ public class EditarAulaFormActionTest extends TestCasePresentationSopPortal {
 		return new String[] {"errors.lesson.invalid.time.interval"};
 	}
 
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedUnsuccessfuly()
+	 */
+	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
+		// 
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
+		// 
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
+		// 
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
+	 */
+	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
+		// 
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
+	 */
+	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
+		// 
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInUnsuccessfulExecution()
+	 */
+	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		// 
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInUnsuccessfulExecution()
+	 */
+	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		// 
+		return null;
+	}
+
 	
 }
