@@ -11,7 +11,7 @@
 <bean:define id="objectCode" name="component" property="infoSite.idInternal"/>
 <bean:define id="lessonTypes" name="component" property="lessonTypes" />
 <bean:define id="shifts" name="component" property="infoShifts" />
-<bean:define id="professorships" name="component" property="infoProfessorships" />
+<%--<bean:define id="professorships" name="component" property="infoProfessorships" />
 
 <html:form action="/viewSiteSummaries">
 <html:hidden property="page" value="1"/>
@@ -25,7 +25,7 @@
 	<tr>
 		<td width="20%"><bean:message key="message.summaryType" /></td>
 		<td width="40%">
-			<html:select property="bySummaryType">
+			<html:select property="bySummaryType" onchange="this.form.method.value='summaries';this.form.page.value=0;this.form.submit();">
 				<html:option  value="0" key="label.showBy.all" />
 				<html:options collection="lessonTypes" property="tipo" labelProperty="fullNameTipoAula"/>
 			</html:select>		
@@ -163,5 +163,5 @@
 		</tr>
 		<tr><td>&nbsp;</td></tr>    		      
 	</logic:iterate>		
-</table>
+</table>--%>
 </logic:present>

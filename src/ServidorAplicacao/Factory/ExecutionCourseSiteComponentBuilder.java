@@ -14,6 +14,7 @@ import java.util.ListIterator;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.slide.common.SlideException;
@@ -29,6 +30,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoItem;
 import DataBeans.InfoLesson;
 import DataBeans.InfoSection;
+import DataBeans.InfoShift;
 import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
@@ -366,7 +368,16 @@ public class ExecutionCourseSiteComponentBuilder {
             component.setExecutionCourse((InfoExecutionCourse) Cloner
                     .get(executionCourse));
             component.setLessonTypes(lessonTypes);
-            component.setInfoShifts(infoShifts);
+            if(component.getLessonType() != null && component.getLessonType().intValue() != 0) {
+                final TipoAula lessonTypeSelect = new TipoAula(component.getLessonType().intValue());
+                List infoShiftsOnlyType = (List) CollectionUtils.select(infoShifts, new Predicate() {
+
+                  public boolean evaluate(Object arg0) {
+                      return ((InfoShift) arg0).getTipo().equals(lessonTypeSelect);
+                  }});                
+              
+                component.setInfoShifts(infoShiftsOnlyType);
+              }
             component.setInfoProfessorships(infoProfessorships);
 
             return component;

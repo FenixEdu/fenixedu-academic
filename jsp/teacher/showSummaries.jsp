@@ -23,7 +23,6 @@
 <br />
 
 <html:form action="/showSummaries">
-<html:hidden property="onlyType" value=""/>
 <html:hidden property="page" value="1"/>
 <html:hidden property="method" value="showSummaries"/>
 <html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
@@ -35,7 +34,7 @@
 	<tr>
 		<td width="15%"><bean:message key="message.summaryType" /></td>
 		<td width="40%">
-			<html:select property="bySummaryType" onchange="this.form.method.value='showSummaries';this.form.onlyType.value='lesson';this.form.page.value=0;this.form.submit();">
+			<html:select property="bySummaryType" onchange="this.form.method.value='showSummaries';this.form.page.value=0;this.form.submit();">
 				<html:option  value="0" key="label.showBy.all" />
 				<html:options collection="lessonTypes" property="tipo" labelProperty="fullNameTipoAula" />
 			</html:select>		

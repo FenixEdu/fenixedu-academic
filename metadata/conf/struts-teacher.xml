@@ -106,7 +106,6 @@
             <form-property name="bySummaryType" type="java.lang.String"/>  
             <form-property name="byShift" type="java.lang.String"/>
             <form-property name="byTeacher" type="java.lang.String"/>
-            <form-property name="onlyType" type="java.lang.String"/>
             <form-property name="objectCode" type="java.lang.String"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>        
