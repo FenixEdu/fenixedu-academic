@@ -35,10 +35,9 @@ public class EvaluationExecutionCourseOJB extends ObjectFenixOJB implements
             return (IEvalutionExecutionCourse) queryObject(ExamExecutionCourse.class, crit);
 
         }
-        else
-        {
+       
             return null;
-        }
+        
     }
 
     public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia

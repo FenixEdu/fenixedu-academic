@@ -48,7 +48,7 @@ public final class MasterDegreeClassification extends FenixValuedEnum {
  	public static String getClassificationString (int value){
  		if (value == 1) return "Aprovado";
 		if (value == 2) return "Recusado";
-		else return "Não Definido";
+		 return "Não Definido";
  	}
  
 	public static Map getEnumMap() {

@@ -16,10 +16,10 @@ public class GeneralClassPropertyNameJava2SqlConversion implements FieldConversi
 		{
 			GeneralClassPropertyName src = (GeneralClassPropertyName) source;
 			return src.getName();
-		} else
-		{
+		} 
+		
 			return source;
-		}
+		
 	}
 
 	public Object sqlToJava(Object source)
@@ -28,9 +28,8 @@ public class GeneralClassPropertyNameJava2SqlConversion implements FieldConversi
 		{
 			String src = (String) source;
 			return new GeneralClassPropertyName(src);
-		} else
-		{
+		} 
 			return source;
-		}
+		
 	}
 }

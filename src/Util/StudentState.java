@@ -63,10 +63,9 @@ public class StudentState extends FenixUtil
             StudentState aux = (StudentState) o;
             return this.state.equals(aux.getState());
         }
-        else
-        {
+       
             return false;
-        }
+        
     }
 
     public String toString()

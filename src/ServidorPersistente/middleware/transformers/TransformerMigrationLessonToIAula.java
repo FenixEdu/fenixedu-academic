@@ -73,9 +73,9 @@ public class TransformerMigrationLessonToIAula implements Transformer
     private ISala getRoomFromName(String roomName)
     {
         ISala room = (ISala) roomHashMap.get(roomName);
-        if (room != null)
-            return room;
-        else
+        if (room != null){
+            return room;}
+        
             throw new IllegalArgumentException("Unknown room:" + roomName);
     }
 

@@ -16,10 +16,9 @@ public class GeneralClassPropertyValueJava2SqlConversion implements FieldConvers
 		{
 			GeneralClassPropertyValue src = (GeneralClassPropertyValue) source;
 			return src.getValue();
-		} else
-		{
+		} 
 			return source;
-		}
+		
 	}
 
 	public Object sqlToJava(Object source)
@@ -28,9 +27,8 @@ public class GeneralClassPropertyValueJava2SqlConversion implements FieldConvers
 		{
 			String src = (String) source;
 			return new GeneralClassPropertyValue(src);
-		} else
-		{
+		} 
 			return source;
-		}
+		
 	}
 }

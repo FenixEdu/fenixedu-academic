@@ -550,9 +550,9 @@ public class ParseQuestion extends DefaultHandler {
             Element element = (Element) it.next();
             String tag = element.getQName();
             Attributes atts = element.getAttributes();
-            if ((tag.equals("matimage"))) if (imageIdAux == imageId)
-                return element.getValue();
-            else
+            if ((tag.equals("matimage"))) if (imageIdAux == imageId){
+                return element.getValue();}
+            
                 imageIdAux++;
         }
         it = listOptions.iterator();
@@ -560,9 +560,9 @@ public class ParseQuestion extends DefaultHandler {
             Element element = (Element) it.next();
             String tag = element.getQName();
             Attributes atts = element.getAttributes();
-            if ((tag.equals("matimage"))) if (imageIdAux == imageId)
-                return element.getValue();
-            else
+            if ((tag.equals("matimage"))) if (imageIdAux == imageId){
+                return element.getValue();}
+            
                 imageIdAux++;
         }
         it = listFeedback.iterator();
@@ -570,9 +570,9 @@ public class ParseQuestion extends DefaultHandler {
             Element element = (Element) it.next();
             String tag = element.getQName();
             Attributes atts = element.getAttributes();
-            if ((tag.equals("matimage"))) if (imageIdAux == imageId)
-                return element.getValue();
-            else
+            if ((tag.equals("matimage"))) if (imageIdAux == imageId){
+                return element.getValue();}
+            
                 imageIdAux++;
         }
         return null;
@@ -595,7 +595,7 @@ public class ParseQuestion extends DefaultHandler {
                     v.add("");
                     vRandom.add(new Integer(v.size()).toString());
                     continue;
-                } else
+                } 
                     v.add(new Integer(v.size() + 1).toString());
             }
         }

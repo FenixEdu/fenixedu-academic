@@ -62,10 +62,9 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente
         {
             throw new notAuthorizedPersistentDeleteException("Cannot delete rooms with classes");
         }
-        else
-        {
+        
             super.delete(sala);
-        }
+        
 
     }
 

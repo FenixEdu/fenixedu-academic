@@ -57,11 +57,9 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
         {
             return (IAnnouncement) result.get(0);
         }
-        else
-        {
-
+        
             return null;
-        }
+        
     }
 
 }

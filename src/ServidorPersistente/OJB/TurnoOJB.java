@@ -241,10 +241,9 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
 			criteria.addEqualTo("associatedLessons.idInternal", lesson.getIdInternal());
 			return queryList(Turno.class, criteria);
 		}
-		else
-		{
+		
 			return null;
-		}
+		
 	}
 	
 	/* (non-Javadoc)

@@ -48,9 +48,9 @@ public class GuideRequester extends FenixUtil {
             GuideRequester aux = (GuideRequester) o;
             return this.type.equals(aux.getType());
         }
-        else {
+       
             return false;
-        }
+        
     }
 
     public static ArrayList toArrayList() {

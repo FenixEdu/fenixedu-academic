@@ -69,9 +69,9 @@ public class MarkType extends FenixUtil {
 		if (o instanceof MarkType) {
 			MarkType aux = (MarkType) o;
 			return this.type.equals(aux.getType());
-		} else {
+		} 
 			return false;
-		}
+		
 	}
 	
 	

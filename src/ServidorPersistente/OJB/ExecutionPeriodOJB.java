@@ -638,10 +638,9 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             store(executionDegreeToCreate);
             return executionDegreeToCreate;
         }
-        else
-        {
+        
             return (CursoExecucao) queryObject(CursoExecucao.class, criteria);
-        }
+        
     }
 
     private ExecutionCourse createExecutionCourse(Object arg0,
