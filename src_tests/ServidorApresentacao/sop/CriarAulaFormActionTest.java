@@ -1,6 +1,5 @@
 package ServidorApresentacao.sop;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -11,16 +10,14 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.TestCasePresentation;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.DiaSemana;
 import Util.TipoAula;
 /**
  * @author tfc130
  */
-public class CriarAulaFormActionTest extends TestCasePresentation {
+public class CriarAulaFormActionTest extends TestCasePresentationSopPortal {
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());
 	}
@@ -42,7 +39,6 @@ public class CriarAulaFormActionTest extends TestCasePresentation {
 	}
 
 	public void testSuccessfulCriarAula() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
 
 		// define mapping de origem
 		setRequestPathInfo("", "/criarAulaForm");
@@ -60,13 +56,7 @@ public class CriarAulaFormActionTest extends TestCasePresentation {
 		addRequestParameter("courseInitials", "TFCI");
 		addRequestParameter("nomeSala", "Ga1");
 		// coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("CriarAula");
-		privilegios.add(
-			"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
-
+		setAuthorizedUser();
 		try {
 			InfoDegree iL =
 				new InfoDegree(
@@ -101,7 +91,7 @@ public class CriarAulaFormActionTest extends TestCasePresentation {
 			GestorServicos gestor = GestorServicos.manager();
 			ArrayList iDE =
 				(ArrayList) gestor.executar(
-					userView,
+					getAuthorizedUser(),
 					"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
 					argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
 			getSession().setAttribute(
@@ -122,7 +112,6 @@ public class CriarAulaFormActionTest extends TestCasePresentation {
 	}
 
 	public void testUnsuccessfulCriarAula() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
 
 		setRequestPathInfo("", "/criarAulaForm");
 		addRequestParameter(
@@ -138,12 +127,7 @@ public class CriarAulaFormActionTest extends TestCasePresentation {
 		addRequestParameter("courseInitials", "TFCI");
 		addRequestParameter("nomeSala", "Ga1");
 		// coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("CriarAula");
-		privilegios.add(
-			"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
+		setAuthorizedUser();
 		try {
 			InfoDegree iL =
 				new InfoDegree(
@@ -164,21 +148,21 @@ public class CriarAulaFormActionTest extends TestCasePresentation {
 				iLE);
 
 			InfoExecutionPeriod executionPeriod =
-							new InfoExecutionPeriod(
-								"2º Semestre",
-								new InfoExecutionYear("2002/2003"));
-						getSession().setAttribute(
-							SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-							executionPeriod);
+				new InfoExecutionPeriod(
+					"2º Semestre",
+					new InfoExecutionYear("2002/2003"));
+			getSession().setAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+				executionPeriod);
 
-						getSession().setAttribute(
-							SessionConstants.CURRICULAR_YEAR_KEY,
-							new Integer(2));
+			getSession().setAttribute(
+				SessionConstants.CURRICULAR_YEAR_KEY,
+				new Integer(2));
 
 			GestorServicos gestor = GestorServicos.manager();
 			ArrayList iDE =
 				(ArrayList) gestor.executar(
-					userView,
+					getAuthorizedUser(),
 					"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
 					argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
 			getSession().setAttribute("infoDisciplinasExecucao", iDE);
@@ -188,6 +172,7 @@ public class CriarAulaFormActionTest extends TestCasePresentation {
 		actionPerform();
 		verifyForwardPath("/criarAula.jsp");
 
-		verifyActionErrors(new String[] { "error.exception.existing" });	}
+		verifyActionErrors(new String[] { "error.exception.existing" });
+	}
 
 }

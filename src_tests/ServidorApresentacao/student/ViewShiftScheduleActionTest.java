@@ -1,6 +1,8 @@
 package ServidorApresentacao.student;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,6 +11,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import servletunit.struts.MockStrutsTestCase;
 import DataBeans.InfoPerson;
+import DataBeans.InfoRole;
 import DataBeans.InfoStudent;
 import Dominio.Aula;
 import Dominio.Curso;
@@ -47,6 +50,7 @@ import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.DiaSemana;
+import Util.RoleType;
 import Util.TipoAula;
 import Util.TipoCurso;
 import Util.TipoDocumentoIdentificacao;
@@ -286,10 +290,13 @@ public class ViewShiftScheduleActionTest extends MockStrutsTestCase {
 	addRequestParameter("shiftName","turno_apr_teorico1");
 
     // coloca credenciais na sessão
-    HashSet privileges = new HashSet();
-	privileges.add("ReadShiftLessons");
-    IUserView userView = new UserView("athirduser", privileges);
-    getSession().setAttribute("UserView", userView);
+	Collection roles = new ArrayList();
+
+	InfoRole infoRole = new InfoRole();
+	infoRole.setRoleType(RoleType.STUDENT);
+
+	IUserView userView = new UserView("athirduser", roles);
+	getSession().setAttribute(SessionConstants.U_VIEW, userView);
     
     // invoca acção
     actionPerform();

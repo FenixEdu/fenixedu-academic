@@ -38,6 +38,8 @@ public class EditarAulaFormActionTest extends TestCaseActionExecution {
 
 
 	private void prepareSuccessfulRequest() {
+		
+		
 		// Preenche campos do formulario
 		addRequestParameter("diaSemana",new Integer(DiaSemana.SEGUNDA_FEIRA).toString());
 		addRequestParameter("horaInicio","20");

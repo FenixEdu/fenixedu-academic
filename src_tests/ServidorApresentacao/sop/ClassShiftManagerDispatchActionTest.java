@@ -19,9 +19,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.TestCasePresentation;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.ClassShiftManagerDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -30,7 +28,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  *
  */
 // TODO verify post conditions of methods test...
-public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
+public class ClassShiftManagerDispatchActionTest extends TestCasePresentationSopPortal {
 
 	/**
 	 * Constructor for ClassShiftManagerDispatchActionTest.
@@ -57,18 +55,14 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedAddClassShift() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
 				
 		//set request path
 		setRequestPathInfo("sop", "/ClassShiftManagerDA");
 		//sets needed objects to session/request
 		addRequestParameter("method", "addClassShift");
 
-		//coloca credenciais na sessao
-		HashSet privileges = new HashSet();
-		IUserView userView = new UserView("user", privileges);
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
-
+		setNotAuthorizedUser();
+		
 		//fills the form
 		addRequestParameter("shiftIndex", "0");
 		//		Coloca contexto em sessão
@@ -112,20 +106,12 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedAddClassShift() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 		
 		/**
 		 * prepare session 
 		 */
-		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("AdicionarTurno");
-		privilegios.add("LerTurnosDeTurma");
-		privilegios.add(
-			"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular");
-		privilegios.add(
-			"LerTurnosDeDisciplinaExecucao");
-		IUserView userView = new UserView("user", privilegios);
+		setAuthorizedUser();
 
 		InfoDegree infoDegree = new InfoDegree();
 		infoDegree.setSigla("LEIC");
@@ -157,7 +143,7 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 		try {
 			infoExecutionCourseList =
 				(List) manager.executar(
-					userView,
+					getAuthorizedUser(),
 					"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
 					args);
 		} catch (Exception e) {
@@ -180,13 +166,13 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 				infoExecutionPeriod);
 
 		getSession().setAttribute(SessionConstants.CLASS_VIEW, infoClass);
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
+		getSession().setAttribute(SessionConstants.U_VIEW, getAuthorizedUser());
 		
 		
 		Object[] argsLerTurnosDeDisciplinaExecucao = { infoExecutionCourse };
 		List shiftList = null;
 		try{	
-			shiftList = (List) manager.executar(userView, "LerTurnosDeDisciplinaExecucao", argsLerTurnosDeDisciplinaExecucao);
+			shiftList = (List) manager.executar(getAuthorizedUser(), "LerTurnosDeDisciplinaExecucao", argsLerTurnosDeDisciplinaExecucao);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Test services first!");
@@ -238,9 +224,9 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 
 		//coloca credenciais na sessao
 		HashSet privilegios = new HashSet();
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
-
+		
+		setNotAuthorizedUser();
+		
 		//fills the form
 		addRequestParameter("shiftName", "turno1");
 
@@ -295,12 +281,7 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 		addRequestParameter("method", "removeClassShift");
 
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("RemoverTurno");
-		privilegios.add("LerTurnosDeTurma");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
-
+		setAuthorizedUser();
 
 		//			Coloca contexto em sessão
 		InfoDegree infoDegree =
@@ -340,7 +321,7 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 		try {
 			classInfoShiftList =
 				(List) manager.executar(
-					userView,
+					getAuthorizedUser(),
 					"LerTurnosDeTurma",
 					args);
 		} catch (Exception e) {
@@ -403,6 +384,7 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 		//		String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
 		//		verifyActionErrors(errors);
 		//fail("Falta fazer o teste");
+		//TODO make this test
 	}
 
 	public void testAuthorizedViewClassShift() {
@@ -414,11 +396,8 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 		addRequestParameter("method", "viewClassShiftList");
 
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("RemoverTurno");
-		privilegios.add("LerTurnosDeTurma");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
+
+		setAuthorizedUser();
 
 		//			Coloca contexto em sessão
 		InfoDegree iL =
@@ -483,10 +462,8 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 		addRequestParameter("method", "listAvailableShifts");
 
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
-
+		setNotAuthorizedUser();
+		
 		//			Coloca contexto em sessão
 		InfoDegree iL =
 			new InfoDegree(
@@ -536,11 +513,9 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 		addRequestParameter("method", "listAvailableShifts");
 
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("LerTurnosDeDisciplinaExecucao");
-		privilegios.add("LerTurnosDeTurma");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
+		setAuthorizedUser();
+		
+		
 
 		//			Coloca contexto em sessão
 		InfoDegree iL =

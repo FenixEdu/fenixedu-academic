@@ -4,10 +4,10 @@
  */
 package ServidorApresentacao.sop;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Set;
 
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
@@ -76,7 +76,6 @@ public class AutenticacaoSOPFormActionTest extends TestCaseActionExecution {
 		//verifies UserView
 		UserView newUserView = (UserView) getSession().getAttribute(SessionConstants.U_VIEW);
 		assertEquals("Verify UserView", newUserView.getUtilizador(), "user");
-		assertTrue("Verify authorization", newUserView.getPrivilegios().contains("CriarSala"));		
 	}
 
 	/**
@@ -87,8 +86,8 @@ public class AutenticacaoSOPFormActionTest extends TestCaseActionExecution {
 	public void testUnsuccessfulExecutionOfAction() {
 		//place unauthorized user in session
 		getSession().removeAttribute(SessionConstants.U_VIEW);
-		Set privileges = new HashSet();
-		IUserView userView = new UserView("athirduser", privileges);
+		Collection roles = new ArrayList();
+		IUserView userView = new UserView("athirduser", roles);
 		getSession().setAttribute(SessionConstants.U_VIEW, userView);
 		
 		String[] actionErrors = { "errors.invalidAuthentication" };

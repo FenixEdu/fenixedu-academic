@@ -7,7 +7,6 @@
 package ServidorApresentacao.sop;
 
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,9 +20,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.TestCasePresentation;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.ClassesManagerDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -32,7 +29,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author João Mota
  *
  */
-public class ClassesManagerDispatchActionTest extends TestCasePresentation {
+public class ClassesManagerDispatchActionTest extends TestCasePresentationSopPortal {
 
 	/**
 	 * Constructor for ClassesManagerDispatchAction.
@@ -58,18 +55,18 @@ public class ClassesManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedListClasses() {
+		
 		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
 				
 		//set request path
 		setRequestPathInfo("sop", "/ClassesManagerDA");
+		
+		addRequestParameter("method","listClasses");
+		
+		
 		//sets needed objects to session/request
-		addRequestParameter("method", "listClasses");
-		//falta  contexto
-		// coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
-
+		setNotAuthorizedUser();
+		
 		//		Coloca contexto em sessão
 		InfoDegree iL =
 			new InfoDegree(
@@ -89,6 +86,8 @@ public class ClassesManagerDispatchActionTest extends TestCasePresentation {
 			iLE);
 		//action perform
 		actionPerform();
+		
+		verifyForwardPath("/naoAutorizado.do");
 		//verify that there are errors
 		String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
 		verifyActionErrors(errors);
@@ -96,20 +95,16 @@ public class ClassesManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedListClasses() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 				
 		//set request path
 		setRequestPathInfo("sop", "/ClassesManagerDA");
+		
+		addRequestParameter("method","listClasses");
+		
 		//sets needed objects to session/request
-		addRequestParameter("method", "listClasses");
-		//falta  contexto
-		// coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-
-		privilegios.add("LerTurmas");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
-
+		setAuthorizedUser();
+		
 		//		Coloca contexto em sessão
 		InfoDegree iL =
 			new InfoDegree(

@@ -1,7 +1,6 @@
 package ServidorApresentacao.sop;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -12,16 +11,14 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.TestCasePresentation;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoAula;
 
 /**
  * @author tfc130
  */
-public class CriarTurnoFormActionTest extends TestCasePresentation {
+public class CriarTurnoFormActionTest extends TestCasePresentationSopPortal {
 
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());
@@ -44,7 +41,6 @@ public class CriarTurnoFormActionTest extends TestCasePresentation {
 	}
 
 	public void testSuccessfulCriarTurno() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
 
 		// define mapping de origem
 		setRequestPathInfo("sop", "/criarTurnoForm");
@@ -58,13 +54,7 @@ public class CriarTurnoFormActionTest extends TestCasePresentation {
 		addRequestParameter("lotacao", (new Integer(100).toString()));
 
 		// coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("CriarTurno");
-		privilegios.add(
-			"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
-
+setAuthorizedUser();
 		try {
 			InfoDegree iL =
 				new InfoDegree(
@@ -100,7 +90,7 @@ public class CriarTurnoFormActionTest extends TestCasePresentation {
 			GestorServicos gestor = GestorServicos.manager();
 			ArrayList iDE =
 				(ArrayList) gestor.executar(
-					userView,
+					getAuthorizedUser(),
 					"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
 					argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
 			getSession().setAttribute(
@@ -121,7 +111,7 @@ public class CriarTurnoFormActionTest extends TestCasePresentation {
 	}
 
 	public void testUnsuccessfulCriarTurno() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 
 		setRequestPathInfo("sop", "/criarTurnoForm");
 		addRequestParameter("nome", "turno1");
@@ -132,13 +122,7 @@ public class CriarTurnoFormActionTest extends TestCasePresentation {
 		addRequestParameter("lotacao", (new Integer(100).toString()));
 
 		// coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("CriarTurno");
-		privilegios.add(
-			"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
-
+		setAuthorizedUser();
 		try {
 			InfoDegree iL =
 				new InfoDegree(
@@ -174,7 +158,7 @@ public class CriarTurnoFormActionTest extends TestCasePresentation {
 			GestorServicos gestor = GestorServicos.manager();
 			ArrayList iDE =
 				(ArrayList) gestor.executar(
-					userView,
+					getAuthorizedUser(),
 					"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
 					argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
 			getSession().setAttribute(

@@ -1,6 +1,8 @@
 package ServidorApresentacao.student;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,6 +11,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import servletunit.struts.MockStrutsTestCase;
 import DataBeans.InfoPerson;
+import DataBeans.InfoRole;
 import DataBeans.InfoStudent;
 import Dominio.Aula;
 import Dominio.Curso;
@@ -52,6 +55,7 @@ import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.DiaSemana;
+import Util.RoleType;
 import Util.TipoAula;
 import Util.TipoCurso;
 import Util.TipoDocumentoIdentificacao;
@@ -297,11 +301,13 @@ public class ViewScheduleActionTest extends MockStrutsTestCase {
     setRequestPathInfo("/student", "/viewSchedule");
 
     // coloca credenciais na sessão
-    HashSet privileges = new HashSet();
-	privileges.add("ReadStudentLessons");
-    IUserView userView = new UserView("athirduser", privileges);
-    getSession().setAttribute("UserView", userView);
-    
+	Collection roles = new ArrayList();
+
+	InfoRole infoRole = new InfoRole();
+	infoRole.setRoleType(RoleType.STUDENT);
+
+	IUserView userView = new UserView("athirduser", roles);
+	    
     // colocar outras informações na sessão
 	getSession().setAttribute("infoStudent", _infoStudent);
     

@@ -7,12 +7,13 @@
 package ServidorApresentacao.sop;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
@@ -23,6 +24,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.RoleType;
 
 /**
  * @author dcs-rjao
@@ -75,9 +77,12 @@ public class ViewClassesWithShiftTest extends TestCaseActionExecution {
 		//create new user view with privileges for executing action sucessfully
 		getSession().removeAttribute(SessionConstants.U_VIEW);
 		this.userView = null;
-		HashSet privileges = new HashSet();
-		privileges.add("ReadClassesWithShiftService");
-		this.userView = new UserView("user", privileges);
+		Collection roles = new ArrayList();
+		InfoRole infoRole = new InfoRole();
+		infoRole.setRoleType(RoleType.TIME_TABLE_MANAGER);
+		roles.add(infoRole);
+		this.userView = new UserView("user", null);
+		((UserView)this.userView).setRoles(roles);
 		getSession().setAttribute(SessionConstants.U_VIEW, userView);
 		
 		//items in request

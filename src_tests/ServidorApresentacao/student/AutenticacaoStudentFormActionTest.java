@@ -1,12 +1,12 @@
 package ServidorApresentacao.student;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import servletunit.struts.MockStrutsTestCase;
-
 import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.Pessoa;
@@ -127,8 +127,8 @@ public class AutenticacaoStudentFormActionTest extends MockStrutsTestCase {
     addRequestParameter("password","pass");
 
     // coloca credenciais na sessão
-    HashSet privilegios = new HashSet();
-    IUserView userView = new UserView("athirduser", privilegios);
+    Collection roles = new ArrayList();
+    IUserView userView = new UserView("athirduser", roles);
     getSession().setAttribute("UserView", userView);
     
     // invoca acção
@@ -155,8 +155,8 @@ public class AutenticacaoStudentFormActionTest extends MockStrutsTestCase {
     addRequestParameter("password","pass2");
 
     // coloca credenciais na sessão
-    HashSet privilegios = new HashSet();
-    IUserView userView = new UserView("athirduser", privilegios);
+	Collection roles = new ArrayList();
+    IUserView userView = new UserView("athirduser", roles);
     getSession().setAttribute("UserView", userView);
     
     // invoca acção

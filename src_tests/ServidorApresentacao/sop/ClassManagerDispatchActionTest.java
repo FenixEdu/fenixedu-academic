@@ -23,17 +23,16 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.TestCasePresentation;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author João Mota
- *
  */
-public class ClassManagerDispatchActionTest extends TestCasePresentation {
-	
+public class ClassManagerDispatchActionTest
+	extends TestCasePresentationSopPortal {
+
 	/**
 	 * Constructor for ClassManagerDispatchActionTest.
 	 * @param arg0
@@ -58,17 +57,13 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedCreateClass() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-				
+
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
 		addRequestParameter("method", "createClass");
 
-		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
+		setNotAuthorizedUser();
 
 		//fills the form
 		addRequestParameter("className", "10501");
@@ -82,8 +77,10 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedCreateExistingClass() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-				
+		getSession().setAttribute(
+			SessionConstants.SESSION_IS_VALID,
+			SessionConstants.SESSION_IS_VALID);
+
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
@@ -91,11 +88,9 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 
 		//coloca credenciais na sessao
 		HashSet privilegios = new HashSet();
-		privilegios.add("CriarTurma");
-		privilegios.add("LerTurma");
-		privilegios.add("LerAulasDeTurma");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
+
+		setAuthorizedUser();
+
 		getSession().setAttribute(
 			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
 			new InfoExecutionPeriod(
@@ -123,21 +118,17 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedCreateNonExistingClass() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-				
+		getSession().setAttribute(
+			SessionConstants.SESSION_IS_VALID,
+			SessionConstants.SESSION_IS_VALID);
+
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
 		addRequestParameter("method", "createClass");
 
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("CriarTurma");
-		privilegios.add("LerTurma");
-		privilegios.add("LerAulasDeTurma");
-
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
+		setAuthorizedUser();
 
 		//fills the form
 		addRequestParameter("className", "newClassName");
@@ -167,17 +158,17 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedPrepareEditClass() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-				
+		getSession().setAttribute(
+			SessionConstants.SESSION_IS_VALID,
+			SessionConstants.SESSION_IS_VALID);
+
 		//			set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
 		addRequestParameter("method", "editClass");
 
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
+		setNotAuthorizedUser();
 
 		//fills the form
 		addRequestParameter("className", "10501");
@@ -219,8 +210,10 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedEditClass() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-				
+		getSession().setAttribute(
+			SessionConstants.SESSION_IS_VALID,
+			SessionConstants.SESSION_IS_VALID);
+
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
@@ -228,9 +221,7 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 		addRequestParameter("change", "1");
 
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
+		setNotAuthorizedUser();
 
 		//fills the form
 		addRequestParameter("className", "xpto");
@@ -271,20 +262,17 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedPrepareEditClass() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-				
+		getSession().setAttribute(
+			SessionConstants.SESSION_IS_VALID,
+			SessionConstants.SESSION_IS_VALID);
+
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
 		addRequestParameter("method", "editClass");
 
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("EditarTurma");
-		privilegios.add("LerTurma");
-		privilegios.add("LerAulasDeTurma");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
+		setAuthorizedUser();
 
 		//fills the form
 		addRequestParameter("className", "10501");
@@ -315,20 +303,17 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedEditClass() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-				
+		getSession().setAttribute(
+			SessionConstants.SESSION_IS_VALID,
+			SessionConstants.SESSION_IS_VALID);
+
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
 		addRequestParameter("method", "editClass");
 		addRequestParameter("change", "1");
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("EditarTurma");
-		privilegios.add("LerTurma");
-		privilegios.add("LerAulasDeTurma");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
+		setAuthorizedUser();
 
 		//fills the form
 		addRequestParameter("className", "xpto");
@@ -373,23 +358,18 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 
 	}
 
-
 	public void testAuthorizedEditClassToExisting() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-				
+		getSession().setAttribute(
+			SessionConstants.SESSION_IS_VALID,
+			SessionConstants.SESSION_IS_VALID);
+
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
 		addRequestParameter("method", "editClass");
 		addRequestParameter("change", "1");
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("EditarTurma");
-		privilegios.add("LerTurma");
-		privilegios.add("LerAulasDeTurma");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
-
+		setAuthorizedUser();
 		//fills the form
 		addRequestParameter("className", "turma413");
 		//				Coloca contexto em sessão
@@ -428,24 +408,18 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 		//verify that the action puts in session/request the required objects
 		assertNotNull(SessionConstants.CLASS_VIEW);
 		assertNotNull(SessionConstants.LESSON_LIST_ATT);
-		
 
 	}
 
-
 	public void testUnAuthorizedDeleteClass() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-				
+
 		//			set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
 		addRequestParameter("method", "deleteClass");
 
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
-
+		setNotAuthorizedUser();
 		//fills the form
 		addRequestParameter("className", "10501");
 
@@ -458,37 +432,45 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedDeleteClass() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-				
+
 		//			set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
 		addRequestParameter("method", "deleteClass");
 
 		//create execution period
-		InfoExecutionYear infoExecutionYear =  new InfoExecutionYear("2002/2003");
-		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-		getSession().setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+		InfoExecutionYear infoExecutionYear =
+			new InfoExecutionYear("2002/2003");
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+		getSession().setAttribute(
+			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+			infoExecutionPeriod);
 
 		//create execution degree
-		InfoDegree infoDegree = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores");
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan("plano1", infoDegree);
-		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree(infoDegreeCurricularPlan, infoExecutionYear);
-		getSession().setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
-				
+		InfoDegree infoDegree =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+			new InfoDegreeCurricularPlan("plano1", infoDegree);
+		InfoExecutionDegree infoExecutionDegree =
+			new InfoExecutionDegree(
+				infoDegreeCurricularPlan,
+				infoExecutionYear);
+		getSession().setAttribute(
+			SessionConstants.INFO_EXECUTION_DEGREE_KEY,
+			infoExecutionDegree);
+
 		//privileges
-		HashSet privileges = new HashSet();
-		privileges.add("LerTurma");		
-		privileges.add("ApagarTurma");
-		IUserView userView = new UserView("user", privileges);
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
+		setAuthorizedUser();
 
 		//fills the form
 		addRequestParameter("className", "10501");
 
 		//action perform
 		actionPerform();
-		
+
 		//verify that there are errors
 		verifyNoActionErrors();
 		//		verify correct Forward
@@ -497,17 +479,14 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedViewClass() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-				
+
 		//			set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
 		addRequestParameter("method", "viewClass");
 
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
+		setNotAuthorizedUser();
 
 		//fills the form
 		addRequestParameter("className", "10501");
@@ -520,19 +499,14 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedViewClass() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-				
+
 		//		set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
 		addRequestParameter("method", "viewClass");
 
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("LerTurma");
-		privilegios.add("LerAulasDeTurma");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
+		setAuthorizedUser();
 
 		//fills the form
 		addRequestParameter("className", "10501");
@@ -603,8 +577,6 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 		}
 
 	}
-
-	
 
 	private InfoClass getInfoTurma(IUserView userView, String className)
 		throws Exception {

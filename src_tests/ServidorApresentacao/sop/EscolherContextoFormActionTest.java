@@ -1,23 +1,20 @@
 package ServidorApresentacao.sop;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.TestCasePresentation;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author tfc130
  *
  */
-public class EscolherContextoFormActionTest extends TestCasePresentation {
+public class EscolherContextoFormActionTest extends TestCasePresentationSopPortal {
 
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());
@@ -33,7 +30,6 @@ public class EscolherContextoFormActionTest extends TestCasePresentation {
 		super.setUp();
 		// define ficheiro de configura��o Struts a utilizar
 		setServletConfigFile("/WEB-INF/tests/web-sop.xml");
-
 	}
 
 	public EscolherContextoFormActionTest(String testName) {
@@ -41,8 +37,8 @@ public class EscolherContextoFormActionTest extends TestCasePresentation {
 	}
 
 	public void testSuccessfulEscolherContexto() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-
+		
+		
 		// define mapping de origem
 		setRequestPathInfo("", "/escolherContextoForm");
 
@@ -52,14 +48,7 @@ public class EscolherContextoFormActionTest extends TestCasePresentation {
 		addRequestParameter("index", "0");
 
 		// coloca credenciais na sess�o
-		HashSet privilegios = new HashSet();
-		privilegios.add("LerLicenciatura");
-		privilegios.add("ReadExecutionDegreesByExecutionYear");
-		privilegios.add("LerLicenciaturaExecucaoDeLicenciatura");
-		privilegios.add("LerTurmas");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
-
+setAuthorizedUser();
 		//puts executionPeriod in session
 		InfoExecutionPeriod executionPeriod =
 			new InfoExecutionPeriod(
@@ -76,7 +65,7 @@ public class EscolherContextoFormActionTest extends TestCasePresentation {
 				{ new InfoExecutionYear("2002/2003")};
 			ArrayList executionCourses =
 				(ArrayList) gestor.executar(
-					userView,
+					getAuthorizedUser(),
 					"ReadExecutionDegreesByExecutionYear",
 					argsReadExecutionDegrees);
 

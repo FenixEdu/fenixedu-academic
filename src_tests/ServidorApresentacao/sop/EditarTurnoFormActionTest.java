@@ -1,6 +1,5 @@
 package ServidorApresentacao.sop;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -9,15 +8,13 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoShift;
 import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.TestCasePresentation;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoAula;
 /**
  *@author tfc130
  */
-public class EditarTurnoFormActionTest extends TestCasePresentation {
+public class EditarTurnoFormActionTest extends TestCasePresentationSopPortal {
   
   public static void main(java.lang.String[] args) {
     junit.textui.TestRunner.run(suite());
@@ -40,7 +37,7 @@ public class EditarTurnoFormActionTest extends TestCasePresentation {
   }
 
     public void testSuccessfulEditarTurno() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 
     // define mapping de origem
     setRequestPathInfo("", "/editarTurnoForm");
@@ -48,11 +45,7 @@ public class EditarTurnoFormActionTest extends TestCasePresentation {
     addRequestParameter("nome", "NovoTurno1");
     addRequestParameter("lotacao",new Integer(50).toString());
     // coloca credenciais na sessao
-    HashSet privilegios = new HashSet();
-    privilegios.add("EditarTurno");
-    privilegios.add("LerTurnosDeDisciplinaExecucao");
-    IUserView userView = new UserView("user", privilegios);
-    getSession().setAttribute("UserView", userView);
+	setAuthorizedUser();
     try {
     	GestorServicos gestor = GestorServicos.manager();
 		InfoExecutionCourse iDE = new InfoExecutionCourse(
@@ -69,7 +62,7 @@ public class EditarTurnoFormActionTest extends TestCasePresentation {
 
     	Object argsLerTurnos[] = new Object[1];
     	argsLerTurnos[0] = iDE;
-    	ArrayList infoTurnos = (ArrayList) gestor.executar(userView, "LerTurnosDeDisciplinaExecucao", argsLerTurnos);
+    	ArrayList infoTurnos = (ArrayList) gestor.executar(getAuthorizedUser(), "LerTurnosDeDisciplinaExecucao", argsLerTurnos);
     	getSession().setAttribute("infoTurnosDeDisciplinaExecucao", infoTurnos);
 
 		InfoShift infoTurno1 = new InfoShift("turno1",new TipoAula(1),new Integer(100), iDE);
@@ -100,13 +93,7 @@ public class EditarTurnoFormActionTest extends TestCasePresentation {
     addRequestParameter("lotacao",new Integer(100).toString());
 
     // coloca credenciais na sessao
-    HashSet privilegios = new HashSet();
-    privilegios.add("EditarTurno");
-    privilegios.add("LerTurnosDeDisciplinaExecucao");
-    IUserView userView = new UserView("user", privilegios);
-
-    getSession().setAttribute("UserView", userView);
-
+setAuthorizedUser();
     try {
     	GestorServicos gestor = GestorServicos.manager();
 		InfoExecutionCourse iDE = new InfoExecutionCourse(
@@ -123,7 +110,7 @@ public class EditarTurnoFormActionTest extends TestCasePresentation {
 
 		Object argsLerTurnos[] = new Object[1];
 		argsLerTurnos[0] = iDE;
-		ArrayList infoTurnos = (ArrayList) gestor.executar(userView, "LerTurnosDeDisciplinaExecucao", argsLerTurnos);
+		ArrayList infoTurnos = (ArrayList) gestor.executar(getAuthorizedUser(), "LerTurnosDeDisciplinaExecucao", argsLerTurnos);
 		getSession().setAttribute("infoTurnosDeDisciplinaExecucao", infoTurnos);
 
 		InfoShift infoTurno1 = new InfoShift("turno1",new TipoAula(1),new Integer(100), iDE);

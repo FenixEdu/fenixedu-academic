@@ -2,16 +2,14 @@ package ServidorApresentacao.sop;
   
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import ServidorApresentacao.TestCasePresentation;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.TestCasePresentationSopPortal;
 
 /**
  * EditarAulasDeTurnoFormActionTest.java
  * 
  * @author Ivo Brandão
  */
-public class EditarAulasDeTurnoFormActionTest extends TestCasePresentation {
+public class EditarAulasDeTurnoFormActionTest extends TestCasePresentationSopPortal {
 
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());
@@ -35,8 +33,6 @@ public class EditarAulasDeTurnoFormActionTest extends TestCasePresentation {
 	}
 
 	public void testAdicionarAulas() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-		
 		/* :FIXME: change this when changing action */
 		String operation = "Adicionar Aulas";
 		
@@ -45,8 +41,6 @@ public class EditarAulasDeTurnoFormActionTest extends TestCasePresentation {
 	}
 
 	public void testRemoverAula() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-		
 		/* :FIXME: change this when changing action */
 		String operation = "Remover Aula";
 
@@ -58,7 +52,7 @@ public class EditarAulasDeTurnoFormActionTest extends TestCasePresentation {
 		//set request path
 		setRequestPathInfo("/sop", "/editarAulasDeTurnoForm");
 		addRequestParameter("operation", operation);
-
+		setAuthorizedUser();
 		//action perform
 		actionPerform();
 

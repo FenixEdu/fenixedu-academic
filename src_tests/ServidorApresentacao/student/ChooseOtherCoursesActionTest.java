@@ -1,6 +1,8 @@
 package ServidorApresentacao.student;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,6 +10,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import servletunit.struts.MockStrutsTestCase;
 import DataBeans.InfoPerson;
+import DataBeans.InfoRole;
 import DataBeans.InfoShiftEnrolment;
 import DataBeans.InfoStudent;
 import Dominio.Curso;
@@ -41,6 +44,7 @@ import Dominio.Turno;
 import Dominio.TurnoAluno;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -56,6 +60,7 @@ import ServidorPersistente.ITurmaTurnoPersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.RoleType;
 import Util.StudentCurricularPlanState;
 import Util.TipoAula;
 import Util.TipoCurso;
@@ -363,10 +368,16 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
     addRequestParameter("password","pass");
 
     // coloca credenciais na sessão
-    HashSet privileges = new HashSet();
-	privileges.add("ReadOtherCoursesWithShifts");
-    IUserView userView = new UserView("athirduser", privileges);
-    getSession().setAttribute("UserView", userView);
+	Collection roles = new ArrayList();
+	
+	InfoRole infoRole = new InfoRole();
+	infoRole.setRoleType(RoleType.STUDENT);
+
+
+    IUserView userView = new UserView("athirduser", roles);
+    
+    
+    getSession().setAttribute(SessionConstants.U_VIEW, userView);
     
     // colocar outras informações na sessão
 	getSession().setAttribute("infoStudent", _infoStudent);

@@ -9,6 +9,7 @@
 package ServidorApresentacao.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
@@ -31,6 +32,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
+import DataBeans.InfoRole;
 import Dominio.CurricularCourse;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
@@ -63,6 +65,7 @@ import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IPlanoCurricularCursoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.RoleType;
 import Util.TipoCurso;
 import Util.TipoDocumentoIdentificacao;
 
@@ -403,11 +406,13 @@ public class SessionUtilsTest extends TestCase {
 	}
 
 	private IUserView createUserView() {
-		HashSet privileges = new HashSet();
-		privileges.add(
-			new String("LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular"));
+		InfoRole infoRole = new InfoRole();
+		infoRole.setRoleType(RoleType.STUDENT);
 
-		IUserView userView = new UserView("45498", privileges);
+		Collection roles = new ArrayList();
+		roles.add(infoRole);
+		
+		IUserView userView = new UserView("45498", roles);
 		return userView;
 	}
 

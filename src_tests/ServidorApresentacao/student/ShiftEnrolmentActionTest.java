@@ -8,6 +8,8 @@
  */
 package ServidorApresentacao.student;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 
 import junit.framework.Test;
@@ -17,6 +19,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import servletunit.struts.MockStrutsTestCase;
 import DataBeans.InfoPerson;
+import DataBeans.InfoRole;
 import DataBeans.InfoStudent;
 import Dominio.Curso;
 import Dominio.DisciplinaExecucao;
@@ -50,6 +53,7 @@ import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.RoleType;
 import Util.TipoAula;
 import Util.TipoCurso;
 import Util.TipoDocumentoIdentificacao;
@@ -306,11 +310,13 @@ public class ShiftEnrolmentActionTest extends MockStrutsTestCase {
 	 * @param _student1
 	 */
 	private void setUserToSession(IStudent student) {
-		HashSet hashSet = new HashSet();
-		hashSet.add(this.serviceName);
+		Collection roles = new ArrayList();
+		
+		InfoRole infoRole = new InfoRole();
+		infoRole.setRoleType(RoleType.STUDENT);
 
 		IUserView userView =
-			new UserView(student.getPerson().getUsername(), hashSet);
+			new UserView(student.getPerson().getUsername(), roles);
 
 		InfoPerson infoPerson = new InfoPerson();
 		try {
