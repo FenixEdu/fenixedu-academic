@@ -11,19 +11,19 @@
 <body>
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>
 <!-- Header -->
-<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+<table id="header" width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td class="header" width="25%"><img alt="" height="60" src="<%= request.getContextPath() %>/images/dotist_student.gif" width="192" />
+    <td class="header-td" width="25%"><img alt="" height="60" src="<%= request.getContextPath() %>/images/dotist_student.gif" width="192" />
 	</td>
-    <td class="header"><div align="right"><h1><tiles:getAsString name="serviceName" /></h1></div>
+    <td class="header-td"><div align="right"><h1><tiles:getAsString name="serviceName" /></h1></div>
     </td>
   </tr>
 </table>
 <!-- End Header -->
 <!-- NavGeral -->
-<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+<table id="navbargeral" width="100%%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td class="navbargeral"><tiles:insert attribute="navGeral" />
+    <td class="navbargeral-td"><tiles:insert attribute="navGeral" />
     </td>
   </tr>
 </table>
@@ -31,9 +31,9 @@
 <!-- Navbar Lateral e Body Content -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
-     <td width="25%" align="left" valign="top" nowrap="nowrap" class="navlateral"><tiles:insert attribute="navLocal" />
+     <td width="25%" align="left" valign="top" nowrap="nowrap" class="navlateral-td"><tiles:insert attribute="navLocal" />
     </td>
-     <td width="100%" align="left" valign="top" bgcolor="#FFFFFF" class="bodycontent"><tiles:insert attribute="body" />
+     <td width="100%" align="left" valign="top" class="bodycontent"><tiles:insert attribute="body" />
 	</td>
   </tr>
 </table>
@@ -41,7 +41,7 @@
 <!-- Footer -->
 <table width="100%%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td class="footer"><tiles:insert attribute="footer" />
+    <td class="footer-td"><tiles:insert attribute="footer" />
     </td>
   </tr>
 </table>
