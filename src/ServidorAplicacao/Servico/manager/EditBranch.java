@@ -1,0 +1,80 @@
+/*
+ * Created on 18/Set/2003
+ */
+package ServidorAplicacao.Servico.manager;
+
+import DataBeans.InfoBranch;
+import Dominio.Branch;
+import Dominio.IBranch;
+import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentBranch;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
+
+/**
+ * @author lmac1
+ */
+
+public class EditBranch implements IServico {
+
+	private static EditBranch service = new EditBranch();
+
+	/**
+	 * The singleton access method of this class.
+	 */
+	public static EditBranch getService() {
+		return service;
+	}
+
+	/**
+	 * The constructor of this class.
+	 */
+	private EditBranch() {
+	}
+
+	/**
+	 * Service name
+	 */
+	public final String getNome() {
+		return "EditBranch";
+	}
+
+	/**
+	 * Executes the service.
+	 */
+
+	public void run(InfoBranch infoBranch) throws FenixServiceException {
+
+		ISuportePersistente persistentSuport = null;
+		IPersistentBranch persistentbranch = null;
+		IBranch branch = null;
+		String code = infoBranch.getCode();
+
+		try {
+			
+			persistentSuport = SuportePersistenteOJB.getInstance();
+			persistentbranch = persistentSuport.getIPersistentBranch();
+			IBranch helpBranch = new Branch();
+			helpBranch.setIdInternal(infoBranch.getIdInternal());
+			branch = (IBranch) persistentbranch.readByOId(helpBranch, false);
+			
+			if(branch == null)
+				throw new NonExistingServiceException();
+			
+			branch.setName(infoBranch.getName());
+			branch.setCode(code);
+
+			persistentbranch.lockWrite(branch);
+						
+		} catch (ExistingPersistentException ex) {
+			throw new ExistingServiceException();
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+			throw new FenixServiceException(excepcaoPersistencia);
+		}
+	}
+}

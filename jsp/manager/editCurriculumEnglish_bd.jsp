@@ -15,31 +15,33 @@
 	
 	<table>
 		<tr>
-			<bean:message key="message.generalObjectivesEn"/>
+			<b><bean:message key="message.generalObjectivesEn"/></b>
 		</tr>
 		<tr>
 			<html:textarea property="generalObjectivesEn" rows="3" cols="60"/>
 		</tr>
+		<br>
 		<tr>
-			<bean:message key="message.operacionalObjectivesEn"/>
+			<b><bean:message key="message.operacionalObjectivesEn"/></b>
 		</tr>
 		<tr>
 			<html:textarea property="operacionalObjectivesEn" rows="3" cols="60"/>
 		</tr>
+		<br>
 		<tr>
-			<bean:message key="message.programEn"/>
+			<b><bean:message key="message.programEn"/></b>
 		</tr>
 		<tr>
 			<html:textarea property="programEn" rows="3" cols="60"/>
 		</tr>
+		<br>
 		<tr>
-			<bean:message key="message.evaluationElementsEn"/>
+			<b><bean:message key="message.evaluationElementsEn"/></b>
 		</tr>
 		<tr>
 			<html:textarea property="evaluationElementsEn" rows="3" cols="60"/>
 		</tr>	
 	</table>
-	<br>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.save.english"/>
 	</html:submit>

@@ -96,7 +96,16 @@
 				<form-property name="evaluationElements" type="java.lang.String" />
 				<form-property name="evaluationElementsEn" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
-		</form-bean>    
+		</form-bean>
+		
+		<form-bean name="branchForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">
+				<form-property name="name" type="java.lang.String" />       
+				<form-property name="code" type="java.lang.String" />
+				<form-property name="internalIds" type="java.lang.Integer[]" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
 
 	  <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 
@@ -402,7 +411,8 @@
              handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
           />
        <forward name="editCurricularCourseScope" path="df.page.edit-curricular-course-scope"/>
-       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
+       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>
+       <forward name="readDegree" path="/readDegree.do"/>
 	</action>
 	
 	<!-- Action for inserting a curricular course scope -->
@@ -422,7 +432,8 @@
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
        <forward name="insertCurricularCourseScope" path="df.page.insert-curricular-course-scope"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>    
-       <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>  	      
+       <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>
+       <forward name="readDegree" path="/readDegree.do"/> 	      
 	</action>
 	
 	<!-- Action for inserting a curricular course scope from another -->
@@ -437,8 +448,12 @@
         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+             	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
        <forward name="insertCurricularCourseScope" path="df.page.insert-from-other-curricular-course-scope"/>
-       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
+       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>
+       <forward name="readDegree" path="/readDegree.do"/>     	      
 	</action>
 	
 	
@@ -549,8 +564,7 @@
 		input="/editCurriculum.do?method=prepareEdit&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.EditCurriculumDA"
-        validate="true">  
+		type="ServidorApresentacao.Action.manager.EditCurriculumDA">
         <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
@@ -558,6 +572,26 @@
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>
        <forward name="editCurriculumEnglish" path="df.page.edit-curriculum-english"/>  	      
+	</action>
+	
+	<!-- Actions for managing branches  -->
+	<action
+		path="/manageBranches"
+		name="branchForm"
+		input="/manageBranches.do?method=showBranches&amp;page=0"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.ManageBranchesDA">  
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       <forward name="readDegree" path="/readDegree.do"/>
+       <forward name="manageBranches" path="df.page.manage-branches"/>
+       <forward name="insertBranch" path="df.page.insert-branch"/>
+       <forward name="editBranch" path="df.page.edit-branch"/>
 	</action>
     
       <!--Input actions-->  

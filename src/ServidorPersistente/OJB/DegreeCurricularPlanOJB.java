@@ -8,6 +8,7 @@ import java.util.ListIterator;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
+import Dominio.Branch;
 import Dominio.CurricularCourse;
 import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
@@ -96,21 +97,28 @@ public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersiste
 				Criteria crit = new Criteria();
 				crit.addEqualTo("keyCurricularPlan", degreeCurricularPlan.getIdInternal());
 				List result = queryList(CursoExecucao.class, crit);
-				if (!result.isEmpty())
+				if(!result.isEmpty())
 					return new Boolean(false);
 							
 				// Check for related CurricularCourses
 				Criteria criter = new Criteria();
 				criter.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
 				result = queryList(CurricularCourse.class, criter);
-				if (!result.isEmpty())
+				if(!result.isEmpty())
 					return new Boolean(false);
 					
 				//Check for related StudentCurricularPlans
 				Criteria criteria = new Criteria();
 				criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
 				result = queryList(StudentCurricularPlan.class, criteria);
-				if (!result.isEmpty())
+				if(!result.isEmpty())
+					return new Boolean(false);
+					
+				//Check for related Branches
+				Criteria crite = new Criteria();
+				crite.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlan.getIdInternal());
+				result = queryList(Branch.class, crite);
+				if(!result.isEmpty())
 					return new Boolean(false);
 
 				super.delete(degreeCurricularPlan);

@@ -20,8 +20,9 @@
 
 <ul style="list-style-type: square;">
 	<li><html:link page="<%="/editDegreeCurricularPlan.do?method=prepareEdit&degreeId="  + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.edit.degreeCurricularPlan"/></html:link></li>
-	<li><html:link page="<%="/insertCurricularCourse.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.insert.curricularCourse"/></html:link></li>			
-	<li><html:link page="<%="/insertExecutionDegree.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.insert.executionDegree"/></html:link></li>			
+	<li><html:link page="<%="/insertCurricularCourse.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.insert.curricularCourse"/></html:link></li>
+	<li><html:link page="<%="/insertExecutionDegree.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.insert.executionDegree"/></html:link></li>
+	<li><html:link page="<%="/manageBranches.do?method=showBranches&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.branches.management"/></html:link></li>
 </ul>
 
 <span class="error"><html:errors/></span>
@@ -97,13 +98,14 @@
 			<table width="70%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header">
-			
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.executionDegree.executionYear" />
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.executionDegree.coordinator" />
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.executionDegree.temporaryExamMap" />
+					</td>
+					<td class="listClasses-header">
 					</td>
 				</tr>
 				<logic:iterate id="executionDegree" name="executionDegreesList">
@@ -140,7 +142,7 @@
 							---
 						</logic:notPresent>	
 					</td>
-					<td>
+					<td class="listClasses">
 						<html:link page="<%= "/editExecutionDegree.do?method=prepareEdit&degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="executionDegreeId" paramName="executionDegree" paramProperty="idInternal"><bean:message key="label.edit"/></html:link>
 					</td>
 	 			</tr>

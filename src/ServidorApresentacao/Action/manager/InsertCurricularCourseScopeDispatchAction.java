@@ -10,8 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -59,14 +57,13 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 					result = (List) ServiceUtils.executeService(userView, "ReadBranchesByDegreeCurricularPlan", args);
 			
 			} catch (NonExistingServiceException ex) {
-				ActionErrors errors = new ActionErrors();
-				ActionError actionError = new ActionError("message.insert.degreeCurricularCourseScope.error");
-				errors.add("message.insert.degreeCurricularCourseScope.error", actionError);
-				saveErrors(request, errors);
-				return mapping.findForward("readCurricularCourse");
+				throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
+			
+			if(result == null)
+				throw new NonExistingActionException("message.insert.degreeCurricularCourseScope.error", mapping.findForward("readCurricularCourse"));
 			
 //			creation of bean of InfoBranches for use in jsp
 			ArrayList branchesList = new ArrayList();

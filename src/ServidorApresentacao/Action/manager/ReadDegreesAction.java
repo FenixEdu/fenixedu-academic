@@ -44,7 +44,7 @@ public class ReadDegreesAction extends FenixAction {
 				degrees,
 				new ComparatorByNameForInfoDegree());
 			
-					request.setAttribute("Lista de licenciaturas", degrees);
+					request.setAttribute("degreesList", degrees);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}

@@ -24,31 +24,33 @@
 	
 	<table>
 		<tr>
-			<bean:message key="message.generalObjectives"/>
+			<b><bean:message key="message.generalObjectives"/></b>
 		</tr>
 		<tr>
-			<html:text size="60" property="generalObjectives" />
+			<html:textarea property="generalObjectives" rows="3" cols="60"/>
+		</tr>
+		<br>
+		<tr>
+			<b><bean:message key="message.operacionalObjectives"/></b>
 		</tr>
 		<tr>
-			<bean:message key="message.operacionalObjectives"/>
+			<html:textarea property="operacionalObjectives" rows="3" cols="60"/>
+		</tr>
+		<br>
+		<tr>
+			<b><bean:message key="message.program"/></b>
 		</tr>
 		<tr>
-			<html:text size="60" property="operacionalObjectives"  />
+			<html:textarea property="program" rows="3" cols="60"/>
+		</tr>
+		<br>
+		<tr>
+			<b><bean:message key="message.evaluationElements"/></b>
 		</tr>
 		<tr>
-			<bean:message key="message.program"/>
-		</tr>
-		<tr>
-			<html:text size="60" property="program"  />
-		</tr>
-		<tr>
-			<bean:message key="message.evaluationElements"/>
-		</tr>
-		<tr>
-			<html:text size="60" property="evaluationElements"  />
+			<html:textarea property="evaluationElements" rows="3" cols="60"/>
 		</tr>	
 	</table>
-	<br>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.save"/>
 	</html:submit>

@@ -54,13 +54,15 @@ public class ReadBranchesByDegreeCurricularPlan implements IServico {
 	try {
 			sp = SuportePersistenteOJB.getInstance();
 			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOId(new DegreeCurricularPlan(idDegreeCurricularPlan), false);
+			if(degreeCurricularPlan == null)
+				throw new NonExistingServiceException();
 			allBranches = sp.getIPersistentBranch().readByDegreeCurricularPlan(degreeCurricularPlan);
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
 	}
 
 	if(allBranches == null || allBranches.isEmpty()) 
-		throw new NonExistingServiceException();
+		return null;
 
 	// build the result of this service
 	Iterator iterator = allBranches.iterator();

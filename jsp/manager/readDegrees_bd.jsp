@@ -3,8 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<logic:present name="Lista de licenciaturas" scope="request">
-<logic:notEmpty name="Lista de licenciaturas" >
+<logic:present name="degreesList" scope="request">
+<logic:notEmpty name="degreesList" >
 		<h2><bean:message key="label.manager.degrees"/></h2>
 <ul style="list-style-type: square;">
 <li><html:link page="/insertDegree.do?method=prepareInsert"><bean:message key="label.manager.insert.degree"/></html:link></li>
@@ -33,7 +33,7 @@
 	</tr>
 		
 		 
-	<logic:iterate id="degree" name="Lista de licenciaturas">			
+	<logic:iterate id="degree" name="degreesList">			
 		<tr>	
 			<td class="listClasses">
 			

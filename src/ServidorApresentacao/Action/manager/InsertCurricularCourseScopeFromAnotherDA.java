@@ -84,28 +84,30 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 		Object[] args1 = { degreeCurricularPlanId };
 		List result = null;
 		try {
-			result = (List) ServiceUtils.executeService(userView, "ReadBranchesByDegreeCurricularPlan", args1);
+				result = (List) ServiceUtils.executeService(userView, "ReadBranchesByDegreeCurricularPlan", args1);
+		} catch (NonExistingServiceException ex) {
+			throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+		
+		if(result == null)
+			throw new NonExistingActionException("message.insert.degreeCurricularCourseScope.error", mapping.findForward("readCurricularCourse"));
 
 		//	creation of bean of InfoBranches for use in jsp
 		ArrayList branchesList = new ArrayList();
-		if (result != null) {
-			InfoBranch infoBranch;
-			Iterator iter = result.iterator();
-			String label, value;
-			while (iter.hasNext()) {
-				infoBranch = (InfoBranch) iter.next();
-				value = infoBranch.getIdInternal().toString();
-				label = infoBranch.getCode() + " - " + infoBranch.getName();
-				branchesList.add(new LabelValueBean(label, value));
-			}
-			dynaForm.set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getIdInternal().toString());
-			request.setAttribute("branchesList", branchesList);
-
+		InfoBranch infoBranch;
+		Iterator iter = result.iterator();
+		String label, value;
+		while (iter.hasNext()) {
+			infoBranch = (InfoBranch) iter.next();
+			value = infoBranch.getIdInternal().toString();
+			label = infoBranch.getCode() + " - " + infoBranch.getName();
+			branchesList.add(new LabelValueBean(label, value));
 		}
-
+		
+		dynaForm.set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getIdInternal().toString());
+		request.setAttribute("branchesList", branchesList);
 		dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal().toString());
 		
 		return mapping.findForward("insertCurricularCourseScope");
