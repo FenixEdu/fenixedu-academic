@@ -19,7 +19,7 @@
 
 <br />
 <logic:present name="<%= SessionConstants.SHIFTS %>" scope="request">
-	<html:form action="/addShifts">
+	<html:form action="/addShifts" focus="selectedItems">
 		<html:hidden property="method" value="add"/>
 		<html:hidden property="page" value="1"/>
 

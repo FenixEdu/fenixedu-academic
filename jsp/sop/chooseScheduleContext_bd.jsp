@@ -8,7 +8,7 @@
 
 <span class="error"><html:errors/></span>
 
-<html:form action="/chooseContext">
+<html:form action="/chooseContext" focus="executionDegreeOID">
 
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="choose"/>

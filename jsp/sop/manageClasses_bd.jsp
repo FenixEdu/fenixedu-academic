@@ -16,7 +16,7 @@
 <h2>Manipular Turmas</h2>
 
 <br />
-<html:form action="/manageClasses">
+<html:form action="/manageClasses" focus="className">
 
 	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>

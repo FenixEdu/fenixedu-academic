@@ -18,7 +18,7 @@
 
 <br />
 <logic:present name="<%= SessionConstants.CLASSES %>" scope="request">
-	<html:form action="/addClasses">
+	<html:form action="/addClasses" focus="selectedItems">
 		<html:hidden property="method" value="add"/>
 		<html:hidden property="page" value="1"/>
 

@@ -7,7 +7,7 @@
 	<html:errors/>
 </span>
 
-<html:form action="/manageShift">
+<html:form action="/manageShift" focus="nome">
 
 	<html:hidden property="method" value="editShift"/>
 	<html:hidden property="page" value="1"/>

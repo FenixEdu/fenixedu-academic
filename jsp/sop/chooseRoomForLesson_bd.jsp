@@ -22,7 +22,7 @@
 <span class="error">
 	<html:errors/>
 </span>
-<html:form action="/manageLesson" focus="diaSemana">
+<html:form action="/manageLesson" focus="nomeSala">
 	<html:hidden property="method" value="createEditLesson"/>
 	<html:hidden property="page" value="2"/>
 	

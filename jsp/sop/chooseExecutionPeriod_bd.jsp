@@ -3,7 +3,7 @@
  <h2><bean:message key="title.manage.schedule"/></h2>
 <br/>
 <span class="error"><html:errors /></span>
-<html:form action="/chooseExecutionPeriod">
+<html:form action="/chooseExecutionPeriod" focus="index">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td nowrap="nowrap" width="125"><bean:message key="property.executionPeriod"/>:</td>
