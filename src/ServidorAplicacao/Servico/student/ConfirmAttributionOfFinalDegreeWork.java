@@ -37,7 +37,7 @@ public class ConfirmAttributionOfFinalDegreeWork implements IService {
 
         if (groupProposal != null) {
             IGroup groupAttributed = groupProposal.getFinalDegreeWorkProposal()
-                    .getGroupAttributed();
+                    .getGroupAttributedByTeacher();
 
             if (groupAttributed == null) { throw new NoAttributionToConfirmException(); }
 
