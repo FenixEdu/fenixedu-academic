@@ -269,8 +269,9 @@
 -->
             <batchtest fork="yes" todir="${reports.tests}">
                 <fileset dir="${src.tests}">
-                    <!--<include name="**/*Test.java"/>-->
-                    <include name="**/T*OJBTest.java"/>
+                    <include name="**/*Test.java"/>
+                    <exclude name="**/SuportePersistenteOJBTest.java"/>
+                    <exclude name="**/AllTests.java"/>
                 </fileset>
             </batchtest>
 		</junit>
@@ -297,8 +298,7 @@
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <!--<include name="**/*Test.java"/>-->
-                    <include name="**/CriarSalaFormActionTest.java"/>
+                    <include name="**/*Test.java"/>
                     <exclude name="**/commons/*.java"/>
                     <exclude name="**/student/*.java"/>
                     <exclude name="**/SessionUtilsTest.java"/>
