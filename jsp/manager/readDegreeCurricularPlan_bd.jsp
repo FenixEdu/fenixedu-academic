@@ -38,7 +38,7 @@
 	<html:form action="/deleteCurricularCourses" method="get">
 		<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 		<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
-			<table width="70%" cellpadding="0" border="0">
+			<table width="100%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header">
 					</td>
@@ -54,7 +54,7 @@
 							<bean:write name="curricularCourse" property="idInternal"/>
 						</html:multibox>
 					</td>				
-					<td class="listClasses"><html:link page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="name"/></html:link>
+					<td class="listClasses"><p align="left"><html:link page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="name"/></html:link></p>
 					</td>
 					<td class="listClasses"><html:link page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="code"/></html:link>
 					</td>

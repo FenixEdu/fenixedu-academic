@@ -16,7 +16,7 @@
 
 <html:form action="/deleteDegrees" method="get">
 
-<table width="50%" cellpadding="0" border="0">
+<table width="100%" cellpadding="0" border="0">
 	<tr>
 		<td class="listClasses-header">
 		</td>
@@ -37,7 +37,7 @@
 			</td>	
 			<td class="listClasses"><html:link page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="sigla"/></html:link>
 			</td>			
-			<td class="listClasses"><html:link page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="nome"/></html:link>
+			<td class="listClasses"><p align="left"><html:link page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="nome"/></html:link></p>
 			</td>
 			<bean:define id="tipoCurso" name="degree" property="tipoCurso"/>
 			<td class="listClasses"><%= tipoCurso.toString() %>

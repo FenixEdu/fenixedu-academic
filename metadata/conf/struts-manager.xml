@@ -444,6 +444,8 @@
        <forward name="editExecutionDegree" path="df.page.edit-execution-degree"/>
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
 	</action>
+	
+	
     
     <!-- Action for deleting execution degree --> 
     <action 
@@ -453,8 +455,16 @@
       	scope="request"
       	type="ServidorApresentacao.Action.manager.DeleteExecutionDegreesAction">
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
-    </action>	
-         
+    </action>
+    	
+    <!-- Action for associating execution courses to a curricular course -->
+          <action path="/readExecutionPeriodToAssociateExecutionCoursesAction"
+              type="ServidorApresentacao.Action.manager.ReadExecutionPeriodToAssociateExecutionCoursesAction"
+              parameter="method"
+              scope="request"
+              >
+          <forward name="viewExecutionPeriods" path="df.page.read-execution-periods"/>
+      </action>
     
       <!--Input actions-->  
      <action path="/readDegreesInput"
