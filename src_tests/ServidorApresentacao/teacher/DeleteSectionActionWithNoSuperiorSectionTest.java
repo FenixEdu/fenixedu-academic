@@ -74,7 +74,8 @@ public class DeleteSectionActionWithNoSuperiorSectionTest extends TestCasePresen
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 		sp.iniciarTransaccao();
 		
-		IDisciplinaExecucao executionCourse = sp.getIDisciplinaExecucaoPersistente().readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO", "2002/2003", "LEIC");
+		IDisciplinaExecucao executionCourse = sp.getIDisciplinaExecucaoPersistente().readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO", "2002/2003", "MEEC");
+		assertNotNull(executionCourse);
 		ISite site = sp.getIPersistentSite().readByExecutionCourse(executionCourse);
 	    ISection section = sp.getIPersistentSection().readBySiteAndSectionAndName(site, null, "seccao1dePO");
 	    InfoSection infoSection = Cloner.copyISection2InfoSection(section);
