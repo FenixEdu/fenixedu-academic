@@ -11,7 +11,7 @@
     <title><bean:message key="title.masterDegree.administraiveOffice.createGuide" /></title>
   </head>
   <body>
-   <span class="error"><html:errors/></span>
+   <span class="error"><html:errors/><br></span>
 
    <table>
     <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE%>" scope="session" />

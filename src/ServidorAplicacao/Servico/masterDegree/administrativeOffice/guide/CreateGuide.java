@@ -22,6 +22,7 @@ import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -70,6 +71,11 @@ public class CreateGuide implements IServico {
 		IGuide guide = new Guide();
 		IGuideSituation guideSituation = null;
 		IPessoa person = null;		
+
+
+		// Check the Guide Situation
+		if (situationOfGuide.equals(SituationOfGuide.ANNULLED_TYPE))
+			throw new InvalidSituationServiceException();
 
 		InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
 		if (othersPrice != null){

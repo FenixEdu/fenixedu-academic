@@ -27,9 +27,11 @@ import DataBeans.InfoGuide;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingContributorServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.exceptions.InvalidSituationActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.GuideRequester;
@@ -224,6 +226,10 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			try {
 				Object args[] = {infoGuide, othersRemarks, othersPrice, remarks, situationOfGuide, paymentType};
 				newInfoGuide = (InfoGuide) serviceManager.executar(userView, "CreateGuide", args);
+			} catch (InvalidSituationServiceException e) {
+				Object object = new Object();
+				object = "Anulada";
+				throw new InvalidSituationActionException(object);
 			} catch (NonExistingContributorServiceException e) {
 				session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE);
 				return mapping.getInputForward();

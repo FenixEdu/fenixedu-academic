@@ -71,7 +71,7 @@
       </form-bean>
 
 	  <!-- Bean for ready to create a guide  -->
-      <form-bean name="guideCreateReady" 
+      <form-bean name="guideCreateReadyForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
 
@@ -271,13 +271,16 @@
 
 
       <!-- Create Guide -->
-      <action attribute="guideCreateReady"
+      <action attribute="guideCreateReadyForm"
       		  input="/guide/createGuideReady.jsp"
-      	      name="guideCreateReady"
+      	      name="guideCreateReadyForm"
 		      path="/createGuideReadyDispatchAction"
 		      parameter="method"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateGuideDispatchAction"
               validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+		                key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
       </action>
