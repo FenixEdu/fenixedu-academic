@@ -1,5 +1,5 @@
 /*
- * Created on 2003/07/29
+ * Created on 2003/07/31
  *
  */
 package ServidorApresentacao.Action.sop.base;
@@ -11,14 +11,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.utils.ContextUtils;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public abstract class FenixExecutionDegreeAndCurricularYearContextDispatchAction
-	extends FenixContextDispatchAction {
+public abstract class FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction
+	extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 	/**
 	 * Tests if the session is valid.
 	 * @see SessionUtils#validSessionVerification(HttpServletRequest, ActionMapping)
@@ -34,8 +33,7 @@ public abstract class FenixExecutionDegreeAndCurricularYearContextDispatchAction
 		ActionForward actionForward =
 			super.execute(mapping, actionForm, request, response);
 
-		ContextUtils.setExecutionDegreeContext(request);
-		ContextUtils.setCurricularYearContext(request);
+		ContextUtils.setExecutionCourseContext(request);
 
 		return actionForward;
 	}

@@ -78,6 +78,8 @@ public abstract class Cloner {
 			Cloner.copyInfoExecutionCourse2ExecutionCourse(
 				infoShift.getInfoDisciplinaExecucao());
 
+		System.out.println("executionCourse= " + executionCourse);
+
 		copyObjectProperties(shift, infoShift);
 
 		shift.setDisciplinaExecucao(executionCourse);
@@ -240,7 +242,7 @@ public abstract class Cloner {
 	 * @param iExecutionPeriod
 	 * @return InfoExecutionPeriod
 	 */
-	
+
 	public static InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(IExecutionPeriod executionPeriod) {
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
 		InfoExecutionYear infoExecutionYear =

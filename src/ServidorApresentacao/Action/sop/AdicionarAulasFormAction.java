@@ -1,5 +1,4 @@
 package ServidorApresentacao.Action.sop;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,15 +17,17 @@ import DataBeans.InfoShift;
 import DataBeans.InfoShiftServiceResult;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
-import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * @author tfc130
+ * @author Luis Cruz & Sara Ribeiro
+ * 
  */
-public class AdicionarAulasFormAction extends FenixAction {
+public class AdicionarAulasFormAction
+	extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
 
 	public static String THEORETICAL_HOURS_LIMIT_EXCEEDED =
 		"errors.shift.theoretical.hours.limit.exceeded";
@@ -52,21 +53,23 @@ public class AdicionarAulasFormAction extends FenixAction {
 		HttpServletResponse response)
 		throws Exception {
 
+		super.execute(mapping, form, request, response);
+
 		DynaActionForm adicionarAulasForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
-			DynaActionForm manipularTurnosForm =
-				(DynaActionForm) request.getAttribute("manipularTurnosForm");
+			//DynaActionForm manipularTurnosForm =
+			//	(DynaActionForm) request.getAttribute("manipularTurnosForm");
 			IUserView userView =
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
-			Integer indexTurno =
-				(Integer) manipularTurnosForm.get("indexTurno");
-			ArrayList infoTurnos =
-				(ArrayList) request.getAttribute(
-					"infoTurnosDeDisciplinaExecucao");
-			InfoShift infoTurno =
-				(InfoShift) infoTurnos.get(indexTurno.intValue());
+			//Integer indexTurno =
+			//	(Integer) manipularTurnosForm.get("indexTurno");
+			//ArrayList infoTurnos =
+			//	(ArrayList) request.getAttribute(
+			//		"infoTurnosDeDisciplinaExecucao");
+			InfoShift infoTurno = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+			//	infoTurnos.get(indexTurno.intValue());
 
 			String[] classesList =
 				(String[]) adicionarAulasForm.get("lessonsList");

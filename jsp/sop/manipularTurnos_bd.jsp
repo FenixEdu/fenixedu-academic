@@ -41,8 +41,24 @@
               	<td class="listClasses"><bean:write name="infoTurno" property="lessons"/></td> 
               	<td class="listClasses"><bean:write name="infoTurno" property="lotacao"/></td>
 			   	<td class="listClasses">
-               		<html:link page="/viewClassesWithShift.do" paramId="name" paramName="infoTurno" paramProperty="nome">
-						<bean:message key="link.view"/>							
+			   		<bean:define id="shiftOID" name="infoTurno" property="idInternal"/>
+               		<html:link page="<%= "/viewClassesWithShift.do?"
+               							+ SessionConstants.SHIFT_OID
+			  							+ "="
+               				   			+ pageContext.findAttribute("shiftOID")
+               				   			+ "&amp;"
+			  							+ SessionConstants.EXECUTION_PERIOD_OID
+  										+ "="
+  										+ pageContext.findAttribute("executionPeriodOID")
+  										+ "&amp;"
+  										+ SessionConstants.CURRICULAR_YEAR_OID
+			  							+ "="
+  										+ pageContext.findAttribute("curricularYearOID")
+  										+ "&amp;"
+			  							+ SessionConstants.EXECUTION_DEGREE_OID
+  										+ "="
+  										+ pageContext.findAttribute("executionDegreeOID") %>">
+						<bean:message key="link.view"/>
 					</html:link>
              	</td>
           	</tr>

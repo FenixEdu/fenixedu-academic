@@ -635,7 +635,8 @@
               name="shiftNameForm"
               path="/viewClassesWithShift"
               scope="request"
-              type="ServidorApresentacao.Action.sop.ViewClassesWithShift">
+              type="ServidorApresentacao.Action.sop.ViewClassesWithShift"
+              validate="false">
 	        <forward name="sucess" path="/viewClassesWithShift.jsp"/> 
       </action>
      
@@ -714,12 +715,12 @@
       <action attribute="editarAulasDeTurnoForm"
               name="editarAulasDeTurnoForm"
       		  path="/removerAulaDeTurno"
-              scope="session"      		  
-              input="/editarAulasDeTurno.jsp"
+              scope="request"      		  
+              input="/editarAulasDeTurnoForm.do"
               type="ServidorApresentacao.Action.sop.RemoverAulaDeTurnoFormAction"
               validate="true"
               >
-          <forward name="Sucesso" path="/editarAulasDeTurno.jsp"/>
+          <forward name="Sucesso" path="/editarAulasDeTurnoForm.do"/>
       </action>
 
       <action path="/prepararAdicionarAulasDeTurno"

@@ -26,10 +26,52 @@
    	</tr>
 </table>
 <br />
-<html:link page="/prepararEditarAulasDeTurno.do"> <bean:message key="link.add.remove.aulas"/></html:link>
+<html:link page="<%= "/prepararEditarAulasDeTurno.do?"
+	+ SessionConstants.SHIFT_OID
+	+ "="
+    + pageContext.findAttribute("shiftOID")
+    + "&amp;"
+	+ SessionConstants.EXECUTION_PERIOD_OID
+  	+ "="
+  	+ pageContext.findAttribute("executionPeriodOID")
+  	+ "&amp;"
+  	+ SessionConstants.CURRICULAR_YEAR_OID
+	+ "="
+  	+ pageContext.findAttribute("curricularYearOID")
+  	+ "&amp;"
+  	+ SessionConstants.EXECUTION_COURSE_OID
+	+ "="
+  	+ pageContext.findAttribute("executionCourseOID")
+  	+ "&amp;"
+	+ SessionConstants.EXECUTION_DEGREE_OID
+  	+ "="
+	+ pageContext.findAttribute("executionDegreeOID") %>">
+	 <bean:message key="link.add.remove.aulas"/>
+</html:link>
 <br />
 <br />
-<html:link page="/listClasses.do?method=showClasses"> <bean:message key="link.add.shift.classes"/></html:link>
+<html:link page="<%= "/listClasses.do?method=showClasses&amp;"
+	+ SessionConstants.SHIFT_OID
+	+ "="
+    + pageContext.findAttribute("shiftOID")
+    + "&amp;"
+	+ SessionConstants.EXECUTION_PERIOD_OID
+  	+ "="
+  	+ pageContext.findAttribute("executionPeriodOID")
+  	+ "&amp;"
+  	+ SessionConstants.CURRICULAR_YEAR_OID
+	+ "="
+  	+ pageContext.findAttribute("curricularYearOID")
+  	+ "&amp;"
+  	+ SessionConstants.EXECUTION_COURSE_OID
+	+ "="
+  	+ pageContext.findAttribute("executionCourseOID")
+  	+ "&amp;"
+	+ SessionConstants.EXECUTION_DEGREE_OID
+  	+ "="
+	+ pageContext.findAttribute("executionDegreeOID") %>">
+	 <bean:message key="link.add.shift.classes"/>
+</html:link>
 <br />
 <br />
 <br />

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="DataBeans.InfoLesson" %>
@@ -15,19 +16,54 @@
         <br/>
 	   	<% ArrayList iA = (ArrayList) request.getAttribute("infoAulasDeTurno"); %>
  <center>
- 	<b><html:link page="/listClasses.do?method=showClasses" paramName="infoTurno" paramProperty="idInternal" paramId="shiftOID"> <bean:message key="link.add.shift.classes"/></html:link></b>
+ 	<b>
+		<html:link page="<%= "/listClasses.do?method=showClasses&amp;"
+			+ SessionConstants.SHIFT_OID
+			+ "="
+		    + pageContext.findAttribute("shiftOID")
+		    + "&amp;"
+			+ SessionConstants.EXECUTION_PERIOD_OID
+		  	+ "="
+		  	+ pageContext.findAttribute("executionPeriodOID")
+		  	+ "&amp;"
+		  	+ SessionConstants.CURRICULAR_YEAR_OID
+			+ "="
+		  	+ pageContext.findAttribute("curricularYearOID")
+		  	+ "&amp;"
+		  	+ SessionConstants.EXECUTION_COURSE_OID
+			+ "="
+		  	+ pageContext.findAttribute("executionCourseOID")
+		  	+ "&amp;"
+			+ SessionConstants.EXECUTION_DEGREE_OID
+		  	+ "="
+			+ pageContext.findAttribute("executionDegreeOID") %>">
+ 			 <bean:message key="link.add.shift.classes"/>
+ 		</html:link>
+ 	</b>
  </center>
 <br/>
 <br/>
      <center>
             <span class="error">
                     <bean:message key="title.editAulaOfTurnoXPTO"/>
-                    <bean:write name="infoTurno" property="nome" scope="request" filter="true"/>
+                    <bean:write name="shift" property="nome" scope="request" filter="true"/>
             </span>
         </center>
         <br/>
         <html:errors/>
         <html:form action="/editarAulasDeTurnoForm">
+
+<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+			 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+			 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+			 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.SHIFT_OID %>"
+			 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
+
             <center> <b> <bean:message key="listAulas.added"/> </b> </center>
             <br/>
             <logic:present name="infoAulasDeTurno" scope="request">
@@ -111,6 +147,7 @@
             		<table align="center">
                 		<tr align="center">
                     		<td>
+
                         		<html:submit property="operation">
                             		<bean:message key="label.add.Aulas"/>
                        		 </html:submit>

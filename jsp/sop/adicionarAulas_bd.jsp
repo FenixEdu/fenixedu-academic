@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="DataBeans.InfoLesson" %>
@@ -93,6 +94,17 @@
                 <tr align="center">
 
                     <td>
+
+<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+			 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+			 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+			 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.SHIFT_OID %>"
+			 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 
                         <html:submit property="operation">
 

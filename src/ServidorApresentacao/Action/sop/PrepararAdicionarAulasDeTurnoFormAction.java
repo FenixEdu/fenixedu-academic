@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -16,39 +15,68 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao
+	.Action
+	.sop
+	.base
+	.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * @author tfc130
+ * @author Luis Cruz & Sara Ribeiro
+ * 
  */
-public class PrepararAdicionarAulasDeTurnoFormAction extends Action {
+public class PrepararAdicionarAulasDeTurnoFormAction
+	extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
 
-  public ActionForward execute(ActionMapping mapping, ActionForm form,
-                                HttpServletRequest request,
-                                HttpServletResponse response)
-      throws Exception {
-		
-    HttpSession sessao = request.getSession(false);
-    if (sessao != null) {
-        IUserView userView = (IUserView) sessao.getAttribute("UserView");
-        GestorServicos gestor = GestorServicos.manager();
-        ArrayList infoAulasDeTurno = (ArrayList) request.getAttribute("infoAulasDeTurno");
-		InfoShift infoTurno = (InfoShift) request.getAttribute("infoTurno");
+	public ActionForward execute(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
 
-		// Ler Aulas de Disciplina em Execucao e Tipo
-		InfoExecutionCourse infoDisciplina = (InfoExecutionCourse) request.getAttribute("infoDisciplinaExecucao");
-		ExecutionCourseKeyAndLessonType tipoAulaAndKeyDisciplinaExecucao = new ExecutionCourseKeyAndLessonType(infoTurno.getTipo(),infoDisciplina.getSigla());
-		
-	    Object argsLerAulasDeDisciplinaETipo[] = { tipoAulaAndKeyDisciplinaExecucao, infoDisciplina };
-        ArrayList infoAulasDeDisciplina = (ArrayList) gestor.executar(userView, "LerAulasDeDisciplinaExecucaoETipo", argsLerAulasDeDisciplinaETipo);
+		super.execute(mapping, form, request, response);
 
-		if (infoAulasDeTurno != null)
-			infoAulasDeDisciplina.removeAll(infoAulasDeTurno);
-		request.removeAttribute("infoAulasDeDisciplinaExecucao");
-		if (!infoAulasDeDisciplina.isEmpty())
-	     	request.setAttribute("infoAulasDeDisciplinaExecucao", infoAulasDeDisciplina);
+		HttpSession sessao = request.getSession(false);
+		if (sessao != null) {
+			IUserView userView = (IUserView) sessao.getAttribute("UserView");
+			GestorServicos gestor = GestorServicos.manager();
+			ArrayList infoAulasDeTurno =
+				(ArrayList) request.getAttribute("infoAulasDeTurno");
 
-      return mapping.findForward("Sucesso");
-    } else
-      throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
-  }
+			//InfoShift infoTurno = (InfoShift) request.getAttribute("infoTurno");
+			InfoShift infoTurno =
+				(InfoShift) request.getAttribute(SessionConstants.SHIFT);
+
+			// Ler Aulas de Disciplina em Execucao e Tipo
+			InfoExecutionCourse infoDisciplina =
+				(InfoExecutionCourse) request.getAttribute(
+					SessionConstants.EXECUTION_COURSE);
+			ExecutionCourseKeyAndLessonType tipoAulaAndKeyDisciplinaExecucao =
+				new ExecutionCourseKeyAndLessonType(
+					infoTurno.getTipo(),
+					infoDisciplina.getSigla());
+
+			Object argsLerAulasDeDisciplinaETipo[] =
+				{ tipoAulaAndKeyDisciplinaExecucao, infoDisciplina };
+			ArrayList infoAulasDeDisciplina =
+				(ArrayList) gestor.executar(
+					userView,
+					"LerAulasDeDisciplinaExecucaoETipo",
+					argsLerAulasDeDisciplinaETipo);
+
+			if (infoAulasDeTurno != null)
+				infoAulasDeDisciplina.removeAll(infoAulasDeTurno);
+			request.removeAttribute("infoAulasDeDisciplinaExecucao");
+			if (!infoAulasDeDisciplina.isEmpty())
+				request.setAttribute(
+					"infoAulasDeDisciplinaExecucao",
+					infoAulasDeDisciplina);
+
+			return mapping.findForward("Sucesso");
+		} else
+			throw new Exception();
+		// nao ocorre... pedido passa pelo filtro Autorizacao
+	}
 }

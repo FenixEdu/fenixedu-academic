@@ -17,13 +17,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.InfoShift;
 import DataBeans.InfoSiteClassesComponent;
 import DataBeans.SiteView;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -35,7 +34,8 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * ServidorApresentacao.Action.sop
  * 
  */
-public class AddShiftsToClassesDA extends FenixDispatchAction {
+public class AddShiftsToClassesDA
+	extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
 	public ActionForward showClasses(
 		ActionMapping mapping,
@@ -49,9 +49,10 @@ public class AddShiftsToClassesDA extends FenixDispatchAction {
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			DynaActionForm shiftForm = (DynaActionForm) form;
+			//DynaActionForm shiftForm = (DynaActionForm) form;
 
-			Integer shiftOID = new Integer((String) shiftForm.get("shiftOID"));
+			//Integer shiftOID = new Integer((String) shiftForm.get("shiftOID"));
+			Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
 			Object serviceArgs[] = { shiftOID };
 			SiteView siteView = null;
 			try {
@@ -63,9 +64,10 @@ public class AddShiftsToClassesDA extends FenixDispatchAction {
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
-			
+
 			Collections.sort(
-				((InfoSiteClassesComponent)siteView.getComponent()).getInfoClasses(),
+				((InfoSiteClassesComponent) siteView.getComponent())
+					.getInfoClasses(),
 				new BeanComparator("nome"));
 
 			request.setAttribute("siteView", siteView);
@@ -88,9 +90,10 @@ public class AddShiftsToClassesDA extends FenixDispatchAction {
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 
 			String[] classesList = (String[]) classesForm.get("classesList");
-			InfoShift infoShift = (InfoShift) sessao.getAttribute("infoTurno");
-			Integer keyShift = infoShift.getIdInternal();
-			Object argsAdicionarAula[] = { keyShift, classesList };
+			//InfoShift infoShift = (InfoShift) sessao.getAttribute("infoTurno");
+			//Integer keyShift = infoShift.getIdInternal();
+			Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
+			Object argsAdicionarAula[] = { shiftOID, classesList };
 
 			try {
 				ServiceUtils.executeService(

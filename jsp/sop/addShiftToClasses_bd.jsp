@@ -2,6 +2,16 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+	   	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td class="infoselected"><p>O curso seleccionado &eacute;:</p>
+			  <strong><jsp:include page="context.jsp"/></strong>
+            </td>
+          </tr>
+        </table>
+        <br/>
+
 <span class="error"><html:errors/></span>
 <logic:present name="siteView">
 <bean:define id="component" name="siteView" property="component"/>
@@ -49,6 +59,18 @@
 <br/>
 <br/>
 <br/>
+
+<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+			 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+			 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+			 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.SHIFT_OID %>"
+			 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
+
 <html:submit/><html:reset/>
 </html:form>
 </logic:present>

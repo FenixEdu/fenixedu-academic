@@ -154,24 +154,31 @@ public class TurnoAulaOJB
  */
 	public List readByShift(ITurno shift) throws ExcepcaoPersistencia {
 		try {
+			
+			System.out.println("##################################");
+			System.out.println("shift.id=" + shift.getIdInternal());
+			System.out.println("executionCourse.id=" + shift.getDisciplinaExecucao().getIdInternal());
+
 			String oqlQuery =
 				"select all from "
 					+ TurnoAula.class.getName()
 					+ " where turno.nome = $1"
-					+ " and turno.disciplinaExecucao.executionPeriod.name = $2"
-					+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $3"
-					+ " and turno.disciplinaExecucao.sigla = $4";
+					+ " and turno.disciplinaExecucao.idInternal = $2";
+					//+ " and turno.disciplinaExecucao.executionPeriod.name = $2"
+					//+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $3"
+					//+ " and turno.disciplinaExecucao.sigla = $4";
 			query.create(oqlQuery);
 
 			
 			IDisciplinaExecucao executionCourse = shift.getDisciplinaExecucao();
 			
 			query.bind(shift.getNome());
-			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(executionCourse.getIdInternal());
+			//query.bind(executionCourse.getExecutionPeriod().getName());
 			
-			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+			//query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 
-			query.bind(executionCourse.getSigla());
+			//query.bind(executionCourse.getSigla());
 
 			List shiftLessons = (List) query.execute();
 			lockRead(shiftLessons);
