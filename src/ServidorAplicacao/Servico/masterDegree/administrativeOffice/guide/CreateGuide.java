@@ -65,7 +65,7 @@ public class CreateGuide implements IServico {
 	}
 
 	public InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
-		 SituationOfGuide situationOfGuide, Integer paymentTypeInteger) throws Exception {
+		 SituationOfGuide situationOfGuide, String paymentType) throws Exception {
 
 		ISuportePersistente sp = null;
 		IContributor contributor = null;
@@ -122,8 +122,10 @@ public class CreateGuide implements IServico {
 		
 		guide = Cloner.copyInfoGuide2IGuide(infoGuide);
 
-		if (situationOfGuide.equals(SituationOfGuide.PAYED_TYPE))
-			guide.setPaymentType(new PaymentType(paymentTypeInteger));
+		if (situationOfGuide.equals(SituationOfGuide.PAYED_TYPE)){
+			guide.setPaymentType(new PaymentType(paymentType));
+			guide.setPaymentDate(calendar.getTime());
+		}
 		
 
 		//FIXME: Nuno Nunes

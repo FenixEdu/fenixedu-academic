@@ -236,9 +236,28 @@
         <var>
           <var-name>max</var-name>
           <var-value>2100</var-value>
-        </var>      </field>
+        </var>
+      </field>
     </form>
 
+
+   <!-- validation for the edition of a Guide Situation Form -->
+    <form name="editGuideSituationForm">
+      <field property="guideSituation" depends="required" page="1">
+        <arg0 key="label.masterDegree.administrativeOffice.guideSituation" />
+      </field>
+      <field property="paymentDateYear" depends="validateDate" page="1">
+          <arg0 key="Data de Pagamento" />
+          <var>
+             <var-name>month</var-name>
+             <var-value>paymentDateMonth</var-value>
+          </var>
+          <var>
+             <var-name>day</var-name>
+             <var-value>paymentDateDay</var-value>
+          </var>
+      </field> 
+   </form>
 
 
 

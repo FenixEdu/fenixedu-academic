@@ -9,19 +9,27 @@
 <%@ page import="Util.SituationOfGuide" %>
 <%@ page import="ServidorAplicacao.Servico.UserView" %>
 
-
-  <html:form action="/editGuideSituation.do?method=editGuideSituation">
-   	  <html:hidden property="page" value="1"/>  
-   <table>
-   		<bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="request"/>  		
+   		<bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="session"/>  		
    		<bean:define id="guideSituation" name="infoGuide" property="infoGuideSituation"/>  		
-   		<bean:define id="days" name="<%= SessionConstants.MONTH_DAYS_KEY %>" scope="request"/>
-   		<bean:define id="months" name="<%= SessionConstants.MONTH_LIST_KEY %>" scope="request"/>
-   		<bean:define id="years" name="<%= SessionConstants.YEARS_KEY %>" scope="request"/>
+   		<bean:define id="days" name="<%= SessionConstants.MONTH_DAYS_KEY %>" scope="session"/>
+   		<bean:define id="months" name="<%= SessionConstants.MONTH_LIST_KEY %>" scope="session"/>
+   		<bean:define id="years" name="<%= SessionConstants.YEARS_KEY %>" scope="session"/>
 
       <span class="error"><html:errors/></span>
+      <br>
+
+	<bean:define id="action">/editGuideSituation.do?method=editGuideSituation<%= "&" %>year=<bean:write name="infoGuide" property="year"/><%= "&" %>number=<bean:write name="infoGuide" property="number"/><%= "&" %>version=<bean:write name="infoGuide" property="version"/>
+	</bean:define>
 
 
+
+  <html:form action='<%= pageContext.findAttribute("action").toString() %>'>
+   	  <html:hidden property="page" value="1"/>  
+   <strong><bean:message key="label.masterDegree.administrativeOffice.activeSituation" /></strong>
+   <br>
+   <br>
+   <table>
+  	   
        <tr>
 		<td><bean:message key="label.masterDegree.administrativeOffice.remarks" /></td>
         <td><bean:write name="guideSituation" property="remarks"/></td>
@@ -41,12 +49,12 @@
     		</tr>
      	<% } %>
 
-	<table>
-	
-	<br>
-	<br>
-	
 	</table>
+	
+	<br>
+	<br>
+	
+	<table>
 
 	   <!-- Guide Situation -->
        <tr>
@@ -59,8 +67,13 @@
        	</td>
        </tr>
 
+	</table>
 
-        <!-- Payment Date -->
+	<br>
+	<br>
+	
+	<table>
+	    <!-- Payment Date -->
         <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.paymentDate" /></td>
           <td><html:select property="paymentDateYear">
@@ -77,17 +90,18 @@
         
    </table>
 
+	<br>
+	<br>
+
     <bean:message key="label.masterDegree.administrativeOffice.payment" />
     <html:select property="paymentType">
     	<html:options collection="<%= SessionConstants.PAYMENT_TYPE %>" property="value" labelProperty="label" />
     </html:select>     
 
-   
-	<bean:message key="label.masterDegree.administrativeOffice.payment"/><br>
-
+	<br>
+	<br>
 
    <html:submit property="Alterar">Alterar Situação</html:submit>
-   
    <html:reset property="Reset">Dados Originais</html:reset>
    
 </html:form>     

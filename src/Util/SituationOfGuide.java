@@ -40,6 +40,12 @@ public class SituationOfGuide {
 		this.situation = type;
 	}
 
+	public SituationOfGuide(String type) {
+		if (type.equals(SituationOfGuide.ANNULLED_STRING)) this.situation = new Integer(SituationOfGuide.ANNULLED);
+		if (type.equals(SituationOfGuide.NON_PAYED_STRING)) this.situation = new Integer(SituationOfGuide.NON_PAYED);
+		if (type.equals(SituationOfGuide.PAYED_STRING)) this.situation = new Integer(SituationOfGuide.PAYED);
+	}
+
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof SituationOfGuide) {
@@ -52,9 +58,9 @@ public class SituationOfGuide {
 	public static ArrayList toArrayList() {
 		ArrayList result = new ArrayList();
 		result.add(new LabelValueBean(SituationOfGuide.DEFAULT, null));
-		result.add(new LabelValueBean(SituationOfGuide.ANNULLED_STRING, String.valueOf(SituationOfGuide.ANNULLED)));
-		result.add(new LabelValueBean(SituationOfGuide.NON_PAYED_STRING, String.valueOf(SituationOfGuide.NON_PAYED)));
-		result.add(new LabelValueBean(SituationOfGuide.PAYED_STRING, String.valueOf(SituationOfGuide.PAYED)));
+		result.add(new LabelValueBean(SituationOfGuide.ANNULLED_STRING, SituationOfGuide.ANNULLED_STRING));
+		result.add(new LabelValueBean(SituationOfGuide.NON_PAYED_STRING, SituationOfGuide.NON_PAYED_STRING));
+		result.add(new LabelValueBean(SituationOfGuide.PAYED_STRING, SituationOfGuide.PAYED_STRING));
 		return result;	
 	}
     

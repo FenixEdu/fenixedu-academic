@@ -244,7 +244,20 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			String othersPriceString = (String) createGuideForm.get("othersPrice");
 			String remarks = (String) createGuideForm.get("remarks");
 			String guideSituationString = (String) createGuideForm.get("guideSituation");
-			Integer paymentType = (Integer) createGuideForm.get("paymentType");
+			String paymentType = (String) createGuideForm.get("paymentType");
+			
+			
+			// Check if the Guide will have a "Payed" situation and if the payment type has been chosen
+			
+			if ((guideSituationString.equals(SituationOfGuide.PAYED_STRING)) && (paymentType.equals(PaymentType.DEFAULT_STRING))){
+				ActionError actionError = new ActionError("error.paymentTypeRequired");
+				ActionErrors actionErrors = new ActionErrors();
+				actionErrors.add("Unknown", actionError);
+				saveErrors(request, actionErrors);
+				return mapping.getInputForward();
+			}
+			
+			
 			
 			Double othersPrice = null;
 			if ((othersPriceString != null) && (othersPriceString.length() != 0))
@@ -253,7 +266,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 				
 			System.out.println("[" + guideSituationString + "] tamanho " + guideSituationString.length());
 				
-			SituationOfGuide situationOfGuide = new SituationOfGuide(new Integer(guideSituationString));
+			SituationOfGuide situationOfGuide = new SituationOfGuide(guideSituationString);
 			InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
 	
 			InfoGuide newInfoGuide = null;

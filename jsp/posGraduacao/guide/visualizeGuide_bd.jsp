@@ -131,6 +131,10 @@
         			<td><bean:message key="label.masterDegree.administrativeOffice.payment" /></td>
         			<td><bean:write name="infoGuide" property="paymentType"/></td>
         		</tr>
+           		<tr>
+        			<td><bean:message key="label.masterDegree.administrativeOffice.paymentDate" /></td>
+        			<td><bean:write name="infoGuide" property="paymentDate"/></td>
+        		</tr>
          	<% } %>
          </logic:iterate>
      </table>

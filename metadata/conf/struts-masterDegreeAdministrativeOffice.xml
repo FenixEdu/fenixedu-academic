@@ -104,7 +104,7 @@
         	<form-property name="othersPrice" type="java.lang.String" />
         	<form-property name="remarks" type="java.lang.String" />
         	<form-property name="guideSituation" type="java.lang.String" />
-        	<form-property name="paymentType" type="java.lang.Integer" initial="2" />
+        	<form-property name="paymentType" type="java.lang.String" />
         	
       </form-bean>
 
@@ -160,14 +160,14 @@
 
 
 	  <!-- Bean to Change the Guide Situation  -->
-      <form-bean name="editGuideForm" 
+      <form-bean name="editGuideSituationForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
         	<form-property name="remarks" type="java.lang.String" />
         	<form-property name="guideSituation" type="java.lang.String" />
-        	<form-property name="paymentType" type="java.lang.Integer" />
+        	<form-property name="paymentType" type="java.lang.String" />
         	<form-property name="paymentDateDay" type="java.lang.String" />
         	<form-property name="paymentDateMonth" type="java.lang.String" />
 			<form-property name="paymentDateYear" type="java.lang.String" />
@@ -407,20 +407,20 @@
 
 
 
-	  <!-- Action to Edit ONE Guide -->
-      <action attribute="editGuideForm"
-      		  input="/guide/editGuide.jsp"
-      	      name="editGuideForm"
+	  <!-- Action to Edit a Guide Situation -->
+      <action attribute="editGuideSituationForm"
+      		  input="/guide/editGuideSituation.jsp"
+      	      name="editGuideSituationForm"
 		      path="/editGuideSituation"
 		      parameter="method"
 		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.EditGuideDispatchAction"
-              validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
-		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+			  validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.NonValidChangeActionException"
+		                key="ServidorApresentacao.Action.exceptions.NonValidChangeActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="EditReady" path="/guide/editGuideSituation.jsp"/>  
-	         <forward name="EditSuccess" path="/guide/editGuideSituationSuccess.jsp"/>  
+	         <forward name="SituationChanged" path="/guide/changeSuccess.jsp"/>  
       </action>
 
 
