@@ -241,13 +241,10 @@ public class EnrolmentEvaluation extends DomainObject implements
         String otherGrade = enrolmentEvaluation.getGrade();
         Date otherWhenAltered = enrolmentEvaluation.getWhen();
 
-        
         if (this.getEnrolment().getStudentCurricularPlan().getStudent().getDegreeType().equals(TipoCurso.MESTRADO_OBJ))
         {
         	return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
-        }
-        
-        if (this.getObservation() != null
+        } else if (this.getObservation() != null
                 && this.getObservation().equals(this.RECTIFICATION)
                 && enrolmentEvaluation.getObservation() != null
                 && enrolmentEvaluation.getObservation().equals(
