@@ -19,44 +19,44 @@ INSERT INTO PERSON VALUES (1, 123456789, 'Lisboa', null, null,'Nome da Pessoa',
                            'Freguesia', 'Concelho', 'Distrito', 'Morada', 'localidade',
                            '1700-200', 'l200', 'frequesia morada', 'concelho morada',
                            'distrito morada', '214443523', '96546321', 's@h.c','http',
-                           '9876543210', 'Profissao', 'user','pass', 63,
+                           '9876543210', 'Profissao', 'user',MD5("pass"), 63,
                            '9786453120', 1, 0, 0);
 INSERT INTO PERSON VALUES (2, 9876543210, 'Lisboa', null, null,'Jorge',
                            null, 'Nome do Pai', 'Nome da Mae', 'Portuguesa',
                            'Freguesia', 'Concelho', 'Distrito', 'Morada', 'localidade',
                            '1700-200', 'l200', 'frequesia morada', 'concelho morada',
                            'distrito morada', '214443523', '96546321', 's@h.c','http',
-                           '9876543210', 'Profissao', 'jorge','a', 63,
+                           '9876543210', 'Profissao', 'jorge',MD5("a"), 63,
                            '9876543210', 1, 0, 0);
 INSERT INTO PERSON VALUES (3, 1111111111, 'Lisboa', null, null,'Nome da Pessoa',
                            null, 'Nome do Pai', 'Nome da Mae', 'Portuguesa',
                            'Freguesia', 'Concelho', 'Distrito', 'Morada', 'localidade',
                            '1700-200', 'l200', 'frequesia morada', 'concelho morada',
                            'distrito morada', '214443523', '96546321', 's@h.c','http',
-                           '1111111111', 'Profissao', '3','pass', 63,
+                           '1111111111', 'Profissao', '3',MD5("pass"), 63,
                            '1111111111', 1, 0, 0);
 INSERT INTO PERSON VALUES (4, 2222222222, 'Lisboa', null, null,'Jorge',
                            null, 'Nome do Pai', 'Nome da Mae', 'Portuguesa',
                            'Freguesia', 'Concelho', 'Distrito', 'Morada', 'localidade',
                            '1700-200', 'l200', 'frequesia morada', 'concelho morada',
                            'distrito morada', '214443523', '96546321', 's@h.c','http',
-                           '2222222222', 'Profissao', '4','a', 63,
+                           '2222222222', 'Profissao', '4',MD5("a"), 63,
                            '2222222222', 1, 0, 0);
 INSERT INTO PERSON VALUES (5, 3333333333, 'Lisboa', null, null,'Nome da Pessoa',
                            null, 'Nome do Pai', 'Nome da Mae', 'Portuguesa',
                            'Freguesia', 'Concelho', 'Distrito', 'Morada', 'localidade',
                            '1700-200', 'l200', 'frequesia morada', 'concelho morada',
                            'distrito morada', '214443523', '96546321', 's@h.c','http',
-                           '3333333333', 'Profissao', '45498','pass', 63,
+                           '3333333333', 'Profissao', '45498',MD5("pass"), 63,
                            '3333333333', 1, 0, 0);
 #-----------------------------
 # Data for table 'ROLE'
 #-----------------------------
 delete from ROLE;
-insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_ACTION, PORTAL_ACTION_NAME_PROPERTY) values (1,1,'personPortal','portal.person.name');
-insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_ACTION, PORTAL_ACTION_NAME_PROPERTY) values (2,2,'studentPortal','portal.student.name');
-insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_ACTION, PORTAL_ACTION_NAME_PROPERTY) values (3,3,'teacherPortal','portal.teacher.name');
-insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_ACTION, PORTAL_ACTION_NAME_PROPERTY) values (4,4,'timeTableManagerPortal','portal.timeTableManager.name');
+insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (1,1,null,'/index.do','portal.person');
+insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (2,2,'/student','/index.do','portal.student');
+insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (3,3,'/teacher','/index.do','portal.teacher');
+insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (4,4,'/sop','/paginaPrincipal.jsp','portal.sop');
 
 #-----------------------------
 # Data for table 'PERSON_ROLE'
@@ -470,8 +470,8 @@ INSERT INTO EXECUTION_YEAR values (2, '2003/2004');
 #
 
 DELETE FROM MASTER_DEGREE_CANDIDATE;
-INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (1, 112233, 1, 'Lisboa', '2002-11-17', '2004-11-17', 'Nuno Nunes', 1, 1, '2000-12-10', 'Manuel', 'Maria', 63, 'Oeiras', 'Oeiras', 'Lisboa', 'Rua Nuno', 'Localidade Nuno', '2795-833', 'Queijas', 'Oeiras', 'Lisboa', 11111, 33333, 'nmsn@rnl.ist.utl.pt', 'www.nuno.com', 11111, 'Estudante', 'LEIC', 'Cand1', 'Pass1', 1,  1, 'IST', 2000, 11.0, 10, 63 );
-INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (2, 445566, 2, 'Porto', '2002-11-12', '2005-11-17', 'Joana Mota', 2, 2, '2000-12-17', 'João', 'Silvia', 64, 'Almada', 'Almada', 'Almada', 'Rua Joana', 'Localidade Joana', '2779-558', 'Almada', 'Almada', 'Almada', 22222, 44444, 'jccm@rnl.ist.utl.pt', 'www.joana.com', 22222, 'Modelo', 'LEEC', 'Cand2', 'Pass2', 2, 2, 'IST2', 2001, 2.0, 10, 64 );
+INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (1, 112233, 1, 'Lisboa', '2002-11-17', '2004-11-17', 'Nuno Nunes', 1, 1, '2000-12-10', 'Manuel', 'Maria', 63, 'Oeiras', 'Oeiras', 'Lisboa', 'Rua Nuno', 'Localidade Nuno', '2795-833', 'Queijas', 'Oeiras', 'Lisboa', 11111, 33333, 'nmsn@rnl.ist.utl.pt', 'www.nuno.com', 11111, 'Estudante', 'LEIC', 'Cand1', 'Pass1', 1, 2, 1, 'IST', 2000, 11.0, 10, 63 );
+INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (2, 445566, 2, 'Porto', '2002-11-12', '2005-11-17', 'Joana Mota', 2, 2, '2000-12-17', 'João', 'Silvia', 64, 'Almada', 'Almada', 'Almada', 'Rua Joana', 'Localidade Joana', '2779-558', 'Almada', 'Almada', 'Almada', 22222, 44444, 'jccm@rnl.ist.utl.pt', 'www.joana.com', 22222, 'Modelo', 'LEEC', 'Cand2', 'Pass2', 2, 2, 2, 'IST2', 2001, 2.0, 10, 64 );
 
 
 #
