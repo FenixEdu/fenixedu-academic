@@ -21,7 +21,7 @@
       <form-bean name="chooseSearchContextForm"
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
-        <form-property name="index" type="java.lang.String"/>
+        <form-property name="index" type="java.lang.Integer"/>
 
         <form-property name="curYear" type="java.lang.Integer"/>
         <form-property name="page" type="java.lang.Integer"/> 
@@ -37,7 +37,7 @@
       <form-bean name="chooseContextForm"
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
-        <form-property name="index" type="java.lang.String"/>
+        <form-property name="index" type="java.lang.Integer"/>
         <form-property name="curYear" type="java.lang.Integer"/>
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>

@@ -117,10 +117,7 @@
       <field property="index" depends="required, integer" page="1">
         <arg0 key="property.context.degree" />
       </field>
-      <field property="selectedCurricularYears" depends="required, integer" page="1" indexedListProperty="true">
-        <arg0 key="property.context.degree" />
-        <msg name="required" key="errors.choose.one.year"/>
-      </field>
+     
       <field property="selectAllCurricularYears"
              depends="multiBoxWithSelectAllCheckBox" page="1">
       	<arg0 key="ano curricular" resource="true"/>
