@@ -17,7 +17,7 @@
 	<b> <bean:message key="label.execution-course.name" /></b> <bean:write name="infoExecutionCourse" property="nome"/>
 </p>
 
-<span class="error"><html:errors/></span>
+<html:errors/>
 
 <html:form action="/manageTeacherShiftProfessorships">
 	<html:hidden property="teacherNumber" value="<%= teacherNumber.toString() %>"/>
