@@ -25,6 +25,7 @@ import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
+import DataBeans.InfoSiteExam;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSiteProgram;
@@ -149,6 +150,18 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		readSiteView(request, shiftsComponent,null);
 		return mapping.findForward("sucess");
 	}
+	
+	public ActionForward exams(
+			ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response)
+			throws FenixActionException {
+
+			ISiteComponent examComponent = new InfoSiteExam();
+			readSiteView(request, examComponent,null);
+			return mapping.findForward("sucess");
+		}
 	
 	public ActionForward section(
 			ActionMapping mapping,
