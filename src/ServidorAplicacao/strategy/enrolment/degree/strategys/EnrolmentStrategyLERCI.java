@@ -8,6 +8,7 @@ import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterAutomati
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterBranchRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterFinalistRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterNACandNDRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterPrecedenceRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterSemesterRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentValidateCurricularYearPrecedenceRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentValidateNACandNDRule;
@@ -37,11 +38,14 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		enrolmentRule = new EnrolmentFilterAnualCurricularCourseRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
-		enrolmentRule = new EnrolmentFilterAutomaticEnrolmentRule();
-		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
-
 		enrolmentRule = new EnrolmentFilterSemesterRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+
+		enrolmentRule = new EnrolmentFilterPrecedenceRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+
+		enrolmentRule = new EnrolmentFilterAutomaticEnrolmentRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);		
 
 		//	NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
 		enrolmentRule = new EnrolmentFilterNACandNDRule();

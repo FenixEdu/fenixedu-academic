@@ -277,17 +277,17 @@ insert into ENROLMENT VALUES (8, 1, 8, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT VALUES (9, 1, 9, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT VALUES (10, 1, 10, 1, 1, 'Dominio.Enrolment', null);
 
-#insert into ENROLMENT VALUES (11, 1, 11, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT VALUES (12, 1, 12, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT VALUES (13, 1, 13, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT VALUES (14, 1, 14, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT VALUES (15, 1, 15, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT VALUES (11, 1, 11, 1, 2, 'Dominio.Enrolment', null);
+insert into ENROLMENT VALUES (12, 1, 12, 1, 2, 'Dominio.Enrolment', null);
+insert into ENROLMENT VALUES (13, 1, 13, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT VALUES (14, 1, 14, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT VALUES (15, 1, 15, 1, 1, 'Dominio.Enrolment', null);
 
-#insert into ENROLMENT VALUES (16, 1, 16, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT VALUES (17, 1, 17, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT VALUES (18, 1, 18, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT VALUES (19, 1, 19, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT VALUES (20, 1, 20, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT VALUES (16, 1, 16, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT VALUES (17, 1, 17, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT VALUES (18, 1, 18, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT VALUES (19, 1, 19, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT VALUES (20, 1, 20, 1, 1, 'Dominio.Enrolment', null);
 
 #insert into ENROLMENT VALUES (21, 1, 21, 1, 1, 'Dominio.Enrolment', null);
 #insert into ENROLMENT VALUES (22, 1, 22, 1, 1, 'Dominio.Enrolment', null);
@@ -317,3 +317,36 @@ insert into ENROLMENT VALUES (10, 1, 10, 1, 1, 'Dominio.Enrolment', null);
 #insert into ENROLMENT VALUES (41, 1, 54, 1, 1, 'Dominio.Enrolment', null);
 #insert into ENROLMENT VALUES (42, 1, 55, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 39);
 #insert into ENROLMENT VALUES (43, 1, 56, 1, 1, 'Dominio.Enrolment', null);
+
+#-----------------------------
+# Data for table 'PRECEDENCE'
+#-----------------------------
+# (ID_INTERNAL, KEY_CURRICULAR_COURSE, ENROLMENT_STEP)
+;
+
+DELETE FROM PRECEDENCE;
+insert into PRECEDENCE VALUES (1, 29, 'offline');
+
+#-----------------------------
+# Data for table 'RESTRICTION'
+#-----------------------------
+# (ID_INTERNAL, CLASS_NAME, KEY_PRECEDENCE, KEY_CURRICULAR_COURSE, NUMBER_OF_CURRICULAR_COURSE_DONE)
+;
+
+DELETE FROM RESTRICTION;
+insert into RESTRICTION VALUES (1, 'Dominio.CurricularCourseDoneRestriction', 1, 12, 0);
+insert into RESTRICTION VALUES (2, 'Dominio.CurricularCourseDoneRestriction', 1, 11, 0);
+
+#-----------------------------
+# Data for table 'ENROLMENT_PERIOD'
+# (ID_INTERNAL, KEY_DEGREE_CURRICULAR_PLAN, KEY_EXECUTION_PERIOD, START_DATE, END_DATE) 
+#-----------------------------
+;
+DELETE FROM ENROLMENT_PERIOD;
+INSERT into ENROLMENT_PERIOD values (1, 1, 1, SYSDATE(), '2010-01-10');
+
+# Isto e para sair
+;
+DELETE FROM EXECUTION_PERIOD;
+INSERT INTO EXECUTION_PERIOD values (1, '1º Semestre', 1, 'A', 1);
+INSERT INTO EXECUTION_PERIOD values (2, '2º Semestre', 1, 'NO', 2);
