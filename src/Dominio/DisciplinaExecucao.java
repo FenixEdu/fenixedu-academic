@@ -86,6 +86,21 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
         return resultado;
     }    
 
+
+	public String toString() {
+	  String result = "[EXECUTION_COURSE";
+	  result += ", codInt=" + codigoInterno;
+	  result += ", sigla=" + sigla;
+	  result += ", nome=" + nome;
+	  result += ", programa=" + programa;
+	  result += ", theoreticalHours=" + theoreticalHours;
+	  result += ", praticalHours=" + praticalHours;
+	  result += ", theoPratHours=" + theoPratHours;
+	  result += ", labHours=" + labHours;
+	  result += ", executionPeriod=" + executionPeriod;
+	  result += "]";
+	  return result;
+	}    
     
 
 	/**
@@ -321,5 +336,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 	public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
 		this.keyExecutionPeriod = keyExecutionPeriod;
 	}
+
+	
 
 }
