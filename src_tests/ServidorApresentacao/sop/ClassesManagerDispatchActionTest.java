@@ -24,6 +24,7 @@ import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
+import ServidorApresentacao.Action.sop.ClassesManagerDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -32,7 +33,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  *
  */
 public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
-	
+
 	/**
 	 * Constructor for ClassesManagerDispatchAction.
 	 * @param arg0
@@ -54,7 +55,6 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 		// define ficheiro de configuracao Struts a utilizar
 		setServletConfigFile("/WEB-INF/tests/web-sop.xml");
 
-		
 	}
 
 	public void testUnAuthorizedListClasses() {
@@ -123,7 +123,10 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 		getSession().setAttribute(
 			SessionConstants.INFO_EXECUTION_DEGREE_KEY,
 			iLE);
-			
+		getSession().setAttribute(
+					SessionConstants.CURRICULAR_YEAR_KEY,
+					new Integer(1));
+
 		//action perform
 		actionPerform();
 		//verify that there are no errors
@@ -132,7 +135,13 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 		verifyForward("listClasses");
 		//verify that all that should be in session is
 		GestorServicos gestor = GestorServicos.manager();
-		Object argsLerTurmas[] = { aCSiLE };
+		Object argsLerTurmas[] =
+			{
+				iLE,
+				new InfoExecutionPeriod(
+					"2º Semestre",
+					new InfoExecutionYear("2002/2003")),
+				new Integer(1)};
 
 		try {
 			List classesList =
@@ -143,7 +152,7 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 			if (classesList != null && !classesList.isEmpty()) {
 				assertEquals(
 					classesList,
-					getRequest().getAttribute("CLASS_LIST_KEY"));
+					getRequest().getAttribute(ClassesManagerDispatchAction.CLASS_LIST_KEY));
 			}
 		} catch (Exception e) {
 		}
@@ -187,7 +196,5 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 		}
 
 	}
-
-	
 
 }

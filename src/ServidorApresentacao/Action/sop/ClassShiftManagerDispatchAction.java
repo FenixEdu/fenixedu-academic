@@ -75,8 +75,8 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 
 			
 
-			/* TO REMOVE */
-			session.setAttribute(SessionConstants.CLASS_VIEW, classView);
+//			/* TO REMOVE */
+//			session.setAttribute(SessionConstants.CLASS_VIEW, classView);
 
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
