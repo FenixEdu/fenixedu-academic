@@ -48,4 +48,9 @@ public interface ISuportePersistente {
 	
 	public IPersistentExecutionPeriod getIPersistentExecutionPeriod();
 	public IPersistentExecutionYear getIPersistentExecutionYear();	
+	
+	public IPersistentSite getIPersistentSite();
+	public IPersistentSection getIPersistentSection();
+	public IPersistentItem getPersistentItem();
+	public IPersistentAnnouncement getIPersistentAnnouncement();
 }

@@ -26,13 +26,16 @@ import ServidorPersistente.IDepartamentoPersistente;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
+import ServidorPersistente.IPersistentAnnouncement;
 import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
+import ServidorPersistente.IPersistentSection;
+import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IPlanoCurricularCursoPersistente;
@@ -217,8 +220,20 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	/**
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentExecutionYear()
 	 */
-	public IPersistentExecutionYear getIPersistentExecutionYear() {
-		return new ExecutionYearOJB();
+	public IPersistentSite getIPersistentSite() {
+		return new SiteOJB();
 	}
+
+	public IPersistentSection getIPersistentSection() {
+			return new SectionOJB();
+		}
+		
+	public IPersistentItem getIPersistentItem() {
+			return new ItemOJB();
+		}
+		
+	public IPersistentAnnouncement getIPersistentAnnouncement() {
+			return new AnnouncementOJB();
+		}
 
 }
