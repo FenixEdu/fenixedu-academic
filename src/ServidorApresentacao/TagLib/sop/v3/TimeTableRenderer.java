@@ -120,9 +120,9 @@ public class TimeTableRenderer {
                     /** no lessons */
                     int colspan = dayColumn.getMaxColisionSize().intValue();
                     String cssClass = getSlotCssClass(null, hourIndex);
-                    strBuffer.append("<td ").append(" class='").append(cssClass);
+                    strBuffer.append("<td ").append(" class='").append(cssClass).append("' ");
                     if (colspan > 1){
-                        strBuffer.append("' colspan='").append(colspan).append("'");
+                        strBuffer.append("colspan='").append(colspan).append("'");
                     }
                     strBuffer.append(">").append("&nbsp;").append("</td>\r\n");
                 }
@@ -158,14 +158,6 @@ public class TimeTableRenderer {
             }
         }
         return colspan;
-    }
-
-    /**
-     * @param infoLessonWrapper
-     * @return boolean
-     */
-    private boolean canExpand(InfoLessonWrapper infoLessonWrapper) {
-        return ((infoLessonWrapper != null) && (infoLessonWrapper.getNumberOfCollisions().intValue() == 0));
     }
 
     /**
