@@ -3,9 +3,11 @@ package Util;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -58,8 +60,9 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 
 		try {
 			/* ficheiro com dados de pessoa validos */
-			ficheiro = new File(ficheiroValidas);
-			leitura = new BufferedReader(new FileReader(ficheiro), new Long(ficheiro.length()).intValue());
+			File file =  new  File(ficheiroValidas);
+			InputStream inputStream = new FileInputStream(file);
+			leitura = new BufferedReader(new InputStreamReader(inputStream,"8859_1"), new Long(file.length()).intValue());
 		} catch (IOException e) {
 			throw new NotExecuteException("error.ficheiro.naoEncontrado");
 		}

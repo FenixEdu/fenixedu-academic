@@ -2,14 +2,20 @@ package Util;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.StringTokenizer;
+
+import org.apache.commons.lang.StringUtils;
 
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 
@@ -46,8 +52,9 @@ public class LeituraFicheiroFuncionario {
 
 		try {
 			/* ficheiro com dados de funcionario validos */
-			ficheiro = new File(ficheiroValidas);
-			leitura = new BufferedReader(new FileReader(ficheiro), new Long(ficheiro.length()).intValue());
+			File file =  new  File(ficheiroValidas);
+			InputStream ficheiro = new FileInputStream(file);
+			leitura = new BufferedReader(new InputStreamReader(ficheiro,"8859_1"), new Long(file.length()).intValue());
 		} catch (IOException e) {
 			throw new NotExecuteException("error.ficheiro.naoEncontrado");
 		}
