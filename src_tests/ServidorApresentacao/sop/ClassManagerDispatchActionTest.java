@@ -229,113 +229,146 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 		//verify correct Forward
 		verifyInputForward();
 	}
-	
-		public void testAuthorizedCreateNonExistingClass() {
-			//set request path
-			setRequestPathInfo("sop", "/ClassManagerDA");
-			//sets needed objects to session/request
-			addRequestParameter("method", "createClass");
-	
-			//coloca credenciais na sessao
-			HashSet privilegios = new HashSet();
-			privilegios.add("CriarTurma");
-			privilegios.add("LerTurma");
-			privilegios.add("LerAulasDeTurma");
-	
-			IUserView userView = new UserView("user", privilegios);
-			getSession().setAttribute("UserView", userView);
-	
-			//fills the form
-			addRequestParameter("className", "newClassName");
-			//		Coloca contexto em sessão
-			InfoDegree iL = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores");
-			InfoExecutionDegree iLE =
-				new InfoExecutionDegree(
-					new InfoDegreeCurricularPlan("plano1", iL),
-					new InfoExecutionYear("2002/2003"));
-			getSession().setAttribute(
-						SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-						new InfoExecutionPeriod(
-							"2º Semestre",
-							new InfoExecutionYear("2002/2003")));
-					getSession().setAttribute(
-						SessionConstants.INFO_EXECUTION_DEGREE_KEY, iLE);
-			//action perform
-			actionPerform();
-			//verify that there are no  errors					
-			verifyNoActionErrors();
-			//verify correct Forward
-			verifyInputForward();
-		}
-	
-		public void testUnAuthorizedPrepareEditClass() {
-			//			set request path
-			setRequestPathInfo("sop", "/ClassManagerDA");
-			//sets needed objects to session/request
-			addRequestParameter("method", "editClass");
-	
-			//coloca credenciais na sessao
-			HashSet privilegios = new HashSet();
-			IUserView userView = new UserView("user", privilegios);
-			getSession().setAttribute("UserView", userView);
-	
-			//fills the form
-			addRequestParameter("className", "10501");
-	
-			//action perform
-			actionPerform();
-			//verify that there are errors
-			String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
-			verifyActionErrors(errors);
-		}
-	
-		public void testUnAuthorizedEditClass() {
-			//			set request path
-			setRequestPathInfo("sop", "/ClassManagerDA");
-			//sets needed objects to session/request
-			addRequestParameter("method", "editClass");
-			addRequestParameter("change", "1");
-	
-			//coloca credenciais na sessao
-			HashSet privilegios = new HashSet();
-			IUserView userView = new UserView("user", privilegios);
-			getSession().setAttribute("UserView", userView);
-	
-			//fills the form
-			addRequestParameter("className", "10501");
-	
-			//action perform
-			actionPerform();
-			//verify that there are errors
-			String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
-			verifyActionErrors(errors);
-		}
-		
-//		public void testAuthorizedPrepareEditClass() {
-//			//			set request path
-//			setRequestPathInfo("sop", "/ClassManagerDA");
-//			//sets needed objects to session/request
-//			addRequestParameter("method", "editClass");
-//	
-//			//coloca credenciais na sessao
-//			HashSet privilegios = new HashSet();
-//			privilegios.add("EditarTurma");
-//			privilegios.add("LerTurma");
-//			privilegios.add("LerAulasDeTurma");
-//			IUserView userView = new UserView("user", privilegios);
-//			getSession().setAttribute("UserView", userView);
-//	
-//			//fills the form
-//			addRequestParameter("className", "10501");
-//	
-//			//action perform
-//			actionPerform();
-//			//verify that there are no errors
-//			verifyNoActionErrors();
-//			//verify correct Forward
-//			verifyInputForward();
-//	
-//		}
+
+	public void testAuthorizedCreateNonExistingClass() {
+		//set request path
+		setRequestPathInfo("sop", "/ClassManagerDA");
+		//sets needed objects to session/request
+		addRequestParameter("method", "createClass");
+
+		//coloca credenciais na sessao
+		HashSet privilegios = new HashSet();
+		privilegios.add("CriarTurma");
+		privilegios.add("LerTurma");
+		privilegios.add("LerAulasDeTurma");
+
+		IUserView userView = new UserView("user", privilegios);
+		getSession().setAttribute("UserView", userView);
+
+		//fills the form
+		addRequestParameter("className", "newClassName");
+		//		Coloca contexto em sessão
+		InfoDegree iL =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
+		InfoExecutionDegree iLE =
+			new InfoExecutionDegree(
+				new InfoDegreeCurricularPlan("plano1", iL),
+				new InfoExecutionYear("2002/2003"));
+		getSession().setAttribute(
+			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+			new InfoExecutionPeriod(
+				"2º Semestre",
+				new InfoExecutionYear("2002/2003")));
+		getSession().setAttribute(
+			SessionConstants.INFO_EXECUTION_DEGREE_KEY,
+			iLE);
+		//action perform
+		actionPerform();
+		//verify that there are no  errors					
+		verifyNoActionErrors();
+		//verify correct Forward
+		verifyInputForward();
+	}
+
+	public void testUnAuthorizedPrepareEditClass() {
+		//			set request path
+		setRequestPathInfo("sop", "/ClassManagerDA");
+		//sets needed objects to session/request
+		addRequestParameter("method", "editClass");
+
+		//coloca credenciais na sessao
+		HashSet privilegios = new HashSet();
+		IUserView userView = new UserView("user", privilegios);
+		getSession().setAttribute("UserView", userView);
+
+		//fills the form
+		addRequestParameter("className", "10501");
+
+		//			Coloca contexto em sessão
+		InfoDegree iL =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
+		InfoExecutionDegree iLE =
+			new InfoExecutionDegree(
+				new InfoDegreeCurricularPlan("plano1", iL),
+				new InfoExecutionYear("2002/2003"));
+		getSession().setAttribute(
+			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+			new InfoExecutionPeriod(
+				"2º Semestre",
+				new InfoExecutionYear("2002/2003")));
+		getSession().setAttribute(
+			SessionConstants.INFO_EXECUTION_DEGREE_KEY,
+			iLE);
+
+		//puts old classview in session
+		InfoClass oldClass =
+			new InfoClass(
+				"10501",
+				new Integer(5),
+				iLE,
+				new InfoExecutionPeriod(
+					"2º Semestre",
+					new InfoExecutionYear("2002/2003")));
+		getSession().setAttribute(SessionConstants.CLASS_VIEW, oldClass);
+
+		//action perform
+		actionPerform();
+		//verify that there are errors
+		String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
+		verifyActionErrors(errors);
+	}
+
+	public void testUnAuthorizedEditClass() {
+		//			set request path
+		setRequestPathInfo("sop", "/ClassManagerDA");
+		//sets needed objects to session/request
+		addRequestParameter("method", "editClass");
+		addRequestParameter("change", "1");
+
+		//coloca credenciais na sessao
+		HashSet privilegios = new HashSet();
+		IUserView userView = new UserView("user", privilegios);
+		getSession().setAttribute("UserView", userView);
+
+		//fills the form
+		addRequestParameter("className", "10501");
+
+		//action perform
+		actionPerform();
+		//verify that there are errors
+		String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
+		verifyActionErrors(errors);
+	}
+
+	//		public void testAuthorizedPrepareEditClass() {
+	//			//			set request path
+	//			setRequestPathInfo("sop", "/ClassManagerDA");
+	//			//sets needed objects to session/request
+	//			addRequestParameter("method", "editClass");
+	//	
+	//			//coloca credenciais na sessao
+	//			HashSet privilegios = new HashSet();
+	//			privilegios.add("EditarTurma");
+	//			privilegios.add("LerTurma");
+	//			privilegios.add("LerAulasDeTurma");
+	//			IUserView userView = new UserView("user", privilegios);
+	//			getSession().setAttribute("UserView", userView);
+	//	
+	//			//fills the form
+	//			addRequestParameter("className", "10501");
+	//	
+	//			//action perform
+	//			actionPerform();
+	//			//verify that there are no errors
+	//			verifyNoActionErrors();
+	//			//verify correct Forward
+	//			verifyInputForward();
+	//	
+	//		}
 	//
 	//	public void testAuthorizedEditClass() {
 	//		//			set request path
