@@ -69,7 +69,7 @@
 <br>
 <html:hidden property="method" value="editStudentGroupShift"/>
 <html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<logic:present name="shiftCode">
+<logic:present name="shift">
 <html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
 </logic:present>
 <html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
@@ -86,7 +86,7 @@
 		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 		<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
-		<logic:present name="shiftCode">
+		<logic:present name="shift">
 		<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
 		</logic:present>
 	</html:form>
