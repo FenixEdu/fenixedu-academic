@@ -22,6 +22,7 @@
 <!ENTITY assiduousness SYSTEM "repository_assiduousness.xml">
 <!ENTITY almeida-enrolment SYSTEM "repository_almeida_enrolment.xml">
 <!ENTITY leq-new-curricular-course SYSTEM "repository_LEQ_New_Curricular_Course.xml">
+<!ENTITY sigla SYSTEM "repository_sigla.xml">
 ]>
 
 
@@ -49,5 +50,6 @@
     &assiduousness;
     &almeida-enrolment;
     &leq-new-curricular-course;
+    &sigla;
 	
 </descriptor-repository>
