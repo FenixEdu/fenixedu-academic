@@ -13,6 +13,10 @@ import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionYear;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
@@ -70,24 +74,6 @@ public class ViewClassesWithShiftTest extends TestCasePresentationSopPortal{
 		return "/WEB-INF/web.xml";
 	}
 
-	public void testSuccessfulExecution() {
-		//create new user view with privileges for executing action sucessfully
-		getSession().removeAttribute(SessionConstants.U_VIEW);
-		setAuthorizedUser();
-		//items in request
-		HashMap itemsInRequest = new HashMap();
-		String forward = "sucess";
-		itemsInRequest.put("name", "turno1");
-		
-		//items in session
-		HashMap itemsInSession = new HashMap();		
-		readShifts();
-		itemsInSession.put(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY, this.infoShifts);
-		itemsInSession.put(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-		
-		doTest(itemsInRequest, itemsInSession, forward, null, null, null, null);
-	}
-
 	private void readShifts() {
 
 		ITurno shift = null;
@@ -123,8 +109,32 @@ public class ViewClassesWithShiftTest extends TestCasePresentationSopPortal{
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
-		// 
-		return null;
+		//create new user view with privileges for executing action sucessfully
+		getSession().removeAttribute(SessionConstants.U_VIEW);
+		setAuthorizedUser();
+
+		InfoDegree infoDegree = new InfoDegree();
+		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+		
+		infoExecutionYear.setYear("2002/2003");
+		
+		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+		infoDegreeCurricularPlan.setName("plano1");
+		infoDegree.setSigla("LEIC");
+		infoDegree.setNome("Licenciatura de Engenharia Informatica e de Computadores");
+		
+		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
+		HashMap hashMap = new HashMap();
+		hashMap.put(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
+		
+		readShifts();
+		hashMap.put(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY, this.infoShifts);
+		hashMap.put(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
+		return hashMap;
 	}
 
 	/* (non-Javadoc)
@@ -139,8 +149,9 @@ public class ViewClassesWithShiftTest extends TestCasePresentationSopPortal{
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
-		// 
-		return null;
+		HashMap itemsInRequest = new HashMap();
+		itemsInRequest.put("name", "turno1");
+		return itemsInRequest;
 	}
 
 	/* (non-Javadoc)
@@ -182,4 +193,11 @@ public class ViewClassesWithShiftTest extends TestCasePresentationSopPortal{
 		// 
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
+	 */
+	protected String getSuccessfulForward() {
+		return "sucess";
+	}
+
 }
