@@ -25,31 +25,31 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class PublicationTeacherAuthorizationFilter extends AuthorizationByRoleFilter
+public class OldPublicationTeacherAuthorizationFilter extends AuthorizationByRoleFilter
 {
 
-    private static PublicationTeacherAuthorizationFilter instance =
-        new PublicationTeacherAuthorizationFilter();
+    private static OldPublicationTeacherAuthorizationFilter instance =
+        new OldPublicationTeacherAuthorizationFilter();
 
     /**
-	 * The singleton access method of this class.
-	 * 
-	 * @return Returns the instance of this class responsible for the authorization access to services.
-	 */
+     * The singleton access method of this class.
+     * 
+     * @return Returns the instance of this class responsible for the authorization access to services.
+     */
     public static Filtro getInstance()
     {
         return instance;
     }
 
-    private PublicationTeacherAuthorizationFilter()
+    private OldPublicationTeacherAuthorizationFilter()
     {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
     protected RoleType getRoleType()
     {
         return RoleType.TEACHER;
