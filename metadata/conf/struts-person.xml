@@ -172,7 +172,7 @@
 		   	  input="/manageQualificationForm?method=prepareEdit&amp;page=0"
    	          type="ServidorApresentacao.Action.person.ManageQualificationAction"    
    	          scope="request" 
-   	          className="ServidorApresentacao.framework.actions.mappings.CRUDMapping"> 
+   	          className="ServidorApresentacao.mapping.framework.CRUDMapping"> 
  		<set-property property="editService" value="EditQualification"/>
  		<set-property property="deleteService" value="DeleteQualification"/>
  		<set-property property="readService" value="ReadQualification"/>
