@@ -13,7 +13,7 @@
 <B>Consultas</b>
 <li><a HREF="https://fenix.ist.utl.pt/privado">NOTAS - Consulta ao Curr&iacute;culo do Aluno (necessita de autenticação)</a>
 <li><a HREF="http://secreta.ist.utl.pt/secretaria/fichcur.htm" target="_top">Fichas Curriculares</a>
-<li><html:link page="/searchProfessorships.do?method=prepareForm" >Respons&aacute;veis por Disciplina</html:link>
+<li><html:link page="/searchProfessorships.do?method=prepareForm" >Consulta de Corpo Docente por Disciplina</html:link>
 <li><a HREF="http://fenix.ist.utl.pt/publico/index.do?method=prepare&page=0" TARGET="_top">Hor&aacute;rios, P&aacute;ginas das Disciplinas, Turmas e Salas</a>
 <li><a HREF="/pt/servicos/internos/lista.html">Lista Telef&oacute;nica</a> </li>
 <BR/>

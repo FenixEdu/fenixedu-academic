@@ -3,9 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<h2>Consulta dos Responsáveis por Disciplina</h2>
+<h2>Consulta de Corpo Docente Disciplina</h2>
 <logic:present name="detailedProfessorShipsListofLists">
-    <table width="90%" >
+    <table width="90%" class="tab_altrow" >
     <logic:iterate id="detailedProfessorShipsList" name="detailedProfessorShipsListofLists" indexId="i">
       
     
@@ -20,13 +20,11 @@
            </td>
             <td >
             <logic:iterate id="detailedProfessorship" name="detailedProfessorShipsList">
-                 <logic:equal name="detailedProfessorship" property="responsibleFor" value="true">
-                   <strong>
-                </logic:equal>
+                 
                 <bean:write name="detailedProfessorship" 
                     property="infoProfessorship.infoTeacher.infoPerson.nome"/> &nbsp;
                 <logic:equal name="detailedProfessorship" property="responsibleFor" value="true">
-                   </strong>
+                  (responsável)
                 </logic:equal>
                 <br/>
             </logic:iterate>

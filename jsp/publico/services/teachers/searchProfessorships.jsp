@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<h2>Consulta do Corpo Docente por Disciplina</h2>
+<h2>Consulta de Corpo Docente por Disciplina</h2>
 <logic:present name="executionYears">
 <html:form action="/searchProfessorships" >
     <html:hidden property="method" value="prepareForm"/>
