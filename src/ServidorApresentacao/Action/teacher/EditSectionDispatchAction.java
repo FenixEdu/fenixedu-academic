@@ -195,6 +195,8 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 
 		InfoSection oldSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 		InfoSection newSection = new InfoSection(oldSection.getName(), oldSection.getSectionOrder(), oldSection.getInfoSite(), newParent);
+
+		//TODO: section order
 		
 		//perform edition
 		Object editionArgs[] = { oldSection, newSection };
@@ -222,15 +224,6 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		session.removeAttribute(SessionConstants.SECTIONS);
 		session.setAttribute(SessionConstants.SECTIONS, sections);
 
-//		session.removeAttribute("index");
-//		
-//		List infoSites = (List) session.getAttribute(SessionConstants.INFO_SITES_LIST);
-//		InfoSite currentSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-//		Integer siteIndex = new Integer(infoSites.indexOf(currentSite)-1);
-//		session.setAttribute("index", siteIndex);
-
-//		return mapping.findForward("prepareEditSection");
-//		return mapping.findForward("viewSection");
 		return mapping.findForward("viewSite");
 	}
 
