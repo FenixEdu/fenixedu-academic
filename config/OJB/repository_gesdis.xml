@@ -667,6 +667,7 @@
          name="shift"
          class-ref="Dominio.Turno"
          proxy="true"
+		refresh="true"
     >
 	<foreignkey field-id-ref="3"/>
 	
@@ -677,6 +678,7 @@
          name="attendsSet"
          class-ref="Dominio.AttendsSet"
          proxy="true"
+		refresh="true"
     >
 	<foreignkey field-id-ref="4"/>
 	
@@ -730,6 +732,7 @@
          name="studentGroup"
          class-ref="Dominio.StudentGroup"
          proxy="true"
+		refresh="true"
     >
 	<foreignkey field-id-ref="3"/>
 	
@@ -1007,7 +1010,9 @@
 	<collection-descriptor 
 			name="studentGroups" 
 			element-class-ref="Dominio.StudentGroup"
-			proxy="true">
+			proxy="true"
+			refresh="true"
+	>
 		<inverse-foreignkey field-ref="keyAttendsSet"/>
     </collection-descriptor>
 
