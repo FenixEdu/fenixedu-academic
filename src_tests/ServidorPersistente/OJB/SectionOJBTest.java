@@ -371,21 +371,22 @@ public class SectionOJBTest extends TestCaseOJB {
 			try {
 				
 				 persistentSupport.iniciarTransaccao();
-				 assertNotNull(executionCourse2);
-				 site = persistentSite.readByExecutionCourse(executionCourse2);
+				 assertNotNull(executionCourse);
+				 site = persistentSite.readByExecutionCourse(executionCourse);
 				 assertNotNull(site);
-				 superiorSection = persistentSection.readBySiteAndSectionAndName(site,null,"seccao1dePO");
+				 superiorSection = persistentSection.readBySiteAndSectionAndName(site,null,"Seccao1deTFCI");
 				 assertNotNull(superiorSection);
-				 section = persistentSection.readBySiteAndSectionAndName(site,superiorSection,"subSeccao1dePO");
+				 section = persistentSection.readBySiteAndSectionAndName(site,null,"Seccao1deTFCI");
 				 assertNotNull(section);
 				 persistentSection.delete(section);
 	 		     persistentSupport.confirmarTransaccao();
 	
 						 
 				 persistentSupport.iniciarTransaccao();
-				 ISection deletedSection = persistentSection.readBySiteAndSectionAndName(site,superiorSection,"subSeccao1dePO");
+//				 ISection deletedSection = persistentSection.readBySiteAndSectionAndName(site,superiorSection,"subSeccao1dePO");
+				ISection deletedSection = persistentSection.readBySiteAndSectionAndName(site,null,"Seccao1deTFCI");
+				persistentSupport.confirmarTransaccao();
 			     assertNull(deletedSection);
-				 persistentSupport.confirmarTransaccao();
 	
 			} catch (ExcepcaoPersistencia ex) {
 			 fail("testDelete:fail deleting a section without inferior sections");
