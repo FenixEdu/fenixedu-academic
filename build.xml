@@ -195,7 +195,7 @@
             description="Compila de raiz os testes para o projecto"
             name="build-tests"/>   
 
-    <target depends="compile-tests,deploy, load-dump-db"
+    <target depends="compile-tests, load-dump-db"
             description="Executa todos os testes"
             name="generate_unitTest-reports">
 
