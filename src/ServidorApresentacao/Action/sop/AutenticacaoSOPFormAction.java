@@ -26,10 +26,6 @@ import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
-
-// FIXME : MT IMPORTANTE !! da maneira como esta para o SOP se autenticar e verificada a password e o username
-// na tabela Pessoa. Isto implica que qualquer pessoa possa entrar no portal do SOP ... alunos, funcionarios, docentes ...
-
 public class AutenticacaoSOPFormAction extends FenixAction {
 
 	public ActionForward execute(

@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servico;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -11,7 +12,7 @@ import Util.RoleType;
 /**
  * @author jorge
  */
-public class UserView implements IUserView {
+public class UserView implements IUserView, Serializable {
 	private String utilizador;
 	private Collection roles;
 	private ICandidateView candidateView;

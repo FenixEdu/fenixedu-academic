@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servico;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import Util.SituationName;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class CandidateView implements ICandidateView {
+public class CandidateView implements ICandidateView, Serializable {
 	private List infoApplicationInfos;
 	
 

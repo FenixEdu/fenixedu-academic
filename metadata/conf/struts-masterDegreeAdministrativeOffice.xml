@@ -220,13 +220,28 @@
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       <action path="/index" forward="/index.jsp"/>
-      <action path="/candidateSection" forward="/candidateIndex.jsp"/>
-      <action path="/contributorSection" forward="/contributor/indexContributor.jsp"/>
-      <action path="/guideSection" forward="/guide/indexGuide.jsp"/>
-      <action path="/printGuidePage" forward="/guide/printGuidePage.jsp"/>
-      
-      
+
+      <action path="/candidateSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/candidateIndex.jsp"/> 
+      </action>
             
+	  <action path="/contributorSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/contributor/indexContributor.jsp"/> 
+      </action>
+
+	  <action path="/guideSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/guide/indexGuide.jsp"/> 
+      </action>
+
     
       
       <!-- action definition -->
