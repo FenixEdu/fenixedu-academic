@@ -29,3 +29,12 @@ e alterar aulas).</p>
 </table>
 <p>Este m&oacute;dulo visa uma gest&atilde;o eficiente das <strong>salas de aulas</strong> dispon&iacute;veis
   e a sua calendariza&ccedil;&atilde;o.</p>
+<br />
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
+    </td>
+    <td class="infoop"><strong>Gest&atilde;o de Exames</strong></td>
+  </tr>
+</table>
+<p>Este m&oacute;dulo visa uma gest&atilde;o eficiente da calendariza&ccedil;&atilde;o dos <strong>exames</strong>.</p>

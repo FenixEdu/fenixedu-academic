@@ -1,0 +1,8 @@
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<p><strong>&raquo; Gest&atilde;o de Exames</strong></p>
+<ul>
+  <li><html:link page="/createExam.do?method=prepare"><bean:message key="link.exams.create"/></html:link></li>
+  <li><html:link page="/viewExamsByDayAndShift.do?method=prepare"><bean:message key="link.exams.listByDayAndShift"/></html:link></li>
+  <li><html:link page="/viewExamsByDegreeAndAcademicYear.do?method=prepare"><bean:message key="link.exams.listByDegreeAndAcademicYear"/></html:link></li>
+</ul>

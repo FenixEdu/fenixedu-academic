@@ -208,7 +208,7 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
       <action path="/paginaPrincipal" forward="/paginaPrincipal.jsp"/>
-      
+      <action path="/mainExams" forward="/mainExams.jsp"/>
       <action path="/index" forward="/autenticacaoSOP.jsp"/>
       <action path="/autenticacaoSOP" forward="/autenticacaoSOP.jsp"/>
       <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
