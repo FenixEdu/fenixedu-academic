@@ -56,12 +56,16 @@ public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter
 		IUserView id,
 		IServico servico,
 		Object[] argumentos)
-		throws Exception {
-		if ((id == null)
-			|| (id.getRoles() == null)
-			|| !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-			|| !lecturesExecutionCourse(id, argumentos)
-			|| !announcementBelongsExecutionCourse(id, argumentos)) {
+		throws NotAuthorizedException {
+		try {
+			if ((id == null)
+				|| (id.getRoles() == null)
+				|| !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+				|| !lecturesExecutionCourse(id, argumentos)
+				|| !announcementBelongsExecutionCourse(id, argumentos)) {
+				throw new NotAuthorizedException();
+			}
+		} catch (RuntimeException e) {
 			throw new NotAuthorizedException();
 		}
 	}
@@ -99,21 +103,28 @@ public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter
 						new DisciplinaExecucao((Integer) argumentos[0]),
 						false);
 			}
-			IPersistentAnnouncement persistentAnnouncement = sp.getIPersistentAnnouncement();
+			IPersistentAnnouncement persistentAnnouncement =
+				sp.getIPersistentAnnouncement();
 			if (argumentos[1] instanceof InfoAnnouncement) {
 				infoAnnouncement = (InfoAnnouncement) argumentos[1];
 				announcement =
-					Cloner.copyInfoAnnouncement2IAnnouncement(
-						infoAnnouncement);
-				announcement = (IAnnouncement) persistentAnnouncement.readByOId(announcement,false);		
+					Cloner.copyInfoAnnouncement2IAnnouncement(infoAnnouncement);
+				announcement =
+					(IAnnouncement) persistentAnnouncement.readByOId(
+						announcement,
+						false);
 			} else {
-				announcement = (IAnnouncement) persistentAnnouncement.readByOId(new Announcement((Integer) argumentos[1]),false);	
-				
+				announcement =
+					(IAnnouncement) persistentAnnouncement.readByOId(
+						new Announcement((Integer) argumentos[1]),
+						false);
+
 			}
 		} catch (Exception e) {
 			return false;
 		}
-		return announcement.getSite().getExecutionCourse().equals(executionCourse);
+		return announcement.getSite().getExecutionCourse().equals(
+			executionCourse);
 	}
 
 	/**
