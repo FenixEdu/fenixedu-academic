@@ -1511,8 +1511,10 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	 */
 	private Integer calculateCreditsInSpecializationArea(
 		IStudentCurricularPlan studentCurricularPlan,
-		HashMap creditsInSpecializationAreaGroups)
+		HashMap creditsInSpecializationAreaGroups) throws ExcepcaoPersistencia
 	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
 		int areaCredits = 0;
 
 		if (!creditsInSpecializationAreaGroups.entrySet().isEmpty())
@@ -1522,8 +1524,18 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			{
 				Map.Entry mapEntry = (Map.Entry) iterator.next();
 				Integer credits = (Integer) mapEntry.getValue();
+				Integer groupID = (Integer) mapEntry.getKey();
 
-				areaCredits += credits.intValue();
+				ICurricularCourseGroup group =
+					(ICurricularCourseGroup) curricularCourseGroupDAO.readByOID(CurricularCourseGroup.class, groupID);
+
+				if (credits.intValue() > group.getMaximumCredits().intValue())
+				{
+					areaCredits += group.getMaximumCredits().intValue();
+				} else
+				{
+					areaCredits += credits.intValue();
+				}
 			}
 
 			if (areaCredits >= studentCurricularPlan.getBranch().getSpecializationCredits().intValue())
@@ -1544,8 +1556,10 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	private Integer calculateCreditsInSecundaryArea(
 		IStudentCurricularPlan studentCurricularPlan,
 		HashMap creditsInSecundaryAreaGroups,
-		int creditsInAnySecundaryArea)
+		int creditsInAnySecundaryArea) throws ExcepcaoPersistencia
 	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
 		int areaCredits = 0;
 
 		if (!creditsInSecundaryAreaGroups.entrySet().isEmpty())
@@ -1555,8 +1569,18 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			{
 				Map.Entry mapEntry = (Map.Entry) iterator.next();
 				Integer credits = (Integer) mapEntry.getValue();
+				Integer groupID = (Integer) mapEntry.getKey();
 
-				areaCredits += credits.intValue();
+				ICurricularCourseGroup group =
+					(ICurricularCourseGroup) curricularCourseGroupDAO.readByOID(CurricularCourseGroup.class, groupID);
+
+				if (credits.intValue() > group.getMaximumCredits().intValue())
+				{
+					areaCredits += group.getMaximumCredits().intValue();
+				} else
+				{
+					areaCredits += credits.intValue();
+				}
 			}
 		}
 

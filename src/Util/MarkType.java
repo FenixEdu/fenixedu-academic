@@ -20,13 +20,21 @@ public class MarkType extends FenixUtil {
 	public static final MarkType TYPE20_OBJ = new MarkType(20);
 	public static final MarkType TYPE5_OBJ = new MarkType(5);
 	
-	public static final Object[] REP_MARKS = {"RE" ,"R.E." ,"REP", "re", "rep"};
-	public static final Object[] NA_MARKS = {"NA","N.A.", "na"};
-	public static final Object[] OTHER_MARKS = {"RE" ,"R.E." ,"REP" , "NA","N.A.", "AP", "ap", "re", "rep", "na"};
+//	public static final Object[] REP_MARKS = {"RE" ,"R.E." ,"REP", "re", "rep"};
+//	public static final Object[] NA_MARKS = {"NA","N.A.", "na"};
+//	public static final Object[] OTHER_MARKS = {"RE" ,"R.E." ,"REP" , "NA","N.A.", "AP", "ap", "re", "rep", "na"};
+//	public static final Object[] TYPE20_MARKS = {"10","11","12","13","14","15","16","17","18","19","20"};
+//	public static final Object[] TYPE20EVALUATION_MARKS = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+//	public static final Object[] TYPE5_MARKS = {"3" , "4", "5"};
+//	public static final Object[] AP_MARKS = {"AP", "ap"};
+	
+	public static final Object[] REP_MARKS = {"RE"};
+	public static final Object[] NA_MARKS = {"NA"};
+	public static final Object[] OTHER_MARKS = {"RE", "NA", "AP"};
 	public static final Object[] TYPE20_MARKS = {"10","11","12","13","14","15","16","17","18","19","20"};
 	public static final Object[] TYPE20EVALUATION_MARKS = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-	public static final Object[] TYPE5_MARKS = {"3" , "4", "5"};
-	public static final Object[] AP_MARKS = {"AP", "ap"};
+	public static final Object[] TYPE5_MARKS = {"3", "4", "5"};
+	public static final Object[] AP_MARKS = {"AP"};
 	
 	private Integer type;
 
