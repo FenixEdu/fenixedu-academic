@@ -1,6 +1,9 @@
 package ServidorApresentacao.Action;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +25,7 @@ import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.mapping.ActionMappingForAuthentication;
+import Util.RoleType;
 
 /**
  * @author jorge
@@ -87,20 +91,47 @@ public class AuthenticationAction extends FenixAction {
 		sessao.setAttribute(
 			SessionConstants.SESSION_IS_VALID,
 			new Boolean(true));
-		if (userView.getRoles().size() == 1) {
-			Iterator iterator = userView.getRoles().iterator();
-			InfoRole infoRole = null;
-			while (iterator.hasNext()) {
-				infoRole = (InfoRole) iterator.next();
-			}
-			return buildRoleForward(infoRole);
-		} else {
-			return mapping.findForward("sucess");
-		}
 
+		Collection userRoles = userView.getRoles();
+		
+		int numberOfSubApplications = getNumberOfSubApplications(userRoles);
+		ActionForward forwardToReturn = mapping.findForward("sucess");
+		
+		Iterator iterator = userRoles.iterator();
+		InfoRole firstInfoRole = null;
+		while (iterator.hasNext())
+		{
+			firstInfoRole = (InfoRole) iterator.next();
+			break;
+		}
+		InfoRole personInfoRole = new InfoRole();
+		personInfoRole.setRoleType(RoleType.PERSON);
+		if (numberOfSubApplications == 1 || !userRoles.contains(personInfoRole)) {
+			forwardToReturn = buildRoleForward(firstInfoRole);
+		}
+		return forwardToReturn;
 	}
 
 	/**
+     * @param userRoles
+     * @return
+     */
+    private int getNumberOfSubApplications(Collection userRoles)
+    {
+        List subApplications = new ArrayList();
+        Iterator iterator = userRoles.iterator();
+        while (iterator.hasNext())
+        {
+            InfoRole infoRole = (InfoRole) iterator.next();
+			String subApplication = infoRole.getPortalSubApplication();
+            if (!subApplications.contains(subApplication) && !subApplication.equals("/teacher")){
+    			subApplications.add(subApplication);
+			}
+        }
+        return subApplications.size();
+    }
+
+    /**
 	 * @param infoRole
 	 * @return
 	 */
