@@ -33,6 +33,7 @@ import ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionExcept
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.Data;
 import Util.MasterDegreeClassification;
 import Util.TipoCurso;
 
@@ -151,15 +152,13 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
 			saveErrors(request, actionErrors);
 
-			if (actionErrors.isEmpty() == false){
+			if (actionErrors.isEmpty() == false) {
 				transportData(form, request);
 				return mapping.findForward("start");
 			}
-				
 
 		}
 
-		//
 		Object args2[] = { userView, infoStudentCurricularPlan, proofDate, thesisDeliveryDate, finalResult, attachedCopiesNumber, infoTeacherJuries };
 
 		try {
@@ -201,6 +200,12 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 		// final result options
 		List finalResult = MasterDegreeClassification.toArrayList();
 		request.setAttribute(SessionConstants.CLASSIFICATION, finalResult);
+		
+		// dates combo boxes options
+		request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
+		request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
+		request.setAttribute(SessionConstants.YEARS_LIST, Data.getExpirationYears());
+		
 
 	}
 

@@ -1,5 +1,7 @@
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,7 @@ import ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionExcept
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.Data;
 import Util.MasterDegreeClassification;
 import Util.TipoCurso;
 
@@ -98,6 +101,11 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
 
 		List finalResult = MasterDegreeClassification.toArrayList();
 		request.setAttribute(SessionConstants.CLASSIFICATION, finalResult);
+		
+		request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
+		request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
+		request.setAttribute(SessionConstants.YEARS_LIST, Data.getExpirationYears());
+		
 
 		/* * * get master degree proof * * */
 		Object argsMasterDegreeProofVersion[] = { infoStudentCurricularPlan };
@@ -135,20 +143,25 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
 
 		if (infoMasterDegreeProofVersion.getInfoJuries().isEmpty() == false)
 			request.setAttribute(SessionConstants.JURIES_LIST, infoMasterDegreeProofVersion.getInfoJuries());
-
+		
+		Calendar proofDateCalendar = new GregorianCalendar();
+		Calendar thesisDeliveryDateCalendar = new GregorianCalendar();	
+		proofDateCalendar.setTime(infoMasterDegreeProofVersion.getProofDate());
+		thesisDeliveryDateCalendar.setTime(infoMasterDegreeProofVersion.getThesisDeliveryDate());
+		
 		DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
-
+		
 		changeMasterDegreeThesisForm.set("studentNumber", studentNumber);
 		changeMasterDegreeThesisForm.set("degreeType", degreeType);
 		changeMasterDegreeThesisForm.set("dissertationTitle", infoMasterDegreeThesisDataVersion.getDissertationTitle());
 		changeMasterDegreeThesisForm.set("finalResult", new Integer(infoMasterDegreeProofVersion.getFinalResult().getValue()));
 		changeMasterDegreeThesisForm.set("attachedCopiesNumber", infoMasterDegreeProofVersion.getAttachedCopiesNumber());
-		changeMasterDegreeThesisForm.set("proofDateDay", new Integer(infoMasterDegreeProofVersion.getProofDate().getDate()));
-		changeMasterDegreeThesisForm.set("proofDateMonth", new Integer(infoMasterDegreeProofVersion.getProofDate().getMonth()));
-		changeMasterDegreeThesisForm.set("proofDateYear", new Integer(infoMasterDegreeProofVersion.getProofDate().getYear()));
-		changeMasterDegreeThesisForm.set("thesisDeliveryDateDay", new Integer(infoMasterDegreeProofVersion.getThesisDeliveryDate().getDate()));
-		changeMasterDegreeThesisForm.set("thesisDeliveryDateMonth", new Integer(infoMasterDegreeProofVersion.getThesisDeliveryDate().getMonth()));
-		changeMasterDegreeThesisForm.set("thesisDeliveryDateYear", new Integer(infoMasterDegreeProofVersion.getThesisDeliveryDate().getYear()));
+		changeMasterDegreeThesisForm.set("proofDateDay", new Integer(proofDateCalendar.get(Calendar.DAY_OF_MONTH)));
+		changeMasterDegreeThesisForm.set("proofDateMonth", new Integer(proofDateCalendar.get(Calendar.MONTH)));
+		changeMasterDegreeThesisForm.set("proofDateYear", new Integer(proofDateCalendar.get(Calendar.YEAR)));
+		changeMasterDegreeThesisForm.set("thesisDeliveryDateDay", new Integer(thesisDeliveryDateCalendar.get(Calendar.DAY_OF_MONTH)));
+		changeMasterDegreeThesisForm.set("thesisDeliveryDateMonth", new Integer(thesisDeliveryDateCalendar.get(Calendar.MONTH)));
+		changeMasterDegreeThesisForm.set("thesisDeliveryDateYear", new Integer(thesisDeliveryDateCalendar.get(Calendar.YEAR)));
 
 		return mapping.findForward("start");
 
