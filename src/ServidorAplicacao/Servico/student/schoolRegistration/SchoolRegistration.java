@@ -115,7 +115,7 @@ public class SchoolRegistration implements IService {
         for (int iter = 0; iter < curricularCourses.size(); iter++) {
             ICurricularCourse cc = (ICurricularCourse) curricularCourses.get(iter);
             Integer executionPeriodId = persistentEP.readActualExecutionPeriod().getIdInternal();
-            we.run(null, scp.getIdInternal(), cc.getIdInternal(), executionPeriodId, CurricularCourseEnrollmentType.DEFINITIVE);
+            we.run(null, scp.getIdInternal(), cc.getIdInternal(), executionPeriodId, CurricularCourseEnrollmentType.DEFINITIVE, "false");
         }
         
         sp.confirmarTransaccao();

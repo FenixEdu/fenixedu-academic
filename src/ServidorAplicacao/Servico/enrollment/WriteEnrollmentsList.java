@@ -6,6 +6,7 @@ package ServidorAplicacao.Servico.enrollment;
 
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionYear;
@@ -41,7 +42,7 @@ public class WriteEnrollmentsList implements IService
 		InfoStudent infoStudent,
 		TipoCurso degreeType,
 		InfoExecutionYear infoExecutionYear,
-		List curricularCoursesList)
+		List curricularCoursesList, Map optionalEnrollments)
 		throws FenixServiceException
 	{
 		try
@@ -101,7 +102,8 @@ public class WriteEnrollmentsList implements IService
 						studentCurricularPlan.getIdInternal(),
 						curricularCourseID,
 						executionPeriodId,
-						CurricularCourseEnrollmentType.DEFINITIVE
+						CurricularCourseEnrollmentType.DEFINITIVE,
+						(String) optionalEnrollments.get(curricularCourseID)
 					);
 				}
 			}

@@ -367,10 +367,6 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
             public Object transform(Object obj) {
                 IEnrollment enrollment = (IEnrollment) obj;
 
-                if (enrollment instanceof IEnrolmentInOptionalCurricularCourse) {
-                    return (((IEnrolmentInOptionalCurricularCourse) enrollment)
-                            .getCurricularCourseForOption());
-                }
                 return enrollment.getCurricularCourse();
 
             }

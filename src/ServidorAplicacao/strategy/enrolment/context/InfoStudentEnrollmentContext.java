@@ -1,18 +1,11 @@
 package ServidorAplicacao.strategy.enrolment.context;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.InfoCurricularCourse;
-import DataBeans.InfoEnrolment;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoObject;
 import DataBeans.InfoStudentCurricularPlan;
-import DataBeans.util.Cloner;
-import Dominio.ICurricularCourse;
-import Dominio.IEnrollment;
 
 /**
  * @author David Santos Jan 27, 2004
@@ -156,60 +149,7 @@ public class InfoStudentEnrollmentContext extends InfoObject implements
         this.creditsInSpecializationArea = creditsInSpecializationArea;
     }
 
-    /**
-     * @param infoStudentEnrolmentContext
-     * @return StudentEnrolmentContext
-     */
-    public static InfoStudentEnrollmentContext cloneStudentEnrolmentContextToInfoStudentEnrolmentContext(
-            StudentEnrolmentContext studentEnrolmentContext) {
-        Iterator iterator = studentEnrolmentContext
-                .getFinalCurricularCoursesWhereStudentCanBeEnrolled()
-                .iterator();
-        List finalInfoCurricularCoursesWhereStudentCanBeEnrolled = new ArrayList();
-        while (iterator.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iterator
-                    .next();
-            InfoCurricularCourse infoCurricularCourse = Cloner
-                    .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-            finalInfoCurricularCoursesWhereStudentCanBeEnrolled
-                    .add(infoCurricularCourse);
-        }
-
-        iterator = studentEnrolmentContext
-                .getStudentCurrentSemesterEnrollments().iterator();
-        List studentCurrentSemesterInfoEnrollments = new ArrayList();
-        while (iterator.hasNext()) {
-            IEnrollment enrolment = (IEnrollment) iterator.next();
-            InfoEnrolment infoEnrolment = Cloner
-                    .copyIEnrolment2InfoEnrolment(enrolment);
-            studentCurrentSemesterInfoEnrollments.add(infoEnrolment);
-        }
-
-        InfoStudentCurricularPlan infoStudentCurricularPlan = Cloner
-                .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentEnrolmentContext
-                        .getStudentCurricularPlan());
-
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner
-                .get(studentEnrolmentContext.getExecutionPeriod());
-
-        InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
-        infoStudentEnrolmentContext
-                .setFinalInfoCurricularCoursesWhereStudentCanBeEnrolled(finalInfoCurricularCoursesWhereStudentCanBeEnrolled);
-        infoStudentEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);
-        infoStudentEnrolmentContext
-                .setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-        infoStudentEnrolmentContext
-                .setStudentCurrentSemesterInfoEnrollments(studentCurrentSemesterInfoEnrollments);
-        infoStudentEnrolmentContext
-                .setCreditsInSecundaryArea(studentEnrolmentContext
-                        .getCreditsInSecundaryArea());
-        infoStudentEnrolmentContext
-                .setCreditsInSpecializationArea(studentEnrolmentContext
-                        .getCreditsInSpecializationArea());
-
-        return infoStudentEnrolmentContext;
-    }
-
+   
     /**
      * @return Returns the curricularCourses2Enroll.
      */

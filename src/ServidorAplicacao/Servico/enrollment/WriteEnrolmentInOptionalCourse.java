@@ -7,7 +7,6 @@ import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
-import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IStudentCurricularPlan;
@@ -21,9 +20,9 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.EnrollmentState;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
-import Util.EnrollmentState;
 import Util.TipoCurso;
 
 /**
@@ -67,10 +66,9 @@ public class WriteEnrolmentInOptionalCourse implements IService
 
 			if (enrolment == null)
 			{
-				IEnrolmentInOptionalCurricularCourse enrolmentToWrite = new EnrolmentInOptionalCurricularCourse();
+				IEnrollment enrolmentToWrite = new EnrolmentInOptionalCurricularCourse();
 				enrolmentDAO.simpleLockWrite(enrolmentToWrite);
-				enrolmentToWrite.setCurricularCourse(optionalCurricularCourse);
-				enrolmentToWrite.setCurricularCourseForOption(chosenCurricularCourse);
+				enrolmentToWrite.setCurricularCourse(chosenCurricularCourse);
 				enrolmentToWrite.setEnrollmentState(EnrollmentState.ENROLLED);
 				enrolmentToWrite.setExecutionPeriod(executionPeriod);
 				enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);

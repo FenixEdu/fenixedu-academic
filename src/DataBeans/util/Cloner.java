@@ -37,7 +37,6 @@ import DataBeans.InfoEmployee;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
-import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import DataBeans.InfoExam;
 import DataBeans.InfoExamStudentRoom;
 import DataBeans.InfoExecutionCourse;
@@ -1842,17 +1841,7 @@ public abstract class Cloner {
             }
         }
 
-        if (enrolment instanceof IEnrolmentInOptionalCurricularCourse) {
-            infoEnrolment = new InfoEnrolmentInOptionalCurricularCourse();
-            ICurricularCourse curricularCourseForOption = ((IEnrolmentInOptionalCurricularCourse) enrolment)
-                    .getCurricularCourseForOption();
-            if (curricularCourseForOption != null) {
-                infoCurricularCourseOption = Cloner
-                        .copyCurricularCourse2InfoCurricularCourse(curricularCourseForOption);
-                ((InfoEnrolmentInOptionalCurricularCourse) infoEnrolment)
-                        .setInfoCurricularCourseForOption(infoCurricularCourseOption);
-            }
-        } else if (enrolment instanceof IEnrolmentInExtraCurricularCourse) {
+        if (enrolment instanceof IEnrolmentInExtraCurricularCourse) {
             infoEnrolment = new InfoEnrolmentInExtraCurricularCourse();
         } else {
             infoEnrolment = new InfoEnrolment();
@@ -1890,16 +1879,9 @@ public abstract class Cloner {
         IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoEnrolment
                 .getInfoExecutionPeriod());
 
-        if (infoEnrolment instanceof InfoEnrolmentInOptionalCurricularCourse) {
-            enrolment = new EnrolmentInOptionalCurricularCourse();
-            curricularCourseOption = Cloner
-                    .copyInfoCurricularCourse2CurricularCourse(((InfoEnrolmentInOptionalCurricularCourse) infoEnrolment)
-                            .getInfoCurricularCourseForOption());
-            ((IEnrolmentInOptionalCurricularCourse) enrolment)
-                    .setCurricularCourseForOption(curricularCourseOption);
-        } else {
+        
             enrolment = new Enrolment();
-        }
+        
 
         List enrolmentEvaluationsList = new ArrayList();
         List infoEnrolmentEvaluationsList = infoEnrolment.getInfoEvaluations();

@@ -2,10 +2,10 @@ package DataBeans;
 
 import java.util.Date;
 import java.util.List;
+
 import Dominio.IEnrollment;
-import Dominio.IEnrolmentInOptionalCurricularCourse;
-import Util.EnrolmentEvaluationType;
 import Util.EnrollmentState;
+import Util.EnrolmentEvaluationType;
 import Util.enrollment.EnrollmentCondition;
 
 /**
@@ -213,12 +213,10 @@ public class InfoEnrolment extends InfoObject {
     public static InfoEnrolment newInfoFromDomain(IEnrollment enrollment) {
         InfoEnrolment infoEnrolment = null;
         if (enrollment != null) {
-            if (enrollment instanceof IEnrolmentInOptionalCurricularCourse) {
-                infoEnrolment = InfoEnrolmentInOptionalCurricularCourse.newInfoFromDomain(enrollment);
-            } else {
-                infoEnrolment = new InfoEnrolment();
-                infoEnrolment.copyFromDomain(enrollment);
-            }
+
+            infoEnrolment = new InfoEnrolment();
+            infoEnrolment.copyFromDomain(enrollment);
+
         }
         return infoEnrolment;
     }

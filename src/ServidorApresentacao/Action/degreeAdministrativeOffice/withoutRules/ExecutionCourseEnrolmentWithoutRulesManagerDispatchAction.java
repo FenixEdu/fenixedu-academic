@@ -7,7 +7,9 @@ package ServidorApresentacao.Action.degreeAdministrativeOffice.withoutRules;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -519,8 +521,8 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 
 		String[] curricularCourses = (String[]) enrollForm.get("curricularCourses");
 		List curricularCoursesList = Arrays.asList(curricularCourses);
-
-		Object[] args = { infoStudent, degreeType, infoExecutionYear, curricularCoursesList };
+		Map optionalEnrollments = (HashMap) enrollForm.get("optionalEnrollments");
+		Object[] args = { infoStudent, degreeType, infoExecutionYear, curricularCoursesList,optionalEnrollments };
 		try
 		{
 			ServiceManagerServiceFactory.executeService(userView, "WriteEnrollmentsList", args);

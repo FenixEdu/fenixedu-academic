@@ -10,6 +10,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.CurricularCourse;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
+import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.ExecutionPeriod;
 import Dominio.Frequenta;
 import Dominio.ICurricularCourse;
@@ -51,10 +52,10 @@ public class WriteEnrollment implements IService {
     // some of these arguments may be null. they are only needed for filter
     public void run(Integer executionDegreeId, Integer studentCurricularPlanID,
             Integer curricularCourseID, Integer executionPeriodID,
-            CurricularCourseEnrollmentType enrollmentType) throws FenixServiceException {
+            CurricularCourseEnrollmentType enrollmentType,String optionalEnrollment) throws FenixServiceException {
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
+            IPersistentEnrollment enrollmentDAO = persistentSuport.getIPersistentEnrolment();
             IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport
                     .getIStudentCurricularPlanPersistente();
             IPersistentExecutionPeriod executionPeriodDAO = persistentSuport
@@ -74,26 +75,32 @@ public class WriteEnrollment implements IService {
                 executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
                         executionPeriodID);
             }
-
-            IEnrollment enrolment = enrolmentDAO
+          
+            IEnrollment enrollment = enrollmentDAO
                     .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
                             studentCurricularPlan, curricularCourse, executionPeriod);
 
-            if (enrolment == null) {
-                IEnrollment enrolmentToWrite = new Enrolment();
-                enrolmentDAO.simpleLockWrite(enrolmentToWrite);
-                enrolmentToWrite.setCurricularCourse(curricularCourse);
-                enrolmentToWrite.setEnrollmentState(EnrollmentState.ENROLLED);
-                enrolmentToWrite.setExecutionPeriod(executionPeriod);
-                enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
-                enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-                enrolmentToWrite.setCreationDate(new Date());
-                enrolmentToWrite.setCondition(getEnrollmentCondition(enrollmentType));
+            if (enrollment == null) {
+                IEnrollment enrollmentToWrite;
+                if (optionalEnrollment == null || optionalEnrollment.equals("false")){
+                    
+                enrollmentToWrite = new Enrolment();
+                }else {
+                enrollmentToWrite = new EnrolmentInOptionalCurricularCourse();
+                }
+                enrollmentDAO.simpleLockWrite(enrollmentToWrite);
+                enrollmentToWrite.setCurricularCourse(curricularCourse);
+                enrollmentToWrite.setEnrollmentState(EnrollmentState.ENROLLED);
+                enrollmentToWrite.setExecutionPeriod(executionPeriod);
+                enrollmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
+                enrollmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+                enrollmentToWrite.setCreationDate(new Date());
+                enrollmentToWrite.setCondition(getEnrollmentCondition(enrollmentType));
 
-                createEnrollmentEvaluation(enrolmentToWrite);
+                createEnrollmentEvaluation(enrollmentToWrite);
 
                 createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod,
-                        enrolmentToWrite);
+                        enrollmentToWrite);
             }
 
         } catch (ExcepcaoPersistencia e) {

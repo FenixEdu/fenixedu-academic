@@ -40,6 +40,12 @@
 						<bean:write name="infoCurricularCourseId"/>-<bean:write name="infoCurricularCourse" property="enrollmentType.value"/>
 						</html:multibox>
 						</td>
+						<td class="listClasses">
+						<html:radio property='<%= "optionalEnrollments(" + infoCurricularCourseId.toString() + ")" %>' value="false"/>
+						</td>
+						<td class="listClasses">
+						<html:radio property='<%= "optionalEnrollments(" + infoCurricularCourseId.toString() + ")" %>' value="true"/>
+						</td>
 					</tr>
 				</logic:iterate>
 			</table>
