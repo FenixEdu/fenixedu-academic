@@ -101,6 +101,9 @@ public class Pessoa extends DomainObject implements IPessoa {
 //		this.pais = null;
 //		this.codigoFiscal = "";
 	}
+	public Pessoa(String username){
+		setUsername(username);
+	}
 
 	public Pessoa(TipoDocumentoIdentificacao idDocumentType, String userName) {
 //		this.numeroDocumentoIdentificacao = "";

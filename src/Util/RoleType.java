@@ -34,7 +34,8 @@ public final class RoleType extends ValuedEnum {
 	public static final int SCIENTIFIC_COUNCIL_TYPE = 17;
 	public static final int ADMINISTRATOR_TYPE = 18;
 	public static final int OPERATOR_TYPE = 19;
-    public static final int SEMINARIES_COORDINATOR_TYPE = 20;
+  public static final int SEMINARIES_COORDINATOR_TYPE = 20;
+  public static final int WEBSITE_MANAGER_TYPE = 21;
 	
 	
 	public static final RoleType PERSON = new RoleType("person", RoleType.PERSON_TYPE);
@@ -56,7 +57,8 @@ public final class RoleType extends ValuedEnum {
 	public static final RoleType SCIENTIFIC_COUNCIL = new RoleType("scientificCouncil",RoleType.SCIENTIFIC_COUNCIL_TYPE);
 	public static final RoleType ADMINISTRATOR = new RoleType("admin",RoleType.ADMINISTRATOR_TYPE);
 	public static final RoleType OPERATOR = new RoleType("operator",RoleType.OPERATOR_TYPE);
-    public static final RoleType SEMINARIES_COORDINATOR = new RoleType("seminariesCoordinator",RoleType.SEMINARIES_COORDINATOR_TYPE);	
+  public static final RoleType SEMINARIES_COORDINATOR = new RoleType("seminariesCoordinator",RoleType.SEMINARIES_COORDINATOR_TYPE);	
+	public static final RoleType WEBSITE_MANAGER = new RoleType("WebSiteManager",RoleType.WEBSITE_MANAGER_TYPE);
 	
 	/**
 	 * @param name

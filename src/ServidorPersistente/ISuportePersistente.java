@@ -163,6 +163,10 @@ public interface ISuportePersistente {
 	public IPersistentStudentTestLog getIPersistentStudentTestLog();
 	
 	public IPersistentAdvisory getIPersistentAdvisory();
+	
+	public IPersistentWebSite getIPersistentWebSite();
+	public IPersistentWebSiteSection getIPersistentWebSiteSection();
+	public IPersistentWebSiteItem getIPersistentWebSiteItem();
 }
 
 

@@ -100,6 +100,10 @@
             <param-name>config/operator</param-name>
             <param-value>/WEB-INF/conf/struts-operator.xml</param-value>
         </init-param>
+        <init-param>
+            <param-name>config/webSiteManager</param-name>
+            <param-value>/WEB-INF/conf/struts-webSiteManager.xml</param-value>
+        </init-param>
 
         <init-param>
             <param-name>debug</param-name>

@@ -15,3 +15,4 @@ insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAM
 insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (11,11,'/manager','/index.do','portal.manager');
 insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (13,13,'/credits','/index.do','portal.credits');
 insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (14,14,'/credits','/index.do','portal.credits');
+insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (0,21,'/webSiteManager','/index.do','portal.webSiteManager');

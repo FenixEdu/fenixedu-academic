@@ -30,6 +30,7 @@
 <!ENTITY seminary SYSTEM "repository_seminary.xml">
 <!ENTITY advisory SYSTEM "repository_advisory.xml">
 <!ENTITY middleware SYSTEM "repository_middleware.xml">
+<!ENTITY website SYSTEM "repository_website.xml">
 ]>
 
 
@@ -65,5 +66,6 @@
 	&seminary;
     &advisory;
     &middleware;
+    &website;
 	
 </descriptor-repository>

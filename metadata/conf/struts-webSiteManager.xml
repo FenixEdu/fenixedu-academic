@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC 
+      "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    
+    <!-- ========== Data Source Configuration =============================== -->
+
+    
+    <!-- ========== Form Bean Definitions ================================== -->
+    <form-beans type="org.apache.struts.action.ActionFormBean">
+		<form-bean name="itemForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			<form-property name="title" type="java.lang.String"/>
+			<form-property name="mainEntryText" type="java.lang.String"/>
+			<form-property name="excerpt" type="java.lang.String"/>
+			<form-property name="keywords" type="java.lang.String"/>
+			<form-property name="itemBeginDay" type="java.lang.String"/>
+			<form-property name="itemEndDay" type="java.lang.String"/>
+			<form-property name="publish" type="java.lang.Boolean"/>
+			<form-property name="onlineBeginDay" type="java.lang.String"/>
+			<form-property name="onlineEndDay" type="java.lang.String"/>
+			<form-property name="delete" type="java.lang.Boolean"/>
+			<form-property name="itemsListSize" type="java.lang.String"/>
+			<form-property name="objectCode" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+
+     </form-beans>
+    
+    <!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+		<exception type="java.lang.Exception"
+			       key="java.lang.Exception"
+			       path="/naoExecutado.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
+		<exception type="ServidorAplicacao.NotAuthorizedException"
+			       key="ServidorAplicacao.NotAuthorizedException"
+			       path="/naoAutorizado.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
+		<exception type="ServidorAplicacao.NotExecutedException"
+		  	       key="ServidorAplicacao.NotExecutedException"
+		  	       path="/naoExecutado.do"
+		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       path="/naoExistente.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+	</global-exceptions>
+    
+    <!-- ========== Global Forward Definitions =============================== -->
+    <global-forwards type="org.apache.struts.action.ActionForward">
+      <forward name="home" path="/mainPortalPage.jsp" redirect="true" contextRelative="true"/>
+      <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+      <forward name="globalOutOfPeriod" path="definition.out.of.period"/>              
+    </global-forwards>
+    
+    <!-- ========== Action Mapping Definitions =============================== -->
+    <action-mappings type="org.apache.struts.action.ActionMapping">
+      <!-- page fronting actions -->
+      <action path="/index" forward="/index.jsp"/>
+      
+      <!-- Sections -->
+      <action path="/sectionsManagement" 
+      	parameter="method"
+      	type="ServidorApresentacao.Action.webSiteManager.SectionsManagementAction"
+      	input="/index.jsp">
+      	
+      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
+      	
+      	<forward name="sectionsMenu" path="/sectionsFirstPage.jsp"/>
+      	<forward name="sectionPage" path="/sectionPage.jsp"/>
+      </action>
+
+      <action path="/itemsManagement" 
+      	parameter="method"
+      	type="ServidorApresentacao.Action.webSiteManager.ItemsManagementAction" 
+      	name="itemForm" 
+      	scope="request"
+      	validate="true"
+      	input="/itemsManagement.do?method=prepareAddItem&amp;page=0"
+      	>
+      	
+      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
+      	
+      	<forward name="addItem" path="/addItem.jsp"/>
+      	<forward name="listItems" path="/listItems.jsp"/>
+      	<forward name="sectionPage" path="/sectionPage.jsp"/>
+      </action>
+
+	  <action path="/listItemsManagement" 
+      	parameter="method"
+      	type="ServidorApresentacao.Action.webSiteManager.ItemsManagementAction" 
+      	name="itemForm" 
+      	scope="request"
+      	validate="false"
+      	input="/listItemsManagement.do?method=listItems&amp;page=0"
+      	>
+      	
+      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
+      	
+      	<forward name="listItems" path="/listItems.jsp"/>
+      </action>
+
+	  <action path="/editItemsManagement" 
+      	parameter="method"
+      	type="ServidorApresentacao.Action.webSiteManager.ItemsManagementAction" 
+      	name="itemForm" 
+      	scope="request"
+      	validate="true"
+      	input="/editItemsManagement.do?method=prepareEditItem&amp;page=0"
+      	>
+      	
+      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
+      	
+      	<forward name="listItems" path="/listItems.jsp"/>
+      	<forward name="editItem" path="/editItem.jsp"/>
+      </action>
+     </action-mappings>     
+
+    
+    <!-- ========== Controller Configuration ================================ -->
+	 <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
+	     
+    <!-- ========== Message Resources Definitions ============================ -->
+     <message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>   
+
+    
+    <!-- ========== Plug Ins Configuration ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+      <set-property property="pathnames" 
+                    value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-website-manager.xml"/>
+    </plug-in>
+</struts-config> 

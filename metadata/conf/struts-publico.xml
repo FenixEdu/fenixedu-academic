@@ -399,7 +399,19 @@
       <action path="/fileDownload" 
       		  type="ServidorApresentacao.Action.fileManager.FileRetrievingAction" >
       		  <forward  name="xpto1" path="/xpto1.jsp"/>  		  
-     </action>	 	 
+     </action>	 
+     
+     <action path="/viewWebSiteSection" 
+     	type="ServidorApresentacao.Action.publico.ViewWebSiteSectionAction" 
+     	parameter="method" 
+     	input="siteViewerError.jsp">
+
+      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
+     	
+		<forward name="viewWebSiteSection" path="/viewWebSiteSection.jsp"/>     	
+     </action>	 
     
      </action-mappings>     
 
