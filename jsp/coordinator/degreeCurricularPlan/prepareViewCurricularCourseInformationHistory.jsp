@@ -18,9 +18,13 @@
 		<logic:iterate id="executionYear" name="infoExecutionYears">
 			<tr>
 				<td>
-					<bean:define id="stringExecutionYear" name="executionYear" property="label"/>
+<%--					<bean:define id="stringExecutionYear" name="executionYear" property="label"/>
 					<html:link page="<%="/degreeCurricularPlanManagement.do?method=viewCurricularCourseInformationHistory&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;executionYear=" + stringExecutionYear + "&amp;infoCurricularCourseName=" + infoCurricularCourseName %>">
 						<bean:write name="executionYear" property="label"/>
+					</html:link> --%>
+					<bean:define id="stringExecutionYear" name="executionYear" property="year"/>
+					<html:link page="<%="/degreeCurricularPlanManagement.do?method=viewCurricularCourseInformationHistory&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;executionYear=" + stringExecutionYear + "&amp;infoCurricularCourseName=" + infoCurricularCourseName %>">
+						<bean:write name="executionYear" property="year"/>
 					</html:link>
 				</td>
 			</tr>

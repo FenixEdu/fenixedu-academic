@@ -392,7 +392,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 		};
 		try
 		{
-			infoExecutionYears = (List) ServiceUtils.executeService(null, "ReadExecutionYears", args);
+			infoExecutionYears = (List) ServiceUtils.executeService(null, "ReadNotClosedExecutionYears", args);
 
 		} catch (FenixServiceException e)
 		{
