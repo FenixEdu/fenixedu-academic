@@ -74,7 +74,7 @@ public class ManageShiftsDA
 		ComparatorChain chainComparator = new ComparatorChain();
 		chainComparator.addComparator(
 			new BeanComparator("infoDisciplinaExecucao.nome"));
-		chainComparator.addComparator(new BeanComparator("tipo.tipo"));
+		chainComparator.addComparator(new BeanComparator("tipo"));
 		chainComparator.addComparator(new BeanComparator("nome"));
 		Collections.sort(infoShifts, chainComparator);
 

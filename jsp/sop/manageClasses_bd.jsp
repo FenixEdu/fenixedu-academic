@@ -123,6 +123,7 @@
 		</tr>
 	</logic:iterate>
 </table>
+
 	<html:submit styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 		<bean:message key="link.delete"/>
 	</html:submit>

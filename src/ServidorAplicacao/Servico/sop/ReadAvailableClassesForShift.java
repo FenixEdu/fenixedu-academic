@@ -6,14 +6,13 @@
 package ServidorAplicacao.Servico.sop;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoClass;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
-import Dominio.IDegreeCurricularPlan;
+import Dominio.ICurricularCourseScope;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurma;
 import Dominio.ITurno;
@@ -21,7 +20,6 @@ import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.ITurnoPersistente;
@@ -68,17 +66,16 @@ public class ReadAvailableClassesForShift implements IServico {
 			ITurno shift =
 				(ITurno) shiftDAO.readByOId(new Turno(shiftOID), false);
 
-			ICursoExecucaoPersistente executionDegreeDAO =
-				sp.getICursoExecucaoPersistente();
+			List curricularCourses =
+				shift.getDisciplinaExecucao().getAssociatedCurricularCourses();
+			List scopes = new ArrayList();
+			for (int i = 0; i < curricularCourses.size(); i++) {
+				ICurricularCourse curricularCourse =
+					(ICurricularCourse) curricularCourses.get(i);
+				scopes.addAll(curricularCourse.getScopes());
+			}
+
 			IDisciplinaExecucao executionCourse = shift.getDisciplinaExecucao();
-
-			Collection degreeCurricularPlans =
-				extractCurricularPlans(executionCourse);
-
-			List executionDegree =
-				executionDegreeDAO.readByExecutionYearAndDegreeCurricularPlans(
-					executionCourse.getExecutionPeriod().getExecutionYear(),
-					degreeCurricularPlans);
 
 			ITurmaPersistente classDAO = sp.getITurmaPersistente();
 			List classes =
@@ -89,8 +86,8 @@ public class ReadAvailableClassesForShift implements IServico {
 			Iterator iter = classes.iterator();
 			while (iter.hasNext()) {
 				ITurma classImpl = (ITurma) iter.next();
-				if (executionDegree.contains(classImpl.getExecutionDegree()) &&
-					!shift.getAssociatedClasses().contains(classImpl)) {
+				if (!shift.getAssociatedClasses().contains(classImpl)
+					&& containsScope(scopes, classImpl)) {
 					InfoClass infoClass = Cloner.copyClass2InfoClass(classImpl);
 					infoClasses.add(infoClass);
 				}
@@ -102,23 +99,29 @@ public class ReadAvailableClassesForShift implements IServico {
 		return infoClasses;
 	}
 
-	private Collection extractCurricularPlans(IDisciplinaExecucao executionCourse) {
-		List curricularCourses =
-			executionCourse.getAssociatedCurricularCourses();
-
-		Iterator curricularCoursesIterator = curricularCourses.iterator();
-		Collection degreeCurricularPlans = new ArrayList();
-		
-		while (curricularCoursesIterator.hasNext()) {
-			ICurricularCourse curricularCourse =
-				(ICurricularCourse) curricularCoursesIterator.next();
-			IDegreeCurricularPlan degreeCurricularPlan =
-				curricularCourse.getDegreeCurricularPlan();
-			if (!degreeCurricularPlans.contains(degreeCurricularPlan)) {
-				degreeCurricularPlans.add(degreeCurricularPlan);
-			}
+	/**
+	 * @param scopes
+	 * @param classImpl
+	 * @return
+	 */
+	private boolean containsScope(List scopes, ITurma classImpl) {
+		for (int i = 0; i < scopes.size(); i++) {
+			ICurricularCourseScope scope =
+				(ICurricularCourseScope) scopes.get(i);
+			if (scope
+				.getCurricularCourse()
+				.getDegreeCurricularPlan()
+				.equals(classImpl.getExecutionDegree().getCurricularPlan())
+				&& scope
+					.getCurricularSemester()
+					.getCurricularYear()
+					.getYear()
+					.equals(
+					classImpl.getAnoCurricular()))
+				return true;
 		}
-		return degreeCurricularPlans;
+
+		return false;
 	}
 
 }

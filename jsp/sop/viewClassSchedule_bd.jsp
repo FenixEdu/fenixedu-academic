@@ -61,6 +61,23 @@
 			</html:form>
 		</td>
 		<td width="10"></td>
+		<td>
+			<html:form action="/manageClasses">
+				<html:hidden property="method" value="listClasses"/>
+				<html:hidden property="page" value="0"/>
+
+				<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+						 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+				<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+						 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+				<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+						 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+
+				<html:submit styleClass="inputbutton">
+					<bean:message key="label.return"/>
+				</html:submit>			
+			</html:form>
+		</td>
 	</tr>
 </table>
 

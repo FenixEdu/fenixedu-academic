@@ -6,7 +6,6 @@
 
 package Util;
 
-
 /**
  *
  * @author  tfc130
@@ -94,18 +93,17 @@ public class TipoAula implements Comparable {
 
 	public int compareTo(Object arg0) {
 		// T(1) < TP(3) < P(2) < L(4) < D(5) < R(6)
-		if ((getTipo().intValue() < ((TipoAula) arg0).getTipo().intValue())
-			|| (getTipo().intValue() == 3
-				&& ((TipoAula) arg0).getTipo().intValue() == 2)) {
-			//System.out.println("%%%%%%%% " + getTipo().intValue() + " < " + ((TipoAula) arg0).getTipo().intValue());
+		TipoAula tipoAula = (TipoAula) arg0;
+
+		if (getTipo().intValue() == 3 && tipoAula.getTipo().intValue() == 2) {
+			// 3 < 2
 			return -1;
-		} else if (
-			getTipo().intValue() > ((TipoAula) arg0).getTipo().intValue()) {
-			//System.out.println("%%%%%%%% " + getTipo().intValue() + " > " + ((TipoAula) arg0).getTipo().intValue());
-			return 1;
-		} else {
-			return 0;
 		}
+		if (getTipo().intValue() == 2 && tipoAula.getTipo().intValue() == 3) {
+			// 2 > 3
+			return 1;
+		}
+		return	getTipo().compareTo(tipoAula.getTipo());
 	}
 
 }
