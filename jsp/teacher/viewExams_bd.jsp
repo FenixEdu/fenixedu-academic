@@ -49,7 +49,7 @@
 					<bean:message key="link.students.enrolled.exam"/></html:link></td>	
 			<td class="listClasses" >
 				<html:link 
-					page="<%= "/showMarksListOptions?objectCode="+ pageContext.findAttribute("objectCode")+"&amp;examCode=" +pageContext.findAttribute("idInternal") %>" >
+					page="<%= "/showMarksListOptions.do?objectCode="+ pageContext.findAttribute("objectCode")+"&amp;examCode=" +pageContext.findAttribute("idInternal") %>" >
 					<bean:message key="link.students.listMarks"/></html:link></td>	
 					
 							
