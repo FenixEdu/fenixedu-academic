@@ -9,7 +9,7 @@
 	</filter>
 	<filter-mapping>
 	    <filter-name>indexFilter</filter-name>
-	    <url-pattern>/publico/index.do</url-pattern>
+	    <url-pattern>/publico/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 	    <filter-name>indexFilter</filter-name>
