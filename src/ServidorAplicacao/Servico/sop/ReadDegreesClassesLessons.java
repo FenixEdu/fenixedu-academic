@@ -26,7 +26,6 @@ import Dominio.IAula;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import Dominio.ITurno;
-import Dominio.Turma;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;

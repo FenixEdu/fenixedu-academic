@@ -314,8 +314,9 @@ public class ChooseContextDispatchAction extends DispatchAction {
 
 			String nextPage =
 				(String) session.getAttribute(SessionConstants.NEXT_PAGE);
-			if (nextPage != null)
+			if (nextPage != null) {
 				return mapping.findForward(nextPage);
+			}				
 			else
 				// TODO : throw a proper exception
 				throw new Exception("SomeOne is messing around with the links");
