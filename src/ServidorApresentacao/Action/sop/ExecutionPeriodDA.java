@@ -54,9 +54,14 @@ public class ExecutionPeriodDA extends DispatchAction {
 					"" + i));
 		}
 
+		session.setAttribute(
+			SessionConstants.LIST_INFOEXECUTIONPERIOD,
+			executionPeriods);
+
 		request.setAttribute(
-			SessionConstants.EXECUTION_PERIOD_LIST,
+			SessionConstants.LABELLIST_EXECUTIONPERIOD,
 			executionPeriodsLabelValueList);
+			
 		return mapping.findForward("showForm");
 	}
 
@@ -69,15 +74,15 @@ public class ExecutionPeriodDA extends DispatchAction {
 		HttpSession session = request.getSession(false);
 		DynaActionForm indexForm = (DynaActionForm) form;
 
-		ArrayList executionPeriodLabelValueList =
-			(ArrayList) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD_LIST);
+		ArrayList infoExecutionPeriodList =
+			(ArrayList) session.getAttribute(
+				SessionConstants.LIST_INFOEXECUTIONPERIOD);
 		Integer index = (Integer) indexForm.get("index");
 
-		if (executionPeriodLabelValueList != null && index != null) {
+		if (infoExecutionPeriodList != null && index != null) {
 			session.setAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-				executionPeriodLabelValueList.get(index.intValue()));
+				infoExecutionPeriodList.get(index.intValue()));
 		}
 		return mapping.findForward("choose");
 	}

@@ -22,7 +22,10 @@ import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
-import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
+import ServidorApresentacao
+	.Action
+	.exceptions
+	.InvalidTimeIntervalActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -44,12 +47,12 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-				
+
 		HttpSession session = request.getSession(false);
 		session.setAttribute("minutes", Util.getMinutes());
 		session.setAttribute("hours", Util.getHours());
 		session.setAttribute("weekDays", Util.getDaysOfWeek());
-		
+
 		// execution period selection		
 		IUserView userView = (IUserView) session.getAttribute("UserView");
 		GestorServicos gestor = GestorServicos.manager();
@@ -74,10 +77,14 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 					"" + i));
 		}
 
+		session.setAttribute(
+			SessionConstants.LIST_INFOEXECUTIONPERIOD,
+			executionPeriods);
+
 		request.setAttribute(
-			SessionConstants.EXECUTION_PERIOD_LIST,
+			SessionConstants.LABELLIST_EXECUTIONPERIOD,
 			executionPeriodsLabelValueList);
-		
+
 		return mapping.findForward("searchPage");
 	}
 
@@ -90,19 +97,19 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			
+
 		try {
 			FenixDynaValidatorForm searchForm = (FenixDynaValidatorForm) form;
 			Integer normalCapacity = new Integer(0);
-			try{
+			try {
 				normalCapacity =
 					new Integer((String) searchForm.get("normalCapacity"));
-			}catch (NumberFormatException e){
+			} catch (NumberFormatException e) {
 				//ignored
 			}
-			
+
 			Integer weekDay = new Integer((String) searchForm.get("weekDay"));
-			
+
 			Calendar start = Calendar.getInstance();
 			start.set(
 				Calendar.HOUR_OF_DAY,
@@ -119,58 +126,83 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 				Calendar.MINUTE,
 				Integer.parseInt((String) searchForm.get("endMinutes")));
 			end.set(Calendar.SECOND, 0);
-			
+
 			InfoRoom infoRoom = new InfoRoom();
 			infoRoom.setCapacidadeNormal(normalCapacity);
-			
+
 			InfoLesson infoLesson = new InfoLesson();
-			
+
 			infoLesson.setDiaSemana(new DiaSemana(weekDay));
 			infoLesson.setInicio(start);
 			infoLesson.setFim(end);
-			
+
 			//	execution period selection
 			HttpSession session = request.getSession(false);
-							
-			ArrayList executionPeriodLabelValueList =
-				(ArrayList) request.getAttribute(
-					SessionConstants.EXECUTION_PERIOD_LIST);
+
+			ArrayList infoExecutionPeriodList =
+				(ArrayList) session.getAttribute(
+					SessionConstants.LIST_INFOEXECUTIONPERIOD);
 			Integer index = (Integer) searchForm.get("executionPeriodIndex");
 
-			if (executionPeriodLabelValueList != null && index != null) {
+			if (infoExecutionPeriodList != null && index != null) {
 				session.setAttribute(
 					SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-					executionPeriodLabelValueList.get(index.intValue()));
+					infoExecutionPeriodList.get(index.intValue()));
 			}
 			// --------------------------------	
-			
+
 			Object args[] = { infoRoom, infoLesson };
-			
+
 			List emptyRoomsList =
 				(List) ServiceUtils.executeService(
 					SessionUtils.getUserView(request),
 					"ReadEmptyRoomsService",
 					args);
-			
+
 			if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {
 				ActionErrors actionErrors = new ActionErrors();
 				actionErrors.add(
 					"search.empty.rooms.no.rooms",
 					new ActionError("search.empty.rooms.no.rooms"));
-			
+
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
-			request.setAttribute("roomList", emptyRoomsList);			
-			
+			// keep search criteria in request 
+			// (executionPeriod is already in session...)
+			request.setAttribute("weekDay", infoLesson.getDiaSemana());
+			request.setAttribute(
+				"intervalStart",
+				timeToString(infoLesson.getInicio()));
+			request.setAttribute(
+				"intervalEnd",
+				timeToString(infoLesson.getFim()));
+			request.setAttribute("minimumCapacity", normalCapacity);
+			//--------------------------------------------
+
+			request.setAttribute("roomList", emptyRoomsList);
+
 			return mapping.findForward("showSearchResult");
-			
+
 		} catch (InvalidTimeIntervalServiceException ex) {
 			throw new InvalidTimeIntervalActionException(ex);
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 			throw new RuntimeException(e.getMessage());
 		}
+	}
+
+	private String timeToString(Calendar time) {
+		String hourStr = "" + time.get(Calendar.HOUR_OF_DAY);
+		String minutesStr = "" + time.get(Calendar.MINUTE);
+
+		if (time.get(Calendar.HOUR_OF_DAY) < 10)
+			hourStr = "0" + hourStr;
+		if (time.get(Calendar.MINUTE) < 10)
+			minutesStr = "0" + minutesStr;
+
+		return hourStr + ":" + minutesStr;
+
 	}
 
 }

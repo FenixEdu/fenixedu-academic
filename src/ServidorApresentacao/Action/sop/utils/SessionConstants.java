@@ -31,7 +31,8 @@ public abstract class SessionConstants {
 	//    General Purpose Constants - For Context
 	// -------------------------------------------------------------------------------
 	public static final String DEGREES = "licenciaturas";
-	public static final String EXECUTION_PERIOD_LIST = "executionPeriodList";	
+	public static final String LIST_INFOEXECUTIONPERIOD = "infoExecutionPeriodList";	
+	public static final String LABELLIST_EXECUTIONPERIOD = "executionPeriodLabelList";	
 
 	// -------------------------------------------------------------------------------
 	//    GesDis Constants - For GesDis

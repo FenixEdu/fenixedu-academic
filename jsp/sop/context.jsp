@@ -12,7 +12,8 @@
 		<jsp:getProperty name="infoDegree" property="nome" />
 		<br/>
 		<bean:message key="label.year" arg0="<%= curricularYear.toString() %>" /> -	
-		<jsp:getProperty name="infoExecutionPeriod" property="name"/>
+		<jsp:getProperty name="infoExecutionPeriod" property="name"/> -
+		<bean:write name="<%=SessionConstants.INFO_EXECUTION_PERIOD_KEY%>" property="infoExecutionYear.year" scope="session"/>
 	</logic:present>
 		
 	<logic:present name="<%= SessionConstants.CLASS_VIEW %>"  >

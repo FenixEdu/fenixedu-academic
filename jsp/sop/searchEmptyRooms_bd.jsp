@@ -17,7 +17,7 @@
 						<html:select property="executionPeriodIndex" size="1">
 					 		<html:options property="value"
 					 		              labelProperty="label" 
- 	  									  collection="<%= SessionConstants.EXECUTION_PERIOD_LIST%>" />
+ 	  									  collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>" />
 						</html:select>
                    </td>
                 </tr>                
