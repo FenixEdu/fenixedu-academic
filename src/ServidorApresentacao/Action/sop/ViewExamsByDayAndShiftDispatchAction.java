@@ -138,4 +138,28 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		return mapping.findForward("Edit Exam");
 	}
 
+	public ActionForward addExecutionCourse(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		HttpSession session = request.getSession(false);
+		IUserView userView = SessionUtils.getUserView(request);
+	
+		List infoViewExams = (List) session.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
+
+		Integer indexExam = new Integer(request.getParameter("indexExam"));
+
+		session.setAttribute(
+			SessionConstants.INFO_VIEW_EXAM,
+			((InfoViewExamByDayAndShift) infoViewExams
+				.get(indexExam.intValue())));
+
+		session.setAttribute("input", "viewExamsByDayAndShift");
+		
+		return mapping.findForward("Add Execution Course");
+	}
+
 }

@@ -98,6 +98,7 @@ public abstract class SessionConstants {
 	public static final String EXAM_DATEANDTIME       		= "examDateAndTime";
 	public static final String EXAM_DATEANDTIME_STR   		= "examDateAndTimeString";
 	public static final String INFO_EXAMS_KEY         		= "INFO_EXAMS_KEY";
+	public static final String INFO_VIEW_EXAM         		= "infoViewExam";
 	public static final String LABLELIST_DAYSOFMONTH  		= "daysOfMonth";
 	public static final String LABLELIST_HOURS        		= "horas";
 	public static final String LABLELIST_MONTHSOFYEAR 		= "monthsOfYear";

@@ -65,6 +65,9 @@
 					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=delete">
 						<bean:message key="label.delete"/>
 					</html:link>
+					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=addExecutionCourse">
+						<br/><bean:message key="label.add.executionCourse"/>
+					</html:link>
 				</td>
 			</tr>
 		</logic:iterate>

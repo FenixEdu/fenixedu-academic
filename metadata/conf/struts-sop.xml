@@ -754,6 +754,7 @@
          <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
          <forward name="Deleted Exam" path="/viewExamsDayAndShiftForm.do?method=view"/>
          <forward name="Edit Exam" path="/editExam.jsp"/>
+         <forward name="Add Execution Course" path="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext&amp;nextPage=addExecutionCourseToExam"/>
 	</action>
 	
     <action input="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext"
@@ -767,7 +768,19 @@
         <forward name="chooseExamsContext" path="/chooseExamsContext.jsp"/>
         <forward name="createExam" path="/chooseExecutionCourseForm.do"/>
         <forward name="listByDegreeAndAcademicYear" path="/viewExamsByDegreeAndCurricularYear.do"/>
+        <forward name="addExecutionCourseToExam" path="/chooseExecutionCourseToAddToExam.do"/>
     </action>
+
+	<action path="/addExecutionCourseToExam"
+    		type="ServidorApresentacao.Action.sop.AddExecutionCourseToExamAction"
+    		input="/viewExamsByDayAndShift.jsp"
+    		>
+    	<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+        		   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+        		   />
+    	<forward name="Sucess" path="/viewExamsDayAndShiftForm.do?method=view"/>
+	</action>
 	
 	<action path="/viewExamsByDegreeAndCurricularYear"
     		type="ServidorApresentacao.Action.sop.ViewExamsByDegreeAndCurricularYearAction"
@@ -783,6 +796,16 @@
             type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
             validate="true">
         <forward name="forwardChoose" path="/createExam.do?method=prepare&amp;page=0"/>
+        <forward name="showForm" path="/chooseExecutionCourse.jsp"/>        
+    </action>
+
+    <action path="/chooseExecutionCourseToAddToExam"
+    		name="chooseExecutionCourseForm"
+			input="/escolherDisciplinaExecucao.jsp"
+            scope="request"
+            type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
+            validate="true">
+        <forward name="forwardChoose" path="/addExecutionCourseToExam.do"/>
         <forward name="showForm" path="/chooseExecutionCourse.jsp"/>        
     </action>
 
