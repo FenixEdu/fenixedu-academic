@@ -113,7 +113,7 @@
 	<!-- ========== Global Forward Definitions =============================== -->
 	<global-forwards type="org.apache.struts.action.ActionForward">
      <forward name="index" path="/index.do" redirect="true"/>
-     <forward name="firstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
+     <forward name="firstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>  
     </global-forwards>
 
 	<!-- ========== Action Mapping Definitions =============================== -->
@@ -292,6 +292,20 @@
 		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
         validate="true"	>    
        <forward name="viewSite" path="/viewSite.do"/>
+	</action>
+	
+	<action name="sectionForm"
+		input="/viewSection.jsp"
+		path="/createSection"
+		type="ServidorApresentacao.Action.teacher.InserSectionAction"
+        validate="false"	>    
+       <forward name="viewSite" path="/viewSite.do"/>
+	</action>
+	
+	<!-- Section viewer -->
+	<action path="/viewSection"
+        type="ServidorApresentacao.Action.teacher.ViewSectionAction">    
+     <forward name="Sucess" path="/viewSection.jsp"/>         
 	</action>
 	
 	</action-mappings>

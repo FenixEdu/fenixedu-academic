@@ -6,6 +6,8 @@
  */
 package ServidorApresentacao.Action.teacher;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,47 +38,71 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class ReadSite extends FenixAction {
 
 	public ActionForward execute(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
-			SessionUtils.validSessionVerification(request, mapping);
-			HttpSession session = getSession(request);
-			UserView userView =
-				(UserView) session.getAttribute(SessionConstants.U_VIEW);
-				
-			InfoTeacher infoTeacher = (InfoTeacher) session.getAttribute(SessionConstants.INFO_TEACHER);	
-			List infoSites = (List) session.getAttribute(SessionConstants.INFO_SITES_LIST);
-						
-			InfoSite site=null;
-						String index = (String) request.getParameter("index");
-						if(index!=null){
-			
-						site = (InfoSite) infoSites.get((new Integer(index)).intValue());
-							}
-						else {
-						site = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);	
-						}
-						session.setAttribute(SessionConstants.INFO_SITE,site);			
-						session.setAttribute(SessionConstants.ALTERNATIVE_SITE,site.getAlternativeSite());
-						session.setAttribute(SessionConstants.MAIL,site.getMail());	
-			//TODO: Read Sections
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		SessionUtils.validSessionVerification(request, mapping);
+		HttpSession session = getSession(request);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			//Read last Anouncement
-			Object args[] = new Object[1];
-			args[0] = site;
+		InfoTeacher infoTeacher =
+			(InfoTeacher) session.getAttribute(SessionConstants.INFO_TEACHER);
+		List infoSites =
+			(List) session.getAttribute(SessionConstants.INFO_SITES_LIST);
 
-			InfoAnnouncement lastAnnouncement = null;		
-			GestorServicos manager = GestorServicos.manager();
-			try {
-				lastAnnouncement = (InfoAnnouncement) manager.executar(userView, "ReadLastAnnouncement", args);
-				session.setAttribute(SessionConstants.LAST_ANNOUNCEMENT, lastAnnouncement);
-			} catch (FenixServiceException fenixServiceException){
-				throw new FenixActionException(fenixServiceException.getMessage());
-			}
-			
-			return mapping.findForward("viewSite");}
+		InfoSite site = null;
+		String index = (String) request.getParameter("index");
+		if (index != null) {
 
+			site = (InfoSite) infoSites.get((new Integer(index)).intValue());
+		} else {
+			site = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+		}
+		session.setAttribute(SessionConstants.INFO_SITE, site);
+		session.setAttribute(
+			SessionConstants.ALTERNATIVE_SITE,
+			site.getAlternativeSite());
+		session.setAttribute(SessionConstants.MAIL, site.getMail());
+		
+		//Read last Anouncement
+		Object args[] = new Object[1];
+		args[0] = site;
+
+		InfoAnnouncement lastAnnouncement = null;
+		GestorServicos manager = GestorServicos.manager();
+		try {
+			lastAnnouncement =
+				(InfoAnnouncement) manager.executar(
+					userView,
+					"ReadLastAnnouncement",
+					args);
+			session.setAttribute(
+				SessionConstants.LAST_ANNOUNCEMENT,
+				lastAnnouncement);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+
+
+		// read sections		
+		ArrayList sections = null;
+		try {
+			sections =
+				(ArrayList) manager.executar(
+					userView,
+					"ReadSections",
+					args);
+			Collections.sort(sections);
+			session.setAttribute(
+				SessionConstants.SECTIONS,
+				sections);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+		return mapping.findForward("viewSite");
+	}
 
 }
