@@ -10,6 +10,8 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -110,6 +112,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 			&& infoShiftEnrollment.getInfoShiftEnrollment().size() > 0
 			&&  selectCourses == null)
 		{
+			order(infoShiftEnrollment);
 			return mapping.findForward("showShiftsEnrollment");
 		}
 		else
@@ -130,6 +133,14 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		}
 	}
 
+	private void order(InfoShiftEnrollment infoShiftEnrollment)
+	{
+		ComparatorChain comparator = new ComparatorChain();
+		comparator.addComparator(new BeanComparator("infoDisciplinaExecucao.nome"));
+		comparator.addComparator(new BeanComparator("tipo"));
+		Collections.sort(infoShiftEnrollment.getInfoShiftEnrollment(), comparator);
+	}
+	
 	private String checkParameter(HttpServletRequest request)
 	{
 		String selectCourses = request.getParameter("selectCourses");
