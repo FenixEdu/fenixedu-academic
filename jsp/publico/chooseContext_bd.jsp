@@ -20,7 +20,7 @@
 	<br />
     <p><bean:message key="property.context.degree"/>:
 		<html:select property="index" size="1">
-       		<html:options collection="licenciaturas" property="value" labelProperty="label"/>
+       		<html:options scope="request" collection="<%= SessionConstants.DEGREES %>" property="value" labelProperty="label"/>
        </html:select>
 	 </p>
 	 <br />
@@ -35,7 +35,7 @@
 	   <tr>
 	     <td nowrap class="formTD"><bean:message key="property.context.curricular.year"/>:</td>
 	     <td nowrap class="formTD"><html:select property="curricularYear" size="1">
-       		<html:options collection="anosCurriculares" property="value" labelProperty="label"/>
+       		<html:options collection="<%= SessionConstants.CURRICULAR_YEAR_LIST_KEY %>" property="value" labelProperty="label"/>
        </html:select></td>
        </tr>
 <%--	   <tr>
