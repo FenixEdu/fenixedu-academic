@@ -64,9 +64,9 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         Object[] arguments = getServiceCallArguments(request);
         ISummary summary = getSummary(arguments);
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();        
         ITeacher teacherLogged = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-        
+                        
         try {
             if(isTeacherResponsible(arguments, request)){
                 List teachers = getExecutionCourseTeachers(arguments, request);
@@ -74,7 +74,9 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
                     throw new NotAuthorizedFilterException();                  
                 }                
             }
-            else if(summary.getTeacher().equals(teacherLogged)){}    
+            else if((summary.getTeacher() != null) && (summary.getTeacher().equals(teacherLogged))){
+                
+            }    
             else if ((id == null) || (id.getRoles() == null)
                     || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
                     || !lecturesExecutionCourse(id, arguments)
@@ -146,13 +148,14 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         IUserView userView = getRemoteUser(request);              
         List responsibleTeachers = getResponsibleTeachers((Integer) arguments[0]);  
         boolean loggedIsResponsible = false;  
-        
+                  
         for (Iterator iter = responsibleTeachers.iterator(); iter.hasNext();) {
             ITeacher teacher = (ITeacher) iter.next();
             if (teacher.getPerson().getUsername().equals(userView.getUtilizador()))
                 loggedIsResponsible = true;
             break;
         }
+        
         return loggedIsResponsible;
     }
 
@@ -434,9 +437,10 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
                 professorship = persistentProfessorship.readByTeacherAndExecutionCoursePB(teacher,
                         executionCourse);
             }
-        } catch (Exception e) {
+        } catch (Exception e) {           
             return false;
         }
+        
         return professorship != null;
     }
 
