@@ -5,13 +5,16 @@
 package ServidorAplicacao.Servico.credits;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
 import Dominio.ExecutionCourse;
+import Dominio.IAula;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IShiftProfessorship;
@@ -21,6 +24,9 @@ import Dominio.ShiftProfessorship;
 import Dominio.Teacher;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.credits.validator.CreditsValidator;
+import ServidorAplicacao.Servico.credits.validator.OverlappingLessonPeriod;
+import ServidorAplicacao.Servico.credits.validator.OverlappingPeriodException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
@@ -30,14 +36,21 @@ import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.DiaSemana;
 
 /**
  * @author jpvl
  */
 public class AcceptTeacherExecutionCourseShiftPercentage implements IServico
 {
-    private static AcceptTeacherExecutionCourseShiftPercentage service =
-        new AcceptTeacherExecutionCourseShiftPercentage();
+    /**
+	 * @author jpvl
+	 */
+    public class InvalidProfessorshipPercentage extends FenixServiceException
+    {
+
+    }
+    private static AcceptTeacherExecutionCourseShiftPercentage service = new AcceptTeacherExecutionCourseShiftPercentage();
 
     /**
 	 * The singleton access method of this class.
@@ -47,10 +60,8 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico
         return service;
     }
 
-    private ITurno getIShift(
-        ITurnoPersistente shiftDAO,
-        InfoShiftProfessorship infoShiftProfessorship)
-        throws ExcepcaoPersistencia
+    private ITurno getIShift(ITurnoPersistente shiftDAO, InfoShiftProfessorship infoShiftProfessorship)
+            throws ExcepcaoPersistencia
     {
         ITurno shift = new Turno(infoShiftProfessorship.getInfoShift().getIdInternal());
         shift = (ITurno) shiftDAO.readByOId(shift, false);
@@ -73,11 +84,8 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico
 	 * @return @throws
 	 *              FenixServiceException
 	 */
-    public List run(
-        InfoTeacher infoTeacher,
-        InfoExecutionCourse infoExecutionCourse,
-        List infoShiftProfessorshipList)
-        throws FenixServiceException
+    public List run(InfoTeacher infoTeacher, InfoExecutionCourse infoExecutionCourse,
+            List infoShiftProfessorshipList) throws FenixServiceException
     {
         List shiftWithErrors = new ArrayList();
 
@@ -87,15 +95,14 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico
 
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
 
-            IPersistentShiftProfessorship shiftProfessorshipDAO =
-                sp.getIPersistentTeacherShiftPercentage();
+            IPersistentShiftProfessorship shiftProfessorshipDAO = sp
+                    .getIPersistentTeacherShiftPercentage();
             IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
 
             //read execution course
-            IExecutionCourse executionCourse =
-                new ExecutionCourse(infoExecutionCourse.getIdInternal());
+            IExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourse.getIdInternal());
             executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 
             //read teacher
@@ -103,60 +110,16 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico
             teacher = (ITeacher) teacherDAO.readByOId(teacher, false);
 
             //read professorship
-            IProfessorship professorship =
-                professorshipDAO.readByTeacherIDAndExecutionCourseID(teacher, executionCourse);
+            IProfessorship professorship = professorshipDAO.readByTeacherIDAndExecutionCourseID(teacher,
+                    executionCourse);
 
             if (professorship != null)
             {
                 Iterator iterator = infoShiftProfessorshipList.iterator();
-                while (iterator.hasNext())
-                {
-                    InfoShiftProfessorship infoShiftProfessorship =
-                        (InfoShiftProfessorship) iterator.next();
-
-                    ITurno shift = getIShift(shiftDAO, infoShiftProfessorship);
-
-                    IShiftProfessorship shiftProfessorship = shiftProfessorshipDAO.readByProfessorshipAndShift(professorship, shift);
-                    
-                    
-                    if (shiftProfessorship == null) {
-                        shiftProfessorship = new ShiftProfessorship();
-                        shiftProfessorship.setProfessorship(professorship);
-                        shiftProfessorship.setShift(shift);
-                    }
-					shiftProfessorshipDAO.simpleLockWrite(shiftProfessorship);
-                    shiftProfessorship.setPercentage(infoShiftProfessorship.getPercentage());
-
-//                    boolean ok = validate(shift, infoShiftProfessorship.getPercentage(), teacher);
-
-//                    if (ok)
-//                    {
-//                        if (infoShiftProfessorship.getPercentage().floatValue() != 0)
-//                        {
-//                            lockPercentages(shiftProfessorshipDAO, /* teacherShiftPercentageAdded, */
-//                            shift, shiftProfessorship);
-//                        }
-//                        else
-//                        {
-//                            //delete because is zero
-//                            shiftProfessorship =
-//                                shiftProfessorshipDAO.readByUnique(shiftProfessorship);
-//
-//                            if (shiftProfessorship != null)
-//                            {
-//                                shiftProfessorshipDAO.delete(shiftProfessorship);
-//                            }
-//                        }
-//                    }
-//                    else
-//                    {
-//                        shiftWithErrors.add(Cloner.copyIShift2InfoShift(shift));
-//                    }
-                }
+                List shiftProfessorshipAdded = addShiftProfessorships(shiftDAO, shiftProfessorshipDAO,
+                        professorship, iterator);
+                validateShiftProfessorshipAdded(shiftProfessorshipAdded);
             }
-
-            //List teacherShiftPercentageAdded = new ArrayList();
-
         }
         catch (ExcepcaoPersistencia e)
         {
@@ -167,53 +130,133 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico
         return shiftWithErrors; //retorna a lista com os turnos que causaram erros!
     }
 
-//    private void lockPercentages(IPersistentShiftProfessorship teacherShiftPercentageDAO,
-//    //List teacherShiftPercentageAdded,
-//    ITurno shift, IShiftProfessorship teacherShiftPercentage) throws ExcepcaoPersistencia
-//    {
-//
-//        List associatedTeacherProfessorShipPercentage =
-//            shift.getAssociatedTeacherProfessorShipPercentage();
-//        int indexOf = associatedTeacherProfessorShipPercentage.indexOf(teacherShiftPercentage);
-//
-//        IShiftProfessorship teacherShiftPercentageToWrite = null;
-//        if (indexOf != -1)
-//        {
-//            teacherShiftPercentageToWrite =
-//                (IShiftProfessorship) associatedTeacherProfessorShipPercentage.get(indexOf);
-//        }
-//        else
-//        {
-//            teacherShiftPercentageToWrite = teacherShiftPercentage;
-//        }
-//
-//        teacherShiftPercentageDAO.simpleLockWrite(teacherShiftPercentageToWrite);
-//        teacherShiftPercentageToWrite.setPercentage(teacherShiftPercentage.getPercentage());
-//        //teacherShiftPercentageAdded.add(teacherShiftPercentageToWrite);
-//    }
-//
-//    private boolean validate(ITurno shift, Double percentage, ITeacher teacher)
-//    {
-//        double percentageAvailable = 100;
-//        if (shift.getTipo().getTipo().intValue() != TipoAula.LABORATORIAL)
-//        {
-//            List teacherProfessorShipPercentageList =
-//                shift.getAssociatedTeacherProfessorShipPercentage();
-//            Iterator iterator = teacherProfessorShipPercentageList.iterator();
-//            while (iterator.hasNext())
-//            {
-//                IShiftProfessorship teacherShiftPercentageBD = (IShiftProfessorship) iterator.next();
-//                if (!teacherShiftPercentageBD.getProfessorShip().getTeacher().equals(teacher))
-//                {
-//                    percentageAvailable -= teacherShiftPercentageBD.getPercentage().doubleValue();
-//                }
-//            }
-//            if (percentageAvailable < percentage.doubleValue())
-//            {
-//                // 100% exceeded
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
+    private List addShiftProfessorships(ITurnoPersistente shiftDAO,
+            IPersistentShiftProfessorship shiftProfessorshipDAO, IProfessorship professorship,
+            Iterator iterator)
+            throws InvalidProfessorshipPercentage, ExcepcaoPersistencia, OverlappingPeriodException, 
+            FenixServiceException
+    {
+        List shiftProfessorshipAdded = new ArrayList();
+        while (iterator.hasNext())
+        {
+            InfoShiftProfessorship infoShiftProfessorship = (InfoShiftProfessorship) iterator.next();
+
+            Double percentage = infoShiftProfessorship.getPercentage();
+            if ((percentage != null)
+                    && ((percentage.doubleValue() > 100) || (percentage.doubleValue() < 0)))
+            {
+                throw new InvalidProfessorshipPercentage();
+            }
+
+            ITurno shift = getIShift(shiftDAO, infoShiftProfessorship);
+
+            IShiftProfessorship shiftProfessorship = shiftProfessorshipDAO.readByProfessorshipAndShift(
+                    professorship, shift);
+
+            shiftProfessorship = lockOrDeleteShiftProfessorship(shiftProfessorshipDAO, professorship,
+                    percentage, shift, shiftProfessorship);
+
+            if (percentage.doubleValue() != 0)
+            {
+                shiftProfessorshipAdded.add(shiftProfessorship);
+            }
+
+        }
+        return shiftProfessorshipAdded;
+    }
+
+    private IShiftProfessorship lockOrDeleteShiftProfessorship(
+            IPersistentShiftProfessorship shiftProfessorshipDAO, IProfessorship professorship,
+            Double percentage, ITurno shift, IShiftProfessorship shiftProfessorship)
+            throws ExcepcaoPersistencia, OverlappingPeriodException, FenixServiceException
+    {
+        if (percentage.doubleValue() == 0)
+        {
+            shiftProfessorshipDAO.delete(shiftProfessorship);
+        }
+        else
+        {
+
+            if (shiftProfessorship == null)
+            {
+                shiftProfessorship = new ShiftProfessorship();
+                shiftProfessorship.setProfessorship(professorship);
+                shiftProfessorship.setShift(shift);
+            }
+            shiftProfessorshipDAO.simpleLockWrite(shiftProfessorship);
+
+            shiftProfessorship.setPercentage(percentage);
+
+            CreditsValidator.validatePeriod(professorship.getTeacher(), professorship
+                    .getExecutionCourse().getExecutionPeriod(),
+                    shiftProfessorship);
+        }
+        return shiftProfessorship;
+    }
+
+    /**
+	 * @param infoShiftProfessorshipAdded
+	 */
+    private void validateShiftProfessorshipAdded(List shiftProfessorshipAdded)
+            throws OverlappingLessonPeriod
+    {
+
+        if (shiftProfessorshipAdded.size() > 1)
+        {
+            ArrayList lessonsList = new ArrayList();
+            ArrayList fullShiftLessonList = new ArrayList();
+            for (int i = 0; i < shiftProfessorshipAdded.size(); i++)
+            {
+                final IShiftProfessorship shiftProfessorship = (IShiftProfessorship) shiftProfessorshipAdded
+                        .get(i);
+                List shiftLessons = shiftProfessorship.getShift().getAssociatedLessons();
+                lessonsList.addAll(shiftLessons);
+                if (shiftProfessorship.getPercentage().doubleValue() == 100)
+                {
+                    fullShiftLessonList.addAll(shiftLessons);
+                }
+            }
+
+            for (int j = 0; j < fullShiftLessonList.size(); j++)
+            {
+                IAula lesson = (IAula) lessonsList.get(j);
+                if (overlapsWithAny(lesson, lessonsList))
+                {
+                    throw new OverlappingLessonPeriod();
+                }
+            }
+        }
+    }
+
+    /**
+	 * @param lesson
+	 * @param lessonsList
+	 * @return
+	 */
+    private boolean overlapsWithAny(IAula lesson, ArrayList lessonsList)
+    {
+        DiaSemana lessonWeekDay = lesson.getDiaSemana();
+        Calendar lessonStart = lesson.getInicio();
+        Calendar lessonEnd = lesson.getFim();
+        for (int i = 0; i < lessonsList.size(); i++)
+        {
+            IAula otherLesson = (IAula) lessonsList.get(i);
+            if (!otherLesson.equals(lesson))
+            {
+                if (otherLesson.getDiaSemana().equals(lessonWeekDay))
+                {
+                    Calendar otherStart = otherLesson.getInicio();
+                    Calendar otherEnd = otherLesson.getFim();
+                    if (((otherStart.equals(lessonStart)) && otherEnd.equals(lessonEnd))
+                            || (lessonStart.before(otherEnd) && lessonStart.after(otherStart))
+                            || (lessonEnd.before(otherEnd) && lessonEnd.after(otherStart)))
+                    {
+                        return true;
+                    }
+
+                }
+            }
+        }
+        return false;
+    }
 }
