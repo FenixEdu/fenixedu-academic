@@ -27,7 +27,6 @@ import DataBeans.InfoContributor;
 import DataBeans.InfoCoordinator;
 import DataBeans.InfoCountry;
 import DataBeans.InfoCurricularCourse;
-import DataBeans.InfoCurricularCourseGroup;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurricularSemester;
 import DataBeans.InfoCurricularYear;
@@ -220,7 +219,7 @@ import Util.EvaluationType;
 import Util.State;
 import Util.tests.Response;
 import constants.publication.PublicationConstants;
-
+ 
 /**
  * @author jpvl
  *  
@@ -4933,20 +4932,7 @@ public abstract class Cloner
         return infoTeacherInstitutionWorkTime;
     }
 
-    /**
-     * @param curricularCourseGroup
-     * @return
-     */
-    public static InfoCurricularCourseGroup copyICurricularCourseGroup2InfoCurricularCourseGroup(ICurricularCourseGroup curricularCourseGroup)
-    {
-        InfoCurricularCourseGroup infoCCGroup = new InfoCurricularCourseGroup();
-        InfoBranch infoBranch = copyIBranch2InfoBranch(curricularCourseGroup.getBranch());
-        copyObjectProperties(infoCCGroup, curricularCourseGroup);
-
-        infoCCGroup.setInfoBranch(infoBranch);
-        infoCCGroup.setAreaType(curricularCourseGroup.getAreaType());
-        return infoCCGroup;
-    }
+   
 
     public static IWorkLocation copyInfoWorkLocation2IWorkLocation(InfoWorkLocation infoWorkLocation)
     {

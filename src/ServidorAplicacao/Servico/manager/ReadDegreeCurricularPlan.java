@@ -3,11 +3,10 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.util.Cloner;
 import Dominio.DegreeCurricularPlan;
 import Dominio.IDegreeCurricularPlan;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -18,46 +17,34 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class ReadDegreeCurricularPlan implements IServico {
+public class ReadDegreeCurricularPlan implements IService {
 
-  private static ReadDegreeCurricularPlan service = new ReadDegreeCurricularPlan();
+    /**
+     * The constructor of this class.
+     */
+    public ReadDegreeCurricularPlan() {
+    }
 
-  /**
-   * The singleton access method of this class.
-   */
-  public static ReadDegreeCurricularPlan getService() {
-	return service;
-  }
+    /**
+     * Executes the service. Returns the current InfoDegreeCurricularPlan.
+     */
+    public InfoDegreeCurricularPlan run(Integer idInternal) throws FenixServiceException {
+        IDegreeCurricularPlan degreeCurricularPlan;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            degreeCurricularPlan = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan()
+                    .readByOID(DegreeCurricularPlan.class, idInternal);
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
 
-  /**
-   * The constructor of this class.
-   */
-  private ReadDegreeCurricularPlan() { }
+        if (degreeCurricularPlan == null) {
+            throw new NonExistingServiceException();
+        }
 
-  /**
-   * Service name
-   */
-  public final String getNome() {
-	return "ReadDegreeCurricularPlan";
-  }
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
+                .newInfoFromDomain(degreeCurricularPlan);
 
-  /**
-   * Executes the service. Returns the current InfoDegreeCurricularPlan.
-   */
-  public InfoDegreeCurricularPlan run(Integer idInternal) throws FenixServiceException {
-	IDegreeCurricularPlan degreeCurricularPlan;
-	try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			degreeCurricularPlan = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class, idInternal);
-	} catch (ExcepcaoPersistencia excepcaoPersistencia){
-		throw new FenixServiceException(excepcaoPersistencia);
-	}
-     
-	if (degreeCurricularPlan == null) {
-		throw new NonExistingServiceException();
-	}
-
-	InfoDegreeCurricularPlan infoDegreeCurricularPlan = Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCurricularPlan); 
-	return infoDegreeCurricularPlan;
-  }
+        return infoDegreeCurricularPlan;
+    }
 }

@@ -6,6 +6,7 @@ package DataBeans;
 
 import java.util.List;
 
+import Dominio.AreaCurricularCourseGroup;
 import Dominio.ICurricularCourseGroup;
 import Util.AreaType;
 
@@ -14,17 +15,23 @@ import Util.AreaType;
  * @author Ricardo Rodrigues
  */
 
-public class InfoCurricularCourseGroup extends InfoObject {
+public abstract class InfoCurricularCourseGroup extends InfoObject {
 
-    private Integer minimumCredits;
+    protected Integer minimumValue;
 
-    private Integer maximumCredits;
+    protected Integer maximumValue;
 
-    private AreaType areaType;
+    protected List curricularCourses;
 
-    private InfoBranch infoBranch;
+    protected List scientificAreas;
 
-    private List curricularCourseScopes;
+    protected String name;
+
+    protected AreaType areaType;
+
+    protected InfoBranch infoBranch;
+
+    protected List curricularCourseScopes;
 
     public InfoCurricularCourseGroup() {
     }
@@ -33,36 +40,20 @@ public class InfoCurricularCourseGroup extends InfoObject {
         boolean resultado = false;
         if (obj instanceof InfoCurricularCourseGroup) {
             InfoCurricularCourseGroup infoCurricularCourseGroup = (InfoCurricularCourseGroup) obj;
-            resultado = (((getInfoBranch() == null && infoCurricularCourseGroup
-                    .getInfoBranch() == null) || (getInfoBranch() != null
-                    && infoCurricularCourseGroup.getInfoBranch() != null && getInfoBranch()
-                    .equals(infoCurricularCourseGroup.getInfoBranch())))
-                    && ((getAreaType() == null && infoCurricularCourseGroup
-                            .getAreaType() == null) || (getAreaType() != null
-                            && infoCurricularCourseGroup.getAreaType() != null && getAreaType()
-                            .equals(infoCurricularCourseGroup.getAreaType()))) && ((getCurricularCourseScopes() == null && infoCurricularCourseGroup
+            resultado = (((getInfoBranch() == null && infoCurricularCourseGroup.getInfoBranch() == null) || (getInfoBranch() != null
+                    && infoCurricularCourseGroup.getInfoBranch() != null && getInfoBranch().equals(
+                    infoCurricularCourseGroup.getInfoBranch())))
+                    && ((getAreaType() == null && infoCurricularCourseGroup.getAreaType() == null) || (getAreaType() != null
+                            && infoCurricularCourseGroup.getAreaType() != null && getAreaType().equals(
+                            infoCurricularCourseGroup.getAreaType()))) && ((getCurricularCourseScopes() == null && infoCurricularCourseGroup
                     .getCurricularCourseScopes() == null) || (getCurricularCourseScopes() != null
                     && infoCurricularCourseGroup.getCurricularCourseScopes() != null && getCurricularCourseScopes()
-                    .equals(
-                            infoCurricularCourseGroup
-                                    .getCurricularCourseScopes()))));
+                    .equals(infoCurricularCourseGroup.getCurricularCourseScopes()))));
         }
 
         return resultado;
     }
 
-    public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "Branch = " + this.infoBranch + "; ";
-        result += "MimimumCredits = " + this.minimumCredits + "; ";
-        result += "MaximumCredits = " + this.maximumCredits + "; ";
-        result += "AreaType = " + this.areaType + "; ";
-        return result;
-    }
-
-    /**
-     * @return
-     */
     public InfoBranch getInfoBranch() {
         return infoBranch;
     }
@@ -102,50 +93,86 @@ public class InfoCurricularCourseGroup extends InfoObject {
         this.areaType = areaType;
     }
 
-    /**
-     * @return
-     */
-    public Integer getMaximumCredits() {
-        return maximumCredits;
+    protected Integer getMaximumValue() {
+        return maximumValue;
+    }
+
+    protected void setMaximumValue(Integer maximumValue) {
+        this.maximumValue = maximumValue;
+    }
+
+    protected Integer getMinimumValue() {
+        return minimumValue;
+    }
+
+    protected void setMinimumValue(Integer minimumValue) {
+        this.minimumValue = minimumValue;
     }
 
     /**
-     * @param maximumCredits
+     * @return Returns the curricularCourses.
      */
-    public void setMaximumCredits(Integer maximumCredits) {
-        this.maximumCredits = maximumCredits;
+    protected List getCurricularCourses() {
+        return curricularCourses;
     }
 
     /**
-     * @return
+     * @param curricularCourses
+     *            The curricularCourses to set.
      */
-    public Integer getMinimumCredits() {
-        return minimumCredits;
+    protected void setCurricularCourses(List curricularCourses) {
+        this.curricularCourses = curricularCourses;
     }
 
     /**
-     * @param minimumCredits
+     * @return Returns the name.
      */
-    public void setMinimumCredits(Integer minimumCredits) {
-        this.minimumCredits = minimumCredits;
+    protected String getName() {
+        return name;
+    }
+
+    /**
+     * @param name
+     *            The name to set.
+     */
+    protected void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return Returns the scientificAreas.
+     */
+    protected List getScientificAreas() {
+        return scientificAreas;
+    }
+
+    /**
+     * @param scientificAreas
+     *            The scientificAreas to set.
+     */
+    protected void setScientificAreas(List scientificAreas) {
+        this.scientificAreas = scientificAreas;
     }
 
     public void copyFromDomain(ICurricularCourseGroup curricularCourseGroup) {
         super.copyFromDomain(curricularCourseGroup);
         if (curricularCourseGroup != null) {
             setAreaType(curricularCourseGroup.getAreaType());
-            setMaximumCredits(curricularCourseGroup.getMaximumCredits());
-            setMinimumCredits(curricularCourseGroup.getMinimumCredits());
+            setName(curricularCourseGroup.getName());
         }
     }
 
     public static InfoCurricularCourseGroup newInfoFromDomain(
             ICurricularCourseGroup curricularCourseGroup) {
-        InfoCurricularCourseGroup infoCurricularCourseGroup = null;
+
         if (curricularCourseGroup != null) {
-            infoCurricularCourseGroup = new InfoCurricularCourseGroup();
-            infoCurricularCourseGroup.copyFromDomain(curricularCourseGroup);
+            if (curricularCourseGroup instanceof AreaCurricularCourseGroup) {
+                return InfoAreaCurricularCourseGroup.newInfoFromDomain(curricularCourseGroup);
+            }
+            return InfoOptionalCurricularCourseGroup.newInfoFromDomain(curricularCourseGroup);
+
         }
-        return infoCurricularCourseGroup;
+        return null;
     }
+
 }
