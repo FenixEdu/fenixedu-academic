@@ -29,6 +29,7 @@ import DataBeans.InfoSiteExam;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSiteProgram;
+import DataBeans.InfoSiteRoomTimeTable;
 import DataBeans.InfoSiteSection;
 import DataBeans.InfoSiteShifts;
 import DataBeans.InfoSiteTimetable;
@@ -236,6 +237,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		}
 	}
 
+
+
 	public ActionForward roomViewer(
 		ActionMapping mapping,
 		ActionForm form,
@@ -251,6 +254,13 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		List lessons = null;
 
 		if (roomName != null) {
+			/*
+			
+			ISiteComponent roomTimeTableComponent = new InfoSiteRoomTimeTable();
+			
+			
+			
+			*/
 			roomKey = new RoomKey(roomName);
 
 			GestorServicos gestor = GestorServicos.manager();
