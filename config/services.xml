@@ -3554,9 +3554,9 @@
         </filterChains>
     </service>
     <service>
-        <name>ReadDepartmentTeachersService</name>
+        <name>ReadDepartmentTeachersCreditsDetailsService</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.department.ReadDepartmentTeachersService</implementationClass>
+            ServidorAplicacao.Servico.department.ReadDepartmentTeachersCreditsDetailsService</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
