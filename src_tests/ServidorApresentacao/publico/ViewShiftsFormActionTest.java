@@ -3,27 +3,32 @@ package ServidorApresentacao.publico;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import servletunit.struts.MockStrutsTestCase;
-import Dominio.Curso;
-import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.ITurno;
 import Dominio.Turno;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
-import Util.TipoCurso;
 
 /**
  * @author João Mota
  */
 public class ViewShiftsFormActionTest extends MockStrutsTestCase {
-	protected ISuportePersistente _suportePersistente = null;
-	protected IDisciplinaExecucaoPersistente _disciplinaExecucaoPersistente =
+	protected ISuportePersistente sp = null;
+	protected IDisciplinaExecucaoPersistente executionCourseDAO =
 		null;
-	protected ITurnoPersistente _turnoPersistente = null;
-	protected ITurno _turno = null;
+	protected ITurnoPersistente shiftDAO = null;
+	private IPersistentExecutionPeriod executionPeriodDAO;
+	private IPersistentExecutionYear executionYearDAO;
+	protected ITurno shift = null;
 
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());
@@ -40,34 +45,43 @@ public class ViewShiftsFormActionTest extends MockStrutsTestCase {
 		// define ficheiro de configuração Struts a utilizar
 		setServletConfigFile("/WEB-INF/tests/web-publico.xml");
 		//preenche a DB
-		_suportePersistente = SuportePersistenteOJB.getInstance();
-		_turnoPersistente = _suportePersistente.getITurnoPersistente();
-		_disciplinaExecucaoPersistente =
-			_suportePersistente.getIDisciplinaExecucaoPersistente();
-		_suportePersistente.iniciarTransaccao();
-		_suportePersistente.getICursoExecucaoPersistente().deleteAll();
-		_suportePersistente.getICursoPersistente().deleteAll();
-		_turnoPersistente.deleteAll();
-		_disciplinaExecucaoPersistente.apagarTodasAsDisciplinasExecucao();
-		_suportePersistente.confirmarTransaccao();
-		System.out.println("***************apagueitudo da bd");
-
-		DisciplinaExecucao exeCourse = new DisciplinaExecucao();
-		exeCourse.setSigla("whatever");
-		exeCourse.setChaveLicenciaturaExecucao(new Integer(1));
-		exeCourse.setChaveResponsavel(new Integer(1));
-
-		exeCourse.setLicenciaturaExecucao(
-			new CursoExecucao(
-				"2002/03",
-				new Curso("sigla", "nome", new TipoCurso(new Integer(1)))));
+		sp = SuportePersistenteOJB.getInstance();
+		shiftDAO = sp.getITurnoPersistente();
+		executionCourseDAO =
+			sp.getIDisciplinaExecucaoPersistente();
+			
+		executionYearDAO.deleteAll();
+		
+		
+		sp.iniciarTransaccao();
+		sp.getICursoExecucaoPersistente().deleteAll();
+		sp.getICursoPersistente().deleteAll();
+		
+		shiftDAO.deleteAll();
+		
+		
+		executionCourseDAO.apagarTodasAsDisciplinasExecucao();
+		sp.confirmarTransaccao();
+			
+		IExecutionPeriod executionPeriod = new ExecutionPeriod();
+		executionPeriod.setName("1");
+		executionPeriod.setExecutionYear(new ExecutionYear("2002/2003"));
+		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+		
+		executionCourse.setSigla("whatever");
+		
+		executionCourse.setExecutionPeriod(executionPeriod);
 
 		TipoAula tipo = new TipoAula(new Integer(1));
-		_turno = new Turno("blabla", tipo, new Integer(1), exeCourse);
-		_suportePersistente.iniciarTransaccao();
-		_turnoPersistente.lockWrite(_turno);
-		_suportePersistente.confirmarTransaccao();
-		System.out.println("***************escrevi tudo na bd");
+		
+		shift = new Turno("blabla", tipo, new Integer(1), executionCourse);
+		
+		sp.iniciarTransaccao();
+		
+		shiftDAO.lockWrite(shift);
+		
+		sp.confirmarTransaccao();
+		
 	}
 
 	public void tearDown() throws Exception {
