@@ -132,12 +132,22 @@ public class InfoAnnouncement implements Comparable{
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(Object arg0) {
-		if (getCreationDate().after(((InfoAnnouncement)arg0).getCreationDate())){
+		if (getYoungerDate().after(((InfoAnnouncement)arg0).getYoungerDate())){
 			return -1;
 		}
-		else{ if (getCreationDate().before(((InfoAnnouncement)arg0).getCreationDate())){
+		else{ if (getYoungerDate().before(((InfoAnnouncement)arg0).getYoungerDate())){
 			return 1;
 		}else {		return 0; } 
 	}
+	}
+	
+	private Timestamp getYoungerDate() {
+	
+			
+			if (getLastModifiedDate()!=null && getLastModifiedDate().after(getCreationDate())) {
+				return getLastModifiedDate();
+			}
+			else {return getCreationDate();	}	
+		
 	}
 }
