@@ -142,16 +142,19 @@ public class ChangeStudentTestQuestion implements IServico {
 						distributedTest));
 			}
 
-			Iterator studentsTestQuestionIt = studentsTestQuestionList.iterator();
-			IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
+			Iterator studentsTestQuestionIt =
+				studentsTestQuestionList.iterator();
+			IPersistentMetadata persistentMetadata =
+				persistentSuport.getIPersistentMetadata();
 			IMetadata metadata = null;
-			if (newMetadataId != null){
+			if (newMetadataId != null) {
 				metadata = new Metadata(newMetadataId);
-				metadata = (IMetadata) persistentMetadata.readByOId(metadata, false);
+				metadata =
+					(IMetadata) persistentMetadata.readByOId(metadata, false);
 				if (metadata == null)
 					throw new InvalidArgumentsServiceException();
 			}
-				
+
 			while (studentsTestQuestionIt.hasNext()) {
 				IStudentTestQuestion studentTestQuestion =
 					(IStudentTestQuestion) studentsTestQuestionIt.next();
@@ -164,14 +167,31 @@ public class ChangeStudentTestQuestion implements IServico {
 				else {
 					IQuestion newQuestion = new Question();
 					if (newMetadataId == null) {
-						newQuestion = getNewQuestion(persistentQuestion, oldQuestion.getMetadata(), oldQuestion);
-						if (newQuestion == null	|| newQuestion.equals(oldQuestion))
+						newQuestion =
+							getNewQuestion(
+								persistentQuestion,
+								oldQuestion.getMetadata(),
+								oldQuestion);
+						if (newQuestion == null
+							|| newQuestion.equals(oldQuestion))
 							return false;
 					} else {
-						newQuestion = getNewQuestion(persistentQuestion, metadata, null);
+						newQuestion =
+							getNewQuestion(persistentQuestion, metadata, null);
 						if (newQuestion == null)
 							throw new InvalidArgumentsServiceException();
 					}
+					System.out.println(
+						"Troquei exercicio. AlunoNum: "
+							+ studentTestQuestion.getStudent().getNumber()
+							+ " ExercicioOld:"
+							+ oldQuestion.getIdInternal()
+							+ " ExercicioNew: "
+							+ newQuestion.getIdInternal()
+							+ " RespostaOld:"
+							+ studentTestQuestion.getResponse()
+							+ " Shuffle: "
+							+ studentTestQuestion.getOptionShuffle());
 					studentTestQuestion.setQuestion(newQuestion);
 					studentTestQuestion.setResponse(new Integer(0));
 					persistentStudentTestQuestion.simpleLockWrite(
