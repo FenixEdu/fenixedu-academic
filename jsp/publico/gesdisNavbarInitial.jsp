@@ -44,5 +44,18 @@
 	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)  %>" />
 	</logic:notPresent>		
 </logic:present>	
-	
+
+ 	
 </div>
+<logic:present name="<%= SessionConstants.INFO_SITE %>" property="mail" >
+	
+<div id="nav">
+   <h3>Contacto</h3>	
+  <ul><li>
+  	<bean:define id="mail" name="<%=SessionConstants.INFO_SITE%>" property="mail"/>
+	<html:link href="<%= "mailto:" + pageContext.findAttribute("mail") %>">
+		<bean:write name="mail" /></html:link>
+  	</li>
+  </ul> 
+</div>
+</logic:present>
