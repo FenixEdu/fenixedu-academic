@@ -58,6 +58,10 @@
 		<put name="body" value="/manager/insertCurricularCourseScope_bd.jsp" />
 		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
 	</definition>
+	<definition name="df.page.insert-from-other-curricular-course-scope" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/insertFromOtherCurricularCourseScope_bd.jsp" />
+		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
+	</definition>
 
 	<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 	<definition name="df.page.manage-execution-periods" extends="definition.manager.masterPage" >

@@ -1,6 +1,7 @@
 package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -8,7 +9,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.CurricularCourse;
-import Dominio.Enrolment;
+import Dominio.CurricularCourseScope;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
@@ -65,35 +66,35 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	
+
 	public ICurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(Integer degreeCurricularPlanId, String name, String code) throws ExcepcaoPersistencia {
 		try {
-				ICurricularCourse curricularCourse = null;
-				String oqlQuery = "select all from " + CurricularCourse.class.getName();
-				oqlQuery += " where name = $1";
-				oqlQuery += " and code = $2";
-				oqlQuery += " and degreeCurricularPlanKey = $3";
-				query.create(oqlQuery);
-				query.bind(name);
-				query.bind(code);
-				query.bind(degreeCurricularPlanId);
+			ICurricularCourse curricularCourse = null;
+			String oqlQuery = "select all from " + CurricularCourse.class.getName();
+			oqlQuery += " where name = $1";
+			oqlQuery += " and code = $2";
+			oqlQuery += " and degreeCurricularPlanKey = $3";
+			query.create(oqlQuery);
+			query.bind(name);
+			query.bind(code);
+			query.bind(degreeCurricularPlanId);
 
-				List result = (List) query.execute();
-				try {
-					lockRead(result);
-				} catch (ExcepcaoPersistencia ex) {
-					throw ex;
-				}
-
-				if ((result != null) && (result.size() != 0)) {
-					curricularCourse = (ICurricularCourse) result.get(0);
-				}
-				return curricularCourse;
-
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+			List result = (List) query.execute();
+			try {
+				lockRead(result);
+			} catch (ExcepcaoPersistencia ex) {
+				throw ex;
 			}
+
+			if ((result != null) && (result.size() != 0)) {
+				curricularCourse = (ICurricularCourse) result.get(0);
+			}
+			return curricularCourse;
+
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
 
 	public void lockWrite(ICurricularCourse curricularCourseToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
 
@@ -105,15 +106,18 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 
 		// Read branch from database.
-		curricularCourseFromBD = this.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(curricularCourseToWrite.getDegreeCurricularPlan().getIdInternal(), curricularCourseToWrite.getName(), curricularCourseToWrite.getCode());
+		curricularCourseFromBD =
+			this.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
+				curricularCourseToWrite.getDegreeCurricularPlan().getIdInternal(),
+				curricularCourseToWrite.getName(),
+				curricularCourseToWrite.getCode());
 		// If branch is not in database, then write it.
 		if (curricularCourseFromBD == null) {
 			super.lockWrite(curricularCourseToWrite);
 			// else If the branch is mapped to the database, then write any existing changes.
 		} else if (
 			(curricularCourseToWrite instanceof CurricularCourse)
-				&& ((CurricularCourse) curricularCourseFromBD).getIdInternal().equals(
-					((CurricularCourse) curricularCourseToWrite).getIdInternal())) {
+				&& ((CurricularCourse) curricularCourseFromBD).getIdInternal().equals(((CurricularCourse) curricularCourseToWrite).getIdInternal())) {
 			super.lockWrite(curricularCourseToWrite);
 			// else Throw an already existing exception
 		} else
@@ -121,27 +125,31 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 	}
 
 	public Boolean delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
-				// Check for related ExecutionCourses
-				List result = curricularCourse.getAssociatedExecutionCourses();
-				if (!result.isEmpty())
-					return new Boolean(false);
-					
-				// Check for related scopes
-				result = curricularCourse.getScopes();
-				if(result != null) {
-					if(!result.isEmpty())
-						return new Boolean(false);
-				}
-					
-				//Check for related StudentCurricularPlans
-				Criteria criteria = new Criteria();
-				criteria.addEqualTo("curricularCourseScope.curricularCourseKey", curricularCourse.getIdInternal());
-				result = queryList(Enrolment.class, criteria);
-				if (!result.isEmpty())
-					return new Boolean(false);
+		// Check for related ExecutionCourses
+		List result = curricularCourse.getAssociatedExecutionCourses();
 
-				super.delete(curricularCourse);
-				return new Boolean(true);
+		if (!result.isEmpty())
+			return new Boolean(false);
+
+		// Delete related scopes
+
+		result = curricularCourse.getScopes();
+		if (result != null) {
+			if (!result.isEmpty()) {
+				Iterator iter = result.iterator();
+				CurricularCourseScopeOJB scopeOJB = new CurricularCourseScopeOJB();
+				while (iter.hasNext()) {
+					try {
+
+						scopeOJB.delete((CurricularCourseScope) iter.next());
+					} catch (ExcepcaoPersistencia ex) {
+						throw ex;
+					}
+				}
+			}
+		}
+		super.delete(curricularCourse);
+		return new Boolean(true);
 	}
 
 	public List readAll() throws ExcepcaoPersistencia {
@@ -259,13 +267,13 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 	}
 
-	public List readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(IDegreeCurricularPlan degreeCurricularPlan,Boolean basic) throws ExcepcaoPersistencia {
+	public List readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(IDegreeCurricularPlan degreeCurricularPlan, Boolean basic) throws ExcepcaoPersistencia {
 
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("degreeCurricularPlanKey",degreeCurricularPlan.getIdInternal());
-		criteria.addEqualTo("basic",basic);
-		return queryList(CurricularCourse.class,criteria);
-		}
+		criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+		criteria.addEqualTo("basic", basic);
+		return queryList(CurricularCourse.class, criteria);
+	}
 
 	public List readAllCurricularCoursesByBranch(IBranch branch) throws ExcepcaoPersistencia {
 		try {
@@ -397,7 +405,6 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			query.bind(branch.getName());
 			query.bind(branch.getCode());
 
-
 			List result = (List) query.execute();
 			try {
 				lockRead(result);
@@ -443,7 +450,6 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			query.bind(branch.getCode());
 			query.bind("");
 			query.bind("");
-
 
 			List result = (List) query.execute();
 			try {

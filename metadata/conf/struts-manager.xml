@@ -376,6 +376,22 @@
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
 	</action>
 	
+	<!-- Action for inserting a curricular course scope from another -->
+	<action
+		path="/insertCurricularCourseScopeFromAnother"
+		name="curricularCourseScopeForm"
+		input="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;page=0"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.InsertCurricularCourseScopeFromAnotherDA"
+        validate="true">
+        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       <forward name="insertCurricularCourseScope" path="df.page.insert-from-other-curricular-course-scope"/>
+       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
+	</action>
+	
 	
     <!--=====Actions for execution degree==== -->
     

@@ -58,7 +58,7 @@
 				<bean:message key="message.manager.curricular.course.scope.theoreticalHours"/>
 			</td>
 			<td>
-				<html:text size="60" property="theoreticalHours" />
+				<html:text size="5" property="theoreticalHours" />
 			</td>
 		</tr>
 		
@@ -67,7 +67,7 @@
 				<bean:message key="message.manager.curricular.course.scope.praticalHours"/>
 			</td>
 			<td>
-				<html:text size="60" property="praticalHours" />
+				<html:text size="5" property="praticalHours" />
 			</td>
 		</tr>
 		<tr>
@@ -75,7 +75,7 @@
 				<bean:message key="message.manager.curricular.course.scope.theoPratHours"/>
 			</td>
 			<td>
-				<html:text size="60" property="theoPratHours" />
+				<html:text size="5" property="theoPratHours" />
 			</td>
 		</tr>
 		<tr>
@@ -83,31 +83,7 @@
 				<bean:message key="message.manager.curricular.course.scope.labHours"/>
 			</td>
 			<td>
-				<html:text size="60" property="labHours" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message key="message.manager.curricular.course.scope.maxIncrementNac"/>
-			</td>
-			<td>
-				<html:text size="60" property="maxIncrementNac" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message key="message.manager.curricular.course.scope.minIncrementNac"/>
-			</td>
-			<td>
-				<html:text size="60" property="minIncrementNac" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message key="message.manager.curricular.course.scope.weight"/>
-			</td>
-			<td>
-				<html:text size="60" property="weight" />
+				<html:text size="5" property="labHours" />
 			</td>
 		</tr>
 		<tr>
@@ -115,9 +91,34 @@
 				<bean:message key="message.manager.curricular.course.scope.credits"/>
 			</td>
 			<td>
-				<html:text size="60" property="credits" />
+				<html:text size="5" property="credits" />
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<bean:message key="message.manager.curricular.course.scope.maxIncrementNac"/>
+			</td>
+			<td>
+				<html:text size="5" property="maxIncrementNac" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="message.manager.curricular.course.scope.minIncrementNac"/>
+			</td>
+			<td>
+				<html:text size="5" property="minIncrementNac" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="message.manager.curricular.course.scope.weight"/>
+			</td>
+			<td>
+				<html:text size="5" property="weight" />
+			</td>
+		</tr>
+		
 		
 	</table>
 	

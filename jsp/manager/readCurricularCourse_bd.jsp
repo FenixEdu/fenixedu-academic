@@ -23,11 +23,11 @@
 
 <br>
 <logic:present name="basic">
-		<h2><font color="#FF9966"><bean:message key="label.manager.curricularCourse.message.basic"/></font></h2>
+		<h2><font color="#0066CC><bean:message key="label.manager.curricularCourse.message.basic"/></font></h2>
 </logic:present>
 
 <logic:notPresent name="basic">
-		<h2><font color="#FF9966"><bean:message key="label.manager.curricularCourse.message.non.basic"/></font></h2>
+		<h2><font color="#0066CC"><bean:message key="label.manager.curricularCourse.message.non.basic"/></font></h2>
 </logic:notPresent>
 
 
@@ -133,9 +133,9 @@
 						</td>
 												
 						<td>
-							<ul style="list-style-type: square;">
-								<li><html:link page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal"><bean:message key="label.manager.edit.curricularCourseScope"/></html:link></li>
-							</ul>
+								<html:link page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal"><bean:message key="label.manager.edit.curricularCourseScope"/></html:link>
+								<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal"><bean:message key="label.manager.insert.curricularCourseScope.fromAnother"/></html:link>
+						
 						</td>
 	 				</tr>
 	 			</logic:iterate>			
