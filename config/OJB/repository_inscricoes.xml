@@ -713,6 +713,11 @@
 		column="KEY_DEGREE_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="acronym"
+		column="BRANCH_ACRONYM"
+		jdbc-type="VARCHAR"
+	/>
    <reference-descriptor
 		name="degreeCurricularPlan"
 		class-ref="Dominio.DegreeCurricularPlan"
