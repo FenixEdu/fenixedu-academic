@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IGroupProperties;
@@ -50,7 +51,7 @@ public class ReadExecutionCourseProjects implements IServico{
 
 	public List run(Integer executionCourseCode)throws ExcepcaoInexistente, FenixServiceException {
 		
-		List projectsName = null;
+		List projectsGroupProperties = null;
 		
 		try 
 		{
@@ -58,11 +59,11 @@ public class ReadExecutionCourseProjects implements IServico{
 			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao)sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(executionCourseCode),false);
 			List executionCourseProjects = sp.getIPersistentGroupProperties().readAllGroupPropertiesByExecutionCourse(executionCourse);
 			
-			projectsName = new ArrayList();
+			projectsGroupProperties = new ArrayList();
 			Iterator iterator = executionCourseProjects.iterator();
 			
 			while (iterator.hasNext()) {
-				projectsName.add(((IGroupProperties)iterator.next()).getName());
+				projectsGroupProperties.add(Cloner.copyIGroupProperties2InfoGroupProperties((IGroupProperties)iterator.next()));
 
 			}
 		} catch (ExcepcaoPersistencia e) {
@@ -70,6 +71,6 @@ public class ReadExecutionCourseProjects implements IServico{
 			throw new FenixServiceException("error.impossibleReadExecutionCourseProjects");
 		}
 		
-		return projectsName;
+		return projectsGroupProperties;
 	}
 }

@@ -4,18 +4,19 @@
  * To change the template for this generated file go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-package ServidorAplicacao.Servicos.student;
+package ServidorAplicacao.Servicos.publico;
 
 import java.util.HashMap;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IGroupProperties;
 import Dominio.ITurno;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -83,9 +84,10 @@ public class ReadStudentGroupInformationTest extends TestCaseReadServices {
 	 ISuportePersistente persistentSupport = null;
 	 IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 	 ITurnoPersistente persistentShift = null;
+	 IPersistentGroupProperties persistentGroupProperties = null;
 	 
 	 ITurno shift = null;
-	 IDisciplinaExecucao executionCourse = null;
+	 IGroupProperties groupProperties = null;
 	 	 
 
 	 try {
@@ -93,10 +95,12 @@ public class ReadStudentGroupInformationTest extends TestCaseReadServices {
 			
 	   persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();		
 	   persistentShift = persistentSupport.getITurnoPersistente();
+	   persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();		
+	   
 	   persistentSupport.iniciarTransaccao();
 		
-	   executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","MEEC");
-	  	
+	   IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","MEEC");
+	   groupProperties = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(executionCourse,"nameB"); 
 	   shift = persistentShift.readByNameAndExecutionCourse("turno_po_teorico",executionCourse);
 
 	   persistentSupport.confirmarTransaccao();
@@ -104,7 +108,7 @@ public class ReadStudentGroupInformationTest extends TestCaseReadServices {
 	 } catch (ExcepcaoPersistencia e) {
 		 System.out.println("failed setting up the test data");
 	   }
-	   Object[] args = {new Integer(1),"nameB", Cloner.copyIShift2InfoShift(shift).getIdInternal(), Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse).getIdInternal()};
+	   Object[] args = {new Integer(1),shift.getIdInternal(),groupProperties.getIdInternal()};
 	   return args;
  	}
 	

@@ -1,20 +1,22 @@
 /*
- * Created on 29/Jul/2003
+ * Created on 3/Ago/2003
  *
  * To change the template for this generated file go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-package ServidorAplicacao.Servicos.student;
+package ServidorAplicacao.Servicos.publico;
 
 import java.util.HashMap;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IGroupProperties;
 import Dominio.ITurno;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -25,12 +27,12 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class ReadStudentGroupsByShiftTest extends TestCaseReadServices {
+public class ReadAllShiftsByProjectTest extends TestCaseReadServices {
 
 	/**
 	* @param testName
 		*/
-	public ReadStudentGroupsByShiftTest(String testName) {
+	public ReadAllShiftsByProjectTest(String testName) {
 		super(testName);
 	}
 
@@ -42,7 +44,7 @@ public class ReadStudentGroupsByShiftTest extends TestCaseReadServices {
 	* @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	*/
 	protected String getNameOfServiceToBeTested() {
-		return "ReadStudentGroupsByShift";
+		return "ReadAllShiftsByProject";
 	}
 
 	public static Test suite() {
@@ -76,28 +78,26 @@ public class ReadStudentGroupsByShiftTest extends TestCaseReadServices {
 		ISuportePersistente persistentSupport = null;
 		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 		ITurnoPersistente persistentShift = null;
-
+		IPersistentGroupProperties persistentGroupProperties = null;
+		
 		ITurno shift = null;
-		IDisciplinaExecucao executionCourse = null;
-
+		IGroupProperties groupProperties = null;
 		try {
 			persistentSupport = SuportePersistenteOJB.getInstance();
 
 			persistentExecutionCourse =
 				persistentSupport.getIDisciplinaExecucaoPersistente();
 			persistentShift = persistentSupport.getITurnoPersistente();
+			persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
 			persistentSupport.iniciarTransaccao();
 
-			executionCourse =
+			IDisciplinaExecucao executionCourse =
 				persistentExecutionCourse
 					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 					"PO",
 					"2002/2003",
 					"MEEC");
-			shift =
-				persistentShift.readByNameAndExecutionCourse(
-					"turno_po_teorico",
-					executionCourse);
+			groupProperties = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(executionCourse,"nameB"); 		
 
 			persistentSupport.confirmarTransaccao();
 
@@ -105,9 +105,7 @@ public class ReadStudentGroupsByShiftTest extends TestCaseReadServices {
 			System.out.println("failed setting up the test data");
 		}
 		Object[] args =
-			{	"nameB",
-				shift.getIdInternal(),
-				executionCourse.getIdInternal()};
+			{groupProperties.getIdInternal()};
 		return args;
 	}
 
@@ -115,7 +113,7 @@ public class ReadStudentGroupsByShiftTest extends TestCaseReadServices {
 	* @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
 	*/
 	protected int getNumberOfItemsToRetrieve() {
-		return 3;
+		return 2;
 	}
 
 	/* (non-Javadoc)

@@ -4,15 +4,13 @@
  * To change the template for this generated file go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-package ServidorAplicacao.Servico.student;
+package ServidorAplicacao.Servico.publico;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.GroupProperties;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.ITurno;
@@ -53,16 +51,16 @@ public class ReadStudentGroupsByShift implements IServico{
 		return "ReadStudentGroupsByShift";
 	}
 
-	public List run(String name, Integer shiftCode, Integer executionCourseCode) {
+	public List run(Integer shiftCode, Integer groupPropertiesCode) {
 	
 		List studentGroupsList = null;
 		try 
 		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 	
-			IDisciplinaExecucao executionCourse =(IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(executionCourseCode), false);
+			IGroupProperties groupProperties =(IGroupProperties)sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
 			ITurno shift = (ITurno) sp.getITurnoPersistente().readByOId(new Turno(shiftCode),false);
-			IGroupProperties groupProperties = sp.getIPersistentGroupProperties().readGroupPropertiesByExecutionCourseAndName(executionCourse,name);
+
 				
 			studentGroupsList = sp.getIPersistentStudentGroup().readAllStudentGroupByGroupPropertiesAndShift(groupProperties,shift);
 				 
@@ -70,12 +68,12 @@ public class ReadStudentGroupsByShift implements IServico{
 			ex.printStackTrace();
 		  }
 				
-		List infoStudentGroupsList = new ArrayList(studentGroupsList.size());
+		List studentGroupNumbersList = new ArrayList(studentGroupsList.size());
 		Iterator iter = studentGroupsList.iterator();
 		while(iter.hasNext())
-			infoStudentGroupsList.add(Cloner.copyIStudentGroup2InfoStudentGroup((IStudentGroup) iter.next()));				
+			studentGroupNumbersList.add(((IStudentGroup) iter.next()).getGroupNumber());				
 			
-		return infoStudentGroupsList;
+		return studentGroupNumbersList;
 			
 	}
 

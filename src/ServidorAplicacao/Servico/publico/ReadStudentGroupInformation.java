@@ -4,7 +4,7 @@
  * To change the template for this generated file go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-package ServidorAplicacao.Servico.student;
+package ServidorAplicacao.Servico.publico;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,8 +12,7 @@ import java.util.List;
 
 import DataBeans.InfoStudentGroupAttend;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.GroupProperties;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
@@ -99,17 +98,16 @@ public class ReadStudentGroupInformation implements IServico{
 					
 		}
 		
-		public Object run(Integer groupNumber,String name, Integer shiftCode, Integer executionCourseCode) {
+		public Object run(Integer groupNumber,Integer shiftCode, Integer groupPropertiesCode) {
 			
 			List studentGroupAttendInformationList = null;
 			try 
 			{
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 				
-				IDisciplinaExecucao executionCourse =(IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(executionCourseCode), false);
+				IGroupProperties groupProperties =(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
 				ITurno shift = (ITurno)sp.getITurnoPersistente().readByOId(new Turno(shiftCode),false);
 				 
-				IGroupProperties groupProperties = sp.getIPersistentGroupProperties().readGroupPropertiesByExecutionCourseAndName(executionCourse,name);
 				IStudentGroup studentGroup = sp.getIPersistentStudentGroup().readStudentGroupByGroupPropertiesAndGroupNumberAndShift(groupProperties,groupNumber,shift);
 				List studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
 				
