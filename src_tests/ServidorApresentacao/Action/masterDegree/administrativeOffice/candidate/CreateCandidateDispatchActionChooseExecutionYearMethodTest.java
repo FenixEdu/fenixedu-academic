@@ -85,7 +85,7 @@ public class CreateCandidateDispatchActionChooseExecutionYearMethodTest
 		HashMap attributes = new HashMap();
 		List requestAttributes = new ArrayList();
 		requestAttributes.add(SessionConstants.EXECUTION_YEAR);
-		attributes.put(new Integer(ScopeConstants.REQUEST),requestAttributes);
+		attributes.put(new Integer(ScopeConstants.SESSION),requestAttributes);
 		return attributes;
 	}
 
