@@ -33,6 +33,7 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
+import Dominio.CurricularCourseScope;
 import Dominio.CurricularSemester;
 import Dominio.CurricularYear;
 import Dominio.Curso;
@@ -44,6 +45,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
 import Dominio.ICurricularYear;
 import Dominio.ICurso;
@@ -63,6 +65,7 @@ import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -99,6 +102,7 @@ public class SessionUtilsTest extends TestCase {
 	protected IPersistentExecutionYear executionYearDAO;
 	protected IPersistentExecutionPeriod executionPeriodDAO;
 	private IPersistentCurricularSemester curricularSemesterDAO = null;
+	private IPersistentCurricularCourseScope curricularCourseScopeDAO = null;
 
 	protected ICursoExecucao _executionDegree;
 	protected ICurso _degree;
@@ -189,9 +193,8 @@ public class SessionUtilsTest extends TestCase {
 
 				List curricularSemesterList = new ArrayList();
 				curricularSemesterList.add(curricularSemester);
-				_curricularCourse.setAssociatedCurricularSemesters(
-					curricularSemesterList);
-
+//				_curricularCourse.setAssociatedCurricularSemesters(curricularSemesterList);
+	
 				IExecutionPeriod executionPeriod =
 					executionPeriodDAO.readByNameAndExecutionYear(
 						"2º Semestre",
@@ -228,6 +231,20 @@ public class SessionUtilsTest extends TestCase {
 					.getIDisciplinaDepartamentoPersistente()
 					.escreverDisciplinaDepartamento(
 					dd);
+
+
+
+
+				ICurricularCourseScope curricularCourseScope = curricularCourseScopeDAO.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(_curricularCourse, curricularSemester, null);
+				if (curricularCourseScope == null) {
+					curricularCourseScope = new CurricularCourseScope(_curricularCourse, curricularSemester, null);
+					curricularCourseScopeDAO.lockWrite(curricularCourseScope);
+				}
+
+
+
+
+
 
 				_curricularCourseDAO.lockWrite(_curricularCourse);
 				_executionCourseDAO.escreverDisciplinaExecucao(

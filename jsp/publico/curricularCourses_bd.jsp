@@ -47,13 +47,13 @@
 							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>
 						</td>
 						<td class="horariosHoras_first">
-							<logic:iterate id="infoCurricularSemester" name="curricularCourse" property="associatedInfoCurricularSemesters">
-								<bean:write name="infoCurricularSemester" property="infoCurricularYear.year"/>&nbsp;
+							<logic:iterate id="infoCurricularCourseScope" name="curricularCourse" property="infoScopes">
+								<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>&nbsp;
 							</logic:iterate>
 						</td>
 						<td class="horariosHoras_first">
-							<logic:iterate id="infoCurricularSemester" name="curricularCourse" property="associatedInfoCurricularSemesters">
-								<bean:write name="infoCurricularSemester" property="semester"/>&nbsp;
+							<logic:iterate id="infoCurricularCourseScope" name="curricularCourse" property="infoScopes">
+								<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>&nbsp;
 							</logic:iterate>
 						</td>
 					</tr>
