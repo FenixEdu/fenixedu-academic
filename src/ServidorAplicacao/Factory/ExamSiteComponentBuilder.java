@@ -115,14 +115,17 @@ public class ExamSiteComponentBuilder {
 					.getCurricularPlan()
 					.getDegree()
 					.getSigla()
-					.equals("LET")
-				|| executionDegree
-					.getCurricularPlan()
-					.getDegree()
-					.getSigla()
 					.equals("LA")) {
 				startSeason1.set(Calendar.DAY_OF_MONTH, 12);
 				endSeason2.set(Calendar.DAY_OF_MONTH, 7);
+			}
+			if (executionDegree
+					.getCurricularPlan()
+					.getDegree()
+					.getSigla()
+					.equals("LET")) {
+				startSeason1.set(Calendar.DAY_OF_MONTH, 12);
+				endSeason2.set(Calendar.DAY_OF_MONTH, 14);
 			}
 
 			 // Set Exam Season info

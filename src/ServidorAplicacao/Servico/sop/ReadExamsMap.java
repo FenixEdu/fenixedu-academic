@@ -105,16 +105,19 @@ public class ReadExamsMap implements IServico {
 				.getInfoDegreeCurricularPlan()
 				.getInfoDegree()
 				.getSigla()
-				.equals("LET")
-			|| infoExecutionDegree
-				.getInfoDegreeCurricularPlan()
-				.getInfoDegree()
-				.getSigla()
 				.equals("LA")) {
 			startSeason1.set(Calendar.DAY_OF_MONTH, 12);
 			endSeason2.set(Calendar.DAY_OF_MONTH, 7);
 		}
-
+		if (infoExecutionDegree
+				.getInfoDegreeCurricularPlan()
+				.getInfoDegree()
+				.getSigla()
+				.equals("LET")) {
+			startSeason1.set(Calendar.DAY_OF_MONTH, 12);
+			endSeason2.set(Calendar.DAY_OF_MONTH, 14);
+		}
+		
 		// Set Exam Season info
 		infoExamsMap.setStartSeason1(startSeason1);
 		infoExamsMap.setEndSeason1(null);
