@@ -41,7 +41,7 @@
 	<!-- Dissertation Title -->
 	<tr>
 		<th align="left" colspan="2">
-			<bean:message key="label.masterDegree.administrativeOffice.dissertationTitle"/>&nbsp;
+			<bean:message key="label.masterDegree.administrativeOffice.dissertationTitle"/>:&nbsp;
 			<bean:write name="dissertationTitle"/>			
 		</th>
 	</tr>

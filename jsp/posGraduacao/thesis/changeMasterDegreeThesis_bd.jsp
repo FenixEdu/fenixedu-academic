@@ -41,7 +41,7 @@
 		<!-- Dissertation Title -->
 		<tr>
 			<th align="left" colspan="2">
-				<bean:message key="label.masterDegree.administrativeOffice.dissertationTitle"/>&nbsp;
+				<bean:message key="label.masterDegree.administrativeOffice.dissertationTitle"/>:&nbsp;
 				<html:text property="dissertationTitle" size="45"/>
 			</th>
 		</tr>
@@ -93,7 +93,6 @@
 				<html:submit styleClass="inputbuttonSmall" property="method">
 					<bean:message key="button.submit.masterDegree.thesis.addGuider"/>
 				</html:submit>
-				<html:errors property="guidersNumbers" />
 			</th>
 		</tr>
 		<tr> 
@@ -250,13 +249,7 @@
 			</tr>
 
 		</logic:present>
-		<!-- No results found -->
-		<logic:notPresent name="<%= SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS %>" scope="request">
-			<logic:present name="<%= SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS_FLAG %>" scope="request">
-				<bean:message key="label.masterDegree.administrativeOffice.searchResultsEmpty"/>
-			</logic:present>				
-		</logic:notPresent>
-		
+	
 		
 		<tr>
 			<tr> 

@@ -44,7 +44,7 @@
 		<!-- Dissertation Title -->
 		<tr>
 			<th align="left" >
-				<bean:message key="label.masterDegree.administrativeOffice.dissertationTitle"/>&nbsp;
+				<bean:message key="label.masterDegree.administrativeOffice.dissertationTitle"/>:&nbsp;
 			</th>
 			<th align="left" >
 				<bean:write name="dissertationTitle"/>
@@ -56,13 +56,13 @@
 		
 		<!-- Proof Date -->
 		<tr >
-			<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>&nbsp;</th>
+			<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>:&nbsp;</th>
 			<td><bean:write name="proofDate"/></td>
 		</tr>
 		
 		<!-- Thesis Delivery Date -->
 		<tr >
-			<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>&nbsp;</th>
+			<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>S&nbsp;</th>
 			<td><bean:write name="thesisDeliveryDate"/></td>
 		</tr>
 			
@@ -70,7 +70,7 @@
 	<!-- Final Result -->
 		<tr>	
 			<th align="left" >
-				<bean:message key="label.masterDegree.administrativeOffice.finalResult"/>
+				<bean:message key="label.masterDegree.administrativeOffice.finalResult"/>:&nbsp;
 			</th>
 			<td><bean:write name="finalResult"/></td>
 		</tr>
@@ -79,7 +79,7 @@
 		<!-- Attached Copies Number -->
 		<tr>
 			<th align="left" >
-				<bean:message key="label.masterDegree.administrativeOffice.attachedCopiesNumber"/>&nbsp;
+				<bean:message key="label.masterDegree.administrativeOffice.attachedCopiesNumber"/>:&nbsp;
 			</th>
 			<td><bean:write name="attachedCopiesNumber"/></td>
 		</tr>

@@ -49,7 +49,7 @@
 		<!-- Dissertation Title -->
 		<tr>
 			<th align="left" colspan="2">
-				<bean:message key="label.masterDegree.administrativeOffice.dissertationTitle"/>&nbsp;
+				<bean:message key="label.masterDegree.administrativeOffice.dissertationTitle"/>:&nbsp;
 				<bean:write name="dissertationTitleFromRequest"/>
 				
 				
@@ -71,7 +71,7 @@
 		
 		<!-- Proof Date -->
 		<tr >
-			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>&nbsp;</th>
+			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>:&nbsp;</th>
 			<th>
 				<html:select property="proofDateDay">
 			    	<html:options collection="<%= SessionConstants.DAYS_LIST %>" property="value" labelProperty="label" />
@@ -92,7 +92,7 @@
 		
 		<!-- Thesis Delivery Date -->
 		<tr >
-			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>&nbsp;</th>
+			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>:&nbsp;</th>
 			<th>
 				<html:select property="thesisDeliveryDateDay">
 			    	<html:options collection="<%= SessionConstants.DAYS_LIST %>" property="value" labelProperty="label" />
@@ -119,7 +119,7 @@
 	<!-- Final Result -->
 		<tr>	
 			<th align="left" colspan="3">
-				<bean:message key="label.masterDegree.administrativeOffice.finalResult"/>&nbsp;
+				<bean:message key="label.masterDegree.administrativeOffice.finalResult"/>:&nbsp;
 			    <html:select property="finalResult">
 			    	<html:options collection="<%= SessionConstants.CLASSIFICATION %>" property="value" labelProperty="label" />
 			   </html:select> 
@@ -132,7 +132,7 @@
 		<!-- Attached Copies Number -->
 		<tr>
 			<th align="left" colspan="4">
-				<bean:message key="label.masterDegree.administrativeOffice.attachedCopiesNumber"/>&nbsp;
+				<bean:message key="label.masterDegree.administrativeOffice.attachedCopiesNumber"/>:&nbsp;
 				<html:text property="attachedCopiesNumber" size="5"/>
 			</th>
 		</tr>
@@ -180,7 +180,6 @@
 				<html:submit styleClass="inputbuttonSmall" property="method">
 					<bean:message key="button.submit.masterDegree.thesis.addJury"/>
 				</html:submit>
-				<html:errors property="guidersNumbers" />
 			</th>
 		</tr>
 		<tr> 
