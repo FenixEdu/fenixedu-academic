@@ -32,8 +32,10 @@ public class EditCustomizationOptionsTest
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/testDeleteAnnouncementDataSet.xml";
-		//TODO... alterar para o XML correcto
+		return "etc/datasets/servicos/teacher/testEditCustomizationOptionsDataSet.xml";
+	}
+	protected String getExpectedDataSetFilePath() {
+		return "etc/datasets/servicos/teacher/testExpectedEditCustomizationOptionsUnsuccefullDataSet.xml";
 	}
 
 	/*
@@ -115,37 +117,40 @@ public class EditCustomizationOptionsTest
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 				sp.iniciarTransaccao();
 				ISite site = null;
-				IDisciplinaExecucao sitecourse = 
+				IDisciplinaExecucao sitecourse =
 					(IDisciplinaExecucao) sp
 						.getIDisciplinaExecucaoPersistente()
 						.readByOId(
 						new DisciplinaExecucao(infoExecutionCourseCode),
 						false);
-				site = sp.getIPersistentSite().readByExecutionCourse(sitecourse);
-				
+				site =
+					sp.getIPersistentSite().readByExecutionCourse(sitecourse);
+
 				sp.confirmarTransaccao();
-				if(site == null)
-				{
+				if (site == null) {
 					fail("Editing Customization Options of a Site.");
 				}
 				//Efectuar as comparações necessárias
-				assertEquals(site.getAlternativeSite(),infoSiteNew.getAlternativeSite());
-				assertEquals(site.getMail(),infoSiteNew.getMail());
-				assertEquals(site.getInitialStatement(),infoSiteNew.getInitialStatement());
-				assertEquals(site.getIntroduction(),infoSiteNew.getIntroduction());
+				assertEquals(
+					site.getAlternativeSite(),
+					infoSiteNew.getAlternativeSite());
+				assertEquals(site.getMail(), infoSiteNew.getMail());
+				assertEquals(
+					site.getInitialStatement(),
+					infoSiteNew.getInitialStatement());
+				assertEquals(
+					site.getIntroduction(),
+					infoSiteNew.getIntroduction());
 
 			} catch (ExcepcaoPersistencia ex) {
 				fail("Editing Customization Options of a Site: " + ex);
 			}
-
-			//Verificar se a base de dados foi alterada
-			//compareDataSet("testDeleteAnnouncementSuccefull.xml");
 		} catch (NotAuthorizedException ex) {
-			fail("Deleting an announcement of a Site " + ex);
+			fail("Editing Customization Options of a Site " + ex);
 		} catch (FenixServiceException ex) {
-			fail("Deleting an announcement of a Site " + ex);
+			fail("Editing Customization Options of a Site " + ex);
 		} catch (Exception ex) {
-			fail("Deleting an announcument of a Site " + ex);
+			fail("Editing Customization Options of a Site " + ex);
 		}
 	}
 
@@ -176,11 +181,11 @@ public class EditCustomizationOptionsTest
 			 * o serviço nem sequer chega a ser invocado
 			 */
 			//Comparacao do dataset
-			//compareDataSet(getDataSetFilePath());
+			compareDataSet(getExpectedDataSetFilePath());
 		} catch (FenixServiceException ex) {
-			fail("Deleting an announcument of a Site " + ex);
+			fail("Editing Customization Options of a Site " + ex);
 		} catch (Exception ex) {
-			fail("Deleting an announcument of a Site " + ex);
+			fail("Editing Customization Options of a Site " + ex);
 		}
 	}
 }
