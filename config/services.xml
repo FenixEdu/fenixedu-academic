@@ -6444,6 +6444,45 @@
 			<chain name="EquivalenceAuthorization"/>
         </filterChains>
     </service>
+    <service>
+        <name>CountSentSmsByPersonAndDatePeriod</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.person.sms.CountSentSmsByPersonAndDatePeriod</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="PersonAuthorization"/>
+        </filterChains>
+    </service> 
+    <service>
+        <name>CreateSentSms</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.person.sms.CreateSentSms</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="PersonAuthorization"/>
+        </filterChains>
+    </service> 
+    <service>
+        <name>UpdateSmsDeliveryReport</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.person.sms.UpdateSmsDeliveryReport</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service> 
+    <service>
+        <name>ReadSentSmsByPerson</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.person.sms.ReadSentSmsByPerson</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="PersonAuthorization"/>
+        </filterChains>
+    </service> 
+                   
 <!-- =============================================================================================== -->
 <!-- =============================================================================================== -->
 <!-- =============================================================================================== -->
