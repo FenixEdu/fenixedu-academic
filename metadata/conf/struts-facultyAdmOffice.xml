@@ -36,7 +36,7 @@
 			
 			<form-bean name="editGrantContractForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="idInternal" type="java.lang.String"/>
+				<form-property name="idInternal" type="java.lang.Integer"/>
 				<form-property name="contractNumber" type="java.lang.String"/>
 				<form-property name="dateBeginContract" type="java.lang.String"/>
 				<form-property name="dateEndContract" type="java.lang.String"/>
@@ -44,7 +44,7 @@
 				<form-property name="grantType" type="java.lang.String"/>
 				<form-property name="grantResponsibleTeacher" type="java.lang.String"/>
 				<form-property name="grantOrientationTeacher" type="java.lang.String"/>
-				<form-property name="idGrantOwner" type="java.lang.String"/>
+				<form-property name="idGrantContract" type="java.lang.Integer"/>
 			</form-bean>
 
 			<form-bean name="editGrantOwnerForm" 
