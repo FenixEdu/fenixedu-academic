@@ -19,7 +19,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoDegree;
-
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -40,6 +39,8 @@ public class ReadDegreeAction extends FenixAction  {
 			HttpServletResponse response)
 			throws FenixActionException {
 				
+				System.out.println("qqqqqqqqqqqqqqqqentra na action de read");
+				
 				HttpSession session = request.getSession(false);
 				DynaActionForm readDegreeForm = (DynaActionForm) form;
 						
@@ -52,7 +53,7 @@ public class ReadDegreeAction extends FenixAction  {
 				
 				GestorServicos manager = GestorServicos.manager();
 				InfoDegree degree = null;
-				
+				System.out.println("INFODEGREE NA ACTION DE READ AGQIN"+degreeId);
 				try {
 						degree = (InfoDegree) manager.executar(userView, "ReadDegreeService", args);
 				} catch(FenixServiceException e) {

@@ -93,7 +93,7 @@
       
 	 <!-- Action for reading a degree -->
       <action path="/readDegree"
-      	      name="degreeForm"
+      	      name="degreeCurricularPlanForm"
               input="/readDegreesInput.do"
               scope="request"
       	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">
@@ -178,8 +178,10 @@
 		type="ServidorApresentacao.Action.manager.InsertDegreeCurricularPlanDispatchAction"
         validate="true">  
        <forward name="insertDegreeCurricularPlan" path="df.page.insert-degree-curricular-plan"/>
-       <forward name="readDegree" path="/readDegree.do"/>      	      
+       <forward name="g" path="/readDegree.do"/>      	      
 	</action>
+	
+	
     
     <!-- Action for editing a degree 
 	<action

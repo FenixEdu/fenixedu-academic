@@ -5,7 +5,7 @@
 
 <%--<logic:present name="degreeId" >--%>
 <h2><bean:message key="label.manager.insert.degreeCurricularPlan" /></h2>
-<br/>
+<br>
 
 <table>
 <html:form action="/insertDegreeCurricularPlan" method ="get">
@@ -134,7 +134,7 @@
 <html:hidden property="method" value="insert"/>
 <html:hidden property="degreeId"/>
 
-<br />
+<br>
 <html:submit styleClass="inputbutton">
 <bean:message key="button.save"/>
 </html:submit>

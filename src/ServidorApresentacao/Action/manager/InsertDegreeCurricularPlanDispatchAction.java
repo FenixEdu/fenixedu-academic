@@ -168,8 +168,8 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		
-		return mapping.findForward("readDegree");
+		System.out.println("FIM FIM FIMF FIM");
+		return mapping.findForward("g");
 	}			
 }
 

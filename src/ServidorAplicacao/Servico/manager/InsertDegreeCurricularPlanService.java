@@ -72,8 +72,8 @@ public class InsertDegreeCurricularPlanService implements IServico {
 					if(name.compareToIgnoreCase(degreeCurricularPlanIter.getName())==0 && 
 					   infoDegree.equals( (InfoDegree) Cloner.copyIDegree2InfoDegree(degreeCurricularPlanIter.getDegree()) ) ){
 						modified++;
-						errors.set(2, name);
-						errors.set(1, infoDegree);
+						errors.set(0, infoDegree.getNome());
+						errors.set(1, name);
 					}
 				}
 
