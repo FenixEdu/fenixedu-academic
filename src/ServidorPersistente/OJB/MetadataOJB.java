@@ -61,11 +61,17 @@ public class MetadataOJB extends ObjectFenixOJB implements IPersistentMetadata {
         criteria.addEqualTo("keyExecutionCourse", executionCourse
                 .getIdInternal());
         criteria.addEqualTo("visibility", new Boolean("true"));
+
+        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction())
+                .getBroker();
+        QueryByCriteria queryCriteria = new QueryByCriteria(Metadata.class,
+                criteria, false);
+
         if (asc != null && asc.equals("false"))
-            criteria.addOrderBy(order, false);
+            queryCriteria.addOrderBy(order, false);
         else
-            criteria.addOrderBy(order, true);
-        return queryList(Metadata.class, criteria);
+            queryCriteria.addOrderBy(order, true);
+        return (List) pb.getCollectionByQuery(queryCriteria);
     }
 
     public List readByExecutionCourseAndNotTest(
@@ -89,11 +95,16 @@ public class MetadataOJB extends ObjectFenixOJB implements IPersistentMetadata {
                 .getIdInternal());
         if (testMetadatasIdInternals.size() != 0)
                 criteria.addNotIn("idInternal", testMetadatasIdInternals);
+
+        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction())
+                .getBroker();
+        QueryByCriteria queryCriteria = new QueryByCriteria(Metadata.class,
+                criteria, false);
         if (asc != null && asc.equals("false"))
-            criteria.addOrderBy(order, false);
+            queryCriteria.addOrderBy(order, false);
         else
-            criteria.addOrderBy(order, true);
-        return queryList(Metadata.class, criteria);
+            queryCriteria.addOrderBy(order, true);
+        return (List) pb.getCollectionByQuery(queryCriteria);
     }
 
     public List readByExecutionCourseAndNotDistributedTest(

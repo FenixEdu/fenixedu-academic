@@ -49,9 +49,16 @@ public class StudentTestQuestionOJB extends ObjectFenixOJB implements
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTest
                 .getIdInternal());
-        criteria.addOrderBy("student.number", true);
-        criteria.addOrderBy("testQuestionOrder", true);
-        return queryList(StudentTestQuestion.class, criteria);
+
+        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction())
+                .getBroker();
+        QueryByCriteria queryCriteria = new QueryByCriteria(
+                StudentTestQuestion.class, criteria, false);
+
+        queryCriteria.addOrderBy("student.number", true);
+        queryCriteria.addOrderBy("testQuestionOrder", true);
+
+        return (List) pb.getCollectionByQuery(queryCriteria);
     }
 
     public List readByStudent(IStudent student) throws ExcepcaoPersistencia {
@@ -135,21 +142,18 @@ public class StudentTestQuestionOJB extends ObjectFenixOJB implements
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTest
                 .getIdInternal());
-        criteria.addOrderBy("keyStudent", true);
-        criteria.addOrderBy("testQuestionOrder", true);
-        return readSpan(StudentTestQuestion.class, criteria, distributedTest
-                .getNumberOfQuestions(), new Integer(0));
-    }
 
-    public List readQuestionsByDistributedTest(IDistributedTest distributedTest)
-            throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyDistributedTest", distributedTest
-                .getIdInternal());
-        criteria.addOrderBy("keyStudent", true);
-        criteria.addOrderBy("testQuestionOrder", true);
-        return readSpan(StudentTestQuestion.class, criteria, distributedTest
-                .getNumberOfQuestions(), new Integer(0));
+        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction())
+                .getBroker();
+        QueryByCriteria queryCriteria = new QueryByCriteria(
+                StudentTestQuestion.class, criteria, false);
+
+        queryCriteria.addOrderBy("keyStudent", true);
+        queryCriteria.addOrderBy("testQuestionOrder", true);
+        queryCriteria.setEndAtIndex(distributedTest.getNumberOfQuestions()
+                .intValue());
+
+        return (List) pb.getCollectionByQuery(queryCriteria);
     }
 
     public Double readStudentTestFinalMark(Integer distributedTestId,
@@ -178,8 +182,11 @@ public class StudentTestQuestionOJB extends ObjectFenixOJB implements
                 criteria);
         Iterator it = studentTestQuestions.iterator();
         List result = new ArrayList();
-        while (it.hasNext())
-            result.add(((IStudentTestQuestion) it.next()).getDistributedTest());
+        while (it.hasNext()) {
+            IDistributedTest distributedTest = ((IStudentTestQuestion) it
+                    .next()).getDistributedTest();
+            if (!result.contains(distributedTest)) result.add(distributedTest);
+        }
         return result;
     }
 
