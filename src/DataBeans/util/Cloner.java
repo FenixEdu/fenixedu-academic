@@ -299,7 +299,9 @@ public abstract class Cloner {
 			Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoExecutionDegree.getInfoDegreeCurricularPlan());
 
 		IExecutionYear executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionDegree.getInfoExecutionYear());
-		ITeacher coordinator = Cloner.copyInfoTeacher2Teacher(infoExecutionDegree.getInfoCoordinator());
+		ITeacher coordinator = null;
+		if (infoExecutionDegree.getInfoCoordinator() != null)
+		 coordinator = Cloner.copyInfoTeacher2Teacher(infoExecutionDegree.getInfoCoordinator());
 
 		copyObjectProperties(executionDegree, infoExecutionDegree);
 
