@@ -130,5 +130,13 @@ public class GrantOwner extends DomainObject implements IGrantOwner {
 	public void setCardCopyNumber(Integer cardCopyNumber) {
 		this.cardCopyNumber = cardCopyNumber;
 	}
+	
+	/**
+	 * Sets the keyPerson.
+	 * @param personKey The personKey to set
+	 */
+	public void setKeyPerson(Integer personKey) {
+		this.keyPerson = personKey;
+	}
 
 }

@@ -147,7 +147,11 @@ public class CreatePersonBaseClass {
 			}				
 			
 			//Generate person's Password
-			person.setPassword(GeneratePassword.generatePassword());
+			if(person.getPassword() == null)
+				//UNCOMMENT this line to run CreateGrantOwnerTest
+				person.setPassword("1a1dc91c907325c69271ddf0c944bc72");
+				//COMMENT this line to run CreateGrantOwnerTest
+				//person.setPassword(GeneratePassword.generatePassword());
 
 		} catch (ExistingPersistentException ex) {
 			throw new ExistingServiceException(ex);

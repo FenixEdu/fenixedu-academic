@@ -2,7 +2,7 @@ package ServidorPersistente.OJB.grant.owner;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import DataBeans.InfoPerson;
+import Dominio.IPessoa;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -30,22 +30,25 @@ public class GrantOwnerOJB
 		return grantOwner;
 	}
 
-	public IGrantOwner readGrantOwnerByPerson(InfoPerson infoPerson)
+	public IGrantOwner readGrantOwnerByPerson(Integer personIdInternal)
 		throws ExcepcaoPersistencia {
 		IGrantOwner grantOwner = null;
+		IPessoa person = null;
 
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("key_person", infoPerson.getIdInternal());
+		criteria.addEqualTo("key_person", personIdInternal);
 		grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
 		return grantOwner;
 	}
 
 	public Integer readMaxGrantOwnerNumber() throws ExcepcaoPersistencia{
-		Integer maxGrantOwnerNumber = null;
+		IGrantOwner grantOwner = new GrantOwner();
+		Integer maxGrantOwnerNumber = new Integer(0);
 
 		Criteria criteria = new Criteria();
 		criteria.addOrderBy("number", false);
-		maxGrantOwnerNumber = (Integer) queryObject(GrantOwner.class, criteria);
+		grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
+		maxGrantOwnerNumber = grantOwner.getNumber();
 		return maxGrantOwnerNumber;
 	}
 }

@@ -51,7 +51,7 @@ public class InfoGrantOwner extends InfoObject {
 	/**
 	 * @return Integer
 	 */
-	public Integer cardCopyNumber() {
+	public Integer getCardCopyNumber() {
 		return cardCopyNumber;
 	}
 	

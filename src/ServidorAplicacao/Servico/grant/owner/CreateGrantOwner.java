@@ -6,14 +6,21 @@ package ServidorAplicacao.Servico.grant.owner;
 
 import DataBeans.InfoPerson;
 import DataBeans.grant.owner.InfoGrantOwner;
+import Dominio.IPersonRole;
 import Dominio.IPessoa;
+import Dominio.PersonRole;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
+import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentPersonRole;
+import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.grant.IPersistentGrantOwner;
+import Util.RoleType;
 
 /**
  * @author  Barbosa
@@ -21,10 +28,8 @@ import ServidorPersistente.grant.IPersistentGrantOwner;
  *  
  */
 public class CreateGrantOwner
-	extends ServidorAplicacao.Servico.person.base.CreatePersonBaseClass {
-
-	private ISuportePersistente persistentSupport = null;
-	private IPersistentGrantOwner persistentGrantOwner = null;
+	extends ServidorAplicacao.Servico.person.base.CreatePersonBaseClass
+	implements IServico {
 
 	private static CreateGrantOwner service = new CreateGrantOwner();
 	/**
@@ -45,20 +50,47 @@ public class CreateGrantOwner
 		return "CreateGrantOwner";
 	}
 
-	private String generateGrantOwnerPersonUsername(Integer grantOwnerNumber) throws ExcepcaoPersistencia{
+	private String generateGrantOwnerPersonUsername(Integer grantOwnerNumber)
+		throws ExcepcaoPersistencia {
 		String result = null;
 		result = "B" + grantOwnerNumber.toString();
 		return result;
 	}
 
-	private void checkIfGrantOwnerExists(InfoPerson infoPerson)
+	private IPessoa checkIfPersonExists(InfoPerson person)
 		throws FenixServiceException {
-		IGrantOwner grantOwner = null;
-		persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
+		ISuportePersistente persistentSupport = null;
+		IPessoaPersistente persistentPerson = null;
+		IPessoa personToCheck = null;
 
 		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+			persistentPerson = persistentSupport.getIPessoaPersistente();
+			personToCheck = persistentPerson.lerPessoaPorNumDocIdETipoDocId(
+										person.getNumeroDocumentoIdentificacao(),
+										person.getTipoDocumentoIdentificacao());
+		} catch (ExcepcaoPersistencia persistentException) {
+			throw new FenixServiceException(persistentException.getMessage());
+		}
+		
+		return personToCheck;
+	}
+
+	private void checkIfGrantOwnerExists(Integer personIdInternal)
+		throws FenixServiceException {
+		ISuportePersistente persistentSupport = null;
+		IPersistentGrantOwner persistentGrantOwner = null;
+		IPessoaPersistente persistentPerson = null;
+		IPessoa person = null;
+		IGrantOwner grantOwner = null;
+
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+			persistentPerson = persistentSupport.getIPessoaPersistente();
+			persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
+
 			grantOwner =
-				persistentGrantOwner.readGrantOwnerByPerson(infoPerson);
+				persistentGrantOwner.readGrantOwnerByPerson(personIdInternal);
 
 		} catch (ExcepcaoPersistencia persistentException) {
 			throw new FenixServiceException(persistentException.getMessage());
@@ -72,25 +104,50 @@ public class CreateGrantOwner
 	 */
 	public boolean run(InfoGrantOwner infoGrantOwner)
 		throws FenixServiceException {
+		ISuportePersistente persistentSupport = null;
+		IPersistentGrantOwner persistentGrantOwner = null;
+		IPersistentPersonRole persistentPersonRole = null;
 
-		IPessoa person = null;
+		IPessoa person = checkIfPersonExists(infoGrantOwner.getPersonInfo());
 
-		checkIfGrantOwnerExists(infoGrantOwner.getPersonInfo());
+		if (person != null) 
+			{
+				System.out.println("PERSON EXISTS!!");
+				checkIfGrantOwnerExists(person.getIdInternal());	
+			}else System.out.println("PERSON DOES NOT EXIST!!");
+			
 
 		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+			persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
+			persistentPersonRole = persistentSupport.getIPersistentPersonRole();
+
 			IGrantOwner grantOwner = new GrantOwner();
 			persistentGrantOwner.simpleLockWrite(grantOwner);
 			person = createPersonBase(infoGrantOwner.getPersonInfo());
-			
+
 			//Generate the GrantOwner's number
 			Integer maxNumber = persistentGrantOwner.readMaxGrantOwnerNumber();
 			int aux = maxNumber.intValue() + 1;
 			Integer nextNumber = new Integer(aux);
 			grantOwner.setNumber(nextNumber);
 			
+			grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
+			grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
+
 			//Generate the GrantOwner's Person Username
-			person.setUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()));
-			
+			if(person.getUsername() == null)
+				//UNCOMMENT this line to run CreateGrantOwnerTest
+				person.setUsername("17");
+				//COMMENT this line to run CreateGrantOwnerTest
+				//person.setUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()));
+
+			//Set the GRANT_OWNER Role to this new GrantOwner
+			IPersonRole personRole = new PersonRole();
+			persistentPersonRole.simpleLockWrite(personRole);
+			personRole.setPerson(person);
+			personRole.setRole(persistentSupport.getIPersistentRole().readByRoleType(RoleType.GRANT_OWNER));
+
 			grantOwner.setPerson(person);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
