@@ -212,27 +212,34 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 				+ "and inicio <$2 "
 				+ "and diaSemana = $3 "
 				+ "and sala.nome = $4 ) "
+
 				+ "or ( fim > $5 "
 				+ "and fim < $6 "
 				+ "and diaSemana = $7 "
 				+ "and sala.nome = $8 )"
-				+ "or ( inicio = $8 "
-				+ "and fim = $9 "
-				+ "and diaSemana = $10 "
-				+ "and sala.nome = $11 )"
-				+ "or ( inicio <= $12 "
-				+ "and fim >= $13 "
-				+ "and diaSemana = $14 "
-				+ "and sala.nome = $15 )";
 
-				
-				
+				+ "or ( inicio = $9 "
+				+ "and fim = $10 "
+				+ "and diaSemana = $11 "
+				+ "and sala.nome = $12 )"
+
+				+ "or ( inicio <= $13 "
+				+ "and fim >= $14"
+				+ "and diaSemana = $15 "
+				+ "and sala.nome = $16 )"
+
+				+ "or ( inicio = $17 "
+				+ "and fim <= $18 "
+				+ "and diaSemana = $19 "
+				+ "and sala.nome = $20 )";
+
 
 			query.create(oqlQuery);
 			query.bind(lesson.getInicio());
 			query.bind(lesson.getFim());
 			query.bind(lesson.getDiaSemana());
 			query.bind(lesson.getSala().getNome());
+		
 			query.bind(lesson.getInicio());
 			query.bind(lesson.getFim());
 			query.bind(lesson.getDiaSemana());
@@ -242,6 +249,12 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 			query.bind(lesson.getFim());
 			query.bind(lesson.getDiaSemana());
 			query.bind(lesson.getSala().getNome());
+
+			query.bind(lesson.getInicio());
+			query.bind(lesson.getFim());
+			query.bind(lesson.getDiaSemana());
+			query.bind(lesson.getSala().getNome());
+
 
 			query.bind(lesson.getInicio());
 			query.bind(lesson.getFim());

@@ -455,6 +455,290 @@ public class AulaOJBTest extends TestCaseOJB {
 	
   }
 	
+
+  public void testReadLessonsInBroadPeriod() {
+  	
+  	try {
+		persistentSupport.iniciarTransaccao();
+		ISala room = persistentRoom.readByName("Ga1");
+		assertNotNull(room);
+		persistentSupport.confirmarTransaccao();
+
+		IAula lesson = new Aula();
+		lesson.setDiaSemana(new DiaSemana(DiaSemana.SEGUNDA_FEIRA));
+		lesson.setSala(room);
+		
+		Calendar startTime = null;
+		Calendar endTime = null;
+
+		// Test 1: new lesson is containded is existing one		
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 8);
+		startTime.set(Calendar.MINUTE, 30);
+		startTime.set(Calendar.SECOND, 0);
+		endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 9);
+		endTime.set(Calendar.MINUTE, 0);
+		endTime.set(Calendar.SECOND, 0);
+
+		lesson.setInicio(startTime);
+		lesson.setFim(endTime);
+
+		persistentSupport.iniciarTransaccao();
+		List result = persistentLesson.readLessonsInBroadPeriod(lesson);
+		persistentSupport.confirmarTransaccao();
+		assertNotNull(result);
+		assertEquals(result.size(), 1);
+
+
+		// Test 2: new lesson starts and finishes before existing one		
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 7);
+		startTime.set(Calendar.MINUTE, 30);
+		startTime.set(Calendar.SECOND, 0);
+		endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 9);
+		endTime.set(Calendar.MINUTE, 0);
+		endTime.set(Calendar.SECOND, 0);
+
+		lesson.setInicio(startTime);
+		lesson.setFim(endTime);
+
+		persistentSupport.iniciarTransaccao();
+		result = persistentLesson.readLessonsInBroadPeriod(lesson);
+		persistentSupport.confirmarTransaccao();
+		assertNotNull(result);
+		assertEquals(result.size(), 1);
+
+
+		// Test 3: new lesson starts and finishes at exactly the same time	
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 8);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.SECOND, 0);
+		endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 9);
+		endTime.set(Calendar.MINUTE, 30);
+		endTime.set(Calendar.SECOND, 0);
+
+		lesson.setInicio(startTime);
+		lesson.setFim(endTime);
+
+		persistentSupport.iniciarTransaccao();
+		result = persistentLesson.readLessonsInBroadPeriod(lesson);
+		persistentSupport.confirmarTransaccao();
+		assertNotNull(result);
+		assertEquals(result.size(), 1);
+
+
+		// Test 4: new lesson starts and finishes after existing one	
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 8);
+		startTime.set(Calendar.MINUTE, 30);
+		startTime.set(Calendar.SECOND, 0);
+		endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 10);
+		endTime.set(Calendar.MINUTE, 0);
+		endTime.set(Calendar.SECOND, 0);
+
+		lesson.setInicio(startTime);
+		lesson.setFim(endTime);
+
+		persistentSupport.iniciarTransaccao();
+		result = persistentLesson.readLessonsInBroadPeriod(lesson);
+		persistentSupport.confirmarTransaccao();
+		assertNotNull(result);
+		assertEquals(result.size(), 1);
+
+
+		// Test 5: new lesson starts before existing one and finishes at the same time	
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 7);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.SECOND, 0);
+		endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 8);
+		endTime.set(Calendar.MINUTE, 0);
+		endTime.set(Calendar.SECOND, 0);
+
+		lesson.setInicio(startTime);
+		lesson.setFim(endTime);
+
+		persistentSupport.iniciarTransaccao();
+		result = persistentLesson.readLessonsInBroadPeriod(lesson);
+		persistentSupport.confirmarTransaccao();
+		assertNotNull(result);
+		assertEquals(result.size(), 0);
+
+		// Test 6: new lesson starts at the same time and finishes after existing one	
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 7);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.SECOND, 0);
+		endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 8);
+		endTime.set(Calendar.MINUTE, 0);
+		endTime.set(Calendar.SECOND, 0);
+
+		lesson.setInicio(startTime);
+		lesson.setFim(endTime);
+
+		persistentSupport.iniciarTransaccao();
+		result = persistentLesson.readLessonsInBroadPeriod(lesson);
+		persistentSupport.confirmarTransaccao();
+		assertNotNull(result);
+		assertEquals(result.size(), 0);
+
+
+
+
+		// Test 7: new lesson starts before existing one and finishes after existing one 	
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 7);
+		startTime.set(Calendar.MINUTE, 30);
+		startTime.set(Calendar.SECOND, 0);
+		endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 10);
+		endTime.set(Calendar.MINUTE, 0);
+		endTime.set(Calendar.SECOND, 0);
+
+		lesson.setInicio(startTime);
+		lesson.setFim(endTime);
+
+		persistentSupport.iniciarTransaccao();
+		result = persistentLesson.readLessonsInBroadPeriod(lesson);
+		persistentSupport.confirmarTransaccao();
+		assertNotNull(result);
+		assertEquals(result.size(), 1);
+
+
+		// Test 8: new lesson starts at exactly the same time and finishes before existing one 	
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 8);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.SECOND, 0);
+		endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 9);
+		endTime.set(Calendar.MINUTE, 0);
+		endTime.set(Calendar.SECOND, 0);
+
+		lesson.setInicio(startTime);
+		lesson.setFim(endTime);
+
+		persistentSupport.iniciarTransaccao();
+		result = persistentLesson.readLessonsInBroadPeriod(lesson);
+		persistentSupport.confirmarTransaccao();
+		assertNotNull(result);
+		assertEquals(result.size(), 1);
+
+
+		// Test 9: new lesson starts at exactly the same time and finishes after existing one 	
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 8);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.SECOND, 0);
+		endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 10);
+		endTime.set(Calendar.MINUTE, 0);
+		endTime.set(Calendar.SECOND, 0);
+
+		lesson.setInicio(startTime);
+		lesson.setFim(endTime);
+
+		persistentSupport.iniciarTransaccao();
+		result = persistentLesson.readLessonsInBroadPeriod(lesson);
+		persistentSupport.confirmarTransaccao();
+		assertNotNull(result);
+		assertEquals(result.size(), 1);
+
+
+		// Test 10: new lesson starts after existing one and finishes exactly ate the same time 	
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 9);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.SECOND, 0);
+		endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 9);
+		endTime.set(Calendar.MINUTE, 30);
+		endTime.set(Calendar.SECOND, 0);
+
+		lesson.setInicio(startTime);
+		lesson.setFim(endTime);
+
+		persistentSupport.iniciarTransaccao();
+		result = persistentLesson.readLessonsInBroadPeriod(lesson);
+		persistentSupport.confirmarTransaccao();
+		assertNotNull(result);
+		assertEquals(result.size(), 1);
+
+
+		// Test 11: new lesson starts before existing one and finishes exactly ate the same time 	
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 7);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.SECOND, 0);
+		endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 9);
+		endTime.set(Calendar.MINUTE, 30);
+		endTime.set(Calendar.SECOND, 0);
+
+		lesson.setInicio(startTime);
+		lesson.setFim(endTime);
+
+		persistentSupport.iniciarTransaccao();
+		result = persistentLesson.readLessonsInBroadPeriod(lesson);
+		persistentSupport.confirmarTransaccao();
+		assertNotNull(result);
+		assertEquals(result.size(), 1);
+
+
+		// Test 12: new lesson starts and finishes before existing one  	
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 7);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.SECOND, 0);
+		endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 7);
+		endTime.set(Calendar.MINUTE, 30);
+		endTime.set(Calendar.SECOND, 0);
+
+		lesson.setInicio(startTime);
+		lesson.setFim(endTime);
+
+		persistentSupport.iniciarTransaccao();
+		result = persistentLesson.readLessonsInBroadPeriod(lesson);
+		persistentSupport.confirmarTransaccao();
+		assertNotNull(result);
+		assertEquals(result.size(), 0);
+
+
+		// Test 13: new lesson starts and finishes after existing one  	
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 10);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.SECOND, 0);
+		endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 10);
+		endTime.set(Calendar.MINUTE, 30);
+		endTime.set(Calendar.SECOND, 0);
+
+		lesson.setInicio(startTime);
+		lesson.setFim(endTime);
+
+		persistentSupport.iniciarTransaccao();
+		result = persistentLesson.readLessonsInBroadPeriod(lesson);
+		persistentSupport.confirmarTransaccao();
+		assertNotNull(result);
+		assertEquals(result.size(), 0);
+
+
+
+
+  	} catch (ExcepcaoPersistencia ex) {
+		fail("testReadByRoomAndExecutionPeriod : fail");
+    }
+  }
+
   
   
 }
