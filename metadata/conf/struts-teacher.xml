@@ -111,9 +111,18 @@
         <form-property name="name" type="java.lang.String" />   
         <form-property name="urgent" type="java.lang.String"/>   
        <form-property name="page" type="java.lang.Integer" initial="0" />      
-		          
+	</form-bean> 		          
+
+	<!-- Forms for credits -->
+	<form-bean name="executionCourseShiftsPercentageForm"
+		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+        dynamic="true">
+        <form-property name="executionCourseInternalCode" type="java.lang.Integer"/>
+        <form-property name="shiftProfessorships"  type="java.lang.Integer[]"/>
+        <form-property name="shiftProfessorshipsPercentages"  type="java.lang.Double[]"/> 
+        <form-property name="method" type="java.lang.String"></form-property>       
+	</form-bean> 		          
 	
-	</form-bean> 
 
     </form-beans>
 
@@ -289,12 +298,14 @@
 	<action	path="/index"
         type="ServidorApresentacao.Action.teacher.TeacherLoginAction"
 		>    
-     <forward name="viewProfessorships" path="/viewProfessorships.jsp"/>         
+<!--      <forward name="viewProfessorships" path="/viewProfessorships.jsp"/>          -->
+		<forward name="viewProfessorships" path="df.page.viewProfessorships"/>
 	</action>
 	
 	<action path="/viewSite"
         type="ServidorApresentacao.Action.teacher.ReadSite">    
-     <forward name="viewSite" path="/viewSite.jsp"/>         
+   <!--  <forward name="viewSite" path="/viewSite.jsp"/>          -->
+		<forward name="viewSite" path="df.page.initial.management.execution_course"/>
 	</action>
 	
 	<!-- Insert Section -->
@@ -428,10 +439,24 @@
        
 	</action>
 	<!-- start of evaluation mappings -->
+	
+	<!-- Actions for Teacher credits -->
+	<action 
+		name="executionCourseShiftsPercentageForm"
+		input="/editEvaluation.jsp"
+		path="/executionCourseShiftsPercentageManager"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.credits.ProfessorShipShiftPercentageDispatchAction"
+		validate="false"
+        >
+       <forward name="showTable" path="df.teacher.showShiftsPercentageTable"/>
+	</action>	
+	<!-- End of Actions for Teacher credits -->	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
+	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.ApplicationResources" />
@@ -441,5 +466,12 @@
       <set-property property="pathnames" 
 		value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-teacher.xml"/>
 	</plug-in>
+
+	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
+		<set-property property="definitions-config"
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml" />
+		<set-property property="moduleAware" value="true" />
+		<set-property property="definitions-parser-validate" value="true" />
+	</plug-in>    
 
 </struts-config>
