@@ -29,6 +29,7 @@
 			<tr>
 				<td class="listClasses-header"><bean:message key="property.name"/></td>
 				<td class="listClasses-header"><bean:message key="property.type"/></td>
+				<td class="listClasses-header"><bean:message key="property.lessons"/></td>
 				<td class="listClasses-header"><bean:message key="property.turno.capacity"/></td>
 				<td class="listClasses-header">
 					<logic:present name="available">						
@@ -43,6 +44,8 @@
 			<tr>
 				<td class="listClasses"><jsp:getProperty name="shiftView" property="nome"/></td>
 				<td class="listClasses"><jsp:getProperty name="shiftView" property="tipo"/></td>
+				
+				<td class="listClasses"><jsp:getProperty name="shiftView" property="lessons"/></td>
 				<td class="listClasses"><jsp:getProperty name="shiftView" property="lotacao"/></td>
 	<logic:present name="available">
 				<td class="listClasses">

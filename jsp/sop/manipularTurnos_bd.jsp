@@ -11,6 +11,9 @@
     </tr>
 </table>
 <br />
+
+<!-- Tenho de passar a string com a informação do turno para o serviço -->
+
 <h2><bean:message key="title.manage.turnos"/></h2>
 <br />
 <span class="error"><html:errors/></span>
@@ -27,6 +30,7 @@
             	<td class="listClasses-header">&nbsp;</td>
             	<td class="listClasses-header"><bean:message key="property.shift.name"/></td>
             	<td class="listClasses-header"><bean:message key="property.shift.type"/></td>
+	            <!-- <td class="listClasses-header"><bean:message key="property.shift.shift"></td> -->
             	<td class="listClasses-header"><bean:message key="property.shift.capacity"/></td>
             	<td class="listClasses-header"><bean:message key="label.link.shift.classes"/></td>
             </tr>
@@ -35,6 +39,7 @@
 	            <td class="listClasses"><html:radio property="indexTurno" value="<%= (new Integer(i)).toString() %>"/></td>
               	<td class="listClasses"><bean:write name="infoTurno" property="nome"/></td>
               	<td class="listClasses"><bean:write name="infoTurno" property="tipo"/></td>
+              	<!-- <td class="listClasses"><bean:write name="infoTurno" property="turno"/></td> -->
               	<td class="listClasses"><bean:write name="infoTurno" property="lotacao"/></td>
                	<td class="listClasses">
                		<html:link page="/viewClassesWithShift.do" paramId="name" paramName="infoTurno" paramProperty="nome">

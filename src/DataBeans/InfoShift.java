@@ -10,6 +10,10 @@ package DataBeans;
  *
  * @author  tfc130
  */
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+
 import Util.TipoAula;
 
 public class InfoShift extends InfoObject {
@@ -18,6 +22,7 @@ public class InfoShift extends InfoObject {
 	protected Integer _lotacao;
 	protected Integer availabilityFinal;
 	protected InfoExecutionCourse _infoDisciplinaExecucao;
+	protected List infoLessons;
 
 	public InfoShift() {
 	}
@@ -85,9 +90,51 @@ public class InfoShift extends InfoObject {
 		result += ", infoDisciplinaExecucao=" + _infoDisciplinaExecucao;
 		result += "]";
 		return result;
-		
+
 	}
-	
+
+	public String getLessons() {
+		List infoLessonsList = getInfoLessons();
+		Iterator itLesson = infoLessonsList.iterator();
+		String result = new String();
+		int index = 0;
+		
+		while (itLesson.hasNext()) {
+			index = index+1;
+			InfoLesson lesson = (InfoLesson) itLesson.next();
+			result += lesson.getDiaSemana().toString();
+			result += " (";
+			result += ((Calendar) lesson.getInicio()).get(Calendar.HOUR_OF_DAY);
+			result += ":";
+			result += minutesFormatter(((Calendar) lesson.getInicio()).get(Calendar.MINUTE));
+			result += "-";
+			result += ((Calendar) lesson.getFim()).get(Calendar.HOUR_OF_DAY);
+			result += ":";
+			result += minutesFormatter(((Calendar) lesson.getFim()).get(Calendar.MINUTE));
+			result += ") ";
+			result += lesson.getInfoSala().getNome().toString();
+			int last = (infoLessonsList.size());
+			if ( index != last || (index != 1 && index != last)) {
+				result += " , ";
+			} else {
+				result += " ";
+			}
+
+		}
+
+		return result;
+	}
+
+	private String minutesFormatter(int minute){
+		String result="";
+		if (minute<10){
+			result+="0";
+		}
+		result+=minute;
+		
+		return result;
+	}
+
 	/**
 	 * @return
 	 */
@@ -102,5 +149,18 @@ public class InfoShift extends InfoObject {
 		availabilityFinal = integer;
 	}
 
+	/**
+	 * @return
+	 */
+	public List getInfoLessons() {
+		return infoLessons;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setInfoLessons(List list) {
+		infoLessons = list;
+	}
 
 }
