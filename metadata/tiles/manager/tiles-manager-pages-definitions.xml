@@ -18,4 +18,8 @@
 		<put name="body" value="/manager/insertDegree_bd.jsp" />
 		<put name="navLocal" value="/manager/mainMenu.jsp" />
 	</definition>
+	<definition name="df.page.read-degreeCurricularPlans" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/readDegreeCurricularPlans_bd.jsp" />
+		<put name="navLocal" value="/manager/mainMenu.jsp" />
+	</definition>
 </tiles-definitions>

@@ -121,6 +121,12 @@
        <forward name="readDegrees" path="df.page.read-degrees"/>      	      
 	</action>
      
+     <!-- Action for reading all degree curricular plans  -->
+      <action path="/readDegreeCurricularPlans"
+      	     type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlansAction">
+      	  <forward name="readDegreeCurricularPlans" path="df.page.read-degreeCurricularPlans"/>      	      
+      </action>
+     
       <!--Input actions-->
       <action path="/insertDegreeInput"
       	      type="ServidorApresentacao.Action.commons.VoidAction">

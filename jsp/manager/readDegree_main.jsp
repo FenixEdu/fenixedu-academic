@@ -8,5 +8,5 @@
 	<li><html:link page="/editDegree.do" paramId="idInternal" paramName="degreeId"><bean:message key="label.manager.editDegree" /></html:link></li>
 	<br>
 	<br>
-	<li><html:link page="/readCurricularPlans.do" paramId="idInternal" paramName="degreeId"><bean:message key="label.manager.readCurricularPlans" /></html:link></li>			
+	<li><html:link page="/readDegreeCurricularPlans.do" paramId="idInternal" paramName="degreeId"><bean:message key="label.manager.readCurricularPlans" /></html:link></li>			
 </ul>

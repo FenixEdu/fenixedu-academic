@@ -59,6 +59,7 @@ public abstract class SessionConstants {
 	public static final String INFO_DEGREES_LIST = "Lista de licenciaturas";
 	public static final String DEGREE = "degree";
 	public static final String INFO_DEGREE = "info_degree";
+	public static final String INFO_DEGREE_CURRICULAR_PLANS_LIST = "lista de planos curriculares";
 	
 	
 	// -------------------------------------------------------------------------------
