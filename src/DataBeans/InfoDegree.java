@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class InfoDegree implements Serializable{
   protected String sigla;
   protected String nome;
+  // FIXME : this should be a util!!! Why istn't it?
   protected String degreeType;
     
 

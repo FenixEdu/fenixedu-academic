@@ -356,7 +356,11 @@ public abstract class Cloner {
 		InfoDegree infoDegree = new InfoDegree();
 		try {
 			BeanUtils.copyProperties(infoDegree, degree);
-			infoDegree.setDegreeType(degree.getTipoCurso().toString());
+			
+			// FIXME : See InfoDegree variables for root cause.
+			if (degree != null && degree.getTipoCurso() != null) {
+				infoDegree.setDegreeType(degree.getTipoCurso().toString());
+			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
