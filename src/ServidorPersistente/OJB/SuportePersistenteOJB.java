@@ -482,6 +482,9 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new PersistentRestriction();
 	}
 
+/**
+ * @deprecated
+ */
 	public IPersistentEvaluationMethod getIPersistentEvaluationMethod() {
 		return new EvaluationMethodOJB();
 	}
