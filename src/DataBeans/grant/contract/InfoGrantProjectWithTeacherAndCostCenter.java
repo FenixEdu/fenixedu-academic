@@ -13,8 +13,8 @@ import Dominio.grant.contract.IGrantProject;
 public class InfoGrantProjectWithTeacherAndCostCenter extends InfoGrantProject {
 
     public void copyFromDomain(IGrantProject grantProject) {
-        super.copyFromDomain(grantProject);
         if (grantProject != null) {
+            super.copyFromDomain(grantProject);
             if (grantProject.getResponsibleTeacher() != null) {
                 setInfoResponsibleTeacher(InfoTeacherWithPerson
                         .newInfoFromDomain(grantProject.getResponsibleTeacher()));

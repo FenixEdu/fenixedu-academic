@@ -19,7 +19,6 @@ public class InfoGrantCostCenter extends InfoGrantPaymentEntity {
      */
     public void copyFromDomain(IGrantCostCenter grantCostCenter)
     {
-    	super.copyFromDomain(grantCostCenter);
     	if(grantCostCenter != null){
     		setNumber(grantCostCenter.getNumber());
     		setDesignation(grantCostCenter.getDesignation());

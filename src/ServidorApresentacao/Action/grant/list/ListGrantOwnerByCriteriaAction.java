@@ -73,7 +73,7 @@ public class ListGrantOwnerByCriteriaAction extends FenixDispatchAction {
             if (listGrantOwners != null && listGrantOwners.size() != 0) {
                 if (listGrantOwners.size() > infoSpanByCriteriaListGrantOwner
                         .getNumberOfElementsInSpan().intValue()) {
-                    infoSpanByCriteriaListGrantOwner = (InfoSpanListGrantOwner) listGrantOwners
+                    infoSpanByCriteriaListGrantOwner = (InfoSpanByCriteriaListGrantOwner) listGrantOwners
                             .get(listGrantOwners.size() - 1);
                     listGrantOwners.remove(listGrantOwners.size() - 1);
                 }

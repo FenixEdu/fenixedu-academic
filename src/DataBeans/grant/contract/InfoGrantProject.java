@@ -33,7 +33,6 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
      */
     public void copyFromDomain(IGrantProject grantProject)
     {
-    	super.copyFromDomain(grantProject);
     	if(grantProject != null){
     		setNumber(grantProject.getNumber());
     		setDesignation(grantProject.getDesignation());

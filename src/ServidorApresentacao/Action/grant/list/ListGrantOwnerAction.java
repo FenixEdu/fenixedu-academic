@@ -169,9 +169,22 @@ public class ListGrantOwnerAction extends FenixDispatchAction
 					if(listGrantOwnerCompleteInfo != null)
 					{
 						//Set the request
-						request.setAttribute("infoGrantOwner",listGrantOwnerCompleteInfo.getInfoGrantOwner());
-						request.setAttribute("infoQualificationList", listGrantOwnerCompleteInfo.getInfoQualifications());
-						request.setAttribute("infoListGrantContractList", listGrantOwnerCompleteInfo.getInfoListGrantContracts());
+					    if(listGrantOwnerCompleteInfo.getInfoGrantOwner() != null)
+						{
+					        request.setAttribute("infoGrantOwner",listGrantOwnerCompleteInfo.getInfoGrantOwner());
+						}
+					    else 
+					    {
+					        throw new FenixServiceException();
+					    }
+						if(listGrantOwnerCompleteInfo.getInfoQualifications() != null && !listGrantOwnerCompleteInfo.getInfoQualifications().isEmpty())
+						{
+						    request.setAttribute("infoQualificationList", listGrantOwnerCompleteInfo.getInfoQualifications());
+						}
+						if(listGrantOwnerCompleteInfo.getInfoListGrantContracts() != null && !listGrantOwnerCompleteInfo.getInfoListGrantContracts().isEmpty())
+						{
+						    request.setAttribute("infoListGrantContractList", listGrantOwnerCompleteInfo.getInfoListGrantContracts());
+						}
 					}
 				}
 				catch (FenixServiceException e)

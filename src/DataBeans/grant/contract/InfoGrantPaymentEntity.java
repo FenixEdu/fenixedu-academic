@@ -5,7 +5,6 @@ package DataBeans.grant.contract;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
-import Dominio.grant.contract.GrantProject;
 import Dominio.grant.contract.IGrantPaymentEntity;
 
 /**
@@ -84,13 +83,13 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
 
     public static InfoGrantPaymentEntity newInfoFromDomain(
             IGrantPaymentEntity grantPaymentEntity) {
-        if (grantPaymentEntity != null) {
-            if (grantPaymentEntity instanceof GrantProject) {
-                return InfoGrantProjectWithTeacherAndCostCenter
-                        .newInfoFromDomain(grantPaymentEntity);
+        if (grantPaymentEntity != null) 
+        {
+            if (grantPaymentEntity.getOjbConcreteClass().equals("Dominio.grant.contract.GrantProject"))
+            {
+                return InfoGrantProjectWithTeacherAndCostCenter.newInfoFromDomain(grantPaymentEntity);
             } else
-                return InfoGrantCostCenterWithTeacher
-                        .newInfoFromDomain(grantPaymentEntity);
+                return InfoGrantCostCenterWithTeacher.newInfoFromDomain(grantPaymentEntity);
         }
         else
             return null;

@@ -6,18 +6,24 @@
 package ServidorAplicacao.Servico.grant.list;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.contract.InfoGrantContractRegime;
+import DataBeans.grant.contract.InfoGrantContractRegimeWithTeacherAndContract;
 import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import DataBeans.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
 import DataBeans.grant.contract.InfoGrantPart;
+import DataBeans.grant.contract.InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
 import DataBeans.grant.contract.InfoGrantSubsidy;
+import DataBeans.grant.contract.InfoGrantSubsidyWithContract;
 import DataBeans.grant.list.InfoListGrantContract;
 import DataBeans.grant.list.InfoListGrantOwnerComplete;
 import DataBeans.grant.list.InfoListGrantSubsidy;
 import DataBeans.grant.owner.InfoGrantOwnerWithPerson;
+import DataBeans.util.Cloner;
 import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantContractRegime;
 import Dominio.grant.contract.IGrantOrientationTeacher;
@@ -73,6 +79,7 @@ public class ShowGrantOwner implements IService
 						(IGrantContract) contractsIter.next(), sp);
 				listInfoListGrantContracts.add(infoListGrantContract);
 			}
+			Collections.reverse(listInfoListGrantContracts);
 			infoListGrantOwnerComplete.setInfoListGrantContracts(listInfoListGrantContracts);
 		}
 		catch (Exception e)
@@ -108,7 +115,7 @@ public class ShowGrantOwner implements IService
 			Iterator regimesIter = contractRegimes.iterator();
 			while (regimesIter.hasNext())
 			{
-				InfoGrantContractRegime newInfoGrantContractRegime = InfoGrantContractRegime
+				InfoGrantContractRegime newInfoGrantContractRegime = InfoGrantContractRegimeWithTeacherAndContract
 						.newInfoFromDomain((IGrantContractRegime) regimesIter.next());
 				infoContractRegimes.add(newInfoGrantContractRegime);
 			}
@@ -121,7 +128,7 @@ public class ShowGrantOwner implements IService
 			while (subsidiesIter.hasNext())
 			{
 				InfoListGrantSubsidy newInfoListGrantSubsidy = new InfoListGrantSubsidy();
-				InfoGrantSubsidy newInfoGrantSubsidy = InfoGrantSubsidy
+				InfoGrantSubsidy newInfoGrantSubsidy = InfoGrantSubsidyWithContract
 						.newInfoFromDomain((IGrantSubsidy) subsidiesIter.next());
 				newInfoListGrantSubsidy.setInfoGrantSubsidy(newInfoGrantSubsidy);
 				//read the subsidy grant parts
@@ -131,8 +138,7 @@ public class ShowGrantOwner implements IService
 				Iterator partsIter = subsidyParts.iterator();
 				while (partsIter.hasNext())
 				{
-					InfoGrantPart newInfoGrantPart = InfoGrantPart
-							.newInfoFromDomain((IGrantPart) partsIter.next());
+					InfoGrantPart newInfoGrantPart = Cloner.copyIGrantPart2InfoGrantPart((IGrantPart) partsIter.next());
 					infoSubsidyParts.add(newInfoGrantPart);
 				}
 				newInfoListGrantSubsidy.setInfoGrantParts(infoSubsidyParts);
