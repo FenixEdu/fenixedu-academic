@@ -96,14 +96,10 @@ public class ScientificCouncilComponentBuilder {
 
 			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
 				sp.getIPersistentDegreeCurricularPlan();
-			IDegreeCurricularPlan degreeCurricularPlan =
-				new DegreeCurricularPlan(degreeCurricularPlanId);
-			degreeCurricularPlan =
-				(
-					IDegreeCurricularPlan) persistentDegreeCurricularPlan
-						.readByOId(
-					degreeCurricularPlan,
-					false);
+			
+			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
+				DegreeCurricularPlan.class, degreeCurricularPlanId);
+
 			if (degreeCurricularPlan == null) {
 				throw new InvalidArgumentsServiceException();
 			}
@@ -167,14 +163,10 @@ public class ScientificCouncilComponentBuilder {
 
 			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
 				sp.getIPersistentDegreeCurricularPlan();
-			IDegreeCurricularPlan degreeCurricularPlan =
-				new DegreeCurricularPlan(degreeCurricularPlanId);
-			degreeCurricularPlan =
-				(
-					IDegreeCurricularPlan) persistentDegreeCurricularPlan
-						.readByOId(
-					degreeCurricularPlan,
-					false);
+
+			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
+				DegreeCurricularPlan.class, degreeCurricularPlanId);
+
 			if (degreeCurricularPlan == null) {
 				throw new InvalidArgumentsServiceException();
 			}

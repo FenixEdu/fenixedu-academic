@@ -19,58 +19,59 @@ import Util.enrollment.EnrollmentCondition;
 import Util.enrollment.EnrollmentRuleType;
 
 /**
- * @author David Santos in Jun 15, 2004
+ * @author David Santos in Jun 24, 2004
  */
-public class StudentCurricularPlan extends DomainObject implements IStudentCurricularPlan {
 
-	protected Integer studentKey; 
+public class StudentCurricularPlan extends DomainObject implements IStudentCurricularPlan
+{
+	protected Integer studentKey;
 	protected Integer branchKey;
 	protected Integer degreeCurricularPlanKey;
-	protected Specialization specialization;
-	protected Double givenCredits;
-	protected Date when;
-	protected Integer secundaryBranchKey;
-	protected IBranch secundaryBranch;
-	
+	protected Integer employeeKey;
+
+	protected String ojbConcreteClass;
 	protected IStudent student;
 	protected IBranch branch;
 	protected IDegreeCurricularPlan degreeCurricularPlan;
-	protected IEmployee employee; 
+	protected IEmployee employee;
 	protected Date startDate;
 	protected StudentCurricularPlanState currentState;
 	protected List enrolments;
-    protected Integer completedCourses;
-    protected Double classification;
-    protected Integer enrolledCourses;
+	protected Integer completedCourses;
+	protected Double classification;
+	protected Integer enrolledCourses;
 	protected String observations;
-	protected Integer employeeKey;
+	protected Specialization specialization;
+	protected Double givenCredits;
+	protected Date when;
 
-    // For enrollment purposes only
+	// For enrollment purposes only
 	protected Map acumulatedEnrollments;
 	protected List notNeedToEnrollCurricularCourses;
 
 	public StudentCurricularPlan()
 	{
+		ojbConcreteClass = getClass().getName();
 	}
 
-	public StudentCurricularPlan(Integer studentCurricularPlanId) {
-		setIdInternal(studentCurricularPlanId);
-	}
+	public boolean equals(Object obj)
+	{
+		boolean result = false;
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof IStudentCurricularPlan) {
+		if (obj instanceof IStudentCurricularPlan)
+		{
 			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
-			resultado =
-				this.getStudent().equals(studentCurricularPlan.getStudent())
-					&& this.getDegreeCurricularPlan().equals(
-						studentCurricularPlan.getDegreeCurricularPlan())
-					&& this.getCurrentState().equals(studentCurricularPlan.getCurrentState());
+
+			result = getStudent().equals(studentCurricularPlan.getStudent())
+				&& getDegreeCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan())
+				&& getCurrentState().equals(studentCurricularPlan.getCurrentState());
 		}
-		return resultado;
+
+		return result;
 	}
 
-	public String toString() {
+	public String toString()
+	{
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "internalCode = " + getIdInternal() + "; ";
 		result += "student = " + this.student + "; ";
@@ -79,314 +80,219 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		result += "specialization = " + this.specialization + "; ";
 		result += "currentState = " + this.currentState + "]\n";
 		result += "when alter = " + this.when + "]\n";
-		if (this.employee!=null) {
-		result += "employee = " + this.employee.getPerson().getNome()  + "]\n";}
+		if (this.employee != null)
+		{
+			result += "employee = " + this.employee.getPerson().getNome() + "]\n";
+		}
 		return result;
 	}
 
-	/**
-	 * Returns the degreeCurricularPlan.
-	 * @return IDegreeCurricularPlan
-	 */
-	public IDegreeCurricularPlan getDegreeCurricularPlan() {
-		return degreeCurricularPlan;
-	}
-
-	/**
-	 * Returns the degreeCurricularPlanKey.
-	 * @return Integer
-	 */
-	public Integer getDegreeCurricularPlanKey() {
-		return degreeCurricularPlanKey;
-	}
-
-	/**
-	 * Returns the currentState.
-	 * @return StudentCurricularPlanState
-	 */
-	public StudentCurricularPlanState getCurrentState() {
-		return currentState;
-	}
-
-	/**
-	 * Returns the startDate.
-	 * @return Date
-	 */
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	/**
-	 * Returns the student.
-	 * @return IStudent
-	 */
-	public IStudent getStudent() {
-		return student;
-	}
-
-	/**
-	 * Returns the studentKey.
-	 * @return Integer
-	 */
-	public Integer getStudentKey() {
-		return studentKey;
-	}
-
-	/**
-	 * Sets the degreeCurricularPlan.
-	 * @param degreeCurricularPlan The degreeCurricularPlan to set
-	 */
-	public void setDegreeCurricularPlan(IDegreeCurricularPlan courseCurricularPlan) {
-		this.degreeCurricularPlan = courseCurricularPlan;
-	}
-
-	/**
-	 * Sets the degreeCurricularPlanKey.
-	 * @param degreeCurricularPlanKey The degreeCurricularPlanKey to set
-	 */
-	public void setDegreeCurricularPlanKey(Integer courseCurricularPlanKey) {
-		this.degreeCurricularPlanKey = courseCurricularPlanKey;
-	}
-
-	/**
-	 * Sets the currentState.
-	 * @param currentState The currentState to set
-	 */
-	public void setCurrentState(StudentCurricularPlanState currentState) {
-		this.currentState = currentState;
-	}
-
-	/**
-	 * Sets the startDate.
-	 * @param startDate The startDate to set
-	 */
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	/**
-	 * Sets the student.
-	 * @param student The student to set
-	 */
-	public void setStudent(IStudent student) {
-		this.student = student;
-	}
-
-	/**
-	 * Sets the studentKey.
-	 * @param studentKey The studentKey to set
-	 */
-	public void setStudentKey(Integer studentKey) {
-		this.studentKey = studentKey;
-	}
-
-	/**
-	 * @return IBranch
-	 */
-	public IBranch getBranch() {
+	public IBranch getBranch()
+	{
 		return branch;
 	}
-
-	/**
-	 * @return Integer
-	 */
-	public Integer getBranchKey() {
+	
+	public Integer getBranchKey()
+	{
 		return branchKey;
 	}
-
-	/**
-	 * Sets the branch.
-	 * @param branch The branch to set
-	 */
-	public void setBranch(IBranch branch) {
-		this.branch = branch;
-	}
-
-	/**
-	 * Sets the branchKey.
-	 * @param branchKey The branchKey to set
-	 */
-	public void setBranchKey(Integer branchKey) {
-		this.branchKey = branchKey;
-	}
-
-	/**
-	 * @return
-	 */
-	public Specialization getSpecialization() {
-		return specialization;
-	}
-
-	/**
-	 * @param specialization
-	 */
-	public void setSpecialization(Specialization specialization) {
-		this.specialization = specialization;
-	}
-
-	/**
-	 * @return
-	 */
-	public Double getGivenCredits() {
-		return givenCredits;
-	}
-
-	/**
-	 * @param Given Credits
-	 */
-	public void setGivenCredits(Double givenCredits) {
-		this.givenCredits = givenCredits;
-	}
-
-	/**
-	 * @return Enrolments
-	 */
-	public List getEnrolments() {
-		return enrolments;
-	}
-
-	/**
-	 * @param list
-	 */
-	public void setEnrolments(List list) {
-		enrolments = list;
-	}
-
-
-	/**
-	 * @return
-	 */
-	public Integer getCompletedCourses()
-	{
-		return completedCourses;
-	}
-
-	/**
-	 * @param integer
-	 */
-	public void setCompletedCourses(Integer integer)
-	{
-		completedCourses= integer;
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer getEnrolledCourses()
-	{
-		return enrolledCourses;
-	}
-
-	/**
-	 * @param integer
-	 */
-	public void setEnrolledCourses(Integer integer)
-	{
-		enrolledCourses= integer;
-	}
-
-	/**
-	 * @return
-	 */
+	
 	public Double getClassification()
 	{
 		return classification;
 	}
 
-	/**
-	 * @param double1
-	 */
-	public void setClassification(Double double1)
+	public Integer getCompletedCourses()
 	{
-		classification= double1;
+		return completedCourses;
 	}
-
-	/**
-	 * @return
-	 */
-	public IEmployee getEmployee() {
+	
+	public StudentCurricularPlanState getCurrentState()
+	{
+		return currentState;
+	}
+	
+	public IDegreeCurricularPlan getDegreeCurricularPlan()
+	{
+		return degreeCurricularPlan;
+	}
+	
+	public Integer getDegreeCurricularPlanKey()
+	{
+		return degreeCurricularPlanKey;
+	}
+	
+	public IEmployee getEmployee()
+	{
 		return employee;
 	}
-
-	/**
-	 * @param employee
-	 */
-	public void setEmployee(IEmployee employee) {
-		this.employee = employee;
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer getEmployeeKey() {
+	
+	public Integer getEmployeeKey()
+	{
 		return employeeKey;
 	}
-
-	/**
-	 * @param employeeKey
-	 */
-	public void setEmployeeKey(Integer employeeKey) {
-		this.employeeKey = employeeKey;
+	
+	public Integer getEnrolledCourses()
+	{
+		return enrolledCourses;
+	}
+	
+	public List getEnrolments()
+	{
+		return enrolments;
+	}
+	
+	public Double getGivenCredits()
+	{
+		return givenCredits;
+	}
+	
+	public String getOjbConcreteClass()
+	{
+		return ojbConcreteClass;
 	}
 
-	/**
-	 * @return
-	 */
-	public Date getWhen() {
-		return when;
-	}
-
-	/**
-	 * @param when
-	 */
-	public void setWhen(Date when) {
-		this.when = when;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getObservations() {
+	public String getObservations()
+	{
 		return observations;
 	}
-
-	/**
-	 * @param observations
-	 */
-	public void setObservations(String observations) {
-		this.observations = observations;
-	}
-
-	/**
-	 * @return Returns the secundaryBranch.
-	 */
+	
 	public IBranch getSecundaryBranch()
 	{
-		return secundaryBranch;
+		return null;
 	}
-
-	/**
-	 * @param secundaryBranch The secundaryBranch to set.
-	 */
-	public void setSecundaryBranch(IBranch secundaryBranch)
-	{
-		this.secundaryBranch = secundaryBranch;
-	}
-
-	/**
-	 * @return Returns the secundaryBranchKey.
-	 */
+	
 	public Integer getSecundaryBranchKey()
 	{
-		return secundaryBranchKey;
+		return null;
+	}
+	
+	public Specialization getSpecialization()
+	{
+		return specialization;
+	}
+	
+	public Date getStartDate()
+	{
+		return startDate;
+	}
+	
+	public IStudent getStudent()
+	{
+		return student;
+	}
+	
+	public Integer getStudentKey()
+	{
+		return studentKey;
+	}
+	
+	public Date getWhen()
+	{
+		return when;
+	}
+	
+	public void setBranch(IBranch branch)
+	{
+		this.branch = branch;
+	}
+	
+	public void setBranchKey(Integer branchKey)
+	{
+		this.branchKey = branchKey;
+	}
+	
+	public void setClassification(Double classification)
+	{
+		this.classification = classification;
+	}
+	
+	public void setCompletedCourses(Integer completedCourses)
+	{
+		this.completedCourses = completedCourses;
+	}
+	
+	public void setCurrentState(StudentCurricularPlanState currentState)
+	{
+		this.currentState = currentState;
+	}
+	
+	public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
+	{
+		this.degreeCurricularPlan = degreeCurricularPlan;
+	}
+	
+	public void setDegreeCurricularPlanKey(Integer degreeCurricularPlanKey)
+	{
+		this.degreeCurricularPlanKey = degreeCurricularPlanKey;
+	}
+	
+	public void setEmployee(IEmployee employee)
+	{
+		this.employee = employee;
+	}
+	
+	public void setEmployeeKey(Integer employeeKey)
+	{
+		this.employeeKey = employeeKey;
+	}
+	
+	public void setEnrolledCourses(Integer enrolledCourses)
+	{
+		this.enrolledCourses = enrolledCourses;
+	}
+	
+	public void setEnrolments(List enrolments)
+	{
+		this.enrolments = enrolments;
+	}
+	
+	public void setGivenCredits(Double givenCredits)
+	{
+		this.givenCredits = givenCredits;
+	}
+	
+	public void setOjbConcreteClass(String ojbConcreteClass)
+	{
+		this.ojbConcreteClass = ojbConcreteClass;
 	}
 
-	/**
-	 * @param secundaryBranchKey The secundaryBranchKey to set.
-	 */
+	public void setObservations(String observations)
+	{
+		this.observations = observations;
+	}
+	
+	public void setSecundaryBranch(IBranch secundaryBranch)
+	{
+	}
+	
 	public void setSecundaryBranchKey(Integer secundaryBranchKey)
 	{
-		this.secundaryBranchKey = secundaryBranchKey;
+	}
+	
+	public void setSpecialization(Specialization specialization)
+	{
+		this.specialization = specialization;
+	}
+	
+	public void setStartDate(Date startDate)
+	{
+		this.startDate = startDate;
+	}
+	
+	public void setStudent(IStudent student)
+	{
+		this.student = student;
+	}
+	
+	public void setStudentKey(Integer studentKey)
+	{
+		this.studentKey = studentKey;
+	}
+	
+	public void setWhen(Date when)
+	{
+		this.when = when;
 	}
 
 	// -------------------------------------------------------------
@@ -408,7 +314,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		List setOfCurricularCoursesToEnroll = this.getCommonBranchAndStudentBranchesCourses(executionPeriod.getSemester());
 		List enrollmentRules = this.getListOfEnrollmentRules(executionPeriod, enrollmentRuleType);
 		int size = enrollmentRules.size();
-		
+
 		for (int i = 0; i < size; i++)
 		{
 			IEnrollmentRule enrollmentRule = (IEnrollmentRule) enrollmentRules.get(i);
@@ -443,7 +349,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
 		int b = this.getStudentNotNeedToEnrollCourses().size();
 
-		// TODO [DAVID]: Still missing to check if the student has any approved enrollment
+		// TODO [DAVID]: Still missing to check if the student has any approved
+		// enrollment
 		// in a curricular course with a degree curricular plan equivalence.
 
 		return a + b;
@@ -464,7 +371,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 			{
 				IEnrolment enrollment = (IEnrolment) obj;
 
-				if(enrollment instanceof IEnrolmentInOptionalCurricularCourse)
+				if (enrollment instanceof IEnrolmentInOptionalCurricularCourse)
 				{
 					return (((IEnrolmentInOptionalCurricularCourse) enrollment).getCurricularCourseForOption());
 				} else
@@ -486,7 +393,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 			return true;
 		}
 
-		// TODO [DAVID]: Still missing to check if the student has any approved enrollment
+		// TODO [DAVID]: Still missing to check if the student has any approved
+		// enrollment
 		// in a curricular course with a degree curricular plan equivalence.
 
 		return false;
@@ -513,11 +421,11 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		return false;
 	}
 
-    public void calculateStudentAcumulatedEnrollments()
-    {
-        List enrollments = this.getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
+	public void calculateStudentAcumulatedEnrollments()
+	{
+		List enrollments = this.getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
 
-        List curricularCourses = (List) CollectionUtils.collect(enrollments, new Transformer()
+		List curricularCourses = (List) CollectionUtils.collect(enrollments, new Transformer()
 		{
 			public Object transform(Object obj)
 			{
@@ -526,10 +434,10 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 			}
 		});
 
-        setAcumulatedEnrollmentsMap(CollectionUtils.getCardinalityMap(curricularCourses));
-    }
+		setAcumulatedEnrollmentsMap(CollectionUtils.getCardinalityMap(curricularCourses));
+	}
 
-    public Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse)
+	public Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse)
 	{
 		String key = curricularCourse.getCurricularCourseUniqueKeyForEnrollment();
 
@@ -542,7 +450,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
 		return curricularCourseAcumulatedEnrolments;
 	}
-	
+
 	public List getStudentApprovedEnrollments()
 	{
 		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
@@ -604,23 +512,23 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 			}
 		});
 	}
-	
-    protected Map getAcumulatedEnrollmentsMap()
+
+	protected Map getAcumulatedEnrollmentsMap()
 	{
 		return acumulatedEnrollments;
 	}
 
-    protected void setAcumulatedEnrollmentsMap(Map acumulatedEnrollments)
+	protected void setAcumulatedEnrollmentsMap(Map acumulatedEnrollments)
 	{
 		this.acumulatedEnrollments = acumulatedEnrollments;
 	}
 
-    protected List getListOfEnrollmentRules(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType)
+	protected List getListOfEnrollmentRules(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType)
 	{
 		return this.getDegreeCurricularPlan().getListOfEnrollmentRules(this, executionPeriod, enrollmentRuleType);
 	}
-	
-    protected List getStudentNotNeedToEnrollCourses()
+
+	protected List getStudentNotNeedToEnrollCourses()
 	{
 		return (List) CollectionUtils.collect(this.getNotNeedToEnrollCurricularCourses(), new Transformer()
 		{
@@ -632,12 +540,12 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		});
 	}
 
-    protected List getCommonBranchAndStudentBranchesCourses(final Integer semester)
+	protected List getCommonBranchAndStudentBranchesCourses(final Integer semester)
 	{
 		List curricularCourses = new ArrayList();
 
 		List commonAreas = this.getDegreeCurricularPlan().getCommonAreas();
-		
+
 		for (int i = 0; i < commonAreas.size(); i++)
 		{
 			IBranch area = (IBranch) commonAreas.get(i);
@@ -661,8 +569,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 			public boolean evaluate(Object obj)
 			{
 				ICurricularCourse curricularCourse = (ICurricularCourse) obj;
-				return (isCurricularCourseApproved(curricularCourse) || isCurricularCourseEnrolled(curricularCourse)
-						|| !curricularCourse.hasActiveScopeInGivenSemester(semester));
+				return (isCurricularCourseApproved(curricularCourse) || isCurricularCourseEnrolled(curricularCourse) || !curricularCourse
+					.hasActiveScopeInGivenSemester(semester));
 			}
 		});
 
@@ -674,5 +582,4 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes
 	// -------------------------------------------------------------
-
 }

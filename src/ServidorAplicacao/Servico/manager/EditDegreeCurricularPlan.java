@@ -42,8 +42,8 @@ public class EditDegreeCurricularPlan implements IService
 
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
-            oldDegreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(
-                    new DegreeCurricularPlan(newInfoDegreeCP.getIdInternal()), false);
+            oldDegreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
+                    DegreeCurricularPlan.class, newInfoDegreeCP.getIdInternal());
 
             if (oldDegreeCP == null) { throw new NonExistingServiceException(
                     "message.nonExistingDegreeCurricularPlan", null); }

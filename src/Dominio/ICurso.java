@@ -20,10 +20,13 @@ public interface ICurso extends IDomainObject
     public TipoCurso getTipoCurso();
     public List getDegreeCurricularPlans();
     public List getDegreeInfos();
+	public String getConcreteClassForDegreeCurricularPlans();
+	public IDegreeCurricularPlan getNewDegreeCurricularPlan();
 
     public void setSigla(String sigla);
     public void setNome(String nome);
     public void setTipoCurso(TipoCurso tipoCurso);
     public void setDegreeCurricularPlans(List degreeCurricularPlans);
     public void setDegreeInfos(List degreeInfos);
+	public void setConcreteClassForDegreeCurricularPlans(String concreteClassForDegreeCurricularPlans);
 }

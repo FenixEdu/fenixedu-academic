@@ -71,10 +71,8 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico
             }
 
             IDegreeCurricularPlan degreeCurricularPlan =
-                (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(
-                    new DegreeCurricularPlan(
-                        infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal()),
-                    false);
+                (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
+                    DegreeCurricularPlan.class, infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
 
             if (degreeCurricularPlan == null) {
                 throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);

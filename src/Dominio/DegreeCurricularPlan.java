@@ -14,76 +14,77 @@ import Util.MarkType;
 import Util.enrollment.EnrollmentRuleType;
 
 /**
- * @author dcs-rjao
- *
- * 19/Mar/2003
+ * @author David Santos in Jun 25, 2004
  */
 
-public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricularPlan {
+public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricularPlan
+{
+	protected Integer degreeKey;
 
-	private Integer degreeKey;
-	
-	private ICurso degree;
-	private String name;
-	private DegreeCurricularPlanState state;
-	private Date initialDate;
-	private Date endDate;
-	private Integer degreeDuration;
-	private Double neededCredits;
-	private MarkType markType;
-	private Integer numerusClausus;
-	private String description;
-	private String descriptionEn;
-	private List curricularCourses;
-	private List areas;
-	
+	protected String ojbConcreteClass;
+	protected String concreteClassForStudentCurricularPlans;
+	protected ICurso degree;
+	protected String name;
+	protected DegreeCurricularPlanState state;
+	protected Date initialDate;
+	protected Date endDate;
+	protected Integer degreeDuration;
+	protected Double neededCredits;
+	protected MarkType markType;
+	protected Integer numerusClausus;
+	protected String description;
+	protected String descriptionEn;
+	protected List curricularCourses;
+	protected List areas;
 
-    // For enrollment purposes
-	private Integer minimalYearForOptionalCourses;
-	private String enrollmentStrategyClassName;
-	
+	// For enrollment purposes
+	protected Integer minimalYearForOptionalCourses;
+	protected String enrollmentStrategyClassName;
 
-	public DegreeCurricularPlan() {
+	public DegreeCurricularPlan()
+	{
+		ojbConcreteClass = getClass().getName();
 	}
 
-	public DegreeCurricularPlan(Integer idInternal) {
-		setIdInternal(idInternal);
+	public IStudentCurricularPlan getNewStudentCurricularPlan()
+	{
+		IStudentCurricularPlan studentCurricularPlan = null;
+
+		try
+		{
+			Class classDefinition = Class.forName(getConcreteClassForStudentCurricularPlans());
+			studentCurricularPlan = (IStudentCurricularPlan) classDefinition.newInstance();
+		} catch (InstantiationException e)
+		{
+			System.out.println(e);
+		} catch (IllegalAccessException e)
+		{
+			System.out.println(e);
+		} catch (ClassNotFoundException e)
+		{
+			System.out.println(e);
 		}
 		
-	public DegreeCurricularPlan(String nome, ICurso degree) {
-		setName(nome);
-		setDegree(degree);
-		setState(null);
-		setInitialDate(null);
-		setEndDate(null);
+		return studentCurricularPlan;
 	}
 
-	public DegreeCurricularPlan(
-		String nome,
-		ICurso degree,
-		DegreeCurricularPlanState state,
-		Date initialDate,
-		Date endDate) {
-		this();
-		setName(nome);
-		setDegree(degree);
-		setState(state);
-		setInitialDate(initialDate);
-		setEndDate(endDate);
-	}
+	public boolean equals(Object obj)
+	{
+		boolean result = false;
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof IDegreeCurricularPlan) {
-			IDegreeCurricularPlan dcp = (IDegreeCurricularPlan) obj;
-			resultado =
-				this.getName().equals(dcp.getName())
-					&& this.getDegree().equals(dcp.getDegree());
+		if (obj instanceof IDegreeCurricularPlan)
+		{
+			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) obj;
+
+			result = getDegree().equals(degreeCurricularPlan.getDegree())
+				&& getName().equals(degreeCurricularPlan.getName());
 		}
-		return resultado;
+
+		return result;
 	}
 
-	public String toString() {
+	public String toString()
+	{
 		String result = "[" + this.getClass().getName() + ": ";
 		result += "idInternal = " + getIdInternal() + "; ";
 		result += "name = " + this.name + "; ";
@@ -91,227 +92,183 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 		result += "endDate = " + this.endDate + "; ";
 		result += "state = " + this.state + "; ";
 		result += "needed Credits = " + this.neededCredits + "; ";
-		result += "Mark Type = " + this.markType+ "; ";
+		result += "Mark Type = " + this.markType + "; ";
 		result += "degree = " + this.degree + "]\n";
 		result += "NumerusClausus = " + this.numerusClausus + "]\n";
-		
+
 		return result;
 	}
 
-	
-
-	/**
-	 * @return MarkType
-	 */
-	public MarkType getMarkType() {
-		return markType;
-	}
-
-	/**
-	 * @param markType
-	 */
-	public void setMarkType(MarkType markType) {
-		this.markType = markType;
-	}
-
-	/**
-	 * @return The Needed Credits to finish the degree
-	 */
-	public Double getNeededCredits() {
-		return neededCredits;
-	}
-
-	/**
-	 * @param needed Credits to finish the degree
-	 */
-	public void setNeededCredits(Double neededCredits) {
-		this.neededCredits = neededCredits;
-	}
-
-
-	/**
-	 * Returns the degreeKey.
-	 * @return Integer
-	 */
-	public Integer getDegreeKey() {
-		return degreeKey;
-	}
-
-	/**
-	 * Returns the degree.
-	 * @return ICurso
-	 */
-	public ICurso getDegree() {
-		return degree;
-	}
-
-	/**
-	 * Returns the name.
-	 * @return String
-	 */
-	public String getName() {
-		return name;
-	}
-
-
-	/**
-	 * Sets the degreeKey.
-	 * @param degreeKey The degreeKey to set
-	 */
-	public void setDegreeKey(Integer chaveCurso) {
-		this.degreeKey = chaveCurso;
-	}
-
-	/**
-	 * Sets the degree.
-	 * @param degree The degree to set
-	 */
-	public void setDegree(ICurso curso) {
-		this.degree = curso;
-	}
-
-	/**
-	 * Sets the name.
-	 * @param name The name to set
-	 */
-	public void setName(String nome) {
-		this.name = nome;
-	}
-
-	/**
-	 * @return DegreeCurricularPlanState
-	 */
-	public DegreeCurricularPlanState getState() {
-		return state;
-	}
-
-	/**
-	 * @return Date
-	 */
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	/**
-	 * @return Date
-	 */
-	public Date getInitialDate() {
-		return initialDate;
-	}
-
-	/**
-	 * Sets the state.
-	 * @param state The state to set
-	 */
-	public void setState(DegreeCurricularPlanState state) {
-		this.state = state;
-	}
-
-	/**
-	 * Sets the endDate.
-	 * @param endDate The endDate to set
-	 */
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	/**
-	 * Sets the initialDate.
-	 * @param initialDate The initialDate to set
-	 */
-	public void setInitialDate(Date initialDate) {
-		this.initialDate = initialDate;
-	}
-
-	/* (non-Javadoc)
-	 * @see Dominio.IDegreeCurricularPlan#getCurricularCourses()
-	 */
-	public List getCurricularCourses() {
-		return this.curricularCourses;
-	}
-
-	/* (non-Javadoc)
-	 * @see Dominio.IDegreeCurricularPlan#setCurricularCourses(java.util.List)
-	 */
-	public void setCurricularCourses(List curricularCourses) {
-		this.curricularCourses = curricularCourses;		
-	}
-
-	public Integer getDegreeDuration() {
-		return degreeDuration;
-	}
-
-	public Integer getMinimalYearForOptionalCourses() {
-		return minimalYearForOptionalCourses;
-	}
-
-	public void setDegreeDuration(Integer integer) {
-		degreeDuration = integer;
-	}
-
-	public void setMinimalYearForOptionalCourses(Integer integer) {
-		minimalYearForOptionalCourses = integer;
-	}
-
-	public Integer getNumerusClausus() {
-		return numerusClausus;
-	}
-
-	public void setNumerusClausus(Integer integer) {
-		numerusClausus = integer;
-	}
-
-    public String getDescription()
-    {
-        return description;
-    }
-
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
-
-    public String getDescriptionEn()
-    {
-        return descriptionEn;
-    }
-
-    public void setDescriptionEn(String descriptionEn)
-    {
-        this.descriptionEn = descriptionEn;
-    }
-
-    /**
-	 * @return Returns the enrollmentStrategyClassName.
-	 */
-	public String getEnrollmentStrategyClassName()
-	{
-		return enrollmentStrategyClassName;
-	}
-
-	/**
-	 * @param enrollmentStrategyClassName The enrollmentStrategyClassName to set.
-	 */
-	public void setEnrollmentStrategyClassName(String enrollmentStrategyClassName)
-	{
-		this.enrollmentStrategyClassName = enrollmentStrategyClassName;
-	}
-
-	/**
-	 * @return Returns the areas.
-	 */
 	public List getAreas()
 	{
 		return areas;
 	}
+
+	public List getCurricularCourses()
+	{
+		return curricularCourses;
+	}
 	
-	/**
-	 * @param areas The areas to set.
-	 */
+	public ICurso getDegree()
+	{
+		return degree;
+	}
+	
+	public Integer getDegreeDuration()
+	{
+		return degreeDuration;
+	}
+	
+	public Integer getDegreeKey()
+	{
+		return degreeKey;
+	}
+	
+	public String getDescription()
+	{
+		return description;
+	}
+	
+	public String getDescriptionEn()
+	{
+		return descriptionEn;
+	}
+	
+	public Date getEndDate()
+	{
+		return endDate;
+	}
+	
+	public Date getInitialDate()
+	{
+		return initialDate;
+	}
+	
+	public MarkType getMarkType()
+	{
+		return markType;
+	}
+	
+	public Integer getMinimalYearForOptionalCourses()
+	{
+		return minimalYearForOptionalCourses;
+	}
+	
+	public String getName()
+	{
+		return name;
+	}
+	
+	public Double getNeededCredits()
+	{
+		return neededCredits;
+	}
+	
+	public Integer getNumerusClausus()
+	{
+		return numerusClausus;
+	}
+	
+	public DegreeCurricularPlanState getState()
+	{
+		return state;
+	}
+	
 	public void setAreas(List areas)
 	{
 		this.areas = areas;
 	}
+	
+	public void setCurricularCourses(List curricularCourses)
+	{
+		this.curricularCourses = curricularCourses;
+	}
+	
+	public void setDegree(ICurso degree)
+	{
+		this.degree = degree;
+	}
+	
+	public void setDegreeDuration(Integer degreeDuration)
+	{
+		this.degreeDuration = degreeDuration;
+	}
+	
+	public void setDegreeKey(Integer degreeKey)
+	{
+		this.degreeKey = degreeKey;
+	}
+	
+	public void setDescription(String description)
+	{
+		this.description = description;
+	}
+	
+	public void setDescriptionEn(String descriptionEn)
+	{
+		this.descriptionEn = descriptionEn;
+	}
+	
+	public void setEndDate(Date endDate)
+	{
+		this.endDate = endDate;
+	}
+	
+	public void setInitialDate(Date initialDate)
+	{
+		this.initialDate = initialDate;
+	}
+	
+	public void setMarkType(MarkType markType)
+	{
+		this.markType = markType;
+	}
+	
+	public void setMinimalYearForOptionalCourses(Integer minimalYearForOptionalCourses)
+	{
+		this.minimalYearForOptionalCourses = minimalYearForOptionalCourses;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public void setNeededCredits(Double neededCredits)
+	{
+		this.neededCredits = neededCredits;
+	}
+	
+	public void setNumerusClausus(Integer numerusClausus)
+	{
+		this.numerusClausus = numerusClausus;
+	}
+	
+	public void setState(DegreeCurricularPlanState state)
+	{
+		this.state = state;
+	}
+
+	public String getConcreteClassForStudentCurricularPlans()
+	{
+		return concreteClassForStudentCurricularPlans;
+	}
+
+	public String getOjbConcreteClass()
+	{
+		return ojbConcreteClass;
+	}
+	
+	public void setConcreteClassForStudentCurricularPlans(String concreteClassForStudentCurricularPlans)
+	{
+		this.concreteClassForStudentCurricularPlans = concreteClassForStudentCurricularPlans;
+	}
+	
+	public void setOjbConcreteClass(String ojbConcreteClass)
+	{
+		this.ojbConcreteClass = ojbConcreteClass;
+	}
+
 
 	// -------------------------------------------------------------
 	// BEGIN: Only for enrollment purposes

@@ -61,9 +61,13 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 			
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
 				sp.getIStudentCurricularPlanPersistente();
+			
+			IStudentCurricularPlan studentCurricularPlanTemp = new StudentCurricularPlan();
+			studentCurricularPlanTemp.setIdInternal(studentCurricularPlanId);
+
 			IStudentCurricularPlan studentCurricularPlan =
 				(IStudentCurricularPlan) persistentStudentCurricularPlan.readByOId(
-					new StudentCurricularPlan(studentCurricularPlanId),
+					studentCurricularPlanTemp,
 					true);
 			if (studentCurricularPlan == null) {
 				throw new InvalidArgumentsServiceException();

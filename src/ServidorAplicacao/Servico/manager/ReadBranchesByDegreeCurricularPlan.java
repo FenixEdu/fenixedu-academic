@@ -53,7 +53,7 @@ public class ReadBranchesByDegreeCurricularPlan implements IServico {
 	List allBranches = null;
 	try {
 			sp = SuportePersistenteOJB.getInstance();
-			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOId(new DegreeCurricularPlan(idDegreeCurricularPlan), false);
+			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class, idDegreeCurricularPlan);
 			if(degreeCurricularPlan == null)
 				throw new NonExistingServiceException();
 			allBranches = sp.getIPersistentBranch().readByDegreeCurricularPlan(degreeCurricularPlan);

@@ -44,9 +44,8 @@ public class ReadExecutionDegreesByDegreeCurricularPlanID implements IService
 
             sp = SuportePersistenteOJB.getInstance();
             IDegreeCurricularPlan degreeCurricularPlan =
-                (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOId(
-                    new DegreeCurricularPlan(degreeCurricularPlanID),
-                    false);
+                (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOID(
+                    DegreeCurricularPlan.class, degreeCurricularPlanID);
 
             executionDegrees =
                 sp.getICursoExecucaoPersistente().readByDegreeCurricularPlan(degreeCurricularPlan);

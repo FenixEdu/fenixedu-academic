@@ -42,7 +42,7 @@ public class InsertBranch implements IService
             IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
                     .getIPersistentDegreeCurricularPlan();
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
-                    .readByOId(new DegreeCurricularPlan(degreeCurricularPlanId), false);
+                    .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 
             if (degreeCurricularPlan == null)
                 throw new NonExistingServiceException();

@@ -70,9 +70,8 @@ public class DeleteDegreeCurricularPlans implements IServico
 
                 degreeCurricularPlanId = (Integer) iter.next();
                 degreeCurricularPlan =
-                    (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(
-                        new DegreeCurricularPlan(degreeCurricularPlanId),
-                        false);
+                    (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
+                        DegreeCurricularPlan.class, degreeCurricularPlanId);
                 if (degreeCurricularPlan != null)
                 {
                     executionDegrees =

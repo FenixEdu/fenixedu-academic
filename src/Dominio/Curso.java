@@ -22,6 +22,7 @@ public class Curso extends DomainObject implements ICurso {
 	protected TipoCurso tipoCurso;
 	private List degreeCurricularPlans;
 	private List degreeInfos;//added by Tânia Pousão
+	private String concreteClassForDegreeCurricularPlans;
 
 	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */
 	public Curso() {
@@ -44,6 +45,28 @@ public class Curso extends DomainObject implements ICurso {
 			resultado = getSigla().equals(curso.getSigla());
 		}
 		return resultado;
+	}
+
+	public IDegreeCurricularPlan getNewDegreeCurricularPlan()
+	{
+		IDegreeCurricularPlan degreeCurricularPlan = null;
+
+		try
+		{
+			Class classDefinition = Class.forName(getConcreteClassForDegreeCurricularPlans());
+			degreeCurricularPlan = (IDegreeCurricularPlan) classDefinition.newInstance();
+		} catch (InstantiationException e)
+		{
+			System.out.println(e);
+		} catch (IllegalAccessException e)
+		{
+			System.out.println(e);
+		} catch (ClassNotFoundException e)
+		{
+			System.out.println(e);
+		}
+		
+		return degreeCurricularPlan;
 	}
 
 	public String toString() {
@@ -132,5 +155,15 @@ public class Curso extends DomainObject implements ICurso {
 	 */
 	public void setDegreeInfos(List degreeInfos) {
 		this.degreeInfos = degreeInfos;
+	}
+
+	public String getConcreteClassForDegreeCurricularPlans()
+	{
+		return concreteClassForDegreeCurricularPlans;
+	}
+	
+	public void setConcreteClassForDegreeCurricularPlans(String concreteClassForDegreeCurricularPlans)
+	{
+		this.concreteClassForDegreeCurricularPlans = concreteClassForDegreeCurricularPlans;
 	}
 }

@@ -1,0 +1,51 @@
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for Dominio.Curso -->
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="Dominio.Curso" table="DEGREE">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="sigla"
+		column="CODE"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="nome"
+		column="NAME"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="tipoCurso"
+		column="TYPE_DEGREE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<field-descriptor
+		name="concreteClassForDegreeCurricularPlans"
+		column="CLASS_NAME_FOR_DEGREE_CURRICULAR_PLANS"
+		jdbc-type="VARCHAR"
+	/>
+	<collection-descriptor
+			name="degreeCurricularPlans"
+			element-class-ref="Dominio.DegreeCurricularPlan"
+			proxy="true">
+		<inverse-foreignkey field-ref="degreeKey"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="degreeInfos"
+			element-class-ref="Dominio.DegreeInfo"
+			proxy="true">
+		<inverse-foreignkey field-ref="degreeKey"/>
+	</collection-descriptor>    
+</class-descriptor>

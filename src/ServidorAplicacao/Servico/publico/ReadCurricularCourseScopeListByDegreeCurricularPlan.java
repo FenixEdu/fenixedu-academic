@@ -61,9 +61,8 @@ public class ReadCurricularCourseScopeListByDegreeCurricularPlan implements ISer
         {
             sp = SuportePersistenteOJB.getInstance();
             IDegreeCurricularPlan degreeCurricularPlan =
-                (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOId(
-                    new DegreeCurricularPlan(idDegreeCurricularPlan),
-                    false);
+                (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOID(
+                    DegreeCurricularPlan.class, idDegreeCurricularPlan);
             allCurricularCourses =
                 sp.getIPersistentCurricularCourse().readCurricularCoursesByDegreeCurricularPlan(
                     degreeCurricularPlan);
