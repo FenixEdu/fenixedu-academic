@@ -6,303 +6,373 @@ import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 
-
 /**
- * @author dcs-rjao
- *
- * 24/Mar/2003
+ * @author dcs-rjao 24/Mar/2003
  */
 
-public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvaluation, Comparable {
+public class EnrolmentEvaluation extends DomainObject implements
+        IEnrolmentEvaluation, Comparable
+{
 
-//	private String RECTIFIED = "RECTIFICADO";
-	private String RECTIFICATION = "RECTIFICAÇÃO";
-	
-	private String grade;
-	private EnrolmentEvaluationType enrolmentEvaluationType;
-	private Date examDate;
-	private Date gradeAvailableDate;
-	private EnrolmentEvaluationState enrolmentEvaluationState;
-	private Date when;
-	private String checkSum;
-	private String observation;
-	
-	private IEnrolment enrolment;
-	private IPessoa personResponsibleForGrade;
-	private IEmployee employee; 
-	
-	private Integer enrolmentKey;
-	private Integer personResponsibleForGradeKey;
-	private Integer employeeKey;
-		
-	public EnrolmentEvaluation() {
-	}
+    //	private String RECTIFIED = "RECTIFICADO";
+    private String RECTIFICATION = "RECTIFICAÇÃO";
 
-	public boolean equals(Object obj) {
-		boolean result = false;
+    private String grade;
 
-		if(obj instanceof IEnrolmentEvaluation)
-		{
-			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
-			result = this.getEnrolment().equals(enrolmentEvaluation.getEnrolment()) &&
-					this.getIdInternal().equals(enrolmentEvaluation.getIdInternal())/* &&
-//			 		this.getEnrolmentEvaluationType().equals(enrolmentEvaluation.getEnrolmentEvaluationType()) &&
-					this.getGrade().equals(enrolmentEvaluation.getGrade()) &&
-					this.getWhen().equals(enrolmentEvaluation.getWhen())*/;
-		}
-		return result;
-	}
+    private EnrolmentEvaluationType enrolmentEvaluationType;
 
-	public String toString() {
-		String result = "[" + this.getClass().getName() + "; ";
-		result += "grade = " + this.grade + "; ";
-		result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
-		result += "examDate = " + this.examDate + "; ";
-		result += "personResponsibleForGrade = " + this.personResponsibleForGrade + "; ";
-		result += "enrolmentEvaluationState = " + this.enrolmentEvaluationState + "; ";
-		result += "when = " + this.when + "; ";
-		result += "checkSum = " + this.checkSum + "; ";
-		result += "enrolment = " + this.enrolment + "; ";
-		result += "gradeAvailableDate = " + this.gradeAvailableDate + "]\n";
-		result += "employee = " + this.employee + "; ";
-		return result;
-	}
-	public IEnrolment getEnrolment() {
-		return enrolment;
-	}
+    private Date examDate;
 
-	public Integer getEnrolmentKey() {
-		return enrolmentKey;
-	}
+    private Date gradeAvailableDate;
 
-	public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-		return enrolmentEvaluationType;
-	}
+    private EnrolmentEvaluationState enrolmentEvaluationState;
 
-	public Date getExamDate() {
-		return examDate;
-	}
+    private Date when;
 
-	public String getGrade() {
-		return grade;
-	}
+    private String checkSum;
 
-	public Date getGradeAvailableDate() {
-		return gradeAvailableDate;
-	}
+    private String observation;
 
-	public EnrolmentEvaluationState getEnrolmentEvaluationState() {
-		return enrolmentEvaluationState;
-	}
+    private IEnrolment enrolment;
 
-	public void setEnrolment(IEnrolment enrolment) {
-		this.enrolment = enrolment;
-	}
+    private IPessoa personResponsibleForGrade;
 
-	public void setEnrolmentKey(Integer integer) {
-		enrolmentKey = integer;
-	}
+    private IEmployee employee;
 
-	public void setEnrolmentEvaluationType(EnrolmentEvaluationType type) {
-		enrolmentEvaluationType = type;
-	}
+    private Integer enrolmentKey;
 
-	public void setExamDate(Date date) {
-		examDate = date;
-	}
+    private Integer personResponsibleForGradeKey;
 
-	public void setGrade(String string) {
-		grade = string;
-	}
+    private Integer employeeKey;
 
-	public void setGradeAvailableDate(Date date) {
-		gradeAvailableDate = date;
-	}
+    public EnrolmentEvaluation()
+    {
+    }
 
-	public void setEnrolmentEvaluationState(EnrolmentEvaluationState state) {
-		this.enrolmentEvaluationState = state;
-	}
+    public boolean equals(Object obj)
+    {
+        boolean result = false;
 
-	public IPessoa getPersonResponsibleForGrade() {
-		return personResponsibleForGrade;
-	}
+        if (obj instanceof IEnrolmentEvaluation)
+        {
+            IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
+            result = this.getEnrolment().equals(
+                    enrolmentEvaluation.getEnrolment())
+                    && this.getIdInternal().equals(
+                            enrolmentEvaluation.getIdInternal())/*
+                                                                 * && //
+                                                                 * this.getEnrolmentEvaluationType().equals(enrolmentEvaluation.getEnrolmentEvaluationType()) &&
+                                                                 * this.getGrade().equals(enrolmentEvaluation.getGrade()) &&
+                                                                 */;
+        }
+        return result;
+    }
 
-	public Integer getPersonResponsibleForGradeKey() {
-		return personResponsibleForGradeKey;
-	}
+    public String toString()
+    {
+        String result = "[" + this.getClass().getName() + "; ";
+        result += "grade = " + this.grade + "; ";
+        result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType
+                + "; ";
+        result += "examDate = " + this.examDate + "; ";
+        result += "personResponsibleForGrade = "
+                + this.personResponsibleForGrade + "; ";
+        result += "enrolmentEvaluationState = " + this.enrolmentEvaluationState
+                + "; ";
+        result += "when = " + this.when + "; ";
+        result += "checkSum = " + this.checkSum + "; ";
+        result += "enrolment = " + this.enrolment + "; ";
+        result += "gradeAvailableDate = " + this.gradeAvailableDate + "]\n";
+        result += "employee = " + this.employee + "; ";
+        return result;
+    }
 
-	public void setPersonResponsibleForGrade(IPessoa person) {
-		personResponsibleForGrade = person;
-	}
+    public IEnrolment getEnrolment()
+    {
+        return enrolment;
+    }
 
-	public void setPersonResponsibleForGradeKey(Integer integer) {
-		personResponsibleForGradeKey = integer;
-	}
+    public Integer getEnrolmentKey()
+    {
+        return enrolmentKey;
+    }
 
-	public IEmployee getEmployee() {
-		return employee;
-	}
+    public EnrolmentEvaluationType getEnrolmentEvaluationType()
+    {
+        return enrolmentEvaluationType;
+    }
 
-	public Integer getEmployeeKey() {
-		return employeeKey;
-	}
+    public Date getExamDate()
+    {
+        return examDate;
+    }
 
-	public void setEmployee(IEmployee employee) {
-		this.employee = employee;
-	}
+    public String getGrade()
+    {
+        return grade;
+    }
 
-	public void setEmployeeKey(Integer integer) {
-		employeeKey = integer;
-	}
+    public Date getGradeAvailableDate()
+    {
+        return gradeAvailableDate;
+    }
 
-	public String getCheckSum() {
-		return checkSum;
-	}
+    public EnrolmentEvaluationState getEnrolmentEvaluationState()
+    {
+        return enrolmentEvaluationState;
+    }
 
-	public Date getWhen() {
-		return when;
-	}
+    public void setEnrolment(IEnrolment enrolment)
+    {
+        this.enrolment = enrolment;
+    }
 
-	public void setCheckSum(String string) {
-		checkSum = string;
-	}
+    public void setEnrolmentKey(Integer integer)
+    {
+        enrolmentKey = integer;
+    }
 
-	public void setWhen(Date date) {
-		when = date;
-	}
+    public void setEnrolmentEvaluationType(EnrolmentEvaluationType type)
+    {
+        enrolmentEvaluationType = type;
+    }
 
-	public String getObservation() {
-		return observation;
-	}
+    public void setExamDate(Date date)
+    {
+        examDate = date;
+    }
 
-	public void setObservation(String string) {
-		observation = string;
-	}
+    public void setGrade(String string)
+    {
+        grade = string;
+    }
 
-	/**
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
-	public int compareTo(Object o)
-	{
-		IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) o;
-		EnrolmentState myEnrolmentState = getEnrollmentStateByGrade(this.getGrade());
-		EnrolmentState otherEnrolmentState = getEnrollmentStateByGrade(enrolmentEvaluation.getGrade());
-		String otherGrade = enrolmentEvaluation.getGrade();
-		Date otherWhenAltered = enrolmentEvaluation.getWhen();
+    public void setGradeAvailableDate(Date date)
+    {
+        gradeAvailableDate = date;
+    }
 
-		if (this.getObservation() != null
-			&& this.getObservation().equals(this.RECTIFICATION)
-			&& enrolmentEvaluation.getObservation() != null
-			&& enrolmentEvaluation.getObservation().equals(this.RECTIFICATION))
-		{
-			return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
-		} else if (this.getObservation() != null && this.getObservation().equals(this.RECTIFICATION))
-		{
-			return 1;
-		} else if (this.getObservation() != null && this.getObservation().equals(this.RECTIFICATION))
-		{
-			return -1;
-		} else if (myEnrolmentState.equals(otherEnrolmentState))
-		{
-			return compareForEqualStates(myEnrolmentState, otherEnrolmentState, otherGrade, otherWhenAltered);
-		} else
-		{
-			return compareForNotEqualStates(myEnrolmentState, otherEnrolmentState);
-		}
-	}
+    public void setEnrolmentEvaluationState(EnrolmentEvaluationState state)
+    {
+        this.enrolmentEvaluationState = state;
+    }
 
-	private int compareMyWhenAlteredDateToAnotherWhenAlteredDate(Date whenAltered)
-	{
-		if (this.getWhen().compareTo(whenAltered) >= 0)
-		{
-			return 1;
-		} else
-		{
-			return -1;
-		}
-	}
+    public IPessoa getPersonResponsibleForGrade()
+    {
+        return personResponsibleForGrade;
+    }
 
-	private int compareMyGradeToAnotherGrade(String grade)
-	{
-		Integer myGrade = Integer.valueOf(this.getGrade());
-		Integer otherGrade = Integer.valueOf(grade);
-		if (myGrade.intValue() >= otherGrade.intValue())
-		{
-			return 1;
-		} else
-		{
-			return -1;
-		}
-	}
+    public Integer getPersonResponsibleForGradeKey()
+    {
+        return personResponsibleForGradeKey;
+    }
 
-	private int compareForEqualStates(
-		EnrolmentState myEnrolmentState,
-		EnrolmentState otherEnrolmentState,
-		String otherGrade,
-		Date otherWhenAltered)
-	{
-		if (myEnrolmentState.equals(EnrolmentState.APROVED))
-		{
-			return compareMyGradeToAnotherGrade(otherGrade);
-		} else
-		{
-			return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
-		}
-	}
+    public void setPersonResponsibleForGrade(IPessoa person)
+    {
+        personResponsibleForGrade = person;
+    }
 
-	private int compareForNotEqualStates(EnrolmentState myEnrolmentState, EnrolmentState otherEnrolmentState)
-	{
-		if (myEnrolmentState.equals(EnrolmentState.APROVED))
-		{
-			return 1;
-		} else if (myEnrolmentState.equals(EnrolmentState.NOT_APROVED) && otherEnrolmentState.equals(EnrolmentState.APROVED))
-		{
-			return -1;
-		} else if (myEnrolmentState.equals(EnrolmentState.NOT_APROVED))
-		{
-			return 1;
-		} else if (myEnrolmentState.equals(EnrolmentState.NOT_EVALUATED))
-		{
-			return -1;
-		} else
-		{
-			return 0;
-		}
-	}
-	
-	private EnrolmentState getEnrollmentStateByGrade(String grade)
-	{
-		if (grade == null)
-		{
-			return EnrolmentState.NOT_EVALUATED;
-		}
+    public void setPersonResponsibleForGradeKey(Integer integer)
+    {
+        personResponsibleForGradeKey = integer;
+    }
 
-		if (grade.equals(""))
-		{
-			return EnrolmentState.NOT_EVALUATED;
-		}
+    public IEmployee getEmployee()
+    {
+        return employee;
+    }
 
-		if (grade.equals("0"))
-		{
-			return EnrolmentState.NOT_EVALUATED;
-		}
+    public Integer getEmployeeKey()
+    {
+        return employeeKey;
+    }
 
-		if (grade.equals("NA"))
-		{
-			return EnrolmentState.NOT_EVALUATED;
-		}
+    public void setEmployee(IEmployee employee)
+    {
+        this.employee = employee;
+    }
 
-		if (grade.equals("RE"))
-		{
-			return EnrolmentState.NOT_APROVED;
-		}
+    public void setEmployeeKey(Integer integer)
+    {
+        employeeKey = integer;
+    }
 
-		if (grade.equals("AP"))
-		{
-			return EnrolmentState.APROVED;
-		}
+    public String getCheckSum()
+    {
+        return checkSum;
+    }
 
-		return EnrolmentState.APROVED;
-	}
+    public Date getWhen()
+    {
+        return when;
+    }
+
+    public void setCheckSum(String string)
+    {
+        checkSum = string;
+    }
+
+    public void setWhen(Date date)
+    {
+        when = date;
+    }
+
+    public String getObservation()
+    {
+        return observation;
+    }
+
+    public void setObservation(String string)
+    {
+        observation = string;
+    }
+
+    /**
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compareTo(Object o)
+    {
+        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) o;
+        EnrolmentState myEnrolmentState = getEnrollmentStateByGrade(this
+                .getGrade());
+        EnrolmentState otherEnrolmentState = getEnrollmentStateByGrade(enrolmentEvaluation
+                .getGrade());
+        String otherGrade = enrolmentEvaluation.getGrade();
+        Date otherWhenAltered = enrolmentEvaluation.getWhen();
+
+        if (this.getObservation() != null
+                && this.getObservation().equals(this.RECTIFICATION)
+                && enrolmentEvaluation.getObservation() != null
+                && enrolmentEvaluation.getObservation().equals(
+                        this.RECTIFICATION))
+        {
+            return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
+        }
+        else if (this.getObservation() != null
+                && this.getObservation().equals(this.RECTIFICATION))
+        {
+            return 1;
+        }
+        else if (this.getObservation() != null
+                && this.getObservation().equals(this.RECTIFICATION))
+        {
+            return -1;
+        }
+        else if (myEnrolmentState.equals(otherEnrolmentState))
+        {
+            return compareForEqualStates(myEnrolmentState, otherEnrolmentState,
+                    otherGrade, otherWhenAltered);
+        }
+        else
+        {
+            return compareForNotEqualStates(myEnrolmentState,
+                    otherEnrolmentState);
+        }
+    }
+
+    private int compareMyWhenAlteredDateToAnotherWhenAlteredDate(
+            Date whenAltered)
+    {
+        if (this.getWhen() == null) { return -1; }
+        if (whenAltered == null) { return 1; }
+        if (this.getWhen().compareTo(whenAltered) >= 0)
+        {
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    private int compareMyGradeToAnotherGrade(String grade)
+    {
+        Integer myGrade = null;
+        Integer otherGrade = null;
+        if (this.getGrade() == null)
+        {
+            myGrade = new Integer(0);
+        }
+        else
+        {
+
+            myGrade = Integer.valueOf(this.getGrade());
+        }
+        if (grade == null)
+        {
+            otherGrade = new Integer(0);
+        }
+        else
+        {
+
+            otherGrade = Integer.valueOf(grade);
+        }
+
+        if (myGrade.intValue() >= otherGrade.intValue())
+        {
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    private int compareForEqualStates(EnrolmentState myEnrolmentState,
+            EnrolmentState otherEnrolmentState, String otherGrade,
+            Date otherWhenAltered)
+    {
+        if (myEnrolmentState.equals(EnrolmentState.APROVED))
+        {
+            return compareMyGradeToAnotherGrade(otherGrade);
+        }
+        else
+        {
+            return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
+        }
+    }
+
+    private int compareForNotEqualStates(EnrolmentState myEnrolmentState,
+            EnrolmentState otherEnrolmentState)
+    {
+        if (myEnrolmentState.equals(EnrolmentState.APROVED))
+        {
+            return 1;
+        }
+        else if (myEnrolmentState.equals(EnrolmentState.NOT_APROVED)
+                && otherEnrolmentState.equals(EnrolmentState.APROVED))
+        {
+            return -1;
+        }
+        else if (myEnrolmentState.equals(EnrolmentState.NOT_APROVED))
+        {
+            return 1;
+        }
+        else if (myEnrolmentState.equals(EnrolmentState.NOT_EVALUATED))
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    private EnrolmentState getEnrollmentStateByGrade(String grade)
+    {
+        if (grade == null) { return EnrolmentState.NOT_EVALUATED; }
+
+        if (grade.equals("")) { return EnrolmentState.NOT_EVALUATED; }
+
+        if (grade.equals("0")) { return EnrolmentState.NOT_EVALUATED; }
+
+        if (grade.equals("NA")) { return EnrolmentState.NOT_EVALUATED; }
+
+        if (grade.equals("RE")) { return EnrolmentState.NOT_APROVED; }
+
+        if (grade.equals("AP")) { return EnrolmentState.APROVED; }
+
+        return EnrolmentState.APROVED;
+    }
 
 }
