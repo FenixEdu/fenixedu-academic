@@ -13,6 +13,7 @@ import DataBeans.InfoShift;
  * @author jpvl
  */
 public class InfoShiftPercentage {
+	private List lessons;
 	private InfoShift shift;
 	private Double availablePercentage;
 	private List teacherShiftPercentageList;
@@ -59,4 +60,12 @@ public class InfoShiftPercentage {
 	public void addInfoTeacherShiftPercentage(InfoTeacherShiftPercentage infoTeacherShiftPercentage){
 		teacherShiftPercentageList.add(infoTeacherShiftPercentage);	
 	}
+
+	public void setInfoLessons(List lessons) {
+		this.lessons = lessons;
+	}
+	
+	public List getInfoLessons(){
+		return this.lessons;
+	}	
 }
