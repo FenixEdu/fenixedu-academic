@@ -288,6 +288,7 @@ public class RegisterCandidate implements IServico
             qualification.setSchool(masterDegreeCandidate.getMajorDegreeSchool());
             qualification.setTitle(masterDegreeCandidate.getMajorDegree());
             qualification.setYear(masterDegreeCandidate.getMajorDegreeYear());
+            qualification.setDegree(masterDegreeCandidate.getMajorDegree());
 
             sp.confirmarTransaccao();
             sp.iniciarTransaccao();
