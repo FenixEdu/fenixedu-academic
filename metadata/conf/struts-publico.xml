@@ -22,8 +22,8 @@
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
         <form-property name="index" type="java.lang.String"/>
+
         <form-property name="curricularYear" type="java.lang.Integer"/>
-<!--        <form-property name="semester" type="java.lang.String"/> -->
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>
       
@@ -92,7 +92,7 @@
         <forward name="showTimeTables" path="/viewClasses.do"/>
       </action>
 		
-      <action input="/chooseContext.jsp"
+      <action input="/chooseClassSearchContextDA.do?method=prepare&amp;page=0"
               name="chooseSearchContextForm"
               parameter="method"
               path="/chooseClassSearchContextDA"
@@ -103,7 +103,7 @@
         <forward name="nextPage" path="/viewClasses.do"/>
       </action>
 
-	  <action input="/chooseContext.jsp"
+	  <action input="/chooseShiftSearchContextDA.do?method=prepare&amp;page=0"
               name="chooseSearchContextForm"
               parameter="method"
               path="/chooseShiftSearchContextDA"

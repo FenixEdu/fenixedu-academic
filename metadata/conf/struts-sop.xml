@@ -234,7 +234,7 @@
       </action>
 
       <action attribute="escolherContextoForm"
-              input="/escolherContexto.jsp"
+              input="/prepararEscolherContexto.do"
               name="escolherContextoForm"
               path="/escolherContextoForm"
               scope="request"
