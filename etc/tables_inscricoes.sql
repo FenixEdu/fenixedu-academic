@@ -101,7 +101,7 @@ create table CURRICULAR_COURSE (
    KEY_UNIVERSITY int(11),
    BASIC bit not null default '0',
    PRIMARY KEY  (ID_INTERNAL),
-   UNIQUE KEY U1 (CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN),
+   UNIQUE KEY U1 (CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
 
 -- ----------------------------
@@ -187,7 +187,7 @@ create table CURRICULAR_COURSE_SCOPE (
    BEGIN_DATE date NOT NULL default '0000-00-00',
    END_DATE date default null,
    primary key (ID_INTERNAL),
-   unique U1(KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH, BEGIN_DATE),
+   unique U1(KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH, BEGIN_DATE)
 )type=InnoDB;
 
 
@@ -265,23 +265,7 @@ CREATE TABLE RESTRICTION (
   KEY_PRECEDENCE int(11) not null,
   KEY_CURRICULAR_COURSE int (11),
   NUMBER_OF_CURRICULAR_COURSE_DONE int(11),
-  primary key (ID_INTERNAL)) TYPE=InnoDB;
-
--- ----------------------------
---  Table structure for EXECUTION_PERIOD
---  State : A = Actual; O= Open; NO= Not open; C= Closed
--- ----------------------------
-drop table if exists EXECUTION_PERIOD;
-create table EXECUTION_PERIOD (
-   ID_INTERNAL int(11) not null auto_increment,
-   NAME varchar(50) not null,
-   KEY_EXECUTION_YEAR int(11) not null,
-   STATE varchar(3) not null default "NO",
-   SEMESTER int (11) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (NAME, KEY_EXECUTION_YEAR))
-   type=InnoDB comment="InnoDB free: 373760 kB";
-   
+  primary key (ID_INTERNAL)) TYPE=InnoDB; 
    
 -- ----------------------------
 --  Table structure for EXECUTION_YEAR
