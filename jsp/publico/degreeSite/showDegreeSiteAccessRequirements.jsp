@@ -17,7 +17,11 @@
 	</div>
 	
 	<!-- PÁGINA EM INGLÊS -->
-	<div class="version"><!--<span class="px10"><a href="#">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span>--></div> 
+	<div class="version">
+		<span class="px10">
+			<html:link page="<%= "/showDegreeSite.do?method=showAccessRequirements&amp;inEnglish=true&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") %>" >english version</html:link> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
+		</span>
+	</div> 
 	<div class="clear"></div> 
 	
 	<h1><bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp;<bean:write name="infoDegreeInfo" property="infoDegree.nome" /></h1>
@@ -69,3 +73,21 @@
 	</logic:notEmpty>
 
 </logic:present>
+
+<logic:empty name="infoDegreeInfo" property="testIngression">
+<logic:empty name="infoDegreeInfo" property="classifications">
+<logic:empty name="infoDegreeInfo" property="driftsInitial">
+<logic:empty name="infoDegreeInfo" property="driftsFirst">
+<logic:empty name="infoDegreeInfo" property="driftsSecond">
+<logic:empty name="infoDegreeInfo" property="markAverage">
+<logic:empty name="infoDegreeInfo" property="markMin">
+<logic:empty name="infoDegreeInfo" property="markMax">
+	<p><span class="error"><bean:message key="error.public.DegreeInfoNotPresent" /></span></p>
+</logic:empty>
+</logic:empty>
+</logic:empty>	
+</logic:empty>	
+</logic:empty>
+</logic:empty>
+</logic:empty>	
+</logic:empty> 

@@ -45,6 +45,9 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
+        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+        request.setAttribute("inEnglish", inEnglish);
+
         //If degreeId is null then this was call by coordinator
         //Don't have a degreeId but a executionDegreeId
         //It's necessary read the executionDegree and obtain the correspond degree
@@ -154,7 +157,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         {
             executionDegreeList =
                 (List) gestorServicos.executar(
-                    null,
+                   null,
                     "ReadExecutionDegreesByDegreeAndExecutionPeriod",
                     args);
         } catch (FenixServiceException e)
@@ -165,7 +168,13 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 
         request.setAttribute("infoDegreeInfo", infoDegreeInfo);
         request.setAttribute("infoExecutionDegrees", executionDegreeList);
-        return mapping.findForward("showDescription");
+        if (inEnglish == null || inEnglish.booleanValue() == false)
+        {
+            return mapping.findForward("showDescription");
+        } else
+        {
+			return mapping.findForward("showDescriptionEnglish");
+        }
     }
 
     public ActionForward showAccessRequirements(
@@ -183,6 +192,9 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
+		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+		request.setAttribute("inEnglish", inEnglish);
+		
         GestorServicos gestorServicos = GestorServicos.manager();
 
         //degree information
@@ -205,7 +217,13 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         }
 
         request.setAttribute("infoDegreeInfo", infoDegreeInfo);
-        return mapping.findForward("showAccessRequirements");
+		if (inEnglish == null || inEnglish.booleanValue() == false)
+		{
+			return mapping.findForward("showAccessRequirements");
+		} else
+		{
+			return mapping.findForward("showAccessRequirementsEnglish");
+		}        
     }
 
     public ActionForward showCurricularPlan(
@@ -226,6 +244,9 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
+		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+		request.setAttribute("inEnglish", inEnglish);
+		
         GestorServicos gestorServicos = GestorServicos.manager();
 
         //degree information
@@ -255,7 +276,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         InfoDegreeCurricularPlan infoDegreeCurricularPlan =
             (InfoDegreeCurricularPlan) infoDegreeCurricularPlanList.get(0);
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
-							  
+
         if (degreeCurricularPlanId != null)
         {
             Object[] args2 = { degreeCurricularPlanId };
@@ -277,7 +298,14 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 
             request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
         }
-        return mapping.findForward("showCurricularPlans");
+        
+		if (inEnglish == null || inEnglish.booleanValue() == false)
+		{
+			return mapping.findForward("showCurricularPlans");
+		} else
+		{
+			return mapping.findForward("showCurricularPlansEnglish");
+		}         
     }
 
     private Integer getFromRequest(String parameter, HttpServletRequest request)
@@ -293,5 +321,22 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
             parameterCode = new Integer(parameterCodeString);
         }
         return parameterCode;
+    }
+
+    private Boolean getFromRequestBoolean(String parameter, HttpServletRequest request)
+    {
+        Boolean parameterBoolean = null;
+
+        String parameterCodeString = request.getParameter(parameter);
+        if (parameterCodeString == null)
+        {
+            parameterCodeString = (String) request.getAttribute(parameter);
+        }
+        if (parameterCodeString != null)
+        {
+            parameterBoolean = new Boolean(parameterCodeString);
+        }
+
+        return parameterBoolean;
     }
 }

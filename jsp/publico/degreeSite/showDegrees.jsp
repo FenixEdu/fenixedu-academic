@@ -15,7 +15,7 @@
 
 				
 				<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > Ensino</div>
-				<div class="version"><!--<span class="px10"><a href="#">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span>--></div> 
+				<div class="version"><span class="px10"><a href="#">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div> 
 			
 				<h1><bean:message key="label.education" /></h1>
 				<p class="greytxt">

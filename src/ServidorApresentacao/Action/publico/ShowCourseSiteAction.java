@@ -48,11 +48,14 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
-		Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
-		request.setAttribute("degreeCurricularPlanID", request);
-		
+        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        request.setAttribute("degreeCurricularPlanID", request);
+
         Integer curricularCourseId = getFromRequest("curricularCourseID", request);
         request.setAttribute("curricularCourseID", curricularCourseId);
+
+        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+        request.setAttribute("inEnglish", inEnglish);
 
         GestorServicos gestorServicos = GestorServicos.manager();
         Object[] args = { curricularCourseId, executionPeriodOId };
@@ -112,7 +115,14 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction
         }
 
         request.setAttribute("infoCurriculum", infoCurriculum);
-        return mapping.findForward("showCurricularCourseSite");
+
+		if (inEnglish == null || inEnglish.booleanValue() == false)
+		{
+			return mapping.findForward("showCurricularCourseSite");
+		} else
+		{
+			return mapping.findForward("showCurricularCourseSiteEnglish");
+		}
     }
 
     public ActionForward showExecutionCourseSite(
@@ -192,5 +202,22 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction
             parameterCode = new Integer(parameterCodeString);
         }
         return parameterCode;
+    }
+
+    private Boolean getFromRequestBoolean(String parameter, HttpServletRequest request)
+    {
+        Boolean parameterBoolean = null;
+
+        String parameterCodeString = request.getParameter(parameter);
+        if (parameterCodeString == null)
+        {
+            parameterCodeString = (String) request.getAttribute(parameter);
+        }
+        if (parameterCodeString != null)
+        {
+            parameterBoolean = new Boolean(parameterCodeString);
+        }
+
+        return parameterBoolean;
     }
 }

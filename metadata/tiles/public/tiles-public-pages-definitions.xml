@@ -11,23 +11,43 @@
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
 		<put name="body" value="/publico/degreeSite/showDegreeSiteDescription.jsp" />
 	</definition>
+	<definition name="showDescriptionEnglish" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+		<put name="body" value="/publico/degreeSite/showDegreeSiteDescriptionEnglish.jsp" />
+	</definition>
 	<definition name="showAccessRequirements" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />		
 		<put name="body" value="/publico/degreeSite/showDegreeSiteAccessRequirements.jsp" />
+	</definition>
+	<definition name="showAccessRequirementsEnglish" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />		
+		<put name="body" value="/publico/degreeSite/showDegreeSiteAccessRequirementsEnglish.jsp" />
 	</definition>
 	<definition name="showCurricularPlans" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
 		<put name="body" value="/publico/degreeSite/showDegreeSiteCurricularPlans.jsp" />
 	</definition>
+	<definition name="showCurricularPlansEnglish" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
+		<put name="body" value="/publico/degreeSite/showDegreeSiteCurricularPlansEnglish.jsp" />
+	</definition>	
 	<definition name="showDegreeCurricularPlan" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
 		<put name="body" value="/publico/degreeSite/showDegreeCurricularPlan.jsp"/>
+	</definition>	
+	<definition name="showDegreeCurricularPlanEnglish" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
+		<put name="body" value="/publico/degreeSite/showDegreeCurricularPlanEnglish.jsp"/>
 	</definition>
 	<definition name="showCurricularCourseSite" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="" />	
 		<put name="body" value="/publico/degreeSite/showCurricularCourseSite.jsp"/>
-	</definition>
-		<definition name="showExecutionCourseSite" extends="definition.public.mainPageIST">
+	</definition>	
+	<definition name="showCurricularCourseSiteEnglish" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="" />	
+		<put name="body" value="/publico/degreeSite/showCurricularCourseSiteEnglish.jsp"/>
+	</definition>	
+	<definition name="showExecutionCourseSite" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/executionCourseSiteMainNavigation.jsp" />	
 		<put name="body" value="/publico/degreeSite/showExecutionCourseSite.jsp"/>
 	</definition>	

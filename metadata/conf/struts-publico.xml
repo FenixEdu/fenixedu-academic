@@ -414,9 +414,12 @@
      		parameter="method"
      		input="/showDegrees.do?method=nonMaster"
      		>
-	     <forward  name="showDescription" path="showDescription"/>  	
-	     <forward  name="showAccessRequirements" path="showAccessRequirements"/>  
-	     <forward  name="showCurricularPlans" path="showCurricularPlans"/>  	  
+	     <forward  name="showDescription" path="showDescription"/>
+	     <forward  name="showDescriptionEnglish" path="showDescriptionEnglish"/>   	
+	     <forward  name="showAccessRequirements" path="showAccessRequirements"/> 
+	     <forward  name="showAccessRequirementsEnglish" path="showAccessRequirementsEnglish"/>  
+	     <forward  name="showCurricularPlans" path="showCurricularPlans"/>
+	     <forward  name="showCurricularPlansEnglish" path="showCurricularPlansEnglish"/>  	  
      </action>
      
      <action path="/showDegreeCurricularPlan" 
@@ -425,6 +428,7 @@
      		input="/showDegreeSite.do?method=showDescription"
      		>
 	     <forward  name="showDegreeCurricularPlan" path="showDegreeCurricularPlan"/>  		  
+	     <forward  name="showDegreeCurricularPlanEnglish" path="showDegreeCurricularPlanEnglish"/>
      </action>
      
      <action path="/showCourseSite"
@@ -433,6 +437,7 @@
      input="showCurricularCourseSite"
      >
      	<forward name="showCurricularCourseSite" path="showCurricularCourseSite"/>
+     	<forward name="showCurricularCourseSiteEnglish" path="showCurricularCourseSiteEnglish"/>
      	<forward name="showExecutionCourseSite" path="showExecutionCourseSite" />
      </action>
               
