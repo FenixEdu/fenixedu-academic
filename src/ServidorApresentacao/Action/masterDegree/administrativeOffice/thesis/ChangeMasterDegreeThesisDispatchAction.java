@@ -108,4 +108,29 @@ public class ChangeMasterDegreeThesisDispatchAction extends DispatchAction {
 
 	}
 
+	public ActionForward reloadForm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
+
+		try {
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalAssistentGuidersIDs",
+				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
+				actionErrors);
+
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		}
+
+		return mapping.findForward("start");
+
+	}
+
 }

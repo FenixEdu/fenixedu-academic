@@ -101,11 +101,10 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
 
 		List finalResult = MasterDegreeClassification.toArrayList();
 		request.setAttribute(SessionConstants.CLASSIFICATION, finalResult);
-		
+
 		request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
 		request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
 		request.setAttribute(SessionConstants.YEARS_LIST, Data.getExpirationYears());
-		
 
 		/* * * get master degree proof * * */
 		Object argsMasterDegreeProofVersion[] = { infoStudentCurricularPlan };
@@ -138,21 +137,23 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
 			return mapping.findForward("start");
 
 		} catch (ScholarshipNotFinishedServiceException e) {
-			throw new ScholarshipNotFinishedActionException("error.exception.masterDegree.scholarshipNotFinished", mapping.findForward("errorScholarshipNotFinished"));
+			throw new ScholarshipNotFinishedActionException(
+				"error.exception.masterDegree.scholarshipNotFinished",
+				mapping.findForward("errorScholarshipNotFinished"));
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 
 		if (infoMasterDegreeProofVersion.getInfoJuries().isEmpty() == false)
 			request.setAttribute(SessionConstants.JURIES_LIST, infoMasterDegreeProofVersion.getInfoJuries());
-		
+
 		Calendar proofDateCalendar = new GregorianCalendar();
-		Calendar thesisDeliveryDateCalendar = new GregorianCalendar();	
+		Calendar thesisDeliveryDateCalendar = new GregorianCalendar();
 		proofDateCalendar.setTime(infoMasterDegreeProofVersion.getProofDate());
 		thesisDeliveryDateCalendar.setTime(infoMasterDegreeProofVersion.getThesisDeliveryDate());
-		
+
 		DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
-		
+
 		changeMasterDegreeThesisForm.set("studentNumber", studentNumber);
 		changeMasterDegreeThesisForm.set("degreeType", degreeType);
 		changeMasterDegreeThesisForm.set("dissertationTitle", infoMasterDegreeThesisDataVersion.getDissertationTitle());
@@ -166,6 +167,44 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
 		changeMasterDegreeThesisForm.set("thesisDeliveryDateYear", new Integer(thesisDeliveryDateCalendar.get(Calendar.YEAR)));
 
 		return mapping.findForward("start");
+
+	}
+
+	public ActionForward reloadForm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
+
+		transportData(form, request);
+
+		try {
+			operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		}
+
+		return mapping.findForward("start");
+
+	}
+
+	private void transportData(ActionForm form, HttpServletRequest request) throws FenixActionException {
+
+		// dissertation title
+		DynaActionForm masterDegreeProofForm = (DynaActionForm) form;
+		String dissertationTitle = (String) masterDegreeProofForm.get("dissertationTitle");
+		request.setAttribute(SessionConstants.DISSERTATION_TITLE, dissertationTitle);
+
+		// final result options
+		List finalResult = MasterDegreeClassification.toArrayList();
+		request.setAttribute(SessionConstants.CLASSIFICATION, finalResult);
+
+		// dates combo boxes options
+		request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
+		request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
+		request.setAttribute(SessionConstants.YEARS_LIST, Data.getExpirationYears());
 
 	}
 
