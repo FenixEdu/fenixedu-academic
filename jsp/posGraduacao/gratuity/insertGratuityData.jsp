@@ -20,8 +20,6 @@
 				<bean:define id="degreeLabel"><%=pageContext.findAttribute("degreeName")%></bean:define>
 				<b><bean:message key="label.masterDegree.gratuity.executionYear" />:</b>&nbsp;<bean:write name="executionYearLabel" /><br />
 				<b><bean:message key="label.qualification.degree"/>:</b>&nbsp;<bean:write name="degreeLabel"/>
-<%--				<bean:define id="labelSpecializationArea"><%=pageContext.findAttribute("specializationArea")%></bean:define>
-				<b><bean:message key="label.masterDegree.gratuity.specializationArea"/></b>&nbsp;<bean:write name="labelSpecializationArea"/>--%>
 			</td>
 		</tr>
 	</table>

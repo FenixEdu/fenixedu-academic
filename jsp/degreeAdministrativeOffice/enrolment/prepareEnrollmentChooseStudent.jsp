@@ -10,7 +10,7 @@
 		<tr>
 			<td><bean:message key="label.choose.student"/>&nbsp;</td>
 			<td>
-				<input type="text" name="studentNumber" size="5"/>
+				<input type="text" name="studentNumber" size="5" maxlength="5"/>
 			</td>
 		</tr>
 	</table>
