@@ -94,7 +94,9 @@ class InfoShiftDividedList extends ArrayList {
 	 * @param shift to shift to be stored
 	 * @return true if the main type and shift type already existed, else false 
 	 */
-	public boolean put(String type, InfoShiftWithAssociatedInfoClassesAndInfoLessons info) {
+	public boolean put(
+		String type,
+		InfoShiftWithAssociatedInfoClassesAndInfoLessons info) {
 		// tdi-dev (bruno) -> honestly, this is the best way, without flags or others...  
 		Element mainE, subE;
 		Iterator mainIt = this.iterator();
@@ -109,7 +111,9 @@ class InfoShiftDividedList extends ArrayList {
 				Iterator subIt = mainE.getList().iterator();
 				while (subIt.hasNext()) {
 					subE = (Element) subIt.next();
-					if (subE.getType().equals(shift.getTipo().getSiglaTipoAula())) {
+					if (subE
+						.getType()
+						.equals(shift.getTipo().getSiglaTipoAula())) {
 						// ok, found shift type list, let's add the shift
 						subE.add(info);
 						return true;
@@ -146,8 +150,10 @@ class InfoShiftDividedList extends ArrayList {
 
 }
 
-public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDispatchAction {
-	private final String TRANSACTION_ERROR_MESSAGE_KEY = "error.transaction.enrolment";
+public class ShiftStudentEnrolmentManagerDispatchAction
+	extends TransactionalDispatchAction {
+	private final String TRANSACTION_ERROR_MESSAGE_KEY =
+		"error.transaction.enrolment";
 
 	private class ClassNamePredicate implements Predicate {
 		private String s;
@@ -169,39 +175,55 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 	 * @return
 	 * @throws FenixActionException
 	 */
-	public ActionForward enrollCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	public ActionForward enrollCourses(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
 		throws FenixActionException {
 		boolean firstTime = request.getParameter("firstTime") != null;
 
 		if (firstTime) {
 			createToken(request);
 		} else {
-			validateToken(request, form, mapping, TRANSACTION_ERROR_MESSAGE_KEY);
+			validateToken(
+				request,
+				form,
+				mapping,
+				TRANSACTION_ERROR_MESSAGE_KEY);
 		}
 
 		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		// retrieve the student information to fill the info 
 		// to be passed to the readShifts service
 		InfoStudent infoStudent = null;
 		try {
-			infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "ReadStudentByUsername", new Object[] { userView.getUtilizador()});
+			infoStudent =
+				(InfoStudent) ServiceUtils.executeService(
+					userView,
+					"ReadStudentByUsername",
+					new Object[] { userView.getUtilizador()});
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 
 		//Update the student's attending courses:
 
-		String[] wantedCourses = ((String[]) ((DynaActionForm) form).get("wantedCourse"));
+		String[] wantedCourses =
+			((String[]) ((DynaActionForm) form).get("wantedCourse"));
 
 		if (wantedCourses != null && !firstTime) {
 
 			//Build up the arrayList
-			Boolean attendenceChanged = writeAttendingCourses(userView, infoStudent, wantedCourses);
+			Boolean attendenceChanged =
+				writeAttendingCourses(userView, infoStudent, wantedCourses);
 
 			if (!attendenceChanged.booleanValue()) {
-				System.out.println("Nao foi possivel actualizar as disciplinas do aluno");
+				System.out.println(
+					"Nao foi possivel actualizar as disciplinas do aluno");
 				throw new FenixActionException("Can't Change Degree Attending.");
 			}
 		} // firstTime if
@@ -209,7 +231,13 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		// Retrieve the current executionYear to later get the existing degrees
 		InfoExecutionYear currentExecutionYear;
 		try {
-			currentExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(userView, "ReadCurrentExecutionYear", new Object[] {
+			currentExecutionYear =
+				(
+					InfoExecutionYear) ServiceUtils
+						.executeService(
+							userView,
+							"ReadCurrentExecutionYear",
+							new Object[] {
 			});
 		} catch (FenixServiceException e1) {
 			throw new FenixActionException(e1);
@@ -218,7 +246,11 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		// Retrieve the list of existing degrees
 		List degreeList;
 		try {
-			degreeList = (List) ServiceUtils.executeService(userView, "ReadExecutionDegreesByExecutionYear", new Object[] { currentExecutionYear });
+			degreeList =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadExecutionDegreesByExecutionYear",
+					new Object[] { currentExecutionYear });
 		} catch (FenixServiceException e2) {
 			throw new FenixActionException(e2);
 		}
@@ -234,7 +266,12 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 			try {
 				selectedDegreeAbbrev =
 					((InfoDegree) ServiceUtils
-						.executeService(userView, "ReadCourseByStudent", new Object[] { infoStudent.getNumber(), infoStudent.getDegreeType()}))
+						.executeService(
+							userView,
+							"ReadCourseByStudent",
+							new Object[] {
+								infoStudent.getNumber(),
+								infoStudent.getDegreeType()}))
 						.getSigla();
 			} catch (FenixServiceException e3) {
 				throw new FenixActionException(e3);
@@ -245,7 +282,11 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		// we assume that the Abbrev ( sigla ) is unique amongst the degrees
 		while (i.hasNext()) {
 			idtemp = (InfoExecutionDegree) i.next();
-			if (idtemp.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals(selectedDegreeAbbrev)) {
+			if (idtemp
+				.getInfoDegreeCurricularPlan()
+				.getInfoDegree()
+				.getSigla()
+				.equals(selectedDegreeAbbrev)) {
 				selectedDegree = idtemp;
 				i.remove();
 			}
@@ -262,7 +303,13 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 
 		InfoExecutionPeriod currentExecutionPeriod;
 		try {
-			currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadCurrentExecutionPeriod", new Object[] {
+			currentExecutionPeriod =
+				(
+					InfoExecutionPeriod) ServiceUtils
+						.executeService(
+							userView,
+							"ReadCurrentExecutionPeriod",
+							new Object[] {
 			});
 		} catch (FenixServiceException e3) {
 			throw new FenixActionException(e3);
@@ -276,7 +323,10 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 					(List) ServiceUtils.executeService(
 						userView,
 						"SelectExecutionCourse",
-						new Object[] { selectedDegree, currentExecutionPeriod, new Integer(j)}));
+						new Object[] {
+							selectedDegree,
+							currentExecutionPeriod,
+							new Integer(j)}));
 			} catch (FenixServiceException e4) {
 				throw new FenixActionException(e4);
 			}
@@ -292,7 +342,9 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 				(List) ServiceUtils.executeService(
 					userView,
 					"ReadDisciplinesByStudent",
-					new Object[] { infoStudent.getNumber(), infoStudent.getDegreeType()});
+					new Object[] {
+						infoStudent.getNumber(),
+						infoStudent.getDegreeType()});
 		} catch (FenixServiceException e4) {
 			throw new FenixActionException(e4);
 		}
@@ -302,22 +354,35 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		return mapping.findForward("selectCourses");
 	}
 
-	private Boolean writeAttendingCourses(IUserView userView, InfoStudent infoStudent, String[] wantedCourses) throws FenixActionException {
+	private Boolean writeAttendingCourses(
+		IUserView userView,
+		InfoStudent infoStudent,
+		String[] wantedCourses)
+		throws FenixActionException {
 
 		List newAttendingCourses = Arrays.asList(wantedCourses);
 
 		Boolean attendenceChanged;
 		try {
 			attendenceChanged =
-				(Boolean) (ServiceUtils.executeService(userView, "WriteStudentAttendingCourses", new Object[] { infoStudent, newAttendingCourses }));
+				(Boolean) (ServiceUtils
+					.executeService(
+						userView,
+						"WriteStudentAttendingCourses",
+						new Object[] { infoStudent, newAttendingCourses }));
 		} catch (FenixServiceException e1) {
-			System.out.println("Nao foi possivel actualizar as disciplinas do aluno");
+			System.out.println(
+				"Nao foi possivel actualizar as disciplinas do aluno");
 			throw new FenixActionException(e1);
 		}
 		return attendenceChanged;
 	}
 
-	public ActionForward proceedToShiftEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	public ActionForward proceedToShiftEnrolment(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
 		throws FenixActionException {
 
 		validateToken(request, form, mapping, TRANSACTION_ERROR_MESSAGE_KEY);
@@ -328,13 +393,18 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		// ou não...                            
 
 		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		// retrieve the student information to fill the info 
 		// to be passed to the readShifts service
 		InfoStudent infoStudent = null;
 		try {
-			infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "ReadStudentByUsername", new Object[] { userView.getUtilizador()});
+			infoStudent =
+				(InfoStudent) ServiceUtils.executeService(
+					userView,
+					"ReadStudentByUsername",
+					new Object[] { userView.getUtilizador()});
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 
@@ -342,24 +412,36 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 
 		//Update the student's attending courses:
 
-		String[] wantedCourses = ((String[]) ((DynaActionForm) form).get("wantedCourse"));
+		String[] wantedCourses =
+			((String[]) ((DynaActionForm) form).get("wantedCourse"));
 
 		if (wantedCourses != null) {
 
-			Boolean attendenceChanged = writeAttendingCourses(userView, infoStudent, wantedCourses);
+			Boolean attendenceChanged =
+				writeAttendingCourses(userView, infoStudent, wantedCourses);
 			if (!attendenceChanged.booleanValue()) {
-				System.out.println("Nao foi possivel actualizar as disciplinas do aluno");
+				System.out.println(
+					"Nao foi possivel actualizar as disciplinas do aluno");
 				throw new FenixActionException("Can't Change Degree Attending.");
 			}
 		}
 		return initializeShiftEnrolment(mapping, form, request, infoStudent);
 	}
-	public ActionForward initializeShiftEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+	public ActionForward initializeShiftEnrolment(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
 		createToken(request);
 		InfoStudent infoStudent = null;
 		IUserView userView = SessionUtils.getUserView(request);
 		try {
-			infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "ReadStudentByUsername", new Object[] { userView.getUtilizador()});
+			infoStudent =
+				(InfoStudent) ServiceUtils.executeService(
+					userView,
+					"ReadStudentByUsername",
+					new Object[] { userView.getUtilizador()});
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 
@@ -368,12 +450,17 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		return initializeShiftEnrolment(mapping, form, request, infoStudent);
 	}
 
-	private ActionForward initializeShiftEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, InfoStudent infoStudent)
+	private ActionForward initializeShiftEnrolment(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		InfoStudent infoStudent)
 		throws FenixActionException {
 
 		HttpSession session = request.getSession();
 		IUserView userView = SessionUtils.getUserView(request);
-		InfoShiftStudentEnrolment infoShiftStudentEnrolment = new InfoShiftStudentEnrolment();
+		InfoShiftStudentEnrolment infoShiftStudentEnrolment =
+			new InfoShiftStudentEnrolment();
 
 		infoShiftStudentEnrolment.setInfoStudent(infoStudent);
 		try {
@@ -386,7 +473,9 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 			throw new FenixActionException(e1);
 		}
 
-		session.setAttribute(SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY, infoShiftStudentEnrolment);
+		session.setAttribute(
+			SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY,
+			infoShiftStudentEnrolment);
 
 		// if the user has chosen to enrol by class we show a jsp , otherwise, 
 		// proceed to the showAvailableShifts action 
@@ -412,7 +501,11 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 	 * @return
 	 * @throws Exception
 	 */
-	public ActionForward showAvailableShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	public ActionForward showAvailableShifts(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
 		throws FenixActionException {
 
 		validateToken(request, form, mapping, TRANSACTION_ERROR_MESSAGE_KEY);
@@ -420,10 +513,14 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		HttpSession session = request.getSession();
 
 		InfoShiftStudentEnrolment infoShiftStudentEnrolment =
-			(InfoShiftStudentEnrolment) session.getAttribute(SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY);
+			(InfoShiftStudentEnrolment) session.getAttribute(
+				SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY);
 
-		System.out.println("CurrentEnrolment" + infoShiftStudentEnrolment.getCurrentEnrolment());
-		System.out.println("dividedList" + infoShiftStudentEnrolment.getDividedList());
+		System.out.println(
+			"CurrentEnrolment"
+				+ infoShiftStudentEnrolment.getCurrentEnrolment());
+		System.out.println(
+			"dividedList" + infoShiftStudentEnrolment.getDividedList());
 		//		dividedList
 		//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
 		//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
@@ -441,28 +538,39 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		//		ClassNamePredicate filter = new ClassNamePredicate(wantedClass);
 
 		while (i.hasNext()) {
-			InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftClassesWithLessons = (InfoShiftWithAssociatedInfoClassesAndInfoLessons) i.next();
+			InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftClassesWithLessons =
+				(InfoShiftWithAssociatedInfoClassesAndInfoLessons) i.next();
 			List classes = shiftClassesWithLessons.getInfoClasses();
 			InfoShift shift = shiftClassesWithLessons.getInfoShift();
 			// if the user selected a class 
 			if (wantedClass != null && !wantedClass.equals("")) {
 				// we see if the current shift has that class0
 				for (int j = 0; j < classes.size(); j++) {
-					if (((InfoClass) classes.get(j)).getNome().equals(wantedClass)) {
-						infoShiftDividedList.put(shift.getInfoDisciplinaExecucao().getNome(), shiftClassesWithLessons);
+					if (((InfoClass) classes.get(j))
+						.getNome()
+						.equals(wantedClass)) {
+						infoShiftDividedList.put(
+							shift.getInfoDisciplinaExecucao().getNome(),
+							shiftClassesWithLessons);
 						continue; // it has, no need to continue searching
 					}
 				}
 			} else {
 				// otherwise, just add the shift to the list
-				infoShiftDividedList.put(shift.getInfoDisciplinaExecucao().getNome(), shiftClassesWithLessons);
+				infoShiftDividedList.put(
+					shift.getInfoDisciplinaExecucao().getNome(),
+					shiftClassesWithLessons);
 			}
 		}
 		//request.setAttribute(wantedClass, filter)
 		infoShiftStudentEnrolment.setDividedList(infoShiftDividedList);
-		System.out.println("CurrentEnrolment" + infoShiftStudentEnrolment.getCurrentEnrolment());
+		System.out.println(
+			"CurrentEnrolment"
+				+ infoShiftStudentEnrolment.getCurrentEnrolment());
 
-		session.setAttribute(SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY, infoShiftStudentEnrolment);
+		session.setAttribute(
+			SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY,
+			infoShiftStudentEnrolment);
 		initializeForm(infoShiftStudentEnrolment, (DynaActionForm) form);
 		return mapping.findForward("showAvailableShifts");
 	}
@@ -489,10 +597,12 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		ArrayList toEnroll = new ArrayList();
 
 		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		InfoShiftStudentEnrolment infoShiftStudentEnrolment =
-			(InfoShiftStudentEnrolment) session.getAttribute(SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY);
+			(InfoShiftStudentEnrolment) session.getAttribute(
+				SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY);
 
 		List avaliableShifts = infoShiftStudentEnrolment.getAvailableShift();
 
@@ -505,14 +615,19 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 				// the user may have wished not to select a particular shift group
 			}
 			while (it.hasNext()) {
-				shift = (InfoShift) ((InfoShiftWithAssociatedInfoClassesAndInfoLessons) it.next()).getInfoShift();
+				shift =
+					(InfoShift)
+						((InfoShiftWithAssociatedInfoClassesAndInfoLessons) it
+						.next())
+						.getInfoShift();
 				if (shifts[i].equals(shift.getIdInternal())) {
 					toEnroll.add(shift);
 				}
 			}
 		}
 		// Insert into the wanted shifts list the shifts the users is already enroled in
-		Iterator it = infoShiftStudentEnrolment.getCurrentEnrolment().iterator();
+		Iterator it =
+			infoShiftStudentEnrolment.getCurrentEnrolment().iterator();
 		while (it.hasNext()) {
 			toEnroll.add(it.next());
 		}
@@ -529,26 +644,47 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 			// TODO: tdi-dev (bruno) -> here we will catch the errors that say "hey, you made a boo boo". or not
 			throw new FenixActionException(e);
 		}
-		session.setAttribute(SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY, infoShiftStudentEnrolment);
+		session.setAttribute(
+			SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY,
+			infoShiftStudentEnrolment);
 		return mapping.findForward("validateAndConfirmShiftEnrolment");
 		// TODO: tdi-dev (bruno) -> clean up session variable?
 	}
 
-	public ActionForward viewClassTimeTable(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	public ActionForward viewClassTimeTable(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
 		throws FenixActionException {
 		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		String classIdString = request.getParameter("classId");
 		Integer classId = new Integer(classIdString);
 		InfoClass infoClass = new InfoClass();
 		infoClass.setIdInternal(classId);
 		List infoLessons;
 		try {
-			infoLessons = (List) ServiceUtils.executeService(userView, "LerAulasDeTurma", new Object[] { infoClass });
+			infoLessons =
+				(List) ServiceUtils.executeService(
+					userView,
+					"LerAulasDeTurma",
+					new Object[] { infoClass });
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-
+		InfoClass infoSchoolClass;
+		try {
+			infoSchoolClass =
+				(InfoClass) ServiceUtils.executeService(
+					userView,
+					"ReadSchoolClass",
+					new Object[] { infoClass });
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		request.setAttribute("infoSchoolClass", infoSchoolClass);
 		request.setAttribute("infoLessons", infoLessons);
 
 		return mapping.findForward("classTimeTable");
@@ -558,12 +694,20 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 	 * @param infoShiftStudentEnrolment
 	 * @param form
 	 */
-	private void initializeForm(InfoShiftStudentEnrolment infoShiftStudentEnrolment, DynaActionForm form) {
+	private void initializeForm(
+		InfoShiftStudentEnrolment infoShiftStudentEnrolment,
+		DynaActionForm form) {
 
 		//		List currentEnrolment = infoShiftStudentEnrolment.getCurrentEnrolment();
 		//		List avaliableShift = infoShiftStudentEnrolment.getAvailableShift();
 		//		InfoStudent infoStudent = infoShiftStudentEnrolment.getInfoStudent();
-		form.set("shifts", new Integer[((InfoShiftDividedList) infoShiftStudentEnrolment.getDividedList()).leafSize() * 2]);
+		form.set(
+			"shifts",
+			new Integer[(
+				(InfoShiftDividedList) infoShiftStudentEnrolment
+					.getDividedList())
+				.leafSize()
+				* 2]);
 		// DANGER: each divided 'sector' has two sublists, each a type of shift . Hardcoding 2 is dangerous
 	}
 }
