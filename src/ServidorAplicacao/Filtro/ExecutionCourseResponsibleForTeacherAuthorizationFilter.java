@@ -11,13 +11,14 @@ import java.util.Iterator;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
+import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorAplicacao.NotAuthorizedException;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -85,28 +86,42 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter
 	 * @param argumentos
 	 * @return
 	 */
+	
+
 	private boolean isResponsibleForExecutionCourse(IUserView id, Object[] argumentos) {
-		InfoExecutionCourse infoExecutionCourse =(InfoExecutionCourse) argumentos[0];
-		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-		ISuportePersistente sp;
+			InfoExecutionCourse infoExecutionCourse = null;
+			IDisciplinaExecucao executionCourse =null;
+			ISuportePersistente sp;
 		IResponsibleFor responsibleFor =null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+			if (argumentos==null) {
+				return false;
+			}
+			try {
+			
+				sp = SuportePersistenteOJB.getInstance();
+				IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+				if (argumentos[0] instanceof InfoExecutionCourse) {
+					infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
+					 executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+				} else {
+					executionCourse = 
+							(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao((Integer) argumentos[0]));
+				}
+		
+				IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 			ITeacher teacher=persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
 			IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
 			responsibleFor =persistentResponsibleFor.readByTeacherAndExecutionCoursePB(teacher,executionCourse);
-			
-		} catch (ExcepcaoPersistencia e) {
-			return false;
+
+			} catch (Exception e) {
+				return false;
+			}
+			if (responsibleFor == null) {
+				return false;
+			} else {
+				return true;
+			}
+
 		}
-		if (responsibleFor==null){
-			return false;
-		}
-		else {
-			return true;
-		}
-		
-	}
 
 }
