@@ -26,17 +26,35 @@
 				<th>Nome da disciplina</th>
 				<th>Ano</th>
 			</tr>
+			
+			<script type="text/javascript" language="JavaScript">
+				function disableAllElements(form, elementName){
+					var elements = form.elements;
+					var i = 0;
+					for (i = 0; i < elements.length ; i++){
+						var element = elements[i];
+						if (element.name == elementName && !element.checked){
+							element.disabled = true;
+						}
+					}
+				}
+			</script>
+			
 			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled" indexId="index">
+				<bean:define id="optionalEnrolmentString" value="" />
+
 				<logic:equal name="curricularScope" property="infoCurricularCourse.type" 
 								value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
 					<bean:define id="onclick">
-						if (this.checked == true) {this.form.method.value='startEnrolmentInOptional'; document.forms[0].optionalCourseIndex.value='<bean:write name="index"/>';this.form.submit();}	
+						if (this.checked == true) {this.form.method.value='startEnrolmentInOptional'; document.forms[0].optionalCourseIndex.value='<bean:write name="index"/>'; disableAllElements(this.form,this.name);this.form.submit();}	
 					</bean:define>
-					
+
+
 					<bean:define id="optionalCourse" name="curricularScope" property="infoCurricularCourse"/>
+
 					<logic:iterate id="optionalEnrolment" name="infoEnrolmentContext" property="infoOptionalCurricularCoursesEnrolments">
 						<logic:equal name="optionalEnrolment" property="infoCurricularCourse" value="<%= pageContext.findAttribute("optionalCourse").toString() %>">
-							<bean:define id="optionalEnrolment">
+							<bean:define id="optionalEnrolmentString">
 								<br/> &nbsp;&nbsp;<bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>
 							</bean:define>
 						</logic:equal> 
@@ -46,7 +64,6 @@
 				<logic:notEqual name="curricularScope" property="infoCurricularCourse.type" 
 								value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
 					<bean:define id="onclick" value=" "></bean:define>
-					<bean:define id="optionalEnrolment" value="" />
 				</logic:notEqual>
 				<tr>
 					<td>
@@ -54,8 +71,8 @@
 					</td>
 					<td>
 						<bean:write name="curricularScope" property="infoCurricularCourse.name"/>
-						<logic:present name="optionalEnrolment">
-							<bean:write name="optionalEnrolment" filter="false"/>
+						<logic:present name="optionalEnrolmentString">
+							<bean:write name="optionalEnrolmentString" filter="false"/>
 						</logic:present>
 					</td>
 					<td align="right">
