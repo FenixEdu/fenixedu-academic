@@ -576,9 +576,15 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", oid);
         IDomainObject domainObject = (IDomainObject) queryObject(classToQuery, criteria);
+        
+        if (domainObject == null) {
+            return null;
+        }
+        
         if (lockWrite) {
             tx.lock(domainObject, Transaction.WRITE);
         }
+        
         return domainObject;
     }
 
