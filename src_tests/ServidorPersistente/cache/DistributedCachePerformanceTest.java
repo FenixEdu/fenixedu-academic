@@ -10,10 +10,6 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.CurricularCourse;
-import Dominio.CurricularCourseScope;
-import Dominio.Enrolment;
-import Dominio.ExecutionCourse;
-import Dominio.Frequenta;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
