@@ -31,18 +31,15 @@ public class RequestContextUtil {
 		} catch (NumberFormatException ex) {
 			examDateAndTime = (Calendar) request.getAttribute(SessionConstants.EXAM_DATEANDTIME);
 			if (examDateAndTime != null) {
-				System.out.println("Restting EXAM_DATEANDTIME= " + examDateAndTime);	
 				request.setAttribute(SessionConstants.EXAM_DATEANDTIME, examDateAndTime);
 			} else {
 				request.removeAttribute(SessionConstants.EXAM_DATEANDTIME);
 				request.setAttribute(SessionConstants.EXAM_DATEANDTIME, null);
-				System.out.println("Removing EXAM_DATEANDTIME= " + examDateAndTime);
 			}
 		}
 
 		if (dateAndTime != null) {
 			examDateAndTime.setTimeInMillis(dateAndTime.longValue());
-			System.out.println("Setting EXAM_DATEANDTIME= " + examDateAndTime);
 			request.setAttribute(
 				SessionConstants.EXAM_DATEANDTIME,
 				examDateAndTime);
