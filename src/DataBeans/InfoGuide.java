@@ -17,7 +17,7 @@ import Util.PaymentType;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class InfoGuide implements Serializable{
+public class InfoGuide extends InfoObject implements Serializable{
 	
 	private Integer number;
 	private Integer year;
@@ -34,6 +34,7 @@ public class InfoGuide implements Serializable{
 	private List infoGuideSituations;
 	private InfoGuideSituation infoGuideSituation;
 	private Date paymentDate;
+    private List infoReimbursementGuides;
 
 	public InfoGuide() {}
 	 
@@ -301,4 +302,18 @@ public class InfoGuide implements Serializable{
 
 	
 
+    /**
+     * @return Returns the reimbursementGuides.
+     */
+    public List getInfoReimbursementGuides()
+    {
+        return infoReimbursementGuides;
+    }
+    /**
+     * @param reimbursementGuides The reimbursementGuides to set.
+     */
+    public void setInfoReimbursementGuides(List reimbursementGuides)
+    {
+        this.infoReimbursementGuides = reimbursementGuides;
+    }
 }

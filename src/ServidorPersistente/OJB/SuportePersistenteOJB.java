@@ -121,6 +121,8 @@ import ServidorPersistente.OJB.Seminaries.EquivalencyOJB;
 import ServidorPersistente.OJB.Seminaries.ModalityOJB;
 import ServidorPersistente.OJB.Seminaries.ThemeOJB;
 import ServidorPersistente.OJB.degree.finalProject.PersistentDegreeFinalProjectOJB;
+import ServidorPersistente.OJB.gaugingTests.physics.GaugingTestResultOJB;
+import ServidorPersistente.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import ServidorPersistente.OJB.gesdis.CourseReportOJB;
 import ServidorPersistente.OJB.grant.contract.GrantContractOJB;
 import ServidorPersistente.OJB.grant.contract.GrantOrientationTeacherOJB;
@@ -263,7 +265,8 @@ public class SuportePersistenteOJB implements ISuportePersistente
         try
         {
             openDatabase();
-        } catch (ODMGException e)
+        }
+        catch (ODMGException e)
         {
             throw new ExcepcaoPersistencia();
         }
@@ -280,10 +283,12 @@ public class SuportePersistenteOJB implements ISuportePersistente
             openDatabase();
             Transaction tx = _odmg.newTransaction();
             tx.begin();
-        } catch (ODMGException ex1)
+        }
+        catch (ODMGException ex1)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.OPEN_DATABASE, ex1);
-        } catch (ODMGRuntimeException ex)
+        }
+        catch (ODMGRuntimeException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.BEGIN_TRANSACTION, ex);
         }
@@ -314,10 +319,12 @@ public class SuportePersistenteOJB implements ISuportePersistente
                 //				Database db =_odmg.getDatabase(null);
                 //				if (db!= null) db.close();
             }
-        } catch (ODMGException ex1)
+        }
+        catch (ODMGException ex1)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.CLOSE_DATABASE, ex1);
-        } catch (ODMGRuntimeException ex)
+        }
+        catch (ODMGRuntimeException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.COMMIT_TRANSACTION, ex);
         }
@@ -336,10 +343,12 @@ public class SuportePersistenteOJB implements ISuportePersistente
                 //					_odmg.getDatabase(null).close();
             }
 
-        } catch (ODMGException ex1)
+        }
+        catch (ODMGException ex1)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.CLOSE_DATABASE, ex1);
-        } catch (ODMGRuntimeException ex)
+        }
+        catch (ODMGRuntimeException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.ABORT_TRANSACTION, ex);
         }
@@ -986,5 +995,16 @@ public class SuportePersistenteOJB implements ISuportePersistente
     public IPersistentOldPublication getIPersistentOldPublication()
     {
         return new OldPublicationOJB();
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGaugingTestResult()
+	 */
+    public IPersistentGaugingTestResult getIPersistentGaugingTestResult()
+    {
+
+        return new GaugingTestResultOJB();
     }
 }

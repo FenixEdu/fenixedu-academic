@@ -524,7 +524,12 @@
 			<forward name="viewStudentExecutionCourses" path="view-Student-ExecutionCourses"/>
 			<forward name="studentExecutionCoursePage" path="/studentExecutionCoursePage.jsp"/>
 		</action>  
-      
+      <action path="/studentGaugingTestResults"
+			scope="request"
+			type="ServidorApresentacao.Action.student.gaugingTests.physics.ViewGaugingTestsResults"
+			>
+			<forward name="viewGaugingTestsResults" path="definition.gaugingTestResults"/>
+		</action>  
     
      </action-mappings>     
 

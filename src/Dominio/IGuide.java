@@ -28,8 +28,9 @@ public interface IGuide extends IDomainObject {
   public List getGuideSituations();
   public Date getPaymentDate();
   public IGuideSituation getActiveSituation();
+  public List getReimbursementGuides();
+ 
   
-
   public void setNumber(Integer number);
   public void setYear(Integer year);
   public void setTotal(Double total);
@@ -44,4 +45,5 @@ public interface IGuide extends IDomainObject {
   public void setVersion(Integer version);
   public void setGuideSituations(List guideSituations);
   public void setPaymentDate(Date paymentDate);
+  public void setReimbursementGuides(List reimbursementGuides);
 }

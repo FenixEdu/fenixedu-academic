@@ -31,5 +31,11 @@
 	<definition name="df.page.editStudentCurricularCoursePlan" extends="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan">
 		<put name="body" value="/posGraduacao/student/studentCurricularPlan/editStudentCurricularCoursePlan.jsp"/>
 	</definition>
+	<definition name="df.page.createReimbursementGuide" extends="definition.masterDegreeAdministrativeOffice.guide.reimbursementGuideOperations">
+		<put name="body" value="/posGraduacao/guide/reimbursementGuide/createReimbursementGuide.jsp"/>
+	</definition>
+	<definition name="df.page.viewReimbursementGuide" extends="definition.masterDegreeAdministrativeOffice.guide.reimbursementGuideOperations">
+		<put name="body" value="/posGraduacao/guide/reimbursementGuide/viewReimbursementGuide.jsp"/>
+	</definition>
 	
 </tiles-definitions>

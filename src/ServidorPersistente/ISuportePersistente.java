@@ -6,6 +6,7 @@
 
 package ServidorPersistente;
 
+import ServidorPersistente.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import ServidorPersistente.Seminaries.IPersistentSeminary;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCandidacy;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudy;
@@ -224,4 +225,5 @@ public interface ISuportePersistente
     public IPersistentOrientation getIPersistentOrientation();
     public IPersistentPublicationsNumber getIPersistentPublicationsNumber();
     public IPersistentOldPublication getIPersistentOldPublication();
+    public IPersistentGaugingTestResult getIPersistentGaugingTestResult();
 }

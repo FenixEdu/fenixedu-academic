@@ -342,6 +342,14 @@
        >
        <inverse-foreignkey field-ref="keyGuide"/>
      </collection-descriptor>
+     
+      <collection-descriptor
+         name="reimbursementGuides"
+         refresh="true"
+         element-class-ref="Dominio.reimbursementGuide.ReimbursementGuide"
+       >
+       <inverse-foreignkey field-ref="keyGuide"/>
+     </collection-descriptor>
        
 	 </class-descriptor>
 	 

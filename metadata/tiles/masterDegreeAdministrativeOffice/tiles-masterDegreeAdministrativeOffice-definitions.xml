@@ -24,7 +24,11 @@
 	</definition>
 
 
-	<definition name="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
+	<definition name="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan" extends="definition.masterDegreeAdministrativeOffice.studentOperations">	
 		<put name="body-context" value="/posGraduacao/student/studentCurricularPlan/studentContext.jsp"/>
+	</definition>
+	<definition name="definition.masterDegreeAdministrativeOffice.guide.reimbursementGuideOperations" extends="definition.masterDegreeAdministrativeOffice.guideListing">
+		<put name="navLocal" value="/posGraduacao/guide/guideMenu.jsp"/>
+		<put name="body-context" value="/posGraduacao/guide/reimbursementGuide/guideContext.jsp"/>
 	</definition>
 </tiles-definitions>

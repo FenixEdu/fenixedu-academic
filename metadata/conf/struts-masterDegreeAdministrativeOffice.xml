@@ -538,6 +538,15 @@
    	        <form-property name="thesisDeliveryDateMonth" type="java.lang.String"/>
    	        <form-property name="thesisDeliveryDateYear" type="java.lang.String"/>   	        
 	  </form-bean>
+	  
+	  <form-bean name="createReimbursementGuide"  
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+	  		<form-property name="value" type="java.lang.Double"/>
+	  		<form-property name="justification" type="java.lang.String"/>
+	  		<form-property name="page" type="java.lang.Integer"/>
+	  		<form-property name="guideId" type="java.lang.Integer"/>
+	  </form-bean>
 
    </form-beans>
     
@@ -1920,6 +1929,17 @@
 			<forward name="errorNonExistingProofVersion" path="/thesis/indexThesis.jsp"/>
 	</action>	
 	
+	
+	<action type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ReimbursementGuideDispatchAction"
+			name="createReimbursementGuide"
+			path="/reimbursementGuideDA"
+			parameter="method"
+			scope="request"	
+	>
+	<forward name="createReimbursementGuide" path="df.page.createReimbursementGuide"/>
+	<forward name="viewReimbursementGuide" path="df.page.viewReimbursementGuide"/>
+	<forward name="viewGuide" path="/chooseGuideDispatchAction.do?method=choose"/>  
+	</action>
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

@@ -1,6 +1,6 @@
 /*
  * Created on 14/Mar/2003
- *
+ *  
  */
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.guide;
 
@@ -25,12 +25,10 @@ import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  * This is the Action to choose, visualize and edit a Guide.
- * 
+ *  
  */
 public class ChooseGuideDispatchAction extends DispatchAction
 {
@@ -58,7 +56,8 @@ public class ChooseGuideDispatchAction extends DispatchAction
             if (action.equals("visualize"))
             {
                 session.setAttribute(SessionConstants.ACTION, "label.action.visualizeGuide");
-            } else if (action.equals("edit"))
+            }
+            else if (action.equals("edit"))
             {
                 session.setAttribute(SessionConstants.ACTION, "label.action.editGuide");
             }
@@ -66,10 +65,12 @@ public class ChooseGuideDispatchAction extends DispatchAction
             chooseGuide.set("guideYear", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
             return mapping.findForward("PrepareReady");
-        } else
+        }
+        else
             throw new Exception();
 
     }
+  
 
     public ActionForward choose(
         ActionMapping mapping,
@@ -100,7 +101,8 @@ public class ChooseGuideDispatchAction extends DispatchAction
             try
             {
                 result = (List) serviceManager.executar(userView, "ChooseGuide", args);
-            } catch (NonExistingServiceException e)
+            }
+            catch (NonExistingServiceException e)
             {
                 throw new NonExistingActionException("A Guia", e);
             }
@@ -116,7 +118,8 @@ public class ChooseGuideDispatchAction extends DispatchAction
             request.setAttribute(SessionConstants.GUIDE_NUMBER, guideNumber);
 
             return mapping.findForward("ShowVersionList");
-        } else
+        }
+        else
             throw new Exception();
     }
 
@@ -148,7 +151,8 @@ public class ChooseGuideDispatchAction extends DispatchAction
             {
                 Object args[] = { guideNumber, guideYear, guideVersion };
                 infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
-            } catch (NonExistingServiceException e)
+            }
+            catch (NonExistingServiceException e)
             {
                 throw new NonExistingActionException("A Versão da Guia", e);
             }
@@ -158,7 +162,8 @@ public class ChooseGuideDispatchAction extends DispatchAction
             {
                 Object args[] = { guideNumber, guideYear };
                 guideList = (List) serviceManager.executar(userView, "ChooseGuide", args);
-            } catch (NonExistingServiceException e)
+            }
+            catch (NonExistingServiceException e)
             {
                 throw new NonExistingActionException("A Guia", e);
             }
@@ -166,7 +171,8 @@ public class ChooseGuideDispatchAction extends DispatchAction
             request.setAttribute(SessionConstants.GUIDE_LIST, guideList);
             request.setAttribute(SessionConstants.GUIDE, infoGuide);
             return mapping.findForward("ActionReady");
-        } else
+        }
+        else
             throw new Exception();
     }
 

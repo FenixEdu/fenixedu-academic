@@ -59,4 +59,7 @@
 		<put name="body" value="/student/showCandidacyDetails_bd.jsp"/>
 	</definition>
 
+	<definition name="definition.gaugingTestResults" extends="definition.student.masterPage">
+		<put name="body" value="/student/gaugingTests/physics/viewGaugingTestResults.jsp"/>
+	</definition>
 </tiles-definitions>

@@ -35,6 +35,7 @@
 <!ENTITY places SYSTEM "repository_places.xml">
 <!ENTITY grant_owner_management SYSTEM "repository_grant_owner_management.xml">
 <!ENTITY teacher SYSTEM "repository_teacher.xml">
+<!ENTITY gaugingTests SYSTEM "repository_gaugingTests.xml">
 ]>
 
 
@@ -75,4 +76,5 @@
 	&places;
     &grant_owner_management;
     &teacher;
+    &gaugingTests;
 </descriptor-repository>
