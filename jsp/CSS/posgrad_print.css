@@ -4,11 +4,11 @@
 	Global Text Proprieties 
 *****************************************/
 
-body {
+body, html {
 	font: 11pt Georgia, sans-serif;
 	color: #fff;
 	text-align: left;
-	margin: 0;
+	margin: 15pt 20pt 15pt 20pt;
 	}
 	
 table, p {
@@ -155,8 +155,8 @@ a:visited {
 	padding: 2pt;
 	}
 
-.tall-td {
-	height: 50pt;
+#vert-spacer {
+	margin-top: 15em;
 	}
 
 /*****************************************************************
