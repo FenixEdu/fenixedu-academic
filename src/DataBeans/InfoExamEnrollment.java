@@ -94,54 +94,54 @@ public class InfoExamEnrollment extends InfoObject {
 
 	public String getBeginDay() {
 
-		return new Integer(getBeginDate().getTime().getDate()).toString();
+		return new Integer(getBeginDate().get(Calendar.DAY_OF_MONTH)).toString();
 	}
 
 	public String getBeginMonth() {
-		return new Integer(getBeginDate().getTime().getMonth() + 1).toString();
+		return new Integer(getBeginDate().get(Calendar.MONTH) + 1).toString();
 	}
 	public String getBeginYear() {
-		return new Integer(getBeginDate().getTime().getYear() + 1900)
+		return new Integer(getBeginDate().get(Calendar.YEAR) + 1900)
 			.toString();
 	}
 	public String getBeginHour() {
-		return new Integer(getBeginDate().getTime().getHours()).toString();
+		return new Integer(getBeginDate().get(Calendar.HOUR_OF_DAY)).toString();
 	}
 	public String getBeginMinutes() {
-		return new Integer(getBeginDate().getTime().getMinutes()).toString();
+		return new Integer(getBeginDate().get(Calendar.MINUTE)).toString();
 	}
 
 	public String getEndDay() {
 
-		return new Integer(getEndDate().getTime().getDate()).toString();
+		return new Integer(getEndDate().get(Calendar.DAY_OF_MONTH)).toString();
 	}
 
 	public String getEndMonth() {
-		return new Integer(getEndDate().getTime().getMonth() + 1).toString();
+		return new Integer(getEndDate().get(Calendar.MONTH) + 1).toString();
 	}
 	public String getEndYear() {
-		return new Integer(getEndDate().getTime().getYear() + 1900).toString();
+		return new Integer(getEndDate().get(Calendar.YEAR) + 1900).toString();
 	}
 	public String getEndHour() {
-		return new Integer(getEndDate().getTime().getHours()).toString();
+		return new Integer(getEndDate().get(Calendar.HOUR_OF_DAY)).toString();
 	}
 	public String getEndMinutes() {
-		return new Integer(getEndDate().getTime().getMinutes()).toString();
+		return new Integer(getEndDate().get(Calendar.MINUTE)).toString();
 	}
 
 
 
 	public String getBeginHourString() {
-		return formatTime(new Integer(getBeginDate().getTime().getHours()).toString());
+		return formatTime(new Integer(getBeginDate().get(Calendar.HOUR_OF_DAY)).toString());
 	}
 	public String getBeginMinutesString() {
-		return formatTime(new Integer(getBeginDate().getTime().getMinutes()).toString());
+		return formatTime(new Integer(getBeginDate().get(Calendar.MINUTE)).toString());
 	}
 	public String getEndHourString() {
-		return formatTime(new Integer(getEndDate().getTime().getHours()).toString());
+		return formatTime(new Integer(getEndDate().get(Calendar.HOUR_OF_DAY)).toString());
 	}
 	public String getEndMinutesString() {
-		return formatTime(new Integer(getEndDate().getTime().getMinutes()).toString());
+		return formatTime(new Integer(getEndDate().get(Calendar.MINUTE)).toString());
 	}
 	
 	private String formatTime(String time){
