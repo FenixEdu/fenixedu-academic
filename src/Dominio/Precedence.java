@@ -92,7 +92,7 @@ public class Precedence extends DomainObject implements IPrecedence {
 			if (result){
 				List precedenceRestrictions = precedence.getRestrictions();
 				if (precedenceRestrictions != null){
-					for (int i = 0; i < precedenceRestrictions.size() || !result; i++){
+					for (int i = 0; i < precedenceRestrictions.size() && result; i++){
 						IRestriction restriction = (IRestriction) precedenceRestrictions.get(i);
 						result = this.getRestrictions().contains(restriction);
 					}
