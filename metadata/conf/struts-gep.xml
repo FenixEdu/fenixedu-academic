@@ -74,6 +74,19 @@
             type="ServidorApresentacao.Action.gep.ReadCourseInformationAction" >
             <forward name="show" path="view-course-information"/>
         </action>
+        
+        <action path="/listCoursesInformation" 
+            type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction" 
+            input="/listCoursesInformation.do?method=searchForm" scope="request" parameter="method" 
+            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            <set-property property="serviceName" value="ReadCoursesInformation"/>
+            <set-property property="objectAttribute" value="infoSiteCourseInformation"/>
+            <set-property property="listAttribute" value="infoSiteCoursesInformation"/>
+            <set-property property="notFoundMessageKey" value="label.gep.notFound"/>
+            <forward name="search-form" path="search-courses-information"/>
+            <forward name="list-one" path="list-courses-information"/>
+            <forward name="list-many" path="list-courses-information"/>
+        </action>
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>

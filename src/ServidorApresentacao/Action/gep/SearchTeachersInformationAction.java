@@ -4,6 +4,8 @@
  */
 package ServidorApresentacao.Action.gep;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -92,6 +94,20 @@ public class SearchTeachersInformationAction extends SearchAction
                 userView,
                 "ReadExecutionDegreesByExecutionYearAndDegreeType",
                 args);
+        Collections.sort(infoExecutionDegrees, new Comparator()
+        {
+            public int compare(Object o1, Object o2)
+            {
+                InfoExecutionDegree infoExecutionDegree1 = (InfoExecutionDegree) o1;
+                InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) o2;
+                return infoExecutionDegree1
+                    .getInfoDegreeCurricularPlan()
+                    .getInfoDegree()
+                    .getNome()
+                    .compareTo(
+                    infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
+            }
+        });
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
     }
 }

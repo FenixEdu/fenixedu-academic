@@ -105,7 +105,7 @@
 			<% filled++; %>
 		</logic:present>
 	</logic:iterate>
-	<% double stats = ((double) filled / length.doubleValue()) * 100; %>
+	<% int stats = (int) (((double) filled / length.doubleValue()) * 100); %>
 	<br />
 	<bean:message key="label.gep.filled" bundle="GEP_RESOURCES"/>: <%= filled %>
 	<br/>

@@ -4,4 +4,4 @@
 
 <center><strong>
 Bem Vindo à secção de gabinetes de estudos e planeamento.
-</center></strong>
+</strong></center>

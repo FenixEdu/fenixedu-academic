@@ -12,4 +12,9 @@
       <put name="body" value="" />
       <put name="footer" value="/copyright.jsp" />
 	</definition>
+	<definition name="definition.gep.one-column" extends="df.layout.one-column">
+	    <put name="title" value=".IST - Gabinete de Estudo e Planeamento" />
+        <put name="serviceName" value="Gabinete de Estudo e Planeamento" />
+        <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
+	</definition>
 </tiles-definitions>

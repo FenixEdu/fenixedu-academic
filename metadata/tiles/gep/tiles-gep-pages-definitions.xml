@@ -23,4 +23,7 @@
     <definition name="search-courses-information" extends="definition.gep.two-column">
         <put name="body" value="/gep/courses/searchCoursesInformation.jsp"/>
     </definition>
+    <definition name="list-courses-information" extends="definition.gep.one-column">
+        <put name="body" value="/gep/courses/viewCoursesInformation.jsp"/>
+    </definition>
 </tiles-definitions>

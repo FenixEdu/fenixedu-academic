@@ -32,13 +32,19 @@
 	<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
 			<td class="listClasses-header">
-				<bean:message key="label.gep.degreeYear" bundle="GEP_RESOURCES"/>
+				<bean:message key="label.gep.courseYear" bundle="GEP_RESOURCES"/>
 			</td>
 			<td class="listClasses-header">
-				<bean:message key="label.gep.degreeSemester" bundle="GEP_RESOURCES"/>
+				<bean:message key="label.gep.courseSemester" bundle="GEP_RESOURCES"/>
 			</td>
 			<td class="listClasses-header">
-				<bean:message key="label.gep.degreeName" bundle="GEP_RESOURCES"/>
+				<bean:message key="label.gep.courseName" bundle="GEP_RESOURCES"/>
+			</td>
+			<td class="listClasses-header">
+				<bean:message key="label.gep.executionCode" bundle="GEP_RESOURCES"/>
+			</td>
+			<td class="listClasses-header">
+				<bean:message key="label.gep.executionPeriod" bundle="GEP_RESOURCES"/>
 			</td>
 			<td class="listClasses-header">
 				<bean:message key="label.gep.courseInformation.basic" bundle="GEP_RESOURCES"/>
@@ -74,10 +80,16 @@
 										       paramId="executionCourseId" 
 										       paramName="infoSiteCourseInformation"
 										       paramProperty="infoExecutionCourse.idInternal">
-				   					        <bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.nome"/>-
-						       		   		<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.sigla"/>
+				   					        <bean:write name="infoCurricularCourse" property="name"/>-
+						       		   		<bean:write name="infoCurricularCourse" property="code"/>
 							      	</html:link>
 						       	</td>
+						       	<td class="listClasses">&nbsp;
+		   				         	 <bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.sigla"/>
+					         	</td>
+				         		<td class="listClasses">&nbsp;
+		   				         	 <bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.name"/>
+					         	</td>
 						       	<td class="listClasses">
 						       		<logic:equal name="infoCurricularCourse" property="basic" value="true">
 						       			<bean:message key="label.yes" bundle="GEP_RESOURCES"/>
@@ -127,10 +139,16 @@
 									       paramId="executionCourseId" 
 									       paramName="infoSiteCourseInformation"
 									       paramProperty="infoExecutionCourse.idInternal">
-			   					        <bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.nome"/>-
-					       		   		<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.sigla"/>
+			   					        <bean:write name="infoCurricularCourse" property="name"/>-
+						       		   	<bean:write name="infoCurricularCourse" property="code"/>
 						      	</html:link>
 					       	</td>
+					       	<td class="listClasses">&nbsp;
+	   				         	 <bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.sigla"/>
+				         	</td>
+			         		<td class="listClasses">&nbsp;
+	   				         	 <bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.name"/>
+				         	</td>
 					       	<td class="listClasses">
 					       		<logic:equal name="infoCurricularCourse" property="basic" value="true">
 					       			<bean:message key="label.yes" bundle="GEP_RESOURCES"/>
@@ -179,9 +197,47 @@
 			<% filled++; %>
 		</logic:present>
 	</logic:iterate>
-	<% double stats = ((double) filled / length.doubleValue()) * 100; %>
+	<% int stats = (int) (((double) filled / length.doubleValue()) * 100); %>
 	<br />
 	<bean:message key="label.gep.filled" bundle="GEP_RESOURCES"/>: <%= filled %>
 	<br/>
 	<bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>: <%= stats %>%
+	<%-- <logic:present name="infoExecutionDegree">
+		<logic:present name="basic">
+			<div class="button">
+				<html:link page="/listCoursesInformation.do?method=doSearch&amp;basic=basic" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list" />
+				</html:link>
+			</div>
+		</logic:present>
+		<logic:notPresent name="basic">
+			<div class="button">
+				<html:link page="/listCoursesInformation.do?method=doSearch" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list" />
+				</html:link>
+			</div>
+		</logic:notPresent>
+	</logic:present>
+	<logic:notPresent name="infoExecutionDegree">
+		<logic:present name="basic">
+			<div class="button">
+				<html:link page="/listCoursesInformation.do?method=doSearch&amp;executionDegreeId=all&amp;basic=basic" target="_blank">
+					<bean:message key="label.list" />
+				</html:link>
+			</div>
+		</logic:present>
+		<logic:notPresent name="basic">
+			<div class="button">
+				<html:link page="/listCoursesInformation.do?method=doSearch&amp;executionDegreeId=all" target="_blank">
+					<bean:message key="label.list" />
+				</html:link>
+			</div>
+		</logic:notPresent>
+	</logic:notPresent>--%>
 </logic:present>
