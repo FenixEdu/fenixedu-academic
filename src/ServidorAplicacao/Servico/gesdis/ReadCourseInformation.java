@@ -16,20 +16,27 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ISiteComponent;
+import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoCurricularCourseScopeWithBranchAndSemesterAndYear;
+import DataBeans.InfoCurricularCourseWithInfoDegree;
 import DataBeans.InfoCurriculum;
+import DataBeans.InfoDepartment;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionCourseWithExecutionPeriod;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
 import DataBeans.InfoLesson;
+import DataBeans.InfoLessonWithInfoExecutionCourse;
 import DataBeans.InfoSiteCommon;
+import DataBeans.InfoTeacherWithPersonAndCategory;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.gesdis.InfoSiteCourseInformation;
 import DataBeans.gesdis.InfoSiteEvaluationInformation;
 import DataBeans.gesdis.InfoSiteEvaluationStatistics;
-import DataBeans.util.Cloner;
 import Dominio.Aula;
 import Dominio.ExecutionCourse;
 import Dominio.IAula;
@@ -98,8 +105,13 @@ public class ReadCourseInformation implements IService {
 
             InfoSiteCourseInformation infoSiteCourseInformation = new InfoSiteCourseInformation();
 
-            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
-                    .get(executionCourse);
+            //CLONER
+            //InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse)
+            // Cloner
+            //.get(executionCourse);
+            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
+                    .newInfoFromDomain(executionCourse);
+
             infoSiteCourseInformation
                     .setInfoExecutionCourse(infoExecutionCourse);
 
@@ -115,9 +127,13 @@ public class ReadCourseInformation implements IService {
                         .setInfoEvaluationMethod(infoEvaluationMethod);
 
             } else {
+                //CLONER
+                //infoSiteCourseInformation
+                //.setInfoEvaluationMethod(Cloner
+                //.copyIEvaluationMethod2InfoEvaluationMethod(evaluationMethod));
                 infoSiteCourseInformation
-                        .setInfoEvaluationMethod(Cloner
-                                .copyIEvaluationMethod2InfoEvaluationMethod(evaluationMethod));
+                        .setInfoEvaluationMethod(InfoEvaluationMethod
+                                .newInfoFromDomain(evaluationMethod));
             }
 
             IPersistentResponsibleFor persistentResponsibleFor = sp
@@ -177,8 +193,11 @@ public class ReadCourseInformation implements IService {
                 infoCourseReport.setInfoExecutionCourse(infoExecutionCourse);
                 infoSiteCourseInformation.setInfoCourseReport(infoCourseReport);
             } else {
-                infoSiteCourseInformation.setInfoCourseReport(Cloner
-                        .copyICourseReport2InfoCourseReport(courseReport));
+                //CLONER
+                //infoSiteCourseInformation.setInfoCourseReport(Cloner
+                //.copyICourseReport2InfoCourseReport(courseReport));
+                infoSiteCourseInformation.setInfoCourseReport(InfoCourseReport
+                        .newInfoFromDomain(courseReport));
             }
 
             List infoSiteEvaluationInformations = getInfoSiteEvaluationInformation(
@@ -235,16 +254,23 @@ public class ReadCourseInformation implements IService {
                     .size()));
             infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
             infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner
-                    .get(executionPeriod);
+            //CLONER
+            //InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod)
+            // Cloner
+            //.get(executionPeriod);
+            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
+                    .newInfoFromDomain(executionPeriod);
             infoSiteEvaluationStatistics
                     .setInfoExecutionPeriod(infoExecutionPeriod);
 
             InfoSiteEvaluationInformation infoSiteEvaluationInformation = new InfoSiteEvaluationInformation();
             infoSiteEvaluationInformation
                     .setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
-            InfoCurricularCourse infoCurricularCourse = Cloner
-                    .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+            //CLONER
+            //InfoCurricularCourse infoCurricularCourse = Cloner
+            //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
+                    .newInfoFromDomain(curricularCourse);
             infoSiteEvaluationInformation
                     .setInfoCurricularCourse(infoCurricularCourse);
             infoSiteEvaluationInformation
@@ -296,9 +322,12 @@ public class ReadCourseInformation implements IService {
             IExecutionPeriod executionPeriod = (IExecutionPeriod) iter.next();
 
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
+            //infoSiteEvaluationStatistics
+            //.setInfoExecutionPeriod((InfoExecutionPeriod) Cloner
+            //.get(executionPeriod));
             infoSiteEvaluationStatistics
-                    .setInfoExecutionPeriod((InfoExecutionPeriod) Cloner
-                            .get(executionPeriod));
+                    .setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
+                            .newInfoFromDomain(executionPeriod));
             List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
             infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled
                     .size()));
@@ -379,8 +408,10 @@ public class ReadCourseInformation implements IService {
             ITeacher teacher = responsibleFor.getTeacher();
             IDepartment department = persistentDepartment
                     .readByTeacher(teacher);
-            infoDepartments.add(Cloner
-                    .copyIDepartment2InfoDepartment(department));
+            //CLONER
+            //infoDepartments.add(Cloner
+                    //.copyIDepartment2InfoDepartment(department));
+            infoDepartments.add(InfoDepartment.newInfoFromDomain(department));
         }
         return infoDepartments;
     }
@@ -509,9 +540,12 @@ public class ReadCourseInformation implements IService {
         while (iter.hasNext()) {
             IBibliographicReference bibliographicReference = (IBibliographicReference) iter
                     .next();
+            //CLONER
+            //infoBibliographicReferences
+                    //.add(Cloner
+                            //.copyIBibliographicReference2InfoBibliographicReference(bibliographicReference));
             infoBibliographicReferences
-                    .add(Cloner
-                            .copyIBibliographicReference2InfoBibliographicReference(bibliographicReference));
+            .add(InfoBibliographicReference.newInfoFromDomain(bibliographicReference));
         }
         return infoBibliographicReferences;
     }
@@ -534,7 +568,8 @@ public class ReadCourseInformation implements IService {
         while (iter.hasNext()) {
             IProfessorship professorship = (IProfessorship) iter.next();
             ITeacher teacher = professorship.getTeacher();
-            infoLecturingTeachers.add(Cloner.copyITeacher2InfoTeacher(teacher));
+            //infoLecturingTeachers.add(Cloner.copyITeacher2InfoTeacher(teacher));
+            infoLecturingTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
         }
         return infoLecturingTeachers;
     }
@@ -555,8 +590,11 @@ public class ReadCourseInformation implements IService {
         while (iter.hasNext()) {
             ICurricularCourse curricularCourse = (ICurricularCourse) iter
                     .next();
-            InfoCurricularCourse infoCurricularCourse = Cloner
-                    .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+            //CLONER
+            //InfoCurricularCourse infoCurricularCourse = Cloner
+                    //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+                    .newInfoFromDomain(curricularCourse);
             List infoScopes = getInfoScopes(curricularCourse.getScopes(), sp);
             infoCurricularCourse.setInfoScopes(infoScopes);
             ICurriculum curriculum = persistentCurriculum
@@ -566,8 +604,10 @@ public class ReadCourseInformation implements IService {
                 infoCurriculum = new InfoCurriculum();
 
             } else {
-                infoCurriculum = Cloner
-                        .copyICurriculum2InfoCurriculum(curriculum);
+                //CLONER
+                //infoCurriculum = Cloner
+                        //.copyICurriculum2InfoCurriculum(curriculum);
+                infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
             }
             infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
             infoCurriculums.add(infoCurriculum);
@@ -588,8 +628,10 @@ public class ReadCourseInformation implements IService {
         while (iter.hasNext()) {
             ResponsibleFor responsibleFor = (ResponsibleFor) iter.next();
             ITeacher teacher = responsibleFor.getTeacher();
-            infoResponsibleTeachers.add(Cloner
-                    .copyITeacher2InfoTeacher(teacher));
+            //CLONER
+            //infoResponsibleTeachers.add(Cloner
+                    //.copyITeacher2InfoTeacher(teacher));
+            infoResponsibleTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
         }
         return infoResponsibleTeachers;
     }
@@ -609,8 +651,11 @@ public class ReadCourseInformation implements IService {
 
             List curricularCourseScopes = curricularCourse.getScopes();
             List infoScopes = getInfoScopes(curricularCourseScopes, sp);
-            InfoCurricularCourse infoCurricularCourse = Cloner
-                    .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+            //CLONER
+            //InfoCurricularCourse infoCurricularCourse = Cloner
+                    //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+                    .newInfoFromDomain(curricularCourse);
             infoCurricularCourse.setInfoScopes(infoScopes);
             infoCurricularCourses.add(infoCurricularCourse);
         }
@@ -628,8 +673,10 @@ public class ReadCourseInformation implements IService {
         while (iter.hasNext()) {
             ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iter
                     .next();
-            InfoCurricularCourseScope infoCurricularCourseScope = Cloner
-                    .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+            //CLONER
+            //InfoCurricularCourseScope infoCurricularCourseScope = Cloner
+                    //.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+            InfoCurricularCourseScope infoCurricularCourseScope = InfoCurricularCourseScopeWithBranchAndSemesterAndYear.newInfoFromDomain(curricularCourseScope);
             infoScopes.add(infoCurricularCourseScope);
         }
         return infoScopes;
@@ -649,7 +696,9 @@ public class ReadCourseInformation implements IService {
         Iterator iter = lessons.iterator();
         while (iter.hasNext()) {
             IAula lesson = (IAula) iter.next();
-            infoLessons.add(Cloner.copyILesson2InfoLesson(lesson));
+            //CLONER
+            //infoLessons.add(Cloner.copyILesson2InfoLesson(lesson));
+            infoLessons.add(InfoLessonWithInfoExecutionCourse.newInfoFromDomain(lesson));
         }
         return infoLessons;
     }

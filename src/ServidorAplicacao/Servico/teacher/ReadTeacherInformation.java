@@ -10,16 +10,22 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import DataBeans.InfoCurricularCourseWithInfoDegree;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionCourseWithExecutionPeriod;
+import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
 import DataBeans.InfoTeacher;
+import DataBeans.InfoTeacherWithPersonAndCategory;
 import DataBeans.SiteView;
+import DataBeans.person.InfoQualification;
+import DataBeans.teacher.InfoCareer;
+import DataBeans.teacher.InfoExternalActivity;
+import DataBeans.teacher.InfoOldPublication;
 import DataBeans.teacher.InfoOrientation;
 import DataBeans.teacher.InfoPublicationsNumber;
 import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoSiteTeacherInformation;
 import DataBeans.teacher.InfoWeeklyOcupation;
-import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -92,7 +98,9 @@ public class ReadTeacherInformation implements IServico
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            //CLONER
+            //InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
             infoSiteTeacherInformation.setInfoTeacher(infoTeacher);
 
             infoSiteTeacherInformation.setInfoQualifications(getInfoQualifications(sp, teacher));
@@ -114,8 +122,10 @@ public class ReadTeacherInformation implements IServico
             }
             else
             {
-                InfoServiceProviderRegime infoServiceProviderRegime =
-                    Cloner.copyIServiceProviderRegime2InfoServiceProviderRegime(serviceProviderRegime);
+                //CLONER
+                //InfoServiceProviderRegime infoServiceProviderRegime =
+                    //Cloner.copyIServiceProviderRegime2InfoServiceProviderRegime(serviceProviderRegime);
+                InfoServiceProviderRegime infoServiceProviderRegime = InfoServiceProviderRegime.newInfoFromDomain(serviceProviderRegime);                
                 infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
             }
 
@@ -141,8 +151,10 @@ public class ReadTeacherInformation implements IServico
             }
             else
             {
-                InfoWeeklyOcupation infoWeeklyOcupation =
-                    Cloner.copyIWeeklyOcupation2InfoWeeklyOcupation(weeklyOcupation);
+                //CLONER
+                //InfoWeeklyOcupation infoWeeklyOcupation =
+                    //Cloner.copyIWeeklyOcupation2InfoWeeklyOcupation(weeklyOcupation);
+                InfoWeeklyOcupation infoWeeklyOcupation = InfoWeeklyOcupation.newInfoFromDomain(weeklyOcupation);                
                 infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
             }
 
@@ -171,8 +183,10 @@ public class ReadTeacherInformation implements IServico
 
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-            infoSiteTeacherInformation.setInfoExecutionPeriod(
-                (InfoExecutionPeriod) Cloner.get(executionPeriod));
+            //CLONER
+            //infoSiteTeacherInformation.setInfoExecutionPeriod(
+                //(InfoExecutionPeriod) Cloner.get(executionPeriod));
+            infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod));
 
             return new SiteView(infoSiteTeacherInformation);
         }
@@ -219,11 +233,14 @@ public class ReadTeacherInformation implements IServico
                     public Object transform(Object o)
                     {
                         ICurricularCourse curricularCourse = (ICurricularCourse) o;
-                        return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                        //CLONER
+                        //return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                        return InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
                     }
                 });
-                InfoExecutionCourse infoExecutionCourse;
-                infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+                //CLONER
+                //infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+                InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(executionCourse);                
                 infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
                 return infoExecutionCourse;
             }
@@ -243,7 +260,9 @@ public class ReadTeacherInformation implements IServico
             public Object transform(Object o)
             {
                 IExternalActivity externalActivity = (IExternalActivity) o;
-                return Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
+                //CLONER
+                //return Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
+                return InfoExternalActivity.newInfoFromDomain(externalActivity);
             }
         });
         return infoExternalActivities;
@@ -281,11 +300,15 @@ public class ReadTeacherInformation implements IServico
                     public Object transform(Object o)
                     {
                         ICurricularCourse curricularCourse = (ICurricularCourse) o;
-                        return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                        //CLONER
+                        //return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                        return InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
                     }
                 });
                 InfoExecutionCourse infoExecutionCourse;
-                infoExecutionCourse =  (InfoExecutionCourse) Cloner.get(executionCourse);
+                //CLONER
+                //infoExecutionCourse =  (InfoExecutionCourse) Cloner.get(executionCourse);
+                infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(executionCourse);
                 infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
                 return infoExecutionCourse;
             }
@@ -303,7 +326,9 @@ public class ReadTeacherInformation implements IServico
             public Object transform(Object o)
             {
                 IQualification qualification = (IQualification) o;
-                return Cloner.copyIQualification2InfoQualification(qualification);
+                //CLONER
+                //return Cloner.copyIQualification2InfoQualification(qualification);
+                return InfoQualification.newInfoFromDomain(qualification);
             }
         });
         return infoQualifications;
@@ -319,7 +344,9 @@ public class ReadTeacherInformation implements IServico
             public Object transform(Object o)
             {
                 ICareer career = (ICareer) o;
-                return Cloner.copyICareer2InfoCareer(career);
+                //CLONER
+                //return Cloner.copyICareer2InfoCareer(career);
+                return InfoCareer.newInfoFromDomain(career);                
             }
         });
         return infoCareers;
@@ -341,7 +368,8 @@ public class ReadTeacherInformation implements IServico
             public Object transform(Object o)
             {
                 IOldPublication oldPublication = (IOldPublication) o;
-                return Cloner.copyIOldPublication2InfoOldPublication(oldPublication);
+                //return Cloner.copyIOldPublication2InfoOldPublication(oldPublication);
+                return InfoOldPublication.newInfoFromDomain(oldPublication);
             }
         });
         return infoOldPublications;
@@ -359,11 +387,15 @@ public class ReadTeacherInformation implements IServico
         InfoOrientation infoOrientation = null;
         if (orientation != null)
         {
-            infoOrientation = Cloner.copyIOrientation2InfoOrientation(orientation);
+            //CLONER
+            //infoOrientation = Cloner.copyIOrientation2InfoOrientation(orientation);
+            infoOrientation = InfoOrientation.newInfoFromDomain(orientation);
         }
         else
         {
-            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            //CLONER
+            //InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
             infoOrientation = new InfoOrientation();
             infoOrientation.setInfoTeacher(infoTeacher);
             infoOrientation.setOrientationType(orientationType);
@@ -384,12 +416,14 @@ public class ReadTeacherInformation implements IServico
         InfoPublicationsNumber infoPublicationsNumber = null;
         if (publicationsNumber != null)
         {
-            infoPublicationsNumber =
-                Cloner.copyIPublicationsNumber2InfoPublicationsNumber(publicationsNumber);
+            //infoPublicationsNumber =
+                //Cloner.copyIPublicationsNumber2InfoPublicationsNumber(publicationsNumber);
+            infoPublicationsNumber = InfoPublicationsNumber.newInfoFromDomain(publicationsNumber);
         }
         else
         {
-            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            //InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
             infoPublicationsNumber = new InfoPublicationsNumber();
             infoPublicationsNumber.setInfoTeacher(infoTeacher);
             infoPublicationsNumber.setPublicationType(publicationType);

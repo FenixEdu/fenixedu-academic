@@ -133,7 +133,7 @@ public abstract class InfoCareer extends InfoObject implements ISiteComponent {
             {
                 infoCareer = InfoProfessionalCareer.newInfoFromDomain((IProfessionalCareer) career);
             }
-            else
+            else if (career instanceof ITeachingCareer)            
             {
                 infoCareer = InfoTeachingCareerWithInfoCategory.newInfoFromDomain((ITeachingCareer) career);
             }

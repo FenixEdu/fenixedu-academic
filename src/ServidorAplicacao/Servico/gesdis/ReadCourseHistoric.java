@@ -16,8 +16,8 @@ import org.apache.commons.collections.Transformer;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.gesdis.InfoCourseHistoric;
+import DataBeans.gesdis.InfoCourseHistoricWithInfoCurricularCourse;
 import DataBeans.gesdis.InfoSiteCourseHistoric;
-import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
@@ -83,8 +83,10 @@ public class ReadCourseHistoric implements IService {
             ICurricularCourse curricularCourse, Integer semester,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
-        InfoCurricularCourse infoCurricularCourse = Cloner
-                .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+        //CLONER
+        //InfoCurricularCourse infoCurricularCourse = Cloner
+                //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
         infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
 
         IPersistentCourseHistoric persistentCourseHistoric = sp
@@ -95,8 +97,10 @@ public class ReadCourseHistoric implements IService {
                 coursesHistoric, new Transformer() {
                     public Object transform(Object arg0) {
                         ICourseHistoric courseHistoric = (ICourseHistoric) arg0;
-                        return Cloner
-                                .copyICourseHistoric2InfoCourseHistoric(courseHistoric);
+                        //CLONER
+                        //return Cloner
+                        //.copyICourseHistoric2InfoCourseHistoric(courseHistoric);
+                        return InfoCourseHistoricWithInfoCurricularCourse.newInfoFromDomain(courseHistoric);
                     }
 
                 });

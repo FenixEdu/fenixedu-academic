@@ -53,6 +53,7 @@
 <br />
 <h3 class="bluetxt"><bean:message key="message.teachingReport.executionYear" />
 &nbsp;<bean:write name="executionYear" property="year" />*</h3>
+
 <logic:iterate id="siteEvaluationInformation" name="siteCourseInformation" property="infoSiteEvaluationInformations">
 	<bean:define id="evaluated" name="siteEvaluationInformation" property="infoSiteEvaluationStatistics.evaluated" type="java.lang.Integer"/>
 	<bean:define id="enrolled" name="siteEvaluationInformation" property="infoSiteEvaluationStatistics.enrolled" type="java.lang.Integer"/>
@@ -109,9 +110,10 @@
 				<td class="listClasses"><%= ap_ev_h %>%</td>
 			</tr>
 		</logic:iterate>
+		
 		<logic:present name="infoCoursesHistoric">
 			<bean:define id="curricularCourse" name="siteEvaluationInformation" property="infoCurricularCourse"/>
-			<logic:iterate id="siteCourseHistoric" name="infoCoursesHistoric">
+			<%--<logic:iterate id="siteCourseHistoric" name="infoCoursesHistoric">
 				<logic:iterate id="courseHistoric" name="siteCourseHistoric" property="infoCourseHistorics">
 					<bean:define id="curricularCourseId" name="courseHistoric" property="infoCurricularCourse.idInternal"/>
 					<logic:equal name="curricularCourse" property="idInternal" value="<%= curricularCourseId.toString() %>">
@@ -129,7 +131,7 @@
 						</tr>
 					</logic:equal>
 				</logic:iterate>
-			</logic:iterate>
+			</logic:iterate>--%>
 		</logic:present>		
 	</table>
 	<br/>

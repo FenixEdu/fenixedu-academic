@@ -72,7 +72,7 @@ public class InfoProfessionalCareer extends InfoCareer
     
     public static InfoProfessionalCareer newInfoFromDomain(IProfessionalCareer professionalCareer) {
         InfoProfessionalCareer infoProfessionalCareer = null;
-        if(professionalCareer == null) {
+        if(professionalCareer != null) {
             infoProfessionalCareer = new InfoProfessionalCareer();
             infoProfessionalCareer.copyFromDomain(professionalCareer);
         }

@@ -6,6 +6,7 @@ package DataBeans.gesdis;
 
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoObject;
+import Dominio.gesdis.ICourseHistoric;
 
 /**
  * @author Leonor Almeida
@@ -125,5 +126,29 @@ public class InfoCourseHistoric extends InfoObject
     public void setSemester(Integer semester)
     {
         this.semester = semester;
+    }
+    
+    
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(ICourseHistoric courseHistoric) {
+        super.copyFromDomain(courseHistoric);
+        if(courseHistoric != null) {
+           setApproved(courseHistoric.getApproved());
+           setEnrolled(courseHistoric.getEnrolled());
+           setEvaluated(courseHistoric.getEvaluated());
+           setCurricularYear(courseHistoric.getCurricularYear());
+           setSemester(courseHistoric.getSemester());
+        }        
+    }
+    
+    public static InfoCourseHistoric newInfoFromDomain(ICourseHistoric courseHistoric) {
+        InfoCourseHistoric infoCourseHistoric = null;
+        if(courseHistoric != null) {
+            infoCourseHistoric = new InfoCourseHistoric();
+            infoCourseHistoric.copyFromDomain(courseHistoric);
+        }
+        return infoCourseHistoric;
     }
 }

@@ -4,6 +4,8 @@
  */
 package DataBeans;
 
+import Dominio.IDepartment;
+
 /**
  * @author jpvl
  */
@@ -61,5 +63,26 @@ public class InfoDepartment extends InfoObject
                     .equals(infoDepartment.getName())));
         }
         return false;
+    }
+    
+    
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(IDepartment department) {
+        super.copyFromDomain(department);
+        if(department != null) {
+            setCode(department.getCode());
+            setName(department.getName());
+        }
+    }
+    
+    public static InfoDepartment newInfoFromDomain(IDepartment department) {
+        InfoDepartment infoDepartment = null;
+        if(department != null) {
+            infoDepartment =  new InfoDepartment();
+            infoDepartment.copyFromDomain(department);
+        }
+        return infoDepartment;
     }
 }

@@ -56,7 +56,11 @@
 				<td class="listClasses"><bean:write name="infoTeachingCareer" property="beginYear"/>
 					-<bean:write name="infoTeachingCareer" property="endYear"/>
 				</td>
-				<td class="listClasses"><bean:write name="infoTeachingCareer" property="infoCategory.shortName" /></td>
+				<td class="listClasses">				
+					<logic:notEmpty name="infoTeachingCareer" property="infoCategory" >
+						<bean:write name="infoTeachingCareer" property="infoCategory.shortName" />
+					</logic:notEmpty>
+				</td>
 				<td class="listClasses"><bean:write name="infoTeachingCareer" property="courseOrPosition" /></td>
 			</tr>
 			</logic:iterate>
