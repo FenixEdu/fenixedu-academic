@@ -14,6 +14,28 @@
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="executionCourse" name="component" property="executionCourse"/>
 <bean:define id="objectCode" name="executionCourse" property="idInternal"/>
+Mostrar Sumários:
+<html:link page="/summariesManager.do?method=showSummaries" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+							<bean:message key="label.summaries.all"/>
+</html:link>
+|
+<html:link page="/summariesManager.do?method=showSummaries&typeFilter=T" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+							<bean:message key="label.summaries.theo"/>
+</html:link>
+|
+<html:link page="/summariesManager.do?method=showSummaries&typeFilter=P" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+							<bean:message key="label.summaries.prat"/>
+</html:link>
+|
+<html:link page="/summariesManager.do?method=showSummaries&typeFilter=TP" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+							<bean:message key="label.summaries.theoPrat"/>
+</html:link>
+|
+<html:link page="/summariesManager.do?method=showSummaries&typeFilter=L" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+							<bean:message key="label.summaries.lab"/>
+</html:link>
+<br/>
+<br/>
 <table>
 	<tr>
          <td>
@@ -25,15 +47,28 @@
 					<br />
                 </td>
       </tr>
-
+     <logic:present  name="component" property="summaryType">
+      <tr>
+      	<td><h3><bean:message key="label.summaries.lesson.type"/><bean:write name="component" property="summaryType.fullNameTipoAula"/></h3>
+      	
+      	</td>
+      </tr>
+      </logic:present>
+<logic:empty name="component" property="infoSummaries" >
+	<tr>
+		<td><bean:message key="label.summaries.not.found"/>
+		</td>
+	</tr>
+</logic:empty>
+<logic:notEmpty name="component" property="infoSummaries" >
 <logic:iterate id="summary" name="component" property="infoSummaries" type="DataBeans.InfoSummary">
 	 
 	  <tr>
          <td>			
 			<strong><bean:message key="label.summary.lesson"/>
-			<bean:write name="summary" property="summaryTypeFormatted"/>
-            <bean:write name="summary" property="summaryDateFormatted"/>
-            <bean:write name="summary" property="summaryHourFormatted"/></strong>
+			<bean:write name="summary" property="summaryTypeFormatted"/><div class="greytxt">(<bean:write name="summary" property="summaryDateFormatted"/>
+            <bean:write name="summary" property="summaryHourFormatted"/>)</div></strong>
+            
           </td>
       </tr>
 	 <tr>
@@ -70,5 +105,6 @@
                 </tr>
 
 </logic:iterate>
+</logic:notEmpty>
 </table>
 </logic:present>
