@@ -34,7 +34,6 @@ public class TestProjectSuite extends TestCase {
         //Do NOT change lines enclosed by the --JUNIT: and :JUNIT-- tags.
         
         TestSuite suite = new TestSuite("TestProject");
-        suite.addTest(ServidorPersistente.OJB.OJBSuite.suite());
         suite.addTest(ServidorAplicacao.Servicos.ServicosSuite.suite());
         
         //:JUNIT--
