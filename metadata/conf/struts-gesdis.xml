@@ -10,12 +10,23 @@
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
 
+	<form-bean name="executionCourseObjectivesForm"
+		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-property name="operacionalObjectives" type="java.lang.String" />
+		<form-property name="generalObjectives" type="java.lang.String" />
+	</form-bean>
+
 	<form-bean name="teacher.announcementManagementForm"
 		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 		<form-property name="index" type="java.lang.Integer" />
 		<form-property name="option" type="java.lang.String" />
 	</form-bean>
-
+	
+	
+	<form-bean name="executionCourseProgramForm"
+		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-property name="program" type="java.lang.String" />
+	</form-bean>
 	<!--
 	
 	<form-bean name="autenticacaoForm"
@@ -581,8 +592,20 @@
 	
 	<!--attention: this action is incomplete --> 
 	<action 
+		name="executionCourseObjectivesForm"
 		parameter="method"
-		path="/CurriculumManagerDA"
+		path="/objectivesManagerDA"
+        type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
+		>    
+     <forward name="viewProgram" path="/viewProgram.jsp"/>
+     <forward name="editProgram" path="/editProgram.jsp"/>
+     
+	</action>
+	
+	<action 
+		name="executionCourseProgramForm"
+		parameter="method"
+		path="/programManagerDA"
         type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
 		>
      <forward name="viewObjectives" path="/viewObjectives.jsp"/>
