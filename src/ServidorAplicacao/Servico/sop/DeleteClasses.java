@@ -11,7 +11,6 @@ package ServidorAplicacao.Servico.sop;
  **/
 import java.util.List;
 
-import Dominio.IShiftProfessorship;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.Turma;

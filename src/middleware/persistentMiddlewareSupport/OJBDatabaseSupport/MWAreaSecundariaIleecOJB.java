@@ -6,7 +6,6 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
 import middleware.middlewareDomain.MWAreaSecundariaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWAreaSecundariaIleec;
-import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
 import org.apache.ojb.broker.query.Criteria;
 

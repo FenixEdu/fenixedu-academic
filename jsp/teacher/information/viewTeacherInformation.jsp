@@ -36,7 +36,7 @@
 				<td class="listClasses"><bean:write name="infoQualification" property="school" /></td>
 				<td class="listClasses"><bean:write name="infoQualification" property="degree" /></td>
 				<td class="listClasses"><bean:write name="infoQualification" property="title" /></td>
-				<td class="listClasses"><bean:write name="infoQualification" property="mark" /></td>
+				<td class="listClasses">&nbsp;<bean:write name="infoQualification" property="mark" /></td>
 			</tr>
 			</logic:iterate>
 		</table>
@@ -133,46 +133,46 @@
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.comunicationsPublications" /></td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoComunicationPublicationsNumber.national" />
 				</td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoComunicationPublicationsNumber.international" />
 				</td>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.articlesPublications" /></td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoMagArticlePublicationsNumber.national" />
 				</td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoMagArticlePublicationsNumber.international" />
 				</td>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.bookAuthorPublications" /></td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoAuthorBookPublicationsNumber.national" />
 				</td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoAuthorBookPublicationsNumber.international" />
 				</td>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.bookEditorPublications" /></td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoEditBookPublicationsNumber.national" />
 				</td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoEditBookPublicationsNumber.international" />
 				</td>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.articlesAndChaptersPublications" /></td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoArticleChapterPublicationsNumber.national" />
 				</td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoArticleChapterPublicationsNumber.international" />
 				</td>
 			</tr>
@@ -186,9 +186,14 @@
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 			<tr>
 				<td>
-					<bean:message name="infoSiteTeacherInformation" 
-								  property="infoServiceProviderRegime.providerRegimeType.name" 
-								  bundle="ENUMERATION_RESOURCES"/>
+					<logic:present name="infoSiteTeacherInformation" property="infoServiceProviderRegime.providerRegimeType">
+						<bean:message name="infoSiteTeacherInformation" 
+									  property="infoServiceProviderRegime.providerRegimeType.name" 
+									  bundle="ENUMERATION_RESOURCES"/>
+				  	</logic:present>
+					<logic:notPresent name="infoSiteTeacherInformation" property="infoServiceProviderRegime.providerRegimeType">
+						<bean:message key="label.teachersInformation.notModified" />
+				  	</logic:notPresent>
 				</td>
 			</tr>
 		</table>
@@ -240,28 +245,28 @@
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.tfc" /></td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoDegreeOrientation.numberOfStudents" />
 				</td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoDegreeOrientation.description" />&nbsp;
 				</td>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.masterThesis" /></td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoMasterOrientation.numberOfStudents" />
 				</td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoMasterOrientation.description" />&nbsp;
 				</td>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.phdThesis" /></td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoPhdOrientation.numberOfStudents" />
 				</td>
-				<td class="listClasses">
+				<td class="listClasses">&nbsp;
 					<bean:write name="infoSiteTeacherInformation" property="infoPhdOrientation.description" />&nbsp;
 				</td>
 			</tr>

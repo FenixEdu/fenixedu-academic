@@ -5,17 +5,18 @@
  */
 package ServidorApresentacao.Action.publico;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
+
 import DataBeans.StudentGroupAttendacyInformation;
 import Dominio.IAula;
 import Dominio.ICurricularCourse;
