@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
 import ServidorApresentacao.ScopeConstants;
 import ServidorApresentacao.TestCasePresentationManagerPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -25,7 +27,16 @@ public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 		super(testName);
 
 	}
+	
+		public static void main(java.lang.String[] args) {
+			junit.textui.TestRunner.run(suite());
+		}
 
+		
+		public static Test suite() {
+			TestSuite suite = new TestSuite(ReadDegreeActionTest.class);
+			return suite;
+		}
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
@@ -80,9 +91,7 @@ public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 	}
 
 	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
-		Map result = new HashMap();
-		result.put("idInternal", "5");
-		return result;
+		return null;
 	}
 
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
@@ -92,7 +101,9 @@ public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 	}
 	
 	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
-	return null;
+		Map result = new HashMap();
+		result.put("idInternal", "5");
+		return result;
 	}
 
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {

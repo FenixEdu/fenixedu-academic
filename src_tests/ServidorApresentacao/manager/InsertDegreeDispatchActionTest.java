@@ -1,6 +1,5 @@
 /*
- * Created on 22/Jul/2003
- *
+ * Created on 25/Jul/2003
  */
 package ServidorApresentacao.manager;
 
@@ -18,30 +17,30 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author lmac1
  */
-public class ReadDegreesActionTest extends TestCasePresentationManagerPortal{
+public class InsertDegreeDispatchActionTest extends TestCasePresentationManagerPortal{
 
 	
 	/**
 	 * @param testName
 	 */
-	public ReadDegreesActionTest(String testName) {
+	public InsertDegreeDispatchActionTest(String testName) {
 		super(testName);
 
 	}
-	
 	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
-		
+			junit.textui.TestRunner.run(suite());
+		}
+
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ReadDegreesActionTest.class);
-		return suite;
-	}
+			TestSuite suite = new TestSuite(InsertDegreeDispatchActionTest.class);
+			return suite;
+		}
+
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		return "/readDegrees";
+		return "/insertDegree";
 	}
 
 	/**
@@ -49,9 +48,8 @@ public class ReadDegreesActionTest extends TestCasePresentationManagerPortal{
 	 * use with testUnsuccessfulExecutionOfAction.
 	 */
 	protected String[] getActionErrors() {
-//		String[] result = { "java.lang.Exception" };
-//		return result;
-		return null;
+		String[] result = {"message.existingDegreeCode","message.existingDegreeName"};		
+		return result;
 	}
 
 	/**
@@ -91,25 +89,36 @@ public class ReadDegreesActionTest extends TestCasePresentationManagerPortal{
 	}
 
 	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
-		
 		return null;
 	}
 
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
-		return null;
+		Map result = new HashMap();
+		
+		result.put("method","insert");
+		result.put("code","LEC");
+		result.put("name","Licenciatura em Engenharia Civil");
+		result.put("degreeType","Licenciatura");
+		return result;
 	}
 	
 	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
-	return null;
+		Map result = new HashMap();
+		
+		result.put("method","insert");
+		result.put("code","MEM");
+		result.put("name","Engenharia Mecânica");
+		result.put("degreeType","Licenciatura");
+		return result;
 	}
 
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
 		Map result = new HashMap();
-
+		
 		List requestAttributtes = new ArrayList(1);
 		requestAttributtes.add(SessionConstants.INFO_DEGREES_LIST);
 		result.put(new Integer(ScopeConstants.REQUEST), requestAttributtes);
-	
+
 		return result;
 	}
 
@@ -118,7 +127,13 @@ public class ReadDegreesActionTest extends TestCasePresentationManagerPortal{
 	}
 
 	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
-		return null;
+		Map result = new HashMap();
+		
+		List requestAttributtes = new ArrayList(1);
+		requestAttributtes.add(SessionConstants.INFO_DEGREES_LIST);
+		result.put(new Integer(ScopeConstants.REQUEST), requestAttributtes);
+		
+		return result;
 	}
 
 	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
@@ -126,3 +141,5 @@ public class ReadDegreesActionTest extends TestCasePresentationManagerPortal{
 	}
 
 }
+
+

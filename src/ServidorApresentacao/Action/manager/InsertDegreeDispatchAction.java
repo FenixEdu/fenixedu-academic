@@ -61,13 +61,8 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 		String code = (String) dynaForm.get("code");
 		String name = (String) dynaForm.get("name");
 		Integer degreeTypeInt = (Integer) dynaForm.get("degreeType");
-		
-	//	Integer tipoCursoInt = new Integer(tipoCursoString);
-		
+				
 		TipoCurso degreeType = new TipoCurso(degreeTypeInt);
-		
-	//	System.out.println("TIPO DE CURSO"+degreeTypeInt);
-		
 		
 
     	InfoDegree infoDegree =
@@ -82,10 +77,10 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 		try {
 			serviceResult = (List) manager.executar(userView, "InsertDegreeService", args);
 		}
-		//FAZER TB PARA JAH EXISTE COM ESSA SIGLA 
-		catch (ExistingServiceException e) {
-						   throw new ExistingActionException("Uma secção com esse nome",e);
-					   }
+//		//FAZER TB PARA JAH EXISTE COM ESSA SIGLA 
+//		catch (ExistingServiceException e) {
+//						   throw new ExistingActionException("Uma secção com esse nome",e);
+//					   }
 		catch (FenixServiceException e) {
 			throw new FenixActionException(e.getMessage());
 		}
