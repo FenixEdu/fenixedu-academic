@@ -260,7 +260,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 		request.setAttribute("inEnglish", inEnglish);
 
 		//if came in the request a executionDegreeId that it is necessary
-		//find the corrspond degree curricular plan
+		//find the correpond degree curricular plan
 		if (executionDegreeId != null)
 		{
 			Object[] args = { executionDegreeId };
@@ -329,16 +329,14 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 			//find information about this degree curricular plan
 			if (degreeCurricularPlanId != null)
 			{
-
 				Iterator iterator = infoDegreeCurricularPlanList.iterator();
 				while (iterator.hasNext())
 				{
 					InfoDegreeCurricularPlan infoDegreeCurricularPlanElem =
 						(InfoDegreeCurricularPlan) iterator.next();
-
-					if (infoDegreeCurricularPlan.getIdInternal().equals(degreeCurricularPlanId))
+					if (infoDegreeCurricularPlanElem.getIdInternal().equals(degreeCurricularPlanId))
 					{
-						request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+						request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlanElem);
 						break;
 					}
 				}

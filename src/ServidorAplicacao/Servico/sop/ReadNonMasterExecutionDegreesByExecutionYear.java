@@ -1,7 +1,6 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
- * Servico LerSalas
  *
  * @author tfc130
  * @version
