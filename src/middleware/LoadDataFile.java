@@ -7,9 +7,10 @@
 package middleware;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -40,7 +41,9 @@ public abstract class LoadDataFile {
 		BufferedReader bufferedReader;
 
 		try {
-			bufferedReader = new BufferedReader(new FileReader(getFilename()));
+			FileInputStream fin = new FileInputStream(getFilename());
+			InputStreamReader inputStreamReader = new InputStreamReader(fin, "8859_1");
+			bufferedReader = new BufferedReader(inputStreamReader);
 			String line = bufferedReader.readLine();
 			while (line != null) {
 				processLine(line);

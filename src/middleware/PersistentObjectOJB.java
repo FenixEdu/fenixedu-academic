@@ -38,20 +38,42 @@ public class PersistentObjectOJB {
 		broker.commitTransaction();
 	}
 
-	public void lockWrite(Object obj) {
+	public synchronized void lockWrite(Object obj) {
 		try {
+
+			commitTransaction();
+			beginTransaction();
 			broker.store(obj);
+			commitTransaction();
+			beginTransaction();
+
 		} catch (org.apache.ojb.broker.PersistenceBrokerSQLException ex) {
 		}
 	}
 
 	public List query(Class classToQuery, Criteria criteria) {
+		List result = null;
+
+                       // commitTransaction();
+                        beginTransaction();
 		Query query = new QueryByCriteria(classToQuery, criteria);
-		return (List) broker.getCollectionByQuery(query);
+		result = (List) broker.getCollectionByQuery(query);
+                        commitTransaction();
+                       // beginTransaction();
+
+		return result;
 	}
 
 	public List query(Object object) {
-		return (List) broker.getCollectionByQuery(new QueryByCriteria(object));
+		List result = null;
+	
+                      //  commitTransaction();
+                        beginTransaction();
+		result = (List) broker.getCollectionByQuery(new QueryByCriteria(object));
+                        commitTransaction();
+                      //  beginTransaction();
+
+		return result;
 	}
 
 }

@@ -109,10 +109,15 @@ public class LoadDisciplinas extends LoadDataFile {
 			getDegreeCurricularPlan(new Integer("" + almeida_disc.getCodcur()));
 
 		if (degreeCurricularPlan != null) {
+
+			//System.out.println("Args= " + degreeCurricularPlan.getIdInternal() + " - " + almeida_disc.getCoddis());
+
 			ICurricularCourse curricularCourse =
 				persistentObjectOJB.readCurricularCourse(
 					degreeCurricularPlan,
 					almeida_disc.getCoddis());
+
+			//System.out.println("curricularCourse= " + curricularCourse);
 
 			if (curricularCourse == null) {
 				curricularCourse = new CurricularCourse();
@@ -243,6 +248,14 @@ public class LoadDisciplinas extends LoadDataFile {
 				new Integer("" + almeida_disc.getCodram()));
 
 		if (almeida_curram != null) {
+
+/*			System.out.println("Reading Branch: ");
+			System.out.println("  Descri: [" + almeida_curram.getDescri() + "}");
+			System.out.println("  Code:   [" + ""
+                                                + almeida_curram.getCodcur()
+                                                + almeida_curram.getCodram()
+                                                + almeida_curram.getCodorien() + "}");
+*/
 			IBranch branch =
 				persistentObjectOJB.readBranch(
 					almeida_curram.getDescri(),
@@ -250,6 +263,8 @@ public class LoadDisciplinas extends LoadDataFile {
 						+ almeida_curram.getCodcur()
 						+ almeida_curram.getCodram()
 						+ almeida_curram.getCodorien());
+
+//			System.out.println("Result of read: " + branch);
 
 			if (branch == null) {
 				branch = new Branch();
