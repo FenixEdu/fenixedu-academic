@@ -77,7 +77,7 @@ public class ChooseMasterDegreeDispatchAction extends DispatchAction {
 
 			request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
 			request.setAttribute("executionYear", getFromRequest("executionYear", request));
-			request.setAttribute("degree", getFromRequest("masterDegree", request));
+			request.setAttribute("degree", getFromRequest("degree", request));
 
 			return mapping.findForward("ChooseSuccess");
 	}
