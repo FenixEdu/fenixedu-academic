@@ -23,13 +23,24 @@
 					<br/>
 		        </li>
 	        	<li>
-		        	<html:link page="/prepareCandidateApproval.do?method=chooseExecutionDegree&page=0">
+	        		<bean:define id="link">/prepareCandidateApproval.do?method=chooseExecutionDegree&page=0&executionDegreeID=
+	        		</bean:define>
+		        	<bean:define id="prepareCandidateApprovalLink">
+    					<bean:write name="link"/><bean:write name="infoExecutionDegreeId"/>
+    				</bean:define> 	
+		        	
+		        	<html:link page='<%= pageContext.findAttribute("prepareCandidateApprovalLink").toString() %>'>
 		        	<bean:message key="link.coordinator.approveCandidates" /></html:link>
 		        	<br/>
 					<br/>		        	
 		        </li>
 				<li>
-					<html:link page="/displayCandidateListToMakeStudyPlan.do?method=prepareSelectCandidates&amp;page=0">
+					<bean:define id="link2">/displayCandidateListToMakeStudyPlan.do?method=prepareSelectCandidates&amp;page=0&executionDegreeID=
+	        		</bean:define>
+		        	<bean:define id="displayCandidateListToMakeStudyPlanLink">
+    					<bean:write name="link2"/><bean:write name="infoExecutionDegreeId"/>
+    				</bean:define> 	
+					<html:link page="<%= pageContext.findAttribute("displayCandidateListToMakeStudyPlanLink").toString() %>">
 					<bean:message key="link.masterDegree.administrativeOffice.makeStudyPlan" /></html:link>
 		        	<br/>
 					<br/>
