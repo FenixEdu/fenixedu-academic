@@ -7,8 +7,7 @@
         <center><font color='#034D7A' size='5'> <b> <bean:message key="title.choose.discipline"/> </b> </font></center>
         <br/>
         <br/>
-        <html:errors />
-        
+        <span class="error"><html:errors/></span>        
         <html:form action="/viewExecutionCourse">
        		<input type="hidden" name="method" value="executionCourseViewerSelectedFromForm">
         

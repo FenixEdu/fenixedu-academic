@@ -11,6 +11,13 @@
         <arg0 key="Index" resource="false"/>
       </field>
     </form>
+
+    <!-- Validation for Execution Course Form -->
+    <form name="chooseExecutionCourseForm">
+      <field property="courseInitials" depends="required">
+        <arg0 key="property.context.course"/>
+      </field>
+    </form>
     
   <!-- Validation for chooseSearchContextForm Form -->
     <form name="chooseSearchContextForm">

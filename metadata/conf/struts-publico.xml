@@ -250,8 +250,10 @@
 		</action>
 	
 	<action name="chooseExecutionCourseForm"
+			input="/prepareSelectExecutionCourse.jsp"
 			path="/viewExecutionCourse"
 			parameter="method"
+			validate="true"
             type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
           <forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
     </action>
