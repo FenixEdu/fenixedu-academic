@@ -67,11 +67,9 @@ public class DeleteItemTest extends ItemBelongsExecutionCourseTest {
 
 	public void testDeleteExistingItem() {
 		Object[] args = getTestItemSuccessfullArguments();
-		Object result = null;
 
 		try {
-			result =
-				gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
 			compareDataSet("etc/datasets/servicos/teacher/testExpectedDeleteItemDataSet.xml");
 			System.out.println(

@@ -182,11 +182,9 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 		infoItem.setUrgent(new Boolean(false));
 
 		Object[] args = { new Integer(27), new Integer(6), infoItem };
-		Object result = null;
 
 		try {
-			result =
-				gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -238,11 +236,9 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 		infoItem.setUrgent(new Boolean(false));
 
 		Object[] args = { new Integer(27), new Integer(6), infoItem };
-		Object result = null;
 
 		try {
-			result =
-				gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();

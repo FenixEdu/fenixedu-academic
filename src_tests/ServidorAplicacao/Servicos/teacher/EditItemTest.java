@@ -82,11 +82,9 @@ public class EditItemTest extends ItemBelongsExecutionCourseTest {
 
 	public void testEditExistingItem() {
 		Object[] args = getTestItemSuccessfullArguments();
-		Object result = null;
 
 		try {
-			result =
-				gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
 			compareDataSet("etc/datasets/servicos/teacher/testExpectedEditItemDataSet.xml");
 			System.out.println(
@@ -110,11 +108,9 @@ public class EditItemTest extends ItemBelongsExecutionCourseTest {
 		infoItem.setUrgent(new Boolean(false));
 
 		Object[] args = { new Integer(27), new Integer(100), infoItem };
-		Object result = null;
 
 		try {
-			result =
-				gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 			System.out.println(
 				"testEditNonExistingItem was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());

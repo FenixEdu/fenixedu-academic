@@ -23,25 +23,22 @@ public abstract class SectionBelongsExecutionCourseTest
 
 		Object serviceArguments[] = getTestSectionSuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result =
-				gestor.executar(
-					userView,
-					getNameOfServiceToBeTested(),
-					serviceArguments);
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				serviceArguments);
 			System.out.println(
 				"testSectionBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 
 		} catch (NotAuthorizedException ex) {
-			fail(getNameOfServiceToBeTested() + "fail testSectionlongsExecutionCourse");
+			fail(
+				getNameOfServiceToBeTested()
+					+ "fail testSectionlongsExecutionCourse");
 
 		} catch (Exception ex) {
-			fail(
-				"Unable to run service: "
-					+ getNameOfServiceToBeTested());
+			fail("Unable to run service: " + getNameOfServiceToBeTested());
 
 		}
 
@@ -59,7 +56,9 @@ public abstract class SectionBelongsExecutionCourseTest
 					userView,
 					getNameOfServiceToBeTested(),
 					serviceArguments);
-			fail(getNameOfServiceToBeTested() + "fail testSectionNotBelongsExecutionCourse");
+			fail(
+				getNameOfServiceToBeTested()
+					+ "fail testSectionNotBelongsExecutionCourse");
 
 		} catch (NotAuthorizedException ex) {
 
@@ -68,9 +67,7 @@ public abstract class SectionBelongsExecutionCourseTest
 					+ getNameOfServiceToBeTested());
 
 		} catch (Exception ex) {
-			fail(
-				"Unable to run service: "
-					+ getNameOfServiceToBeTested());
+			fail("Unable to run service: " + getNameOfServiceToBeTested());
 
 		}
 
