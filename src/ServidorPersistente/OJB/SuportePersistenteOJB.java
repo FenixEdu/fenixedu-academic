@@ -328,4 +328,12 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentContributor getIPersistentContributor() {
 		return new ContributorOJB();
 	}
+
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentEnrolment()
+	 */
+	public IPersistentEnrolment getIPersistentEnrolment() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -12,7 +12,7 @@ public class InfoAnnouncement {
 
 	private String title;
 	private Date creationDate;
-	private Date lastModificationDate;
+	private Date lastModifiedDate;
 	private String information;
 //	private InfoSite site;	
 	private InfoSite infoSite;
@@ -23,7 +23,7 @@ public class InfoAnnouncement {
 	public InfoAnnouncement(String title, Date creationDate, Date lastModifiedDate, String information, InfoSite infoSite) {
 		this.title = title;
 		this.creationDate = creationDate;
-		this.lastModificationDate = lastModifiedDate;
+		this.lastModifiedDate = lastModifiedDate;
 		this.information = information;
 		this.infoSite = infoSite;
 	}
@@ -35,7 +35,7 @@ public class InfoAnnouncement {
 			resultado =
 				getTitle().equals(((InfoAnnouncement) obj).getTitle())
 					&& getCreationDate().equals(((InfoAnnouncement) obj).getCreationDate())
-					&& getLastModificationDate().equals(((InfoAnnouncement) obj).getLastModificationDate())
+					&& getLastModifiedDate().equals(((InfoAnnouncement) obj).getLastModifiedDate())
 					&& getInformation().equals(((InfoAnnouncement) obj).getInformation())
 					&& getInfoSite().equals(((InfoAnnouncement) obj).getInfoSite());
 		}
@@ -48,7 +48,7 @@ public class InfoAnnouncement {
 	    result += ", title=" + getTitle();
 	    result += ", information=" + getInformation();
 		result += ", creationDate=" + getCreationDate();
-		result += ", lastModificationDate=" + getLastModificationDate();
+		result += ", lastModifiedDate=" + getLastModifiedDate();
 		result += ", infoSite=" + getInfoSite();
 	    result += "]";
 	    return result;
@@ -60,35 +60,30 @@ public class InfoAnnouncement {
 	public Date getCreationDate() {
 		return creationDate;
 	}
-
 	/**
 	 * @return String
 	 */
 	public String getInformation() {
 		return information;
 	}
-
-	/**
-	 * @return Date
-	 */
-	public Date getLastModificationDate() {
-		return lastModificationDate;
-	}
-
 	/**
 	 * @return InfoSite
 	 */
 	public InfoSite getInfoSite() {
 		return infoSite;
 	}
-
+	/**
+	 * @return Date
+	 */
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
 	/**
 	 * @return String
 	 */
 	public String getTitle() {
 		return title;
 	}
-
 	/**
 	 * Sets the creationDate.
 	 * @param creationDate The creationDate to set
@@ -96,7 +91,6 @@ public class InfoAnnouncement {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-
 	/**
 	 * Sets the information.
 	 * @param information The information to set
@@ -104,15 +98,6 @@ public class InfoAnnouncement {
 	public void setInformation(String information) {
 		this.information = information;
 	}
-
-	/**
-	 * Sets the lastModificationDate.
-	 * @param lastModificationDate The lastModificationDate to set
-	 */
-	public void setLastModificationDate(Date lastModificationDate) {
-		this.lastModificationDate = lastModificationDate;
-	}
-
 	/**
 	 * Sets the infoSite.
 	 * @param infoSite The infoSite to set
@@ -120,7 +105,13 @@ public class InfoAnnouncement {
 	public void setInfoSite(InfoSite infoSite) {
 		this.infoSite = infoSite;
 	}
-
+	/**
+	 * Sets the lastModifiedDate.
+	 * @param lastModifiedDate The lastModifiedDate to set
+	 */
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
 	/**
 	 * Sets the title.
 	 * @param title The title to set
@@ -128,5 +119,4 @@ public class InfoAnnouncement {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 }

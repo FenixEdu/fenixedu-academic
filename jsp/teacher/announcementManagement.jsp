@@ -16,7 +16,7 @@
                     <br><br><hr>
                 </td>
             </tr>
-            <logic:iterate id="announcement" name="Announcements">
+            <logic:iterate id="announcement" name="Announcements" scope="session" >
                 <tr>
                     <td>
                         <br>
@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                 	<td>
-                		<bean:message key="label.lastModificationDate" /> <bean:write name="announcement" property="lastModificationDate"/>
+                		<bean:message key="label.lastModificationDate" /><bean:write name="announcement" property="lastModifiedDate"/>
 						<br><br>
                 	</td>
             	</tr>

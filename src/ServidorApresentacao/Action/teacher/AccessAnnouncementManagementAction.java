@@ -26,7 +26,6 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 		HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = getSession(request);
-
 		
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -40,10 +39,6 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 		List announcements = (List) manager.executar(userView, "ReadAnnouncements", args);
 		session.setAttribute("Announcements", announcements);
 		
-		session.setAttribute("AnnouncementsName", "Announcements");
-		  
-//		session.setAttribute("method", "showAnnouncements");
-		  
 		return mapping.findForward("AnnouncementManagement");
 	}
 }

@@ -5,13 +5,15 @@
  */
 package DataBeans.gesdis;
 
+import java.io.Serializable;
+
 import DataBeans.InfoExecutionCourse;
 
 /**
  *
  * @author  EP 15
  */
-public class InfoBibliographicReference {
+public class InfoBibliographicReference implements Serializable {
 	protected String title;
 	protected String authors;
 	protected String reference;

@@ -1,7 +1,6 @@
 package ServidorApresentacao.Action.teacher;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,14 +15,14 @@ import DataBeans.gesdis.InfoAnnouncement;
 import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.Action.base.FenixLookupDispatchAction;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author Ivo Brandão
  */
-public class AnnouncementManagementAction extends FenixLookupDispatchAction {
+public class AnnouncementManagementAction extends FenixDispatchAction {
 
 	public ActionForward createAnnouncement(
 		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -108,23 +107,11 @@ public class AnnouncementManagementAction extends FenixLookupDispatchAction {
 		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
+			List announcements = (List) request.getSession().getAttribute("Announcements");
+//			System.out.println( ((InfoAnnouncement) announcements.get(0)).getLastModificationDate());
+
 			//return to announcementManagement
 			return mapping.findForward("showAnnouncements");
 	}
 
-	/**
-	 * @see ServidorApresentacao.Action.FenixLookupDispatchAction#getKeyMethodMap()
-	 */
-	protected Map getKeyMethodMap() {
-		Map map = new HashMap();
-		map.put("button.insert", "createAnnouncement");
-		map.put("button.delete", "deleteAnnouncement");
-		map.put("button.edit", "prepareEditAnnouncement");
-
-		map.put("button.save", "editAnnouncement");
-		
-		map.put("showAnnouncements", "showAnnouncements");
-		
-		return map;
-	}
 }
