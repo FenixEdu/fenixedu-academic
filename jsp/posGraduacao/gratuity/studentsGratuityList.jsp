@@ -94,7 +94,7 @@
 					</tr>
 				</logic:equal>
 			</logic:iterate>
-		<table>			
+		</table>			
 	</logic:notEmpty>	
 </logic:present>
 
