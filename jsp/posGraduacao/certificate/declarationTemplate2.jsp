@@ -3,11 +3,4 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-
-
-<tr> <td> 
-	Mais se declara que ao abrigo do Decreto-Lei 216/92 de 13 de Outubro, o(a) aluno(a) tem o prazo máximo de 4 semestres para a entrega da dissertação. 
-</td> 
-</tr>
- 
-
+<p>Mais se declara que ao abrigo do Decreto-Lei 216/92 de 13 de Outubro, o(a) aluno(a) tem o prazo máximo de 4 semestres para a entrega da dissertação.</p> 
