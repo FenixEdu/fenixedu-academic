@@ -89,7 +89,7 @@ public class ReadTeacherSiteTest extends TestCaseReadServices
                 idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
 
             InfoExecutionCourse infoExecutionCourse =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                (InfoExecutionCourse) Cloner.get(executionCourse);
             Object[] args = { infoExecutionCourse };
 
             sp.confirmarTransaccao();
@@ -143,7 +143,7 @@ public class ReadTeacherSiteTest extends TestCaseReadServices
                 idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
 
             InfoExecutionCourse infoExecutionCourse =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                (InfoExecutionCourse) Cloner.get(executionCourse);
             List infoSections = new ArrayList();
             InfoSite infoSite = new InfoSite(infoExecutionCourse);
             infoSections.add(new InfoSection("Seccao1deTFCI", new Integer(0), infoSite, null));

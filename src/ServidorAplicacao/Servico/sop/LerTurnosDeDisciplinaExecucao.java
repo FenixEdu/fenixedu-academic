@@ -60,7 +60,7 @@ public class LerTurnosDeDisciplinaExecucao implements IServico {
 
 			while (itShiftList.hasNext()) {
 				ITurno shift = (ITurno) itShiftList.next();
-				InfoShift infoTurno =  Cloner.copyIShift2InfoShift(shift);
+				InfoShift infoTurno =  (InfoShift) Cloner.get(shift);
 				
 				List lessons = shift.getAssociatedLessons();
 				Iterator itLessons = lessons.iterator();

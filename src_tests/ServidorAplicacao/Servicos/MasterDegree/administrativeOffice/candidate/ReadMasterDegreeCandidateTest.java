@@ -144,7 +144,7 @@ public class ReadMasterDegreeCandidateTest extends TestCaseReadServicesIntranet
             fail("Error !");
         }
 
-        infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+        infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
         Object[] args =
             { infoExecutionDegree, new Integer(1), new Specialization(Specialization.MESTRADO)};
 

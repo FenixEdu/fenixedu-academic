@@ -134,7 +134,7 @@ public class LerAlunosDeTurnoServicosTest extends TestCaseReadServices
                 it = itp.readByNameAndExecutionCourse("turno1", ide);
             }
 
-            this.infoShift = Cloner.copyIShift2InfoShift(it);
+            this.infoShift = (InfoShift) Cloner.get(it);
 
             sp.confirmarTransaccao();
 

@@ -142,7 +142,7 @@ public class AdicionarTurnoServicosTest extends TestCaseCreateServices
             }
 
             this.infoClass = Cloner.copyClass2InfoClass(turma);
-            this.infoShift = Cloner.copyIShift2InfoShift(it);
+            this.infoShift = (InfoShift) Cloner.get(it);
 
             sp.confirmarTransaccao();
 

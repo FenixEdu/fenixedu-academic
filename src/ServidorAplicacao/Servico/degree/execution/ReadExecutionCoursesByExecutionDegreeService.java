@@ -103,7 +103,7 @@ public class ReadExecutionCoursesByExecutionDegreeService implements IService
                     IExecutionCourse executionCourse = (IExecutionCourse) input;
                     InfoExecutionCourse infoExecutionCourse;
                     infoExecutionCourse =
-                        Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                        (InfoExecutionCourse) Cloner.get(executionCourse);
                     return infoExecutionCourse;
                 }
             });

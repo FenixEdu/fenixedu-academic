@@ -56,7 +56,7 @@ public class ReadExecutionCoursesByStudent implements IServico {
 				IExecutionCourse executionCourse =
 					attend.getDisciplinaExecucao();
 				result.add(
-					Cloner.copyIExecutionCourse2InfoExecutionCourse(
+					Cloner.get(
 						executionCourse));
 			}
 		} catch (ExcepcaoPersistencia e) {

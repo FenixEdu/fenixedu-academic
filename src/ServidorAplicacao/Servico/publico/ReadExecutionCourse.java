@@ -66,7 +66,7 @@ public class ReadExecutionCourse implements IServico
                     code,
                     executionPeriod);
             if (iExecCourse != null)
-                infoExecCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(iExecCourse);
+                infoExecCourse = (InfoExecutionCourse) Cloner.get(iExecCourse);
         }
         catch (ExcepcaoPersistencia ex)
         {

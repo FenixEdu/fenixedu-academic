@@ -85,7 +85,7 @@ public class PrepareCreateGuideTest extends TestCaseServicos
                     executionYear);
             assertNotNull(executionDegree);
 
-            infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+            infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
 
             sp.confirmarTransaccao();
         }

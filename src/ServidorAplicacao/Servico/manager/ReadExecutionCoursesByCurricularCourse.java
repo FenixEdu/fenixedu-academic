@@ -85,7 +85,7 @@ public class ReadExecutionCoursesByCurricularCourse implements IServico
             while (iterator.hasNext())
             {
                 InfoExecutionCourse infoExecutionCourse =
-                    Cloner.copyIExecutionCourse2InfoExecutionCourse((IExecutionCourse) iterator.next());
+                    (InfoExecutionCourse) Cloner.get((IExecutionCourse) iterator.next());
                 try
                 {
                     hasSite =

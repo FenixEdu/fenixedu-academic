@@ -93,7 +93,7 @@ public class ReadMetadatasByTestTest extends TestCaseReadServices
             assertNotNull("metadata null", metadata6);
 
             sp.confirmarTransaccao();
-            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
             InfoMetadata infoMetadata2 = Cloner.copyIMetadata2InfoMetadata(metadata2);
             InfoMetadata infoMetadata3 = Cloner.copyIMetadata2InfoMetadata(metadata3);
             InfoMetadata infoMetadata4 = Cloner.copyIMetadata2InfoMetadata(metadata4);

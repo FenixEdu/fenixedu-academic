@@ -142,7 +142,7 @@ public class LerTurnoServicosTest extends TestCaseReadServices
                         executionPeriod);
             }
 
-            this.infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            this.infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             sp.confirmarTransaccao();
 

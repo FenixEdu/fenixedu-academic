@@ -160,8 +160,8 @@ public class LerTurmaServicosTest extends TestCaseReadServices
                 executionPeriod = new ExecutionPeriod("desc", executionYear);
             }
 
-            this.infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
-            this.infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+            this.infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
+            this.infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
 
             sp.confirmarTransaccao();
 

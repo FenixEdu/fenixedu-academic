@@ -11,6 +11,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoTeacher;
 import DataBeans.SiteView;
 import DataBeans.teacher.InfoOrientation;
@@ -171,7 +172,7 @@ public class ReadTeacherInformation implements IServico
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
             infoSiteTeacherInformation.setInfoExecutionPeriod(
-                Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod));
+                (InfoExecutionPeriod) Cloner.get(executionPeriod));
 
             return new SiteView(infoSiteTeacherInformation);
         }
@@ -222,7 +223,7 @@ public class ReadTeacherInformation implements IServico
                     }
                 });
                 InfoExecutionCourse infoExecutionCourse;
-                infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
                 infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
                 return infoExecutionCourse;
             }
@@ -284,7 +285,7 @@ public class ReadTeacherInformation implements IServico
                     }
                 });
                 InfoExecutionCourse infoExecutionCourse;
-                infoExecutionCourse =  Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                infoExecutionCourse =  (InfoExecutionCourse) Cloner.get(executionCourse);
                 infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
                 return infoExecutionCourse;
             }

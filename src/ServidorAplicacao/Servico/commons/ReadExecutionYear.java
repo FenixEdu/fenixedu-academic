@@ -46,7 +46,7 @@ public class ReadExecutionYear implements IServico {
 		
 		IExecutionYear executionYear = executionYearDAO.readExecutionYearByName(year);
 		if (executionYear != null) {
-			result =  Cloner.copyIExecutionYear2InfoExecutionYear(executionYear);				
+			result =  (InfoExecutionYear) Cloner.get(executionYear);				
 		}
 
 	  } catch (ExcepcaoPersistencia ex) {

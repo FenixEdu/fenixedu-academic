@@ -98,7 +98,7 @@ public class ReadExamsByDayAndBeginning implements IServico
                         IExecutionCourse executionCourse =
                             (IExecutionCourse) tempExam.getAssociatedExecutionCourses().get(k);
                         tempInfoExecutionCourses.add(
-                            Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+                            Cloner.get(executionCourse));
 
                         // prepare degrees associated with exam
                         tempAssociatedCurricularCourses =

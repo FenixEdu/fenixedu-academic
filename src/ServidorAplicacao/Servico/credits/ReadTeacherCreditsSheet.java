@@ -324,7 +324,7 @@ public class ReadTeacherCreditsSheet implements IServico
 
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
             InfoExecutionPeriod infoExecutionPeriod =
-                Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+                (InfoExecutionPeriod) Cloner.get(executionPeriod);
 
             teacherCreditsSheetDTO.setInfoTeacher(infoTeacher);
             teacherCreditsSheetDTO.setInfoExecutionPeriod(infoExecutionPeriod);

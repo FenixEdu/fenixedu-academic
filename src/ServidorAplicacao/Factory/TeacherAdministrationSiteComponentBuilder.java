@@ -303,7 +303,7 @@ public class TeacherAdministrationSiteComponentBuilder
             component.setMail(site.getMail());
             component.setSections(infoSectionsList);
             InfoExecutionCourse executionCourse =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(site.getExecutionCourse());
+                (InfoExecutionCourse) Cloner.get(site.getExecutionCourse());
             component.setExecutionCourse(executionCourse);
         }
         catch (ExcepcaoPersistencia excepcaoPersistencia)
@@ -353,7 +353,7 @@ public class TeacherAdministrationSiteComponentBuilder
         component.setIntroduction(site.getIntroduction());
         component.setIdInternal(site.getIdInternal());
         component.setInfoExecutionCourse(
-            Cloner.copyIExecutionCourse2InfoExecutionCourse(site.getExecutionCourse()));
+            (InfoExecutionCourse) Cloner.get(site.getExecutionCourse()));
         component.setStyle(site.getStyle());
 
         return component;
@@ -911,7 +911,7 @@ public class TeacherAdministrationSiteComponentBuilder
                 {
                     IExecutionCourse element = (IExecutionCourse) iter.next();
                     List attendingStudents = element.getAttendingStudents();
-                    InfoExecutionCourse infoExecutionCourse =  Cloner.copyIExecutionCourse2InfoExecutionCourse(element);
+                    InfoExecutionCourse infoExecutionCourse =  (InfoExecutionCourse) Cloner.get(element);
                     infoExecutionCourse.setNumberOfAttendingStudents(
                         new Integer(attendingStudents.size()));
                     infoExecutionCourses.add(infoExecutionCourse);
@@ -1406,7 +1406,7 @@ public class TeacherAdministrationSiteComponentBuilder
                             shift);
 
                     infoSiteShift = new InfoSiteShift();
-                    infoSiteShift.setInfoShift( Cloner.copyIShift2InfoShift(shift));
+                    infoSiteShift.setInfoShift( (InfoShift) Cloner.get(shift));
 
                     if (groupProperties.getGroupMaximumNumber() != null)
                     {
@@ -1658,7 +1658,7 @@ public class TeacherAdministrationSiteComponentBuilder
                                 shift.getNome(),
                                 shift.getTipo(),
                                 shift.getLotacao(),
-                                 Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+                                 (InfoExecutionCourse) Cloner.get(executionCourse));
 
                         List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
                         List infoLessons = new ArrayList();

@@ -99,7 +99,7 @@ public class ResponsibleForValidator
 					return infoResponsibleFor;
 				}
 			});
-			InfoExecutionCourse infoExecutionCourse =  Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+			InfoExecutionCourse infoExecutionCourse =  (InfoExecutionCourse) Cloner.get(executionCourse);
 			throw new MaxResponsibleForExceed(infoExecutionCourse, infoResponsibleFors);
 		}
 	}

@@ -68,7 +68,7 @@ public class ReadExecutionDegreeByCandidateID implements IServico
             throw new NonExistingServiceException();
         }
 
-        return Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+        return (InfoExecutionDegree) Cloner.get(executionDegree);
     }
 
 }

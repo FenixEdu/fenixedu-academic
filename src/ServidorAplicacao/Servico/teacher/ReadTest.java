@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.ExecutionCourseSiteView;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteTest;
 import DataBeans.InfoTestQuestion;
 import DataBeans.SiteView;
@@ -93,7 +94,7 @@ public class ReadTest implements IServico {
 			infoSiteTest.setInfoTestQuestions(result);
 			infoSiteTest.setInfoTest(Cloner.copyITest2InfoTest(test));
 			infoSiteTest.setExecutionCourse(
-				 Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				 (InfoExecutionCourse) Cloner.get(
 					executionCourse));
 			SiteView siteView =
 				new ExecutionCourseSiteView(infoSiteTest, infoSiteTest);

@@ -125,7 +125,7 @@ public class ReadDegreeCandidatesTest extends TestCaseServicos
                     executionYear);
             assertNotNull(executionDegree);
 
-            this.infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+            this.infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
             sp.confirmarTransaccao();
 
         }

@@ -61,7 +61,7 @@ public class ReadBibliographicReferenceTest extends TestCaseReadServices
                 idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
 
             InfoExecutionCourse infoExecutionCourse =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                (InfoExecutionCourse) Cloner.get(executionCourse);
             Object[] testArgs = { infoExecutionCourse, null };
 
             sp.confirmarTransaccao();

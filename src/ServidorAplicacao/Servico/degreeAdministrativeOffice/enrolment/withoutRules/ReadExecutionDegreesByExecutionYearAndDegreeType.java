@@ -63,7 +63,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
                 {
                     ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
                     InfoExecutionDegree infoExecutionDegree =
-                        Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+                        (InfoExecutionDegree) Cloner.get(executionDegree);
                     infoExecutionDegreeList.add(infoExecutionDegree);
                 }
             }

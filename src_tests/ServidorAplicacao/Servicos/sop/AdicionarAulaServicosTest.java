@@ -252,7 +252,7 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 			ITurno it = itp.readByNameAndExecutionCourse(nomeTurno, ide);
 			
 			this.infoLesson = Cloner.copyILesson2InfoLesson(ia);
-			this.infoShift =  Cloner.copyIShift2InfoShift(it);
+			this.infoShift =  (InfoShift) Cloner.get(it);
 
 			sp.confirmarTransaccao();
 

@@ -136,7 +136,7 @@ public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseReadServices
                         new Integer(50));
             }
 
-            this.infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(iep);
+            this.infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(iep);
 
             sp.confirmarTransaccao();
 

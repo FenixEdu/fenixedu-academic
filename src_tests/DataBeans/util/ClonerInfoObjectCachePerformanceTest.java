@@ -74,7 +74,7 @@ public class ClonerInfoObjectCachePerformanceTest extends ObjectFenixOJB
 		startTime = Calendar.getInstance();
 		for (int i = 0; i < infoExecutionCourses.size(); i++)
 		{
-			Cloner.copyIExecutionCourse2InfoExecutionCourse((IExecutionCourse) infoExecutionCourses.get(i));
+			Cloner.get((IExecutionCourse) infoExecutionCourses.get(i));
 		}
 		endTime = Calendar.getInstance();
 		System.out.println(

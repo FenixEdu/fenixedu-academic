@@ -11,6 +11,7 @@ package ServidorAplicacao.Servicos.student;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionCourse;
@@ -73,7 +74,7 @@ public class ReadShiftLessonsTest extends TestCaseReadServices
                         "turnoINEX",
                         null,
                         null,
-                        Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse))};
+                        (InfoExecutionCourse)Cloner.get(executionCourse))};
             return result;
         }
         catch (ExcepcaoPersistencia ex)
@@ -102,7 +103,7 @@ public class ReadShiftLessonsTest extends TestCaseReadServices
                         "turno4",
                         null,
                         null,
-                        Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse))};
+                        (InfoExecutionCourse)Cloner.get(executionCourse))};
             return result;
         }
         catch (ExcepcaoPersistencia ex)

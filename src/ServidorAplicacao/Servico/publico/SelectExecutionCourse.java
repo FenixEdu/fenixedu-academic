@@ -81,7 +81,7 @@ public class SelectExecutionCourse implements IServico
             {
                 IExecutionCourse aux = (IExecutionCourse) executionCourseList.get(i);
                 InfoExecutionCourse infoExecutionCourse =
-                    Cloner.copyIExecutionCourse2InfoExecutionCourse(aux);
+                    (InfoExecutionCourse) Cloner.get(aux);
                 infoExecutionCourseList.add(infoExecutionCourse);
             }
 

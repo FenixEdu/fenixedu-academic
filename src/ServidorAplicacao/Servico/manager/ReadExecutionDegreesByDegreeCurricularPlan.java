@@ -89,7 +89,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlan implements IServico
             ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
 
             InfoExecutionDegree infoExecutionDegree =
-                Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+                (InfoExecutionDegree) Cloner.get(executionDegree);
 
             //added by Tânia Pousão
             if (executionDegree.getCoordinatorsList() != null)

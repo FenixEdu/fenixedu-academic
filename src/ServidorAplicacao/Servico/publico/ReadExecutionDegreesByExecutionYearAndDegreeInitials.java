@@ -67,7 +67,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitials implements ISe
                     nameDegreeCurricularPlan,
                     executionYear);
             if (executionDegree != null)
-                infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+                infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
         }
         catch (ExcepcaoPersistencia ex)
         {

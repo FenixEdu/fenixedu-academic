@@ -67,7 +67,7 @@ public class ReadExecutionCourse implements IServico
                 throw new NonExistingServiceException();
             }
 
-            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
         }
         catch (ExcepcaoPersistencia excepcaoPersistencia)
         {

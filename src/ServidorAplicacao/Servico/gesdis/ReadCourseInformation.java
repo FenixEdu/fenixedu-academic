@@ -97,7 +97,7 @@ public class ReadCourseInformation implements IService
             InfoSiteCourseInformation infoSiteCourseInformation = new InfoSiteCourseInformation();
 
             InfoExecutionCourse infoExecutionCourse =
-                 Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                 (InfoExecutionCourse) Cloner.get(executionCourse);
             infoSiteCourseInformation.setInfoExecutionCourse(infoExecutionCourse);
 
             IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();

@@ -85,7 +85,7 @@ public class ReadTeachersByExecutionCourseResponsibilityTest extends TestCaseRea
                     "TFCI",
                     executionPeriod);
             InfoExecutionCourse infoExecutionCourse =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                (InfoExecutionCourse) Cloner.get(executionCourse);
             Object[] args = { infoExecutionCourse };
             persistentSupport.confirmarTransaccao();
             return args;

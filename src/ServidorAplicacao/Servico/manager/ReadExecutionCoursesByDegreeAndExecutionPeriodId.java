@@ -114,7 +114,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
             {
                 public Object transform(Object arg0)
                 {
-					return Cloner.copyIExecutionCourse2InfoExecutionCourse((IExecutionCourse) arg0);
+					return Cloner.get((IExecutionCourse) arg0);
                 }
             });
             return infoExecutionCourses;

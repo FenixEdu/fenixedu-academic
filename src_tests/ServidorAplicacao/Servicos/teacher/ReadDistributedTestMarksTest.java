@@ -10,6 +10,7 @@ import java.util.List;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoDistributedTestMarks;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteDistributedTestMarks;
 import DataBeans.InfoStudentTestQuestion;
 import DataBeans.SiteView;
@@ -108,7 +109,7 @@ public class ReadDistributedTestMarksTest extends TestCaseReadServices
             infoSiteDistributedTestMarks.setNotAnsweredPercentage(notAnsweredList);
 
             infoSiteDistributedTestMarks.setExecutionCourse(
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+                (InfoExecutionCourse) Cloner.get(executionCourse));
         }
         catch (ExcepcaoPersistencia e)
         {

@@ -59,7 +59,7 @@ public class ReadShiftsByTypeFromExecutionCourseServicesTest extends TestCaseRea
             SuportePersistenteOJB.getInstance().confirmarTransaccao();
             Object[] result =
                 {
-                    Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse),
+                    Cloner.get(executionCourse),
                     new TipoAula(TipoAula.RESERVA)};
             return result;
         }
@@ -85,7 +85,7 @@ public class ReadShiftsByTypeFromExecutionCourseServicesTest extends TestCaseRea
             SuportePersistenteOJB.getInstance().confirmarTransaccao();
             Object[] result =
                 {
-                    Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse),
+                    Cloner.get(executionCourse),
                     new TipoAula(TipoAula.TEORICA)};
             return result;
         }

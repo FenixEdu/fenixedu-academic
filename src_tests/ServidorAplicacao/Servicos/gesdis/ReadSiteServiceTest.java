@@ -85,7 +85,7 @@ public class ReadSiteServiceTest extends TestCaseReadServices
                 idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
 
             InfoExecutionCourse infoExecutionCourse =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                (InfoExecutionCourse) Cloner.get(executionCourse);
             Object[] args = { infoExecutionCourse };
             sp.confirmarTransaccao();
             return args;
@@ -138,7 +138,7 @@ public class ReadSiteServiceTest extends TestCaseReadServices
                 idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
 
             InfoExecutionCourse infoExecutionCourse =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                (InfoExecutionCourse) Cloner.get(executionCourse);
 
             InfoSite infoSite = new InfoSite(infoExecutionCourse);
 

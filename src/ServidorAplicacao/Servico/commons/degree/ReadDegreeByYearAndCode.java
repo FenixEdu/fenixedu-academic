@@ -61,7 +61,7 @@ public class ReadDegreeByYearAndCode implements IServico
             throw new NonExistingServiceException();
         }
 
-        return Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+        return (InfoExecutionDegree) Cloner.get(executionDegree);
     }
 
 }

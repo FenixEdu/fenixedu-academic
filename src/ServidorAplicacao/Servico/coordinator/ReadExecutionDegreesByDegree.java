@@ -81,7 +81,7 @@ public class ReadExecutionDegreesByDegree implements IServico
 
         while (iterator.hasNext())
             allInfoExecutionDegrees.add(
-                Cloner.copyIExecutionDegree2InfoExecutionDegree((ICursoExecucao) iterator.next()));
+                Cloner.get((ICursoExecucao) iterator.next()));
 
         return allInfoExecutionDegrees;
     }

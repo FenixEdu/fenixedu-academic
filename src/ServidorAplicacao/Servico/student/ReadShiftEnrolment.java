@@ -87,7 +87,7 @@ public class ReadShiftEnrolment implements IServico
                 //	InfoExecutionDegree infoExecutionDegree = new
 				// InfoExecutionDegree();
 
-                InfoExecutionCourse ide = Cloner.copyIExecutionCourse2InfoExecutionCourse(de);
+                InfoExecutionCourse ide = (InfoExecutionCourse) Cloner.get(de);
 
                 //	ICurso degree = new Curso();
                 //		degree.setSigla(de.getLicenciaturaExecucao().getCurso().getSigla());

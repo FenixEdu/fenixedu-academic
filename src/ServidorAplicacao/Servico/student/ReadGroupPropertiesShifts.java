@@ -92,7 +92,7 @@ public class ReadGroupPropertiesShifts implements IServico
                     if (result)
                     {
 
-                        InfoShift infoShift = Cloner.copyIShift2InfoShift(shift);
+                        InfoShift infoShift = (InfoShift) Cloner.get(shift);
 
                         infoShift.setIdInternal(shift.getIdInternal());
 
@@ -104,7 +104,7 @@ public class ReadGroupPropertiesShifts implements IServico
                 {
                     ITurno oldShift =
                         (ITurno) sp.getITurnoPersistente().readByOId(new Turno(shiftCode), false);
-                    infoShifts.add(Cloner.copyIShift2InfoShift(oldShift));
+                    infoShifts.add(Cloner.get(oldShift));
                 }
 
             }

@@ -158,12 +158,12 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest extends Te
 			 */
             this.degreeInitials = degree.getSigla();
             this.nameDegreeCurricularPlan = degreeCurricularPlan.getName();
-            this.infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(executionYear);
+            this.infoExecutionYear = (InfoExecutionYear) Cloner.get(executionYear);
 
             if (!exists)
                 cursoExecucaoPersistente.delete(executionDegree);
 
-            this.infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+            this.infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
 
             sp.confirmarTransaccao();
 

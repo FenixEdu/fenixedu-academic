@@ -123,7 +123,7 @@ public class ReadExamsByDayAndBeginningServiceTest extends TestCaseRequeiersAuth
                     IExecutionCourse executionCourse =
                         (IExecutionCourse) tempExam.getAssociatedExecutionCourses().get(k);
                     tempInfoExecutionCourses.add(
-                        Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+                        Cloner.get(executionCourse));
 
                     tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();
                     for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++)

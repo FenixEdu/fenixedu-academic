@@ -72,7 +72,7 @@ public class ReadExecutionPeriodsByExecutionYear implements IServico
                 {
                     IExecutionPeriod executionPeriod = (IExecutionPeriod) input;
                     InfoExecutionPeriod infoExecutionPeriod =
-                        Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+                        (InfoExecutionPeriod) Cloner.get(executionPeriod);
                     return infoExecutionPeriod;
                 }
             });

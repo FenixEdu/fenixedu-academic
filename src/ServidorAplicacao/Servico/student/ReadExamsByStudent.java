@@ -9,6 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 import DataBeans.InfoExam;
 import DataBeans.InfoExamStudentRoom;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoStudentSiteExams;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
@@ -87,7 +88,7 @@ public class ReadExamsByStudent implements IServico
                     infoExamStudentRoom.setInfoExam(
                         Cloner.copyIExam2InfoExam(examStudentRoom.getExam()));
                     infoExamStudentRoom.getInfoExam().setInfoExecutionCourse(
-                        Cloner.copyIExecutionCourse2InfoExecutionCourse(
+                        (InfoExecutionCourse) Cloner.get(
                             (IExecutionCourse) examStudentRoom
                                 .getExam()
                                 .getAssociatedExecutionCourses()
@@ -159,7 +160,7 @@ public class ReadExamsByStudent implements IServico
                     {
                         InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
                         infoExam.setInfoExecutionCourse(
-                            Cloner.copyIExecutionCourse2InfoExecutionCourse(
+                            (InfoExecutionCourse) Cloner.get(
                                 (IExecutionCourse) exam.getAssociatedExecutionCourses().get(0)));
                         infoExamsToEnroll.add(infoExam);
                     }

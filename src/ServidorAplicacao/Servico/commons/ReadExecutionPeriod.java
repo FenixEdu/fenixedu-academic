@@ -57,7 +57,7 @@ public class ReadExecutionPeriod implements IServico
                 executionPeriodDAO.readByNameAndExecutionYear(name, executionYear);
             if (executionPeriod != null)
             {
-                result = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+                result = (InfoExecutionPeriod) Cloner.get(executionPeriod);
             }
         }
         catch (ExcepcaoPersistencia ex)

@@ -154,12 +154,12 @@ public class ReadExecutionCourseTest extends TestCaseServicos
                     executionPeriod);
             assertNotNull(executionCourse);
 
-            this.infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            this.infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             if (!exists)
                 disciplinaExecucaoPersistente.deleteExecutionCourse(executionCourse);
 
-            this.infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+            this.infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
             this.code = executionCourse.getSigla();
 
             sp.confirmarTransaccao();

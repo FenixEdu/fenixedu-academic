@@ -130,7 +130,7 @@ public class StudentShiftEnrolmentTest extends TestCaseReadServices
                     executionCourse);
             assertNotNull(shift);
 
-            infoShift = Cloner.copyIShift2InfoShift(shift);
+            infoShift = (InfoShift) Cloner.get(shift);
 
             SuportePersistenteOJB.getInstance().confirmarTransaccao();
         }

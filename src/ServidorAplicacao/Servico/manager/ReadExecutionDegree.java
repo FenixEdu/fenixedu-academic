@@ -77,7 +77,7 @@ public class ReadExecutionDegree implements IServico
         }
 
         InfoExecutionDegree infoExecutionDegree =
-            Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+            (InfoExecutionDegree) Cloner.get(executionDegree);
 
         //added by Tânia Pousão
         if (executionDegree.getCoordinatorsList() != null)

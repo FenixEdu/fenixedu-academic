@@ -51,10 +51,10 @@ import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
+import Dominio.IExecutionCourse;
 import Dominio.IEvaluation;
 import Dominio.IEvaluationMethod;
 import Dominio.IExam;
-import Dominio.IExecutionCourse;
 import Dominio.IItem;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
@@ -201,10 +201,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param course
-	 * @param site
-	 * @return
-	 */
+     * @param course
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoSiteCurricularCourse(
         InfoSiteCurricularCourse component,
         ISite site,
@@ -257,10 +257,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param summaries
-	 * @param site
-	 * @return
-	 */
+     * @param summaries
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoSiteSummaries(InfoSiteSummaries component, ISite site)
         throws FenixServiceException
     {
@@ -296,7 +296,7 @@ public class ExecutionCourseSiteComponentBuilder
             component.setInfoSummaries(result);
             component.setInfoSite(Cloner.copyISite2InfoSite(site));
             component.setExecutionCourse(
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+                (InfoExecutionCourse) Cloner.get(executionCourse));
 
             return component;
         }
@@ -308,10 +308,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param evaluation
-	 * @param site
-	 * @return
-	 */
+     * @param evaluation
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ISite site)
     {
         IExecutionCourse executionCourse = site.getExecutionCourse();
@@ -330,10 +330,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param exam
-	 * @param site
-	 * @return
-	 */
+     * @param exam
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoSiteExam(InfoSiteExam component, ISite site)
     {
 
@@ -351,10 +351,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param common
-	 * @param site
-	 * @return
-	 */
+     * @param common
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoSiteCommon(InfoSiteCommon component, ISite site)
         throws FenixServiceException
     {
@@ -396,16 +396,16 @@ public class ExecutionCourseSiteComponentBuilder
         component.setMail(site.getMail());
         component.setSections(infoSectionsList);
         InfoExecutionCourse executionCourse;
-        executionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(site.getExecutionCourse());
+        executionCourse = (InfoExecutionCourse) Cloner.get(site.getExecutionCourse());
         component.setExecutionCourse(executionCourse);
         return component;
     }
 
     /**
-	 * @param section
-	 * @param site
-	 * @return
-	 */
+     * @param section
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoSiteSection(
         InfoSiteSection component,
         ISite site,
@@ -472,10 +472,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param shifts
-	 * @param site
-	 * @return
-	 */
+     * @param shifts
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, ISite site)
         throws FenixServiceException
     {
@@ -536,10 +536,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param timetable
-	 * @param site
-	 * @return
-	 */
+     * @param timetable
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component, ISite site)
         throws FenixServiceException
     {
@@ -571,10 +571,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param courses
-	 * @param site
-	 * @return
-	 */
+     * @param courses
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoSiteAssociatedCurricularCourses(
         InfoSiteAssociatedCurricularCourses component,
         ISite site)
@@ -620,10 +620,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param bibliography
-	 * @param site
-	 * @return
-	 */
+     * @param bibliography
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoSiteBibliography(InfoSiteBibliography component, ISite site)
         throws FenixServiceException
     {
@@ -665,10 +665,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param evaluation
-	 * @param site
-	 * @return
-	 */
+     * @param evaluation
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoEvaluationMethod(InfoEvaluationMethod component, ISite site)
         throws FenixServiceException
     {
@@ -692,10 +692,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param evaluation
-	 * @param site
-	 * @return
-	 */
+     * @param evaluation
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoEvaluation(InfoSiteEvaluationMethods component, ISite site)
         throws FenixServiceException
     {
@@ -731,10 +731,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param program
-	 * @param site
-	 * @return
-	 */
+     * @param program
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoSiteProgram(InfoSiteProgram component, ISite site)
         throws FenixServiceException
     {
@@ -760,10 +760,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param objectives
-	 * @param site
-	 * @return
-	 */
+     * @param objectives
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoSiteObjectives(InfoSiteObjectives component, ISite site)
         throws FenixServiceException
     {
@@ -813,10 +813,10 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * @param page
-	 * @param site
-	 * @return
-	 */
+     * @param page
+     * @param site
+     * @return
+     */
     private ISiteComponent getInfoSiteFirstPage(InfoSiteFirstPage component, ISite site)
         throws FenixServiceException
     {
@@ -959,15 +959,15 @@ public class ExecutionCourseSiteComponentBuilder
     }
 
     /**
-	 * Angela && Tânia
-	 *  
-	 */
+     * Angela && Tânia
+     *  
+     */
 
     /**
-	 * @param common
-	 * @param site
-	 * @return
-	 */
+     * @param common
+     * @param site
+     * @return
+     */
     private InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses getInfoSiteCurricularCoursesAndAssociatedShiftsAndClasses(
         InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses component,
         ISite site)
@@ -1028,7 +1028,7 @@ public class ExecutionCourseSiteComponentBuilder
 
         component.setAssociatedCurricularCourses(infoCurricularCourseList);
         InfoExecutionCourse executionCourse;
-        executionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(site.getExecutionCourse());
+        executionCourse = (InfoExecutionCourse) Cloner.get(site.getExecutionCourse());
         component.setInfoExecutionCourse(executionCourse);
         component.setInfoShiftsWithAssociatedClassesList(infoShiftsWithAssociatedClassesList);
 

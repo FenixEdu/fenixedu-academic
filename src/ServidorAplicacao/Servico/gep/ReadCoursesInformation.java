@@ -136,7 +136,7 @@ public class ReadCoursesInformation implements IService
     private InfoSiteCourseInformation getCourseInformation(IExecutionCourse executionCourse, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
-        InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
         InfoSiteCourseInformation infoSiteCourseInformation = new InfoSiteCourseInformation();
         infoSiteCourseInformation.setInfoExecutionCourse(infoExecutionCourse);
 

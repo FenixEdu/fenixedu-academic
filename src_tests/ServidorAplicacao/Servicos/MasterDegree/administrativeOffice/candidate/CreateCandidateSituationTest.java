@@ -106,7 +106,7 @@ public class CreateCandidateSituationTest extends TestCaseServicos
                     executionYear);
             assertNotNull(executionDegree);
 
-            infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+            infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
 
             person = sp.getIPessoaPersistente().lerPessoaPorUsername("nmsn");
 

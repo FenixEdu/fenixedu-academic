@@ -135,7 +135,7 @@ public class LerTurnosDeDisciplinaExecucaoServicosTest extends TestCaseReadServi
                         executionPeriod);
             }
 
-            this.infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            this.infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             sp.confirmarTransaccao();
 

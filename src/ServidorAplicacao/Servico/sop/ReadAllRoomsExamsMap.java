@@ -18,6 +18,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoExam;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoomExamsMap;
 import DataBeans.util.Cloner;
@@ -126,7 +127,7 @@ public class ReadAllRoomsExamsMap implements IServico
         {
             InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) exam);
             infoExam.setInfoExecutionCourse(
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(
+                (InfoExecutionCourse) Cloner.get(
                     (IExecutionCourse) ((IExam) exam).getAssociatedExecutionCourses().get(0)));
             return infoExam;
         }

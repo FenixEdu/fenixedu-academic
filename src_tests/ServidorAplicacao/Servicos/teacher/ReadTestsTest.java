@@ -87,7 +87,7 @@ public class ReadTestsTest extends TestCaseReadServices
             assertNotNull("test null", test5);
             sp.confirmarTransaccao();
 
-            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
             InfoTest infoTest3 = Cloner.copyITest2InfoTest(test3);
             InfoTest infoTest4 = Cloner.copyITest2InfoTest(test4);
             InfoTest infoTest5 = Cloner.copyITest2InfoTest(test5);

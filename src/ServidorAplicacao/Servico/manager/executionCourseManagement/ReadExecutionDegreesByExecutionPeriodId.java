@@ -77,7 +77,7 @@ public class ReadExecutionDegreesByExecutionPeriodId implements IServico
             {
                 ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
                 infoExecutionDegreeList.add(
-                    Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree));
+                    Cloner.get(executionDegree));
             }
 
         }

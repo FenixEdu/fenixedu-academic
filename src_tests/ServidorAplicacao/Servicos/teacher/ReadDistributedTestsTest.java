@@ -88,7 +88,7 @@ public class ReadDistributedTestsTest extends TestCaseReadServices
             assertNotNull("distributedTest null", distributedTest25);
             sp.confirmarTransaccao();
 
-            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
             InfoDistributedTest infoDistributedTest23 =
                 Cloner.copyIDistributedTest2InfoDistributedTest(distributedTest23);
             InfoDistributedTest infoDistributedTest24 =

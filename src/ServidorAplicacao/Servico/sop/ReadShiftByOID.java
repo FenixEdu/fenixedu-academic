@@ -53,7 +53,7 @@ public class ReadShiftByOID implements IServico
 
             if (shift != null)
             {
-                result = Cloner.copyIShift2InfoShift(shift);
+                result = (InfoShift) Cloner.get(shift);
             }
         }
         catch (ExcepcaoPersistencia ex)

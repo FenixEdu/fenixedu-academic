@@ -13,6 +13,7 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoShift;
 import DataBeans.InfoSiteGroupsByShift;
 import DataBeans.InfoSiteShift;
 import DataBeans.InfoSiteShiftsAndGroups;
@@ -99,7 +100,7 @@ public class ReadShiftsAndGroupsTest extends TestCaseReadServices
                     new StudentGroup(new Integer(10)),
                     false);
 
-            infoSiteShift.setInfoShift(Cloner.copyIShift2InfoShift(shift));
+            infoSiteShift.setInfoShift((InfoShift) Cloner.get(shift));
             infoSiteShift.setNrOfGroups(new Integer(9));
             infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
 

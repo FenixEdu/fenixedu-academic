@@ -85,7 +85,7 @@ public class ReadAvailableExecutionPeriods implements IServico
     {
         public Object transform(Object executionPeriod)
         {
-            return Cloner.copyIExecutionPeriod2InfoExecutionPeriod((IExecutionPeriod) executionPeriod);
+            return Cloner.get((IExecutionPeriod) executionPeriod);
         }
     };
 

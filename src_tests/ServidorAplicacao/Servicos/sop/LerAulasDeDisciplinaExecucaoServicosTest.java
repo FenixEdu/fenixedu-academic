@@ -133,7 +133,7 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServic
                         iep);
             }
 
-            this.infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(ide);
+            this.infoExecutionCourse = (InfoExecutionCourse) Cloner.get(ide);
 
             sp.confirmarTransaccao();
 

@@ -170,7 +170,7 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
                 public Object transform(Object input)
                 {
                     IExecutionCourse executionCourse = (IExecutionCourse) input;
-                    return Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                    return Cloner.get(executionCourse);
                 }
             }, infoExecutionCourseList);
         }

@@ -210,7 +210,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest extends Te
                     executionPeriod);
             assertNotNull(executionCourse);
 
-            this.infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            this.infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             //			ITurnoPersistente turnoPersistente = sp.getITurnoPersistente();
             //			ITurno shift =

@@ -75,9 +75,9 @@ public class ReadExecutionCoursesByStudentTest extends TestCaseReadServices
             sp.confirmarTransaccao();
 
             InfoExecutionCourse infoExecutionCourse25 =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(disciplinaExecucao25);
+                (InfoExecutionCourse) Cloner.get(disciplinaExecucao25);
             InfoExecutionCourse infoExecutionCourse26 =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(disciplinaExecucao26);
+                (InfoExecutionCourse) Cloner.get(disciplinaExecucao26);
 
             infoExecutionCousesList.add(infoExecutionCourse25);
             infoExecutionCousesList.add(infoExecutionCourse26);

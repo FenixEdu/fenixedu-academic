@@ -75,8 +75,8 @@ public class ReadDistributedTestTest extends TestCaseReadServices
             assertNotNull("test null", distributedTest);
             sp.confirmarTransaccao();
 
-            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-            infoDistributedTest = Cloner.copyIDistributedTest2InfoDistributedTest(distributedTest);
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+            infoDistributedTest = (InfoDistributedTest) Cloner.get(distributedTest);
 
         }
         catch (ExcepcaoPersistencia e)

@@ -101,7 +101,7 @@ public class CriarTurno implements IServico
                 throw new ExistingServiceException(ex);
             }
 
-            result = Cloner.copyIShift2InfoShift(turno);
+            result = (InfoShift) Cloner.get(turno);
         }
         catch (ExcepcaoPersistencia ex)
         {

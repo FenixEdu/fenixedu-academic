@@ -115,7 +115,7 @@ public class ReadOtherCoursesWithShifts implements IServico
                 IExecutionCourse disciplinaExecucao = (IExecutionCourse) ldE.get(i);
 
                 InfoExecutionCourse infoExecutionCourse =
-                    Cloner.copyIExecutionCourse2InfoExecutionCourse(disciplinaExecucao);
+                    (InfoExecutionCourse) Cloner.get(disciplinaExecucao);
 
                 //			InfoDegree iD = new InfoDegree();
                 //			iD.setNome(disciplinaExecucao.getLicenciaturaExecucao().getCurso().getNome());
@@ -194,7 +194,7 @@ public class ReadOtherCoursesWithShifts implements IServico
                                 infoExecutionCourse.getNome());
                         InfoShift infoShift = null;
                         if (shift != null)
-                            infoShift =  Cloner.copyIShift2InfoShift(shift);
+                            infoShift =  (InfoShift) Cloner.get(shift);
 
                         TypeLessonAndInfoShift pair =
                             new TypeLessonAndInfoShift((TipoAula) typesOfShifts.get(k), infoShift);

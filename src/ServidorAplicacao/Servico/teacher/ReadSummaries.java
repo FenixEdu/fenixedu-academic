@@ -11,6 +11,7 @@ import java.util.List;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteSummaries;
 import DataBeans.InfoSummary;
@@ -107,7 +108,7 @@ public class ReadSummaries implements IServico
             InfoSiteSummaries bodyComponent = new InfoSiteSummaries();
             bodyComponent.setInfoSummaries(result);
             bodyComponent.setExecutionCourse(
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+                (InfoExecutionCourse) Cloner.get(executionCourse));
             bodyComponent.setSummaryType(summaryType);
             TeacherAdministrationSiteComponentBuilder componentBuilder =
                 TeacherAdministrationSiteComponentBuilder.getInstance();

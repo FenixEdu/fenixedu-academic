@@ -96,7 +96,7 @@ public class ReadDegreesClassesLessons implements IServico
                 while (iterator.hasNext())
                 {
                     ITurno shift = (ITurno) iterator.next();
-                    InfoShift infoShift = Cloner.copyIShift2InfoShift(shift);
+                    InfoShift infoShift = (InfoShift) Cloner.get(shift);
                     List lessonList = shiftLessonDAO.readByShift(shift);
                     Iterator lessonIterator = lessonList.iterator();
                     while (lessonIterator.hasNext())

@@ -13,6 +13,7 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoExam;
 import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoSiteExamMap;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
@@ -156,8 +157,8 @@ public class ExamSiteComponentBuilder
                 for (int j = 0; j < executionCourses.size(); j++)
                 {
                     InfoExecutionCourse infoExecutionCourse =
-                        Cloner.copyIExecutionCourse2InfoExecutionCourse(
-                            (IExecutionCourse) executionCourses.get(j));
+                        (InfoExecutionCourse) Cloner.get(
+                        (IExecutionCourse) executionCourses.get(j));
 
                     infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
 
@@ -197,7 +198,7 @@ public class ExamSiteComponentBuilder
             throw new FenixServiceException(ex);
         }
         component.setInfoExecutionDegree(
-            Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree));
+            (InfoExecutionDegree) Cloner.get(executionDegree));
         component.setInfoExamsMap(infoExamsMap);
 
         return component;

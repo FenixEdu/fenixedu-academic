@@ -93,7 +93,7 @@ public class TeacherAdministrationSiteComponentServiceItemsTest extends TestCase
                 (IExecutionCourse) persistentExecutionCourse.readByOId(
                     new ExecutionCourse(new Integer(24)),
                     false);
-            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             site = persistentSite.readByExecutionCourse(executionCourse);
 

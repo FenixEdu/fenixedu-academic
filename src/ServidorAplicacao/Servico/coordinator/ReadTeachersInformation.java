@@ -230,7 +230,7 @@ public class ReadTeachersInformation implements IService
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
         IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
         infoSiteTeacherInformation.setInfoExecutionPeriod(
-            Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod));
+            (InfoExecutionPeriod) Cloner.get(executionPeriod));
 
         return infoSiteTeacherInformation;
     }
@@ -276,7 +276,7 @@ public class ReadTeachersInformation implements IService
                     }
                 });
                 InfoExecutionCourse infoExecutionCourse =
-                    Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                    (InfoExecutionCourse) Cloner.get(executionCourse);
                 infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
                 return infoExecutionCourse;
             }
@@ -338,7 +338,7 @@ public class ReadTeachersInformation implements IService
                     }
                 });
                 InfoExecutionCourse infoExecutionCourse =
-                    Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                    (InfoExecutionCourse) Cloner.get(executionCourse);
                 infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
                 return infoExecutionCourse;
             }

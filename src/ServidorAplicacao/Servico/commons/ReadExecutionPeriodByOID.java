@@ -53,7 +53,7 @@ public class ReadExecutionPeriodByOID implements IServico
                 (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class, oid);
             if (executionPeriod != null)
             {
-                result = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+                result = (InfoExecutionPeriod) Cloner.get(executionPeriod);
             }
         }
         catch (ExcepcaoPersistencia ex)

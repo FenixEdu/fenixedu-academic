@@ -629,7 +629,7 @@ public class ReadStudentShiftEnrolment implements IServico
             shift.setAvailabilityFinal(shiftStudent.getShift().getAvailabilityFinal());
             InfoExecutionCourse infoExecutionCourse;
             infoExecutionCourse =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(
+                (InfoExecutionCourse) Cloner.get(
                     shiftStudent.getShift().getDisciplinaExecucao());
             shift.setInfoDisciplinaExecucao(infoExecutionCourse);
 
@@ -651,7 +651,7 @@ public class ReadStudentShiftEnrolment implements IServico
         public Object transform(Object arg0)
         {
             ITurno shift = (ITurno) arg0;
-            return Cloner.copyIShift2InfoShift(shift);
+            return Cloner.get(shift);
         }
     }
 

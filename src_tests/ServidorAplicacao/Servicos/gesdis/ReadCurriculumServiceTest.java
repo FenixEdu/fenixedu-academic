@@ -72,7 +72,7 @@ public class ReadCurriculumServiceTest extends TestCaseReadServices
                 idep.readByExecutionCourseInitialsAndExecutionPeriod("PO", executionPeriod);
 
             InfoExecutionCourse infoExecutionCourse =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                (InfoExecutionCourse) Cloner.get(executionCourse);
             args[1] = infoExecutionCourse;
 
             sp.confirmarTransaccao();
@@ -115,7 +115,7 @@ public class ReadCurriculumServiceTest extends TestCaseReadServices
                 idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
 
             InfoExecutionCourse infoExecutionCourse =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                (InfoExecutionCourse) Cloner.get(executionCourse);
             args[1] = infoExecutionCourse;
 
             sp.confirmarTransaccao();

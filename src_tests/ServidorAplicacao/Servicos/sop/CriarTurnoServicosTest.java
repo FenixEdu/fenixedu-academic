@@ -123,7 +123,7 @@ public class CriarTurnoServicosTest extends TestCaseCreateServices
                 it = new Turno("turnoXPTO", new TipoAula(TipoAula.TEORICA), new Integer(100), ide);
             }
 
-            this.infoShift = Cloner.copyIShift2InfoShift(it);
+            this.infoShift = (InfoShift) Cloner.get(it);
 
             sp.confirmarTransaccao();
 

@@ -148,8 +148,8 @@ public class ReadExamsMap implements IServico
                 for (int j = 0; j < executionCourses.size(); j++)
                 {
                     InfoExecutionCourse infoExecutionCourse =
-                        Cloner.copyIExecutionCourse2InfoExecutionCourse(
-                            (IExecutionCourse) executionCourses.get(j));
+                        (InfoExecutionCourse) Cloner.get(
+                        (IExecutionCourse) executionCourses.get(j));
 
                     infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
 

@@ -58,7 +58,7 @@ public class ReadExecutionDegreeByOID implements IServico
                 (ICursoExecucao) executionDegreeDAO.readByOID(CursoExecucao.class, oid);
             if (executionDegree != null)
             {
-                infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+                infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
 
                 if (executionDegree.getCoordinatorsList() != null)
                 {
