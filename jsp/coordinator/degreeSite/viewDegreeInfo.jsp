@@ -26,6 +26,8 @@
 
 	<table>	
 		<logic:notPresent name="inEnglish">	
+				<logic:present name="info" >
+				<logic:equal name="info" value="description" >
 				<tr>
 					<td><strong><bean:message key="label.coordinator.degreeSite.description"/></strong></td>
 				</tr>
@@ -67,7 +69,19 @@
 				<tr>
 					<td><html:textarea property="links" cols="80" rows="8"/></td>
 				</tr>	
+				<html:hidden property="testIngression" />
+				<html:hidden property="driftsInitial" />	
+				<html:hidden property="driftsFirst" />	
+				<html:hidden property="driftsSecond" />	
+				<html:hidden property="classifications" />
+				<html:hidden property="markMin" />	
+				<html:hidden property="markMax" />	
+				<html:hidden property="markAverage" />					
+				</logic:equal>
+				</logic:present>
 				
+				<logic:present name="info" >
+				<logic:equal name="info" value="acess" >
 				<tr>
 					<td><strong><bean:message key="label.coordinator.degreeSite.testIngression"/></strong></td>
 				</tr>
@@ -132,9 +146,18 @@
 									<html:text property="markAverage" size="5"/>
 							  </td>
 						  </tr>
+						  
 					  </table>
 				  </td>
 				</tr>		
+				<html:hidden property="description" />			
+				<html:hidden property="objectives" />	
+				<html:hidden property="history" />
+				<html:hidden property="professionalExits" />
+				<html:hidden property="additionalInfo" />
+				<html:hidden property="links" />				
+				</logic:equal>
+				</logic:present>
 				
 				<html:hidden property="descriptionEn" />	
 				<html:hidden property="objectivesEn" />	
@@ -161,6 +184,8 @@
 				<html:hidden property="markMax" />	
 				<html:hidden property="markAverage" />	
 
+				<logic:present name="info" >
+				<logic:equal name="info" value="description" >
 				<tr>
 					<td><strong><bean:message key="label.coordinator.degreeSite.description"/></strong></td>
 				</tr>
@@ -202,7 +227,13 @@
 				<tr>
 					<td><html:textarea property="linksEn" cols="80" rows="8"/></td>
 				</tr>	
+				<html:hidden property="testIngressionEn" />
+				<html:hidden property="classificationsEn" />				
+				</logic:equal>
+				</logic:present>
 				
+				<logic:present name="info" >
+				<logic:equal name="info" value="acess" >				
 				<tr>
 					<td><strong><bean:message key="label.coordinator.degreeSite.testIngression"/></strong></td>
 				</tr>
@@ -216,6 +247,14 @@
 				<tr>
 					<td><html:textarea property="classificationsEn" cols="80" rows="3"/></td>
 				</tr>			
+				<html:hidden property="descriptionEn" />	
+				<html:hidden property="objectivesEn" />	
+				<html:hidden property="historyEn" />
+				<html:hidden property="professionalExitsEn" />
+				<html:hidden property="additionalInfoEn" />
+				<html:hidden property="linksEn" />				
+				</logic:equal>
+				</logic:present>
 		</logic:present>
 	</table>
 	
@@ -230,17 +269,41 @@
 	
 	<logic:notPresent name="inEnglish">		
 		<div class="gen-button">
-			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;inEnglish=true&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+			<logic:present name="info" >
+			<logic:equal name="info" value="description" >
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;inEnglish=true&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
 				<bean:message key="link.coordinator.degreeSite.editEnglish"/>
 			</html:link>
+			</logic:equal>
+			</logic:present>
+				
+			<logic:present name="info" >
+			<logic:equal name="info" value="acess" >			
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;inEnglish=true&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+				<bean:message key="link.coordinator.degreeSite.editEnglish"/>
+			</html:link>			
+			</logic:equal>
+			</logic:present>			
 		</div>
 	</logic:notPresent>
 
 	<logic:present name="inEnglish">		
 		<div class="gen-button">
-			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+			<logic:present name="info" >
+			<logic:equal name="info" value="description" >		
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
 				<bean:message key="link.coordinator.degreeSite.editPortuguese"/>
 			</html:link>
+			</logic:equal>
+			</logic:present>			
+			
+			<logic:present name="info" >
+			<logic:equal name="info" value="acess" >		
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+				<bean:message key="link.coordinator.degreeSite.editPortuguese"/>
+			</html:link>
+			</logic:equal>
+			</logic:present>				
 		</div>
 	</logic:present>	
 </html:form> 

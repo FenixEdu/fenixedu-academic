@@ -43,7 +43,6 @@ public class ReadDegreeInfoByExecutionDegree implements IServico {
 	}
 
 	public InfoDegreeInfo run(Integer infoExecutionDegreeId) throws FenixServiceException {
-		System.out.println("--->A processar ReadDegreeInfoByExecutionDegree...");
 		InfoDegreeInfo infoDegreeInfo = null;
 
 		try {
@@ -81,15 +80,15 @@ public class ReadDegreeInfoByExecutionDegree implements IServico {
 			List degreeInfoList = persistentDegreeInfo.readDegreeInfoByDegree(degree);
 
 			//Last information about this degree
-			if (degreeInfoList != null && degreeInfoList.size() > 0) {
-				System.out.println("==degreeInfoList: " + degreeInfoList.size());
+			if (degreeInfoList != null && degreeInfoList.size() > 0) {				
 				Collections.sort(degreeInfoList, new BeanComparator("lastModificationDate"));
 				IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
 				infoDegreeInfo = Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
-
+				infoDegreeInfo.recaptureNULLs(degreeInfo);
+				
 				//verify if the record finded is this execution period
 				if (!verifyExecutionYear(infoDegreeInfo.getLastModificationDate(), executionDegree.getExecutionYear())) {
-					return null;
+					throw new FenixServiceException("error.impossibleDegreeInfo");
 				}
 			}
 		} catch (Exception e) {
@@ -97,7 +96,6 @@ public class ReadDegreeInfoByExecutionDegree implements IServico {
 			throw new FenixServiceException(e);
 		}
 
-		System.out.println("--->Terminou ReadDegreeInfoByExecutionDegree...");
 		return infoDegreeInfo;
 	}
 

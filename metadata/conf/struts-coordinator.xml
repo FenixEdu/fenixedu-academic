@@ -97,9 +97,11 @@
 				<form-property name="additionalInfoEn" type="java.lang.String" />
 				<form-property name="linksEn" type="java.lang.String" />
 				<form-property name="testIngressionEn" type="java.lang.String" />
-				<form-property name="classificationsEn" type="java.lang.String" />								
+				<form-property name="classificationsEn" type="java.lang.String" />		
+				
+				<form-property name="descriptionDegreeCurricularPlan" type="java.lang.String" />
+				<form-property name="descriptionDegreeCurricularPlanEn" type="java.lang.String" />						
 			</form-bean>
-
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -377,6 +379,7 @@
 			<forward name="degreeSiteMenu" path="degreeSiteMenu" />
 			<forward name="viewInformation" path="viewInformation" />
 			<forward name="viewHistoric" path="viewHistoric" />
+			<forward name="viewDescriptionCurricularPlan" path="viewDescriptionCurricularPlan" />
 		</action>			
 
 		<!-- ======== degree curricular plan management mappings -->

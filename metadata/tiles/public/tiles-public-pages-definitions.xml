@@ -15,11 +15,12 @@
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />		
 		<put name="body" value="/publico/degreeSite/showDegreeSiteAccessRequirements.jsp" />
 	</definition>
-	<definition name="showCurricularPlan" extends="definition.public.mainPageIST">
+	<definition name="showCurricularPlans" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
-		<put name="body" value="/publico/degreeSite/showDegreeSiteCurricularPlan.jsp" />
+		<put name="body" value="/publico/degreeSite/showDegreeSiteCurricularPlans.jsp" />
 	</definition>
-	<!--<definition name="showDegreeCurricularPlan" extends="definition.public.mainPage">
-		<put name="body" value="/publico/showDegreeCurricularPlan.jsp"/>
-	</definition> -->	
+	<definition name="showDegreeCurricularPlan" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
+		<put name="body" value="/publico/degreeSite/showDegreeCurricularPlan.jsp"/>
+	</definition>
 </tiles-definitions>

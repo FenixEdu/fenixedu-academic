@@ -41,7 +41,6 @@ public class EditDegreeInfoByExecutionDegree implements IServico {
 
 	public boolean run(Integer infoExecutionDegreeId, Integer infoDegreeInfoId, InfoDegreeInfo infoDegreeInfo)
 		throws FenixServiceException {
-		System.out.println("--->A processar EditDegreeInfoByExecutionDegree...");
 		try {
 			ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
 
@@ -100,12 +99,8 @@ public class EditDegreeInfoByExecutionDegree implements IServico {
 
 			//update last modification date
 			degreeInfo.setLastModificationDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-			
 
-			System.out.println("--->Escreveu: " + degreeInfo);
-			System.out.println("--->Terminou EditDegreeInfoByExecutionDegree...");
 		} catch (ExcepcaoPersistencia e) {
-			System.out.println("--->EXCEPCAO: Ocorreu EditDegreeInfoByExecutionDegree...");
 			e.printStackTrace();
 			throw new FenixServiceException(e);
 		}

@@ -1,4 +1,4 @@
-insert into DEGREE_CURRICULAR_PLAN values (7, 'LEQ-OLD', 1, 3, '0000-00-00', '0000-00-00', 5, 3, 20, 0, 0);
+insert into DEGREE_CURRICULAR_PLAN values (7, 'LEQ-OLD', 1, 3, '0000-00-00', '0000-00-00', 5, 3, 20, 0, 0, null, null);
 
 insert into BRANCH values (7, '', '', 7);
 

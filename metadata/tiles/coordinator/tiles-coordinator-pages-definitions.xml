@@ -19,6 +19,11 @@
 		<put name="body" value="/coordinator/degreeSite/viewDegreeInfo.jsp" />
 	</definition>
 	
+	<definition name="viewDescriptionCurricularPlan" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+		<put name="body" value="/coordinator/degreeSite/viewDescriptionCurricularPlan.jsp" />
+	</definition>	
+	
 	<definition name="viewHistoric" extends="definition.coordinator.two-column.extra-menu">
 		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
 		<put name="body" value="/coordinator/degreeSite/viewDegreeInfo.jsp" />

@@ -319,7 +319,6 @@ public class DegreeInfo extends DomainObject implements IDegreeInfo {
 			result = (getDegree() != null && getDegree().equals(degreeInfo.getDegree()));
 		}
 
-		System.out.println("DEGREE_INFO: " + result);
 		return result;
 	}
 

@@ -78,7 +78,6 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico
             {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }
-            System.out.println(executionYear);
 
             //Degree
             ICursoPersistente persistentDegree = sp.getICursoPersistente();

@@ -16,11 +16,33 @@
 	<p>
 	<ul>
 		<li>
-			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
-			    <bean:message key="link.coordinator.degreeSite.edit" /></html:link>
-			    <br/>
-				<br/>
-			</html:link>
+			<b><bean:message key="link.coordinator.degreeSite.edit" /></b>
+			<ul>
+				<li>
+					<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+					    <bean:message key="label.description" />&nbsp;<bean:message key="label.degree" />
+					</html:link>
+					<br/>
+					<br/>
+					</html:link>
+				</li>
+				<li>
+					<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+					    <bean:message key="label.accessRequirements" />
+					</html:link>
+					<br/>
+					<br/>
+					</html:link>
+				</li>
+				<li>
+					<html:link page="<%= "/degreeSiteManagement.do?method=viewDescriptionCurricularPlan&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+					    <bean:message key="label.description" />&nbsp;<bean:message key="label.curricularPlan" /> 
+					</html:link>
+					<br/>
+					<br/>
+					</html:link>
+				</li>																	
+			</ul>
 		</li>
 		<li>
 			<html:link page="<%= "/degreeSiteManagement.do?method=viewHistoric&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">

@@ -416,16 +416,15 @@
      		>
 	     <forward  name="showDescription" path="showDescription"/>  	
 	     <forward  name="showAccessRequirements" path="showAccessRequirements"/>  
-	     <forward  name="showCurricularPlan" path="showCurricularPlan"/>  	  
+	     <forward  name="showCurricularPlans" path="showCurricularPlans"/>  	  
      </action>
-        
-    <!--<action path="/showDegreeCurricularPlan" 
+     
+     <action path="/showDegreeCurricularPlan" 
      		type="ServidorApresentacao.Action.publico.ShowDegreeCurricularPlanAction" 
-     		parameter="method"
      		>
 	     <forward  name="showDegreeCurricularPlan" path="showDegreeCurricularPlan"/>  		  
-     </action>-->   
-         
+     </action>
+              
      </action-mappings>     
     
     <!-- ========== Controller Configuration ================================ -->

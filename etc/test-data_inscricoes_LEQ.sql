@@ -28,10 +28,10 @@ insert into DEGREE values (1, 'LEQ', 'Licenciatura em Engenharia Quimica', 1);
 
 -- -----------------------------
 -- Data for table 'DEGREE_CURRICULAR_PLAN'
--- (ID_INTERNAL, NAME, KEY_DEGREE, STATE, INITIAL_DATE, END_DATE, KEY_DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO)
+-- (ID_INTERNAL, NAME, KEY_DEGREE, STATE, INITIAL_DATE, END_DATE, KEY_DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO, DESCRIPTION, DESCRIPTION_EN)
 -- -----------------------------
 delete from DEGREE_CURRICULAR_PLAN;
-insert into DEGREE_CURRICULAR_PLAN values (1, 'LEQ2003/2004', 1, 1, '0000-00-00', '0000-00-00', 5, 3, 20, 0, 0);
+insert into DEGREE_CURRICULAR_PLAN values (1, 'LEQ2003/2004', 1, 1, '0000-00-00', '0000-00-00', 5, 3, 20, 0, 0, null, null);
 
 -- -----------------------------
 -- Data for table 'CURRICULAR_COURSE'

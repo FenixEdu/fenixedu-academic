@@ -72,4 +72,5 @@
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
 </class-descriptor>
+
 <!-- Mapping of User defined classses ends here -->

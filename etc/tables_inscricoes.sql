@@ -63,6 +63,8 @@ create table DEGREE_CURRICULAR_PLAN (
    MARK_TYPE integer (11) not null,
    NEEDED_CREDITS float (11,2),
    NUMERUS_CLAUSUS INT(11) unsigned default null,
+   DESCRIPTION text,
+   DESCRIPTION_EN text,
    primary key (ID_INTERNAL),
    unique U1 (NAME, KEY_DEGREE)
 )type=InnoDB;

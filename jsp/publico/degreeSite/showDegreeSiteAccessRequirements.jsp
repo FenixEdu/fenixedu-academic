@@ -9,15 +9,15 @@
 
 <logic:present name="infoDegreeInfo">
 
-	<div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > <a href="http://www.ist.utl.pt/html/ensino/ensino.shtml">Ensino</a> &gt;
+	<div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > <a href="http://www.ist.utl.pt/html/ensino/ensino.shtml">Ensino</a> &gt;&nbsp;
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeId=" + request.getAttribute("degreeId").toString() %>">
 			<bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp<bean:write name="infoDegreeInfo" property="infoDegree.nome" />
 		</html:link>
-		 &gt;<bean:message key="label.accessRequirements"/>
+		 &gt;&nbsp;<bean:message key="label.accessRequirements"/>
 	</div>
 	
 	<!-- PÁGINA EM INGLÊS -->
-	<div class="version"><span class="px10"><a href="http://www.ist.utl.pt/html/en/teaching.shtml">english version</a> <img src="/img/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
+	<div class="version"><span class="px10"><a href="http://www.ist.utl.pt/html/en/teaching.shtml">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
 	<div class="clear"></div> 
 	
 	<h1><bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp<bean:write name="infoDegreeInfo" property="infoDegree.nome" /></h1>
@@ -30,13 +30,13 @@
 
 	<!-- NOME(S) DA PROVA(S) DE INGRESSO -->
 	<logic:notEmpty name="infoDegreeInfo" property="testIngression">
-  <h2><img alt="" height="12" src="/img/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.testIngression" /></h2>  
+  <h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.testIngression" /></h2>  
   <p><bean:write name="infoDegreeInfo" property="testIngression" filter="false" /></p>
   </logic:notEmpty>
   
   <!-- VAGAS -->
  	<logic:notEmpty name="infoDegreeInfo" property="driftsInitial">
-	  <h2><img alt="" height="12" src="/img/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.drifts" /></h2>
+	  <h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.drifts" /></h2>
 	  <ul>
 	  	<li><strong><bean:message key="label.coordinator.degreeSite.driftsInitial" />:</strong> <bean:write name="infoDegreeInfo" property="driftsInitial" /></li>
 	  	
@@ -58,7 +58,7 @@
  	
  	<!-- NOTAS -->
  	<logic:notEmpty name="infoDegreeInfo" property="markAverage">	 	
-		<h2><img alt="" height="12" src="/img/icon_arrow.gif" width="12" /><bean:message key="label.coordinator.degreeSite.marks" /></h2>
+		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" /><bean:message key="label.coordinator.degreeSite.marks" /></h2>
 	  <ul>
 	  	<li><strong><bean:message key="label.coordinator.degreeSite.mark.average" />:</strong> <bean:write name="infoDegreeInfo" property="markAverage" /></li>
 	  	

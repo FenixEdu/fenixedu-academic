@@ -26,6 +26,8 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 	private Double neededCredits;
 	private MarkType markType;
 	private Integer numerusClausus;
+	private String description;
+	private String descriptionEn;
 	
 	private List curricularCourses;
 	
@@ -239,18 +241,31 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 		minimalYearForOptionalCourses = integer;
 	}
 
-	/**
-	 * @return
-	 */
 	public Integer getNumerusClausus() {
 		return numerusClausus;
 	}
 
-	/**
-	 * @param integer
-	 */
 	public void setNumerusClausus(Integer integer) {
 		numerusClausus = integer;
 	}
 
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public String getDescriptionEn()
+    {
+        return descriptionEn;
+    }
+
+    public void setDescriptionEn(String descriptionEn)
+    {
+        this.descriptionEn = descriptionEn;
+    }
 }

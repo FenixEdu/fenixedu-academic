@@ -4,11 +4,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeInfo;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -39,7 +42,8 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         HttpServletResponse response)
         throws FenixActionException
     {
-        System.out.println("--->Entrou viewInformation...");
+        ActionErrors errors = new ActionErrors();
+
         HttpSession session = request.getSession();
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
@@ -49,6 +53,9 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
         request.setAttribute("inEnglish", inEnglish);
+
+        String info2Edit = getFromRequestString("info", request);
+        request.setAttribute("info", info2Edit);
 
         Object[] args = { infoExecutionDegreeId };
 
@@ -65,8 +72,21 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
                     args);
         } catch (FenixServiceException e)
         {
-            e.printStackTrace();
-            throw new FenixActionException(e);
+            if (e.getMessage().equals("error.invalidExecutionDegree"))
+            {
+                errors.add(
+                    "invalidExecutionDegree",
+                    new ActionError("error.invalidExecutionDegree"));
+                saveErrors(request, errors);
+            } else if (e.getMessage().equals("error.impossibleDegreeInfo"))
+            {
+                errors.add("impossibleDegreeInfo", new ActionError("error.impossibleDegreeInfo"));
+                saveErrors(request, errors);
+            } else
+            {
+                e.printStackTrace();
+                throw new FenixActionException(e);
+            }
         }
 
         DynaActionForm degreeInfoForm = (DynaActionForm) form;
@@ -80,7 +100,6 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
         request.setAttribute("infoDegreeInfoId", infoDegreeInfoId);
 
-        System.out.println("--->Saiu viewInformation...");
         return mapping.findForward("viewInformation");
     }
 
@@ -91,7 +110,8 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         HttpServletResponse response)
         throws FenixActionException
     {
-        System.out.println("--->Entrou editDegreeInfomation...");
+        ActionErrors errors = new ActionErrors();
+
         HttpSession session = request.getSession();
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
@@ -101,6 +121,9 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
         Integer infoDegreeInfoId = getFromRequest("infoDegreeInfoId", request);
         request.setAttribute("infoDegreeInfoId", infoDegreeInfoId);
+
+        String info2Edit = getFromRequestString("info", request);
+        request.setAttribute("info", info2Edit);
 
         DynaActionForm degreeInfoForm = (DynaActionForm) form;
         InfoDegreeInfo infoDegreeInfo = new InfoDegreeInfo();
@@ -120,7 +143,6 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
             throw new FenixActionException(e);
         }
 
-        System.out.println("--->Saiu editDegreeInfomation...");
         return mapping.findForward("degreeSiteMenu");
     }
 
@@ -182,6 +204,114 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         infoDegreeInfo.setClassificationsEn((String) degreeInfoForm.get("classificationsEn"));
     }
 
+    public ActionForward viewDescriptionCurricularPlan(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        ActionErrors errors = new ActionErrors();
+
+        HttpSession session = request.getSession();
+
+        IUserView userView = (IUserView) session.getAttribute("UserView");
+
+        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeId", request);
+        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
+
+        Object[] args = { infoExecutionDegreeId };
+
+        GestorServicos gestorServicos = GestorServicos.manager();
+
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+        try
+        {
+            infoDegreeCurricularPlan =
+                (InfoDegreeCurricularPlan) gestorServicos.executar(
+                    userView,
+                    "ReadActiveDegreeCurricularPlanByExecutionDegreeCode",
+                    args);
+        } catch (FenixServiceException e)
+        {
+            if (e.getMessage().equals("error.coordinator.noExecutionDegree"))
+            {
+                errors.add("noExecutionDegree", new ActionError("error.coordinator.noExecutionDegree"));
+                saveErrors(request, errors);
+            } else
+            {
+                throw new FenixActionException(e);
+            }
+        }
+
+        DynaActionForm descriptionCurricularPlanForm = (DynaActionForm) form;
+
+        if (infoDegreeCurricularPlan != null)
+        {
+            descriptionCurricularPlanForm.set(
+                "descriptionDegreeCurricularPlan",
+                infoDegreeCurricularPlan.getDescription());
+            descriptionCurricularPlanForm.set(
+                "descriptionDegreeCurricularPlanEn",
+                infoDegreeCurricularPlan.getDescriptionEn());
+
+            request.setAttribute("infoDegreeCurricularPlanId", infoDegreeCurricularPlan.getIdInternal());
+        }
+
+        return mapping.findForward("viewDescriptionCurricularPlan");
+    }
+
+    public ActionForward editDescriptionDegreeCurricularPlan(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        ActionErrors errors = new ActionErrors();
+
+        HttpSession session = request.getSession();
+
+        IUserView userView = (IUserView) session.getAttribute("UserView");
+
+        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeId", request);
+        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
+
+        Integer infoDegreeCurricularPlanId = getFromRequest("infoDegreeCurricularPlanId", request);
+        request.setAttribute("infoDegreeCurricularPlanId", infoDegreeCurricularPlanId);
+
+        DynaActionForm descriptionCurricularPlanForm = (DynaActionForm) form;
+
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+        infoDegreeCurricularPlan.setIdInternal(infoDegreeCurricularPlanId);
+
+        infoDegreeCurricularPlan.setDescription(
+            (String) descriptionCurricularPlanForm.get("descriptionDegreeCurricularPlan"));
+        infoDegreeCurricularPlan.setDescriptionEn(
+            (String) descriptionCurricularPlanForm.get("descriptionDegreeCurricularPlanEn"));
+
+        Object[] args = { infoExecutionDegreeId, infoDegreeCurricularPlan };
+
+        GestorServicos gestorServicos = GestorServicos.manager();
+
+        try
+        {
+            gestorServicos.executar(userView, "EditDescriptionDegreeCurricularPlan", args);
+        } catch (FenixServiceException e)
+        {
+			if (e.getMessage().equals("message.nonExistingDegreeCurricularPlan"))
+			{
+				errors.add("nonExistingDegreeCurricularPlan", new ActionError("message.nonExistingDegreeCurricularPlan"));
+				saveErrors(request, errors);
+			} else
+			{
+				throw new FenixActionException(e);
+			}
+        }
+
+        return mapping.findForward("degreeSiteMenu");
+    }
+
     public Integer convertString2Integer(String string)
     {
         Integer integer = null;
@@ -195,11 +325,12 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
     public String convertInteger2String(Integer integer)
     {
         String string = null;
-        
-        if(integer != null) {
+
+        if (integer != null)
+        {
             string = String.valueOf(integer);
         }
-        
+
         return string;
     }
 
@@ -213,17 +344,18 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         return double1;
     }
 
-	public String convertDouble2String(Double double1)
-	{
-		String string = null;
-        
-		if(double1 != null) {
-			string = String.valueOf(double1);
-		}
-        
-		return string;
-	}
-    
+    public String convertDouble2String(Double double1)
+    {
+        String string = null;
+
+        if (double1 != null)
+        {
+            string = String.valueOf(double1);
+        }
+
+        return string;
+    }
+
     public ActionForward viewHistoric(
         ActionMapping mapping,
         ActionForm form,
@@ -265,5 +397,16 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         }
 
         return parameterBoolean;
+    }
+
+    private String getFromRequestString(String parameter, HttpServletRequest request)
+    {
+        String parameterString = request.getParameter(parameter);
+        if (parameterString == null)
+        {
+            parameterString = (String) request.getAttribute(parameter);
+        }
+
+        return parameterString;
     }
 }

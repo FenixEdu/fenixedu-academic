@@ -1,11 +1,16 @@
 package ServidorApresentacao.Action.publico;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -16,7 +21,6 @@ import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
-import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -32,6 +36,8 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         HttpServletResponse response)
         throws Exception
     {
+        ActionErrors errors = new ActionErrors();
+
         HttpSession session = request.getSession(true);
 
         Integer executionPeriodOId = getFromRequest("executionPeriodOId", request);
@@ -59,14 +65,16 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
                         args);
             } catch (FenixServiceException e)
             {
-                throw new FenixActionException(e);
+                errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+                saveErrors(request, errors);
             }
 
             if (infoExecutionDegree != null
                 && infoExecutionDegree.getInfoDegreeCurricularPlan() != null
                 && infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() != null)
             {
-                degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();                
+                degreeId =
+                    infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
             }
         }
 
@@ -85,10 +93,9 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
                     args);
         } catch (FenixServiceException e)
         {
-            throw new FenixActionException(e);
+			errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+			saveErrors(request, errors);
         }
-
-        System.out.println("------>Degree info: " + infoDegreeInfo.getLastModificationDate());
 
         //execution degrees of this degree
         List executionDegreeList = null;
@@ -101,11 +108,9 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
                     args);
         } catch (FenixServiceException e)
         {
-            throw new FenixActionException(e);
+			errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+			saveErrors(request, errors);
         }
-
-        System.out.println("------>Execution degree(size): " + executionDegreeList.size());
-        System.out.println("------>Execution degree: " + executionDegreeList.get(0));
 
         request.setAttribute(SessionConstants.EXECUTION_PERIOD, executionPeriodOId);
         request.setAttribute("degreeId", degreeId);
@@ -121,6 +126,8 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         HttpServletResponse response)
         throws Exception
     {
+        ActionErrors errors = new ActionErrors();
+
         HttpSession session = request.getSession(true);
 
         Integer executionPeriodOId = getFromRequest("executionPeriodOId", request);
@@ -141,7 +148,8 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
                     args);
         } catch (FenixServiceException e)
         {
-            throw new FenixActionException(e);
+			errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+			saveErrors(request, errors);
         }
 
         //read execution period for display the school year
@@ -154,16 +162,16 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
                 (InfoExecutionPeriod) gestorServicos.executar(null, "ReadExecutionPeriodByOID", args2);
         } catch (FenixServiceException e)
         {
-            throw new FenixActionException(e);
+			errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+			saveErrors(request, errors);
         }
-
-        System.out.println("------>Degree info: " + infoDegreeInfo.getLastModificationDate());
 
         request.setAttribute(SessionConstants.EXECUTION_PERIOD, executionPeriodOId);
         if (infoExecutionPeriod != null && infoExecutionPeriod.getInfoExecutionYear() != null)
         {
             request.setAttribute("schoolYear", infoExecutionPeriod.getInfoExecutionYear().getYear());
         }
+
         request.setAttribute("degreeId", degreeId);
         request.setAttribute("infoDegreeInfo", infoDegreeInfo);
         return mapping.findForward("showAccessRequirements");
@@ -176,7 +184,60 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         HttpServletResponse response)
         throws Exception
     {
-        return mapping.findForward("showCurricularPlan");
+        ActionErrors errors = new ActionErrors();
+
+        HttpSession session = request.getSession(true);
+
+        Integer executionPeriodOId = getFromRequest("executionPeriodOId", request);
+        Integer degreeId = getFromRequest("degreeId", request);
+
+        GestorServicos gestorServicos = GestorServicos.manager();
+
+        //degree information
+        Object[] args = { degreeId };
+
+        List infoDegreeCurricularPlanList = null;
+        try
+        {
+            infoDegreeCurricularPlanList =
+                (List) gestorServicos.executar(null, "ReadDegreeCurricularPlansByDegree", args);
+        } catch (FenixServiceException e)
+        {
+			errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+			saveErrors(request, errors);
+        }
+
+        //order the list by state and next by begin date
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("state.degreeState"));
+        comparatorChain.addComparator(new BeanComparator("initialDate"));
+
+        Collections.sort(infoDegreeCurricularPlanList, comparatorChain);
+
+        //read execution period for display the school year
+        Object[] args2 = { executionPeriodOId };
+
+        InfoExecutionPeriod infoExecutionPeriod = null;
+        try
+        {
+            infoExecutionPeriod =
+                (InfoExecutionPeriod) gestorServicos.executar(null, "ReadExecutionPeriodByOID", args2);
+        } catch (FenixServiceException e)
+        {
+			errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+			saveErrors(request, errors);
+        }
+
+        request.setAttribute(SessionConstants.EXECUTION_PERIOD, executionPeriodOId);
+        if (infoExecutionPeriod != null && infoExecutionPeriod.getInfoExecutionYear() != null)
+        {
+            request.setAttribute("schoolYear", infoExecutionPeriod.getInfoExecutionYear().getYear());
+        }
+
+        request.setAttribute("degreeId", degreeId);
+        request.setAttribute("infoDegreeCurricularPlanList", infoDegreeCurricularPlanList);
+
+        return mapping.findForward("showCurricularPlans");
     }
 
     private Integer getFromRequest(String parameter, HttpServletRequest request)

@@ -106,7 +106,16 @@
 		column="NUMERUS_CLAUSUS"
 		jdbc-type="INTEGER"
 	/>
-
+  <field-descriptor
+  	name="description"
+   	column="DESCRIPTION"
+    jdbc-type="LONGVARCHAR"
+  />	
+  <field-descriptor
+  	name="descriptionEn"
+   	column="DESCRIPTION_EN"
+    jdbc-type="LONGVARCHAR"
+  />	  
 	<reference-descriptor
 			name="degree"
 			class-ref="Dominio.Curso"

@@ -80,7 +80,6 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriod implements IServico
             {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }
-            System.out.println(executionYear);
 
             //Degree
             ICursoPersistente persistentDegree = sp.getICursoPersistente();
@@ -106,6 +105,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriod implements IServico
             Collections.sort(degreeInfoList, new BeanComparator("lastModificationDate"));
             IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
             infoDegreeInfo = Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
+            infoDegreeInfo.recaptureNULLs(degreeInfo);
 
             if (infoDegreeInfo == null)
             {
