@@ -99,10 +99,10 @@ public class InfoLesson {
       resultado = (getDiaSemana().equals(infoAula.getDiaSemana())) &&
                   (getInicio().get(Calendar.HOUR_OF_DAY) == infoAula.getInicio().get(Calendar.HOUR_OF_DAY)) &&
                   (getInicio().get(Calendar.MINUTE) == infoAula.getInicio().get(Calendar.MINUTE)) &&
-                  (getInicio().get(Calendar.SECOND) == infoAula.getInicio().get(Calendar.SECOND)) &&
+                
                   (getFim().get(Calendar.HOUR_OF_DAY) == infoAula.getFim().get(Calendar.HOUR_OF_DAY)) &&
                   (getFim().get(Calendar.MINUTE) == infoAula.getFim().get(Calendar.MINUTE)) &&
-                  (getFim().get(Calendar.SECOND) == infoAula.getFim().get(Calendar.SECOND)) &&
+                 
                   (getInfoSala().equals(infoAula.getInfoSala()));
     }
 

@@ -85,12 +85,7 @@ public class InfoRoom implements Serializable, Comparable {
 	  boolean resultado = false;
 	  if (obj instanceof InfoRoom) {
 		InfoRoom infoSala = (InfoRoom)obj;
-		resultado = (getNome().equals(infoSala.getNome()));// &&
-//					(getEdificio().equals(infoSala.getEdificio())) &&
-//					(getPiso().equals(infoSala.getPiso())) &&
-//					(getTipo().equals(infoSala.getTipo())) &&
-//					(getCapacidadeNormal().equals(infoSala.getCapacidadeNormal())) &&
-//					(getCapacidadeExame().equals(infoSala.getCapacidadeExame()));
+		resultado = (getNome().equals(infoSala.getNome()));
 	  }
 	  return resultado;
 	}
