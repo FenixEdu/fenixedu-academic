@@ -1,14 +1,18 @@
 package ServidorApresentacao.Action.teacher;
 
+import java.util.Collections;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoSiteStudents;
 import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
@@ -54,6 +58,9 @@ public class StudentsByCurricularCourseListAction extends DispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+
+		InfoSiteStudents infoSiteStudents = (InfoSiteStudents) siteView.getComponent();
+		Collections.sort(infoSiteStudents.getStudents(), new BeanComparator("number"));
 
 		request.setAttribute("siteView", siteView);
 		request.setAttribute("objectCode", objectCode);

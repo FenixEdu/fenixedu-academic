@@ -11,6 +11,12 @@
 <bean:define id="studentsComponent" name="siteView" property="component" type="DataBeans.InfoSiteStudents"/>
 <bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>
     <span class="error"><html:errors/></span>
+	<bean:size id="studentsListSize" name="studentsComponent" property="students"/>
+    <logic:equal name="studentsListSize" value="0">
+		<span class="error"><bean:message key="message.no.students.enrolled"/></span>
+	</logic:equal>
+<logic:notEqual name="studentsListSize" value="0">
+    	
     <table>        
 		<tr>
 	       <td colspan="2">
@@ -51,4 +57,6 @@
     	</logic:iterate>
 		
     </table>    
+</logic:notEqual>
+    
 </logic:present>
