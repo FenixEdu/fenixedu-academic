@@ -29,8 +29,8 @@
                 <tr>
                     <td class="listClasses">
                 
-							<html:link page="<%= "/viewSite.do" + "?method=viewProjectShiftsAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" paramId="groupProperties" paramName="infoGroupProperties" paramProperty="idInternal">
-								  <b><bean:write name="infoGroupProperties" property="name"/></b>
+							<html:link page="<%= "/viewSite.do" + "?method=viewShiftsAndGroupsAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" paramId="groupProperties" paramName="infoGroupProperties" paramProperty="idInternal">
+								 <b><bean:write name="infoGroupProperties" property="name"/></b>
 							</html:link>
 							
 							

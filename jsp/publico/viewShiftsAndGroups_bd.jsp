@@ -13,6 +13,7 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoLesson"%>
 <%@ page import="DataBeans.InfoShift"%>
+
 <%@ page import="java.util.Calendar" %>
 
 
@@ -21,11 +22,11 @@
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
 	
-	<logic:empty name="component" property="infoSiteShifts">
+	<logic:empty name="component" property="infoSiteGroupsByShiftList">
 		<h2><bean:message key="message.shifts.not.available" /></h2>
 	</logic:empty>
 	
-<logic:notEmpty name="component" property="infoSiteShifts">
+<logic:notEmpty name="component" property="infoSiteGroupsByShiftList">
 		
 <table align="center" width="95%" cellspacing='1' cellpadding='1'>
 	<h2><bean:message key="title.ProjectsShifts"/></h2>
@@ -58,9 +59,10 @@
 			<bean:message key="property.lesson.room"/>
 		</td>
 	</tr>		
-    
-     <logic:iterate id="infoSiteShift" name="component" property="infoSiteShifts" >
-
+    		
+     <logic:iterate id="infoSiteGroupsByShift" name="component" property="infoSiteGroupsByShiftList" >
+		<bean:define id="infoSiteShift" name="infoSiteGroupsByShift" property="infoSiteShift"/>	
+			
 			<logic:notEmpty name="infoSiteShift" property="infoShift">
 			<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>	
 															
@@ -72,29 +74,37 @@
 					<tr>
 						
 						<td  class="listClasses" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
-							<b><bean:write name="infoShift" property="nome"/></b>
+							<bean:write name="infoShift" property="nome"/>
 						</td>
 						<td class="listClasses">
-							<b><bean:write name="infoLesson" property="diaSemana"/></b> &nbsp;
+							<bean:write name="infoLesson" property="diaSemana"/> &nbsp;
 						</td>
 						<td class="listClasses">
-							<b><%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %></b>
+							<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
 						</td>
 						<td class="listClasses">
-							<b><%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %></b>								
+							<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>								
 						</td>
 							
 		               	<td class="listClasses">
-							<b><bean:write name="infoLesson" property="infoSala.nome"/></b>
+							<bean:write name="infoLesson" property="infoSala.nome"/>
 				 		</td>
 				 		
 				 		 <td class="listClasses" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size()%>">
-                        
-                        	<html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupsAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupProperties") %>" paramId="shiftCode" paramName="infoShift" paramProperty="idInternal">
-								<b><bean:message key="link.groupsList"/></b>
+                        <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
+                        [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
+							<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
+                        	<html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupProperties") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+								<bean:write name="infoStudentGroup" property="groupNumber"/>
 							</html:link>
-							
-						  </td>
+						</logic:iterate>]
+						</logic:notEmpty>
+						
+						<logic:empty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
+							<bean:message key="message.shift.without.groups"/>
+						</logic:empty>
+						
+						 </td>
 				 						
 				 	</tr>
 				</logic:iterate>
@@ -106,16 +116,16 @@
                        <% Integer fM = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.MINUTE)); %>
 						<tr >
 							<td class="listClasses">
-								<b><bean:write name="infoLesson" property="diaSemana"/></b> &nbsp;
+								<bean:write name="infoLesson" property="diaSemana"/> &nbsp;
 							</td>
 							<td class="listClasses">
-								<b><%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %></b>
+								<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
 							</td>
 							<td class="listClasses">
-								<b><%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %></b>
+								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>
 							</td>
 							<td class="listClasses">
-								<b><bean:write name="infoLesson" property="infoSala.nome"/></b>
+								<bean:write name="infoLesson" property="infoSala.nome"/>
 							</td>
 						</tr>
 					

@@ -22,11 +22,11 @@ import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteGroupsByShift;
 import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSiteProgram;
-import DataBeans.InfoSiteProjectShifts;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteRoomTimeTable;
 import DataBeans.InfoSiteSection;
 import DataBeans.InfoSiteShifts;
+import DataBeans.InfoSiteShiftsAndGroups;
 import DataBeans.InfoSiteStudentGroup;
 import DataBeans.InfoSiteSummaries;
 import DataBeans.InfoSiteTimetable;
@@ -269,97 +269,62 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
 	
 	public ActionForward viewExecutionCourseProjects(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
-			
-			
-			ISiteComponent viewProjectsComponent = new InfoSiteProjects();
-			readGroupView(request, viewProjectsComponent,null, null, null, null,null);		
-			return mapping.findForward("sucess");
-		
-				
-			
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		ISiteComponent viewProjectsComponent = new InfoSiteProjects();
+		readGroupView(request, viewProjectsComponent, null, null, null, null, null);
+		return mapping.findForward("sucess");
+
 	}
 
+	public ActionForward viewShiftsAndGroupsAction(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
 
-	public ActionForward viewProjectShiftsAction(
-				ActionMapping mapping,
-				ActionForm form,
-				HttpServletRequest request,
-				HttpServletResponse response)
-				throws FenixActionException {
+		String objectCodeString = null;
+		Integer groupPropertiesCode = null;
+		objectCodeString = (String) request.getParameter("groupProperties");
+		if (objectCodeString == null)
+			groupPropertiesCode = (Integer) request.getAttribute("groupProperties");
 
-				String objectCodeString =null;
-				Integer groupPropertiesCode =null;
-				objectCodeString =(String)request.getParameter("groupProperties");
-				if(objectCodeString==null)
-					groupPropertiesCode = (Integer)request.getAttribute("groupProperties");
-				
-				else
-					groupPropertiesCode = new Integer(objectCodeString);
-			
-				ISiteComponent viewProjectShifts = new InfoSiteProjectShifts();
-				ExecutionCourseSiteView siteView = (ExecutionCourseSiteView)readGroupView(request, viewProjectShifts,null,null, null,groupPropertiesCode,null);
-				request.setAttribute("groupProperties",groupPropertiesCode);
-					
-				return mapping.findForward("sucess");	
-			}
-	
+		else
+			groupPropertiesCode = new Integer(objectCodeString);
 
-	public ActionForward viewStudentGroupsAction(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
-				
-				
-			
-			String objectCodeString =null;
-			Integer groupPropertiesCode =null;
-			objectCodeString =(String)request.getParameter("groupProperties");
-			
-			if(objectCodeString==null)
-				groupPropertiesCode = (Integer)request.getAttribute("groupProperties");
-				
-			else
-				groupPropertiesCode = new Integer(objectCodeString);
-			
-			String shiftCodeString =(String)request.getParameter("shiftCode");
-			
-			Integer shiftCode = new Integer(shiftCodeString);
-			
-			ISiteComponent viewGroupsByShift = new InfoSiteGroupsByShift();
-			ExecutionCourseSiteView siteView = (ExecutionCourseSiteView)readGroupView(request, viewGroupsByShift,null,null, null,groupPropertiesCode,shiftCode);
-			
-			request.setAttribute("groupProperties",groupPropertiesCode);
-			request.setAttribute("shiftCode",shiftCode);
-					
-			return mapping.findForward("sucess");	
-		}
+		ISiteComponent viewShiftsAndGroups = new InfoSiteShiftsAndGroups();
+		ExecutionCourseSiteView siteView =
+			(ExecutionCourseSiteView) readGroupView(request, viewShiftsAndGroups, null, null, null, groupPropertiesCode, null);
+		request.setAttribute("groupProperties", groupPropertiesCode);
+
+		return mapping.findForward("sucess");
+	}
+
 	
 	public ActionForward viewStudentGroupInformationAction(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
 
-			String studentGroupCodeString =(String)request.getParameter("studentGroupCode");
-			
-			Integer studentGroupCode = new Integer(studentGroupCodeString);
-			
-			ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
-			
-			ExecutionCourseSiteView siteView = (ExecutionCourseSiteView)readGroupView(request, viewStudentGroup,null,null, null, null,studentGroupCode);
-				
-			return mapping.findForward("sucess");	
-	
-	
-		}
+		String studentGroupCodeString = (String) request.getParameter("studentGroupCode");
+
+		Integer studentGroupCode = new Integer(studentGroupCodeString);
+
+		ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
+
+		ExecutionCourseSiteView siteView =
+			(ExecutionCourseSiteView) readGroupView(request, viewStudentGroup, null, null, null, null, studentGroupCode);
+
+		return mapping.findForward("sucess");
+
+	}
 
 	private SiteView readSiteView(
 		HttpServletRequest request,
@@ -368,7 +333,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		Integer sectionIndex,
 		Integer curricularCourseId)
 		throws FenixActionException {
-		
+
 		Integer objectCode = null;
 		if (infoExecutionCourseCode == null) {
 			String objectCodeString = request.getParameter("objectCode");
