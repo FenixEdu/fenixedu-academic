@@ -118,8 +118,7 @@ public class InsertEvaluationMarks implements IServico
 
                 String mark = (String)hashMarks.get(attend.getAluno().getNumber().toString());
 				hashMarks.remove(attend.getAluno().getNumber().toString());
-
-                //verify if the student has already a mark
+				
                 if (mark != null && mark.length() > 0)
                 { 
                     if (!isValidMark(evaluation, mark, attend.getAluno()))
@@ -133,6 +132,7 @@ public class InsertEvaluationMarks implements IServico
                     {
 						newHashMarks.put(attend.getAluno().getNumber().toString(), mark);
                         IMark domainMark = persistentMark.readBy(evaluation, attend);
+                        //verify if the student has already a mark
                         if (domainMark == null)
                         {
                             domainMark = new Mark();
