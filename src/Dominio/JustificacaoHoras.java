@@ -22,10 +22,9 @@ public class JustificacaoHoras implements IStrategyJustificacoes {
 	}
 
 	public void completaListaMarcacoes(Timestamp dataConsulta, Justificacao justificacao, ArrayList listaMarcacoesPonto) {
-		
-		
-		MarcacaoPonto entrada = new MarcacaoPonto(0, new Timestamp(dataConsulta.getTime() + justificacao.getHoraInicio().getTime()), 0);
-		MarcacaoPonto saida = new MarcacaoPonto(0, new Timestamp(dataConsulta.getTime() + justificacao.getHoraFim().getTime()), 0);
+				
+		MarcacaoPonto entrada = new MarcacaoPonto(0, new Timestamp(dataConsulta.getTime() + justificacao.getHoraInicio().getTime() + 3600*1000), 0);
+		MarcacaoPonto saida = new MarcacaoPonto(0, new Timestamp(dataConsulta.getTime() + justificacao.getHoraFim().getTime() + 3600*1000), 0);
 		
 		listaMarcacoesPonto.add(entrada);
 		listaMarcacoesPonto.add(saida);
