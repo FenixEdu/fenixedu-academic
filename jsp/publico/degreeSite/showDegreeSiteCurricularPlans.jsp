@@ -58,9 +58,9 @@
 		<!-- LISTA DOS OUTROS PLANOSCURRICULARES -->
 		<logic:greaterThan name="listSize" value="1">
 			<!-- verify if the others plans are actives -->
-			<logic:iterate id="infoDegreeCurricularPlan" name="infoDegreeCurricularPlanList" indexId="index"> 
+			<logic:iterate id="infoDegreeCurricularPlanElem" name="infoDegreeCurricularPlanList" indexId="index"> 
 				<logic:notEqual name="index" value="0">
-				<logic:equal name="infoDegreeCurricularPlan" property="state" value="<%= DegreeCurricularPlanState.ACTIVE_OBJ.toString() %>" >
+				<logic:equal name="infoDegreeCurricularPlanElem" property="state" value="<%= DegreeCurricularPlanState.ACTIVE_OBJ.toString() %>" >
 					<bean:define id="plansActives" value="true" />											
 				</logic:equal>
 				</logic:notEqual>
@@ -74,14 +74,14 @@
 			<tr>
 				<td class="box_cell">
 				<ul>		
-					<logic:iterate id="infoDegreeCurricularPlan" name="infoDegreeCurricularPlanList" indexId="index"> 
-						<bean:define id="otherDegreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />						
-	  					<logic:equal name="infoDegreeCurricularPlan" property="state" value="<%= DegreeCurricularPlanState.ACTIVE_OBJ.toString() %>" > <!-- If is active -->
+					<logic:iterate id="infoDegreeCurricularPlanElem" name="infoDegreeCurricularPlanList" indexId="index"> 
+						<bean:define id="otherDegreeCurricularPlanID" name="infoDegreeCurricularPlanElem" property="idInternal" />						
+	  					<logic:equal name="infoDegreeCurricularPlanElem" property="state" value="<%= DegreeCurricularPlanState.ACTIVE_OBJ.toString() %>" > <!-- If is active -->
 	  						<li><html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("otherDegreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
-								<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
+								<bean:define id="initialDate" name="infoDegreeCurricularPlanElem" property="initialDate" />		
 								<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")) %>
-								<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">
-									<bean:define id="endDate" name="infoDegreeCurricularPlan" property="endDate" />	
+								<logic:notEmpty name="infoDegreeCurricularPlanElem" property="endDate">
+									<bean:define id="endDate" name="infoDegreeCurricularPlanElem" property="endDate" />	
 									-<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>
 								</logic:notEmpty>
 							</html:link></li>
@@ -97,11 +97,7 @@
 </div>
 			
 <!-- DESCRIÇÃO DO PLANO CURRICULAR(activo e o mais recente) -->
-*<bean:write name="infoDegreeCurricularPlan" property="description" filter="false" />
 <logic:notEmpty name="infoDegreeCurricularPlan" property="description">
 		  <p><bean:write name="infoDegreeCurricularPlan" property="description" filter="false" /></p>
 </logic:notEmpty>	
-<logic:empty name="infoDegreeCurricularPlan" property="description">
-		 werweret
-</logic:empty>
 </logic:present>	
