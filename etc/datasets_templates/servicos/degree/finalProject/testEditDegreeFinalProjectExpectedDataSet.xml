@@ -1,0 +1,240 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE dataset SYSTEM "@project.base.path@/metadata/dtds/fenix-database.dtd">
+<dataset>
+  <STUDENT_CURRICULAR_PLAN  ID_INTERNAL='1' KEY_STUDENT='1' KEY_DEGREE_CURRICULAR_PLAN='51' CURRENT_STATE='1' START_DATE='2003-05-19' KEY_BRANCH='7905' COMPLETED_COURSES='0' ENROLLED_COURSES='0' CLASSIFICATION='0.0' WHEN_ALTER='2003-10-16 19:43:44.0'/>
+  <STUDENT_CURRICULAR_PLAN  ID_INTERNAL='2' KEY_STUDENT='2' KEY_DEGREE_CURRICULAR_PLAN='48' CURRENT_STATE='1' START_DATE='2003-05-19' KEY_BRANCH='8527' COMPLETED_COURSES='0' ENROLLED_COURSES='0' CLASSIFICATION='0.0' WHEN_ALTER='2003-10-16 19:43:44.0'/>
+  <STUDENT ID_INTERNAL='1' NUMBER='6681' KEY_PERSON='3335' STATE='2' DEGREE_TYPE='1' KEY_STUDENT_KIND='1'/>
+  <STUDENT ID_INTERNAL='2' NUMBER='9716' KEY_PERSON='3336' STATE='2' DEGREE_TYPE='1' KEY_STUDENT_KIND='1'/>
+  <EXECUTION_PERIOD ID_INTERNAL='1' NAME='2 Semestre' KEY_EXECUTION_YEAR='1' STATE='O' SEMESTER='2' BEGIN_DATE='2003-02-19' END_DATE='2003-06-07'/>
+  <EXECUTION_PERIOD ID_INTERNAL='2' NAME='1 Semestre' KEY_EXECUTION_YEAR='2' STATE='C' SEMESTER='1' BEGIN_DATE='2003-09-15' END_DATE='2003-12-20'/>
+  <EXECUTION_PERIOD ID_INTERNAL='3' NAME='1 Semestre' KEY_EXECUTION_YEAR='1' STATE='NO' SEMESTER='1' BEGIN_DATE='2002-09-16' END_DATE='2002-12-21'/>
+  <EXECUTION_YEAR ID_INTERNAL='1' YEAR='2002/2003' STATE='O' BEGIN_DATE='2001-10-01' END_DATE='2002-07-31'/>
+  <EXECUTION_YEAR ID_INTERNAL='2' YEAR='2003/2004' STATE='C' BEGIN_DATE='2003-10-01' END_DATE='2003-07-31'/>
+  <TEACHER ID_INTERNAL='940' TEACHER_NUMBER='4308' KEY_PERSON='3309'/>
+  <TEACHER ID_INTERNAL='947' TEACHER_NUMBER='4324' KEY_PERSON='3325'/>
+  <COUNTRY ID_INTERNAL='1' NAME='PORTUGAL' NATIONALITY='PORTUGUESA' CODE='PT'/>
+  <PERSON ID_INTERNAL='3309' DOCUMENT_ID_NUMBER='3309' EMISSION_LOCATION_OF_DOCUMENT_ID='XXXXXXXXXX' EMISSION_DATE_OF_DOCUMENT_ID='2003-11-10' EXPERATION_DATE_OF_DOCUMENT_ID='2003-11-10' NAME='Xxxxxxxxxxxxxxxx Xxxxxxxxx Xxxxxxx Xxxxxxxxx' DATE_OF_BIRTH='2003-11-10' NAME_OF_FATHER='Xxx Xxxxx Xxx Xxxxxxx Xxxxxxxxx' NAME_OF_MOTHER='Xxx Xxxxx Xxxx Xxxxxxx Xxxxxxxxx' NATIONALITY='xxxxxxxxxx' PARISH_OF_BIRTH='xxxxxxxxxxxxx' DISTRICT_SUBDIVISION_OF_BIRTH='XXXXXXXXXX' DISTRICT_OF_BIRTH='Xxcvxcvx Cxbdxbdxbd' ADDRESS='XXXXXXXXXX' AREA='XXXXXXXXXX' AREA_CODE='2823-657' AREA_OF_AREA_CODE='XXXXXXXXXX' PARISH_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_SUBDIVISION_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_OF_RESIDENCE='XXXXXXXXXX' PHONE='21223309' MOBILE='9695968752' EMAIL='suporte@dotist.utl.pt' WEB_ADRDRESS='http://fenix-ashes.ist.utl.pt:8080' SOCIAL_SECURITY_NUMBER='3309' PROFESSION='zzzzzzzzzzz' USERNAME='D4308' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='3309' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='2'/>
+  <PERSON ID_INTERNAL='3325' DOCUMENT_ID_NUMBER='3325' EMISSION_LOCATION_OF_DOCUMENT_ID='XXXXXXXXXX' EMISSION_DATE_OF_DOCUMENT_ID='2003-11-10' EXPERATION_DATE_OF_DOCUMENT_ID='2003-11-10' NAME='Xxxxxxxxxxxxxxxx Xxxxxxxxx Xxxxxxx Xxxxxxxxx' DATE_OF_BIRTH='2003-11-10' NAME_OF_FATHER='Xxx Xxxxx Xxx Xxxxxxx Xxxxxxxxx' NAME_OF_MOTHER='Xxx Xxxxx Xxxx Xxxxxxx Xxxxxxxxx' NATIONALITY='xxxxxxxxxx' PARISH_OF_BIRTH='xxxxxxxxxxxxx' DISTRICT_SUBDIVISION_OF_BIRTH='XXXXXXXXXX' DISTRICT_OF_BIRTH='Xxcvxcvx Cxbdxbdxbd' ADDRESS='XXXXXXXXXX' AREA='XXXXXXXXXX' AREA_CODE='2823-657' AREA_OF_AREA_CODE='XXXXXXXXXX' PARISH_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_SUBDIVISION_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_OF_RESIDENCE='XXXXXXXXXX' PHONE='21223325' MOBILE='9695968752' EMAIL='suporte@dotist.utl.pt' WEB_ADRDRESS='http://fenix-ashes.ist.utl.pt:8080' SOCIAL_SECURITY_NUMBER='3325' PROFESSION='zzzzzzzzzzz' USERNAME='L46137' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='3325' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1'/>
+  <PERSON ID_INTERNAL='3335' DOCUMENT_ID_NUMBER='3335' EMISSION_LOCATION_OF_DOCUMENT_ID='XXXXXXXXXX' EMISSION_DATE_OF_DOCUMENT_ID='2003-11-10' EXPERATION_DATE_OF_DOCUMENT_ID='2003-11-10' NAME='Xxxxxxxxxxxxxxxx Xxxxxxxxx Xxxxxxx Xxxxxxxxx' DATE_OF_BIRTH='2003-11-10' NAME_OF_FATHER='Xxx Xxxxx Xxx Xxxxxxx Xxxxxxxxx' NAME_OF_MOTHER='Xxx Xxxxx Xxxx Xxxxxxx Xxxxxxxxx' NATIONALITY='xxxxxxxxxx' PARISH_OF_BIRTH='xxxxxxxxxxxxx' DISTRICT_SUBDIVISION_OF_BIRTH='XXXXXXXXXX' DISTRICT_OF_BIRTH='Xxcvxcvx Cxbdxbdxbd' ADDRESS='XXXXXXXXXX' AREA='XXXXXXXXXX' AREA_CODE='2823-657' AREA_OF_AREA_CODE='XXXXXXXXXX' PARISH_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_SUBDIVISION_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_OF_RESIDENCE='XXXXXXXXXX' PHONE='21223335' MOBILE='9695968752' EMAIL='suporte@dotist.utl.pt' WEB_ADRDRESS='http://fenix-ashes.ist.utl.pt:8080' SOCIAL_SECURITY_NUMBER='3335' PROFESSION='zzzzzzzzzzz' USERNAME='L6681' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='3335' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1'/>
+  <PERSON ID_INTERNAL='3336' DOCUMENT_ID_NUMBER='3336' EMISSION_LOCATION_OF_DOCUMENT_ID='XXXXXXXXXX' EMISSION_DATE_OF_DOCUMENT_ID='2003-11-10' EXPERATION_DATE_OF_DOCUMENT_ID='2003-11-10' NAME='Xxxxxxxxxxxxxxxx Xxxxxxxxx Xxxxxxx Xxxxxxxxx' DATE_OF_BIRTH='2003-11-10' NAME_OF_FATHER='Xxx Xxxxx Xxx Xxxxxxx Xxxxxxxxx' NAME_OF_MOTHER='Xxx Xxxxx Xxxx Xxxxxxx Xxxxxxxxx' NATIONALITY='xxxxxxxxxx' PARISH_OF_BIRTH='xxxxxxxxxxxxx' DISTRICT_SUBDIVISION_OF_BIRTH='XXXXXXXXXX' DISTRICT_OF_BIRTH='Xxcvxcvx Cxbdxbdxbd' ADDRESS='XXXXXXXXXX' AREA='XXXXXXXXXX' AREA_CODE='2823-657' AREA_OF_AREA_CODE='XXXXXXXXXX' PARISH_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_SUBDIVISION_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_OF_RESIDENCE='XXXXXXXXXX' PHONE='21223336' MOBILE='9695968752' EMAIL='suporte@dotist.utl.pt' WEB_ADRDRESS='http://fenix-ashes.ist.utl.pt:8080' SOCIAL_SECURITY_NUMBER='3336' PROFESSION='zzzzzzzzzzz' USERNAME='L9716' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='3336' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1'/>
+  <!-- Added -->
+  <PERSON ID_INTERNAL='1' USERNAME='DepartmentCreditsManager' DOCUMENT_ID_NUMBER='1' EMISSION_LOCATION_OF_DOCUMENT_ID='XXXXXXXXXX' EMISSION_DATE_OF_DOCUMENT_ID='2003-11-10' EXPERATION_DATE_OF_DOCUMENT_ID='2003-11-10' NAME='Xxxxxxxxxxxxxxxx Xxxxxxxxx Xxxxxxx Xxxxxxxxx' DATE_OF_BIRTH='2003-11-10' NAME_OF_FATHER='Xxx Xxxxx Xxx Xxxxxxx Xxxxxxxxx' NAME_OF_MOTHER='Xxx Xxxxx Xxxx Xxxxxxx Xxxxxxxxx' NATIONALITY='xxxxxxxxxx' PARISH_OF_BIRTH='xxxxxxxxxxxxx' DISTRICT_SUBDIVISION_OF_BIRTH='XXXXXXXXXX' DISTRICT_OF_BIRTH='Xxcvxcvx Cxbdxbdxbd' ADDRESS='XXXXXXXXXX' AREA='XXXXXXXXXX' AREA_CODE='2823-657' AREA_OF_AREA_CODE='XXXXXXXXXX' PARISH_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_SUBDIVISION_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_OF_RESIDENCE='XXXXXXXXXX' PHONE='21223336' MOBILE='9695968752' EMAIL='suporte@dotist.utl.pt' WEB_ADRDRESS='http://fenix-ashes.ist.utl.pt:8080' SOCIAL_SECURITY_NUMBER='3336' PROFESSION='zzzzzzzzzzz' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='3336' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1'/>
+  <PERSON_ROLE ID_INTERNAL='1' KEY_ROLE='1' KEY_PERSON='1'/>
+  <PERSON_ROLE ID_INTERNAL='2' KEY_ROLE='14' KEY_PERSON='1'/>  
+  <!-- Added -->
+  <PERSON_ROLE ID_INTERNAL='23366' KEY_ROLE='3' KEY_PERSON='3309'/>
+  <PERSON_ROLE ID_INTERNAL='24975' KEY_ROLE='9' KEY_PERSON='3309'/>
+  <PERSON_ROLE ID_INTERNAL='6617' KEY_ROLE='1' KEY_PERSON='3309'/>
+  <PERSON_ROLE ID_INTERNAL='23373' KEY_ROLE='3' KEY_PERSON='3325'/>
+  <PERSON_ROLE ID_INTERNAL='24990' KEY_ROLE='9' KEY_PERSON='3325'/>
+  <PERSON_ROLE ID_INTERNAL='6649' KEY_ROLE='1' KEY_PERSON='3325'/>
+  <PERSON_ROLE ID_INTERNAL='45308' KEY_ROLE='2' KEY_PERSON='3325'/>
+  <PERSON_ROLE ID_INTERNAL='6704' KEY_ROLE='1' KEY_PERSON='3335'/>
+  <PERSON_ROLE ID_INTERNAL='32862' KEY_ROLE='2' KEY_PERSON='3335'/>
+  <PERSON_ROLE ID_INTERNAL='6706' KEY_ROLE='1' KEY_PERSON='3336'/>
+  <PERSON_ROLE ID_INTERNAL='32863' KEY_ROLE='2' KEY_PERSON='3336'/>
+  <ROLE ID_INTERNAL='1' ROLE_TYPE='1' PORTAL_SUB_APPLICATION='/person' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.person'/>
+  <ROLE ID_INTERNAL='2' ROLE_TYPE='2' PORTAL_SUB_APPLICATION='/student' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.student'/>
+  <ROLE ID_INTERNAL='3' ROLE_TYPE='3' PORTAL_SUB_APPLICATION='/teacher' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.teacher'/>
+  <ROLE ID_INTERNAL='4' ROLE_TYPE='4' PORTAL_SUB_APPLICATION='/sop' PAGE='/paginaPrincipal.jsp' PAGE_NAME_PROPERTY='portal.sop'/>
+  <ROLE ID_INTERNAL='5' ROLE_TYPE='5' PORTAL_SUB_APPLICATION='/candidato' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.candidate'/>
+  <ROLE ID_INTERNAL='6' ROLE_TYPE='6' PORTAL_SUB_APPLICATION='/posGraduacao' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.masterDegree'/>
+  <ROLE ID_INTERNAL='7' ROLE_TYPE='7' PORTAL_SUB_APPLICATION='/treasury' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.treasury'/>
+  <ROLE ID_INTERNAL='8' ROLE_TYPE='8' PORTAL_SUB_APPLICATION='/coordinator' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.coordinator'/>
+  <ROLE ID_INTERNAL='9' ROLE_TYPE='9' PORTAL_SUB_APPLICATION='/employee' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.employee'/>
+  <ROLE ID_INTERNAL='10' ROLE_TYPE='10' PORTAL_SUB_APPLICATION='/managementAssiduousness' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.managementAssiduousness'/>
+  <ROLE ID_INTERNAL='11' ROLE_TYPE='11' PORTAL_SUB_APPLICATION='/manager' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.manager'/>
+  <ROLE ID_INTERNAL='13' ROLE_TYPE='13' PORTAL_SUB_APPLICATION='/credits' PAGE='index.do' PAGE_NAME_PROPERTY='portal.credits'/>
+  <ROLE ID_INTERNAL='14' ROLE_TYPE='14' PORTAL_SUB_APPLICATION='/credits' PAGE='index.do' PAGE_NAME_PROPERTY='portal.credits.department'/>
+  <ROLE ID_INTERNAL='20' ROLE_TYPE='20' PORTAL_SUB_APPLICATION='/teacher' PAGE='/seminariesIndex.jsp' PAGE_NAME_PROPERTY='portal.seminariesCoordinator'/>
+  <ROLE ID_INTERNAL='21' ROLE_TYPE='19' PORTAL_SUB_APPLICATION='/operator' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.operator'/>
+  <ROLE ID_INTERNAL='22' ROLE_TYPE='21' PORTAL_SUB_APPLICATION='/webSiteManager' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.webSiteManager'/>
+  <ass_CENTRO_CUSTO codigoInterno='1' sigla='0321' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2='SEC. PESSOAL DOC. E INVESTIGADOR'/>
+  <ass_CENTRO_CUSTO codigoInterno='2' sigla='' departamento='' seccao1='' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='3' sigla='0310' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='4' sigla='2003' departamento='DEPARTAMENTO DE ENGENHARIA CIVIL' seccao1='SEC.HIDRAULICA E REC.HID.AMBIENTAIS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='5' sigla='2002' departamento='DEPARTAMENTO DE ENGENHARIA CIVIL' seccao1='SECCAO DE ESTRUTURAS E CONSTRUCAO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='6' sigla='2202' departamento='DEP. DE ENGENHARIA MECANICA' seccao1='SECCAO DE PROJECTO MECANICO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='7' sigla='2001' departamento='DEPARTAMENTO DE ENGENHARIA CIVIL' seccao1='DEC - PRESIDENCIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='8' sigla='2106' departamento='DEP. ENG. ELECT. E COMPUTADORES' seccao1='SECCAO DE PROPAGACAO E RADIACAO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='9' sigla='0000' departamento='' seccao1='' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='10' sigla='2401' departamento='DEPARTAMENTO DE FISICA' seccao1='DEPARTAMENTO DE FISICA-PRESIDENCIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='11' sigla='2604' departamento='DEPARTAMENTO DE ENGENHARIA MINAS' seccao1='LAB. MINERALURGIA E PLAN. MINEIRO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='12' sigla='2102' departamento='DEP. ENG. ELECT. E COMPUTADORES' seccao1='SECCAO DE ELECTRONICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='13' sigla='0108' departamento='' seccao1='GAB. COORDENADOR DE OBRAS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='14' sigla='2103' departamento='DEP. ENG. ELECT. E COMPUTADORES' seccao1='SEC. ELECT. TEORICA E MEDIDAS ELECT' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='15' sigla='2004' departamento='DEPARTAMENTO DE ENGENHARIA CIVIL' seccao1='SECCAO DE MECANICA APLICADA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='16' sigla='2301' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='DEQ - PRESIDENCIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='17' sigla='2602' departamento='DEPARTAMENTO DE ENGENHARIA MINAS' seccao1='LAB. MINERALOGIA E PETROLOGIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='18' sigla='2701' departamento='DEPART. DE ENGENHARIA DE MATERIAIS' seccao1='DEP. ENG. MATERIAIS - PRESIDENCIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='19' sigla='0500' departamento='CENTRO DE INFORMATICA' seccao1='' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='20' sigla='2306' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='SEC. QUIMICA E FISICA TERMODINAMICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='21' sigla='2109' departamento='DEP. ENG. ELECT. E COMPUTADORES' seccao1='SECCAO DE TELECOMUNICACOES' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='22' sigla='2207' departamento='DEP. DE ENGENHARIA MECANICA' seccao1='SECCAO DE AMBIENTE E ENERGIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='23' sigla='2603' departamento='DEPARTAMENTO DE ENGENHARIA MINAS' seccao1='SECCAO DE EXPLORACAO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='24' sigla='1116' departamento='' seccao1='CENTRO DE QUIMICA-FISICA MOLECULAR' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='25' sigla='1130' departamento='' seccao1='CENTRO DE AUTOMATICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='26' sigla='2206' departamento='DEP. DE ENGENHARIA MECANICA' seccao1='SECCAO TERMOFLUIDOS E ENERGIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='27' sigla='1123' departamento='' seccao1='CENTRO VALOR. RECURSOS MINERAIS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='28' sigla='2303' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='SEC. PROJECTO QUIMICO ENG.REACCOES' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='29' sigla='2005' departamento='DEPARTAMENTO DE ENGENHARIA CIVIL' seccao1='SECCAO DE URBANIZACAO E SISTEMAS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='30' sigla='2308' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='SECCAO DE QUIMICA ORGANICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='31' sigla='2204' departamento='DEP. DE ENGENHARIA MECANICA' seccao1='SECCAO DE TECNOLOGIA MECANICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='32' sigla='2502' departamento='DEPARTAMENTO DE MATEMATICA' seccao1='SECCAO ALGEBRA E ANALISE' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='33' sigla='2310' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='LABORATORIO DE ANALISES' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='34' sigla='2801' departamento='DEPARTAMENTO DE ENG. INFORMATICA' seccao1='DEP. ENG. INFORMATICA - PRESIDENCIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='35' sigla='0412' departamento='SERVICOS DE APOIO TECNICO' seccao1='MUSEU DO IST' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='36' sigla='2007' departamento='DEPARTAMENTO DE ENGENHARIA CIVIL' seccao1='SEC. ARQ.,CARTOG. E MODELACAO GEOM.' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='37' sigla='2101' departamento='DEP. ENG. ELECT. E COMPUTADORES' seccao1='DEEC - PRESIDENCIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='38' sigla='1107' departamento='' seccao1='CENTRO DE BIOTECNOLOGIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='39' sigla='0211' departamento='SERVIÇOS ACADEMICOS' seccao1='REPARTICAO ACADEMICA' seccao2='SECCAO DE GRADUACAO'/>
+  <ass_CENTRO_CUSTO codigoInterno='40' sigla='0107' departamento='' seccao1='GPS-GAB. PROTECCAO E SEGURANCA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='41' sigla='0324' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2='SECCAO DE VENCIMENTOS'/>
+  <ass_CENTRO_CUSTO codigoInterno='42' sigla='1301' departamento='' seccao1='INESC' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='43' sigla='2307' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='SECCAO DE QUIMICA INORGANICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='44' sigla='2302' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='SEC. FENOMENOS TRANSF. APLICADA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='45' sigla='1113' departamento='' seccao1='CENTRO DE QUIMICA ESTRUTURAL' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='46' sigla='2501' departamento='DEPARTAMENTO DE MATEMATICA' seccao1='DEPART. MATEMATICA - PRESIDENCIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='47' sigla='2503' departamento='DEPARTAMENTO DE MATEMATICA' seccao1='SECCAO ESTATISTICA E APLICACOES' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='48' sigla='2104' departamento='DEP. ENG. ELECT. E COMPUTADORES' seccao1='SECCAO DE ENERGIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='49' sigla='1115' departamento='' seccao1='CENTRO DE ANALISES E PROC.SINAIS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='50' sigla='2205' departamento='DEP. DE ENGENHARIA MECANICA' seccao1='SECCAO DE TERMODINAMICA APLICADA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='51' sigla='0606' departamento='BIBLIOTECA' seccao1='BIBLIOTECA DEP. ENG. QUIMICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='52' sigla='0603' departamento='BIBLIOTECA' seccao1='BIBLIOTECA CENTRAL' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='53' sigla='2108' departamento='DEP. ENG. ELECT. E COMPUTADORES' seccao1='SECCAO DE SISTEMAS E CONTROLO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='54' sigla='2201' departamento='DEP. DE ENGENHARIA MECANICA' seccao1='DEM - PRESIDENCIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='55' sigla='2107' departamento='DEP. ENG. ELECT. E COMPUTADORES' seccao1='SEC. SIST. DIGITAIS E COMPUTADORES' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='56' sigla='2006' departamento='DEPARTAMENTO DE ENGENHARIA CIVIL' seccao1='SEC.GEOTECNIA,VIAS COMUNIC.TRANSPOR' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='57' sigla='2504' departamento='DEPARTAMENTO DE MATEMATICA' seccao1='SEC. MATEM. APLIC.E ANAL. NUMERICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='58' sigla='2203' departamento='DEP. DE ENGENHARIA MECANICA' seccao1='SECCAO DE SISTEMAS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='59' sigla='1603' departamento='' seccao1='POLO IST - INST.TELECOMUNICACOES' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='60' sigla='2296' departamento='DEP. DE ENGENHARIA MECANICA' seccao1='SECCAO DE MECANICA AEROESPACIAL' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='61' sigla='0404' departamento='SERVICOS DE APOIO TECNICO' seccao1='MOTORISTAS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='62' sigla='0315' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO CONTABILIDADE DE PROJECTOS'/>
+  <ass_CENTRO_CUSTO codigoInterno='63' sigla='3001' departamento='' seccao1='SEC. AUTONOMA DE ECONOMIA E GESTAO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='64' sigla='1112' departamento='' seccao1='CENTRO DE ELECTRODINAMICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='65' sigla='0911' departamento='' seccao1='TAGUS PARQUE - POLO OEIRAS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='66' sigla='2105' departamento='DEP. ENG. ELECT. E COMPUTADORES' seccao1='SEC. MAQ. ELECT. E ELECT. POTENCIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='67' sigla='0221' departamento='SERVIÇOS ACADEMICOS' seccao1='REPARTICAO PEDAGOGICA' seccao2='SECCAO DE ORGANIZACAO PEDAGOGICA'/>
+  <ass_CENTRO_CUSTO codigoInterno='68' sigla='1101' departamento='' seccao1='CENTRO DE FUSAO NUCLEAR' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='69' sigla='1601' departamento='' seccao1='POLO IST - ISR' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='70' sigla='0503' departamento='CENTRO DE INFORMATICA' seccao1='CIIST - SERVICO DE EXPLORACAO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='71' sigla='2505' departamento='DEPARTAMENTO DE MATEMATICA' seccao1='SECCAO CIENCIA DE COMPUTACAO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='72' sigla='2305' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='SECCAO QUIMICA ANALITICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='73' sigla='3002' departamento='' seccao1='SEC. AUTONOMA DE ENGENHARIA NAVAL' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='74' sigla='0312' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO DE ECONOMATO'/>
+  <ass_CENTRO_CUSTO codigoInterno='75' sigla='0212' departamento='SERVIÇOS ACADEMICOS' seccao1='REPARTICAO ACADEMICA' seccao2='SECCAO DE POS-GRADUACAO'/>
+  <ass_CENTRO_CUSTO codigoInterno='76' sigla='0453' departamento='SERVICOS DE APOIO TECNICO' seccao1='GABINETE DE GESTAO DE ALOJAMENTOS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='77' sigla='0323' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2='SECCAO DE SERVICOS SOCIAIS'/>
+  <ass_CENTRO_CUSTO codigoInterno='78' sigla='0314' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO DE TESOURARIA'/>
+  <ass_CENTRO_CUSTO codigoInterno='79' sigla='2601' departamento='DEPARTAMENTO DE ENGENHARIA MINAS' seccao1='DEP. MINAS - PRESIDENCIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='80' sigla='2605' departamento='DEPARTAMENTO DE ENGENHARIA MINAS' seccao1='LABORATORIO DE GEOLOGIA APLICADA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='81' sigla='0609' departamento='BIBLIOTECA' seccao1='BIBLIOTECA DEP. ENG. FISICA E TEC.' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='82' sigla='0605' departamento='BIBLIOTECA' seccao1='BIBLIOTECA DEP. ENG. MECANICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='83' sigla='0402' departamento='SERVICOS DE APOIO TECNICO' seccao1='SERV. LIMPEZA E AUXILIAR' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='84' sigla='0415' departamento='SERVICOS DE APOIO TECNICO' seccao1='GESTAO DE EDIFICIOS E ESPACOS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='85' sigla='0411' departamento='SERVICOS DE APOIO TECNICO' seccao1='ESCOLA POS GRADUACAO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='86' sigla='1410' departamento='' seccao1='CIIST' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='87' sigla='0406' departamento='SERVICOS DE APOIO TECNICO' seccao1='EXPEDICAO E CORREIO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='88' sigla='0403' departamento='SERVICOS DE APOIO TECNICO' seccao1='REPROGRAFIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='89' sigla='0700' departamento='OFICINAS' seccao1='' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='90' sigla='0322' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2='SECCAO DE PESSOAL NAO DOCENTE'/>
+  <ass_CENTRO_CUSTO codigoInterno='91' sigla='0508' departamento='CENTRO DE INFORMATICA' seccao1='CIIST-EQUIPAMENTO MICROINFORMATICO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='92' sigla='0316' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='NUCLEO DE VENCIMENTOS'/>
+  <ass_CENTRO_CUSTO codigoInterno='93' sigla='0506' departamento='CENTRO DE INFORMATICA' seccao1='CIIST - SERVICO DE APLICACOES' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='94' sigla='1611' departamento='' seccao1='LAB. HIDRAULICA REC. HIDRICOS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='95' sigla='0111' departamento='' seccao1='GEP-GAB. ESTUDOS E PLANEAMENTO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='96' sigla='0501' departamento='CENTRO DE INFORMATICA' seccao1='CIIST - CONSELHO DIRECTIVO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='97' sigla='0311' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO DE CONTABILIDADE CENTRAL'/>
+  <ass_CENTRO_CUSTO codigoInterno='98' sigla='2297' departamento='DEP. DE ENGENHARIA MECANICA' seccao1='SEC.TERMODINAMICA APLICADA-OFICINAS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='99' sigla='0114' departamento='' seccao1='NAPPI-NUCLEO APOIO PROT.PROP.INTEL.' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='100' sigla='0003' departamento='ORGAOS CENTRAIS' seccao1='CONSELHO DIRECTIVO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='101' sigla='0416' departamento='SERVICOS DE APOIO TECNICO' seccao1='EDITORA IST/PRESS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='102' sigla='0502' departamento='CENTRO DE INFORMATICA' seccao1='CIIST - SERV.DE GESTAO DE SISTEMAS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='103' sigla='0117' departamento='' seccao1='GAB.APOIO PROD.CONT. E E-LEARNING' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='104' sigla='0115' departamento='' seccao1='GAEP-GAB.APOIO ESCOLA POS-GRADUACAO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='105' sigla='0004' departamento='ORGAOS CENTRAIS' seccao1='CONSELHO CIENTIFICO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='106' sigla='0101' departamento='' seccao1='GABINETE JURIDICO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='107' sigla='0414' departamento='SERVICOS DE APOIO TECNICO' seccao1='SERVICOS AUDIOVISUAIS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='108' sigla='0320' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='109' sigla='2304' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='SEC. PROC. ENG. QUIMICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='110' sigla='1131' departamento='' seccao1='CENTRO FISICA INTERAC.FUNDAMENTAIS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='111' sigla='0104' departamento='' seccao1='GIRE-GAB.REL.PUBLICAS E PROMOCAO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='112' sigla='0607' departamento='BIBLIOTECA' seccao1='BIBLIOTECA DEP. ENG. CIVIL' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='113' sigla='0105' departamento='' seccao1='GACIP-GAB. APOIO E COORD. E PROJ.' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='114' sigla='2309' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='SECCAO DE BIOTECNOLOGIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='115' sigla='0604' departamento='BIBLIOTECA' seccao1='BIBLIOTECA DEP. ENG. ELECT E COMP.' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='116' sigla='0116' departamento='' seccao1='TAGUSPARK SERV.ADMINISTRATIVOS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='117' sigla='0608' departamento='BIBLIOTECA' seccao1='BIBLIOTECA DEP. ENG. MATERIAIS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='118' sigla='0110' departamento='' seccao1='NUCLEO DE COOPERACAO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='119' sigla='1306' departamento='' seccao1='ADIST' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='120' sigla='1610' departamento='' seccao1='LABORATORIO DE ESTRUTURAS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='121' sigla='0103' departamento='' seccao1='GAPE-GAB. APOIO AO ESTUDANTE' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='122' sigla='1109' departamento='' seccao1='CENTRO MULTIDISC.CIRCUITOS S.T.M.' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='123' sigla='0452' departamento='SERVICOS DE APOIO TECNICO' seccao1='SERVICOS DE ACCAO SOCIAL' seccao2='FORMACAO DE NAO DOCENTES'/>
+  <ass_CENTRO_CUSTO codigoInterno='124' sigla='0505' departamento='CENTRO DE INFORMATICA' seccao1='CIIST - SERVICO DE FORMACAO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='125' sigla='0005' departamento='ORGAOS CENTRAIS' seccao1='CONSELHO PEDAGOGICO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='126' sigla='4015' departamento='COORDENACAO DE LICENCIATURA' seccao1='COORD. LICENCIATURA ENG. AMBIENTE' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='127' sigla='1001' departamento='' seccao1='' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='128' sigla='1119' departamento='' seccao1='CENTRO DE FISICA DOS PLASMAS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='129' sigla='0109' departamento='' seccao1='CENTRO DE CONGRESSOS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='130' sigla='1121' departamento='' seccao1='CENTRO DE TERM.APLIC.E MEC.FLUIDOS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='131' sigla='0001' departamento='ORGAOS CENTRAIS' seccao1='ASSEMBLEIA DE REPRESENTANTES' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='132' sigla='1129' departamento='' seccao1='CENTRO DE ELECTRONICA APLICADA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='133' sigla='1126' departamento='' seccao1='CENTRO SIST. URBANOS E REGIONAIS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='134' sigla='1608' departamento='' seccao1='ICIST - INSTITUTO DA CONSTRUCAO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='135' sigla='1602' departamento='' seccao1='POLO IST - IDEMEC' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='136' sigla='1124' departamento='' seccao1='CENTRO DE PETROLOGIA E GEOQUIMICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='137' sigla='1114' departamento='' seccao1='CENTRO DE FISICA MOLECULAR' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='138' sigla='1613' departamento='' seccao1='LABORATORIO DE MECATRONICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='139' sigla='1111' departamento='' seccao1='SAID: SERV. APOIO I&amp;D-COMPLEXO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='140' sigla='0106' departamento='' seccao1='GAIST-GAB. APOIO INFORMATICO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='141' sigla='0313' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO DE PATRIMONIO'/>
+  <ass_CENTRO_CUSTO codigoInterno='142' sigla='0317' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='GABINETE DE GESTÃO DE PROJECTOS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='143' sigla='0721' departamento='OFICINAS' seccao1='OFICINAS CENTRAIS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='144' sigla='1307' departamento='' seccao1='FUNDETEC' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='145' sigla='0451' departamento='SERVICOS DE APOIO TECNICO' seccao1='SERVICOS DE ACCAO SOCIAL' seccao2='CASIST-CENTRO ASSIST.SOCIAL I.S.T.'/>
+  <ass_CENTRO_CUSTO codigoInterno='146' sigla='1104' departamento='' seccao1='CENTRO DE GEOTECNIA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='147' sigla='1133' departamento='' seccao1='UNIDADE DE ENG.TECNOLOGIA NAVAL' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='148' sigla='1137' departamento='' seccao1='C.ESTUDOS INOV.TECN.POL.DESENVOLV.' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='149' sigla='1501' departamento='' seccao1='CENTRO FUSAO NUCLEAR-LAB.ASSOCIADO' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='150' sigla='1110' departamento='' seccao1='CENTRO MULTIDISC. ASTROFISICA' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='151' sigla='1604' departamento='' seccao1='INST.CIENCIA E ENG.MATERIAIS E SUP.' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='152' sigla='1711' departamento='' seccao1='CENTRO AMBIENTE E TECN.MARITIMOS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='153' sigla='1102' departamento='' seccao1='CENTRO DE ESTUDOS E HIDROSISTEMAS' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='154' sigla='1502' departamento='CENTRO FISICA PLASMAS-LAB.ASSOCIADO' seccao1='' seccao2=''/>
+  <ass_CENTRO_CUSTO codigoInterno='155' sigla='1303' departamento='ITEC' seccao1='' seccao2=''/>
+  <DEPARTMENT ID_INTERNAL='1' NAME='DEP. ENG. ELECT. E COMPUTADORES' CODE='21'/>
+  <DEPARTMENT ID_INTERNAL='2' NAME='DEPARTAMENTO DE ENGENHARIA QUIMICA' CODE='23'/>
+  <DEPARTMENT ID_INTERNAL='3' NAME='DEPARTAMENTO DE ENGENHARIA CIVIL' CODE='20'/>
+  <DEPARTMENT ID_INTERNAL='4' NAME='DEP. DE ENGENHARIA MECANICA' CODE='22'/>
+  <DEPARTMENT ID_INTERNAL='5' NAME='DEPARTAMENTO DE FISICA' CODE='24'/>
+  <DEPARTMENT ID_INTERNAL='6' NAME='DEPARTAMENTO DE ENGENHARIA MINAS' CODE='26'/>
+  <DEPARTMENT ID_INTERNAL='7' NAME='DEPARTAMENTO DE MATEMATICA' CODE='25'/>
+  <DEPARTMENT ID_INTERNAL='8' NAME='DEPART. DE ENGENHARIA DE MATERIAIS' CODE='27'/>
+  <DEPARTMENT ID_INTERNAL='9' NAME='DEPARTAMENTO DE ENG. INFORMATICA' CODE='28'/>
+  <DEPARTMENT ID_INTERNAL='10' NAME='SEC. AUTONOMA DE ECONOMIA E GESTAO' CODE='3001'/>
+  <DEPARTMENT ID_INTERNAL='11' NAME='SEC. AUTONOMA DE ENGENHARIA NAVAL' CODE='3002'/>
+  <ass_FUNCIONARIO_HISTORICO codigoInterno='13360' chaveFuncionario='1578' chaveCCCorrespondencia='36' dataInicio='1970-01-01' quem='0' quando='2003-10-09 10:45:34.0'/>
+  <ass_FUNCIONARIO_HISTORICO codigoInterno='9928' chaveFuncionario='1578' chaveFuncResponsavel='0' dataInicio='1970-01-01' quem='0' quando='2003-10-09 10:42:55.0'/>
+  <ass_FUNCIONARIO_HISTORICO codigoInterno='9929' chaveFuncionario='1578' chaveCCVencimento='2' dataInicio='1970-01-01' quem='0' quando='2003-10-09 10:42:55.0'/>
+  <ass_FUNCIONARIO_HISTORICO codigoInterno='9930' chaveFuncionario='1578' calendario='LISBOA' dataInicio='1970-01-01' quem='0' quando='2003-10-09 10:42:55.0'/>
+  <ass_FUNCIONARIO_HISTORICO codigoInterno='17623' chaveFuncionario='1578' chaveCCLocalTrabalho='36' dataInicio='1970-01-01' quem='0' quando='2003-10-09 10:53:33.0'/>
+  <ass_FUNCIONARIO_HISTORICO codigoInterno='13376' chaveFuncionario='1593' chaveCCCorrespondencia='32' dataInicio='1970-01-01' quem='0' quando='2003-10-09 10:45:35.0'/>
+  <ass_FUNCIONARIO_HISTORICO codigoInterno='17639' chaveFuncionario='1593' chaveCCLocalTrabalho='32' dataInicio='1970-01-01' quem='0' quando='2003-10-09 10:53:34.0'/>
+  <ass_FUNCIONARIO_HISTORICO codigoInterno='9976' chaveFuncionario='1593' chaveFuncResponsavel='0' dataInicio='1970-01-01' quem='0' quando='2003-10-09 10:42:56.0'/>
+  <ass_FUNCIONARIO_HISTORICO codigoInterno='9977' chaveFuncionario='1593' chaveCCVencimento='2' dataInicio='1970-01-01' quem='0' quando='2003-10-09 10:42:56.0'/>
+  <ass_FUNCIONARIO_HISTORICO codigoInterno='9978' chaveFuncionario='1593' calendario='LISBOA' dataInicio='1970-01-01' quem='0' quando='2003-10-09 10:42:56.0'/>
+  <ass_FUNCIONARIO codigoInterno='1578' chavePessoa='3309' numeroMecanografico='4308' chaveHorarioActual='0' antiguidade='1970-01-01'/>
+  <ass_FUNCIONARIO codigoInterno='1593' chavePessoa='3325' numeroMecanografico='4324' chaveHorarioActual='0' antiguidade='1970-01-01'/>
+  <!-- Added -->
+  <CREDITS_MANAGER_DEPARTMENT ID_INTERNAL='1' KEY_DEPARTMENT='7' KEY_PERSON='1'/>
+  
+  <DEGREE_FINAL_PROJECT ID_INTERNAL='1' TITLE='Degree final project 1' KEY_EXECUTION_YEAR='1' />
+  <DEGREE_FINAL_PROJECT ID_INTERNAL='2' TITLE='DFP 2' KEY_EXECUTION_YEAR='2' />
+  <DEGREE_FINAL_PROJECT ID_INTERNAL='3' TITLE='DFP 3' KEY_EXECUTION_YEAR='2' />  
+
+  <DEGREE_FINAL_PROJECT_ORIENTATION ID_INTERNAL='1' KEY_DEGREE_FINAL_PROJECT="1"  KEY_TEACHER='947' PERCENTAGE="100.0"  CO_ORIENTATION="0"/>
+  <DEGREE_FINAL_PROJECT_ORIENTATION ID_INTERNAL='2' KEY_DEGREE_FINAL_PROJECT="3"  KEY_TEACHER='947' PERCENTAGE="10.0"  CO_ORIENTATION="1"/>
+  <!-- Added -->
+</dataset>
