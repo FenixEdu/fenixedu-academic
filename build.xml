@@ -129,7 +129,35 @@
 		  <replacefilter 
 		    token="@db.alias@" 
 		    property="db.alias"/>
-		    
+
+		  <replacefilter 
+		    token="@db.assiduousness.user@" 
+		    property="db.assiduousness.user"/>
+		  <replacefilter 
+		    token="@db.assiduousness.pass@" 
+		    property="db.assiduousness.pass"/>
+		  <replacefilter 
+		    token="@db.assiduousness.name@" 
+		    property="db.assiduousness.name"/>
+		  <replacefilter 
+		    token="@db.assiduousness.alias@" 
+		    property="db.assiduousness.alias"/>
+		  <replacefilter 
+		    token="@db.assiduousness.platform@" 
+		    property="db.assiduousness.platform"/>
+		  <replacefilter 
+		    token="@db.assiduousness.driver@" 
+		    property="db.assiduousness.driver"/>
+		  <replacefilter 
+		    token="@db.assiduousness.protocol@" 
+		    property="db.assiduousness.protocol"/>
+		  <replacefilter 
+		    token="@db.assiduousness.subprotocol@" 
+		    property="db.assiduousness.subprotocol"/>
+		  <replacefilter 
+		    token="@db.assiduousness.validationQuery@" 
+		    property="db.assiduousness.validationQuery"/>
+
 		  <replacefilter 
 		    token="@dbMarcacoesPonto.user@" 
 		    property="dbMarcacoesPonto.user"/>
@@ -408,7 +436,7 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/AcceptTeacherShiftPercentageTest.java"/>
+                    <include name="**/WriteCreditsTeacherTest.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
                    	<exclude name="**/StudentShiftEnrolmentTest.java"/>
@@ -804,14 +832,13 @@
 	</target>
 
 	<target name="validate-xml">
-<!--		<xmlvalidate warn="false" failonerror="false">
+		<xmlvalidate warn="false" failonerror="false">
 				<fileset dir="${webapp.metadata}" includes="**/*.xml">
 					<exclude name="**/repository*.xml"/>
 					<exclude name="**/validator-rules.xml"/>
 					<exclude name="**/fenix-validator-rules.xml"/>					
 				</fileset>
-		</xmlvalidate> -->
-		
+		</xmlvalidate>
 	</target> 
 	
 	
