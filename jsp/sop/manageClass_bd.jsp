@@ -102,7 +102,7 @@ Turnos:
 			</td>
 		</tr>
 		<bean:define id="deleteConfirm">
-			return confirm('<bean:message key="message.confirm.delete.class"/>')
+			return confirm('<bean:message key="message.confirm.remove.shift"/>')
 		</bean:define>			
 		<logic:iterate id="infoShift" name="<%= SessionConstants.SHIFTS %>">
 			<bean:define id="infoShiftOID" name="infoShift" property="idInternal"/>

@@ -224,13 +224,21 @@ public abstract class Cloner {
 			}
 		});
 
+		List infoClassesList =
+			(
+				List) CollectionUtils
+					.collect(shift.getAssociatedClasses(), new Transformer() {
+			public Object transform(Object arg0) {
+				return copyClass2InfoClass((ITurma) arg0);
+			}
+		});
+		
 		System.out.println("infoLessonList.size= " + infoLessonList.size());
 
 		copyObjectProperties(infoShift, shift);
-
 		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-
 		infoShift.setInfoLessons(infoLessonList);
+		infoShift.setInfoClasses(infoClassesList);
 
 		return infoShift;
 	}
@@ -476,12 +484,22 @@ public abstract class Cloner {
 				return copyILesson2InfoLesson((IAula) arg0);
 			}
 		});
+		
+		List infoClassesList =
+			(
+				List) CollectionUtils
+					.collect(shift.getAssociatedClasses(), new Transformer() {
+			public Object transform(Object arg0) {
+				return copyClass2InfoClass((ITurma) arg0);
+			}
+		});
 
 		copyObjectProperties(infoShift, shift);
 		infoShift.setAvailabilityFinal(shift.getAvailabilityFinal());
 		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 		infoShift.setIdInternal(shift.getIdInternal());
 		infoShift.setInfoLessons(infoLessonList);
+		infoShift.setInfoClasses(infoClassesList);
 
 		return infoShift;
 	}

@@ -23,6 +23,7 @@ public class InfoShift extends InfoObject {
 	protected Integer availabilityFinal;
 	protected InfoExecutionCourse _infoDisciplinaExecucao;
 	protected List infoLessons;
+	protected List infoClasses;
 
 	public InfoShift() {
 	}
@@ -36,6 +37,9 @@ public class InfoShift extends InfoObject {
 		setTipo(tipo);
 		setLotacao(lotacao);
 		setInfoDisciplinaExecucao(infoDisciplinaExecucao);
+	}
+	public Integer getSize() {
+		return new Integer(infoClasses.size());
 	}
 
 	public String getNome() {
@@ -161,6 +165,20 @@ public class InfoShift extends InfoObject {
 	 */
 	public void setInfoLessons(List list) {
 		infoLessons = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getInfoClasses() {
+		return infoClasses;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setInfoClasses(List list) {
+		infoClasses = list;
 	}
 
 }

@@ -32,4 +32,8 @@ public interface ITurno extends IDomainObject {
   
   List getAssociatedLessons();
   void setAssociatedLessons(List lessons);
+  List getAssociatedClasses();
+  void setAssociatedClasses(List classes);
+  
 }
+

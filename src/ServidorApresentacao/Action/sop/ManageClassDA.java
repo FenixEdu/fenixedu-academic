@@ -140,7 +140,7 @@ public class ManageClassDA
 					userView,
 					"ReadShiftByOID",
 					args);
-			System.out.println("shift= " + infoShift);
+			//System.out.println("shift= " + infoShift);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException();
 		}

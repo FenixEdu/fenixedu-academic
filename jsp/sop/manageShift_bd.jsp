@@ -17,7 +17,8 @@
 
 <jsp:include page="editShift.jsp"/>
 
+<br />
 <jsp:include page="shiftLessonList.jsp"/>
 
 <br />
-Listar aqui as turmas a que pertence.
+<jsp:include page="shiftClassesList.jsp"/>
