@@ -335,12 +335,12 @@ insert into RESTRICTION values (37, 'Dominio.RestrictionCurricularCourseNotDone'
 
 -- -----------------------------
 delete from ENROLMENT;
-insert into ENROLMENT values (1, 1, 1, 1, 4, 'Dominio.Enrolment', null, 1);
-insert into ENROLMENT values (2, 1, 2, 1, 4, 'Dominio.Enrolment', null, 1);
-insert into ENROLMENT values (3, 1, 3, 1, 4, 'Dominio.Enrolment', null, 1);
-insert into ENROLMENT values (4, 1, 4, 1, 4, 'Dominio.Enrolment', null, 1);
-insert into ENROLMENT values (5, 1, 5, 1, 4, 'Dominio.Enrolment', null, 1);
-insert into ENROLMENT values (6, 1, 6, 1, 4, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (1, 1, 1, 1, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (2, 1, 2, 1, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (3, 1, 3, 1, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (4, 1, 4, 1, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (5, 1, 5, 1, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (6, 1, 6, 1, 1, 'Dominio.Enrolment', null, 1);
 
 -- insert into ENROLMENT values (7, 1, 7, 2, 1, 'Dominio.Enrolment', null, 1);
 -- insert into ENROLMENT values (8, 1, 8, 2, 1, 'Dominio.Enrolment', null, 1);
@@ -395,3 +395,8 @@ insert into ENROLMENT values (6, 1, 6, 1, 4, 'Dominio.Enrolment', null, 1);
 -- insert into ENROLMENT values (50, 1, 50, 9, 1, 'Dominio.Enrolment', null, 1);
 -- insert into ENROLMENT values (51, 1, 51, 9, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 70, 1);
 
+-- -----------------------------
+-- Data for table 'EXECUTION_DEGREE'
+-- -----------------------------
+DELETE FROM EXECUTION_DEGREE;
+INSERT INTO EXECUTION_DEGREE VALUES (1, 1, 1, 1, 1);

@@ -17,8 +17,9 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td><u>Nome da disciplina</u></td>
-				<td align="right"><u>Ano</u></td>
+				<td><u><bean:message key="label.curricular.course.name"/></u></td>
+				<td><u><bean:message key="label.curricular.course.semester"/></u></td>
+				<td><u><bean:message key="label.curricular.course.year"/></u></td>
 			</tr>
 			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled" indexId="index">
 				<tr>
@@ -30,7 +31,10 @@
 					<td>
 						<bean:write name="curricularScope" property="infoCurricularCourse.name"/>
 					</td>
-					<td align="right">
+					<td align="center">
+						<bean:write name="curricularScope" property="infoCurricularSemester.semester"/>
+					</td>
+					<td align="center">
 						<bean:write name="curricularScope" property="infoCurricularSemester.infoCurricularYear.year"/>
 					</td>
 				</tr>
@@ -47,3 +51,6 @@
 		</table>
 	</html:form>
 </logic:notEqual>
+<logic:equal name="sizeToBeEnroled" value="0">
+	<b><bean:message key="message.no.curricular.course.for.enrolment"/></b>
+</logic:equal>
