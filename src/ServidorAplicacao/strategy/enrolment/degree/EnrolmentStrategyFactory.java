@@ -75,7 +75,7 @@ public class EnrolmentStrategyFactory {
 		persistentSupport = SuportePersistenteOJB.getInstance();
 		persistentCurricularCourseScope = persistentSupport.getIPersistentCurricularCourseScope();
 		persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-
+		persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 		
 		IStudent student = enrolmentContext.getStudent();
 		
