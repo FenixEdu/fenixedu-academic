@@ -86,7 +86,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 //			
 //			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
-			request.setAttribute(SessionConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
+			session.setAttribute(SessionConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
 						
 			return mapping.findForward("CreateReady");
 		  } else
@@ -115,7 +115,9 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 			// Get the Degree List
 			
 			ArrayList degreeList = null;
-			Object args[] = { request.getAttribute(SessionConstants.EXECUTION_YEAR) } ;
+			Object args[] = { session.getAttribute(SessionConstants.EXECUTION_YEAR) } ;
+			
+			session.removeAttribute(SessionConstants.EXECUTION_YEAR);
 			
 			try {
 				degreeList = (ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", args);
