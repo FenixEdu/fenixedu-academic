@@ -11,7 +11,7 @@ package DataBeans;
  * @author  tfc130
  */
 
-public class InfoMark {
+public class InfoMark extends InfoObject{
 	protected String mark;
 	protected String publishedMark;
 	private InfoEvaluation infoEvaluation;
