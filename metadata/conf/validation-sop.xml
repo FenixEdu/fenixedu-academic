@@ -728,7 +728,7 @@
           <var-value>5</var-value>
         </var>
       </field>
-      <field property="executionCourseName" depends="requiered" page="1">
+      <field property="executionCourseName" depends="required" page="1">
 		<arg0 key="property.executionCourse.name" resource="true"/>
       </field>
     </form>

@@ -132,10 +132,10 @@ public class MergeExecutionCourses implements IServico
     {
 
         boolean distributedTestAuthorization = false;
-        boolean slideAuthorization = false;
-        IFileSuport fileSuport = FileSuport.getInstance();
+//        boolean slideAuthorization = false;
+//        IFileSuport fileSuport = FileSuport.getInstance();
 
-        slideAuthorization = fileSuport.getDirectorySize(source.getSlideName()) <= 0;
+//        slideAuthorization = fileSuport.getDirectorySize(source.getSlideName()) <= 0;
 
         IPersistentMetadata persistentMetadata = ps.getIPersistentMetadata();
         IPersistentDistributedTest persistentDistributedTest = ps.getIPersistentDistributedTest();
@@ -157,8 +157,8 @@ public class MergeExecutionCourses implements IServico
             && source != null
             && source.getExecutionPeriod().equals(destination.getExecutionPeriod())
             && source != destination
-            && distributedTestAuthorization
-            && slideAuthorization;
+            && distributedTestAuthorization;
+//            && slideAuthorization;
     }
 
     /**
