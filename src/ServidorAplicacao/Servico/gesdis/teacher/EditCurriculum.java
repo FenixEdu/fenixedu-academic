@@ -34,28 +34,42 @@ public class EditCurriculum implements IServico {
 	public static EditCurriculum getService() {
 		return service;
 	}
-	public Boolean run(InfoCurriculum oldInfoCurriculum, InfoCurriculum newInfoCurriculum)
+	public Boolean run(
+		InfoCurriculum oldInfoCurriculum,
+		InfoCurriculum newInfoCurriculum)
 		throws FenixServiceException {
 		try {
-			
+
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			
-            ICurriculum oldCurriculum = Cloner.copyInfoCurriculum2ICurriculum(oldInfoCurriculum);
-			ICurriculum newCurriculum = Cloner.copyInfoCurriculum2ICurriculum(newInfoCurriculum);
-            
-            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-            ICurriculum curriculum=persistentCurriculum.readCurriculumByExecutionCourse(oldCurriculum.getExecutionCourse());
-			if (curriculum!=null){
-				curriculum.setGeneralObjectives(newCurriculum.getGeneralObjectives());
-							curriculum.setOperacionalObjectives(newCurriculum.getOperacionalObjectives());
-							curriculum.setProgram(newCurriculum.getProgram());
-							persistentCurriculum.lockWrite(curriculum);
-			}
-			else throw new InvalidArgumentsServiceException();	
-            	
+
+			ICurriculum oldCurriculum =
+				Cloner.copyInfoCurriculum2ICurriculum(oldInfoCurriculum);
+			ICurriculum newCurriculum =
+				Cloner.copyInfoCurriculum2ICurriculum(newInfoCurriculum);
+
+			IPersistentCurriculum persistentCurriculum =
+				sp.getIPersistentCurriculum();
+			ICurriculum curriculum =
+				persistentCurriculum.readCurriculumByExecutionCourse(
+					oldCurriculum.getExecutionCourse());
+			if (curriculum != null) {
+				curriculum.setGeneralObjectives(
+					newCurriculum.getGeneralObjectives());
+				curriculum.setOperacionalObjectives(
+					newCurriculum.getOperacionalObjectives());
+				curriculum.setProgram(newCurriculum.getProgram());
+				curriculum.setGeneralObjectivesEn(
+					newCurriculum.getGeneralObjectivesEn());
+				curriculum.setOperacionalObjectivesEn(
+					newCurriculum.getOperacionalObjectivesEn());
+				curriculum.setProgramEn(newCurriculum.getProgramEn());
+				persistentCurriculum.lockWrite(curriculum);
+			} else
+				throw new InvalidArgumentsServiceException();
+
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
-		} 
+		}
 		return new Boolean(true);
 	}
 }

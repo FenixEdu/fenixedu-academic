@@ -63,17 +63,20 @@ public class EditEvaluation implements IServico {
 				if (evaluationFromDB != null) {
 					evaluationFromDB.setEvaluationElements(
 						evaluationNew.getEvaluationElements());
+					evaluationFromDB.setEvaluationElementsEn(
+						evaluationNew.getEvaluationElementsEn());
 				}
 				sp.getIPersistentEvaluation().lockWrite(evaluationFromDB);
 			} else {
-				
-				evaluationNew.setExecutionCourse(sp
-					.getIDisciplinaExecucaoPersistente()
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-						evaluationNew.getExecutionCourse().getSigla(),
-						evaluationNew
-							.getExecutionCourse()
-							.getExecutionPeriod()));
+
+				evaluationNew.setExecutionCourse(
+					sp
+						.getIDisciplinaExecucaoPersistente()
+						.readByExecutionCourseInitialsAndExecutionPeriod(
+							evaluationNew.getExecutionCourse().getSigla(),
+							evaluationNew
+								.getExecutionCourse()
+								.getExecutionPeriod()));
 
 				sp.getIPersistentEvaluation().lockWrite(evaluationNew);
 			}

@@ -39,7 +39,8 @@ public class EditEvaluationDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 		
-		HttpSession session = request.getSession(false);	
+		HttpSession session = request.getSession(false);
+		session.removeAttribute(SessionConstants.INFO_EVALUATION);	
 		//	get executionCourse from session
 		InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 		
