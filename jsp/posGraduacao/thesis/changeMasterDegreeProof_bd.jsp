@@ -5,6 +5,7 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoStudent" %>
 <%@ page import="DataBeans.InfoTeacher" %>
+<%@ page import="DataBeans.InfoExternalPerson" %>
 
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
@@ -188,6 +189,114 @@
 		
 		
 		
+		<!-- External Juries -->
+		<tr>
+			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.externalJuries"/></th>				
+		</tr>
+				
+		<logic:present name="<%= SessionConstants.EXTERNAL_JURIES_LIST %>" scope="request">
+			<bean:define id="externalJuriesList" name="<%= SessionConstants.EXTERNAL_JURIES_LIST %>" type="java.util.List"/>
+			<tr>
+				<td>&nbsp;</td>	
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
+				<td>&nbsp;</td>									
+			</tr>			
+			<logic:iterate id="externalJury" name="externalJuriesList">
+				<html:hidden property="externalJuriesIDs" value="<%= ((InfoExternalPerson)externalJury).getIdInternal().toString() %>"/>
+				<tr>
+					<td>&nbsp;</td>
+					<td align="left"><bean:write name="externalJury" property="infoPerson.nome"/></td>
+					<td align="left"><bean:write name="externalJury" property="workLocation"/></td>
+					<td align="center">
+						<html:multibox property="removedExternalJuriesIDs">
+							<bean:write name="externalJury" property="idInternal"/>
+						</html:multibox>	
+					</td>						
+				</tr>				
+			</logic:iterate>
+			<tr>
+				<td colspan="4" align="right">
+					<html:submit styleClass="inputbuttonSmall" property="method">
+						<bean:message key="button.submit.masterDegree.thesis.removeExternalJuries"/>
+					</html:submit>
+				</td>
+			</tr>			
+		</logic:present>		
+
+		<logic:notPresent name="<%= SessionConstants.SEARCH_EXTERNAL_JURIES %>" scope="request">
+			<logic:notPresent name="<%= SessionConstants.EXTERNAL_JURIES_SEARCH_RESULTS %>" scope="request">
+				<tr>
+					<td align="left" colspan="4">
+						<html:submit styleClass="inputbuttonSmall" property="method">
+							<bean:message key="button.submit.masterDegree.thesis.externalJury"/>
+						</html:submit>
+					</td>
+				</tr>
+			</logic:notPresent>
+		</logic:notPresent>
+		
+		<logic:present name="<%= SessionConstants.SEARCH_EXTERNAL_JURIES %>" scope="request">
+			<tr><td colspan="4" >
+				<table border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="infoop" >
+							<span class="emphasis-box">info</span>
+						</td>
+						<td class="infoop">
+							<strong>Nota:</strong> Na indicação do nome pode ser fornecido apenas parte do nome do júri externo.<br/>
+							Exemplo 1: Para selecionar todos os júris externos que começam com a letra "A" escreva <strong>A%</strong><br/>
+							Exemplo 2: Para selecionar todos os júris externos que começam com a letra "A" e que tenham um segundo nome que começam com a letra "M" escreva <strong>A% M%</strong>
+						</td>
+					</tr>
+				</table></td>	
+			</tr>
+			<tr>
+				<td align="left" colspan="4">
+					<bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/>:
+					<input type="text" name="externalJuryName" size="25" value=""/>
+					<html:submit styleClass="inputbuttonSmall" property="method">
+						<bean:message key="button.submit.masterDegree.thesis.searchExternalJury"/>
+					</html:submit>
+				</td>
+			</tr>
+		</logic:present>
+		<!-- External Person search results -->
+		<logic:present name="<%= SessionConstants.EXTERNAL_JURIES_SEARCH_RESULTS %>" scope="request">
+			<bean:define id="externalJuriesSearchResultsList" name="<%= SessionConstants.EXTERNAL_JURIES_SEARCH_RESULTS %>" type="java.util.List"/>
+			<tr>
+				<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.searchResults"/></th>				
+			</tr>
+			<tr>
+				<td>&nbsp;</td>	
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
+				<td>&nbsp;</td>									
+			</tr>				
+			<logic:iterate id="externalJury" name="externalJuriesSearchResultsList">
+				<tr>
+					<td>&nbsp;</td>
+					<td align="left"><bean:write name="externalJury" property="infoPerson.nome"/></td>
+					<td align="left"><bean:write name="externalJury" property="workLocation"/></td>						
+					<td>
+						<html:radio idName="externalJury" property="externalJuriesIDs" value="idInternal"/>	
+					</td>
+				</tr>				
+			</logic:iterate>
+			<tr>
+				<td colspan="4" align="right">
+					<html:submit styleClass="inputbuttonSmall" property="method">
+						<bean:message key="button.submit.masterDegree.thesis.addExternalJury"/>
+					</html:submit>
+				</td>
+			</tr>
+
+		</logic:present>
+		
+		
+		
+		
+		<!-- confirmation -->
 		<tr>		
 			<td colspan="4" align="center">
 				<html:submit styleClass="inputbuttonSmall" property="method">
