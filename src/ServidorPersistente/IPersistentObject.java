@@ -49,6 +49,8 @@ public interface IPersistentObject
     public IDomainObject readByOID(Class classToQuery, Integer oid)
             throws ExcepcaoPersistencia;
 
+    public IDomainObject readByOID(Class classToQuery, Integer oid, boolean lockWrite)
+    throws ExcepcaoPersistencia;
     public Object lockIteratorNextObj(Iterator iterator)
             throws ExcepcaoPersistencia;
 
