@@ -40,6 +40,9 @@
 <li><html:link page="<%= "/viewSite.do" + "?method=shifts&amp;exeCode=" + pageContext.findAttribute("exeCode") + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" + pageContext.findAttribute("eYName") %>">
 		<bean:message key="link.executionCourse.shifts"/>
 </html:link></li>
+<li><html:link page="<%= "/viewSite.do" + "?method=exams&amp;exeCode=" + pageContext.findAttribute("exeCode") + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" + pageContext.findAttribute("eYName") %>">
+		<bean:message key="link.exams"/>
+</html:link></li>
 </ul>
 <bean:define id="component" name="siteView" property="commonComponent" />
 <bean:define id="sections" name="component" property="sections"/>
