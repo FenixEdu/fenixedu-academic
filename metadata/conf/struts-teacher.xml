@@ -964,9 +964,6 @@
 		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
 	</action>
 	
-	
-	<action path="/editStudentGroupChoices" scope="request" forward="/editStudentGroupChoices.jsp"/>
-	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
