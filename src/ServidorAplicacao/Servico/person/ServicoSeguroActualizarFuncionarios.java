@@ -4,14 +4,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
+
+import middleware.RoleFunctions;
+
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.Funcionario;
+import Dominio.IPersonRole;
 import Dominio.Pessoa;
-import ServidorAplicacao.Servico.exceptions.NotExecuteException;
-import ServidorPersistenteJDBC.IFuncionarioPersistente;
-import ServidorPersistenteJDBC.IPessoaPersistente;
-import ServidorPersistenteJDBC.SuportePersistente;
+import Dominio.Role;
 import Util.LeituraFicheiroFuncionario;
+import Util.RoleType;
 
 /**
  * @author  Ivo Brandão
@@ -19,7 +27,7 @@ import Util.LeituraFicheiroFuncionario;
 public class ServicoSeguroActualizarFuncionarios {
 
 	private static String ficheiro = null;
-	private static String delimitador;
+	private static String delimitador; 
 	private static Hashtable estrutura;
 	private static Collection ordem;
 	private static Collection lista;
@@ -43,85 +51,120 @@ public class ServicoSeguroActualizarFuncionarios {
 	}
 
 	/** Executa a actualizacao da tabela Funcionario na Base de Dados */
-	public static void main(String[] args) throws NotExecuteException {
+	public static void main(String[] args) throws Exception {
 		ServicoSeguroActualizarFuncionarios servico = new ServicoSeguroActualizarFuncionarios(args);		
+		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+		broker.clearCache();
 		
 		LeituraFicheiroFuncionario servicoLeitura = new LeituraFicheiroFuncionario();
 
 		lista = servicoLeitura.lerFicheiro(args[0]/*ficheiro*/, delimitador, estrutura, ordem);
 
-		/* ciclo para percorrer a Collection de Funcionarios */
-		/* algoritmo */
+		Funcionario funcionario2Write = null;
+		Integer numeroMecanografico = null;
+		IPersonRole newRole = null;
 
-		/* Recuperar registos */
-		System.out.println("ServicoSeguroActualizarFuncionarios.main:Lista de Resultados...");
-		Iterator iterador = lista.iterator();
-		while (iterador.hasNext()) {
-			System.out.println(iterador.next());
-		}
+		broker.beginTransaction();
 
-		/* Procurar chavePessoa correspondente e criar funcionario */
-		Iterator iteradorNovo = lista.iterator();
-		while (iteradorNovo.hasNext()) {
-			IPessoaPersistente iPessoaPersistente = SuportePersistente.getInstance().iPessoaPersistente();
-			IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
-			Hashtable instanciaTemporaria = (Hashtable) iteradorNovo.next();
+		try {
 
-			String numeroDocumentoIdentificacao = (String) instanciaTemporaria.get("numeroDocumentoIdentificacao");
-			Integer tipoDocumentoIdentificacao = new Integer((String) instanciaTemporaria.get("tipoDocumentoIdentificacao"));
-			Integer numeroMecanografico = new Integer((String) instanciaTemporaria.get("numeroMecanografico"));
 
-			Pessoa pessoa = iPessoaPersistente.lerPessoa(numeroDocumentoIdentificacao, tipoDocumentoIdentificacao.intValue());
+			/* ciclo para percorrer a Collection de Funcionarios */
+			/* algoritmo */
+	
+			/* Recuperar registos */
+			System.out.println("ServicoSeguroActualizarFuncionarios.main:Lista de Resultados...");
+	
+			/* Procurar chavePessoa correspondente e criar funcionario */
+			Iterator iteradorNovo = lista.iterator();
 
-			if (pessoa != null) {
-				pessoa.setUsername(numeroMecanografico.toString());
-				//pessoa.setPassword(numeroDocumentoIdentificacao);
-				iPessoaPersistente.alterarPessoa(pessoa);
+			while (iteradorNovo.hasNext()) {
+				Hashtable instanciaTemporaria = (Hashtable) iteradorNovo.next();
+	
+				String numeroDocumentoIdentificacao = (String) instanciaTemporaria.get("numeroDocumentoIdentificacao");
+				Integer tipoDocumentoIdentificacao = (Integer) instanciaTemporaria.get("tipoDocumentoIdentificacao");
+				numeroMecanografico = new Integer((String) instanciaTemporaria.get("numeroMecanografico"));
+	
+				// Check if the Employee Exists
+				
+				Criteria criteria = new Criteria();
+				Query query = null;
+			
+				criteria.addEqualTo("numeroMecanografico", numeroMecanografico);
+				query = new QueryByCriteria(Funcionario.class,criteria);
+				List resultFuncionario = (List) broker.getCollectionByQuery(query);	
+	
+				// Read The Corresponding Person
+				criteria = new Criteria();
+				query = null;
+			
+				criteria.addEqualTo("numeroDocumentoIdentificacao", numeroDocumentoIdentificacao);
+				criteria.addEqualTo("tipoDocumentoIdentificacao", tipoDocumentoIdentificacao);
+				query = new QueryByCriteria(Pessoa.class,criteria);
+				List resultPerson = (List) broker.getCollectionByQuery(query);	
 
-				Funcionario funcionario = new Funcionario(0, /* codigoInterno */
-				pessoa.getCodigoInterno().intValue(), numeroMecanografico.intValue(), 0 /* chaveHorarioActual */
-				);
-
-				Funcionario funcionarioBD = iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(numeroMecanografico.intValue());
-
-				if (funcionarioBD != null) {
-					funcionario.setCodigoInterno(funcionarioBD.getCodigoInterno());
-
-					System.out.println(
-						"ServicoSeguroActualizarFuncionarios.main:Funcionario " + funcionarioBD.getCodigoInterno() + " existente.");
-
-					if (funcionario.equals(funcionarioBD)) {
-						System.out.println(
-							"ServicoSeguroActualizarFuncionarios.main:Funcionario "
-								+ funcionarioBD.getCodigoInterno()
-								+ " nao mudou.");
-					} else {
-						System.out.println(
-							"ServicoSeguroActualizarFuncionarios.main:Funcionario " + funcionarioBD.getCodigoInterno() + " mudou.");
-						iFuncionarioPersistente.alterarFuncionario(funcionario);
-					}
-				} //(funcionarioBD!=null)
-				else {
-					funcionario.setCodigoInterno(iFuncionarioPersistente.ultimoCodigoInterno() + 1);
-					iFuncionarioPersistente.escreverFuncionario(funcionario);
-
-					System.out.println(
-						"ServicoSeguroActualizarFuncionarios.main:Funcionario "
-							+ numeroMecanografico.intValue()
-							+ " tem Pessoa correspondente e nao existe.");
-
+	
+				if (resultPerson.size() == 0){
+					throw new Exception("Erro a Ler a pessoa do Funcionario " + numeroMecanografico);
 				}
+				Pessoa person = (Pessoa) resultPerson.get(0);
 
-			} //(pessoa!=null)
-			else {
-				System.out.println(
-					"ServicoSeguroActualizarFuncionarios.main:Funcionario "
-						+ numeroMecanografico.intValue()
-						+ " nao tem Pessoa correspondente.");
+				if (resultFuncionario.size() == 0){
+					
+					
+					// Check If the person already has a employee associated
+					
+					criteria = new Criteria();
+					query = null;
+			
+					criteria.addEqualTo("chavePessoa", person.getCodigoInterno());
+					query = new QueryByCriteria(Funcionario.class,criteria);
+					resultFuncionario = (List) broker.getCollectionByQuery(query);	
+					
+					if (resultFuncionario.size() == 0){
+						funcionario2Write = new Funcionario();
+						funcionario2Write.setNumeroMecanografico(numeroMecanografico.intValue());
+						funcionario2Write.setChavePessoa(person.getCodigoInterno().intValue());
+						
+						IPersonRole personRole = RoleFunctions.readPersonRole(person, RoleType.EMPLOYEE, broker);
+						if (personRole == null){
+						
+							criteria = new Criteria();
+							criteria.addEqualTo("roleType", RoleType.EMPLOYEE);
+			
+							query = new QueryByCriteria(Role.class, criteria);
+							List result = (List) broker.getCollectionByQuery(query);
+			
+							Role roleBD = null;
+			
+							if (result.size() == 0)
+								throw new Exception("Unknown Role !!!");
+							else roleBD = (Role) result.get(0);
+			 
+							person.getPersonRoles().add(roleBD);
+						}
+					} else {
+						// Decision Time ... Keep The Old NumeroMecanografico or Put The new ?
+						funcionario2Write = (Funcionario) resultFuncionario.get(0);
+						
+						// Keep the higher 
+						if (funcionario2Write.getNumeroMecanografico() < numeroMecanografico.intValue()){
+							funcionario2Write.setNumeroMecanografico(numeroMecanografico.intValue());
+						}
+					}
+					broker.store(funcionario2Write);
+
+				} 
+				
+				// Change the person Username
+				person.setUsername("F" + String.valueOf(numeroMecanografico));
+				broker.store(person);					
 			}
-
+			
+		} catch(Exception e) {
+			throw new Exception("\nError Migrating Employee " + numeroMecanografico + "\n" + e);
 		}
-
+		broker.commitTransaction();
+		broker.close();
 	}
-
 }
