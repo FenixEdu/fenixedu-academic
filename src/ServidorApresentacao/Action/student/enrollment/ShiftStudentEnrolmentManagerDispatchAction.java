@@ -136,20 +136,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		String studentNumber = getStudent(request);
 		if (studentNumber == null)
 		{
-			InfoStudent infoStudent = null;
-			try
-			{
-				Object args[] = { userView.getUtilizador()};
-				infoStudent =
-					(InfoStudent) ServiceManagerServiceFactory.executeService(
-						userView,
-						"ReadStudentByUsername",
-						args);
-			}
-			catch (FenixServiceException e)
-			{
-				throw new FenixActionException(e);
-			}
+			InfoStudent infoStudent = obtainStudent(request, userView);
 			studentNumber = infoStudent.getNumber().toString();
 		}
 		return studentNumber;
@@ -163,6 +150,57 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 			studentNumber = (String) request.getAttribute("studentNumber");
 		}
 		return studentNumber;
+	}
+
+	public ActionForward unEnroleStudentFromShift(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
+		IUserView userView = SessionUtils.getUserView(request);
+
+		String studentIDString = request.getParameter("studentId");
+		String shidtIDString = request.getParameter("shiftId");
+		
+		Integer studentId = new Integer(studentIDString);
+		Integer shiftId = new Integer(shidtIDString);
+
+		try
+		{
+			Object args[] = { studentId, shiftId };
+			ServiceManagerServiceFactory.executeService(
+					userView,
+					"UnEnrollStudentFromShift",
+					args);
+		} catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
+
+		return start(mapping, form, request, response);
+	}
+
+	private InfoStudent obtainStudent(
+		HttpServletRequest request,
+		IUserView userView)
+		throws FenixActionException
+	{
+		InfoStudent infoStudent = null;
+		try
+		{
+			Object args[] = { userView.getUtilizador()};
+			infoStudent =
+				(InfoStudent) ServiceManagerServiceFactory.executeService(
+					userView,
+					"ReadStudentByUsername",
+					args);
+		} catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
+		return infoStudent;
 	}
 
 }

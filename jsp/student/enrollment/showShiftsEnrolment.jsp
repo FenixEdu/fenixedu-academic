@@ -32,6 +32,15 @@
 				<td>
 					<bean:message key="property.turno" />:</b>&nbsp;
 					<bean:write name="infoShift" property="nome" />
+					<bean:define id="infoShiftId" name="infoShift" property="idInternal" />
+					-
+					<html:link page="<%= "/studentShiftEnrolmentManager.do?method=unEnroleStudentFromShift&amp;studentId="
+												+ pageContext.findAttribute("studentId").toString()
+												+ "&amp;shiftId="
+												+ pageContext.findAttribute("infoShiftId").toString()
+												%>">
+						<bean:message key="link.unenrole.shift" />
+					</html:link>
 				</td>
 			</tr>
 			<tr>
