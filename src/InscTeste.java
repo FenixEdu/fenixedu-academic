@@ -26,7 +26,10 @@ public class InscTeste {
 			Object serviceArgs1[] = {userView, new Integer(1)};
 			result = gestor.executar(userView, "ShowAvailableCurricularCourses", serviceArgs1);
 			InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) result;
-			System.out.println(infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
+			System.out.println("TO CHOOSE (FINAL SPAN):");
+			System.out.println(infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled());
+			System.out.println("AUTOMATIC CHOOSEN (ANUALS + ALTERNATIVES):");
+			System.out.println(infoEnrolmentContext.getInfoCurricularCoursesScopesEnroledByStudent());
 
 
 //			for(int i = 0; i < 6; i++) {
