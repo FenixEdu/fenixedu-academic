@@ -2,17 +2,20 @@ package ServidorAplicacao.Servico.gesdis.teacher;
 /**
  * @author jmota
  */
-import java.util.List;
-
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IProfessorship;
+import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentProfessorship;
+import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -38,13 +41,16 @@ public class RemoveTeacher implements IServico {
 	/**
 	 * Executes the service.	
 	 **/
-	public boolean run(
+	public Boolean run(
 		InfoExecutionCourse infoExecutionCourse,
 		Integer teacherNumber)
 		throws FenixServiceException {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+			IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+			IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 			ITeacher teacher =
 				persistentTeacher.readTeacherByNumber(teacherNumber);
 			
@@ -52,25 +58,23 @@ public class RemoveTeacher implements IServico {
 				throw new InvalidArgumentsServiceException();
 			}
 			IDisciplinaExecucao executionCourse =
-				Cloner.copyInfoExecutionCourse2ExecutionCourse(
-					infoExecutionCourse);
-			List professorShipsExecutionCoursesList =
-				teacher.getProfessorShipsExecutionCourses();
-			
+				persistentExecutionCourse
+					.readByExecutionCourseInitialsAndExecutionPeriod(
+					infoExecutionCourse.getSigla(),
+					Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
+						infoExecutionCourse.getInfoExecutionPeriod()));
+					
 			//note: removed the possibility for a responsible teacher to remove from himself the professorship (it was a feature that didnt make sense)
-			List responsibleForExecutionCoursesList = teacher.getResponsibleForExecutionCourses();
-			if(responsibleForExecutionCoursesList.contains(executionCourse)) {
+			IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(teacher,executionCourse);
+					if(responsibleFor!=null) {
 				throw new notAuthorizedServiceDeleteException();
 			}
-				
-			while (professorShipsExecutionCoursesList.contains(executionCourse)){
-			boolean xptoBoolean=professorShipsExecutionCoursesList.remove(executionCourse);
-			}
-			teacher.setProfessorShipsExecutionCourses(
-				professorShipsExecutionCoursesList);
-			persistentTeacher.lockWrite(teacher);
-			return true;
+			IProfessorship professorshipToDelete = persistentProfessorship.readByTeacherAndExecutionCourse(teacher,executionCourse);
+			persistentProfessorship.delete(professorshipToDelete);
+			
+			return Boolean.TRUE;
 		} catch (ExcepcaoPersistencia e) {
+			
 			throw new FenixServiceException(e);
 		}
 	}

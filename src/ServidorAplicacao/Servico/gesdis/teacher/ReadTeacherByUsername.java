@@ -66,12 +66,11 @@ public class ReadTeacherByUsername implements IServico {
 			if (teacher!=null) {
 				infoTeacher=Cloner.copyITeacher2InfoTeacher(teacher);
 		} 
-		System.out.println("teacher"+teacher);
-		System.out.println("infoTeacher"+infoTeacher);
+	
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
-		System.out.println("tudo ok");
+		
 		return infoTeacher;
 	}
 }

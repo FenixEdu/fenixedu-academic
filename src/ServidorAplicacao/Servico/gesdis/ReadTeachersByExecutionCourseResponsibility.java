@@ -14,10 +14,12 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.gesdis.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -60,13 +62,16 @@ public class ReadTeachersByExecutionCourseResponsibility implements IServico {
 				IDisciplinaExecucao executionCourse =
 							Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
 				IPersistentTeacher persistentTeacher=sp.getIPersistentTeacher();
-				result=persistentTeacher.readTeacherByExecutionCourseResponsibility(executionCourse);	
+				IPersistentResponsibleFor persistentResponsibleFor= sp.getIPersistentResponsibleFor();
+				result = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+				
+					
 				List infoResult = new ArrayList();
-							if (result!=null){
-			
+							if (result!=null){			
 							Iterator iter = result.iterator();	
 							while(iter.hasNext()) {
-								ITeacher teacher = (ITeacher) iter.next();
+								IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
+								ITeacher teacher = responsibleFor.getTeacher();
 								InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 								infoResult.add(infoTeacher);				
 							}
