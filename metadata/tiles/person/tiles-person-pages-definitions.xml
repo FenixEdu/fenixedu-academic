@@ -3,10 +3,25 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
-		<definition name="view-qualifications" extends="teacher-information">
+	<definition name="view-qualifications" extends="teacher-information">
 		<put name="body" value="/person/qualificationManagement.jsp" />
 	</definition>
 	<definition name="edit-qualification" extends="teacher-information">
 		<put name="body" value="/person/editQualification.jsp" />
 	</definition>
+
+	<!-- Send SMS's -->
+	<definition name="df.page.sendSms" extends="definition.person.masterPage">
+		<put name="body" value="/person/sendSms.jsp" />
+	</definition>
+
+	<definition name="df.page.sendSmsError" extends="definition.person.masterPage">
+		<put name="body" value="/person/sendSms_error.jsp" />
+	</definition>
+	
+	<definition name="df.page.viewSmsDeliveryReports" extends="definition.person.masterPage">
+		<put name="body" value="/person/viewSmsDeliveryReports.jsp" />
+	</definition>
+	
+	
 </tiles-definitions>
