@@ -23,12 +23,12 @@ public class PeriodState {
 	private PeriodState(final String stateCode){
 		this.stateCode = stateCode;
 	}
-	public String getCode(){
+	public String getStateCode(){
 		return stateCode;
 	}
 
 	public PeriodState(PeriodState executionPeriodState){
-		this.stateCode = executionPeriodState.getCode();
+		this.stateCode = executionPeriodState.getStateCode();
 	}
 	
 	
@@ -38,7 +38,7 @@ public class PeriodState {
 	public boolean equals(Object obj) {
 		if (obj instanceof PeriodState) {
 			PeriodState executionPeriodState = (PeriodState) obj;
-			return executionPeriodState.getCode() == stateCode;
+			return executionPeriodState.getStateCode() == stateCode;
 		}
 		return false;
 	}
