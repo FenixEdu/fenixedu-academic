@@ -11,6 +11,8 @@ package ServidorPersistente.OJB;
  * @author  ars
  */
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.odmg.OJB;
 import org.odmg.Database;
 import org.odmg.Implementation;
@@ -83,8 +85,12 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	}
 
 	public static synchronized void resetInstance() {
-		if (_instance != null)
+		if (_instance != null) {
+			PersistenceBroker broker =
+				PersistenceBrokerFactory.defaultPersistenceBroker();
+			broker.clearCache();
 			_instance = null;
+		}
 	}
 
 	/** Creates a new instance of SuportePersistenteOJB */
@@ -100,7 +106,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	}
 
 	public void iniciarTransaccao() throws ExcepcaoPersistencia {
-		
+
 		try {
 			//System.out.println("SuportePersistente.OJB::iniciarTransaccao()");
 
@@ -117,9 +123,9 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			///////////////////////////////////////////////////////////////////
 			Database db = _odmg.getDatabase(null);
 			if (db == null) {
-			///////////////////////////////////////////////////////////////////
-			// End of Added Code
-			///////////////////////////////////////////////////////////////////				
+				///////////////////////////////////////////////////////////////////
+				// End of Added Code
+				///////////////////////////////////////////////////////////////////				
 				db = _odmg.newDatabase();
 				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
 			}
@@ -144,10 +150,10 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 				System.out.println(
 					"SuportePersistente.OJB - Nao ha transaccao activa");
 			else {
-				
-				tx.commit();				
+
+				tx.commit();
 				_odmg.getDatabase(null).close();
-			}			
+			}
 		} catch (ODMGException ex1) {
 			throw new ExcepcaoPersistencia(
 				ExcepcaoPersistencia.CLOSE_DATABASE,
@@ -250,11 +256,11 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentCandidateSituation getIPersistentCandidateSituation() {
 		return new CandidateSituationOJB();
 	}
-	
+
 	public IPersistentBibliographicReference getIPersistentBibliographicReference() {
-			return new BibliographicReferenceOJB();
+		return new BibliographicReferenceOJB();
 	}
-	
+
 	/**
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentExecutionPeriod()
 	 */
@@ -267,8 +273,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public IPersistentExecutionYear getIPersistentExecutionYear() {
 		return new ExecutionYearOJB();
-	}	
-		
+	}
 
 	/**
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSite()
@@ -277,29 +282,27 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new SiteOJB();
 	}
 
-
 	/**
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSection()
 	 */
 	public IPersistentSection getIPersistentSection() {
-			return new SectionOJB();
-		}
-		
+		return new SectionOJB();
+	}
 
 	/**
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentItem()
 	 */
 	public IPersistentItem getIPersistentItem() {
-			return new ItemOJB();
-		}
-		
+		return new ItemOJB();
+	}
+
 	/**
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentAnnouncement()
 	 */
 	public IPersistentAnnouncement getIPersistentAnnouncement() {
-			return new AnnouncementOJB();
-		}
-	
+		return new AnnouncementOJB();
+	}
+
 	/**
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentCurriculum()
 	 */
@@ -314,9 +317,9 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new TeacherOJB();
 	}
 
-    public IPersistentExam getIPersistentExam() {
-    	return new ExamOJB();
-    }
+	public IPersistentExam getIPersistentExam() {
+		return new ExamOJB();
+	}
 
 	public IPersistentExamExecutionCourse getIPersistentExamExecutionCourse() {
 		return new ExamExecutionCourseOJB();
@@ -325,7 +328,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentBranch getIPersistentBranch() {
 		return new BranchOJB();
 	}
-	
+
 	public IPersistentCurricularYear getIPersistentCurricularYear() {
 		return new CurricularYearOJB();
 	}
@@ -361,25 +364,25 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	}
 
 	public IPersistentGuideEntry getIPersistentGuideEntry() {
-		return new GuideEntryOJB(); 
+		return new GuideEntryOJB();
 	}
 
 	public IPersistentGuide getIPersistentGuide() {
-		return new GuideOJB(); 
+		return new GuideOJB();
 	}
 
 	public IPersistentGuideSituation getIPersistentGuideSituation() {
-			return new GuideSituationOJB(); 
-		}
+		return new GuideSituationOJB();
+	}
 
 	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope() {
 		return new CurricularCourseScopeOJB();
 	}
-	
+
 	public IPersistentRole getIPersistentRole() {
 		return new RoleOJB();
 	}
-	
+
 	public IPersistentPersonRole getIPersistentPersonRole() {
 		return new PersonRoleOJB();
 	}

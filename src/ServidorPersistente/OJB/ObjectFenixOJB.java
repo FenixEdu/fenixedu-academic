@@ -91,6 +91,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		try {
 			tx = odmg.currentTransaction();
 			tx.lock(obj, Transaction.WRITE);
+			
 		} catch (ODMGRuntimeException ex) {
 			throw new ExcepcaoPersistencia(
 				ExcepcaoPersistencia.UPGRADE_LOCK,
