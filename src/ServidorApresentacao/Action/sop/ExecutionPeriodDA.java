@@ -25,6 +25,7 @@ import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.utils.ContextUtils;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -45,7 +46,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		InfoExecutionPeriod selectedExecutionPeriod =
 			(InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.EXECUTION_PERIOD);
-
+		
 		Object argsReadExecutionPeriods[] = {
 		};
 		ArrayList executionPeriods =
@@ -64,7 +65,8 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 			DynaActionForm indexForm = (DynaActionForm) form;
 			indexForm.set(
 				"index",
-				new Integer(executionPeriods.indexOf(selectedExecutionPeriod)));
+				//new Integer(executionPeriods.indexOf(selectedExecutionPeriod))
+				selectedExecutionPeriod.getIdInternal());
 		}
 		//----------------------------------------------
 
@@ -77,7 +79,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 					infoExecutionPeriod.getName()
 						+ " - "
 						+ infoExecutionPeriod.getInfoExecutionYear().getYear(),
-					"" + i));
+					"" + infoExecutionPeriod.getIdInternal()));
 		}
 
 		request.setAttribute(
@@ -103,30 +105,15 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos gestor = GestorServicos.manager();
 
-		Object argsReadExecutionPeriods[] = { };
-		ArrayList infoExecutionPeriodList =
-			(ArrayList) gestor.executar(
-				userView,
-				"ReadExecutionPeriods",
-				argsReadExecutionPeriods);
-		ComparatorChain chainComparator = new ComparatorChain();
-		chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
-		chainComparator.addComparator(new BeanComparator("semester"));
-		Collections.sort(infoExecutionPeriodList, chainComparator);
-
-		Integer index = (Integer) indexForm.get("index");
-
-		if (infoExecutionPeriodList != null && index != null) {
-			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) infoExecutionPeriodList.get(
-					index.intValue());
-			request.setAttribute(
-				SessionConstants.EXECUTION_PERIOD,
-				infoExecutionPeriod);
+		//Integer index = (Integer) indexForm.get("index");
+		Integer executionPeriodOid = (Integer) indexForm.get("index");
+		if (executionPeriodOid != null) {
 			request.setAttribute(
 				SessionConstants.EXECUTION_PERIOD_OID,
-				infoExecutionPeriod.getIdInternal().toString());
+				executionPeriodOid.toString());
+			ContextUtils.setExecutionPeriodContext(request);
 		}
+
 		return mapping.findForward("choose");
 	}
 
@@ -143,6 +130,18 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		GestorServicos gestor = GestorServicos.manager();
 
 		// get selected execution period
+		InfoExecutionPeriod selectedInfoExecutionPeriod = null;
+		Integer executionPeriodOid = (Integer) indexForm.get("index");
+		if (executionPeriodOid != null) {
+			request.setAttribute(
+				SessionConstants.EXECUTION_PERIOD_OID,
+				executionPeriodOid.toString());
+			ContextUtils.setExecutionPeriodContext(request);
+			selectedInfoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(
+					SessionConstants.EXECUTION_PERIOD);
+		}
+
 		Object argsReadExecutionPeriods[] = {
 		};
 		ArrayList executionPeriods =
@@ -155,29 +154,16 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		chainComparator.addComparator(new BeanComparator("semester"));
 		Collections.sort(executionPeriods, chainComparator);
 
-		Integer index = (Integer) indexForm.get("index");
-		InfoExecutionPeriod selectedInfoExecutionPeriod = null;
-		if (executionPeriods != null && index != null) {
-			selectedInfoExecutionPeriod =
-				(InfoExecutionPeriod) executionPeriods.get(index.intValue());
-			request.setAttribute(
-				SessionConstants.EXECUTION_PERIOD,
-				selectedInfoExecutionPeriod);
-			request.setAttribute(
-				SessionConstants.EXECUTION_PERIOD_OID,
-				selectedInfoExecutionPeriod.getIdInternal());
-		}
-
-		// set form with selected value
+		// if executionPeriod was previously selected,form has that
+		// value as default
 		if (selectedInfoExecutionPeriod != null) {
-			indexForm = (DynaActionForm) form;
 			indexForm.set(
 				"index",
-				new Integer(
-					executionPeriods.indexOf(selectedInfoExecutionPeriod)));
+				//new Integer(executionPeriods.indexOf(selectedExecutionPeriod))
+			selectedInfoExecutionPeriod.getIdInternal());
 		}
+		//----------------------------------------------
 
-		// create execution periods label/value bean
 		ArrayList executionPeriodsLabelValueList = new ArrayList();
 		for (int i = 0; i < executionPeriods.size(); i++) {
 			InfoExecutionPeriod infoExecutionPeriod =
@@ -187,11 +173,8 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 					infoExecutionPeriod.getName()
 						+ " - "
 						+ infoExecutionPeriod.getInfoExecutionYear().getYear(),
-					"" + i));
+					"" + infoExecutionPeriod.getIdInternal()));
 		}
-		request.setAttribute(
-			SessionConstants.LABELLIST_EXECUTIONPERIOD,
-			executionPeriodsLabelValueList);
 
 		// read lessons of (previously selected) room in selected executionPeriod
 		InfoRoom infoRoom = null;
