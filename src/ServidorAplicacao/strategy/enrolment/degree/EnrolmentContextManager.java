@@ -5,6 +5,7 @@
 package ServidorAplicacao.strategy.enrolment.degree;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import Dominio.IEnrolmentPeriod;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -45,8 +47,8 @@ import Util.EnrolmentState;
  */
 public abstract class EnrolmentContextManager {
 
-	public static EnrolmentContext initialEnrolmentContext(IStudent student) throws ExcepcaoPersistencia {
-
+	public static EnrolmentContext initialEnrolmentContext(IStudent student) throws ExcepcaoPersistencia, OutOfCurricularCourseEnrolmentPeriod {
+		
 		EnrolmentContext enrolmentContext = new EnrolmentContext();
 
 		ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
@@ -58,6 +60,8 @@ public abstract class EnrolmentContextManager {
 		final IStudentCurricularPlan studentActiveCurricularPlan =
 			persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 
+		IEnrolmentPeriod enrolmentPeriod =
+			getEnrolmentPeriod(enrolmentPeriodDAO, studentActiveCurricularPlan);
 		List degreeCurricularPlanCurricularCourses = studentActiveCurricularPlan.getDegreeCurricularPlan().getCurricularCourses();
 
 		final List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentActiveCurricularPlan);
@@ -114,7 +118,7 @@ public abstract class EnrolmentContextManager {
 
 		List studentCurricularPlanCurricularCourses = computeStudentCurricularPlanCurricularCourses(degreeCurricularPlanCurricularCourses, studentActiveCurricularPlan);
 		
-		IEnrolmentPeriod enrolmentPeriod = enrolmentPeriodDAO.readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan.getDegreeCurricularPlan());
+		
 		
 		IExecutionPeriod enrolmentExecutionPeriod = enrolmentPeriod.getExecutionPeriod(); 
 
@@ -136,6 +140,24 @@ public abstract class EnrolmentContextManager {
 		enrolmentContext.setOptionalCurricularCoursesToChooseFromDegree(new ArrayList());
 
 		return enrolmentContext;
+	}
+
+	private static IEnrolmentPeriod getEnrolmentPeriod(
+		IPersistentEnrolmentPeriod enrolmentPeriodDAO,
+		final IStudentCurricularPlan studentActiveCurricularPlan)
+		throws ExcepcaoPersistencia, OutOfCurricularCourseEnrolmentPeriod {
+		IEnrolmentPeriod enrolmentPeriod = enrolmentPeriodDAO.readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan.getDegreeCurricularPlan());
+		if (enrolmentPeriod == null){
+			IEnrolmentPeriod nextEnrolmentPeriod = enrolmentPeriodDAO.readNextEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan.getDegreeCurricularPlan());
+			Date startDate = null;
+			Date endDate = null;
+			if (nextEnrolmentPeriod != null){
+				startDate = nextEnrolmentPeriod.getStartDate();
+				endDate = nextEnrolmentPeriod.getEndDate();
+			}
+			throw new OutOfCurricularCourseEnrolmentPeriod(startDate, endDate);
+		}
+		return enrolmentPeriod;
 	}
 
 	public static List computeStudentCurricularPlanCurricularCourses(
