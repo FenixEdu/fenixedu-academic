@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -52,6 +53,7 @@ public class SeeStudentCurricularPlansAction extends Action {
 		}
 
 		request.setAttribute("studentCurricularPlansList", studentCurricularPlansList);
+		request.setAttribute("student", ((InfoStudentCurricularPlan) studentCurricularPlansList.get(0)).getInfoStudent());
 
 		return mapping.findForward("viewStudentCurricularPlans");
 	}

@@ -3,11 +3,11 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 
-	<definition name="df.page.searchStudents" extends="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan">
+	<definition name="df.page.searchStudents" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
 		<put name="body" value="/posGraduacao/student/studentCurricularPlan/searchStudents.jsp"/>
 	</definition>
 
-	<definition name="df.page.viewStudents" extends="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan">
+	<definition name="df.page.viewStudents" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
 		<put name="body" value="/posGraduacao/student/studentCurricularPlan/viewStudents.jsp"/>
 	</definition>
 

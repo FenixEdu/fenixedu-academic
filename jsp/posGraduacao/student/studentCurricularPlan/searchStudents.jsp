@@ -5,15 +5,27 @@
 
 <bean:define id="docIDTypeList" name="docIDTypeList" scope="request"/>
 
-<h2 align="center"><bean:message key="title.masterDegree.administrativeOffice.chooseStudent"/></h2>
+<h2 align="left"><bean:message key="title.masterDegree.administrativeOffice.chooseStudent"/></h2>
+
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="infoop" >
+			<span class="emphasis-box">info</span>
+		</td>
+		<td class="infoop">
+			<strong>Nota:</strong> Na indicação do nome pode ser fornecido apenas parte do nome da disciplina.<br/>
+			Exemplo 1: Para selecionar todas as disciplinas que começam com a letra "A" escreva <strong>A%</strong><br/>
+			Exemplo 2: Para selecionar todas as disciplinas que começam com a letra "A" e que tenham um segundo nome que começa com a letra "M" escreva <strong>A% M%</strong>
+		</td>
+	</tr>
+</table>
+<br/><br/>
 <span class="error"><html:errors/></span>
-<center>
-<br/>
-<br/>
+
 <html:form action="/seeStudentAndCurricularPlans.do">
 	<html:hidden property="method" value="read"/>
 	<html:hidden property="page" value="1"/>
-	<table border="0">
+	<table border="0" cellspacing="0" cellpadding="5">
 		<tr>
 			<td align="left"><bean:message key="label.masterDegree.administrativeOffice.studentName"/>:&nbsp;</td>
 			<td align="left">
@@ -47,4 +59,3 @@
 		<bean:message key="label.masterDegree.administrativeOffice.studentSearchSubmit"/>
 	</html:submit>
 </html:form>
-</center>

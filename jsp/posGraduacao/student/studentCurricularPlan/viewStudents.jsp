@@ -6,11 +6,8 @@
 
 <bean:define id="studentList" name="studentList" scope="request"/>
 
-<h2 align="center"><bean:message key="title.masterDegree.administrativeOffice.chooseStudent"/></h2>
+<h2 align="left"><bean:message key="title.masterDegree.administrativeOffice.chooseStudent"/></h2>
 <span class="error"><html:errors/></span>
-<center>
-<br/>
-<br/>
 <table border="0" cellspacing="3" cellpadding="10">
 	<tr>
 		<th align="left"><bean:message key="label.masterDegree.administrativeOffice.studentNumber"/></th>
@@ -50,4 +47,3 @@
 		</tr>
 	</logic:iterate>
 </table>
-</center>

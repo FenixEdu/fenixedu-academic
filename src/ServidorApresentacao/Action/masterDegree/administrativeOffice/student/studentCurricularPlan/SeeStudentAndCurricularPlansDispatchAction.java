@@ -67,15 +67,12 @@ public class SeeStudentAndCurricularPlansDispatchAction extends DispatchAction {
 			try {
 				studentNumber2 = new Integer(studentNumber1);
 			} catch (NumberFormatException e) {
-				ActionError actionError = new ActionError("error.numberFormat");
-				ActionErrors actionErrors = new ActionErrors();
-				actionErrors.add("idNumber", actionError);
-				saveErrors(request, actionErrors);
+				this.saveError(request, "error.numberFormat", "studentNumber");
 				return mapping.getInputForward();
 			}
 		}
 		
-		if(!this.isValid(mapping, request, idNumber2, idType2)) {
+		if(!this.isValid(request, idNumber2, idType2)) {
 			return mapping.getInputForward();
 		}
 
@@ -92,7 +89,12 @@ public class SeeStudentAndCurricularPlansDispatchAction extends DispatchAction {
 			throw new FenixActionException(e);
 		}
 
-		request.setAttribute("studentList", studentList);
+		if(studentList != null && !studentList.isEmpty()) {
+			request.setAttribute("studentList", studentList);
+		} else {
+			this.saveError(request, "error.no.students", "noStudents");
+			return mapping.getInputForward();
+		}
 
 		return mapping.findForward("viewStudents");
 	}
@@ -115,22 +117,23 @@ public class SeeStudentAndCurricularPlansDispatchAction extends DispatchAction {
 		}
 	}
 
-	private boolean isValid(ActionMapping mapping, HttpServletRequest request, String idNumber, TipoDocumentoIdentificacao idType) {
+	private boolean isValid(HttpServletRequest request, String idNumber, TipoDocumentoIdentificacao idType) {
 		boolean result = true;
 
 		if(idNumber != null && idType == null) {
-			ActionError actionError = new ActionError("error.required.idType");
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("idType", actionError);
-			saveErrors(request, actionErrors);
+			this.saveError(request, "error.required.idType", "idType");
 			result = false;
 		} else if(idNumber == null && idType != null) {
-			ActionError actionError = new ActionError("error.required.idNumber");
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("idNumber", actionError);
-			saveErrors(request, actionErrors);
+			this.saveError(request, "error.required.idNumber", "idNumber");
 			result = false;
 		}
 		return result;
+	}
+
+	private void saveError(HttpServletRequest request, String errorMessageKey, String errorKey) {
+		ActionError actionError = new ActionError(errorMessageKey);
+		ActionErrors actionErrors = new ActionErrors();
+		actionErrors.add(errorKey, actionError);
+		saveErrors(request, actionErrors);
 	}
 }
