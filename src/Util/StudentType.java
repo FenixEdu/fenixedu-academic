@@ -8,7 +8,7 @@ package Util;
 public class StudentType {
 
 	public static final int NORMAL = 1;
-	public static final int TRABALHADOR_ESTUDANTE = 2;
+	public static final int WORKING_STUDENT = 2;
 
 	private Integer state;
 
@@ -58,8 +58,8 @@ public class StudentType {
 			case NORMAL :
 				valueS = "NORMAL";
 				break;
-			case TRABALHADOR_ESTUDANTE :
-				valueS = "TRABALHADOR_ESTUDANTE";
+			case WORKING_STUDENT :
+				valueS = "WORKING_STUDENT";
 				break;
 			default:
 				break;

@@ -16,7 +16,7 @@ import Util.CurricularCourseType;
  * @author David Santos
  */
 
-public class InscTeste2 {
+public class InscTeste {
 
 	private static GestorServicos gestor = GestorServicos.manager();
 	private static IUserView userView = null;
