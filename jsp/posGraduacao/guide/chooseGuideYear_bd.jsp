@@ -2,13 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-
-    <h2><bean:message key="title.masterDegree.administrativeOffice.guideListingByYear"/></h2>
-    
-    
-   <span class="error"><html:errors/></span>
-   <br>
-   
+<h2><bean:message key="title.masterDegree.administrativeOffice.guideListingByYear"/></h2>
+<br />
+<span class="error"><html:errors/></span>
    <table>
     <html:form action="/guideListingByYear?method=chooseYear">
    	  <html:hidden property="page" value="1"/>
@@ -18,12 +14,7 @@
          <td><html:text property="year"/></td>
          </td>
        </tr>
-
-
-    	<tr> 
-         <td><html:submit value="Seguinte" styleClass="button" property="ok"/></td>
-    	</tr>
-    </html:form>
    </table>
-
-
+<br />
+<html:submit value="Seguinte" styleClass="inputbutton" property="ok" />
+</html:form>
