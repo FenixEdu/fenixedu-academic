@@ -575,14 +575,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		String authors = (String) insertBibliographicReferenceForm.get("authors");
 		String reference = (String) insertBibliographicReferenceForm.get("reference");
 		String year = (String) insertBibliographicReferenceForm.get("year");
-		String optionalStr = (String) insertBibliographicReferenceForm.get("optional");
-		Boolean optional;
-
-		if (optionalStr.equals(this.getResources(request).getMessage("message.optional"))) {
-			optional = new Boolean(true);
-		} else {
-			optional = new Boolean(false);
-		}
+		
+		Boolean optional = new Boolean ((String) insertBibliographicReferenceForm.get("optional"));
 
 		UserView userView = (UserView) session.getAttribute("UserView");
 		Object args[] = { objectCode, title, authors, reference, year, optional };

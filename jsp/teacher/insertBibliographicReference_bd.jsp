@@ -4,6 +4,9 @@
 
 <h2><bean:message key="title.editBibligraphicReference"/></h2>
 
+<logic:present name="siteView"> 
+<bean:define id="bibliographicReference" name="siteView" property="component"/>
+
 <html:form action="/createBibliographicReference">
 <html:hidden property="page" value="1"/>
 <bean:message key="message.insertBibliographyData"/>
@@ -27,7 +30,7 @@
     
 <strong><bean:message key="message.bibliographicReferenceOptional"/></strong>            
 		<p>
-			<html:select name="bibliographicReference" property="optional">
+			<html:select property="optional">
 	    		<html:option key="option.bibliographicReference.optional" value="true"/>
 	    		<html:option key="option.bibliographicReference.recommended" value="false"/>
 	    	</html:select>
@@ -44,3 +47,4 @@
 <html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 
 </html:form>
+</logic:present>
