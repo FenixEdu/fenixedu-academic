@@ -80,6 +80,8 @@ public class ServicoSeguroInicializarLocalTrabalhoFuncionarios
 		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 		broker.clearCache();
 		broker.beginTransaction();
+		
+		int newEmployees = 0;
 
 		Iterator iteradorNovo = lista.iterator();
 		while (iteradorNovo.hasNext())
@@ -125,7 +127,7 @@ public class ServicoSeguroInicializarLocalTrabalhoFuncionarios
 				if (resultEmployee.size() == 0)
 				{
 					throw new Exception(
-						"Erro ao Ler centro de custo do Funcionario " + numeroMecanografico);
+						"Erro Funcionario Não Existe" + numeroMecanografico);
 				}
 				else
 				{
@@ -147,6 +149,8 @@ public class ServicoSeguroInicializarLocalTrabalhoFuncionarios
 					employeeHistoric.setWho(new Integer(0));
 
 					broker.store(employeeHistoric);
+					
+					newEmployees++;
 				}
 			}
 			catch (Exception exception)
@@ -156,5 +160,8 @@ public class ServicoSeguroInicializarLocalTrabalhoFuncionarios
 			}			
 		}
 		broker.commitTransaction();
+		
+		System.out.println("New Employees with  Working Place Cost Center: " + newEmployees);
+		System.out.println("  Done !");
 	}
 }

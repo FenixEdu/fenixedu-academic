@@ -38,7 +38,7 @@ public class ServicoSeguroActualizarPessoas
 	/** Construtor */
 	public ServicoSeguroActualizarPessoas(String[] args)
 	{
-		_ficheiro = args[0];
+		_ficheiro = "E:/Projectos/_carregamentos/pessoa-activos.dat"; //args[0];
 	}
 
 	/** executa a actualizacao da tabela Pessoa na Base de Dados */

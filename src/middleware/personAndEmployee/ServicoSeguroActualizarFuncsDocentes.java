@@ -44,7 +44,7 @@ public class ServicoSeguroActualizarFuncsDocentes
 	public ServicoSeguroActualizarFuncsDocentes(String[] args)
 	{
 		ficheiro = "E:/Projectos/_carregamentos/docente.dat"; //args[0];
-		delimitador = new String(";");
+		delimitador = new String("\t");
 
 		/* Inicializar Hashtable com atributos a recuperar do ficheiro de texto requeridos */
 		estrutura = new Hashtable();

@@ -11,7 +11,23 @@ package Dominio;
 public class EmployeeNotTeacher extends DomainObject implements IEmployeeNotTeacher
 {
 	private IEmployee employee;
-	private Integer employeeKey;
+	private Integer keyEmployee;
+	/**
+	 * @return Returns the keyEmployee.
+	 */
+	public Integer getKeyEmployee()
+	{
+		return keyEmployee;
+	}
+
+	/**
+	 * @param keyEmployee The keyEmployee to set.
+	 */
+	public void setKeyEmployee(Integer keyEmployee)
+	{
+		this.keyEmployee = keyEmployee;
+	}
+
 	/**
 	 * @return Returns the employee.
 	 */
@@ -28,20 +44,6 @@ public class EmployeeNotTeacher extends DomainObject implements IEmployeeNotTeac
 		this.employee = employee;
 	}
 
-	/**
-	 * @return Returns the employeeKey.
-	 */
-	public Integer getEmployeeKey()
-	{
-		return employeeKey;
-	}
 
-	/**
-	 * @param employeeKey The employeeKey to set.
-	 */
-	public void setEmployeeKey(Integer employeeKey)
-	{
-		this.employeeKey = employeeKey;
-	}
 
 }

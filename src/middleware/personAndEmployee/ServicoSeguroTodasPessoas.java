@@ -38,7 +38,7 @@ public class ServicoSeguroTodasPessoas
 	/** Construtor */
 	public ServicoSeguroTodasPessoas(String[] args)
 	{
-		_ficheiro = "E:/Projectos/_carregamentos/pessoa.dat"; //args[0];//
+		_ficheiro = "E:/Projectos/_carregamentos/pessoa-todos.dat"; //args[0];
 	}
 
 	/** executa a actualizacao da tabela Pessoa na Base de Dados */
@@ -186,17 +186,14 @@ public class ServicoSeguroTodasPessoas
 			if (limpaOutput.getNomeDistrito() != null)
 			{
 				pessoa.setDistritoNaturalidade(WordUtils.capitalize(limpaOutput.getNomeDistrito()));
-				//				StringUtils.capitaliseAllWords(limpaOutput.getNomeDistrito()));
 			}
 			if (limpaOutput.getNomeConcelho() != null)
 			{
 				pessoa.setConcelhoNaturalidade(WordUtils.capitalize(limpaOutput.getNomeConcelho()));
-				//				StringUtils.capitaliseAllWords(limpaOutput.getNomeConcelho()));
 			}
 			if (limpaOutput.getNomeFreguesia() != null)
 			{
 				pessoa.setFreguesiaNaturalidade(WordUtils.capitalize(limpaOutput.getNomeFreguesia()));
-				//				StringUtils.capitaliseAllWords(limpaOutput.getNomeFreguesia()));
 			}
 
 			//locais da Morada
@@ -210,17 +207,14 @@ public class ServicoSeguroTodasPessoas
 			if (limpaOutput.getNomeDistrito() != null)
 			{
 				pessoa.setDistritoMorada(WordUtils.capitalize(limpaOutput.getNomeDistrito()));
-				//				StringUtils.capitaliseAllWords(limpaOutput.getNomeDistrito()));
 			}
 			if (limpaOutput.getNomeConcelho() != null)
 			{
 				pessoa.setConcelhoMorada(WordUtils.capitalize(limpaOutput.getNomeConcelho()));
-				//				StringUtils.capitaliseAllWords(limpaOutput.getNomeConcelho()));
 			}
 			if (limpaOutput.getNomeFreguesia() != null)
 			{
 				pessoa.setFreguesiaMorada(WordUtils.capitalize(limpaOutput.getNomeFreguesia()));
-				//				StringUtils.capitaliseAllWords(limpaOutput.getNomeFreguesia()));
 			}
 		}
 		catch (Exception e)

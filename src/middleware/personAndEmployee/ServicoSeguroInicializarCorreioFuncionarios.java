@@ -79,6 +79,8 @@ public class ServicoSeguroInicializarCorreioFuncionarios
 		broker.clearCache();
 		broker.beginTransaction();
 
+		int newEmployees = 0;
+		
 		Iterator iteradorNovo = lista.iterator();
 		while (iteradorNovo.hasNext())
 		{
@@ -145,6 +147,8 @@ public class ServicoSeguroInicializarCorreioFuncionarios
 					employeeHistoric.setWho(new Integer(0));
 
 					broker.store(employeeHistoric);
+					
+					newEmployees++;
 				}
 			}
 			catch (Exception exception)
@@ -154,5 +158,8 @@ public class ServicoSeguroInicializarCorreioFuncionarios
 			}
 		}
 		broker.commitTransaction();
+		
+		System.out.println("New Employees with  Mailing Cost Center: " + newEmployees);
+		System.out.println("  Done !");
 	}
 }
