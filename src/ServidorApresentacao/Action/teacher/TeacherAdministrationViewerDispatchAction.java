@@ -1,4 +1,5 @@
 package ServidorApresentacao.Action.teacher;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -84,53 +85,41 @@ import Util.EnrolmentGroupPolicyType;
 import Util.TipoAula;
 import fileSuport.FileSuportObject;
 import framework.factory.ServiceManagerServiceFactory;
+
 /**
  * @author Fernanda Quitério
- *  
  */
 public class TeacherAdministrationViewerDispatchAction extends FenixDispatchAction
 {
-    public ActionForward instructions(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward instructions(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         ISiteComponent instructionsComponent = new InfoSiteInstructions();
         readSiteView(request, instructionsComponent, null, null, null);
         return mapping.findForward("viewSite");
     }
+
     // ======================== Customization Options Management
-	// ========================
-    public ActionForward prepareCustomizationOptions(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    // ========================
+    public ActionForward prepareCustomizationOptions(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         ISiteComponent customizationOptionsComponent = new InfoSite();
         readSiteView(request, customizationOptionsComponent, null, null, null);
-        TeacherAdministrationSiteView siteView =
-            (TeacherAdministrationSiteView) request.getAttribute("siteView");
+        TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
+                .getAttribute("siteView");
         DynaValidatorForm alternativeSiteForm = (DynaValidatorForm) form;
-        alternativeSiteForm.set(
-            "siteAddress",
-            ((InfoSite) siteView.getComponent()).getAlternativeSite());
+        alternativeSiteForm
+                .set("siteAddress", ((InfoSite) siteView.getComponent()).getAlternativeSite());
         alternativeSiteForm.set("mail", ((InfoSite) siteView.getComponent()).getMail());
-        alternativeSiteForm.set(
-            "initialStatement",
-            ((InfoSite) siteView.getComponent()).getInitialStatement());
+        alternativeSiteForm.set("initialStatement", ((InfoSite) siteView.getComponent())
+                .getInitialStatement());
         alternativeSiteForm.set("introduction", ((InfoSite) siteView.getComponent()).getIntroduction());
         return mapping.findForward("editAlternativeSite");
     }
-    public ActionForward editCustomizationOptions(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward editCustomizationOptions(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         DynaValidatorForm alternativeSiteForm = (DynaValidatorForm) form;
         HttpSession session = request.getSession(false);
@@ -146,7 +135,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoSiteNew.setInitialStatement(initialStatement);
         infoSiteNew.setIntroduction(introduction);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, infoSiteNew };
+        Object args[] = {objectCode, infoSiteNew};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "EditCustomizationOptions", args);
@@ -160,48 +149,44 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         session.setAttribute("alternativeSiteForm", alternativeSiteForm);
         return mapping.findForward("viewSite");
     }
+
     //	======================== Announcements Management
-	// ========================
-	public ActionForward showAnnouncements(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-	{
+    // ========================
+    public ActionForward showAnnouncements(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
+    {
 
-		ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
-		readSiteView(request, announcementsComponent, null, null, null);
-		TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
-				.getAttribute("siteView");
+        ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
+        readSiteView(request, announcementsComponent, null, null, null);
+        TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
+                .getAttribute("siteView");
 
-		List announcementsList = ((InfoSiteAnnouncement) siteView.getComponent()).getAnnouncements();
-		if (!announcementsList.isEmpty())
-		{
-			Collections.sort(announcementsList, new ComparatorChain(new BeanComparator(
-					"lastModifiedDate"), true));
-			return mapping.findForward("showAnnouncements");
-		} else
-		{
-			HttpSession session = request.getSession(false);
-			session.removeAttribute("insertAnnouncementForm");
-			return mapping.findForward("insertAnnouncement");
-		}
-	}
-    public ActionForward prepareCreateAnnouncement(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+        List announcementsList = ((InfoSiteAnnouncement) siteView.getComponent()).getAnnouncements();
+        if (!announcementsList.isEmpty())
+        {
+            Collections.sort(announcementsList, new ComparatorChain(new BeanComparator(
+                    "lastModifiedDate"), true));
+            return mapping.findForward("showAnnouncements");
+        }
+        else
+        {
+            HttpSession session = request.getSession(false);
+            session.removeAttribute("insertAnnouncementForm");
+            return mapping.findForward("insertAnnouncement");
+        }
+    }
+
+    public ActionForward prepareCreateAnnouncement(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         session.removeAttribute("insertAnnouncementForm");
         readSiteView(request, null, null, null, null);
         return mapping.findForward("insertAnnouncement");
     }
-    public ActionForward createAnnouncement(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward createAnnouncement(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
@@ -209,7 +194,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String title = (String) insertAnnouncementForm.get("title");
         String information = (String) insertAnnouncementForm.get("information");
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, title, information };
+        Object args[] = {objectCode, title, information};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "CreateAnnouncement", args);
@@ -229,12 +214,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         readSiteView(request, announcementsComponent, null, null, null);
         return mapping.findForward("showAnnouncements");
     }
-    public ActionForward prepareEditAnnouncement(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward prepareEditAnnouncement(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         //retrieve announcement
         Integer announcementCode = getAnnouncementCode(request);
@@ -242,6 +224,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         readSiteView(request, announcementComponent, null, announcementCode, null);
         return mapping.findForward("editAnnouncement");
     }
+
     private Integer getAnnouncementCode(HttpServletRequest request)
     {
         String announcementCodeString = request.getParameter("announcementCode");
@@ -254,12 +237,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             announcementCode = new Integer(announcementCodeString);
         return announcementCode;
     }
-    public ActionForward editAnnouncement(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward editAnnouncement(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         String announcementCodeString = request.getParameter("announcementCode");
@@ -273,7 +253,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String newTitle = (String) insertAnnouncementForm.get("title");
         String newInformation = (String) insertAnnouncementForm.get("information");
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, announcementCode, newTitle, newInformation };
+        Object args[] = {objectCode, announcementCode, newTitle, newInformation};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "EditAnnouncementService", args);
@@ -286,12 +266,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         readSiteView(request, announecementsComponent, null, null, null);
         return mapping.findForward("showAnnouncements");
     }
-    public ActionForward deleteAnnouncement(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         String announcementCodeString = request.getParameter("announcementCode");
@@ -302,7 +279,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer announcementCode = new Integer(announcementCodeString);
         Integer objectCode = getObjectCode(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, announcementCode };
+        Object args[] = {objectCode, announcementCode};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "DeleteAnnouncementService", args);
@@ -313,8 +290,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         ISiteComponent announecementsComponent = new InfoSiteAnnouncement();
         readSiteView(request, announecementsComponent, null, null, null);
-        TeacherAdministrationSiteView siteView =
-            (TeacherAdministrationSiteView) request.getAttribute("siteView");
+        TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
+                .getAttribute("siteView");
         if (!((InfoSiteAnnouncement) siteView.getComponent()).getAnnouncements().isEmpty())
         {
             return mapping.findForward("showAnnouncements");
@@ -325,34 +302,28 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return mapping.findForward("insertAnnouncement");
         }
     }
+
     //	======================== Objectives Management ========================
-    public ActionForward viewObjectives(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward viewObjectives(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         ISiteComponent objectivesComponent = new InfoSiteObjectives();
         readSiteView(request, objectivesComponent, null, null, null);
         return mapping.findForward("viewObjectives");
     }
-    public ActionForward prepareEditObjectives(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward prepareEditObjectives(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
-    	
+
         ISiteComponent objectivesComponent = new InfoCurriculum();
-        
+
         Integer objectCode = getObjectCode(request);
-        
+
         String curricularCourseCodeString = request.getParameter("curricularCourseCode");
         Integer curricularCourseCode = new Integer(curricularCourseCodeString);
         request.setAttribute("curricularCourseCode", curricularCourseCode);
-        
+
         try
         {
             readSiteView(request, objectivesComponent, null, curricularCourseCode, null);
@@ -362,19 +333,16 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             throw e1;
         }
 
-        HttpSession session = request.getSession(false);        
+        HttpSession session = request.getSession(false);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        
+
         //Filter if the cteacher is responsibles for the execution course
-        Object args[] = { userView.getUtilizador(), objectCode, curricularCourseCode};
+        Object args[] = {userView.getUtilizador(), objectCode, curricularCourseCode};
         Boolean isResponsible = null;
         try
         {
-        	isResponsible =
-                (Boolean) ServiceManagerServiceFactory.executeService(
-                    null,
-                    "TeacherResponsibleByExecutionCourse",
-                    args);
+            isResponsible = (Boolean) ServiceManagerServiceFactory.executeService(null,
+                    "TeacherResponsibleByExecutionCourse", args);
 
         }
         catch (FenixServiceException e)
@@ -392,36 +360,28 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return mapping.findForward("notAuthorized");
         }
 
-        TeacherAdministrationSiteView siteView =
-            (TeacherAdministrationSiteView) request.getAttribute("siteView");
+        TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
+                .getAttribute("siteView");
 
         if (siteView.getComponent() != null)
         {
             DynaActionForm objectivesForm = (DynaActionForm) form;
 
-            objectivesForm.set(
-                "generalObjectives",
-                ((InfoCurriculum) siteView.getComponent()).getGeneralObjectives());
-            objectivesForm.set(
-                "generalObjectivesEn",
-                ((InfoCurriculum) siteView.getComponent()).getGeneralObjectivesEn());
-            objectivesForm.set(
-                "operacionalObjectives",
-                ((InfoCurriculum) siteView.getComponent()).getOperacionalObjectives());
-            objectivesForm.set(
-                "operacionalObjectivesEn",
-                ((InfoCurriculum) siteView.getComponent()).getOperacionalObjectivesEn());
+            objectivesForm.set("generalObjectives", ((InfoCurriculum) siteView.getComponent())
+                    .getGeneralObjectives());
+            objectivesForm.set("generalObjectivesEn", ((InfoCurriculum) siteView.getComponent())
+                    .getGeneralObjectivesEn());
+            objectivesForm.set("operacionalObjectives", ((InfoCurriculum) siteView.getComponent())
+                    .getOperacionalObjectives());
+            objectivesForm.set("operacionalObjectivesEn", ((InfoCurriculum) siteView.getComponent())
+                    .getOperacionalObjectivesEn());
         }
 
         return mapping.findForward("editObjectives");
     }
 
-    public ActionForward editObjectives(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward editObjectives(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
@@ -435,12 +395,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoCurriculumNew.setGeneralObjectives((String) objectivesForm.get("generalObjectives"));
         infoCurriculumNew.setGeneralObjectivesEn((String) objectivesForm.get("generalObjectivesEn"));
         infoCurriculumNew.setOperacionalObjectives((String) objectivesForm.get("operacionalObjectives"));
-        infoCurriculumNew.setOperacionalObjectivesEn(
-            (String) objectivesForm.get("operacionalObjectivesEn"));
+        infoCurriculumNew.setOperacionalObjectivesEn((String) objectivesForm
+                .get("operacionalObjectivesEn"));
 
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew, userView.getUtilizador()};
+        Object args[] = {objectCode, curricularCourseCode, infoCurriculumNew, userView.getUtilizador()};
 
         try
         {
@@ -455,27 +415,19 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     //	======================== Program Management ========================
-    public ActionForward viewProgram(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward viewProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException
     {
         ISiteComponent programComponent = new InfoSitePrograms();
         readSiteView(request, programComponent, null, null, null);
         return mapping.findForward("viewProgram");
     }
 
-    public ActionForward prepareEditProgram(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward prepareEditProgram(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
-    	Integer objectCode = getObjectCode(request);
-    	
+        Integer objectCode = getObjectCode(request);
+
         String curricularCourseCodeString = request.getParameter("curricularCourseCode");
         Integer curricularCourseCode = new Integer(curricularCourseCodeString);
         request.setAttribute("curricularCourseCode", curricularCourseCode);
@@ -492,38 +444,35 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             throw e1;
         }
 
-        HttpSession session = request.getSession(false);        
+        HttpSession session = request.getSession(false);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        
+
         //Filter if the cteacher is responsibles for the execution course
-        Object args[] = { userView.getUtilizador(), objectCode, curricularCourseCode};
-         Boolean isResponsible = null;
-         try
-         {
-         	isResponsible =
-         (Boolean) ServiceManagerServiceFactory.executeService(
-         null,
-         "TeacherResponsibleByExecutionCourse",
-         args);
+        Object args[] = {userView.getUtilizador(), objectCode, curricularCourseCode};
+        Boolean isResponsible = null;
+        try
+        {
+            isResponsible = (Boolean) ServiceManagerServiceFactory.executeService(null,
+                    "TeacherResponsibleByExecutionCourse", args);
 
-         }
-         catch (FenixServiceException e)
-         {
-         e.printStackTrace();
-         throw new FenixActionException(e);
-         }
-         if (isResponsible.booleanValue() == false)
-         {
-         ActionErrors errors = new ActionErrors();
+        }
+        catch (FenixServiceException e)
+        {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
+        if (isResponsible.booleanValue() == false)
+        {
+            ActionErrors errors = new ActionErrors();
 
-         errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
-         saveErrors(request, errors);
+            errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
+            saveErrors(request, errors);
 
-         return mapping.findForward("notAuthorized");
-         }
+            return mapping.findForward("notAuthorized");
+        }
 
-        TeacherAdministrationSiteView siteView =
-            (TeacherAdministrationSiteView) request.getAttribute("siteView");
+        TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
+                .getAttribute("siteView");
 
         if (siteView.getComponent() != null)
         {
@@ -535,12 +484,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return mapping.findForward("editProgram");
     }
 
-    public ActionForward editProgram(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward editProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
@@ -555,7 +500,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoCurriculumNew.setProgramEn((String) programForm.get("programEn"));
 
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew, userView.getUtilizador()};
+        Object args[] = {objectCode, curricularCourseCode, infoCurriculumNew, userView.getUtilizador()};
 
         try
         {
@@ -569,16 +514,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     //	======================== EvaluationMethod Management
-	// ========================
-    public ActionForward viewEvaluationMethod(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    // ========================
+    public ActionForward viewEvaluationMethod(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         //ISiteComponent evaluationComponent = new
-		// InfoSiteEvaluationMethods();
+        // InfoSiteEvaluationMethods();
 
         ISiteComponent evaluationComponent = new InfoEvaluationMethod();
 
@@ -586,12 +527,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return mapping.findForward("viewEvaluationMethod");
     }
 
-    public ActionForward prepareEditEvaluationMethod(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward prepareEditEvaluationMethod(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
 
         ISiteComponent evaluationComponent = new InfoEvaluationMethod();
@@ -604,18 +541,16 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             throw e1;
         }
 
-        TeacherAdministrationSiteView siteView =
-            (TeacherAdministrationSiteView) request.getAttribute("siteView");
+        TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
+                .getAttribute("siteView");
 
         if (siteView.getComponent() != null)
         {
             DynaActionForm evaluationForm = (DynaActionForm) form;
-            evaluationForm.set(
-                "evaluationElements",
-                ((InfoEvaluationMethod) siteView.getComponent()).getEvaluationElements());
-            evaluationForm.set(
-                "evaluationElementsEn",
-                ((InfoEvaluationMethod) siteView.getComponent()).getEvaluationElementsEn());
+            evaluationForm.set("evaluationElements", ((InfoEvaluationMethod) siteView.getComponent())
+                    .getEvaluationElements());
+            evaluationForm.set("evaluationElementsEn", ((InfoEvaluationMethod) siteView.getComponent())
+                    .getEvaluationElementsEn());
         }
 
         return mapping.findForward("editEvaluationMethod");
@@ -626,7 +561,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         //		String curricularCourseCodeString =
         //			request.getParameter("curricularCourseCode");
         //		Integer curricularCourseCode = new
-		// Integer(curricularCourseCodeString);
+        // Integer(curricularCourseCodeString);
         //
         //		try {
         //			readSiteView(
@@ -657,12 +592,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         //		return mapping.findForward("editEvaluationMethod");
     }
 
-    public ActionForward editEvaluationMethod(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward editEvaluationMethod(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
 
@@ -674,10 +605,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
         infoEvaluationMethod.setIdInternal(evaluationMethodCode);
         infoEvaluationMethod.setEvaluationElements((String) evaluationForm.get("evaluationElements"));
-        infoEvaluationMethod.setEvaluationElementsEn(
-            (String) evaluationForm.get("evaluationElementsEn"));
+        infoEvaluationMethod
+                .setEvaluationElementsEn((String) evaluationForm.get("evaluationElementsEn"));
 
-        Object args[] = { objectCode, evaluationMethodCode, infoEvaluationMethod };
+        Object args[] = {objectCode, evaluationMethodCode, infoEvaluationMethod};
 
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         try
@@ -696,28 +627,28 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         //		HttpSession session = request.getSession(false);
         //		Integer objectCode = getObjectCode(request);
         //		String curricularCourseCodeString =
-		// request.getParameter("curricularCourseCode");
+        // request.getParameter("curricularCourseCode");
         //		Integer curricularCourseCode = new
-		// Integer(curricularCourseCodeString);
+        // Integer(curricularCourseCodeString);
         //
         //		DynaActionForm evaluationForm = (DynaActionForm) form;
         //
         //		InfoCurriculum infoCurriculumNew = new InfoCurriculum();
         //		infoCurriculumNew.setIdInternal(curricularCourseCode);
         //		infoCurriculumNew.setEvaluationElements((String)
-		// evaluationForm.get("evaluationElements"));
+        // evaluationForm.get("evaluationElements"));
         //		infoCurriculumNew.setEvaluationElementsEn((String)
         // evaluationForm.get("evaluationElementsEn"));
         //
         //		Object args[] = { objectCode, curricularCourseCode,
-		// infoCurriculumNew };
+        // infoCurriculumNew };
         //
         //		UserView userView = (UserView)
-		// session.getAttribute(SessionConstants.U_VIEW);
+        // session.getAttribute(SessionConstants.U_VIEW);
         //		GestorServicos serviceManager = GestorServicos.manager();
         //		try {
         //			ServiceManagerServiceFactory.executeService(userView,
-		// "EditEvaluation", args);
+        // "EditEvaluation", args);
         //
         //		} catch (FenixServiceException e) {
         //			throw new FenixActionException(e);
@@ -726,20 +657,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     //	======================== Bibliographic References Management
-	// ========================
-    public ActionForward viewBibliographicReference(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    // ========================
+    public ActionForward viewBibliographicReference(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         ISiteComponent bibliographyComponent = new InfoSiteBibliography();
         readSiteView(request, bibliographyComponent, null, null, null);
-        TeacherAdministrationSiteView siteView =
-            (TeacherAdministrationSiteView) request.getAttribute("siteView");
+        TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
+                .getAttribute("siteView");
         if (((InfoSiteBibliography) siteView.getComponent()).getBibliographicReferences() != null
-            && (!((InfoSiteBibliography) siteView.getComponent()).getBibliographicReferences().isEmpty()))
+                && (!((InfoSiteBibliography) siteView.getComponent()).getBibliographicReferences()
+                        .isEmpty()))
         {
             return mapping.findForward("bibliographyManagement");
         }
@@ -751,24 +679,18 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return mapping.findForward("bibliographyManagement");
         }
     }
-    public ActionForward prepareCreateBibliographicReference(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
+
+    public ActionForward prepareCreateBibliographicReference(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception
     {
         HttpSession session = request.getSession(false);
         session.removeAttribute("bibliographicReferenceForm");
         readSiteView(request, null, null, null, null);
         return mapping.findForward("insertBibliographicReference");
     }
-    public ActionForward createBibliographicReference(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward createBibliographicReference(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
@@ -779,7 +701,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String year = (String) insertBibliographicReferenceForm.get("year");
         Boolean optional = new Boolean((String) insertBibliographicReferenceForm.get("optional"));
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, title, authors, reference, year, optional };
+        Object args[] = {objectCode, title, authors, reference, year, optional};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "CreateBibliographicReference", args);
@@ -792,38 +714,32 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         readSiteView(request, bibliographyComponent, null, null, null);
         return mapping.findForward("bibliographyManagement");
     }
-    public ActionForward prepareEditBibliographicReference(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward prepareEditBibliographicReference(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         //retrieve bibliographic reference
         String bibliographicReferenceCodeString = request.getParameter("bibliographicReferenceCode");
         if (bibliographicReferenceCodeString == null)
         {
-            bibliographicReferenceCodeString =
-                (String) request.getAttribute("bibliographicReferenceCode");
+            bibliographicReferenceCodeString = (String) request
+                    .getAttribute("bibliographicReferenceCode");
         }
         Integer bibliographicReferenceCode = new Integer(bibliographicReferenceCodeString);
         ISiteComponent bibliographyComponent = new InfoBibliographicReference();
         readSiteView(request, bibliographyComponent, null, bibliographicReferenceCode, null);
         return mapping.findForward("editBibliographicReference");
     }
-    public ActionForward editBibliographicReference(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward editBibliographicReference(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         String bibliographicReferenceCodeString = request.getParameter("bibliographicReferenceCode");
         if (bibliographicReferenceCodeString == null)
         {
-            bibliographicReferenceCodeString =
-                (String) request.getAttribute("bibliographicReferenceCode");
+            bibliographicReferenceCodeString = (String) request
+                    .getAttribute("bibliographicReferenceCode");
         }
         Integer bibliographicReferenceCode = new Integer(bibliographicReferenceCodeString);
         Integer objectCode = getObjectCode(request);
@@ -833,17 +749,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String reference = (String) editBibliographicReferenceForm.get("reference");
         String year = (String) editBibliographicReferenceForm.get("year");
         //String optionalStr = (String)
-		// editBibliographicReferenceForm.get("optional");
+        // editBibliographicReferenceForm.get("optional");
         Boolean optional = new Boolean((String) editBibliographicReferenceForm.get("optional"));
         //		if
-		// (optionalStr.equals(this.getResources(request).getMessage("message.optional")))
-		// {
+        // (optionalStr.equals(this.getResources(request).getMessage("message.optional")))
+        // {
         //			optional = new Boolean(true);
         //		} else {
         //			optional = new Boolean(false);
         //		}
-        Object args[] =
-            { objectCode, bibliographicReferenceCode, title, authors, reference, year, optional };
+        Object args[] = {objectCode, bibliographicReferenceCode, title, authors, reference, year,
+                optional};
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         try
         {
@@ -857,24 +773,21 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         readSiteView(request, bibliographyComponent, null, null, null);
         return mapping.findForward("bibliographyManagement");
     }
-    public ActionForward deleteBibliographicReference(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward deleteBibliographicReference(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         String bibliographicReferenceCodeString = request.getParameter("bibliographicReferenceCode");
         if (bibliographicReferenceCodeString == null)
         {
-            bibliographicReferenceCodeString =
-                (String) request.getAttribute("bibliographicReferenceCode");
+            bibliographicReferenceCodeString = (String) request
+                    .getAttribute("bibliographicReferenceCode");
         }
         Integer bibliographicReferenceCode = new Integer(bibliographicReferenceCodeString);
         Integer objectCode = getObjectCode(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, bibliographicReferenceCode };
+        Object args[] = {objectCode, bibliographicReferenceCode};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "DeleteBibliographicReference", args);
@@ -885,19 +798,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return viewBibliographicReference(mapping, form, request, response);
     }
+
     //	======================== Teachers Management ========================
-    public ActionForward viewTeachersByProfessorship(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward viewTeachersByProfessorship(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         String username = getUsername(request);
         ISiteComponent teachersComponent = new InfoSiteTeachers();
         readSiteView(request, teachersComponent, null, null, username);
         return mapping.findForward("viewTeachers");
     }
+
     private String getUsername(HttpServletRequest request) throws InvalidSessionActionException
     {
         HttpSession session = getSession(request);
@@ -905,31 +816,25 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String username = userView.getUtilizador();
         return username;
     }
-    public ActionForward prepareAssociateTeacher(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward prepareAssociateTeacher(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         session.removeAttribute("teacherForm");
         readSiteView(request, null, null, null, null);
         return mapping.findForward("associateTeacher");
     }
-    public ActionForward associateTeacher(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward associateTeacher(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = getSession(request);
         Integer objectCode = getObjectCode(request);
         DynaActionForm teacherForm = (DynaActionForm) form;
         Integer teacherNumber = new Integer((String) teacherForm.get("teacherNumber"));
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, teacherNumber };
+        Object args[] = {objectCode, teacherNumber};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "AssociateTeacher", args);
@@ -948,12 +853,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return viewTeachersByProfessorship(mapping, form, request, response);
     }
-    public ActionForward removeTeacher(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward removeTeacher(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = getSession(request);
         String teacherCodeString = request.getParameter("teacherCode");
@@ -964,7 +866,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer teacherCode = new Integer(teacherCodeString);
         Integer objectCode = getObjectCode(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, teacherCode };
+        Object args[] = {objectCode, teacherCode};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "DeleteTeacher", args);
@@ -979,57 +881,41 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return viewTeachersByProfessorship(mapping, form, request, response);
     }
+
     //	======================== Evaluation Management ========================
-    public ActionForward viewEvaluation(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward viewEvaluation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         ISiteComponent evaluationComponent = new InfoSiteEvaluation();
         readSiteView(request, evaluationComponent, null, null, null);
         return mapping.findForward("viewEvaluation");
     }
+
     //	======================== Sections Management ========================
-    public ActionForward sectionsFirstPage(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward sectionsFirstPage(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         readSiteView(request, null, null, null, null);
         return mapping.findForward("sectionsFirstPage");
     }
-    public ActionForward viewSection(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward viewSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException
     {
         Integer sectionCode = getSectionCode(request);
         return viewSection(mapping, form, request, response, sectionCode);
     }
-    public ActionForward viewSection(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response,
-        Integer sectionCode)
-        throws FenixActionException
+
+    public ActionForward viewSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response, Integer sectionCode) throws FenixActionException
     {
         ISiteComponent sectionComponent = new InfoSiteSection();
         readSiteView(request, sectionComponent, null, sectionCode, null);
         return mapping.findForward("viewSection");
     }
-    public ActionForward prepareCreateRegularSection(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward prepareCreateRegularSection(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         Integer sectionCode = getSectionCode(request);
         ISiteComponent regularSectionsComponent = new InfoSiteRegularSections();
@@ -1037,6 +923,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         request.setAttribute("currentSectionCode", sectionCode);
         return mapping.findForward("createSubSection");
     }
+
     private Integer getSectionCode(HttpServletRequest request)
     {
         Integer sectionCode = null;
@@ -1051,23 +938,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return sectionCode;
     }
-    public ActionForward prepareCreateRootSection(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward prepareCreateRootSection(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         ISiteComponent rootSectionsComponent = new InfoSiteRootSections();
         readSiteView(request, rootSectionsComponent, null, null, null);
         return mapping.findForward("createSection");
     }
-    public ActionForward createSection(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward createSection(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         Integer sectionCode = getSectionCode(request);
@@ -1076,7 +957,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String sectionName = (String) dynaForm.get("name");
         Integer order = Integer.valueOf((String) dynaForm.get("sectionOrder"));
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, sectionCode, sectionName, order };
+        Object args[] = {objectCode, sectionCode, sectionName, order};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "InsertSection", args);
@@ -1091,24 +972,18 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return sectionsFirstPage(mapping, form, request, response);
     }
-    public ActionForward prepareEditSection(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward prepareEditSection(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         Integer sectionCode = getSectionCode(request);
         ISiteComponent sectionsComponent = new InfoSiteSections();
         readSiteView(request, sectionsComponent, null, sectionCode, null);
         return mapping.findForward("editSection");
     }
-    public ActionForward editSection(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward editSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         Integer sectionCode = getSectionCode(request);
@@ -1118,7 +993,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer order = (Integer) sectionForm.get("sectionOrder");
         order = new Integer(order.intValue() - 1);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object editionArgs[] = { objectCode, sectionCode, sectionName, order };
+        Object editionArgs[] = {objectCode, sectionCode, sectionName, order};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "EditSection", editionArgs);
@@ -1137,25 +1012,20 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return sectionsFirstPage(mapping, form, request, response);
     }
-    public ActionForward deleteSection(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward deleteSection(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         Integer superiorSectionCode = getSuperiorSectionCode(request);
         Integer sectionCode = getSectionCode(request);
         Integer objectCode = getObjectCode(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object deleteSectionArguments[] = { objectCode, sectionCode };
+        Object deleteSectionArguments[] = {objectCode, sectionCode};
         try
         {
-            ServiceManagerServiceFactory.executeService(
-                userView,
-                "DeleteSection",
-                deleteSectionArguments);
+            ServiceManagerServiceFactory.executeService(userView, "DeleteSection",
+                    deleteSectionArguments);
             //			if this section has a parent section
             if (superiorSectionCode != null)
             {
@@ -1169,9 +1039,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         catch (notAuthorizedServiceDeleteException notnotAuthorizedServiceDeleteException)
         {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add(
-                "notAuthorizedSectionDelete",
-                new ActionError("error.notAuthorizedSectionDelete.fileExists"));
+            actionErrors.add("notAuthorizedSectionDelete", new ActionError(
+                    "error.notAuthorizedSectionDelete.fileExists"));
             saveErrors(request, actionErrors);
             if (superiorSectionCode != null)
             {
@@ -1191,6 +1060,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             throw new FenixActionException(e.getMessage());
         }
     }
+
     private Integer getSuperiorSectionCode(HttpServletRequest request)
     {
         Integer sectionCode = null;
@@ -1206,12 +1076,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return sectionCode;
     }
 
-    public ActionForward prepareFileUpload(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward prepareFileUpload(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         Integer itemCode = getItemCode(request);
         ISiteComponent itemsComponent = new InfoSiteItems();
@@ -1219,12 +1085,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return mapping.findForward("uploadItemFile");
     }
 
-    public ActionForward fileUpload(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward fileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -1248,25 +1110,24 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         catch (FileNotFoundException e)
         {
-            
+
         }
         catch (IOException e)
         {
-          
+
         }
         ActionErrors actionErrors = new ActionErrors();
         System.out.println(file.getFileName());
         if (file.getFileName() == null || file.getFileName().indexOf("&") != -1)
         {
-            actionErrors.add(
-                "fileNameInvalid",
-                new ActionError("errors.fileNameInvalid", file.getFileName()));
+            actionErrors.add("fileNameInvalid", new ActionError("errors.fileNameInvalid", file
+                    .getFileName()));
             saveErrors(request, actionErrors);
             return prepareFileUpload(mapping, form, request, response);
 
         }
 
-        Object[] args = { file, itemCode };
+        Object[] args = {file, itemCode};
         Boolean serviceResult = null;
 
         try
@@ -1275,27 +1136,24 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         catch (FileAlreadyExistsServiceException e1)
         {
-            actionErrors.add(
-                "fileAlreadyExists",
-                new ActionError("errors.fileAlreadyExists", file.getFileName()));
+            actionErrors.add("fileAlreadyExists", new ActionError("errors.fileAlreadyExists", file
+                    .getFileName()));
             saveErrors(request, actionErrors);
             return prepareFileUpload(mapping, form, request, response);
 
         }
         catch (FileNameTooLongServiceException e1)
         {
-            actionErrors.add(
-                "fileNameTooLong",
-                new ActionError("errors.fileNameTooLong", file.getFileName()));
+            actionErrors.add("fileNameTooLong", new ActionError("errors.fileNameTooLong", file
+                    .getFileName()));
             saveErrors(request, actionErrors);
             return prepareFileUpload(mapping, form, request, response);
 
         }
         catch (FenixServiceException e1)
         {
-            actionErrors.add(
-                "unableToStoreFile",
-                new ActionError("errors.unableToStoreFile", file.getFileName()));
+            actionErrors.add("unableToStoreFile", new ActionError("errors.unableToStoreFile", file
+                    .getFileName()));
             saveErrors(request, actionErrors);
             return prepareFileUpload(mapping, form, request, response);
 
@@ -1309,12 +1167,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return viewSection(mapping, form, request, response);
     }
 
-    public ActionForward deleteFile(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward deleteFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException
     {
 
         Integer itemCode = getItemCode(request);
@@ -1331,25 +1185,21 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object[] args = { itemCode, fileName };
+        Object[] args = {itemCode, fileName};
         try
         {
             ServiceUtils.executeService(userView, "DeleteItemFile", args);
         }
         catch (FenixServiceException e1)
         {
-          
+
         }
 
         return viewSection(mapping, form, request, response);
     }
 
-    public ActionForward prepareInsertItem(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward prepareInsertItem(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         Integer sectionCode = getSectionCode(request);
         ISiteComponent sectionComponent = new InfoSiteSection();
@@ -1357,12 +1207,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return mapping.findForward("insertItem");
     }
 
-    public ActionForward insertItem(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward insertItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         Integer sectionCode = getSectionCode(request);
@@ -1378,7 +1224,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         newInfoItem.setInformation(information);
         newInfoItem.setUrgent(new Boolean(urgentString));
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, sectionCode, newInfoItem };
+        Object args[] = {objectCode, sectionCode, newInfoItem};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "InsertItem", args);
@@ -1393,18 +1239,16 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return viewSection(mapping, form, request, response);
     }
-    public ActionForward prepareEditItem(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward prepareEditItem(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         Integer itemCode = getItemCode(request);
         ISiteComponent itemsComponent = new InfoSiteItems();
         readSiteView(request, itemsComponent, null, itemCode, null);
         return mapping.findForward("editItem");
     }
+
     private Integer getItemCode(HttpServletRequest request)
     {
         Integer itemCode = null;
@@ -1419,12 +1263,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return itemCode;
     }
-    public ActionForward editItem(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward editItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         Integer itemCode = getItemCode(request);
@@ -1441,7 +1282,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         newInfoItem.setItemOrder(itemOrder);
         newInfoItem.setUrgent(urgent);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object editItemArgs[] = { objectCode, itemCode, newInfoItem };
+        Object editItemArgs[] = {objectCode, itemCode, newInfoItem};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "EditItem", editItemArgs);
@@ -1456,18 +1297,15 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return viewSection(mapping, form, request, response);
     }
-    public ActionForward deleteItem(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward deleteItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         Integer itemCode = getItemCode(request);
         Integer objectCode = getObjectCode(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object deleteItemArguments[] = { objectCode, itemCode };
+        Object deleteItemArguments[] = {objectCode, itemCode};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "DeleteItem", deleteItemArguments);
@@ -1475,9 +1313,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         catch (notAuthorizedServiceDeleteException e)
         {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add(
-                "notAuthorizedItemDelete",
-                new ActionError("error.notAuthorizedItemDelete.fileExists"));
+            actionErrors.add("notAuthorizedItemDelete", new ActionError(
+                    "error.notAuthorizedItemDelete.fileExists"));
             saveErrors(request, actionErrors);
         }
         catch (FenixServiceException fenixServiceException)
@@ -1486,12 +1323,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return viewSection(mapping, form, request, response);
     }
-    public ActionForward validationError(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward validationError(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         SiteManagementActionMapping siteManagementActionMapping = (SiteManagementActionMapping) mapping;
         ISiteComponent siteComponent = getSiteComponentForValidationError(siteManagementActionMapping);
@@ -1502,29 +1336,35 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         {
             obj1 = getItemCode(request);
         }
-        else if (siteComponent instanceof InfoSiteTeachers)
-        {
-            obj2 = getUsername(request);
-        }
-        else if (siteComponent instanceof InfoSiteRegularSections)
-        {
-            obj1 = getSectionCode(request);
-        }
-        else if (siteComponent instanceof InfoAnnouncement)
-        {
-            obj1 = getAnnouncementCode(request);
-        }
-        else if (siteComponent instanceof InfoSiteSections)
-        {
-            obj1 = getSectionCode(request);
-        }
-        else if (siteComponent instanceof InfoSiteSection)
-        {
-            obj1 = getSectionCode(request);
-        }
+        else
+            if (siteComponent instanceof InfoSiteTeachers)
+            {
+                obj2 = getUsername(request);
+            }
+            else
+                if (siteComponent instanceof InfoSiteRegularSections)
+                {
+                    obj1 = getSectionCode(request);
+                }
+                else
+                    if (siteComponent instanceof InfoAnnouncement)
+                    {
+                        obj1 = getAnnouncementCode(request);
+                    }
+                    else
+                        if (siteComponent instanceof InfoSiteSections)
+                        {
+                            obj1 = getSectionCode(request);
+                        }
+                        else
+                            if (siteComponent instanceof InfoSiteSection)
+                            {
+                                obj1 = getSectionCode(request);
+                            }
         readSiteView(request, siteComponent, infoExecutionCourseCode, obj1, obj2);
         return mapping.findForward(siteManagementActionMapping.getInputForwardName());
     }
+
     private ISiteComponent getSiteComponentForValidationError(SiteManagementActionMapping mapping)
     {
         ISiteComponent siteComponent = null;
@@ -1532,11 +1372,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         try
         {
             Class componentClass = this.getClass().getClassLoader().loadClass(className);
-            Constructor c = componentClass.getConstructor(new Class[] {
-            });
+            Constructor c = componentClass.getConstructor(new Class[]{});
             c.setAccessible(true);
-            siteComponent = (ISiteComponent) c.newInstance(new Object[] {
-            });
+            siteComponent = (ISiteComponent) c.newInstance(new Object[]{});
         }
         catch (SecurityException e)
         {
@@ -1568,6 +1406,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return siteComponent;
     }
+
     private Integer getObjectCode(HttpServletRequest request)
     {
         Integer objectCode = null;
@@ -1582,6 +1421,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return objectCode;
     }
+
     private Integer getParameter(HttpServletRequest request, String name)
     {
         Integer objectCode = null;
@@ -1596,13 +1436,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return objectCode;
     }
-    private SiteView readSiteView(
-        HttpServletRequest request,
-        ISiteComponent firstPageComponent,
-        Integer infoExecutionCourseCode,
-        Object obj1,
-        Object obj2)
-        throws FenixActionException
+
+    private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent,
+            Integer infoExecutionCourseCode, Object obj1, Object obj2) throws FenixActionException
     {
 
         HttpSession session = getSession(request);
@@ -1617,25 +1453,20 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
 
         ISiteComponent commonComponent = new InfoSiteCommon();
-        Object[] args =
-            { infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1, obj2 };
+        Object[] args = {infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1,
+                obj2};
 
         try
         {
-            TeacherAdministrationSiteView siteView =
-                (TeacherAdministrationSiteView) ServiceUtils.executeService(
-                    userView,
-                    "TeacherAdministrationSiteComponentService",
-                    args);
+            TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils
+                    .executeService(userView, "TeacherAdministrationSiteComponentService", args);
             request.setAttribute("siteView", siteView);
-            request.setAttribute(
-                "objectCode",
-                ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+            request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent())
+                    .getExecutionCourse().getIdInternal());
             if (siteView.getComponent() instanceof InfoSiteSection)
             {
-                request.setAttribute(
-                    "infoSection",
-                    ((InfoSiteSection) siteView.getComponent()).getSection());
+                request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent())
+                        .getSection());
             }
 
             return siteView;
@@ -1648,12 +1479,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     }
 
-    public ActionForward showSummaries(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward showSummaries(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         String executionCourseIdString = request.getParameter("objectCode");
         String typeFilter = request.getParameter("typeFilter");
@@ -1666,7 +1493,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer executionCourseId = new Integer(executionCourseIdString);
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object[] args = { executionCourseId, summaryType };
+        Object[] args = {executionCourseId, summaryType};
         SiteView siteView = null;
         try
         {
@@ -1677,17 +1504,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             throw new FenixActionException(e);
         }
 
-        Collections.sort(
-            ((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView).getComponent()).getInfoSummaries(),
-            Collections.reverseOrder());
+        Collections.sort(((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView).getComponent())
+                .getInfoSummaries(), Collections.reverseOrder());
 
         request.setAttribute("siteView", siteView);
         return mapping.findForward("showSummaries");
     }
+
     /**
-	 * @param typeFilter
-	 * @return
-	 */
+     * @param typeFilter
+     * @return
+     */
     private TipoAula mapFromStringToLessonType(String typeFilter)
     {
         TipoAula result = null;
@@ -1695,66 +1522,67 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         {
             result = new TipoAula(TipoAula.TEORICA);
         }
-        else if (typeFilter.equals("P"))
-        {
-            result = new TipoAula(TipoAula.PRATICA);
-        }
-        else if (typeFilter.equals("TP"))
-        {
-            result = new TipoAula(TipoAula.TEORICO_PRATICA);
-        }
-        else if (typeFilter.equals("L"))
-        {
-            result = new TipoAula(TipoAula.LABORATORIAL);
-        }
+        else
+            if (typeFilter.equals("P"))
+            {
+                result = new TipoAula(TipoAula.PRATICA);
+            }
+            else
+                if (typeFilter.equals("TP"))
+                {
+                    result = new TipoAula(TipoAula.TEORICO_PRATICA);
+                }
+                else
+                    if (typeFilter.equals("L"))
+                    {
+                        result = new TipoAula(TipoAula.LABORATORIAL);
+                    }
 
         return result;
     }
-	public ActionForward prepareInsertSummary(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-	{
 
-		TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) readSiteView(request,
-				null, null, null, null);
+    public ActionForward prepareInsertSummary(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
+    {
 
-		InfoExecutionCourse infoExecutionCourse = ((InfoSiteCommon) siteView.getCommonComponent())
-				.getExecutionCourse();
+        TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) readSiteView(request,
+                null, null, null, null);
 
-		List lessonTypeValues = new ArrayList();
-		List lessonTypeNames = new ArrayList();
+        InfoExecutionCourse infoExecutionCourse = ((InfoSiteCommon) siteView.getCommonComponent())
+                .getExecutionCourse();
 
-		if (infoExecutionCourse.getTheoreticalHours().doubleValue() > 0)
-		{
-			lessonTypeValues.add(new Integer(1));
-			lessonTypeNames.add("Teórica");
-		}
-		if (infoExecutionCourse.getPraticalHours().doubleValue() > 0)
-		{
-			lessonTypeValues.add(new Integer(2));
-			lessonTypeNames.add("Prática");
-		}
-		if (infoExecutionCourse.getTheoPratHours().doubleValue() > 0)
-		{
-			lessonTypeValues.add(new Integer(3));
-			lessonTypeNames.add("Teórico-Prática");
-		}
-		if (infoExecutionCourse.getLabHours().doubleValue() > 0)
-		{
-			lessonTypeValues.add(new Integer(4));
-			lessonTypeNames.add("Laboratorial");
-		}
+        List lessonTypeValues = new ArrayList();
+        List lessonTypeNames = new ArrayList();
 
-		request.setAttribute("lessonTypeValues", lessonTypeValues);
-		request.setAttribute("lessonTypeNames", lessonTypeNames);
+        if (infoExecutionCourse.getTheoreticalHours().doubleValue() > 0)
+        {
+            lessonTypeValues.add(new Integer(1));
+            lessonTypeNames.add("Teórica");
+        }
+        if (infoExecutionCourse.getPraticalHours().doubleValue() > 0)
+        {
+            lessonTypeValues.add(new Integer(2));
+            lessonTypeNames.add("Prática");
+        }
+        if (infoExecutionCourse.getTheoPratHours().doubleValue() > 0)
+        {
+            lessonTypeValues.add(new Integer(3));
+            lessonTypeNames.add("Teórico-Prática");
+        }
+        if (infoExecutionCourse.getLabHours().doubleValue() > 0)
+        {
+            lessonTypeValues.add(new Integer(4));
+            lessonTypeNames.add("Laboratorial");
+        }
 
-		return mapping.findForward("insertSummary");
-	}
-    public ActionForward insertSummary(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+        request.setAttribute("lessonTypeValues", lessonTypeValues);
+        request.setAttribute("lessonTypeNames", lessonTypeNames);
+
+        return mapping.findForward("insertSummary");
+    }
+
+    public ActionForward insertSummary(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         String executionCourseIdString = request.getParameter("objectCode");
         Integer executionCourseId = new Integer(executionCourseIdString);
@@ -1774,14 +1602,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Calendar summaryHour = Calendar.getInstance();
         summaryHour.set(Calendar.HOUR_OF_DAY, (new Integer(hourTokens[0])).intValue());
         summaryHour.set(Calendar.MINUTE, (new Integer(hourTokens[1])).intValue());
-        Object[] args =
-            {
-                executionCourseId,
-                summaryDate,
-                summaryHour,
-                new Integer(summaryType),
-                title,
-                summaryText };
+        Object[] args = {executionCourseId, summaryDate, summaryHour, new Integer(summaryType), title,
+                summaryText};
         try
         {
             ServiceUtils.executeService(userView, "InsertSummary", args);
@@ -1792,12 +1614,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return showSummaries(mapping, form, request, response);
     }
-    public ActionForward deleteSummary(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward deleteSummary(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         String summaryIdString = request.getParameter("summaryCode");
         Integer summaryId = new Integer(summaryIdString);
@@ -1805,7 +1624,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String executionCourseIdString = request.getParameter("objectCode");
         Integer executionCourseId = new Integer(executionCourseIdString);
-        Object[] args = { executionCourseId, summaryId };
+        Object[] args = {executionCourseId, summaryId};
         try
         {
             ServiceUtils.executeService(userView, "DeleteSummary", args);
@@ -1816,71 +1635,76 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return showSummaries(mapping, form, request, response);
     }
-	public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-	{
 
-		String summaryIdString = request.getParameter("summaryCode");
-		Integer summaryId = new Integer(summaryIdString);
-		String executionCourseIdString = request.getParameter("objectCode");
-		Integer executionCourseId = new Integer(executionCourseIdString);
-		
-		HttpSession session = request.getSession(false);
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		
-		Object[] args = {executionCourseId, summaryId};
-		SiteView siteView = null;
-		try
-		{
-			siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummary", args);
-		} catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
-		
-		Integer summaryType = ((InfoSiteSummary) siteView.getComponent()).getInfoSummary()
-		.getSummaryType().getTipo();
-				
-		List lessonTypeValues = new ArrayList();
-		List lessonTypeNames = new ArrayList();
-		
-		String summaryTypeName = null;
-		
-		if (summaryType.intValue() == TipoAula.TEORICA)
-		{
-			lessonTypeValues.add(new Integer(1));
-			lessonTypeNames.add("Teórica");		
-			summaryTypeName = "Teórica";
-		} else if (summaryType.intValue() == TipoAula.PRATICA)
-		{
-			lessonTypeValues.add(new Integer(2));
-			lessonTypeNames.add("Prática");		
-			summaryTypeName = "Prática";
-		} else if (summaryType.intValue() == TipoAula.TEORICO_PRATICA)
-		{
-			lessonTypeValues.add(new Integer(3));
-			lessonTypeNames.add("Teórico-Prática");		
-			summaryTypeName = "Teórico-Prática";
-		} else if (summaryType.intValue() == TipoAula.LABORATORIAL)
-		{
-			lessonTypeValues.add(new Integer(4));
-			lessonTypeNames.add("Laboratorial");		
-			summaryTypeName = "Laboratorial";
-		}
-		
-		request.setAttribute("summaryTypeName", summaryTypeName);
-		request.setAttribute("summaryTypeValue", summaryType);
-		request.setAttribute("lessonTypeValues", lessonTypeValues);
-		request.setAttribute("lessonTypeNames", lessonTypeNames);
-		request.setAttribute("siteView", siteView);
-		return mapping.findForward("editSummary");
-	}
-    public ActionForward editSummary(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
+    {
+
+        String summaryIdString = request.getParameter("summaryCode");
+        Integer summaryId = new Integer(summaryIdString);
+        String executionCourseIdString = request.getParameter("objectCode");
+        Integer executionCourseId = new Integer(executionCourseIdString);
+
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+        Object[] args = {executionCourseId, summaryId};
+        SiteView siteView = null;
+        try
+        {
+            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummary", args);
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+
+        Integer summaryType = ((InfoSiteSummary) siteView.getComponent()).getInfoSummary()
+                .getSummaryType().getTipo();
+
+        List lessonTypeValues = new ArrayList();
+        List lessonTypeNames = new ArrayList();
+
+        String summaryTypeName = null;
+
+        if (summaryType.intValue() == TipoAula.TEORICA)
+        {
+            lessonTypeValues.add(new Integer(1));
+            lessonTypeNames.add("Teórica");
+            summaryTypeName = "Teórica";
+        }
+        else
+            if (summaryType.intValue() == TipoAula.PRATICA)
+            {
+                lessonTypeValues.add(new Integer(2));
+                lessonTypeNames.add("Prática");
+                summaryTypeName = "Prática";
+            }
+            else
+                if (summaryType.intValue() == TipoAula.TEORICO_PRATICA)
+                {
+                    lessonTypeValues.add(new Integer(3));
+                    lessonTypeNames.add("Teórico-Prática");
+                    summaryTypeName = "Teórico-Prática";
+                }
+                else
+                    if (summaryType.intValue() == TipoAula.LABORATORIAL)
+                    {
+                        lessonTypeValues.add(new Integer(4));
+                        lessonTypeNames.add("Laboratorial");
+                        summaryTypeName = "Laboratorial";
+                    }
+
+        request.setAttribute("summaryTypeName", summaryTypeName);
+        request.setAttribute("summaryTypeValue", summaryType);
+        request.setAttribute("lessonTypeValues", lessonTypeValues);
+        request.setAttribute("lessonTypeNames", lessonTypeNames);
+        request.setAttribute("siteView", siteView);
+        return mapping.findForward("editSummary");
+    }
+
+    public ActionForward editSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException
     {
         String summaryIdString = request.getParameter("summaryCode");
         String executionCourseIdString = request.getParameter("objectCode");
@@ -1902,15 +1726,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Calendar summaryHour = Calendar.getInstance();
         summaryHour.set(Calendar.HOUR_OF_DAY, (new Integer(hourTokens[0])).intValue());
         summaryHour.set(Calendar.MINUTE, (new Integer(hourTokens[1])).intValue());
-        Object[] args =
-            {
-                executionCourseId,
-                summaryId,
-                summaryDate,
-                summaryHour,
-                new Integer(summaryType),
-                title,
-                summaryText };
+        Object[] args = {executionCourseId, summaryId, summaryDate, summaryHour,
+                new Integer(summaryType), title, summaryText};
         try
         {
             ServiceUtils.executeService(userView, "EditSummary", args);
@@ -1924,24 +1741,16 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     //	======================== GROUPS MANAGEMENT ========================
 
-    public ActionForward viewExecutionCourseProjects(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward viewExecutionCourseProjects(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         ISiteComponent viewProjectsComponent = new InfoSiteProjects();
         readSiteView(request, viewProjectsComponent, null, null, null);
         return mapping.findForward("viewProjectsAndLink");
     }
 
-    public ActionForward viewShiftsAndGroups(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward viewShiftsAndGroups(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -1959,12 +1768,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     }
 
-    public ActionForward viewStudentGroupInformation(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward viewStudentGroupInformation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         Integer studentGroupCode = new Integer(studentGroupCodeString);
@@ -1973,12 +1778,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer shiftCode = new Integer(shiftCodeString);
 
         ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
-        TeacherAdministrationSiteView result =
-            (TeacherAdministrationSiteView) readSiteView(request,
-                viewStudentGroup,
-                null,
-                studentGroupCode,
-                null);
+        TeacherAdministrationSiteView result = (TeacherAdministrationSiteView) readSiteView(request,
+                viewStudentGroup, null, studentGroupCode, null);
 
         InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) result.getComponent();
         if (infoSiteStudentGroup == null)
@@ -1993,12 +1794,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return mapping.findForward("viewStudentGroupInformation");
     }
-    public ActionForward prepareCreateGroupProperties(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward prepareCreateGroupProperties(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         readSiteView(request, null, null, null, null);
         List shiftTypeValues = new ArrayList();
@@ -2015,12 +1813,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         request.setAttribute("shiftTypeNames", shiftTypeNames);
         return mapping.findForward("insertGroupProperties");
     }
-    public ActionForward createGroupProperties(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward createGroupProperties(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         DynaActionForm insertGroupPropertiesForm = (DynaActionForm) form;
@@ -2133,7 +1928,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         infoGroupProperties.setEnrolmentEndDay(enrolmentEndDay);
         Integer objectCode = getObjectCode(request);
-        Object args[] = { objectCode, infoGroupProperties };
+        Object args[] = {objectCode, infoGroupProperties};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "CreateGroupProperties", args);
@@ -2153,12 +1948,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return viewExecutionCourseProjects(mapping, form, request, response);
     }
-    public ActionForward prepareEditGroupProperties(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward prepareEditGroupProperties(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -2185,14 +1977,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         enrolmentPolicyNames.add("Atómica");
         enrolmentPolicyNames.add("Individual");
 
-        InfoGroupProperties infoGroupProperties =
-            ((InfoSiteGroupProperties) siteView.getComponent()).getInfoGroupProperties();
+        InfoGroupProperties infoGroupProperties = ((InfoSiteGroupProperties) siteView.getComponent())
+                .getInfoGroupProperties();
 
         Integer enrolmentPolicy = infoGroupProperties.getEnrolmentPolicy().getType();
 
         enrolmentPolicyValues.remove(enrolmentPolicy.intValue() - 1);
-        String enrolmentPolicyName =
-            enrolmentPolicyNames.remove(enrolmentPolicy.intValue() - 1).toString();
+        String enrolmentPolicyName = enrolmentPolicyNames.remove(enrolmentPolicy.intValue() - 1)
+                .toString();
 
         Integer shiftType = infoGroupProperties.getShiftType().getTipo();
         shiftTypeValues.remove(shiftType.intValue() - 1);
@@ -2209,12 +2001,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
         return mapping.findForward("editGroupProperties");
     }
-    public ActionForward editGroupProperties(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward editGroupProperties(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
 
         HttpSession session = request.getSession(false);
@@ -2228,8 +2017,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String idealCapacityString = (String) editGroupPropertiesForm.get("idealCapacity");
 
         String groupMaximumNumber = (String) editGroupPropertiesForm.get("groupMaximumNumber");
-        String enrolmentBeginDayString =
-            (String) editGroupPropertiesForm.get("enrolmentBeginDayFormatted");
+        String enrolmentBeginDayString = (String) editGroupPropertiesForm
+                .get("enrolmentBeginDayFormatted");
         String enrolmentEndDayString = (String) editGroupPropertiesForm.get("enrolmentEndDayFormatted");
         String shiftType = (String) editGroupPropertiesForm.get("shiftType");
         String enrolmentPolicy = (String) editGroupPropertiesForm.get("enrolmentPolicy");
@@ -2256,8 +2045,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoGroupProperties.setIdInternal(groupPropertiesCode);
         infoGroupProperties.setEnrolmentBeginDay(enrolmentBeginDay);
         infoGroupProperties.setEnrolmentEndDay(enrolmentEndDay);
-        infoGroupProperties.setEnrolmentPolicy(
-            new EnrolmentGroupPolicyType(new Integer(enrolmentPolicy)));
+        infoGroupProperties
+                .setEnrolmentPolicy(new EnrolmentGroupPolicyType(new Integer(enrolmentPolicy)));
         if (!groupMaximumNumber.equals(""))
             infoGroupProperties.setGroupMaximumNumber(new Integer(groupMaximumNumber));
         Integer maximumCapacity = null;
@@ -2327,14 +2116,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoGroupProperties.setProjectDescription(projectDescription);
         infoGroupProperties.setShiftType(new TipoAula(new Integer(shiftType)));
         Integer objectCode = getObjectCode(request);
-        Object args[] = { objectCode, infoGroupProperties };
+        Object args[] = {objectCode, infoGroupProperties};
         List errors = new ArrayList();
         try
         {
-            errors =
-                (List) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    "EditGroupProperties",
+            errors = (List) ServiceManagerServiceFactory.executeService(userView, "EditGroupProperties",
                     args);
         }
         catch (ExistingServiceException e)
@@ -2387,12 +2173,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return viewExecutionCourseProjects(mapping, form, request, response);
     }
 
-    public ActionForward deleteStudentGroup(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+   
+    public ActionForward deleteStudentGroup(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
 
         HttpSession session = request.getSession(false);
@@ -2401,7 +2184,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer objectCode = getObjectCode(request);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         Integer studentGroupCode = new Integer(studentGroupCodeString);
-        Object[] args = { objectCode, studentGroupCode };
+        Object[] args = {objectCode, studentGroupCode};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "DeleteStudentGroup", args);
@@ -2434,12 +2217,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return viewShiftsAndGroups(mapping, form, request, response);
     }
 
-    public ActionForward prepareCreateStudentGroup(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward prepareCreateStudentGroup(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         session.removeAttribute("insertStudentGroupForm");
@@ -2449,14 +2228,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer groupPropertiesCode = new Integer(groupPropertiesString);
 
         InfoSiteStudentGroup infoSiteStudentGroup;
-        Object args[] = { objectCode, groupPropertiesCode };
+        Object args[] = {objectCode, groupPropertiesCode};
         try
         {
-            infoSiteStudentGroup =
-                (InfoSiteStudentGroup) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    "PrepareCreateStudentGroup",
-                    args);
+            infoSiteStudentGroup = (InfoSiteStudentGroup) ServiceManagerServiceFactory.executeService(
+                    userView, "PrepareCreateStudentGroup", args);
         }
         catch (FenixServiceException e)
         {
@@ -2467,12 +2243,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         readSiteView(request, null, null, null, null);
         return mapping.findForward("insertStudentGroup");
     }
-    public ActionForward createStudentGroup(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward createStudentGroup(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
 
         HttpSession session = request.getSession(false);
@@ -2492,7 +2265,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String groupNumberString = (String) insertStudentGroupForm.get("nrOfElements");
         Integer groupNumber = new Integer(groupNumberString);
 
-        Object args[] = { objectCode, groupNumber, groupPropertiesCode, shiftCode, studentCodes };
+        Object args[] = {objectCode, groupNumber, groupPropertiesCode, shiftCode, studentCodes};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "CreateStudentGroup", args);
@@ -2528,12 +2301,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     }
 
-    public ActionForward prepareEditStudentGroupShift(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward prepareEditStudentGroupShift(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
@@ -2545,12 +2314,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer shiftCode = new Integer(shiftCodeString);
 
         ISiteComponent viewShifts = new InfoSiteShifts();
-        TeacherAdministrationSiteView shiftsView =
-            (TeacherAdministrationSiteView) readSiteView(request,
-                viewShifts,
-                null,
-                groupPropertiesCode,
-                studentGroupCode);
+        TeacherAdministrationSiteView shiftsView = (TeacherAdministrationSiteView) readSiteView(request,
+                viewShifts, null, groupPropertiesCode, studentGroupCode);
         List shifts = ((InfoSiteShifts) shiftsView.getComponent()).getShifts();
 
         if (shifts == null)
@@ -2587,12 +2352,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         request.setAttribute("shift", oldInfoShift);
         return mapping.findForward("editStudentGroupShift");
     }
-    public ActionForward editStudentGroupShift(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+
+    public ActionForward editStudentGroupShift(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
         HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
@@ -2606,51 +2368,105 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         {
             return viewShiftsAndGroups(mapping, form, request, response);
         }
-        else if (newShiftString.equals(""))
-        {
-            ActionErrors actionErrors = new ActionErrors();
-            ActionError error = null;
-            error = new ActionError("errors.invalid.insert.studentGroupShift");
-            actionErrors.add("errors.invalid.insert.studentGroupShift", error);
-            saveErrors(request, actionErrors);
-            return prepareEditStudentGroupShift(mapping, form, request, response);
-        }
         else
-        {
-
-            Integer newShiftCode = new Integer(newShiftString);
-            Object args[] = { objectCode, studentGroupCode, newShiftCode };
-
-            try
-            {
-                ServiceManagerServiceFactory.executeService(userView, "EditStudentGroupShift", args);
-            }
-            catch (InvalidArgumentsServiceException e)
+            if (newShiftString.equals(""))
             {
                 ActionErrors actionErrors = new ActionErrors();
                 ActionError error = null;
-                // Create an ACTION_ERROR
-                error = new ActionError("error.noGroup");
-                actionErrors.add("error.noGroup", error);
+                error = new ActionError("errors.invalid.insert.studentGroupShift");
+                actionErrors.add("errors.invalid.insert.studentGroupShift", error);
                 saveErrors(request, actionErrors);
-                return viewShiftsAndGroups(mapping, form, request, response);
-
+                return prepareEditStudentGroupShift(mapping, form, request, response);
             }
-            catch (FenixServiceException e)
+            else
             {
-                throw new FenixActionException(e);
-            }
 
-            return viewShiftsAndGroups(mapping, form, request, response);
-        }
+                Integer newShiftCode = new Integer(newShiftString);
+                Object args[] = {objectCode, studentGroupCode, newShiftCode};
+
+                try
+                {
+                    ServiceManagerServiceFactory.executeService(userView, "EditStudentGroupShift", args);
+                }
+                catch (InvalidArgumentsServiceException e)
+                {
+                    ActionErrors actionErrors = new ActionErrors();
+                    ActionError error = null;
+                    // Create an ACTION_ERROR
+                    error = new ActionError("error.noGroup");
+                    actionErrors.add("error.noGroup", error);
+                    saveErrors(request, actionErrors);
+                    return viewShiftsAndGroups(mapping, form, request, response);
+
+                }
+                catch (FenixServiceException e)
+                {
+                    throw new FenixActionException(e);
+                }
+
+                return viewShiftsAndGroups(mapping, form, request, response);
+            }
     }
 
-    public ActionForward prepareEditStudentGroupMembers(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward deleteGroupProperties(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
+    {
+
+        ActionErrors actionErrors = new ActionErrors();
+
+        HttpSession session = request.getSession(false);
+
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+
+        Integer objectCode = getObjectCode(request);
+
+        Integer groupPropertiesCode = null;
+        try
+        {
+            String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+            groupPropertiesCode = new Integer(groupPropertiesCodeString);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+
+            actionErrors.add("errors.delete.groupPropertie", new ActionError(e.getMessage()));
+            saveErrors(request, actionErrors);
+
+            return viewExecutionCourseProjects(mapping, form, request, response);
+        }
+
+        Object[] args = {objectCode, groupPropertiesCode};
+
+        Boolean result = Boolean.FALSE;
+        try
+        {
+            result = (Boolean) ServiceManagerServiceFactory.executeService(userView,
+                    "DeleteGroupProperties", args);
+        }
+        catch (FenixServiceException e)
+        {
+            e.printStackTrace();
+
+            actionErrors.add("errors.delete.groupPropertie", new ActionError(e.getMessage()));
+            saveErrors(request, actionErrors);
+
+            return viewExecutionCourseProjects(mapping, form, request, response);
+        }
+        if (result.equals(Boolean.FALSE))
+        {
+            actionErrors.add("errors.delete.groupPropertie", new ActionError(
+                    "error.groupProperties.delete"));
+            saveErrors(request, actionErrors);
+
+            return viewExecutionCourseProjects(mapping, form, request, response);
+        }
+
+        return viewExecutionCourseProjects(mapping, form, request, response);
+    }
+
+    public ActionForward prepareEditStudentGroupMembers(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
 
         HttpSession session = request.getSession(false);
@@ -2663,12 +2479,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer objectCode = getObjectCode(request);
 
         ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
-        TeacherAdministrationSiteView siteView =
-            (TeacherAdministrationSiteView) readSiteView(request,
-                viewStudentGroup,
-                null,
-                studentGroupCode,
-                null);
+        TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) readSiteView(request,
+                viewStudentGroup, null, studentGroupCode, null);
         InfoSiteStudentGroup component = (InfoSiteStudentGroup) siteView.getComponent();
 
         if (component.getInfoSiteStudentInformationList() == null)
@@ -2681,15 +2493,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return viewShiftsAndGroups(mapping, form, request, response);
         }
 
-        Object args[] = { objectCode, studentGroupCode };
+        Object args[] = {objectCode, studentGroupCode};
         List infoStudentList = null;
         try
         {
-            infoStudentList =
-                (List) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    "PrepareEditStudentGroupMembers",
-                    args);
+            infoStudentList = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "PrepareEditStudentGroupMembers", args);
         }
         catch (FenixServiceException e)
         {
@@ -2700,12 +2509,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return mapping.findForward("editStudentGroupMembers");
     }
 
-    public ActionForward insertStudentGroupMembers(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward insertStudentGroupMembers(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
 
         HttpSession session = request.getSession(false);
@@ -2716,7 +2521,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         DynaActionForm insertStudentGroupForm = (DynaActionForm) form;
         List studentCodes = Arrays.asList((Integer[]) insertStudentGroupForm.get("studentCodes"));
 
-        Object args[] = { objectCode, studentGroupCode, studentCodes };
+        Object args[] = {objectCode, studentGroupCode, studentCodes};
 
         try
         {
@@ -2748,12 +2553,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return prepareEditStudentGroupMembers(mapping, form, request, response);
     }
 
-    public ActionForward deleteStudentGroupMembers(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward deleteStudentGroupMembers(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
     {
 
         HttpSession session = request.getSession(false);
@@ -2764,7 +2565,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         DynaActionForm deleteStudentGroupForm = (DynaActionForm) form;
         List studentUsernames = Arrays.asList((String[]) deleteStudentGroupForm.get("studentsToRemove"));
 
-        Object args[] = { objectCode, studentGroupCode, studentUsernames };
+        Object args[] = {objectCode, studentGroupCode, studentUsernames};
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "DeleteStudentGroupMembers", args);
