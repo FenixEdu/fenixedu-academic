@@ -20,7 +20,7 @@
 	</tr>
 	<tr>
 		<td>
-			<bean:message key="label.username" />
+			<bean:message key="property.login.username" />
 		</td>
 		<td>
 			<html:text property="username" size="25"/>

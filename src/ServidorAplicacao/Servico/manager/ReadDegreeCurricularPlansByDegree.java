@@ -20,53 +20,64 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class ReadDegreeCurricularPlansByDegree implements IServico {
+public class ReadDegreeCurricularPlansByDegree implements IServico
+{
 
-  private static ReadDegreeCurricularPlansByDegree service = new ReadDegreeCurricularPlansByDegree();
+	private static ReadDegreeCurricularPlansByDegree service = new ReadDegreeCurricularPlansByDegree();
 
-  /**
-   * The singleton access method of this class.
-   */
-  public static ReadDegreeCurricularPlansByDegree getService() {
-	return service;
-  }
+	/**
+	 * The singleton access method of this class.
+	 */
+	public static ReadDegreeCurricularPlansByDegree getService()
+	{
+		return service;
+	}
 
-  /**
-   * The constructor of this class.
-   */
-  private ReadDegreeCurricularPlansByDegree() { }
+	/**
+	 * The constructor of this class.
+	 */
+	private ReadDegreeCurricularPlansByDegree()
+	{
+	}
 
-  /**
-   * Service name
-   */
-  public final String getNome() {
-	return "ReadDegreeCurricularPlansByDegree";
-  }
+	/**
+	 * Service name
+	 */
+	public final String getNome()
+	{
+		return "ReadDegreeCurricularPlansByDegree";
+	}
 
-  /**
-   * Executes the service. Returns the current collection of infoDegreeCurricularPlans.
-   */
-  public List run(Integer idDegree) throws FenixServiceException {
-	ISuportePersistente sp;
-	List allDegreeCurricularPlans = null;
-	try {
+	/**
+	 * Executes the service. Returns the current collection of infoDegreeCurricularPlans.
+	 */
+	public List run(Integer idDegree) throws FenixServiceException
+	{
+		ISuportePersistente sp;
+		List allDegreeCurricularPlans = null;
+		try
+		{
 			sp = SuportePersistenteOJB.getInstance();
 			ICurso degree = sp.getICursoPersistente().readByIdInternal(idDegree);
 			allDegreeCurricularPlans = sp.getIPersistentDegreeCurricularPlan().readByDegree(degree);
-	} catch (ExcepcaoPersistencia excepcaoPersistencia){
-		throw new FenixServiceException(excepcaoPersistencia);
+		}
+		catch (ExcepcaoPersistencia excepcaoPersistencia)
+		{
+			throw new FenixServiceException(excepcaoPersistencia);
+		}
+
+		if (allDegreeCurricularPlans == null || allDegreeCurricularPlans.isEmpty())
+			return allDegreeCurricularPlans;
+
+		// build the result of this service
+		Iterator iterator = allDegreeCurricularPlans.iterator();
+		List result = new ArrayList(allDegreeCurricularPlans.size());
+
+		while (iterator.hasNext())
+		{
+			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iterator.next();
+			result.add(Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCurricularPlan));
+		}
+		return result;
 	}
-
-	if (allDegreeCurricularPlans == null || allDegreeCurricularPlans.isEmpty()) 
-		return allDegreeCurricularPlans;
-
-	// build the result of this service
-	Iterator iterator = allDegreeCurricularPlans.iterator();
-	List result = new ArrayList(allDegreeCurricularPlans.size());
-    
-	while (iterator.hasNext())
-		result.add(Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan((IDegreeCurricularPlan) iterator.next()));
-
-	return result;
-  }
 }
