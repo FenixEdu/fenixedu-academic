@@ -15,12 +15,12 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftServiceResult;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
@@ -58,8 +58,7 @@ public class AdicionarAulasFormAction extends FenixAction {
 		if (sessao != null) {
 			DynaActionForm manipularTurnosForm =
 				(DynaActionForm) sessao.getAttribute("manipularTurnosForm");
-			IUserView userView = (IUserView) sessao.getAttribute("UserView");
-			GestorServicos gestor = GestorServicos.manager();
+			IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 			Integer indexTurno =
 				(Integer) manipularTurnosForm.get("indexTurno");
 			ArrayList infoTurnos =
