@@ -82,21 +82,23 @@ public class ReadExamsByDayAndBeginning implements IServico {
 				tempInfoDegrees = new ArrayList();
 				tempInfoExecutionCourses = new ArrayList();
 
-				for(int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++ ) {
-					IDisciplinaExecucao executionCourse =
-						(IDisciplinaExecucao) tempExam.getAssociatedExecutionCourses().get(k);
-					tempInfoExecutionCourses.add(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+				if (tempExam.getAssociatedExecutionCourses() != null) {
+					for(int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++ ) {
+						IDisciplinaExecucao executionCourse =
+							(IDisciplinaExecucao) tempExam.getAssociatedExecutionCourses().get(k);
+						tempInfoExecutionCourses.add(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 
-					// prepare degrees associated with exam
-					tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();
-					for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++) {
-						tempDegree = ((ICurricularCourse) tempAssociatedCurricularCourses.get(j)).getDegreeCurricularPlan().getDegree();
-						tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
+						// prepare degrees associated with exam
+						tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();
+						for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++) {
+							tempDegree = ((ICurricularCourse) tempAssociatedCurricularCourses.get(j)).getDegreeCurricularPlan().getDegree();
+							tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
+						}
+
+						// determine number of students attending course
+						numberStudentesAttendingCourse = sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(executionCourse);
+						totalNumberStudents += numberStudentesAttendingCourse.intValue(); 
 					}
-
-					// determine number of students attending course
-					numberStudentesAttendingCourse = sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(executionCourse);
-					totalNumberStudents += numberStudentesAttendingCourse.intValue(); 
 				}
 
 				// add exam and degree info to result list
