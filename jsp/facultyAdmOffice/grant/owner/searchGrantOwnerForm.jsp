@@ -24,7 +24,7 @@
 	</table><br/>
 
 	<html:hidden property="method" value="doSearch"/>
-	<html:hidden property="startIndex" value="1"/>
+	<html:hidden property="startIndex" value="0"/>
 	<html:hidden property="page" value="1"/>
 
 	<%-- Presenting Errors --%>

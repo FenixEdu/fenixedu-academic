@@ -7,9 +7,9 @@
 <bean:define id="resultSize" name="numberOfTotalElementsInSearch"/>
 <p><bean:message key="label.grant.owner.searchresult" arg0="<%= resultSize.toString() %>"/></p>
 
-<logic:present name="justGrantOwner">
+<logic:equal name="justGrantOwner" value="on">
 <br/><strong><bean:message key="label.grant.owner.filter"/></strong>
-</logic:present>
+</logic:equal>
 
 <table align="center">
 <tr>

@@ -37,7 +37,7 @@ public class SearchGrantOwnerAction extends SearchAction {
         Boolean onlyGrantOwner = new Boolean(false);
         if (justGrantOwner.equals("on")) {
             onlyGrantOwner = new Boolean(true);
-        }
+        } 
         request.setAttribute("justGrantOwner", justGrantOwner);
         request.setAttribute("name", name);
 
@@ -78,7 +78,7 @@ public class SearchGrantOwnerAction extends SearchAction {
     
     private boolean hasNextSpan(Integer startIndex, Integer numberOfElementsInResult) {
         
-        if((startIndex.intValue() + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue()) < numberOfElementsInResult.intValue()) {
+        if((startIndex.intValue() + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1) < numberOfElementsInResult.intValue()) {
             return true;
         }            
         return false;
@@ -92,9 +92,9 @@ public class SearchGrantOwnerAction extends SearchAction {
     
     private Integer getNextSpan(Integer startIndex, Integer numberOfElementsInResult) {
         
-        return new Integer(startIndex.intValue() + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1);
+        return new Integer(startIndex.intValue() + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue());
     }
     private Integer getBeforeSpan(Integer startIndex, Integer numberOfElementsInResult) {
-        return new Integer(startIndex.intValue() - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() + 1);
+        return new Integer(startIndex.intValue() - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue());
     }
 }
