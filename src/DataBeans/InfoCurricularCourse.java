@@ -32,6 +32,24 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable{
 	private CurricularCourseExecutionScope curricularCourseExecutionScope;
 	private Boolean mandatory;
 	private IUniversity university;
+	private Boolean basic;
+
+	/**
+	 * @return
+	 */
+	public Boolean getBasic() {
+		return basic;
+	}
+
+	public boolean isBasic(){
+		return getBasic().booleanValue();
+	}
+	/**
+	 * @param basic
+	 */
+	public void setBasic(Boolean basic) {
+		this.basic = basic;
+	}
 
 	public InfoCurricularCourse() {
 	}

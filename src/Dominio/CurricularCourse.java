@@ -31,7 +31,7 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 	private CurricularCourseExecutionScope curricularCourseExecutionScope;
 	private Boolean mandatory;
 	private IUniversity university;
-
+    private Boolean basic;
 	private List associatedExecutionCourses;
 	private List scopes;
 
@@ -51,6 +51,8 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 		setAssociatedExecutionCourses(null);
 		setScopes(null);
 	}
+
+	
 
 	/**
 	 * @deprecated
@@ -379,6 +381,25 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 
 	public Boolean getMandatory() {
 		return mandatory;
+	}
+
+	
+
+	/**
+	 * @return
+	 */
+	public Boolean getBasic() {
+		return basic;
+	}
+
+	public boolean isBasic(){
+		return getBasic().booleanValue();
+	}
+	/**
+	 * @param basic
+	 */
+	public void setBasic(Boolean basic) {
+		this.basic = basic;
 	}
 
 	public boolean curricularCourseIsMandatory() {

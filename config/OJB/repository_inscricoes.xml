@@ -240,6 +240,11 @@
 		jdbc-type="BIT"
 	/>
 	<field-descriptor
+		name="basic"
+		column="BASIC"
+		jdbc-type="BIT"
+	/>
+	<field-descriptor
 		name="universityKey"
 		column="KEY_UNIVERSITY"
 		jdbc-type="INTEGER"
