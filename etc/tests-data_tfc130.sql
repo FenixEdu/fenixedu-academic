@@ -377,19 +377,6 @@ INSERT INTO SECCAO VALUES (6, 'Sub1', 0, 4, 1);
 
 
 #
-# Data for table 'ITEM'
-#
-
-DELETE FROM ITEM;
-INSERT INTO ITEM VALUES (1, '1', 0, 'sou a primeira', 1, 1);
-INSERT INTO ITEM VALUES (2, '2', 1, 'sou a segunda', 0, 1);
-INSERT INTO ITEM VALUES (3, '1', 0, 'sou outra vez a primeira', 0, 6);
-INSERT INTO ITEM VALUES (4, '2', 1, 'sou outra vez a primeira', 0, 6);
-INSERT INTO ITEM VALUES (5, '3', 2, 'sou outra vez a primeira', 0, 6);
-INSERT INTO ITEM VALUES (6, '4', 3, 'sou outra vez a primeira', 0, 6);
-
-
-#
 # Data for table 'ENROLMENT'
 #
 
