@@ -18,23 +18,27 @@ import middleware.posgrad.Posgrad_guia_tabela;
 import middleware.posgrad.Posgrad_pagamento_guia;
 import middleware.posgrad.Posgrad_pessoa;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
-
-
+import Dominio.Country;
 import Dominio.ICountry;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
-import Dominio.IRole;
 import Dominio.IStudent;
+import Dominio.IStudentGroupInfo;
 import Dominio.PersonRole;
+import Dominio.Pessoa;
+import Dominio.Role;
 import Dominio.Student;
 import Dominio.StudentGroupInfo;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.RoleType;
 import Util.Sexo;
 import Util.StudentState;
@@ -45,10 +49,9 @@ import Util.TipoDocumentoIdentificacao;
 
 public class SuperConverter extends ObjectFenixOJB {
 
-	SuportePersistenteOJB sp = null;
-	
+	PersistenceBroker broker = null;
 	public SuperConverter() throws ExcepcaoPersistencia{
-		sp = SuportePersistenteOJB.getInstance();
+		broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 	};
 
 
@@ -60,11 +63,6 @@ public static void main(String args[]) throws Exception{
 	SuperConverter superConverter = new SuperConverter();
 
 	// Nao esquecer os Roles
-	// Nao esquecer as quantias das guias e a tabela de precos
-	
-	
-	// Converter as Nacionalidades
-	
 	
 	
 	// Converter Alunos de Licenciatura em Persons e em Students
@@ -72,15 +70,14 @@ public static void main(String args[]) throws Exception{
 		
 	
 	// Converter Pessoas de Pos Graduacao em Persons
+	superConverter.migratePosgradPessoa2Fenix();
+	
 	
 	// Converter Alunos de Pos Graduacao em Students 
 	
 	
 	
 	// Converte Areas Cientificas
-	
-	
-	// Converte Alunos
 	
 	
 	// Converte Disciplinas
@@ -92,124 +89,169 @@ public static void main(String args[]) throws Exception{
 	// Inscricoes de Alunos em Areas Cientificas
 	
 	
-	// Converte Guias de Pagamento
-	
 	
 	}
 
+	public void migratePosgradPessoa2Fenix(){
+		
+//		try {
+//			System.out.print("A Ler Pessoas de Pos-Graduacao ...");
+//			List alunosG = get();
+//			System.out.println("  Done !");
+//
+//			System.out.println("A Converter " + alunosG.size() + " alunos de Licenciatura para o Fenix ...");
+//			
+//			
+//		
+//		} catch(Exception e) {
+//			System.out.println("Erro na Pessoa de Pos-Graduacao : " + person2Convert.getNome());
+//			throw new Exception(e);
+//		}	
+					
+	}
 
 
    
 	public void migrateAluno2Fenix() throws Exception {
 		IPessoa person2Write = null;
+		boolean newPerson = false;
+		boolean newStudent = false;
+		List result = null;
+		Query query = null;
+		QueryByCriteria queryByCriteria = null;
+		Almeida_aluno student2Convert = null;
 		try {
+			System.out.print("A Ler Alunos de Licenciatura ...");
 			List alunosG = getAlunosLIC();
-			
+			System.out.println("  Done !");
+
 			System.out.println("A Converter " + alunosG.size() + " alunos de Licenciatura para o Fenix ...");
 
-			// Cria informacao sobre um grupo de alunos 
-			StudentGroupInfo studentGroupInfo = new StudentGroupInfo();
-			studentGroupInfo.setIdInternal(new Integer(1));
-			studentGroupInfo.setMaxCoursesToEnrol(new Integer(7));
-			studentGroupInfo.setMaxNACToEnrol(new Integer(10));
-			studentGroupInfo.setMinCoursesToEnrol(new Integer(3));
+			// Cria informacao sobre um grupo de alunos
+			IStudentGroupInfo studentGroupInfo = new StudentGroupInfo();
+			
 			studentGroupInfo.setStudentType(new StudentType (StudentType.NORMAL));
-
-			sp.iniciarTransaccao();
-			super.lockWrite(studentGroupInfo);
-			sp.confirmarTransaccao();
-
+			queryByCriteria = new QueryByCriteria(studentGroupInfo);
+			
+			result = (List) broker.getCollectionByQuery(queryByCriteria);
+			
+			if (result.size() == 0){
+			
+				studentGroupInfo = new StudentGroupInfo();			
+				studentGroupInfo.setMaxCoursesToEnrol(new Integer(7));
+				studentGroupInfo.setMaxNACToEnrol(new Integer(10));
+				studentGroupInfo.setMinCoursesToEnrol(new Integer(3));
+				studentGroupInfo.setStudentType(new StudentType (StudentType.NORMAL));
+				broker.store(studentGroupInfo);
+			} else {
+				studentGroupInfo = (IStudentGroupInfo) result.get(0);
+			}
 
 			Iterator iterator = alunosG.iterator();
 			while(iterator.hasNext()){
-				person2Write = new Dominio.Pessoa();
-				Almeida_aluno student2Convert = (Almeida_aluno) iterator.next();
-				
-				// Cria uma nova Pessoa				
-				person2Write.setNumeroDocumentoIdentificacao(student2Convert.getBi());
-				person2Write.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
-				
-				person2Write.setNome(student2Convert.getNome());
-				person2Write.setNascimento(student2Convert.getNascimento());
-				
-				// Username vai ser o Numero
-				person2Write.setUsername(String.valueOf(student2Convert.getNumero()));
-				
-				// PAssword o Numero do BI 
-				person2Write.setPassword(PasswordEncryptor.encryptPassword(student2Convert.getBi()));
-				
-				if (student2Convert.getSexo().equalsIgnoreCase("M"))
-					person2Write.setSexo(new Sexo(Sexo.MASCULINO));
-				else if (student2Convert.getSexo().equalsIgnoreCase("F"))
-					person2Write.setSexo(new Sexo(Sexo.FEMININO));
-				else {
-					System.out.println();
-					System.out.println("Erro a converter Aluno n " + student2Convert.getNumero() + ". Erro no SEXO.");
-				} 
-									
+				newPerson = false;
+				newStudent = false;
+				student2Convert = (Almeida_aluno) iterator.next();
 
-				// Converter a Nacionalidade
-				person2Write.setPais(convertCountry(student2Convert.getNacionalidade()));
-
+				Criteria criteria = new Criteria();
+				criteria.addEqualTo("numeroDocumentoIdentificacao",student2Convert.getBi());
+				criteria.addEqualTo("tipoDocumentoIdentificacao",new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
+				query = new QueryByCriteria(Pessoa.class,criteria);
+				result=(List)broker.getCollectionByQuery(query);
 				
-				person2Write.setFreguesiaNaturalidade(student2Convert.getFreguesia());
-				person2Write.setConcelhoNaturalidade(student2Convert.getConcelho());
-				person2Write.setDistritoNaturalidade(student2Convert.getDistrito());
-				person2Write.setNomePai(student2Convert.getNomepai());
-				person2Write.setNomeMae(student2Convert.getNomemae());
-				person2Write.setMorada(student2Convert.getMorada());
-				person2Write.setLocalidade(student2Convert.getLocalidademorada());
-				person2Write.setCodigoPostal(student2Convert.getCp());
-				person2Write.setLocalidadeCodigoPostal(student2Convert.getLocalidadecp());
-				
-				
-				// pequena verificacao para dividir os numeros de telefone
-				if ((student2Convert.getTelefone().length() == 9) && (student2Convert.getTelefone().charAt(0) == '9'))	
-					person2Write.setTelemovel(student2Convert.getTelefone());
-				else person2Write.setTelefone(student2Convert.getTelefone());
-				
-				
-				person2Write.setEmail(student2Convert.getEmail());
-				
-				
-				// Escrever a pessoa para Obter o Codigo Interno
-				
-				try {
-					sp.iniciarTransaccao();
-					sp.getIPessoaPersistente().escreverPessoa(person2Write);
-					sp.confirmarTransaccao();
+				if (result.size() == 0) {
+					// Cria uma nova Pessoa		
+						
+					newPerson = true;
+					person2Write = new Pessoa();	
+					person2Write.setNumeroDocumentoIdentificacao(student2Convert.getBi());
+					person2Write.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
 					
-					givePersonRole(person2Write);
-				} catch (ExistingPersistentException e) {
-					// Verificar se a Pessoa ja existe (Se ja existe lanca excepcao)
+					person2Write.setNome(student2Convert.getNome());
+					person2Write.setNascimento(student2Convert.getNascimento());
 					
-					sp.iniciarTransaccao();
-					person2Write = this.sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(student2Convert.getBi(), new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
-					sp.confirmarTransaccao();
+					// Username vai ser o Numero
+					person2Write.setUsername(String.valueOf(student2Convert.getNumero()));
+					
+					// PAssword o Numero do BI 
+					person2Write.setPassword(PasswordEncryptor.encryptPassword(student2Convert.getBi()));
+					
+					if (student2Convert.getSexo().equalsIgnoreCase("M"))
+						person2Write.setSexo(new Sexo(Sexo.MASCULINO));
+					else if (student2Convert.getSexo().equalsIgnoreCase("F"))
+						person2Write.setSexo(new Sexo(Sexo.FEMININO));
+					else {
+						System.out.println();
+						System.out.println("Erro a converter Aluno n " + student2Convert.getNumero() + ". Erro no SEXO.");
+					} 
+		
+					// Converter a Nacionalidade
+					person2Write.setPais(convertCountry(student2Convert.getNacionalidade()));
+					
+					person2Write.setFreguesiaNaturalidade(student2Convert.getFreguesia());
+					person2Write.setConcelhoNaturalidade(student2Convert.getConcelho());
+					person2Write.setDistritoNaturalidade(student2Convert.getDistrito());
+					person2Write.setNomePai(student2Convert.getNomepai());
+					person2Write.setNomeMae(student2Convert.getNomemae());
+					person2Write.setMorada(student2Convert.getMorada());
+					person2Write.setLocalidade(student2Convert.getLocalidademorada());
+					person2Write.setCodigoPostal(student2Convert.getCp());
+					person2Write.setLocalidadeCodigoPostal(student2Convert.getLocalidadecp());
+					
+					
+					// pequena verificacao para dividir os numeros de telefone
+					if ((student2Convert.getTelefone().length() == 9) && (student2Convert.getTelefone().charAt(0) == '9'))	
+						person2Write.setTelemovel(student2Convert.getTelefone());
+					else person2Write.setTelefone(student2Convert.getTelefone());
+					
+					
+					person2Write.setEmail(student2Convert.getEmail());
+					broker.store(person2Write);
+	
+				} else {
+					person2Write = (IPessoa) result.get(0);
 					System.out.println("A Pessoa " + student2Convert.getNome() + " já existe.");
 				}
 				
+				// Se for uma nova pessoa dar o novo Role
+				if (newPerson) {
+					givePersonRole(person2Write);
+				}
+				
+				
 				// Criar o Aluno
+				IStudent student2Write = null;
+
+				criteria = new Criteria();
+				criteria.addEqualTo("number",new Integer(String.valueOf(student2Convert.getNumero())));
+				criteria.addEqualTo("degreeType", new TipoCurso(TipoCurso.LICENCIATURA));
+				query = new QueryByCriteria(Student.class, criteria);
+				result = (List)broker.getCollectionByQuery(query);
+
+				if (result.size() == 0){
+					newStudent = true;
+					student2Write = new Student();
+					student2Write.setNumber(new Integer(String.valueOf(student2Convert.getNumero())));
+					student2Write.setDegreeType(new TipoCurso(TipoCurso.LICENCIATURA));
+					student2Write.setPerson(person2Write);
+					student2Write.setState(new StudentState(StudentState.INSCRITO));
+					student2Write.setStudentGroupInfo(studentGroupInfo);
 				
-				IStudent student2Write = new Student();
-				student2Write.setNumber(new Integer(String.valueOf(student2Convert.getNumero())));
-				student2Write.setDegreeType(new TipoCurso(TipoCurso.LICENCIATURA));
-				student2Write.setPerson(person2Write);
-				student2Write.setState(new StudentState(StudentState.INSCRITO));
-				student2Write.setStudentGroupInfo(studentGroupInfo);
-				
-				sp.iniciarTransaccao();
-				super.lockWrite(student2Write);
-				sp.confirmarTransaccao();
-				
-				
-				giveStudentRole(student2Write);
-				
+					if (newStudent){				
+						giveStudentRole(student2Write);
+					}	
+				} else {
+					student2Write = (IStudent) result.get(0);
+					student2Write.setStudentGroupInfo(studentGroupInfo);
+					System.out.println("O Aluno " + student2Convert.getNumero() + " já existe.");
+				}
+				broker.store(student2Write);
+			
 			}
-		
-			System.out.println(" Success ");
+			
+			System.out.println(" Done ! ");
 		} catch (QueryException ex) {
-			System.out.println("Pessoa : " + person2Write.getNome());
+			System.out.println("Erro no Aluno de Licenciatura numero : " + student2Convert.getNome());
 
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}	
@@ -217,231 +259,123 @@ public static void main(String args[]) throws Exception{
     
 
 	public void givePersonRole(IPessoa person) throws Exception {
-		sp.iniciarTransaccao();
-		IRole role = sp.getIPersistentRole().readByRoleType(RoleType.PERSON);
-			
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("roleType", RoleType.PERSON);
+		
+		Query query = new QueryByCriteria(Role.class, criteria);
+		List result = (List)broker.getCollectionByQuery(query);
+		
+		Role role = null;
+		if (result.size() == 0)
+			throw new Exception("Role Desconhecido !!!");
+		else role = (Role) result.get(0);
+		 
 		IPersonRole newRole = new PersonRole();
 		newRole.setPerson(person);
 		newRole.setRole(role);
-
-		sp.getIPersistentPersonRole().lockWrite(newRole);
-		sp.confirmarTransaccao();
+		
+		broker.store(newRole);
 	}
 
 	public void giveStudentRole(IStudent student) throws Exception {
-		sp.iniciarTransaccao();
-
-		IRole role = sp.getIPersistentRole().readByRoleType(RoleType.STUDENT);
-			
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("roleType", RoleType.STUDENT);
+		
+		Query query = new QueryByCriteria(Role.class, criteria);
+		List result = (List)broker.getCollectionByQuery(query);
+		
+		Role role = null;
+		if (result.size() == 0)
+			throw new Exception("Role Desconhecido !!!");
+		else role = (Role) result.get(0);
+		 
 		IPersonRole newRole = new PersonRole();
 		newRole.setPerson(student.getPerson());
 		newRole.setRole(role);
-
-
-		sp.getIPersistentPersonRole().lockWrite(newRole);
-		sp.confirmarTransaccao();
+		
+		broker.store(newRole);
 	}
     
     
    	public List getAlunosLIC() throws Exception {
-		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			String oqlQuery = "select all from " + Almeida_aluno.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-			
-			return result;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}	
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Almeida_aluno.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
 	}
 
 
     
     public List getAlunosPOS() throws Exception {
-		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			String oqlQuery = "select all from " + Posgrad_aluno_mestrado.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-			
-			return result;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}	
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Posgrad_aluno_mestrado.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
     }
 
 	public List getAreasCientificas() throws Exception {
-		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			String oqlQuery = "select all from " + Posgrad_area_cientifica.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-			return result;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}	
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Posgrad_area_cientifica.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
 	}
 
 
 	public List getCursosMestrado() throws Exception {
-		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			String oqlQuery = "select all from " + Posgrad_curso_mestrado.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-			return result;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}	
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Posgrad_curso_mestrado.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
 	}
 
 	public List getDiscAreaAluno() throws Exception {
-		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			String oqlQuery = "select all from " + Posgrad_disc_area_aluno.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-			return result;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}	
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Posgrad_disc_area_aluno.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
 	}
     
 	public List getDiscArea() throws Exception {
-		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			String oqlQuery = "select all from " + Posgrad_disc_area.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-			return result;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}	
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Posgrad_disc_area.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
 	}
   
 	public List getDisciplinas() throws Exception {
-		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			String oqlQuery = "select all from " + Posgrad_disciplina.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-			return result;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}	
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Posgrad_disciplina.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
 	}
 	
 	public List getDocentes() throws Exception {
-		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			String oqlQuery = "select all from " + Posgrad_docente.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-			return result;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}	
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Posgrad_docente.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
 	}
 	
 	public List getGuia() throws Exception {
-		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			String oqlQuery = "select all from " + Posgrad_guia.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-			return result;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}	
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Posgrad_guia.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
 	}
 	
 	public List getGuiaTabela() throws Exception {
-		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			String oqlQuery = "select all from " + Posgrad_guia_tabela.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-			return result;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}	
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Posgrad_guia_tabela.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
 	}
     
     
 	public List getPagamentoGuia() throws Exception {
-		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			String oqlQuery = "select all from " + Posgrad_pagamento_guia.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-			return result;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}	
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Posgrad_pagamento_guia.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
 	}
 	
 	public List getPessoas() throws Exception {
-		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			String oqlQuery = "select all from " + Posgrad_pessoa.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-			return result;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}	
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Posgrad_pessoa.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
 	}
 	
 	public ICountry convertCountry(String countryCode) throws ExcepcaoPersistencia {
-		ICountry country = null;
-		sp.iniciarTransaccao();
+
+		Criteria criteria = new Criteria();
 		
 		if(	countryCode.equals("01") ||
 			countryCode.equals("02") ||
@@ -449,99 +383,99 @@ public static void main(String args[]) throws Exception{
 			countryCode.equals("04") ||
 			countryCode.equals("05") ||
 			countryCode.equals("06")){
-			country = sp.getIPersistentCountry().readCountryByName("PORTUGAL");
+				criteria.addEqualTo("name","PORTUGAL");
 		}else if (countryCode.equals("10")){
-			country = sp.getIPersistentCountry().readCountryByName("ANGOLA");
+			criteria.addEqualTo("name","ANGOLA");
 		}else if (countryCode.equals("11")){
-			country = sp.getIPersistentCountry().readCountryByName("BRASIL");
+			criteria.addEqualTo("name","BRASIL");
 		}else if (countryCode.equals("12")){
-			country = sp.getIPersistentCountry().readCountryByName("CABO VERDE");
+			criteria.addEqualTo("name","CABO VERDE");
 		}else if (countryCode.equals("13")){
-			country = sp.getIPersistentCountry().readCountryByName("GUINE-BISSAO");
+			criteria.addEqualTo("name","GUINE-BISSAO");
 		}else if (countryCode.equals("14")){
-			country = sp.getIPersistentCountry().readCountryByName("MOCAMBIQUE");
+			criteria.addEqualTo("name","MOCAMBIQUE");
 		}else if (countryCode.equals("15")){
-			country = sp.getIPersistentCountry().readCountryByName("SAO TOME E PRINCIPE");
+			criteria.addEqualTo("name","SAO TOME E PRINCIPE");
 		}else if (countryCode.equals("16")){
-			country = sp.getIPersistentCountry().readCountryByName("TIMOR LORO SAE");
+			criteria.addEqualTo("name","TIMOR LORO SAE");
 		}else if (countryCode.equals("20")){
-			country = sp.getIPersistentCountry().readCountryByName("BELGICA");
+			criteria.addEqualTo("name","BELGICA");
 		}else if (countryCode.equals("21")){
-			country = sp.getIPersistentCountry().readCountryByName("DINAMARCA");
+			criteria.addEqualTo("name","DINAMARCA");
 		}else if (countryCode.equals("22")){
-			country = sp.getIPersistentCountry().readCountryByName("ESPANHA");
+			criteria.addEqualTo("name","ESPANHA");
 		}else if (countryCode.equals("23")){
-			country = sp.getIPersistentCountry().readCountryByName("FRANCA");
+			criteria.addEqualTo("name","FRANCA");
 		}else if (countryCode.equals("24")){
-			country = sp.getIPersistentCountry().readCountryByName("HOLANDA");
+			criteria.addEqualTo("name","HOLANDA");
 		}else if (countryCode.equals("25")){
-			country = sp.getIPersistentCountry().readCountryByName("IRLANDA");
+			criteria.addEqualTo("name","IRLANDA");
 		}else if (countryCode.equals("26")){
-			country = sp.getIPersistentCountry().readCountryByName("ITALIA");
+			criteria.addEqualTo("name","ITALIA");
 		}else if (countryCode.equals("27")){
-			country = sp.getIPersistentCountry().readCountryByName("LUXEMBURGO");
+			criteria.addEqualTo("name","LUXEMBURGO");
 		}else if (countryCode.equals("28")){
-			country = sp.getIPersistentCountry().readCountryByName("ALEMANHA");
+			criteria.addEqualTo("name","ALEMANHA");
 		}else if (countryCode.equals("29")){
-			country = sp.getIPersistentCountry().readCountryByName("REINO UNIDO");
+			criteria.addEqualTo("name","REINO UNIDO");
 		}else if (countryCode.equals("30")){
-			country = sp.getIPersistentCountry().readCountryByName("SUECIA");
+			criteria.addEqualTo("name","SUECIA");
 		}else if (countryCode.equals("31")){
-			country = sp.getIPersistentCountry().readCountryByName("NORUEGA");
+			criteria.addEqualTo("name","NORUEGA");
 		}else if (countryCode.equals("32")){
-			country = sp.getIPersistentCountry().readCountryByName("POLONIA");
+			criteria.addEqualTo("name","POLONIA");
 		}else if (countryCode.equals("33")){
-			country = sp.getIPersistentCountry().readCountryByName("AFRICA DO SUL");
+			criteria.addEqualTo("name","AFRICA DO SUL");
 		}else if (countryCode.equals("34")){
-			country = sp.getIPersistentCountry().readCountryByName("ARGENTINA");
+			criteria.addEqualTo("name","ARGENTINA");
 		}else if (countryCode.equals("35")){
-			country = sp.getIPersistentCountry().readCountryByName("CANADA");
+			criteria.addEqualTo("name","CANADA");
 		}else if (countryCode.equals("36")){
-			country = sp.getIPersistentCountry().readCountryByName("CHILE");
+			criteria.addEqualTo("name","CHILE");
 		}else if (countryCode.equals("37")){
-			country = sp.getIPersistentCountry().readCountryByName("EQUADOR");
+			criteria.addEqualTo("name","EQUADOR");
 		}else if (countryCode.equals("38")){
-			country = sp.getIPersistentCountry().readCountryByName("ESTADOS UNIDOS DA AMERICA");
+			criteria.addEqualTo("name","ESTADOS UNIDOS DA AMERICA");
 		}else if (countryCode.equals("39")){
-			country = sp.getIPersistentCountry().readCountryByName("IRAO");
+			criteria.addEqualTo("name","IRAO");
 		}else if (countryCode.equals("40")){
-			country = sp.getIPersistentCountry().readCountryByName("MARROCOS");
+			criteria.addEqualTo("name","MARROCOS");
 		}else if (countryCode.equals("41")){
-			country = sp.getIPersistentCountry().readCountryByName("VENEZUELA");
+			criteria.addEqualTo("name","VENEZUELA");
 		}else if (countryCode.equals("42")){
-			country = sp.getIPersistentCountry().readCountryByName("AUSTRALIA");
+			criteria.addEqualTo("name","AUSTRALIA");
 		}else if (countryCode.equals("43")){
-			country = sp.getIPersistentCountry().readCountryByName("PAQUISTAO");
+			criteria.addEqualTo("name","PAQUISTAO");
 		}else if (countryCode.equals("44")){
-			country = sp.getIPersistentCountry().readCountryByName("REPUBLICA DO ZAIRE");
-		}else if (countryCode.equals("45")){
-			country = sp.getIPersistentCountry().readCountryByName("COREIA");
-		}else if (countryCode.equals("46")){
-			country = sp.getIPersistentCountry().readCountryByName("QUENIA");
+			criteria.addEqualTo("name","REPUBLICA DO ZAIRE");
 		}else if (countryCode.equals("47")){
-			country = sp.getIPersistentCountry().readCountryByName("LIBIA");
+			criteria.addEqualTo("name","LIBIA");
 		}else if (countryCode.equals("48")){
-			country = sp.getIPersistentCountry().readCountryByName("PALESTINA");
+			criteria.addEqualTo("name","PALESTINA");
 		}else if (countryCode.equals("49")){
-			country = sp.getIPersistentCountry().readCountryByName("ZIMBABUE");
+			criteria.addEqualTo("name","ZIMBABUE");
 		}else if (countryCode.equals("50")){
-			country = sp.getIPersistentCountry().readCountryByName("MEXICO");
+			criteria.addEqualTo("name","MEXICO");
 		}else if (countryCode.equals("51")){
-			country = sp.getIPersistentCountry().readCountryByName("RUSSIA");
+			criteria.addEqualTo("name","RUSSIA");
 		}else if (countryCode.equals("52")){
-			country = sp.getIPersistentCountry().readCountryByName("AUSTRIA");
+			criteria.addEqualTo("name","AUSTRIA");
 		}else if (countryCode.equals("53")){
-			country = sp.getIPersistentCountry().readCountryByName("IRAQUE");
+			criteria.addEqualTo("name","IRAQUE");
 		}else if (countryCode.equals("54")){
-			country = sp.getIPersistentCountry().readCountryByName("PERU");
+			criteria.addEqualTo("name","PERU");
 		}else if (countryCode.equals("60")){
-			country = sp.getIPersistentCountry().readCountryByName("ROMENIA");		
+			criteria.addEqualTo("name","ROMENIA");
 		}else if (countryCode.equals("61")){
-			country = sp.getIPersistentCountry().readCountryByName("REPUBLICA CHECA");
-		}
-			
-		sp.confirmarTransaccao();
-		return country;
+			criteria.addEqualTo("name","REPUBLICA CHECA");
+		} else return null;
+
+		Query query = new QueryByCriteria(Country.class,criteria);
+		List result = (List) broker.getCollectionByQuery(query);
+
+		if (result.size() == 0)
+			return null;
+		else return (ICountry) result.get(0);
 	}
     
 }
