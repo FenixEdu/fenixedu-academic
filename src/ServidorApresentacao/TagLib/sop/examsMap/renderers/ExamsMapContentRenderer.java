@@ -8,6 +8,7 @@ package ServidorApresentacao.TagLib.sop.examsMap.renderers;
 import java.util.Calendar;
 
 import DataBeans.InfoExam;
+import DataBeans.InfoExecutionCourse;
 import ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot;
 
 /**
@@ -47,6 +48,8 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
 			if (curicularYear.equals(year1) || curicularYear.equals(year2)) {
 				boolean isOnValidWeekDay = onValidWeekDay(infoExam);
+				
+				InfoExecutionCourse infoExecutionCourse = infoExam.getInfoExecutionCourse();
 				String courseInitials =
 					infoExam.getInfoExecutionCourse().getSigla();
 
@@ -54,7 +57,9 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 					strBuffer.append(
 						"<a href='viewExamsMap.do?method=edit"
 							+ "&amp;executionCourseInitials="
-							+ infoExam.getInfoExecutionCourse().getSigla()
+							+ infoExecutionCourse.getSigla()
+							+ "&amp;executionPeriod="+infoExecutionCourse.getInfoExecutionPeriod().getName()
+							+ "&amp;executionYear="+infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear()
 							+ "&amp;season="
 							+ infoExam.getSeason().getseason()
 							+ "'>");
@@ -69,7 +74,9 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 				} else if (typeUser.equals("public")) {
 					strBuffer.append(
 						"<a href='siteViewer.do?method=executionCourseViewer&amp;exeCourseCode="
-							+ infoExam.getInfoExecutionCourse().getSigla()
+							+ infoExecutionCourse.getSigla()
+							+ "&amp;executionPeriod="+infoExecutionCourse.getInfoExecutionPeriod().getName()
+							+ "&amp;executionYear="+infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear()
 							+ "'>");
 					strBuffer.append(courseInitials);
 				}
