@@ -22,6 +22,7 @@ import Dominio.IExam;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.Season;
 
 public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
@@ -40,6 +41,30 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 			query.bind(executionCourse.getSigla());
 			query.bind(executionCourse.getExecutionPeriod().getName());
 			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0)
+				exam = (IExam) result.get(0);
+			return exam;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+	// TODO : test for this method
+	public IExam readBy(IDisciplinaExecucao executionCourse, Season season) throws ExcepcaoPersistencia {
+		try {
+			IExam exam = null;
+			String oqlQuery = "select exam from " + Exam.class.getName();
+			oqlQuery += " where executionCourse.sigla = $1";
+			oqlQuery += " and executionCourse.executionPeriod.name = $2";
+			oqlQuery += " and executionCourse.executionPeriod.executionYear.year = $3";
+			oqlQuery += " and season = $4";
+			query.create(oqlQuery);
+			query.bind(executionCourse.getSigla());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+			query.bind(season);
 			List result = (List) query.execute();
 			lockRead(result);
 			if (result.size() != 0)

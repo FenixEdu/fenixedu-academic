@@ -744,13 +744,16 @@
          <forward name="View Exams" path="/viewExamsDayAndShiftForm.do?method=view"/>
 	</action>
 
-	<action path="/viewExamsDayAndShiftForm"
+	<action path="/viewExamsDayAndShiftForm"		
 			input="/viewExamsDayAndShift.jsp"
             type="ServidorApresentacao.Action.sop.ViewExamsByDayAndShiftDispatchAction"
             parameter="method"
+            name="examForm"
+            validate="false"
             >
          <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
          <forward name="Deleted Exam" path="/viewExamsDayAndShiftForm.do?method=view"/>
+         <forward name="Edit Exam" path="/editExam.jsp"/>
 	</action>
 	
     <action input="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext"
@@ -795,6 +798,14 @@
         		   />
     	<forward name="showCreateForm" path="/createExam.jsp"/>
     	<forward name="Sucess" path="/mainExams.jsp"/>
+	</action>
+
+	<action path="/editExam"
+			name="examForm"
+			input="/editExam.jsp"
+    		type="ServidorApresentacao.Action.sop.EditExamAction"
+    		>
+    	<forward name="viewExamsByDayAndShift" path="/viewExamsDayAndShiftForm.do?method=view"/>
 	</action>
 
       

@@ -57,7 +57,9 @@
 					<bean:write name="infoViewExam" property="numberStudentesAttendingCourse"/>
 				</td>
 				<td>
-					link.editar ;
+					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=edit">
+						<bean:message key="label.edit"/>
+					</html:link> ;
 					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=delete">
 						<bean:message key="label.delete"/>
 					</html:link>

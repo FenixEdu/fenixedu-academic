@@ -13,6 +13,7 @@ import java.util.List;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.Season;
 
 /**
  *
@@ -20,6 +21,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  */
 public interface IPersistentExam extends IPersistentObject {
 	public IExam readBy(Date day, Calendar beginning, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
+	public IExam readBy(IDisciplinaExecucao executionCourse, Season season) throws ExcepcaoPersistencia;	
 	public List readBy(Date day, Calendar beginning) throws ExcepcaoPersistencia;	
 	public List readBy(IDisciplinaExecucao disciplinaExecucao) throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
