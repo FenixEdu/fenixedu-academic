@@ -133,7 +133,7 @@ public class ReadFilteredExamsMapTest extends ServiceTestCase {
         List curricularYears = new ArrayList();
         curricularYears.add(new Integer(4));
 
-        ReadFilteredExamsMap service = ReadFilteredExamsMap.getService();
+        ReadFilteredExamsMap service = new ReadFilteredExamsMap();
 
         ISuportePersistente sp;
         InfoExamsMap infoExamsMap = null;
@@ -193,7 +193,7 @@ public class ReadFilteredExamsMapTest extends ServiceTestCase {
         List curricularYears = new ArrayList();
         curricularYears.add(new Integer(3));
 
-        ReadFilteredExamsMap service = ReadFilteredExamsMap.getService();
+        ReadFilteredExamsMap service = new ReadFilteredExamsMap();
 
         ISuportePersistente sp;
 
@@ -227,7 +227,7 @@ public class ReadFilteredExamsMapTest extends ServiceTestCase {
         List curricularYears = new ArrayList();
         curricularYears.add(new Integer(3));
 
-        ReadFilteredExamsMap service = ReadFilteredExamsMap.getService();
+        ReadFilteredExamsMap service = new ReadFilteredExamsMap();
 
         ISuportePersistente sp;
 
@@ -263,7 +263,7 @@ public class ReadFilteredExamsMapTest extends ServiceTestCase {
         InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree(infoDegreeCurricularPlan,
                 infoExecutionYear);
 
-        ReadFilteredExamsMap service = ReadFilteredExamsMap.getService();
+        ReadFilteredExamsMap service = new ReadFilteredExamsMap();
 
         ISuportePersistente sp;
 

@@ -66,7 +66,7 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase {
     }
 
     public void testSuccessfullReadExamsMapByRooms() {
-        ReadExamsMapByRooms service = ReadExamsMapByRooms.getService();
+        ReadExamsMapByRooms service = new ReadExamsMapByRooms();
 
         ISuportePersistente sp;
         List infoRoomExamMapList = null;
@@ -107,7 +107,7 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase {
     }
 
     public void testSuccessfullReadExamsMapByRoomsWithNotAllRoomsWithExam() {
-        ReadExamsMapByRooms service = ReadExamsMapByRooms.getService();
+        ReadExamsMapByRooms service = new ReadExamsMapByRooms();
 
         ISuportePersistente sp;
         List infoRoomExamMapList = null;
@@ -151,7 +151,7 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase {
     }
 
     public void testSuccessfullReadExamsMapByRoomsWithoutRooms() {
-        ReadExamsMapByRooms service = ReadExamsMapByRooms.getService();
+        ReadExamsMapByRooms service = new ReadExamsMapByRooms();
 
         ISuportePersistente sp;
         List infoRoomExamMapList = null;
@@ -177,7 +177,7 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase {
     }
 
     public void testUnsuccessfullReadExamsMapByRoomsUnexistentExecutionPeriod() {
-        ReadExamsMapByRooms service = ReadExamsMapByRooms.getService();
+        ReadExamsMapByRooms service = new ReadExamsMapByRooms();
 
         ISuportePersistente sp;
 

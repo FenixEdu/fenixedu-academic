@@ -194,7 +194,7 @@ public class EditExamNewTest extends ServiceTestCase {
 
         Integer examID = new Integer(4526);
 
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp;
 
@@ -229,7 +229,7 @@ public class EditExamNewTest extends ServiceTestCase {
 
         Integer examID = new Integer(4527);
 
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp;
 
@@ -265,7 +265,7 @@ public class EditExamNewTest extends ServiceTestCase {
 
         Integer examID = new Integer(4526);
 
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp;
 
@@ -300,7 +300,7 @@ public class EditExamNewTest extends ServiceTestCase {
 
         Integer examID = new Integer(4526);
 
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp;
 
@@ -334,7 +334,7 @@ public class EditExamNewTest extends ServiceTestCase {
 
         Integer examID = new Integer(4527);
 
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp;
 
@@ -368,7 +368,7 @@ public class EditExamNewTest extends ServiceTestCase {
         String[] roomIDArray = { "232" };
 
         Integer examID = new Integer(4526);
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp;
 
@@ -404,7 +404,7 @@ public class EditExamNewTest extends ServiceTestCase {
         };
 
         Integer examID = new Integer(4526);
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp;
 
@@ -438,7 +438,7 @@ public class EditExamNewTest extends ServiceTestCase {
 
         Integer examID = new Integer(4527);
 
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp;
 
@@ -473,7 +473,7 @@ public class EditExamNewTest extends ServiceTestCase {
 
         Integer examID = new Integer(4526);
 
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp;
 
@@ -508,7 +508,7 @@ public class EditExamNewTest extends ServiceTestCase {
 
         Integer examID = new Integer(4527);
 
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp = null;
 
@@ -547,7 +547,7 @@ public class EditExamNewTest extends ServiceTestCase {
 
         Integer examID = new Integer(4528);
 
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp = null;
 
@@ -586,7 +586,7 @@ public class EditExamNewTest extends ServiceTestCase {
 
         Integer examID = new Integer(4528);
 
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp = null;
 
@@ -624,7 +624,7 @@ public class EditExamNewTest extends ServiceTestCase {
 
         Integer examID = new Integer(4528);
 
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp = null;
 
@@ -662,7 +662,7 @@ public class EditExamNewTest extends ServiceTestCase {
         };
 
         Integer examID = new Integer(4527);
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp = null;
 
@@ -701,7 +701,7 @@ public class EditExamNewTest extends ServiceTestCase {
         };
 
         Integer examID = new Integer(4526);
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp = null;
 
@@ -739,7 +739,7 @@ public class EditExamNewTest extends ServiceTestCase {
 
         Integer examID = new Integer(4526);
 
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp = null;
 
@@ -776,7 +776,7 @@ public class EditExamNewTest extends ServiceTestCase {
 
         Integer examID = new Integer(4500);
 
-        EditExamNew service = EditExamNew.getService();
+        EditExamNew service = new EditExamNew();
 
         ISuportePersistente sp = null;
 
