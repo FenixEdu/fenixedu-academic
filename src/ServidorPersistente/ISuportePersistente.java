@@ -107,11 +107,13 @@ public interface ISuportePersistente {
 	
 	public IPersistentEmployee getIPersistentEmployee();
 	
+	
 	public IPersistentEnrolmentEquivalenceRestriction getIPersistentEnrolmentEquivalenceRestriction();	
 
 	public IPersistentQualification getIPersistentQualification();
-
-
+	
+	public IPersistentStudentGroup getIPersistentStudentGroup();
+	public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend();
+	public IPersistentGroupProperties getIPersistentGroupProperties();
+	
 }
-
-
