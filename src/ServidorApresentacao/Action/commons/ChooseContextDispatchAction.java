@@ -54,6 +54,8 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			
 			HttpSession session = request.getSession(false);
 			if (session != null) {
+				session.setAttribute("nextPage",request.getParameter("nextPage"));
+				
 				IUserView userView = SessionUtils.getUserView(request);
 
 				InfoExecutionPeriod infoExecutionPeriod =
@@ -168,6 +170,8 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			
 				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(index);
 
+
+			
 				if (infoExecutionDegree != null) {
 					CurricularYearAndSemesterAndInfoExecutionDegree cYSiED =
 						new CurricularYearAndSemesterAndInfoExecutionDegree(
@@ -183,6 +187,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 					return mapping.findForward("Licenciatura execucao inexistente");
 				}
 
+				System.out.println("blablabla dois pontos - " + session.getAttribute("nextPage"));
 				return mapping.findForward("nextPage");
 			} else
 				throw new Exception();

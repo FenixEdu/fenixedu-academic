@@ -43,6 +43,7 @@
         <form-property name="index" type="java.lang.String"/>
         <form-property name="curricularYear" type="java.lang.Integer"/>
         <form-property name="page" type="java.lang.Integer"/> 
+        <form-property name="nextPage" type="java.lang.String"/>
       </form-bean>
 
 
@@ -747,7 +748,7 @@
             scope="request"
             validate="true"
             type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction">
-        <forward name="formPage" path="/chooseContext.jsp"/>
+        <forward name="formPage" path="/chooseExamsContext.jsp"/>
         <forward name="nextPage" path="/viewExamsByDegreeAndCurricularYear.do"/>
     </action>
 	
