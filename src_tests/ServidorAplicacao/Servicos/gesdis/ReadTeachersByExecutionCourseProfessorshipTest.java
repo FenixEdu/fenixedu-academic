@@ -1,0 +1,105 @@
+/*
+ * Created on 25/Mar/2003
+ *
+ * To change this generated comment go to 
+ * Window>Preferences>Java>Code Generation>Code and Comments
+ */
+package ServidorAplicacao.Servicos.gesdis;
+
+import DataBeans.InfoExecutionCourse;
+import DataBeans.util.Cloner;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+
+/**
+ * @author jmota
+ *
+ * To change this generated comment go to 
+ * Window>Preferences>Java>Code Generation>Code and Comments
+ */
+public class ReadTeachersByExecutionCourseProfessorshipTest
+	extends TestCaseReadServices {
+
+	/**
+	 * @param testName
+	 */
+	public ReadTeachersByExecutionCourseProfessorshipTest(String testName) {
+		super(testName);
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "ReadTeachersByExecutionCourseProfessorship";
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+		// I don't see in which situation this can be unsucessful!!!
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+		SuportePersistenteOJB persistentSupport = null;
+		IExecutionYear executionYear=null;
+		IExecutionPeriod executionPeriod=null;
+		IDisciplinaExecucao executionCourse = null;
+		try{
+		persistentSupport = SuportePersistenteOJB.getInstance();
+		IDisciplinaExecucaoPersistente persistentExecutionCourse =
+				persistentSupport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionYear persistentExecutionYear =
+				persistentSupport.getIPersistentExecutionYear();
+			IPersistentExecutionPeriod persistentExecutionPeriod =
+				persistentSupport.getIPersistentExecutionPeriod();
+			persistentSupport.iniciarTransaccao();
+			executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
+			executionPeriod =
+				persistentExecutionPeriod.readByNameAndExecutionYear(
+					"2º Semestre",
+					executionYear);
+			executionCourse =
+				persistentExecutionCourse
+					.readByExecutionCourseInitialsAndExecutionPeriod(
+					"TFCI",
+					executionPeriod);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			fail("failed in the test setup");
+		}
+		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+		Object[] args = {infoExecutionCourse
+		};
+		return args;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+	 */
+	protected int getNumberOfItemsToRetrieve() {
+		
+		return 3;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
+	 */
+	protected Object getObjectToCompare() {
+		return null;
+	}
+
+}
