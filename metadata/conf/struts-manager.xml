@@ -141,6 +141,9 @@
     <action path="/index" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="df.page.main-page"/>
   
    
+    	<!--=====Actions for Degrees==== -->
+   
+   
 	 <!-- Action for reading all degrees  -->
       <action path="/readDegrees"
              input="mainPageInput.do"
@@ -163,7 +166,7 @@
 	<action
 		path="/insertDegree"
 		name="degreeForm"
-		input="/insertDegreeInput.do"
+		input="/insertDegree.do?method=prepareInsert&amp;page=0"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.manager.InsertDegreeDispatchAction"
@@ -171,25 +174,23 @@
        <forward name="insertDegree" path="df.page.insert-degree"/>
        <forward name="readDegrees" path="/readDegrees.do"/>      	      
 	</action>	
-	
-	   		     
-         
+	    
 	<!-- Action for deleting degrees --> 
-      <action 
-      		 path="/deleteDegrees"
-      		 name="degreeForm"
-      		 input="/readDegreesInput.do"
-      		 scope="request"
-      	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction"
-			 validate="true">
-      	  <forward name="readDegrees" path="/readDegrees.do"/>      	      
-      </action>
+    <action 
+    	 path="/deleteDegrees"
+    	 name="degreeForm"
+    	 input="/readDegreesInput.do"
+    	 scope="request"
+         type="ServidorApresentacao.Action.manager.DeleteDegreesAction"
+		 validate="true">
+      <forward name="readDegrees" path="/readDegrees.do"/>      	      
+     </action>
       
       <!-- Action for editing a degree -->
 	<action
 		path="/editDegree"
 		name="degreeForm"
-		input="/editDegreeInput.do"
+		input="/editDegree.do?method=prepareEdit&amp;page=0"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.manager.EditDegreeDispatchAction"
@@ -198,31 +199,27 @@
        <forward name="readDegrees" path="/readDegrees.do"/>      	      
 	</action>
       
-      <!-- Action for deleting degreeCurricularPlans --> 
-      <action 
-      		 path="/deleteDegreeCurricularPlans"
-      		 name="degreeCurricularPlanForm"
-      		 input="/readDegreeInput.do"
-      		 scope="request"
-      	     type="ServidorApresentacao.Action.manager.DeleteDegreeCurricularPlansAction">
-      	  <forward name="readDegree" path="/readDegree.do"/>      	      
-      </action>
       
-       <!-- Action for reading a degreeCurricularPlan -->
-      <action path="/readDegreeCurricularPlan"
-      	      name="executionDegreeForm"
-              input="/readDegreeInput.do"
-              scope="request"
-      	      type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlanAction">
-      	  <forward name="viewDegreeCurricularPlan" path="df.page.read-degreeCurricularPlan"/>  
-      	  <forward name="readDegree" path="/readDegree.do"/> 	      
-      </action>
     
+      
+      <!--=====Actions for degree curricular plan==== -->
+    
+    
+    <!-- Action for reading a degree curricular plan -->
+    <action path="/readDegreeCurricularPlan"
+         name="executionDegreeForm"
+         input="/readDegreeInput.do"
+         scope="request"
+         type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlanAction">
+     <forward name="viewDegreeCurricularPlan" path="df.page.read-degreeCurricularPlan"/>  
+     <forward name="readDegree" path="/readDegree.do"/> 	      
+    </action>
+      
     <!-- Action for inserting a degree curricular plan  -->
 	<action
 		path="/insertDegreeCurricularPlan"
 		name="degreeCurricularPlanForm"
-		input="/insertDegreeCurricularPlanInput.do"
+		input="/insertDegreeCurricularPlan.do?method=prepareInsert&amp;page=0"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.manager.InsertDegreeCurricularPlanDispatchAction"
@@ -230,12 +227,22 @@
        <forward name="insertDegreeCurricularPlan" path="df.page.insert-degree-curricular-plan"/>
        <forward name="readDegree" path="/readDegree.do"/>      	      
 	</action>
-	
+      
+      <!-- Action for deleting degree curricular plans --> 
+      <action 
+      	 path="/deleteDegreeCurricularPlans"
+      	 name="degreeCurricularPlanForm"
+      	 input="/readDegreeInput.do"
+      	 scope="request"
+         type="ServidorApresentacao.Action.manager.DeleteDegreeCurricularPlansAction">
+        <forward name="readDegree" path="/readDegree.do"/>      	      
+      </action>
+      
 	 <!-- Action for editing a degree curricular plan  -->
 	<action
 		path="/editDegreeCurricularPlan"
 		name="degreeCurricularPlanForm"
-		input="/editDegreeCurricularPlanInput.do"
+		input="/editDegreeCurricularPlan.do?method=prepareEdit&amp;page=0"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.manager.EditDegreeCurricularPlanDispatchAction"
@@ -244,29 +251,23 @@
        <forward name="readDegree" path="/readDegree.do"/>      	      
 	</action>
 	
-  
 	
-	<!-- Action for deleting curricularCourses --> 
-     <action 
-      	path="/deleteCurricularCourses"
-      	name="degreeCurricularPlanForm"
-      	input="/readDegreeCurricularPlanInput.do"
-      	scope="request"
-      	type="ServidorApresentacao.Action.manager.DeleteCurricularCoursesAction">
-      	<forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
-     </action>	  
-      
-      <!-- Action for deleting executionDegrees --> 
-      <action 
-      	path="/deleteExecutionDegrees"
-      	name="degreeCurricularPlanForm"
-      	input="/readDegreeCurricularPlanInput.do"
-      	scope="request"
-      	type="ServidorApresentacao.Action.manager.DeleteExecutionDegreesAction">
-      	<forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
-      </action>	
-      
-      <!-- Action for inserting a curricular course  -->
+	
+	<!--=====Actions for curricular course==== -->
+	
+	
+	<!-- Action for reading a curricular course -->
+      	
+    <action path="/readCurricularCourse"
+        name="curricularCourseForm"
+        input="/readDegreeInput.do"
+        scope="request"
+        type="ServidorApresentacao.Action.manager.ReadCurricularCourseAction">
+      <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>  
+      <forward name="viewCurricularCourse" path="df.page.read-curricularCourse"/> 	      
+    </action>	
+	
+	<!-- Action for inserting a curricular course  -->
 	<action
 		path="/insertCurricularCourse"
 		name="curricularCourseForm"
@@ -278,7 +279,35 @@
        <forward name="insertCurricularCourse" path="df.page.insert-curricular-course"/>
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
 	</action>
-	
+		
+	<!-- Action for deleting curricular courses --> 
+    <action 
+    	path="/deleteCurricularCourses"
+      	name="degreeCurricularPlanForm"
+      	input="/readDegreeCurricularPlan.do"
+      	scope="request"
+      	type="ServidorApresentacao.Action.manager.DeleteCurricularCoursesAction">
+       <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
+    </action>	  
+      
+    <!-- Action for editing a curricular course  -->
+	<action
+		path="/editCurricularCourse"
+		name="curricularCourseForm"
+		input="/editCurricularCourse.do?method=prepareEdit&amp;page=0"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.EditCurricularCourseDA"
+        validate="true">  
+       <forward name="editCurricularCourse" path="df.page.edit-curricular-course"/>
+       <forward name="readDegreeCP" path="/readDegreeCurricularPlan.do"/>      	      
+	</action>
+      
+      
+      
+    <!--=====Actions for execution degree==== -->
+    
+    
 	<!-- Action for inserting an execution degree  -->
 	<action
 		path="/insertExecutionDegree"
@@ -290,48 +319,19 @@
        <forward name="insertExecutionDegree" path="df.page.insert-execution-degree"/>
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
 	</action>
-	
-	<!-- Action for reading a CurricularCourse -->
-      	
-      <action path="/readCurricularCourse"
-      	      name="curricularCourseForm"
-              input="/readDegreeInput.do"
-              scope="request"
-      	      type="ServidorApresentacao.Action.manager.ReadCurricularCourseAction">
-      	  <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>  
-      	  <forward name="viewCurricularCourse" path="df.page.read-curricularCourse"/> 	      
-      </action>	
     
-     <!-- Action for editing a CurricularCourse  -->
-	<action
-		path="/editCurricularCourse"
-		name="curricularCourseForm"
-		input="/readDegreeInput.do"
-		parameter="method"
-		scope="request"
-		type="ServidorApresentacao.Action.manager.EditCurricularCourseDA"
-        validate="true">  
-       <forward name="editCurricularCourse" path="df.page.edit-curricular-course"/>
-       <forward name="readDegreeCP" path="/readDegreeCurricularPlan.do"/>      	      
-	</action>
+    <!-- Action for deleting execution degree --> 
+    <action 
+      	path="/deleteExecutionDegrees"
+      	name="degreeCurricularPlanForm"
+      	input="/readDegreeCurricularPlanInput.do"
+      	scope="request"
+      	type="ServidorApresentacao.Action.manager.DeleteExecutionDegreesAction">
+       <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
+    </action>	
+         
     
-    
-      <!--Input actions-->
-      <action path="/insertDegreeInput"
-      	      type="ServidorApresentacao.Action.commons.VoidAction">
-      	  <forward name="Success" path="df.page.insert-degree"/>      	      
-      </action>
-      
-      <action path="/insertDegreeCurricularPlanInput"
-      	      type="ServidorApresentacao.Action.commons.VoidAction">
-      	  <forward name="Success" path="df.page.insert-degree-curricular-plan"/>      	      
-      </action>
-            
-       <action path="/editDegreeInput"
-      	      type="ServidorApresentacao.Action.commons.VoidAction">
-      	  <forward name="Success" path="df.page.edit-degree"/>      	      
-      </action>
-      
+      <!--Input actions-->  
      <action path="/readDegreesInput"
      		scope="request"
       	      type="ServidorApresentacao.Action.commons.VoidAction">
@@ -353,12 +353,6 @@
      		scope="request"
       	      type="ServidorApresentacao.Action.commons.VoidAction">
       	  <forward name="Success" path="df.page.read-degree-curricular-plan"/>      	      
-      </action>
-      
-       <action path="/editDegreeCurricularPlanInput"
-     		scope="request"
-      	      type="ServidorApresentacao.Action.commons.VoidAction">
-      	  <forward name="Success" path="df.page.edit-degree-curricular-plan"/>      	      
       </action>
 
 	<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
