@@ -58,13 +58,10 @@ public class CurriculumDispatchAction extends DispatchAction {
 			return mapping.findForward("NotAuthorized");
 		}
 
-		BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
 		BeanComparator curricularYear = new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year");
-//		BeanComparator semester = new BeanComparator("infoExecutionPeriod.name");
 		BeanComparator semester = new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.semester");
 		BeanComparator courseName = new BeanComparator("infoCurricularCourseScope.infoCurricularCourse.name");
 		ComparatorChain chainComparator = new ComparatorChain();
-		chainComparator.addComparator(executionYear);
 		chainComparator.addComparator(curricularYear);
 		chainComparator.addComparator(semester);
 		chainComparator.addComparator(courseName);
