@@ -29,13 +29,15 @@
 <!ENTITY grant_owner_management SYSTEM "repository_grant_owner_management.xml">
 <!ENTITY teacher SYSTEM "repository_teacher.xml">
 <!ENTITY gaugingTests SYSTEM "repository_gaugingTests.xml">
-<!ENTITY student SYSTEM "repository_student.xml">
+<!ENTITY delegate SYSTEM "repository_delegate.xml">
 <!ENTITY finalDegreeWork SYSTEM "repository_finalDegreeWork.xml">
 <!ENTITY sms SYSTEM "repository_sms.xml">
 <!ENTITY classProperties SYSTEM "repository-properties.xml">
 <!ENTITY studentCurricularPlan SYSTEM "repository_student_curricular_plan.xml">
 <!ENTITY degreeCurricularPlan SYSTEM "repository_degree_curricular_plan.xml">
 <!ENTITY degree SYSTEM "repository_degree.xml">
+<!ENTITY student SYSTEM "repository_student.xml">
+<!ENTITY curricularCourseEquivalence SYSTEM "repository_curricular_course_equivalence.xml">
 ]>
 
 
@@ -70,11 +72,13 @@
     &grant_owner_management;
     &teacher;
     &gaugingTests;
-    &student;
+    &delegate;
     &finalDegreeWork;
     &sms;    
     &classProperties;
     &studentCurricularPlan;
     &degreeCurricularPlan;
     &degree;
+	&student;
+	&curricularCourseEquivalence;
 </descriptor-repository>

@@ -163,8 +163,6 @@ public interface ISuportePersistente
 
 	public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence();
 
-	public IPersistentCurricularCourseEquivalenceRestriction getIPersistentCurricularCourseEquivalenceRestriction();
-
 	//by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003)
 	public IPersistentSeminaryModality getIPersistentSeminaryModality();
 

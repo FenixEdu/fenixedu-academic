@@ -1,0 +1,51 @@
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.CurricularCourseEquivalence -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.CurricularCourseEquivalence" table="CURRICULAR_COURSE_EQUIVALENCE">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="oldCurricularCourseKey"
+		column="KEY_OLD_CURRICULAR_COURSE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="equivalentCurricularCourseKey"
+		column="KEY_EQUIVALENT_CURRICULAR_COURSE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="degreeCurricularPlanKey"
+		column="KEY_DEGREE_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<reference-descriptor
+			name="oldCurricularCourse"
+			class-ref="Dominio.CurricularCourse"
+			proxy="true">
+		<foreignkey field-ref="oldCurricularCourseKey"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="equivalentCurricularCourse"
+			class-ref="Dominio.CurricularCourse"
+			proxy="true">
+		<foreignkey field-ref="equivalentCurricularCourseKey"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="degreeCurricularPlan"
+			class-ref="Dominio.CurricularCourse"
+			proxy="true">
+		<foreignkey field-ref="degreeCurricularPlanKey"/>
+	</reference-descriptor>
+</class-descriptor>

@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.util.List;
+
 import Util.AgreementType;
 import Util.EntryPhase;
 import Util.StudentState;
@@ -26,6 +28,7 @@ public class Student extends DomainObject implements IStudent {
     private EntryPhase entryPhase;
     private Boolean payedTuition;
     private Boolean enrollmentForbidden;
+    protected List studentCurricularPlans;
 	
 	public Student(Integer idInternal){
 		setIdInternal(idInternal);
@@ -263,5 +266,13 @@ public class Student extends DomainObject implements IStudent {
      */
     public void setEnrollmentForbidden(Boolean forbiddenEnrollment) {
         this.enrollmentForbidden = forbiddenEnrollment;
+    }
+
+    public List getStudentCurricularPlans() {
+        return studentCurricularPlans;
+    }
+    
+    public void setStudentCurricularPlans(List studentCurricularPlans) {
+        this.studentCurricularPlans = studentCurricularPlans;
     }
 }

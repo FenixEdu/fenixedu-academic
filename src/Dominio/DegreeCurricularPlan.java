@@ -39,7 +39,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 
 	// For enrollment purposes
 	protected Integer minimalYearForOptionalCourses;
-	protected String enrollmentStrategyClassName;
+	protected List curricularCourseEquivalences;
 
 	public DegreeCurricularPlan()
 	{
@@ -99,7 +99,15 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 		return result;
 	}
 
-	public List getAreas()
+    public List getCurricularCourseEquivalences() {
+        return curricularCourseEquivalences;
+    }
+
+    public void setCurricularCourseEquivalences(List curricularCourseEquivalences) {
+        this.curricularCourseEquivalences = curricularCourseEquivalences;
+    }
+	
+    public List getAreas()
 	{
 		return areas;
 	}

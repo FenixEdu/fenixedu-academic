@@ -1,63 +1,90 @@
 package Dominio;
 
-import java.util.List;
-
 
 /**
- * @author dcs-rjao
- *
- * 24/Mar/2003
+ * @author David Santos in Jun 29, 2004
  */
 
-public class CurricularCourseEquivalence extends DomainObject implements ICurricularCourseEquivalence{
+public class CurricularCourseEquivalence extends DomainObject implements ICurricularCourseEquivalence {
 
-	private ICurricularCourse curricularCourse;
-	private List equivalenceRestrictions;
+    protected Integer oldCurricularCourseKey;
 
-	private Integer curricularCourseKey;
+    protected Integer equivalentCurricularCourseKey;
 
-	public CurricularCourseEquivalence() {
-	}
+    protected Integer degreeCurricularPlanKey;
 
+    protected ICurricularCourse oldCurricularCourse;
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
+    protected ICurricularCourse equivalentCurricularCourse;
 
-		if (obj instanceof ICurricularCourseEquivalence) {
-			ICurricularCourseEquivalence equivalence = (ICurricularCourseEquivalence) obj;
+    protected IDegreeCurricularPlan degreeCurricularPlan;
 
-			resultado = (this.getCurricularCourse().equals(equivalence.getCurricularCourse()));
-		}
-		return resultado;
-	}
+    public CurricularCourseEquivalence() {
+    }
 
-	public String toString() {
-		String result = "[" + this.getClass().getName() + "; ";
-		result += "curricularCourse = " + this.curricularCourse + "; ";
-		return result;
-	}
-	public ICurricularCourse getCurricularCourse() {
-		return curricularCourse;
-	}
+    public IDegreeCurricularPlan getDegreeCurricularPlan() {
+        return degreeCurricularPlan;
+    }
 
-	public Integer getCurricularCourseKey() {
-		return curricularCourseKey;
-	}
+    public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
+        this.degreeCurricularPlan = degreeCurricularPlan;
+    }
+    
+    public Integer getDegreeCurricularPlanKey() {
+        return degreeCurricularPlanKey;
+    }
+    
+    public void setDegreeCurricularPlanKey(Integer degreeCurricularPlanKey) {
+        this.degreeCurricularPlanKey = degreeCurricularPlanKey;
+    }
+    
+    public ICurricularCourse getEquivalentCurricularCourse() {
+        return equivalentCurricularCourse;
+    }
+    
+    public void setEquivalentCurricularCourse(ICurricularCourse equivalentCurricularCourse) {
+        this.equivalentCurricularCourse = equivalentCurricularCourse;
+    }
+    
+    public Integer getEquivalentCurricularCourseKey() {
+        return equivalentCurricularCourseKey;
+    }
+    
+    public void setEquivalentCurricularCourseKey(Integer equivalentCurricularCourseKey) {
+        this.equivalentCurricularCourseKey = equivalentCurricularCourseKey;
+    }
+    
+    public ICurricularCourse getOldCurricularCourse() {
+        return oldCurricularCourse;
+    }
+    
+    public void setOldCurricularCourse(ICurricularCourse oldCurricularCourse) {
+        this.oldCurricularCourse = oldCurricularCourse;
+    }
+    
+    public Integer getOldCurricularCourseKey() {
+        return oldCurricularCourseKey;
+    }
+    
+    public void setOldCurricularCourseKey(Integer oldCurricularCourseKey) {
+        this.oldCurricularCourseKey = oldCurricularCourseKey;
+    }
+    
+    public boolean equals(Object obj) {
+        boolean resultado = false;
 
+        if (obj instanceof ICurricularCourseEquivalence) {
+            ICurricularCourseEquivalence cce = (ICurricularCourseEquivalence) obj;
+            resultado = (this.getOldCurricularCourse().equals(cce.getOldCurricularCourse()) && this
+                    .getEquivalentCurricularCourse().equals(
+                            cce.getEquivalentCurricularCourse())
+                                    && this.getDegreeCurricularPlan().equals(cce.getDegreeCurricularPlan()));
+        }
+        return resultado;
+    }
 
-	public void setCurricularCourse(ICurricularCourse course) {
-		curricularCourse = course;
-	}
-
-	public void setCurricularCourseKey(Integer integer) {
-		curricularCourseKey = integer;
-	}
-	public List getEquivalenceRestrictions() {
-		return equivalenceRestrictions;
-	}
-
-	public void setEquivalenceRestrictions(List list) {
-		equivalenceRestrictions = list;
-	}
+    public String toString() {
+        return super.toString();
+    }
 
 }

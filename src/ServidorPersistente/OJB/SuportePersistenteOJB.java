@@ -668,11 +668,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new CurricularCourseEquivalenceOJB();
     }
 
-    public IPersistentCurricularCourseEquivalenceRestriction getIPersistentCurricularCourseEquivalenceRestriction()
-    {
-        return new CurricularCourseEquivalenceRestrictionOJB();
-    }
-
     //by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003)
     public IPersistentSeminaryModality getIPersistentSeminaryModality()
     {

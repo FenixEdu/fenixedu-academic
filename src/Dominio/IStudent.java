@@ -6,6 +6,8 @@
 
 package Dominio;
 
+import java.util.List;
+
 import Util.AgreementType;
 import Util.EntryPhase;
 import Util.StudentState;
@@ -86,4 +88,7 @@ public interface IStudent extends IDomainObject {
      */
     public void setEnrollmentForbidden(Boolean forbiddenEnrollment);
 
+    public List getStudentCurricularPlans();
+    
+    public void setStudentCurricularPlans(List studentCurricularPlans);
 }

@@ -1,22 +1,28 @@
-/*
- * Created on 17/Jun/2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package Dominio;
 
-import java.util.List;
-
 /**
- * @author dcs-rjao
- *
- * 17/Jun/2003
+ * @author David Santos in Jun 29, 2004
  */
-public interface ICurricularCourseEquivalence extends IDomainObject{
-	public abstract ICurricularCourse getCurricularCourse();
-	public List getEquivalenceRestrictions();
-	public abstract void setCurricularCourse(ICurricularCourse course);
-	public void setEquivalenceRestrictions(List list);
 
+public interface ICurricularCourseEquivalence extends IDomainObject {
+
+    public IDegreeCurricularPlan getDegreeCurricularPlan();
+
+    public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan);
+    
+    public Integer getDegreeCurricularPlanKey();
+    
+    public void setDegreeCurricularPlanKey(Integer degreeCurricularPlanKey);
+    
+    public ICurricularCourse getEquivalentCurricularCourse();
+    
+    public void setEquivalentCurricularCourse(ICurricularCourse equivalentCurricularCourse);
+    
+    public Integer getEquivalentCurricularCourseKey();
+    
+    public void setEquivalentCurricularCourseKey(Integer equivalentCurricularCourseKey);
+    
+    public ICurricularCourse getOldCurricularCourse();
+    
+    public void setOldCurricularCourse(ICurricularCourse oldCurricularCourse);
 }

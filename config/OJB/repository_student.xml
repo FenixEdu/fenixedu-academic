@@ -1,64 +1,97 @@
-<!-- Please keep user defined mappings in this file only
-     to avoid mixing user defined and system mappings. -->   
-<!-- Mapping of User defined classes starts here -->
-<!-- Definitions for Dominio.student.Delegate -->
-   <class-descriptor
-   	  class="Dominio.student.Delegate"
-   	  table="DELEGATE"
-   >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-     <field-descriptor
-		name="keyStudent"
-		column="KEY_STUDENT"
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.Student -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.Student" table="STUDENT">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="number"
+		column="NUMBER"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyDegree"
-		column="KEY_DEGREE"
+		name="personKey"
+		column="KEY_PERSON"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyExecutionYear"
-		column="KEY_EXECUTION_YEAR"
+		name="state"
+		column="STATE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaStudentState2SqlStudentStateFieldConversion"         
+	/>
+	<field-descriptor
+		name="degreeType"
+		column="DEGREE_TYPE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"         
+	/>
+	<field-descriptor id="6"
+		name="studentKindKey"
+		column="KEY_STUDENT_KIND"
 		jdbc-type="INTEGER"
 	/>
-	<field-descriptor 
-	    name="yearType" 
-    	column="YEAR_TYPE" 
-    	jdbc-type="INTEGER"
-    	conversion="ServidorPersistente.Conversores.DelegateYearTypeFieldConversion"/>
-    <field-descriptor 
-        name="type" 
-        column="TYPE" 
-        jdbc-type="BIT"/>
-    <reference-descriptor
-			name="degree"
-			class-ref="Dominio.Curso"
-			proxy="false">
-		<foreignkey field-ref="keyDegree"/>
+	<field-descriptor
+		name="keyRegistrationYear"
+		column="KEY_REGISTRATION_YEAR"
+		jdbc-type="INTEGER"      	
+	/>
+	<field-descriptor
+		name="payedTuition"
+		column="PAYED_TUITION"
+		jdbc-type="BIT"
+	/>
+	<field-descriptor
+		name="enrollmentForbidden"
+		column="ENROLLMENT_FORBIDDEN"
+		jdbc-type="BIT"
+	/>
+	<field-descriptor
+		name="entryPhase"
+		column="ENTRY_PHASE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.EntryPhase2SqlEntryPhaseFieldConversion"         
+	/>
+	<field-descriptor
+		name="keyRegistrationYear"
+		column="KEY_REGISTRATION_YEAR"
+		jdbc-type="INTEGER"      	
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<reference-descriptor
+			name="person"
+			class-ref="Dominio.Pessoa"
+			proxy="false"
+			refresh="true">
+		<foreignkey field-id-ref="3"/>
 	</reference-descriptor>
 	<reference-descriptor
-			name="executionYear"
+			name="studentKind"
+			class-ref="Dominio.StudentKind"
+			proxy="false">
+		<foreignkey field-ref="studentKindKey"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="registrationYear"
 			class-ref="Dominio.ExecutionYear"
-			proxy="false">
-		<foreignkey field-ref="keyExecutionYear"/>
-	</reference-descriptor>    
-	 <reference-descriptor
-			name="student"
-			class-ref="Dominio.Student"
-			proxy="false">
-		<foreignkey field-ref="keyStudent"/>
-	</reference-descriptor>   
-   </class-descriptor>
+			proxy="true">
+		<foreignkey field-ref="keyRegistrationYear"/>
+	</reference-descriptor>
+	<collection-descriptor
+			name="studentCurricularPlans"
+			element-class-ref="Dominio.StudentCurricularPlan"
+			refresh="true"
+			proxy="true">
+		<inverse-foreignkey field-ref="studentKey"/>
+	</collection-descriptor>
+</class-descriptor>

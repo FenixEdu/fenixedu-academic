@@ -30,6 +30,7 @@ public interface IDegreeCurricularPlan extends IDomainObject
 	public Integer getNumerusClausus();
 	public DegreeCurricularPlanState getState();
 	public String getConcreteClassForStudentCurricularPlans();
+    public List getCurricularCourseEquivalences();
 	
 	public void setAreas(List areas);
 	public void setCurricularCourses(List curricularCourses);
@@ -46,6 +47,7 @@ public interface IDegreeCurricularPlan extends IDomainObject
 	public void setNumerusClausus(Integer numerusClausus);
 	public void setState(DegreeCurricularPlanState state);
 	public void setConcreteClassForStudentCurricularPlans(String concreteClassForStudentCurricularPlans);
+    public void setCurricularCourseEquivalences(List curricularCourseEquivalences);
 
 	// -------------------------------------------------------------
 	// BEGIN: Only for enrollment purposes

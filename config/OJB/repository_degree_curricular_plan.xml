@@ -109,6 +109,12 @@
 			proxy="true">
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
+	<collection-descriptor
+			name="curricularCourseEquivalences"
+			element-class-ref="Dominio.CurricularCourseEquivalence"
+			proxy="true">
+		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
@@ -220,5 +226,10 @@
 			proxy="true">
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
+	<collection-descriptor
+			name="curricularCourseEquivalences"
+			element-class-ref="Dominio.CurricularCourseEquivalence"
+			proxy="true">
+		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
+	</collection-descriptor>
 </class-descriptor>
-
