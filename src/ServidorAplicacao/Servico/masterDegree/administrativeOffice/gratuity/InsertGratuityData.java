@@ -91,9 +91,12 @@ public class InsertGratuityData implements IService
 
 			gratuityValues =
 				persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
+			boolean isNew = false;
 			if (gratuityValues == null) //it doesn't exist in database, then write it
 			{
 				gratuityValues = new GratuityValues();
+				persistentGratuityValues.simpleLockWrite(gratuityValues);
+				isNew = true;
 
 				//execution Degree
 				ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
@@ -106,7 +109,10 @@ public class InsertGratuityData implements IService
 				gratuityValues.setExecutionDegree(executionDegree);
 
 			}
-
+			if (!isNew)
+			{
+				persistentGratuityValues.simpleLockWrite(gratuityValues);
+			}
 			validatePaymentPhasesWithTransaction(sp, gratuityValues);
 			//			validateGratuitySituationWithTransaction(sp, gratuityValues);
 
@@ -127,8 +133,6 @@ public class InsertGratuityData implements IService
 			//update gratuity values in all student curricular plan that belong to this execution
 			// degree
 			updateStudentsGratuitySituation(sp, gratuityValues, gratuityValue);
-		
-			persistentGratuityValues.simpleLockWrite(gratuityValues);
 		}
 		catch (ExcepcaoPersistencia e)
 		{

@@ -17,8 +17,10 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import DataBeans.InfoExecutionYear;
 import DataBeans.InfoObject;
 import DataBeans.InfoRole;
 import ServidorAplicacao.IUserView;
@@ -56,6 +58,72 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		return mapping.findForward("prepareEnrollmentChooseStudent");
 	}
 
+	public ActionForward prepareEnrollmentChooseStudentAndExecutionYear(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{		
+		System.out.println("prepareEnrollmentChooseStudentAndExecutionYear");
+		ActionErrors errors = new ActionErrors();
+
+		//degree type's code 
+		String degreeType = request.getParameter("degreeType");
+		request.setAttribute("degreeType", degreeType);
+		
+		//execution years
+		List executionYears = null;
+		Object[] args = {
+		};
+		try
+		{
+			executionYears =
+			(List) ServiceManagerServiceFactory.executeService(
+					null,
+					"ReadNotClosedExecutionYears",
+					args);
+		}
+		catch (FenixServiceException e)
+		{
+			errors.add("noExecutionYears", new ActionError("error.impossible.insertExemptionGratuity"));
+			saveErrors(request, errors);
+			return mapping.getInputForward();
+		}
+		if (executionYears == null || executionYears.size() <= 0)
+		{
+			errors.add("noExecutionYears", new ActionError("error.impossible.insertExemptionGratuity"));
+			saveErrors(request, errors);
+			return mapping.getInputForward();
+		}
+
+		ComparatorChain comparator = new ComparatorChain();
+		comparator.addComparator(new BeanComparator("year"), true);
+		Collections.sort(executionYears, comparator);
+
+		List executionYearLabels = buildLabelValueBeanForJsp(executionYears);
+		request.setAttribute("executionYears", executionYearLabels);
+				
+		return mapping.findForward("prepareEnrollmentChooseStudentWithoutRules");
+	}
+
+	private List buildLabelValueBeanForJsp(List infoExecutionYears)
+	{
+		List executionYearLabels = new ArrayList();
+		CollectionUtils.collect(infoExecutionYears, new Transformer()
+				{
+			public Object transform(Object arg0)
+			{
+				InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
+
+				LabelValueBean executionYear =
+				new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getYear());
+				return executionYear;
+			}
+		}, executionYearLabels);
+		return executionYearLabels;
+	}
+	
 	private Integer getExecutionDegree(HttpServletRequest request)
 	{
 		Integer executionDegreeId = null;
@@ -520,11 +588,11 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		try
 		{
 			if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE))
-					|| userView.getRoles().contains(
-							new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))))
+				|| userView.getRoles().contains(
+					new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))))
 			{
 				infoStudentEnrolmentContext =
-				(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+					(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ShowAvailableCurricularCoursesNew",
 						args);
@@ -532,7 +600,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			else
 			{
 				infoStudentEnrolmentContext =
-				(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+					(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ShowAvailableCurricularCoursesWithoutEnrollmentPeriod",
 						args);
@@ -558,18 +626,18 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			else if (e.getMessage().equals("studentCurricularPlan"))
 			{
 				errors.add(
-						"studentCurricularPlan",
-						new ActionError("error.student.curricularPlan.nonExistent"));
+					"studentCurricularPlan",
+					new ActionError("error.student.curricularPlan.nonExistent"));
 			}
 		}
 		catch (OutOfCurricularCourseEnrolmentPeriod e)
 		{
 			errors.add(
-					"enrolment",
-					new ActionError(
-							e.getMessageKey(),
-							Data.format2DayMonthYear(e.getStartDate()),
-							Data.format2DayMonthYear(e.getEndDate())));
+				"enrolment",
+				new ActionError(
+					e.getMessageKey(),
+					Data.format2DayMonthYear(e.getStartDate()),
+					Data.format2DayMonthYear(e.getEndDate())));
 		}
 		catch (FenixServiceException e)
 		{

@@ -90,9 +90,13 @@ public class EditGratuitySituationById implements IServico
 					.readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
 					studentCurricularPlan,
 					gratuityValues);
+			boolean isNew = false;
 			if (gratuitySituation == null) //it doesn't exist in database, then write it
 			{
 				gratuitySituation = new GratuitySituation();
+
+				persistentGratuitySituation.simpleLockWrite(gratuitySituation);
+				isNew = true;
 
 				//gratuity values
 				gratuityValues = new GratuityValues();
@@ -114,11 +118,11 @@ public class EditGratuitySituationById implements IServico
 						studentCurricularPlan,
 						false);
 				gratuitySituation.setStudentCurricularPlan(studentCurricularPlan);
-
-//				persistentGratuitySituation.simpleLockWrite(gratuitySituation);
-
 			}
-
+			if (!isNew)
+			{
+				persistentGratuitySituation.simpleLockWrite(gratuitySituation);
+			}
 			//employee who made register
 			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 			IPessoa person =
@@ -140,8 +144,7 @@ public class EditGratuitySituationById implements IServico
 
 			infoGratuitySituation =
 				Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
-		
-			persistentGratuitySituation.simpleLockWrite(gratuitySituation);
+
 		}
 		catch (ExcepcaoPersistencia e)
 		{

@@ -5803,4 +5803,13 @@
             <chain name="StudentIsUserAndHasStudentRoleFilter"/>
         </filterChains>
     </service>
+    <service>
+    	<name>ReadEnrollmentsWithStateEnrolledByStudent</name>
+    	<description>Enrollments with state ENROLED of the student</description>
+    	<implementationClass>ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadEnrollmentsWithStateEnrolledByStudent</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="DegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>    
 </serviceDefinitions>

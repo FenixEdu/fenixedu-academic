@@ -28,6 +28,23 @@ public final class InfoStudentEnrolmentContext
 
 	public InfoStudentEnrolmentContext() {}
 
+	
+	/**
+	 * @return Returns the studentCurrentSemesterInfoEnrollments.
+	 */
+	public List getStudentInfoEnrollmentsWithStateEnrolled()
+	{
+		return studentCurrentSemesterInfoEnrollments;
+	}
+
+	/**
+	 * @param studentCurrentSemesterInfoEnrollments The studentCurrentSemesterInfoEnrollments to set.
+	 */
+	public void setStudentInfoEnrollmentsWithStateEnrolled(List studentInfoEnrollmentsWithStateEnrolled)
+	{
+		this.studentCurrentSemesterInfoEnrollments = studentInfoEnrollmentsWithStateEnrolled;
+	}
+	
 	/**
 	 * @return Returns the finalInfoCurricularCoursesWhereStudentCanBeEnrolled.
 	 */

@@ -51,11 +51,20 @@
 			<form-property name="enrolledCurricularCoursesBefore" type="java.lang.Integer[]"/>
 			<form-property name="enrolledCurricularCoursesAfter" type="java.lang.Integer[]"/>
 			<form-property name="unenrolledCurricularCourses" type="java.lang.Integer[]"/>
+			<form-property name="executionYear" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 
 		<form-bean name="curriculumForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<!-- ******************* Enrollment Without Rule**************** -->
+		<form-bean name="curricularCoursesEnrollmentWithoutRuleForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="executionYear" type="java.lang.String"/>
+			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -256,6 +265,7 @@
 				
 			<forward name="beginTransaction" path="/curricularCoursesEnrollment.do?method=start"/>
 			<forward name="prepareEnrollmentChooseStudent" path="df.page.prepareEnrollmentChooseStudent"/>
+			<forward name="prepareEnrollmentChooseStudentWithoutRules" path="df.page.prepareEnrollmentChooseStudentWithoutRules"/>
 			<forward name="prepareEnrollmentChooseAreas" path="df.page.prepareEnrollmentChooseAreas"/>
 			<forward name="prepareChooseAreas" path="/curricularCoursesEnrollment.do?method=prepareEnrollmentPrepareChooseAreas&amp;page=0"/>
 			<forward name="prepareEnrollmentChooseCurricularCourses" path="df.page.prepareEnrollmentChooseCurricularCourses"/>
@@ -279,7 +289,17 @@
         	<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
         	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
       	</action>
-			
+      	
+      	
+      	<!-- ****************** Enrollment Without Rules **************************** -->
+		<action path="/courseEnrolmentWithoutRulesManagerDA"
+			type="ServidorApresentacao.Action.degreeAdministrativeOffice.withoutRules.ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction"
+			input="/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=1"
+			name="curricularCoursesEnrollmentWithoutRuleForm"
+			scope="request"
+			parameter="method">
+			<forward name="curricularCourseEnrollmentList" path="df.page.curricularCourseEnrollmentList"/>
+		</action>	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
