@@ -20,6 +20,16 @@ class net.sourceforge.fenixedu.domain.Advisory extends net.sourceforge.fenixedu.
 }
 
 
+class net.sourceforge.fenixedu.domain.Building extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
+
+	interface "
+    public java.util.List getRooms();
+    public void setRooms(java.util.List rooms);
+    "
+}
+
+
 class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String longName;
