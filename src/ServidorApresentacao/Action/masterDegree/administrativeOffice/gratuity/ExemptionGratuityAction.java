@@ -293,7 +293,7 @@ public class ExemptionGratuityAction extends DispatchAction
 						"valueExemptionGratuity",
 						String.valueOf(exemptionPercentage));
 				}
-				else
+				else if(exemptionPercentage.intValue() > 0)
 				{
 					exemptionGrauityForm.set("valueExemptionGratuity", "-1");
 					exemptionGrauityForm.set(
