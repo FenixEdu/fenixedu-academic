@@ -1,1 +1,0 @@
-INSERT INTO ROLE (ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY, ACK_OPT_LOCK) VALUES (27, '/delegate', '/index.do', 'portal.delegate', 1);
