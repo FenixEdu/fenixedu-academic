@@ -19,8 +19,6 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 
 abstract public class Filtro {
-	private static Filtro instance;
-
 	/**
 	 * The preFilter method is called before the service is
 	 * invoked. It should throw an exception if the service should
