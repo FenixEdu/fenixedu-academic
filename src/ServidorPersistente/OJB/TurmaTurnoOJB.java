@@ -93,25 +93,6 @@ public class TurmaTurnoOJB
 		super.deleteAll(oqlQuery);
 	}
 
-	public List readTurnosDeTurma(String nomeTurma) throws ExcepcaoPersistencia{
-		try {
-			String oqlQuery = "select all from " + TurmaTurno.class.getName();
-			oqlQuery += " where turma.nome = $1";
-			query.create(oqlQuery);
-			query.bind(nomeTurma);
-			List result = (List) query.execute();
-			lockRead(result);
-
-			List finalResult = new ArrayList();
-			for (int i = 0; i != result.size(); i++)
-				finalResult.add(((ITurmaTurno) (result.get(i))).getTurno());
-
-			return finalResult;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-
 	/**
 	 * Returns a shift list
 	 * @see ServidorPersistente.ITurmaTurnoPersistente#readByClass(ITurma)

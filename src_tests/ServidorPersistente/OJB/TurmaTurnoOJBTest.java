@@ -13,14 +13,25 @@ package ServidorPersistente.OJB;
  */
 import java.util.List;
 
-import junit.framework.*;
-import java.util.List;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.apache.ojb.odmg.OJB;
-import org.odmg.QueryException;
-import org.odmg.OQLQuery;
 import org.odmg.Implementation;
-import ServidorPersistente.*;
-import Dominio.*;
+import org.odmg.OQLQuery;
+import org.odmg.QueryException;
+
+import Dominio.ICurso;
+import Dominio.ICursoExecucao;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
+import Dominio.IPlanoCurricularCurso;
+import Dominio.ITurma;
+import Dominio.ITurmaTurno;
+import Dominio.ITurno;
+import Dominio.TurmaTurno;
+import ServidorPersistente.ExcepcaoPersistencia;
 
 public class TurmaTurnoOJBTest extends TestCaseOJB {
     public TurmaTurnoOJBTest(java.lang.String testName) {
@@ -51,135 +62,298 @@ public class TurmaTurnoOJBTest extends TestCaseOJB {
     // read existing TurmaTurno
     try {
       _suportePersistente.iniciarTransaccao();
-      turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(_turma1, _turno1);
+      // existing
+      IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+      assertNotNull(executionYear);
+      
+      IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+      assertNotNull(executionPeriod);
+      
+      ICurso degree = cursoPersistente.readBySigla("LEIC");
+      assertNotNull(degree);
+      
+      IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+      assertNotNull(degreeCurricularPlan);
+      
+      ICursoExecucao executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+      assertNotNull(executionDegree);
+      
+      ITurma classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
+      assertNotNull(classTemp);
+      
+      IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+      assertNotNull(executionCourse);
+      
+      ITurno shift = _turnoPersistente.readByNameAndExecutionCourse("turno1", executionCourse);
+      assertNotNull(shift);
+      
+      turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(classTemp, shift);
+
+	  assertEquals(turmaTurno.getTurno(), shift);
+	  assertEquals(turmaTurno.getTurma(), classTemp);
+      
+      
+      // Non Existing
+	  shift = _turnoPersistente.readByNameAndExecutionCourse("turno2", executionCourse);
+  	  assertNotNull(shift);
+  
+	  turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(classTemp, shift);
+	  assertNull(turmaTurno);
+
+
       _suportePersistente.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByTurmaAndTurno:fail read existing turmaTurno");
-    }
-    assertEquals("testReadByTurmaAndTurno:read existing aula",turmaTurno,_turmaTurno1);
-      
-    // read unexisting TurmaTurno
-    try {
-      _suportePersistente.iniciarTransaccao();
-      turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(_turma1, _turno2);
-      assertNull(turmaTurno);
-      _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByTurmaAndTurno:fail read unexisting turmaTurno");
     }
   }
 
   // write new existing turmaTurno
   public void testCreateExistingTurmaTurno() { 
-    ITurmaTurno turmaTurno = new TurmaTurno(_turma1, _turno1);
-    try {
-      _suportePersistente.iniciarTransaccao();
-      _turmaTurnoPersistente.lockWrite(turmaTurno);
-      _suportePersistente.confirmarTransaccao();
-      fail("testCreateExistingTurmaTurno");
-    } catch (ExcepcaoPersistencia ex) {
-      //all is ok
-    }
+
+	try{
+		
+		_suportePersistente.iniciarTransaccao();
+		// existing
+		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+		assertNotNull(executionYear);
+	      
+		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+		assertNotNull(executionPeriod);
+	      
+		ICurso degree = cursoPersistente.readBySigla("LEIC");
+		assertNotNull(degree);
+	      
+		IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+		assertNotNull(degreeCurricularPlan);
+	      
+		ICursoExecucao executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+		assertNotNull(executionDegree);
+	      
+		ITurma classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
+		assertNotNull(classTemp);
+	      
+		IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		assertNotNull(executionCourse);
+	      
+		ITurno shift = _turnoPersistente.readByNameAndExecutionCourse("turno1", executionCourse);
+		assertNotNull(shift);
+	      
+		// Create Existing 
+		
+		ITurmaTurno turmaTurno = new TurmaTurno(classTemp, shift);
+		_suportePersistente.iniciarTransaccao();
+		_turmaTurnoPersistente.lockWrite(turmaTurno);
+		_suportePersistente.confirmarTransaccao();
+		
+		fail("testCreateExistingTurmaTurno");	
+	} catch (ExcepcaoPersistencia ex) {
+	//all is ok
+	}
   }
+
 
   // write new non-existing turmaTurno
   public void testCreateNonExistingTurmaTurno() {
-    ITurmaTurno turmaTurno = null;
-    try {
-    	_suportePersistente.iniciarTransaccao();
-    	ITurma turma2 = _turmaPersistente.readByName(_turma2.getNome());
-    	ITurno turno1 = _turnoPersistente.readByNome(_turno1.getNome());
-    	_suportePersistente.confirmarTransaccao();
+	try{
+		
+		_suportePersistente.iniciarTransaccao();
+		// existing
+		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+		assertNotNull(executionYear);
+	      
+		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+		assertNotNull(executionPeriod);
+	      
+		ICurso degree = cursoPersistente.readBySigla("LEIC");
+		assertNotNull(degree);
+	      
+		IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+		assertNotNull(degreeCurricularPlan);
+	      
+		ICursoExecucao executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+		assertNotNull(executionDegree);
+	      
+		ITurma classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
+		assertNotNull(classTemp);
+	      
+		IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		assertNotNull(executionCourse);
+	      
+		ITurno shift = _turnoPersistente.readByNameAndExecutionCourse("turno2", executionCourse);
+		assertNotNull(shift);
 
-    	turmaTurno = new TurmaTurno(turma2, turno1);
+	    ITurmaTurno turmaTurno = new TurmaTurno(classTemp, shift);
+        _turmaTurnoPersistente.lockWrite(turmaTurno);
+        _suportePersistente.confirmarTransaccao();
 
-      _suportePersistente.iniciarTransaccao();
-      _turmaTurnoPersistente.lockWrite(turmaTurno);
-      _suportePersistente.confirmarTransaccao();
-      //      assertTrue(((Item)item).getCodigoInterno() != 0);
+		// Check Insert
+
+		_suportePersistente.iniciarTransaccao();
+		turmaTurno = null;
+		turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(classTemp, shift);
+		assertNotNull(turmaTurno);
+		_suportePersistente.confirmarTransaccao();
+
+
     } catch (ExcepcaoPersistencia ex) {
       fail("testCreateNonExistingTurmaTurno");
     }
   }
 
   /** Test of write method, of class ServidorPersistente.OJB.TurmaTurnoOJB. */
-  public void testWriteExistingUnchangedObject() {
-    // write item already mapped into memory
-    try {
-    	_suportePersistente.iniciarTransaccao();
-    	ITurmaTurno turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(_turma1, _turno1);
-    	_suportePersistente.confirmarTransaccao();
-
-      _suportePersistente.iniciarTransaccao();
-      _turmaTurnoPersistente.lockWrite(turmaTurno);
-      _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testWriteExistingUnchangedObject");
-    }
-  }
-
-  /** Test of write method, of class ServidorPersistente.OJB.TurmaTurnoOJB. */
   public void testWriteExistingChangedObject() {
-    ITurmaTurno turmaTurno1 = null;
-    ITurmaTurno turmaTurno2 = null;
-      
-    // write item already mapped into memory
-    try {
-    	_suportePersistente.iniciarTransaccao();
-    	ITurno turno2 = _turnoPersistente.readByNome(_turno2.getNome());
-    	_suportePersistente.confirmarTransaccao();
+	try{
+		
+		_suportePersistente.iniciarTransaccao();
+		// existing
+		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+		assertNotNull(executionYear);
+	      
+		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+		assertNotNull(executionPeriod);
+	      
+		ICurso degree = cursoPersistente.readBySigla("LEIC");
+		assertNotNull(degree);
+	      
+		IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+		assertNotNull(degreeCurricularPlan);
+	      
+		ICursoExecucao executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+		assertNotNull(executionDegree);
+	      
+		ITurma classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
+		assertNotNull(classTemp);
+	      
+		IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		assertNotNull(executionCourse);
+	      
+		ITurno shift1 = _turnoPersistente.readByNameAndExecutionCourse("turno1", executionCourse);
+		assertNotNull(shift1);
 
-      _suportePersistente.iniciarTransaccao();
-      turmaTurno1 = _turmaTurnoPersistente.readByTurmaAndTurno(_turma1, _turno1);
-      turmaTurno1.setTurno(turno2);
-      _suportePersistente.confirmarTransaccao();
+		ITurmaTurno turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(classTemp, shift1);
+		assertNotNull(turmaTurno);
 
-      _suportePersistente.iniciarTransaccao();
-      turmaTurno2 = _turmaTurnoPersistente.readByTurmaAndTurno(_turma1, _turno2);
-      _suportePersistente.confirmarTransaccao();
+		ITurno shift2 = _turnoPersistente.readByNameAndExecutionCourse("turno2", executionCourse);
+		assertNotNull(shift2);
 
-      assertTrue(turmaTurno2.getTurno().equals(_turno2));
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testWriteExistingChangedObject");
-    }
+		turmaTurno.setTurno(shift2);
+
+		_suportePersistente.confirmarTransaccao();
+
+		// Check Insert
+
+		_suportePersistente.iniciarTransaccao();
+		turmaTurno = null;
+		turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(classTemp, shift1);
+		assertNull(turmaTurno);
+
+		turmaTurno = null;
+		turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(classTemp, shift2);
+		assertNotNull(turmaTurno);
+		_suportePersistente.confirmarTransaccao();
+
+
+	} catch (ExcepcaoPersistencia ex) {
+	  fail("testCreateNonExistingTurmaTurno");
+	}
   }
 
   /** Test of delete method, of class ServidorPersistente.OJB.TurmaTurnoOJB. */
   public void testDeleteTurmaTurno() {
-    try {
-    	_suportePersistente.iniciarTransaccao();
-    	ITurmaTurno turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(_turma1, _turno1);
-    	_suportePersistente.confirmarTransaccao();    	
-    	
-      _suportePersistente.iniciarTransaccao();
-      _turmaTurnoPersistente.delete(turmaTurno);
-      _suportePersistente.confirmarTransaccao();
+	ITurmaTurno turmaTurno = null;
+	// read existing TurmaTurno
+	try {
+	  _suportePersistente.iniciarTransaccao();
+	  // existing
+	  IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+	  assertNotNull(executionYear);
+      
+	  IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+	  assertNotNull(executionPeriod);
+      
+	  ICurso degree = cursoPersistente.readBySigla("LEIC");
+	  assertNotNull(degree);
+      
+	  IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+	  assertNotNull(degreeCurricularPlan);
+      
+	  ICursoExecucao executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+	  assertNotNull(executionDegree);
+      
+	  ITurma classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
+	  assertNotNull(classTemp);
+      
+	  IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+	  assertNotNull(executionCourse);
+      
+	  ITurno shift = _turnoPersistente.readByNameAndExecutionCourse("turno1", executionCourse);
+	  assertNotNull(shift);
+      
+	  turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(classTemp, shift);
+	  assertNotNull(turmaTurno);
+      
+	  _turmaTurnoPersistente.delete(turmaTurno);
 
-      _suportePersistente.iniciarTransaccao();
-      turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(_turma1, _turno1);
-      _suportePersistente.confirmarTransaccao();
-
-      assertEquals(turmaTurno, null);
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testDeleteTurmaTurno");
-    }
+	  _suportePersistente.confirmarTransaccao();
+	  
+	  
+	  _suportePersistente.iniciarTransaccao();
+	  turmaTurno = null;
+	  turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(classTemp, shift);
+	  assertNull(turmaTurno);
+      
+	  _suportePersistente.confirmarTransaccao();
+	  
+	  
+	} catch (ExcepcaoPersistencia ex) {
+	  fail("testReadByTurmaAndTurno:fail read existing turmaTurno");
+	}
   }
 
   /** Test of delete method, of class ServidorPersistente.OJB.TurmaTurnoOJB. */
   public void testDeleteTurmaTurnoByKeys() {
-    try {
-      _suportePersistente.iniciarTransaccao();
-      _turmaTurnoPersistente.delete(_turma1.getNome(), _turno1.getNome());
-      _suportePersistente.confirmarTransaccao();
+	ITurmaTurno turmaTurno = null;
+	// read existing TurmaTurno
+	try {
+	  _suportePersistente.iniciarTransaccao();
+	  // existing
+	  IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+	  assertNotNull(executionYear);
+      
+	  IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+	  assertNotNull(executionPeriod);
+      
+	  ICurso degree = cursoPersistente.readBySigla("LEIC");
+	  assertNotNull(degree);
+      
+	  IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+	  assertNotNull(degreeCurricularPlan);
+      
+	  ICursoExecucao executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+	  assertNotNull(executionDegree);
+      
+	  ITurma classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
+	  assertNotNull(classTemp);
+      
+	  IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+	  assertNotNull(executionCourse);
+      
+	  ITurno shift = _turnoPersistente.readByNameAndExecutionCourse("turno1", executionCourse);
+	  assertNotNull(shift);
+      
+	  turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(classTemp, shift);
+	  assertNotNull(turmaTurno);
+	  
+	  _turmaTurnoPersistente.delete(turmaTurno);
+	  _suportePersistente.confirmarTransaccao();
 
-      _suportePersistente.iniciarTransaccao();
-      ITurmaTurno turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(_turma1, _turno1);
-      _suportePersistente.confirmarTransaccao();
-
-      assertEquals(turmaTurno, null);
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testDeleteTurmaTurno");
-    }
+	  _suportePersistente.iniciarTransaccao();
+	  turmaTurno = _turmaTurnoPersistente.readByTurmaAndTurno(classTemp, shift);
+	  assertNull(turmaTurno);
+	  _suportePersistente.confirmarTransaccao();
+	} catch (ExcepcaoPersistencia ex) {
+	  fail("testReadByTurmaAndTurno:fail read existing turmaTurno");
+	}
   }
   
   /** Test of deleteAll method, of class ServidorPersistente.OJB.TurmaTurnoOJB. */
@@ -209,76 +383,90 @@ public class TurmaTurnoOJBTest extends TestCaseOJB {
 
   }
 
-  public void testReadTurnosDeTurma() {
-    try {
-      List turnos = null;
-
-      _suportePersistente.iniciarTransaccao();
-      ITurma turma1 = _turmaPersistente.readByName(_turma1.getNome());
-      ITurno turno1 = _turnoPersistente.readByNome(_turno1.getNome());
-      ITurno turno2 = _turnoPersistente.readByNome(_turno2.getNome());
-      _suportePersistente.confirmarTransaccao();      
-
-      ITurmaTurno turmaTurno1 = new TurmaTurno(turma1, turno1);
-      ITurmaTurno turmaTurno2 = new TurmaTurno(turma1, turno2);      
-        /* Testa metodo qdo nao ha nenhuma turno da turma */
-      _suportePersistente.iniciarTransaccao();
-      _turmaTurnoPersistente.deleteAll();
-      _suportePersistente.confirmarTransaccao();
+  
+  public void testReadByClass() {
+	ITurmaTurno turmaTurno = null;
+	// read existing TurmaTurno
+	try {
+	  _suportePersistente.iniciarTransaccao();
+	  // existing
+	  IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+	  assertNotNull(executionYear);
       
-      _suportePersistente.iniciarTransaccao();
-      turnos = _turmaTurnoPersistente.readTurnosDeTurma(_turma1.getNome());
-      _suportePersistente.confirmarTransaccao();
-      assertEquals("testReadTurnosDeTurma: qdo nao nenhum turno da turma na BD", turnos.size(),0);
+	  IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+	  assertNotNull(executionPeriod);
+      
+	  ICurso degree = cursoPersistente.readBySigla("LEIC");
+	  assertNotNull(degree);
+      
+	  IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+	  assertNotNull(degreeCurricularPlan);
+      
+	  ICursoExecucao executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+	  assertNotNull(executionDegree);
+      
+	  ITurma classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", executionDegree, executionPeriod);
+	  assertNotNull(classTemp);
+      
+      
+      List result = _turmaTurnoPersistente.readByClass(classTemp);
+      assertNotNull(result);
+      assertEquals(result.size(), 1);
+      
+	  classTemp = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("turmaParaTestarInscricoesDeAlunos2", executionDegree, executionPeriod);
+	  assertNotNull(classTemp);
+	  
+	  result = _turmaTurnoPersistente.readByClass(classTemp);
+	  assertEquals(result.size(), 5);
+      
 
-      /* Testa metodo qdo ha mais do q um turno de uma turma na BD */      
-      _suportePersistente.iniciarTransaccao();
-      _turmaTurnoPersistente.lockWrite(turmaTurno1);
-      _turmaTurnoPersistente.lockWrite(turmaTurno2);
-      _suportePersistente.confirmarTransaccao();
-      _suportePersistente.iniciarTransaccao();
-      turnos = _turmaTurnoPersistente.readTurnosDeTurma(_turma1.getNome());
-      _suportePersistente.confirmarTransaccao();
-      assertEquals("testReadTurnosDeTurma: 1qdo ha 2 turnos da turma na BD", turnos.size(),2);
-      assertEquals("testReadTurnosDeTurma: qdo ha 2 turnos da turma na BD", turnos.get(0), _turno1);
-      assertEquals("testReadTurnosDeTurma: qdo ha 2 turnos da turma na BD", turnos.get(1), _turno2);
-      // Estranhamente o seguinte não funciona neste caso! Mas é o que deveria ser utilizado
-      //assertTrue("testReadTurnosDeTurma: 2qdo ha 2 turnos da turma na BD", turnos.contains(_turno1));
-      //assertTrue("testReadTurnosDeTurma: 3qdo ha 2 turnos da turma na BD", turnos.contains(_turno2));
-
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadTurnosDeTurma");
-    }
+	  _suportePersistente.confirmarTransaccao();
+	} catch (ExcepcaoPersistencia ex) {
+	  fail("testReadByTurmaAndTurno:fail read existing turmaTurno");
+	}
   }
 
-  public void testReadAulasByTurma() {
-    try {
-      List aulas = null;
-
-      /* Testa metodo qdo ha mais do q um turno de uma turma na BD */
-      _suportePersistente.iniciarTransaccao();
-      aulas = _turmaTurnoPersistente.readAulasByTurma("turma413");
-      _suportePersistente.confirmarTransaccao();
-
-      assertEquals("testReadAulasByTurma: qdo ha 2 aulas da turma na BD", aulas.size(),2);
-
-      _suportePersistente.iniciarTransaccao();
-      aulas = _turmaTurnoPersistente.readAulasByTurma("turma414");
-      _suportePersistente.confirmarTransaccao();
-      assertEquals("testReadAulasByTurma: qdo ha 3 aulas da turma na BD", aulas.size(),3);
+  
+  public void testReadClassesWithShift() {
+	ITurmaTurno turmaTurno = null;
+	// read existing TurmaTurno
+	try {
+	  _suportePersistente.iniciarTransaccao();
+	  // existing
+	  IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+	  assertNotNull(executionYear);
       
-      /* Testa metodo qdo nao ha nenhuma turno da turma */
-      _suportePersistente.iniciarTransaccao();
-      _turmaTurnoPersistente.deleteAll();
-      _suportePersistente.confirmarTransaccao();
+	  ICurso degree = cursoPersistente.readBySigla("LEIC");
+	  assertNotNull(degree);
       
-      _suportePersistente.iniciarTransaccao();
-      aulas = _turmaTurnoPersistente.readTurnosDeTurma("turma413");
-      _suportePersistente.confirmarTransaccao();
-      assertEquals("testReadAulasByTurma: qdo nao nenhum turno da turma na BD", aulas.size(),0);
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadAulasByTurma");
-    }
-  }    
+	  IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+	  assertNotNull(degreeCurricularPlan);
+      
+	  ICursoExecucao executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+	  assertNotNull(executionDegree);
+      
+	  IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+	  assertNotNull(executionCourse);
+      
+	  ITurno shift = _turnoPersistente.readByNameAndExecutionCourse("turno1", executionCourse);
+	  assertNotNull(shift);
+      
+	  List result = _turmaTurnoPersistente.readClassesWithShift(shift);
+	  assertEquals(result.size(), 1);
+
+	  shift = _turnoPersistente.readByNameAndExecutionCourse("turno455", executionCourse);
+	  assertNotNull(shift);
+      
+	  result = _turmaTurnoPersistente.readClassesWithShift(shift);
+	  assertEquals(result.size(), 2);
+
+
+	  _suportePersistente.confirmarTransaccao();
+	} catch (ExcepcaoPersistencia ex) {
+	  fail("testReadByTurmaAndTurno:fail read existing turmaTurno");
+	}
+  }
+
+
 
 }
