@@ -82,7 +82,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico {
 			//read professorship
 			IProfessorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(teacher, executionCourse);
 
-			List teacherShiftPercentageAdded = new ArrayList();
+			//List teacherShiftPercentageAdded = new ArrayList();
 
 			Iterator iterator = infoTeacherShiftPercentageList.iterator();
 			while (iterator.hasNext()) {
@@ -99,7 +99,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico {
 
 				if (ok) {
 					if (infoTeacherShiftPercentage.getPercentage().floatValue() != 0) {
-						lockPercentages(teacherShiftPercentageDAO, teacherShiftPercentageAdded, shift, teacherShiftPercentage);
+						lockPercentages(teacherShiftPercentageDAO, /*teacherShiftPercentageAdded,*/ shift, teacherShiftPercentage);
 					} else {
 						//delete because is zero
 						teacherShiftPercentage = teacherShiftPercentageDAO.readByUnique(teacherShiftPercentage);
@@ -130,7 +130,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico {
 
 	private void lockPercentages(
 		IPersistentTeacherShiftPercentage teacherShiftPercentageDAO,
-		List teacherShiftPercentageAdded,
+		//List teacherShiftPercentageAdded,
 		ITurno shift,
 		ITeacherShiftPercentage teacherShiftPercentage)
 		throws ExcepcaoPersistencia {
@@ -145,9 +145,9 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico {
 			teacherShiftPercentageToWrite = teacherShiftPercentage;
 		}
 
-		teacherShiftPercentageDAO.lockWrite(teacherShiftPercentageToWrite);
+		teacherShiftPercentageDAO.simpleLockWrite(teacherShiftPercentageToWrite);
 		teacherShiftPercentageToWrite.setPercentage(teacherShiftPercentage.getPercentage());
-		teacherShiftPercentageAdded.add(teacherShiftPercentageToWrite);
+		//teacherShiftPercentageAdded.add(teacherShiftPercentageToWrite);
 	}
 
 	private boolean validate(ITurno shift, Double percentage, ITeacher teacher) {
