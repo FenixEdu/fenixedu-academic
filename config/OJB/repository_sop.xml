@@ -374,12 +374,14 @@
       <reference-descriptor
          name="aluno"
          class-ref="Dominio.Student"
+         proxy="true"
       >
          <foreignkey field-id-ref="2"/>
       </reference-descriptor> 
       <reference-descriptor
          name="disciplinaExecucao"
          class-ref="Dominio.DisciplinaExecucao"
+         proxy="true"
       >
          <foreignkey field-id-ref="3"/>
       </reference-descriptor> 
