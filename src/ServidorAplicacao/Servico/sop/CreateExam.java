@@ -17,8 +17,10 @@ import java.util.Calendar;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.Exam;
+import Dominio.ExamExecutionCourse;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
+import Dominio.IExamExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
@@ -77,19 +79,19 @@ public class CreateExam implements IServico {
 					infoExecutionCourse.getSigla(),
 					executionPeriod);
 
-			IExam exam =
-				new Exam(
-					examDate.getTime(),
-					examTime,
-					null,
-					season,
-					executionCourse);
+			for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
+				IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
+				if (exam.getSeason().equals(season)) {
+					throw new ExistingServiceException();
+				}
+			}
 
-			// TODO : Falta realizar verificações adicionais
-			//        antes de escrever.
-			//   Verificações a fazer
+			IExam exam = new Exam(examDate.getTime(), examTime, null, season, executionCourse);
+			IExamExecutionCourse examExecutionCourse = new ExamExecutionCourse(exam, executionCourse);
+
 			try {
-				sp.getIPersistentExam().lockWrite(exam);
+				//sp.getIPersistentExam().lockWrite(exam);
+				sp.getIPersistentExamExecutionCourse().lockWrite(examExecutionCourse);
 			} catch (ExistingPersistentException ex) {
 				throw new ExistingServiceException(ex);
 			}
