@@ -110,6 +110,7 @@ public class TimeTable {
 		InfoLessonWrapper infoLessonWrapper = (InfoLessonWrapper) this.infoLessonWrapperMap.get(infoLesson);
 		if (infoLessonWrapper == null){
 			infoLessonWrapper = new InfoLessonWrapper (infoLesson);
+			System.out.println("Criei um novo infoLessonWrapper");
 			this.infoLessonWrapperMap.put(infoLesson, infoLessonWrapper);
 		}
 		return infoLessonWrapper;

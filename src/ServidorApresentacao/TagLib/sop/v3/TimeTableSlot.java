@@ -1,6 +1,7 @@
 package ServidorApresentacao.TagLib.sop.v3;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -18,6 +19,12 @@ public class TimeTableSlot {
 	}
 	
 	public void addLessonSlot(LessonSlot lessonSlot){
+		Iterator iterator = lessonSlotList.iterator();
+		while (iterator.hasNext()) {
+			LessonSlot lessonSlotElem = (LessonSlot) iterator.next();
+			lessonSlotElem.getInfoLessonWrapper().addCollision();
+		}
+		lessonSlot.getInfoLessonWrapper().setNumberOfCollisions(new Integer(lessonSlotList.size()));		
 		lessonSlotList.add(lessonSlot);
 		dayColumn.setMaxColisionSize(new Integer(lessonSlotList.size()));
 	}

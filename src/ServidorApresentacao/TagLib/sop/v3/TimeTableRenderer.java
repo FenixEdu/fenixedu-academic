@@ -9,6 +9,8 @@ import java.util.List;
  * @author jpvl
  */
 public class TimeTableRenderer {
+	// TODO: modify getSlotCssClass... 
+
 	private Integer endHour;
 	private Integer startHour;
 	private Integer slotSize;
@@ -79,9 +81,9 @@ public class TimeTableRenderer {
 					int emptyLessonSlotNumber =
 						getEmptyLessonSlotNumber(lessonSlotListResolved);
 
-					for (int slotIndex = 0;
-						slotIndex < lessonSlotListResolved.length;
-						slotIndex++) {
+					for (int slotIndex = 0, colspan = 0;
+						slotIndex < lessonSlotListResolved.length && colspan < lessonSlotListResolved.length;
+						slotIndex++, colspan ++) {
 						InfoLessonWrapper infoLessonWrapper =
 							lessonSlotListResolved[slotIndex];
 
@@ -95,7 +97,19 @@ public class TimeTableRenderer {
 								grid,
 								lessonSlotListResolved,
 								slotIndex));
-						strBuffer.append("' >");
+						strBuffer.append("' ");
+												 
+						
+						if (infoLessonWrapper !=null)
+							System.out.println("COLISIONS :"+infoLessonWrapper.getNumberOfCollisions().intValue());
+							
+						if (infoLessonWrapper != null && infoLessonWrapper.getNumberOfCollisions().intValue() == 0){
+							System.out.println("*******************************************");
+							strBuffer.append(" colspan ='").append(dayColumn.getMaxColisionSize()).append("'");
+							colspan = lessonSlotListResolved.length;
+						}
+						
+						strBuffer.append(">");
 
 						if (infoLessonWrapper != null) {
 							if (infoLessonWrapper
@@ -201,6 +215,7 @@ public class TimeTableRenderer {
 			strBuffer.append("_right");
 		}
 
+		/**/
 		if ((infoLessonWrapper == null)
 			&& (hourIndex + 1 < timeTable.getNumberOfHours().intValue())) {
 			TimeTableSlot nextSlot = timeTableGrid[dayIndex][hourIndex + 1];
@@ -224,6 +239,7 @@ public class TimeTableRenderer {
 			}
 		}
 
+		/**/
 		if (hourIndex + 1 == timeTable.getNumberOfHours().intValue()) {
 			strBuffer.append("_bottom");
 		}

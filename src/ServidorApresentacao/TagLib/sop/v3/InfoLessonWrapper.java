@@ -6,13 +6,15 @@ import DataBeans.InfoLesson;
  * @author jpvl
  *
  */
-public class InfoLessonWrapper implements Comparable{
+public class InfoLessonWrapper implements Comparable {
 	private InfoLesson infoLesson;
 	private boolean locked;
 	private int slotIndex;
 	private LessonSlot lessonSlot;
 
-	public InfoLessonWrapper (InfoLesson infoLesson){
+	private Integer numberOfCollisions = new Integer(0);
+
+	public InfoLessonWrapper(InfoLesson infoLesson) {
 		this.infoLesson = infoLesson;
 		this.locked = false;
 	}
@@ -23,8 +25,8 @@ public class InfoLessonWrapper implements Comparable{
 	public boolean isLocked() {
 		return locked;
 	}
-	
-	public int getSlotIndex(){
+
+	public int getSlotIndex() {
 		return slotIndex;
 	}
 
@@ -44,8 +46,8 @@ public class InfoLessonWrapper implements Comparable{
 	public InfoLesson getInfoLesson() {
 		return infoLesson;
 	}
-	
-	protected void setLessonSlot(LessonSlot lessonSlot){
+
+	protected void setLessonSlot(LessonSlot lessonSlot) {
 		this.lessonSlot = lessonSlot;
 	}
 
@@ -56,23 +58,44 @@ public class InfoLessonWrapper implements Comparable{
 	public LessonSlot getLessonSlot() {
 		return lessonSlot;
 	}
-	
-	public int getSpan(){
+
+	public int getSpan() {
 		int startIndex = lessonSlot.getStartIndex();
 		int endIndex = lessonSlot.getEndIndex();
 		return endIndex - startIndex;
 	}
-	
+
 	/**
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(Object toCompareWith) {
 		int compareResult = 0;
-		if (toCompareWith instanceof InfoLessonWrapper){
-			InfoLessonWrapper infoLessonWrapper = (InfoLessonWrapper) toCompareWith;
+		if (toCompareWith instanceof InfoLessonWrapper) {
+			InfoLessonWrapper infoLessonWrapper =
+				(InfoLessonWrapper) toCompareWith;
 			compareResult = infoLessonWrapper.getSpan() - getSpan();
 		}
 		return compareResult;
+	}
+
+	/**
+	 * @return Integer
+	 */
+	public Integer getNumberOfCollisions() {
+		return numberOfCollisions;
+	}
+
+	public void addCollision() {
+		this.numberOfCollisions =
+			new Integer(this.numberOfCollisions.intValue() + 1);
+	}
+
+	/**
+	 * Sets the numberOfCollisions.
+	 * @param numberOfCollisions The numberOfCollisions to set
+	 */
+	public void setNumberOfCollisions(Integer numberOfCollisions) {
+		this.numberOfCollisions = numberOfCollisions;
 	}
 
 }
