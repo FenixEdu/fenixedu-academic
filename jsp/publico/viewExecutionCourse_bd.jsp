@@ -62,12 +62,12 @@
 						<bean:write name="announcement" property="information" filter="false"/>
 					</p>
 				</div>
-				<logic:empty name="component" property="lastAnnouncements" ></div></logic:empty>
+				<logic:empty name="component" property="lastFiveAnnouncements" ></div></logic:empty>
 		</logic:notEmpty>
 
-		<logic:notEmpty name="component" property="lastAnnouncements" >		    	
+		<logic:notEmpty name="component" property="lastFiveAnnouncements" >		    	
 				<ul>
-				<logic:iterate id="announcement" name="component" property="lastAnnouncements">
+				<logic:iterate id="announcement" name="component" property="lastFiveAnnouncements">
 					<bean:define id="announcementId" name ="announcement" property="idInternal" />
 					<li class="more-announc"><span class="more-announc-date"><dt:format pattern="dd/MM/yyyy">
 						<bean:write name="announcement" property="lastModifiedDate.time"/></dt:format> - </span>

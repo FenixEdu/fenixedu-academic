@@ -22,7 +22,7 @@ public class InfoSiteFirstPage extends DataTranferObject implements ISiteCompone
 
     private InfoAnnouncement lastAnnouncement;
 
-    private List lastFiveAnnouncents;
+    private List lastFiveAnnouncements;
 
     private List responsibleTeachers;
 
@@ -132,11 +132,11 @@ public class InfoSiteFirstPage extends DataTranferObject implements ISiteCompone
      * @param infoAnnouncements
      */
     public void setLastFiveAnnouncements(List infoAnnouncements) {
-        lastFiveAnnouncents = infoAnnouncements;
+        lastFiveAnnouncements = infoAnnouncements;
     }
 
     public List getLastFiveAnnouncements() {
-        return lastFiveAnnouncents;
+        return lastFiveAnnouncements;
     }
 
 }
