@@ -97,6 +97,12 @@ public class Curriculum implements ICurriculum {
 	
 	public String toString() {
 		String result = "[CURRICULUM";
+		result += "codigo interno" + getInternalCode();
+		result += "Objectivos Operacionais" + getOperacionalObjectives();
+		result += "Objectivos gerais" + getGeneralObjectives();
+		result += "programa" + getProgram();
+		result += "execution course" + getExecutionCourse();
+		
 		result += "]";
 		return result;
 	}
