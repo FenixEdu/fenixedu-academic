@@ -20,7 +20,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -63,10 +62,10 @@ public class ExecutionCourseSiteComponentService implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
-			ITurnoPersistente turnoPersistente = sp.getITurnoPersistente();
+			
 
 			ISite site = null;
-			ISite siteShift = null;
+		
 			if (infoSiteCode != null) {
 
 				site = (ISite) persistentSite.readByOId(new Site(infoSiteCode), false);

@@ -119,7 +119,7 @@
 			Escolha o curso das cadeiras que quer frequentar:
 		</strong>
 		<br/>
-		<html:select  property="degree" size="1"onchange="document.studentShiftEnrolmentForm.method.value='enrollCourses';selectAll();document.studentShiftEnrolmentForm.submit();" >
+		<html:select  property="degree" size="1" onchange="document.studentShiftEnrolmentForm.method.value='enrollCourses';selectAll();document.studentShiftEnrolmentForm.submit();" >
 			<logic:iterate  id="executionDegree" name="degreeList">
 				<bean:define id="deg" name="executionDegree" property="infoDegreeCurricularPlan.infoDegree"/>
 				<option value="<%= ((InfoDegree)deg).getSigla() %>">
@@ -132,11 +132,11 @@
 				Disciplinas do curso selecionado:
 			</b>
 		</p>
-		<html:select property="course" size="8" styleClass="courseEnroll">
+		<html:select property="course" size="8" multiple="true" styleClass="courseEnroll">
 			<html:options collection="courseList" labelProperty="nome" property="idInternal"/>
 		</html:select>
 		<p style="margin-top:1px">
-			<input type="button" value="Adicionar Disciplina" onclick="addToList(wantedCourse,course[course.selectedIndex].text,course[course.selectedIndex].value);" style="width:100%"/>
+			<html:submit type="button" value="Adicionar Disciplina"  style="width:100%"/>
 		</p>
 		</div>
 		<br/>
@@ -147,15 +147,19 @@
 				Disciplinas que vai frequentar:
 			</b>
 		</p>
-		<html:select property="wantedCourse" multiple="false" size="8" styleClass="courseEnroll">
+		<html:select property="wantedCourse" multiple="true" size="8" styleClass="courseEnroll">
 			<html:options  collection="wantedCourse"   labelProperty="nome"  property="idInternal"/>
 		</html:select>
 		<p style="margin-top:1px">
-			<input type="button"  value="Remover Disciplina" onclick="removeFromList(wantedCourse);selectFirst();" size="12" style="width:100%"/>
+			<html:submit value="Remover Disciplina" onclick="document.studentShiftEnrolmentForm.method.value='proceedToShiftEnrolment';selectAll();return true;"/>
+			<input type="button"  value="Remover Disciplina"  size="12" style="width:100%"/>
 		</p>
 		</div>
 		<br/>
 		<br/>
-		<html:submit value="Continuar inscrição" onclick="document.studentShiftEnrolmentForm.method.value='proceedToShiftEnrolment';selectAll();return true;"/>
+		<logic:iterate id="wantedExecutionCourse" name="previousWantedCourse">
+			<html:hidden property="previousWantedCourse" value="<%=wantedExecutionCourse.getIdInternal().toString()%>"/>
+		</logic:iterate>
+		<html:submit value="Continuar inscrição" />
 	</html:form>
 </div>

@@ -25,6 +25,8 @@
 		<form-property name="degree" type="java.lang.String"/>
 		<form-property name="course" type="java.lang.String[]"/>
 		<form-property name="wantedCourse" type="java.lang.String[]"/>
+		<form-property name="previousWantedCourse" type="java.lang.String[]"/>
+		
       </form-bean>
       
 <!--

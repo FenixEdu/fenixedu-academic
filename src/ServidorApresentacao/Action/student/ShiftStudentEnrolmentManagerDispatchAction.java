@@ -15,11 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import electric.util.ArrayUtil;
 
 import DataBeans.InfoClass;
 import DataBeans.InfoDegree;
@@ -157,15 +159,74 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 	private final String TRANSACTION_ERROR_MESSAGE_KEY =
 		"error.transaction.enrolment";
 
-	private class ClassNamePredicate implements Predicate {
-		private String s;
-		public ClassNamePredicate(String s) {
-			super();
-			this.s = s;
+	public ActionForward removeCourses(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+//		String[] unWantedCourses = {
+//		};
+//		if (request.getParameter("unWantedCourse") != null) {
+//			unWantedCourses =
+//				((String[]) ((DynaActionForm) form).get("unWantedCourse"));
+//		}
+//		String[] wantedCourses = {
+//		};
+//		if (request.getParameter("wantedCourse") != null) {
+//			wantedCourses =
+//				((String[]) ((DynaActionForm) form).get("wantedCourse"));
+//		}
+//		List unWantedCoursesList = Arrays.asList(unWantedCourses);
+//		List wantedCoursesList = Arrays.asList(wantedCourses);
+//		wantedCoursesList =
+//			(List) CollectionUtils.subtract(
+//				wantedCoursesList,
+//				unWantedCoursesList);
+//		String[] newWantedArray = {
+//		};
+//		for (int i = 0; i < wantedCoursesList.size(); i++) {
+//			newWantedArray[i] = (String) wantedCoursesList.get(i);
+//		}
+//		String[] aux = {
+//		};
+//		request.setAttribute("wantedCourse", newWantedArray);
+//		request.setAttribute("unWantedCourse", aux);
+//		request.setAttribute("firstTime", "yes");
+		return enrollCourses(mapping, form, request, response);
+	}
+
+	public ActionForward addCourses(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		String[] wantedCourse = {
+		};
+		String[] course = {
+		};
+		String[] previousWantedCourse = {
+		};
+		if (request.getParameter("wantedCourse") != null) {
+			wantedCourse =
+				((String[]) ((DynaActionForm) form).get("wantedCourse"));
 		}
-		public boolean evaluate(Object input) {
-			return ((InfoClass) input).getNome().equals(s);
+		if (request.getParameter("course") != null) {
+			course = ((String[]) ((DynaActionForm) form).get("course"));
 		}
+		if (request.getParameter("previousWantedCourse") != null) {
+			previousWantedCourse =
+				((String[]) ((DynaActionForm) form)
+					.get("previousWantedCourse"));
+		}
+		List wantedCourseList = Arrays.asList(wantedCourse);
+		List courseList = Arrays.asList(course);
+		List previousWantedCourseList = Arrays.asList(previousWantedCourse);
+		
+		
+		return null;
 	}
 	/**
 	 * Enroll the student on a particular set of classes as selected by him of
@@ -201,39 +262,10 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 
 		// retrieve the student information to fill the info 
 		// to be passed to the readShifts service
-		InfoStudent infoStudent = null;
-		try {
-			infoStudent =
-				(InfoStudent) ServiceUtils.executeService(
-					userView,
-					"ReadStudentByUsername",
-					new Object[] { userView.getUtilizador()});
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+		InfoStudent infoStudent = getInfoStudent(userView);
 
 		//Update the student's attending courses:
-		String[] wantedCourses = {
-		};
-
-		if (request.getParameter("wantedCourse") != null) {
-			wantedCourses =
-				((String[]) ((DynaActionForm) form).get("wantedCourse"));
-		}
-
-		if (wantedCourses != null && !firstTime) {
-
-			//Build up the arrayList
-			Boolean attendenceChanged =
-				writeAttendingCourses(userView, infoStudent, wantedCourses);
-
-			if (!attendenceChanged.booleanValue()) {
-				System.out.println(
-					"Nao foi possivel actualizar as disciplinas do aluno");
-				throw new FenixActionException("Can't Change Degree Attending.");
-			}
-		} // firstTime if
-
+		enrollStudent(form, request, firstTime, userView, infoStudent);
 		// Retrieve the current executionYear to later get the existing degrees
 		InfoExecutionYear currentExecutionYear;
 		try {
@@ -355,6 +387,49 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		request.setAttribute("wantedCourse", attendingCourses);
 
 		return mapping.findForward("selectCourses");
+	}
+
+	private void enrollStudent(ActionForm form, HttpServletRequest request, boolean firstTime, IUserView userView, InfoStudent infoStudent) throws FenixActionException {
+		String[] wantedCourses = {
+		};
+
+		if (request.getParameter("wantedCourse") != null) {
+			wantedCourses =
+				((String[]) ((DynaActionForm) form).get("wantedCourse"));
+		}
+
+		if (wantedCourses != null && !firstTime) {
+			if (wantedCourses.length <= 8) {
+
+				//Build up the arrayList
+				Boolean attendenceChanged =
+					writeAttendingCourses(userView, infoStudent, wantedCourses);
+
+				if (!attendenceChanged.booleanValue()) {
+					System.out.println(
+						"Nao foi possivel actualizar as disciplinas do aluno");
+					throw new FenixActionException("Can't Change Degree Attending.");
+				}
+			} else {
+				// TODO: actionErrors
+			}
+
+		} // firstTime if
+
+	}
+
+	private InfoStudent getInfoStudent(IUserView userView) throws FenixActionException {
+		InfoStudent infoStudent = null;
+		try {
+			infoStudent =
+				(InfoStudent) ServiceUtils.executeService(
+					userView,
+					"ReadStudentByUsername",
+					new Object[] { userView.getUtilizador()});
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		return infoStudent;
 	}
 
 	private Boolean writeAttendingCourses(
@@ -693,9 +768,6 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		InfoShiftStudentEnrolment infoShiftStudentEnrolment,
 		DynaActionForm form) {
 
-		//		List currentEnrolment = infoShiftStudentEnrolment.getCurrentEnrolment();
-		//		List avaliableShift = infoShiftStudentEnrolment.getAvailableShift();
-		//		InfoStudent infoStudent = infoShiftStudentEnrolment.getInfoStudent();
 		form.set(
 			"shifts",
 			new Integer[(
