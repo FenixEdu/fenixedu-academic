@@ -78,11 +78,15 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		if (!errors.isEmpty()) {
 			saveErrors(request, errors);
 		}
-
+		System.out.println("View Responsables " + infoExecutionDegree.getCoordinatorsList().size());
+		
 		Integer[] responsibleCoordinatorsIds = findResponsibleCoodinators(
 		infoExecutionDegree.getCoordinatorsList());
 		DynaActionForm coordinatorsForm = (DynaActionForm) actionForm;
-		
+		//clean
+		coordinatorsForm.set(
+				"responsibleCoordinatorsIds",
+				null);
 		coordinatorsForm.set(
 			"responsibleCoordinatorsIds",
 			responsibleCoordinatorsIds);
@@ -185,7 +189,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		System.out.println("ManageCoordinatorsAction: edit");
+		
 
 		ActionErrors errors = new ActionErrors();
 
@@ -203,12 +207,15 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		request.setAttribute("degreeCurricularPlanId", executionDegreeId);
 
 		DynaActionForm coordinatorsForm = (DynaActionForm) actionForm;
-
 		Integer[] responsibleCoordinatorsIds =
 			(Integer[]) coordinatorsForm.get("responsibleCoordinatorsIds");
+		Integer[] deletedCoordinatorsIds =
+		(Integer[]) coordinatorsForm.get("deletedCoordinatorsIds");
+				
 		if (responsibleCoordinatorsIds != null) {
 			List responsibleCoordinatorsIdsList =
 				Arrays.asList(responsibleCoordinatorsIds);
+			System.out.println("ManageCoordinatorsAction: edit " + responsibleCoordinatorsIdsList.size());
 			Object[] args =
 				{ executionDegreeId, responsibleCoordinatorsIdsList };
 			try {
@@ -225,15 +232,12 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 			if (!errors.isEmpty()) {
 				saveErrors(request, errors);
 			}
-
 		}
 
-		Integer[] deletedCoordinatorsIds =
-			(Integer[]) coordinatorsForm.get("deletedCoordinatorsIds");
 		if (deletedCoordinatorsIds != null) {
 			List deletedCoordinatorsIdsList =
 				Arrays.asList(deletedCoordinatorsIds);
-
+			System.out.println("ManageCoordinatorsAction: remove " + deletedCoordinatorsIdsList.size());
 			Object[] args = { executionDegreeId, deletedCoordinatorsIdsList };
 			try {
 				ServiceManagerServiceFactory.executeService(
