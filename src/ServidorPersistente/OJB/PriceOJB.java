@@ -72,4 +72,25 @@ public class PriceOJB extends ObjectFenixOJB implements IPersistentPrice {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}		
 	 }
+	 
+	public List readByGraduationTypeAndDocumentType(GraduationType graduationType, DocumentType documentType)
+			 throws ExcepcaoPersistencia {
+		 	
+			try {
+				String oqlQuery = "select all from " + Price.class.getName()
+								+ " where graduationType = $1"
+								+ " and documentType = $2";
+								
+				query.create(oqlQuery);
+				query.bind(graduationType.getType());
+				query.bind(documentType.getType());
+				
+				List result = (List) query.execute();
+				super.lockRead(result);
+				return (List) result;
+
+			} catch (QueryException ex) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+			}		
+		 }
 }

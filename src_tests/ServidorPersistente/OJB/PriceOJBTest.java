@@ -69,11 +69,11 @@ public class PriceOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			List result = persistentPrice.readByGraduationType(GraduationType.MAJOR_DEGREE_TYPE);
 			assertTrue(!result.isEmpty());
-			assertEquals(result.size(), 3);
+			assertEquals(result.size(), 2);
 			
 			result = persistentPrice.readByGraduationType(GraduationType.MASTER_DEGREE_TYPE);
 			assertTrue(!result.isEmpty());
-			assertEquals(result.size(), 3);
+			assertEquals(result.size(), 4);
 
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex) {
@@ -86,11 +86,11 @@ public class PriceOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			IPrice price = persistentPrice.readByGraduationTypeAndDocumentTypeAndDescription(GraduationType.MASTER_DEGREE_TYPE, DocumentType.APPLICATION_EMOLUMENT_TYPE, "Mestrado");
+			IPrice price = persistentPrice.readByGraduationTypeAndDocumentTypeAndDescription(GraduationType.MASTER_DEGREE_TYPE, DocumentType.CERTIFICATE_TYPE, "Matrícula");
 			assertNotNull(price);
 		
-			assertEquals(price.getDescription(), "Mestrado");
-			assertEquals(price.getDocumentType(), DocumentType.APPLICATION_EMOLUMENT_TYPE);
+			assertEquals(price.getDescription(), "Matrícula");
+			assertEquals(price.getDocumentType(), DocumentType.CERTIFICATE_TYPE);
 			assertEquals(price.getGraduationType(), GraduationType.MASTER_DEGREE_TYPE);
 			assertEquals(price.getPrice(), new Double(75));
 			
@@ -100,5 +100,20 @@ public class PriceOJBTest extends TestCaseOJB {
 			fail("testReadAllByGraduationType: unexpected exception" + ex);
 		}
 	}
+
+	public void testReadByGraduationTypeAndDocumentType() {
+			System.out.println("Test 4 - Read By Graduation Type And Document Type");        
+
+			try {
+				persistentSupport.iniciarTransaccao();
+				List price = persistentPrice.readByGraduationTypeAndDocumentType(GraduationType.MASTER_DEGREE_TYPE, DocumentType.CERTIFICATE_TYPE);
+				assertTrue(!price.isEmpty());
+				assertEquals(price.size(), 4);
+
+				persistentSupport.confirmarTransaccao();
+			} catch(ExcepcaoPersistencia ex) {
+				fail("testReadByGraduationTypeAndDocumentType: unexpected exception" + ex);
+			}
+		}
 
 }

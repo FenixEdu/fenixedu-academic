@@ -212,6 +212,7 @@
             <form-property name="page" type="java.lang.Integer" />
         	<form-property name="requesterNumber" type="java.lang.String" />
         	<form-property name="graduationType" type="java.lang.String" />
+        	<form-property name="certificateList" type="java.lang.String"/>
 			<form-property name="destination" type="java.lang.String[]"/>
       </form-bean>
 
@@ -625,8 +626,8 @@
 		 parameter="method"
   	         scope="request"
       	      type="ServidorApresentacao.Action.certificate.ChooseCertificateInfoAction">
-   		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
-            key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+   		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       	  <forward name="PrepareReady" path="/certificate/chooseCertificate.jsp"/>
       	  <forward name="ChooseSuccess" path="/certificate/listCertificates.jsp"/>

@@ -1,8 +1,11 @@
 
 package ServidorApresentacao.Action.certificate;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,13 +17,18 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import DataBeans.InfoGuide;
+import DataBeans.InfoStudent;
+import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.DocumentReason;
+import Util.DocumentType;
+import Util.GraduationType;
 import Util.Specialization;
+import Util.TipoCurso;
 
 /**
  * 
@@ -37,26 +45,45 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 
 		
 		HttpSession session = request.getSession(false);
-
+		DynaActionForm chooseDeclaration = (DynaActionForm) form;
+		GestorServicos serviceManager = GestorServicos.manager();	
 
 
 		if (session != null) {
 			
 			session.removeAttribute(SessionConstants.SPECIALIZATIONS);
+			session.removeAttribute(SessionConstants.DOCUMENT_REASON);
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			ArrayList specializations = Specialization.toArrayList();
+			ArrayList documentReason = DocumentReason.toArrayList();
+			
+			Object args[] = {GraduationType.MASTER_DEGREE_TYPE, DocumentType.CERTIFICATE_TYPE};
+	        
+			// output
+			List certificateList = null;
+
+
+			//get informations
+			try {
+				certificateList = (List) serviceManager.executar(userView, "ReadCertificateList", args);
+
+			} catch (NonExistingServiceException e) {
+				throw new NonExistingActionException("A lista de certidões", e);
+			}
+
+			session.setAttribute(SessionConstants.DOCUMENT_REASON,documentReason);
 			session.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
-					
+			session.setAttribute(SessionConstants.CERTIFICATE_LIST, certificateList);
+			
 			return mapping.findForward("PrepareReady");
 		  } else
 			throw new Exception();   
 
 	}
 
-
-
+	
 
 	public ActionForward choose(ActionMapping mapping, ActionForm form,
 									HttpServletRequest request,
@@ -67,76 +94,64 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
+
+			DynaActionForm chooseDeclaration = (DynaActionForm) form;
 			
-			DynaActionForm chooseGuide = (DynaActionForm) form;
-			
-			GestorServicos serviceManager = GestorServicos.manager();
-			
+			GestorServicos serviceManager = GestorServicos.manager();	
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
+			//remove sessions variables
+			session.removeAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
+			session.removeAttribute(SessionConstants.DEGREE_TYPE);
+			session.removeAttribute(SessionConstants.DATE);
+			session.removeAttribute(SessionConstants.DOCUMENT_REASON_LIST);
+
+			
 			// Get the Information
-			Integer guideNumber = new Integer((String) chooseGuide.get("guideNumber"));
-			Integer guideYear = new Integer((String) chooseGuide.get("guideYear"));
-					
-			Object args[] = { guideNumber, guideYear };
-	  
-	  		List result = null;
-			try {
-				result = (List) serviceManager.executar(userView, "ChooseGuide", args);
-			} catch (NonExistingServiceException e) {
-				throw new NonExistingActionException("A Guia", e);
-			}
-
-			session.setAttribute(SessionConstants.GUIDE_LIST, result);
-			if (result.size() == 1) {
-
-				request.setAttribute(SessionConstants.GUIDE, result.get(0));
-				return mapping.findForward("ActionReady");
-			}
-
-			request.setAttribute(SessionConstants.GUIDE_YEAR, guideYear);
-			request.setAttribute(SessionConstants.GUIDE_NUMBER, guideNumber);
-		  
-		  	return mapping.findForward("ShowVersionList");
-		} else
-		  throw new Exception();   
-	  }
-	  
-	  
-	public ActionForward chooseVersion(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
-
+			Integer requesterNumber = new Integer((String) chooseDeclaration.get("requesterNumber"));
+			String graduationType = (String) chooseDeclaration.get("graduationType");
+			String[] destination =  (String[]) chooseDeclaration.get("destination");
+		    
+			if (destination.length != 0)
+				session.setAttribute(SessionConstants.DOCUMENT_REASON_LIST,destination);
+		   
 		
-		HttpSession session = request.getSession(false);
 
-		if (session != null) {
+			// inputs
+			InfoStudent infoStudent = new InfoStudent();
+			infoStudent.setNumber(requesterNumber);
+			infoStudent.setDegreeType(new TipoCurso(TipoCurso.MESTRADO));
+			session.setAttribute(SessionConstants.DEGREE_TYPE, infoStudent.getDegreeType());
+			Object args[] = {infoStudent, new Specialization(graduationType)};
+	        
+			// output
+			InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 			
-			DynaActionForm chooseGuide = (DynaActionForm) form;
 			
-			GestorServicos serviceManager = GestorServicos.manager();
-			
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			
-			// Get the Information
-			Integer guideNumber = new Integer((String) request.getParameter("number"));
-			Integer guideYear = new Integer((String) request.getParameter("year"));
-			Integer guideVersion = new Integer((String) request.getParameter("version"));
-					
-			Object args[] = { guideNumber, guideYear , guideVersion };
-	  
-			InfoGuide infoGuide = null;
-
+			//get informations
 			try {
-				infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
-			} catch (NonExistingServiceException e) {
-				throw new NonExistingActionException("A Versão da Guia", e);
-			}
+				infoStudentCurricularPlan = (InfoStudentCurricularPlan) serviceManager.executar(userView, "CreateDeclaration", args);
 
-			request.setAttribute(SessionConstants.GUIDE, infoGuide);
-			return mapping.findForward("ActionReady");
-		} else
+			} catch (NonExistingServiceException e) {
+				throw new NonExistingActionException("A Declaração", e);
+			}
+			
+			if (infoStudentCurricularPlan == null){
+				throw new NonExistingActionException("O aluno");
+			}
+				
+			else {
+				Locale locale = new Locale("pt", "PT");
+				Date date = new Date();
+				String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
+	
+				session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
+				
+				session.setAttribute(SessionConstants.DATE, formatedDate);	
+				return mapping.findForward("ChooseSuccess"); 
+			}
+			
+		  } else
 		  throw new Exception();   
 	  }
 
