@@ -35,7 +35,10 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidSituationActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.DocumentType;
+import Util.GraduationType;
 import Util.GuideRequester;
 import Util.PaymentType;
 import Util.RandomStringGenerator;
@@ -128,6 +131,8 @@ public class CreateGuideDispatchAction extends DispatchAction {
 
 			GestorServicos serviceManager = GestorServicos.manager();
 			
+			session.removeAttribute(SessionConstants.CERTIFICATE_LIST);
+			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Get the Information
@@ -151,6 +156,27 @@ public class CreateGuideDispatchAction extends DispatchAction {
 				contributorNumber = new Integer(contributorNumberString);
 			
 			ArrayList degrees = (ArrayList) session.getAttribute(SessionConstants.DEGREE_LIST);
+
+			List types = new ArrayList();
+			types.add(DocumentType.INSURANCE_TYPE);
+			types.add(DocumentType.CERTIFICATE_TYPE);
+			types.add(DocumentType.ENROLMENT_TYPE);
+			types.add(DocumentType.FINE_TYPE);
+		
+			 
+			Object argsAux[] = {GraduationType.MASTER_DEGREE_TYPE, types};
+			
+		    List studentGuideList = null;
+		   
+			try {
+				studentGuideList = (List) serviceManager.executar(userView, "ReadCertificateList", argsAux);
+
+			} catch (NonExistingServiceException e) {
+				throw new NonExistingActionException("A lista de guias para estudantes", e);
+			}
+
+			session.setAttribute(SessionConstants.CERTIFICATE_LIST, studentGuideList);
+
 
 			// Verify the chosen degree			
 			Iterator iterator = degrees.iterator();
@@ -196,11 +222,13 @@ public class CreateGuideDispatchAction extends DispatchAction {
 				return mapping.findForward("CreateCandidateGuide");
 			}			
 			
-			if (requesterType.equals(GuideRequester.STUDENT_STRING))
-				return mapping.findForward("ChooseItems");
-
-			return null;
-		} else throw new Exception();   
+			if (requesterType.equals(GuideRequester.STUDENT_STRING)){
+				session.removeAttribute(SessionConstants.REQUESTER_TYPE);
+				session.setAttribute(SessionConstants.REQUESTER_TYPE, requesterType);
+				return mapping.findForward("CreateStudentGuide");
+			}
+			throw new Exception("Unknown requester type!");
+		} else throw new Exception();
 	  }
 	  
 	public ActionForward create(ActionMapping mapping, ActionForm form,

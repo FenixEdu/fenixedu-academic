@@ -181,7 +181,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 						session.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, infoExecutionYear);	
 						session.setAttribute(SessionConstants.ENROLMENT_LIST, enrolmentList);	
 						session.setAttribute(SessionConstants.INFO_FINAL_RESULT, infoFinalResult);	
-						
+
 						return mapping.findForward("ChooseSuccess"); 
 				 
 				    }

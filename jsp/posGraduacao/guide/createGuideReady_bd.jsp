@@ -6,11 +6,7 @@
 <%@ page import="java.lang.Integer" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-<html>
-  <head>
-    <title><bean:message key="title.masterDegree.administraiveOffice.createGuide" /></title>
-  </head>
-  <body>
+
    <span class="error"><html:errors/><br></span>
 
    <table>
@@ -102,5 +98,4 @@
    <html:submit property="Criar">Criar Guia</html:submit>
       </html:form>
    </table>
-  </body>
-</html>
+

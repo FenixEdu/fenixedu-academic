@@ -216,6 +216,17 @@
 			<form-property name="destination" type="java.lang.String[]"/>
       </form-bean>
 
+	  <!-- Bean to Choose the Information for the Certificate  -->
+      <form-bean name="chooseStudentGuideForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="quantityList" type="java.lang.String" />
+			<form-property name="studentGuideList" type="java.lang.String"/>
+      </form-bean>
+
+
 
    </form-beans>
     
@@ -377,8 +388,25 @@
 	         <forward name="ChangePasswordSuccess" path="/guide/informationTemplate1.jsp"/>  
       </action>
       
-      
-      
+      <action attribute="chooseStudentGuideForm"
+      		  input="/guide/chooseStudentGuide.jsp"
+      	      name="chooseStudentGuideForm"
+		      path="/studentGuideDispatchAction"
+		      parameter="method"
+		      scope="request"
+              
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.StudentGuideDispatchAction"
+              validate="true">
+       		 <exception type="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
+		                key="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       		 <exception type="ServidorApresentacao.Action.exceptions.NoChangeMadeActionException"
+		                key="ServidorApresentacao.Action.exceptions.NoChangeMadeActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>                        
+	         <forward name="CreateStudentGuideReady" path="/guide/createGuideReady.jsp"/>
+	  </action>
+
+
       
       <!-- Dispatch Action to Create the Contributor Information -->
       <action path="/createContributorDispatchAction"
@@ -457,6 +485,7 @@
               validate="true">
 	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
+	         <forward name="CreateStudentGuide" path="/guide/chooseStudentGuide.jsp"/>  
       </action>
 
 
@@ -533,6 +562,7 @@
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
+	         <forward name="CreateStudentGuide" path="/guide/guideMenu.jsp"/>  
 	         <forward name="CreateSuccess" path="printGuide.do?method=prepare"/>  	         
       </action>
 

@@ -23,6 +23,11 @@ public class NoChangeMadeActionException extends FenixActionException {
 	public NoChangeMadeActionException(Object[] values, Throwable cause) {
 		super(key, values, cause);
 	}
+	
+	public NoChangeMadeActionException(String key) {
+			super(key);
+	}
+	
     
 	public static String getKey() {
 		return key;

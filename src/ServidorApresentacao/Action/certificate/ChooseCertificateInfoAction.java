@@ -4,6 +4,7 @@ package ServidorApresentacao.Action.certificate;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -18,6 +19,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoExecutionYear;
+import DataBeans.InfoPrice;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.GestorServicos;
@@ -61,8 +63,11 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 			ArrayList specializations = Specialization.toArrayList();
 			ArrayList documentReason = DocumentReason.toArrayList();
 			
+			List types = new ArrayList();
+			types.add(DocumentType.CERTIFICATE_TYPE);
+			
 			// inputs	
-			Object args[] = {GraduationType.MASTER_DEGREE_TYPE, DocumentType.CERTIFICATE_TYPE};
+			Object args[] = {GraduationType.MASTER_DEGREE_TYPE, types};
 	        
 			// output
 			List certificateList = null;
@@ -76,9 +81,16 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 				throw new NonExistingActionException("A lista de certidões", e);
 			}
 
+
+			List result = new ArrayList();
+			Iterator iterator = certificateList.iterator();
+			while(iterator.hasNext()) {	
+				InfoPrice price = (InfoPrice) iterator.next(); 
+				result.add(price.getDescription());
+			}
 			session.setAttribute(SessionConstants.DOCUMENT_REASON,documentReason);
 			session.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
-			session.setAttribute(SessionConstants.CERTIFICATE_LIST, certificateList);
+			session.setAttribute(SessionConstants.CERTIFICATE_LIST, result);
 			
 			return mapping.findForward("PrepareReady");
 		  } else

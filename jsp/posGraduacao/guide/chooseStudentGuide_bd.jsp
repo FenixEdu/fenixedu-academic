@@ -1,0 +1,60 @@
+<%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ page import="org.apache.struts.action.Action" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<h2><bean:message key="label.masterDegree.administrativeOffice.studentGuide" /></h2>
+ <bean:define id="studentGuideList" name="<%= SessionConstants.CERTIFICATE_LIST %>"/>
+<br />
+
+
+<span class="error"><html:errors/></span>
+   
+   <table>
+    <html:form action="/studentGuideDispatchAction?method=createReady">
+
+    <bean:define id="certificateList" name="<%= SessionConstants.CERTIFICATE_LIST %>" scope="session" />
+    
+    <logic:iterate id="price" name="certificateList" >
+    	<tr>
+    		<td>
+	  			<bean:write name="price" property="documentType" /> : <bean:write name="price" property="description" />
+  	        </td>
+  	       
+    		<td>
+    		<div align="right">
+	  			<html:text property="quantityList" size='2' maxlength='3' value='0'/> 
+  			</div>
+  	        </td>
+  	         <td>
+  	        ----------------
+  	        </td>
+    		<td >
+    		<div align="right">
+	  			<bean:write name="price" property="price" /> <bean:message key="label.currencySymbol"/>
+	  	    </div>
+  	        </td>
+  	        
+    	</tr>               
+	</logic:iterate>
+	
+	<%--
+		<tr>
+			<td><bean:message key="label.masterDegree.administrativeOffice.others" /></td>
+			<td><html:textarea property="othersRemarks"/></td>
+			<td><html:text property="othersQuantity"/></td>
+			<td><html:text property="othersPrice"/> <bean:message key="label.currencySymbol" /></td>
+		</tr>
+	--%>
+   
+   
+   </table>
+<br />
+        <br />
+<html:submit value="Submeter" styleClass="inputbutton" property="ok"/>
+</html:form>
+
+
+
+ 

@@ -21,6 +21,8 @@ import Dominio.IExecutionYear;
 import Dominio.IGuide;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPrice;
+import Dominio.IStudent;
+import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingContributorServiceException;
@@ -32,6 +34,7 @@ import Util.DocumentType;
 import Util.GraduationType;
 import Util.GuideRequester;
 import Util.Specialization;
+import Util.TipoCurso;
 
 
 /**
@@ -100,8 +103,9 @@ public class PrepareCreateGuide implements IServico {
 		year = new Integer(calendar.get(Calendar.YEAR));
 		
 		//	Check if the Requester is a Candidate
+		ICursoExecucao executionDegree = null;
 		if (requesterType.equals(GuideRequester.CANDIDATE_STRING)) {
-			ICursoExecucao executionDegree = null;
+			
 			try {
 				IExecutionYear executionYear = new ExecutionYear(infoExecutionDegree.getInfoExecutionYear().getYear());
 				executionDegree = sp.getICursoExecucaoPersistente().readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
@@ -166,10 +170,47 @@ public class PrepareCreateGuide implements IServico {
 
 		}
 
-
 		if (requesterType.equals(GuideRequester.STUDENT_STRING)) {
+			IStudent student = null;
+			try {
+				IExecutionYear executionYear = new ExecutionYear(infoExecutionDegree.getInfoExecutionYear().getYear());
+				student = sp.getIPersistentStudent().readByNumero(number,TipoCurso.MESTRADO_OBJ);
+				
+				IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(student.getNumber(),
+										TipoCurso.MESTRADO_OBJ);
+				
+				executionDegree = sp.getICursoExecucaoPersistente().readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
+										studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla(),
+										studentCurricularPlan.getDegreeCurricularPlan().getName(),
+										executionYear);
+				System.out.println(executionDegree);
+				
+								
+			} catch (ExcepcaoPersistencia ex) {
+				FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+				newEx.fillInStackTrace();
+				throw newEx;
+			}
+
+			// Check if the Candidate Exists
+				
+			if (student == null) 
+			 throw new NonExistingServiceException("O Aluno", null);
+			 
+			 
+			guide.setContributor(contributor);
+			guide.setPerson(student.getPerson());
+			guide.setYear(year);
 			
-			// Fill in the blank
+			guide.setCreationDate(calendar.getTime());
+			guide.setVersion(new Integer(1));			
+
+			guide.setExecutionDegree(executionDegree);
+
+			infoGuide = Cloner.copyIGuide2InfoGuide(guide);
+
+			infoGuide.setInfoGuideEntries(new ArrayList());
+			infoGuide.setGuideRequester(GuideRequester.STUDENT_TYPE);			
 		}
 
 		return infoGuide;
