@@ -110,7 +110,7 @@ public class StudentShiftEnrolmentTest extends TestCaseReadServices {
 		  shift = SuportePersistenteOJB.getInstance().getITurnoPersistente().readByNameAndExecutionCourse("turno4", executionCourse);
 		  assertNotNull(shift);
 		  
-		  infoShift = Cloner.copyIShift2InfoShift(shift);
+		  infoShift = (InfoShift) Cloner.get(shift);
 		  
 		  SuportePersistenteOJB.getInstance().confirmarTransaccao();
 	  } catch (ExcepcaoPersistencia ex) {

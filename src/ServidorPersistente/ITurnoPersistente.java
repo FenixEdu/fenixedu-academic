@@ -12,6 +12,7 @@ package ServidorPersistente;
  */
 import java.util.List;
 
+import Dominio.IAula;
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
@@ -64,4 +65,8 @@ public interface ITurnoPersistente extends IPersistentObject {
 		throws ExcepcaoPersistencia;
     
     public List readByExecutionCourseID(Integer id) throws ExcepcaoPersistencia;
+	/**
+	 * @return
+	 */
+	public List readByLesson(IAula lesson) throws ExcepcaoPersistencia;
 }

@@ -13,6 +13,7 @@ import java.util.List;
 
 import Dominio.Aula;
 import Dominio.IAula;
+import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -56,6 +57,13 @@ public class DeleteLessons implements IServico {
 						Aula.class,
 						(Integer) lessonOIDs.get(j));
 
+				List shifts = sp.getITurnoPersistente().readByLesson(lesson);
+				for (int i = 0; i < shifts.size(); i++)
+				{
+					ITurno turno = (ITurno) shifts.get(i);
+					sp.getITurnoPersistente().simpleLockWrite(turno);
+					turno.getAssociatedLessons().remove(lesson);
+				}
 				sp.getIAulaPersistente().delete(lesson);
 			}
 

@@ -177,7 +177,7 @@
 	</collection-descriptor>
      <collection-descriptor
 			name="associatedLessons"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
 			element-class-ref="Dominio.Aula"
 			indirection-table="SHIFT_LESSON"
 			proxy="true"
@@ -186,9 +186,9 @@
 		<fk-pointing-to-this-class column="KEY_SHIFT"/>
 		<fk-pointing-to-element-class column="KEY_LESSON"/>
 	</collection-descriptor>
+	<!-- collection-class="org.apache.ojb.broker.util.collections.ManageableVector" -->
      <collection-descriptor
 			name="associatedClasses"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			element-class-ref="Dominio.Turma"
 			indirection-table="CLASS_SHIFT"
 			proxy="true"

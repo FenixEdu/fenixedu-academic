@@ -57,7 +57,7 @@ public class ReadShiftsByDistributedTestTest extends TestCaseReadServices {
 			assertNotNull("shift null", shift);
 			sp.confirmarTransaccao();
 
-			InfoShift infoShift = Cloner.copyIShift2InfoShift(shift);
+			InfoShift infoShift = (InfoShift) Cloner.get(shift);
 
 			shiftList.add(infoShift);
 		} catch (ExcepcaoPersistencia e) {

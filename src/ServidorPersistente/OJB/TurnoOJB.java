@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
+import Dominio.IAula;
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
@@ -264,5 +265,22 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
         criteria.addEqualTo("chaveDisciplinaExecucao", id);
         return queryList(Turno.class, criteria);
     }
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ITurnoPersistente#readByLesson()
+	 */
+	public List readByLesson(IAula lesson) throws ExcepcaoPersistencia
+	{
+		if (lesson != null)
+		{
+			Criteria criteria = new Criteria();
+			criteria.addEqualTo("associatedLessons.idInternal", lesson.getIdInternal());
+			return queryList(Turno.class, criteria);
+		}
+		else
+		{
+			return null;
+		}
+	}
 
 }

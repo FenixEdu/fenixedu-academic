@@ -11,7 +11,9 @@ package ServidorAplicacao.Servico.sop;
  **/
 import java.util.List;
 
+import Dominio.IShiftProfessorship;
 import Dominio.ITurma;
+import Dominio.ITurno;
 import Dominio.Turma;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -55,6 +57,12 @@ public class DeleteClasses implements IServico {
 					(ITurma) sp.getITurmaPersistente().readByOID(
 						Turma.class,
 						(Integer) classOIDs.get(j));
+
+				for (int i = 0; i < schoolClass.getAssociatedShifts().size(); i++) {
+					ITurno shift = (ITurno) schoolClass.getAssociatedShifts().get(i);
+					sp.getITurnoPersistente().simpleLockWrite(shift);
+					shift.getAssociatedClasses().remove(schoolClass);
+				}
 
 				sp.getITurmaPersistente().delete(schoolClass);
 			}

@@ -184,7 +184,7 @@ public class ReadOtherCoursesWithShifts implements IServico {
 							infoExecutionCourse.getNome());
 					InfoShift infoShift = null;
 					if (shift != null)
-						infoShift = Cloner.copyIShift2InfoShift(shift);
+						infoShift = (InfoShift) Cloner.get(shift);
 
 					TypeLessonAndInfoShift pair =
 						new TypeLessonAndInfoShift(

@@ -59,6 +59,7 @@ public class RemoveShifts implements IServico {
 				(ITurma) sp.getITurmaPersistente().readByOID(
 					Turma.class,
 					infoClass.getIdInternal());			
+			sp.getITurmaPersistente().simpleLockWrite(schoolClass);
 
 			for (int i = 0; i < shiftOIDs.size(); i++) {
 				ITurno shift =
@@ -68,11 +69,12 @@ public class RemoveShifts implements IServico {
 				ITurmaTurno classShift = sp.getITurmaTurnoPersistente().readByTurmaAndTurno(
 										schoolClass,
 										shift);
-
 				if (classShift != null) {
 					sp.getITurmaTurnoPersistente().delete(classShift);
 				}
-
+				schoolClass.getAssociatedShifts().remove(shift);
+				sp.getITurmaTurnoPersistente().simpleLockWrite(shift);
+				shift.getAssociatedClasses().remove(schoolClass);
 			}
 
 			result = true;

@@ -64,7 +64,7 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
         public Object transform(Object arg0)
         {
             ITurno shift = (ITurno) arg0;
-            return Cloner.copyIShift2InfoShift(shift);
+            return Cloner.get(shift);
         }
     }
     private static ValidateAndConfirmShiftStudentEnrolment _service =
@@ -245,7 +245,7 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
                  */
 
                 InfoShift pair[] = new InfoShift[2];
-                pair[0] = Cloner.copyIShift2InfoShift(shift);
+                pair[0] = (InfoShift) Cloner.get(shift);
                 pair[1] = null;
 
                 newShifts.add(pair);
@@ -306,8 +306,8 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
                      */
 
                     InfoShift pair[] = new InfoShift[2];
-                    pair[0] = Cloner.copyIShift2InfoShift(oldShift);
-                    pair[1] = Cloner.copyIShift2InfoShift(shift);
+                    pair[0] = (InfoShift) Cloner.get(oldShift);
+                    pair[1] = (InfoShift) Cloner.get(shift);
                     newShifts.add(pair);
 
                     //Removing the old shift
@@ -366,7 +366,7 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
 
                     InfoShift pair[] = new InfoShift[2];
                     pair[0] = null;
-                    pair[1] = Cloner.copyIShift2InfoShift(shift);
+                    pair[1] = (InfoShift) Cloner.get(shift);
                     newShifts.add(pair);
 
                     //Updates the availability on the database
@@ -815,7 +815,7 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
         public ShiftConflict(ITurno s, String m)
         {
             this.setMsg(m);
-            this.setShift(Cloner.copyIShift2InfoShift(s));
+            this.setShift((InfoShift) Cloner.get(s));
         }
 
         /**

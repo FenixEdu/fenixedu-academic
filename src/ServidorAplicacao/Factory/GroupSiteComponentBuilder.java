@@ -13,6 +13,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoShift;
 import DataBeans.InfoSiteGroupsByShift;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteShift;
@@ -174,7 +175,7 @@ public class GroupSiteComponentBuilder {
 						persistentStudentGroup.readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
 
 					infoSiteShift = new InfoSiteShift();
-					infoSiteShift.setInfoShift(Cloner.copyIShift2InfoShift(shift));
+					infoSiteShift.setInfoShift((InfoShift) Cloner.get(shift));
 					infoSiteShift.setNrOfGroups(new Integer(allStudentGroups.size()));
 
 					infoSiteGroupsByShift = new InfoSiteGroupsByShift();

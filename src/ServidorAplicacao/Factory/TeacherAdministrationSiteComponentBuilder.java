@@ -1406,7 +1406,7 @@ public class TeacherAdministrationSiteComponentBuilder
                             shift);
 
                     infoSiteShift = new InfoSiteShift();
-                    infoSiteShift.setInfoShift(Cloner.copyIShift2InfoShift(shift));
+                    infoSiteShift.setInfoShift((InfoShift) Cloner.get(shift));
 
                     if (groupProperties.getGroupMaximumNumber() != null)
                     {

@@ -76,7 +76,7 @@ public class ReadGroupPropertiesShifts implements IServico {
 					result = strategy.checkNumberOfGroups(groupProperties, shift);
 					if (result) {
 
-						InfoShift infoShift = Cloner.copyIShift2InfoShift(shift);
+						InfoShift infoShift = (InfoShift) Cloner.get(shift);
 
 						infoShift.setIdInternal(shift.getIdInternal());
 
@@ -86,7 +86,7 @@ public class ReadGroupPropertiesShifts implements IServico {
 
 				if (shiftCode != null) {
 					ITurno oldShift = (ITurno) sp.getITurnoPersistente().readByOId(new Turno(shiftCode), false);
-					infoShifts.add(Cloner.copyIShift2InfoShift(oldShift));
+					infoShifts.add(Cloner.get(oldShift));
 				}
 
 			}

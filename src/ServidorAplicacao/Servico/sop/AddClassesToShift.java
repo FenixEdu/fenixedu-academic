@@ -13,18 +13,14 @@ import java.util.List;
 
 import DataBeans.InfoShift;
 import Dominio.ITurma;
-import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.Turma;
-import Dominio.TurmaTurno;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class AddClassesToShift implements IServico {
 
@@ -61,6 +57,7 @@ public class AddClassesToShift implements IServico {
 				(ITurno) sp.getITurnoPersistente().readByOID(
 					Turno.class,
 					infoShift.getIdInternal());
+			sp.getITurnoPersistente().simpleLockWrite(shift);
 
 			for (int i = 0; i < classOIDs.size(); i++) {
 				ITurma schoolClass =
@@ -68,12 +65,15 @@ public class AddClassesToShift implements IServico {
 						Turma.class,
 						(Integer) classOIDs.get(i));
 
-				ITurmaTurno classShift = new TurmaTurno(schoolClass, shift);
-				try {
-					sp.getITurmaTurnoPersistente().lockWrite(classShift);
-				} catch (ExistingPersistentException e) {
-					throw new ExistingServiceException(e);
-				}
+//				ITurmaTurno classShift = new TurmaTurno(schoolClass, shift);
+//				try {
+//					sp.getITurmaTurnoPersistente().lockWrite(classShift);
+//				} catch (ExistingPersistentException e) {
+//					throw new ExistingServiceException(e);
+//				}
+				shift.getAssociatedClasses().add(schoolClass);
+				sp.getITurmaPersistente().simpleLockWrite(schoolClass);
+				schoolClass.getAssociatedShifts().add(shift);
 			}
 
 			result = true;

@@ -79,9 +79,9 @@ public class ReadShiftsByExecutionCourseCodeTest extends TestCaseReadServices {
 
 			sp.confirmarTransaccao();
 
-			InfoShift infoTurno19 = Cloner.copyIShift2InfoShift(turno19);
-			InfoShift infoTurno20 = Cloner.copyIShift2InfoShift(turno20);
-			InfoShift infoTurno21 = Cloner.copyIShift2InfoShift(turno21);
+			InfoShift infoTurno19 = (InfoShift) Cloner.get(turno19);
+			InfoShift infoTurno20 = (InfoShift) Cloner.get(turno20);
+			InfoShift infoTurno21 = (InfoShift) Cloner.get(turno21);
 
 			List lessons = turno19.getAssociatedLessons();
 			Iterator itLessons = lessons.iterator();

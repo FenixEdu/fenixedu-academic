@@ -57,7 +57,7 @@ public class ReadShiftsByTypeFromExecutionCourse implements IServico {
 			if (dshifts != null)
 				for (int i = 0; i < dshifts.size(); i++) {
 					ITurno dshift = (ITurno) dshifts.get(i);
-					InfoShift shift = Cloner.copyIShift2InfoShift(dshift);
+					InfoShift shift = (InfoShift) Cloner.get(dshift);
 					shifts.add(shift);
 				}
 		} catch (ExcepcaoPersistencia e) {

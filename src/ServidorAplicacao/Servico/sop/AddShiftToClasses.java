@@ -6,10 +6,8 @@
 package ServidorAplicacao.Servico.sop;
 
 import Dominio.ITurma;
-import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.Turma;
-import Dominio.TurmaTurno;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -17,7 +15,6 @@ import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
-import ServidorPersistente.ITurmaTurnoPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -56,13 +53,14 @@ public class AddShiftToClasses implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			ITurnoPersistente persistentShift = sp.getITurnoPersistente();
 			ITurmaPersistente persistentClass = sp.getITurmaPersistente();
-			ITurmaTurnoPersistente persistentClassShift =
-				sp.getITurmaTurnoPersistente();
+//			ITurmaTurnoPersistente persistentClassShift =
+//				sp.getITurmaTurnoPersistente();
 			ITurno shift = new Turno(keyShift);
 			shift = (ITurno) persistentShift.readByOId(shift, false);
 			if (shift == null || classesList == null) {
 				throw new InvalidArgumentsServiceException();
 			}
+			persistentShift.simpleLockWrite(shift);
 			int iter = 0;
 			int length = classesList.length;
 			while (iter < length) {
@@ -72,19 +70,20 @@ public class AddShiftToClasses implements IServico {
 				if (dClass == null) {
 					throw new InvalidArgumentsServiceException();
 				}
-				if (persistentClassShift.readByTurmaAndTurno(dClass, shift)
-					== null) {
-					ITurmaTurno classShift = new TurmaTurno();
-					classShift.setTurma(dClass);
-					classShift.setTurno(shift);
-					persistentClassShift.lockWrite(classShift);
-
-				}
+				shift.getAssociatedClasses().add(dClass);
+				persistentClass.simpleLockWrite(dClass);
+				dClass.getAssociatedShifts().add(shift);
+//				if (persistentClassShift.readByTurmaAndTurno(dClass, shift)
+//					== null) {
+//					ITurmaTurno classShift = new TurmaTurno();
+//					classShift.setTurma(dClass);
+//					classShift.setTurno(shift);
+//					persistentClassShift.lockWrite(classShift);
+//				}
 				iter++;
 			}
 
 		} catch (ExcepcaoPersistencia e) {
-
 		}
 
 	}

@@ -71,7 +71,7 @@ public class ReadShiftsByExecutionCourseID implements IServico {
 		
 				shift.setOcupation(new Integer(studentsInShift.size()));
 				shift.setPercentage(NumberUtils.formatNumber(new Double(shift.getOcupation().floatValue() * 100 / shift.getLotacao().floatValue()), 1));
-				infoExecutionCourseOccupancy.getInfoShifts().add(Cloner.copyIShift2InfoShift(shift));		
+				infoExecutionCourseOccupancy.getInfoShifts().add(Cloner.get(shift));		
 			}
 		
 						

@@ -13,6 +13,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoShift;
 import DataBeans.InfoSiteGroupsByShift;
 import DataBeans.InfoSiteShift;
 import DataBeans.InfoSiteShiftsAndGroups;
@@ -105,7 +106,7 @@ public class ReadShiftsAndGroups implements IServico {
 						persistentStudentGroup.readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
 
 					infoSiteShift = new InfoSiteShift();
-					infoSiteShift.setInfoShift(Cloner.copyIShift2InfoShift(shift));
+					infoSiteShift.setInfoShift((InfoShift) Cloner.get(shift));
 
 					if (groupProperties.getGroupMaximumNumber() != null) {
 

@@ -436,10 +436,19 @@ public class ContextUtils
                         return time1.compareTo(time2);
                     }
                 });
-                chainComparator.addComparator(new BeanComparator("infoSala.nome"));
-                Collections.sort(infoShift.getInfoLessons(), chainComparator);
+                if (infoShift.getInfoLessons() == null)
+                {
+					infoShift.setInfoLessons(new ArrayList());
+                }
+				if (infoShift.getInfoClasses() == null)
+				{
+					infoShift.setInfoClasses(new ArrayList());
+				}
+                
+               	chainComparator.addComparator(new BeanComparator("infoSala.nome"));
+				Collections.sort(infoShift.getInfoLessons(), chainComparator);
 
-                if (infoShift.getInfoLessons().isEmpty())
+				if (infoShift.getInfoLessons().isEmpty())
                 {
                     infoShift.setInfoLessons(null);
                 }

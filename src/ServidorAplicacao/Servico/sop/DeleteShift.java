@@ -11,6 +11,7 @@ package ServidorAplicacao.Servico.sop;
  **/
 import DataBeans.InfoShift;
 import Dominio.IAula;
+import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
@@ -63,6 +64,14 @@ public class DeleteShift implements IServico {
 						i++) {
 						sp.getIAulaPersistente().delete(
 							(IAula) shift.getAssociatedLessons().get(i));
+					}
+
+					for (int i = 0;
+						i < shift.getAssociatedClasses().size();
+						i++) {
+						ITurma schoolClass = (ITurma) shift.getAssociatedClasses().get(i);
+						sp.getITurmaPersistente().simpleLockWrite(schoolClass);
+						schoolClass.getAssociatedShifts().remove(shift);
 					}
 
 					sp.getITurnoPersistente().delete(shift);

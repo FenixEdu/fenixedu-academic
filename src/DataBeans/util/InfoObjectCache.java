@@ -52,6 +52,7 @@ public class InfoObjectCache
 
 	public static void remove(String key)
 	{
+		System.out.println("Removing: " + key);
 		infoObjectTable.remove(key);
 	}
 
