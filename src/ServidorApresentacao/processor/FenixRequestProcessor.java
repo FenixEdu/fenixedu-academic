@@ -39,8 +39,11 @@ public class FenixRequestProcessor extends RequestProcessor {
 		}
 		if (((uri.indexOf("login.do") == -1)
 			&& (uri.indexOf("/publico/index.do") == -1))) {
-			
-			if ((session == null) || (session.isNew()) && ((session!= null)&&(!session.getAttributeNames().hasMoreElements()))) {
+
+			if ((session == null)
+				|| (session.isNew())
+				|| ((session != null)
+					&& (!session.getAttributeNames().hasMoreElements()))) {
 				ActionErrors errors = new ActionErrors();
 
 				errors.add(
