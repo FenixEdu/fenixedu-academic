@@ -28,6 +28,7 @@ import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentPrecedence;
 import ServidorPersistente.IPersistentRestriction;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
+import Util.PrecedenceScopeToApply;
 import Util.TipoCurso;
 
 /**
@@ -65,7 +66,7 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 			sp.iniciarTransaccao();
 			curricularCourse = curricularCourseDAO.readCurricularCourseByNameAndCode("Analise Matematica II","AMII");
 			assertNotNull(curricularCourse);
-			precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse);
+			precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse, PrecedenceScopeToApply.TO_APPLY_TO_SPAN);
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace(System.out);
@@ -113,7 +114,7 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 		List precedenceList = null;
 		try {
 			sp.iniciarTransaccao();
-			precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse);
+			precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse, PrecedenceScopeToApply.TO_APPLY_TO_SPAN);
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace(System.out);
@@ -146,7 +147,7 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 		List precedenceList = null;
 		try {
 			sp.iniciarTransaccao();
-			precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse);
+			precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse, PrecedenceScopeToApply.TO_APPLY_TO_SPAN);
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e1) {
 			e1.printStackTrace(System.out);

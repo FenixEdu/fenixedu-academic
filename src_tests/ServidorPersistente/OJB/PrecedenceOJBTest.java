@@ -18,6 +18,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentPrecedence;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
+import Util.PrecedenceScopeToApply;
 import Util.TipoCurso;
 
 /**
@@ -46,7 +47,7 @@ public class PrecedenceOJBTest extends TestCaseOJB {
 
 		try {
 			sp.iniciarTransaccao();
-			precedenceList = precedenceDAO.readByDegreeCurricularPlan(studentCurricularPlan.getDegreeCurricularPlan());
+			precedenceList = precedenceDAO.readByDegreeCurricularPlan(studentCurricularPlan.getDegreeCurricularPlan(), PrecedenceScopeToApply.TO_APPLY_TO_SPAN);
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace(System.out);
@@ -73,7 +74,7 @@ public class PrecedenceOJBTest extends TestCaseOJB {
 		
 		try {
 			sp.iniciarTransaccao();
-			precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse);
+			precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse, PrecedenceScopeToApply.TO_APPLY_TO_SPAN);
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace(System.out);
