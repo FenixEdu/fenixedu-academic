@@ -31,6 +31,9 @@
 					<bean:message key="label.courseInformation"/>	
 				</td>
 				<td class="listClasses-header">
+					<bean:message key="label.teachingReport"/>	
+				</td>
+				<td class="listClasses-header">
 					Alunos	
 				</td>
 			</tr>
@@ -78,6 +81,11 @@
 					</td>
 					<td class="listClasses">
 						<html:link page="/courseInformation.do" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
+							<bean:message key ="label.courseInformation.view" />
+						</html:link>
+					</td>
+					<td class="listClasses">
+						<html:link page="/viewTeachingReport.do?method=read" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
 							<bean:message key ="label.courseInformation.view" />
 						</html:link>
 					</td>

@@ -345,7 +345,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
         criteria.addEqualTo(
             "associatedExecutionCourses.executionPeriod.executionYear.idInternal",
             executionYear.getIdInternal());
-        criteria.addEqualTo("scopes.curricularSemester.curricularYear.year", criteria);
+        criteria.addEqualTo("scopes.curricularSemester.curricularYear.year", year);
         return queryList(CurricularCourse.class, criteria);
     }
 

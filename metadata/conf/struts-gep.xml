@@ -12,6 +12,12 @@
             <form-property name="executionDegreeId" type="java.lang.Integer"/>
             <form-property name="basic" type="java.lang.Boolean"/>
         </form-bean>
+        
+        <!-- TEACHING REPORT FORM  -->
+	    <form-bean name="teachingReportForm" 
+                   type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+                <form-property name="executionCourseId" type="java.lang.Integer" />
+        </form-bean>
     </form-beans>
     <!-- ========== Global Exception Definitions ============================== -->
     <global-exceptions>
@@ -107,6 +113,19 @@
             <forward name="list-one" path="list-teachers-acreditation"/>
             <forward name="list-many" path="list-teachers-acreditation"/>
         </action>
+        
+         <!-- Teaching Report -->
+        <action type="ServidorApresentacao.Action.gesdis.TeachingReportAction" 
+			path="/viewTeachingReport" name="teachingReportForm" 
+			input="/viewTeachingReport.do?method=read" 
+			parameter="method" validate="true" scope="request">
+			<exception 
+				type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
+				key="error.exception.notAuthorized" 
+				handler="ServidorApresentacao.config.FenixNotAuthorizedExceptionHandler" 
+				/>
+			<forward name="successfull-read" path="view-teaching-report"/>
+	</action>
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>

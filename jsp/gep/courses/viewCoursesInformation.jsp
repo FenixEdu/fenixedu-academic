@@ -109,6 +109,9 @@
 			<td class="listClasses-header">
 				<bean:message key="label.gep.courseInformation.lastModificationDate" bundle="GEP_RESOURCES"/>
 			</td>
+			<td class="listClasses-header">
+				<bean:message key="label.gep.teachingReport" bundle="GEP_RESOURCES"/>	
+			</td>
 		</tr> 
 		
 		<logic:iterate id="infoSiteCourseInformation" name="infoSiteCoursesInformation">
@@ -192,6 +195,11 @@
 												  bundle="GEP_RESOURCES"/>
 								</logic:notPresent>
 							</td>
+							<td class="listClasses">
+								<html:link page="/viewTeachingReport.do?method=read" paramId="executionCourseId" paramName="infoSiteCourseInformation" paramProperty="infoExecutionCourse.idInternal">
+									<bean:message key ="label.courseInformation.view" bundle="GEP_RESOURCES"/>
+								</html:link>
+							</td>
 						</tr>			
 		         	</logic:equal>
 	         	</logic:present>
@@ -209,7 +217,7 @@
    				         	 </table>
    				         </td>
    				         <td class="listClasses" >&nbsp;
-							<html:link page="readCourseInformation.do"
+							<html:link page="/readCourseInformation.do"
 								       paramId="executionCourseId" 
 								       paramName="infoSiteCourseInformation"
 								       paramProperty="infoExecutionCourse.idInternal">
@@ -270,6 +278,11 @@
 								<bean:message key="label.gep.courseInformation.notModified" 
 											  bundle="GEP_RESOURCES"/>
 							</logic:notPresent>
+						</td>
+						<td class="listClasses">
+							<html:link page="/viewTeachingReport.do?method=read" paramId="executionCourseId" paramName="infoSiteCourseInformation" paramProperty="infoExecutionCourse.idInternal">
+								<bean:message key ="label.courseInformation.view" bundle="GEP_RESOURCES"/>
+							</html:link>
 						</td>
 					</tr>			
 	         	</logic:notPresent>

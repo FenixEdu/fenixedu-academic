@@ -32,4 +32,7 @@
      <definition name="list-teachers-acreditation" extends="definition.gep.one-column">
         <put name="body" value="/gep/teachers/acreditationInformation.jsp"/>
     </definition>
+    <definition name="view-teaching-report" extends="definition.gep.two-column">
+        <put name="body" value="/gesdis/viewTeachingReport.jsp"></put>
+    </definition>
 </tiles-definitions>

@@ -143,7 +143,7 @@
 	<bean:message key="message.teachingReport.note2"/>
 </p>
 <h3 class="bluetxt"><bean:message key="message.teachingReport.report"/></h3>
-<p><bean:write name="siteCourseInformation" property="infoCourseReport.report" /></p>
+<p><bean:write name="siteCourseInformation" property="infoCourseReport.report" filter="false"/></p>
 <strong><bean:message key="message.teachingReport.text1"/>
 20/03/2004
 <bean:message key="message.teachingReport.text2"/></strong>
