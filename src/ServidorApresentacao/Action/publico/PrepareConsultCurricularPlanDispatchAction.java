@@ -33,7 +33,7 @@ import Util.TipoSala;
 public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
         DynaActionForm indexForm = (DynaActionForm) form;
 

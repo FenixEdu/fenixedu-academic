@@ -28,7 +28,7 @@ import Util.TipoSala;
 public class PrepareConsultRoomsDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
         // super.execute(mapping, form, request, response);
 
         //  HttpSession session = request.getSession(false);
