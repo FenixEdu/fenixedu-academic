@@ -26,7 +26,7 @@ public final class MasterDegreeClassification extends ValuedEnum {
 	public static final MasterDegreeClassification UNDEFINED = new MasterDegreeClassification("undefined", MasterDegreeClassification.UNDEFINED_TYPE);
 	
 	public static final String APPROVED_STRING = "Aprovado";
-	public static final String NOT_APPROVED_STRING = "Não Aprovado";
+	public static final String NOT_APPROVED_STRING = "Recusado";
 	public static final String UNDEFINED_STRING = "Não Definido";
 	public static final String DEFAULT_STRING = "[Escolha uma Opção]";
 	
@@ -48,7 +48,7 @@ public final class MasterDegreeClassification extends ValuedEnum {
  
  	public static String getClassificationString (int value){
  		if (value == 1) return "Aprovado";
-		if (value == 2) return "Não Aprovado";
+		if (value == 2) return "Recusado";
 		else return "Não Definido";
  	}
  
