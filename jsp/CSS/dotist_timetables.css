@@ -119,7 +119,6 @@
 	border-top-style: solid;
 	border-right-width: 1px;
 	border-right-style: solid;
-
 }
 
 .slot_start_top_right_last{
@@ -302,6 +301,14 @@
 	border-top-style: solid;
 	border-right-width: 2px;
 	border-right-style: solid;
+}
+
+.slot_empty_top_lessonAfter{
+	border-color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-top-width: 2px;
+	border-top-style: solid;
 }
 
 .slot_empty_top_right_lessonAfter_last{
