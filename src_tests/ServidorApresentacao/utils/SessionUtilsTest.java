@@ -19,6 +19,8 @@ import javax.servlet.http.HttpSession;
 import junit.framework.TestCase;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
 
 import servletunit.HttpServletRequestSimulator;
 import servletunit.HttpSessionSimulator;
@@ -32,6 +34,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
+import Dominio.Branch;
 import Dominio.CurricularCourse;
 import Dominio.CurricularCourseScope;
 import Dominio.CurricularSemester;
@@ -44,6 +47,7 @@ import Dominio.DisciplinaDepartamento;
 import Dominio.DisciplinaExecucao;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
+import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
@@ -63,10 +67,14 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IDepartamentoPersistente;
+import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurricularSemester;
+import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -92,25 +100,26 @@ public class SessionUtilsTest extends TestCase {
 	private String _degreeName = "Licenciatura";
 	private String _degreeInitials = "LEIC";
 
-	protected ISuportePersistente _sp;
+	protected ISuportePersistente sp;
 
-	protected ICursoExecucaoPersistente _executionDegreeDAO;
+	protected ICursoExecucaoPersistente executionDegreeDAO;
 	protected ICursoPersistente _degreeDAO;
-	protected IDisciplinaExecucaoPersistente _executionCourseDAO;
-	protected IPersistentCurricularCourse _curricularCourseDAO;
+	protected IDisciplinaExecucaoPersistente executionCourseDAO;
+	protected IPersistentCurricularCourse curricularCourseDAO;
 	protected IPersistentDegreeCurricularPlan _degreeCurriculumDAO;
 	protected IPersistentExecutionYear executionYearDAO;
 	protected IPersistentExecutionPeriod executionPeriodDAO;
 	private IPersistentCurricularSemester curricularSemesterDAO = null;
 	private IPersistentCurricularCourseScope curricularCourseScopeDAO = null;
+	private IPersistentBranch branchDAO = null;
 
 	protected ICursoExecucao _executionDegree;
-	protected ICurso _degree;
+	protected ICurso degree;
 
 	protected IDisciplinaExecucao _executionCourse;
 	protected ICurricularCourse _curricularCourse;
 	protected IPessoaPersistente _personDAO = null;
-	private List _executionCourseList;
+	private List executionCourseList;
 
 	/**
 	 * Constructor for SessionUtilsTest.
@@ -131,42 +140,97 @@ public class SessionUtilsTest extends TestCase {
 		try {
 			super.setUp();
 			_ctx = new ServletContextSimulator();
+			PersistenceBroker pb =
+				PersistenceBrokerFactory.defaultPersistenceBroker();
+			pb.clearCache();
 
 			startPersistentLayer();
 
-			_degree =
-				new Curso(
-					_degreeInitials,
-					_degreeName,
-					new TipoCurso(TipoCurso.LICENCIATURA));
-			_sp.iniciarTransaccao();
+			sp.iniciarTransaccao();
+			ICursoPersistente degreeDAO = sp.getICursoPersistente();
+			degree = degreeDAO.readBySigla(_degreeInitials);
+			if (degree == null) {
+				degree =
+					new Curso(
+						_degreeInitials,
+						_degreeName,
+						new TipoCurso(TipoCurso.LICENCIATURA));
+
+				degreeDAO.lockWrite(degree);
+			}
+			sp.confirmarTransaccao();
+
+			sp.iniciarTransaccao();
 			IExecutionYear executionYear =
 				executionYearDAO.readExecutionYearByName(_schoolYear);
 			if (executionYear == null) {
 				executionYear = new ExecutionYear(_schoolYear);
 				executionYearDAO.lockWrite(executionYear);
 			}
-			_sp.confirmarTransaccao();
-			IDegreeCurricularPlan degreeCurriculum = new DegreeCurricularPlan("plano1", _degree);
+			sp.confirmarTransaccao();
+
+			sp.iniciarTransaccao();
+			IPersistentDegreeCurricularPlan degreeCurricularPlanDAO =
+				sp.getIPersistentDegreeCurricularPlan();
+			IDegreeCurricularPlan degreeCurriculum =
+				degreeCurricularPlanDAO.readByNameAndDegree("plano1", degree);
+			if (degreeCurriculum == null) {
+				degreeCurriculum = new DegreeCurricularPlan("plano1", degree);
+				degreeCurricularPlanDAO.lockWrite(degreeCurriculum);
+			}
+			sp.confirmarTransaccao();
+
+			sp.iniciarTransaccao();
+			ICursoExecucaoPersistente executionDegreeDAO =
+				sp.getICursoExecucaoPersistente();
 			_executionDegree =
-				new CursoExecucao(
-					executionYear,
-					degreeCurriculum);
+				executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(
+					degreeCurriculum,
+					executionYear);
+			if (_executionDegree == null) {
+				_executionDegree =
+					new CursoExecucao(executionYear, degreeCurriculum);
+				executionDegreeDAO.lockWrite(_executionDegree);
+			}
+			sp.confirmarTransaccao();
 
-			
+			IDisciplinaExecucao executionCourse = null;
+			ICurricularCourse curricularCourse = null;
+			executionCourseList = new ArrayList();
 
-
-			IDisciplinaExecucao _executionCourse = null;
-			ICurricularCourse _curricularCourse = null;
-
-			_executionCourseList = new ArrayList();
-
-			_sp.iniciarTransaccao();
 			for (int i = 1; i < 10; i++) {
+				//FIXME this test got something with the cache...
+				pb.clearCache(); //don't remove this...
+				
 				IDepartamento d = new Departamento("nome" + i, "sigla" + i);
 				IDisciplinaDepartamento dd =
 					new DisciplinaDepartamento("Disciplina " + i, "D" + i, d);
-				_curricularCourse =
+
+				IDepartamentoPersistente departmentDAO =
+					sp.getIDepartamentoPersistente();
+				
+				sp.iniciarTransaccao();
+				IDepartamento d2 =
+					(IDepartamento) departmentDAO.readDomainObjectByCriteria(d);
+				if (d2 == null) {
+					departmentDAO.escreverDepartamento(d);
+				}
+				
+				sp.confirmarTransaccao();
+
+				IDisciplinaDepartamentoPersistente departmentCourseDAO =
+					sp.getIDisciplinaDepartamentoPersistente();
+				sp.iniciarTransaccao();
+				IDisciplinaDepartamento dd2 =
+					departmentCourseDAO.lerDisciplinaDepartamentoPorNomeESigla(
+						dd.getNome(),
+						dd.getSigla());
+				if (dd2 == null) {
+					departmentCourseDAO.escreverDisciplinaDepartamento(dd);
+				}
+				sp.confirmarTransaccao();
+
+				curricularCourse =
 					new CurricularCourse(
 						new Double(1.0),
 						new Double(2.0),
@@ -178,8 +242,32 @@ public class SessionUtilsTest extends TestCase {
 						dd,
 						degreeCurriculum);
 
+				sp.iniciarTransaccao();
+				ICurricularCourse curricularCourse2 =
+					curricularCourseDAO.readCurricularCourseByNameAndCode(
+						curricularCourse.getName(),
+						curricularCourse.getCode());
+				if (curricularCourse2 == null) {
+					curricularCourseDAO.lockWrite(curricularCourse);
+				}
+				sp.confirmarTransaccao();
+
+
+				IPersistentCurricularYear curricularYearDAO =
+					sp.getIPersistentCurricularYear();
+
+				
+				sp.iniciarTransaccao();
 				ICurricularYear curricularYear =
-					new CurricularYear(new Integer(2));
+					curricularYearDAO.readCurricularYearByYear(new Integer(2));
+				if (curricularYear == null) {
+					curricularYear = new CurricularYear(new Integer(2));
+					curricularYearDAO.lockWrite(curricularYear);
+				}
+				sp.confirmarTransaccao();
+				
+				
+				sp.iniciarTransaccao();
 				ICurricularSemester curricularSemester =
 					curricularSemesterDAO
 						.readCurricularSemesterBySemesterAndCurricularYear(
@@ -190,11 +278,13 @@ public class SessionUtilsTest extends TestCase {
 						new CurricularSemester(new Integer(2), curricularYear);
 					curricularSemesterDAO.lockWrite(curricularSemester);
 				}
+				sp.confirmarTransaccao();
 
 				List curricularSemesterList = new ArrayList();
 				curricularSemesterList.add(curricularSemester);
-//				_curricularCourse.setAssociatedCurricularSemesters(curricularSemesterList);
-	
+				//				_curricularCourse.setAssociatedCurricularSemesters(curricularSemesterList);
+
+				sp.iniciarTransaccao();
 				IExecutionPeriod executionPeriod =
 					executionPeriodDAO.readByNameAndExecutionYear(
 						"2º Semestre",
@@ -204,12 +294,12 @@ public class SessionUtilsTest extends TestCase {
 						new ExecutionPeriod("2º Semestre", executionYear);
 					executionPeriodDAO.lockWrite(executionPeriod);
 				}
+				sp.confirmarTransaccao();
 
-				_executionCourse =
+				executionCourse =
 					new DisciplinaExecucao(
 						"Disciplina " + i,
 						"D" + i,
-						"Programa",
 						new Double(2.0),
 						new Double(2.0),
 						new Double(0),
@@ -218,50 +308,70 @@ public class SessionUtilsTest extends TestCase {
 
 				List list = new ArrayList();
 
-				list.add(_curricularCourse);
-				
+				list.add(curricularCourse);
+
 				List listExecutionCourse = new ArrayList();
-				listExecutionCourse.add(_executionCourse);
-				_curricularCourse.setAssociatedExecutionCourses(listExecutionCourse);
-				
-				_executionCourse.setAssociatedCurricularCourses(list);
+				listExecutionCourse.add(executionCourse);
+				curricularCourse.setAssociatedExecutionCourses(
+					listExecutionCourse);
 
-				_sp.getIDepartamentoPersistente().escreverDepartamento(d);
-				_sp
-					.getIDisciplinaDepartamentoPersistente()
-					.escreverDisciplinaDepartamento(
-					dd);
+				executionCourse.setAssociatedCurricularCourses(list);
 
+				sp.iniciarTransaccao();
+				IBranch branch = branchDAO.readBranchByNameAndCode("", "");
+				if (branch == null) {
+					branch = new Branch("", "");
+					branchDAO.lockWrite(branch);
+				}
+				sp.confirmarTransaccao();
 
-
-
-				ICurricularCourseScope curricularCourseScope = curricularCourseScopeDAO.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(_curricularCourse, curricularSemester, null);
+				sp.iniciarTransaccao();
+				ICurricularCourseScope curricularCourseScope =
+					curricularCourseScopeDAO
+						.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+						curricularCourse,
+						curricularSemester,
+						branch);
 				if (curricularCourseScope == null) {
-					curricularCourseScope = new CurricularCourseScope(_curricularCourse, curricularSemester, null);
+					curricularCourseScope =
+						new CurricularCourseScope(
+							curricularCourse,
+							curricularSemester,
+							branch);
 					curricularCourseScopeDAO.lockWrite(curricularCourseScope);
 				}
+				sp.confirmarTransaccao();
 
 
-
-
-
-
-				_curricularCourseDAO.lockWrite(_curricularCourse);
-				_executionCourseDAO.escreverDisciplinaExecucao(
-					_executionCourse);
+				sp.iniciarTransaccao();
+				IDisciplinaExecucao executionCourse2 =
+					executionCourseDAO
+						.readByExecutionCourseInitialsAndExecutionPeriod(
+						executionCourse.getSigla(),
+						executionCourse.getExecutionPeriod());
+				if (executionCourse2 == null) {
+					executionCourseDAO.escreverDisciplinaExecucao(
+						executionCourse);
+				}
+				sp.confirmarTransaccao();
 
 				InfoExecutionCourse infoExecutionCourse =
 					new InfoExecutionCourse();
 
 				copyExecutionCourseToInfoExecutionCourse(
 					infoExecutionCourse,
-					_executionCourse);
-				_executionCourseList.add(infoExecutionCourse);
+					executionCourse);
+				executionCourseList.add(infoExecutionCourse);
 			}
-
-			_executionDegreeDAO.lockWrite(_executionDegree);
-
-			_sp.confirmarTransaccao();
+			sp.iniciarTransaccao();
+			ICursoExecucao executionDegree2 =
+				executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(
+					_executionDegree.getCurricularPlan(),
+					_executionDegree.getExecutionYear());
+			if (executionDegree2 == null) {
+				executionDegreeDAO.lockWrite(_executionDegree);
+			}
+			sp.confirmarTransaccao();
 		} catch (Exception e) {
 
 			e.printStackTrace(System.out);
@@ -300,42 +410,44 @@ public class SessionUtilsTest extends TestCase {
 
 	protected void startPersistentLayer() {
 		try {
-			_sp = SuportePersistenteOJB.getInstance();
+			sp = SuportePersistenteOJB.getInstance();
 		} catch (ExcepcaoPersistencia e) {
 			fail("Starting persistent layer!");
 		}
 
-		_executionDegreeDAO = _sp.getICursoExecucaoPersistente();
-		_degreeDAO = _sp.getICursoPersistente();
-		_executionCourseDAO = _sp.getIDisciplinaExecucaoPersistente();
-		_curricularCourseDAO = _sp.getIPersistentCurricularCourse();
-		_degreeCurriculumDAO = _sp.getIPersistentDegreeCurricularPlan();
-		_personDAO = _sp.getIPessoaPersistente();
-		executionYearDAO = _sp.getIPersistentExecutionYear();
-		executionPeriodDAO = _sp.getIPersistentExecutionPeriod();
-		curricularSemesterDAO = _sp.getIPersistentCurricularSemester();
+		executionDegreeDAO = sp.getICursoExecucaoPersistente();
+		_degreeDAO = sp.getICursoPersistente();
+		executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+		curricularCourseDAO = sp.getIPersistentCurricularCourse();
+		curricularCourseScopeDAO = sp.getIPersistentCurricularCourseScope();
+		_degreeCurriculumDAO = sp.getIPersistentDegreeCurricularPlan();
+		_personDAO = sp.getIPessoaPersistente();
+		executionYearDAO = sp.getIPersistentExecutionYear();
+		executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+		curricularSemesterDAO = sp.getIPersistentCurricularSemester();
+		branchDAO = sp.getIPersistentBranch();
 		cleanData();
 	}
 
 	protected void cleanData() {
 		try {
-			_sp.iniciarTransaccao();
+			sp.iniciarTransaccao();
 
-			_executionDegreeDAO.deleteAll();
+			executionDegreeDAO.deleteAll();
 			_degreeDAO.deleteAll();
-			_executionCourseDAO.apagarTodasAsDisciplinasExecucao();
-			_curricularCourseDAO.deleteAll();
+			executionCourseDAO.apagarTodasAsDisciplinasExecucao();
+			curricularCourseDAO.deleteAll();
 			_degreeCurriculumDAO.deleteAll();
 			_personDAO.apagarTodasAsPessoas();
-			_sp.getIDepartamentoPersistente().apagarTodosOsDepartamentos();
-			_sp
+			sp.getIDepartamentoPersistente().apagarTodosOsDepartamentos();
+			sp
 				.getIDisciplinaDepartamentoPersistente()
 				.apagarTodasAsDisciplinasDepartamento();
 		} catch (ExcepcaoPersistencia e) {
 			fail("Cleaning data!");
 		} finally {
 			try {
-				_sp.confirmarTransaccao();
+				sp.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia ignored) {
 			}
 		}
@@ -462,11 +574,11 @@ public class SessionUtilsTest extends TestCase {
 			infoExecutionCourseList);
 		assertEquals(
 			"List is not of the same size!",
-			_executionCourseList.size(),
+			executionCourseList.size(),
 			infoExecutionCourseList.size());
 		assertTrue(
 			"List not contains all elements!",
-			infoExecutionCourseList.containsAll(_executionCourseList));
+			infoExecutionCourseList.containsAll(executionCourseList));
 		assertNotNull(
 			"Session must contain attribute in SessionConstants.EXECUTION_COURSE_LIST_KEY",
 			request.getSession().getAttribute(

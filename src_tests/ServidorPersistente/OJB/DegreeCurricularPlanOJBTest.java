@@ -549,6 +549,6 @@ public class DegreeCurricularPlanOJBTest extends TestCaseOJB {
             fail("testLerTodosOsPlanosCurriculares: confirmarTransaccao_1");
         }
         assertNotNull(listap);
-        assertEquals(listap.size(), 2);
+        assertEquals(4,listap.size());
     }
 }

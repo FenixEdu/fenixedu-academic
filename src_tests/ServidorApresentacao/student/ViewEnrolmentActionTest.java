@@ -2,8 +2,6 @@ package ServidorApresentacao.student;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +26,6 @@ import Dominio.IStudent;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
 import Dominio.Pessoa;
-import Dominio.Privilegio;
 import Dominio.Student;
 import Dominio.Turno;
 import Dominio.TurnoAluno;
@@ -99,7 +96,7 @@ public class ViewEnrolmentActionTest extends MockStrutsTestCase {
 	ICursoExecucao _cursoExecucao1 = null; //new CursoExecucao("2002/03", _curso1);
 
 	IPessoa person = new Pessoa();
-	Set privileges = new HashSet();	
+	
 	person.setNome("Marvin");
 	person.setUsername("45498");
 	person.setNumeroDocumentoIdentificacao("010101010101");
@@ -107,8 +104,6 @@ public class ViewEnrolmentActionTest extends MockStrutsTestCase {
 	person.setTipoDocumentoIdentificacao(
 		new TipoDocumentoIdentificacao(
 			TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
-	privileges.add(new Privilegio(person, new String("ReadShiftEnrolment")));
-	person.setPrivilegios(privileges);
 	IStudent student = new Student(new Integer(45498), new StudentState(567), person, new TipoCurso(TipoCurso.LICENCIATURA));
 
 	IExecutionYear executionYear = new ExecutionYear();
@@ -122,8 +117,6 @@ public class ViewEnrolmentActionTest extends MockStrutsTestCase {
 		new DisciplinaExecucao(
 			"Trabalho Final de Curso I",
 			"TFCI",
-			"Program1",
-
 			new Double(1),
 			new Double(1),
 			new Double(1),
@@ -133,8 +126,6 @@ public class ViewEnrolmentActionTest extends MockStrutsTestCase {
 		new DisciplinaExecucao(
 			"Trabalho Final de Curso II",
 			"TFCII",
-			"Program2",
-
 			new Double(1),
 			new Double(1),
 			new Double(1),
@@ -144,7 +135,6 @@ public class ViewEnrolmentActionTest extends MockStrutsTestCase {
 		new DisciplinaExecucao(
 			"Engenharia da Programacao",
 			"EP",
-			"Program3",
 			new Double(1),
 			new Double(1),
 			new Double(1),
@@ -154,7 +144,6 @@ public class ViewEnrolmentActionTest extends MockStrutsTestCase {
 		new DisciplinaExecucao(
 			"Aprendizagem",
 			"APR",
-			"Program4",
 			new Double(1),
 			new Double(1),
 			new Double(1),

@@ -1,13 +1,10 @@
 package ServidorApresentacao;
 
-import java.util.HashSet;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import servletunit.struts.MockStrutsTestCase;
 import Dominio.IPessoa;
 import Dominio.Pessoa;
-import Dominio.Privilegio;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -47,10 +44,6 @@ public class AuthenticationActionTest extends MockStrutsTestCase {
     cleanData();
     _suportePersistente.iniciarTransaccao();
 
-    HashSet privilegios = new HashSet();
-    //privilegios.add("CriarSitio");
-    //_pessoa1 = new Pessoa("user", "pass", privilegios);
-    //_pessoaPersistente.lockWrite(_pessoa1);
     _pessoa1 = new Pessoa();
     _pessoa1.setNumeroDocumentoIdentificacao("0123456789");
     _pessoa1.setCodigoFiscal("9876543210");
@@ -58,14 +51,8 @@ public class AuthenticationActionTest extends MockStrutsTestCase {
     			   TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
     _pessoa1.setUsername("user");
     _pessoa1.setPassword(PasswordEncryptor.encryptPassword("pass"));
-    privilegios.add(new Privilegio(_pessoa1, new String("CriarSitio")));
-    _pessoa1.setPrivilegios(privilegios);
     _pessoaPersistente.escreverPessoa(_pessoa1);
     
-    privilegios = new HashSet();
-    //privilegios.add("AlterarSitio");
-    //_pessoa2 = new Pessoa("anotheruser", "anotherpass", privilegios);
-    //_pessoaPersistente.lockWrite(_pessoa2);
     _pessoa2 = new Pessoa();
     _pessoa2.setNumeroDocumentoIdentificacao("0321654987");
     _pessoa2.setCodigoFiscal("7894561230");
@@ -73,8 +60,6 @@ public class AuthenticationActionTest extends MockStrutsTestCase {
     			 TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
     _pessoa2.setUsername("nome2");
     _pessoa2.setPassword(PasswordEncryptor.encryptPassword("pass2"));
-    privilegios.add(new Privilegio(_pessoa1, new String("AlterarSitio")));
-    _pessoa2.setPrivilegios(privilegios);
     _pessoaPersistente.escreverPessoa(_pessoa2);    
     
     _suportePersistente.confirmarTransaccao();

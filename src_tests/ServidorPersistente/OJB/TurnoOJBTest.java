@@ -345,7 +345,7 @@ public class TurnoOJBTest extends TestCaseOJB {
 
 	  // Read non Existing
 	  executionCourse = null;
-	  executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("RCII", "2002/2003", "LEEC");
+	  executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("RCII", "2002/2003", "MEEC");
 	  assertNotNull(executionCourse);
       
 	  shifts = null;

@@ -227,7 +227,7 @@ public class CursoOJBTest extends TestCaseOJB {
       persistentSupport.iniciarTransaccao();
       degrees = persistentDegree.readAll();
       persistentSupport.confirmarTransaccao();
-      assertEquals(degrees.size(), 3);
+      assertEquals(4, degrees.size());
 
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadAll");

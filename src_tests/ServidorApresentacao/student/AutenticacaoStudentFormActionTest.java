@@ -2,7 +2,6 @@ package ServidorApresentacao.student;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -10,7 +9,6 @@ import servletunit.struts.MockStrutsTestCase;
 import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.Pessoa;
-import Dominio.Privilegio;
 import Dominio.Student;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
@@ -58,7 +56,6 @@ public class AutenticacaoStudentFormActionTest extends MockStrutsTestCase {
     cleanData();
     _suportePersistente.iniciarTransaccao();
 
-    HashSet privileges = new HashSet();
     _person1 = new Pessoa();
     _person1.setNumeroDocumentoIdentificacao("0123456789");
     _person1.setCodigoFiscal("9876543210");
@@ -66,8 +63,7 @@ public class AutenticacaoStudentFormActionTest extends MockStrutsTestCase {
     			   TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
     _person1.setUsername("12345");
     _person1.setPassword(PasswordEncryptor.encryptPassword("pass"));
-	privileges.add(new Privilegio(_person1, new String("ReadStudentByUsername")));
-    _person1.setPrivilegios(privileges);
+    
     //_persistentPerson.escreverPessoa(_person1);
     
 	_student1 =
@@ -78,7 +74,7 @@ public class AutenticacaoStudentFormActionTest extends MockStrutsTestCase {
 			new TipoCurso(TipoCurso.LICENCIATURA));
 	_persistentStudent.lockWrite(_student1);
 
-	privileges = new HashSet();
+	
     _person2 = new Pessoa();
     _person2.setNumeroDocumentoIdentificacao("0321654987");
     _person2.setCodigoFiscal("7894561230");
@@ -86,10 +82,9 @@ public class AutenticacaoStudentFormActionTest extends MockStrutsTestCase {
     			 TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
     _person2.setUsername("nome2");
     _person2.setPassword(PasswordEncryptor.encryptPassword("pass2"));
-    _person2.setPrivilegios(privileges);
+
     _persistentPerson.escreverPessoa(_person2);
 
-	privileges = new HashSet();
 	_person3 = new Pessoa();
 	_person3.setNumeroDocumentoIdentificacao("12121212112");
 	_person3.setCodigoFiscal("12121212112");
@@ -97,8 +92,6 @@ public class AutenticacaoStudentFormActionTest extends MockStrutsTestCase {
 				   TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
 	_person3.setUsername("54321");
 	_person3.setPassword(PasswordEncryptor.encryptPassword("pass"));
-	privileges.add(new Privilegio(_person3, new String("ReadStudentByUsername")));
-	_person3.setPrivilegios(privileges);
 	//_persistentPerson.escreverPessoa(_person3);
 
 	_student3 =

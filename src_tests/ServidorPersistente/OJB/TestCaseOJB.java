@@ -1,5 +1,8 @@
 package ServidorPersistente.OJB;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+
 import junit.framework.TestCase;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -30,6 +33,8 @@ public class TestCaseOJB extends TestCase {
 		try {
 			SuportePersistenteOJB.resetInstance();
 			sp = SuportePersistenteOJB.getInstance();
+			PersistenceBroker pb = PersistenceBrokerFactory.defaultPersistenceBroker();
+			pb.clearCache();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			fail ("Setup: getting persistent factory!");

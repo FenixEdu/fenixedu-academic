@@ -117,7 +117,7 @@ public class LerTurnoServicosTest extends TestCaseReadServices {
 				assertNotNull(executionCourse);
 
 			} else {
-				executionCourse = new DisciplinaExecucao("desc", "desc", "desc", new Double(1), new Double(2), new Double(3), new Double(4), executionPeriod);
+				executionCourse = new DisciplinaExecucao("desc", "desc", new Double(1), new Double(2), new Double(3), new Double(4), executionPeriod);
 			}
 			
 			this.infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse); 

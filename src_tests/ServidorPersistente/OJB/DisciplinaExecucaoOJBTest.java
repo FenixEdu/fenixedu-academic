@@ -107,7 +107,6 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 
 	assertTrue(executionCourse.getNome().equals("Trabalho Final de Curso I"));
 	assertTrue(executionCourse.getSigla().equals("TFCI"));
-	assertTrue(executionCourse.getPrograma().equals("programa1"));
 	assertTrue(executionCourse.getTheoreticalHours().equals(new Double(1.5)));
 	assertTrue(executionCourse.getPraticalHours().equals(new Double(2)));
 	assertTrue(executionCourse.getTheoPratHours().equals(new Double(1.5)));
@@ -118,7 +117,7 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 	// Read Non Existing
 	try{
 		persistentSupport.iniciarTransaccao();
-		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI","2002/2003","LEEC");
+		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI","2002/2003","MEEC");
 		assertNull(executionCourse);
 		persistentSupport.confirmarTransaccao();
 	
@@ -219,7 +218,7 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 
 		persistentSupport.confirmarTransaccao();
 
-		IDisciplinaExecucao executionCourseTemp = new DisciplinaExecucao("disc1", "d1", "p1", new Double(0), new Double(0), new Double(0), new Double(0), executionPeriod);
+		IDisciplinaExecucao executionCourseTemp = new DisciplinaExecucao("disc1", "d1", new Double(0), new Double(0), new Double(0), new Double(0), executionPeriod);
 		
 		persistentSupport.iniciarTransaccao();
 		// Check existing Execution Courses
@@ -299,7 +298,7 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 
 		persistentSupport.confirmarTransaccao();
 
-		IDisciplinaExecucao executionCourseTemp = new DisciplinaExecucao("disc1", "d1", "p1", new Double(0), new Double(0), new Double(0), new Double(0), executionPeriod);
+		IDisciplinaExecucao executionCourseTemp = new DisciplinaExecucao("disc1", "d1", new Double(0), new Double(0), new Double(0), new Double(0), executionPeriod);
 		
 
 		// Write Non Existing	
@@ -307,7 +306,7 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 		persistentExecutionCourse.escreverDisciplinaExecucao(executionCourseTemp);
 		persistentSupport.confirmarTransaccao();
 
-		executionCourseTemp = new DisciplinaExecucao("disc1", "d1", "p1", new Double(0), new Double(0), new Double(0), new Double(0), executionPeriod);
+		executionCourseTemp = new DisciplinaExecucao("disc1", "d1", new Double(0), new Double(0), new Double(0), new Double(0), executionPeriod);
 
 		// Write Existing
 		try {

@@ -68,7 +68,7 @@ public class SiteOJBTest extends TestCaseOJB{
 		  executionCourse =persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 							"PO",
 							"2002/2003",
-							"LEEC");
+							"MEEC");
 		persistentSupport.confirmarTransaccao();
 	  } catch (ExcepcaoPersistencia e) {
 		  e.printStackTrace();
@@ -135,7 +135,6 @@ public class SiteOJBTest extends TestCaseOJB{
 				new DisciplinaExecucao(
 					"nonExistingExecutionCourse",
 					"NEEC",
-					"",
 					new Double(1),
 					new Double(2),
 					new Double(0),

@@ -111,7 +111,7 @@ public class FrequentaOJBTest extends TestCaseOJB {
 					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 					"TFCII",
 					"2002/2003",
-					"LEEC");
+					"MEEC");
 			assertNotNull(executionCourse);
 
 			attend =
@@ -216,7 +216,7 @@ public class FrequentaOJBTest extends TestCaseOJB {
 					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 					"TFCII",
 					"2002/2003",
-					"LEEC");
+					"MEEC");
 			assertNotNull(executionCourse);
 
 			persistentSupport.confirmarTransaccao();
@@ -278,7 +278,7 @@ public class FrequentaOJBTest extends TestCaseOJB {
 					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 					"TFCII",
 					"2002/2003",
-					"LEEC");
+					"MEEC");
 			assertNotNull(executionCourse1);
 
 			attend.setDisciplinaExecucao(executionCourse1);
@@ -414,7 +414,7 @@ public class FrequentaOJBTest extends TestCaseOJB {
 					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 					"PO",
 					"2002/2003",
-					"LEEC");
+					"MEEC");
 			assertNotNull(executionCourse);
 
 			attendList = null;
@@ -452,7 +452,7 @@ public class FrequentaOJBTest extends TestCaseOJB {
 					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 					"PO",
 					"2002/2003",
-					"LEEC");
+					"MEEC");
 			assertNotNull(executionCourse);
 
 			result = persistentAttend.countStudentsAttendingExecutionCourse(executionCourse);

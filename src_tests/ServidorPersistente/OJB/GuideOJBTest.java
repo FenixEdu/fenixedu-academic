@@ -163,7 +163,7 @@ public class GuideOJBTest extends TestCaseOJB {
 				IContributor contributor = persistentContributor.readByContributorNumber(new Integer(123));
 				assertNotNull(contributor);
 
-				IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+				IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 				assertNotNull(executionYear);
 				ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeNameAndExecutionYear("Mestrado em Engenharia Electrotecnica e de Computadores", executionYear);
 				assertNotNull(executionDegree);

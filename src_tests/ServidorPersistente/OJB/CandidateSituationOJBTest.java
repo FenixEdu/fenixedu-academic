@@ -140,7 +140,7 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
 			IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
 			masterDegreeCandidate.setPerson(person);
 			
-			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
 			ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeNameAndExecutionYear("Mestrado em Engenharia Electrotecnica e de Computadores", executionYear);
 			assertNotNull(executionDegree);

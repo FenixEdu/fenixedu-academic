@@ -317,7 +317,7 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 
 	    try {
 	      persistentSupport.iniciarTransaccao();
-		  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+		  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "MEEC");
 		  assertNotNull(executionCourse);
   
 		  ITurno shift = persistentShift.readByNameAndExecutionCourse("turno3", executionCourse);

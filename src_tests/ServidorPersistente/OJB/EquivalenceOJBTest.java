@@ -9,11 +9,13 @@ import Dominio.Equivalence;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import Dominio.IEquivalence;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEquivalence;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.EnrolmentState;
@@ -72,12 +74,28 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 
 	// -------------------------------------------------------------------------------------------------------------------------
 
+	public void testReadByEnrolmentAndEquivalentEnrolment(){
+		loadEnrolments(true);
+		IEquivalence equivalence = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			equivalence = persistentEquivalence.readEquivalenceByEnrolmentAndEquivalentEnrolment(this.enrolment, this.equivalentEnrolment);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace(System.out);
+			fail("Unexpected exception!");
+		}
+		assertNotNull("Equivalence is null!",equivalence);
+	}
+
+
 	public void testWriteEquivalence() {
 
 		System.out.println("\n- Test 1.1 : Write Existing Equivalence\n");
 
 		// Equivalence ja existente
 		this.loadEnrolments(true);
+		
 		IEquivalence equivalence = new Equivalence(this.enrolment, this.equivalentEnrolment, new EquivalenceType(EquivalenceType.EQUIVALENT_COURSE));
 
 		try {
@@ -266,15 +284,18 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 				persistentSupport.iniciarTransaccao();
 				curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
 				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
+
 				assertNotNull(curricularCourse);
 				assertNotNull(studentCurricularPlan);
+								
 				this.enrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourse(studentCurricularPlan, curricularCourse);
 
 				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 				assertNotNull(studentCurricularPlan);
+
 				this.equivalentEnrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourse(studentCurricularPlan, curricularCourse);
-				
 				assertNotNull(equivalentEnrolment);
+
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia ex) {
 				fail("Loading Enrolments from DB.");
@@ -282,16 +303,23 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 		} else {
 			try {
 				persistentSupport.iniciarTransaccao();
+				
+				IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
+				
+				IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+				
+				
 				curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso II", "TFCII");
 				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
 				assertNotNull(curricularCourse);
 				assertNotNull(studentCurricularPlan);
 				this.enrolment = new Enrolment(studentCurricularPlan, curricularCourse, new EnrolmentState(EnrolmentState.APROVED));
+				this.enrolment.setExecutionPeriod(executionPeriod);
 
 				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 				assertNotNull(studentCurricularPlan);
 				this.equivalentEnrolment = new Enrolment(studentCurricularPlan, curricularCourse, new EnrolmentState(EnrolmentState.APROVED));
-				
+				this.equivalentEnrolment.setExecutionPeriod(executionPeriod);
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia ex) {
 				fail("Loading Enrolments from DB.");

@@ -395,7 +395,7 @@ public class AulaOJBTest extends TestCaseOJB {
 		executionCourse1 = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 		assertNotNull(executionCourse1);
 
-		executionCourse2 = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("RCII", "2002/2003", "LEEC");
+		executionCourse2 = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("RCII", "2002/2003", "MEEC");
 		assertNotNull(executionCourse2);
 
         lessons = persistentLesson.readByExecutionCourse(executionCourse1);

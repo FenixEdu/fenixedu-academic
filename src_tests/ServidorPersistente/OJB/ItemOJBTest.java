@@ -76,7 +76,7 @@ public class ItemOJBTest extends TestCaseOJB {
 		
 		persistentSupport.iniciarTransaccao();
 		
-		IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","LEEC");
+		IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","MEEC");
 		
 		site = persistentSite.readByExecutionCourse(executionCourse);
 		

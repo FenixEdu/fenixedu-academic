@@ -139,14 +139,12 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 			TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
 	privileges.add(new Privilegio(person, new String("ReadShiftEnrolment")));
 	privileges.add(new Privilegio(person, new String("ReadOtherCoursesWithShifts")));
-	person.setPrivilegios(privileges);
 	IStudent student = new Student(new Integer(45498), new StudentState(567), person, new TipoCurso(TipoCurso.LICENCIATURA));
 
 	IDisciplinaExecucao discipline1 =
 		new DisciplinaExecucao(
 			"Trabalho Final de Curso I",
 			"TFCI",
-			"Program1",
 			new Double(1),
 			new Double(1),
 			new Double(1),
@@ -156,7 +154,6 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 		new DisciplinaExecucao(
 			"Trabalho Final de Curso II",
 			"TFCII",
-			"Program2",
 			new Double(1),
 			new Double(1),
 			new Double(1),
@@ -166,7 +163,6 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 		new DisciplinaExecucao(
 			"Engenharia da Programação",
 			"EP",
-			"Program3",
 			new Double(1),
 			new Double(1),
 			new Double(1),
@@ -176,7 +172,6 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 		new DisciplinaExecucao(
 			"Aprendizagem",
 			"APR",
-			"Program4",
 			new Double(1),
 			new Double(1),
 			new Double(1),
@@ -186,7 +181,6 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 		new DisciplinaExecucao(
 			"Percepção",
 			"PERC",
-			"Program5",
 			new Double(1),
 			new Double(1),
 			new Double(1),

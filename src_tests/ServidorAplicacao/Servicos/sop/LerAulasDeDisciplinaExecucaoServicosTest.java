@@ -109,7 +109,7 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServic
 			if(existing) {
 				ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
 			} else {
-				ide = new DisciplinaExecucao("NOME", "SIGLA", "Programa", new Double(1.5), new Double(1.5), new Double(1.5), new Double(1.5), iep);
+				ide = new DisciplinaExecucao("NOME", "SIGLA", new Double(1.5), new Double(1.5), new Double(1.5), new Double(1.5), iep);
 			}
 			
 			this.infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(ide);

@@ -77,7 +77,7 @@ public class CreateMasterDegreeCandidateServiceTest extends TestCaseServicos {
 		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 		
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-		infoExecutionYear.setYear("2003/2004");
+		infoExecutionYear.setYear("2002/2003");
 		
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);

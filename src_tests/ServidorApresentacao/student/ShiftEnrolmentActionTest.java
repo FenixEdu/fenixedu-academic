@@ -10,7 +10,6 @@ package ServidorApresentacao.student;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -33,7 +32,6 @@ import Dominio.IStudent;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.Pessoa;
-import Dominio.Privilegio;
 import Dominio.Student;
 import Dominio.Turno;
 import ServidorAplicacao.IUserView;
@@ -151,12 +149,8 @@ public class ShiftEnrolmentActionTest extends MockStrutsTestCase {
 		_classDAO.lockWrite(_class);
 
 		_executionCourse = new DisciplinaExecucao();
-
-//		_executionCourse.setLicenciaturaExecucao(_executionDegree);
 		_executionCourse.setNome("ec1");
 		_executionCourse.setSigla("ec1");
-		// This has to be done because the domain conections are not yet complete
-		((DisciplinaExecucao) _executionCourse).setChaveResponsavel(new Integer(0));
 		_executionCourseDAO.escreverDisciplinaExecucao(_executionCourse);
 		_shift1 =
 			new Turno(
@@ -192,9 +186,6 @@ public class ShiftEnrolmentActionTest extends MockStrutsTestCase {
 		_person1.setUsername("person1");
 		_person1.setPassword(PasswordEncryptor.encryptPassword("pass1"));
 
-		HashSet privileges = new HashSet(1);
-		privileges.add(new Privilegio(_person1, this.serviceName));
-		_person1.setPrivilegios(privileges);
 		_personDAO.escreverPessoa(_person1);
 
 		_student1 = new Student(new Integer(1), new StudentState(1), _person1, new TipoCurso(TipoCurso.LICENCIATURA));
@@ -209,9 +200,6 @@ public class ShiftEnrolmentActionTest extends MockStrutsTestCase {
 		_person2.setNome("person2");
 		_person2.setUsername("person2");
 		_person2.setPassword(PasswordEncryptor.encryptPassword("pass2"));
-		privileges.clear();
-		privileges.add(new Privilegio(_person2, this.serviceName));
-		_person2.setPrivilegios(privileges);
 		_personDAO.escreverPessoa(_person2);
 
 		_student2 = new Student(new Integer(2), new StudentState(2), _person2, new TipoCurso(TipoCurso.LICENCIATURA));

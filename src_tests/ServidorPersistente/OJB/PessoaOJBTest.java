@@ -103,7 +103,6 @@ public class PessoaOJBTest extends TestCaseOJB {
     	         TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
     pessoa.setUsername("jorge");
     pessoa.setPassword(PasswordEncryptor.encryptPassword("pass"));
-    pessoa.setPrivilegios(null);
     try {
       persistentSupport.iniciarTransaccao();
       //persistentPerson.lockWrite(pessoa);
@@ -127,7 +126,6 @@ public class PessoaOJBTest extends TestCaseOJB {
     			 TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
     pessoa.setUsername("ars");
     pessoa.setPassword(PasswordEncryptor.encryptPassword("pass2"));
-    pessoa.setPrivilegios(null);
     try {
       persistentSupport.iniciarTransaccao();
       //persistentPerson.lockWrite(pessoa);

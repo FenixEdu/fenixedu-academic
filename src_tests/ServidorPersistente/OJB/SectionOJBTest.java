@@ -79,7 +79,7 @@ public class SectionOJBTest extends TestCaseOJB {
 					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 					"PO",
 					"2002/2003",
-					"LEEC");
+					"MEEC");
 			executionCourse3 =
 				persistentExecutionCourse
 					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
