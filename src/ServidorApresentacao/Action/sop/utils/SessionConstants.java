@@ -171,8 +171,16 @@ public abstract class SessionConstants {
 	public static final String STUDENT_CURRICULAR_PLAN = "student_curricular_plan";
 	public static final String STUDENT = "student";
 	public static final String STATE = "state";
-	
-	
+	public static final String GUIDERS_LIST = "guiders_list";
+	public static final String ASSISTENT_GUIDERS_LIST = "assistent_guiders_list";
+	public static final String EXTERNAL_ASSISTENT_GUIDERS_LIST = "external_assistent_guiders_list";
+	public static final String SEARCH_EXTERNAL_ASSISTENT_GUIDERS = "search_external_assistent_guiders";
+	public static final String EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS_FLAG = "external_assistent_guiders_search_results_flag";
+	public static final String EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS = "external_assistent_guiders_search_results";
+	public static final String MASTER_DEGREE_THESIS_DATA_VERSION = "master_degree_thesis_data_version";
+	public static final String RESPONSIBLE_EMPLOYEE = "responsible_employee";
+	public static final String DISSERTATION_TITLE = "dissertation_title";
+	public static final String LAST_MODIFICATION = "last_modification";
 	
 	
 	
