@@ -930,7 +930,7 @@
 		locking="true"
 	/>
 	<collection-descriptor
-			name="curricularCourseGroups"
+			name="areaCurricularCourseGroups"
 			element-class-ref="Dominio.AreaCurricularCourseGroup"
 			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
 			proxy="true">
