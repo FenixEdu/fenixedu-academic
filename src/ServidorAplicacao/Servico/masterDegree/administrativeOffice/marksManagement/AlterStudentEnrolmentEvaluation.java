@@ -139,6 +139,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico
                 {
                     try
                     {
+                    	new Integer(enrolmentEvaluation.getGrade());
                         iEnrolmentEvaluation.getEnrolment().setEnrolmentState(EnrolmentState.APROVED);
                     } catch (NumberFormatException e)
                     {
