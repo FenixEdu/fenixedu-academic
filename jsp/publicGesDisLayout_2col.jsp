@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -28,7 +27,7 @@
 <table width="100%"  height="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
      <td  align="left" valign="top" bgcolor="#B5BED6"  class="barraist">
-     <div id="header"><a href="http://www.ist.utl.pt"><img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="" border="0" /></a></div>
+     <div id="header"><img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="" border="0" /></div>
 	</td>
     <td id="principal" bgcolor="#FFFFFF">
       <div id="header"><img src="<%= request.getContextPath() %>/images/ist_header.gif" width="324 height="42" ""alt="Instituto Superior T&eacute;cnico"></div>
