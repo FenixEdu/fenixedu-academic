@@ -155,7 +155,6 @@ public class SendWebSiteSectionFileToServer implements IServico {
 
 				// need to know what to sort
 				calendarLast.setTime(dateToSort(infoWebSiteSection, lastInfoWebSiteItem));
-				//				calendarLast.setTime(lastInfoWebSiteItem.getOnlineBeginDay());
 
 				// get items with the same month as last
 				Iterator iterItems = infoWebSiteSection.getInfoItemsList().iterator();
@@ -188,7 +187,6 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				while (iterItems.hasNext()) {
 					InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterItems.next();
 					calendarCycle.clear();
-					//					calendarCycle.setTime(infoWebSiteItem.getOnlineBeginDay());
 					calendarCycle.setTime(dateToSort(infoWebSiteSection, infoWebSiteItem));
 
 					// get collection of months present in database
@@ -210,7 +208,6 @@ public class SendWebSiteSectionFileToServer implements IServico {
 						InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterAllItems.next();
 						calendarCycle.clear();
 						calendarCycle.setTime(dateToSort(infoWebSiteSection, infoWebSiteItem));
-						//						calendarCycle.setTime(infoWebSiteItem.getOnlineBeginDay());
 						if (calendarCycle.get(Calendar.MONTH) == monthLink.intValue()) {
 							thisMonthList.add(infoWebSiteItem);
 						}
@@ -218,6 +215,13 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				} else {
 					thisMonthList = monthList;
 				}
+				
+				BeanComparator beanComparator = getBeanComparator(infoWebSiteSection);
+				Collections.sort(thisMonthList, beanComparator);
+				if (infoWebSiteSection.getSortingOrder().equals("descendent")) {
+					Collections.reverse(thisMonthList);
+				}				
+				
 				// build body for items
 				String itemsFile = new String();
 				itemsFile = putBegginingOfItemFile(itemsFile, infoWebSiteSection);
