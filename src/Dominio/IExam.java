@@ -16,14 +16,12 @@ public interface IExam {
 	public Date getDay();
 	public Calendar getEnd();
 	public Season getSeason();	
-	public IDisciplinaExecucao getExecutionCourse();
 	public List getAssociatedExecutionCourses();
 
 	public void setBeginning(Calendar beginning);
 	public void setDay(Date day);
 	public void setEnd(Calendar end);
 	public void setSeason(Season epoca);
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse);
 	public void setAssociatedExecutionCourses(List list);
 
 }

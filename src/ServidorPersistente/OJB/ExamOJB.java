@@ -21,7 +21,6 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.Season;
 
 public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
@@ -125,39 +124,6 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 		}
 	}
 
-	public void lockWrite(IExam examToWrite)
-		throws ExcepcaoPersistencia, ExistingPersistentException {
-		IExam examFromDB = null;
-		if (examToWrite == null)
-			// Should we throw an exception saying nothing to write or
-			// something of the sort?
-			// By default, if OJB received a null object it would complain.
-			return;
-
-		// read exam		
-		examFromDB =
-			this.readBy(
-				examToWrite.getDay(),
-				examToWrite.getBeginning(),
-				examToWrite.getExecutionCourse());
-
-		// if (exam not in database) then write it
-		if (examFromDB == null){
-			super.lockWrite(examToWrite);
-		}
-			
-		// else if (exam is mapped to the database then write any existing changes)
-		else if (
-			(examToWrite instanceof Exam)
-				&& ((Exam) examFromDB).getIdInternal().equals(
-					((Exam) examToWrite).getIdInternal())) {
-			examFromDB.setEnd(examToWrite.getEnd());
-			// No need to werite it because it is already mapped.
-			//super.lockWrite(examToWrite);
-			// else throw an AlreadyExists exception.
-		} else
-			throw new ExistingPersistentException();
-	}
 
 	public void delete(IExam exam) throws ExcepcaoPersistencia {
 		// TODO : delete exam_executionCoursees too

@@ -11,8 +11,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
@@ -61,10 +61,10 @@ public class EditExamAction extends FenixAction {
 			examDate.set(Calendar.MONTH, month.intValue());
 			examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
 
-			InfoExam oldExam =  (InfoExam) session.getAttribute(SessionConstants.INFO_EXAMS_KEY);
+			InfoViewExamByDayAndShift infoViewOldExam =  (InfoViewExamByDayAndShift) session.getAttribute(SessionConstants.INFO_EXAMS_KEY);
 
 			// Create an exam with season, examDateAndTime and executionCourse
-			Object argsCreateExam[] = { examDate, examTime, season, executionCourse, oldExam };
+			Object argsCreateExam[] = { examDate, examTime, season, infoViewOldExam };
 			try {
 				ServiceUtils.executeService(userView, "EditExam", argsCreateExam);
 			} catch (ExistingServiceException ex) {

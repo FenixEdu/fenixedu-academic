@@ -917,10 +917,7 @@ public abstract class Cloner {
 	public static InfoExam copyIExam2InfoExam(IExam exam) {
 		InfoExam infoExam = new InfoExam();
 
-		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(exam.getExecutionCourse());
-
 		copyObjectProperties(infoExam, exam);
-		infoExam.setInfoExecutionCourse(infoExecutionCourse);
 
 		return infoExam;
 	}
@@ -933,10 +930,7 @@ public abstract class Cloner {
 	public static IExam copyInfoExam2IExam(InfoExam infoExam) {
 		IExam exam = new Exam();
 
-		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExam.getInfoExecutionCourse());
-
 		copyObjectProperties(exam, infoExam);
-		exam.setExecutionCourse(executionCourse);
 
 		return exam;
 	}

@@ -20,35 +20,17 @@ public class InfoExam {
 	protected Calendar beginning;
 	protected Calendar end;
 	protected Season season;	
-	protected InfoExecutionCourse infoExecutionCourse;
 
 	public InfoExam() {
 	}
 
-	public InfoExam(Date day, Calendar beginning, Calendar end, Season season, InfoExecutionCourse infoExecutionCourse) {
+	public InfoExam(Date day, Calendar beginning, Calendar end, Season season) {
 		this.setDay(day);
 		this.setBeginning(beginning);
 		this.setEnd(end);
 		this.setSeason(season);
-		this.setInfoExecutionCourse(infoExecutionCourse);
 	}
 
-	public boolean equals(Object obj) {
-		if (obj instanceof InfoExam) {
-			InfoExam examObj = (InfoExam) obj;
-			return this.getDay().equals(examObj.getDay())
-				   && this.getBeginning().get(Calendar.HOUR_OF_DAY) == examObj.getBeginning().get(Calendar.HOUR_OF_DAY)
-				   && this.getBeginning().get(Calendar.MINUTE) == examObj.getBeginning().get(Calendar.MINUTE)
-				   && this.getBeginning().get(Calendar.SECOND) == examObj.getBeginning().get(Calendar.SECOND)
-				   && this.getEnd().get(Calendar.HOUR_OF_DAY) == examObj.getEnd().get(Calendar.HOUR_OF_DAY)
-				   && this.getEnd().get(Calendar.MINUTE) == examObj.getEnd().get(Calendar.MINUTE)
-				   && this.getEnd().get(Calendar.SECOND) == examObj.getEnd().get(Calendar.SECOND)
-				   && this.getSeason().equals(examObj.getSeason())
-				   && this.getInfoExecutionCourse().equals(examObj.getInfoExecutionCourse());
-		}
-
-		return false;
-	}
 
 	public String toString() {
 		return "[INFOEXAM:"
@@ -56,7 +38,6 @@ public class InfoExam {
 			+ " beginning= '"       + this.getBeginning()       + "'"
 			+ " end= '"				+ this.getEnd()       + "'"
 			+ " season= '"          + this.getSeason()          + "'"
-			+ " executionCourse= '" + this.getInfoExecutionCourse() + "'"
 			+ "";
 	}
 
@@ -83,13 +64,6 @@ public class InfoExam {
 	}
 
 	/**
-	 * @return InfoExecutionCourse
-	 */
-	public InfoExecutionCourse getInfoExecutionCourse() {
-		return infoExecutionCourse;
-	}
-
-	/**
 	 * Sets the beginning.
 	 * @param beginning The beginning to set
 	 */
@@ -113,13 +87,6 @@ public class InfoExam {
 		this.end = end;
 	}
 
-	/**
-	 * Sets the infoExecutionCourse.
-	 * @param infoExecutionCourse The infoExecutionCourse to set
-	 */
-	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
-		this.infoExecutionCourse = infoExecutionCourse;
-	}
 
 	/**
 	 * @return

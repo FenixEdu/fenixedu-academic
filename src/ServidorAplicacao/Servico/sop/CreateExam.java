@@ -86,7 +86,7 @@ public class CreateExam implements IServico {
 				}
 			}
 
-			IExam exam = new Exam(examDate.getTime(), examTime, null, season, executionCourse);
+			IExam exam = new Exam(examDate.getTime(), examTime, null, season);
 			IExamExecutionCourse examExecutionCourse = new ExamExecutionCourse(exam, executionCourse);
 
 			try {

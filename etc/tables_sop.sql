@@ -138,14 +138,11 @@ create table EXECUTION_YEAR (
 DROP TABLE IF EXISTS EXAM;
 CREATE TABLE EXAM (
   ID_INTERNAL int(11) not null auto_increment,
-  KEY_EXECUTION_COURSE int(11) not null,
   DAY date,
   BEGINNING time,
   END time,
   SEASON int(11) not null,
-  PRIMARY KEY (ID_INTERNAL),
-  UNIQUE U1 (KEY_EXECUTION_COURSE, SEASON),
-  UNIQUE U2 (KEY_EXECUTION_COURSE, DAY, BEGINNING)
+  PRIMARY KEY (ID_INTERNAL)
 ) TYPE=InnoDB;
 
 #----------------------------

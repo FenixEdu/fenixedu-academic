@@ -22,7 +22,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import DataBeans.InfoExam;
 import DataBeans.InfoViewExam;
 import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.IUserView;
@@ -82,7 +81,7 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 
 		Integer indexExam = new Integer(request.getParameter("indexExam"));
 
-		Object args[] = { ((InfoViewExamByDayAndShift) infoExams.get(indexExam.intValue())).getInfoExam() };
+		Object args[] = { (InfoViewExamByDayAndShift) infoExams.get(indexExam.intValue()) };
 		ServiceUtils.executeService(userView, "DeleteExam",	args);
 		
 		return mapping.findForward("Deleted Exam");
@@ -104,7 +103,7 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 
 		Integer indexExam = new Integer(request.getParameter("indexExam"));
 
-		InfoExam infoExam = ((InfoViewExamByDayAndShift) infoExams.get(indexExam.intValue())).getInfoExam();
+		InfoViewExamByDayAndShift infoViewExam = (InfoViewExamByDayAndShift) infoExams.get(indexExam.intValue());
 
 		ArrayList horas = Util.getExamShifts();
 		session.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
@@ -119,21 +118,19 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		session.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
 
 		Calendar date = Calendar.getInstance();
-		date.setTime(infoExam.getDay());
+		date.setTime(infoViewExam.getInfoExam().getDay());
 
 		editExamForm.set("day", new Integer(date.get(Calendar.DAY_OF_MONTH)).toString());
 		editExamForm.set("month", new Integer(date.get(Calendar.MONTH)).toString());
 		editExamForm.set("year", new Integer(date.get(Calendar.YEAR)).toString());
-		if (infoExam.getBeginning() != null) {
-			editExamForm.set("beginning", new Integer(infoExam.getBeginning().get(Calendar.HOUR_OF_DAY)).toString());
+		if (infoViewExam.getInfoExam().getBeginning() != null) {
+			editExamForm.set("beginning", new Integer(infoViewExam.getInfoExam().getBeginning().get(Calendar.HOUR_OF_DAY)).toString());
 		}
-		editExamForm.set("season", infoExam.getSeason().getseason().toString());
-
-		session.setAttribute(SessionConstants.EXECUTION_COURSE_KEY, infoExam.getInfoExecutionCourse());
+		editExamForm.set("season", infoViewExam.getInfoExam().getSeason().getseason().toString());
 
 		session.setAttribute("input", "viewExamsByDayAndShift");
 		
-		session.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoExam);
+		session.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExam);
 
 		return mapping.findForward("Edit Exam");
 	}

@@ -19,10 +19,6 @@ public class Exam extends DomainObject implements IExam {
 	protected Calendar beginning;
 	protected Calendar end;
 	protected Season season;
-	protected IDisciplinaExecucao executionCourse;
-
-	private Integer keyExecutionCourse;
-
 	protected List associatedExecutionCourses;
 
 
@@ -31,15 +27,7 @@ public class Exam extends DomainObject implements IExam {
 	public boolean equals(Object obj) {
 		if (obj instanceof Exam) {
 			Exam examObj = (Exam) obj;
-			return this.getDay().equals(examObj.getDay())
-				   && this.getBeginning().get(Calendar.HOUR_OF_DAY) == examObj.getBeginning().get(Calendar.HOUR_OF_DAY)
-				   && this.getBeginning().get(Calendar.MINUTE) == examObj.getBeginning().get(Calendar.MINUTE)
-			       && this.getBeginning().get(Calendar.SECOND) == examObj.getBeginning().get(Calendar.SECOND)
-				   && this.getEnd().get(Calendar.HOUR_OF_DAY) == examObj.getEnd().get(Calendar.HOUR_OF_DAY)
-				   && this.getEnd().get(Calendar.MINUTE) == examObj.getEnd().get(Calendar.MINUTE)
-				   && this.getEnd().get(Calendar.SECOND) == examObj.getEnd().get(Calendar.SECOND)
-				   && this.getSeason().equals(examObj.getSeason())
-				   && this.getExecutionCourse().equals(examObj.getExecutionCourse());
+			return this.getIdInternal().equals(examObj.getIdInternal());
 		}
 
 		return false;
@@ -51,17 +39,15 @@ public class Exam extends DomainObject implements IExam {
 			+ " beginning= '"       + this.getBeginning()       + "'"
 			+ " end= '"             + this.getEnd()             + "'"
 			+ " season= '"           + this.getSeason()           + "'"			
-			+ " executionCourse= '" + this.getExecutionCourse() + "'"
 			+ "";
 	}
 
 
-	public Exam(Date day, Calendar beginning, Calendar end, Season season, IDisciplinaExecucao executionCourse) {
+	public Exam(Date day, Calendar beginning, Calendar end, Season season) {
 		this.setDay(day);
 		this.setBeginning(beginning);
 		this.setEnd(end);
 		this.setSeason(season);
-		this.setExecutionCourse(executionCourse);
 	}
 
 
@@ -87,13 +73,6 @@ public class Exam extends DomainObject implements IExam {
 	}
 
 	/**
-	 * @return Integer
-	 */
-	public Integer getKeyExecutionCourse() {
-		return keyExecutionCourse;
-	}
-
-	/**
 	 * Sets the beginning.
 	 * @param beginning The beginning to set
 	 */
@@ -115,29 +94,6 @@ public class Exam extends DomainObject implements IExam {
 	 */
 	public void setEnd(Calendar end) {
 		this.end = end;
-	}
-
-	/**
-	 * Sets the keyExecutionCourse.
-	 * @param keyExecutionCourse The keyExecutionCourse to set
-	 */
-	public void setKeyExecutionCourse(Integer keyExecutionCourse) {
-		this.keyExecutionCourse = keyExecutionCourse;
-	}
-
-	/**
-	 * @return IDisciplinaExecucao
-	 */
-	public IDisciplinaExecucao getExecutionCourse() {
-		return executionCourse;
-	}
-
-	/**
-	 * Sets the executionCourse.
-	 * @param executionCourse The executionCourse to set
-	 */
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse) {
-		this.executionCourse = executionCourse;
 	}
 
 	/**

@@ -7,9 +7,8 @@
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
-		<td bgcolor="#FFFFFF" class="infoselected"><p>A disciplina
-        	&eacute;:<br/>
-			<strong><jsp:include page="context.jsp"/></strong>
+		<td bgcolor="#FFFFFF" class="infoselected"><p>
+			<jsp:include page="examContext.jsp"/>
          </td>
     </tr>
 </table>

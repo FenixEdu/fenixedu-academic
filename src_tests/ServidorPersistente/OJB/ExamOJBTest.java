@@ -17,7 +17,6 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import Dominio.Exam;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
@@ -27,8 +26,6 @@ import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.exceptions.ExistingPersistentException;
-import Util.Season;
 
 public class ExamOJBTest extends TestCaseOJB {
   
@@ -189,83 +186,6 @@ public class ExamOJBTest extends TestCaseOJB {
 		fail("testReadAll: unexpected exception: " + e);
 	}
   }
-
-  public void testLockWrite() {
-	Calendar beginning = Calendar.getInstance();
-	beginning.set(Calendar.YEAR, 2003);
-	beginning.set(Calendar.MONTH, Calendar.MARCH);
-	beginning.set(Calendar.DAY_OF_MONTH, 19);
-	beginning.set(Calendar.HOUR_OF_DAY, 9);
-	beginning.set(Calendar.MINUTE, 0);
-	beginning.set(Calendar.SECOND, 0);
-	Calendar end = Calendar.getInstance();
-	end.set(Calendar.YEAR, 2003);
-	end.set(Calendar.MONTH, Calendar.MARCH);
-	end.set(Calendar.DAY_OF_MONTH, 19);
-	end.set(Calendar.HOUR_OF_DAY, 12);
-	end.set(Calendar.MINUTE, 0);
-	end.set(Calendar.SECOND, 0);
-	Season season = new Season(Season.SEASON1);
-	IDisciplinaExecucao executionCourse = null;
-	IExecutionPeriod executionPeriod = null;
-	IExecutionYear executionYear = null;
-	IExam examFromDB = null;
-
-	try {
-		persistentSupport.iniciarTransaccao();
-		executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
-		executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
-		executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("EP", executionPeriod);
-		// Make sure test data set is ok
-		assertNotNull("testLockWrite: test data has been altered!!!", executionCourse);
-		examFromDB = persistentExam.readBy(beginning.getTime(), beginning, executionCourse);
-		assertNotNull("testLockWrite: expected a result", examFromDB);
-
-		// Write Cahnged mapped object
-		beginning.set(Calendar.DAY_OF_MONTH, 21);
-		examFromDB.setDay(beginning.getTime());
-		persistentExam.lockWrite(examFromDB);
-		persistentSupport.confirmarTransaccao();
-		// Confirm Changes
-		persistentSupport.iniciarTransaccao();
-		IExam exam = persistentExam.readBy(beginning.getTime(), beginning, executionCourse);
-		assertNotNull("testLockWrite: expected a result", exam);
-		persistentSupport.confirmarTransaccao();
-
-		persistentSupport.iniciarTransaccao();
-		// Write mapped object
-		persistentExam.lockWrite(examFromDB);
-		persistentSupport.confirmarTransaccao();
-
-		persistentSupport.iniciarTransaccao();		
-		// Write new unexisting object
-		beginning.set(Calendar.DAY_OF_MONTH, 22);
-		season.setSeason(new Integer(Season.SEASON2));
-		IExam newExam = new Exam(beginning.getTime(), beginning, end, season, executionCourse);
-		persistentExam.lockWrite(newExam);
-		persistentSupport.confirmarTransaccao();
-		// Confirm Changes
-		persistentSupport.iniciarTransaccao();
-		exam = persistentExam.readBy(beginning.getTime(), beginning, executionCourse);
-		assertNotNull("testLockWrite: expected a result", exam);
-		persistentSupport.confirmarTransaccao();
-		
-		persistentSupport.iniciarTransaccao();
-		// Write new unmapped existing object
-		beginning.set(Calendar.DAY_OF_MONTH, 22);
-		newExam = new Exam(beginning.getTime(), beginning, end, season, executionCourse);
-		try {
-			persistentExam.lockWrite(newExam);
-			fail("testLockWrite: expected an ExistingPersistentException");
-		} catch (ExistingPersistentException e) {
-			// All is ok!
-		}
-		persistentSupport.confirmarTransaccao();
-	} catch (ExcepcaoPersistencia e) {
-		fail("testReadBy: unexpected exception: " + e);
-	}
-  }
-
 
   public void testDelete() {
 	try {

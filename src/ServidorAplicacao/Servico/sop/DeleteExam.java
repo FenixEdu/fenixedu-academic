@@ -11,11 +11,13 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
-import DataBeans.InfoExam;
+import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
@@ -45,9 +47,8 @@ public class DeleteExam implements IServico {
 		return "DeleteExam";
 	}
 
-	public Object run(InfoExam infoExam) {
+	public Object run(InfoViewExamByDayAndShift infoViewExam) throws FenixServiceException {
 
-		IExam exam = null;
 		boolean result = false;
 
 		try {
@@ -58,35 +59,33 @@ public class DeleteExam implements IServico {
 
 			IExecutionPeriod executionPeriod =
 				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoExam.getInfoExecutionCourse().getInfoExecutionPeriod());
+					((InfoExecutionCourse) infoViewExam.getInfoExecutionCourses().get(0))
+					.getInfoExecutionPeriod());
 
 			IDisciplinaExecucao executionCourse =
 				executionCourseDAO
 					.readByExecutionCourseInitialsAndExecutionPeriod(
-					infoExam.getInfoExecutionCourse().getSigla(),
+					((InfoExecutionCourse) infoViewExam.getInfoExecutionCourses().get(0))
+					.getSigla(),
 					executionPeriod);
-
-			System.out.println("infoexam= " + infoExam);
-			System.out.println("executionCourse= " + executionCourse);
 
 			if (executionCourse == null)
 				return new Boolean(result);
 
-			exam =
-				sp.getIPersistentExam().readBy(
-					infoExam.getDay(),
-					infoExam.getBeginning(),
-					executionCourse);
-
-			if (exam != null) {
-				sp.getIPersistentExam().delete(exam);
-				result = true;
+			for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
+				IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
+				if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
+						sp.getIPersistentExam().delete(exam);
+						result = true;					
+				}
 			}
+
 		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
+			throw new FenixServiceException("Errer deleteing exam");
 		}
 
 		return new Boolean(result);
+		
 	}
 
 }

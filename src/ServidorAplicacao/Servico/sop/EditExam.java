@@ -14,8 +14,8 @@ package ServidorAplicacao.Servico.sop;
 
 import java.util.Calendar;
 
-import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
@@ -56,8 +56,7 @@ public class EditExam implements IServico {
 		Calendar examDate,
 		Calendar examTime,
 		Season season,
-		InfoExecutionCourse infoExecutionCourse,
-		InfoExam oldExam)
+		InfoViewExamByDayAndShift infoViewOldExam)
 		throws FenixServiceException {
 
 		Boolean result = new Boolean(false);
@@ -69,19 +68,20 @@ public class EditExam implements IServico {
 
 			IExecutionPeriod executionPeriod =
 				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoExecutionCourse.getInfoExecutionPeriod());
+					((InfoExecutionCourse) infoViewOldExam.getInfoExecutionCourses().get(0))
+					.getInfoExecutionPeriod());
 
 			IDisciplinaExecucao executionCourse =
 				executionCourseDAO
 					.readByExecutionCourseInitialsAndExecutionPeriod(
-					infoExecutionCourse.getSigla(),
-					executionPeriod);
+					((InfoExecutionCourse) infoViewOldExam.getInfoExecutionCourses().get(0))
+					.getSigla(), executionPeriod);
 
 			IExam examFromDBToBeEdited = null;
 			boolean newSeasonAlreadyScheduled = false;
 			for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
 				IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
-				if (exam.getSeason().equals(oldExam.getSeason())) {
+				if (exam.getSeason().equals(infoViewOldExam.getInfoExam().getSeason())) {
 					System.out.println("Exontrámos o exam de época: " + season + ".");
 					examFromDBToBeEdited = exam;
 				} else if (exam.getSeason().equals(season)) {
