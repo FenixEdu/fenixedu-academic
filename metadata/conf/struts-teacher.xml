@@ -16,6 +16,16 @@
 	 	<form-property name="evaluationElementsEn" type="java.lang.String"/>
 	 	<form-property name="page" type="java.lang.Integer" initial="0"/>
 	 </form-bean>
+	 
+	 <!-- examEnrollment form -->
+   	<form-bean name="examEnrollmentForm"
+		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">        
+        <form-property name="enrollmentBeginDayFormatted" type="java.lang.String" />
+        <form-property name="enrollmentBeginTimeFormatted" type="java.lang.String" />
+        <form-property name="enrollmentEndDayFormatted" type="java.lang.String" />
+        <form-property name="enrollmentEndTimeFormatted" type="java.lang.String" />
+     </form-bean>    	
+	 
      <!--curriculum forms --> 
      <form-bean name="executionCourseCurriculumForm"
 		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">		
@@ -121,6 +131,13 @@
         <form-property name="objectCode" type="java.lang.Integer"/>
         <form-property name="shiftProfessorships"  type="java.lang.Integer[]"/>
         <form-property name="method" type="java.lang.String"></form-property>       
+	</form-bean> 		          
+	<form-bean name="creditsTeacherForm"
+		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+        dynamic="true">
+        <form-property name="tfcStudentsNumber"  type="java.lang.Integer"/>
+        <form-property name="method" type="java.lang.String"></form-property>       
+        <form-property name="page" type="java.lang.Integer"></form-property>               
 	</form-bean> 		          
 	
 
@@ -283,18 +300,13 @@
 	</action>
 	
 	
-	<action	path="/index" type="org.apache.struts.actions.ForwardAction" parameter="df.page.teacher-index" />
+	<action	path="/index" type="ServidorApresentacao.Action.teacher.IndexTeacherAction">
+		<forward name="success"	path="df.page.teacher-index"/>
+	</action>
 
 	<action	path="/manageExecutionCourses" type="org.apache.struts.actions.ForwardAction" parameter="df.page.management.execution-courses" />
 	<action	path="/manageCredits" type="org.apache.struts.actions.ForwardAction" parameter="df.page.management.credits" />	
 		
-	<!--	<action	path="/index"
-        type="ServidorApresentacao.Action.teacher.TeacherLoginAction"
-		>    
-      <forward name="viewProfessorships" path="/viewProfessorships.jsp"/>      
-		<forward name="viewProfessorships" path="df.page.viewProfessorships"/>
-	</action> -->
-	
 	<action path="/viewSite"
         type="ServidorApresentacao.Action.teacher.ReadSite">    
   <forward name="viewSite" path="/viewSite.jsp"/>    
@@ -353,14 +365,6 @@
      <forward name="Sucess" path="/viewSection.jsp"/>         
 	</action>-->
 	
-	<!-- Exams viewer -->
-	<action		
-		path="/viewExams"
-        type="ServidorApresentacao.Action.teacher.ViewExamsAction"
-        scope="request">    
-     <forward name="Sucess" path="/viewExams.jsp"/>         
-	</action>
-
 	<!-- Delete Section -->
 	<action path="/deleteSection"
  			 input="/viewSection.jsp"
@@ -411,7 +415,31 @@
        <forward name="insertItem" path="/insertItem.jsp"/>
        <forward name="viewSection" path="/viewSection.jsp"/>
 	</action>
-		
+
+	<!-- Actions For ExamEnrollments -->
+	
+	<action 
+		path="/viewExams"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.ViewExamsAction">		
+       <forward name="viewExams" path="/viewExams.jsp"/>
+	</action>
+	
+	
+	<action 
+		input="/viewExams.do"
+		name="examEnrollmentForm"
+		path="/examEnrollmentEditionManager"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.ExamEnrollmentDispatchAction"
+		validate="true"
+        >       
+       <forward name="viewExams" path="/viewExams.do"/>
+	</action>
+	
+	
+	<!-- End Of Actions For ExamEnrollments -->
 	<!-- start of evaluation mappings -->
 	
 	<action 
@@ -440,19 +468,33 @@
 	<!-- start of evaluation mappings -->
 	
 	<!-- Actions for Teacher credits -->
-	<action path="/creditsManagement" type="org.apache.struts.actions.ForwardAction" parameter="df.page.credits-management"/>
+	<action path="/creditsManagement" name="creditsTeacherForm" 
+			input="/creditsManagement.do?page=0&amp;method=prepare"
+			type="ServidorApresentacao.Action.teacher.credits.TeacherCreditsDispatchAction"
+			parameter="method"
+			validate="false"
+			scope="request">
+		<forward name="showForm" path="df.page.management.credits" />
+	</action>
 	
 	<action 
 		name="executionCourseShiftsPercentageForm"
-		input="/"
+		input="/executionCourseShiftsPercentageManager.do?method=show"
 		path="/executionCourseShiftsPercentageManager"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.credits.ProfessorShipShiftPercentageDispatchAction"
-		validate="false"
-        >
+		validate="false">
        <forward name="showTable" path="df.teacher.showShiftsPercentageTable"/>
-        <forward name="acceptSuccess" path="df.page.viewProfessorships"/>
+       <forward name="acceptSuccess" path="/creditsManagement.do?page=0&amp;method=prepare" redirect="true"/>
+	</action>	
+	<action 
+		path="/showStudentsEnrolledInExam"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.ShowStudentsEnrolledInExamAction"
+		  >
+       <forward name="showStudents" path="showStudentsEnrolledInExam.jsp"/>
+       
 	</action>	
 	<!-- End of Actions for Teacher credits -->	
 	
