@@ -1,0 +1,7 @@
+Convention:
+I am using the following parameters for the following objects.
+RequestUtils methods also use the following parameters:
+
+eYName -> executionYear name
+ePName -> executionPeriod year
+eCCode -> executionCourse code
